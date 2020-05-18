@@ -2,10 +2,10 @@ OpenID server
 =============
 
 
-.. warning:: 
+.. warning::
 
     OpenID protocol is deprecated, you should now use
-    :doc:`OpenID Connect<idpopenidconnect>`\ 
+    :doc:`OpenID Connect<idpopenidconnect>`\
 
 Presentation
 ------------
@@ -31,13 +31,15 @@ their authentication using [PORTAL]/openidserver/[login] where:
 
 -  [PORTAL] is the portal URL
 -  [login] is the user login (or any other session information,
-   :doc:`see below<idpopenid>`)
+   :ref:`see below<idpopenid-configuration>`)
 
 Example:
 
 ::
 
    http://auth.example.com/openidserver/foo.bar
+
+.. _idpopenid-configuration:
 
 Configuration
 -------------
@@ -47,38 +49,40 @@ In the Manager, go in ``General Parameters`` » ``Issuer modules`` »
 
 -  **Activation**: set to ``On``
 -  **Path**: keep ``^/openidserver/`` unless you have change
-   :doc:`Apache portal configuration<configlocation>` file.
+   :ref:`Apache portal configuration<configlocation-portal>` file.
 -  **Use rule**: a rule to allow user to use this module, set to 1 to
    always allow.
 
 
-.. tip:: 
+.. tip::
 
     For example, to allow only users with a strong authentication
     level:
-    
+
     ::
-    
+
        $authenticationLevel > 2
-    
+
 
 
 Then go in ``Options`` to define:
 
 -  **Secret token**: a secret token used to secure transmissions between
-   OpenID client and server (:doc:`see below<idpopenid>`).
+   OpenID client and server (:ref:`see below<idpopenid-security>`).
 -  **OpenID login**: the session key used to match OpenID login.
 -  **Authorized domains**: white list or black list of OpenID client
-   domains (:doc:`see below<idpopenid>`).
+   domains (:ref:`see below<idpopenid-security>`).
 -  **SREG mapping**: link between SREG attributes and session keys
-   (:doc:`see below<idpopenid>`).
+   (:ref:`see below<idpopenid-shared-attributes-sreg>`).
 
 
-.. tip:: 
+.. tip::
 
     If ``OpenID login`` is not set, it uses ``General Parameters``
     » ``Logs`` » ``REMOTE_USER`` data, which is set to ``uid`` by
     default
+
+.. _idpopenid-shared-attributes-sreg:
 
 Shared attributes (SREG)
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -100,10 +104,12 @@ Each SREG attribute will be associated to a user session key. A session
 key can be associated to more than one SREG attribute.
 
 
-.. important:: 
+.. note::
 
     If the OpenID consumer ask for data, users will be prompted to
     accept or not the data sharing.
+
+.. _idpopenid-security:
 
 Security
 ~~~~~~~~
@@ -114,7 +120,7 @@ Security
    encryption key.
 
 
-.. important:: 
+.. important::
 
     Note that :doc:`SAML<idpsaml>` protocol is more secured
     than OpenID, so when your partners are known, prefer

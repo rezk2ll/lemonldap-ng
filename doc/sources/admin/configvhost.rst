@@ -9,7 +9,8 @@ Apache configuration
 --------------------
 
 To protect a virtual host in Apache, the LemonLDAP::NG Handler must be
-activated (see :doc:`Apache global configuration<configlocation>`).
+activated (see
+:ref:`Apache global configuration<configlocation-apache>`).
 
 Then you can take any virtual host, and simply add this line to protect
 it:
@@ -79,7 +80,7 @@ Same with remote server configured with the same host name:
    </VirtualHost>
 
 
-.. important:: 
+.. note::
 
     The ``ProxyPreserveHost`` directive will forward the Host header
     to the protected application. To learn more about using Apache as
@@ -88,7 +89,7 @@ Same with remote server configured with the same host name:
 
 
 
-.. tip:: 
+.. tip::
 
     Some applications need the ``REMOTE_USER`` environment
     variable to get the connected user, which is not set in reverse-proxy
@@ -115,7 +116,7 @@ Pages where this menu is displayed can be restricted, for example:
    </Location>
 
 
-.. important:: 
+.. important::
 
     You need to disable mod_deflate to use the floating
     menu
@@ -137,14 +138,14 @@ Then you can take any virtual host and modify it:
        internal;
        include /etc/nginx/fastcgi_params;
        fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
-       
+
        # Drop post datas
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
-       
+
        # Keep original hostname
        fastcgi_param HOST $http_host;
-       
+
        # Keep original request (LLNG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI  $request_uri;
      }
@@ -161,7 +162,7 @@ Then you can take any virtual host and modify it:
        add_header Set-Cookie $cookie_value;
        error_page 401 $lmlocation;
        try_files $uri $uri/ =404;
-       
+
        ...
      }
 
@@ -188,7 +189,7 @@ Then you can take any virtual host and modify it:
        #proxy_set_header Cookie: $lmcookie;
        # OR in the corresponding block
        #fastcgi_param HTTP_COOKIE $lmcookie;
-       
+
        # Set REMOTE_USER (for FastCGI apps only)
        #fastcgi_param REMOTE_USER $lmremote_user;
      }
@@ -220,7 +221,7 @@ Example of a protected virtual host for a local application:
        fastcgi_param HOST $http_host;
        # Keep original request (LLNG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI  $request_uri;
-     } 
+     }
 
      # Client requests
      location ~ \.php$ {
@@ -280,7 +281,7 @@ Reverse proxy
        fastcgi_param HOST $http_host;
        # Keep original request (LLNG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI  $request_uri;
-     } 
+     }
 
      # Client requests
      location / {
@@ -316,7 +317,7 @@ by different types of handler :
      listen 80;
      server_name myserver;
      root /var/www/html;
-     
+
     # Internal MAIN handler authentication request
      location = /lmauth {
        internal;
@@ -363,7 +364,7 @@ by different types of handler :
        uwsgi_buffer_size 32k;
        uwsgi_buffers 32 32k;
      }
-     
+
      # Client requests
      location / {
        ##################################
@@ -375,14 +376,14 @@ by different types of handler :
        auth_request_set $lmlocation $upstream_http_location;
        # Remove this for AuthBasic handler
        error_page 401 $lmlocation;
-     
+
        ##################################
        # PASSING HEADERS TO APPLICATION #
        ##################################
        # IF LUA IS SUPPORTED
        include /etc/nginx/nginx-lua-headers.conf;
      }
-     
+
      location /AuthBasic/ {
        ##################################
        # CALLING AUTHENTICATION         #
@@ -400,7 +401,7 @@ by different types of handler :
        # IF LUA IS SUPPORTED
        include /etc/nginx/nginx-lua-headers.conf;
      }
-     
+
      location /web-service/ {
        ##################################
        # CALLING AUTHENTICATION         #
@@ -418,6 +419,8 @@ by different types of handler :
        include /etc/nginx/nginx-lua-headers.conf;
      }
    }
+
+.. _configvhost-lemonldapng-configuration:
 
 LemonLDAP::NG configuration
 ---------------------------
@@ -445,29 +448,29 @@ learn how to configure access control and HTTP headers sent to
 application by LL::NG.
 
 
-.. important:: 
+.. important::
 
     With **Nginx**-based ReverseProxy, header directives can
     be appended by a LUA script.
-    
+
     To send more than **TEN** headers to protected applications, you have to
     edit and modify :
-    
-    ``/etc/nginx/nginx-lua-headers.conf`` 
+
+    ``/etc/nginx/nginx-lua-headers.conf``
 
 
-.. warning:: 
+.. warning::
 
     \* **Nginx** gets rid of any empty headers. There is no
     point of passing along empty values to another server; it would only
     serve to bloat the request. In other words, headers with **empty values
     are completely removed** from the passed request.
-    
+
     \* **Nginx**, by default, will consider any header that **contains
     underscores as invalid**. It will remove these from the proxied request.
     If you wish to have Nginx interpret these as valid, you can set the
     ``underscores_in_headers`` directive to “on”, otherwise your headers
-    will never make it to the backend server. 
+    will never make it to the backend server.
 
 POST data
 ~~~~~~~~~
@@ -486,9 +489,9 @@ Some options are available:
 -  Maintenance mode: reject all requests with a maintenance message
 -  Aliases: list of aliases for this virtual host *(avoid to rewrite
    rules,...)*
--  Type: handler type *(normal,
-   :doc:`ServiceToken Handler</documentation/2.0/servertoserver>`,
-   :doc:`DevOps Handler</documentation/2.0/devopshandler>`,...)*
+-  Type: handler type (normal,
+   :doc:`ServiceToken Handler<servertoserver>`,
+   :doc:`DevOps Handler<devopshandler>`,...)
 -  Authentication level required: this option avoids to reject user with
    a rule based on ``$_authenticationLevel``. When user hasn't got the
    required level, he is redirected to an upgrade page in the portal.
@@ -497,24 +500,24 @@ Some options are available:
    seconds by default. This TTL can be customized for each virtual host.
 
 
-.. warning:: 
+.. warning::
 
     A same virtual host can serve many locations. Each
     location can be protected by a different type of handler :
-    
+
     ::
-    
+
        server test1.example.com 80
          location ^/AuthBasic  => AuthBasic handler
          location ^/AuthCookie => Main handler
-    
+
     Keep in mind that AuthBasic handler use "Login/Password" to authenticate
     users. If you set "Authentication level required" option to "5" by
     example, AuthBasic requests will be ALWAYS rejected because AuthBasic
-    authentication level is lower than required level. 
+    authentication level is lower than required level.
 
 
-.. important:: 
+.. important::
 
     A negative or null ServiceToken timeout value will be
     overloaded by ``handlerServiceTokenTTL`` (30 seconds by default).

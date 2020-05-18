@@ -3,7 +3,7 @@ Sessions
 
 LL::NG rely on a session mechanism with the session ID as a shared
 secret between the user (in :doc:`SSO cookie<ssocookie>`) and the
-:doc:`session database<start>`.
+:ref:`session database<start-sessions-database>`.
 
 To configure sessions, go in Manager, ``General Parameters`` »
 ``Sessions``:
@@ -17,7 +17,7 @@ To configure sessions, go in Manager, ``General Parameters`` »
    when activity timeout is set.
 
 
-.. warning:: 
+.. warning::
 
     Session activity timeout requires Handlers to have a write
     access to sessions database.
@@ -26,9 +26,9 @@ To configure sessions, go in Manager, ``General Parameters`` »
    session, see :doc:`Grant Session plugin documentation<grantsession>`
 -  **Sessions Storage**: you can define here which session backend to
    use, with the backend options. See
-   :doc:`sessions database configuration<start>` to know which modules
-   you can use. Here are some global options that you can use with all
-   sessions backends:
+   :ref:`sessions database configuration<start-sessions-database>` to
+   know which modules you can use. Here are some global options that you
+   can use with all sessions backends:
 
    -  **generateModule**: allows one to override the default module that
       generates sessions identifiers. For security reasons, we recommend
@@ -47,7 +47,7 @@ To configure sessions, go in Manager, ``General Parameters`` »
       that belong to a different user on that IP address are removed
    -  **Display deleted sessions**: display deleted sessions on
       authentication phase.
-   -  \**Display other sessions \**: display other sessions on
+   -  **Display other sessions**: display other sessions on
       authentication phase, with a link to delete them.
 
 -  **Persistent sessions**: are used for storing users log in history,
@@ -58,7 +58,7 @@ To configure sessions, go in Manager, ``General Parameters`` »
    -  **Disable storage**: Do not store user persitent sessions.
 
 
-.. important:: 
+.. important::
 
     Note that since HTTP protocol is not connected,
     restrictions are not applied to the new session: the oldest are
@@ -74,7 +74,7 @@ Command-line tools
 .. code:: shell
 
    # Delete all sessions opened by user "dwho"
-   $ llngDeleteSession dwho 
+   $ llngDeleteSession dwho
    # Delete all sessions opened by user starting with "dh"
    $ llngDeleteSession dh*
    # Delete all sessions:

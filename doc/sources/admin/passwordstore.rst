@@ -12,15 +12,15 @@ password variable in session. To bypass this, LL::NG can remember what
 password was given by user on authentication phase.
 
 
-.. important:: 
+.. important::
 
-    
-    
+
+
     -  As this may be a security hole, password store in session is not
        activated by default
     -  This mechanism can only work with authentication backends using a
        login/password form (:doc:`LDAP<authldap>`, :doc:`DBI<authdbi>`, ...)
-    
+
 
 
 Configuration
@@ -40,7 +40,7 @@ to send it in an header:
    Auth-Password => $_password
 
 
-.. tip:: 
+.. tip::
 
     For security reasons, the password is not shown in sessions
     explorer.

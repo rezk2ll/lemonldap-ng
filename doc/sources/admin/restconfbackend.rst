@@ -17,7 +17,7 @@ You can retrieve "human readable" error messages:
 If no <lang> provided, 'en' errors file is returned.
 
 
-.. tip:: 
+.. tip::
 
     Note that REST is not a real configuration backend, but just a
     proxy system to access to your configuration over the network

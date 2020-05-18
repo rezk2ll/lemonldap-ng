@@ -4,7 +4,7 @@ Combination of authentication schemes
 ============== ===== ========
 Authentication Users Password
 ============== ===== ========
-✔              ✔    
+✔              ✔
 ============== ===== ========
 
 Presentation
@@ -42,7 +42,7 @@ must set:
    ldapServer,...
 
 
-.. important:: 
+.. note::
 
     To overload parameters, you must select a module, add a parameter
     and set its value.  For example:
@@ -50,7 +50,7 @@ must set:
 ==== ==== ============ ===========================
 Name Type Scope        Parameters
 ==== ==== ============ ===========================
-DB1  DBI  Auth only   
+DB1  DBI  Auth only
 DB2  DBI  User DB only dbiAuthChain => "mysql:..."
 ==== ==== ============ ===========================
 
@@ -71,7 +71,7 @@ JSON value:
    {"cn" => "cn", "uid" => "sAMAccounName", "mail" => "mail"}
 
 
-.. important:: 
+.. important::
 
     If your JSON is corrupted, LLNG will use it as string
     and just report a warning in logs.
@@ -104,11 +104,11 @@ Example                                 Explanation
 ======================================= =============================================================================
 
 
-.. important:: 
+.. important::
 
     Note that "or" can't be used inside a scheme. If you
     think to "[mySSL or myLDAP, myLDAP]", you must write
-    ``[mySSL, myLDAP] or [myLDAP, myLDAP]`` 
+    ``[mySSL, myLDAP] or [myLDAP, myLDAP]``
 
 ================================================== =========================================================
 Example                                            Explanation
@@ -118,13 +118,13 @@ Example                                            Explanation
 ================================================== =========================================================
 
 
-.. important:: 
+.. important::
 
     You can't use brackets in a boolean expression and "and"
     has precedence on "or".
-    
+
     If you think to "( [myLDAP] or [myDBI1] ) and [myDBI2]", you must write
-    ``[myLDAP] and [myDBI2] or [myDBI1] and [myDBI2]`` 
+    ``[myLDAP] and [myDBI2] or [myDBI1] and [myDBI2]``
 
 Tests
 ^^^^^
@@ -140,12 +140,12 @@ Example                                                                         
 ======================================================================================================================= ==============================================================================
 
 
-.. important:: 
+.. important::
 
     Note that brackets can't be used except to enclose test.
-    
+
     If you wants to write ``if(...) then if...``, you must write
-    ``if(not ...) then ... else if(...)...`` 
+    ``if(not ...) then ... else if(...)...``
 
 Let's be crazy
 ^^^^^^^^^^^^^^
@@ -199,8 +199,8 @@ steps.
 ================================= =================================== ========================================================================
 Bad expression                    Solution                            Explanation
 ================================= =================================== ========================================================================
-*``[SAML] and [LDAP]``*           ``[SAML, SAML and LDAP]``           Authentication is done by SAML only but user must match an LDAP entry
-*``[SAML] and [LDAP] or [LDAP]``* ``[SAML, SAML and LDAP] or [LDAP]`` Authentication is done by SAML or LDAP but user must match an LDAP entry
+``[SAML] and [LDAP]``             ``[SAML, SAML and LDAP]``           Authentication is done by SAML only but user must match an LDAP entry
+``[SAML] and [LDAP] or [LDAP]``   ``[SAML, SAML and LDAP] or [LDAP]`` Authentication is done by SAML or LDAP but user must match an LDAP entry
 ================================= =================================== ========================================================================
 
 Auth::Apache authentication
@@ -212,7 +212,7 @@ behaviour: if the auth module fails, Apache returns 401. So it can be
 used only with a "and" boolean expression.
 
 
-.. tip:: 
+.. tip::
 
     The new :doc:`Kerberos authentication module<authkerberos>`
     solve this for Kerberos: you just have to use it instead of Apache and

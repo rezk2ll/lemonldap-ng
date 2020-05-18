@@ -4,7 +4,7 @@ Kerberos
 ============== ===== ========
 Authentication Users Password
 ============== ===== ========
-✔                   
+✔
 ============== ===== ========
 
 Presentation
@@ -36,18 +36,18 @@ and configure the following parameters:
    value and remove the '@domain'.
 
 
-.. important:: 
+.. important::
 
-    
-    
+
+
     -  Due to a perl GSSAPI issue, you may need to copy the keytab in
        /etc/krb5.keytab which is the default location hardcoded in the
        library
     -  As Kerberos ticket is passed inside Authorization header, you may
-       need to set CGIPassAuth on in Apache *(with old Apache, use
+       need to set CGIPassAuth on in Apache (with old Apache, use
        ``RewriteCond %{HTTP:Authorization}`` followed by
-       ``RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]``)*
-    
+       ``RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]``)
+
 
 
 Kerberos configuration

@@ -87,8 +87,8 @@ application "AAA".
 Gather roles in session
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Use the :doc:`LDAP group<authldap>` configuration to store roles as
-groups in the user session:
+Use the :ref:`LDAP group<authldap-groups>` configuration to store roles
+as groups in the user session:
 
 -  Base: ou=roles,dc=example,dc=com
 -  Object class: organizationalRole

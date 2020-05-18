@@ -45,7 +45,7 @@ two Apache configuration files:
 
    <VirtualHost *:80>
            ServerName application.example.com
-           
+
            SetEnvIfNoCase Auth-User "(.*)" REMOTE_USER=$1
 
            DocumentRoot /var/www/application
@@ -53,18 +53,18 @@ two Apache configuration files:
    </VirtualHost>
 
 
-.. tip:: 
+.. tip::
 
     Sometimes, PHP applications also check the PHP_AUTH_USER and
     PHP_AUHT_PW environment variables. You can set them the same way:
-    
+
     .. code:: apache
-    
+
        SetEnvIfNoCase Auth-User "(.*)" PHP_AUTH_USER=$1
        SetEnvIfNoCase Auth-Password "(.*)" PHP_AUTH_PW=$1
-    
+
     Of course, you need to :doc:`store password in session<passwordstore>`
-    to fill PHP_AUTH_PW. 
+    to fill PHP_AUTH_PW.
 
 Nginx
 -----

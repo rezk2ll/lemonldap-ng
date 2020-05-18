@@ -17,9 +17,9 @@ Just enable it in the Manager (section “plugins”).
    -  **Custom parameter**: Session attribut to display at global logout
 
 
-.. important:: 
+.. note::
 
     To display more than one session attribute, you can create a
     macro like this :
-    
-    ``user_USER => "$uid_" . uc $uid`` 
+
+    ``user_USER => "$uid_" . uc $uid``

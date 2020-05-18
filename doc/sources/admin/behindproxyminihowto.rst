@@ -39,10 +39,10 @@ uncomment the relevant parts of the configuration file.
        real_ip_header    X-Forwarded-For;
 
 
-.. tip:: 
+.. tip::
 
     Make sure Nginx was compiled with the `http_real_ip
-    module <http://nginx.org/en/docs/http/ngx_http_realip_module.html>`__\ 
+    module <http://nginx.org/en/docs/http/ngx_http_realip_module.html>`__\
 
 -  For Apache:
 
@@ -52,14 +52,14 @@ uncomment the relevant parts of the configuration file.
         RemoteIPInternalProxy 127.0.0.1
 
 
-.. tip:: 
+.. tip::
 
     Make sure the `mod_remoteip
     module <https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html>`__ is
     enabled in your Apache installation
 
 
-.. warning:: 
+.. warning::
 
     Both modules need you to specify the address of your
     reverse proxy. Using the ``http_real_ip`` or ``mod_remoteip`` module

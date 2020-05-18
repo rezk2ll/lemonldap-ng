@@ -2,18 +2,18 @@ Quick start tutorial
 ====================
 
 
-.. important:: 
+.. important::
 
     This tutorial will guide you into a minimal
     installation and configuration procedure. You need some prerequisites:
-    
+
     -  A computer with a GNU/Linux recent distribution (Debian, Ubuntu,
        CentOS, RHEL, ...) with root privileges
     -  A web browser
     -  The possibility to update your local ``hosts`` file, or an easy
        access to your DNS server
     -  A cup of coffee (or tea, we are open minded)
-    
+
 
 
 Installation
@@ -74,7 +74,7 @@ For example on your local computer:
 
 ::
 
-   echo "192.168.1.30 auth.mydomain.com manager.mydomain.com test1.mydomain.com test2.mydomain.com" >> /etc/hosts 
+   echo "192.168.1.30 auth.mydomain.com manager.mydomain.com test1.mydomain.com test2.mydomain.com" >> /etc/hosts
 
 Run
 ---

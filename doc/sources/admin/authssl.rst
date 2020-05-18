@@ -4,7 +4,7 @@ SSL
 ============== ===== ========
 Authentication Users Password
 ============== ===== ========
-✔                   
+✔
 ============== ===== ========
 
 Presentation
@@ -23,9 +23,8 @@ Configuration (as the only authentication module)
 
 By default, SSL is required before the portal is displayed (handled by
 webserver). If you want to display a button to connect to LLNG
-*(compatible with :doc:`Combination<authcombination>`)*, you can
-activate "SSL by Ajax request" in the manager. See "SSL by Ajax"
-below.
+(compatible with :doc:`Combination<authcombination>`), you can
+activate "SSL by Ajax request" in the manager.
 
 With Apache
 ~~~~~~~~~~~
@@ -42,13 +41,13 @@ For CentOS/RHEL:
    yum install mod_ssl
 
 
-.. tip:: 
+.. tip::
 
     In Debian/Ubuntu mod_ssl is already shipped in
     ``apache*-common`` package.
 
 
-.. tip:: 
+.. tip::
 
     For CentOS/RHEL, We advice to disable the default SSL virtual
     host configured in /etc/httpd/conf.d/ssl.conf.
@@ -68,16 +67,16 @@ of /etc/lemonldap-ng/portal-apache2.conf:
    SSLCACertificateFile /etc/httpd/certs/ow2-ca.cert
 
 
-.. important:: 
+.. note::
 
     Put your own files instead of ``ow2.cert``, ``ow2.key``,
     ``ow2-ca.cert``:
-    
+
     -  **SSLCertificateFile**: Server certificate
     -  **SSLCertificateKeyFile**: Server private key
     -  **SSLCACertificateFile**: CA certificate to validate client
        certificates
-    
+
 
 
 If you specify port in virtual host, then declare SSL port:
@@ -161,7 +160,7 @@ Nginx SSL Virtual Host example with uWSGI
 
      ssl_verify_client on;
      ssl_verify_depth 3;
-     
+
      # Full chain CRL is required
      # All CRLs must be concatenated in a single .pem format file
      ssl_crl /etc/nginx/ssl/crl/crls.pem;
@@ -187,12 +186,12 @@ Nginx SSL Virtual Host example with uWSGI
    }
 
 
-.. important:: 
+.. important::
 
     Nginx 1.11.6 change: format of the $ssl_client_s_dn and
     $ssl_client_i_dn variables has been changed to follow RFC 2253 (RFC
     4514); values in the old format are available in the
-    $ssl_client_s_dn_legacy and $ssl_client_i_dn_legacy variables. 
+    $ssl_client_s_dn_legacy and $ssl_client_i_dn_legacy variables.
 
 Configuration of LemonLDAP::NG
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -201,7 +200,7 @@ In Manager, go in ``General Parameters`` > ``Authentication modules``
 and choose SSL for authentication.
 
 
-.. tip:: 
+.. tip::
 
     You can then choose any other module for users and
     password.
@@ -296,7 +295,7 @@ limitation.
            beforeSend:function(){},
            type:"GET",
            dataType:"html",
-           success:function(c,a){ 
+           success:function(c,a){
              if (c !== "") {
                    alert("Carte OK");
                    window.location.href = "https://auth.example.com/sslok/";
@@ -333,12 +332,12 @@ connexion reset:
    ssl_session_timeout 1s;
 
 
-.. warning:: 
+.. warning::
 
     It is incompatible with authentication combination because
     of Apache parameter "SSLVerifyClient", which must have the value
     "require". To enable SSL with :doc:`Combination<authcombination>`, use
-    "SSL by Ajax" 
+    "SSL by Ajax"
 
 Configuration (for Combination/Choice)
 --------------------------------------
@@ -348,59 +347,60 @@ If you enable this feature, you must configure 2 portal virtual hosts:
 -  the main *(which corresponds to portal URL)* with
    ``SSLVerifyClient none``
 -  the second with ``SSLVerifyClient require`` and a
-   ``Header set Allow-Control-Allow-Origin %%https://portal-main-url%%``
+   ``Header set Allow-Control-Allow-Origin https://portal-main-url``
 
 then declare the second URL in SSL options in the Manager. That's all !
-Then you can chain it in a :doc:`combination<authcombination>`. 
-.. important:: 
+Then you can chain it in a :doc:`combination<authcombination>`.
 
-    
+.. note::
+
+
     With :doc:`choice<authchoice>`, the second URL should be also declared
-    in module URL parameter to redirect user to Portal menu.  
+    in module URL parameter to redirect user to Portal menu.
 
-.. important:: 
+.. note::
 
-    
+
     Ajax authentication request can be sent to an another URL than Portal
     URL.
-    
+
     To avoid a persistent loop between Portal and a redirection URL (pdata
     is not removed because domains mismatch), you have to set pdata cookie
     domain by editing ``lemonldap-ng.ini`` in section [portal]:
-    
+
     .. code:: ini
-    
+
        [portal]
        pdataDomain = example.com
-    
+
     To avoid a bad/expired token during session upgrading (Reauthentication)
     if URLs are served by different load balancers, you can force Upgrade
     tokens to be stored into Global Storage by editing ``lemonldap-ng.ini``
     in section [portal]:
-    
+
     .. code:: ini
-    
+
        [portal]
        forceGlobalStorageUpgradeOTT = 1
-    
- 
-.. important:: 
+
+
+.. important::
 
     **Content Security Policy** may prevent to
     submit Ajax Request. To avoid security warning,
-    
+
     Go to :
     ``General Parameters > Advanced Parameters > Security > Content security policy``
-    
+
     and set :
-    
+
     **Default value** => 'self' "Ajax request URL"
-    
+
     **Form destinations** => 'self' "Ajax request URL"
-    
+
     **Ajax destinations** => 'self' "Ajax request URL"
-    
-    **Script source** => 'self' "Ajax request URL" 
+
+    **Script source** => 'self' "Ajax request URL"
 
 Extracting the username attribute
 ---------------------------------

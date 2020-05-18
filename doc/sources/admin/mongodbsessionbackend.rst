@@ -5,7 +5,7 @@ MongoDB session backend
 is a faster shareable session backend.
 
 
-.. important:: 
+.. important::
 
     Use an up-to-date version of Apache::Session::MongoDB, at least 1.8.1.
 
@@ -27,14 +27,15 @@ in ``General parameters`` » ``Sessions`` » ``Session storage`` »
 sensitive):
 
 ============================= ============================================================================================ ===============
-Optional parameters                                                                                                       
-============================= ============================================================================================ ===============
+Optional parameters
+------------------------------------------------------------------------------------------------------------------------------------------
 Name                          Comment                                                                                      Example
+============================= ============================================================================================ ===============
 **host**                      `MongoDB server URI <https://metacpan.org/pod/MongoDB::MongoClient#CONNECTION-STRING-URI>`__ 127.0.0.1:27017
 **db_name**                   Session database (default: sessions)                                                         llconfdb
 **collection**                Collection (default: sessions)                                                               sessions
 **auth_mechanism**            Authentication mechanism                                                                     PLAIN
-**auth_mechanism_properties**                                                                                             
+**auth_mechanism_properties**
 **connect_timeout**           Connection timeout                                                                           10000
 **ssl**                       Boolean or hash ref (default: 0)                                                             1
 **username**                  Username to use to connect                                                                   lluser

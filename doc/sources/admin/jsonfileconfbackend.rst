@@ -5,14 +5,14 @@ This works like :doc:`File backend<fileconfbackend>`, except that data
 are serialized in JSON.
 
 
-.. tip:: 
+.. tip::
 
     This configuration storage can be shared between different
     hosts using:
-    
+
     -  :doc:`SOAP configuration backend proxy<soapconfbackend>`
     -  any files sharing system (NFS, NAS, SAN,...)
-    
+
 
 
 Configuration

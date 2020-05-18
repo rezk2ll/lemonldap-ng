@@ -30,10 +30,10 @@ integrated with LemonLDAP::NG without having to use a
 :doc:`Gitlab<gitlab>` server.
 
 
-.. warning:: 
+.. warning::
 
     The following configuration requires your user database
-    to expose a unique numeric identifier for every user. 
+    to expose a unique numeric identifier for every user.
 
 Configuring Mattermost Team Edition
 -----------------------------------
@@ -106,16 +106,16 @@ with the following parameters:
          * ''id'': session attribute containing the user's numeric ID
 
 
-.. warning:: 
+.. warning::
 
     Mattermost absolutely needs to receive a numerical value
     in the ``id`` claim. If you are using a LDAP server, you could use the
     ``uidNumber`` LDAP attribute. If you use something else, you will have
     to find a trick to assign a unique numeric ID to each Mattermost user.
-    
+
     The ``id`` attribute has to be different for each user, since this is
     the field Mattermost will use internally to map Gitlab identities to
-    Mattermost accouts. 
+    Mattermost accouts.
 
 Troubleshooting
 ~~~~~~~~~~~~~~~

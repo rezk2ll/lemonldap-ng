@@ -59,13 +59,17 @@ Functioning
 
 LL::NG portal is a modular component. It needs 4 modules to work:
 
--  :doc:`Authentication<start>`: how check user credentials
--  :doc:`User database<start>`: where collect user information
--  :doc:`Password database<start>`: where change password
--  :doc:`Identity provider<start>`: how forward user identity
+-  :ref:`Authentication<start-authentication-users-and-password-databases>`:
+   how check user credentials
+-  :ref:`User database<start-authentication-users-and-password-databases>`:
+   where collect user information
+-  :ref:`Password database<start-authentication-users-and-password-databases>`:
+   where change password
+-  :ref:`Identity provider<start-identity-provider>`: how forward user
+   identity
 
 
-.. tip:: 
+.. tip::
 
     Each module can be disabled using the ``Null`` backend.
 
@@ -87,10 +91,10 @@ Kinematics
 #. Redirect user to the asked URL or display menu
 
 
-.. important:: 
+.. note::
 
     See also
-    :doc:`general kinematics presentation<presentation>`.
+    :ref:`general kinematics presentation<presentation-kinematics>`.
 
 URL parameters
 --------------

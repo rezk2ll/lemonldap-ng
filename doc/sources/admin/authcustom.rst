@@ -14,10 +14,10 @@ This artifact allows one to define its own modules (authentication, user
 database, password or register database).
 
 
-.. tip:: 
+.. tip::
 
     The developer documentation is available in Portal manpages.
-    See Auth.pod and UserDB.pod 
+    See Auth.pod and UserDB.pod
 
 Configuration
 -------------
@@ -33,16 +33,18 @@ You can define your own customAuth module icon. Icon must be in
 site/htdocs/static/common/modules/icon.png
 
 
-.. tip:: 
+.. tip::
 
     ::Auth::My::Dev.pm means Lemonldap::NG::Portal::Auth::My::Dev
 
 
 
-.. important:: 
+.. important::
 
     Be careful. Don' t use an already attributed name in
-    configuration.  These parameters are available in your plugins
-    using ``$self->conf->{customAddParams}->{//customName//}``.
+    configuration.
+
+These parameters are available in your plugins using
+``$self->conf->{customAddParams}->{<customName>}``.
 
 Read portal manpages to see how to write these plugins.

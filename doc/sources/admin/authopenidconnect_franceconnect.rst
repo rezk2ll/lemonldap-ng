@@ -10,7 +10,7 @@ Presentation
 authentication platform made by French government.
 
 
-.. important:: 
+.. important::
 
     It is for the moment only in BETA stage. This
     documentation will explain how to configure LL::NG with the developer

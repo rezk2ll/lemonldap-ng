@@ -18,15 +18,15 @@ DecryptValue plugin can be allowed or denied for specific users.
       to use internal decrypt function.
 
 
-.. warning:: 
+.. warning::
 
     Custom functions must be defined into
     ``Lemonldap::NG::Portal::My::Plugin`` and set:
-    
+
     ::
-    
+
        My::Plugin::function1 My::Plugin::function2
-    
+
 
 
 .. |image0| image:: /documentation/beta.png

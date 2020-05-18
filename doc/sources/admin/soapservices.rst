@@ -10,7 +10,7 @@ Portal SOAP services
 
 SOAP functions are not accessible by network by default. SOAP functions
 are protected by Web Server, you can change this in
-:doc:`portal configuration<configlocation>`.
+:ref:`portal configuration<configlocation-portal>`.
 
 -  Read-only functions (index.pl/sessions or index.pl/adminSessions
    paths):
@@ -42,12 +42,12 @@ are protected by Web Server, you can change this in
       :doc:`Notifications system<notifications>` for more)
 
 
-.. important:: 
+.. important::
 
     When you use
     :doc:`SOAP sessions backend<soapsessionbackend>`, it is recommended to
     use read-only URL (/index.fcgi/sessions). Write session path is needed
-    only if you use a remote session explorer or a remote portal 
+    only if you use a remote session explorer or a remote portal
 
 WSDL
 ----

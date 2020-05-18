@@ -10,13 +10,13 @@ The user will be prompted for this code in order to finish the login
 process.
 
 
-.. important:: 
+.. important::
 
     This plugin will only improve security in situations
     where the user's email is not protected by the same password used to
     login on LemonLDAP::NG. And of course, if the user's email account is
     also protected by LemonLDAP::NG, they will not be able to open their
-    mailbox to find out their one-time code. 
+    mailbox to find out their one-time code.
 
 Configuration
 ~~~~~~~~~~~~~

@@ -35,12 +35,12 @@ initiated by OpenID-Connect Provider. LLNG will implement it when this
 standard will be published.
 
 
-.. important:: 
+.. important::
 
     Federation proxy installation can be complex. Don't
     hesitate to contact us on lemonldap-ng-users@ow2.org
 
 See the following chapters:
 
--  :doc:`Authentication protocols<start>`
--  :doc:`Identity provider<start>`
+-  :ref:`Authentication protocols<start-authentication-users-and-password-databases>`
+-  :ref:`Identity provider<start-identity-provider>`

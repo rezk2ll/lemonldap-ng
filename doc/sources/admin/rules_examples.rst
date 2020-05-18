@@ -2,7 +2,7 @@ Rules examples
 ==============
 
 This page contains a few useful Perl expressions you can use in your
-:doc:`Handler rules<writingrulesand_headers>`, SAML/OIDC/CAS security
+:ref:`Handler rules<rules>`, SAML/OIDC/CAS security
 rules, 2FA Activation rules, etc.
 
 Using session attributes
@@ -22,10 +22,10 @@ attribute you see there can be used in a rule!
    etc.
 
 
-.. tip:: 
+.. tip::
 
     In Perl, ``eq`` means *Equal* and must be used on strings.
-    ``==`` should be used only on numbers 
+    ``==`` should be used only on numbers
 
 -  Restricting access to specific groups
 
@@ -65,11 +65,11 @@ attribute you see there can be used in a rule!
    $_auth ne 'Demo'
 
 
-.. tip:: 
+.. tip::
 
     In Perl, ``ne`` means *Not Equal* and must be used on
     strings. ``\b`` means *word Boundary*. (?:) means *non capturing*
-    parenthesis. 
+    parenthesis.
 
 Using environment variables
 ---------------------------

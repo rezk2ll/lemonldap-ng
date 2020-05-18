@@ -4,7 +4,7 @@ LinkedIn
 ============== ===== ========
 Authentication Users Password
 ============== ===== ========
-✔                   
+✔
 ============== ===== ========
 
 Presentation
@@ -39,20 +39,20 @@ Then, go in ``LinkedIn parameters``:
    and last name, and ``r_emailaddress`` to get email.
 
 
-.. tip:: 
+.. tip::
 
     Collected fields are stored in session in ``linkedIn_``
     keys
 
 
-.. important:: 
+.. important::
 
     Browser implementations of formAction directive are
     inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome
     does). Administrators may have to modify formAction value with wildcard
     likes \*.
-    
+
     In Manager, go in :
-    
+
     ``General Parameters`` > ``Advanced Parameters`` > ``Security`` >
-    ``Content Security Policy`` > ``Form destination`` 
+    ``Content Security Policy`` > ``Form destination``

@@ -5,16 +5,16 @@ You can share your configuration over the network using SOAP proxy
 system.
 
 
-.. tip:: 
+.. tip::
 
     Note that SOAP is not a real configuration backend, but just a
     proxy system to access to your configuration over the network
 
 
-.. important:: 
+.. important::
 
     SOAP has been deprecated. Prefer to use
-    :doc:`REST configuration backend<restconfbackend>`\ 
+    :doc:`REST configuration backend<restconfbackend>`\
 
 Configuration
 -------------
@@ -31,7 +31,7 @@ First, configure your real backend
 -  Configure your web server to allow remote access. Remote SOAP access
    is disabled by default. You must change it as follow :
 
-\* in ``portal-apache2.conf`` :
+- in ``portal-apache2.conf`` :
 
 .. code:: apache
 
@@ -40,7 +40,7 @@ First, configure your real backend
        Require ip 192.168.2.0/24
    </Location>
 
-\* in ``portal-nginx.conf`` :
+- in ``portal-nginx.conf`` :
 
 .. code:: nginx
 
@@ -48,6 +48,8 @@ First, configure your real backend
    location /index.psgi/config {
      allow 192.168.2.0/24;
    }
+
+.. _soapconfbackend-next-configure-soap-for-your-remote-servers:
 
 Next, configure SOAP for your remote servers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

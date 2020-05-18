@@ -18,7 +18,7 @@ protected by the OAuth2 Handler.
 |image1|
 
 
-.. tip:: 
+.. tip::
 
     In the above schema, the OpenID Connect process is simplified.
     How the front application receives the Access Token depends on the

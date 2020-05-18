@@ -4,7 +4,7 @@ Facebook
 ============== ===== ========
 Authentication Users Password
 ============== ===== ========
-✔              ✔    
+✔              ✔
 ============== ===== ========
 
 Presentation
@@ -56,27 +56,27 @@ variables:
    -  sn => last_name
 
 
-.. important:: 
+.. important::
 
     Do not query user field in exported variables, as it is
     already registered by the authentication module in ``$_user``.
 
 
-.. important:: 
+.. important::
 
     Browser implementations of formAction directive are
     inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome
     does). Administrators may have to modify formAction value with wildcard
     likes \*.
-    
+
     In Manager, go in :
-    
+
     ``General Parameters`` > ``Advanced Parameters`` > ``Security`` >
-    ``Content Security Policy`` > ``Form destination`` 
+    ``Content Security Policy`` > ``Form destination``
 
 
-.. tip:: 
+.. tip::
 
     You can use the same Facebook access token in your
     applications. It is stored in session datas under the name
-    ``$_facebookToken``\ 
+    ``$_facebookToken``\

@@ -23,7 +23,7 @@ authenticated by LemonLDAP::NG will be registered in HumHub upon their
 first login.
 
 
-.. warning:: 
+.. warning::
 
     HumHub retrieves a user from his username and the
     authentication service he came through. As a result, a former local or
@@ -36,12 +36,12 @@ OpenID Connect
 --------------
 
 
-.. note:: 
+.. note::
 
     This set-up works with option enablePrettyUrl activated in
     Humhub. If not activated, rewrite URL in Humhub HTTP server and allowed
     redirect URL in LemonLDAP needs to be adapted to work with the non
-    pretty URL format. 
+    pretty URL format.
 
 Configuring HumHub
 ~~~~~~~~~~~~~~~~~~
@@ -82,10 +82,10 @@ composer :
    composer update worteks/humhub-auth-oidc  --no-dev --prefer-dist -vvv
 
 
-.. note:: 
+.. note::
 
     If you just need to update the connector, change its version
-    in composer.json and run the above composer update command. 
+    in composer.json and run the above composer update command.
 
 ::
 
@@ -142,7 +142,7 @@ can set up a redirection in the http server in front of the application
 
 ::
 
-   if ($query_string !~ "nosso"){                                                                       
+   if ($query_string !~ "nosso"){
      rewrite ^/user/auth/login$ /user/auth/external?authclient=lemonldapng permanent;
    }
 

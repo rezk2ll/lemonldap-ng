@@ -90,7 +90,7 @@ Then set some attributes that will be sent to simpleSAMLphp:
 |image2|
 
 
-.. tip:: 
+.. tip::
 
     Set ``Mandatory`` to ``On`` to force attributes in
     authentication response.
@@ -120,7 +120,7 @@ internal PHP representation. Copy the ``saml20-idp-remote`` content:
    ?>
 
 
-.. tip:: 
+.. tip::
 
     Don't forget PHP start and end tag to have a valid PHP
     file.
@@ -183,7 +183,7 @@ And create a default IDP configuration:
    ?>
 
 
-.. important:: 
+.. important::
 
     You need to configure your own certificates and
     authentication scheme
@@ -198,7 +198,7 @@ List attributes you want to collect:
 |image6|
 
 
-.. tip:: 
+.. tip::
 
     You can keep ``Mandatory`` to ``Off`` to not fail if attribute
     is not sent by IDP
@@ -227,7 +227,7 @@ internal PHP representation. Copy the ``saml20-sp-remote`` content:
    ?>
 
 
-.. tip:: 
+.. tip::
 
     Don't forget PHP start and end tag to have a valid PHP
     file.

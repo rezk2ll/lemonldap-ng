@@ -18,14 +18,14 @@ This plugin allows users to reset their certificate informations.
    successfully reset.
 
 
-.. warning:: 
+.. warning::
 
-    
-    
+
+
     ::
-    
+
            LDAP backend supported only
-    
+
 
 
 Configuration
@@ -55,40 +55,40 @@ Go in Manager, ``General Parameters`` → ``Plugins`` →
          * **Certificat reset mail subject **: Subject of mail sent when certificate is reset
          * **Certificat reset mail content **: (optional): Content of mail sent when certificate is reset
          * **Confirmation mail subject**: Subject of mail sent when certificate reset  is asked
-         * **Confirmation mail content**: (optional) Content of mail sent when certificate is asked    
+         * **Confirmation mail content**: (optional) Content of mail sent when certificate is asked
 
 
-.. important:: 
+.. important::
 
     By default, mail contents are empty in order to use
     templates:
-    
+
     ::
-    
+
          * portal/skins/common/mail_certificateConfirm.tpl
          * portal/skins/common/mail_certificateReset.tpl
-    
+
     If you define custom mail contents in Manager, then templates won't be
-    used. 
+    used.
 
 **Other**
 
 ::
 
       * **Reset Page URL**: URL of certificate reset page (default: [PORTAL]/certificateReset)
-      * **Certificate descrition attribute Name**:  Attribute where to save certificate description name (Default description) 
-      * **Certificate hash attribute Name**:  Attribute where to store certificate hash (Default userCertificate;binary)   
+      * **Certificate descrition attribute Name**:  Attribute where to save certificate description name (Default description)
+      * **Certificate hash attribute Name**:  Attribute where to store certificate hash (Default userCertificate;binary)
       * **Minimun duration before expiration**: number of days of validity before certificate expires. Default 0.
 
 
-.. warning:: 
+.. warning::
 
-    
-    
+
+
     ::
-    
+
            .p12 certificates only.
-    
+
 
 
 .. |image0| image:: /documentation/beta.png

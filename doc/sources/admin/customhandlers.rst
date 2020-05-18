@@ -56,13 +56,13 @@ LLNG provides 3 platforms:
 
 If you want to add another, you must write:
 
--  the platform launcher file that launch the required type *(see
+-  the platform launcher file that launch the required type (see
    ``lemonldap-ng-handler/lib/Lemonldap/NG/Handler/ApacheMP2`` file for
-   example)*
+   example)
 -  write the main platform file
    (``Lemonldap::NG::Handler::MyPlatform::Main``) that provides required
-   method *(see ``lemonldap-ng-handler/lib/Lemonldap/NG/Handler/*/Main``
-   for examples)* and inherits from ``Lemonldap::NG::Handler::Main``
+   method (see ``lemonldap-ng-handler/lib/Lemonldap/NG/Handler/*/Main``
+   for examples) and inherits from ``Lemonldap::NG::Handler::Main``
 -  write the "type" wrapper files (AuthBasic,...).
 
 Wrapper usually look at this:
@@ -79,7 +79,7 @@ Old fashion Nginx handlers
 --------------------------
 
 
-.. important:: 
+.. important::
 
     There is no need to use this feature now. It is kept for
     compatibility.

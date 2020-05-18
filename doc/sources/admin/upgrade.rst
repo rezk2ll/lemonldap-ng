@@ -5,7 +5,7 @@ Please apply general caution as you would with any software: have
 backups and a rollback plan ready!
 
 
-.. warning:: 
+.. warning::
 
     If you have
     :doc:`installed LemonLDAP::NG from official RPMs<installrpm>`, you may
@@ -153,12 +153,14 @@ manager API config:
 -  CAS logout starts validating the service= parameter, but only if you
    use the CAS Access control policy. The URL sent in the service=
    parameter will be checked against
-   :doc:`known CAS applications<idpcas>`, Virtual Hosts, and
-   :doc:`trusted domains<security>`. Add your target domain to trusted
-   domains if you suddenly start having "Invalid URL" messages on logout
+   :ref:`known CAS applications<idpcas-configuring-cas-applications>`,
+   Virtual Hosts, and
+   :ref:`trusted domains<security-configure-security-settings>`. Add
+   your target domain to trusted domains if you suddenly start having
+   "Invalid URL" messages on logout
 -  Improvements in cryptographic functions: to take advantage of them,
    **you must change the encryption key** of LemonLDAP::NG (see
-   :doc:`CLI example<cli_examples>`).
+   :ref:`CLI example<cli-examples-encryption-key>`).
 -  Debian packaging: FastCGI / uWsgi servers require llng-lmlog.conf and
    llng-lua-headers.conf. Those configuration files are now provided by
    lemonldap-ng-handler package and installed in /etc/nginx/snippets
@@ -168,7 +170,7 @@ Upgrade from 1.9 to 2.0
 =======================
 
 
-.. important:: 
+.. important::
 
     2.0 is a major release, lot of things have been changed.
     You must read this document before upgrade.
@@ -186,7 +188,7 @@ upgrade must be done in the following order:
 #. manager server
 
 
-.. important:: 
+.. important::
 
     You must revalidate your configuration using the
     manager.
@@ -195,7 +197,7 @@ Installation
 ------------
 
 
-.. important:: 
+.. important::
 
     French documentation is no more available. Only English
     version of this documentation is maintained now.
@@ -225,7 +227,8 @@ Configuration
    -  **languages** *(manager and portal)*: accepted languages
 
 -  Portal skins are now in ``/usr/share/lemonldap-ng/portal/templates``.
-   See :doc:`skin customization<portalcustom>` to adapt your templates.
+   See :ref:`skin customization<portalcustom-skin-customization>` to
+   adapt your templates.
 -  User module in authentication parameters now provides a "Same as
    authentication" value. You must revalidate it in the manager since
    all special values must be replaced by this *(Multi, Choice, Proxy,
@@ -246,14 +249,14 @@ Configuration
    :doc:`how to run LL::NG behind a reverse proxy<behindproxyminihowto>`.
 
 
-.. important:: 
+.. important::
 
     Apache mod_perl has got lot of troubleshooting problems
-    since 2.4 version *(many segfaults,...)*, especially when using MPM
+    since 2.4 version (many segfaults,...), especially when using MPM
     worker or MPM event. That's why LL::NG doesn't use anymore
-    ModPerl::Registry: all is now handled by FastCGI *(portal and manager)*,
+    ModPerl::Registry: all is now handled by FastCGI (portal and manager),
     except for Apache2 Handler.
-    
+
     **For Handlers, it is now recommended to migrate to Nginx**, but Apache
     2.4 is still supported with MPM prefork.
 
@@ -265,7 +268,7 @@ configuration stored in local cache every 10 minutes. So it has to be
 reload like every handler.
 
 
-.. important:: 
+.. important::
 
     If you want to use reload mechanism on a portal only
     host, you must install a handler in Portal host to be able to refresh
@@ -286,7 +289,7 @@ Kerberos or SSL usage
    added since 2.0. This module solves many Kerberos integration
    problems *(usage in conjunction with other backends, better error
    display,…)*. However, you can retain the old integration manner
-   *(using :doc:`Apache authentication module<authapache>`)*.
+   (using :doc:`Apache authentication module<authapache>`).
 -  For :doc:`SSL<authssl>`, a new :doc:`Ajax option<authssl>` can be
    used in the same idea: so SSL can be used in conjunction with other
    backends.
@@ -348,11 +351,9 @@ Handlers
 Rules and headers
 -----------------
 
-::
-
-   * hostname() and remote_ip() are no more provided to avoid some name conflicts //(replaced by $ENV{})//
-   * ''$ENV{<cgi_variable>}'' is now available everywhere: see [[writingrulesand_headers|Writing rules and headers]]
-   * some variable names have changed. See [[variables]] document
+* hostname() and remote_ip() are no more provided to avoid some name conflicts *replaced by `$ENV{}`)*
+* `$ENV{<cgi_variable>}` is now available everywhere: see :doc:`writingrulesand_headers`
+* some variable names have changed. See :doc:`variables` document
 
 Opening conditions
 ------------------
@@ -387,7 +388,7 @@ SOAP/REST services
 -  SOAP services can be replaced by new REST services
 
 
-.. important:: 
+.. important::
 
     \ :doc:`AuthBasic Handler<handlerauthbasic>` uses now
     REST services instead of SOAP.
@@ -443,4 +444,4 @@ handlers, they must be rewritten, see
 :doc:`customhandlers<customhandlers>`.
 
 If you used self protected CGI, you also need to rewrite them, see
-:doc:`documentation<selfmadeapplication>`.
+:ref:`documentation<selfmadeapplication-perl-auto-protected-cgi>`.

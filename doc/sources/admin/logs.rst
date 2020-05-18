@@ -33,7 +33,7 @@ choose between:
    backends depending on log level
 
 
-.. important:: 
+.. important::
 
     Except for Apache2 and Log4Perl, log level is defined
     by ``logLevel`` parameter set in ``lemonldap-ng.ini`` file. Logger
@@ -167,7 +167,7 @@ You just have to give your DSN:
    sentryDsn = https://...
 
 
-.. important:: 
+.. important::
 
     This experimental logger requires
     `Sentry::Raven <https://metacpan.org/pod/Sentry::Raven>`__ Perl
@@ -190,10 +190,10 @@ Use it to use more than one logger. Example:
    sentryDsn         = https://...
 
 
-.. important:: 
+.. important::
 
-    At least ``logDispatchError`` *(or
-    ``userLogDispatchError`` for user logs)* must be defined. All sub level
+    At least ``logDispatchError`` (or
+    ``userLogDispatchError`` for user logs) must be defined. All sub level
     will be dispatched on it, until another lever is declared. In the above
     example, Sentry collects ``error`` and ``warn`` levels and all user
     actions, while syslog stores technical ``notice``, ``info`` and

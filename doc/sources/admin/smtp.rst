@@ -13,10 +13,10 @@ Go in ``General Parameters`` > ``Advanced Parameters`` > ``SMTP``:
      * ** SSL/TLS protocol** and **SSL/TLS options**: Here you can enable SMTPS or startTLS
 
 
-.. tip:: 
+.. tip::
 
-    
-    
+
+
     -  If no SMTP server is configured, the mail will be sent via the local
        sendmail program. Else, Net::SMTP module is required to use the SMTP
        server
@@ -24,7 +24,7 @@ Go in ``General Parameters`` > ``Advanced Parameters`` > ``SMTP``:
        ``mail.example.com:25``
     -  If authentication is configured, ``Authen::SASL`` and
        ``MIME::Base64`` modules are required
-    
+
 
 
 -  **Mail headers**:

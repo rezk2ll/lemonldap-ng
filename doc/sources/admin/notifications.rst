@@ -63,13 +63,13 @@ An XML document can contain several notifications messages. Just the
 first one can be searched and displayed!
 
 
-.. important:: 
+.. important::
 
     Listed notifications are extracted from users
     persistent session (notification reference and accepted date). ONLY the
     notifications explorer can found in notifications backend are available
     to be displayed. Notifications content (title, subtitle and so on...) is
-    not stored into persistent session. 
+    not stored into persistent session.
 
 Storage
 ~~~~~~~
@@ -99,20 +99,20 @@ Parameters for File backend are the same as
 :doc:`File configuration backend<fileconfbackend>`.
 
 
-.. important:: 
+.. important::
 
     You need to create yourself the directory and set write
     access to Apache user. For example:
-    
+
     ::
-    
+
        mkdir /usr/local/lemonldap-ng/notifications/
        chown www-data /usr/local/lemonldap-ng/notifications/
-    
 
 
 
-.. tip:: 
+
+.. tip::
 
     The file name default separator is ``_``, this can be a
     problem if you register notifications for users having ``_`` in their
@@ -131,12 +131,12 @@ Parameters for DBI backend are the same as
 :doc:`DBI configuration backend<sqlconfbackend>`.
 
 
-.. important:: 
+.. important::
 
     You have to create the table by yourself:
-    
+
     .. code:: sql
-    
+
        CREATE TABLE notifications (
          date datetime NOT NULL,
          uid varchar(255) NOT NULL,
@@ -146,7 +146,7 @@ Parameters for DBI backend are the same as
          done datetime DEFAULT NULL,
          PRIMARY KEY (date, uid,ref)
        )
-    
+
 
 
 To summary available options:
@@ -163,7 +163,7 @@ Parameters for LDAP backend are the same as
 :doc:`LDAP configuration backend<ldapconfbackend>`.
 
 
-.. important:: 
+.. important::
 
     You have to create the branch by yourself
 
@@ -175,12 +175,12 @@ To summary available options:
 -  **ldapConfBase**: Notifications branch DN.
 
 
-.. important:: 
+.. note::
 
     DBI configuration example:
-    
+
     ::
-    
+
        notificationStorage = DBI
        notificationStorageOptions={  \
            'dbiChain'    => 'DBI:Pg:dbname=llng;host=mabdd;port=5432', \
@@ -189,7 +189,7 @@ To summary available options:
            'dbiPassword' => 'qwerty', \
            'type'        => 'CDBI', \
        }
-    
+
 
 
 Wildcard
@@ -210,7 +210,7 @@ Using notification system
 -------------------------
 
 
-.. important:: 
+.. important::
 
     Since version 2.0, notifications are now stored in JSON
     format. If you want to keep old format, select "use old format" in the
@@ -252,19 +252,19 @@ Notifications are JSON (default) or XML files containing:
          type="checkbox" />...</p>
 
 
-.. important:: 
+.. important::
 
     All other elements will be removed including HTML
     elements like <b>.
 
 
-.. tip:: 
+.. tip::
 
     One notification XML document can contain several
     notifications messages.
-    
+
     Several notifications can be inserted with a single request by using an
-    array of JSON (Tested with an array of 10,000 elements) 
+    array of JSON (Tested with an array of 10,000 elements)
 
 Examples
 ^^^^^^^^
@@ -298,7 +298,7 @@ JSON
    }] # No comma at the end
 
 
-.. tip:: 
+.. tip::
 
     JSON format notifications are displayed sorted by date and
     reference
@@ -361,7 +361,7 @@ Available options:
 -  **HTTP methods**: Enable/Disable HTTP methods
 
 
-.. important:: 
+.. important::
 
     If notification server is enabled, you have to protect
     this URL by using the web server because there is no authentication
@@ -492,7 +492,7 @@ For example with curl:
    # Retrieve all existing notifications
    curl -X GET -H "Content-Type: application/json" -H "Accept: application/json" http://auth.example.com/notifications/_allExisting_
 
-   # Retrieve all <uid>'s notifications 
+   # Retrieve all <uid>'s notifications
    curl -X GET -H "Content-Type: application/json" -H "Accept: application/json" http://auth.example.com/notifications/<uid>
 
    # Retrieve <uid>/<reference> notification parameters

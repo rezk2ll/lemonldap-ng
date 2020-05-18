@@ -4,7 +4,7 @@ SAML
 ============== ===== ========
 Authentication Users Password
 ============== ===== ========
-✔              ✔    
+✔              ✔
 ============== ===== ========
 
 Presentation
@@ -22,7 +22,7 @@ be mandatory, so if they are not returned by IDP, the session will not
 open.
 
 
-.. tip:: 
+.. tip::
 
     LL::NG can also act as :doc:`SAML IDP<idpsaml>`, that allows
     one to interconnect two LL::NG systems.
@@ -36,17 +36,17 @@ SAML Service
 See :doc:`SAML service<samlservice>` configuration chapter.
 
 
-.. important:: 
+.. important::
 
     Browser implementations of formAction directive are
     inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome
     does). Administrators may have to modify formAction value with wildcard
     likes \*.
-    
+
     In Manager, go in :
-    
+
     ``General Parameters`` > ``Advanced Parameters`` > ``Security`` >
-    ``Content Security Policy`` > ``Form destination`` 
+    ``Content Security Policy`` > ``Form destination``
 
 Authentication and UserDB
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -57,10 +57,10 @@ In ``General Parameters`` > ``Authentication modules``, set:
 -  Users module: Same (eq SAML)
 
 
-.. tip:: 
+.. tip::
 
     As passwords will not be managed by LL::NG, you can disable
-    :doc:`menu password module<portalmenu>`.
+    :ref:`menu password module<portalmenu-menu-modules>`.
 
 Register LemonLDAP::NG on partner Identity Provider
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -89,7 +89,7 @@ between your server and the IDP):
 |image0|
 
 
-.. tip:: 
+.. tip::
 
     You can also edit the metadata directly in the textarea
 
@@ -145,8 +145,9 @@ Authentication request
 -  **Requested authentication context**: this context is declared in
    authentication request. When receiving the request, the real
    authentication context will be mapped to an internal authentication
-   level (see :doc:`how configure the mapping<samlservice>`), that you
-   can check to allow or deny session creation.
+   level (see
+   :ref:`how configure the mapping<samlservice-authentication-contexts>`),
+   that you can check to allow or deny session creation.
 -  **Allow URL as RelayState**: Set to On if the RelayState value sent
    by IDP is the URL where the user must be redirected after
    authentication.
@@ -172,7 +173,7 @@ Signature
 '''''''''
 
 These options override service signature options (see
-:doc:`SAML service configuration<samlservice>`).
+:ref:`SAML service configuration<samlservice-general-options>`).
 
 -  **Sign SSO message**: sign SSO message
 -  **Check SSO message signature**: check SSO message signature
@@ -188,7 +189,7 @@ Binding
    http-post, etc.)
 
 
-.. important:: 
+.. note::
 
     If no binding defined, the default binding in IDP metadata will be
     used.
@@ -213,7 +214,7 @@ Used only if you have more than 1 SAML Identity Provider declared
 -  **Order**: Number to sort IDP display
 
 
-.. tip:: 
+.. tip::
 
     The chosen logo must be in Portal icons directory
     (``portal/static/common/``). You can set a custom icon by setting the

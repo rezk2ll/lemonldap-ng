@@ -13,12 +13,12 @@ Examples
 **Important things**:
 
 -  Rules and headers must be written in javascript for these hosts
-   *(example ``$uid eq "dwho"`` becomes ``$uid === "dwho"``)*
+   (example ``$uid eq "dwho"`` becomes ``$uid === "dwho"``)
 -  Multi-lines are not supported in lemonldap-ng.ini
 -  Virtualhosts handled by node-lemonldap-ng-handler must be explicitly
    declared in your ``lemonldap-ng.ini`` file in ``[node-handler]``
-   section *(*\ **NB**\ *: section ``[handler]`` isn't used by node
-   handler)*:
+   section (**NB**: section ``[handler]`` isn't used by node
+   handler):
 
 .. code:: ini
 

@@ -2,20 +2,20 @@ Memcached session backend
 =========================
 
 
-.. important:: 
+.. important::
 
     \ `Memcached <http://memcached.org/>`__ can be used with
     LL::NG, but some features will not work since Memcached doesn't provide
     any parsing system:
-    
+
     -  Session expiration: sessions will never expire (server side)
-    -  :doc:`Session explorer<features>` will not work
-    -  :doc:`Session restrictions<features>` will not work
-    
+    -  :ref:`Session explorer<session-explorer>` will not work
+    -  :ref:`Session restrictions<session-restrictions>` will not work
+
     To keep Memcached performance level and LL::NG features, you can replace
     `Memcached <http://memcached.org/>`__ by
     `Redis <http://code.google.com/p/redis/>`__ using
-    :doc:`NoSQL session backend<nosqlsessionbackend>`. 
+    :doc:`NoSQL session backend<nosqlsessionbackend>`.
 
 Setup
 -----
@@ -29,7 +29,7 @@ in ``General parameters`` » ``Sessions`` » ``Session storage`` »
 sensitive):
 
 =================== ================= =============================
-Required parameters                  
+Required parameters
 =================== ================= =============================
 Name                Comment           Example
 **Servers**         Memcached servers 10.0.0.1:20000 10.0.0.2:20000

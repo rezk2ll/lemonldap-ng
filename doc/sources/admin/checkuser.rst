@@ -29,47 +29,47 @@ Just enable it in the manager (section “plugins”).
       attributes
 
 
-.. note:: 
+.. note::
 
     By examples :
-    
+
     \* Search attributes => ``mail uid givenName``
-    
+
     If ``whatToTrace`` fails, sessions are searched by ``mail``, next
     ``uid`` if none session is found and so on...
-    
+
     \* Display empty headers rule => ``$uid eq "dwho"`` -> Only 'dwho' will
-    see empty headers 
+    see empty headers
 
 
-.. note:: 
+.. note::
 
     Keep in mind that Nginx HTTP proxy module gets rid of empty
     headers. If the value of a header field is an empty string then this
     field will not be passed to a proxied server. To avoid misunderstanding,
-    it might be useful to not display empty headers. 
+    it might be useful to not display empty headers.
 
 
-.. important:: 
+.. important::
 
     Be careful to not display secret attributes.
-    
+
     checkUser plugin hidden attributes are concatenation of
     ``checkUserHiddenAttributes`` and ``hiddenAttributes``. You just have to
-    append checkUser specific attributes. 
+    append checkUser specific attributes.
 
 
-.. warning:: 
+.. warning::
 
     This plugin displays ALL user session attributes except
     the hidden ones.
-    
+
     You have to restrict access to specific users (administrators, DevOps,
     power users and so on...) by setting an access rule like other
     VirtualHosts.
-    
+
     By example: ``$groups =~ /\bsu\b/``
-    
+
 
 
 To modify persistent sessions attributes ('_loginHistory \_2fDevices
@@ -87,7 +87,7 @@ Usage
 When enabled, ``/checkuser`` URL path is handled by this plugin.
 
 
-.. important:: 
+.. important::
 
     With federated authentication, checkUser plugin works
-    only if a session can be found in backend. 
+    only if a session can be found in backend.

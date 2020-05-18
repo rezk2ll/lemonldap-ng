@@ -5,7 +5,7 @@ LemonLDAP::NG provides a script to change session backend. This script
 will help you transfer existing persistent sessions (or offline
 sessions) when migrating from one backend to another, or when adding
 indexes to a
-:doc:`browseable sessio backend</browseablesessionbackend>`. It is
+:doc:`browseable session backend</browseablesessionbackend>`. It is
 available in LemonLDAP::NG utilities directory (``convertSessions``).
 
 How it works

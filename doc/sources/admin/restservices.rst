@@ -12,9 +12,10 @@ Authentication
 
 The authentication service is always available with REST, you just need
 to send credentials on portal URL. But by default, the portal is
-protected by :doc:`one time tokens to prevent CSRF<security>`. You must
-disable them or set a rule (configuration parameter ``requireToken``) so
-token will not be required for REST requests, for example:
+protected by :ref:`one time tokens to prevent CSRF<security-portal>`.
+You must disable them or set a rule (configuration parameter
+``requireToken``) so token will not be required for REST requests, for
+example:
 
 .. code:: perl
 
@@ -48,17 +49,17 @@ The JSON response fields are:
    field
 
 
-.. tip:: 
+.. tip::
 
     You can also get the cookie by reading the response header
     ``Cookie`` returned by the portal.
 
 
-.. important:: 
+.. important::
 
     Before version 2.0.4, the response to a success
     authentication had no ``id`` field, and ``error`` field was named
-    ``code`` *(use Cookie header to get id value)*.
+    ``code`` (use Cookie header to get id value).
 
 Example
 ^^^^^^^
@@ -70,15 +71,15 @@ Example
    curl -H "Accept: application/json" -d user=rtyler -d password=rtyler http://auth.example.com/ | json_pp
 
 
-.. important:: 
+.. important::
 
     With ``cURL > 7.18.0``, to include special characters
     like @, & or + in the cURL POST data:
-    
+
     ::
-    
+
        curl -H "Accept: application/json" -d name=rtyler --data-urlencode passwd=@31&3+*J http://auth.example.com/ | json_pp
-    
+
 
 
 -  Response for bad authentication:
@@ -104,7 +105,7 @@ Sessions
 ~~~~~~~~
 
 REST functions for sessions are protected by Web Server, you can change
-this in :doc:`portal configuration<configlocation>`.
+this in :ref:`portal configuration<configlocation-portal>`.
 
 See :doc:`REST session backend documentation<restsessionbackend>` for
 more.
@@ -113,7 +114,7 @@ Configuration
 ~~~~~~~~~~~~~
 
 REST functions for configuration are protected by Web Server, you can
-change this in :doc:`portal configuration<configlocation>`.
+change this in :ref:`portal configuration<configlocation-portal>`.
 
 See :doc:`REST configuration backend documentation<restconfbackend>` for
 more.

@@ -32,7 +32,7 @@ Password change       Password change URL
 ===================== ====================================
 
 
-.. tip:: 
+.. tip::
 
     You can then choose any other module for users and
     password.
@@ -62,9 +62,9 @@ Password change URL       ``{"user":$user,"password":$password}`` ``{"result":tr
 ========================= ======================================= ===================================================
 
 
-.. tip:: 
+.. tip::
 
     To have only one REST call during the login process, you can
     set REST only as an Authentication backend, configure Null as your User
     Database, and make sure the REST authentication URL send all your user
-    attributes in the ``info`` response key 
+    attributes in the ``info`` response key

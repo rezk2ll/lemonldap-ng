@@ -40,7 +40,7 @@ In Manager, go in ``General Parameters`` > ``Authentication modules``
 and choose Choice for authentication.
 
 
-.. important:: 
+.. important::
 
     When ``Choice`` is selected for authentication, values
     for Users and Password modules are also forced to ``Choice``.
@@ -75,29 +75,29 @@ Define here:
    $env->{urldc} =~ /test1\.example\.com/
 
 
-.. important:: 
+.. note::
 
     Authentication request to an another URL than Portal URL can lead
     to a persistent loop between Portal and a redirection URL (pdata is not
     removed because domains mismatch). To avoid this, you have to set pdata
     cookie domain by editing ``lemonldap-ng.ini`` in section [portal]:
-    
+
     .. code:: ini
-    
+
        [portal]
        pdataDomain = example.com
-    
 
 
 
-.. tip:: 
+
+.. tip::
 
     You can prefix the key name with a digit to order them. The
     digit will not be shown on portal page. Underscore characters are also
     replaced by spaces.
 
 
-.. tip:: 
+.. tip::
 
     You can also override some LLNG parameters for each chain. See
     :doc:`Parameter list<parameterlist>` to have the key names to use

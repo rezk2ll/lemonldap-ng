@@ -32,7 +32,7 @@ set type in your configuration file:
    ``fastcgi_param VHOSTTYPE SecureToken;``
 
 
-.. important:: 
+.. note::
 
     This handler uses Apache2Filter Module to hide token, prefer
     :doc:`Handling server webservice calls<servertoserver>` for other
@@ -58,13 +58,13 @@ SecureToken parameters are the following:
    application without secure token (default: yes)
 
 
-.. important:: 
+.. important::
 
     Due to Handler API change in 1.9, you need to set these
     attributes in ``lemonldap-ng.ini`` and not in Manager, for example:
-    
+
     .. code:: ini
-    
+
        [handler]
        secureTokenMemcachedServers = 127.0.0.1:11211
        secureTokenExpiration = 60
@@ -72,5 +72,5 @@ SecureToken parameters are the following:
        secureTokenUrls = .*
        secureTokenHeader = Auth-Token
        secureTokenAllowOnError = 1
-    
+
 

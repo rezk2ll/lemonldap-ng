@@ -10,7 +10,7 @@ code execution.
 
 This is also true for:
 
--  :doc:`Menu modules activation rules<portalmenu>`
+-  :ref:`Menu modules activation rules<portalmenu-menu-modules>`
 -  :doc:`Form replay data<formreplay>`
 -  Macros
 -  Issuer databases use rules
@@ -18,30 +18,32 @@ This is also true for:
 
 Inside this jail, you can access to:
 
-::
+* all session values and CGI environment variables (through `$ENV{<HTTP_NAME>}`)
+* Core Perl subroutines (split, pop, map, etc.)
+* :doc:`Custom functions<customfunctions>`
+* The `encode_base64 <http://perldoc.perl.org/MIME/Base64.html>`__ subroutine
+* Information about current request
+* Extended functions:
 
-   * all session values and CGI environment variables //(through $ENV{<HTTP_NAME>})//
-   * Core Perl subroutines (split, pop, map, etc.)
-   * [[customfunctions|Custom functions]]
-   * The [[http://perldoc.perl.org/MIME/Base64.html|encode_base64]] subroutine
-   * [[#Request information|Information about current request]]
-   * [[#Extended functions list|Extended functions]]:
-     * [[#date|date]]
-     * [[#checkLogonHours|checkLogonHours]]
-     * [[#checkDate|checkDate]]
-     * [[#basic|basic]]
-     * [[#unicode2iso|unicode2iso]]
-     * [[#iso2unicode|iso2unicode]]
-     * [[#groupMatch|groupMatch]]
-     * [[#listMatch|listMatch]] ({{..:new.png?direct&35|}} // since 2.0.7)//
-     * [[#inGroup|inGroup]] ({{..:new.png?direct&35|}} // since 2.0.8)//
-     * [[#encrypt|encrypt]]
-     * [[#token|token]]
-     * [[#isInNet6|isInNet6]]
-     * [[#varIsInUri|varIsInUri]]
+  * date_
+  * checkLogonHours_
+  * checkDate_
+  * basic_
+  * unicode2iso_
+  * iso2unicode_
+  * groupMatch_
+  * listMatch_ (|new| *since 2.0.7*)
+  * inGroup_ (|new| *since 2.0.8*)
+  * encrypt_
+  * token_
+  * isInNet6_
+  * varIsInUri_
 
 
-.. tip:: 
+.. |new| image:: /documentation/new.png
+   :width: 35px
+
+.. tip::
 
     To know more about the jail, check `Safe module
     documentation <http://perldoc.perl.org/Safe.html>`__.
@@ -72,11 +74,10 @@ For example, for a full access, excepted week-end:
    000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000
 
 
-.. tip:: 
+.. tip::
 
-    The :doc:`LDAP schema extension<authldap>` can be used to
-    store this value. You can also use the binary value from the logonHours
-    attribute of Active Directory
+    You can use the binary value from the logonHours attribute of Active
+    Directory, or create a custom attribute in your LDAP schema.
 
 Functions parameters:
 
@@ -130,11 +131,6 @@ This function will check the date of current request, and compare it to
 a start date and an end date. It returns 1 if this match, 0 else.
 
 
-.. tip:: 
-
-    The :doc:`LDAP schema extension<authldap>` can be used to
-    store these values
-
 The date format is the LDAP date syntax, for example for the 1st March
 2009:
 
@@ -159,7 +155,7 @@ basic
 ~~~~~
 
 
-.. important:: 
+.. important::
 
     This function is not compliant with
     :doc:`Safe jail<safejail>`, you will need to disable the jail to use
@@ -184,7 +180,7 @@ unicode2iso
 ~~~~~~~~~~~
 
 
-.. important:: 
+.. important::
 
     This function is not compliant with
     :doc:`Safe jail<safejail>`, you will need to disable the jail to use
@@ -206,7 +202,7 @@ iso2unicode
 ~~~~~~~~~~~
 
 
-.. important:: 
+.. important::
 
     This function is not compliant with
     :doc:`Safe jail<safejail>`, you will need to disable the jail to use
@@ -241,6 +237,8 @@ Simple usage example:
 ::
 
    groupMatch($hGroups, 'description', 'Service 1')
+
+.. _listMatch:
 
 listMatch
 ~~~~~~~~~
@@ -293,7 +291,7 @@ encrypt
 ~~~~~~~
 
 
-.. tip:: 
+.. tip::
 
     Since version 2.0, this function is now compliant with
     :doc:`Safe jail<safejail>`.

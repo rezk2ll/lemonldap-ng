@@ -31,11 +31,11 @@ theses :
      * **OAUTH2_ID_MAP**: ''sub''
 
 
-.. warning:: 
+.. warning::
 
     Be careful to the / in server_url and endpoints, the
     complete URL need to be valid, ie auth.example.com/ for url & oauth2/xxx
-    for endpoints, OR, auth.example.com & /oauth2/xxx for endpoints. 
+    for endpoints, OR, auth.example.com & /oauth2/xxx for endpoints.
 
 Configuring LemonLDAP
 ~~~~~~~~~~~~~~~~~~~~~
@@ -59,11 +59,11 @@ with the following parameters:
 ^^^^^^^^^^^^^^^^^^
 
 
-.. warning:: 
+.. warning::
 
     OIDC login fails when an user as a multi-valued email
     attribute, this need to be fixed on wekan's side, we can bypass that by
-    telling lemonldap to only send one email 
+    telling lemonldap to only send one email
 
 Create a new macro, name it (_singleMail is an example), the macro
 should contain ``(split(/; /,$mail))[1]``

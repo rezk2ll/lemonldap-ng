@@ -17,7 +17,7 @@ Authentication against LL::NG can be done trough:
 -  SAML 2 (LL::NG as SAML2 IDP)
 
 
-.. tip:: 
+.. tip::
 
     Alfresco now recommends SAML2 method
 
@@ -30,10 +30,10 @@ Alfresco
 ~~~~~~~~
 
 
-.. tip:: 
+.. tip::
 
     The official documentation can be found here:
-    http://docs.alfresco.com/4.0/tasks/auth-alfrescoexternal-sso.html\ 
+    http://docs.alfresco.com/4.0/tasks/auth-alfrescoexternal-sso.html\
 
 You need to find the following files in your Alfresco installation:
 
@@ -102,7 +102,7 @@ the ``<endpoint>``, change ``<connector-id>`` value to
 You need to restart Tomcat to apply changes.
 
 
-.. warning:: 
+.. warning::
 
     Now you can log in with a simple HTTP header. You need to
     restrict access to Alfresco to LL::NG.
@@ -171,13 +171,13 @@ Edit then ``share-config-custom.xml``:
        ...
            <config evaluator="string-compare" condition="CSRFPolicy" replace="true">
 
-        
+
 
            <!--
                If using https make a CSRFPolicy with replace="true" and override the properties section.
                Note, localhost is there to allow local checks to succeed.
 
-        
+
 
                I.e.
                <properties>
@@ -187,15 +187,15 @@ Edit then ``share-config-custom.xml``:
                </properties>
            -->
 
-        
+
 
                <filter>
 
-        
+
 
                    <!-- SAML SPECIFIC CONFIG -  START -->
 
-        
+
 
                    <!--
                     Since we have added the CSRF filter with filter-mapping of "/*" we will catch all public GET to avoid them
@@ -208,7 +208,7 @@ Edit then ``share-config-custom.xml``:
                        </request>
                    </rule>
 
-        
+
 
                    <!-- Incoming posts from IDPs do not require a token -->
                    <rule>
@@ -218,15 +218,15 @@ Edit then ``share-config-custom.xml``:
                        </request>
                    </rule>
 
-        
+
 
                    <!-- SAML SPECIFIC CONFIG -  STOP -->
 
-        
+
 
                    <!-- EVERYTHING BELOW FROM HERE IS COPIED FROM share-security-config.xml -->
 
-        
+
 
                    <!--
                     Certain webscripts shall not be allowed to be accessed directly form the browser.
@@ -241,7 +241,7 @@ Edit then ``share-config-custom.xml``:
                        </action>
                    </rule>
 
-        
+
 
                    <!--
                     Certain Repo webscripts should be allowed to pass without a token since they have no Share knowledge.
@@ -260,7 +260,7 @@ Edit then ``share-config-custom.xml``:
                        </action>
                    </rule>
 
-        
+
 
                    <!--
                     Certain Surf POST requests from the WebScript console must be allowed to pass without a token since
@@ -279,7 +279,7 @@ Edit then ``share-config-custom.xml``:
                        </action>
                    </rule>
 
-        
+
 
                    <!-- Certain Share POST requests does NOT require a token -->
                    <rule>
@@ -295,7 +295,7 @@ Edit then ``share-config-custom.xml``:
                        </action>
                    </rule>
 
-        
+
 
                    <!-- Assert logout is done from a valid domain, if so clear the token when logging out -->
                    <rule>
@@ -315,7 +315,7 @@ Edit then ``share-config-custom.xml``:
                        </action>
                    </rule>
 
-        
+
 
                    <!-- Make sure the first token is generated -->
                    <rule>
@@ -332,7 +332,7 @@ Edit then ``share-config-custom.xml``:
                        </action>
                    </rule>
 
-        
+
 
                    <!-- Refresh token on new "page" visit when a user is logged in -->
                    <rule>
@@ -350,7 +350,7 @@ Edit then ``share-config-custom.xml``:
                        </action>
                    </rule>
 
-        
+
 
                    <!--
                     Verify multipart requests from logged in users contain the token as a parameter
@@ -376,7 +376,7 @@ Edit then ``share-config-custom.xml``:
                        </action>
                    </rule>
 
-        
+
 
                    <!--
                     Verify that all remaining state changing requests from logged in users' requests contains a token in the

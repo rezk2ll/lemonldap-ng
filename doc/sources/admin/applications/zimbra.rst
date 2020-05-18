@@ -21,7 +21,7 @@ SSO on its application. This protocol is implemented in an LL::NG
 specific Handler.
 
 
-.. tip:: 
+.. tip::
 
     Zimbra can also be connected to LL::NG via
     :doc:`SAML protocol<../idpsaml>` (see `Zimbra
@@ -77,20 +77,20 @@ Zimbra parameters are the following:
    (by default: ^/zimbrasso$)
 
 
-.. important:: 
+.. important::
 
     Due to Handler API change in 1.9, you need to set these
     attributes in ``lemonldap-ng.ini`` and not in Manager, for example:
-    
+
     .. code:: ini
-    
+
        [handler]
        zimbraPreAuthKey = XXXX
        zimbraAccountKey = uid
        zimbraBy =id
        zimbraUrl = /service/preauth
        zimbraSsoUrl = ^/zimbrasso$
-    
+
 
 
 Multi-domain issues

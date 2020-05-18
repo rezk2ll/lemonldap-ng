@@ -40,12 +40,12 @@ Example :
    password = llpassword
 
 ===================================================================================================================== ================================ ==========
-Optional parameters (see `MongoDB::MongoClient <http://search.cpan.org/perldoc?MongoDB%3A%3AMongoClient>`__ man page)                                 
+Optional parameters (see `MongoDB::MongoClient <http://search.cpan.org/perldoc?MongoDB%3A%3AMongoClient>`__ man page)
 ===================================================================================================================== ================================ ==========
 Name                                                                                                                  Comment                          Example
 db_name                                                                                                               Admin database (default: admin)  admin
 auth_mechanism                                                                                                        Authentication mechanism         PLAIN
-auth_mechanism_properties                                                                                                                             
+auth_mechanism_properties
 connect_timeout                                                                                                       Connection timeout               10000
 ssl                                                                                                                   Boolean or hash ref (default: 0) 1
 username                                                                                                              Username to use to connect       lluser

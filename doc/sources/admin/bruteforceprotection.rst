@@ -47,11 +47,11 @@ section:
    bruteForceProtectionMaxLockTime = 900
 
 
-.. important:: 
+.. note::
 
     Max lock time value is used by this plugin if a lock time is
     missing (number of failed logins higher than listed lock time values).
-    Lock time values can not be higher than max lock time. 
+    Lock time values can not be higher than max lock time.
 
 Incremental lock time disabled
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -71,7 +71,7 @@ of allowed failed login attempts (3 by default) edit
    bruteForceProtectionMaxFailed = 3
 
 
-.. important:: 
+.. important::
 
     Number of failed login attempts stored in history MUST
     be higher than allowed failed logins for this plugin takes effect.

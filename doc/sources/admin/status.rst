@@ -27,11 +27,11 @@ statistics and save them in their local cache. This means that if
 several Handlers are deployed, each will manage its own statistics.
 
 
-.. tip:: 
+.. tip::
 
     This page can be browsed for example by
     `MRTG <http://oss.oetiker.ch/mrtg/>`__ using the
-    :doc:`MRTG monitoring script<mrtg>`. 
+    :doc:`MRTG monitoring script<mrtg>`.
 
 Statistics are collected through a daemon launched by the Handler. It
 can be supervised in system processes.
@@ -88,7 +88,7 @@ configuration:
 Then restart Apache.
 
 
-.. tip:: 
+.. tip::
 
     You should change the ``Allow`` directive to match
     administration IP, or use another Apache protection mean.

@@ -4,7 +4,7 @@ GitHub
 ============== ===== ========
 Authentication Users Password
 ============== ===== ========
-✔                   
+✔
 ============== ===== ========
 
 Presentation
@@ -35,20 +35,20 @@ Then, go in ``GitHub parameters``:
    https://developer.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/
 
 
-.. tip:: 
+.. tip::
 
     Collected fields are stored in session in ``github_``
     keys
 
 
-.. important:: 
+.. important::
 
     Browser implementations of formAction directive are
     inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome
     does). Administrators may have to modify formAction value with wildcard
     likes \*.
-    
+
     In Manager, go in:
-    
+
     ``General Parameters`` > ``Advanced Parameters`` > ``Security`` >
-    ``Content Security Policy`` > ``Form destination`` 
+    ``Content Security Policy`` > ``Form destination``

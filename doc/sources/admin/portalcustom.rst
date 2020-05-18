@@ -2,7 +2,7 @@ Portal customization
 ====================
 
 
-.. important:: 
+.. note::
 
     The portal is the visible part of LemonLDAP::NG, all user
     interactions are displayed on it.
@@ -16,11 +16,11 @@ Portal > Customization > Main Logo.
 A blank value disables Main Logo display.
 
 
-.. tip:: 
+.. tip::
 
     - Logo files must be stored in lemonldap-ng-portal/site/htdocs/static/my/path directory
     - Logo file path must be like my/path/logo.png
-    - Main logo is included in Portal templates AND mail body 
+    - Main logo is included in Portal templates AND mail body
 
 Show languages choice
 ~~~~~~~~~~~~~~~~~~~~~
@@ -31,13 +31,13 @@ Portal > Customization > Show languages choice.
 Option enabled by default.
 
 
-.. tip:: 
+.. tip::
 
-    
-    
+
+
     If languages choice is disabled, Portal displays accepted languages by
     your browser (EN by default).
-    
+
 
 
 Custom CSS file
@@ -58,6 +58,9 @@ Sample CSS file, to remove white background of main logo:
    #header img {
      background-color: transparent;
    }
+
+
+.. _portalcustom-skin-customization:
 
 Skin
 ----
@@ -134,7 +137,7 @@ Skin customization
 ~~~~~~~~~~~~~~~~~~
 
 
-.. important:: 
+.. important::
 
     If you modify directly the skin files, your
     modifications will certainly be erased on the next upgrade. The best is
@@ -332,7 +335,7 @@ Password Policy
 ~~~~~~~~~~~~~~~
 
 
-.. tip:: 
+.. tip::
 
     Available since version 2.0.6
 
@@ -345,6 +348,8 @@ Password Policy
    characters (``_`` is not a special character)
 -  **Display policy in password form**: enable this to display an
    information message about password policy constraints
+
+.. _portalcustom-other-parameters:
 
 Other parameters
 ----------------

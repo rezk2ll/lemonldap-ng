@@ -2,7 +2,7 @@ Error messages
 ==============
 
 
-.. important:: 
+.. note::
 
     This page do not reference all error messages, but only the
     frequentest
@@ -23,7 +23,7 @@ from a version older than 1.0
    Can't locate /usr/share/lemonldap-ng/configStorage.pl
 
 → When you upgrade from Debian Lenny with customized index.pl files, you
-must upgrade them. See :doc:`Debian Lenny upgrade<upgrade>`.
+must upgrade them. 
 
 Lemonldap::NG::Handler
 ----------------------
@@ -60,13 +60,13 @@ configStorageOptionsor file permissions.
    mkdir /tmp/MyNamespace/2: Permission denied ...
 
 → The cache has been created by another user than Apache's user. Restart
-Apache to purge it. 
-.. important:: 
+Apache to purge it.
+.. important::
 
     This can append when you use
     lmConfigEditor or launch **cron files** with a different user than
     Apache process. That is why it is important to set APACHEUSER variable
-    when you launch "make install" 
+    when you launch "make install"
 
 ::
 

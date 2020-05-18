@@ -4,14 +4,14 @@ OpenID Connect
 ============== ===== ========
 Authentication Users Password
 ============== ===== ========
-✔              ✔    
+✔              ✔
 ============== ===== ========
 
 Presentation
 ------------
 
 
-.. important:: 
+.. note::
 
     OpenID Connect is a protocol based on REST, OAuth 2.0 and JOSE
     stacks. It is described here: http://openid.net/connect/.
@@ -34,14 +34,19 @@ You can use this authentication module to link your LL::NG server to any
 OpenID Connect Provider. Here are some examples, witch their specific
 documentation:
 
-================================================ ========================================
-Google                                           France Connect
-================================================ ========================================
-:doc:`google_logo.png<authopenidconnect_google>` :doc:`franceconnect_logo.png<authopenidconnect_franceconnect>`
-================================================ ========================================
+=============== ==================
+Google          France Connect
+=============== ==================
+|google|        |franceconnect|
+=============== ==================
 
+.. |google| image:: applications/google_logo.png
+   :target: authopenidconnect_google.html
 
-.. important:: 
+.. |franceconnect| image:: applications/franceconnect_logo.png
+   :target: authopenidconnect_franceconnect.html
+
+.. important::
 
     OpenID-Connect specification isn't finished for logout
     propagation. So logout initiated by relaying-party will be forward to
@@ -67,23 +72,23 @@ In ``General Parameters`` > ``Authentication modules``, set:
 -  **Users module**: OpenID Connect
 
 
-.. tip:: 
+.. tip::
 
     As passwords will not be managed by LL::NG, you can disable
-    :doc:`menu password module<portalmenu>`.
+    :ref:`menu password module<portalmenu-menu-modules>`.
 
 
-.. important:: 
+.. important::
 
     Browser implementations of formAction directive are
     inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome
     does). Administrators may have to modify formAction value with wildcard
     likes \*.
-    
+
     In Manager, go in :
-    
+
     ``General Parameters`` > ``Advanced Parameters`` > ``Security`` >
-    ``Content Security Policy`` > ``Form destination`` 
+    ``Content Security Policy`` > ``Form destination``
 
 Then in ``General Parameters`` > ``Authentication modules`` >
 ``OpenID Connect parameters``, you can set:
@@ -111,7 +116,7 @@ parameter, for example:
 -  http://auth.example.com/?lmAuth=oidc&openidcallback=1
 
 
-.. important:: 
+.. important::
 
     If you use the :doc:`choice backend<authchoice>`, you
     need to add the choice parameter in redirect URL
@@ -169,7 +174,7 @@ automatically if jwks_uri is defined in metadata. Else you can paste the
 content of the JSON file in the textarea.
 
 
-.. tip:: 
+.. tip::
 
     If the OpenID Connect provider only uses symmetric encryption,
     JWKS data is not useful.

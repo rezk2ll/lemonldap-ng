@@ -14,7 +14,7 @@ LL::NG portal provides REST end points for sessions management:
 -  PUT /sessions/<type>/<session-id> : update some keys
 -  DELETE /sessions/<type>/<session-id> : delete a session
 
-Sessions for connected users *(used by :doc:`LLNG Proxy<authproxy>`)*:
+Sessions for connected users (used by :doc:`LLNG Proxy<authproxy>`):
 
 -  GET /session/my/<type> : get session datas
 -  GET /session/my/<type>/key : get session key
@@ -52,17 +52,24 @@ Then, set ``Lemonldap::NG::Common::Apache::Session::REST`` in
 sensitive):
 
 =================== ======================================== ==================================================
-Required parameters                                         
-=================== ======================================== ==================================================
+Required parameters
+---------------------------------------------------------------------------------------------------------------
 Name                Comment                                  Example
+=================== ======================================== ==================================================
 **baseUrl**         URL of sessions REST end point           http://auth.example.com/index.fcgi/sessions/global
-Optional parameters                                         
+=================== ======================================== ==================================================
+
+=================== ======================================== ==================================================
+Optional parameters
+---------------------------------------------------------------------------------------------------------------
+Name                Comment                                  Example
+=================== ======================================== ==================================================
 **user**            Username to use for auth basic mechanism
 **password**        Password to use for auth basic mechanism
 =================== ======================================== ==================================================
 
 
-.. important:: 
+.. important::
 
     By default, user password and other secret keys are
     hidden by LLNG REST server. You can force REST server to export their
@@ -99,7 +106,7 @@ For example, if real sessions are stored in
    globalStorageOptions = { 'Directory' => '/var/lib/lemonldap-ng/sessions/', 'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/', }
 
 
-.. tip:: 
+.. tip::
 
     Session explorer and "single session" features can't be used
     using this backend. Session explorer and portal must be launched with

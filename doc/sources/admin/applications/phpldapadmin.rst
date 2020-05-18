@@ -15,7 +15,7 @@ phpLDAPadmin will be protected by LemonLDAP::NG with specific access
 rules.
 
 
-.. warning:: 
+.. warning::
 
     phpLDAPadmin will have no idea of the user connected to
     the WebSSO. So a simple user can have admin rights on the LDAP directory
@@ -52,7 +52,7 @@ Configure phpLDAPadmin virtual host like other
           PerlHeaderParserHandler Lemonldap::NG::Handler
 
           ...
-          
+
    </VirtualHost>
 
 -  For Nginx:
@@ -75,8 +75,8 @@ Configure phpLDAPadmin virtual host like other
        fastcgi_param HOST $http_host;
        # Keep original request (LLNG server will received /llauth)
        fastcgi_param X_ORIGINAL_URI  $request_uri;
-     } 
-    
+     }
+
      # Client requests
      location / {
        auth_request /lmauth;
@@ -84,9 +84,9 @@ Configure phpLDAPadmin virtual host like other
        auth_request_set $lmlocation $upstream_http_location;
        error_page 401 $lmlocation;
        try_files $uri $uri/ =404;
-    
+
        ...
-    
+
        include /etc/lemonldap-ng/nginx-lua-headers.conf;
      }
      location / {
@@ -100,9 +100,9 @@ phpLDAPadmin virtual host in Manager
 Go to the Manager and :doc:`create a new virtual host<../configvhost>`
 for phpLDAPadmin.
 
-Just configure the :doc:`access rules<../writingrulesand_headers>`.
+Just configure the :ref:`access rules<rules>`.
 
-No :doc:`headers<../writingrulesand_headers>` are required.
+No :ref:`headers<headers>` are required.
 
 .. |image0| image:: /applications/phpldapadmin_logo.png
    :class: align-center

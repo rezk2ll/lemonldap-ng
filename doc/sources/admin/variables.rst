@@ -16,7 +16,7 @@ kind of variables:
 
 -  internal variables, managed by LemonLDAP::NG
 -  :doc:`exported variables<exportedvars>` collected from UserDB backend
--  :doc:`macro and groups<performances>`
+-  :ref:`macro and groups<macros_and_groups>`
 
 When you know the key of the variable, you just have to prefix it with
 the dollar sign to use it, for example to test if ``uid`` variable match
@@ -27,7 +27,7 @@ the dollar sign to use it, for example to test if ``uid`` variable match
    $uid eq "coudot"
 
 
-.. tip:: 
+.. tip::
 
     You can inspect a user session with the sessions explorer (in
     Manager)

@@ -15,7 +15,7 @@ GET parameters:
    example)
 
 
-.. warning:: 
+.. warning::
 
     Passing such sensitive information can be dangerous. Using
     other well-known secured protocols is recommended.
@@ -32,20 +32,20 @@ In the Manager, go in ``General Parameters`` » ``Issuer modules`` »
 
 -  **Activation**: set to ``On``.
 -  **Path**: keep ``^/get/`` unless you have change
-   :doc:`Apache portal configuration<configlocation>` file.
+   :ref:`Apache portal configuration<configlocation-portal>` file.
 -  **Use rule**: a rule to allow user to use this module, set to 1 to
    always allow.
 
 
-.. tip:: 
+.. tip::
 
     For example, to allow only users with a strong authentication
     level:
-    
+
     ::
-    
+
        $authenticationLevel > 2
-    
+
 
 
 Then go in ``Get parameters`` to define variables to transmit:
@@ -63,15 +63,16 @@ For example:
    }
 
 
-.. warning:: 
+.. warning::
 
     In the previous example, \_session_id is quite sensitive,
     thus it is encouraged that the application revalidate \_session_id using
     getCookie() SOAP call to avoid some security problems
 
 
-.. tip:: 
+.. tip::
 
     If host is not already registered in virtual hosts, you need
-    to declare it in :doc:`trusted domains<security>` to allow
+    to declare it in
+    :ref:`trusted domains<security-configure-security-settings>` to allow
     redirection

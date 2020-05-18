@@ -35,42 +35,42 @@ Application list
 ================================================================= ==================================================== ============ ================ === ==== ====
 Application                                                       Configuration guide                                  HTTP headers Specific Handler CAS SAML OIDC
 ================================================================= ==================================================== ============ ================ === ==== ====
-.. image:: applications/microsoft-adfs.png                        :doc:`ADFS<applications/adfs>`                                                         ✔   
-.. image:: applications/alfresco_logo.png                         :doc:`Alfresco<applications/alfresco>`               ✔                                 ✔   
-.. image:: applications/logo_amazon_web_services.jpg              :doc:`Amazon Web Services<applications/aws>`                                           ✔   
-.. image:: applications/logo-awx.png                              :doc:`AWX (Ansible Tower)<applications/awx>`                                           ✔   
-.. image:: applications/bugzilla_logo.png                         :doc:`Bugzilla<applications/bugzilla>`               ✔                                     
-.. image:: applications/csod_logo.png                             :doc:`Cornerstone<applications/cornerstone>`                                           ✔   
+.. image:: applications/microsoft-adfs.png                        :doc:`ADFS<applications/adfs>`                                                         ✔
+.. image:: applications/alfresco_logo.png                         :doc:`Alfresco<applications/alfresco>`               ✔                                 ✔
+.. image:: applications/logo_amazon_web_services.jpg              :doc:`Amazon Web Services<applications/aws>`                                           ✔
+.. image:: applications/logo-awx.png                              :doc:`AWX (Ansible Tower)<applications/awx>`                                           ✔
+.. image:: applications/bugzilla_logo.png                         :doc:`Bugzilla<applications/bugzilla>`               ✔
+.. image:: applications/csod_logo.png                             :doc:`Cornerstone<applications/cornerstone>`                                           ✔
 .. image:: applications/discourse.jpg                             :doc:`Discourse<applications/discourse>`                                               ✔    ✔
-.. image:: applications/django_logo.png                           :doc:`Django<applications/django>`                   ✔                                     
-.. image:: applications/dokuwiki_logo.png                         :doc:`Dokuwiki<applications/dokuwiki>`               ✔                                     
-.. image:: applications/drupal_logo.png                           :doc:`Drupal<applications/drupal>`                   ✔                                     
-.. image:: applications/fusiondirectory-logo.jpg                  :doc:`FusionDirectory<applications/fusiondirectory>` ✔                                     
+.. image:: applications/django_logo.png                           :doc:`Django<applications/django>`                   ✔
+.. image:: applications/dokuwiki_logo.png                         :doc:`Dokuwiki<applications/dokuwiki>`               ✔
+.. image:: applications/drupal_logo.png                           :doc:`Drupal<applications/drupal>`                   ✔
+.. image:: applications/fusiondirectory-logo.jpg                  :doc:`FusionDirectory<applications/fusiondirectory>` ✔
 .. image:: applications/gitlab_logo.png                           :doc:`Gitlab<applications/gitlab>`                                                     ✔    ✔
-.. image:: applications/glpi_logo.png                             :doc:`GLPI<applications/glpi>`                       ✔                                     
-.. image:: applications/googleapps_logo.png                       :doc:`Google Apps<applications/googleapps>`                                            ✔   
+.. image:: applications/glpi_logo.png                             :doc:`GLPI<applications/glpi>`                       ✔
+.. image:: applications/googleapps_logo.png                       :doc:`Google Apps<applications/googleapps>`                                            ✔
 .. image:: applications/grafana_logo.png                          :doc:`Grafana<applications/grafana>`                                                        ✔
-.. image:: applications/grr_logo.png                              :doc:`GRR<applications/grr>`                         ✔                                     
+.. image:: applications/grr_logo.png                              :doc:`GRR<applications/grr>`                         ✔
 .. image:: applications/guacamole.png                             :doc:`Apache Guacamole<applications/guacamole>`      ✔                             ✔        ✔
 .. image:: applications/humhub_logo.png                           :doc:`HumHub<applications/humhub>`                                                          ✔
-.. image:: applications/logo-jitsimeet.png                        :doc:`Jitsi Meet<applications/jitsimeet>`            ✔                                     
-.. image:: applications/liferay_logo.png                          :doc:`Liferay<applications/liferay>`                 ✔                                     
-.. image:: applications/limesurvey_logo.png                       :doc:`LimeSurvey<applications/limesurvey>`           ✔                                     
+.. image:: applications/logo-jitsimeet.png                        :doc:`Jitsi Meet<applications/jitsimeet>`            ✔
+.. image:: applications/liferay_logo.png                          :doc:`Liferay<applications/liferay>`                 ✔
+.. image:: applications/limesurvey_logo.png                       :doc:`LimeSurvey<applications/limesurvey>`           ✔
 .. image:: applications/mattermost_logo.png                       :doc:`Mattermost<applications/mattermost>`                                                  ✔
-.. image:: applications/mediawiki_logo.png                        :doc:`Mediawiki<applications/mediawiki>`             ✔                                     
-.. image:: applications/nextcloud-logo.png                        :doc:`NextCloud<applications/nextcloud>`                                               ✔   
-.. image:: applications/obm_logo.png                              :doc:`OBM<applications/obm>`                         ✔                                     
-.. image:: applications/logo_office_365.png                       :doc:`Office 365<applications/office365>`                                              ✔   
-.. image:: applications/phpldapadmin_logo.png                     :doc:`phpLDAPAdmin<applications/phpldapadmin>`       ✔                                     
-.. image:: applications/roundcube_logo.png                        :doc:`Roundcube<applications/roundcube>`             ✔                                     
-.. image:: applications/salesforce-logo.jpg                       :doc:`SalesForce<applications/salesforce>`                                             ✔   
-.. image:: applications/SAPLogo.gif                               :doc:`SAP<applications/sap>`                         ✔                                 ✔   
-.. image:: applications/simplesamlphp_logo.png                    :doc:`simpleSAMLphp<applications/simplesamlphp>`                                       ✔   
-.. image:: applications/spring_logo.png                           :doc:`Spring<applications/spring>`                   ✔                                     
-.. image:: applications/symfony_logo.png                          :doc:`Symfony<applications/symfony>`                 ✔                                     
-.. image:: applications/sympa_logo.png                            :doc:`Sympa<applications/sympa>`                     ✔                                     
-.. image:: applications/tomcat_logo.png                           :doc:`Tomcat<applications/tomcat>`                   ✔                                     
-.. image:: applications/wordpress_logo.png                        :doc:`Wordpress<applications/wordpress>`                                           ✔       
-.. image:: applications/xwiki.png                                 :doc:`XWiki<applications/xwiki>`                     ✔                                     
-.. image:: applications/zimbra_logo.png                           :doc:`Zimbra<applications/zimbra>`                                ✔                        
+.. image:: applications/mediawiki_logo.png                        :doc:`Mediawiki<applications/mediawiki>`             ✔
+.. image:: applications/nextcloud-logo.png                        :doc:`NextCloud<applications/nextcloud>`                                               ✔
+.. image:: applications/obm_logo.png                              :doc:`OBM<applications/obm>`                         ✔
+.. image:: applications/logo_office_365.png                       :doc:`Office 365<applications/office365>`                                              ✔
+.. image:: applications/phpldapadmin_logo.png                     :doc:`phpLDAPAdmin<applications/phpldapadmin>`       ✔
+.. image:: applications/roundcube_logo.png                        :doc:`Roundcube<applications/roundcube>`             ✔
+.. image:: applications/salesforce-logo.jpg                       :doc:`SalesForce<applications/salesforce>`                                             ✔
+.. image:: applications/SAPLogo.gif                               :doc:`SAP<applications/sap>`                         ✔                                 ✔
+.. image:: applications/simplesamlphp_logo.png                    :doc:`simpleSAMLphp<applications/simplesamlphp>`                                       ✔
+.. image:: applications/spring_logo.png                           :doc:`Spring<applications/spring>`                   ✔
+.. image:: applications/symfony_logo.png                          :doc:`Symfony<applications/symfony>`                 ✔
+.. image:: applications/sympa_logo.png                            :doc:`Sympa<applications/sympa>`                     ✔
+.. image:: applications/tomcat_logo.png                           :doc:`Tomcat<applications/tomcat>`                   ✔
+.. image:: applications/wordpress_logo.png                        :doc:`Wordpress<applications/wordpress>`                                           ✔
+.. image:: applications/xwiki.png                                 :doc:`XWiki<applications/xwiki>`                     ✔
+.. image:: applications/zimbra_logo.png                           :doc:`Zimbra<applications/zimbra>`                                ✔
 ================================================================= ==================================================== ============ ================ === ==== ====

@@ -4,7 +4,7 @@ Apache Tomcat
 |image0|
 
 
-.. important:: 
+.. important::
 
     The Tomcat Valve is only available for tomcat 5.5 or
     greater.
@@ -32,7 +32,7 @@ authentication:
      <user username="role1" password="tomcat" roles="role1"/>
      <user username="both" password="tomcat" roles="tomcat,role1"/>
    </tomcat-users>
-    
+
 
 LL::NG provides a valve, available on :doc:`download page</download>`.
 This valve will check an HTTP header to set the authenticated user on
@@ -48,7 +48,7 @@ Copy ``ValveLemonLDAPNG.jar`` in ``<TOMCAT_HOME>/server/lib``:
    cp ValveLemonLDAPNG.jar server/lib/
 
 
-.. tip:: 
+.. tip::
 
     If needed, you can
     :doc:`recompile the valve from the sources<>`.
@@ -79,7 +79,7 @@ Configure attributes:
    present, a 403 error is sent.
 
 
-.. tip:: 
+.. tip::
 
     For debugging, this valve can print some helpful information
     in debug level. See `how configure logging in
@@ -100,15 +100,15 @@ Required :
 Configure your tomcat home in ``build.properties`` files.
 
 
-.. important:: 
+.. important::
 
     Be careful for Windows user, path must contains "/".
     Example:
-    
+
     ::
-    
+
        c:/my hardisk/tomcat/
-    
+
 
 
 Next run ant command:

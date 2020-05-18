@@ -19,7 +19,7 @@ To have a stronger integration, we will configure LimeSurvey to
 autocreate unknown users and use HTTP headers to fill name and mail.
 
 
-.. important:: 
+.. important::
 
     We suppose that LimeSurvey is installed in
     /var/www/html/limesurvey
@@ -35,15 +35,15 @@ manager. Select the WebServer module and configure it.
 This is enough for the authentication part.
 
 
-.. tip:: 
+.. tip::
 
     If you are blocked, you can deactivate the plugin with this
     request in database:
-    
+
     ::
-    
+
        update lime_plugins SET active=0 where name="Authwebserver";
-    
+
 
 
 To configure account autocreation, you need to edit
@@ -106,15 +106,15 @@ Default   default     Allow only users with a LimeSurvey role
 ========= =========== ========================================
 
 
-.. tip:: 
+.. tip::
 
     You can set the default access to:
-    
+
     ::
-    
+
         * **accept**: all authenticated users will access surveys
-        * **unprotect**: no authentication will be asked to access surveys 
-    
+        * **unprotect**: no authentication will be asked to access surveys
+
 
 
 .. |image0| image:: /applications/limesurvey_logo.png

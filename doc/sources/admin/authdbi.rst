@@ -34,7 +34,7 @@ LL::NG can use two tables:
 -  User table: where user data are stored (mail, name, etc.)
 
 
-.. tip:: 
+.. tip::
 
     Authentication table and user table can be the same.
 
@@ -105,15 +105,15 @@ Authentication level
 The authentication level given to users authenticated with this module.
 
 
-.. important:: 
+.. important::
 
     As DBI is a login/password based module, the
     authentication level can be:
-    
+
     -  increased (+1) if portal is protected by SSL (HTTPS)
     -  decreased (-1) if the portal autocompletion is allowed (see
        :doc:`portal customization<portalcustom>`)
-    
+
 
 
 Exported variables
@@ -126,7 +126,7 @@ Connection
 ~~~~~~~~~~
 
 
-.. tip:: 
+.. tip::
 
     Connection settings can be configured differently for
     authentication process and user process. This allows one to use
@@ -181,22 +181,22 @@ Password
    non-salted schemes" or "Supported salted schemes".
 
 
-.. important:: 
+.. important::
 
     The SQL function MUST have hexadecimal values as input
     AND output
 
 
-.. tip:: 
+.. tip::
 
     Here is an example for creating a postgreSQL SHA256 function.
     1. Install postgresql-contrib. 2. Activate extension:
     ``CREATE EXTENSION pgcrypto;`` 3. Create the hash function:
-    
+
     ::
-    
+
        CREATE OR REPLACE FUNCTION sha256(varchar) returns text AS $$
        SELECT encode(digest(decode($1, 'hex'), 'sha256'), 'hex')
        $$ LANGUAGE SQL STRICT IMMUTABLE;
-    
+
 

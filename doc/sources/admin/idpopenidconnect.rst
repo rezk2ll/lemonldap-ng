@@ -5,7 +5,7 @@ Presentation
 ------------
 
 
-.. important:: 
+.. note::
 
     OpenID Connect is a protocol based on REST, OAuth 2.0 and JOSE
     stacks. It is described here: http://openid.net/connect/.
@@ -58,15 +58,15 @@ and configure:
    to always allow.
 
 
-.. tip:: 
+.. tip::
 
     For example, to allow only users with a strong authentication
     level:
-    
+
     ::
-    
+
        $authenticationLevel > 2
-    
+
 
 
 Configuration of LL::NG in Relying Party
@@ -173,7 +173,7 @@ So you can define for example:
 -  email => mail
 
 
-.. important:: 
+.. important::
 
     The specific ``sub`` attribute is not defined here, but
     in User attribute parameter (see below).
@@ -182,7 +182,7 @@ Extra Claims
 ^^^^^^^^^^^^
 
 
-.. important:: 
+.. important::
 
     By default, only claims that are part of standard OpenID
     Connect scopes will be sent to a client. If you want to send a claim
@@ -202,7 +202,7 @@ be able to read the ``rebirth_count`` and ``bloodline`` claims from the
 Userinfo endpoint.
 
 
-.. warning:: 
+.. warning::
 
     Any Claim defined in this section must be mapped to a
     LemonLDAP::NG session attribute in the **Exported Attributes**
@@ -268,16 +268,15 @@ Options
       https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
       for details. These offline sessions can be administered through
       the Session Browser.
+   - **Allow OAuth2.0 Password Grant** (since version ``2.0.8``) Allow the use of the Resource Owner Password Credentials Grant on by this client. This feature only works if you have configured a form-based authentication module.
+   - **Access Rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
 
-::
+- **Logout**
 
-      * **Allow OAuth2.0 Password Grant** (since version ''2.0.8''): Allow the use of the Resource Owner Password Credentials Grant on by this client. This feature only works if you have configured a form-based authentication module.
-      * **Access Rule**: lets you specify a [[rules_examples|Perl rule]] to restrict access to this client
-   * **Logout**
-     * **Allowed redirection addresses for logout**: A space separated list of URLs that this client can redirect the user to once the logout is done (through ''post_logout_redirect_uri'')
-     * **URL**: Specify the relying party's logout URL
-     * **Type**: Type of Logout to perform (only Front-Channel is implemented for now)
-     * **Session required**: Whether to send the Session ID in the logout request
+   - **Allowed redirection addresses for logout**: A space separated list of URLs that this client can redirect the user to once the logout is done (through ``post_logout_redirect_uri``)
+   - **URL**: Specify the relying party's logout URL
+   - **Type**: Type of Logout to perform (only Front-Channel is implemented for now)
+   - **Session required**: Whether to send the Session ID in the logout request
 
 Macros
 ^^^^^^

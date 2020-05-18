@@ -12,7 +12,7 @@ delegate the authentication of LL::NG to Google:
 https://developers.google.com/identity/protocols/OpenIDConnect
 
 
-.. important:: 
+.. important::
 
     Google does not support logout trough OpenID Connect. If
     you close your session on LL::NG side, your Google session will still be

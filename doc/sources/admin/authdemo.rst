@@ -14,7 +14,7 @@ This mode allow one to test LemonLDAP::NG without any third-party
 software.
 
 
-.. warning:: 
+.. warning::
 
     This mode must not be used for other purpose than test and
     demonstration!
@@ -30,7 +30,7 @@ dwho   dwho     dwho@badwolf.org   administrator
 ====== ======== ================== =============
 
 
-.. important:: 
+.. note::
 
     As you may have guessed, these accounts are famous characters from
     the TV show `Doctor

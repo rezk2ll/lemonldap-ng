@@ -9,16 +9,16 @@ filling a HTML POST login form and autosubmitting it, without asking
 anything to the user.
 
 
-.. warning:: 
+.. warning::
 
     This kind of SSO mechanism is not clean, and can lead to
     problems, like local password blocking, local session not well closed,
     etc.
-    
+
     Please always try to find another solution to protect your application
     with LL::NG. At least, check if it is not a
     :doc:`known application<applications>`, or
-    :doc:`try to adapt its source code<selfmadeapplication>`. 
+    :doc:`try to adapt its source code<selfmadeapplication>`.
 
 If you configure form replay with LL::NG, the Handler will detect forms
 to fill, add a javascript in the html page to fill form fields with
@@ -28,7 +28,7 @@ data in the request body.
 POST data can be static values or computed from user's session.
 
 
-.. tip:: 
+.. tip::
 
     To post user's password, you must enable
     :doc:`password storing<passwordstore>`. In this case you will be able to
@@ -96,7 +96,7 @@ example:
 |image1|
 
 
-.. tip:: 
+.. tip::
 
     You can define more than one form replay URL per virtual
     host.

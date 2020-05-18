@@ -2,7 +2,7 @@ SAML service configuration
 ==========================
 
 
-.. important:: 
+.. note::
 
     SAML service configuration is a common step to configure LL::NG as
     :doc:`SAML SP<authsaml>` or :doc:`SAML IDP<idpsaml>`.
@@ -18,7 +18,7 @@ particular:
 -  Set SAML end points
 
 
-.. important:: 
+.. important::
 
     Service configuration will be used to generate LL::NG
     SAML metadata, that will be shared with other providers. It means that
@@ -45,7 +45,7 @@ You can use official Debian packages or those available here:
 http://deb.entrouvert.org/.
 
 
-.. tip:: 
+.. tip::
 
     We recommend Lasso 2.6 for the SHA256 support, so use the
     stretch-testing repository of deb.entrouvert.org.
@@ -60,7 +60,7 @@ RHEL/CentOS/Fedora
 ^^^^^^^^^^^^^^^^^^
 
 RPMs are available in LL::NG RPM "extras" repository (see
-:doc:`installrpm#yum_repository<installrpm>`)
+:ref:`installrpm#yum_repository<installrpm-yum-repository>`)
 
 Then install lasso and lasso-perl packages:
 
@@ -69,7 +69,7 @@ Then install lasso and lasso-perl packages:
    yum install lasso lasso-perl
 
 
-.. important:: 
+.. important::
 
     Only 64bits package are available.
 
@@ -85,7 +85,7 @@ Service configuration
 Go in Manager and click on ``SAML 2 Service`` node.
 
 
-.. tip:: 
+.. tip::
 
     You can use #PORTAL# in values to replace the portal
     URL.
@@ -97,17 +97,19 @@ Your EntityID, often use as metadata URL, by default
 #PORTAL#/saml/metadata.
 
 
-.. important:: 
+.. note::
 
     The value will be use in metadata main markup:
-    
+
     .. code:: xml
-    
+
        <EntityDescriptor entityID="http://auth.example.com/saml/metadata">
          ...
        </EntityDescriptor>
-    
 
+
+
+.. _samlservice-security-parameters:
 
 Security parameters
 ~~~~~~~~~~~~~~~~~~~
@@ -122,7 +124,7 @@ To define keys, you can:
 -  generate new public and private keys (``New keys`` button)
 
 
-.. tip:: 
+.. tip::
 
     You can enter a password to protect private key with a
     password. It will be prompted if you generate keys, else you can set it
@@ -136,16 +138,16 @@ SAML components (expiration date, common name, etc.), but will just be a
 public key wrapper.
 
 
-.. tip:: 
+.. tip::
 
     You can easily generate a certificate to replace your public
     key by saving the private key in a file, and use ``openssl`` commands to
     issue a self-signed certificate:
-    
+
     ::
-    
+
        $ openssl req -new -key private.key -out cert.pem -x509 -days 3650
-    
+
 
 
 -  **Use certificate in response**: Certificate will be sent inside SAML
@@ -153,7 +155,7 @@ public key wrapper.
 -  **Signature method**: set the signature algorithm
 
 
-.. important:: 
+.. important::
 
     Default value is RSA SHA1 for compatibility purpose but
     we recommend to use RSA SHA256. This requires to test all partners to
@@ -167,7 +169,7 @@ identifier, carried in SAML messages. You can configure here which field
 of LL::NG session will be associated to a NameID format.
 
 
-.. important:: 
+.. note::
 
     This parameter is used by :doc:`SAML IDP<idpsaml>` to fill the
     NameID in authentication responses.
@@ -180,7 +182,7 @@ Customizable NameID formats are:
 -  Kerberos
 
 
-.. tip:: 
+.. tip::
 
     For example, if you are using
     :doc:`AD as authentication backend<authldap>`, you can use
@@ -192,6 +194,8 @@ Other NameID formats are automatically managed:
 -  **Persistent**: NameID is restored from previous sessions
 -  **Undefined**: Default NameID format is used
 
+.. _samlservice-authentication-contexts:
+
 Authentication contexts
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -200,7 +204,7 @@ be associated to an `SAML authentication
 context <http://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf>`__.
 
 
-.. important:: 
+.. note::
 
     This parameter is used by :doc:`SAML IDP<idpsaml>` to fill the
     authentication context in authentication responses. It will use the
@@ -220,19 +224,19 @@ Organization
 ~~~~~~~~~~~~
 
 
-.. important:: 
+.. note::
 
     This concerns all parameters for the Organization metadata
     section:
-    
+
     .. code:: xml
-    
+
        <Organization>
          <OrganizationName xml:lang="en">Example</OrganizationName>
          <OrganizationDisplayName xml:lang="en">Example</OrganizationDisplayName>
          <OrganizationURL xml:lang="en">http://www.example.com</OrganizationURL>
        </Organization>
-    
+
 
 
 -  **Display Name**: should be displayed on IDP, this is often your
@@ -244,18 +248,19 @@ Service Provider
 ~~~~~~~~~~~~~~~~
 
 
-.. important:: 
+.. note::
 
     This concerns all parameters for the Service Provider metadata
     section:
-    
+
     .. code:: xml
-    
+
        <SPSSODescriptor>
          ...
        </SPSSODescriptor>
-    
 
+
+.. _samlservice-general-options:
 
 General options
 ^^^^^^^^^^^^^^^
@@ -266,7 +271,7 @@ General options
    assertions are signed.
 
 
-.. tip:: 
+.. tip::
 
     These options can then be overridden for each Identity
     Provider.
@@ -308,17 +313,17 @@ Identity Provider
 ~~~~~~~~~~~~~~~~~
 
 
-.. important:: 
+.. note::
 
     This concerns all parameters for the Service Provider metadata
     section:
-    
+
     .. code:: xml
-    
+
        <IDPSSODescriptor>
          ...
        </IDPSSODescriptor>
-    
+
 
 
 General parameters
@@ -329,7 +334,7 @@ General parameters
      * **Want Authentication Request Signed**: set to On to require that received authentication request are signed.
 
 
-.. tip:: 
+.. tip::
 
     This option can then be overridden for each Service
     Provider.
@@ -377,17 +382,17 @@ Attribute Authority
 ~~~~~~~~~~~~~~~~~~~
 
 
-.. important:: 
+.. note::
 
     This concerns all parameters for the Attribute Authority metadata
     section
-    
+
     .. code:: xml
-    
+
        <AttributeAuthorityDescriptor>
          ...
        </AttributeAuthorityDescriptor>
-    
+
 
 
 Attribute Service
@@ -423,20 +428,22 @@ customize it:
    this case, you can fill here the IDP entityID, for example:
    ``https://auth.example.com/saml/metadata/idp``.
 
+.. _samlservice-saml-sessions-module-name-and-options:
+
 SAML sessions module name and options
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 By default, the main session module is used to store SAML temporary data
 (like relay-states), but SAML sessions need to use a session module
 compatible with the
-:doc:`sessions restrictions feature<features>`.
+:ref:`sessions restrictions feature<session-restrictions>`.
 
 This is not the case of :doc:`Memcached<memcachedsessionbackend>` for
 example. In this case, you can choose a different module to manage SAML
 sessions.
 
 
-.. tip:: 
+.. tip::
 
     You can also choose a different session module to split SSO
     sessions and SAML sessions.
@@ -458,11 +465,13 @@ Configuration parameters are:
 -  **Writer URL**: URL used by SAML IDP to write the cookie. Leave blank
    to deactivate the feature.
 
+.. _samlservice-discovery-protocol:
+
 Discovery Protocol
 ^^^^^^^^^^^^^^^^^^
 
 
-.. important:: 
+.. note::
 
     Discovery Protocol is also know as `WAYF
     Service <http://www.switch.ch/aai/support/tools/wayf.html>`__. More
@@ -474,7 +483,7 @@ Instead user is redirected on the discovery service and is redirected
 back to LL::NG with the chosen IDP.
 
 
-.. important:: 
+.. important::
 
     If the chosen IDP is not registered in LL::NG, user will
     be redirected to discovery service again.

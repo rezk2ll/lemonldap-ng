@@ -5,7 +5,7 @@ Handler Redirections
 --------------------
 
 
-.. important:: 
+.. note::
 
     When a user access a Handler without a cookie, he is redirected on
     portal, and the target URL is encoded in redirection URL (to redirect
@@ -25,7 +25,7 @@ These parameters can be configured in Manager, in ``General Parameters``
 > ``Advanced parameters`` > ``Handler redirections``.
 
 
-.. tip:: 
+.. tip::
 
     These settings can be overridden per virtual host, see
     :doc:`virtual host management<configvhost>`.
@@ -73,7 +73,7 @@ Portal Redirections
 -------------------
 
 
-.. important:: 
+.. note::
 
     If a user is redirected from handler to portal for authentication
     and once he is authenticated, portal redirects him to the redirection

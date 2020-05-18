@@ -46,32 +46,32 @@ see :doc:`REST sessions backend<restsessionbackend>`, enable local cache
 to access required locations in Portal Virtual Host.
 
 
-.. warning:: 
+.. warning::
 
     With AuthBasic handler, you have to disable CSRF token by
     setting a special rule based on source IP addresses like this :
-    
+
     requireToken => $env->{REMOTE_ADDR} !~ /^127\.0\.[1-3]\.1$/
-    
+
     With AutChoice, you have to declare which authentication module is
     requested by handler to create global session.
-    
+
     Go to:
     ``General Parameters > Authentication parameters > Choice parameters``
-    
+
     and set authentication module's name :
-    
+
     **AuthBasic handler parameter** => 2_LDAP (by example)
-    
 
 
 
-.. important:: 
+
+.. important::
 
     With HTTPS, you may have to set **LWP::UserAgent
     object** with ``verify_hostname => 0`` and ``SSL_verify_mode => 0``.
-    
+
     Go to:
-    
+
     ``General Parameters > Advanced Parameters > Security > SSL options for server requests``
 

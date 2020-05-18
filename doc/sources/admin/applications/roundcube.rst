@@ -26,10 +26,10 @@ LemonLDAP::NG
 -  in HTTP headers, you need Auth-User ($mail) and Auth-Pw ($_password).
 
 
-.. important:: 
+.. important::
 
     To be able to forward password to RoundCube, see
-    :doc:`how to store password in session<../passwordstore>`\ 
+    :doc:`how to store password in session<../passwordstore>`\
 
 -  Configure :doc:`Apache or Nginx virtual host<../configvhost>`
 

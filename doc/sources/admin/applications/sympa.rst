@@ -13,7 +13,7 @@ URL is protected by LL::NG, Sympa will display a button for users who
 wants to use this feature.
 
 
-.. tip:: 
+.. tip::
 
     Since version 1.9 of LLNG, old Auto-Login feature has been
     removed since it works only with Sympa-5 which has been deprecated
@@ -44,11 +44,11 @@ And fill it:
            logout_url                          http://sympa.example.com/wws/logout
 
 
-.. tip:: 
+.. tip::
 
     You can also disable internal Sympa authentication to keep
     only LemonLDAP::NG by removing user_table paragraph
-    
+
     Note that if you use FastCGI, you must restart Apache to enable changes.
 
 
@@ -63,7 +63,7 @@ Configure Sympa virtual host like other
 authentication URL.
 
 
-.. tip:: 
+.. tip::
 
     The location URL end is based on the ``service_id`` defined in
     Sympa apache configuration.
@@ -78,9 +78,9 @@ authentication URL.
           <Location /wws/sso_login/lemonldapng>
           PerlHeaderParserHandler Lemonldap::NG::Handler
           </Location>
-          
+
           ...
-          
+
    </VirtualHost>
 
 -  For Nginx:
@@ -103,8 +103,8 @@ authentication URL.
        fastcgi_param HOST $http_host;
        # Keep original request (LLNG server will received /llauth)
        fastcgi_param X_ORIGINAL_URI  $request_uri;
-     } 
-    
+     }
+
      # Client requests
      location /wws/sso_login/lemonldapng {
        auth_request /lmauth;
@@ -112,9 +112,9 @@ authentication URL.
        auth_request_set $lmlocation $upstream_http_location;
        error_page 401 $lmlocation;
        try_files $uri $uri/ =404;
-       
+
        ...
-        
+
        include /etc/lemonldap-ng/nginx-lua-headers.conf;
      }
      location / {
@@ -128,8 +128,8 @@ Sympa virtual host in Manager
 Go to the Manager and :doc:`create a new virtual host<../configvhost>`
 for Sympa.
 
-Configure the :doc:`access rules<../writingrulesand_headers>` and define
-the following :doc:`headers<../writingrulesand_headers>`:
+Configure the :ref:`access rules<rules>` and define
+the following :ref:`headers<headers>`:
 
 -  Auth-User
 -  Mail

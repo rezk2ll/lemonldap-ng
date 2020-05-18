@@ -63,6 +63,8 @@ ReverseProxy Mode
 **LLNG integration in ReverseProxy webserver** :doc:`Inside<configvhost>` Separate process: External LLNG FastCGI/uWSGI servers
 ============================================== ========================== ==============================================================
 
+.. _platformsoverview-external-servers-for-nginx:
+
 External servers for Nginx
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -71,7 +73,7 @@ Nginx supportes natively FastCGI and uWSGI protocoles.
 Therefore, LLNG services can be provided by compatible external servers.
 
 
-.. tip:: 
+.. tip::
 
     FastCGI or uWSGI server(s) can be installed on separate hosts.
     Also you can imagine a global cloud-FastCGI/uWSGI-service for all your
@@ -96,7 +98,7 @@ However, you can use some other FastCGI server engines:
    Node.js <https://github.com/LemonLDAPNG/node-lemonldap-ng-handler#nginx-authorization-server>`__\ (*)
 
 
-.. warning:: 
+.. warning::
 
     (*) LLNG Node.js handler can only be used as Nginx
     \`auth_request\` server, not to serve Portal or Manager
@@ -104,5 +106,5 @@ However, you can use some other FastCGI server engines:
 uWSGI
 ^^^^^
 
--  uWSGI server *(with uwsgi PSGI plugin, see
-   :doc:`Advanced PSGI usage<psgi>`)*
+-  uWSGI server (with uwsgi PSGI plugin, see
+   :doc:`Advanced PSGI usage<psgi>`)

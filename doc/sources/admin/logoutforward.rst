@@ -5,7 +5,7 @@ Presentation
 ------------
 
 Even if LL:NG can catch logout URL trough
-:doc:`virtual host rules<writingrulesand_headers>`, you can have the
+:ref:`virtual host rules<rules>`, you can have the
 need to forward a logout to other applications, to close their local
 sessions.
 
@@ -14,7 +14,7 @@ process, to send logout requests (indeed, GET requests on application
 logout URL) inside hidden iframes.
 
 
-.. tip:: 
+.. tip::
 
     The logout request will be sent even if the user did not use
     the application.
@@ -29,7 +29,7 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
 -  **Value**: application logout URL
 
 
-.. important:: 
+.. important::
 
     The request on logout URL will be sent after user is
     disconnected, so you should unprotect this URL if it is protected by an

@@ -14,7 +14,7 @@ Captchas are available on the following forms:
 -  Register form: where user enters information to create a new account
 
 
-.. important:: 
+.. important::
 
     We use the Perl module GD::SecurityImage to generate
     images, you need to install it if you enable Captcha feature.

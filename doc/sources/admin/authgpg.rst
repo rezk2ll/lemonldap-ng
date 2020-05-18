@@ -4,7 +4,7 @@ Databases
 ============== ===== ========
 Authentication Users Password
 ============== ===== ========
-✔                   
+✔
 ============== ===== ========
 
 Presentation
@@ -24,7 +24,7 @@ you just have to set GPG database. For example
 ``/usr/share/keyrings/debian-keyring.gpg``
 
 
-.. tip:: 
+.. tip::
 
     You can then choose any other module for users and
     password.

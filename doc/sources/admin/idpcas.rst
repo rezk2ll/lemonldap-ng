@@ -29,16 +29,17 @@ In the Manager, go in ``General Parameters`` » ``Issuer modules`` »
    to always allow.
 
 
-.. tip:: 
+.. tip::
 
     For example, to allow only users with a strong authentication
     level:
-    
-    ::
-    
-       $authenticationLevel > 2
-    
 
+    ::
+
+       $authenticationLevel > 2
+
+
+.. _idpcas-configuring-cas-applications:
 
 Configuring the CAS Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -65,14 +66,16 @@ Then go in ``CAS Service`` to define:
 
 -  **CAS session module name and options**: choose a specific module if
    you do not want to mix CAS sessions and normal sessions (see
-   :doc:`why<samlservice>`).
+   :ref:`why<samlservice-saml-sessions-module-name-and-options>`).
 
 
-.. tip:: 
+.. tip::
 
     If ``CAS login`` is not set, it uses ``General Parameters`` »
     ``Logs`` » ``REMOTE_USER`` data, which is set to ``uid`` by
     default
+
+.. _idpcas-configuring-the-cas-service:
 
 Configuring CAS Applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -110,7 +113,7 @@ Options
    left blank, access will be allowed for everyone.
 
 
-.. important:: 
+.. important::
 
     If the access control policy is set to ``none``, this
     rule will be ignored

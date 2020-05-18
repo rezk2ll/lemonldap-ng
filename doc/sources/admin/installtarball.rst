@@ -8,7 +8,7 @@ Get the tarball from :doc:`download page</download>`. You can also find
 on this page the SVN tarball if you want to test latest features.
 
 
-.. important:: 
+.. important::
 
     The content of the SVN tarball is not the same as the
     official tarball. Please see the next chapter to learn how build an
@@ -60,10 +60,10 @@ For full install:
    sudo make install PROD=yes
 
 
-.. important:: 
+.. note::
 
     ``PROD=yes`` makes web interface use minified versions of CSS and
-    JS files. 
+    JS files.
 
 You can modify location of default storage configuration file in
 configure target:
@@ -126,28 +126,28 @@ Available parameters are:
 -  **VHOSTLISTEN**: how listen parameter is configured for virtual hosts
    in Apache (default: \*:80)
 -  **PROD**: use minified JS and CSS files
--  **USEDEBIANLIBS**: use Debian packaged JS and CSS files *(*\ **Note
-   that this options isn't yet usable**\ *since Debian provides a too
-   old AngularJS for now: LLNG manager needs at least version 1.4.0)*
+-  **USEDEBIANLIBS**: use Debian packaged JS and CSS files (**Note
+   that this options isn't yet usable**  since Debian provides a too
+   old AngularJS for now: LLNG manager needs at least version 1.4.0)
 -  **USEEXTERNALLIBS**: use files from public CDN
 
 
-.. tip:: 
+.. tip::
 
     For Debian/Ubuntu with Apache2, you can use:
-    
+
     ::
-    
+
        make debian-install-for-apache
        make ubuntu-install-for-apache
-    
+
     And with Nginx:
-    
+
     ::
-    
+
        make debian-install-for-nginx
        make ubuntu-install-for-nginx
-    
+
     See also :doc:`Debian/Ubuntu installation documentation<installdeb>`.
 
 
@@ -176,4 +176,4 @@ Configure your DNS server to resolve names with your server IP:
 -  manager.<your domain>: manager, only for adminsitrators
 -  test1.<your domain>, test2.<your domain>: sample applications
 
-Follow the :doc:`next steps<start>`.
+Follow the :ref:`next steps<start-configuration>`.

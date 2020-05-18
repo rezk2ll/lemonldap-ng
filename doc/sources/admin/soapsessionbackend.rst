@@ -36,14 +36,15 @@ Then, set ``Lemonldap::NG::Common::Apache::Session::SOAP`` in
 sensitive):
 
 =================== ============================== ===========================================
-Required parameters                               
-=================== ============================== ===========================================
+Required parameters
+----------------------------------------------------------------------------------------------
 Name                Comment                        Example
+=================== ============================== ===========================================
 **proxy**           URL of sessions SOAP end point http://auth.example.com/index.fcgi/sessions
 =================== ============================== ===========================================
 
 
-.. tip:: 
+.. tip::
 
     Use /adminSessions if the Handler need to modify the session,
     for example if you configured an idle timeout.
@@ -102,10 +103,10 @@ For example, if real sessions are stored in
    globalStorageOptions = { 'Directory' => '/var/lib/lemonldap-ng/sessions/', 'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/', }
 
 
-.. tip:: 
+.. tip::
 
     If your sessions explorer is on the same server that the
     portal, either use the **adminSessions** end point in Manager
     configuration, or override the ``globalStorage`` and
     ``globalStorageOptions`` parameters in section all (and not portal) of
-    ``lemonldap-ng.ini``. 
+    ``lemonldap-ng.ini``.

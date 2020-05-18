@@ -29,18 +29,18 @@ The E-Mail, External and REST 2F modules
 parameters.
 
 
-.. tip:: 
+.. tip::
 
     If you want to force a 2F registration on first login, you can
     use 'Require 2FA'. You can also use a rule to force 2FA registration
-    only for some users. 
-.. tip:: 
+    only for some users.
+.. tip::
 
     You can display a message if an
     expired second factor has been removed by enabling 'Display a message if
-    an expired SF is removed' option or setting a rule. 
+    an expired SF is removed' option or setting a rule.
 
-.. tip:: 
+.. tip::
 
     Link to second factor Manager is automatically display if at least a
     SFA module is enabled. You can set a rule to display or not the

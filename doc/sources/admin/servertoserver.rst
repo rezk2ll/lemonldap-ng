@@ -50,7 +50,7 @@ You can also set ServiceToken default timeout (30 seconds) by editing
    handlerServiceTokenTTL = 30
 
 
-.. important:: 
+.. note::
 
     Service token timeout can be set for each virtual hosts.
 

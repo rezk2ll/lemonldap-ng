@@ -7,7 +7,7 @@ choose another profile to appear as. This feature can be especially
 useful for training/learning or development platforms.
 
 
-.. important:: 
+.. important::
 
     This plugin should not be used on production instance,
     prefer :doc:`ContextSwitching plugin<contextswitching>`.
@@ -36,41 +36,41 @@ protected from being impersonated.
       ``su; admins; anonymous``
 
 
-.. warning:: 
+.. warning::
 
     You HAVE TO modify **REMOTE_USER** to log both real AND
     spoofed uid.
-    
+
     Set a macro like this :
-    
+
     '' \_whatToTrace -> $real__user ? "$real__user/$_user" : "$_user/$_user"
     ''
-    
+
     and set ``Genaral Parameters > Logs > REMOTE_USER`` with ''
     \_whatToTrace ''
-    
 
 
 
-.. important:: 
+
+.. important::
 
     Both spoofed and real session attributes can be used to
     set access rules, groups or macros.
-    
+
     By example : ``$real_uid eq 'dwho``' or ``$real_groups =~ /\bsu\b/``
-    
+
     Keep in mind that real session is computed first. Afterward, if access
     is granted, impersonated session is computed with real and spoofed
-    session attributes if Impersonation is allowed. 
+    session attributes if Impersonation is allowed.
 
 
-.. important:: 
+.. important::
 
     By example, to prevent impersonation as 'dwho' set
     **Identities use rule** like :
-    
+
     '' $uid ne 'dwho' ''
-    
+
 
 
 impersonationPrefix is used to rename user's real profile attributes.

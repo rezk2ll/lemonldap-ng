@@ -31,9 +31,9 @@ Your configuration file will have to look something like this:
    client_id = CHOOSE_A_CLIENT_ID
    client_secret = CHOOSE_A_CLIENT_SECRET
    scopes = openid email profile
-   auth_url = https://auth.example.com/oauth2/authorize 
-   token_url = https://auth.example.com/oauth2/token 
-   api_url = https://auth.example.com/oauth2/userinfo 
+   auth_url = https://auth.example.com/oauth2/authorize
+   token_url = https://auth.example.com/oauth2/token
+   api_url = https://auth.example.com/oauth2/userinfo
    allow_sign_up = true
    name = LemonLDAP::NG
    send_client_credentials_via_post = false

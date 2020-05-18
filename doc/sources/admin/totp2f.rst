@@ -12,7 +12,7 @@ LLNG can propose users to register this kind of software to increase
 authentication level.
 
 
-.. tip:: 
+.. tip::
 
     Note that it's a second factor, not an authentication module.
     Users are authenticated both by login form and TOTP.
@@ -66,7 +66,7 @@ In the manager (advanced parameters), you just have to enable it:
    the choice screen
 
 
-.. important:: 
+.. important::
 
     If you want to use a custom rule for "activation" and
     want to keep self-registration, you must include this in your rule that
@@ -97,8 +97,8 @@ Developer corner
 
 If you have another TOTP registration interface, you have to set these
 keys in Second Factor Devices array (JSON) in your user-database. Then
-map it to the \_2fDevices attribute *(see
-:doc:`exported variables<exportedvars>`)*:
+map it to the \_2fDevices attribute (see
+:doc:`exported variables<exportedvars>`):
 
 .. code:: json
 

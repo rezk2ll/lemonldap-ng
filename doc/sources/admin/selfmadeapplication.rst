@@ -11,19 +11,19 @@ Your application can know the connected user using:
 -  HTTP header (in all cases)
 
 To get more information on user (name, mail, etc.), you have to read
-:doc:`HTTP headers<writingrulesand_headers>`.
+:ref:`HTTP headers<headers>`.
 
 
-.. tip:: 
+.. tip::
 
     If your application is based on `Perl CGI
     package <http://search.cpan.org/perldoc?CGI>`, you can simply replace
-    CGI by Lemonldap::NG::Handler::CGI 
+    CGI by Lemonldap::NG::Handler::CGI
 
 Code snippet
 ------------
 
-Examples with a :doc:`configured header<writingrulesand_headers>` named
+Examples with a :ref:`configured header<headers>` named
 'Auth-User':
 
 Perl
@@ -40,6 +40,8 @@ PHP
 
    print "Connected user: ".$_SERVER["HTTP_AUTH_USER"];
 
+.. _selfmadeapplication-perl-auto-protected-cgi:
+
 Perl auto-protected CGI
 -----------------------
 
@@ -51,9 +53,9 @@ First create a PSGI module based on Lemonldap::NG::Handler:
 .. code:: perl
 
    package My::PSGI;
-     
+
    use base "Lemonldap::NG::Handler::PSGI"; # or Lemonldap::NG::Handler::PSGI::OAuth2, etc…
-     
+
    sub init {
        my ($self,$args) = @_;
        $self->protection('manager');
@@ -66,17 +68,17 @@ First create a PSGI module based on Lemonldap::NG::Handler:
        # $self->error
        return 1;
    }
-     
+
    sub handler {
        my ( $self, $req ) = @_;
 
        # Will be called only if authorisated
        my $userId = $self->userId($req);
        #...
-       
+
        # Return JSON
        # $self->sendJSONresponse(...);
-       
+
        # or Return HTML
        $self->sendHtml($req, "myskin/mytemplate", ( params => { 'userId' => $userId }) );
    }
@@ -86,7 +88,7 @@ They create a FCGI script like this:
 .. code:: perl
 
    #!/usr/bin/env perl
-    
+
    use My::PSGI;
    use Plack::Handler::FCGI;
 

@@ -7,7 +7,7 @@ Presentation
 ------------
 
 
-.. important:: 
+.. important::
 
     For now, this feature is only supported by Apache
     handler.
@@ -63,7 +63,7 @@ So the above example can also be written like this:
    Authorization => basic($uid,$_password)
 
 
-.. tip:: 
+.. tip::
 
     The ``basic`` function will also force conversion from UTF-8
     to ISO-8859-1, which should be accepted by most of HTTP servers.

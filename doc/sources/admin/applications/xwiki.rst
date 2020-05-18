@@ -71,9 +71,9 @@ Xwiki virtual host in Manager
 Go to the Manager and :doc:`create a new virtual host<../configvhost>`
 for Xwiki.
 
-Configure the :doc:`access rules<../writingrulesand_headers>`.
+Configure the :ref:`access rules<rules>`.
 
-Configure the :doc:`headers<../writingrulesand_headers>`:
+Configure the :ref:`headers<headers>`:
 
 -  remote_user: $uid
 -  remote_groups: encode_base64($groups,'')

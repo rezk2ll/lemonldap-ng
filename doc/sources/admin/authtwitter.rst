@@ -4,7 +4,7 @@ Twitter
 ============== ===== ========
 Authentication Users Password
 ============== ===== ========
-✔                   
+✔
 ============== ===== ========
 
 Presentation
@@ -30,23 +30,23 @@ In Manager, go in ``General Parameters`` > ``Authentication modules``
 and choose Twitter for authentication module.
 
 
-.. tip:: 
+.. tip::
 
     You can then choose any other module for users and
     password.
 
 
-.. important:: 
+.. important::
 
     Browser implementations of formAction directive are
     inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome
     does). Administrators may have to modify formAction value with wildcard
     likes \*.
-    
+
     In Manager, go in :
-    
+
     ``General Parameters`` > ``Advanced Parameters`` > ``Security`` >
-    ``Content Security Policy`` > ``Form destination`` 
+    ``Content Security Policy`` > ``Form destination``
 
 Then, go in ``Twitter parameters``:
 

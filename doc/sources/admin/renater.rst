@@ -24,8 +24,8 @@ Configure LL::NG as SAML Service Provider with this
 :doc:`documentation<authsaml>`. You don't need to declare any IDP for
 the moment.
 
-Configure :doc:`SAML Discovery Protocol<samlservice>` to redirect users
-on WAYF Service. The endpoint URL is
+Configure :ref:`SAML Discovery Protocol<samlservice-discovery-protocol>`
+to redirect users on WAYF Service. The endpoint URL is
 https://discovery.renater.fr/renater/WAYF.
 
 Metadata import
@@ -93,7 +93,7 @@ Then run the script:
    /usr/share/lemonldap-ng/bin/importMetadataRenater -m https://metadata.federation.renater.fr/renater/main/main-idps-renater-metadata.xml -r -i "idp-renater-" -s "sp-renater-"
 
 
-.. important:: 
+.. important::
 
     You need to add this in cron to refresh metadata into
     LL::NG configuration.
@@ -104,7 +104,7 @@ Add your SP into the federation
 Go to https://federation.renater.fr/registry and register your SP.
 
 
-.. important:: 
+.. important::
 
     Be sure to check all attributes as mandatory to be able
     to get them in SAML assertions.
@@ -122,7 +122,7 @@ Configure LL::NG as SAML Identity Provider with this
 moment.
 
 
-.. important:: 
+.. important::
 
     If your LL::NG server will act as SP and IDP inside
     Renater federation, you need to set the advanced parameter "Override
@@ -173,7 +173,7 @@ Then run the script:
    /usr/share/lemonldap-ng/bin/importMetadataRenater -m https://metadata.federation.renater.fr/renater/main/main-sps-renater-metadata.xml -r -i "idp-renater" -s "sp-renater"
 
 
-.. important:: 
+.. important::
 
     You need to add this in cron to refresh metadata into
     LL::NG configuration.

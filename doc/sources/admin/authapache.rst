@@ -4,7 +4,7 @@ Apache
 ============== ===== ========
 Authentication Users Password
 ============== ===== ========
-✔                   
+✔
 ============== ===== ========
 
 Presentation
@@ -16,14 +16,14 @@ module <http://httpd.apache.org/docs/current/howto/auth.html>`__, for
 example Kerberos, Radius, OTP, etc.
 
 
-.. important:: 
+.. important::
 
     To authenticate users using Kerberos, you can now use
     the new :doc:`Kerberos authentication module<authkerberos>` which allow
-    one to chain Kerberos in a :doc:`combination<authcombination>`\ 
+    one to chain Kerberos in a :doc:`combination<authcombination>`\
 
 
-.. tip:: 
+.. tip::
 
     Apache authentication module will set the ``REMOTE_USER``
     environment variable, which will be used by LL::NG to get authenticated
@@ -47,7 +47,7 @@ the Apache authentication fails. Use then the
    Apache;LDAP
 
 
-.. tip:: 
+.. tip::
 
     In this case, the Apache authentication module should not
     require a valid user and not be authoritative, else Apache server will
@@ -77,7 +77,7 @@ The Kerberos configuration is quite complex. You can find some
 configuration tips :doc:`on this page<kerberos>`.
 
 
-.. tip:: 
+.. tip::
 
     Prefer new :doc:`Kerberos<authkerberos>` module.
 
@@ -93,8 +93,8 @@ In this case, you can add in the Apache authentication module:
 
 .. code:: apache
 
-         Satisfy any 
-         Order allow,deny 
+         Satisfy any
+         Order allow,deny
          allow from APPLICATIONS_IP
 
 This will bypass the authentication module for request from

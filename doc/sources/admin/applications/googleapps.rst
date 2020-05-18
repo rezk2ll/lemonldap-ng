@@ -26,7 +26,7 @@ Google Apps control panel
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. important:: 
+.. important::
 
     This part is based on `SimpleSAMLPHP
     documentation <http://simplesamlphp.org/docs/1.6/simplesamlphp-googleapps>`__.
@@ -55,7 +55,7 @@ Now configure all SAML parameters:
    Example: http://auth.example.com
 
 
-.. important:: 
+.. important::
 
     You must check the option
     ``Use a specific domain transmitter`` to force Google Apps to send the
@@ -79,10 +79,10 @@ use openssl to generate an auto-signed certificate:
 You can now the upload the certificate (``cert.pem``) on Google Apps.
 
 
-.. tip:: 
+.. tip::
 
     You can also use the certificate instead of public key in SAML
-    metadata, see :doc:`SAML service configuration<../samlservice>`\ 
+    metadata, see :doc:`SAML service configuration<../samlservice>`\
 
 New Service Provider
 ~~~~~~~~~~~~~~~~~~~~
@@ -112,7 +112,7 @@ Now we will add Google Apps as a new SAML Service Provider:
    </md:EntityDescriptor>
 
 
-.. important:: 
+.. important::
 
     Change **mydomain.org** (in ``AssertionConsumerService``
     markup, parameter ``Location``) into your Google Apps domain. Also adapt
@@ -134,7 +134,7 @@ You need to adapt some parameters:
    ``On`` to always display it
 
 
-.. important:: 
+.. important::
 
     Change **mydomain.org** into your Google Apps
     domain
@@ -155,7 +155,7 @@ To manage the other way (LL::NG → Google Apps), you can add a dedicated
    GoogleApps => http://www.google.com/calendar/hosted/mydomain.org/logout
 
 
-.. important:: 
+.. important::
 
     Change **mydomain.org** into your Google Apps
     domain

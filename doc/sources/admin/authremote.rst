@@ -4,11 +4,11 @@ Remote
 ============== ===== ========
 Authentication Users Password
 ============== ===== ========
-✔              ✔    
+✔              ✔
 ============== ===== ========
 
 
-.. warning:: 
+.. warning::
 
     This module is a LL::NG specific identity federation
     protocol. You may rather use standards protocols like
@@ -44,7 +44,7 @@ Presentation
 #. User can now access to the protected application
 
 
-.. important:: 
+.. note::
 
     Note that if the user is already authenticated on the first
     portal, all redirections are transparent.

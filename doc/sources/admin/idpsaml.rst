@@ -32,15 +32,15 @@ configure:
    to always allow.
 
 
-.. tip:: 
+.. tip::
 
     For example, to allow only users with a strong authentication
     level:
-    
+
     ::
-    
+
        $authenticationLevel > 2
-    
+
 
 
 Register LemonLDAP::NG on partner Service Provider
@@ -78,7 +78,7 @@ between your server and the SP).
 |image0|
 
 
-.. tip:: 
+.. tip::
 
     You can also edit the metadata directly in the textarea
 
@@ -139,10 +139,10 @@ Authentication response
      NotOnOrAfter="2014-07-21T12:48:08Z">
 
 
-.. important:: 
+.. important::
 
     There is a time tolerance of 60 seconds in
-    ``<Conditions>``\ 
+    ``<Conditions>``\
 
 -  **Force UTF-8**: Activate to force UTF-8 decoding of values in SAML
    attributes. If set to 0, the value from the session is directly
@@ -152,7 +152,7 @@ Signature
 '''''''''
 
 These options override service signature options (see
-:doc:`SAML service configuration<samlservice>`).
+:ref:`SAML service configuration<samlservice-general-options>`).
 
 -  **Sign SSO message**: sign SSO message
 -  **Check SSO message signature**: check SSO message signature
@@ -168,17 +168,17 @@ Security
    Initiated URL on this SP.
 
 
-.. tip:: 
+.. tip::
 
     The IDP Initiated URL is the SSO SAML URL with GET
     parameters:
-    
+
     -  IDPInitiated: 1
     -  One of:
-    
+
        -  sp: SP entity ID
        -  spConfKey: SP configuration key
-    
+
     For example:
     http://auth.example.com/saml/singleSignOn?IDPInitiated=1&spConfKey=simplesamlphp
 

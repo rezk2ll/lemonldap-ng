@@ -43,7 +43,7 @@ Active Directory). The reverse DNS of auth.example.com **must** return
 the portal IP.
 
 
-.. tip:: 
+.. tip::
 
     If you have a SSO cluster, you must setup a Virtual IP in
     cluster and register this IP in DNS.
@@ -136,13 +136,13 @@ You have to run this command on Active Directory:
    ktpass -princ HTTP/auth.example.com@EXAMPLE.COM -mapuser KERB_AUTH@EXAMPLE.COM -crypto DES-CBC-MD5 -ptype KRB5_NT_PRINCIPAL -mapOp set -pass <PASSWORD> -out c:\auth.keytab
 
 
-.. important:: 
+.. important::
 
     The values passed in -crypto and -ptype depend on the
     Active Directory version and the windows version of the workstations.
     You can for example use RC4-HMAC-NT as crypto protocol if DES is not
     supported by workstations (this the case by default for Window 8 for
-    example). 
+    example).
 
 The file ``auth.keytab`` should then be copied (with a secure media) to
 the Linux server (for example in ``/etc/lemonldap-ng``).

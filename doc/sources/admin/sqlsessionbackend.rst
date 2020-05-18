@@ -13,6 +13,8 @@ SQL session backend can be used with many SQL databases such as:
 Setup
 -----
 
+.. _sqlsessionbackend-prepare-the-database:
+
 Prepare the database
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -20,10 +22,10 @@ Your database must have a specific table to host sessions. Here are some
 examples for main databases servers.
 
 
-.. important:: 
+.. important::
 
     If your database doesn't accept UTF-8 characters in
-    'text' field, use 'blob' instead of 'text'. 
+    'text' field, use 'blob' instead of 'text'.
 
 MySQL
 ^^^^^
@@ -44,20 +46,20 @@ Create sessions table:
        );
 
 
-.. important:: 
+.. important::
 
     Change ``char(32)`` by ``varchar(64)`` if you use the
     now recommended SHA256 hash algorithm. See
     :doc:`Sessions<sessions>` for more details
 
 
-.. tip:: 
+.. tip::
 
     You can change table name ``sessions`` to whatever you want,
     just adapt the parameter ``TableName`` in module options.
 
 
-.. important:: 
+.. important::
 
     For a better UTF-8 support, use
     `DBD::MariaDB <https://metacpan.org/pod/DBD::MariaDB>`__ with
@@ -101,7 +103,7 @@ Create table:
    lemonldap-ng=> q
 
 
-.. important:: 
+.. important::
 
     Change ``char(32)`` by ``varchar(64)`` if you use the
     now recommended SHA256 hash algorithm. See
@@ -117,9 +119,10 @@ for PostgreSQL) in ``General parameters`` » ``Sessions`` »
 parameters (case sensitive):
 
 =================== ================================================= ====================================
-Required parameters                                                  
-=================== ================================================= ====================================
+Required parameters
+----------------------------------------------------------------------------------------------------------
 Name                Comment                                           Example
+=================== ================================================= ====================================
 **DataSource**      The `DBI <https://metacpan.org/pod/DBI>`__ string dbi:Pg:dbname=sessions;host=10.2.3.1
 **UserName**        The database username                             lemonldap-ng
 **Password**        The database password                             mysuperpassword
@@ -134,24 +137,25 @@ connector (https://metacpan.org/pod/DBD::Oracle,
 `DBD::Pg <https://metacpan.org/pod/DBD::Pg>`__,...)
 
 
-.. important:: 
+.. important::
 
     For MySQL, you need to set additional parameters:
-    
+
     -  LockDataSource
     -  LockUserName
     -  LockPassword
-    
 
 
 
-.. tip:: 
+
+.. tip::
 
     For better performances, you can use specific
     :doc:`browseable session backend<browseablesessionbackend>`.
-    
+
     Learn more at
-    :doc:`how to increase Data Base performances<performances>`. 
+    :ref:`how to increase Data Base performances<performances-apachesession-performances>`.
+
 
 UTF8 support
 ^^^^^^^^^^^^

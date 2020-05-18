@@ -6,7 +6,8 @@ Presentation
 
 Exported variables are the variables available to
 :doc:`write rules and headers<writingrulesand_headers>`. They are
-extracted from the users database by the :doc:`users module<start>`.
+extracted from the users database by the
+:ref:`users module<start-authentication-users-and-password-databases>`.
 
 To create a variable, you've just to map a user attributes in LL::NG
 using ``Variables`` » ``Exported variables``. For each variable, The
@@ -32,7 +33,7 @@ module.
 |Exported variables in the Manager|
 
 
-.. tip:: 
+.. tip::
 
     You can define environment variables in
     ``Exported variables``, this allows one to populate user session with

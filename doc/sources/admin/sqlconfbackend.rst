@@ -7,7 +7,7 @@ There is 2 types of SQL configuration backends for LemonLDAP::NG:
 -  **RDBI**: triple store storage
 
 
-.. tip:: 
+.. tip::
 
     You can use any database engine if it provides a Perl Driver.
     You will find here examples for MySQL and PostgreSQL, but other engines
@@ -80,13 +80,13 @@ components needs just a read access. You can also use the same user for
 all.
 
 
-.. tip:: 
+.. tip::
 
     You can use different dbiUser strings:
-    
+
     -  one with read/write rights for servers hosting the manager
     -  one with just read rights for other servers
-    
+
 
 
 For example (suppose that our servers are in 10.0.0.0/24 network):

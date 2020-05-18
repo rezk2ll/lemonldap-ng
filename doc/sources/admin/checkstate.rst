@@ -22,7 +22,7 @@ GET Parameter Need     Value
 ============= ======== ============================================================
 ``secret``    required Same value as the shared secret given to the manager
 ``user``      optional If set (with password), a login/logout process will be tried
-``password``  optional 
+``password``  optional
 ============= ======== ============================================================
 
 Example

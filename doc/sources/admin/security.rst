@@ -12,7 +12,7 @@ use more than 1 server. If some of your servers are not in the same
 :doc:`SOAP access<soapconfbackend>` for those servers.
 
 
-.. tip:: 
+.. tip::
 
     You can use different type of access:
     :doc:`SQL<sqlconfbackend>`, :doc:`File<fileconfbackend>` or
@@ -20,7 +20,8 @@ use more than 1 server. If some of your servers are not in the same
     :doc:`SOAP<soapconfbackend>` for remote servers.
 
 Next, you have to configure the SOAP access as described
-:doc:`here<soapconfbackend>` since SOAP access is denied by default.
+:ref:`here<soapconfbackend-next-configure-soap-for-your-remote-servers>`
+since SOAP access is denied by default.
 
 Protect the Manager
 -------------------
@@ -70,12 +71,15 @@ To protect the manager by LL::NG, you just have to set this in
    protection = manager
 
 
-.. important:: 
+.. important::
 
     Before, you have to create the virtual host
     ``manager.your.domain`` in the manager and set a
-    :doc:`rules<writingrulesand_headers>`, else access to the manager will
+    :ref:`rule<rules>`, else access to the manager will
     be denied.
+
+
+.. _security-portal:
 
 Portal
 ------
@@ -107,16 +111,16 @@ LLNG portal now embeds the following features:
    Security » Cross-Origin Resource Sharing)*
 
 
-.. important:: 
+.. important::
 
-    
-    
+
+
     -  Brute-force attack protection is DISABLED by default
     -  Browser implementations of formAction directive are inconsistent
        (e.g. Firefox doesn't block the redirects whereas Chrome does).
        Administrators may have to modify formAction value with wildcard
        likes ``*``.
-    
+
 
 
 Split portal when using SOAP/REST
@@ -126,17 +130,19 @@ If you use :doc:`SOAP<soapsessionbackend>` or
 :doc:`REST<restsessionbackend>` session backend, dedicate a portal
 especially for these internal requests.
 
+.. _security-write-good-rules:
+
 Write good rules
 ----------------
 
 Order your rules
 ~~~~~~~~~~~~~~~~
 
-:doc:`Rules<writingrulesand_headers>` are applied in alphabetical order
+:ref:`Rules<rules>` are applied in alphabetical order
 (comment and regular expression). The first matching rule is applied.
 
 
-.. important:: 
+.. important::
 
     The "default" rule is only applied if no other rule
     matchs
@@ -151,7 +157,7 @@ For example, if these rules are used without comments:
 Regular expression Rule           Comment
 ================== ============== =======
 ^/pub/admin/       $uid eq "root"
-^/pub/             accept        
+^/pub/             accept
 ================== ============== =======
 
 Then the second rule will be applied first, so every authenticated user
@@ -167,52 +173,52 @@ Regular expression Rule           Comment
 ================== ============== =======
 
 
-.. tip:: 
+.. tip::
 
-    
-    
+
+
     -  Reload the Manager to see the effective order
     -  Use rule comments to order your rules
-    
+
 
 
 Be careful with URL parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can write :doc:`rules<writingrulesand_headers>` matching any
+You can write :ref:`rules<rules>` matching any
 component of URL to protect including GET parameters, but be careful.
 
 For example with this rule on the ``access`` parameter:
 
-=========================== ====================== =======
-Regular expression          Rule                   Comment
-=========================== ====================== =======
-^/index.php\?.*access=admin $groups =~ /\badmin\b/
-default                     accept                
-=========================== ====================== =======
+=============================== ========================== =======
+Regular expression              Rule                       Comment
+=============================== ========================== =======
+``^/index.php\?.*access=admin`` ``$groups =~ /\badmin\b/``
+``default``                     ``accept``
+=============================== ========================== =======
 
 Then a user that try to access to one of the following will be granted !
 
--  /index.php?access=admin&access=other
--  /index.php?Access=admin
+-  ``/index.php?access=admin&access=other``
+-  ``/index.php?Access=admin``
 
 You can use the following rules instead:
 
-================================= ====================== =======
-Regular expression                Rule                   Comment
-================================= ====================== =======
-^/(?i)index.php\?.*access.*access deny                   0_bad
-^/(?i)index.php\?.*access=admin   $groups =~ /\badmin\b/ 1_admin
-default                           accept                
-================================= ====================== =======
+===================================== ========================== =======
+Regular expression                    Rule                       Comment
+===================================== ========================== =======
+``^/(?i)index.php\?.*access.*access`` ``deny``                   0_bad
+``^/(?i)index.php\?.*access=admin``   ``$groups =~ /\badmin\b/`` 1_admin
+``default``                           ``accept``
+===================================== ========================== =======
 
 
-.. tip:: 
+.. tip::
 
-    \ **(?i)** means case no sensitive.
+     **(?i)** means case no sensitive.
 
 
-.. warning:: 
+.. warning::
 
     Remember that rules written on GET parameters must be
     tested.
@@ -229,7 +235,7 @@ IP in rules
 ~~~~~~~~~~~
 
 
-.. warning:: 
+.. warning::
 
     If you are running LemonLDAP::NG behind a reverse proxy,
     make sure you check the
@@ -237,6 +243,8 @@ IP in rules
     applies to the real user IP and not the reverse proxy's IP. Make sure
     you only specify trusted proxy addresses so that an attacker cannot
     forge the ``X-Forwarded-For`` header
+
+.. _security-reverseproxies:
 
 Secure reverse-proxies
 ----------------------
@@ -283,6 +291,8 @@ of:
 -  SSL client certificate for the reverse-proxy (see SSLProxy\*
    parameters in `mod_ssl
    documentation <http://httpd.apache.org/docs/2.2/mod/mod_ssl.html>`__)
+
+.. _security-configure-security-settings:
 
 Configure security settings
 ---------------------------
@@ -340,19 +350,19 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
    ``Access-Control-Allow-Origin`` value with ' '.
 
 
-.. important:: 
+.. important::
 
     If URLs are protected with AuthBasic handler, you have
     to disable CSRF token by setting a special rule based on callers IP
     address like this :
-    
-    requireToken => $env->{REMOTE_ADDR} !~ /^127\.0\.[1-3]\.1$/ 
 
-.. warning:: 
+    requireToken => $env->{REMOTE_ADDR} !~ /^127\.0\.[1-3]\.1$/
+
+.. warning::
 
     Enable global storage for one time tokens will downgrade
     Portal performance!!!
-    
+
     Must ONLY be use with outdated or low performance Load Balancer.
 
 Fail2ban
@@ -416,7 +426,8 @@ We recommend to use :
 SAML
 ----
 
-See :doc:`samlservice#security_parameters<samlservice>`
+See
+:ref:`samlservice#security_parameters<samlservice-security-parameters>`
 
 .. |image0| image:: /documentation/manager-rule.png
    :class: align-center

@@ -5,9 +5,9 @@ SSO cookie
 ----------
 
 The SSO cookie is built by the portal (as described in the
-:doc:`login kinematic<presentation>`), or by the Handler
-for cross domain authentication (see
-:doc:`CDA kinematic<presentation>`).
+:ref:`login kinematic<presentation-login>`), or by the
+Handler for cross domain authentication (see
+:ref:`CDA kinematic<cda>`).
 
 To edit SSO cookie parameters, go in Manager, ``General Parameters`` >
 ``Cookies``:
@@ -38,13 +38,13 @@ To edit SSO cookie parameters, go in Manager, ``General Parameters`` >
    expiration time and use a session cookie.
 
 
-.. warning:: 
+.. warning::
 
     When you change cookie expiration time, it is written on
     the user hard disk unlike session cookie
 
 
-.. important:: 
+.. important::
 
     Changing the domain value will not update other
     configuration parameters, like virtual host names, portal URL, etc. You
@@ -62,7 +62,7 @@ portal by:
    POST, SAML, etc.)
 
 
-.. warning:: 
+.. warning::
 
     The portal URL **must** be inside SSO domain. If secured
     cookie is enabled, the portal URL **must** be HTTPS.

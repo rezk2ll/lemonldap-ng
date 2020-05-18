@@ -8,8 +8,8 @@ To use LemonLDAP::NG, you have the choice of the Web Server :
 
 -  Nginx
 -  Apache 2
--  Any FastCGI or uWSGI compatible Web Server *(*\ **Portal and manager
-   only**\ *)*
+-  Any FastCGI or uWSGI compatible Web Server ( **Portal and manager
+   only**)
 
 For Apache2, you can use all workers mpm-worker, mpm-prefork and
 mpm-event. Mpm-worker works faster and LemonLDAP::NG use the thread
@@ -23,7 +23,7 @@ Perl
 ----
 
 
-.. important:: 
+.. note::
 
     Here the list of Perl modules used in LemonLDAP::NG. Core modules
     must be installed on the system. Other modules are required only if you
@@ -154,11 +154,13 @@ Install dependencies on your system
 -----------------------------------
 
 
-.. warning:: 
+.. warning::
 
     You don't need to install them if you use LL::NG packages.
     With ``apt`` or ``yum``, dependencies will be automatically
     installed.
+
+.. _prereq-apt-get:
 
 APT
 ~~~
@@ -181,15 +183,17 @@ For Nginx:
 
    apt install nginx nginx-extras
 
+.. _prereq-yum:
+
 YUM
 ~~~
 
 
-.. tip:: 
+.. tip::
 
     You need `EPEL <http://fedoraproject.org/wiki/EPEL/>`__
     repository. See below how to enable this repository:
-    http://fedoraproject.org/wiki/EPEL/FAQ#howtouse\ 
+    http://fedoraproject.org/wiki/EPEL/FAQ#howtouse\
 
 Perl dependencies:
 
@@ -210,7 +214,7 @@ For Nginx:
    yum install nginx
 
 
-.. important:: 
+.. important::
 
     As you need a recent version of Nginx, the best is to
     install `Nginx official

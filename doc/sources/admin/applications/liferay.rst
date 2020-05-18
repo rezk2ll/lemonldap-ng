@@ -18,7 +18,7 @@ Of course, integration will be full if you use the LDAP directory as
 users backend for LL::NG and Liferay.
 
 
-.. important:: 
+.. important::
 
     If the user is not created, or can not be created via
     LDAP import, the connection to Liferay will be refused. With LDAP,
@@ -59,7 +59,7 @@ In ``General``, fill at least the following information:
 -  **How do users authenticate?**: by login
 
 
-.. tip:: 
+.. tip::
 
     We advice to deactivate other options, cause users will use
     LL::NG portal to modify or reset their password.
@@ -67,16 +67,16 @@ In ``General``, fill at least the following information:
 |image6|
 
 
-.. important:: 
+.. important::
 
     You need to activate LDAP authentication, else SSO
     authentication will not work. Do this in the control panel or in the
     configuration file:
-    
+
     ::
-    
+
        ldap.auth.enabled=true
-    
+
 
 
 Then use the ``SiteMinder`` tab to configure SSO:
@@ -88,7 +88,7 @@ Then use the ``SiteMinder`` tab to configure SSO:
 |image7|
 
 
-.. important:: 
+.. important::
 
     Do not forget to save your changes!
 
@@ -108,7 +108,7 @@ Configure Liferay virtual host like other
           PerlHeaderParserHandler Lemonldap::NG::Handler
 
           ...
-          
+
    </VirtualHost>
 
 -  For Nginx:
@@ -131,8 +131,8 @@ Configure Liferay virtual host like other
        fastcgi_param HOST $http_host;
        # Keep original request (LLNG server will received /llauth)
        fastcgi_param X_ORIGINAL_URI  $request_uri;
-     } 
-    
+     }
+
      # Client requests
      location / {
        auth_request /lmauth;
@@ -140,9 +140,9 @@ Configure Liferay virtual host like other
        auth_request_set $lmlocation $upstream_http_location;
        error_page 401 $lmlocation;
        try_files $uri $uri/ =404;
-    
+
        ...
-    
+
        include /etc/lemonldap-ng/nginx-lua-headers.conf;
      }
      location / {
@@ -156,14 +156,14 @@ Liferay virtual host in Manager
 Go to the Manager and :doc:`create a new virtual host<../configvhost>`
 for Liferay.
 
-Just configure the :doc:`access rules<../writingrulesand_headers>`. You
+Just configure the :ref:`access rules<rules>`. You
 can add a rule for logout:
 
 ::
 
     ^/c/portal/logout => logout_sso
 
-Configure the ``Auth-User`` :doc:`header<../writingrulesand_headers>`.
+Configure the ``Auth-User`` :ref:`header<headers>`.
 
 .. |image0| image:: /applications/liferay_logo.png
    :class: align-center

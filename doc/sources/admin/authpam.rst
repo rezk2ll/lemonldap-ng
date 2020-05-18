@@ -4,7 +4,7 @@ PAM
 ============== ===== ========
 Authentication Users Password
 ============== ===== ========
-✔                   
+✔
 ============== ===== ========
 
 Presentation
@@ -41,7 +41,7 @@ In Manager, go in ``General Parameters`` > ``Authentication modules``
 and choose PAM for authentication.
 
 
-.. tip:: 
+.. tip::
 
     You can then choose any other module for users and
     password.

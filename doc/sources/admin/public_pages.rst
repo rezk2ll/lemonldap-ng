@@ -2,7 +2,7 @@ Public pages
 ============
 
 
-.. important:: 
+.. note::
 
     Public pages are available since version 1.9.8.
 

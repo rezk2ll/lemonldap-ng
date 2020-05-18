@@ -7,13 +7,13 @@ LemonLDAP::NG) to verify the validity of an OTP using the standard
 Radius protocol.
 
 
-.. tip:: 
+.. tip::
 
     This page is about using Radius to connect to an external 2FA
     system for the *second factor only*. If your 2FA system works by
     concatenating the user's password and their OTP (LinOTP), you should
     probably be using :doc:`regular Radius authentication<authradius>`
-    instead 
+    instead
 
 After choosing the Radius second factor type, the user is prompted with
 a code that will be checked against the Radius server.

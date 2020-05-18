@@ -2,8 +2,8 @@ Custom functions
 ================
 
 Custom functions allow one to extend LL::NG, they can be used in
-:doc:`headers<writingrulesand_headers>`,
-:doc:`rules<writingrulesand_headers>` or
+:ref:`headers`,
+:ref:`rules` or
 :doc:`form replay data<formreplay>`. Two actions are needed:
 
 -  declare them in LLNG configuration
@@ -72,7 +72,7 @@ Old method
 ^^^^^^^^^^
 
 
-.. warning:: 
+.. warning::
 
     This method is available but unusable by Portal under
     Apache. So if your rule may be used by the menu, use the new
@@ -128,7 +128,7 @@ Go in Manager, ``General Parameters`` » ``Advanced Parameters`` »
    SSOExtensions::function1 SSOExtensions::function2
 
 
-.. important:: 
+.. important::
 
     If your function is not compliant with
     :doc:`Safe jail<safejail>`, you will need to disable the jail.

@@ -5,14 +5,14 @@ This is the default configuration backend. Configuration is stored as
 JSON.
 
 
-.. tip:: 
+.. tip::
 
     This configuration storage can be shared between different
     hosts using:
-    
+
     -  :doc:`SOAP configuration backend proxy<soapconfbackend>`
     -  any files sharing system (NFS, NAS, SAN,...)
-    
+
 
 
 Configuration

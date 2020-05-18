@@ -43,11 +43,11 @@ Your Guacamole configuration directory will look something like this.
    └── guacamole.properties
 
 
-.. warning:: 
+.. warning::
 
     Make sure to rename the JAR in a way that `ensures that it
     will be loaded
-    first <https://lists.apache.org/thread.html/b781a5c4e4d14f7ce297200ba6886d888df4333f83836220ac8b69f1@%3Cuser.guacamole.apache.org%3E>`__\ 
+    first <https://lists.apache.org/thread.html/b781a5c4e4d14f7ce297200ba6886d888df4333f83836220ac8b69f1@%3Cuser.guacamole.apache.org%3E>`__\
 
 And ``guacamole.properties`` should contain at least
 
@@ -61,7 +61,7 @@ And ``guacamole.properties`` should contain at least
    openid-username-claim-type: sub
 
 
-.. tip:: 
+.. tip::
 
     Remplace the ``redirect uri`` with your Guacamole server's URL
 

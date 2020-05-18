@@ -16,8 +16,8 @@ LL::NG affords all these services (except application logs of course,
 but headers are provided to permit this).
 
 Headers setting is an another LL::NG service. LL::NG can provide any
-user attributes to an application *(see
-:doc:`Rules and headers<writingrulesand_headers>`)*
+user attributes to an application (see
+:doc:`Rules and headers<writingrulesand_headers>`)
 
 ``*aaS`` means that application can drive underlying layer (IaaS for
 infrastructure, PaaS for platform,…). So for us, ``SSOaaS`` must provide
@@ -28,11 +28,12 @@ just use it, not manage it.
 LL::NG affords some features that can be used to provide SSO as a
 service: a web application can manage its rules and headers. Docker or
 VM images (Nginx only) includes LL::NG Nginx configuration that aims to
-a global :doc:`LL::NG authorization server<platformsoverview>`. By
-default, all authenticated users can access and one header is set:
+a global
+:ref:`LL::NG authorization server<platformsoverview-external-servers-for-nginx>`.
+By default, all authenticated users can access and one header is set:
 ``Auth-User``. If application gives a RULES_URL parameter that refers to
 a JSON file, authorization server will read it, apply specified rules
-and set required headers *(see :doc:`DevOps Handler<devopshandler>`)*.
+and set required headers (see :doc:`DevOps Handler<devopshandler>`).
 
 There are two different architectures to do this:
 
@@ -75,7 +76,7 @@ request authorization from a central FastCGI server:
        fastcgi_param HOST $http_host;
        # Keep original request (LLNG server will received /lmauth)
        fastcgi_param X_ORIGINAL_URI  $request_uri;
-       
+
        # Set dynamically rules (LLNG will poll it every 10 mn)
        fastcgi_param RULES_URL http://rulesserver/my.json
      }
@@ -115,14 +116,14 @@ FastCGI" configuration.
    <VirtualHost ...>
        ServerName app.tls
        PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2::FCGIClient
-       
+
        # This must point to the central FastCGI server
        PerlSetVar LLNG_SERVER 192.0.2.1:9090
-       
+
        # Declare this vhost as a DevOps vhost, so that we do not have
        # to declare it in the LemonLDAP::NG Manager
        PerlSetVar VHOSTTYPE DevOps
-       
+
        # This URL will be fetched by the central FastCGI server and
        # used to make the authentication decision about this virtualhost
        # Make sure the central FastCGI server can reach it

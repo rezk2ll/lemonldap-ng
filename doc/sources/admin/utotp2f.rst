@@ -26,14 +26,14 @@ In the manager (second factors), you just have to enable it:
    the choice screen
 
 
-.. tip:: 
+.. tip::
 
     Every other parameters of :doc:`U2F<u2f>` and
     :doc:`TOTP<totp2f>` can be set in the corresponding 2F modules except
     that you should not enable them.
 
 
-.. important:: 
+.. important::
 
     If you want to give a different level for U2F or TOTP,
     leave this parameter blank and set U2F and TOTP "authentication level"

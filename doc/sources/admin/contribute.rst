@@ -18,8 +18,8 @@ applies the following rules:
 -  Javascript:
 
    -  code must be written in
-      `CoffeeScript <http://coffeescript.org/>`__ *(in
-      ``<component>/site/coffee``)*: ``make minify`` will generate JS
+      `CoffeeScript <http://coffeescript.org/>`__ (in
+      ``<component>/site/coffee``): ``make minify`` will generate JS
       files
 
 Configure SSH
@@ -60,7 +60,7 @@ Debian
    aptitude install vim make devscripts yui-compressor git git-gui libjs-uglify coffeescript cpanminus autopkgtest pkg-perl-autopkgtest
    aptitude install libauth-yubikey-webclient-perl libnet-smtp-server-perl
 
-   cpanm Authen::U2F Authen::U2F::Tester Crypt::U2F::Server::Simple 
+   cpanm Authen::U2F Authen::U2F::Tester Crypt::U2F::Server::Simple
 
    curl -sL https://deb.nodesource.com/setup_9.x | bash -
    apt-get install -y nodejs
@@ -127,7 +127,7 @@ Install dependencies
 
 ::
 
-   aptitude install libapache-session-perl libcache-cache-perl libclone-perl libconfig-inifiles-perl libconvert-pem-perl libcrypt-openssl-bignum-perl libcrypt-openssl-rsa-perl libcrypt-openssl-x509-perl libcrypt-rijndael-perl libdbi-perl libdigest-hmac-perl libemail-sender-perl libgd-securityimage-perl libhtml-template-perl libio-string-perl libjson-perl libmime-tools-perl libmouse-perl libnet-ldap-perl libplack-perl libregexp-assemble-perl libregexp-common-perl libsoap-lite-perl libstring-random-perl libtext-unidecode-perl libunicode-string-perl liburi-perl libwww-perl libxml-simple-perl libxml-libxslt-perl libcrypt-urandom-perl libconvert-base32-perl cpanminus 
+   aptitude install libapache-session-perl libcache-cache-perl libclone-perl libconfig-inifiles-perl libconvert-pem-perl libcrypt-openssl-bignum-perl libcrypt-openssl-rsa-perl libcrypt-openssl-x509-perl libcrypt-rijndael-perl libdbi-perl libdigest-hmac-perl libemail-sender-perl libgd-securityimage-perl libhtml-template-perl libio-string-perl libjson-perl libmime-tools-perl libmouse-perl libnet-ldap-perl libplack-perl libregexp-assemble-perl libregexp-common-perl libsoap-lite-perl libstring-random-perl libtext-unidecode-perl libunicode-string-perl liburi-perl libwww-perl libxml-simple-perl libxml-libxslt-perl libcrypt-urandom-perl libconvert-base32-perl cpanminus
    aptitude install apache2 libapache2-mod-fcgid libapache2-mod-perl2  # install Apache
    aptitude install nginx nginx-extras  # install Nginx
    cpanm perltidy@20181120
@@ -135,7 +135,7 @@ Install dependencies
 ::
 
     SAML :
-   aptitude install liblasso-perl libglib-perl 
+   aptitude install liblasso-perl libglib-perl
 
 Working Project
 ---------------

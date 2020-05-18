@@ -4,7 +4,7 @@ Proxy
 ============== ===== ========
 Authentication Users Password
 ============== ===== ========
-✔              ✔    
+✔              ✔
 ============== ===== ========
 
 Presentation
@@ -60,6 +60,6 @@ in your lemonldap-ng.ini:
    soapProxyUrn = urn:Lemonldap/NG/Common/CGI/SOAPService
 
 
-.. important:: 
+.. important::
 
     This needs LLNG version 2.0.8 at least

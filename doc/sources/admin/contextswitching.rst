@@ -23,15 +23,15 @@ can be forbidden to assume.
       request.
 
 
-.. warning:: 
+.. warning::
 
     During context switching authentication process, all
     plugins are disabled. In other words, all entry points like afterData,
     endAuth and so on are skipped. Therefore, second factors or
-    notifications by example will not be prompted! 
+    notifications by example will not be prompted!
 
 
-.. important:: 
+.. important::
 
     ContextSwitching plugin works only with a userDB
     backend. You can not switch context with federated authentication.

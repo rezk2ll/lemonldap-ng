@@ -9,7 +9,7 @@ Apache based protection
 -----------------------
 
 
-.. tip:: 
+.. tip::
 
     Apache based protection allow one to be independent from
     WebSSO, so Manager will always be reachable even if WebSSO configuration
@@ -46,23 +46,23 @@ module <http://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html>`__:
        </Directory>
 
 
-.. important:: 
+.. important::
 
     You need to disable default Manager protection in
     lemonldap-ng.ini to rely only on Apache:
-    
+
     .. code:: ini
-    
+
        [manager]
        ;protection = manager
-    
+
 
 
 LL::NG based protection
 -----------------------
 
 
-.. warning:: 
+.. warning::
 
     Before enabling Manager protection by LL::NG, you must
     have configured how users authenticate on Portal, and test that you can
@@ -71,8 +71,9 @@ LL::NG based protection
 
 By default, you will have a manager virtual host define in
 configuration. If not Go on Manager, and declare Manager as a new
-:doc:`virtual host<configvhost>`, for example ``manager.example.com``.
-You can then set the access rule. No headers are needed.
+:ref:`virtual host<configvhost-lemonldapng-configuration>`, for example
+``manager.example.com``. You can then set the access rule. No headers
+are needed.
 
 The default rule is:
 
@@ -86,7 +87,7 @@ like group membership, or any other rule based on a session variable).
 Save the configuration and exit the Manager.
 
 
-.. tip:: 
+.. tip::
 
     The next time you will access Manager, it will be trough
     LL::NG.
@@ -112,10 +113,10 @@ Restart Apache and try to log on Manager. You should be redirected to
 LL::NG Portal.
 
 You can then add the Manager as
-:doc:`an application in the menu<portalmenu>`.
+:ref:`an application in the menu<portalmenu-categories-and-applications>`.
 
 
-.. tip:: 
+.. tip::
 
     If for an obscure reason, the WebSSO is not working and you
     want to access the Manager, remove the protection in

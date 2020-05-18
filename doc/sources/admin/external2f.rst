@@ -10,7 +10,7 @@ Commands
 
 Commands receive arguments on command line and must return a 0 code if
 succeed, another else. **Nothing must be written to STDOUT**, STDERR is
-reported in logs *(but may be lost with FastCGI server)*.
+reported in logs (but may be lost with FastCGI server).
 
 Configuration
 ~~~~~~~~~~~~~
@@ -33,17 +33,17 @@ All parameters are configured in "General Parameters » Portal Parameters
 -  **Authentication level** (Optional): if you want to overwrite the
    value sent by your authentication module, you can define here the new
    authentication level. Example: 5
--  **Logo** (Optional): logo file *(in static/<skin> directory)*
+-  **Logo** (Optional): logo file (in static/<skin> directory)
 -  **Label** (Optional): label that should be displayed to the user on
    the choice screen
 
 
-.. important:: 
+.. important::
 
     The command line is split in an array and launched with
-    exec(). So you don't need to enclose arguments in "" and this feature
-    protects your system against shell injection. However, you can not use
-    any space except to separate arguments.
+    exec(). So you don't need to enclose arguments in quotes to  protect your
+    system against shell injection. However, you can not use any space except
+    to separate arguments.
 
 SELinux note
 ^^^^^^^^^^^^

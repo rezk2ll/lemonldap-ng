@@ -123,14 +123,14 @@ Edit also OBM configuration to enable LL::NG Handler:
 
    <VirtualHost *:80>
        ServerName obm.example.com
-       
+
        # SSO protection
        PerlHeaderParserHandler Lemonldap::NG::Handler
 
        DocumentRoot /usr/share/obm/php
 
        ...
-       
+
    </VirtualHost>
 
 -  For Nginx:
@@ -153,8 +153,8 @@ Edit also OBM configuration to enable LL::NG Handler:
        fastcgi_param HOST $http_host;
        # Keep original request (LLNG server will received /llauth)
        fastcgi_param X_ORIGINAL_URI  $request_uri;
-     } 
-    
+     }
+
      # Client requests
      location ~ \.php$ {
        auth_request /lmauth;
@@ -164,7 +164,7 @@ Edit also OBM configuration to enable LL::NG Handler:
        try_files $uri $uri/ =404;
 
        ...
-    
+
        include /etc/lemonldap-ng/nginx-lua-headers.conf;
      }
      location / {
@@ -191,7 +191,7 @@ To add these attributes, go in Manager, ``Variables`` »
 ``Exported Variables``.
 
 
-.. important:: 
+.. important::
 
     If you plan to forward user's password to OBM, then you
     have to :doc:`keep the password in session<../passwordstore>`.
@@ -200,9 +200,9 @@ You may also create these macros to manage OBM administrator account
 (``Variables`` » ``Macros``):
 
 ===== ====================================================== =============================== == ==============================
-field value                                                                                    
+field value
 ===== ====================================================== =============================== == ==============================
-uidR  ($uid =~ /^admin0/i)[0] ? "admin0\@global.virt" : $uid                                   
+uidR  ($uid =~ /^admin0/i)[0] ? "admin0\@global.virt" : $uid
 mailR %%($uid =~ /                                           admin0/i)[0] ? "" : ($mail =~ / ([ @]+)/)[0] . "\@example.com" %%
 ===== ====================================================== =============================== == ==============================
 

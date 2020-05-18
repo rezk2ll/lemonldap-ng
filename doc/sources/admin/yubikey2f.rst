@@ -44,7 +44,7 @@ In the manager (second factors), you just have to enable it:
    the choice screen
 
 
-.. important:: 
+.. important::
 
     If you want to use a custom rule for "activation" and
     want to keep self-registration, you must include this in your rule:
@@ -57,8 +57,8 @@ Provisioning
 
 If you don't want to use self-registration, set public part of user's
 yubikey in Second Factor Devices array (JSON) in your user-database.
-Then map it to the \_2fDevices attribute *(see
-:doc:`exported variables<exportedvars>`)*:
+Then map it to the \_2fDevices attribute (see
+:doc:`exported variables<exportedvars>`):
 
 .. code:: json
 

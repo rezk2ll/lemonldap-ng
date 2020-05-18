@@ -34,7 +34,7 @@ Configure Drupal virtual host like other
 :doc:`protected virtual host<../configvhost>`.
 
 
-.. important:: 
+.. important::
 
     If you are protecting Drupal with LL::NG as reverse
     proxy,
@@ -50,7 +50,7 @@ Configure Drupal virtual host like other
           PerlHeaderParserHandler Lemonldap::NG::Handler
 
           ...
-          
+
    </VirtualHost>
 
 -  For Nginx:
@@ -73,8 +73,8 @@ Configure Drupal virtual host like other
        fastcgi_param HOST $http_host;
        # Keep original request (LLNG server will received /llauth)
        fastcgi_param X_ORIGINAL_URI  $request_uri;
-     } 
-    
+     }
+
      # Client requests
      location / {
        auth_request /lmauth;
@@ -82,9 +82,9 @@ Configure Drupal virtual host like other
        auth_request_set $lmlocation $upstream_http_location;
        error_page 401 $lmlocation;
        try_files $uri $uri/ =404;
-    
+
        ...
-    
+
        include /etc/lemonldap-ng/nginx-lua-headers.conf;
      }
      location / {
@@ -98,10 +98,10 @@ Drupal virtual host in Manager
 Go to the Manager and :doc:`create a new virtual host<../configvhost>`
 for Drupal.
 
-Just configure the :doc:`access rules<../writingrulesand_headers>`.
+Just configure the :ref:`access rules<rules>`.
 
 If using LL::NG as reverse proxy, configure the ``Auth-User``
-:doc:`header<../writingrulesand_headers>`, else no headers are needed.
+:ref:`header<headers>`, else no headers are needed.
 
 Protect only the administration pages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -110,7 +110,7 @@ With the above solution, all the Drupal site will be protected, so no
 anonymous access will be allowed.
 
 
-.. important:: 
+.. important::
 
     You cannot use the ``unprotect`` rule because Drupal
     navigation is based on query strings (?q=admin, ?q=user, etc.), and

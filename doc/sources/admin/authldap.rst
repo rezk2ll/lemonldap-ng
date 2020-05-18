@@ -38,7 +38,7 @@ In Manager, go in ``General Parameters`` > ``Authentication modules``
 and choose LDAP for authentication, users and/or password modules.
 
 
-.. tip:: 
+.. tip::
 
     For :doc:`Active Directory<authad>`, choose
     ``Active Directory`` instead of ``LDAP``.
@@ -49,15 +49,15 @@ Authentication level
 The authentication level given to users authenticated with this module.
 
 
-.. important:: 
+.. important::
 
     As LDAP is a login/password based module, the
     authentication level can be:
-    
+
     -  increased (+1) if portal is protected by SSL (HTTPS)
     -  decreased (-1) if the portal autocompletion is allowed (see
        :doc:`portal customization<portalcustom>`)
-    
+
 
 
 Exported variables
@@ -74,12 +74,12 @@ Connection
 
    -  More than one server can be set here separated by spaces or
       commas. They will be tested in the specified order.
-   -  To use TLS, set ``ldap+tls:%%//%%server`` and to use LDAPS, set
-      ``ldaps:%%//%%server`` instead of server name.
+   -  To use TLS, set ``ldap+tls://server`` and to use LDAPS, set
+      ``ldaps://server`` instead of server name.
    -  If you use TLS, you can set any of the
       `Net::LDAP <http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod>`__
       start_tls() sub like
-      ``ldap+tls:%%//%%server/verify=none&capath=/etc/ssl``. You can
+      ``ldap+tls://server/verify=none&capath=/etc/ssl``. You can
       also use cafile and capath parameters.
 
 -  **Server port**: TCP port used by LDAP server. Can be overridden by
@@ -97,7 +97,7 @@ Connection
    documentation).
 
 
-.. important:: 
+.. important::
 
     LemonLDAP::NG need anonymous access to LDAP Directory
     RootDSE in order to check LDAP connection.
@@ -106,7 +106,7 @@ Filters
 ~~~~~~~
 
 
-.. tip:: 
+.. tip::
 
     In LDAP filters, $user is replaced by user login, and $mail by
     user email.
@@ -121,21 +121,23 @@ Filters
    ``find``)
 
 
-.. tip:: 
+.. tip::
 
     For Active Directory, the default authentication filter is:
-    
-    ::
-    
-       (&(sAMAccountName=$user)(objectClass=person))
-    
-    And the mail filter is:
-    
-    ::
-    
-       (&(mail=$mail)(objectClass=person))
-    
 
+    ::
+
+       (&(sAMAccountName=$user)(objectClass=person))
+
+    And the mail filter is:
+
+    ::
+
+       (&(mail=$mail)(objectClass=person))
+
+
+
+.. _authldap-groups:
 
 Groups
 ~~~~~~
@@ -159,17 +161,18 @@ Groups
    used in the link, for recursive group search (default: dn).
 
 
-.. important:: 
+.. note::
 
     The groups that the user belongs to are available as ``$groups``
-    and ``%hGroups``, as documented :doc:`here<exportedvars>` 
+    and ``%hGroups``, as documented :ref:`here<macros_and_groups>`
 
 
-.. important:: 
+.. important::
 
     If your LDAP countains over a thousand groups, you
     should avoid using group processing, check out
-    :doc:`the performance page<performances>` for alternatives 
+    :ref:`the performance page<performances-ldap-performances>` for
+    alternatives 
 
 Password
 ~~~~~~~~

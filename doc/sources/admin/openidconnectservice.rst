@@ -28,7 +28,7 @@ values unless you have a specific need to change them.
 -  **Check Session**
 
 
-.. tip:: 
+.. tip::
 
     The end points are published inside JSON metadata.
 
@@ -84,7 +84,7 @@ run for example each week:
    5 5 * * 6 www-data /usr/share/lemonldap-ng/bin/rotateOidcKeys
 
 
-.. tip:: 
+.. tip::
 
     Set the correct Apache user, else generated configuration will
     not be readable by LL::NG.
@@ -100,7 +100,7 @@ portal (or has destroyed its SSO cookie). Else the ``unchanged`` state
 will be returned.
 
 
-.. tip:: 
+.. tip::
 
     To work, the LL::NG cookie must not be protected against
     javascript (``httpOnly`` option should be set to ``0``).

@@ -87,7 +87,7 @@ Add then extension configuration, for example:
    $wgHooks['PersonalUrls'][] = 'StripLogin';
 
 
-.. warning:: 
+.. warning::
 
     In last version of Auth_remoteuser and Mediawiki, empty
     passwords are not authorized, so you may need to patch the extension
@@ -100,7 +100,7 @@ Add then extension configuration, for example:
    sed -i "s/'wpPassword' => ''/'wpPassword' => 'none'/" extensions/Auth_remoteuser/Auth_remoteuser.body.php
 
 
-.. warning:: 
+.. warning::
 
     In last version of Auth_remoteuser and Mediawiki,
     auto-provisioning requires REMOTE_USER to match the normalized mediawiki
@@ -121,7 +121,7 @@ Configure MediaWiki virtual host like other
 :doc:`protected virtual host<../configvhost>`.
 
 
-.. important:: 
+.. important::
 
     If you are protecting MediaWiki with LL::NG as reverse
     proxy,
@@ -137,7 +137,7 @@ Configure MediaWiki virtual host like other
           PerlHeaderParserHandler Lemonldap::NG::Handler
 
           ...
-          
+
    </VirtualHost>
 
 -  For Nginx:
@@ -160,8 +160,8 @@ Configure MediaWiki virtual host like other
        fastcgi_param HOST $http_host;
        # Keep original request (LLNG server will received /llauth)
        fastcgi_param X_ORIGINAL_URI  $request_uri;
-     } 
-    
+     }
+
      # Client requests
      location / {
        auth_request /lmauth;
@@ -169,9 +169,9 @@ Configure MediaWiki virtual host like other
        auth_request_set $lmlocation $upstream_http_location;
        error_page 401 $lmlocation;
        try_files $uri $uri/ =404;
-    
+
        ...
-    
+
        include /etc/lemonldap-ng/nginx-lua-headers.conf;
      }
      location / {
@@ -185,7 +185,7 @@ MediaWiki virtual host in Manager
 Go to the Manager and :doc:`create a new virtual host<../configvhost>`
 for MediaWiki.
 
-Just configure the :doc:`access rules<../writingrulesand_headers>`. You
+Just configure the :ref:`access rules<rules>`. You
 can also add a rule for logout:
 
 ::
@@ -201,7 +201,7 @@ extension configuration):
    Auth-Mail => $mail
 
 If using LL::NG as reverse proxy, configure also the ``Auth-User``
-:doc:`header<../writingrulesand_headers>`,
+:ref:`header<headers>`,
 
 .. |image0| image:: /applications/mediawiki_logo.png
    :class: align-center

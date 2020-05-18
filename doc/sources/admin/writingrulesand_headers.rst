@@ -7,24 +7,24 @@ headers added to the request to give datas to the application (for logs,
 profiles,...).
 
 
-.. important:: 
+.. important::
 
     Note that variables designed by $xx correspond to the
     name of the :doc:`exported variables<exportedvars>` or
-    :doc:`macro names<performances>` except for ``$ENV{<cgi-header>}`` which
-    correspond to CGI header *(``$ENV{REMOTE_ADDR}`` for example)*.
+    :ref:`macro names<macros_and_groups>` except for ``$ENV{<cgi-header>}`` which
+    correspond to CGI header (``$ENV{REMOTE_ADDR}`` for example).
 
 Available $ENV variables
 ------------------------
 
 The %ENV table provides:
 
--  all headers in CGI format *(``User-Agent`` becomes
-   ``HTTP_USER_AGENT``)*
+-  all headers in CGI format (``User-Agent`` becomes
+   ``HTTP_USER_AGENT``)
 -  some CGI variables depending on the context:
 
-   -  For portal: all CGI standard variables *(you can add custom
-      headers using ``fastcgi_param`` with Nginx)*,
+   -  For portal: all CGI standard variables (you can add custom
+      headers using ``fastcgi_param`` with Nginx),
    -  For Apache handler: REMOTE_ADDR, QUERY_STRING, REQUEST_URI,
       SERVER_PORT, REQUEST_METHOD,
    -  For Nginx handler: all variables given by ``fastcgi_param``
@@ -36,6 +36,8 @@ The %ENV table provides:
    -  $ENV{_url} : Origin URL before Handler redirection, base64 encoded
 
 See also :doc:`extended functions<extendedfunctions>`.
+
+.. _rules:
 
 Rules
 -----
@@ -51,36 +53,35 @@ Examples:
 =============================================================================================================================================== ================== ======================================
 Goal                                                                                                                                            Regular expression Rule
 =============================================================================================================================================== ================== ======================================
-Restrict /admin/ directory to user bart.simpson                                                                                                 ^/admin/          
+Restrict /admin/ directory to user bart.simpson                                                                                                 ^/admin/
 Restrict /js/ and /css/ directory to authenticated users                                                                                        ^/(css|js)/        accept
 Deny access to /config/ directory                                                                                                               ^/config/          deny
 Do not restrict /public/                                                                                                                        ^/public/          skip
 Do not restrict /skip/ and restrict other to authenticated users                                                                                ^/skip/            $ENV{REQUEST_URI} =~ /skip/ ? skip : 1
 Makes authentication optional, but authenticated users are seen as such (that is, user data are sent to the app through HTTP headers)           ^/forum/           unprotect
-Restrict access to the whole site to users that have the LDAP description field set to "LDAP administrator" (must be set in exported variables) default           
+Restrict access to the whole site to users that have the LDAP description field set to "LDAP administrator" (must be set in exported variables) default
 =============================================================================================================================================== ================== ======================================
 
 The "**default**" access rule is used if no other access rule match the
 current URL.
 
 
-.. tip:: 
+.. tip::
 
     See :doc:`the rules examples page<rules_examples>` for a few
-    common use cases 
+    common use cases
 
 
-.. tip:: 
+.. tip::
 
-    
-    
+
+
     -  Comments can be used to order your rules: rules are applied in the
        alphabetical order of comment (or regexp in there is no comment). See
-       :doc:`security chapter<security>` to learn more about writing
-       good rules.
-    -  See :doc:`performances<performances>` to know how to use macros and
-       groups in rules.
-    
+       :ref:`security chapter<security-write-good-rules>` to learn more
+       about writing good rules.
+    -  See :ref:`performances<performances-handler-performance>` to know how
+       to use macros and groups in rules.
 
 
 Rules can also be used to intercept logout URL:
@@ -94,7 +95,7 @@ Logout user from current application and from Lemonldap::NG and redirect it to h
 ================================================================================================================= =================== ====
 
 
-.. warning:: 
+.. warning::
 
     \ ``logout_app`` and ``logout_app_sso`` rules are not
     available on Nginx, only on Apache.
@@ -103,7 +104,7 @@ By default, user will be redirected on portal if no URL defined, or on
 the specified URL if any.
 
 
-.. important:: 
+.. important::
 
     Only current application is concerned by logout_app\*
     targets. Be careful with some applications which doesn't verify
@@ -121,8 +122,8 @@ values are:
 -  0 for :doc:`Null<authnull>`
 -  1 for :doc:`CAS<authcas>`, :doc:`old OpenID-2<authopenid>`,
    :doc:`Facebook<authfacebook>`,…
--  2 for web-form based authentication *(:doc:`LDAP<authldap>`,
-   :doc:`DBI<authdbi>`,…)*
+-  2 for web-form based authentication (:doc:`LDAP<authldap>`,
+   :doc:`DBI<authdbi>`,…)
 -  3 for :doc:`Yubikey<authyubikey>`
 -  4 for :doc:`Kerberos<authapache>`
 -  5 for :doc:`SSL<authssl>`
@@ -139,11 +140,13 @@ There are three ways to impose users a higher authentication level:
    backend).
 
 
-.. tip:: 
+.. tip::
 
     Instead of returning a 403 code, "minimum level" returns user
     to a form that explain that a higher level is required and propose to
     reauthenticate himself.
+
+.. _headers:
 
 Headers
 -------
@@ -163,34 +166,35 @@ Give display name             Display-Name $givenName." ".$surName
 Give a non ascii data         Display-Name
 ============================= ============ =======================
 
-As described in :doc:`performances chapter<performances>`, you can use
-macros, local macros,...
+As described in
+:ref:`performances chapter<performances-handler-performance>`, you can
+use macros, local macros,...
 
 
-.. important:: 
+.. important::
 
-    
-    
+
+
     -  Since many HTTP servers refuse non ascii headers, it is recommended
        to use encode_base64() function to transmit those headers
     -  Don't forget to add an empty string as second argument to
        encode_base64 function to avoid a "newline" characters insertion in
        result
     -  Header names must contain only letters and "-" character
-    
 
 
 
-.. tip:: 
+
+.. tip::
 
     By default, SSO cookie is hidden. So protected applications
     cannot retrieve SSO session key. But you can forward this key if
     absolutely needed:
-    
+
     ::
-    
+
        Session-ID => $_session_id
-    
+
 
 
 Available functions
@@ -219,8 +223,8 @@ rule is applied. Example with precedence order for test.sub.example.com:
 #. test*.sub.example.com
 #. %.sub.example.com
 #. \*.sub.example.com
-#. \*.example.com *(``%.example.com`` does not match
-   test.sub.example.com)*
+#. \*.example.com (``%.example.com`` does not match
+   test.sub.example.com)
 
 .. |image0| image:: /documentation/manager-rule.png
    :class: align-center

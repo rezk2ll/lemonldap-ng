@@ -2,9 +2,11 @@ Portal menu
 ===========
 
 
-.. important:: 
+.. note::
 
     The menu is displayed if authentication is successful.
+
+.. _portalmenu-menu-modules:
 
 Menu modules
 ------------
@@ -29,6 +31,8 @@ user authenticated trough LDAP or DBI:
 .. code:: perl
 
    $_auth eq LDAP or $_auth eq DBI
+
+.. _portalmenu-categories-and-applications:
 
 Categories and applications
 ---------------------------
@@ -56,13 +60,13 @@ Application parameters:
    -  **Enabled**: always display
    -  **Disabled**: never display
    -  **Automatic**: display only if the user can access it
-   -  **Special rule**: specify a :doc:`rule<writingrulesand_headers>`
+   -  **Special rule**: specify a :ref:`rule<rules>`
       or "sp: <name>" where "name" is the key name of the service
       provider, the corresponding rule will be applied *(available for
       CAS, SAML or OpenID-Connect)*
 
 
-.. tip:: 
+.. tip::
 
     Categories and applications are displayed in alphabetical
     order.
@@ -70,7 +74,7 @@ Application parameters:
 |image1|
 
 
-.. tip:: 
+.. tip::
 
     The chosen logo file must be in portal applications logos
     directory (``portal/htdocs/static/common/apps/``). You can set a custom

@@ -16,7 +16,7 @@ in "General parameters » Sessions » Session storage » Apache::Session
 module" and add the following parameters (case sensitive):
 
 =================== ============================== ===================================
-Required parameters                               
+Required parameters
 =================== ============================== ===================================
 Name                Comment                        Example
 **Directory**       The path to the main directory /var/lib/lemonldap-ng/sessions

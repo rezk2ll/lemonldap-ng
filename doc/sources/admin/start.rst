@@ -32,7 +32,7 @@ Installation
 -  :doc:`Installation on RHEL/CentOS with packages<installrpm>`
 -  :doc:`Installation on Suse Linux Enterprise Server with packages<installsles>`
 -  :doc:`Run in LemonLDAP::NG in Docker<docker>`
--  :doc:`Node.js handler<nodehandler>` |image2|
+-  :doc:`Node.js handler<nodehandler>` |new|
 
 After installation
 ~~~~~~~~~~~~~~~~~~
@@ -43,7 +43,10 @@ After installation
    configuration)*
 -  :doc:`Deploy Apache configuration<configapache>`
 -  :doc:`Deploy LemonLDAP::NG on Plack servers family<configplack>`
-   *(Twiggy, Starman, Corona,...)* |image4|
+   *(Twiggy, Starman, Corona,...)* |new|
+
+
+.. _start-configuration:
 
 Configuration
 -------------
@@ -72,6 +75,9 @@ Portal
 -  :doc:`Captcha<captcha>`
 -  :doc:`Public pages<public_pages>`
 
+
+.. _start-authentication-users-and-password-databases:
+
 Authentication, users and password databases
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -81,62 +87,81 @@ Authentication, users and password databases
 Official Backends                                                    Authentication                                  Users    Password
 ==================================================================== =============================================== ======== ========
 :doc:`Active Directory<authad>`                                      ✔                                               ✔        ✔
-:doc:`Apache (Basic, NTLM, OTP, ...)<authapache>`                    ✔                                                       
-:doc:`CAS<authcas>`                                                  ✔                                               |image8|
+:doc:`Apache (Basic, NTLM, OTP, ...)<authapache>`                    ✔
+:doc:`CAS<authcas>`                                                  ✔                                               |new|
 :doc:`SQL Databases<authdbi>`                                        ✔                                               ✔        ✔
 :doc:`Demonstration<authdemo>`                                       ✔                                               ✔        ✔
-:doc:`Facebook<authfacebook>`                                        ✔                                               ✔       
-:doc:`GitHub<authgithub>` |image9|  [1]_                             ✔                                                       
-:doc:`GPG<authgpg>` |image10|  [2]_                                  ✔                                                       
-:doc:`Kerberos<authkerberos>` |image11|                              ✔                                                       
+:doc:`Facebook<authfacebook>`                                        ✔                                               ✔
+:doc:`GitHub<authgithub>` |new|  [1]_                                ✔
+:doc:`GPG<authgpg>` |new|  [2]_                                      ✔
+:doc:`Kerberos<authkerberos>` |new|                                  ✔
 :doc:`LDAP<authldap>`                                                ✔                                               ✔        ✔
-:doc:`LinkedIn<authlinkedin>`                                        ✔                                                       
+:doc:`LinkedIn<authlinkedin>`                                        ✔
 :doc:`Null<authnull>`                                                ✔                                               ✔        ✔
-:doc:`OpenID Connect<authopenidconnect>`                             ✔                                               ✔       
-:doc:`PAM<authpam>` |image12|                                        ✔                                                       
-:doc:`Proxy LL::NG<authproxy>`                                       ✔                                               ✔       
-:doc:`Radius<authradius>`                                            ✔                                                       
-:doc:`REST<authrest>` |image13|                                      ✔                                               ✔        ✔
-:doc:`SAML 2.0 / Shibboleth<authsaml>`                               ✔                                               ✔       
-:doc:`Slave<authslave>`                                              ✔                                               ✔       
-:doc:`SSL<authssl>`                                                  ✔                                                       
-:doc:`Twitter<authtwitter>`                                          ✔                                                       
-:doc:`WebID<authwebid>`                                              ✔                                               ✔       
-[STRIKEOUT::doc:`Yubikey<authyubikey>`]                              *Deprecated, replaced by Yubikey second factor*         
-:doc:`Custom modules<authcustom>` |image14|                          ✔                                               ✔        ✔
-Combo Backends                                                       Authentication                                  Users    Password
-:doc:`Choice by users<authchoice>`                                   ✔                                               ✔        ✔
-:doc:`Combination of auth schemes<authcombination>` |image15|        ✔                                               ✔       
-[STRIKEOUT::doc:`Multiple backends stack<authmulti>`]                *Deprecated, replaced by Combination*                   
-Obsolete Backends                                                    Authentication                                  Users    Password
-:doc:`OpenID<authopenid>`                                            ✔                                               ✔       
-:doc:`Remote LL::NG<authremote>`                                     ✔                                               ✔       
-Second factor (:doc:`documentation<secondfactor>`)                   Authentication                                          
-:doc:`TOTP-or-U2F<utotp2f>` |image16|                                ✔                                                       
-:doc:`U2F<u2f>` |image17|                                            ✔                                                       
-:doc:`TOTP<totp2f>` *(Google Authenticator,...)* |image18|           ✔                                                       
-:doc:`E-mail Second Factor<mail2f>` |image19|                        ✔                                                       
-:doc:`External Second Factor<external2f>` *(OTP, SMS,...)* |image20| ✔                                                       
-:doc:`Radius Second Factor<radius2f>` |image21|  [3]_                ✔                                                       
-:doc:`REST Second Factor<rest2f>` |image22|                          ✔                                                       
-:doc:`Yubikey<yubikey2f>` |image23|                                  ✔                                                       
-:doc:`Additional second factors<sfextra>` |image24|  [4]_            ✔                                                       
-Auth addons                                                          Authentication                                          
-:doc:`Auto Signin<autosignin>` |image25|                             ✔                                                       
+:doc:`OpenID Connect<authopenidconnect>`                             ✔                                               ✔
+:doc:`PAM<authpam>` |new|                                            ✔
+:doc:`Proxy LL::NG<authproxy>`                                       ✔                                               ✔
+:doc:`Radius<authradius>`                                            ✔
+:doc:`REST<authrest>` |new|                                          ✔                                               ✔        ✔
+:doc:`SAML 2.0 / Shibboleth<authsaml>`                               ✔                                               ✔
+:doc:`Slave<authslave>`                                              ✔                                               ✔
+:doc:`SSL<authssl>`                                                  ✔
+:doc:`Twitter<authtwitter>`                                          ✔
+:doc:`WebID<authwebid>`                                              ✔                                               ✔
+:doc:`Yubikey<authyubikey>` |deprecated|                             *Replaced by* :doc:`yubikey2f`
+:doc:`Custom modules<authcustom>` |new|                              ✔                                               ✔        ✔
 ==================================================================== =============================================== ======== ========
+
+==================================================================== ================================================= ======== ========
+Combo Backends                                                       Authentication                                    Users    Password
+==================================================================== ================================================= ======== ========
+:doc:`Choice by users<authchoice>`                                   ✔                                                 ✔        ✔
+:doc:`Combination of auth schemes<authcombination>` |new|            ✔                                                 ✔
+:doc:`Multiple backends stack<authmulti>` |deprecated|               *Replaced by* :doc:`Combination<authcombination>`
+==================================================================== ================================================= ======== ========
+
+==================================================================== =============================================== ======== ========
+Obsolete Backends                                                    Authentication                                  Users    Password
+==================================================================== =============================================== ======== ========
+:doc:`OpenID<authopenid>`                                            ✔                                               ✔
+:doc:`Remote LL::NG<authremote>`                                     ✔                                               ✔
+==================================================================== =============================================== ======== ========
+
+==================================================================== ==============
+Second factor (:doc:`documentation<secondfactor>`)                   Authentication
+==================================================================== ==============
+:doc:`TOTP-or-U2F<utotp2f>` |new|                                    ✔
+:doc:`U2F<u2f>` |new|                                                ✔
+:doc:`TOTP<totp2f>` *(Google Authenticator,...)* |new|               ✔
+:doc:`E-mail Second Factor<mail2f>` |new|                            ✔
+:doc:`External Second Factor<external2f>` *(OTP, SMS,...)* |new|     ✔
+:doc:`Radius Second Factor<radius2f>` |new|  [3]_                    ✔
+:doc:`REST Second Factor<rest2f>` |new|                              ✔
+:doc:`Yubikey<yubikey2f>` |new|                                      ✔
+:doc:`Additional second factors<sfextra>` |new|  [4]_                ✔
+==================================================================== ==============
+
+==================================================================== ==============
+Auth addons                                                          Authentication
+==================================================================== ==============
+:doc:`Auto Signin<autosignin>` |new|                                 ✔
+==================================================================== ==============
+
+
+.. _start-identity-provider:
 
 Identity provider
 ^^^^^^^^^^^^^^^^^
 
 
-.. tip:: 
+.. tip::
 
-    
-    
+
+
     -  All identity provider protocols can be used simultaneously
     -  LemonLDAP::NG can be used as a
        :doc:`proxy between those protocols<federationproxy>`
-    
+
 
 
 |image26|
@@ -152,7 +177,7 @@ Protocol                                                              Service Pr
 ===================================================================== ================ =================
 
 
-.. tip:: 
+.. tip::
 
     * Issuers timeout : Delay for issuers to submit their authentication requests
     * To avoid a bad/expired token and lose redirection to the SP protected
@@ -161,7 +186,7 @@ Protocol                                                              Service Pr
       by editing ``lemonldap-ng.ini`` in section [portal]:
 
     .. code:: ini
-    
+
        [portal]
        forceGlobalStorageIssuerOTT = 1
 
@@ -170,26 +195,26 @@ Attacks and Protection
 ^^^^^^^^^^^^^^^^^^^^^^
 
 
-.. tip:: 
+.. tip::
 
     To learn or find out more about security, go to
-    :doc:`Security<security>` documentation 
+    :doc:`Security<security>` documentation
 
 |image27|
 
-======================================== =============== ============================
-Attack                                   LLNG protection System Integrator protection
-======================================== =============== ============================
-:doc:`Brute Force<bruteforceprotection>` ✔               ✔
-:doc:`Page Content<security>`            ✔              
-:doc:`CSRF<security>`                    ✔              
-Deny of Service                                          ✔
-:doc:`Invisible iFrame<portalcustom>`    ✔               ✔
-Man-in-the-Middle                                        ✔
-Software Exploit                                         ✔
-:doc:`SSO by-passing<security>`                          ✔
-:doc:`XSS<safejail>`                     ✔              
-======================================== =============== ============================
+====================================================== =============== ============================
+Attack                                                 LLNG protection System Integrator protection
+====================================================== =============== ============================
+:doc:`Brute Force<bruteforceprotection>`               ✔               ✔
+:ref:`Page Content<security-portal>`                   ✔
+:ref:`CSRF<security-portal>`                           ✔
+Deny of Service                                                        ✔
+:ref:`Invisible iFrame<portalcustom-other-parameters>` ✔               ✔
+Man-in-the-Middle                                                      ✔
+Software Exploit                                                       ✔
+:ref:`SSO by-passing<security-reverseproxies>`                         ✔
+:doc:`XSS<safejail>`                                   ✔
+====================================================== =============== ============================
 
 Plugins
 ^^^^^^^
@@ -199,30 +224,30 @@ Plugins
 ==================================================================== ============================================================================================================================================
 Name                                                                 Description
 ==================================================================== ============================================================================================================================================
-:doc:`Auto Signin<autosignin>` |image29|                             Auto Signin Addon
-:doc:`Brute Force protection<bruteforceprotection>` |image30|        User must wait to log in after some failed login attempts
+:doc:`Auto Signin<autosignin>` |new|                                 Auto Signin Addon
+:doc:`Brute Force protection<bruteforceprotection>` |new|            User must wait to log in after some failed login attempts
 :doc:`CDA<cda>`                                                      Cross Domain Authentication
-:doc:`Check state<checkstate>` |image31|                             Check state plugin (test page)
-:doc:`Check user<checkuser>`  [5]_ |image32|                         Check access rights, transmitted headers and session attibutes for a specific user and URL
-:doc:`Configuration viewer<viewer>` |image33|                        Edit WebSSO configuration in Read Only mode
-:doc:`Context switching<contextswitching>`  [6]_\ |image34|          Switch context other users
+:doc:`Check state<checkstate>` |new|                                 Check state plugin (test page)
+:doc:`Check user<checkuser>`  [5]_ |new|                             Check access rights, transmitted headers and session attibutes for a specific user and URL
+:doc:`Configuration viewer<viewer>` |new|                            Edit WebSSO configuration in Read Only mode
+:doc:`Context switching<contextswitching>`  [6]_\ |new|              Switch context other users
 :doc:`Custom<plugincustom>`                                          Write a custom plugin
 :doc:`Decrypt value<decryptvalue>`  [7]_\ |image35|                  Decrypt ciphered values
-:doc:`Display login history<loginhistory>`                          
+:doc:`Display login history<loginhistory>`
 :doc:`Force Authentication<forcereauthn>`                            Force authentication to access to Portal
 :doc:`Global Logout<globallogout>`  [8]_                             Suggest to close all opened sessions at logout
 :doc:`Grant Sessions<grantsession>`                                  Rules to apply before allowing a user to open a session
-:doc:`Impersonation<impersonation>`  [9]_\ |image36|                 Allow users to use another identity
-:doc:`Notifications system<notifications>`                          
+:doc:`Impersonation<impersonation>`  [9]_\ |new|                     Allow users to use another identity
+:doc:`Notifications system<notifications>`
 :doc:`Portal Status<status>`                                         Experimental portal status page
 :doc:`Public pages<public_pages>`                                    Enable public pages system
 :doc:`Refresh session API<refreshsessionapi>`  [10]_                 Plugin that provides an API to refresh a user session
-:doc:`Reset password by mail<resetpassword>`                        
+:doc:`Reset password by mail<resetpassword>`
 :doc:`Reset certificate by mail<resetcertificate>`  [11]_\ |image37| Allow users to reset their certificate
-:doc:`REST services<restservices>` |image38|                         REST server for :doc:`Proxy<authproxy>`
-:doc:`SOAP services<soapservices>` *(deprecated)*                    SOAP server for :doc:`Proxy<authproxy>`
-Stay connected |image39|                                             Enable persistent connection on same browser
-Upgrade session |image40|                                            This plugin explains to an already authenticated user that a higher authentication level is required to access the URL instead of reject him
+:doc:`REST services<restservices>` |new|                             REST server for :doc:`Proxy<authproxy>`
+:doc:`SOAP services<soapservices>` |deprecated|                      SOAP server for :doc:`Proxy<authproxy>`
+Stay connected |new|                                                 Enable persistent connection on same browser
+Upgrade session |new|                                                This plugin explains to an already authenticated user that a higher authentication level is required to access the URL instead of reject him
 ==================================================================== ============================================================================================================================================
 
 Handlers
@@ -233,22 +258,24 @@ Handlers
 Handlers are software control agents to be installed on your web servers
 *(Nginx, Apache, PSGI like Plack based servers or Node.js)*.
 
-==================================================================== ========================================== ============================================================= =========================================== ================================================================================== =============================================== ======================================================================================================================
-Handler type                                                         Apache                                     LLNG FastCGI/uWSGI server (Nginx, or :doc:`SSOaaS<ssoaas>`)   `Plack\* servers <https://plackperl.org>`__ Node.js  ( `express apps <http://expressjs.com/>`__\  or :doc:`SSOaaS<ssoaas>`)    :doc:`Self protected apps<selfmadeapplication>`   Comment
-==================================================================== ========================================== ============================================================= =========================================== ================================================================================== =============================================== ======================================================================================================================
-Main *(default handler)*                                             ✔                                          ✔                                                             ✔                                           :doc:`Partial<nodehandler>` ** [12]_ **                                             ✔                                              
-:doc:`AuthBasic<handlerauthbasic>`                                   ✔                                          ✔                                                             ✔                                                                                                                              ✔                                               Designed for some server-to-server applications
-:doc:`CDA<cda>`                                                      ✔                                          ✔                                                             ✔                                                                                                                              ✔                                               For Cross Domain Authentication
-:doc:`DevOps<devopshandler>`  (:doc:`SSOaaS<ssoaas>`)  |image42|     ✔                                          ✔                                                             ✔                                           ✔                                                                                                                                  Allows application developers to define their own rules and headers inside their applications
-:doc:`DevOpsST<devopssthandler>`  (:doc:`SSOaaS<ssoaas>`)  |image43| ✔                                          ✔                                                             ✔                                           ✔                                                                                                                                  Enables both :doc:`DevOps<devopshandler>` and :doc:`Service Token<servertoserver>`
-:doc:`OAuth2<oauth2handler>`  [13]_\ |image44|                       ✔                                          ✔                                                             ✔                                                                                                                              ✔                                               Uses OpenID Connect/OAuth2 access token to check authentication and authorization, can be used to protect Web Services
-:doc:`Secure Token<securetoken>`                                     ✔                                          ✔                                                             ✔                                                                                                                                                                              Designed to secure exchanges between a LLNG reverse-proxy and a remote app
-:doc:`Service Token<servertoserver>` |image45| *(Server-to-Server)*  ✔                                          ✔                                                             ✔                                           ✔                                                                                  ✔                                               Designed to permit underlying requests *(API-Based Infrastructure)*
-:doc:`Zimbra PreAuth<applications/zimbra>`                           ✔                                                             ✔                                           ✔                                                                                                                                 
-==================================================================== ========================================== ============================================================= =========================================== ================================================================================== =============================================== ======================================================================================================================
+==================================================================== ========== ============================================================= =========================================== ================================================================================== =============================================== ======================================================================================================================
+Handler type                                                         Apache     LLNG FastCGI/uWSGI server (Nginx, or :doc:`SSOaaS<ssoaas>`)   `Plack servers <https://plackperl.org>`__   Node.js  ( `express apps <http://expressjs.com/>`__\  or :doc:`SSOaaS<ssoaas>`)    :doc:`Self protected apps<selfmadeapplication>`   Comment
+==================================================================== ========== ============================================================= =========================================== ================================================================================== =============================================== ======================================================================================================================
+Main *(default handler)*                                             ✔          ✔                                                             ✔                                           :doc:`Partial<nodehandler>` ** [12]_ **                                             ✔
+:doc:`AuthBasic<handlerauthbasic>`                                   ✔          ✔                                                             ✔                                                                                                                              ✔                                               Designed for some server-to-server applications
+:doc:`CDA<cda>`                                                      ✔          ✔                                                             ✔                                                                                                                              ✔                                               For Cross Domain Authentication
+:doc:`DevOps<devopshandler>`  (:doc:`SSOaaS<ssoaas>`)  |new|         ✔          ✔                                                             ✔                                           ✔                                                                                                                                  Allows application developers to define their own rules and headers inside their applications
+:doc:`DevOpsST<devopssthandler>`  (:doc:`SSOaaS<ssoaas>`)  |new|     ✔          ✔                                                             ✔                                           ✔                                                                                                                                  Enables both :doc:`DevOps<devopshandler>` and :doc:`Service Token<servertoserver>`
+:doc:`OAuth2<oauth2handler>`  [13]_\ |new|                           ✔          ✔                                                             ✔                                                                                                                              ✔                                               Uses OpenID Connect/OAuth2 access token to check authentication and authorization, can be used to protect Web Services
+:doc:`Secure Token<securetoken>`                                     ✔          ✔                                                             ✔                                                                                                                                                                              Designed to secure exchanges between a LLNG reverse-proxy and a remote app
+:doc:`Service Token<servertoserver>` |new| *(Server-to-Server)*      ✔          ✔                                                             ✔                                           ✔                                                                                  ✔                                               Designed to permit underlying requests *(API-Based Infrastructure)*
+:doc:`Zimbra PreAuth<applications/zimbra>`                           ✔          ✔                                                             ✔
+==================================================================== ========== ============================================================= =========================================== ================================================================================== =============================================== ======================================================================================================================
 
 LLNG databases
 ~~~~~~~~~~~~~~
+
+.. _start-configuration-database:
 
 Configuration database
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -258,25 +285,36 @@ Configuration database
 LL::NG needs a storage system to store its own configuration (managed by
 the manager). Choose one in the following list:
 
-=========================================== ========= ==============================================================================================================================================================================
+=========================================== ========= ====================================================================
 Backend                                     Shareable Comment
-=========================================== ========= ==============================================================================================================================================================================
-:doc:`File (JSON)<fileconfbackend>`                   Not shareable between servers except if used in conjunction with :doc:`REST<restconfbackend>` or with a shared file system (NFS,...). Selected by default during installation.
-:doc:`YAML<yamlconfbackend>` |image47|                Same as :doc:`File<fileconfbackend>` but in YAML format instead of JSON
+=========================================== ========= ====================================================================
+:doc:`File (JSON)<fileconfbackend>`                   Not shareable between servers except
+                                                      if used in conjunction with :doc:`REST<restconfbackend>`
+                                                      or with a shared file system (NFS,...).
+                                                      Selected by default during installation.
+:doc:`YAML<yamlconfbackend>` |new|                    Same as :doc:`File<fileconfbackend>` but in YAML format
+                                                      instead of JSON
 :doc:`SQL (RDBI/CDBI)<sqlconfbackend>`      ✔         Recommended for large-scale systems. Prefer CDBI.
-:doc:`LDAP<ldapconfbackend>`                ✔        
-:doc:`MongoDB<mongodbconfbackend>`          ✔        
-:doc:`SOAP<soapconfbackend>` *(deprecated)* ✔         Proxy backend to be used in conjunction with another configuration backend. \ **Can be used to secure another backend** for remote servers.
-:doc:`REST<restconfbackend>` |image48|      ✔         Proxy backend to be used in conjunction with another configuration backend. \ **Can be used to secure another backend** for remote servers.
-:doc:`Local<localconfbackend>` |image49|              Use only lemonldap-ng.ini parameters.
-=========================================== ========= ==============================================================================================================================================================================
+:doc:`LDAP<ldapconfbackend>`                ✔
+:doc:`MongoDB<mongodbconfbackend>`          ✔
+:doc:`SOAP<soapconfbackend>` |deprecated|   ✔         Proxy backend to be used in conjunction with another
+                                                      configuration backend. \ **Can be used to secure another backend**
+                                                      for remote servers.
+:doc:`REST<restconfbackend>` |new|          ✔         Proxy backend to be used in conjunction with another configuration
+                                                      backend. \ **Can be used to secure another backend** for
+                                                      remote servers.
+:doc:`Local<localconfbackend>` |new|                  Use only lemonldap-ng.ini parameters.
+=========================================== ========= ====================================================================
 
 
-.. tip:: 
+.. tip::
 
     You can not start with an empty configuration, so read
     :doc:`how to change configuration backend<changeconfbackend>` to convert
     your existing configuration into another one.
+
+
+.. _start-sessions-database:
 
 Sessions database
 ^^^^^^^^^^^^^^^^^
@@ -290,34 +328,34 @@ modules family. All
 style modules are usable except for some features.
 
 
-.. important:: 
+.. important::
 
     If you plan to use LLNG in a large-scale system, take a
-    look at :doc:`Performance Test<performances>` to choose the right
+    look at :ref:`Performance Test<performance-test>` to choose the right
     backend. A :doc:`Browseable SQL backend<browseablesessionbackend>` is
-    generally a good choice. 
+    generally a good choice.
 
 ================================================================ ========= ================================================ ==================================================== ================== =================================================================================================================================================================================================
-Backend                                                          Shareable :doc:`Session explorer<features>`                :doc:`Session restrictions<features>`                Session expiration Comment
+Backend                                                          Shareable :ref:`Session explorer<session-explorer>`        :ref:`Session restrictions<session-restrictions>`    Session expiration Comment
 ================================================================ ========= ================================================ ==================================================== ================== =================================================================================================================================================================================================
 :doc:`File<filesessionbackend>`                                            ✔                                                ✔                                                    ✔                  Not shareable between servers except if used in conjunction with :doc:`REST session backend<restsessionbackend>` or with a shared file system (NFS,...). Selected by default during installation.
 :doc:`SQL<sqlsessionbackend>`                                    ✔         ✔                                                ✔                                                    ✔                  Unoptimized for :doc:`session explorer<features>` and :doc:`single session<features>` features.
-:doc:`LDAP<ldapsessionbackend>`                                  ✔         ✔                                                ✔                                                    ✔                  
+:doc:`LDAP<ldapsessionbackend>`                                  ✔         ✔                                                ✔                                                    ✔
 :doc:`Redis<nosqlsessionbackend>`                                ✔         ✔                                                ✔                                                    ✔                  The fastest. Must be secured by network access control.
 :doc:`MongoDB<mongodbsessionbackend>`                            ✔         ✔                                                ✔                                                    ✔                  Must be secured by network access control.
 :doc:`Browseable (SQL, Redis or LDAP)<browseablesessionbackend>` ✔         ✔                                                ✔                                                    ✔                  **Optimized** for :doc:`session explorer<features>` and :doc:`single session<features>` features.
-:doc:`REST<restsessionbackend>` |image51|                        ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
+:doc:`REST<restsessionbackend>` |new|                            ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
                                                                                                                                                                                                     **Can be used to secure another backend** for remote servers.
-:doc:`SOAP<soapsessionbackend>` *(deprecated)*                   ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
+:doc:`SOAP<soapsessionbackend>`  |deprecated|                    ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
                                                                                                                                                                                                     **Can be used to secure another backend** for remote servers.
 ================================================================ ========= ================================================ ==================================================== ================== =================================================================================================================================================================================================
 
 
-.. tip:: 
+.. tip::
 
     You can migrate from one session backend to another using the
-    :doc:`session conversion script<changesessionbackend>`. (|image52|
-    *since 2.0.7*) 
+    :doc:`session conversion script<changesessionbackend>`. (|new|
+    *since 2.0.7*)
 
 Applications protection
 -----------------------
@@ -336,7 +374,7 @@ Well known compatible applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. important:: 
+.. note::
 
     Here is a list of well known applications that are compatible with
     LL::NG. A full list is available on
@@ -376,8 +414,8 @@ Advanced features
 -  :doc:`Forward logout to applications<logoutforward>`
 -  :doc:`Secure Token Handler<securetoken>`
 -  :doc:`AuthBasic Handler<handlerauthbasic>`
--  :doc:`SSO as a Service<ssoaas>` *(SSOaaS)* |image55|
--  :doc:`Handling server webservice calls<servertoserver>` |image56|
+-  :doc:`SSO as a Service<ssoaas>` *(SSOaaS)* |new|
+-  :doc:`Handling server webservice calls<servertoserver>` |new|
 -  `LemonLDAP::NG kubernetes
    controller <https://github.com/lemonldap-ng-controller/lemonldap-ng-controller>`__
 -  :doc:`Safe jail<safejail>`
@@ -401,7 +439,7 @@ Mini howtos
 -  :doc:`Create a protocol proxy<federationproxy>` *(SAML to OpenID, CAS
    to SAML ,...)*
 -  :doc:`Convert HTTP header into environment variable<header_remote_user_conversion>`
--  :doc:`Connect to Renater Federation<renater>` |image58|
+-  :doc:`Connect to Renater Federation<renater>` |new|
 -  :doc:`Run LemonLDAP::NG components behind a reverse proxy<behindproxyminihowto>`
 -  :doc:`Configure LL::NG to use an outgoing proxy<useoutgoingproxy>`
 
@@ -415,7 +453,7 @@ Exploitation
 -  :doc:`SELinux<selinux>`
 -  :doc:`Handler status page<status>`
 -  :doc:`Portal state check<checkstate>` *(health check for fail-over)*
-   |image60|
+   |new|
 -  :doc:`Monitoring<monitoring>`
 -  :doc:`Logs settings<logs>`
 -  :doc:`Error messages<error>`
@@ -455,8 +493,8 @@ To add a new language:
 -  translate the 3 files
 -  then we will append them in sources.
 
-If you don't want to publish your translation *(``XX`` must be replaced
-by your language code)*:
+If you don't want to publish your translation (``XX`` must be replaced
+by your language code):
 
 -  Manager: translate
    ``lemonldap-ng-manager/site/htdocs/static/languages/en.json`` in
@@ -520,140 +558,61 @@ by your language code)*:
 
 .. |image0| image:: /icons/kthememgr.png
 .. |image1| image:: /icons/warehause.png
-.. |image2| image:: /documentation/new.png
-   :width: 35px
 .. |image3| image:: /icons/clean.png
-.. |image4| image:: /documentation/new.png
-   :width: 35px
 .. |image5| image:: /icons/lists.png
 .. |image6| image:: /icons/colors.png
 .. |image7| image:: /icons/gpg.png
-.. |image8| image:: /documentation/new.png
-   :width: 35px
-.. |image9| image:: /documentation/new.png
-   :width: 35px
-.. |image10| image:: /documentation/new.png
-   :width: 35px
-.. |image11| image:: /documentation/new.png
-   :width: 35px
-.. |image12| image:: /documentation/new.png
-   :width: 35px
-.. |image13| image:: /documentation/new.png
-   :width: 35px
-.. |image14| image:: /documentation/new.png
-   :width: 35px
-.. |image15| image:: /documentation/new.png
-   :width: 35px
-.. |image16| image:: /documentation/new.png
-   :width: 35px
-.. |image17| image:: /documentation/new.png
-   :width: 35px
-.. |image18| image:: /documentation/new.png
-   :width: 35px
-.. |image19| image:: /documentation/new.png
-   :width: 35px
-.. |image20| image:: /documentation/new.png
-   :width: 35px
-.. |image21| image:: /documentation/new.png
-   :width: 35px
-.. |image22| image:: /documentation/new.png
-   :width: 35px
-.. |image23| image:: /documentation/new.png
-   :width: 35px
-.. |image24| image:: /documentation/new.png
-   :width: 35px
-.. |image25| image:: /documentation/new.png
-   :width: 35px
 .. |image26| image:: /icons/personal.png
 .. |image27| image:: /icons/neotux.png
 .. |image28| image:: /icons/personal.png
-.. |image29| image:: /documentation/new.png
-   :width: 35px
-.. |image30| image:: /documentation/new.png
-   :width: 35px
-.. |image31| image:: /documentation/new.png
-   :width: 35px
-.. |image32| image:: /documentation/new.png
-   :width: 35px
-.. |image33| image:: /documentation/new.png
-   :width: 35px
-.. |image34| image:: /documentation/new.png
-   :width: 35px
 .. |image35| image:: /documentation/beta.png
-   :width: 35px
-.. |image36| image:: /documentation/new.png
    :width: 35px
 .. |image37| image:: /documentation/beta.png
    :width: 35px
-.. |image38| image:: /documentation/new.png
-   :width: 35px
-.. |image39| image:: /documentation/new.png
-   :width: 35px
-.. |image40| image:: /documentation/new.png
-   :width: 35px
 .. |image41| image:: /icons/gpg.png
-.. |image42| image:: /documentation/new.png
-   :width: 35px
-.. |image43| image:: /documentation/new.png
-   :width: 35px
-.. |image44| image:: /documentation/new.png
-   :width: 35px
-.. |image45| image:: /documentation/new.png
-   :width: 35px
 .. |image46| image:: /icons/utilities.png
-.. |image47| image:: /documentation/new.png
-   :width: 35px
-.. |image48| image:: /documentation/new.png
-   :width: 35px
-.. |image49| image:: /documentation/new.png
-   :width: 35px
 .. |image50| image:: /icons/kmultiple.png
-.. |image51| image:: /documentation/new.png
-   :width: 35px
-.. |image52| image:: /documentation/new.png
-   :width: 35px
 .. |image53| image:: /icons/access.png
 .. |image54| image:: /icons/neotux.png
-.. |image55| image:: /documentation/new.png
-   :width: 35px
-.. |image56| image:: /documentation/new.png
-   :width: 35px
 .. |image57| image:: /icons/jabber_protocol.png
-.. |image58| image:: /documentation/new.png
-   :width: 35px
 .. |image59| image:: /icons/xeyes.png
-.. |image60| image:: /documentation/new.png
-   :width: 35px
 
-.. |adfs| image:: applications/microsoft-adfs.png                        
+.. |new| image:: /documentation/new.png
+   :alt: new
+
+.. |deprecated| image:: /documentation/deprecated.png
+   :alt: deprecated
+
+
+.. |adfs| image:: applications/microsoft-adfs.png
    :target: applications/adfs.html
-.. |alfresco| image:: applications/alfresco_logo.png                         
+.. |alfresco| image:: applications/alfresco_logo.png
    :target: applications/alfresco.html
-.. |awx| image:: applications/logo-awx.png                              
+.. |awx| image:: applications/logo-awx.png
    :target: applications/awx.html
-.. |bugzilla| image:: applications/bugzilla_logo.png                         
+.. |bugzilla| image:: applications/bugzilla_logo.png
    :target: applications/bugzilla.html
-.. |dokuwiki| image:: applications/dokuwiki_logo.png                         
+.. |dokuwiki| image:: applications/dokuwiki_logo.png
    :target: applications/dokuwiki.html
-.. |drupal| image:: applications/drupal_logo.png                           
+.. |drupal| image:: applications/drupal_logo.png
    :target: applications/drupal.html
-.. |fusiondirectory| image:: applications/fusiondirectory-logo.jpg                  
+.. |fusiondirectory| image:: applications/fusiondirectory-logo.jpg
    :target: applications/fusiondirectory.html
-.. |gitlab| image:: applications/gitlab_logo.png                           
+.. |gitlab| image:: applications/gitlab_logo.png
    :target: applications/gitlab.html
-.. |glpi| image:: applications/glpi_logo.png                             
+.. |glpi| image:: applications/glpi_logo.png
    :target: applications/glpi.html
-.. |liferay| image:: applications/liferay_logo.png                          
+.. |liferay| image:: applications/liferay_logo.png
    :target: applications/liferay.html
-.. |mediawiki| image:: applications/mediawiki_logo.png                        
+.. |mediawiki| image:: applications/mediawiki_logo.png
    :target: applications/mediawiki.html
-.. |nextcloud| image:: applications/nextcloud-logo.png                        
+.. |nextcloud| image:: applications/nextcloud-logo.png
    :target: applications/nextcloud.html
-.. |simplesamlphp| image:: applications/simplesamlphp_logo.png                    
+.. |simplesamlphp| image:: applications/simplesamlphp_logo.png
    :target: applications/simplesamlphp.html
-.. |wordpress| image:: applications/wordpress_logo.png                        
+.. |wordpress| image:: applications/wordpress_logo.png
    :target: applications/wordpress.html
-.. |xwiki| image:: applications/xwiki.png                                 
+.. |xwiki| image:: applications/xwiki.png
    :target: applications/xwiki.html
-.. |zimbra| image:: applications/zimbra_logo.png                           
+.. |zimbra| image:: applications/zimbra_logo.png
    :target: applications/zimbra.html

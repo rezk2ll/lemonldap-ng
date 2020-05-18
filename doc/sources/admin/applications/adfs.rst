@@ -11,7 +11,7 @@ Identity/Service Provider, compatible with several protocols, including
 SAML 2.0.
 
 
-.. important:: 
+.. important::
 
     This documentation does not explains how to setup ADFS,
     but give only tricks to make it works with LL::NG

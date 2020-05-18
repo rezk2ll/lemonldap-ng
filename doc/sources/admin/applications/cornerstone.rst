@@ -56,7 +56,7 @@ Now we will add CSOD as a new SAML Service Provider:
    </md:EntityDescriptor>
 
 
-.. important:: 
+.. important::
 
     Change **mycompanyid** (in ``AssertionConsumerService``
     markup, parameter ``Location``) into your CSOD company ID and put the

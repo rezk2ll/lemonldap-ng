@@ -65,11 +65,11 @@ Create for example the MyPlugin module:
    vi /usr/share/perl5/Lemonldap/NG/Portal/MyPlugin.pm
 
 
-.. tip:: 
+.. tip::
 
     If you do not want to mix files from the distribution with
     your own work, put your own code in
-    ``/usr/local/lib/site_perl/Lemonldap/NG/Portal/MyPlugin.pm``\ 
+    ``/usr/local/lib/site_perl/Lemonldap/NG/Portal/MyPlugin.pm``\
 
 .. code:: perl
 
@@ -93,16 +93,16 @@ Create for example the MyPlugin module:
              return PE_OK;
    }
    sub hello {
-             my ($self, $req) = @_;          
+             my ($self, $req) = @_;
              ...
              return $self->p->sendJSONresponse($req, { hello => 1 });
    }
    sub welcome {
-             my ($self, $req) = @_;          
-                       
+             my ($self, $req) = @_;
+
              my $userid = $req->user;
              $self->p->logger->debug("Call welcome for $userid");
-             
+
              ...
              return $self->p->sendHtml($req, 'template', params => { WELCOME => 1 });
    }

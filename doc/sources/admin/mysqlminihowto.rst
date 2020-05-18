@@ -21,6 +21,6 @@ Steps:
 
    -  :doc:`Using Apache::Session::Browseable::MySQL<browseablesessionbackend>`
       (recommended for best performances)
-   -  :doc:`Using Apache::Session::MySQL<sqlsessionbackend>` *(if you
+   -  :doc:`Using Apache::Session::MySQL<sqlsessionbackend>` (if you
       choose this option, then read
-      :doc:`how to increase MySQL performances<performances>`)*
+      :ref:`how to increase MySQL performances<performances-apachesession-performances>`)

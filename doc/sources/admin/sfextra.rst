@@ -49,24 +49,21 @@ factors of the same type.
 See the :doc:`parameters list<parameterlist>` page for a full list of
 parameters you may overload. Here are the most useful ones:
 
--  E-Mail
-
-::
-
-       * ''mail2fLogo''
-       * ''mailSessionKey''
-       * ''mail2fCodeRegex''
-       * ''mail2fSubject''
-       * ''mail2fBody''
-   * External
-       * ''ext2fLogo''
-       * ''ext2fCodeActivation''
-       * ''ext2FSendCommand''
-       * ''ext2FValidateCommand''
-   * REST
-       * ''rest2fLogo''
-       * ''rest2fVerifyUrl''
-       * ''rest2fVerifyArgs'' (must be a JSON object)
-       * ''rest2fInitUrl''
-       * ''rest2fInitArgs'' (must be a JSON object)
+* E-Mail
+   * ``mail2fLogo``
+   * ``mailSessionKey``
+   * ``mail2fCodeRegex``
+   * ``mail2fSubject``
+   * ``mail2fBody``
+* External
+   * ``ext2fLogo``
+   * ``ext2fCodeActivation``
+   * ``ext2FSendCommand``
+   * ``ext2FValidateCommand``
+* REST
+   * ``rest2fLogo``
+   * ``rest2fVerifyUrl``
+   * ``rest2fVerifyArgs`` (must be a JSON object)
+   * ``rest2fInitUrl``
+   * ``rest2fInitArgs`` (must be a JSON object)
 

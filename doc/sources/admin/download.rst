@@ -27,14 +27,11 @@ RPM
 ^^^
 
 
-.. tip:: 
+.. tip::
 
     You can:
-    
-    -  Use :doc:`our own YUM repository<installrpm>`.
-    -  Download them here and
-       :doc:`install pre-required packages<prereq>`.
-    
+    -  Use :ref:`our own YUM repository<installrpm-yum-repository>`.
+    -  Download them here and :ref:`install pre-required packages<prereq-yum>`.
 
 
 RHEL/CentOS 7
@@ -57,17 +54,16 @@ Debian
 ^^^^^^
 
 
-.. tip:: 
+.. tip::
 
     You can:
-    
+
     -  Use
-       :doc:`packages provided by Debian<installdeb>`.
+       :ref:`packages provided by Debian<installdeb-official-repository>`.
     -  Use
-       :doc:`our own Debian repository<installdeb>`.
+       :ref:`our own Debian repository<installdeb-llng-repository>`.
     -  Download them here and
-       :doc:`install pre-required packages<prereq>`.
-    
+       :ref:`install pre-required packages<prereq-apt-get>`.
 
 
 -  `DEB
@@ -98,6 +94,8 @@ Contributions
 -------------
 
 See https://github.com/LemonLDAPNG
+
+.. _download-getting-sources-from-svn-repository:
 
 Git repository
 --------------

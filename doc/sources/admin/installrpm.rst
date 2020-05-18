@@ -2,7 +2,7 @@ Installation on Red Hat/CentOS
 ==============================
 
 
-.. important:: 
+.. important::
 
     LL::NG requires at least Red Hat/CentOS 7
 
@@ -31,20 +31,22 @@ LemonLDAP::NG provides packages for Red Hat/Centos 7:
 -  perl-Lemonldap-NG-Portal: CPAN - Portal modules
 
 
-.. warning:: 
+.. warning::
 
     The package lemonldap-ng-nginx requires the nginx
     community package. If you use openrestry or Nginx plus, you must ignore
     this dependency. To do this, download the package and install it with:
-    
+
     ::
-    
+
        rpm --nodeps -i lemonldap-ng-nginx*.rpm
-    
+
 
 
 Get the packages
 ----------------
+
+.. _installrpm-yum-repository:
 
 YUM repository
 ~~~~~~~~~~~~~~
@@ -65,7 +67,7 @@ You can add this YUM repository to get recent packages:
    gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
 
 
-.. tip:: 
+.. tip::
 
     Replace ``stable`` by ``2.0`` to avoid upgrade to next major
     version
@@ -88,11 +90,11 @@ Run this to update packages cache:
    yum update
 
 
-.. warning:: 
+.. warning::
 
     You must also install the EPEL repository for non-core
-    dependencies. See :doc:`prerequisites and dependencies<prereq>` chapter
-    for more. 
+    dependencies. See :ref:`prerequisites and dependencies<prereq-yum>`
+    chapter for more. 
 
 Manual download
 ~~~~~~~~~~~~~~~
@@ -140,14 +142,14 @@ You have then to install all the downloaded packages:
    rpm -Uvh lemonldap-ng-* perl-Lemonldap-NG-*
 
 
-.. tip:: 
+.. tip::
 
     You can choose to install only one component by choosing the
     package ``lemonldap-ng-portal``, ``lemonldap-ng-handler`` or
     ``lemonldap-ng-manager``.
-    
+
     Install the package ``lemonldap-ng-conf`` on all server which contains
-    one of those packages. 
+    one of those packages.
 
 First configuration steps
 -------------------------
@@ -176,7 +178,7 @@ Configure your DNS server to resolve names with your server IP:
 -  manager.<your domain>: manager, only for adminsitrators
 -  test1.<your domain>, test2.<your domain>: sample applications
 
-Follow the :doc:`next steps<start>`
+Follow the :ref:`next steps<start-configuration>`
 
 File location
 -------------

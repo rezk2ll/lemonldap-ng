@@ -51,15 +51,15 @@ Find the gitlab.rb file and add these settings:
    ]
 
 
-.. tip:: 
+.. tip::
 
     To get the fingerprint of IDP certificate, copy SAML
     certificate from LL::NG configuration in a file and use openssl:
-    
+
     ::
-    
+
        openssl x509 -in CERT.pem -noout -fingerprint
-    
+
 
 
 You can force SAML by default with this option:
@@ -96,7 +96,7 @@ Register them in LL::NG and send these SAML attributes:
 -  cn => name
 
 
-.. important:: 
+.. important::
 
     The value from LL::NG mail session attribute must be the
     email of the user in Gitlab database, in order to associate
@@ -180,10 +180,10 @@ Add an OpenID Connect RP to LemonLDAP::NG
    LemonLDAP::NG session is mapped to the ``email`` claim.
 
 
-.. important:: 
+.. important::
 
     You need to set a key identifier, or you will get a
-    *JSON::JWK::Set::KidNotFound* error on Gitlab 
+    *JSON::JWK::Set::KidNotFound* error on Gitlab
 
 .. |image0| image:: /applications/gitlab_logo.png
    :class: align-center

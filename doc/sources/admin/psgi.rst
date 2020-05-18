@@ -44,7 +44,7 @@ to replace exactly FastCGI server. You can use it :
 -  with uWSGI **(see below)**
 
 
-.. important:: 
+.. important::
 
     Starman, Twiggy,... are HTTP servers, not FastCGI ones
     !
@@ -63,11 +63,11 @@ LLNG FastCGI Server
 ==================== ===================== ===================== ==========================================================================================
 Command-line options                       Environment variable  Explanation
 ==================== ===================== ===================== ==========================================================================================
-Short                Long                                       
+Short                Long
 -p                   --pid                 PID                   Process PID
 -u                   --user                USER                  Unix uid
 -g                   --group               GROUP                 Unix gid
--n                   --proc                NPROC                 Number of process to launch *(FCGI::ProcManager*)*
+-n                   --proc                NPROC                 Number of process to launch *(FCGI::ProcManager)*
 -s                   --socket              SOCKET                Socket to listen to
 -l                   --listen              LISTEN                Listening address. Examples: ``host:port``, ``:port``, ``/socket/path``
 -f                   --customFunctionsFile CUSTOM_FUNCTIONS_FILE File to load for custom functions
@@ -155,7 +155,7 @@ Simple example:
 .. code:: perl
 
    use Plack::Builder;
-     
+
    my $app   = sub { ... };
    builder {
        enable "Auth::LemonldapNG";

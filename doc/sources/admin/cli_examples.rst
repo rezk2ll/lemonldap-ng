@@ -2,10 +2,10 @@ Command Line Interface (lemonldap-ng-cli) examples
 ==================================================
 
 This page shows some examples of LL::NG Command Line Interface. See
-:doc:`how to use the command<configlocation>`.
+:ref:`how to use the command<configlocation-command-line-interface-cli>`.
 
 
-.. important:: 
+.. important::
 
     On Debian, the command is located in
     ``/usr/share/lemonldap-ng/bin`` and on CentOS in
@@ -232,7 +232,7 @@ In this example we use:
            ldapExportedVars sn sn \
            ldapExportedVars mobile mobile \
            ldapExportedVars mail mail \
-           ldapExportedVars givenName givenName 
+           ldapExportedVars givenName givenName
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
        set \
@@ -248,7 +248,8 @@ Configure CAS Identity Provider
 -------------------------------
 
 You just have to enable the CAS server feature, and you can set the
-access control policy (see :doc:`CAS service options<idpcas>`):
+access control policy (see
+:ref:`CAS service options<idpcas-configuring-the-cas-service>`):
 
 ::
 
@@ -451,6 +452,9 @@ Create the application "sample" inside category "applications":
            applicationList/applications/sample/options logo "tux.png" \
            applicationList/applications/sample/options name "Sample application" \
            applicationList/applications/sample/options uri "https://sample.example.com/"
+
+
+.. _cli-examples-encryption-key:
 
 Encryption key
 --------------

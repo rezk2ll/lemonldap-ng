@@ -10,7 +10,7 @@ LLNG can propose to users to register their keys. When done, 2F
 registered users can not login without using their key.
 
 
-.. tip:: 
+.. tip::
 
     Note that it's a second factor, not an authentication module.
     Users are authenticated by both login form and U2F form.
@@ -31,7 +31,7 @@ For other systems, use CPAN. Before compiling it, you must install
 Yubico's C library headers.
 
 
-.. important:: 
+.. important::
 
     An HTTPS portal is required to use U2F
 
@@ -58,7 +58,7 @@ In the manager (second factors), you just have to enable it:
    the choice screen
 
 
-.. important:: 
+.. important::
 
     If you want to use a custom rule for "activation" and
     enable self-registration, you have to include this in your rule:
@@ -75,8 +75,8 @@ Browser compatibility
    -  38 to 56 with `U2F Support
       Add-on <https://addons.mozilla.org/fr/firefox/addon/u2f-support-add-on/>`__
    -  57 to 59, with "security.webauth.u2f" set to "true" in
-      about:config *(see*\ `Yubico
-      explanations <https://www.yubico.com/2017/11/how-to-navigate-fido-u2f-in-firefox-quantum/>`__\ *)*
+      about:config (see `Yubico
+      explanations <https://www.yubico.com/2017/11/how-to-navigate-fido-u2f-in-firefox-quantum/>`__)
    -  probably enabled by default for versions ≥ 60
 
 -  Opera ≥ 40
@@ -104,15 +104,15 @@ Developer corner
 
 If you have another U2F registration interface, you have to set these
 keys in Second Factor Devices array (JSON) in your user-database. Then
-map it to the \_2fDevices attribute *(see
-:doc:`exported variables<exportedvars>`)*:
+map it to the \_2fDevices attribute (see
+:doc:`exported variables<exportedvars>`):
 
 .. code:: perl
 
    $_2fDevices = [{"name" : "MyU2FKey" , "type" : "U2F" , "_userKey" : "########" , "_keyHandle":"########" , "epoch":"1524078936"}, ...]
 
 
-.. important:: 
+.. important::
 
     \ ``_userKey`` must be base64 encoded
 

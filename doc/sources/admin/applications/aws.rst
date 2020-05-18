@@ -29,7 +29,7 @@ SAML
    name so people know which account is which.
 
 
-.. important:: 
+.. important::
 
     If you have only one role, the configuration is simple. If you
     have multiple roles for different people, it is a little trickier. As
@@ -41,15 +41,15 @@ SAML
     user has attributes which are used quite heavily for dynamic groups and
     authorisation. You will want something similar, using whatever attribute
     makes sense to you. For example:
-    
+
     .. code::
-    
+
          dn: uid=user,ou=people,dc=your,dc=com
          ...
          ou: sysadmin
          ou: database
          ou: root
-    
+
 
 
 -  Assuming you use the web interface to manage lemonldap, go to General

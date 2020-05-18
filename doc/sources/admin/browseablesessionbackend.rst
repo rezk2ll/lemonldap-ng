@@ -5,16 +5,16 @@ Presentation
 ------------
 
 Browseable session backend
-(`Apache::Session::Browseable <https://metacpan.org/pod/Apache::Session::Browseable>`)
+(`Apache::Session::Browseable <https://metacpan.org/pod/Apache::Session::Browseable>`__)
 works exactly like Apache::Session::\* corresponding module but add
-index that increase :doc:`session explorer<features>` and
-:doc:`session restrictions<features>` performances.
+index that increase :ref:`session explorer<session-explorer>` and
+:ref:`session restrictions<session-restrictions>` performances.
 
 If you use features like SAML (authentication and issuer), CAS (issuer)
 and password reset self-service, you also need to index some fields.
 
 
-.. important:: 
+.. note::
 
     Without index, LL::NG will have to retrieve all sessions stored in
     backend and parse them to find the needed sessions. With index, LL::NG
@@ -37,21 +37,21 @@ SAML Session                           \_saml_id
 See Apache::Session::Browseable man page to see how use indexes.
 
 
-.. important:: 
+.. important::
 
     \ *WHATTOTRACE* must be replaced by the attribute or
     macro configured in the What To Trace parameter (REMOTE_USER). By
-    default: **\_whatToTrace**\ 
+    default: **\_whatToTrace**\
 
 
-.. tip:: 
+.. tip::
 
     It is advised to use separate session backends for standard
     sessions, SAML sessions and CAS sessions, in order to manage index
     separately.
 
 
-.. important:: 
+.. note::
 
     Documentation below explains how set index on ipAddr and
     \_whatToTrace. Adapt it to configure the index you need.
@@ -67,7 +67,7 @@ You then just have to add the ``Index`` parameter in
 ``Apache::Session module`` :
 
 =================== ============ ====================
-Required parameters             
+Required parameters
 =================== ============ ====================
 Name                Comment      Example
 **server**          Redis server 127.0.0.1:6379
@@ -78,30 +78,30 @@ Browseable SQL
 --------------
 
 
-.. important:: 
+.. note::
 
     This documentation concerns PostgreSQL. Some adaptations are
     needed with other databases. When using
     Apache::Session::Browseable::Postgres, it
     is strongly recommended to use version 1.3.1 at least. See `bug
-    1732 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1732>`.
+    1732 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1732>`__.
 
 Prepare database
 ~~~~~~~~~~~~~~~~
 
 Database must be prepared exactly like in
-:doc:`SQL session backend<sqlsessionbackend>` except that a field must
-be added for each data to index.
+:ref:`SQL session backend<sqlsessionbackend-prepare-the-database>`
+except that a field must be added for each data to index.
 
 
-.. important:: 
+.. important::
 
     Data written to UNLOGGED tables is not written to the
     WAL, which makes them considerably faster than ordinary tables. However,
     they are not crash-safe: an unlogged table is automatically truncated
     after a crash or unclean shutdown. The contents of an unlogged table are
     also not replicated to standby servers. Any indexes created on an
-    unlogged table are automatically unlogged as well. 
+    unlogged table are automatically unlogged as well.
 
 Apache::Session::Browseable::Postgres
 example:
@@ -124,7 +124,7 @@ example:
    CREATE INDEX h1   ON sessions (_httpSessionType);
 
 
-.. important:: 
+.. important::
 
     For Session Explorer and one-off sessions, it is
     recommended to use BTREE or any index method that indexes partial
@@ -135,7 +135,7 @@ now recommended SHA256 hash algorithm. See
 :doc:`Sessions<sessions>` for more details.
 
 
-.. tip:: 
+.. tip::
 
     With new
     Apache::Session::Browseable::PgHstore
@@ -153,7 +153,7 @@ for MySQL) in ``General parameters`` » ``Sessions`` »
 parameters (case sensitive):
 
 =================== ================================================= =============================================================
-Required parameters                                                  
+Required parameters
 =================== ================================================= =============================================================
 Name                Comment                                           Example
 **DataSource**      The `DBI <https://metacpan.org/pod/DBI>`__ string dbi:Pg:database=lemonldap-ng
@@ -164,11 +164,11 @@ Name                Comment                                           Example
 =================== ================================================= =============================================================
 
 
-.. tip:: 
+.. tip::
 
     Apache::Session::Browseable::MySQL doesn't use locks so performances are
     keeped.
-    
+
     For databases like PostgreSQL, don't forget to add "Commit" with a value
     of 1
 
@@ -184,7 +184,7 @@ You need to add the ``Index`` field and can also configure the
 values will be stored.
 
 ======================== ================================= ===============================
-Required parameters                                       
+Required parameters
 ======================== ================================= ===============================
 Name                     Comment                           Example
 **ldapServer**           URI of the server                 ldap://localhost
@@ -192,7 +192,7 @@ Name                     Comment                           Example
 **ldapBindDN**           Connection login                  cn=admin,dc=example,dc=password
 **ldapBindPassword**     Connection password               secret
 **Index**                Index list                        \_whatToTrace ipAddr
-Optional parameters                                       
+Optional parameters
 Name                     Comment                           Default value
 **ldapObjectClass**      Objectclass of the entry          applicationProcess
 **ldapAttributeId**      Attribute storing session ID      cn

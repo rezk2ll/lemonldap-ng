@@ -8,15 +8,15 @@ LemonLDAP::NG configuration is stored in a backend that allows all
 modules to access it.
 
 
-.. important:: 
+.. important::
 
     Note that all LL::NG components must have access:
-    
+
     -  to the configuration backend
     -  to the sessions storage backend
-    
+
     Detailed configuration backends documentation is available
-    :doc:`here<start>`.
+    :ref:`here<start-configuration-database>`.
 
 By default, configuration is stored in :doc:`files<fileconfbackend>`, so
 access trough network is not possible. To allow this, use
@@ -25,7 +25,8 @@ service like :doc:`SQL database<sqlconfbackend>` or
 :doc:`LDAP directory<ldapconfbackend>`.
 
 Configuration backend can be set in the
-local configuration file, in ``configuration`` section.
+:ref:`local configuration file<configlocation-local-file>`, in ``configuration``
+section.
 
 For example, to configure the ``File`` configuration backend:
 
@@ -36,7 +37,7 @@ For example, to configure the ``File`` configuration backend:
    dirName = /usr/local/lemonldap-ng/data/conf
 
 
-.. tip:: 
+.. tip::
 
     See
     :doc:`How to change configuration backend<changeconfbackend>` to known
@@ -52,7 +53,7 @@ By default, Manager is protected to allow only the demonstration user
 "dwho".
 
 
-.. important:: 
+.. important::
 
     This user will not be available anymore if you configure
     a new authentication backend! Remember to change the access rule in
@@ -77,7 +78,7 @@ editing ``lemonldap-ng.ini`` and changing the ``protection`` parameter:
    #   * none         : no protection
 
 
-.. tip:: 
+.. tip::
 
     See :doc:`Manager protection documentation<managerprotection>`
     to know how to use Apache modules or LL::NG to manage access to
@@ -104,28 +105,28 @@ When all modifications are done, click on ``Save`` to store
 configuration.
 
 
-.. warning:: 
+.. warning::
 
     LemonLDAP::NG will do some checks on configuration and
     display errors and warnings if any. Configuration **is not saved** if
     errors occur.
 
 
-.. tip:: 
+.. tip::
 
-    
-    
+
+
     -  :doc:`Configuration viewer<viewer>` allow some users to edit WebSSO
        configuration in Read Only mode.
-    
+
     -  You can set and display instance name in Manager menu by editing
        ``lemonldap-ng.ini`` in [manager] section:
-    
+
     .. code:: ini
-    
+
        [manager]
        instanceName = LLNG_Demo
-    
+
 
 
 Manager API
@@ -141,7 +142,7 @@ See `Manager API
 documentation <https://lemonldap-ng.org/manager-api/2.0/>`__.
 
 
-.. important:: 
+.. important::
 
     To access Manager API, enable the ``manager-api``
     virtual host and change the access rule. You can protect the API through
@@ -168,7 +169,7 @@ and is stored in the LemonLDAP::NG bin/ directory, for example
    /usr/libexec/lemonldap-ng/bin/lmConfigEditor
 
 
-.. tip:: 
+.. tip::
 
     This script must be run as root, it will then use the Apache
     user and group to access configuration.
@@ -198,6 +199,8 @@ The configuration is displayed as a big Perl Hash, that you can edit:
 If a modification is done, the configuration is saved with a new
 configuration number. Else, current configuration is kept.
 
+.. _configlocation-command-line-interface-cli:
+
 Command Line Interface (CLI)
 ----------------------------
 
@@ -219,7 +222,7 @@ for example /usr/share/lemonldap-ng/bin:
    /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli
 
 
-.. tip:: 
+.. tip::
 
     This script must be run as root, it will then use the Apache
     user and group to access configuration.
@@ -272,15 +275,18 @@ Some examples:
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -sep ',' get macros,_whatToTrace
 
 
-.. tip:: 
+.. tip::
 
     See :doc:`other examples<cli_examples>`.
+
+
+.. _configlocation-apache:
 
 Apache
 ------
 
 
-.. important:: 
+.. important::
 
     LemonLDAP::NG does not manage Apache
     configuration
@@ -294,6 +300,8 @@ LemonLDAP::NG ships 3 Apache configuration files:
 -  **test-apache2.conf** : Example protected virtual hosts
 
 See :doc:`how to deploy them<configapache>`.
+
+.. _configlocation-portal:
 
 Portal
 ~~~~~~
@@ -323,7 +331,7 @@ you need to edit the access rule in **handler-apache2.conf**
 
        <Location /reload>
            #CHANGE THIS######
-           Require ip 127 ::1 
+           Require ip 127 ::1
            ###########^^^^^^^
            SetHandler perl-script
            PerlResponseHandler Lemonldap::NG::Handler::ApacheMP2->reload
@@ -368,7 +376,7 @@ Nginx
 -----
 
 
-.. important:: 
+.. important::
 
     LemonLDAP::NG does not manage Nginx configuration
 
@@ -382,7 +390,7 @@ LemonLDAP::NG ships 3 Nginx configuration files:
 See :doc:`how to deploy them<confignginx>`.
 
 
-.. warning:: 
+.. warning::
 
     \ :doc:`LL::NG FastCGI<fastcgiserver>` server must be
     enabled and started separately.
@@ -417,11 +425,11 @@ you need to edit the access rule in **handler-nginx.conf**
 .. code:: nginx
 
      location = /reload {
-      
+
        ## CHANGE THIS #
        allow 127.0.0.1;
        ######^^^^^^^^^#
-      
+
        deny all;
 
        # FastCGI configuration
@@ -492,27 +500,27 @@ included file):
        #proxy_set_header Auth-User $authuser;
        # OR
        #fastcgi_param HTTP_AUTH_USER $authuser;
-       
+
        # Then (if LUA not supported), change cookie header to hide LLNG cookie
        #auth_request_set $lmcookie $upstream_http_cookie;
        #proxy_set_header Cookie: $lmcookie;
        # OR
        #fastcgi_param HTTP_COOKIE $lmcookie;
-       
+
        # Insert then your configuration (fastcgi_* or proxy_*)
 
 Configuration reload
 --------------------
 
 
-.. important:: 
+.. note::
 
     As Handlers keep configuration in cache, when configuration
     change, it should be updated in Handlers. An Apache restart will work,
     but LemonLDAP::NG offers the mean to reload them through an HTTP
     request. Configuration reload will then be effective in less than 10
     minutes. If you want to change this timeout, set ``checkTime = 240`` in
-    your lemonldap-ng.ini file *(values in seconds)*\ 
+    your lemonldap-ng.ini file *(values in seconds)*\
 
 After configuration is saved by Manager, LemonLDAP::NG will try to
 reload configuration on distant Handlers by sending an HTTP request to
@@ -525,7 +533,7 @@ You also have a parameter to adjust the timeout used to request reload
 URLs, it is be default set to 5 seconds.
 
 
-.. important:: 
+.. important::
 
     If "Compact configuration file" option is enabled, all
     useless parameters are removed to limit file size. Typically, if SAMLv2
@@ -536,7 +544,7 @@ These parameters can be overwritten in LemonLDAP::NG ini file, in the
 section ``apply``.
 
 
-.. tip:: 
+.. tip::
 
     You only need a reload URL per physical servers, as Handlers
     share the same configuration cache on each physical server.
@@ -546,27 +554,27 @@ inside a virtual host protected by LemonLDAP::NG Handler (see below
 examples in Apache->handler or Nginx->Handler).
 
 
-.. important:: 
+.. important::
 
     You must allow access to declared URLs to your Manager
     IP.
 
 
-.. important:: 
+.. important::
 
     If reload URL is served in HTTPS, to avoid "Error 500
     (certificate verify failed)", Go to :
-    
+
     ``General Parameters > Advanced Parameters > Security > SSL options for server requests``
-    
+
     and set :
-    
+
     **verify_hostname => 0**
-    
-    **SSL_verify_mode => 0** 
+
+    **SSL_verify_mode => 0**
 
 
-.. important:: 
+.. important::
 
     If you want to use reload mechanism on a portal only
     host, you must install a handler in Portal host to be able to refresh
@@ -593,6 +601,9 @@ You also need to adjust the protection of the reload vhost, for example:
            PerlResponseHandler Lemonldap::NG::Handler::ApacheMP2->reload
        </Location>
 
+
+.. _configlocation-local-file:
+
 Local file
 ----------
 
@@ -618,7 +629,7 @@ For example, to override configured skin for portal:
    portalSkin = dark
 
 
-.. tip:: 
+.. tip::
 
     You need to know the technical name of configuration parameter
     to do this. You can refer to :doc:`parameter list<parameterlist>` to

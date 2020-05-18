@@ -46,7 +46,7 @@ Finally, just ensure that at least:
 match with the correct values. (adapt the domain if necessary)
 
 
-.. important:: 
+.. important::
 
     For now, the authentication service parameter has no
     domain available. You must come back later to fill this parameter. Once
@@ -54,7 +54,7 @@ match with the correct values. (adapt the domain if necessary)
     the login form, and you'll have an automatic redirection to your
     Identity Provider (no need for the user to click). Note that you can
     always access Salesforce by the general login page:
-    https://login.salesforce.com\ 
+    https://login.salesforce.com\
 
 SAML settings
 ~~~~~~~~~~~~~

@@ -21,7 +21,7 @@ Easy to integrate
 
 :doc:`Integrating applications<applications>` in
 LL::NG is easy since its dialog with applications is based on
-:doc:`customizable HTTP headers<writingrulesand_headers>`.
+:ref:`customizable HTTP headers<headers>`.
 
 Unifying authentications (Identity Federation)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -38,6 +38,8 @@ applications.
 Sessions
 --------
 
+.. _session-explorer:
+
 Session explorer
 ~~~~~~~~~~~~~~~~
 
@@ -51,6 +53,8 @@ opened sessions:
    computers)
 
 It can be used to delete a session
+
+.. _session-restrictions:
 
 Session restrictions
 ~~~~~~~~~~~~~~~~~~~~

@@ -95,23 +95,23 @@ Jitsi Meet Virtual host in Manager
 Go to the Manager and :doc:`create a new virtual host<../configvhost>`
 for Jitsi Meet.
 
-Configure the :doc:`access rules<../writingrulesand_headers>`.
+Configure the :ref:`access rules<rules>`.
 
 ::
 
      * Don't forget to configure the /logout/ URL
 
-Configure the following :doc:`headers<../writingrulesand_headers>`.
+Configure the following :ref:`headers<headers>`.
 
 -  **mail**: $mail
 -  **displayName**: $cn
 
 
-.. warning:: 
+.. warning::
 
     Jitsi meet expects to find a ``mail`` HTTP header, it
     will ignore REMOTE_USER and only use the mail value to identify the
-    user. 
+    user.
 
 .. |image0| image:: /applications/logo-jitsimeet.png
    :class: align-center

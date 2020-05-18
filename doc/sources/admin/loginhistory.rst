@@ -35,8 +35,9 @@ data.
 
 To allow the Login History tab in Menu, configure it in
 ``General Parameters`` > ``Portal`` > ``Menu`` > ``Modules`` (see
-:doc:`portal menu configuration<portalmenu>`).
+:ref:`portal menu configuration<portalmenu-menu-modules>`).
 
 You can also display a check box on the authentication form, to allow
 user to see their login history before being redirected to the protected
-application (see :doc:`portal customization<portalcustom>`).
+application (see
+:ref:`portal customization<portalcustom-other-parameters>`).

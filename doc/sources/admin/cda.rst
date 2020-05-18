@@ -4,7 +4,7 @@ Cross Domain Authentication
 Presentation
 ------------
 
-:ref:`cross_domain_authentication_cda`
+:ref:`cda`
 
 Configuration
 -------------
@@ -21,17 +21,17 @@ To use this feature only locally, edit ``lemonldap-ng.ini`` in section
    cda = 1
 
 
-.. important:: 
+.. important::
 
     If your handler is being served by Nginx, you have to
     uncomment the following lines in your nginx configuration file:
-    
+
     ::
-    
-       # If CDA is used, uncomment this 
-       auth_request_set $cookie_value $upstream_http_set_cookie; 
+
+       # If CDA is used, uncomment this
+       auth_request_set $cookie_value $upstream_http_set_cookie;
        add_header Set-Cookie $cookie_value;
-    
+
 
 
 Handlers
@@ -39,6 +39,4 @@ Handlers
 
 Choose "CDA" as type for each virtualHost concerned by CDA *(ie not in
 main domain)*.
-
-.. |section>..presentation#cross_domain_authentication_cda&noheader| image:: section>..presentation#cross_domain_authentication_cda&noheader
 

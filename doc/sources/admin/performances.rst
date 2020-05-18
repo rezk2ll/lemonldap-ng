@@ -18,22 +18,21 @@ databases:
 ============= ======================== ========== ============================== ==================== ==
 \             Lifetime in memory                  Lifetime in Local-Cache (file)                      DB
 ============= ======================== ========== ============================== ==================== ==
-\             Parameter                Default    Parameter                      Default             
+\             Parameter                Default    Parameter                      Default
 Configuration ``checkTime``            1 second                                  Until "reload" order ✔
-Session       ``handlerInternalCache`` 15 seconds ``default_expires_in``\ (*)    10 minutes           ✔
+Session       ``handlerInternalCache`` 15 seconds ``default_expires_in`` [1]_    10 minutes           ✔
 ============= ======================== ========== ============================== ==================== ==
 
-*(*): Manager >> General parameters >> Sessions >> Sessions storage >>
-Cache module options*
+.. [1] Manager >> General parameters >> Sessions >> Sessions storage >> Cache module options
 
 
-.. important:: 
+.. note::
 
     Configuration and sessions are first looked up in-memory, then in
     the cache file, and then in their backing store. This means that after a
-    configuration reload *(using Manager)*, you have to wait for
+    configuration reload (using Manager), you have to wait for
     ``checkTime`` before you can see your changes, or wait for configuration
-    cache expiration in ``checkTime`` is disabled. 
+    cache expiration in ``checkTime`` is disabled.
 
 Global performance
 ------------------
@@ -57,6 +56,8 @@ installed. You should optimize this to launch:
 -  purgeCentralCache: only 1 time every 10 minutes for the whole system
    (or more)
 -  purgeLocalCache: ~ 1 time per hour on each server
+
+.. _performances-handler-performance:
 
 Handler performance
 -------------------
@@ -120,7 +121,7 @@ Example for macros:
 
    # boolean macro
    isAdmin -> $uid eq 'foo' or $uid eq 'bar'
-   # other macro 
+   # other macro
    displayName -> $givenName." ".$surName
 
    # Use a boolean macro in a rule
@@ -148,13 +149,13 @@ Using groups in a rule
    ^/admin -> inGroup('admin')
 
 
-.. important:: 
+.. note::
 
     Groups are computed after macros, so a group rule may involve a
     macro value.
 
 
-.. important:: 
+.. important::
 
     Macros and groups are computed in alphanumeric order,
     that is, in the order they are displayed in the manager. For example,
@@ -180,7 +181,7 @@ stored.
    Display-Name -> $displayName ||= $givenName." ".$surName
 
 
-.. tip:: 
+.. tip::
 
     Note that this feature is interesting only for the
     Lemonldap::NG systems protecting a high number of applications
@@ -207,12 +208,15 @@ portal Parameters » Advanced Parameters » Forms)*. Note that this will
 decrease performances.
 
 
-.. tip:: 
+.. tip::
 
     In production environment for network performance, prefer
     using minified versions of javascript and css libs: use
-    ``make install **PROD=yes**``. This is done by default in RPM/DEB
-    packages. 
+    ``make install PROD=yes``. This is done by default in RPM/DEB
+    packages.
+
+
+.. _performances-apachesession-performances:
 
 Apache::Session performances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -232,7 +236,7 @@ it can be a bottleneck for the portal:
    following
 
 
-.. tip:: 
+.. tip::
 
     Since 1.9.6, LLNG portal and handler check if session is valid
     at each access, so purgeCentralCache cron no longer needs to be launched
@@ -258,7 +262,7 @@ and use the following parameters:
    Password   -> ...
 
 
-.. tip:: 
+.. tip::
 
     Since version 1.90 of Apache::Session, you can use
     Apache::Session::MySQL::NoLock instead
@@ -290,53 +294,54 @@ Look at :doc:`Browseable session backend<browseablesessionbackend>` to
 known which index to choose.
 
 
-.. important:: 
+.. important::
 
     Some Apache::Session module are not fully usable by
     Lemonldap::NG such as Apache::Session::Memcached since these
     modules do not offer capability to browse sessions. They does not allow
     one to use sessions explorer neither manage one-off sessions.
 
+.. _performance-test:
+
 Performance test
 ^^^^^^^^^^^^^^^^
 
 
-.. tip:: 
+.. tip::
 
     A
-    `Apache::Session::Browseable::Redis <https://metacpan.org/module/Apache::Session::Browseable::Redis>`
+    `Apache::Session::Browseable::Redis <https://metacpan.org/module/Apache::Session::Browseable::Redis>`__
     has been created, it is the fastest (except for session explorer,
-    defeated by
-    Apache::Session::Browseable::DBI <https://metacpan.org/module/Apache::Session::Browseable>`__/`LDAP <https://metacpan.org/module/Apache::Session::Browseable::LDAP>`__])
+    defeated by Apache::Session::Browseable:: `DBI <https://metacpan.org/module/Apache::Session::Browseable>`__ / `LDAP <https://metacpan.org/module/Apache::Session::Browseable::LDAP>`__)
 
 This test isn't an "only-backend" test but embedded some LLNG methods,
 so real differences between engines are mitigate here.
 
 ====================================================================== ============================ =================== ========== =================== ===================================== =================== =============
-Backend                                                                                             Portal and handlers                                Session explorer and one-off sessions                    
-====================================================================== ============================ =================== ========== =================== ===================================== =================== =============
+   Backend                                                                                             Portal and handlers                                Session explorer and one-off sessions
+--------------------------------------------------------------------------------------------------- -------------------------------------------------- -----------------------------------------------------------------------
 Name                                                                   Configuration                Insert 1000         Search 1   Purge 500           Parse all                             Search by substring Search by UID
+====================================================================== ============================ =================== ========== =================== ===================================== =================== =============
 Apache::Session::\ **Browseable::LDAP**                                mdb                          159.66              0.0120     49.22               0.1110                                0.0076              0.0050
 Apache::Session::\ **MySQL**                                           No lock                      87.20               **0.0039** 23.14               0.0281                                0.0252              0.0235
-Apache::Session::\ **Browseable::MySQL**                                                            91.79               **0.0039** **0.139** *(1)*     0.0272                                **0.0036**          **0.0026**
-Apache::Session::\ **Browseable::MySQLJSON**                                                        86.06               0.0145     \*\* 0.151*\* *(2)* **0.0104**                            0.0137              0.0038
+Apache::Session::\ **Browseable::MySQL**                                                            91.79               **0.0039** **0.139** [2]_      0.0272                                **0.0036**          **0.0026**
+Apache::Session::\ **Browseable::MySQLJSON**                                                        86.06               0.0145     \*\* 0.151*\* [3]_  **0.0104**                            0.0137              0.0038
 Apache::Session::\ **Postgres**                                                                     18.31               0.0095     13.40               0.0323                                0.0277              0.0264
 Apache::Session::\ **Postgres**                                        Unlogged table               9.16                0.0095     7.91                0.0318                                0.0270              0.0254
-Apache::Session::\ **Browseable::Postgres**                            Unlogged table with indexes  9.24                0.0094     **0.103** *(1)*     0.0301                                **0.0036**          **0.0028**
-Apache::Session::\ **Browseable::PgJSON**                              Unlogged table, json field   9.25                0.0091     **0.108** *(1)*     0.0247                                **0.0035**          **0.0029**
-Apache::Session::\ **Browseable::PgJSON**                              Unlogged table, jsonb field  9.25                0.0091     **0.105** *(1)*     **0.0126**                            **0.0034**          **0.0029**
-Apache::Session::\ **Browseable::PgHstore**                            Unlogged table, hstore field 9.62                0.0111     **0.105** *(1)*     **0.0125**                            **0.0033**          **0.0029**
+Apache::Session::\ **Browseable::Postgres**                            Unlogged table with indexes  9.24                0.0094     **0.103** [2]_      0.0301                                **0.0036**          **0.0028**
+Apache::Session::\ **Browseable::PgJSON**                              Unlogged table, json field   9.25                0.0091     **0.108** [2]_      0.0247                                **0.0035**          **0.0029**
+Apache::Session::\ **Browseable::PgJSON**                              Unlogged table, jsonb field  9.25                0.0091     **0.105** [2]_      **0.0126**                            **0.0034**          **0.0029**
+Apache::Session::\ **Browseable::PgHstore**                            Unlogged table, hstore field 9.62                0.0111     **0.105** [2]_      **0.0125**                            **0.0033**          **0.0029**
 Apache::Session::\ **Redis**                                                                        **2.13**            **0.0033** 1.158               0.0623                                0.0570              0.0550
 Apache::Session::\ **Browseable::Redis**                                                            **2.36**            **0.0033** 1.154               0.0643                                0.1048              **0.0024**
-*The source of this test is available in sources: e2e-tests/sbperf.pl*                                                                                                                                          
 ====================================================================== ============================ =================== ========== =================== ===================================== =================== =============
 
--  **(1) :**\ *"purge" test is done with
-   Apache::\ :doc:`Session::Browseable-1.2.5<session::browseable-1.2.5>`
-   and LLG-2.0. Earlier results are not so good.*
--  **(2) :**\ *"purge" test is done with
-   Apache::\ :doc:`Session::Browseable-1.2.6<session::browseable-1.2.6>`
-   and LLG-2.0.*
+*The source of this test is available in sources: e2e-tests/sbperf.pl*
+
+.. [2]  "purge" test is done with Apache::Session::Browseable-1.2.5
+   and LLG-2.0. Earlier results are not so good.
+.. [3] "purge" test is done with Apache::Session::Browseable-1.2.6
+   and LLG-2.0.
 
 Analysis:
 
@@ -350,6 +355,8 @@ Analysis:
 -  Redis is the best for main usage
 -  Browseable::Postgres/PgHstore/PgJSON are the best SQL solutions on
    average
+
+.. _performances-ldap-performances:
 
 LDAP performances
 ~~~~~~~~~~~~~~~~~
@@ -371,39 +378,39 @@ overlay <http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Mem
 to do it automatically.
 
 
-.. important:: 
+.. important::
 
     Don't forget to create an index on the field used to
     find users (uid by default)
 
 
-.. tip:: 
+.. tip::
 
     To avoid storing the full group DNs in session data, you can
     use a macro to rewrite ``memberOf``:
-    
+
     -  In \*Exported variables*, export the ``memberOf`` LDAP attribute as a
        ``ldapGroups`` session variable
-    
+
        -  key: ``ldapGroups``
        -  value: ``memberOf``
-    
+
     -  Next, add a ``ldapGroups`` macro that will overwrite the exported
        attribute
-    
+
        -  key: ``ldapGroups``
        -  value:
-    
+
     ::
-    
+
        join("; ",($ldapGroups =~ /cn=(.*?),/g))
-    
+
     ``ldapGroups`` should now contain something like ``admin; su`` just like
     it would if you had used the regular, slower group resolution mechanism.
-    
+
     You can use
-    :doc:`listMatch($ldapGroups, "some_group")<extendedfunctions>` in your
-    access rules. 
+    :ref:`listMatch($ldapGroups, "some_group")<listMatch>` in your
+    access rules.
 
 NGINX performances
 ~~~~~~~~~~~~~~~~~~
@@ -425,8 +432,8 @@ Edit file /etc/nginx/nginx.conf
 .. code:: perl
 
    gzip on; # active la compression Gzip
-   gzip_disable "msie6"; 
-    
+   gzip_disable "msie6";
+
    gzip_vary on;
    gzip_proxied any;
    gzip_comp_level 6;

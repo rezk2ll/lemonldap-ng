@@ -18,8 +18,8 @@ Overview of Handler packages
 Usage                                                                          Platform      Wrapper           Types       Main
 ============================================================================== ============  ================= =========== ====
 Apache2 protection                                                             ApacheMP2     ApacheMP2::<type> Lib::<type> Main
-Plack servers protection or Nginx/\ :doc:`SSOaaS<ssoaas>` FastCGI/uWSGI server Server        Server::<type>             
-:doc:`Self protected applications<selfmadeapplication>`                        PSGI          PSGI::<type>               
+Plack servers protection or Nginx/\ :doc:`SSOaaS<ssoaas>` FastCGI/uWSGI server Server        Server::<type>
+:doc:`Self protected applications<selfmadeapplication>`                        PSGI          PSGI::<type>
 ============================================================================== ============  ================= =========== ====
 
 Types are:

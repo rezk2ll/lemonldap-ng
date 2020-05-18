@@ -48,11 +48,11 @@ For example:
 
 .. code:: javascript
 
-   { 
-     "family_name" : "OUDOT", 
-     "name" : "Clément OUDOT", 
-     "email" : "clement@example.com", 
-     "sub" : "coudot" 
+   {
+     "family_name" : "OUDOT",
+     "name" : "Clément OUDOT",
+     "email" : "clement@example.com",
+     "sub" : "coudot"
    }
 
 Introspection
@@ -94,7 +94,7 @@ HTTP headers to know which user is connected.
 
    curl \
       -H "Authorization: Bearer a74d504ec9e784785e70a1da2b95d1d2" \
-      https://oauth2.example.ccom/rest/myapi 
+      https://oauth2.example.ccom/rest/myapi
 
 .. code:: javascript
 

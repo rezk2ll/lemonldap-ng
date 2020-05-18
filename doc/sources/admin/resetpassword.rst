@@ -23,7 +23,7 @@ Kinematics:
    else the mail only confirm that the password was changed
 
 
-.. tip:: 
+.. tip::
 
     If :doc:`LDAP backend<authldap>` is used, and LDAP password
     policy is enabled, the 'password reset flag is set to true when password
@@ -32,7 +32,7 @@ Kinematics:
     :doc:`LDAP configuration<authldap>`.
 
 
-.. tip:: 
+.. tip::
 
     If the user do a new password reset request but there is
     already a request pending, the user can ask the confirmation mail to be
@@ -42,7 +42,7 @@ Configuration
 -------------
 
 The reset password link must be activated, see
-:doc:`portal customization<portalcustom>`.
+:ref:`portal customization<portalcustom-other-parameters>`.
 
 The SMTP server must be setup, see :doc:`SMTP server setup<smtp>`.
 
@@ -62,14 +62,14 @@ Then go in Manager, ``General Parameters`` » ``Plugins`` »
       when password change is asked
 
 
-.. important:: 
+.. important::
 
     By default, mail content are empty in order to use HTML
     templates:
-    
+
     -  portal/skins/common/mail_confirm.tpl
     -  portal/skins/common/mail_password.tpl
-    
+
     If you define mail contents in Manager, HTML templates will not be used.
 
 

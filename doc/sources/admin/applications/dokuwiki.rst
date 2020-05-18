@@ -14,7 +14,7 @@ readable outside the Wiki and eases the creation of structured texts.
 All data is stored in plain text files – no database is required.
 
 
-.. tip:: 
+.. tip::
 
     LemonLDAP::NG wiki uses Dokuwiki!
 
@@ -57,7 +57,7 @@ Configure Dokuwiki virtual host like other
           PerlHeaderParserHandler Lemonldap::NG::Handler
 
           ...
-          
+
    </VirtualHost>
 
 -  For Nginx:
@@ -80,8 +80,8 @@ Configure Dokuwiki virtual host like other
        fastcgi_param HOST $http_host;
        # Keep original request (LLNG server will received /llauth)
        fastcgi_param X_ORIGINAL_URI  $request_uri;
-     } 
-    
+     }
+
      # Client requests
      location / {
        auth_request /lmauth;
@@ -89,9 +89,9 @@ Configure Dokuwiki virtual host like other
        auth_request_set $lmlocation $upstream_http_location;
        error_page 401 $lmlocation;
        try_files $uri $uri/ =404;
-    
+
        ...
-    
+
        include /etc/lemonldap-ng/nginx-lua-headers.conf;
      }
      location / {
@@ -105,9 +105,9 @@ Dokuwiki virtual host in Manager
 Go to the Manager and :doc:`create a new virtual host<../configvhost>`
 for Dokuwiki.
 
-Configure the :doc:`access rules<../writingrulesand_headers>`.
+Configure the :ref:`access rules<rules>`.
 
-Configure the :doc:`headers<../writingrulesand_headers>`:
+Configure the :ref:`headers<headers>`:
 
 -  Auth-User $uid
 -  Auth-Cn: $cn
@@ -115,7 +115,7 @@ Configure the :doc:`headers<../writingrulesand_headers>`:
 -  Auth-Groups: encode_base64($groups,"")
 
 
-.. important:: 
+.. important::
 
     To allow execution of encode_base64() method, you must
     deactivate the :doc:`Safe jail<../safejail>`.

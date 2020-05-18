@@ -2,7 +2,7 @@ Installation on Suse Linux
 ==========================
 
 
-.. important:: 
+.. important::
 
     LL::NG requires at least SLES 12 SP1 or
     equivalent
@@ -82,14 +82,14 @@ or
    zypper refresh
 
 
-.. tip:: 
+.. tip::
 
-    Only packages on SLES 12 SP1 are tested for now. 
+    Only packages on SLES 12 SP1 are tested for now.
 
 Manual download
 ~~~~~~~~~~~~~~~
 
-RPMs are available on the :doc:`Download page</download>`.
+RPMs are available on the :doc:`Download page<download>`.
 
 Package GPG signature
 ---------------------
@@ -143,14 +143,14 @@ You have then to install all the downloaded packages:
    rpm -Uvh lemonldap-ng-* perl-Lemonldap-NG-*
 
 
-.. tip:: 
+.. tip::
 
     You can choose to install only one component by choosing the
     package ``lemonldap-ng-portal``, ``lemonldap-ng-handler`` or
     ``lemonldap-ng-manager``.
-    
+
     Install the package ``lemonldap-ng-conf`` on all server which contains
-    one of those packages. 
+    one of those packages.
 
 First configuration steps
 -------------------------
@@ -203,7 +203,7 @@ Configure your DNS server to resolve names with your server IP:
 -  manager.<your domain>: manager, only for adminsitrators
 -  test1.<your domain>, test2.<your domain>: sample applications
 
-Follow the :doc:`next steps<start>`
+Follow the :ref:`next steps<start-configuration>`
 
 File location
 -------------
@@ -240,9 +240,9 @@ If you need it, you can rebuild RPMs:
 
 Alternatively, you can use the automatic script
 "create-lemonldap-packages.sh", available in rpm-sles directory in the
-:doc:`lemonldap svn repository</download>`. The automatic script can
-also generate intermediate dependencies. See README file in the same
-directory for more information.
+:ref:`lemonldap svn repository<download-getting-sources-from-svn-repository>`.
+The automatic script can also generate intermediate dependencies. See
+README file in the same directory for more information.
 
 .. |image0| image:: /rpm-gpg-key-ow2
 

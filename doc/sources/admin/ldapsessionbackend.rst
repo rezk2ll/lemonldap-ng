@@ -5,14 +5,14 @@ An Apache session module was created by LL::NG team to store sessions in
 an LDAP directory.
 
 
-.. important:: 
+.. important::
 
     This module is not part of LL::NG distribution, and can
     be found on CPAN:
     `Apache::Session::LDAP <http://search.cpan.org/dist/Apache-Session-LDAP/>`__.
 
 
-.. tip:: 
+.. tip::
 
     This module is also available on
     `GitHub <https://github.com/coudot/apache-session-ldap>`__.
@@ -36,15 +36,21 @@ in ``General parameters`` » ``Sessions`` » ``Session storage`` »
 sensitive):
 
 ======================== ================================= ===============================
-Required parameters                                       
-======================== ================================= ===============================
+Required parameters
+------------------------------------------------------------------------------------------
 Name                     Comment                           Example
+======================== ================================= ===============================
 **ldapServer**           URI of the server                 ldap://localhost
 **ldapConfBase**         DN of sessions branch             ou=sessions,dc=example,dc=com
 **ldapBindDN**           Connection login                  cn=admin,dc=example,dc=password
 **ldapBindPassword**     Connection password               secret
-Optional parameters                                       
+======================== ================================= ===============================
+
+======================== ================================= ===============================
+Optional parameters
+------------------------------------------------------------------------------------------
 Name                     Comment                           Default value
+======================== ================================= ===============================
 **ldapObjectClass**      Objectclass of the entry          applicationProcess
 **ldapAttributeId**      Attribute storing session ID      cn
 **ldapAttributeContent** Attribute storing session content description
