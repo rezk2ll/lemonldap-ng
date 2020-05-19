@@ -875,6 +875,12 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'checkUserSearchAttributes' => {
             'type' => 'text'
         },
+        'checkUserUnrestrictedUsersRule' => {
+            'test' => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'text'
+        },
         'checkXSS' => {
             'default' => 1,
             'type'    => 'bool'
@@ -1028,6 +1034,12 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'contextSwitchingStopWithLogout' => {
             'default' => 1,
             'type'    => 'bool'
+        },
+        'contextSwitchingUnrestrictedUsersRule' => {
+            'test' => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'text'
         },
         'cookieExpiration' => {
             'type' => 'int'
@@ -1427,6 +1439,12 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
         'impersonationSkipEmptyValues' => {
             'default' => 1,
             'type'    => 'bool'
+        },
+        'impersonationUnrestrictedUsersRule' => {
+            'test' => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'text'
         },
         'infoFormMethod' => {
             'default' => 'get',

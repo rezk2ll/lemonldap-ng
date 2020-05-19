@@ -739,6 +739,7 @@ sub tree {
                             nodes => [
                                 'checkUser',
                                 'checkUserIdRule',
+                                'checkUserUnrestrictedUsersRule',
                                 'checkUserHiddenAttributes',
                                 'checkUserSearchAttributes',
                                 'checkUserDisplayEmptyHeaders',
@@ -753,6 +754,7 @@ sub tree {
                             nodes => [
                                 'impersonationRule',
                                 'impersonationIdRule',
+                                'impersonationUnrestrictedUsersRule',
                                 'impersonationHiddenAttributes',
                                 'impersonationSkipEmptyValues',
                                 'impersonationMergeSSOgroups',
@@ -765,6 +767,7 @@ sub tree {
                             nodes => [
                                 'contextSwitchingRule',
                                 'contextSwitchingIdRule',
+                                'contextSwitchingUnrestrictedUsersRule',
                                 'contextSwitchingStopWithLogout',
                             ]
                         },

@@ -454,6 +454,12 @@ sub attributes {
             default       => 1,
             documentation => 'checkUser identities rule',
         },
+        checkUserUnrestrictedUsersRule => {
+            type          => 'text',
+            test          => sub { return perlExpr(@_) },
+            documentation => 'checkUser unrestricted users rule',
+            flags         => 'p',
+        },
         checkUserHiddenAttributes => {
             type          => 'text',
             default       => '_loginHistory _session_id hGroups',
@@ -526,6 +532,12 @@ sub attributes {
             documentation => 'Impersonation identities rule',
             flags         => 'p',
         },
+        impersonationUnrestrictedUsersRule => {
+            type          => 'text',
+            test          => sub { return perlExpr(@_) },
+            documentation => 'Impersonation unrestricted users rule',
+            flags         => 'p',
+        },
         impersonationHiddenAttributes => {
             type          => 'text',
             default       => '_2fDevices _loginHistory',
@@ -549,6 +561,12 @@ sub attributes {
             test          => sub { return perlExpr(@_) },
             default       => 1,
             documentation => 'Context switching identities rule',
+            flags         => 'p',
+        },
+        contextSwitchingUnrestrictedUsersRule => {
+            type          => 'text',
+            test          => sub { return perlExpr(@_) },
+            documentation => 'Context switching unrestricted users rule',
             flags         => 'p',
         },
         contextSwitchingStopWithLogout => {

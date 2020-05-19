@@ -5,16 +5,24 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants
   qw( PE_OK PE_BADCREDENTIALS PE_IMPERSONATION_SERVICE_NOT_ALLOWED PE_MALFORMEDUSER );
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin';
+extends 'Lemonldap::NG::Portal::Main::Plugin',
+  'Lemonldap::NG::Portal::Lib::_tokenRule';
 
 # INITIALIZATION
 
 use constant afterData => 'run';
 
-has rule   => ( is => 'rw', default => sub { 1 } );
-has idRule => ( is => 'rw', default => sub { 1 } );
+has rule                  => ( is => 'rw', default => sub { 1 } );
+has idRule                => ( is => 'rw', default => sub { 1 } );
+has unrestrictedUsersRule => ( is => 'rw', default => sub { 0 } );
+
+# Form timeout token generator (used if requireToken is set)
+has ott => ( is => 'rw' );
+
+# Captcha generator
+has captcha => ( is => 'rw' );
 
 sub hAttr {
     $_[0]->{conf}->{impersonationHiddenAttributes} . ' '
@@ -40,6 +48,25 @@ sub init {
     );
     return 0 unless $self->idRule;
 
+    $self->unrestrictedUsersRule(
+        $self->p->buildRule(
+            $self->conf->{impersonationUnrestrictedUsersRule},
+            'impersonationUnrestrictedUsers'
+        )
+    );
+    return 0 unless $self->unrestrictedUsersRule;
+
+    # Initialize Captcha if needed
+    if ( $self->{conf}->{captcha_login_enabled} ) {
+        $self->captcha( $self->p->loadModule('::Lib::Captcha') ) or return 0;
+    }
+
+    # Initialize form token if needed (captcha provides also a token)
+    else {
+        $self->ott( $self->p->loadModule('::Lib::OneTimeToken') ) or return 0;
+        $self->ott->timeout( $self->conf->{formTimeout} );
+    }
+
     return 1;
 }
 
@@ -53,6 +80,7 @@ sub run {
       PE_OK;    # Skip Impersonation if error during Auth process
 
     my $statut = PE_OK;
+    my $unUser = 0;
     my $loginHistory =
       $req->{sessionInfo}->{_loginHistory};    # Store login history
     $req->{user} ||= $req->{sessionInfo}->{_impUser};    # If 2FA is enabled
@@ -70,7 +98,7 @@ sub run {
         $statut  = PE_MALFORMEDUSER;
     }
 
-    # Check activation rule
+    # Check activation & unrestrictedUsers rules
     if ( $spoofId ne $req->{user} ) {
         $self->logger->debug("Spoof Id: $spoofId / Real Id: $req->{user}");
         unless ( $self->rule->( $req, $req->sessionInfo ) ) {
@@ -78,6 +106,7 @@ sub run {
             $spoofId = $req->{user};
             $statut  = PE_IMPERSONATION_SERVICE_NOT_ALLOWED;
         }
+        $unUser = $self->unrestrictedUsersRule->( $req, $req->sessionInfo );
     }
 
     # Fill spoof session
@@ -98,8 +127,9 @@ sub run {
         delete $req->{sessionInfo}->{$k};
     }
 
-    $spoofSession = $self->_userData( $req, $spoofId, $realSession );
+    $spoofSession = $self->_userData( $req, $spoofId, $realSession, $unUser );
     if ( $req->error ) {
+        $self->setSecurity($req);
         if ( $req->error == PE_BADCREDENTIALS ) {
             $statut = PE_BADCREDENTIALS;
         }
@@ -168,8 +198,9 @@ sub run {
 }
 
 sub _userData {
-    my ( $self, $req, $spoofId, $realSession ) = @_;
+    my ( $self, $req, $spoofId, $realSession, $unUser ) = @_;
     my $realId = $req->{user};
+    $self->logger->info("$realId is an unrestricted user!") if $unUser;
     $req->{user} = $spoofId;
     my $raz = 0;
 
@@ -195,7 +226,7 @@ sub _userData {
 
     # Check identity rule if Impersonation required
     if ( $realId ne $spoofId ) {
-        unless ( $self->idRule->( $req, $req->sessionInfo ) ) {
+        unless ( $unUser || $self->idRule->( $req, $req->sessionInfo ) ) {
             $self->userLogger->warn(
                     'Impersonation requested for an unvalid user ('
                   . $req->{user}
@@ -215,7 +246,7 @@ sub _userData {
                 $self->p->groupsAndMacros, 'setLocalGroups'
             ]
         );
-        $self->logger->debug('Spoof session equal real session');
+        $self->logger->debug('Reset Impersonation process');
         $req->error(PE_BADCREDENTIALS);
         if ( my $error = $self->p->process($req) ) {
             $self->logger->debug("Process returned error: $error");
@@ -236,6 +267,16 @@ sub _userData {
 
     $self->logger->debug("Return \"$req->{user}\" sessionInfo");
     return $req->{sessionInfo};
+}
+
+sub setSecurity {
+    my ( $self, $req ) = @_;
+    if ( $self->captcha ) {
+        $self->captcha->setCaptcha($req);
+    }
+    elsif ( $self->ottRule->( $req, {} ) ) {
+        $self->ott->setToken($req);
+    }
 }
 
 1;
