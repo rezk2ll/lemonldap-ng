@@ -1,4 +1,7 @@
-|image0|\ ====== Global logout plugin ======
+|image0|
+
+Global logout plugin
+====================
 
 Presentation
 ------------
