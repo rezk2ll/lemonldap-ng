@@ -19,8 +19,8 @@ Activation
 ~~~~~~~~~~
 
 To activate notifications system:
-Go to Manager ``General Parameters`` » ``Advanced Parameters`` »
- ``Notifications`` » ``Activation``
+
+Go to Manager ``General Parameters`` » ``Advanced Parameters`` » ``Notifications`` » ``Activation``
 
 or in ``lemonldap-ng.ini`` [portal] section:
 
