@@ -60,7 +60,7 @@ RHEL/CentOS/Fedora
 ^^^^^^^^^^^^^^^^^^
 
 RPMs are available in LL::NG RPM "extras" repository (see
-:ref:`installrpm#yum_repository<installrpm-yum-repository>`)
+:ref:`installrpm-yum-repository`)
 
 Then install lasso and lasso-perl packages:
 
@@ -329,9 +329,7 @@ Identity Provider
 General parameters
 ^^^^^^^^^^^^^^^^^^
 
-::
-
-     * **Want Authentication Request Signed**: set to On to require that received authentication request are signed.
+* **Want Authentication Request Signed**: set to On to require that received authentication request are signed.
 
 
 .. tip::
@@ -360,10 +358,8 @@ Single Logout
 
 For each binding you can set:
 
-::
-
-     * **Location**: Access Point for SLO request.
-     * **Response Location**: Access Point for SLO response.
+* **Location**: Access Point for SLO request.
+* **Response Location**: Access Point for SLO response.
 
 Available bindings are:
 

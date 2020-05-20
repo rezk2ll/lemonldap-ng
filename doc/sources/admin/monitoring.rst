@@ -1,3 +1,6 @@
+Monitoring
+==========
+
 Handler can be monitored by using MRTG. See
 :doc:`MRTG monitoring<mrtg>`.
 

@@ -24,7 +24,7 @@ Using "make install"
 To enable the FastCGI server at startup, copy the script
 ``llng-fastcgi-server`` installed in INITDIR (default
 ``/usr/local/lemonldap-ng/etc/init.d/``) in ``/etc/init.d`` and enable
-it (links to ``/etc/rc//x//.d``).
+it (links to ``/etc/rc<x>.d``).
 
 Configuration
 -------------

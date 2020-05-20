@@ -3,14 +3,13 @@ SMTP server setup
 
 Go in ``General Parameters`` > ``Advanced Parameters`` > ``SMTP``:
 
-::
 
-     * ** Session key containing mail address**: choose which session field contains mail address
-     * **SMTP Server**: IP or hostname of the SMTP server
-     * **SMTP Port**: Port of the SMTP server
-     * **SMTP User**: SMTP user if authentication is required
-     * **SMTP Password**: SMTP password if authentication is required
-     * ** SSL/TLS protocol** and **SSL/TLS options**: Here you can enable SMTPS or startTLS
+* **Session key containing mail address**: choose which session field contains mail address
+* **SMTP Server**: IP or hostname of the SMTP server
+* **SMTP Port**: Port of the SMTP server
+* **SMTP User**: SMTP user if authentication is required
+* **SMTP Password**: SMTP password if authentication is required
+* **SSL/TLS protocol** and **SSL/TLS options**: Here you can enable SMTPS or startTLS
 
 
 .. tip::

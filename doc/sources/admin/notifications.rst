@@ -452,8 +452,8 @@ by using SOAP request, once SOAP is activated:
 JSON notifications through REST
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-\* Insertion example with REST API
-''''''''''''''''''''''''''''''''''
+Insertion example with REST API
+'''''''''''''''''''''''''''''''
 
 Using JSON, you just have to POST json files.
 
@@ -463,8 +463,8 @@ For example with curl:
 
    curl -X POST -H "Content-Type: application/json" -H "Accept: application/json" -d @notif.json http://auth.example.com/notifications
 
-\* Deletion example with REST API
-'''''''''''''''''''''''''''''''''
+Deletion example with REST API
+''''''''''''''''''''''''''''''
 
 DELETE API is available with LLNG ≥ 2.0.6
 
@@ -474,8 +474,8 @@ For example with curl:
 
    curl -X DELETE -H "Content-Type: application/json" -H "Accept: application/json" http://auth.example.com/notifications/<uid>/<reference>
 
-\* List example with REST API
-'''''''''''''''''''''''''''''
+List example with REST API
+''''''''''''''''''''''''''
 
 GET API is available with LLNG ≥ 2.0.6
 

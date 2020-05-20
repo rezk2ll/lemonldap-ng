@@ -16,9 +16,9 @@ To get more information on user (name, mail, etc.), you have to read
 
 .. tip::
 
-    If your application is based on `Perl CGI
-    package <http://search.cpan.org/perldoc?CGI>`, you can simply replace
-    CGI by Lemonldap::NG::Handler::CGI
+    If your application is based on `Perl CGI package
+    <http://search.cpan.org/perldoc?CGI>`__, you can simply replace CGI by
+    :ref:`Lemonldap::NG::Handler::CGI<selfmadeapplication-perl-auto-protected-cgi>`
 
 Code snippet
 ------------

@@ -243,7 +243,7 @@ Simple usage example:
 listMatch
 ~~~~~~~~~
 
-(|image0| // since 2.0.7)//
+(|image0| since 2.0.7)
 
 This function lets you test if a particular value can be found with a
 multi-valued session attribute.
@@ -271,7 +271,7 @@ found.
 inGroup
 ~~~~~~~
 
-(|image1| // since 2.0.8)//
+(|image1| since 2.0.8)
 
 This function lets you test if the user is in a given group. It is
 case-insensitive.

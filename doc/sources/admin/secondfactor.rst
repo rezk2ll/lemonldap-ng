@@ -8,7 +8,7 @@ It is a method to confirm a user's claimed identity by using a
 combination of two different factors between:
 
 #. something they know *(login / password, …)*
-#. something they have //(U2F Key, smartphone, …) //
+#. something they have *(U2F Key, smartphone, …)*
 #. something they are *(biometrics like fingerprints, ...)*
 
 Since 2.0, LLNG provides some second factor plugins that can be used to
@@ -16,9 +16,9 @@ complete authentication module with 2FA :
 
 -  :doc:`U2F-or-TOTP<utotp2f>` *(enable both U2F and TOTP)*
 -  :doc:`TOTP<totp2f>` *(to use
-   with*\ `FreeOTP <https://freeotp.github.io/>`__\ *,*\ `Google-Authenticator <https://en.wikipedia.org/wiki/Google_Authenticator>`__\ *,…)*
+   with* `FreeOTP <https://freeotp.github.io/>`__\ *,*\ `Google-Authenticator <https://en.wikipedia.org/wiki/Google_Authenticator>`__\ *,…)*
 -  :doc:`U2F tokens<u2f>`
--  :doc:`Yubikey tokens<yubikey2f>` // provide by Yubico//
+-  :doc:`Yubikey tokens<yubikey2f>` *(provided by Yubico)*
 -  :doc:`E-Mail 2F<mail2f>` *(Send a code to an email address)*
 -  :doc:`External 2F<external2f>` *(to call an external command)*
 -  :doc:`REST<rest2f>` *(Remote REST app)*

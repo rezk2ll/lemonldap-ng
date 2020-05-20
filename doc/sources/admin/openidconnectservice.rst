@@ -92,8 +92,7 @@ run for example each week:
 Session management
 ------------------
 
-LL::NG implements the change notification as defined here:
-http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification
+LL::NG implements the `OpenID Connect Chance Notification specification <http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification>`__
 
 A ``changed`` state will be sent if the user is disconnected from LL::NG
 portal (or has destroyed its SSO cookie). Else the ``unchanged`` state

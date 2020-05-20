@@ -5,7 +5,7 @@ Each time you save a configuration, Manager launch a lot of tests:
 
 -  unit tests for each key: they are declared in
    Lemonldap::NG::Manager::Attributes *(source
-   Lemonldap::NG::Manager::Build::Attributes)*
+   Lemonldap::NG::Manager::Build::Attributes)* 
 -  more advanced tests declared in Lemonldap::NG::Manager::Conf::Tests
 
 In some case *(conf overridden in INI file,...)*, you may have to ignore

@@ -8,7 +8,7 @@ the backup-node.
 Configuration
 -------------
 
-Just enable it in the manager (\**General Parameters* » *Plugins* »
+Just enable it in the manager (*General Parameters* » *Plugins* »
 *State Check*). You must also set a shared secret.
 
 Usage

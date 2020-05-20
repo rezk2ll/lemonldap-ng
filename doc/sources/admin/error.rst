@@ -5,7 +5,7 @@ Error messages
 .. note::
 
     This page do not reference all error messages, but only the
-    frequentest
+    most common
 
 Lemonldap::NG::Common
 ---------------------
@@ -61,6 +61,7 @@ configStorageOptionsor file permissions.
 
 → The cache has been created by another user than Apache's user. Restart
 Apache to purge it.
+
 .. important::
 
     This can append when you use
