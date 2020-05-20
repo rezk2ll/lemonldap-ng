@@ -7,15 +7,15 @@ the backup-node.
 
 Configuration
 -------------
-
-Just enable it in the manager (*General Parameters* » *Plugins* »
-*State Check*). You must also set a shared secret.
+To enable Check state:
+Go in Manager, ``General Parameters`` » ``Plugins`` » ``State Check``.
+You must also set a shared secret.
 
 Usage
 -----
 
-When enabled, ``/checkstate`` URL path is handled by this plugin. GET
-parameters:
+When enabled, ``/checkstate`` URL path is handled by this plugin.
+GET parameters:
 
 ============= ======== ============================================================
 GET Parameter Need     Value

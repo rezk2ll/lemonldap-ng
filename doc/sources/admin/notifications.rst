@@ -18,8 +18,9 @@ Installation
 Activation
 ~~~~~~~~~~
 
-You just have to activate Notifications in the Manager (General
-Parameters > Advanced Parameters > Notifications > Activation)
+To activate notifications system:
+Go to Manager ``General Parameters`` » ``Advanced Parameters`` »
+ ``Notifications`` » ``Activation``
 
 or in ``lemonldap-ng.ini`` [portal] section:
 
@@ -33,8 +34,8 @@ Explorer
 
 Notifications explorer allows users to see and display theirs accepted
 notifications. Disable by default, you just have to activate it in the
-Manager (General Parameters > Advanced Parameters > Notifications >
-Explorer)
+Manager (``General Parameters`` » ``Advanced Parameters`` » ``Notifications`` »
+``Explorer``)
 
 or in ``lemonldap-ng.ini`` [portal] section:
 

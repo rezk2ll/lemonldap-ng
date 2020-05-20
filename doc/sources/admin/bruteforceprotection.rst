@@ -14,7 +14,7 @@ seconds.
 Configuration
 -------------
 
-To enable Brute Force Attack protection :
+To enable Brute Force Attack protection:
 
 Go in Manager, ``General Parameters`` » ``Advanced Parameters`` »
 ``Security`` » ``Brute-force attack protection`` » ``Activation``\ and
@@ -75,4 +75,4 @@ of allowed failed login attempts (3 by default) edit
 
     Number of failed login attempts stored in history MUST
     be higher than allowed failed logins for this plugin takes effect.
-
+    See :doc:`History plugin<loginhistory>`

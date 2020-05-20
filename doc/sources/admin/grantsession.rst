@@ -24,3 +24,8 @@ You can then create rules with these fields:
    does not return true, then the session is refused.
 -  **Message**: The message that will be displayed. That message can
    contain session data as user attributes or macros.
+
+.. tip::
+
+    By example, you can set a message like this:
+    "hello $uid your are not allowed to login"
