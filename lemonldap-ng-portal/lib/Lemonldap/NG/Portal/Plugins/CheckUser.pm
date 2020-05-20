@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_MALFORMEDUSER
 );
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -33,6 +33,7 @@ has idRule                    => ( is => 'rw', default => sub { 1 } );
 has displayEmptyValuesRule    => ( is => 'rw', default => sub { 0 } );
 has displayEmptyHeadersRule   => ( is => 'rw', default => sub { 0 } );
 has displayPersistentInfoRule => ( is => 'rw', default => sub { 0 } );
+has unrestrictedUsersRule     => ( is => 'rw', default => sub { 0 } );
 has sorted                    => ( is => 'rw', default => sub { 0 } );
 has merged                    => ( is => 'rw', default => '' );
 
@@ -79,6 +80,14 @@ sub init {
         )
     );
     return 0 unless $self->displayPersistentInfoRule;
+
+    $self->unrestrictedUsersRule(
+        $self->p->buildRule(
+            $self->conf->{checkUserUnrestrictedUsersRule},
+            'checkUserUnrestrictedUsers'
+        )
+    );
+    return 0 unless $self->unrestrictedUsersRule;
 
     # Init. other options
     $self->sorted( $self->conf->{impersonationRule}
@@ -152,6 +161,7 @@ sub check {
     my ( $self, $req ) = @_;
     my ( $attrs, $array_attrs, $array_hdrs ) = ( {}, [], [] );
     my $msg = my $auth = my $compute = '';
+    my $unUser = $self->unrestrictedUsersRule->( $req, $req->userData ) || 0;
 
     # Check token
     if ( $self->ottRule->( $req, {} ) ) {
@@ -259,6 +269,16 @@ sub check {
             $attrs   = $self->_userData($req);
             $compute = 1;
         }
+
+        # Check identities rule
+        unless ( $unUser || $self->idRule->( $req, $attrs ) ) {
+            $self->userLogger->warn(
+                "checkUser requested for an unvalid user ($user)");
+            $req->{sessionInfo} = {};
+            $self->logger->debug('Identity not authorized');
+            $req->error(PE_BADCREDENTIALS);
+        }
+        $self->logger->info("\"$user\" is an unrestricted user!") if $unUser;
     }
 
     if ( $req->error ) {
@@ -421,15 +441,6 @@ sub _userData {
         return $req->error(PE_BADCREDENTIALS);
     }
 
-    # Check identities rule
-    unless ( $self->idRule->( $req, $req->sessionInfo ) ) {
-        $self->userLogger->warn(
-            'checkUser requested for an unvalid user (' . $req->{user} . ")" );
-        $req->{sessionInfo} = {};
-        $self->logger->debug('Identity not authorized');
-        return $req->error(PE_BADCREDENTIALS);
-    }
-
     # Compute groups & macros again with real authenticationLevel
     $req->sessionInfo->{authenticationLevel} = $realAuthLevel;
     delete $req->sessionInfo->{groups};
@@ -530,8 +541,6 @@ sub _splitAttributes {
             }
             else {
                 push @$spoofedAttrs, $element;
-
-                #$self->logger->debug(' -> Spoofed attribute');
             }
         }
         @$others = ( @$spoofedAttrs, @$realAttrs );

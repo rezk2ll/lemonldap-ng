@@ -200,7 +200,7 @@ sub run {
 sub _userData {
     my ( $self, $req, $spoofId, $realSession, $unUser ) = @_;
     my $realId = $req->{user};
-    $self->logger->info("$realId is an unrestricted user!") if $unUser;
+    $self->logger->info("\"$realId\" is an unrestricted user!") if $unUser;
     $req->{user} = $spoofId;
     my $raz = 0;
 
