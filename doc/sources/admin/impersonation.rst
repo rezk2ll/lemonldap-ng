@@ -27,6 +27,8 @@ protected from being impersonated.
    -  **Identities use rule**: Rule to define which identities can be
       assumed. Useful to prevent impersonation of certain sensitive
       identities like CEO, administrators or anonymous/protected users
+   -  **Unrestricted users rule**: Rule to define which users can assume
+      ALL users. ``Identities use rule`` is bypassed.
    -  **Hidden attributes**: Attributes not displayed
    -  **Skip empty values**: Do not use empty profile attributes
    -  **Merge spoofed and real SSO groups**: Can be useful for

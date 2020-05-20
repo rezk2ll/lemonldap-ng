@@ -16,6 +16,8 @@ Just enable it in the manager (section “plugins”).
    -  **Activation**: Enable / Disable this plugin
    -  **Identities use rule**: Rule to define which profiles can be
       displayed (by example: ``!$anonymous``)
+   -  **Unrestricted users rule**: Rule to define which users can check
+      ALL users. ``Identities use rule`` is bypassed.
    -  **Hidden attributes**: Attributes not displayed
    -  **Attributes used for searching sessions**: User's attributes used
       for searching sessions in backend if ``whatToTrace`` fails. Useful

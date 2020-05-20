@@ -19,6 +19,8 @@ can be forbidden to assume.
    -  **Identities use rule**: Rule to define which identities can be
       assumed. Useful to prevent impersonation of certain sensitive
       identities like CEO, administrators or anonymous/protected users.
+   -  **Unrestricted users rule**: Rule to define which users can switch
+      context of ALL users. ``Identities use rule`` is bypassed.
    -  **Stop by logout**: Stop context switching by sending a logout
       request.
 
