@@ -1,7 +1,7 @@
 Refresh session plugin (API)
 ============================
 
-This plugin adds an endpoint to refresh sessions by user. It adds a
+This plugin appends an endpoint to refresh sessions by user. It provides
 ``https://portal/refreshsession`` endpoint. Protect it by webserver
 configuration.
 
