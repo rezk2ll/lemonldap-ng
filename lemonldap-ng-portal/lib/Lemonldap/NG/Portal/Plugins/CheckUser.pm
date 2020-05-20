@@ -271,14 +271,14 @@ sub check {
         }
 
         # Check identities rule
+        $self->logger->info("\"$user\" is an unrestricted user!") if $unUser;
         unless ( $unUser || $self->idRule->( $req, $attrs ) ) {
             $self->userLogger->warn(
                 "checkUser requested for an unvalid user ($user)");
             $req->{sessionInfo} = {};
             $self->logger->debug('Identity not authorized');
-            $req->error(PE_BADCREDENTIALS);
+            $req->error(PE_BADCREDENTIALS); # Catch error to preserve protected Id
         }
-        $self->logger->info("\"$user\" is an unrestricted user!") if $unUser;
     }
 
     if ( $req->error ) {

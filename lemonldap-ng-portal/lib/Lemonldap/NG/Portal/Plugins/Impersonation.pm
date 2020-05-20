@@ -131,7 +131,7 @@ sub run {
     if ( $req->error ) {
         $self->setSecurity($req);
         if ( $req->error == PE_BADCREDENTIALS ) {
-            $statut = PE_BADCREDENTIALS;
+            $statut = PE_BADCREDENTIALS; # Catch error to preserve protected Id
         }
         else {
             return $req->error;
@@ -200,9 +200,8 @@ sub run {
 sub _userData {
     my ( $self, $req, $spoofId, $realSession, $unUser ) = @_;
     my $realId = $req->{user};
-    $self->logger->info("\"$realId\" is an unrestricted user!") if $unUser;
-    $req->{user} = $spoofId;
     my $raz = 0;
+    $req->{user} = $spoofId;
 
     # Compute Macros and Groups with real and spoof sessions
     $req->sessionInfo($realSession);
@@ -224,8 +223,9 @@ sub _userData {
         $raz = 1;
     }
 
-    # Check identity rule if Impersonation required
+    # Check identities rule if Impersonation required
     if ( $realId ne $spoofId ) {
+        $self->logger->info("\"$realId\" is an unrestricted user!") if $unUser;
         unless ( $unUser || $self->idRule->( $req, $req->sessionInfo ) ) {
             $self->userLogger->warn(
                     'Impersonation requested for an unvalid user ('

@@ -14,7 +14,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_IMPERSONATION_SERVICE_NOT_ALLOWED
 );
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -36,6 +36,7 @@ has ott => (
 );
 has rule   => ( is => 'rw', default => sub { 0 } );
 has idRule => ( is => 'rw', default => sub { 1 } );
+has unrestrictedUsersRule     => ( is => 'rw', default => sub { 0 } );
 
 sub init {
     my ($self) = @_;
@@ -58,6 +59,14 @@ sub init {
         )
     );
     return 0 unless $self->idRule;
+
+    $self->unrestrictedUsersRule(
+        $self->p->buildRule(
+            $self->conf->{contextSwitchingUnrestrictedUsersRule},
+            'contextSwitchingUnrestrictedUsers'
+        )
+    );
+    return 0 unless $self->unrestrictedUsersRule;
 
     return 1;
 }
@@ -133,6 +142,7 @@ sub run {
     my $statut  = PE_OK;
     my $realId  = $req->{user};
     my $spoofId = $req->param('spoofId') || '';    # ContextSwitching required ?
+    my $unUser = $self->unrestrictedUsersRule->( $req, $req->userData ) || 0;
 
     # Check token
     if ( $self->ottRule->( $req, {} ) ) {
@@ -173,7 +183,7 @@ sub run {
     }
 
     # Create spoofed session
-    $req = $self->_switchContext( $req, $spoofId );
+    $req = $self->_switchContext( $req, $spoofId, $unUser );
     $statut =
       ( $req->error == PE_BADCREDENTIALS ? PE_MALFORMEDUSER : $req->error )
       if $req->error;
@@ -187,7 +197,7 @@ sub run {
 }
 
 sub _switchContext {
-    my ( $self, $req, $spoofId ) = @_;
+    my ( $self, $req, $spoofId, $unUser ) = @_;
     my $realSessionId = $req->userData->{_session_id};
     my $realAuthLevel = $req->userData->{authenticationLevel};
     my $realId        = $req->{user};
@@ -213,8 +223,9 @@ sub _switchContext {
         $raz = 1;
     }
 
-    # Check identity rule if ContextSwitching required
-    unless ( $self->idRule->( $req, $req->sessionInfo ) ) {
+    # Check identities rule if ContextSwitching required
+    $self->logger->info("\"$realId\" is an unrestricted user!") if $unUser;
+    unless ( $unUser || $self->idRule->( $req, $req->sessionInfo ) ) {
         $self->userLogger->warn(
                 'ContextSwitching requested for an unvalid user ('
               . $req->{user}
