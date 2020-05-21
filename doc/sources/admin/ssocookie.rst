@@ -38,13 +38,13 @@ To edit SSO cookie parameters, go in Manager, ``General Parameters`` >
    expiration time and use a session cookie.
 
 
-.. warning::
+.. danger::
 
     When you change cookie expiration time, it is written on
     the user hard disk unlike session cookie
 
 
-.. important::
+.. attention::
 
     Changing the domain value will not update other
     configuration parameters, like virtual host names, portal URL, etc. You
@@ -62,7 +62,7 @@ portal by:
    POST, SAML, etc.)
 
 
-.. warning::
+.. danger::
 
     The portal URL **must** be inside SSO domain. If secured
     cookie is enabled, the portal URL **must** be HTTPS.

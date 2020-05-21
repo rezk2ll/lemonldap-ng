@@ -18,7 +18,7 @@ particular:
 -  Set SAML end points
 
 
-.. important::
+.. attention::
 
     Service configuration will be used to generate LL::NG
     SAML metadata, that will be shared with other providers. It means that
@@ -69,7 +69,7 @@ Then install lasso and lasso-perl packages:
    yum install lasso lasso-perl
 
 
-.. important::
+.. attention::
 
     Only 64bits package are available.
 
@@ -155,7 +155,7 @@ public key wrapper.
 -  **Signature method**: set the signature algorithm
 
 
-.. important::
+.. attention::
 
     Default value is RSA SHA1 for compatibility purpose but
     we recommend to use RSA SHA256. This requires to test all partners to
@@ -479,7 +479,7 @@ Instead user is redirected on the discovery service and is redirected
 back to LL::NG with the chosen IDP.
 
 
-.. important::
+.. attention::
 
     If the chosen IDP is not registered in LL::NG, user will
     be redirected to discovery service again.

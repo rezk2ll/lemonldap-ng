@@ -46,7 +46,7 @@ Google          France Connect
 .. |franceconnect| image:: applications/franceconnect_logo.png
    :target: authopenidconnect_franceconnect.html
 
-.. important::
+.. attention::
 
     OpenID-Connect specification isn't finished for logout
     propagation. So logout initiated by relaying-party will be forward to
@@ -78,7 +78,7 @@ In ``General Parameters`` > ``Authentication modules``, set:
     :ref:`menu password module<portalmenu-menu-modules>`.
 
 
-.. important::
+.. attention::
 
     Browser implementations of formAction directive are
     inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome
@@ -116,7 +116,7 @@ parameter, for example:
 -  http://auth.example.com/?lmAuth=oidc&openidcallback=1
 
 
-.. important::
+.. attention::
 
     If you use the :doc:`choice backend<authchoice>`, you
     need to add the choice parameter in redirect URL
@@ -156,7 +156,7 @@ You can also define:
 
 Example template:
 
-.. code:: javascript
+.. code-block:: javascript
 
    {
      "issuer": "https://auth.example.com/",
@@ -237,6 +237,3 @@ Options
    -  **Display name**: Name of the application
    -  **Logo**: Logo of the application
    -  **Order**: Number to sort buttons
-
-.. |section>openidconnectclaims&noheader| image:: section>openidconnectclaims&noheader
-

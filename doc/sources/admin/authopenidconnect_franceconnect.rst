@@ -10,7 +10,7 @@ Presentation
 authentication platform made by French government.
 
 
-.. important::
+.. attention::
 
     It is for the moment only in BETA stage. This
     documentation will explain how to configure LL::NG with the developer
@@ -41,7 +41,7 @@ using `France Connect
 endpoints <https://doc.integ01.dev-franceconnect.fr/fournisseur-service>`__.
 For example:
 
-.. code:: javascript
+.. code-block:: javascript
 
    {
    "issuer": "https://fcp.integ01.dev-franceconnect.fr",

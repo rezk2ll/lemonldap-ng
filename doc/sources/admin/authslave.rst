@@ -68,7 +68,7 @@ Example
 
 -  Response for good authentication:
 
-.. code:: javascript
+.. code-block:: javascript
 
    {
        "result" : 1,

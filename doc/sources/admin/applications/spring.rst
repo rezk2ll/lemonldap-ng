@@ -23,7 +23,7 @@ http://static.springsource.org/spring-security/site/docs/3.0.x/reference/preauth
 To summarize, to get the user connected trough the ``Auth-User`` HTTP
 Header, use this Sping Security configuration:
 
-.. code:: xml
+.. code-block:: xml
 
    <bean id="LemonLDAPNGFilter" class=
    "org.springframework.security.web.authentication.preauth.header.RequestHeaderPreAuthenticatedProcessingFilter">

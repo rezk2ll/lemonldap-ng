@@ -8,7 +8,7 @@ Authentication Users Password
 ============== ===== ========
 
 
-.. warning::
+.. danger::
 
     OpenID protocol is deprecated. You should now use
     :doc:`OpenID Connect<authopenidconnect>`.
@@ -79,7 +79,7 @@ define attributes:
 See also :doc:`exported variables configuration<exportedvars>`.
 
 
-.. important::
+.. attention::
 
     Browser implementations of formAction directive are
     inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome

@@ -7,7 +7,7 @@ that can be found in manager example directory.
 
 MRTG configuration example:
 
-.. code:: shell
+.. code-block:: shell
 
    ######################################################################
    # Multi Router Traffic Grapher -- Sample Configuration File

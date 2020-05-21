@@ -20,7 +20,7 @@ Go in Manager, ``General Parameters`` » ``Advanced Parameters`` »
 To modify last login interval (5 seconds by default) edit
 ``lemonldap-ng.ini`` in section [portal]:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    portalForceAuthnInterval = 5

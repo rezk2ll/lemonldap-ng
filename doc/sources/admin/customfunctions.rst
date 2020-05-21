@@ -31,7 +31,7 @@ as you want, for example ``SSOExtensions.pm``:
 
    vi /path/to/SSOExtensions.pm
 
-.. code:: perl
+.. code-block:: perl
 
    package SSOExtensions;
 
@@ -72,7 +72,7 @@ Old method
 ^^^^^^^^^^
 
 
-.. warning::
+.. danger::
 
     This method is available but unusable by Portal under
     Apache. So if your rule may be used by the menu, use the new
@@ -83,7 +83,7 @@ Apache
 
 Your module has to be loaded by Apache (for example after Handler load):
 
-.. code:: apache
+.. code-block:: apache
 
    # Perl environment
    PerlRequire Lemonldap::NG::Handler
@@ -99,7 +99,7 @@ environment variable. Using packages, you just have to modify your
 ``/etc/default/llng-fastcgi-server`` (or
 ``/etc/default/lemonldap-ng-fastcgi-server``) file:
 
-.. code:: sh
+.. code-block:: sh
 
    # Number of process (default: 7)
    #NPROC = 7
@@ -128,7 +128,7 @@ Go in Manager, ``General Parameters`` » ``Advanced Parameters`` »
    SSOExtensions::function1 SSOExtensions::function2
 
 
-.. important::
+.. attention::
 
     If your function is not compliant with
     :doc:`Safe jail<safejail>`, you will need to disable the jail.

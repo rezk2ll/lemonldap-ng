@@ -5,7 +5,7 @@ MongoDB session backend
 is a faster shareable session backend.
 
 
-.. important::
+.. attention::
 
     Use an up-to-date version of Apache::Session::MongoDB, at least 1.8.1.
 

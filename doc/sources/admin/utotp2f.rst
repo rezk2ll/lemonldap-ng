@@ -33,7 +33,7 @@ In the manager (second factors), you just have to enable it:
     that you should not enable them.
 
 
-.. important::
+.. attention::
 
     If you want to give a different level for U2F or TOTP,
     leave this parameter blank and set U2F and TOTP "authentication level"

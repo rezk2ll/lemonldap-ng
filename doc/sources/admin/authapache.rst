@@ -16,7 +16,7 @@ module <http://httpd.apache.org/docs/current/howto/auth.html>`__, for
 example Kerberos, Radius, OTP, etc.
 
 
-.. important::
+.. attention::
 
     To authenticate users using Kerberos, you can now use
     the new :doc:`Kerberos authentication module<authkerberos>` which allow
@@ -91,7 +91,7 @@ block the request.
 
 In this case, you can add in the Apache authentication module:
 
-.. code:: apache
+.. code-block:: apache
 
          Satisfy any
          Order allow,deny

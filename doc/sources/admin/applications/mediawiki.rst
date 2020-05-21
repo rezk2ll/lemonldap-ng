@@ -48,14 +48,14 @@ Then edit MediaWiki local settings
 
    vi LocalSettings.php
 
-.. code:: php
+.. code-block:: php
 
    require_once "$IP/extensions/Auth_remoteuser/Auth_remoteuser.php";
    $wgAuth = new Auth_remoteuser();
 
 Add then extension configuration, for example:
 
-.. code:: php
+.. code-block:: php
 
    $wgAuthRemoteuserAuthz = true; /* Your own authorization test */
    $wgAuthRemoteuserName = $_SERVER["HTTP_AUTH_CN"]; /* User's name */
@@ -87,7 +87,7 @@ Add then extension configuration, for example:
    $wgHooks['PersonalUrls'][] = 'StripLogin';
 
 
-.. warning::
+.. danger::
 
     In last version of Auth_remoteuser and Mediawiki, empty
     passwords are not authorized, so you may need to patch the extension
@@ -100,7 +100,7 @@ Add then extension configuration, for example:
    sed -i "s/'wpPassword' => ''/'wpPassword' => 'none'/" extensions/Auth_remoteuser/Auth_remoteuser.body.php
 
 
-.. warning::
+.. danger::
 
     In last version of Auth_remoteuser and Mediawiki,
     auto-provisioning requires REMOTE_USER to match the normalized mediawiki
@@ -121,7 +121,7 @@ Configure MediaWiki virtual host like other
 :doc:`protected virtual host<../configvhost>`.
 
 
-.. important::
+.. attention::
 
     If you are protecting MediaWiki with LL::NG as reverse
     proxy,
@@ -129,7 +129,7 @@ Configure MediaWiki virtual host like other
 
 -  For Apache:
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost *:80>
           ServerName mediawiki.example.com
@@ -142,7 +142,7 @@ Configure MediaWiki virtual host like other
 
 -  For Nginx:
 
-.. code:: nginx
+.. code-block:: nginx
 
    server {
      listen 80;

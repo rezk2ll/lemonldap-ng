@@ -19,7 +19,7 @@ To have a stronger integration, we will configure LimeSurvey to
 autocreate unknown users and use HTTP headers to fill name and mail.
 
 
-.. important::
+.. attention::
 
     We suppose that LimeSurvey is installed in
     /var/www/html/limesurvey
@@ -53,7 +53,7 @@ application/config/config.php: The configuration is done in config.php:
 
    vi /var/www/html/limesurvey/application/config/config.php
 
-.. code:: php
+.. code-block:: php
 
            'config'=>array(
            // debug: Set this to 1 if you are looking for errors. If you still get no errors after enabling this
@@ -110,10 +110,8 @@ Default   default     Allow only users with a LimeSurvey role
 
     You can set the default access to:
 
-    ::
-
-        * **accept**: all authenticated users will access surveys
-        * **unprotect**: no authentication will be asked to access surveys
+    * **accept**: all authenticated users will access surveys
+    * **unprotect**: no authentication will be asked to access surveys
 
 
 

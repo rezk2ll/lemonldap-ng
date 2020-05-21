@@ -8,7 +8,7 @@ Get the tarball from :doc:`download page</download>`. You can also find
 on this page the SVN tarball if you want to test latest features.
 
 
-.. important::
+.. attention::
 
     The content of the SVN tarball is not the same as the
     official tarball. Please see the next chapter to learn how build an

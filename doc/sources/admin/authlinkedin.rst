@@ -45,7 +45,7 @@ Then, go in ``LinkedIn parameters``:
     keys
 
 
-.. important::
+.. attention::
 
     Browser implementations of formAction directive are
     inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome

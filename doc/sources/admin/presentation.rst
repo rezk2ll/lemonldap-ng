@@ -33,7 +33,7 @@ Databases
 ~~~~~~~~~
 
 
-.. important::
+.. attention::
 
     We call "database" a backend where we can read or write a data.
     This can be a file, an LDAP directory, ...
@@ -131,7 +131,7 @@ Session expiration
 
 The session expires after 20 hours by default.
 
-.. important::
+.. attention::
 
     -  Handlers have a session cache, with a default lifetime of 10 minutes.
        So for Handlers on different physical servers than the Portal, a user

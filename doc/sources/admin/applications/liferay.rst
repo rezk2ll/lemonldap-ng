@@ -18,7 +18,7 @@ Of course, integration will be full if you use the LDAP directory as
 users backend for LL::NG and Liferay.
 
 
-.. important::
+.. attention::
 
     If the user is not created, or can not be created via
     LDAP import, the connection to Liferay will be refused. With LDAP,
@@ -67,7 +67,7 @@ In ``General``, fill at least the following information:
 |image6|
 
 
-.. important::
+.. attention::
 
     You need to activate LDAP authentication, else SSO
     authentication will not work. Do this in the control panel or in the
@@ -88,7 +88,7 @@ Then use the ``SiteMinder`` tab to configure SSO:
 |image7|
 
 
-.. important::
+.. attention::
 
     Do not forget to save your changes!
 
@@ -100,7 +100,7 @@ Configure Liferay virtual host like other
 
 -  For Apache:
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost *:80>
           ServerName liferay.example.com
@@ -113,7 +113,7 @@ Configure Liferay virtual host like other
 
 -  For Nginx:
 
-.. code:: nginx
+.. code-block:: nginx
 
    server {
      listen 80;

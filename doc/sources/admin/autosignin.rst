@@ -18,6 +18,6 @@ dwho           ''$env->{REMOTE_ADDR} eq '192.168.42.42' ''
 ============== ===========================================
 
 
-.. important::
+.. attention::
 
     Username must be defined in users database.

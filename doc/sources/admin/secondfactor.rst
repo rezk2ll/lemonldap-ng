@@ -54,28 +54,28 @@ on, you can set tokens by yourself *(in your LDAP server for example)*
 and map it to ``_2fDevices`` attribute. ``_2fDevices`` is a JSON array
 that contains token descriptions :
 
-.. code:: json
+.. code::
 
    [ {"type" : "TOTP", "name" : "MyTOTP", …}, {<other_token>}, …]
 
 U2F Tokens
 ~~~~~~~~~~
 
-.. code:: json
+.. code-block:: json
 
    {"name" : "MyU2FKey" , "type" : "U2F" , "_userKey" : "########" , "_keyHandle":"########" , "epoch":"1524078936"}
 
 TOTP Tokens
 ~~~~~~~~~~~
 
-.. code:: json
+.. code-block:: json
 
    {"name" : "MyTOTP" , "type" : "TOTP" , "_secret" : "########" , "epoch" : "1523817955"}
 
 Yubikey Tokens
 ~~~~~~~~~~~~~~
 
-.. code:: json
+.. code-block:: json
 
    {"name" : "MyYubikey" , "type" : "UBK" , "_yubikey" : "########" , "epoch" : "1523817715"}
 
@@ -88,7 +88,7 @@ module must be a Perl class named
 ``Lemonldap::NG::Portal::2F:://<custom_name>//``. To enable it, set
 ``available2F`` key in your ``lemonldap-ng.ini`` file :
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    available2F = U2F,TOTP,<custom_name>
@@ -96,7 +96,7 @@ module must be a Perl class named
 To enable manager Second Factor Administration Module, set
 ``enabledModules`` key in your ``lemonldap-ng.ini`` file :
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    enabledModules = conf, sessions, notifications, 2ndFA

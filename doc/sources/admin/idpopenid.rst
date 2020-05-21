@@ -2,7 +2,7 @@ OpenID server
 =============
 
 
-.. warning::
+.. danger::
 
     OpenID protocol is deprecated, you should now use
     :doc:`OpenID Connect<idpopenidconnect>`\
@@ -120,7 +120,7 @@ Security
    encryption key.
 
 
-.. important::
+.. attention::
 
     Note that :doc:`SAML<idpsaml>` protocol is more secured
     than OpenID, so when your partners are known, prefer

@@ -155,7 +155,7 @@ basic
 ~~~~~
 
 
-.. important::
+.. attention::
 
     This function is not compliant with
     :doc:`Safe jail<safejail>`, you will need to disable the jail to use
@@ -180,7 +180,7 @@ unicode2iso
 ~~~~~~~~~~~
 
 
-.. important::
+.. attention::
 
     This function is not compliant with
     :doc:`Safe jail<safejail>`, you will need to disable the jail to use
@@ -202,7 +202,7 @@ iso2unicode
 ~~~~~~~~~~~
 
 
-.. important::
+.. attention::
 
     This function is not compliant with
     :doc:`Safe jail<safejail>`, you will need to disable the jail to use
@@ -320,7 +320,7 @@ isInNet6
 Function to check if an IPv6 address is in a subnet. Example *check if
 IP address is local*:
 
-.. code:: perl
+.. code-block:: perl
 
    isInNet6($ipAddr, 'fe80::/10')
 
@@ -332,7 +332,7 @@ Function to check if a variable is in requested URI (Require LL::NG >=
 
 Example *check if $uid is in /check-auth/ URI*:
 
-.. code:: perl
+.. code-block:: perl
 
    varIsInUri($ENV{REQUEST_URI}, '/check-auth/', $uid)
 
@@ -342,7 +342,7 @@ Example *check if $uid is in /check-auth/ URI*:
 
 \* You can set "restricted" flag to match exact URI:
 
-.. code:: perl
+.. code-block:: perl
 
    varIsInUri($ENV{REQUEST_URI}, '/check-auth/', "$uid/", 1)
 

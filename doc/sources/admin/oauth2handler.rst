@@ -32,7 +32,7 @@ Example:
 
    curl -H "Authorization: Bearer de853461341e88e9def8fcb9db2a81c4" https://oauth2.example.com/api/test | json_pp
 
-.. code:: javascript
+.. code-block:: javascript
 
    {
        check: true,

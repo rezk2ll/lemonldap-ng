@@ -26,13 +26,13 @@ must install it :
 
 For CentOS/RHEL:
 
-.. code:: shell
+.. code-block:: shell
 
    yum install perl-Authen-Radius
 
 In Debian/Ubuntu, install the library through apt-get command
 
-.. code:: shell
+.. code-block:: shell
 
    apt-get install libauthen-radius-perl
 

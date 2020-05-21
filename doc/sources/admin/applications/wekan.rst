@@ -19,19 +19,17 @@ Configuring Wekan
 Wekan is mostly configured with environement variables, you need to set
 theses :
 
-::
-
-     * **OAUTH2_ENABLED**: ''TRUE''
-     * **OAUTH2_CLIENT_ID**: ''ClientID''
-     * **OAUTH2_SECRET**: ''Secret''
-     * **OAUTH2_SERVER_URL**: ''https://auth.example.com/''
-     * **OAUTH2_AUTH_ENDPOINT**: ''oauth2/authorize''
-     * **OAUTH2_USERINFO_ENDPOINT**: ''oauth2/userinfo''
-     * **OAUTH2_TOKEN_ENDPOINT**: ''oauth2/token''
-     * **OAUTH2_ID_MAP**: ''sub''
+* **OAUTH2_ENABLED**: ``TRUE``
+* **OAUTH2_CLIENT_ID**: ``ClientID``
+* **OAUTH2_SECRET**: ``Secret``
+* **OAUTH2_SERVER_URL**: ``https://auth.example.com/``
+* **OAUTH2_AUTH_ENDPOINT**: ``oauth2/authorize``
+* **OAUTH2_USERINFO_ENDPOINT**: ``oauth2/userinfo``
+* **OAUTH2_TOKEN_ENDPOINT**: ``oauth2/token``
+* **OAUTH2_ID_MAP**: ``sub``
 
 
-.. warning::
+.. danger::
 
     Be careful to the / in server_url and endpoints, the
     complete URL need to be valid, ie auth.example.com/ for url & oauth2/xxx
@@ -47,19 +45,17 @@ a user.
 Add a :doc:`new OpenID Connect relaying party<..//idpopenidconnect>`
 with the following parameters:
 
-::
-
-     * **Client ID**: the same you set in Wekan configuration (same as OAUTH2_CLIENT_ID)
-     * **Client Secret**: the same you set in Wekan configuration (same as OAUTH2_SECRET)
-     * Add the following exported attributes
-         * ''name'': session attribute containing the user's full name
-         * ''email'': session attribute containing the user's email or _singleMail
+* **Client ID**: the same you set in Wekan configuration (same as OAUTH2_CLIENT_ID)
+* **Client Secret**: the same you set in Wekan configuration (same as OAUTH2_SECRET)
+* Add the following exported attributes
+   * ``name``: session attribute containing the user's full name
+   * ``email``: session attribute containing the user's email or _singleMail
 
 \_singleMail Macro
 ^^^^^^^^^^^^^^^^^^
 
 
-.. warning::
+.. danger::
 
     OIDC login fails when an user as a multi-valued email
     attribute, this need to be fixed on wekan's side, we can bypass that by

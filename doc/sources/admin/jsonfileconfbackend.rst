@@ -21,7 +21,7 @@ Configuration
 You just have to configure a directory writable by Apache user and set
 it in [configuration] section in your lemonldap-ng.ini file:
 
-.. code:: ini
+.. code-block:: ini
 
    [configuration]
    type  = JSONFile

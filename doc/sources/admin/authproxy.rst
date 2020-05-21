@@ -55,11 +55,11 @@ SOAP compatibility with 1.9 server
 If you Proxy is a 2.0.x and your server is a 1.9.x, you should add this
 in your lemonldap-ng.ini:
 
-.. code:: ini
+.. code-block:: ini
 
    soapProxyUrn = urn:Lemonldap/NG/Common/CGI/SOAPService
 
 
-.. important::
+.. attention::
 
     This needs LLNG version 2.0.8 at least

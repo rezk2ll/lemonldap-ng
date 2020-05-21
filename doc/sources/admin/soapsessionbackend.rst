@@ -74,7 +74,7 @@ Apache
 Sessions SOAP end points access must be allowed in Apache portal
 configuration (for example, access by IP range):
 
-.. code:: apache
+.. code-block:: apache
 
    # SOAP functions for sessions management (disabled by default)
    <Location /index.fcgi/adminSessions>
@@ -96,7 +96,7 @@ will do the link between SOAP requests and real sessions).
 For example, if real sessions are stored in
 :doc:`files<filesessionbackend>`:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    globalStorage = Apache::Session::File

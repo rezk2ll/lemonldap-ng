@@ -97,9 +97,7 @@ for Jitsi Meet.
 
 Configure the :ref:`access rules<rules>`.
 
-::
-
-     * Don't forget to configure the /logout/ URL
+* Don't forget to configure the /logout/ URL
 
 Configure the following :ref:`headers<headers>`.
 
@@ -107,7 +105,7 @@ Configure the following :ref:`headers<headers>`.
 -  **displayName**: $cn
 
 
-.. warning::
+.. danger::
 
     Jitsi meet expects to find a ``mail`` HTTP header, it
     will ignore REMOTE_USER and only use the mail value to identify the

@@ -154,7 +154,7 @@ Install dependencies on your system
 -----------------------------------
 
 
-.. warning::
+.. danger::
 
     You don't need to install them if you use LL::NG packages.
     With ``apt`` or ``yum``, dependencies will be automatically
@@ -214,7 +214,7 @@ For Nginx:
    yum install nginx
 
 
-.. important::
+.. attention::
 
     As you need a recent version of Nginx, the best is to
     install `Nginx official

@@ -23,7 +23,7 @@ authenticated by LemonLDAP::NG will be registered in HumHub upon their
 first login.
 
 
-.. warning::
+.. danger::
 
     HumHub retrieves a user from his username and the
     authentication service he came through. As a result, a former local or
@@ -63,9 +63,7 @@ composer :
 
    composer global require hirak/prestissimo
 
-::
-
-   * Go to {humhub_home} folder
+- Go to ``{humhub_home}`` folder
 
 -  Check if composer.json file is present. If not, download it for your
    current version:
@@ -87,9 +85,7 @@ composer :
     If you just need to update the connector, change its version
     in composer.json and run the above composer update command.
 
-::
-
-   * Edit {humhub_home}/protected/config/common.php with the client configuration :
+- Edit `{humhub_home}/protected/config/common.php` with the client configuration :
 
 ::
 
@@ -109,9 +105,7 @@ composer :
        // ...
    ]
 
-::
-
-   * Edit {humhub_home}/protected/config/web.php to disconnect users from LemonLDAP::NG after they logged out of Humhub:
+- Edit ``{humhub_home}/protected/config/web.php`` to disconnect users from LemonLDAP::NG after they logged out of Humhub:
 
 ::
 
@@ -157,10 +151,8 @@ AuthController.onAuthSuccess method needs to be adapted so redirect to
 SSO will be bypassed when a registration error occured. This works for
 version 1.3.15 :
 
-::
-
-    * Go to {humhub_home} folder
-    * Execute
+- Go to ``{humhub_home}`` folder
+- Execute
 
 ::
 
@@ -176,15 +168,13 @@ Then, configure LemonLDAP::NG to recognize your HumHub instance as a
 valid :doc:`new OpenID Connect Relying Party<..//idpopenidconnect>`
 using the following parameters:
 
-::
-
-     * **Client ID**: the same you set in HumHub configuration
-     * **Client Secret**: the same you set in HumHub configuration
-     * Add the following **exported attributes**
-         * **given_name**: user's givenName attribute
-         * **family_name**: user's sn attribute
-         * **email**: user's mail attribute
-     * **Redirect URIs** containing your Yii2 auth client ID.
+* **Client ID**: the same you set in HumHub configuration
+* **Client Secret**: the same you set in HumHub configuration
+* Add the following **exported attributes**
+   * **given_name**: user's givenName attribute
+   * **family_name**: user's sn attribute
+   * **email**: user's mail attribute
+* **Redirect URIs** containing your Yii2 auth client ID.
 
 Configuration sample using CLI:
 
@@ -212,16 +202,12 @@ to LemonLDAP::NG.
 
 Table "user":
 
-::
-
-    * Columns "username" and "email" should match exactly OIDC sub and email attributes ;
-    * If former ldap user, change column "auth_mode" to "local".
+* Columns "username" and "email" should match exactly OIDC sub and email attributes ;
+* If former ldap user, change column "auth_mode" to "local".
 
 Table "user_auth":
 
-::
-
-    * Add an entry with user_id, username and "lemonldapng" as source (or the name you chose in your connector configuration) :
+* Add an entry with user_id, username and "lemonldapng" as source (or the name you chose in your connector configuration) :
 
 ::
 

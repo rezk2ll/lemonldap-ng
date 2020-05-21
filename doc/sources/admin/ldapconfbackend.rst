@@ -67,7 +67,7 @@ LemonLDAP::NG
 Configure LDAP configuration backend in ``lemonldap-ng.ini``, section
 ``[configuration]``:
 
-.. code:: ini
+.. code-block:: ini
 
    type = LDAP
    ldapServer = ldap://localhost

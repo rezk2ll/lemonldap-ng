@@ -4,7 +4,7 @@ Apache Tomcat
 |image0|
 
 
-.. important::
+.. attention::
 
     The Tomcat Valve is only available for tomcat 5.5 or
     greater.
@@ -22,7 +22,7 @@ authentication to Tomcat.
 By default, Tomcat provides a file called ``users.xml`` to manage
 authentication:
 
-.. code:: xml
+.. code-block:: xml
 
    <?xml version='1.0' encoding='utf-8'?>
    <tomcat-users>
@@ -59,7 +59,7 @@ Configuration
 Add on your ``server.xml`` file a new valve entry like this (in host
 section):
 
-.. code:: xml
+.. code-block:: xml
 
    <Valve className="org.lemonLDAPNG.SSOValve" userKey="AUTH-USER" roleKey="AUTH-ROLE" roleSeparator="," allows="127.0.0.1"/>
 
@@ -100,7 +100,7 @@ Required :
 Configure your tomcat home in ``build.properties`` files.
 
 
-.. important::
+.. attention::
 
     Be careful for Windows user, path must contains "/".
     Example:

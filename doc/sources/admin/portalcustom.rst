@@ -53,7 +53,7 @@ Then set this value in Custom CSS parameter :
 
 Sample CSS file, to remove white background of main logo:
 
-.. code:: css
+.. code-block:: css
 
    #header img {
      background-color: transparent;
@@ -92,7 +92,7 @@ To set your own background, copy your file in
 ``/usr/share/lemonldap-ng/portal/htdocs/skins/common/backgrounds/`` and
 register it in ``/etc/lemonldap-ng/lemonldap-ng.ini``:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    portalSkinBackground = file.png
@@ -137,7 +137,7 @@ Skin customization
 ~~~~~~~~~~~~~~~~~~
 
 
-.. important::
+.. attention::
 
     If you modify directly the skin files, your
     modifications will certainly be erased on the next upgrade. The best is
@@ -218,7 +218,7 @@ There are two methods to do this:
 
 -  Use ``lemonldap-ng.ini``:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
 
@@ -231,7 +231,7 @@ There are two methods to do this:
 You can also define messages in several languages or disable message
 boxes by using the bareword ``_hide_`` :
 
-.. code:: ini
+.. code-block:: ini
 
    error_en_0        = Big brother is watching you, authenticated user
    error_fr_0        = Souriez vous êtes surveillés !
@@ -246,7 +246,7 @@ If you have a custom skin, then you can create a lang file in
 
 For example ``templates/myskin/en.json``:
 
-.. code:: javascript
+.. code-block:: javascript
 
    {
    "PE9":"Please authenticate!"
@@ -261,7 +261,7 @@ Menu tabs
 If you modify the menu template to add some tabs, you should add the new
 tabs in \`customMenuTabs\` parameter in lemonldap-ng.ini:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
 
@@ -277,7 +277,7 @@ Template parameters are defined in source code. If you need to add a
 template parameter for your customization, then add to
 ``lemonldap-ng.ini``:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
 
@@ -286,20 +286,20 @@ template parameter for your customization, then add to
 
 Then you will be able to use it in your template like this:
 
-.. code:: html
+.. code-block:: html
 
    Hello <TMPL_VAR NAME="myparam">!
 
 All session variables are also available in templates, with the prefix
 ``session_``:
 
-.. code:: html
+.. code-block:: html
 
    Hello <TMPL_VAR NAME="session_cn">!
 
 You can also display environment variables, with the prefix ``env_``:
 
-.. code:: html
+.. code-block:: html
 
    Your IP is <TMPL_VAR NAME="env_REMOTE_ADDR">
 

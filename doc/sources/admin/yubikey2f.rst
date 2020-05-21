@@ -44,7 +44,7 @@ In the manager (second factors), you just have to enable it:
    the choice screen
 
 
-.. important::
+.. attention::
 
     If you want to use a custom rule for "activation" and
     want to keep self-registration, you must include this in your rule:
@@ -60,7 +60,7 @@ yubikey in Second Factor Devices array (JSON) in your user-database.
 Then map it to the \_2fDevices attribute (see
 :doc:`exported variables<exportedvars>`):
 
-.. code:: json
+.. code::
 
    [{"name" : "MyYubikey" , "type" : "UBK" , "_secret" : "########" , "epoch":"1524078936"}, ...]
 

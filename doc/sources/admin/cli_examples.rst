@@ -5,7 +5,7 @@ This page shows some examples of LL::NG Command Line Interface. See
 :ref:`how to use the command<configlocation-command-line-interface-cli>`.
 
 
-.. important::
+.. attention::
 
     On Debian, the command is located in
     ``/usr/share/lemonldap-ng/bin`` and on CentOS in
@@ -19,13 +19,13 @@ This part requires LLNG 2.0.5 at least.
 
 Save:
 
-.. code:: sh
+.. code-block:: sh
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli save >config.json
 
 Restore:
 
-.. code:: shell
+.. code-block:: shell
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli restore config.json
    # Or
@@ -33,7 +33,7 @@ Restore:
 
 Rollback (restore previous configuration, *since 2.0.8*):
 
-.. code:: shell
+.. code-block:: shell
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli rollback
 

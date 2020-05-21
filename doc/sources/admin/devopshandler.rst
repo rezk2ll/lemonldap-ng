@@ -6,12 +6,12 @@ itself not from LL:NG configuration. Rules and headers are set in a
 **rules.json** file stored at the website root directory (ie
 ``http://website/rules.json``). This file looks like:
 
-.. code:: json
+.. code-block:: json
 
    {
      "rules": {
        "^/admin": "$uid eq 'admin'",
-       "default": "accept'
+       "default": "accept"
      },
      "headers": {
        "Auth-User": "$uid"
@@ -31,7 +31,7 @@ No specific configuration is required except that:
    ``http://127.0.0.1:<server-port>``
 
 
-.. important::
+.. attention::
 
     Note that DevOps handler will refuse to compile
     rules.json if :doc:`Safe Jail<safejail>` isn't enabled.

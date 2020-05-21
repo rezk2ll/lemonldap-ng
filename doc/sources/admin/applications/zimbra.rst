@@ -77,7 +77,7 @@ Zimbra parameters are the following:
    (by default: ^/zimbrasso$)
 
 
-.. important::
+.. attention::
 
     Due to Handler API change in 1.9, you need to set these
     attributes in ``lemonldap-ng.ini`` and not in Manager, for example:

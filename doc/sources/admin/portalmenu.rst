@@ -28,7 +28,7 @@ You can use ``0`` or ``1`` to disable/enable the module, or use a more
 complex rule. For example, to display the password change form only for
 user authenticated trough LDAP or DBI:
 
-.. code:: perl
+.. code-block:: perl
 
    $_auth eq LDAP or $_auth eq DBI
 

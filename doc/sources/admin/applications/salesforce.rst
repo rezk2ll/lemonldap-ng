@@ -46,7 +46,7 @@ Finally, just ensure that at least:
 match with the correct values. (adapt the domain if necessary)
 
 
-.. important::
+.. attention::
 
     For now, the authentication service parameter has no
     domain available. You must come back later to fill this parameter. Once

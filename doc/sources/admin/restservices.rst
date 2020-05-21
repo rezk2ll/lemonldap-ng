@@ -17,7 +17,7 @@ You must disable them or set a rule (configuration parameter
 ``requireToken``) so token will not be required for REST requests, for
 example:
 
-.. code:: perl
+.. code-block:: perl
 
    $env->{HTTP_ACCEPT} !~ m:application/json:
 
@@ -55,7 +55,7 @@ The JSON response fields are:
     ``Cookie`` returned by the portal.
 
 
-.. important::
+.. attention::
 
     Before version 2.0.4, the response to a success
     authentication had no ``id`` field, and ``error`` field was named
@@ -71,7 +71,7 @@ Example
    curl -H "Accept: application/json" -d user=rtyler -d password=rtyler http://auth.example.com/ | json_pp
 
 
-.. important::
+.. attention::
 
     With ``cURL > 7.18.0``, to include special characters
     like @, & or + in the cURL POST data:
@@ -84,7 +84,7 @@ Example
 
 -  Response for bad authentication:
 
-.. code:: javascript
+.. code-block:: javascript
 
    {
        "result" : 0,
@@ -93,7 +93,7 @@ Example
 
 -  Response for good authentication:
 
-.. code:: javascript
+.. code-block:: javascript
 
    {
        "result" : 1,

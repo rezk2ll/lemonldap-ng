@@ -2,7 +2,7 @@ Nginx
 =====
 
 
-.. important::
+.. attention::
 
     Nginx is fully supported by LemonLDAP::NG since version
     1.9.

@@ -30,7 +30,7 @@ integrated with LemonLDAP::NG without having to use a
 :doc:`Gitlab<gitlab>` server.
 
 
-.. warning::
+.. danger::
 
     The following configuration requires your user database
     to expose a unique numeric identifier for every user.
@@ -92,21 +92,19 @@ recognize a user.
 Add a :doc:`new OpenID Connect relaying party<..//idpopenidconnect>`
 with the following parameters:
 
-::
-
-     * **Client ID**: the same you set in Mattermost configuration
-     * **Client Secret**: the same you set in Mattermost configuration
-     * Add a new scope in "Extra claims"
-         * **Key**: ''gitlab''
-         * **Value**: ''id username name email''
-     * Add the following exported attributes
-         * ''username'': set it to the session attribute containing the user login
-         * ''name'': session attribute containing the user's full name
-         * ''email'': session attribute containing the user's email
-         * ''id'': session attribute containing the user's numeric ID
+* **Client ID**: the same you set in Mattermost configuration
+* **Client Secret**: the same you set in Mattermost configuration
+* Add a new scope in "Extra claims"
+   * **Key**: ``gitlab``
+   * **Value**: ``id username name email``
+* Add the following exported attributes
+   * ``username``: set it to the session attribute containing the user login
+   * ``name``: session attribute containing the user's full name
+   * ``email``: session attribute containing the user's email
+   * ``id``: session attribute containing the user's numeric ID
 
 
-.. warning::
+.. danger::
 
     Mattermost absolutely needs to receive a numerical value
     in the ``id`` claim. If you are using a LDAP server, you could use the

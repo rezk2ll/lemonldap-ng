@@ -70,7 +70,7 @@ authentication URL.
 
 -  For Apache:
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost *:80>
           ServerName sympa.example.com
@@ -85,7 +85,7 @@ authentication URL.
 
 -  For Nginx:
 
-.. code:: nginx
+.. code-block:: nginx
 
    server {
      listen 80;

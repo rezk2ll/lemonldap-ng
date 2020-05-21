@@ -21,7 +21,7 @@ authentication process:
 If you need to call a method just after any standard method in
 authentication process, then use ``afterSub``, for example:
 
-.. code:: perl
+.. code-block:: perl
 
      use constant afterSub => {
          getUser => 'mysub',
@@ -35,7 +35,7 @@ authentication process, then use ``afterSub``, for example:
 If you need to call a method instead any standard method in
 authentication process, then use ``aroundSub``, for example:
 
-.. code:: perl
+.. code-block:: perl
 
      use constant aroundSub => {
          getUser => 'mysub',
@@ -71,7 +71,7 @@ Create for example the MyPlugin module:
     your own work, put your own code in
     ``/usr/local/lib/site_perl/Lemonldap/NG/Portal/MyPlugin.pm``\
 
-.. code:: perl
+.. code-block:: perl
 
    package Lemonldap::NG::Portal::MyPlugin;
 
@@ -117,7 +117,7 @@ Declare the plugin in lemonldap-ng.ini:
 
    vi /etc/lemonldap-ng/lemonldap-ng.ini
 
-.. code:: perl
+.. code-block:: perl
 
    [portal]
    customPlugins = Lemonldap::NG::Portal::MyPlugin

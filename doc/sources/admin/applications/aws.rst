@@ -29,7 +29,7 @@ SAML
    name so people know which account is which.
 
 
-.. important::
+.. attention::
 
     If you have only one role, the configuration is simple. If you
     have multiple roles for different people, it is a little trickier. As

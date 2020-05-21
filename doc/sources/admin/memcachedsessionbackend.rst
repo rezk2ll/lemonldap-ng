@@ -2,7 +2,7 @@ Memcached session backend
 =========================
 
 
-.. important::
+.. attention::
 
     \ `Memcached <http://memcached.org/>`__ can be used with
     LL::NG, but some features will not work since Memcached doesn't provide

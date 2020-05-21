@@ -2,7 +2,7 @@ Installation on Suse Linux
 ==========================
 
 
-.. important::
+.. attention::
 
     LL::NG requires at least SLES 12 SP1 or
     equivalent
@@ -110,11 +110,11 @@ With ZYPPER
 
 If the packages are stored in a repository:
 
-.. code:: shell
+.. code-block:: shell
 
    zypper install lemonldap-ng
 
-.. code:: shell
+.. code-block:: shell
 
    59 new packages to install.
    Total download size: 13.5 MiB. Already cached : 0 B. After operation, 30.7 MiB of supplementary disk space will be used.
@@ -183,13 +183,13 @@ Change default DNS domain
 By default, DNS domain is ``example.com``. You can change it quick with
 a sed command. For example, we change it to ``ow2.org``:
 
-.. code:: shell
+.. code-block:: shell
 
    sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/{*.conf,*.ini,for_etc_hosts} /var/lib/lemonldap-ng/conf/lmConf-1
 
 Check Apache configuration and restart:
 
-.. code:: shell
+.. code-block:: shell
 
    apachectl configtest
    apachectl restart

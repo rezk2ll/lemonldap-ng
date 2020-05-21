@@ -15,7 +15,7 @@ phpLDAPadmin will be protected by LemonLDAP::NG with specific access
 rules.
 
 
-.. warning::
+.. danger::
 
     phpLDAPadmin will have no idea of the user connected to
     the WebSSO. So a simple user can have admin rights on the LDAP directory
@@ -30,7 +30,7 @@ phpLDAPadmin local configuration
 Just set the authentication type to ``config`` and indicate DN and
 password inside the file ``config.php``:
 
-.. code:: php
+.. code-block:: php
 
    $ldapservers->SetValue($i,'server','auth_type','config');
    $ldapservers->SetValue($i,'login','dn','cn=Manager,dc=example,dc=com');
@@ -44,7 +44,7 @@ Configure phpLDAPadmin virtual host like other
 
 -  For Apache:
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost *:80>
           ServerName phpldapadmin.example.com
@@ -57,7 +57,7 @@ Configure phpLDAPadmin virtual host like other
 
 -  For Nginx:
 
-.. code:: nginx
+.. code-block:: nginx
 
    server {
      listen 80;

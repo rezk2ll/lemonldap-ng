@@ -16,7 +16,7 @@ Add a new handler type
 
 Wrapper usually look at this:
 
-.. code:: perl
+.. code-block:: perl
 
    package Lemonldap::NG::Handler::ApacheMP2::MyType;
 
@@ -67,7 +67,7 @@ If you want to add another, you must write:
 
 Wrapper usually look at this:
 
-.. code:: perl
+.. code-block:: perl
 
    package Lemonldap::NG::Handler::MyPlatform::AuthBasic;
 
@@ -79,7 +79,7 @@ Old fashion Nginx handlers
 --------------------------
 
 
-.. important::
+.. attention::
 
     There is no need to use this feature now. It is kept for
     compatibility.

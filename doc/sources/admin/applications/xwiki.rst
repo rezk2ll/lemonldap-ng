@@ -30,7 +30,7 @@ You will configure Xwiki virtual host like other
 
 This is an example, with https and speaking to xwiki via AJP.
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost *:80>
        ServerName wiki.acme.fr

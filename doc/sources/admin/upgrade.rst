@@ -5,7 +5,7 @@ Please apply general caution as you would with any software: have
 backups and a rollback plan ready!
 
 
-.. warning::
+.. danger::
 
     If you have
     :doc:`installed LemonLDAP::NG from official RPMs<installrpm>`, you may
@@ -85,7 +85,7 @@ manager API config:
 
    portal-apache2.conf
 
-.. code:: apache
+.. code-block:: apache
 
        RewriteCond "%{REQUEST_URI}" "!^/(?:(?:static|javascript|favicon).*|.*\.fcgi(?:/.*)?)$"
        RewriteRule "^/(.+)$" "/index.fcgi/$1" [PT]
@@ -94,7 +94,7 @@ manager API config:
 
    manager-apache2.conf
 
-.. code:: apache
+.. code-block:: apache
 
        RewriteCond "%{REQUEST_URI}" "!^/(?:static|doc|lib|javascript|favicon).*"
        RewriteRule "^/(.+)$" "/manager.fcgi/$1" [PT]
@@ -128,7 +128,7 @@ manager API config:
    unique attribute for \_whatToTrace, either force lower case in your
    macro:
 
-.. code:: perl
+.. code-block:: perl
 
    $_auth eq 'SAML' ? lc($_user.'@'.$_idpConfKey) : $_auth eq 'OpenIDConnect' ? lc($_user.'@'.$_oidc_OP) : lc($_user)
 
@@ -170,7 +170,7 @@ Upgrade from 1.9 to 2.0
 =======================
 
 
-.. important::
+.. attention::
 
     2.0 is a major release, lot of things have been changed.
     You must read this document before upgrade.
@@ -188,7 +188,7 @@ upgrade must be done in the following order:
 #. manager server
 
 
-.. important::
+.. attention::
 
     You must revalidate your configuration using the
     manager.
@@ -197,7 +197,7 @@ Installation
 ------------
 
 
-.. important::
+.. attention::
 
     French documentation is no more available. Only English
     version of this documentation is maintained now.
@@ -249,7 +249,7 @@ Configuration
    :doc:`how to run LL::NG behind a reverse proxy<behindproxyminihowto>`.
 
 
-.. important::
+.. attention::
 
     Apache mod_perl has got lot of troubleshooting problems
     since 2.4 version (many segfaults,...), especially when using MPM
@@ -268,7 +268,7 @@ configuration stored in local cache every 10 minutes. So it has to be
 reload like every handler.
 
 
-.. important::
+.. attention::
 
     If you want to use reload mechanism on a portal only
     host, you must install a handler in Portal host to be able to refresh
@@ -388,7 +388,7 @@ SOAP/REST services
 -  SOAP services can be replaced by new REST services
 
 
-.. important::
+.. attention::
 
     \ :doc:`AuthBasic Handler<handlerauthbasic>` uses now
     REST services instead of SOAP.

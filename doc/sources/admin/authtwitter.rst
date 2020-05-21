@@ -36,7 +36,7 @@ and choose Twitter for authentication module.
     password.
 
 
-.. important::
+.. attention::
 
     Browser implementations of formAction directive are
     inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome

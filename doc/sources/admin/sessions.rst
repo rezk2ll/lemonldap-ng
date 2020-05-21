@@ -17,7 +17,7 @@ To configure sessions, go in Manager, ``General Parameters`` »
    when activity timeout is set.
 
 
-.. warning::
+.. danger::
 
     Session activity timeout requires Handlers to have a write
     access to sessions database.
@@ -58,7 +58,7 @@ To configure sessions, go in Manager, ``General Parameters`` »
    -  **Disable storage**: Do not store user persitent sessions.
 
 
-.. important::
+.. attention::
 
     Note that since HTTP protocol is not connected,
     restrictions are not applied to the new session: the oldest are
@@ -71,7 +71,7 @@ Command-line tools
    ``llngDeleteSession``. To use it, simply give it the user identifier
    *(wildcard are authorizated)*:
 
-.. code:: shell
+.. code-block:: shell
 
    # Delete all sessions opened by user "dwho"
    $ llngDeleteSession dwho

@@ -11,7 +11,7 @@ Files
 -----
 
 
-.. important::
+.. attention::
 
     Apache Mod Perl has many issues since 2.4 version with
     MPM worker and MPM event. No problem for portal and manager since they
@@ -24,7 +24,7 @@ in ``/usr/local/lemonldap-ng/etc/``, else they are in
 
 You have to include them in Apache main configuration, for example:
 
-.. code:: apache
+.. code-block:: apache
 
    include /usr/local/lemonldap-ng/etc/portal-apache2.conf
    include /usr/local/lemonldap-ng/etc/handler-apache2.conf

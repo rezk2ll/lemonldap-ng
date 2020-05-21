@@ -34,7 +34,7 @@ Configure Drupal virtual host like other
 :doc:`protected virtual host<../configvhost>`.
 
 
-.. important::
+.. attention::
 
     If you are protecting Drupal with LL::NG as reverse
     proxy,
@@ -42,7 +42,7 @@ Configure Drupal virtual host like other
 
 -  For Apache:
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost *:80>
           ServerName drupal.example.com
@@ -55,7 +55,7 @@ Configure Drupal virtual host like other
 
 -  For Nginx:
 
-.. code:: nginx
+.. code-block:: nginx
 
    server {
      listen 80;
@@ -110,7 +110,7 @@ With the above solution, all the Drupal site will be protected, so no
 anonymous access will be allowed.
 
 
-.. important::
+.. attention::
 
     You cannot use the ``unprotect`` rule because Drupal
     navigation is based on query strings (?q=admin, ?q=user, etc.), and
@@ -120,7 +120,7 @@ You can create a special virtual host and use `Apache rewrite
 module <http://httpd.apache.org/docs/current/mod/mod_rewrite.html>`__ to
 switch between open and protected hosts:
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost *:80>
        ServerName drupal.example.com

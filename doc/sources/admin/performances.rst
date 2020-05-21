@@ -72,97 +72,6 @@ Handlers check rights and calculate headers for each HTTP hit. So to
 improve performances, avoid too complex rules by using macros, groups or
 local macros.
 
-.. _macros_and_groups:
-
-Macros and groups
-~~~~~~~~~~~~~~~~~
-
-Macros and groups are calculated during authentication process by the
-portal:
-
--  macros are used to extend (or rewrite)
-   :doc:`exported variables<exportedvars>`. A macro is stored as
-   attributes: it can contain boolean results or any string
--  macros can also be used to import environment variables *(these
-   variables are in CGI format)*. Example: ``$ENV{HTTP_COOKIE}``
--  groups are stored as a string with values separated by ''; ''
-   (default values separator) in the special attribute ``groups``: it
-   contains the names of groups whose rules were returned true for the
-   current user. For example:
-
-.. code:: perl
-
-   $groups = group3; admin
-
--  You can also get groups in ``$hGroups`` which is a Hash Reference of
-   this form:
-
-.. code:: perl
-
-   $hGroups = {
-             'group3' => {
-                           'description' => [
-                                              'Service 3',
-                                              'Service 3 TEST'
-                                            ],
-                           'cn' => [
-                                     'group3'
-                                   ],
-                           'name' => 'group3'
-                         },
-             'admin' => {
-                          'name' => 'admin'
-                        }
-           }
-
-Example for macros:
-
-.. code:: perl
-
-   # boolean macro
-   isAdmin -> $uid eq 'foo' or $uid eq 'bar'
-   # other macro
-   displayName -> $givenName." ".$surName
-
-   # Use a boolean macro in a rule
-   ^/admin -> $isAdmin
-   # Use a string macro in a HTTP header
-   Display-Name -> $displayName
-
-Defining a group for admins
-
-.. code:: perl
-
-   # group
-   admin -> $uid eq 'foo' or $uid eq 'bar'
-
-Using groups in a rule
-
-.. code:: perl
-
-   ^/admin -> $groups =~ /\badmin\b/
-
-   # Or with hGroups
-   ^/admin -> defined $hGroups->{'admin'}
-
-   # Since 2.0.8
-   ^/admin -> inGroup('admin')
-
-
-.. note::
-
-    Groups are computed after macros, so a group rule may involve a
-    macro value.
-
-
-.. important::
-
-    Macros and groups are computed in alphanumeric order,
-    that is, in the order they are displayed in the manager. For example,
-    macro "macro1" will be computed before macro "macro2": so, expression of
-    macro2 may involve value of macro1. As same for groups: a group rule may
-    involve another, previously computed group.
-
 Local macros
 ~~~~~~~~~~~~
 
@@ -173,7 +82,7 @@ the local session cache (only for this server) and only if the user
 access to the related applications. This avoid to have to many datas
 stored.
 
-.. code:: perl
+.. code-block:: perl
 
    # rule
    admin -> $admin ||= ($uid eq 'foo' or $uid eq 'bar')
@@ -294,7 +203,7 @@ Look at :doc:`Browseable session backend<browseablesessionbackend>` to
 known which index to choose.
 
 
-.. important::
+.. attention::
 
     Some Apache::Session module are not fully usable by
     Lemonldap::NG such as Apache::Session::Memcached since these
@@ -378,7 +287,7 @@ overlay <http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Mem
 to do it automatically.
 
 
-.. important::
+.. attention::
 
     Don't forget to create an index on the field used to
     find users (uid by default)
@@ -420,7 +329,7 @@ fonts, Gzip compression can be activated.
 
 Edit file /etc/nginx/mime.types Check those lines or add :
 
-.. code:: perl
+.. code-block:: perl
 
    application/vnd.ms-fontobject    eot;
    application/x-font-ttf           ttf;
@@ -429,7 +338,7 @@ Edit file /etc/nginx/mime.types Check those lines or add :
 
 Edit file /etc/nginx/nginx.conf
 
-.. code:: perl
+.. code-block:: perl
 
    gzip on; # active la compression Gzip
    gzip_disable "msie6";
@@ -454,7 +363,7 @@ In lemonldap-ng.ini, set only modules that you will use. By default,
 configuration, sessions explorer, notifications explorer and second
 factor are enabled. Example:
 
-.. code:: ini
+.. code-block:: ini
 
    [manager]
    enabledModules = conf, sessions
@@ -478,7 +387,7 @@ sessions, notifications) and save the web pages respectively under
 ``DocumentRoot`` directory. Then replace this in Manager file of Apache
 configuration:
 
-.. code:: apache
+.. code-block:: apache
 
    RewriteRule "^/$" "/psgi/manager-server.fcgi" [PT]
    # DirectoryIndex manager.html
@@ -488,7 +397,7 @@ configuration:
 
 by:
 
-.. code:: apache
+.. code-block:: apache
 
    # RewriteRule "^/$" "/psgi/manager-server.fcgi" [PT]
    DirectoryIndex manager.html

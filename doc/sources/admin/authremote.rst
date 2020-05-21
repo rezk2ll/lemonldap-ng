@@ -8,7 +8,7 @@ Authentication Users Password
 ============== ===== ========
 
 
-.. warning::
+.. danger::
 
     This module is a LL::NG specific identity federation
     protocol. You may rather use standards protocols like

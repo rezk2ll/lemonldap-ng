@@ -62,7 +62,7 @@ configStorageOptionsor file permissions.
 → The cache has been created by another user than Apache's user. Restart
 Apache to purge it.
 
-.. important::
+.. attention::
 
     This can append when you use
     lmConfigEditor or launch **cron files** with a different user than

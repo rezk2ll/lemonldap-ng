@@ -46,7 +46,7 @@ For example:
      -H "Authorization: Bearer a74d504ec9e784785e70a1da2b95d1d2" \
      https://auth.example.ccom/oauth2/userinfo | json_pp
 
-.. code:: javascript
+.. code-block:: javascript
 
    {
      "family_name" : "OUDOT",
@@ -72,7 +72,7 @@ For example:
      -X POST -d "token=a74d504ec9e784785e70a1da2b95d1d2" \
      https://auth.example.com/oauth2/introspect | json_pp
 
-.. code:: javascript
+.. code-block:: javascript
 
    {
       "client_id" : "lemonldap",
@@ -96,7 +96,7 @@ HTTP headers to know which user is connected.
       -H "Authorization: Bearer a74d504ec9e784785e70a1da2b95d1d2" \
       https://oauth2.example.ccom/rest/myapi
 
-.. code:: javascript
+.. code-block:: javascript
 
    {
       "check" : "true",

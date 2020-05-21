@@ -33,13 +33,13 @@ choose between:
    backends depending on log level
 
 
-.. important::
+.. attention::
 
     Except for Apache2 and Log4Perl, log level is defined
     by ``logLevel`` parameter set in ``lemonldap-ng.ini`` file. Logger
     configurations are defined in lemonldap-ng.ini.  Example:
 
-.. code:: ini
+.. code-block:: ini
 
    [all]
    logger     = Lemonldap::NG::Common::Logger::Log4perl
@@ -140,7 +140,7 @@ Syslog
 
 You can choose facility in lemonldap-ng.ini file. Default values:
 
-.. code:: ini
+.. code-block:: ini
 
    syslogFacility     = daemon
    userSyslogFacility = auth
@@ -151,7 +151,7 @@ Log4perl
 You can indicate the Log4perl configuration file and the classes to use.
 Default values:
 
-.. code:: ini
+.. code-block:: ini
 
    log4perlConfFile   = /etc/log4perl.conf
    log4perlLogger     = LLNG
@@ -162,12 +162,12 @@ Sentry
 
 You just have to give your DSN:
 
-.. code:: ini
+.. code-block:: ini
 
    sentryDsn = https://...
 
 
-.. important::
+.. attention::
 
     This experimental logger requires
     `Sentry::Raven <https://metacpan.org/pod/Sentry::Raven>`__ Perl
@@ -178,7 +178,7 @@ Dispatch
 
 Use it to use more than one logger. Example:
 
-.. code:: ini
+.. code-block:: ini
 
    logger               = Lemonldap::NG::Common::Logger::Dispatch
    userLogger           = Lemonldap::NG::Common::Logger::Dispatch
@@ -190,7 +190,7 @@ Use it to use more than one logger. Example:
    sentryDsn         = https://...
 
 
-.. important::
+.. attention::
 
     At least ``logDispatchError`` (or
     ``userLogDispatchError`` for user logs) must be defined. All sub level

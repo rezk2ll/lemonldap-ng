@@ -37,7 +37,7 @@ SAML Session                           \_saml_id
 See Apache::Session::Browseable man page to see how use indexes.
 
 
-.. important::
+.. attention::
 
     \ *WHATTOTRACE* must be replaced by the attribute or
     macro configured in the What To Trace parameter (REMOTE_USER). By
@@ -94,7 +94,7 @@ Database must be prepared exactly like in
 except that a field must be added for each data to index.
 
 
-.. important::
+.. attention::
 
     Data written to UNLOGGED tables is not written to the
     WAL, which makes them considerably faster than ordinary tables. However,
@@ -124,7 +124,7 @@ example:
    CREATE INDEX h1   ON sessions (_httpSessionType);
 
 
-.. important::
+.. attention::
 
     For Session Explorer and one-off sessions, it is
     recommended to use BTREE or any index method that indexes partial

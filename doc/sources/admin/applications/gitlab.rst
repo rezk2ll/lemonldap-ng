@@ -29,7 +29,7 @@ Find the gitlab.rb file and add these settings:
 
    vi /etc/gitlab/gitlab.rb
 
-.. code:: ruby
+.. code-block:: ruby
 
    gitlab_rails['omniauth_enabled'] = true
    gitlab_rails['omniauth_allow_single_sign_on'] = ['saml']
@@ -64,7 +64,7 @@ Find the gitlab.rb file and add these settings:
 
 You can force SAML by default with this option:
 
-.. code:: ruby
+.. code-block:: ruby
 
    gitlab_rails['omniauth_auto_sign_in_with_provider'] = 'saml'
 
@@ -96,7 +96,7 @@ Register them in LL::NG and send these SAML attributes:
 -  cn => name
 
 
-.. important::
+.. attention::
 
     The value from LL::NG mail session attribute must be the
     email of the user in Gitlab database, in order to associate
@@ -108,7 +108,7 @@ Manage groups
 You can pass groups to Gitlab. For this, declare groups attribute in
 gitlab.rb:
 
-.. code:: ruby
+.. code-block:: ruby
 
    ...
    gitlab_rails['omniauth_providers'] = [
@@ -134,7 +134,7 @@ Gitlab configuration
 
 In ``/etc/gitlab/gitlab.rb``
 
-.. code:: ruby
+.. code-block:: ruby
 
    ...
    gitlab_rails['omniauth_allow_single_sign_on'] = ['openid_connect']
@@ -180,7 +180,7 @@ Add an OpenID Connect RP to LemonLDAP::NG
    LemonLDAP::NG session is mapped to the ``email`` claim.
 
 
-.. important::
+.. attention::
 
     You need to set a key identifier, or you will get a
     *JSON::JWK::Set::KidNotFound* error on Gitlab

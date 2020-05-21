@@ -8,7 +8,7 @@ LemonLDAP::NG configuration is stored in a backend that allows all
 modules to access it.
 
 
-.. important::
+.. attention::
 
     Note that all LL::NG components must have access:
 
@@ -30,7 +30,7 @@ section.
 
 For example, to configure the ``File`` configuration backend:
 
-.. code:: ini
+.. code-block:: ini
 
    [configuration]
    type=File
@@ -53,7 +53,7 @@ By default, Manager is protected to allow only the demonstration user
 "dwho".
 
 
-.. important::
+.. attention::
 
     This user will not be available anymore if you configure
     a new authentication backend! Remember to change the access rule in
@@ -62,7 +62,7 @@ By default, Manager is protected to allow only the demonstration user
 If you can not access the Manager anymore, you can unprotect it by
 editing ``lemonldap-ng.ini`` and changing the ``protection`` parameter:
 
-.. code:: ini
+.. code-block:: ini
 
    [manager]
 
@@ -105,7 +105,7 @@ When all modifications are done, click on ``Save`` to store
 configuration.
 
 
-.. warning::
+.. danger::
 
     LemonLDAP::NG will do some checks on configuration and
     display errors and warnings if any. Configuration **is not saved** if
@@ -142,7 +142,7 @@ See `Manager API
 documentation <https://lemonldap-ng.org/manager-api/2.0/>`__.
 
 
-.. important::
+.. attention::
 
     To access Manager API, enable the ``manager-api``
     virtual host and change the access rule. You can protect the API through
@@ -183,7 +183,7 @@ favorite editor. To change it:
 
 The configuration is displayed as a big Perl Hash, that you can edit:
 
-.. code:: perl
+.. code-block:: perl
 
    $VAR1 = {
              'ldapAuthnLevel' => '2',
@@ -286,7 +286,7 @@ Apache
 ------
 
 
-.. important::
+.. attention::
 
     LemonLDAP::NG does not manage Apache
     configuration
@@ -312,7 +312,7 @@ configure some for of authentication on the corresponding URLs in the
 
 By default, access to those URLs is denied:
 
-.. code:: apache
+.. code-block:: apache
 
        # REST/SOAP functions for sessions management (disabled by default)
        <Location /index.fcgi/adminSessions>
@@ -327,7 +327,7 @@ In order to allow configuration reload from a different server (if your
 manager is on a different server or if you are using load-balancing),
 you need to edit the access rule in **handler-apache2.conf**
 
-.. code:: apache
+.. code-block:: apache
 
        <Location /reload>
            #CHANGE THIS######
@@ -347,14 +347,14 @@ handler, you need to add these directives:
 
 (in a global configuration file)
 
-.. code:: apache
+.. code-block:: apache
 
    PerlOptions +GlobalRequest
    PerlModule Lemonldap::NG::Handler::ApacheMP2
 
 -  Catch error pages:
 
-.. code:: apache
+.. code-block:: apache
 
    ErrorDocument 403 http://auth.example.com/lmerror/403
    ErrorDocument 404 http://auth.example.com/lmerror/404
@@ -365,7 +365,7 @@ handler, you need to add these directives:
 Then, to protect a standard virtual host, the only configuration line to
 add is:
 
-.. code:: apache
+.. code-block:: apache
 
    PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2
 
@@ -376,7 +376,7 @@ Nginx
 -----
 
 
-.. important::
+.. attention::
 
     LemonLDAP::NG does not manage Nginx configuration
 
@@ -390,7 +390,7 @@ LemonLDAP::NG ships 3 Nginx configuration files:
 See :doc:`how to deploy them<confignginx>`.
 
 
-.. warning::
+.. danger::
 
     \ :doc:`LL::NG FastCGI<fastcgiserver>` server must be
     enabled and started separately.
@@ -406,7 +406,7 @@ configure some for of authentication on the corresponding URLs in the
 
 By default, access to those URLs is denied:
 
-.. code:: nginx
+.. code-block:: nginx
 
        location ~ ^/index.psgi/adminSessions {
          fastcgi_pass llng_portal_upstream;
@@ -422,7 +422,7 @@ In order to allow configuration reload from a different server (if your
 manager is on a different server or if you are using load-balancing),
 you need to edit the access rule in **handler-nginx.conf**
 
-.. code:: nginx
+.. code-block:: nginx
 
      location = /reload {
 
@@ -448,7 +448,7 @@ Nginx handler is provided by the
 
 -  Handle errors:
 
-.. code:: nginx
+.. code-block:: nginx
 
    error_page 403 http://auth.example.com/lmerror/403;
    error_page 404 http://auth.example.com/lmerror/404;
@@ -459,7 +459,7 @@ Nginx handler is provided by the
 To protect a standard virtual host, you must insert this (or create an
 included file):
 
-.. code:: nginx
+.. code-block:: nginx
 
      # Insert $_user in logs
      include /etc/lemonldap-ng/nginx-lmlog.conf;
@@ -533,7 +533,7 @@ You also have a parameter to adjust the timeout used to request reload
 URLs, it is be default set to 5 seconds.
 
 
-.. important::
+.. attention::
 
     If "Compact configuration file" option is enabled, all
     useless parameters are removed to limit file size. Typically, if SAMLv2
@@ -554,13 +554,13 @@ inside a virtual host protected by LemonLDAP::NG Handler (see below
 examples in Apache->handler or Nginx->Handler).
 
 
-.. important::
+.. attention::
 
     You must allow access to declared URLs to your Manager
     IP.
 
 
-.. important::
+.. attention::
 
     If reload URL is served in HTTPS, to avoid "Error 500
     (certificate verify failed)", Go to :
@@ -574,7 +574,7 @@ examples in Apache->handler or Nginx->Handler).
     **SSL_verify_mode => 0**
 
 
-.. important::
+.. attention::
 
     If you want to use reload mechanism on a portal only
     host, you must install a handler in Portal host to be able to refresh
@@ -593,7 +593,7 @@ keep only one reload URL (reload.example.com):
 
 You also need to adjust the protection of the reload vhost, for example:
 
-.. code:: apache
+.. code-block:: apache
 
        <Location /reload>
            Require ip 127 ::1 1.1.1.1 1.1.1.2
@@ -623,7 +623,7 @@ parameter from the global configuration.
 
 For example, to override configured skin for portal:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    portalSkin = dark

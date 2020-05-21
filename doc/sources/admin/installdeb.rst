@@ -47,7 +47,7 @@ installable:
     `Here is the list of Debian versions <https://lemonldap-ng.org/documentation/#packaged_versions>`__.
 
 
-.. warning::
+.. danger::
 
     LLNG Ubuntu packages are not in the "universe" but in the
     "multiverse". This means they are not security-maintained. If you use
@@ -114,7 +114,7 @@ Install packages
 ----------------
 
 
-.. important::
+.. attention::
 
     By default packages will require Nginx. If you want to
     use Apache2, install it first with mod_perl:
@@ -152,7 +152,7 @@ Change default DNS domain
 By default, DNS domain is ``example.com``. You can change it quick with
 a sed command. For example, we change it to ``ow2.org``:
 
-.. code:: shell
+.. code-block:: shell
 
    sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1.json
 

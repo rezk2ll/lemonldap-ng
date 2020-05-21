@@ -36,7 +36,7 @@ SAML Service
 See :doc:`SAML service<samlservice>` configuration chapter.
 
 
-.. important::
+.. attention::
 
     Browser implementations of formAction directive are
     inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome

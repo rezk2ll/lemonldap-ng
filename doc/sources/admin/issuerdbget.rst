@@ -15,7 +15,7 @@ GET parameters:
    example)
 
 
-.. warning::
+.. danger::
 
     Passing such sensitive information can be dangerous. Using
     other well-known secured protocols is recommended.
@@ -63,7 +63,7 @@ For example:
    }
 
 
-.. warning::
+.. danger::
 
     In the previous example, \_session_id is quite sensitive,
     thus it is encouraged that the application revalidate \_session_id using

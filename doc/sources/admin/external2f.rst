@@ -38,7 +38,7 @@ All parameters are configured in "General Parameters » Portal Parameters
    the choice screen
 
 
-.. important::
+.. attention::
 
     The command line is split in an array and launched with
     exec(). So you don't need to enclose arguments in quotes to  protect your

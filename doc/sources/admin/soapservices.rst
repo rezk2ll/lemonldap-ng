@@ -42,7 +42,7 @@ are protected by Web Server, you can change this in
       :doc:`Notifications system<notifications>` for more)
 
 
-.. important::
+.. attention::
 
     When you use
     :doc:`SOAP sessions backend<soapsessionbackend>`, it is recommended to

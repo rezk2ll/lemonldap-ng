@@ -17,7 +17,7 @@ special key in ``lemonldap-ng.ini``, section ``[Manager]``:
 
 Example:
 
-.. code:: ini
+.. code-block:: ini
 
    [Manager]
    skippedUnitTests   = grantSessionRules portalSkinRules

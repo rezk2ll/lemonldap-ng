@@ -12,7 +12,7 @@ password variable in session. To bypass this, LL::NG can remember what
 password was given by user on authentication phase.
 
 
-.. important::
+.. attention::
 
 
 

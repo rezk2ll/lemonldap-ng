@@ -14,7 +14,7 @@ Apache
 
 In Apache configuration, set:
 
-.. code:: apache
+.. code-block:: apache
 
    FcgidInitialEnv http_proxy http://X.X.X.X:X
    FcgidInitialEnv https_proxy http://X.X.X.X:X

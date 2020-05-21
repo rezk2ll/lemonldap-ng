@@ -15,7 +15,7 @@ activated (see
 Then you can take any virtual host, and simply add this line to protect
 it:
 
-.. code:: apache
+.. code-block:: apache
 
    PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2
 
@@ -24,7 +24,7 @@ Hosted application
 
 Example of a protected virtual host for a local application:
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost *:80>
            ServerName localsite.example.com
@@ -43,7 +43,7 @@ Reverse proxy
 
 Example of a protected virtual host with LemonLDAP::NG as reverse proxy:
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost *:80>
            ServerName application.example.com
@@ -63,7 +63,7 @@ Example of a protected virtual host with LemonLDAP::NG as reverse proxy:
 
 Same with remote server configured with the same host name:
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost *:80>
            ServerName application.example.com
@@ -102,21 +102,21 @@ Add a floating menu
 A little floating menu can be added to application with this simple
 Apache configuration:
 
-.. code:: apache
+.. code-block:: apache
 
    PerlModule Lemonldap::NG::Handler::ApacheMP2::Menu
    PerlOutputFilterHandler Lemonldap::NG::Handler::ApacheMP2::Menu->run
 
 Pages where this menu is displayed can be restricted, for example:
 
-.. code:: apache
+.. code-block:: apache
 
    <Location /var/www/html/index.php>
    PerlOutputFilterHandler Lemonldap::NG::Handler::ApacheMP2::Menu->run
    </Location>
 
 
-.. important::
+.. attention::
 
     You need to disable mod_deflate to use the floating
     menu
@@ -132,7 +132,7 @@ Then you can take any virtual host and modify it:
 
 -  Declare the /lmauth endpoint
 
-.. code:: nginx
+.. code-block:: nginx
 
      location = /lmauth {
        internal;
@@ -152,7 +152,7 @@ Then you can take any virtual host and modify it:
 
 -  Protect the application (/ or /path/to/protect):
 
-.. code:: nginx
+.. code-block:: nginx
 
      location /path/to/protect {
        auth_request /lmauth;
@@ -163,16 +163,16 @@ Then you can take any virtual host and modify it:
        error_page 401 $lmlocation;
        try_files $uri $uri/ =404;
 
-       ...
+       # ...
      }
 
 -  Use LUA or set manually the headers:
 
-.. code:: nginx
+.. code-block:: nginx
 
      location /path/to/protect {
 
-       ...
+       # ...
 
        # IF LUA IS SUPPORTED
        #include /etc/lemonldap-ng/nginx-lua-headers.conf;
@@ -201,7 +201,7 @@ Hosted application
 
 Example of a protected virtual host for a local application:
 
-.. code:: nginx
+.. code-block:: nginx
 
    # Log format
    include /path/to/lemonldap-ng/nginx-lmlog.conf;
@@ -261,7 +261,7 @@ Reverse proxy
 
 \* Example of a protected reverse-proxy:
 
-.. code:: nginx
+.. code-block:: nginx
 
    # Log format
    include /path/to/lemonldap-ng/nginx-lmlog.conf;
@@ -309,7 +309,7 @@ Reverse proxy
 \* Example of a Nginx Virtual Host using uWSGI with many URIs protected
 by different types of handler :
 
-.. code:: nginx
+.. code-block:: nginx
 
    # Log format
    include /path/to/lemonldap-ng/nginx-lmlog.conf;
@@ -448,7 +448,7 @@ learn how to configure access control and HTTP headers sent to
 application by LL::NG.
 
 
-.. important::
+.. attention::
 
     With **Nginx**-based ReverseProxy, header directives can
     be appended by a LUA script.
@@ -459,7 +459,7 @@ application by LL::NG.
     ``/etc/nginx/nginx-lua-headers.conf``
 
 
-.. warning::
+.. danger::
 
     \* **Nginx** gets rid of any empty headers. There is no
     point of passing along empty values to another server; it would only
@@ -500,7 +500,7 @@ Some options are available:
    seconds by default. This TTL can be customized for each virtual host.
 
 
-.. warning::
+.. danger::
 
     A same virtual host can serve many locations. Each
     location can be protected by a different type of handler :
@@ -517,7 +517,7 @@ Some options are available:
     authentication level is lower than required level.
 
 
-.. important::
+.. attention::
 
     A negative or null ServiceToken timeout value will be
     overloaded by ``handlerServiceTokenTTL`` (30 seconds by default).

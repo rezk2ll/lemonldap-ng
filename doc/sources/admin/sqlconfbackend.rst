@@ -40,20 +40,20 @@ Database and table creation
 
 Create database:
 
-.. code:: sql
+.. code-block:: sql
 
    CREATE DATABASE lemonldap-ng CHARACTER SET utf8;
 
 Use database to create table:
 
-.. code:: sql
+.. code-block:: sql
 
    use lemonldap-ng
 
 RDBI
 ^^^^
 
-.. code:: sql
+.. code-block:: sql
 
    CREATE TABLE lmConfig (
        cfgNum int(11) NOT NULL,
@@ -65,7 +65,7 @@ RDBI
 CDBI
 ^^^^
 
-.. code:: sql
+.. code-block:: sql
 
    CREATE TABLE lmConfig (
        cfgNum int not null primary key,
@@ -91,7 +91,7 @@ all.
 
 For example (suppose that our servers are in 10.0.0.0/24 network):
 
-.. code:: sql
+.. code-block:: sql
 
    GRANT SELECT,INSERT,UPDATE,DELETE,LOCK TABLES ON lemonldap-ng.lmConfig
      TO lemonldaprw@manager.host IDENTIFIED BY 'mypassword';
@@ -104,7 +104,7 @@ Connection settings
 Change configuration settings in ``/etc/lemonldap-ng/lemonldap-ng.ini``
 file (section configuration):
 
-.. code:: ini
+.. code-block:: ini
 
    [configuration]
    type = RDBI
@@ -143,13 +143,13 @@ Database and table creation
 
 Create database:
 
-.. code:: sql
+.. code-block:: sql
 
    CREATE DATABASE lemonldap-ng;
 
 Use database to create table:
 
-.. code:: sql
+.. code-block:: sql
 
    use lemonldap-ng
 
@@ -158,7 +158,7 @@ Use database to create table:
 RDBI
 ^^^^
 
-.. code:: sql
+.. code-block:: sql
 
    CREATE TABLE lmconfig (
        cfgnum integer NOT NULL,
@@ -172,7 +172,7 @@ RDBI
 CDBI
 ^^^^
 
-.. code:: sql
+.. code-block:: sql
 
    CREATE TABLE lmConfig (
        cfgnum integer not null primary key,
@@ -187,7 +187,7 @@ Connection settings
 Change configuration settings in ``/etc/lemonldap-ng/lemonldap-ng.ini``
 file (section configuration):
 
-.. code:: ini
+.. code-block:: ini
 
    [configuration]
    type = RDBI

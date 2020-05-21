@@ -47,7 +47,7 @@ and choose CAS for authentication.
     password.
 
 
-.. important::
+.. attention::
 
     Browser implementations of formAction directive are
     inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome

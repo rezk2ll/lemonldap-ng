@@ -59,7 +59,7 @@ Nginx
 In this example, web server templates (Nginx only) are configured to
 request authorization from a central FastCGI server:
 
-.. code:: nginx
+.. code::
 
    server {
      server_name myapp.domain.com;
@@ -91,7 +91,7 @@ request authorization from a central FastCGI server:
        auth_request_set $lmlocation $upstream_http_location;
        error_page 401 $lmlocation;
        include /etc/lemonldap-ng/nginx-lua-headers.conf;
-       ...
+       # ...
        # Example with php-fpm:
        include snippets/fastcgi-php.conf;
        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
@@ -111,7 +111,7 @@ applications or proxies.
 The following configuration example assumes that you are in a "central
 FastCGI" configuration.
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost ...>
        ServerName app.tls
@@ -138,7 +138,7 @@ Using `express <https://github.com/expressjs/express#readme>`__ and
 `fastcgi-authz-client <https://github.com/LemonLDAPNG/node-fastcgi-authz-client>`__,
 you can protect also an Express server. Example:
 
-.. code:: javascript
+.. code-block:: javascript
 
    var express = require('express');
    var app = express();
@@ -170,7 +170,7 @@ You just have to enable
 `Plack::Middleware::Auth::FCGI <https://metacpan.org/pod/Plack::Middleware::Auth::FCGI>`__.
 Simple example:
 
-.. code:: perl
+.. code-block:: perl
 
    use Plack::Builder;
 
@@ -216,7 +216,7 @@ authenticated requests to ``<vhost>.internal.domain``. Rules can be
 defined in ``/rules.json`` which is located at the website root
 directory.
 
-.. code:: nginx
+.. code-block:: nginx
 
    server {
      server_name "~^(?<vhost>.+?)\.dev\.sso\.my\.domain$";

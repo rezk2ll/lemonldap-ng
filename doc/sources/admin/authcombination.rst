@@ -66,12 +66,12 @@ DB, you can override the "dbiChain" parameter.
 You can also override a complex key like ldapExportedVars, by setting a
 JSON value:
 
-.. code:: javascript
+.. code-block:: javascript
 
    {"cn" => "cn", "uid" => "sAMAccounName", "mail" => "mail"}
 
 
-.. important::
+.. attention::
 
     If your JSON is corrupted, LLNG will use it as string
     and just report a warning in logs.
@@ -104,7 +104,7 @@ Example                                 Explanation
 ======================================= =============================================================================
 
 
-.. important::
+.. attention::
 
     Note that "or" can't be used inside a scheme. If you
     think to "[mySSL or myLDAP, myLDAP]", you must write
@@ -118,7 +118,7 @@ Example                                            Explanation
 ================================================== =========================================================
 
 
-.. important::
+.. attention::
 
     You can't use brackets in a boolean expression and "and"
     has precedence on "or".
@@ -140,7 +140,7 @@ Example                                                                         
 ======================================================================================================================= ==============================================================================
 
 
-.. important::
+.. attention::
 
     Note that brackets can't be used except to enclose test.
 

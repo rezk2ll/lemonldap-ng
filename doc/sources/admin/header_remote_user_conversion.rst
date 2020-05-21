@@ -14,7 +14,7 @@ module <http://httpd.apache.org/docs/current/mod/mod_setenvif.html>`__
 will let you transform the Auth-User HTTP header in ``REMOTE_USER``
 environment variable:
 
-.. code:: apache
+.. code-block:: apache
 
    SetEnvIfNoCase Auth-User "(.*)" REMOTE_USER=$1
 
@@ -25,7 +25,7 @@ two Apache configuration files:
 -  Apache configuration file on LL::NG reverse proxy (hosting LL::NG
    Handler):
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost *:80>
            ServerName application.example.com
@@ -41,7 +41,7 @@ two Apache configuration files:
 -  Apache configuration file on application server (hosting the
    application):
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost *:80>
            ServerName application.example.com
@@ -73,7 +73,7 @@ Nginx doesn't launch directly PHP pages (or other languages): it dials
 with FastCGI servers (like php-fpm). As you can see in examples, it's
 easy to map a LLNG header to a fastcgi param. Example:
 
-.. code:: nginx
+.. code-block:: nginx
 
    auth_request_set $authuser $upstream_http_auth_user;
    fastcgi_param HTTP_MYVAR $authuser;

@@ -40,7 +40,7 @@ In Manager, go in ``General Parameters`` > ``Authentication modules``
 and choose Choice for authentication.
 
 
-.. important::
+.. attention::
 
     When ``Choice`` is selected for authentication, values
     for Users and Password modules are also forced to ``Choice``.
@@ -70,7 +70,7 @@ Define here:
    Handler from application ``test1.example.com``, you can set this
    condition:
 
-.. code:: perl
+.. code-block:: perl
 
    $env->{urldc} =~ /test1\.example\.com/
 

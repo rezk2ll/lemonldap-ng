@@ -39,7 +39,7 @@ site/htdocs/static/common/modules/icon.png
 
 
 
-.. important::
+.. attention::
 
     Be careful. Don' t use an already attributed name in
     configuration.

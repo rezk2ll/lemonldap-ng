@@ -52,7 +52,7 @@ Just enable it in the manager (section “plugins”).
     it might be useful to not display empty headers.
 
 
-.. important::
+.. attention::
 
     Be careful to not display secret attributes.
 
@@ -61,7 +61,7 @@ Just enable it in the manager (section “plugins”).
     append checkUser specific attributes.
 
 
-.. warning::
+.. danger::
 
     This plugin displays ALL user session attributes except
     the hidden ones.
@@ -78,7 +78,7 @@ To modify persistent sessions attributes ('_loginHistory \_2fDevices
 notification\_' by default), edit ``lemonldap-ng.ini`` in [portal]
 section:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    persistentSessionAttributes = _loginHistory _2fDevices notification_
@@ -89,7 +89,7 @@ Usage
 When enabled, ``/checkuser`` URL path is handled by this plugin.
 
 
-.. important::
+.. attention::
 
     With federated authentication, checkUser plugin works
     only if a session can be found in backend.

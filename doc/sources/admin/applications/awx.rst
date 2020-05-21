@@ -75,16 +75,20 @@ This is the entityID for awx, lets put the fqdn : ``awx.example.com``
 SAML Service Provider Public Certificate
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Put the content of ``saml-awx.crt`` : ``-----BEGIN CERTIFICATE-----
-cert
------END CERTIFICATE-----``
+Put the content of ``saml-awx.crt`` ::
+
+   -----BEGIN CERTIFICATE-----
+   cert
+   -----END CERTIFICATE-----
 
 SAML Service Provider Private Key
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Put the content of ``saml-awx.key`` : ``-----BEGIN RSA PRIVATE KEY-----
-key
------END RSA PRIVATE KEY-----``
+Put the content of ``saml-awx.key`` ::
+
+  -----BEGIN RSA PRIVATE KEY-----
+  key
+  -----END RSA PRIVATE KEY-----
 
 It will be replaced with ``$encrypted$`` after you save the settings.
 

@@ -29,14 +29,14 @@ Examples with a :ref:`configured header<headers>` named
 Perl
 ~~~~
 
-.. code:: perl
+.. code-block:: perl
 
    print "Connected user: ".$ENV{HTTP_AUTH_USER};
 
 PHP
 ~~~
 
-.. code:: php
+.. code-block:: php
 
    print "Connected user: ".$_SERVER["HTTP_AUTH_USER"];
 
@@ -50,7 +50,7 @@ protected CGI.
 
 First create a PSGI module based on Lemonldap::NG::Handler:
 
-.. code:: perl
+.. code-block:: perl
 
    package My::PSGI;
 
@@ -85,7 +85,7 @@ First create a PSGI module based on Lemonldap::NG::Handler:
 
 They create a FCGI script like this:
 
-.. code:: perl
+.. code-block:: perl
 
    #!/usr/bin/env perl
 

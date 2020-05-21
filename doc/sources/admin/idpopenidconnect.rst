@@ -80,7 +80,7 @@ http://auth.example.com/.well-known/openid-configuration
 
 An example of its content:
 
-.. code:: javascript
+.. code-block:: javascript
 
    {
       "end_session_endpoint" : "http://auth.example.com/oauth2/logout",
@@ -173,7 +173,7 @@ So you can define for example:
 -  email => mail
 
 
-.. important::
+.. attention::
 
     The specific ``sub`` attribute is not defined here, but
     in User attribute parameter (see below).
@@ -182,7 +182,7 @@ Extra Claims
 ^^^^^^^^^^^^
 
 
-.. important::
+.. attention::
 
     By default, only claims that are part of standard OpenID
     Connect scopes will be sent to a client. If you want to send a claim
@@ -202,7 +202,7 @@ be able to read the ``rebirth_count`` and ``bloodline`` claims from the
 Userinfo endpoint.
 
 
-.. warning::
+.. danger::
 
     Any Claim defined in this section must be mapped to a
     LemonLDAP::NG session attribute in the **Exported Attributes**
@@ -289,6 +289,3 @@ Display
 
 -  **Display name**: Name of the RP application
 -  **Logo**: Logo of the RP application
-
-.. |section>openidconnectclaims&noheader| image:: section>openidconnectclaims&noheader
-

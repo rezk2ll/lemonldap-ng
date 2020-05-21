@@ -40,10 +40,57 @@ module.
     some environment values. Environment variables will not be queried in
     users database.
 
+.. _macros_and_groups:
+
 Extend variables using macros and groups
 ----------------------------------------
 
-:ref:`macros_and_groups`
+Macros and groups are calculated during authentication process by the
+portal:
+
+-  macros are used to extend (or rewrite)
+   :doc:`exported variables<exportedvars>`. A macro is stored as
+   attributes: it can contain boolean results or any string
+-  macros can also be used to import environment variables *(these
+   variables are in CGI format)*. Example: ``$ENV{HTTP_COOKIE}``
+-  groups are stored as a string with values separated by ''; ''
+   (default values separator) in the special attribute ``groups``: it
+   contains the names of groups whose rules were returned true for the
+   current user. For example:
+
+.. code-block:: perl
+
+   $groups = group3; admin
+
+-  You can also get groups in ``$hGroups`` which is a Hash Reference of
+   this form:
+
+.. code-block:: perl
+
+   $hGroups = {
+             'group3' => {
+                           'description' => [
+                                              'Service 3',
+                                              'Service 3 TEST'
+                                            ],
+                           'cn' => [
+                                     'group3'
+                                   ],
+                           'name' => 'group3'
+                         },
+             'admin' => {
+                          'name' => 'admin'
+                        }
+           }
+
+Example for macros:
+
+.. code-block:: perl
+
+   # boolean macro
+   isAdmin -> $uid eq 'foo' or $uid eq 'bar'
+   # other macro
+   displayName -> $givenName." ".$surName
 
 .. |Exported variables in the Manager| image:: /documentation/manager-exported-variables.png
    :class: align-center

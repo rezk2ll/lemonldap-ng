@@ -14,7 +14,7 @@ This mode allow one to test LemonLDAP::NG without any third-party
 software.
 
 
-.. warning::
+.. danger::
 
     This mode must not be used for other purpose than test and
     demonstration!

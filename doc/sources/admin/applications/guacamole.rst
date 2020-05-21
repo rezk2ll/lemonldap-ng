@@ -43,7 +43,7 @@ Your Guacamole configuration directory will look something like this.
    └── guacamole.properties
 
 
-.. warning::
+.. danger::
 
     Make sure to rename the JAR in a way that `ensures that it
     will be loaded

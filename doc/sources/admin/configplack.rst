@@ -10,7 +10,7 @@ want to replace LLNG FastCGI server.
 Complete example
 ----------------
 
-.. code:: perl
+.. code-block:: perl
 
    #!/usr/bin/perl
 

@@ -9,7 +9,7 @@ Configuration
 
 Parameters are set in ``lemonldap-ng.ini`` file, section [manager]:
 
-.. code:: ini
+.. code-block:: ini
 
    [manager]
    enabledModules = conf, sessions, notifications, 2ndFA, viewer
@@ -30,7 +30,7 @@ Parameters are set in ``lemonldap-ng.ini`` file, section [manager]:
    -  **viewerAllowDiff**: enable "difference with previous" link
 
 
-.. warning::
+.. danger::
 
 
 
@@ -49,7 +49,7 @@ Parameters are set in ``lemonldap-ng.ini`` file, section [manager]:
 
 
 
-.. important::
+.. attention::
 
     To avoid that Read-Only users can access to
     configuration module by using default route, keep in mind to set

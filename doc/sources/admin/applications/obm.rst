@@ -27,7 +27,7 @@ OBM
 
 To enable LL::NG authentication plugin, go in ``/etc/obm/obm_conf.inc``:
 
-.. code:: php
+.. code-block:: php
 
    $auth_kind = 'LemonLDAP';
 
@@ -119,7 +119,7 @@ Edit also OBM configuration to enable LL::NG Handler:
 
 -  For Apache:
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost *:80>
        ServerName obm.example.com
@@ -135,7 +135,7 @@ Edit also OBM configuration to enable LL::NG Handler:
 
 -  For Nginx:
 
-.. code:: nginx
+.. code-block:: nginx
 
    server {
      listen 80;
@@ -191,7 +191,7 @@ To add these attributes, go in Manager, ``Variables`` »
 ``Exported Variables``.
 
 
-.. important::
+.. attention::
 
     If you plan to forward user's password to OBM, then you
     have to :doc:`keep the password in session<../passwordstore>`.
@@ -199,12 +199,12 @@ To add these attributes, go in Manager, ``Variables`` »
 You may also create these macros to manage OBM administrator account
 (``Variables`` » ``Macros``):
 
-===== ====================================================== =============================== == ==============================
+===== ============================================================================
 field value
-===== ====================================================== =============================== == ==============================
-uidR  ($uid =~ /^admin0/i)[0] ? "admin0\@global.virt" : $uid
-mailR %%($uid =~ /                                           admin0/i)[0] ? "" : ($mail =~ / ([ @]+)/)[0] . "\@example.com" %%
-===== ====================================================== =============================== == ==============================
+===== ============================================================================
+uidR  ``($uid =~ /^admin0/i)[0] ? "admin0\@global.virt" : $uid``
+mailR ``($uid =~ /admin0/i)[0] ? "" : ($mail =~ / ([ @]+)/)[0] . "\@example.com"``
+===== ============================================================================
 
 Virtual host
 ^^^^^^^^^^^^

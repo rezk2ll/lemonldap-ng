@@ -44,7 +44,7 @@ to replace exactly FastCGI server. You can use it :
 -  with uWSGI **(see below)**
 
 
-.. important::
+.. attention::
 
     Starman, Twiggy,... are HTTP servers, not FastCGI ones
     !
@@ -83,14 +83,14 @@ Some examples
 
 FCGI with FCGI::ProcManager::Constrained
 
-.. code:: shell
+.. code-block:: shell
 
    llng-fastcgi-server -u nobody -g nobody -s /run/llng.sock -n 10 -e FCGI \
                        --plackOptions=--manager=FCGI::ProcManager::Constrained
 
 FCGI::Engine::ProcManager
 
-.. code:: shell
+.. code-block:: shell
 
    llng-fastcgi-server -u nobody -g nobody -s /run/llng.sock -n 10 \
                        -e FCGI::Engine::ProcManager
@@ -116,7 +116,7 @@ lemonldap-ng-uwsgi-app installs a uWSGI application:
 ``/etc/uwsgi/apps-available/llng-server.yaml``. To enable it, link it in
 ``apps-enabled`` and restart your uWSGI daemon:
 
-.. code:: shell
+.. code-block:: shell
 
    apt-get install uwsgi uwsgi-plugin-psgi
    cd /etc/uwsgi/apps-enabled
@@ -131,13 +131,13 @@ Configuration
 To serve large requests with uWsgi, you could have to modify in uWsgi
 and/or Nginx init files several options. Example:
 
-.. code:: ini
+.. code-block:: ini
 
    workers = 4
    buffer-size = 65535
    limit-post = 0
 
-.. code:: nginx
+.. code-block:: nginx
 
    client_max_body_size 300M;
    proxy_send_timeout 600;
@@ -153,7 +153,7 @@ LLNG provides ``Plack::Middleware::Auth::LemonldapNG`` that can be used
 to protect any PSGI application: it acts exactly like a LLNG handler.
 Simple example:
 
-.. code:: perl
+.. code-block:: perl
 
    use Plack::Builder;
 
@@ -165,7 +165,7 @@ Simple example:
 
 More advanced example:
 
-.. code:: perl
+.. code-block:: perl
 
    use Plack::Builder;
 

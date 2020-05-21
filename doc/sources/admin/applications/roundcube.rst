@@ -26,7 +26,7 @@ LemonLDAP::NG
 -  in HTTP headers, you need Auth-User ($mail) and Auth-Pw ($_password).
 
 
-.. important::
+.. attention::
 
     To be able to forward password to RoundCube, see
     :doc:`how to store password in session<../passwordstore>`\
@@ -42,7 +42,7 @@ RoundCube
 -  Patch it to replace ``PHP_AUTH_*`` by ``HTTP_AUTH_*``
 -  enable http_authentication plugin in main.inc.php :
 
-.. code:: php
+.. code-block:: php
 
    $rcmail_config['plugins'] = array('http_authentication');
 

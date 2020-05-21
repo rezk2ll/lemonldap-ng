@@ -30,7 +30,7 @@ Go in Manager, ``General Parameters`` » ``Advanced Parameters`` »
 ``Incremental lock times`` and set to ``On``. (DISABLED by default) or
 in ``lemonldap-ng.ini`` [portal] section:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    bruteForceProtectionIncrementalTempo = 1
@@ -40,7 +40,7 @@ time values ('5 15 60 300 600' seconds by default) or max lock time
 value (900 seconds by default) edit ``lemonldap-ng.ini`` in [portal]
 section:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    bruteForceProtectionLockTimes = '5 15 60 300 600'
@@ -63,7 +63,7 @@ current and last stored failed login (300 seconds by default) or number
 of allowed failed login attempts (3 by default) edit
 ``lemonldap-ng.ini`` in [portal] section:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    bruteForceProtectionTempo = 30
@@ -71,7 +71,7 @@ of allowed failed login attempts (3 by default) edit
    bruteForceProtectionMaxFailed = 3
 
 
-.. important::
+.. attention::
 
     Number of failed login attempts stored in history MUST
     be higher than allowed failed logins for this plugin takes effect.

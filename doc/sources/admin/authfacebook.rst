@@ -56,13 +56,13 @@ variables:
    -  sn => last_name
 
 
-.. important::
+.. attention::
 
     Do not query user field in exported variables, as it is
     already registered by the authentication module in ``$_user``.
 
 
-.. important::
+.. attention::
 
     Browser implementations of formAction directive are
     inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome

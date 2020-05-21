@@ -105,7 +105,7 @@ Authentication level
 The authentication level given to users authenticated with this module.
 
 
-.. important::
+.. attention::
 
     As DBI is a login/password based module, the
     authentication level can be:
@@ -181,7 +181,7 @@ Password
    non-salted schemes" or "Supported salted schemes".
 
 
-.. important::
+.. attention::
 
     The SQL function MUST have hexadecimal values as input
     AND output

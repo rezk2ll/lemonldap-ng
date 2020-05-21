@@ -24,7 +24,7 @@ Go to Manager ``General Parameters`` » ``Advanced Parameters`` » ``Notificatio
 
 or in ``lemonldap-ng.ini`` [portal] section:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    notification = 1
@@ -39,7 +39,7 @@ Manager (``General Parameters`` » ``Advanced Parameters`` » ``Notifications`` 
 
 or in ``lemonldap-ng.ini`` [portal] section:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    notificationsExplorer = 1
@@ -47,7 +47,7 @@ or in ``lemonldap-ng.ini`` [portal] section:
 By default, just the three last notifications are displayed. You can
 modify this by editing ``lemonldap-ng.ini`` [portal] section:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    notificationsMaxRetrieve = 3
@@ -64,7 +64,7 @@ An XML document can contain several notifications messages. Just the
 first one can be searched and displayed!
 
 
-.. important::
+.. attention::
 
     Listed notifications are extracted from users
     persistent session (notification reference and accepted date). ONLY the
@@ -100,7 +100,7 @@ Parameters for File backend are the same as
 :doc:`File configuration backend<fileconfbackend>`.
 
 
-.. important::
+.. attention::
 
     You need to create yourself the directory and set write
     access to Apache user. For example:
@@ -132,7 +132,7 @@ Parameters for DBI backend are the same as
 :doc:`DBI configuration backend<sqlconfbackend>`.
 
 
-.. important::
+.. attention::
 
     You have to create the table by yourself:
 
@@ -164,7 +164,7 @@ Parameters for LDAP backend are the same as
 :doc:`LDAP configuration backend<ldapconfbackend>`.
 
 
-.. important::
+.. attention::
 
     You have to create the branch by yourself
 
@@ -211,7 +211,7 @@ Using notification system
 -------------------------
 
 
-.. important::
+.. attention::
 
     Since version 2.0, notifications are now stored in JSON
     format. If you want to keep old format, select "use old format" in the
@@ -253,7 +253,7 @@ Notifications are JSON (default) or XML files containing:
          type="checkbox" />...</p>
 
 
-.. important::
+.. attention::
 
     All other elements will be removed including HTML
     elements like <b>.
@@ -273,7 +273,7 @@ Examples
 JSON
 ''''
 
-.. code:: json
+.. code::
 
    [{
    "uid": "foo",
@@ -307,7 +307,7 @@ JSON
 XML
 '''
 
-.. code:: xml
+.. code-block:: xml
 
    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
    <root>
@@ -362,7 +362,7 @@ Available options:
 -  **HTTP methods**: Enable/Disable HTTP methods
 
 
-.. important::
+.. attention::
 
     If notification server is enabled, you have to protect
     this URL by using the web server because there is no authentication
@@ -370,7 +370,7 @@ Available options:
 
 Example:
 
-.. code:: apache
+.. code::
 
    # REST/SOAP functions for insert/delete/list notifications (disabled by default)
    <LocationMatch ^/(index\.fcgi/)?notifications>
@@ -393,7 +393,7 @@ by using SOAP request, once SOAP is activated:
 \* Insertion example in Perl
 ''''''''''''''''''''''''''''
 
-.. code:: perl
+.. code-block:: perl
 
    #!/usr/bin/perl
 
@@ -428,7 +428,7 @@ by using SOAP request, once SOAP is activated:
 \* Deletion example in Perl
 '''''''''''''''''''''''''''
 
-.. code:: perl
+.. code-block:: perl
 
    #!/usr/bin/perl
 

@@ -39,7 +39,7 @@ Protect the Manager by the web server
 You can use any of the mechanisms proposed by Apache: SSL, Auth-Basic,
 Kerberos,... Example
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost *:443>
        ServerName manager.example.com
@@ -65,13 +65,13 @@ Protect the Manager by LL::NG
 To protect the manager by LL::NG, you just have to set this in
 ``lemonldap-ng.ini`` configuration file (section [manager]):
 
-.. code:: ini
+.. code-block:: ini
 
    [manager]
    protection = manager
 
 
-.. important::
+.. attention::
 
     Before, you have to create the virtual host
     ``manager.your.domain`` in the manager and set a
@@ -111,7 +111,7 @@ LLNG portal now embeds the following features:
    Security » Cross-Origin Resource Sharing)*
 
 
-.. important::
+.. attention::
 
 
 
@@ -142,7 +142,7 @@ Order your rules
 (comment and regular expression). The first matching rule is applied.
 
 
-.. important::
+.. attention::
 
     The "default" rule is only applied if no other rule
     matchs
@@ -218,7 +218,7 @@ Regular expression                    Rule                       Comment
      **(?i)** means case no sensitive.
 
 
-.. warning::
+.. danger::
 
     Remember that rules written on GET parameters must be
     tested.
@@ -235,7 +235,7 @@ IP in rules
 ~~~~~~~~~~~
 
 
-.. warning::
+.. danger::
 
     If you are running LemonLDAP::NG behind a reverse proxy,
     make sure you check the
@@ -252,7 +252,7 @@ Secure reverse-proxies
 LL::NG can protect any Apache hosted application including Apache
 reverse-proxy mechanism. Example:
 
-.. code:: apache
+.. code-block:: apache
 
    PerlOptions +GlobalRequest
    PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
@@ -350,7 +350,7 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
    ``Access-Control-Allow-Origin`` value with ' '.
 
 
-.. important::
+.. attention::
 
     If URLs are protected with AuthBasic handler, you have
     to disable CSRF token by setting a special rule based on callers IP
@@ -358,7 +358,7 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
 
     requireToken => $env->{REMOTE_ADDR} !~ /^127\.0\.[1-3]\.1$/
 
-.. warning::
+.. danger::
 
     Enable global storage for one time tokens will downgrade
     Portal performance!!!

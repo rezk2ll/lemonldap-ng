@@ -23,7 +23,7 @@ To use a MongoDB backend, configure your ``lemonldap-ng.ini`` file
 
 Example :
 
-.. code:: ini
+.. code-block:: ini
 
    [configuration]
    type = MongoDB

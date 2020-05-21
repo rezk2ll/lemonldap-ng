@@ -7,7 +7,7 @@ Presentation
 ------------
 
 
-.. important::
+.. attention::
 
     For now, this feature is only supported by Apache
     handler.

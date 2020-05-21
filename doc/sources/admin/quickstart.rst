@@ -2,7 +2,7 @@ Quick start tutorial
 ====================
 
 
-.. important::
+.. attention::
 
     This tutorial will guide you into a minimal
     installation and configuration procedure. You need some prerequisites:

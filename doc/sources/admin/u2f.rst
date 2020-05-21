@@ -31,7 +31,7 @@ For other systems, use CPAN. Before compiling it, you must install
 Yubico's C library headers.
 
 
-.. important::
+.. attention::
 
     An HTTPS portal is required to use U2F
 
@@ -58,7 +58,7 @@ In the manager (second factors), you just have to enable it:
    the choice screen
 
 
-.. important::
+.. attention::
 
     If you want to use a custom rule for "activation" and
     enable self-registration, you have to include this in your rule:
@@ -94,7 +94,7 @@ If a user loses its key, you can delete it from the manager Second
 Factor module. To enable manager Second Factor Administration Module,
 set ``enabledModules`` key in your ``lemonldap-ng.ini`` file :
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    enabledModules = conf, sessions, notifications, 2ndFA
@@ -107,12 +107,12 @@ keys in Second Factor Devices array (JSON) in your user-database. Then
 map it to the \_2fDevices attribute (see
 :doc:`exported variables<exportedvars>`):
 
-.. code:: perl
+.. code-block:: perl
 
    $_2fDevices = [{"name" : "MyU2FKey" , "type" : "U2F" , "_userKey" : "########" , "_keyHandle":"########" , "epoch":"1524078936"}, ...]
 
 
-.. important::
+.. attention::
 
     \ ``_userKey`` must be base64 encoded
 

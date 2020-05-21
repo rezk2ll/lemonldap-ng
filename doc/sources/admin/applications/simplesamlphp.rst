@@ -39,7 +39,7 @@ First set where certificates are stored:
 
    vi /etc/simplesamlphp/config.php
 
-.. code:: php
+.. code-block:: php
 
       'certdir' => '/etc/simplesamlphp/certs/',
 
@@ -57,7 +57,7 @@ Then associate this certificate to the default SP:
 
    vi /etc/simplesamlphp/authsources.php
 
-.. code:: php
+.. code-block:: php
 
        'default-sp' => array(
            'saml:SP',
@@ -108,7 +108,7 @@ internal PHP representation. Copy the ``saml20-idp-remote`` content:
 
    vi /etc/simplesamlphp/metadata/saml20-idp-remote.php
 
-.. code:: php
+.. code-block:: php
 
    <?php
    $metadata['http://auth.example.com/saml/metadata'] = array (
@@ -144,7 +144,7 @@ First, you need to activate IDP feature in simpleSAMLphp:
 
    vi /etc/simplesamlphp/config.php
 
-.. code:: php
+.. code-block:: php
 
        'enable.saml20-idp' => true,
 
@@ -154,7 +154,7 @@ And create a default IDP configuration:
 
    vi /etc/simplesamlphp/metadata/saml20-idp-hosted.php
 
-.. code:: php
+.. code-block:: php
 
    <?php
    $metadata['__DYNAMIC:1__'] = array(
@@ -183,7 +183,7 @@ And create a default IDP configuration:
    ?>
 
 
-.. important::
+.. attention::
 
     You need to configure your own certificates and
     authentication scheme
@@ -217,7 +217,7 @@ internal PHP representation. Copy the ``saml20-sp-remote`` content:
 
    vi /etc/simplesamlphp/metadata/saml20-sp-remote.php
 
-.. code:: php
+.. code-block:: php
 
    <?php
    $metadata['http://auth.example.com/saml/metadata'] = array (

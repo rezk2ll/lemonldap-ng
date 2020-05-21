@@ -69,7 +69,7 @@ Name                Comment                                  Example
 =================== ======================================== ==================================================
 
 
-.. important::
+.. attention::
 
     By default, user password and other secret keys are
     hidden by LLNG REST server. You can force REST server to export their
@@ -82,7 +82,7 @@ Apache
 Sessions REST end points access must be allowed in Apache portal
 configuration (for example, access by IP range):
 
-.. code:: apache
+.. code-block:: apache
 
    # REST/SOAP functions for sessions access (disabled by default)
    <Location /index.fcgi/sessions>
@@ -99,7 +99,7 @@ will do the link between REST requests and real sessions).
 For example, if real sessions are stored in
 :doc:`files<filesessionbackend>`:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    globalStorage = Apache::Session::File

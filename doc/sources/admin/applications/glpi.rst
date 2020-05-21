@@ -26,7 +26,7 @@ http://wiki.glpi-project.org/doku.php?id=en:authautoad
 
 If you use Nginx, you need to add this in configuration:
 
-.. code:: nginx
+.. code-block:: nginx
 
    proxy_set_header Host $http_host;
    proxy_set_header X-Forwarded-Host $http_host;

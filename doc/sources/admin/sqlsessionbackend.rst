@@ -22,7 +22,7 @@ Your database must have a specific table to host sessions. Here are some
 examples for main databases servers.
 
 
-.. important::
+.. attention::
 
     If your database doesn't accept UTF-8 characters in
     'text' field, use 'blob' instead of 'text'.
@@ -38,7 +38,7 @@ Create a database if necessary:
 
 Create sessions table:
 
-.. code:: sql
+.. code-block:: sql
 
    CREATE TABLE sessions (
        id char(32) not null primary key,
@@ -46,7 +46,7 @@ Create sessions table:
        );
 
 
-.. important::
+.. attention::
 
     Change ``char(32)`` by ``varchar(64)`` if you use the
     now recommended SHA256 hash algorithm. See
@@ -59,7 +59,7 @@ Create sessions table:
     just adapt the parameter ``TableName`` in module options.
 
 
-.. important::
+.. attention::
 
     For a better UTF-8 support, use
     `DBD::MariaDB <https://metacpan.org/pod/DBD::MariaDB>`__ with
@@ -103,7 +103,7 @@ Create table:
    lemonldap-ng=> q
 
 
-.. important::
+.. attention::
 
     Change ``char(32)`` by ``varchar(64)`` if you use the
     now recommended SHA256 hash algorithm. See
@@ -137,7 +137,7 @@ connector (https://metacpan.org/pod/DBD::Oracle,
 `DBD::Pg <https://metacpan.org/pod/DBD::Pg>`__,...)
 
 
-.. important::
+.. attention::
 
     For MySQL, you need to set additional parameters:
 

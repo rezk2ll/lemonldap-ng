@@ -47,7 +47,7 @@ Portal host must be configured to use SSL and must ask for client
 certificate. It is recommended to use optional_no_ca since WebID doesn't
 use certificate authorities :
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost _default_:443>
    ServerName auth.example.com

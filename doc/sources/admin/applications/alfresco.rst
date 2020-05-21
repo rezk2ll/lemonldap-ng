@@ -47,7 +47,7 @@ the other for the share webapp.
 
 Edit first ``alfresco-global.properties`` and add the following:
 
-.. code:: java
+.. code-block:: properties
 
    ### SSO ###
    authentication.chain=external1:external
@@ -62,7 +62,7 @@ the ``<endpoint>``, change ``<connector-id>`` value to
 ``alfrescoHeader`` and change the ``<userHeader>`` value to
 ``Auth-User``:
 
-.. code:: xml
+.. code-block:: xml
 
       <config evaluator="string-compare" condition="Remote">
          <remote>
@@ -102,7 +102,7 @@ the ``<endpoint>``, change ``<connector-id>`` value to
 You need to restart Tomcat to apply changes.
 
 
-.. warning::
+.. danger::
 
     Now you can log in with a simple HTTP header. You need to
     restrict access to Alfresco to LL::NG.
@@ -166,7 +166,7 @@ Export the keystore:
 
 Edit then ``share-config-custom.xml``:
 
-.. code:: xml
+.. code-block:: xml
 
        ...
            <config evaluator="string-compare" condition="CSRFPolicy" replace="true">

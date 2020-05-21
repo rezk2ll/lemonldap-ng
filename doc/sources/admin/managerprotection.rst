@@ -18,7 +18,7 @@ Apache based protection
 The configuration can be changed in ``etc/manager-apache2.conf``, for
 example to restrict the IP allowed to access the Manager:
 
-.. code:: apache
+.. code-block:: apache
 
        <Directory /usr/local/lemonldap-ng/htdocs/manager/>
            Order deny,allow
@@ -31,7 +31,7 @@ But you will rather prefer to use an Apache authentication module, like
 for example `LDAP authentication
 module <http://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html>`__:
 
-.. code:: apache
+.. code-block:: apache
 
        <Directory /usr/local/lemonldap-ng/htdocs/manager/>
            AuthzLDAPAuthoritative On
@@ -46,7 +46,7 @@ module <http://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html>`__:
        </Directory>
 
 
-.. important::
+.. attention::
 
     You need to disable default Manager protection in
     lemonldap-ng.ini to rely only on Apache:
@@ -62,7 +62,7 @@ LL::NG based protection
 -----------------------
 
 
-.. warning::
+.. danger::
 
     Before enabling Manager protection by LL::NG, you must
     have configured how users authenticate on Portal, and test that you can
@@ -77,7 +77,7 @@ are needed.
 
 The default rule is:
 
-.. code:: perl
+.. code-block:: perl
 
    $uid eq "dwho"
 
@@ -94,14 +94,14 @@ Save the configuration and exit the Manager.
 
 Enable protection on Manager, by editing ``lemonldap-ng.ini``:
 
-.. code:: ini
+.. code-block:: ini
 
    [manager]
    protection = manager
 
 You can also adapt Apache access control:
 
-.. code:: apache
+.. code-block:: apache
 
        <Directory /usr/local/lemonldap-ng/htdocs/manager/>
            Order deny,allow

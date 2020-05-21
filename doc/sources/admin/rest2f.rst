@@ -31,7 +31,7 @@ Arguments are a list of key/value. Key is the name of JSON entry, value
 is attribute or macro name.
 
 
-.. important::
+.. attention::
 
     For Verify URL, you should send ``$code`` at least
 

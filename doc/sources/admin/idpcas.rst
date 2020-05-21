@@ -113,7 +113,7 @@ Options
    left blank, access will be allowed for everyone.
 
 
-.. important::
+.. attention::
 
     If the access control policy is set to ``none``, this
     rule will be ignored

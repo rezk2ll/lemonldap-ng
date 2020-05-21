@@ -54,7 +54,7 @@ Nginx
 You need to give access to status path in the Handler Nginx
 configuration:
 
-.. code:: nginx
+.. code-block:: nginx
 
    server {
      listen __PORT__;
@@ -76,7 +76,7 @@ Apache
 You need to give access to status path in the Handler Apache
 configuration:
 
-.. code:: apache
+.. code-block:: apache
 
        # Uncomment this to activate status module
        <Location /status>
@@ -102,7 +102,7 @@ variable. If you want to collect portal data, you just have to set
 ``LLNGSTATUSHOST`` environment variable *(see comments in our
 ``portal-apache2.conf``)*.
 
-.. code:: apache
+.. code-block:: apache
 
      <Files *.fcgi>
        SetHandler fcgid-script
@@ -123,7 +123,7 @@ LemonLDAP::NG
 Edit ``lemonldap-ng.ini``, and activate status in the ``handler``
 section:
 
-.. code:: ini
+.. code-block:: ini
 
    [all]
    # Set status to 1 if you want to have the report of activity (used for

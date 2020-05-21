@@ -10,7 +10,7 @@ The user will be prompted for this code in order to finish the login
 process.
 
 
-.. important::
+.. attention::
 
     This plugin will only improve security in situations
     where the user's email is not protected by the same password used to

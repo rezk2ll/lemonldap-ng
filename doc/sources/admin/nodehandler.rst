@@ -20,7 +20,7 @@ Examples
    section (**NB**: section ``[handler]`` isn't used by node
    handler):
 
-.. code:: ini
+.. code-block:: ini
 
    [node-handler]
 
@@ -32,7 +32,7 @@ Use it as FastCGI server (application protection only)
 FastCGI server
 ^^^^^^^^^^^^^^
 
-.. code:: javascript
+.. code-block:: javascript
 
    var handler = require('lemonldap-ng-handler');
 
@@ -51,7 +51,7 @@ FastCGI server
 Nginx configuration
 ^^^^^^^^^^^^^^^^^^^
 
-.. code:: nginx
+.. code-block:: nginx
 
    server {
      #...
@@ -85,7 +85,7 @@ Nginx configuration
 Use it to protect an express app
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. code:: javascript
+.. code-block:: javascript
 
    // Variables
    var express = require('express');

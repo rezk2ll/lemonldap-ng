@@ -2,7 +2,7 @@ Installation on Red Hat/CentOS
 ==============================
 
 
-.. important::
+.. attention::
 
     LL::NG requires at least Red Hat/CentOS 7
 
@@ -31,7 +31,7 @@ LemonLDAP::NG provides packages for Red Hat/Centos 7:
 -  perl-Lemonldap-NG-Portal: CPAN - Portal modules
 
 
-.. warning::
+.. danger::
 
     The package lemonldap-ng-nginx requires the nginx
     community package. If you use openrestry or Nginx plus, you must ignore
@@ -90,7 +90,7 @@ Run this to update packages cache:
    yum update
 
 
-.. warning::
+.. danger::
 
     You must also install the EPEL repository for non-core
     dependencies. See :ref:`prerequisites and dependencies<prereq-yum>`
@@ -120,7 +120,7 @@ With YUM
 
 If the packages are stored in a yum repository:
 
-.. code:: shell
+.. code-block:: shell
 
    yum install lemonldap-ng
 
@@ -160,7 +160,7 @@ Change default DNS domain
 By default, DNS domain is ``example.com``. You can change it quick with
 a sed command. For example, we change it to ``ow2.org``:
 
-.. code:: shell
+.. code-block:: shell
 
    sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1.json /etc/nginx/conf.d/* /etc/httpd/conf.d/*
 

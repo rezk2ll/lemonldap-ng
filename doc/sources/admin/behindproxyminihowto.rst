@@ -33,7 +33,7 @@ uncomment the relevant parts of the configuration file.
 
 -  For Nginx:
 
-.. code:: nginx
+.. code-block:: nginx
 
        set_real_ip_from  127.0.0.1;
        real_ip_header    X-Forwarded-For;
@@ -46,7 +46,7 @@ uncomment the relevant parts of the configuration file.
 
 -  For Apache:
 
-.. code:: apache
+.. code-block:: apache
 
         RemoteIPHeader X-Forwarded-For
         RemoteIPInternalProxy 127.0.0.1
@@ -59,7 +59,7 @@ uncomment the relevant parts of the configuration file.
     enabled in your Apache installation
 
 
-.. warning::
+.. danger::
 
     Both modules need you to specify the address of your
     reverse proxy. Using the ``http_real_ip`` or ``mod_remoteip`` module
@@ -80,7 +80,7 @@ the PROXY protocol on the reverse proxy side.
 Then, on the LemonLDAP::NG side, in the NGINX configuration of your
 Portal/Manager/Handler:
 
-.. code:: nginx
+.. code-block:: nginx
 
     listen 80   proxy_protocol;
    # or

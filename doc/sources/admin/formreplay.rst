@@ -9,7 +9,7 @@ filling a HTML POST login form and autosubmitting it, without asking
 anything to the user.
 
 
-.. warning::
+.. danger::
 
     This kind of SSO mechanism is not clean, and can lead to
     problems, like local password blocking, local session not well closed,

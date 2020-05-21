@@ -117,7 +117,7 @@ Authentication response
    authentication time, to define sessionNotOnOrAfter value in SAML
    response (``<AuthnStatement>``):
 
-.. code:: xml
+.. code-block:: xml
 
    <saml:AuthnStatement AuthnInstant="2014-07-21T11:47:08Z"
      SessionIndex="loVvqZX+Vja2dtgt/N+AymTmckGyITyVt+UJ6vUFSFkE78S8zg+aomXX7oZ9qX1UxOEHf6Q4DUstewSJh1uK1Q=="
@@ -127,19 +127,19 @@ Authentication response
    time, to define notOnOrAfter value in SAML response (``<Condtions>``
    and ``<SubjectConfirmationData>``):
 
-.. code:: xml
+.. code-block:: xml
 
    <saml:SubjectConfirmationData NotOnOrAfter="2014-07-21T12:47:08Z"
      Recipient="http://simplesamlphp.example.com/simplesamlphp/module.php/saml/sp/saml2-acs.php/default-sp"
      InResponseTo="_3cfa896ab05730ac81f413e1e13cc42aa529eceea1"/>
 
-.. code:: xml
+.. code-block:: xml
 
    <saml:Conditions NotBefore="2014-07-21T11:46:08Z"
      NotOnOrAfter="2014-07-21T12:48:08Z">
 
 
-.. important::
+.. attention::
 
     There is a time tolerance of 60 seconds in
     ``<Conditions>``\

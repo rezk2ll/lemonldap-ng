@@ -41,7 +41,7 @@ Then, go in ``GitHub parameters``:
     keys
 
 
-.. important::
+.. attention::
 
     Browser implementations of formAction directive are
     inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome

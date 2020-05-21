@@ -22,7 +22,7 @@ HTTP header.
 
 1. Adapt the app/config/security.yml configuration file as below:
 
-.. code:: yaml
+.. code-block:: yaml
 
    security:
 
@@ -57,7 +57,7 @@ HTTP header.
 
 Create the file src/AppBundle/Security/User/HeaderUser.php :
 
-.. code:: php
+.. code-block:: php
 
    <?php
 
@@ -128,7 +128,7 @@ Create the file src/AppBundle/Security/User/HeaderUser.php :
 
 Create the file src/AppBundle/Security/User/HeaderUserProvider.php :
 
-.. code:: php
+.. code-block:: php
 
    <?php
 

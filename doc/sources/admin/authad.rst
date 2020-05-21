@@ -44,7 +44,7 @@ policy:
    specified in LemonLDAP::NG to do so.
 
 
-.. important::
+.. attention::
 
     Note: since AD 2012, each user can have a specific
     password expiration policy. Then, the "maximum password age" can have

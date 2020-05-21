@@ -48,7 +48,7 @@ and edit configuration:
 Set attributes (use the SAML Name, not FriendlyName) that are provided
 by IDPs, for example:
 
-.. code:: perl
+.. code-block:: perl
 
    my $exportedAttributes = {
        'cn'                          => '0;urn:oid:2.5.4.3',
@@ -64,7 +64,7 @@ by IDPs, for example:
 
 Adapt IDP options, for example:
 
-.. code:: perl
+.. code-block:: perl
 
    my $idpOptions = {
        'samlIDPMetaDataOptionsAdaptSessionUtime'        => 0,
@@ -93,7 +93,7 @@ Then run the script:
    /usr/share/lemonldap-ng/bin/importMetadataRenater -m https://metadata.federation.renater.fr/renater/main/main-idps-renater-metadata.xml -r -i "idp-renater-" -s "sp-renater-"
 
 
-.. important::
+.. attention::
 
     You need to add this in cron to refresh metadata into
     LL::NG configuration.
@@ -104,7 +104,7 @@ Add your SP into the federation
 Go to https://federation.renater.fr/registry and register your SP.
 
 
-.. important::
+.. attention::
 
     Be sure to check all attributes as mandatory to be able
     to get them in SAML assertions.
@@ -122,7 +122,7 @@ Configure LL::NG as SAML Identity Provider with this
 moment.
 
 
-.. important::
+.. attention::
 
     If your LL::NG server will act as SP and IDP inside
     Renater federation, you need to set the advanced parameter "Override
@@ -150,7 +150,7 @@ it and edit configuration:
 
 Adapt IDP options, for example:
 
-.. code:: perl
+.. code-block:: perl
 
    my $spOptions = {
        'samlSPMetaDataOptionsCheckSLOMessageSignature'   => 1,
@@ -173,7 +173,7 @@ Then run the script:
    /usr/share/lemonldap-ng/bin/importMetadataRenater -m https://metadata.federation.renater.fr/renater/main/main-sps-renater-metadata.xml -r -i "idp-renater" -s "sp-renater"
 
 
-.. important::
+.. attention::
 
     You need to add this in cron to refresh metadata into
     LL::NG configuration.

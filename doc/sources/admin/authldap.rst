@@ -49,7 +49,7 @@ Authentication level
 The authentication level given to users authenticated with this module.
 
 
-.. important::
+.. attention::
 
     As LDAP is a login/password based module, the
     authentication level can be:
@@ -97,7 +97,7 @@ Connection
    documentation).
 
 
-.. important::
+.. attention::
 
     LemonLDAP::NG need anonymous access to LDAP Directory
     RootDSE in order to check LDAP connection.
@@ -167,7 +167,7 @@ Groups
     and ``%hGroups``, as documented :ref:`here<macros_and_groups>`
 
 
-.. important::
+.. attention::
 
     If your LDAP countains over a thousand groups, you
     should avoid using group processing, check out

@@ -15,13 +15,13 @@ Go in Manager, ``General Parameters`` » ``Cookies`` »
 To use this feature only locally, edit ``lemonldap-ng.ini`` in section
 [all]:
 
-.. code:: ini
+.. code-block:: ini
 
    [all]
    cda = 1
 
 
-.. important::
+.. attention::
 
     If your handler is being served by Nginx, you have to
     uncomment the following lines in your nginx configuration file:

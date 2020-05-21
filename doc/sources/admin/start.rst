@@ -328,7 +328,7 @@ modules family. All
 style modules are usable except for some features.
 
 
-.. important::
+.. attention::
 
     If you plan to use LLNG in a large-scale system, take a
     look at :ref:`Performance Test<performance-test>` to choose the right

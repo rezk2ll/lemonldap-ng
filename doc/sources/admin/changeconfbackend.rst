@@ -21,7 +21,7 @@ Let's go
 -  Configure your new backend (create SQL database,...)
 -  Launch that:
 
-.. code:: shell
+.. code-block:: shell
 
    convertConfig --current=/etc/lemonldap-ng/lemonldap-ng.ini --new=/new/lemonldap-ng.ini
 

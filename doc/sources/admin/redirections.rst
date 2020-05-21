@@ -42,14 +42,14 @@ Handler use the default Apache error code for the following cases:
 These errors can be catch trough Apache ``ErrorDocument`` directive or
 Nginx ``error_page`` directive, to redirect user on a specific page:
 
-.. code:: apache
+.. code-block:: apache
 
    # Apache: Common error page and security parameters
    ErrorDocument 403 http://auth.example.com/?lmError=403
    ErrorDocument 500 http://auth.example.com/?lmError=500
    ErrorDocument 503 http://auth.example.com/?lmError=503
 
-.. code:: nginx
+.. code-block:: nginx
 
    # Nginx: Common error page and security parameters
    error_page 403 http://auth.example.com/?lmError=403;

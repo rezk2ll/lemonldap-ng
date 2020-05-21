@@ -5,7 +5,7 @@ An Apache session module was created by LL::NG team to store sessions in
 an LDAP directory.
 
 
-.. important::
+.. attention::
 
     This module is not part of LL::NG distribution, and can
     be found on CPAN:

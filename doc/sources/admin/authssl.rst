@@ -36,7 +36,7 @@ You have to install mod_ssl for Apache.
 
 For CentOS/RHEL:
 
-.. code:: shell
+.. code-block:: shell
 
    yum install mod_ssl
 
@@ -58,7 +58,7 @@ Apache SSL global configuration
 You can then use this default SSL configuration, for example in the head
 of /etc/lemonldap-ng/portal-apache2.conf:
 
-.. code:: apache
+.. code-block:: apache
 
    SSLProtocol all -SSLv2
    SSLCipherSuite HIGH:MEDIUM
@@ -81,7 +81,7 @@ of /etc/lemonldap-ng/portal-apache2.conf:
 
 If you specify port in virtual host, then declare SSL port:
 
-.. code:: apache
+.. code-block:: apache
 
    NameVirtualHost *:80
    NameVirtualHost *:443
@@ -91,7 +91,7 @@ Apache portal SSL configuration
 
 Edit the portal virtual host to enable SSL double authentication:
 
-.. code:: apache
+.. code-block:: apache
 
    SSLEngine On
    SSLVerifyClient optional
@@ -118,7 +118,7 @@ With Nginx
 
 Enable SSL:
 
-.. code:: nginx
+.. code-block:: nginx
 
    ssl on;
    ssl_verify_client optional;
@@ -136,7 +136,7 @@ Enable SSL:
 
 You must also export SSL_CLIENT_S_DN_CN in FastCGI params:
 
-.. code:: nginx
+.. code-block:: nginx
 
    # map directive must be set in http context
    map $ssl_client_s_dn $ssl_client_s_dn_cn {
@@ -149,7 +149,7 @@ You must also export SSL_CLIENT_S_DN_CN in FastCGI params:
 Nginx SSL Virtual Host example with uWSGI
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code:: nginx
+.. code-block:: nginx
 
    server {
      listen 443;
@@ -186,7 +186,7 @@ Nginx SSL Virtual Host example with uWSGI
    }
 
 
-.. important::
+.. attention::
 
     Nginx 1.11.6 change: format of the $ssl_client_s_dn and
     $ssl_client_i_dn variables has been changed to follow RFC 2253 (RFC
@@ -228,7 +228,7 @@ limitation.
 
 1. Modify the portal virtual host to match this example:
 
-.. code:: apache
+.. code-block:: apache
 
        SSLEngine On
        SSLCACertificateFile /etc/apache2/ssl/ca.crt
@@ -275,7 +275,7 @@ limitation.
 2. Then you need to construct the Ajax page, for example in
 /index/bouton.html. It looks like this:
 
-.. code:: html
+.. code-block:: html
 
    <body>
    <script src="./jquery-2.1.4.min.js"             type="text/javascript"> </script>
@@ -325,14 +325,14 @@ Nginx server
 With Nginx, append those server context directives to force SSL
 connexion reset:
 
-.. code:: nginx
+.. code-block:: nginx
 
    keepalive_timeout 0 0;
    add_header 'Connection' 'close';
    ssl_session_timeout 1s;
 
 
-.. warning::
+.. danger::
 
     It is incompatible with authentication combination because
     of Apache parameter "SSLVerifyClient", which must have the value
@@ -384,7 +384,7 @@ Then you can chain it in a :doc:`combination<authcombination>`.
        forceGlobalStorageUpgradeOTT = 1
 
 
-.. important::
+.. attention::
 
     **Content Security Policy** may prevent to
     submit Ajax Request. To avoid security warning,

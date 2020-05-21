@@ -7,7 +7,7 @@ headers added to the request to give datas to the application (for logs,
 profiles,...).
 
 
-.. important::
+.. attention::
 
     Note that variables designed by $xx correspond to the
     name of the :doc:`exported variables<exportedvars>` or
@@ -95,7 +95,7 @@ Logout user from current application and from Lemonldap::NG and redirect it to h
 ================================================================================================================= =================== ====
 
 
-.. warning::
+.. danger::
 
     \ ``logout_app`` and ``logout_app_sso`` rules are not
     available on Nginx, only on Apache.
@@ -104,7 +104,7 @@ By default, user will be redirected on portal if no URL defined, or on
 the specified URL if any.
 
 
-.. important::
+.. attention::
 
     Only current application is concerned by logout_app\*
     targets. Be careful with some applications which doesn't verify
@@ -171,7 +171,7 @@ As described in
 use macros, local macros,...
 
 
-.. important::
+.. attention::
 
 
 

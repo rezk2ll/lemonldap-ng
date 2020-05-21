@@ -25,7 +25,7 @@ can be forbidden to assume.
       request.
 
 
-.. warning::
+.. danger::
 
     During context switching authentication process, all
     plugins are disabled. In other words, all entry points like afterData,
@@ -33,7 +33,7 @@ can be forbidden to assume.
     notifications by example will not be prompted!
 
 
-.. important::
+.. attention::
 
     ContextSwitching plugin works only with a userDB
     backend. You can not switch context with federated authentication.
@@ -43,7 +43,7 @@ contextSwitchingPrefix is used to store real user's session Id. You can
 set this prefix ('switching' by default) by editing ``lemonldap-ng.ini``
 in [portal] section:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    contextSwitchingPrefix = switching

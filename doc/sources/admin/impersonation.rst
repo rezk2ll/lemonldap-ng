@@ -7,7 +7,7 @@ choose another profile to appear as. This feature can be especially
 useful for training/learning or development platforms.
 
 
-.. important::
+.. attention::
 
     This plugin should not be used on production instance,
     prefer :doc:`ContextSwitching plugin<contextswitching>`.
@@ -38,40 +38,38 @@ protected from being impersonated.
       ``su; admins; anonymous``
 
 
-.. warning::
+.. danger::
 
     You HAVE TO modify **REMOTE_USER** to log both real AND
     spoofed uid.
 
     Set a macro like this :
 
-    '' \_whatToTrace -> $real__user ? "$real__user/$_user" : "$_user/$_user"
-    ''
+     ``_whatToTrace`` -> ``$real__user ? "$real__user/$_user" : "$_user/$_user"``
 
-    and set ``Genaral Parameters > Logs > REMOTE_USER`` with ''
-    \_whatToTrace ''
+    and set ``General Parameters > Logs > REMOTE_USER`` with ``_whatToTrace``
 
 
 
 
-.. important::
+.. attention::
 
     Both spoofed and real session attributes can be used to
     set access rules, groups or macros.
 
-    By example : ``$real_uid eq 'dwho``' or ``$real_groups =~ /\bsu\b/``
+    By example : ``$real_uid eq 'dwho'`` or ``$real_groups =~ /\bsu\b/``
 
     Keep in mind that real session is computed first. Afterward, if access
     is granted, impersonated session is computed with real and spoofed
     session attributes if Impersonation is allowed.
 
 
-.. important::
+.. attention::
 
     By example, to prevent impersonation as 'dwho' set
     **Identities use rule** like :
 
-    '' $uid ne 'dwho' ''
+    ``$uid ne 'dwho'``
 
 
 
@@ -79,7 +77,7 @@ impersonationPrefix is used to rename user's real profile attributes.
 You can set real attributes prefix ('real\_' by default) by editing
 ``lemonldap-ng.ini`` in section [portal]:
 
-.. code:: ini
+.. code-block:: ini
 
    [portal]
    impersonationPrefix = real_

@@ -62,7 +62,7 @@ Then go in Manager, ``General Parameters`` » ``Plugins`` »
       when password change is asked
 
 
-.. important::
+.. attention::
 
     By default, mail content are empty in order to use HTML
     templates:

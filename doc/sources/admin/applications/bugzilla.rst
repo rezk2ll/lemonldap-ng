@@ -40,7 +40,7 @@ Configure Bugzilla virtual host like other
 
 -  For Apache:
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost *:80>
           ServerName bugzilla.example.com
@@ -53,7 +53,7 @@ Configure Bugzilla virtual host like other
 
 -  For Nginx:
 
-.. code:: nginx
+.. code-block:: nginx
 
    server {
      listen 80;

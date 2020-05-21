@@ -27,7 +27,7 @@ Webapp1 handler configuration
 Select **Main** handler type to protect WebApp1 and insert a header
 named **X-Llng-Token** filled with this value:
 
-.. code:: perl
+.. code-block:: perl
 
    token( $_session_id, 'webapp2.example.com', 'webapp3.example.com', 'serviceHeader1=webapp1.example.com', "testHeader=$uid" )
 
@@ -44,7 +44,7 @@ each required virtualHost.
 You can also set ServiceToken default timeout (30 seconds) by editing
 ``lemonldap-ng.ini`` in section [handler]:
 
-.. code:: ini
+.. code-block:: ini
 
    [handler]
    handlerServiceTokenTTL = 30

@@ -33,7 +33,7 @@ Create the new page:
 
    vi /var/lib/lemonldap-ng/portal/skins/bootstrap/public/test.tpl
 
-.. code:: html
+.. code-block:: html
 
    <TMPL_INCLUDE NAME="../header.tpl">
 

@@ -29,7 +29,7 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
 -  **Value**: application logout URL
 
 
-.. important::
+.. attention::
 
     The request on logout URL will be sent after user is
     disconnected, so you should unprotect this URL if it is protected by an

@@ -14,10 +14,6 @@ readable outside the Wiki and eases the creation of structured texts.
 All data is stored in plain text files – no database is required.
 
 
-.. tip::
-
-    LemonLDAP::NG wiki uses Dokuwiki!
-
 HTTP headers
 ------------
 
@@ -49,7 +45,7 @@ Configure Dokuwiki virtual host like other
 
 -  For Apache:
 
-.. code:: apache
+.. code-block:: apache
 
    <VirtualHost *:80>
           ServerName dokuwiki.example.com
@@ -62,7 +58,7 @@ Configure Dokuwiki virtual host like other
 
 -  For Nginx:
 
-.. code:: nginx
+.. code-block:: nginx
 
    server {
      listen 80;
@@ -115,7 +111,7 @@ Configure the :ref:`headers<headers>`:
 -  Auth-Groups: encode_base64($groups,"")
 
 
-.. important::
+.. attention::
 
     To allow execution of encode_base64() method, you must
     deactivate the :doc:`Safe jail<../safejail>`.

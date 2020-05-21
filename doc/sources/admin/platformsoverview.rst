@@ -98,7 +98,7 @@ However, you can use some other FastCGI server engines:
    Node.js <https://github.com/LemonLDAPNG/node-lemonldap-ng-handler#nginx-authorization-server>`__\ (*)
 
 
-.. warning::
+.. danger::
 
     (*) LLNG Node.js handler can only be used as Nginx
     \`auth_request\` server, not to serve Portal or Manager

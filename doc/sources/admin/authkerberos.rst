@@ -36,7 +36,7 @@ and configure the following parameters:
    value and remove the '@domain'.
 
 
-.. important::
+.. attention::
 
 
 
@@ -66,7 +66,7 @@ request.
 
 Example with Apache and mod_auth_kerb:
 
-.. code:: apache
+.. code-block:: apache
 
      <If "%{QUERY_STRING} =~ /kerberos=/">
        <IfModule auth_kerb_module>

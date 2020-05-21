@@ -79,7 +79,7 @@ Client Kerberos configuration
 
 On LL::NG server, edit ``/etc/krb5.conf``:
 
-.. code:: ini
+.. code-block:: ini
 
    [libdefaults]
     default_realm = EXAMPLE.COM
@@ -136,7 +136,7 @@ You have to run this command on Active Directory:
    ktpass -princ HTTP/auth.example.com@EXAMPLE.COM -mapuser KERB_AUTH@EXAMPLE.COM -crypto DES-CBC-MD5 -ptype KRB5_NT_PRINCIPAL -mapOp set -pass <PASSWORD> -out c:\auth.keytab
 
 
-.. important::
+.. attention::
 
     The values passed in -crypto and -ptype depend on the
     Active Directory version and the windows version of the workstations.
@@ -226,7 +226,7 @@ Client Kerberos configuration
 
 The two domains must be defined in ``/etc/krb5.conf``:
 
-.. code:: ini
+.. code-block:: ini
 
    [libdefaults]
     default_realm = EXAMPLE.COM

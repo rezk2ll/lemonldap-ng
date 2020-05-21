@@ -37,7 +37,7 @@ Now we will add CSOD as a new SAML Service Provider:
 #. Select ``Metadata``, and unprotect the field to paste the following
    value:
 
-.. code:: xml
+.. code-block:: xml
 
    <md:EntityDescriptor entityID="mycompanyid.csod.com" xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata">
      <SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
@@ -56,7 +56,7 @@ Now we will add CSOD as a new SAML Service Provider:
    </md:EntityDescriptor>
 
 
-.. important::
+.. attention::
 
     Change **mycompanyid** (in ``AssertionConsumerService``
     markup, parameter ``Location``) into your CSOD company ID and put the

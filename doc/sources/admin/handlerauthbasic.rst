@@ -46,7 +46,7 @@ see :doc:`REST sessions backend<restsessionbackend>`, enable local cache
 to access required locations in Portal Virtual Host.
 
 
-.. warning::
+.. danger::
 
     With AuthBasic handler, you have to disable CSRF token by
     setting a special rule based on source IP addresses like this :
@@ -66,7 +66,7 @@ to access required locations in Portal Virtual Host.
 
 
 
-.. important::
+.. attention::
 
     With HTTPS, you may have to set **LWP::UserAgent
     object** with ``verify_hostname => 0`` and ``SSL_verify_mode => 0``.

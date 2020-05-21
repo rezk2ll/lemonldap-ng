@@ -28,7 +28,7 @@ Security
 
 Restrict access to the directories only to the Apache server. Example:
 
-.. code:: shell
+.. code-block:: shell
 
    chmod 750 /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/sessions/lock
    chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/sessions/lock

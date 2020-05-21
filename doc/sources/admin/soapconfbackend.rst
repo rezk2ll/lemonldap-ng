@@ -11,7 +11,7 @@ system.
     proxy system to access to your configuration over the network
 
 
-.. important::
+.. attention::
 
     SOAP has been deprecated. Prefer to use
     :doc:`REST configuration backend<restconfbackend>`\
@@ -33,7 +33,7 @@ First, configure your real backend
 
 - in ``portal-apache2.conf`` :
 
-.. code:: apache
+.. code-block:: apache
 
    # SOAP functions for configuration access (disabled by default)
    <Location /index.fcgi/config>
@@ -42,7 +42,7 @@ First, configure your real backend
 
 - in ``portal-nginx.conf`` :
 
-.. code:: nginx
+.. code-block:: nginx
 
    # SOAP functions for configuration access (disabled by default)
    location /index.psgi/config {
@@ -56,7 +56,7 @@ Next, configure SOAP for your remote servers
 
 Change configuration in lemonldap-ng.ini :
 
-.. code:: ini
+.. code-block:: ini
 
    type         = SOAP
    ; Apache
@@ -66,7 +66,7 @@ Change configuration in lemonldap-ng.ini :
 
 You can also add some other parameters
 
-.. code:: ini
+.. code-block:: ini
 
    User         = lemonldap
    Password     = mypassword

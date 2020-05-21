@@ -24,7 +24,7 @@ administrative commands.
 
 Then run this script:
 
-.. code:: bash
+.. code-block:: bash
 
    $dom = "mycompany.com"
    $brand = "My Company"
