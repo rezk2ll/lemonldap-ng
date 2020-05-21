@@ -999,6 +999,7 @@ distclean:	clean
 clean:		common_clean handler_clean portal_clean manager_clean stop_web_server
 	@rm -f $$(find */ -name '*bak' -delete)
 	@rm -rf doc/devel
+	@rm -rf doc/pages/documentation/current/*
 	@rm -vf *gz *zip
 	@rm -rf lemonldap-ng-$(VERSION)
 	@echo "Cleaned"
@@ -1128,7 +1129,7 @@ manager_cpan:	manager_conf
 
 documentation:
 	@sphinx-build -b html -d /tmp/doctrees \
-		-Dhtml_theme_path=. -Dhtml_theme=my_theme\
+		-Dhtml_theme_path=. -Dhtml_theme=manager_doc_theme\
 		doc/sources/admin/ doc/pages/documentation/current/
 
 test-diff:
