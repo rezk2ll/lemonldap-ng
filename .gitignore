@@ -1,6 +1,7 @@
 .gitignore
 .vstags
 doc/sources/admin/_build/
+doc/pages/documentation/
 e2e-tests/conf
 lemonldap-ng-common/MYMETA.json
 lemonldap-ng-common/MYMETA.yml

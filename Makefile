@@ -878,8 +878,6 @@ install_doc_site:
 	@cd doc && for f in `find * -type f ! -name '*.html'`; do \
 		install -v -m 644 $$f $(RDEFDOCDIR)/$$f; \
 	done && cd -
-	# Install symlinks
-	@cd doc && tar cf - `find * -type l` | tar xvf - -C $(RDEFDOCDIR) && cd -
 	# Remove js
 	@cd $(RDEFDOCDIR) && if test "$(USEEXTERNALLIBS)" = "yes"; then \
 		rm -rvf $(DOCEXTERNALLIBS); \
@@ -1129,7 +1127,9 @@ manager_cpan:	manager_conf
 	@mv ${SRCMANAGERDIR}/Lemonldap*.gz .
 
 documentation:
-	@cd doc/sources/admin/ && make html
+	@sphinx-build -b html -d /tmp/doctrees \
+		-Dhtml_theme_path=. -Dhtml_theme=my_theme\
+		doc/sources/admin/ doc/pages/documentation/current/
 
 test-diff:
 	@for file in `find lemonldap-ng-*/lib -type f`; do \
