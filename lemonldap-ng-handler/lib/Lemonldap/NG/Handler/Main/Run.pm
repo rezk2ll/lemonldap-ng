@@ -1,7 +1,7 @@
 # Main running methods file
 package Lemonldap::NG::Handler::Main::Run;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -402,7 +402,7 @@ sub hideCookie {
 sub encodeUrl {
     my ( $class, $req, $url ) = @_;
     $url = $class->_buildUrl( $req, $url ) if ( $url !~ m#^https?://# );
-    return encode_base64( $url, '' );
+    return uri_escape( encode_base64( $url, '' ) );
 }
 
 ## @rmethod protected int goToPortal(string url, string arg)
