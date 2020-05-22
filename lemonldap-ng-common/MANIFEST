@@ -87,6 +87,7 @@ t/35-Common-Crypto.t
 t/36-Common-Regexp.t
 t/40-Common-Session.t
 t/50-Combination-Parser.t
+t/60-Session-Cli.t
 t/99-pod.t
 tools/apache-session-mysql.sql
 tools/lmConfig.CDBI.mysql

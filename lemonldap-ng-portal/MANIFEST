@@ -223,11 +223,13 @@ site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.woff2
 site/htdocs/static/bwr/font-awesome/fonts/FontAwesome.otf
 site/htdocs/static/bwr/jquery-ui/jquery-ui.js
 site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js
+site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js.map
 site/htdocs/static/bwr/jquery.cookie/jquery.cookie.js
 site/htdocs/static/bwr/jquery.cookie/jquery.cookie.min.js
 site/htdocs/static/bwr/jquery.cookie/jquery.cookie.min.js.map
 site/htdocs/static/bwr/jquery/dist/jquery.js
 site/htdocs/static/bwr/jquery/dist/jquery.min.js
+site/htdocs/static/bwr/jquery/dist/jquery.min.js.map
 site/htdocs/static/bwr/jquery/dist/jquery.min.map
 site/htdocs/static/bwr/qrious/dist/qrious.js
 site/htdocs/static/bwr/qrious/dist/qrious.js.map
@@ -471,6 +473,7 @@ site/templates/common/registerBrowser.tpl
 site/templates/common/script.tpl
 t/01-AuthDemo.t
 t/01-CSP-and-CORS-headers.t
+t/01-Handler-redirection-and-URL-check-by-portal.t
 t/01-pdata.t
 t/02-Password-Demo-Local-noPpolicy.t
 t/02-Password-Demo-Local-Ppolicy.t
@@ -557,6 +560,7 @@ t/32-OIDC-Token-Introspection.t
 t/32-OIDC-Token-Security.t
 t/33-Auth-and-issuer-OpenID2.t
 t/34-Auth-Proxy-and-REST-Server.t
+t/34-Auth-Proxy-and-REST-sessions.t
 t/34-Auth-Proxy-and-SOAP-Server.t
 t/35-My-session.t
 t/35-REST-config-backend.t
