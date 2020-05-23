@@ -1,6 +1,49 @@
 Applications
 ============
 
+.. toctree::
+   :hidden:
+
+   applications/adfs
+   applications/alfresco
+   applications/aws
+   applications/awx
+   applications/bugzilla
+   applications/cornerstone
+   applications/discourse
+   applications/django
+   applications/dokuwiki
+   applications/drupal
+   applications/fusiondirectory
+   applications/gitlab
+   applications/glpi
+   applications/googleapps
+   applications/grafana
+   applications/grr
+   applications/guacamole
+   applications/humhub
+   applications/jitsimeet
+   applications/liferay
+   applications/limesurvey
+   applications/mattermost
+   applications/mediawiki
+   applications/nextcloud
+   applications/obm
+   applications/office365
+   applications/phpldapadmin
+   applications/roundcube
+   applications/salesforce
+   applications/sap
+   applications/simplesamlphp
+   applications/spring
+   applications/symfony
+   applications/sympa
+   applications/tomcat
+   applications/wekan
+   applications/wordpress
+   applications/xwiki
+   applications/zimbra
+
 How to integrate
 ----------------
 
@@ -70,6 +113,7 @@ Application                                                       Configuration 
 .. image:: applications/symfony_logo.png                          :doc:`Symfony<applications/symfony>`                 ✔
 .. image:: applications/sympa_logo.png                            :doc:`Sympa<applications/sympa>`                     ✔
 .. image:: applications/tomcat_logo.png                           :doc:`Tomcat<applications/tomcat>`                   ✔
+.. image:: applications/wekan-logo.png                            :doc:`Wekan<applications/wekan>`                                           ✔
 .. image:: applications/wordpress_logo.png                        :doc:`Wordpress<applications/wordpress>`                                           ✔
 .. image:: applications/xwiki.png                                 :doc:`XWiki<applications/xwiki>`                     ✔
 .. image:: applications/zimbra_logo.png                           :doc:`Zimbra<applications/zimbra>`                                ✔

@@ -1,6 +1,46 @@
 Documentation for LemonLDAP::NG 2.0
 ===================================
 
+.. toctree::
+   :caption: Getting started
+   :hidden:
+
+   index_presentation
+   index_installation
+
+.. toctree::
+   :caption: Configuration
+   :hidden:
+
+   index_firststeps
+   index_portal
+   index_handler
+   index_databases
+
+.. toctree::
+   :caption: Application protection
+   :hidden:
+
+   writingrulesand_headers
+   variables
+   selfmadeapplication
+   formreplay
+   customhandlers
+   webserviceprotection
+   applications/authbasic
+   applications
+
+
+.. toctree::
+   :caption: Advanced topics
+   :hidden:
+
+   index_advanced
+   index_minihowtos
+   index_exploitation
+   index_dev
+
+
 Presentation
 ------------
 
@@ -345,9 +385,7 @@ Backend                                                          Shareable :ref:
 :doc:`MongoDB<mongodbsessionbackend>`                            ✔         ✔                                                ✔                                                    ✔                  Must be secured by network access control.
 :doc:`Browseable (SQL, Redis or LDAP)<browseablesessionbackend>` ✔         ✔                                                ✔                                                    ✔                  **Optimized** for :doc:`session explorer<features>` and :doc:`single session<features>` features.
 :doc:`REST<restsessionbackend>` |new|                            ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
-                                                                                                                                                                                                    **Can be used to secure another backend** for remote servers.
 :doc:`SOAP<soapsessionbackend>`  |deprecated|                    ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
-                                                                                                                                                                                                    **Can be used to secure another backend** for remote servers.
 ================================================================ ========= ================================================ ==================================================== ================== =================================================================================================================================================================================================
 
 

@@ -34,6 +34,14 @@ You can use this authentication module to link your LL::NG server to any
 OpenID Connect Provider. Here are some examples, witch their specific
 documentation:
 
+
+.. toctree::
+   :hidden:
+
+   authopenidconnect_google
+   authopenidconnect_franceconnect
+
+
 =============== ==================
 Google          France Connect
 =============== ==================

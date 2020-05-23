@@ -1,6 +1,11 @@
 Monitoring
 ==========
 
+.. toctree::
+   :hidden:
+
+   mrtg
+
 Handler can be monitored by using MRTG. See
 :doc:`MRTG monitoring<mrtg>`.
 
