@@ -217,5 +217,4 @@ ok( $res->[2]->[0] =~ /trmsg="47"/, 'Found logout message' );
 count(2);
 
 clean_sessions();
-
 done_testing( count() );

@@ -168,7 +168,7 @@ sub run {
 
     # ContextSwitching required -> Check user Id
     if ( $spoofId && $spoofId ne $req->{user} ) {
-        $self->logger->debug("Spoof Id: $spoofId");
+        $self->logger->debug("Spoofed Id: $spoofId");
         unless ( $spoofId =~ /$self->{conf}->{userControl}/o ) {
             $self->userLogger->warn('Malformed spoofed Id');
             $self->logger->debug(
@@ -191,7 +191,7 @@ sub run {
     # Main session
     $self->p->updateSession( $req, $req->sessionInfo );
     $self->userLogger->notice(
-        "ContextSwitching: Update $realId session with $spoofId session data");
+        "ContextSwitching: Update \"$realId\" session with \"$spoofId\" session data");
 
     return $self->p->do( $req, [ sub { $statut } ] );
 }
@@ -255,7 +255,7 @@ sub _switchContext {
     }
 
     $self->userLogger->notice(
-        "Start ContextSwitching: $realId becomes $spoofId ");
+        "Start ContextSwitching: \"$realId\" becomes \"$spoofId\"");
     return $req;
 }
 
@@ -272,7 +272,7 @@ sub _abortImpersonation {
 
     if ($abort) {
         $self->userLogger->notice(
-            "Abort ContextSwitching: $spoofId by $realId");
+            "Abort ContextSwitching: \"$spoofId\" by \"$realId\"");
         if ( my $abortSession = $self->p->getApacheSession( $req->id ) ) {
             $abortSession->remove;
         }
@@ -283,7 +283,7 @@ sub _abortImpersonation {
     }
     else {
         $self->userLogger->notice(
-            "Stop ContextSwitching for $realId with uid $spoofId");
+            "Stop ContextSwitching for \"$realId\" with uid \"$spoofId\"");
         $self->p->deleteSession($req);
     }
 
