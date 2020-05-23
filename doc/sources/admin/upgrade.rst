@@ -16,6 +16,15 @@ backups and a rollback plan ready!
     ``/etc/httpd/conf.d/z-lemonldap-ng-*.conf`` files before the
     update.
 
+
+2.0.9
+-----
+
+-  | Bad default value to display OIDC Consents tab has been fixed.
+   | The default value is ``$_oidcConsents``
+
+.. _section-1:
+
 2.0.8
 -----
 
@@ -62,7 +71,7 @@ manager API config:
 
    rm /etc/httpd/conf.d/z-lemonldap-ng-api.conf && systemctl reload httpd
 
-.. _section-1:
+.. _section-2:
 
 2.0.7
 -----
@@ -111,7 +120,7 @@ manager API config:
 
    -  ``samlIdPResolveCookie``
 
-.. _section-2:
+.. _section-3:
 
 2.0.6
 -----
@@ -142,7 +151,7 @@ manager API config:
    yum install -y urw-base35-fonts-legacy
    sed 's,/usr/share/fonts/default/Type1/,/usr/share/X11/fonts/urw-fonts/,g' -i /etc/ImageMagick/type-ghostscript.xml
 
-.. _section-3:
+.. _section-4:
 
 2.0.5
 -----
