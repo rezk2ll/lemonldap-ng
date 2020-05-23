@@ -131,7 +131,7 @@ sub run {
     if ( $req->error ) {
         $self->setSecurity($req);
         if ( $req->error == PE_BADCREDENTIALS ) {
-            $statut = PE_BADCREDENTIALS; # Catch error to preserve protected Id
+            $statut = PE_BADCREDENTIALS;  # Catch error to preserve protected Id
         }
         else {
             return $req->error;
@@ -200,7 +200,7 @@ sub run {
 sub _userData {
     my ( $self, $req, $spoofId, $realSession, $unUser ) = @_;
     my $realId = $req->{user};
-    my $raz = 0;
+    my $raz    = 0;
     $req->{user} = $spoofId;
 
     # Compute Macros and Groups with real and spoof sessions

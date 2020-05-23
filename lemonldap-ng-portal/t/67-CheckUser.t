@@ -253,7 +253,8 @@ ok( $res->[2]->[0] =~ m%<td scope="row">dwho</td>%, 'Found dwho' )
   or explain( $res->[2]->[0], 'Macro Value dwho' );
 ok( $res->[2]->[0] =~ m%<td scope="row">array</td>%, 'Found empty macro' )
   or explain( $res->[2]->[0], 'Macro: empty' );
-ok( $res->[2]->[0] =~ m%<td scope="row">real_array</td>%, 'Found empty real_macro' )
+ok( $res->[2]->[0] =~ m%<td scope="row">real_array</td>%,
+    'Found empty real_macro' )
   or explain( $res->[2]->[0], 'Macro: empty real' );
 count(9);
 

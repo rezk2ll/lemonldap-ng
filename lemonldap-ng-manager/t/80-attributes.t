@@ -64,8 +64,8 @@ my @notManagedAttributes = (
     'zimbraUrl',
 
     # Other ini-only prms
-    'checkTime',           'status', 'soapProxyUrn',
-    'impersonationPrefix', 'pdataDomain',
+    'checkTime',                 'status', 'soapProxyUrn',
+    'impersonationPrefix',       'pdataDomain',
     'mySessionAuthorizedRWKeys', 'contextSwitchingPrefix'
 );
 

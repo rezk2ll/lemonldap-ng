@@ -77,7 +77,7 @@ ok(
 );
 ok(
     $res->[2]->[0] =~
-m%<div class="message message-negative alert"><span trmsg="5">%,
+      m%<div class="message message-negative alert"><span trmsg="5">%,
     ' PE5 found'
 ) or explain( $res->[2]->[0], "PE5 - Forbidden identity" );
 count(2);

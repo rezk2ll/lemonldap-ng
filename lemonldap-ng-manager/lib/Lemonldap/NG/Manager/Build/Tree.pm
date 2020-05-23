@@ -568,8 +568,8 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'singleSession',  'singleIP',
-                                'singleUserByIP',
-                                'notifyDeleted',  'notifyOther'
+                                'singleUserByIP', 'notifyDeleted',
+                                'notifyOther'
                             ]
                         },
                         {

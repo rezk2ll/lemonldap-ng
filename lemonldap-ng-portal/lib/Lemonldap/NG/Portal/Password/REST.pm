@@ -46,7 +46,7 @@ sub modifyPassword {
             $self->conf->{restPwdModifyUrl},
             {
                 ( $useMail ? 'mail' : 'user' ) => $req->user,
-                useMail => ( $useMail ? JSON::true : JSON::false ),
+                useMail  => ( $useMail ? JSON::true : JSON::false ),
                 password => $pwd,
             }
         );

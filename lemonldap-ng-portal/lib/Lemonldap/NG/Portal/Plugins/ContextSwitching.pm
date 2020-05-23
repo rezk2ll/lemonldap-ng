@@ -34,9 +34,9 @@ has ott => (
         return $ott;
     }
 );
-has rule   => ( is => 'rw', default => sub { 0 } );
-has idRule => ( is => 'rw', default => sub { 1 } );
-has unrestrictedUsersRule     => ( is => 'rw', default => sub { 0 } );
+has rule                  => ( is => 'rw', default => sub { 0 } );
+has idRule                => ( is => 'rw', default => sub { 1 } );
+has unrestrictedUsersRule => ( is => 'rw', default => sub { 0 } );
 
 sub init {
     my ($self) = @_;
@@ -191,7 +191,8 @@ sub run {
     # Main session
     $self->p->updateSession( $req, $req->sessionInfo );
     $self->userLogger->notice(
-        "ContextSwitching: Update \"$realId\" session with \"$spoofId\" session data");
+"ContextSwitching: Update \"$realId\" session with \"$spoofId\" session data"
+    );
 
     return $self->p->do( $req, [ sub { $statut } ] );
 }

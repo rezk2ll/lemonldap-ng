@@ -56,7 +56,7 @@ sub init {
             @{ $self->lockTimes } = ( 5, 15, 60, 300, 600 );
             $lockTimes = 5;
         }
-        
+
         if ( $lockTimes > $self->conf->{failedLoginNumber} ) {
             $self->logger->warn( 'Number of incremental lock time values ('
                   . "$lockTimes) is higher than failed logins history ("
@@ -66,7 +66,8 @@ sub init {
             $lockTimes = $self->conf->{failedLoginNumber};
         }
 
-        my $sum = $self->conf->{bruteForceProtectionMaxAge} * ( 1 + $self->conf->{failedLoginNumber} - $lockTimes );
+        my $sum = $self->conf->{bruteForceProtectionMaxAge} *
+          ( 1 + $self->conf->{failedLoginNumber} - $lockTimes );
         $sum += $_ foreach @{ $self->lockTimes };
         $self->maxAge($sum);
     }

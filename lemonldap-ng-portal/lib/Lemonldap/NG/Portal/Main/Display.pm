@@ -145,12 +145,12 @@ sub display {
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $req->error_type,
             MSG             => $info,
-            URL             => $req->{urldc} || $self->conf->{portal}, # Fix 2158
-            HIDDEN_INPUTS   => $self->buildOutgoingHiddenForm( $req, $method ),
-            ACTIVE_TIMER    => $req->data->{activeTimer},
-            CHOICE_PARAM    => $self->conf->{authChoiceParam},
-            CHOICE_VALUE    => $req->data->{_authChoice},
-            FORM_METHOD     => $method,
+            URL => $req->{urldc} || $self->conf->{portal},    # Fix 2158
+            HIDDEN_INPUTS => $self->buildOutgoingHiddenForm( $req, $method ),
+            ACTIVE_TIMER  => $req->data->{activeTimer},
+            CHOICE_PARAM  => $self->conf->{authChoiceParam},
+            CHOICE_VALUE  => $req->data->{_authChoice},
+            FORM_METHOD   => $method,
             (
                   ( not $req->{urldc} ) ? ( SEND_PARAMS => 1 )
                 : ()
@@ -228,17 +228,18 @@ sub display {
             LANGS     => $self->conf->{showLanguages},
             AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
             NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},
-            LOGOUT_URL          => $self->conf->{portal} . "?logout=1",
-            APPSLIST_ORDER      => $req->{sessionInfo}->{'_appsListOrder'},
-            PING                => $self->conf->{portalPingInterval},
-            REQUIRE_OLDPASSWORD => $self->requireOldPwd->($req, $req->userData),
-            HIDE_OLDPASSWORD    => 0,
-            DISPLAY_PPOLICY     => $self->conf->{portalDisplayPasswordPolicy},
-            PPOLICY_MINSIZE     => $self->conf->{passwordPolicyMinSize},
-            PPOLICY_MINLOWER    => $self->conf->{passwordPolicyMinLower},
-            PPOLICY_MINUPPER    => $self->conf->{passwordPolicyMinUpper},
-            PPOLICY_MINDIGIT    => $self->conf->{passwordPolicyMinDigit},
-            PPOLICY_NOPOLICY    => !$isPP,
+            LOGOUT_URL     => $self->conf->{portal} . "?logout=1",
+            APPSLIST_ORDER => $req->{sessionInfo}->{'_appsListOrder'},
+            PING           => $self->conf->{portalPingInterval},
+            REQUIRE_OLDPASSWORD =>
+              $self->requireOldPwd->( $req, $req->userData ),
+            HIDE_OLDPASSWORD => 0,
+            DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy},
+            PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
+            PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
+            PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
+            PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
+            PPOLICY_NOPOLICY => !$isPP,
             PPOLICY_ALLOWEDSPECHAR => $speChars,
             (
                 $speChars

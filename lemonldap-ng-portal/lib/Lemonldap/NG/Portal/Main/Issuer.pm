@@ -99,7 +99,7 @@ sub _redirect {
         $self->logger->debug(
             'Add ' . $self->ipath . ', ' . $self->ipath . 'Path in keepPdata' );
         push @{ $req->pdata->{keepPdata} }, $self->ipath, $self->ipath . 'Path';
-        $req->{urldc}           = $self->conf->{portal} . '/' . $self->path;
+        $req->{urldc} = $self->conf->{portal} . '/' . $self->path;
         $req->pdata->{_url}     = encode_base64( $req->urldc, '' );
         $req->pdata->{issuerTs} = time;
     }
@@ -152,7 +152,7 @@ sub _forAuthUser {
 
         # In case a confirm form is shown, we need it to POST on the
         # current Path
-        $req->data->{confirmFormAction} = URI->new($req->uri)->path;
+        $req->data->{confirmFormAction} = URI->new( $req->uri )->path;
     }
 
     # Clean pdata: keepPdata has been set, so pdata must be cleaned here

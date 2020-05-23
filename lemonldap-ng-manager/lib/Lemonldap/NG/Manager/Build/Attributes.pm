@@ -1442,9 +1442,10 @@ sub attributes {
             documentation => 'Send a mail when password is changed',
         },
         portalRequireOldPassword => {
-            default       => 1,
-            type          => 'boolOrExpr',
-            documentation => 'Rule to require old password to change the password',
+            default => 1,
+            type    => 'boolOrExpr',
+            documentation =>
+              'Rule to require old password to change the password',
         },
         hideOldPassword => {
             default       => 0,
@@ -2114,16 +2115,16 @@ sub attributes {
                 },
                 msgFail => '__badExpression__',
             },
-            keyTest => qr/^\S+$/,
+            keyTest       => qr/^\S+$/,
             keyMsgFail    => '__badHostname__',
             default       => { default => 'deny', },
             documentation => 'Virtualhost rules',
             flags         => 'h',
         },
         exportedHeaders => {
-            type    => 'keyTextContainer',
-            help    => 'writingrulesand_headers.html#headers',
-            keyTest => qr/^\S+$/,
+            type       => 'keyTextContainer',
+            help       => 'writingrulesand_headers.html#headers',
+            keyTest    => qr/^\S+$/,
             keyMsgFail => '__badHostname__',
             test       => {
                 keyTest    => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
@@ -2134,10 +2135,10 @@ sub attributes {
             flags         => 'h',
         },
         post => {
-            type    => 'postContainer',
-            help    => 'formreplay.html',
-            test    => sub { 1 },
-            keyTest => qr/^\S+$/,
+            type          => 'postContainer',
+            help          => 'formreplay.html',
+            test          => sub { 1 },
+            keyTest       => qr/^\S+$/,
             keyMsgFail    => '__badHostname__',
             documentation => 'Virtualhost urls/Data to post',
         },
@@ -3003,11 +3004,10 @@ sub attributes {
             documentation => 'Second factor required',
         },
         sfManagerRule => {
-            type    => 'boolOrExpr',
-            default => 1,
-            help    => 'secondfactor.html',
-            documentation =>
-              'Rule to display second factor Manager link',
+            type          => 'boolOrExpr',
+            default       => 1,
+            help          => 'secondfactor.html',
+            documentation => 'Rule to display second factor Manager link',
         },
         sfRemovedMsgRule => {
             type    => 'boolOrExpr',
@@ -4021,6 +4021,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type   => 'select',
             select => [
                 { k => 'front', v => 'Front Channel' },
+
                 #TODO #1194
                 # { k => 'back',  v => 'Back Channel' },
             ],

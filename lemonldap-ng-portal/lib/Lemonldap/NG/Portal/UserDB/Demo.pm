@@ -89,8 +89,8 @@ sub setSessionInfo {
 # @return Lemonldap::NG::Portal constant
 sub setGroups {
     my ( $self, $req ) = @_;
-    my $user = $req->user;
-    my $groups  = $req->sessionInfo->{groups}  || '';
+    my $user    = $req->user;
+    my $groups  = $req->sessionInfo->{groups} || '';
     my $hGroups = $req->sessionInfo->{hGroups} || {};
     for my $grp ( keys %demoGroups ) {
         if ( grep { $_ eq $user } @{ $demoGroups{$grp} } ) {

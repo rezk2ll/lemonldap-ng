@@ -1743,8 +1743,10 @@ sub replayProtection {
                 return 0;
             }
         }
-    } else {
-        $self->logger->warn( "No assertion session found for request ID ".$samlID);
+    }
+    else {
+        $self->logger->warn(
+            "No assertion session found for request ID " . $samlID );
     }
 
     return 0;

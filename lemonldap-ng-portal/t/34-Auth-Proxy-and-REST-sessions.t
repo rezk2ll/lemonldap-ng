@@ -144,11 +144,11 @@ sub sp {
                 portal           => 'http://auth.sp.com',
                 authentication   => 'Proxy',
                 userDB           => 'Same',
-                secret            => 'abc',
+                secret           => 'abc',
                 proxyAuthService => 'http://auth.idp.com',
                 proxyUseSoap     => 0,
                 whatToTrace      => '_whatToTrace',
-                globalStorage   => 'Lemonldap::NG::Common::Apache::Session::REST',
+                globalStorage => 'Lemonldap::NG::Common::Apache::Session::REST',
                 globalStorageOptions => {
                     'baseUrl' => 'http://auth.idp.com/sessions/global',
                 }

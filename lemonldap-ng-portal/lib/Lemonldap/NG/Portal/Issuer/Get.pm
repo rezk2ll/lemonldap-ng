@@ -25,7 +25,7 @@ sub init {
       $hd->buildSub( $hd->substitute( $self->conf->{issuerDBGetRule} ) );
     unless ($rule) {
         my $error = $hd->tsv->{jail}->error || '???';
-        $self->error( "Bad GET activation rule -> $error" );
+        $self->error("Bad GET activation rule -> $error");
         return 0;
     }
     $self->{rule} = $rule;

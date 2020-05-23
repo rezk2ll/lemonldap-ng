@@ -570,7 +570,7 @@ sub scanTree {
         # Subnode
         elsif ( ref($leaf) ) {
             $jleaf->{title} = $jleaf->{id} = $leaf->{title};
-            $jleaf->{type}  = $leaf->{form} if ( $leaf->{form} );
+            $jleaf->{type} = $leaf->{form} if ( $leaf->{form} );
             if ( $leaf->{title} =~ /^((?:oidc|saml|cas)Service)MetaData$/ ) {
                 no strict 'refs';
                 my @tmp = $self->scanLeaf( $leaf->{nodes} );

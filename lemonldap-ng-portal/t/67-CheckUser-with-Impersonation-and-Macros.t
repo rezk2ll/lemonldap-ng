@@ -26,13 +26,13 @@ my $client = LLNG::Manager::Test->new( {
             userControl                    => '^[\w\.\-/\s]+$',
             whatToTrace                    => '_whatToTrace',
             macros                         => {
-                authLevel => '"Macro_$authenticationLevel"',
+                authLevel     => '"Macro_$authenticationLevel"',
                 realAuthLevel => '"realMacro_$real_authenticationLevel"',
                 _whatToTrace =>
                   '$real__user ? "$_user / $real__user" : "$_user / $_user"',
             },
-            groups                         => {
-                authGroup => '$authenticationLevel == 1',
+            groups => {
+                authGroup     => '$authenticationLevel == 1',
                 realAuthGroup => '$real_authenticationLevel == 1',
             },
         }
@@ -177,9 +177,11 @@ ok( $res->[2]->[0] =~ m%<td scope="row">Macro_1</td>%, 'Found uid' )
 ok( $nbr = ( $res->[2]->[0] =~ s%<td scope="row">Macro_1</td>%%g ),
     'Found two well computed macros' )
   or explain( $res->[2]->[0], 'Macros not well computed' );
-ok( $res->[2]->[0] =~ m%<div class="col">authGroup</div>%, 'Found group "authGroup"' )
+ok( $res->[2]->[0] =~ m%<div class="col">authGroup</div>%,
+    'Found group "authGroup"' )
   or explain( $res->[2]->[0], 'Group "authgroup"' );
-ok( $res->[2]->[0] =~ m%<div class="col">realAuthGroup</div>%, 'Found group "realAuthGroup"' )
+ok( $res->[2]->[0] =~ m%<div class="col">realAuthGroup</div>%,
+    'Found group "realAuthGroup"' )
   or explain( $res->[2]->[0], 'Found group "realAuthGroup"' );
 count(7);
 

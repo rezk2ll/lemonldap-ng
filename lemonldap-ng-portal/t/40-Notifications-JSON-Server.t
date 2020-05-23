@@ -183,7 +183,7 @@ ok(
     'List all pending notifications'
 );
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' );
-ok( scalar @{ $json->{result} } == 3,             'Three notifications found' )
+ok( scalar @{ $json->{result} } == 3, 'Three notifications found' )
   or print STDERR Dumper($json);
 
 foreach ( @{ $json->{result} } ) {
@@ -341,7 +341,7 @@ ok(
     'List all existing notifications'
 );
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' );
-ok( scalar @{ $json->{result} } == 5,             'Five notifications found' )
+ok( scalar @{ $json->{result} } == 5, 'Five notifications found' )
   or print STDERR Dumper($json);
 count(3);
 
@@ -454,7 +454,7 @@ ok(
     'List all pending notifications'
 );
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' );
-ok( scalar @{ $json->{result} } == 3,             'Three notifications found' )
+ok( scalar @{ $json->{result} } == 3, 'Three notifications found' )
   or print STDERR Dumper($json);
 count(3);
 

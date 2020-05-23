@@ -100,7 +100,7 @@ SKIP: {
     $res =
       $client->jsonResponse( 'notifications/done', 'groupBy=substr(uid,1)' );
     ok( $res->{result} == 1, 'Result = 1' );
-    ok( $res->{count} == 0,  'Count = 0' ) or diag Dumper($res);
+    ok( $res->{count} == 0, 'Count = 0' ) or diag Dumper($res);
 
     #print STDERR Dumper($res);
 }

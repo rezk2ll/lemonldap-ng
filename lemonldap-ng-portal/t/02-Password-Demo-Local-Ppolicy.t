@@ -300,7 +300,7 @@ ok(
     $res->[2]->[0] =~
       m%<li><span trspan="passwordPolicyMinSize">Minimal size:</span> 6</li>%,
     ' passwordPolicyMinSize'
-) or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinSize');
+) or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinSize' );
 ok(
     $res->[2]->[0] =~
 m%<li><span trspan="passwordPolicyMinLower">Minimal lower characters:</span> 3</li>%,
@@ -320,7 +320,7 @@ ok(
     $res->[2]->[0] =~
 m%<li><span trspan="passwordPolicyMinSpeChar">Minimal special characters:</span> 2</li>%,
     ' passwordPolicyMinSpeChar'
-) or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinSpeChar');
+) or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinSpeChar' );
 ok(
     $res->[2]->[0] =~
 m%\Q<li><span trspan="passwordPolicySpecialChar">Allowed special characters:</span> [ } \</li>\E%,
@@ -328,7 +328,7 @@ m%\Q<li><span trspan="passwordPolicySpecialChar">Allowed special characters:</sp
 ) or print STDERR Dumper( $res->[2]->[0], 'passwordPolicySpecialChar' );
 ok(
     $res->[2]->[0] =~
-m%<span id=\'show-hide-icon-button\' class="fa fa-eye"></span>%,
+      m%<span id=\'show-hide-icon-button\' class="fa fa-eye"></span>%,
     'Show/Hide toogle button'
 ) or print STDERR Dumper( $res->[2]->[0], 'Toogle button' );
 count(8);

@@ -277,7 +277,8 @@ sub check {
                 "checkUser requested for an unvalid user ($user)");
             $req->{sessionInfo} = {};
             $self->logger->debug('Identity not authorized');
-            $req->error(PE_BADCREDENTIALS); # Catch error to preserve protected Id
+            $req->error(PE_BADCREDENTIALS)
+              ;    # Catch error to preserve protected Id
         }
     }
 

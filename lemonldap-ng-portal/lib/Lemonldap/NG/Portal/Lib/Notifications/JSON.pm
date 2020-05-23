@@ -35,7 +35,7 @@ sub checkForNotifications {
     unless ($notifs) {
         $self->logger->info("No notification found");
         return 0;
-    };
+    }
 
     # Transform notifications
     my $i = 0;    # Files count
@@ -125,7 +125,7 @@ sub viewNotification {
     unless ($notifs) {
         $self->logger->info("No accepted notification found");
         return 0;
-    };
+    }
 
     # Transform notifications
     my $i = 0;    # Files count

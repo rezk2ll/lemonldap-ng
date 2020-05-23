@@ -529,7 +529,7 @@ sub display {
     $speChars =~ s/\s+/ /g;
     $speChars =~ s/(?:^\s|\s$)//g;
     $self->logger->debug( 'Display called with code: ' . $req->error );
-    
+
     my %tplPrm = (
         SKIN_PATH       => $self->conf->{staticPrefix},
         SKIN            => $self->p->getSkin($req),

@@ -235,7 +235,8 @@ m%<span notif=\'testref\' epoch=\'(\d{10})\' class="btn btn-success" role="butto
     );
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
       or print STDERR "$@\n" . Dumper($res);
-    ok( $json->{error} eq 'Missing epoch parameter', ' Missing epoch parameter' )
+    ok( $json->{error} eq 'Missing epoch parameter',
+        ' Missing epoch parameter' )
       or explain( $json, "Missing epoch parameter" );
 
     # Bad request

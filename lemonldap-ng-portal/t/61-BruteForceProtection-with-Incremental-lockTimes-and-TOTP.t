@@ -113,9 +113,8 @@ SKIP: {
             accept => 'text/html',
         ),
         'Auth query'
-    );                     
-    ok( $res->[2]->[0] =~ /<span trspan="enterTotpCode">/,
-        'Enter TOTP code' )
+    );
+    ok( $res->[2]->[0] =~ /<span trspan="enterTotpCode">/, 'Enter TOTP code' )
       or print STDERR Dumper( $res->[2]->[0] );
     count(2);
 
@@ -170,8 +169,7 @@ SKIP: {
         ),
         'Auth query'
     );
-    ok( $res->[2]->[0] =~ /<span trspan="enterTotpCode">/,
-        'Enter TOTP code' )
+    ok( $res->[2]->[0] =~ /<span trspan="enterTotpCode">/, 'Enter TOTP code' )
       or print STDERR Dumper( $res->[2]->[0] );
     count(2);
 
