@@ -434,10 +434,6 @@ By default, the main session module is used to store SAML temporary data
 compatible with the
 :ref:`sessions restrictions feature<session-restrictions>`.
 
-This is not the case of :doc:`Memcached<memcachedsessionbackend>` for
-example. In this case, you can choose a different module to manage SAML
-sessions.
-
 
 .. tip::
 
