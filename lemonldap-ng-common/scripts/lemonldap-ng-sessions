@@ -216,7 +216,7 @@ lemonldap-ng-sessions secondfactors <command> <user> [<id> ... ]
 
 Commands:
 	
-    show <user>
+    get <user>
         show all second factors for a user
     delete <user> <id> [<id> ...]
         delete second factors for a user. The ID must match one of the
@@ -230,7 +230,7 @@ lemonldap-ng-sessions consents <command> <user> [<id> ... ]
 
 Commands:
 	
-    show <user>
+    get <user>
         show all OIDC consents for a user
     delete <user> <id> [<id> ...]
         delete OIDC consents for a user
