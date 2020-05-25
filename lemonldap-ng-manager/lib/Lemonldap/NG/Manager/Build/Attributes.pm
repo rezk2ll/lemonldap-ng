@@ -1975,6 +1975,11 @@ sub attributes {
             default       => 1,
             documentation => 'Authorize users to remove existing Yubikey',
         },
+        yubikey2fFromSessionAttribute => {
+            type => 'text',
+            documentation =>
+              'Provision yubikey from the given session variable',
+        },
         yubikey2fTTL => {
             type          => 'int',
             documentation => 'Yubikey device time to live',

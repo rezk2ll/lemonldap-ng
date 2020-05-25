@@ -4097,6 +4097,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'yubikey2fClientID' => {
             'type' => 'text'
         },
+        'yubikey2fFromSessionAttribute' => {
+            'type' => 'text'
+        },
         'yubikey2fLabel' => {
             'type' => 'text'
         },

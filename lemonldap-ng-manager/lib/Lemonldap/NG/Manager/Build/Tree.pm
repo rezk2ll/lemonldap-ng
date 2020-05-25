@@ -841,6 +841,7 @@ sub tree {
                                 'yubikey2fUrl',
                                 'yubikey2fPublicIDSize',
                                 'yubikey2fUserCanRemoveKey',
+                                'yubikey2fFromSessionAttribute',
                                 'yubikey2fTTL',
                                 'yubikey2fAuthnLevel',
                                 'yubikey2fLabel',
