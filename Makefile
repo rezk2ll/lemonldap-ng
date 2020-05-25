@@ -133,6 +133,9 @@ LLNGTESTLDAP_SLAPD_BIN=/usr/sbin/slapd
 LLNGTESTLDAP_SLAPADD_BIN=/usr/sbin/slapadd
 LLNGTESTLDAP_SCHEMA_DIR=/etc/ldap/schema
 
+# Default website destination
+WEBSITE_DIR=doc/sources/admin/_build/html
+
 # Other
 SRCCOMMONDIR=lemonldap-ng-common
 SRCHANDLERDIR=lemonldap-ng-handler
@@ -1000,6 +1003,7 @@ clean:		common_clean handler_clean portal_clean manager_clean stop_web_server
 	@rm -f $$(find */ -name '*bak' -delete)
 	@rm -rf doc/devel
 	@rm -rf doc/pages/documentation/current/*
+	@rm -rf "$(WEBSITE_DIR)"
 	@rm -vf *gz *zip
 	@rm -rf lemonldap-ng-$(VERSION)
 	@echo "Cleaned"
@@ -1131,6 +1135,10 @@ documentation:
 	@sphinx-build -b html -d /tmp/doctrees \
 		-Dhtml_theme_path=. -Dhtml_theme=manager_doc_theme\
 		doc/sources/admin/ doc/pages/documentation/current/
+
+website_documentation:
+	sphinx-build -b html -d /tmp/doctrees \
+		doc/sources/admin/ "$(WEBSITE_DIR)"
 
 test-diff:
 	@for file in `find lemonldap-ng-*/lib -type f`; do \
