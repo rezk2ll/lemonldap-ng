@@ -6,6 +6,7 @@ Priority: optional
 Build-Depends: debhelper (>= 10),
                po-debconf
 Build-Depends-Indep: libapache-session-perl <!nocheck>,
+                     libauth-yubikey-webclient-perl <!nocheck>,
                      libauthen-oath-perl <!nocheck>,
                      libcache-cache-perl <!nocheck>,
                      libclone-perl <!nocheck>,
