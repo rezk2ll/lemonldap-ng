@@ -21,6 +21,7 @@ CAPTCHADIR=$(LMVARDIR)/captcha
 
 override_dh_auto_configure:
 	$(MAKE) configure STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini \
+		DATADIR=$(LMVARDIR) \
 		PERLOPTIONS="INSTALLDIRS=vendor"
 
 override_dh_auto_build:

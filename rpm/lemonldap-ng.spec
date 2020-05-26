@@ -358,6 +358,7 @@ This package installs the authentication portal.
 %build
 make %{?_smp_mflags} configure \
     STORAGECONFFILE=%{lm_storagefile} \
+    DATADIR=%{lm_vardir} \
     PERLOPTIONS="INSTALLDIRS=vendor"
 make %{?_smp_mflags}
 

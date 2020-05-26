@@ -8,12 +8,21 @@ sub MY::top_targets {
     my $self = shift;
     my $r    = $self->MM::top_targets(@_);
     if ( my $cf = $ENV{LMNGCONFFILE} ) {
-        $r =~ s/^(all.*)$/$1 my_target/m;
+        $r =~ s/^(all.*)$/$1 fix_conffile/m;
         $cf = quotemeta($cf);
         $r .= <<"EOT";
 
-my_target:
+fix_conffile:
 	perl -i -pe 's/^(use constant DEFAULTCONFFILE\\s*=>).*\$\$/\$\$1 "$cf";/' blib/lib/Lemonldap/NG/Common/Conf/Constants.pm
+EOT
+    }
+    if ( my $cf = $ENV{LMNGCONFDIR} ) {
+        $r =~ s/^(all.*)$/$1 fix_confdir/m;
+        $cf = quotemeta($cf);
+        $r .= <<"EOT";
+
+fix_confdir:
+	perl -i -pe 's/^(\\s*dirName\\s+)=>.*/\$\$1 => "$cf",/' blib/lib/Lemonldap/NG/Common/Conf/Constants.pm
 EOT
     }
     return $r;
