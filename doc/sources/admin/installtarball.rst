@@ -54,8 +54,8 @@ For full install:
 ::
 
    cd lemonldap-ng-*
-   make
    make configure
+   make
    make test
    sudo make install PROD=yes
 
@@ -70,7 +70,7 @@ configure target:
 
 ::
 
-   sudo make configure STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini
+   make configure STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini
 
 You can choose other Makefile targets:
 
@@ -115,8 +115,6 @@ Available parameters are:
 -  **DESTDIR**: only for packaging, install the product in a jailroot
    (default: "")
 -  **PREFIX**: installation directory (default: /usr/local)
--  **STORAGECONFFILE**: location of default storage configuration file
-   (default: /usr/local/lemonldap-ng/etc/lemonldap-ng.ini)
 -  **CRONDIR**: Cronfile directory (default:
    $PREFIX/etc/lemonldap-ng/cron.d)
 -  **APACHEUSER**: user running Apache
@@ -130,6 +128,9 @@ Available parameters are:
    that this options isn't yet usable**  since Debian provides a too
    old AngularJS for now: LLNG manager needs at least version 1.4.0)
 -  **USEEXTERNALLIBS**: use files from public CDN
+-  **STORAGECONFFILE**: *make configure* target only. Location of default
+   storage configuration file (default:
+   /usr/local/lemonldap-ng/etc/lemonldap-ng.ini)
 
 
 .. tip::
