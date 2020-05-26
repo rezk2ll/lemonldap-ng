@@ -87,7 +87,7 @@ sub new {
           unless $self->{type} =~ /^Lemonldap::/;
         eval "require $self->{type}";
         if ($@) {
-            $msg .= "Error: Unknown package $self->{type}.\n";
+            $msg .= "Error: failed to load $self->{type}: \n $@";
             return 0;
         }
         return 0 unless $self->prereq;
