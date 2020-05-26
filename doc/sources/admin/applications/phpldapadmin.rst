@@ -32,9 +32,9 @@ password inside the file ``config.php``:
 
 .. code-block:: php
 
-   $ldapservers->SetValue($i,'server','auth_type','config');
-   $ldapservers->SetValue($i,'login','dn','cn=Manager,dc=example,dc=com');
-   $ldapservers->SetValue($i,'login','pass','secret');
+   $servers->SetValue('login','auth_type','config');
+   $servers->SetValue('login','bind_id','cn=Manager,dc=example,dc=com');
+   $servers->SetValue('login','bind_pass','secret');
 
 phpLDAPadmin virtual host
 ~~~~~~~~~~~~~~~~~~~~~~~~~
