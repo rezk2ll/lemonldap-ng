@@ -304,7 +304,8 @@ sub getLocalConf {
         $cfg = Config::IniFiles->new( -file => $file, -allowcontinue => 1 );
 
         unless ( defined $cfg ) {
-            $msg .= "Local config Error: " . @Config::IniFiles::errors . "\n";
+            $msg .= "Local config error: "
+              . ( join "\n", @Config::IniFiles::errors ) . "\n";
             return $r;
         }
 
