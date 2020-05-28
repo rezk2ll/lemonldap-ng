@@ -30,6 +30,9 @@ Name          Comment              Example
 You can specify either a single Redis server or a list of Sentinel hosts
 using the \*sentinels\* module parameter
 
+You can find the complete list of supported options on the `Redis perl module
+documentation <https://metacpan.org/pod/Redis#new>`__.
+
 Security
 --------
 
