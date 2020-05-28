@@ -707,10 +707,7 @@ sub run {
                     $session_state
                 );
 
-                $self->logger->debug("Redirect user to $response_url");
-                $req->urldc($response_url);
-
-                return PE_REDIRECT;
+                return $self->_redirectToUrl($req, $response_url);
             }
 
             # Implicit Flow
@@ -780,10 +777,7 @@ sub run {
                     $session_state
                 );
 
-                $self->logger->debug("Redirect user to $response_url");
-                $req->urldc($response_url);
-
-                return PE_REDIRECT;
+                return $self->_redirectToUrl($req, $response_url);
             }
 
             # Hybrid Flow
@@ -885,9 +879,7 @@ sub run {
                     $session_state
                 );
 
-                $self->logger->debug("Redirect user to $response_url");
-                $req->urldc($response_url);
-                return PE_REDIRECT;
+                return $self->_redirectToUrl($req, $response_url);
             }
 
             $self->logger->debug("None flow has been selected");
@@ -969,9 +961,7 @@ sub run {
                       $self->buildLogoutResponse( $post_logout_redirect_uri,
                         $state );
 
-                    $self->logger->debug("Redirect user to $response_url");
-                    $req->urldc($response_url);
-                    return PE_REDIRECT;
+                    return $self->_redirectToUrl($req, $response_url);
                 }
                 return $req->param('confirm') == 1
                   ? ( $err ? $err : PE_LOGOUT_OK )
@@ -2321,6 +2311,17 @@ sub _generateIDToken {
 
     # Create ID Token
     return $self->createIDToken( $id_token_payload_hash, $rp );
+}
+
+sub _redirectToUrl {
+    my ($self, $req, $response_url) = @_;
+
+    # We must clear hidden form fields saved from the request (#2085)
+    $self->p->clearHiddenFormValue($req);
+    $self->logger->debug("Redirect user to $response_url");
+    $req->urldc($response_url);
+
+    return PE_REDIRECT;
 }
 
 1;

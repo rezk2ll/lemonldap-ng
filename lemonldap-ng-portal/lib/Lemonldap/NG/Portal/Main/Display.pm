@@ -524,19 +524,20 @@ sub buildOutgoingHiddenForm {
     my ( $self, $req, $method ) = @_;
     my @keys = keys %{ $req->{portalHiddenFormValues} };
 
-    # Redirection URL contains query string. Before displaying a form,
-    # we must set the query string parameters as form fields so they can
-    # be preserved #2085
+    if ( lc $method eq 'get' ) {
+        my $uri          = URI->new( $req->{urldc} );
+        my %query_params = $uri->query_form;
 
-    my $uri          = URI->new( $req->{urldc} );
-    my %query_params = $uri->query_form;
-    if (%query_params) {
-        $self->logger->debug(
+        # Redirection URL contains query string. Before displaying a form,
+        # we must set the query string parameters as form fields so they can
+        # be preserved #2085
+        if (%query_params) {
+            $self->logger->debug(
 "urldc contains query parameters, setting them as hidden form values"
-        );
-        $self->clearHiddenFormValue($req);
-        foreach ( keys %query_params ) {
-            $self->setHiddenFormValue( $req, $_, $query_params{$_}, "", 0 );
+            );
+            foreach ( keys %query_params ) {
+                $self->setHiddenFormValue( $req, $_, $query_params{$_}, "", 0 );
+            }
         }
     }
 
