@@ -343,9 +343,10 @@ sub _save {
     }
     else {
         $self->logger->error("CLI: Configuration not saved!");
+        printf STDERR "Could not save configuration:";
+        printf STDERR $Lemonldap::NG::Common::Conf::msg;
         printf STDERR "Modifications rejected: %s:\n", $parser->{message}
           if $parser->{message};
-        print STDERR Dumper($parser);
     }
     foreach (qw(errors warnings status)) {
         if ( $parser->{$_} and @{ $parser->{$_} } ) {
