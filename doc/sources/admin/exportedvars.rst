@@ -83,6 +83,7 @@ portal:
                         }
            }
 
+
 Example for macros:
 
 .. code-block:: perl
@@ -91,6 +92,45 @@ Example for macros:
    isAdmin -> $uid eq 'foo' or $uid eq 'bar'
    # other macro
    displayName -> $givenName." ".$surName
+
+   # Use a boolean macro in a rule
+   ^/admin -> $isAdmin
+   # Use a string macro in a HTTP header
+   Display-Name -> $displayName
+
+Defining a group for admins
+
+.. code-block:: perl
+
+   # group
+   admin -> $uid eq 'foo' or $uid eq 'bar'
+
+Using groups in a rule
+
+.. code-block:: perl
+
+   ^/admin -> $groups =~ /\badmin\b/
+
+   # Or with hGroups
+   ^/admin -> defined $hGroups->{'admin'}
+
+   # Since 2.0.8
+   ^/admin -> inGroup('admin')
+
+
+.. note::
+
+    Groups are computed after macros, so a group rule may involve a
+    macro value.
+
+
+.. warning::
+
+    Macros and groups are computed in alphanumeric order,
+    that is, in the order they are displayed in the manager. For example,
+    macro "macro1" will be computed before macro "macro2": so, expression of
+    macro2 may involve value of macro1. As same for groups: a group rule may
+    involve another, previously computed group.
 
 .. |Exported variables in the Manager| image:: /documentation/manager-exported-variables.png
    :class: align-center
