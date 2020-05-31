@@ -993,7 +993,7 @@
 "yubikey2fLabel":"Etiket",
 "yubikey2fLogo":"Logo",
 "yubikey2fClientID":"API istemci ID",
-"yubikey2fFromSessionAttribute": "Get Yubikey ID from session attribute",
+"yubikey2fFromSessionAttribute":"Get Yubikey ID from session attribute",
 "yubikey2fNonce":"Tek seferlik anahtar",
 "yubikey2fPublicIDSize":"OTP açık ID parça boyutu",
 "yubikey2fSecretKey":"API gizli anahtarı",

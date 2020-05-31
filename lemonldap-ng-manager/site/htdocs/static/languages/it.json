@@ -993,7 +993,7 @@
 "yubikey2fLabel":"Label",
 "yubikey2fLogo":"Logo",
 "yubikey2fClientID":"ID client API",
-"yubikey2fFromSessionAttribute": "Get Yubikey ID from session attribute",
+"yubikey2fFromSessionAttribute":"Get Yubikey ID from session attribute",
 "yubikey2fNonce":"Nonce",
 "yubikey2fPublicIDSize":"Dimensione della parte ID OTP pubblica",
 "yubikey2fSecretKey":"Chiave segreta API",

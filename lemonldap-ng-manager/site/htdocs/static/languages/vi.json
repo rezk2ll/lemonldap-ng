@@ -993,7 +993,7 @@
 "yubikey2fLabel":"Label",
 "yubikey2fLogo":"Logo",
 "yubikey2fClientID":"ID ứng dụng khách API",
-"yubikey2fFromSessionAttribute": "Get Yubikey ID from session attribute",
+"yubikey2fFromSessionAttribute":"Get Yubikey ID from session attribute",
 "yubikey2fNonce":"Nonce",
 "yubikey2fPublicIDSize":"Kích thước phần tử công khai OTP",
 "yubikey2fSecretKey":"Khóa bí mật API",

@@ -104,7 +104,7 @@ SKIP: {
     );
     count(1);
 
-    my ( $host, $url, $query ) =
+    ( $host, $url, $query ) =
       expectForm( $res, undef, '/yubikey2fcheck?skin=bootstrap',
         'token', 'code' );
 
@@ -135,7 +135,7 @@ SKIP: {
     );
     count(1);
 
-    my ( $host, $url, $query ) =
+    ( $host, $url, $query ) =
       expectForm( $res, undef, '/yubikey2fcheck?skin=bootstrap',
         'token', 'code' );
 
@@ -152,7 +152,7 @@ SKIP: {
         'Post code'
     );
     count(1);
-    my $id = expectCookie($res);
+    $id = expectCookie($res);
 
     # This user has no UBK, the activation rule should not trigger
     ok(
