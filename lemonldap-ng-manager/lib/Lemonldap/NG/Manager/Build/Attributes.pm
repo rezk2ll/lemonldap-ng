@@ -390,7 +390,7 @@ sub attributes {
         },
         reloadUrls => {
             type          => 'keyTextContainer',
-            help          => 'configlocation.html#configuration_reload',
+            help          => 'configlocation.html#configuration-reload',
             keyTest       => qr/^$Regexp::Common::URI::RFC2396::host(?::\d+)?$/,
             test          => $url,
             msgFail       => '__badUrl__',
@@ -677,7 +677,7 @@ sub attributes {
         applicationList => {
             type    => 'catAndAppList',
             keyTest => qr/\w/,
-            help    => 'portalmenu.html#categories_and_applications',
+            help    => 'portalmenu.html#categories-and-applications',
             default => {
                 default => { catname => 'Default category', type => "category" }
             },
@@ -1289,7 +1289,7 @@ sub attributes {
         groups => {
             type => 'keyTextContainer',
             help =>
-              'exportedvars.html#extend_variables_using_macros_and_groups',
+              'exportedvars.html#extend-variables-using-macros-and-groups',
             test          => sub { return perlExpr(@_) },
             default       => {},
             documentation => 'Groups',
@@ -1297,7 +1297,7 @@ sub attributes {
         macros => {
             type => 'keyTextContainer',
             help =>
-              'exportedvars.html#extend_variables_using_macros_and_groups',
+              'exportedvars.html#extend-variables-using-macros-and-groups',
             keyTest       => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
             keyMsgFail    => '__badMacroName__',
             test          => sub { return perlExpr(@_) },
@@ -2310,7 +2310,7 @@ sub attributes {
         casAppMetaDataMacros => {
             type => 'keyTextContainer',
             help =>
-              'exportedvars.html#extend_variables_using_macros_and_groups',
+              'exportedvars.html#extend-variables-using-macros-and-groups',
             test => {
                 keyTest    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
                 keyMsgFail => '__badMacroName__',
@@ -2325,7 +2325,7 @@ sub attributes {
         casAppMetaDataNodes => {
             type     => 'casAppMetaDataNodeContainer',
             template => 'casAppMetaDataNode',
-            help     => 'idpcas.html#configuring_cas_applications',
+            help     => 'idpcas.html#configuring-cas-applications',
         },
 
         # OpenID Issuer
@@ -2622,7 +2622,7 @@ sub attributes {
         # IDP Keys
         samlIDPMetaDataExportedAttributes => {
             type       => 'samlAttributeContainer',
-            help       => 'authsaml.html#exported_attributes',
+            help       => 'authsaml.html#exported-attributes',
             keyTest    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
             keyMsgFail => '__badMetadataName__',
             test       => qr/\w/,
@@ -2789,7 +2789,7 @@ sub attributes {
         # SP keys
         samlSPMetaDataExportedAttributes => {
             type       => 'samlAttributeContainer',
-            help       => 'idpsaml.html#exported_attributes',
+            help       => 'idpsaml.html#exported-attributes',
             keyTest    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
             keyMsgFail => '__badMetadataName__',
             test       => qr/\w/,
@@ -2921,7 +2921,7 @@ sub attributes {
         samlSPMetaDataMacros => {
             type => 'keyTextContainer',
             help =>
-              'exportedvars.html#extend_variables_using_macros_and_groups',
+              'exportedvars.html#extend-variables-using-macros-and-groups',
             test => {
                 keyTest    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
                 keyMsgFail => '__badMacroName__',
@@ -3912,12 +3912,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataNodes => {
             type => 'oidcOPMetaDataNodeContainer',
             help =>
-'authopenidconnect.html#declare_the_openid_connect_provider_in_llng',
+'authopenidconnect.html#declare-the-openid-connect-provider-in-ll-ng',
         },
         oidcRPMetaDataNodes => {
             type => 'oidcRPMetaDataNodeContainer',
             help =>
-              'idpopenidconnect.html#configuration_of_relying_party_in_llng',
+              'idpopenidconnect.html#configuration-of-relying-party-in-ll-ng',
         },
         oidcOPMetaDataOptions => { type => 'subContainer', },
         oidcRPMetaDataOptions => { type => 'subContainer', },
@@ -4072,7 +4072,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataMacros => {
             type => 'keyTextContainer',
             help =>
-              'exportedvars.html#extend_variables_using_macros_and_groups',
+              'exportedvars.html#extend-variables-using-macros-and-groups',
             test => {
                 keyTest    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
                 keyMsgFail => '__badMacroName__',

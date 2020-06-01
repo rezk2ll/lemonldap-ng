@@ -55,7 +55,7 @@ override_dh_auto_install:
 	done
 
 override_dh_compress:
-	dh_compress -X favicon.ico
+	dh_compress -X favicon.ico -X .woff2 -X .ttf
 
 # Fix lemonldap-ng dirs permissions and owner since dh_fixperms change them:
 #  * global configuration dirs must be writable by www-data but not readable

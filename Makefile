@@ -133,6 +133,9 @@ LLNGTESTLDAP_SLAPD_BIN=/usr/sbin/slapd
 LLNGTESTLDAP_SLAPADD_BIN=/usr/sbin/slapadd
 LLNGTESTLDAP_SCHEMA_DIR=/etc/ldap/schema
 
+# Default website destination
+WEBSITE_DIR=doc/sources/admin/_build/html
+
 # Other
 SRCCOMMONDIR=lemonldap-ng-common
 SRCHANDLERDIR=lemonldap-ng-handler
@@ -255,7 +258,7 @@ CSSDSTFILES=$(CSSSRCFILES:.css=.min.css)
 #  - packaging targets
 #  - developper corner
 
-all:	configure common handler manager portal
+all:	configure common handler manager portal documentation
 	@echo
 	@echo "Building succeed. Now run :"
 	@echo " - 'make test' to verify your installation"
@@ -894,8 +897,6 @@ install_doc_site:
 	@cd doc && for f in `find * -type f ! -name '*.html'`; do \
 		install -v -m 644 $$f $(RDEFDOCDIR)/$$f; \
 	done && cd -
-	# Install symlinks
-	@cd doc && tar cf - `find * -type l` | tar xvf - -C $(RDEFDOCDIR) && cd -
 	# Remove js
 	@cd $(RDEFDOCDIR) && if test "$(USEEXTERNALLIBS)" = "yes"; then \
 		rm -rvf $(DOCEXTERNALLIBS); \
@@ -1017,6 +1018,8 @@ distclean:	clean
 clean:		common_clean handler_clean portal_clean manager_clean stop_web_server
 	@rm -f $$(find */ -name '*bak' -delete)
 	@rm -rf doc/devel
+	@rm -rf doc/pages/documentation/current/*
+	@rm -rf "$(WEBSITE_DIR)"
 	@rm -vf *gz *zip
 	@rm -rf lemonldap-ng-$(VERSION)
 	@echo "Cleaned"
@@ -1145,7 +1148,17 @@ manager_cpan:	manager_conf
 	@mv ${SRCMANAGERDIR}/Lemonldap*.gz .
 
 documentation:
-	@cd doc/ && ../scripts/doc.pl
+	@if [ "$(SKIP_DOCUMENTATION)" ] ; then \
+		echo "Skipped documentation building" ;\
+	else \
+		sphinx-build -b html -d /tmp/doctrees \
+			-Dhtml_theme_path=. -Dhtml_theme=manager_doc_theme \
+			doc/sources/admin/ doc/pages/documentation/current/ ;\
+	fi
+
+website_documentation:
+	sphinx-build -b html -d /tmp/doctrees \
+		doc/sources/admin/ "$(WEBSITE_DIR)"
 
 test-diff:
 	@for file in `find lemonldap-ng-*/lib -type f`; do \

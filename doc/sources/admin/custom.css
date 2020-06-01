@@ -1,0 +1,17 @@
+nav {
+    display: none;
+}
+.wy-nav-top {
+    display: none;
+}
+
+.wy-nav-content-wrap {
+    margin-left: 0px;
+}
+
+footer {
+    display: none;
+}
+div[role="navigation"] {
+    display: none;
+}
