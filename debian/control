@@ -51,6 +51,8 @@ Build-Depends-Indep: libapache-session-perl <!nocheck>,
                      libxml-libxml-perl <!nocheck>,
                      libxml-libxslt-perl <!nocheck>,
                      libxml-simple-perl <!nocheck>,
+                     python3-sphinx,
+                     python3-sphinx-rtd-theme,
                      perl
 Standards-Version: 4.5.0
 Vcs-Browser: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng

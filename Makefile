@@ -258,7 +258,7 @@ CSSDSTFILES=$(CSSSRCFILES:.css=.min.css)
 #  - packaging targets
 #  - developper corner
 
-all:	configure common handler manager portal
+all:	configure common handler manager portal documentation
 	@echo
 	@echo "Building succeed. Now run :"
 	@echo " - 'make test' to verify your installation"
@@ -1132,9 +1132,13 @@ manager_cpan:	manager_conf
 	@mv ${SRCMANAGERDIR}/Lemonldap*.gz .
 
 documentation:
-	@sphinx-build -b html -d /tmp/doctrees \
-		-Dhtml_theme_path=. -Dhtml_theme=manager_doc_theme\
-		doc/sources/admin/ doc/pages/documentation/current/
+	@if [ "$(SKIP_DOCUMENTATION)" ] ; then \
+		echo "Skipped documentation building" ;\
+	else \
+		sphinx-build -b html -d /tmp/doctrees \
+			-Dhtml_theme_path=. -Dhtml_theme=manager_doc_theme \
+			doc/sources/admin/ doc/pages/documentation/current/ ;\
+	fi
 
 website_documentation:
 	sphinx-build -b html -d /tmp/doctrees \
