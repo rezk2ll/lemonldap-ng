@@ -7,22 +7,25 @@ use ExtUtils::MakeMaker;
 sub MY::top_targets {
     my $self = shift;
     my $r    = $self->MM::top_targets(@_);
+    my $newtarget;
     if ( my $cf = $ENV{LMNGCONFFILE} ) {
-        $r =~ s/^(all.*)$/$1 fix_conffile/m;
         $cf = quotemeta($cf);
-        $r .= <<"EOT";
-
-fix_conffile:
+        $newtarget .= <<"EOT";
 	perl -i -pe 's/^(use constant DEFAULTCONFFILE\\s*=>).*\$\$/\$\$1 "$cf";/' blib/lib/Lemonldap/NG/Common/Conf/Constants.pm
 EOT
     }
     if ( my $cf = $ENV{LMNGCONFDIR} ) {
-        $r =~ s/^(all.*)$/$1 fix_confdir/m;
         $cf = quotemeta($cf);
+        $newtarget .= <<"EOT";
+	perl -i -pe 's/^(\\s*dirName\\s+)=>.*/\$\$1 => "$cf",/' blib/lib/Lemonldap/NG/Common/Conf/Constants.pm
+EOT
+    }
+    if ($newtarget) {
+        $r =~ s/^(all.*)$/$1 fix_defaults/m;
         $r .= <<"EOT";
 
-fix_confdir:
-	perl -i -pe 's/^(\\s*dirName\\s+)=>.*/\$\$1 => "$cf",/' blib/lib/Lemonldap/NG/Common/Conf/Constants.pm
+fix_defaults:
+$newtarget
 EOT
     }
     return $r;
