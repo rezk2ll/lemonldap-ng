@@ -260,24 +260,8 @@ sub newSession {
       or return $self->p->sendError( $req, undef, 400 );
     $infos->{_utime} = time();
 
-    my $force = 0;
-    if ( my $s = delete $infos->{__secret} ) {
-        my $t;
-        if ( $t = $self->conf->{cipher}->decrypt($s) ) {
-            if (    $t <= time + $self->conf->{restClockTolerance}
-                and $t > time - $self->conf->{restClockTolerance} )
-            {
-                $force = 1;
-            }
-            else {
-                $self->userLogger->error( 'Clock drift between servers is'
-                      . ' beyond tolerance, force denied.' );
-            }
-        }
-        else {
-            $self->userLogger->error('Bad key, force denied');
-        }
-    }
+    my $secret = delete $infos->{__secret};
+    my $force  = $self->_checkSecret($secret);
 
     if ( $req->param('all') and not $id ) {
         return $self->p->sendError( $req,
@@ -315,14 +299,13 @@ sub newSession {
 
 sub newAuthSession {
     my ( $self, $req, $id ) = @_;
-    my $t;
-    unless ($t = $req->param('secret')
-        and $t = $self->conf->{cipher}->decrypt($t)
-        and $t <= time
-        and $t > time - 30 )
-    {
+
+    # Check secret
+    my $secret = $req->param('secret');
+    unless ( $self->_checkSecret($secret) ) {
         return $self->p->sendError( $req, 'Bad secret', 403 );
     }
+
     $req->{id}    = $id;
     $req->{force} = 1;
     $req->user( $req->param('user') );
@@ -359,24 +342,8 @@ sub updateSession {
       or return $self->p->sendError( $req, undef, 400 );
 
     # Get secret if given
-    my $force = 0;
-    if ( my $s = delete $infos->{__secret} ) {
-        my $t;
-        if ( $t = $self->conf->{cipher}->decrypt($s) ) {
-            if (    $t <= time + $self->conf->{restClockTolerance}
-                and $t > time - $self->conf->{restClockTolerance} )
-            {
-                $force = 1;
-            }
-            else {
-                $self->userLogger->error( 'Clock drift between servers is'
-                      . ' beyond tolerance, force denied.' );
-            }
-        }
-        else {
-            $self->userLogger->error('Bad key, force denied');
-        }
-    }
+    my $secret = delete $infos->{__secret};
+    my $force  = $self->_checkSecret($secret);
 
     # Get session and store info
     my $session = $self->getApacheSession( $mod, $id, $infos, $force )
@@ -773,6 +740,31 @@ sub getUser {
     else {
         return $self->p->sendJSONresponse( $req, { 'result' => JSON::false } );
     }
+}
+
+sub _checkSecret {
+    my ( $self, $secret ) = @_;
+    my $isValid = 0;
+
+    if ($secret) {
+        my $t;
+        if ( $t = $self->conf->{cipher}->decrypt($secret) ) {
+            if (    $t <= time + $self->conf->{restClockTolerance}
+                and $t > time - $self->conf->{restClockTolerance} )
+            {
+                $isValid = 1;
+            }
+            else {
+                $self->logger->error( 'Clock drift between servers is'
+                      . ' beyond tolerance, force denied.' );
+            }
+        }
+        else {
+            $self->logger->error('Bad key, force denied');
+        }
+    }
+    return $isValid;
+
 }
 
 1;
