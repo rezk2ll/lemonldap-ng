@@ -34,7 +34,7 @@ Then, go in ``Slave parameters``:
 -  **Master's IP address**: the IP addresses of servers which are
    accredited to authenticate user. This is a security point, to prevent
    someone to create a session by sending custom headers. You can set
-   one or several IP addresses, separated by spaces, or let this
+   one or several IP addresses, spaces separated, or let this
    parameter empty to disable the checking.
 -  **Control header name**: header that contains a value to control. Let
    this parameter empty to disable the checking.

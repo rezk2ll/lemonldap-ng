@@ -10,8 +10,8 @@ Authentication Users Password
 Presentation
 ------------
 
-The Active Directory module is based on the
-:doc:`LDAP module<authldap>`, with these features:
+The Active Directory module is based on
+:doc:`LDAP module<authldap>`, with the following features:
 
 -  Specific default values for filters to match AD schema
 -  Compatible password modification
@@ -30,7 +30,7 @@ implemented its own policy. LemonLDAP::NG implements partially the
 policy:
 
 -  when pwdLastSet = 0 in the user entry, it means that password has
-   been reset, and a form is presented to the user for him to change his
+   been reset, and a form is displayed to the user to change his
    password.
 -  when computed virtual attribute 'msDS-User-Account-Control-Computed'
    as 6th flag set to 8, the password is considered expired (support

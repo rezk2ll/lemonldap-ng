@@ -18,7 +18,7 @@ example Kerberos, Radius, OTP, etc.
 
 .. attention::
 
-    To authenticate users using Kerberos, you can now use
+    To authenticate users by using Kerberos, you can now use
     the new :doc:`Kerberos authentication module<authkerberos>` which allow
     one to chain Kerberos in a :doc:`combination<authcombination>`\
 
