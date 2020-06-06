@@ -61,7 +61,7 @@ function templates(tpl,key) {
    {
       "cnodes" : tpl+"s/"+key+"/"+"casAppMetaDataMacros",
       "default" : [],
-      "help" : "exportedvars.html#extend_variables_using_macros_and_groups",
+      "help" : "exportedvars.html#extend-variables-using-macros-and-groups",
       "id" : tpl+"s/"+key+"/"+"casAppMetaDataMacros",
       "title" : "casAppMetaDataMacros",
       "type" : "keyTextContainer"
@@ -621,7 +621,7 @@ function templates(tpl,key) {
    {
       "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
       "default" : [],
-      "help" : "exportedvars.html#extend_variables_using_macros_and_groups",
+      "help" : "exportedvars.html#extend-variables-using-macros-and-groups",
       "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
       "title" : "oidcRPMetaDataMacros",
       "type" : "keyTextContainer"
@@ -656,7 +656,7 @@ function templates(tpl,key) {
    {
       "cnodes" : tpl+"s/"+key+"/"+"samlIDPMetaDataExportedAttributes",
       "default" : [],
-      "help" : "authsaml.html#exported_attributes",
+      "help" : "authsaml.html#exported-attributes",
       "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataExportedAttributes",
       "title" : "samlIDPMetaDataExportedAttributes",
       "type" : "samlAttributeContainer"
@@ -992,7 +992,7 @@ function templates(tpl,key) {
    {
       "cnodes" : tpl+"s/"+key+"/"+"samlSPMetaDataExportedAttributes",
       "default" : [],
-      "help" : "idpsaml.html#exported_attributes",
+      "help" : "idpsaml.html#exported-attributes",
       "id" : tpl+"s/"+key+"/"+"samlSPMetaDataExportedAttributes",
       "title" : "samlSPMetaDataExportedAttributes",
       "type" : "samlAttributeContainer"
@@ -1171,7 +1171,7 @@ function templates(tpl,key) {
    {
       "cnodes" : tpl+"s/"+key+"/"+"samlSPMetaDataMacros",
       "default" : [],
-      "help" : "exportedvars.html#extend_variables_using_macros_and_groups",
+      "help" : "exportedvars.html#extend-variables-using-macros-and-groups",
       "id" : tpl+"s/"+key+"/"+"samlSPMetaDataMacros",
       "title" : "samlSPMetaDataMacros",
       "type" : "keyTextContainer"

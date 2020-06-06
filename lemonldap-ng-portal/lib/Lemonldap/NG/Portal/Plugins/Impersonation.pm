@@ -156,19 +156,20 @@ sub run {
         $realSession->{$sphg} ||= {};
 
         # Merge specified groups/hGroups only
+        my %intersct = %{ $realSession->{$sphg} };
         unless ( $self->{conf}->{impersonationMergeSSOgroups} eq 1 ) {
+            %intersct = {};
             my %SSOgroups = map { $_, 1 } split /\Q$separator/,
               $self->{conf}->{impersonationMergeSSOgroups};
 
             $self->logger->debug("Filtering specified groups/hGroups...");
             @realGrps = grep { exists $SSOgroups{$_} } @realGrps;
-            my %intersct =
+            %intersct =
               map {
                 $realSession->{$sphg}->{$_}
                   ? ( $_, $realSession->{$sphg}->{$_} )
                   : ()
               } keys %SSOgroups;
-            $realSession->{$sphg} = \%intersct;
         }
 
         $self->logger->debug("Processing groups...");
@@ -178,7 +179,7 @@ sub run {
 
         $self->logger->debug("Processing hGroups...");
         $spoofSession->{hGroups} =
-          { %{ $spoofSession->{hGroups} }, %{ $realSession->{$sphg} } };
+          { %{ $spoofSession->{hGroups} }, %intersct };
     }
 
     # Main session

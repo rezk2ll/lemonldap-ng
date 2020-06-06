@@ -1,6 +1,7 @@
 use Test::More;
 use strict;
 use IO::String;
+use JSON;
 
 BEGIN {
     require 't/test-lib.pm';
@@ -139,6 +140,27 @@ ok( $res->[2]->[0] =~ m%<td scope="row">_whatToTrace</td>%,
     'Found _whatToTrace' )
   or explain( $res->[2]->[0], 'Macro Key _whatToTrace' );
 count(15);
+
+
+ok(
+    $res = $client->_post(
+        '/checkuser',
+        IO::String->new($query),
+        cookie => "lemonldap=$id",
+        length => length($query),
+    ),
+    'POST checkuser'
+);
+count(1);
+
+my $json;
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+  or print STDERR "$@\n" . Dumper($res);
+my @real_hGroups = map { $_->{key} eq 'real_hGroups' ? $_ : () }
+  @{ $json->{ATTRIBUTES} };
+ok( keys %{$real_hGroups[0]->{value}} == 5, 'Right number of groups found' )
+  or explain( $real_hGroups[0]->{value}, 'Wrong real_hGroups' );
+count(2);
 
 $client->logout($id);
 clean_sessions();

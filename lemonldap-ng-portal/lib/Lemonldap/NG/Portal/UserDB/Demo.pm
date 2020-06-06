@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_BADCREDENTIALS);
 
 extends 'Lemonldap::NG::Common::Module';
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 # Sample accounts from Doctor Who characters
 our %demoAccounts = (
@@ -94,7 +94,7 @@ sub setGroups {
     my $hGroups = $req->sessionInfo->{hGroups} || {};
     for my $grp ( keys %demoGroups ) {
         if ( grep { $_ eq $user } @{ $demoGroups{$grp} } ) {
-            $hGroups->{$grp} = {};
+            $hGroups->{$grp} = { 'name' => $grp };
             $groups =
               ($groups)
               ? $groups . $self->conf->{multiValuesSeparator} . $grp
