@@ -446,7 +446,7 @@ sub _userData {
     $req->sessionInfo->{authenticationLevel} = $realAuthLevel;
     delete $req->sessionInfo->{groups};
 
-    $req->steps( [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
+    $req->steps( [ 'setSessionInfo', $self->p->groupsAndMacros, 'setLocalGroups' ] );
     if ( my $error = $self->p->process($req) ) {
         $self->logger->debug("CheckUser: Process returned error: $error");
         return $req->error($error);
