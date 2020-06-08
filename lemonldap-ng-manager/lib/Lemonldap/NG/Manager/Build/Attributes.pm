@@ -2304,6 +2304,10 @@ sub attributes {
             type          => 'text',
             documentation => 'CAS User attribute',
         },
+        casAppMetaDataOptionsAuthnLevel => {
+            type          => 'int',
+            documentation => 'Authentication level requires to access to this CAS application',
+        },
         casAppMetaDataOptionsRule => {
             type          => 'text',
             test          => sub { return perlExpr(@_) },
@@ -2914,6 +2918,10 @@ sub attributes {
         samlSPMetaDataOptionsForceUTF8 => {
             type    => 'bool',
             default => 1,
+        },
+        samlSPMetaDataOptionsAuthnLevel => {
+            type          => 'int',
+            documentation => 'Authentication level requires to access to this SP',
         },
         samlSPMetaDataOptionsRule => {
             type          => 'text',
@@ -4064,6 +4072,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'bool',
             default       => 0,
             documentation => 'Issue refresh tokens',
+        },
+        oidcRPMetaDataOptionsAuthnLevel => {
+            type          => 'int',
+            documentation => 'Authentication level requires to access to this RP',
         },
         oidcRPMetaDataOptionsRule => {
             type          => 'text',
