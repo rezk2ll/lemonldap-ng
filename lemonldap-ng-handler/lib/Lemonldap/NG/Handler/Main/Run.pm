@@ -265,17 +265,14 @@ sub checkMaintenanceMode {
     return 0;
 }
 
-## @rmethod boolean grant(string uri, string cond)
-# Grant or refuse client using compiled regexp and functions
+## @rmethod int getLevel(string uri, string $vhost)
+# Return required authentication level for this URI
+# default to vhost authentication level
 # @param $uri URI
-# @param $cond optional Function granting access
-# @return True if the user is granted to access to the current URL
-sub grant {
-    my ( $class, $req, $session, $uri, $cond, $vhost ) = @_;
+# @param $vhost vhost name, default to current request
+sub getLevel {
+    my ( $class, $req, $uri, $vhost ) = @_;
     my $level;
-
-    return $cond->( $req, $session ) if ($cond);
-
     $vhost ||= $class->resolveAlias($req);
 
     # Using URL authentification level if exists
@@ -290,13 +287,33 @@ sub grant {
             last;
         }
     }
-    $level
-      ? $class->logger->debug(
-        'Found AuthnLevel=' . $level . ' for "' . "$vhost$uri" . '"' )
-      : $class->logger->debug("No URL authentication level found...");
+    if ($level) {
+        $class->logger->debug(
+            'Found AuthnLevel=' . $level . ' for "' . "$vhost$uri" . '"' );
+        return $level;
+    }
+    else {
+        $class->logger->debug("No URL authentication level found...");
+        return $class->tsv->{authnLevel}->{$vhost};
+    }
+}
+
+## @rmethod boolean grant(string uri, string cond)
+# Grant or refuse client using compiled regexp and functions
+# @param $uri URI
+# @param $cond optional Function granting access
+# @return True if the user is granted to access to the current URL
+sub grant {
+    my ( $class, $req, $session, $uri, $cond, $vhost ) = @_;
+
+    return $cond->( $req, $session ) if ($cond);
+
+    $vhost ||= $class->resolveAlias($req);
+
+    my $level = $class->getLevel( $req, $uri );
 
     # Using VH authentification level if exists
-    if ( $level ||= $class->tsv->{authnLevel}->{$vhost} ) {
+    if ($level) {
         if ( $session->{authenticationLevel} < $level ) {
             $class->logger->debug(
                 "User authentication level = $session->{authenticationLevel}");
