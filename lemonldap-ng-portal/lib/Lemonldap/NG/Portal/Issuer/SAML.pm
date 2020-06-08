@@ -185,6 +185,13 @@ sub storeEnv {
         $req->env->{llng_saml_sp} = $sp;
         if ( my $spConfKey = $self->spList->{$sp}->{confKey} ) {
             $req->env->{llng_saml_spconfkey} = $spConfKey;
+
+            # Store target authentication level in pdata
+            my $targetAuthnLevel =
+              $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
+              ->{samlSPMetaDataOptionsAuthnLevel};
+            $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
+              if $targetAuthnLevel;
         }
     }
     return PE_OK;

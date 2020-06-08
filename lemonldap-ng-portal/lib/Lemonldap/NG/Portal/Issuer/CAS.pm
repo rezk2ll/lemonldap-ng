@@ -100,6 +100,13 @@ sub storeEnvAndCheckGateway {
 
         if ($app) {
             $req->env->{llng_cas_app} = $app;
+
+            # Store target authentication level in pdata
+            my $targetAuthnLevel = $self->conf->{casAppMetaDataOptions}->{$app}
+              ->{casAppMetaDataOptionsAuthnLevel};
+            $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
+              if $targetAuthnLevel;
+
         }
     }
 
