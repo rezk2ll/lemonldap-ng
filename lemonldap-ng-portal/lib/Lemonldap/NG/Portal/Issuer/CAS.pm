@@ -157,20 +157,6 @@ sub run {
           || $req->param('gateway');
         my $casServiceTicket;
 
-        # Renew
-        if (    $renew
-            and $renew eq 'true'
-            and time - $req->sessionInfo->{_utime} >
-            $self->conf->{portalForceAuthnInterval} )
-        {
-
-            # Authentication must be replayed
-            $self->logger->debug("Authentication renew requested");
-            $self->{updateSession} = 1;
-            $req->env->{QUERY_STRING} =~ s/renew=true/renew=false/;
-            return $self->reAuth($req);
-        }
-
         # If no service defined, exit
         unless ( defined $service ) {
             $self->logger->debug("No service defined in CAS URL");
@@ -184,6 +170,26 @@ sub run {
         my ( $host, $uri ) = ( $1, $2 );
         my $app = $self->casAppList->{$host};
 
+        my $spAuthnLevel =
+          $self->conf->{casAppMetaDataOptions}->{$app}
+          ->{casAppMetaDataOptionsAuthnLevel} || 0;
+
+        # Renew
+        if (    $renew
+            and $renew eq 'true'
+            and time - $req->sessionInfo->{_utime} >
+            $self->conf->{portalForceAuthnInterval} )
+        {
+
+            # Authentication must be replayed
+            $self->logger->debug("Authentication renew requested");
+            $self->{updateSession} = 1;
+            $req->env->{QUERY_STRING} =~ s/renew=true/renew=false/;
+
+            $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
+            return $self->reAuth($req);
+        }
+
         # Check access on the service
         my $casAccessControlPolicy = $self->conf->{casAccessControlPolicy};
 
@@ -195,6 +201,21 @@ sub run {
                 $self->userLogger->error('CAS service not configured');
                 return PE_CAS_SERVICE_NOT_ALLOWED;
             }
+
+            # Check if we have sufficient auth level
+            my $authenticationLevel =
+              $req->{sessionInfo}->{authenticationLevel} || 0;
+            if ( $authenticationLevel < $spAuthnLevel ) {
+                $self->logger->debug(
+                        "Insufficient authentication level for service $app"
+                      . " (has: $authenticationLevel, want: $spAuthnLevel)" );
+
+                # Reauth with sp auth level as target
+                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
+                return $self->upgradeAuth($req);
+            }
+
+            # Check access rule
             if ( my $rule = $self->spRules->{$app} ) {
                 if ( $rule->( $req, $req->sessionInfo ) ) {
                     $self->logger->debug("CAS service $service access allowed");
