@@ -249,6 +249,7 @@
 "registerRequestAlreadyIssued":"Eine Registrierungsanforderung für dieses Konto wurde bereits gestellt am",
 "rememberChoice":"Meine Auswahl merken",
 "removeOtherSessions":"Andere Sitzungen löschen",
+"renewSession":"Renew session",
 "resendConfirmMail":"Bestätigungsmail erneuert senden ?",
 "resentConfirm":"Möchtest du, dass die Bestätigungsmail erneut gesendet wird ?",
 "resetCertificateOK":"Your certificate has been successfully reset!",

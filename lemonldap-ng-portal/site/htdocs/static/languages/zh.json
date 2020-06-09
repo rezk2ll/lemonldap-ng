@@ -249,6 +249,7 @@
 "registerRequestAlreadyIssued":"此账户已存在一个注册请求",
 "rememberChoice":"记住我的选择",
 "removeOtherSessions":"移除其他会话",
+"renewSession":"Renew session",
 "resendConfirmMail":"重新发送确认邮件？",
 "resentConfirm":"您想确认邮件被重新发送吗？",
 "resetCertificateOK":"Your certificate has been successfully reset!",

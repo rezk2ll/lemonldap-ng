@@ -249,6 +249,7 @@
 "registerRequestAlreadyIssued":"Yêu cầu đăng ký cho tài khoản này đã được cấp phát",
 "rememberChoice":"Hãy nhớ sự lựa chọn của tôi",
 "removeOtherSessions":"Xóa các phiên khác",
+"renewSession":"Renew session",
 "resendConfirmMail":"Gửi lại thư xác nhận?",
 "resentConfirm":"Bạn có muốn gửi lại thư xác nhận không?",
 "resetCertificateOK":"Your certificate has been successfully reset!",

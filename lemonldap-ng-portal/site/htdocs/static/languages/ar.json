@@ -249,6 +249,7 @@
 "registerRequestAlreadyIssued":"تم إصدار طلب تسجيل لهذا الحساب من قبل",
 "rememberChoice":"تذكر اختياري",
 "removeOtherSessions":"إزالة الجلسات الأخرى",
+"renewSession":"Renew session",
 "resendConfirmMail":"هل تريد إعادة إرسال رسالة التأكيد؟",
 "resentConfirm":"هل تريد إعادة إرسال رسالة التأكيد؟",
 "resetCertificateOK":"Your certificate has been successfully reset!",

@@ -249,6 +249,7 @@
 "registerRequestAlreadyIssued":"A register request for this account was already issued on ",
 "rememberChoice":"Remember my choice",
 "removeOtherSessions":"Remove other sessions",
+"renewSession":"Renew session",
 "resendConfirmMail":"Resend confirmation mail?",
 "resentConfirm":"Do you want the confirmation mail to be resent?",
 "resetCertificateOK":"Your certificate has been successfully reset!",

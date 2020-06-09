@@ -249,6 +249,7 @@
 "registerRequestAlreadyIssued":"Une demande de création pour ce compte a déjà été faite le ",
 "rememberChoice":"Se souvenir de mon choix",
 "removeOtherSessions":"Fermer les autres sessions",
+"renewSession":"Renouveller la session",
 "resendConfirmMail":"Renvoyer le mail de confirmation ?",
 "resentConfirm":"Voulez-vous que le message de confirmation soit renvoyé ?",
 "resetCertificateOK":"Votre certificat a bien été réinitialisé!",

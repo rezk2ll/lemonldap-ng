@@ -249,6 +249,7 @@
 "registerRequestAlreadyIssued":"Bu hesap için kayıt olma isteği zaten şu tarihte alındı:",
 "rememberChoice":"Seçimimi hatırla",
 "removeOtherSessions":"Diğer oturumları sil",
+"renewSession":"Renew session",
 "resendConfirmMail":"Doğrulama e-postasını tekrar gönder?",
 "resentConfirm":"Onay e-postasının tekrar gönderilmesini ister misiniz?",
 "resetCertificateOK":"Sertifikanız başarıyla sıfırlandı!",
