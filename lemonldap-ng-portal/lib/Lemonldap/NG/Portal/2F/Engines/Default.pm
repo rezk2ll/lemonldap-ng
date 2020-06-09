@@ -200,6 +200,19 @@ sub run {
     # Skip 2F unless a module has been registered
     return PE_OK unless ( @{ $self->sfModules } );
 
+    # Skip 2F if authnLevel is already high enough
+    if (
+        $self->conf->{sfOnlyUpgrade}
+        and ( ( $req->pdata->{targetAuthnLevel} || 0 ) <=
+            ( $req->sessionInfo->{authenticationLevel} || 0 ) )
+      )
+    {
+        $self->logger->debug(
+                "Current authentication level satisfied target service,"
+              . " skipping 2FA" );
+        return PE_OK;
+    }
+
     # Remove expired 2F devices
     my $session = $req->sessionInfo;
     if ( $session->{_2fDevices} ) {
