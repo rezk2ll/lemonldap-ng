@@ -396,6 +396,7 @@ sub run {
             $self->logger->debug("$sp match $spConfKey SP in configuration");
             $req->env->{llng_saml_spconfkey} = $spConfKey;
 
+            # Check access rule
             if ( my $rule = $self->spRules->{$spConfKey} ) {
                 unless ( $rule->( $req, $req->sessionInfo ) ) {
                     $self->userLogger->warn( 'User '
@@ -457,6 +458,10 @@ sub run {
 
             $self->logger->debug("SSO: authentication request is valid");
 
+            my $spAuthnLevel =
+              $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
+              ->{samlSPMetaDataOptionsAuthnLevel} || 0;
+
             # Get ForceAuthn flag
             my $force_authn;
 
@@ -484,6 +489,7 @@ sub run {
                       . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
                 # Replay authentication process
+                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
                 return $self->reAuth($req);
             }
 
@@ -493,9 +499,18 @@ sub run {
                   unless ( $self->checkDestination( $login->request, $url ) );
             }
 
-            # Map authenticationLevel with SAML2 authentication context
+            # Check if we have sufficient auth level
             my $authenticationLevel =
-              $req->{sessionInfo}->{authenticationLevel};
+              $req->{sessionInfo}->{authenticationLevel} || 0;
+            if ( $authenticationLevel < $spAuthnLevel ) {
+                $self->logger->debug(
+                    "Insufficient authentication level for service $spConfKey"
+                      . " (has: $authenticationLevel, want: $spAuthnLevel)" );
+
+                # Reauth with sp auth level as target
+                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
+                return $self->upgradeAuth($req);
+            }
 
             $authn_context =
               $self->authnLevel2authnContext($authenticationLevel);
