@@ -261,6 +261,25 @@ sub display {
         );
     }
 
+    # when upgrading session, the administrator can configure LLNG
+    # to ask only for 2FA
+    elsif ( $req->error == PE_UPGRADESESSION ) {
+        $skinfile       = 'upgradesession';
+        %templateParams = (
+            MAIN_LOGO  => $self->conf->{portalMainLogo},
+            LANGS      => $self->conf->{showLanguages},
+            MSG        => 'askToUpgrade',
+            CONFIRMKEY => $self->stamp,
+            PORTAL     => $self->conf->{portal},
+            URL        => $req->data->{_url},
+            (
+                $req->data->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
+                : ()
+            ),
+        );
+    }
+    # renew uses the same plugin as upgrade, but first factor is mandatory
     elsif ( $req->error == PE_RENEWSESSION ) {
         $skinfile       = 'upgradesession';
         %templateParams = (
@@ -278,6 +297,7 @@ sub display {
         );
     }
 
+    # Looks a lot like upgradesession, but no portal logo
     elsif ( $req->error == PE_MUSTAUTHN ) {
         $skinfile       = 'updatesession';
         %templateParams = (
