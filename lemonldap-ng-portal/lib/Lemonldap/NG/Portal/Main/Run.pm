@@ -1120,6 +1120,18 @@ sub sendJSONresponse {
     my ( $self, $req, $j, %args ) = @_;
     my $res = Lemonldap::NG::Common::PSGI::sendJSONresponse(@_);
 
+    # Handle caching
+    if ( $args{ttl} and $args{ttl} =~ /^\d+$/ ) {
+        push @{ $res->[1] },
+          'Cache-Control' => 'public, max-age=' . $args{ttl};
+    }
+    else {
+        push @{ $res->[1] },
+          'Cache-Control' => 'no-cache, no-store, must-revalidate',
+          'Pragma'        => 'no-cache',
+          'Expires'       => '0';
+    }
+
     # If this is a cross-domain request from the portal itself
     # (Ajax SSL to a different VHost)
     # we allow CORS
