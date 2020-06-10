@@ -601,6 +601,12 @@ sub attributes {
             documentation =>
               'Avoid asking confirmation when an Issuer asks to renew auth',
         },
+        skipUpgradeConfirmation => {
+            type    => 'bool',
+            default => 0,
+            documentation =>
+              'Avoid asking confirmation during a session upgrade',
+        },
         refreshSessions => {
             type          => 'bool',
             documentation => 'Refresh sessions plugin',

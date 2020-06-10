@@ -865,6 +865,7 @@
 "singleSession":"Her kullanıcı için bir oturum",
 "singleUserByIP":"Her IP adresi için bir kullanıcı",
 "skipRenewConfirmation":"Yeniden yetkilendirme doğrulamasını geç",
+"skipUpgradeConfirmation":"Skip upgrade confirmation",
 "slaveAuthnLevel":"Doğrulama seviyesi",
 "slaveDisplayLogo":"Doğrulama logosunu görüntüle",
 "slaveExportedVars":"Dışa aktarılan değişkenler",

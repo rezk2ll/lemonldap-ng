@@ -865,6 +865,7 @@
 "singleSession":"One session per user",
 "singleUserByIP":"Một người dùng theo địa chỉ IP",
 "skipRenewConfirmation":"Skip re-auth confirmation",
+"skipUpgradeConfirmation":"Skip upgrade confirmation",
 "slaveAuthnLevel":"Mức xác thực",
 "slaveDisplayLogo":"Display authentication logo",
 "slaveExportedVars":"Biến đã được xuất",

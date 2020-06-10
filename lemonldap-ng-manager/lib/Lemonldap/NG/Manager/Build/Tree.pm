@@ -1016,6 +1016,7 @@ sub tree {
                             nodes => [
                                 'jsRedirect', 'noAjaxHook',
                                 'skipRenewConfirmation',
+                                'skipUpgradeConfirmation',
                             ]
                         },
                         'nginxCustomHandlers',

@@ -3686,6 +3686,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'skipUpgradeConfirmation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'slaveAuthnLevel' => {
             'default' => 2,
             'type'    => 'int'

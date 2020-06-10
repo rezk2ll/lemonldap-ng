@@ -865,6 +865,7 @@
 "singleSession":"One session per user",
 "singleUserByIP":"One user per IP address",
 "skipRenewConfirmation":"Skip re-auth confirmation",
+"skipUpgradeConfirmation":"Skip upgrade confirmation",
 "slaveAuthnLevel":"Authentication level",
 "slaveDisplayLogo":"Display authentication logo",
 "slaveExportedVars":"Exported variables",

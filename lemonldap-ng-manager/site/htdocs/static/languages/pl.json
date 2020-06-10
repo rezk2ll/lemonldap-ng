@@ -865,6 +865,7 @@
 "singleSession":"Jedna sesja na użytkownika",
 "singleUserByIP":"Jeden użytkownik na adres IP",
 "skipRenewConfirmation":"Pomiń potwierdzenie ponownego uwierzytelnienia",
+"skipUpgradeConfirmation":"Skip upgrade confirmation",
 "slaveAuthnLevel":"Poziom uwierzytelnienia",
 "slaveDisplayLogo":"Wyświetl logo uwierzytelniające",
 "slaveExportedVars":"Wyeksportowane zmienne",
