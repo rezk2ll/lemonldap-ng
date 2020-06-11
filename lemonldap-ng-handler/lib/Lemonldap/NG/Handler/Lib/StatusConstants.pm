@@ -19,6 +19,7 @@ sub portalConsts {
         '100' => 'PE_PP_NOT_ALLOWED_CHARACTER',
         '101' => 'PE_PP_NOT_ALLOWED_CHARACTERS',
         '102' => 'PE_UPGRADESESSION',
+        '103' => 'PE_NO_SECOND_FACTORS',
         '2'   => 'PE_FORMEMPTY',
         '21'  => 'PE_PP_ACCOUNT_LOCKED',
         '22'  => 'PE_PP_PASSWORD_EXPIRED',

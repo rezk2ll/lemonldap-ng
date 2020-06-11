@@ -91,6 +91,8 @@
 "PE99":"Lütfen yeni sertifikanızı seçin",
 "PE100":"Parola izin verilmeyen karakter içeriyor",
 "PE101":"Parola izin verilmeyen karakterler içeriyor",
+"PE102":"Session must be upgraded",
+"PE103":"No second factors available for your account",
 "2fRegRequired":"Bu servis iki adımlı kimlik doğrulama gerektiriyor. Şimdi bir cihaz ekleyin ve ardından portala geri dönün",
 "accept":"Kabul Et",
 "accessDenied":"Bu uygulamaya erişim yetkiniz yok",

@@ -91,6 +91,8 @@
 "PE99":"Wybierz nowy certyfikat",
 "PE100":"Hasło zawiera niedozwolony znak",
 "PE101":"Hasło zawiera niedozwolone znaki",
+"PE102":"Session must be upgraded",
+"PE103":"No second factors available for your account",
 "2fRegRequired":"Ta usługa wymaga podwójnego uwierzytelnienia. Zarejestruj urządzenie 2ndFA teraz, a następnie wróć do portalu.",
 "accept":"Akceptuj",
 "accessDenied":"Nie masz dostępu do tej aplikacji",

@@ -106,6 +106,7 @@ use constant {
     PE_PP_NOT_ALLOWED_CHARACTER          => 100,
     PE_PP_NOT_ALLOWED_CHARACTERS         => 101,
     PE_UPGRADESESSION                    => 102,
+    PE_NO_SECOND_FACTORS                 => 103,
 };
 
 sub portalConsts {
@@ -121,6 +122,7 @@ sub portalConsts {
         '100' => 'PE_PP_NOT_ALLOWED_CHARACTER',
         '101' => 'PE_PP_NOT_ALLOWED_CHARACTERS',
         '102' => 'PE_UPGRADESESSION',
+        '103' => 'PE_NO_SECOND_FACTORS',
         '2'   => 'PE_FORMEMPTY',
         '21'  => 'PE_PP_ACCOUNT_LOCKED',
         '22'  => 'PE_PP_PASSWORD_EXPIRED',
@@ -313,7 +315,8 @@ our @EXPORT_OK = (
     'PE_RESETCERTIFICATE_FIRSTACCESS',
     'PE_PP_NOT_ALLOWED_CHARACTER',
     'PE_PP_NOT_ALLOWED_CHARACTERS',
-    'PE_UPGRADESESSION'
+    'PE_UPGRADESESSION',
+    'PE_NO_SECOND_FACTORS'
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT_OK, 'import' ], );
 

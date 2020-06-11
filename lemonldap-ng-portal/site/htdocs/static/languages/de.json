@@ -91,6 +91,8 @@
 "PE99":"Please select your new certificate",
 "PE100":"Password contains not allowed character",
 "PE101":"Password contains not allowed characters",
+"PE102":"Session must be upgraded",
+"PE103":"No second factors available for your account",
 "2fRegRequired":"Dieser Dienst benötigt Zwei-Faktor-Authentifizierung. Bitte legen Sie ein Gerät an und gehen dann zum Portal zurück.",
 "accept":"Akzeptieren",
 "accessDenied":"Sie haben keine Zugriffsberechtigung für diese Anwendung",
