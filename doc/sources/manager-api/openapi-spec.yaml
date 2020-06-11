@@ -1098,6 +1098,8 @@ components:
         notOnOrAfterTimeout:
           type: integer
           default: 72000
+        authnLevel:
+          type: integer
         rule:
           type: string
         forceUTF8:
@@ -1181,6 +1183,8 @@ components:
           type: string
         allowOffline:
           type: boolean
+        authnLevel:
+          type: integer
         rule:
           type: string
         IDTokenSignAlg:
