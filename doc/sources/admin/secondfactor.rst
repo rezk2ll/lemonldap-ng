@@ -29,22 +29,40 @@ The E-Mail, External and REST 2F modules
 parameters.
 
 
-.. tip::
+Registration on first use
+-------------------------
 
-    If you want to force a 2F registration on first login, you can
-    use 'Require 2FA'. You can also use a rule to force 2FA registration
-    only for some users.
-.. tip::
+If you want to force a 2F registration on first login, you can use the *Force
+2FA registration at login* option.
 
-    You can display a message if an
-    expired second factor has been removed by enabling 'Display a message if
-    an expired SF is removed' option or setting a rule.
+You can use a `rule<writingrulesand_headers>` to enable this behavior only for
+some users.
 
-.. tip::
+Second factor expiration
+------------------------
 
-    Link to second factor Manager is automatically display if at least a
-    SFA module is enabled. You can set a rule to display or not the
-    link.
+You can display a message if an expired second factor has been removed by
+enabling *Display a message if an expired SF is removed* option or setting a
+rule.
+
+Self-care on Portal
+-------------------
+
+User may register second facrots themselves on the Portal by using the 2FA Manager.
+
+The link will be displayed if at least a SFA module is enabled. You can set a
+rule to display or not the link.
+
+Session upgrade through 2FA
+---------------------------
+
+If you enable the *Use 2FA for session upgrade* option, second factor will only
+be asked on login if the target application requires an authentication level
+that is strictly higher than the one obtained by the Authentication backend
+(first factor).
+
+The session upgrade mechanism will only require the second factor step, instead
+of doing a complete reauthentication.
 
 Providing tokens from an external source
 ----------------------------------------
