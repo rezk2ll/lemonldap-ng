@@ -115,6 +115,8 @@ sub confirm {
 
         if ($sfOnly) {
 
+            $req->data->{doingSfUpgrade} = 1;
+
             # Short circuit the first part of login, only do a 2FA step
             return $self->p->do(
                 $req,
@@ -132,6 +134,7 @@ sub confirm {
                 '', 0
             );    # Insert token
                   # Do a regular login
+            # Do a regular login
             return $self->p->login($req);
         }
     }
