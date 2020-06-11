@@ -381,7 +381,7 @@ sub autoRedirect {
               )
             {
                 $self->logger->info("Force cleaning pdata");
-                $req->pdata( {} );
+                delete $req->{pdata}->{_url};
             }
             return [ 302, [ Location => $req->{urldc}, $req->spliceHdrs ], [] ];
         }
