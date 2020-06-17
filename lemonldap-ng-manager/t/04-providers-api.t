@@ -275,6 +275,9 @@ sub checkFindByProviderId {
     if ( $providerIdName eq 'entityId' ) {
         ($gotProviderId) = $result->{metadata} =~ m/entityID=['"](.+?)['"]/i;
     }
+    elsif ( $providerIdName eq 'serviceUrl' ) {
+      $gotProviderId = $result->{options}->{service};
+    }
     else {
         $gotProviderId = $result->{$providerIdName};
     }
@@ -289,36 +292,6 @@ sub checkFindByProviderIdNotFound {
     my ( $test, $type, $providerIdName, $providerId ) = splice @_;
     check404( $test,
         findByProviderId( $test, $type, $providerIdName, $providerId ) );
-}
-
-sub checkFindByServiceUrl {
-    my ( $test, $type, $serviceUrl ) = splice @_;
-    my $res = findByProviderId( $test, $type, 'serviceUrl', $serviceUrl );
-    check200( $test, $res );
-    my $result = from_json( $res->[2]->[0] );
-    my $counter = @{$result};
-    ok(
-        $counter > 0, "$test: check if hits were returned ($counter)"
-    );
-    if ($counter > 0) {
-      my $gotServiceUrl = $result->[0]->{options}->{service};
-      ok(
-          $gotServiceUrl eq $serviceUrl,
-  "$test: Check serviceUrl value returned \"$gotServiceUrl\" matched expected value \"$serviceUrl\""
-      );
-    }
-    count(1);
-}
-
-sub checkFindByServiceUrlNotFound {
-  my ( $test, $type, $serviceUrl ) = splice @_;
-  my $res = findByProviderId( $test, $type, 'serviceUrl', $serviceUrl );
-  check200( $test, $res );
-  my $result = from_json( $res->[2]->[0] );
-  my $counter = @{$result};
-  ok(
-      $counter == 0, "$test: check if hits were returned ($counter)"
-  );
 }
 
 sub deleteProvider {
@@ -751,10 +724,12 @@ checkFindByConfKeyError( $test, 'cas/app', '' );
 checkFindByConfKeyError( $test, 'cas/app', '$' );
 
 $test = "CasApp - FindByServiceUrl should find one entry";
-checkFindByServiceUrl( $test, 'cas/app', 'http://mycasapp.acme.com' );
+checkFindByProviderId( $test, 'cas/app', 'serviceUrl',
+    'http://mycasapp.acme.com' );
 
 $test = "CasApp - FindByServiceUrl should find nothing";
-checkFindByServiceUrlNotFound( $test, 'cas/app', 'http://mycasapp.corporation.com' );
+checkFindByProviderIdNotFound( $test, 'cas/app', 'serviceUrl',
+    'http://mycasapp.corporation.com' );
 
 $test = "CasApp - Clean up";
 checkDelete( $test, 'cas/app', 'myCasApp1' );

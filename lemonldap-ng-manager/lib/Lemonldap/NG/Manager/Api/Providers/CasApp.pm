@@ -82,9 +82,12 @@ sub findCasAppsByServiceUrl {
     # Get latest configuration
     my $conf = $self->_confAcc->getConf;
 
-    my @casApps = $self->_getCasAppsByServiceUrl( $conf, $serviceUrl );
+    my $casApp = $self->_getCasAppByServiceUrl( $conf, $serviceUrl );
+    return $self->sendError( $req,
+        "CAS application with service '$serviceUrl' not found", 404 )
+      unless ( defined $casApp );
 
-    return $self->sendJSONresponse( $req, [@casApps] );
+    return $self->sendJSONresponse( $req, $casApp );
 }
 
 sub addCasApp {
@@ -101,20 +104,12 @@ sub addCasApp {
         400 )
       if ( ref $add->{confKey} );
 
-    # return $self->sendError( $req, 'Invalid input: clientId is missing', 400 )
-    #   unless ( defined $add->{clientId} );
-    #
-    # return $self->sendError( $req, 'Invalid input: clientId is not a string',
-    #     400 )
-    #   if ( ref $add->{clientId} );
-    #
-    # return $self->sendError( $req, 'Invalid input: redirectUris is missing',
-    #     400 )
-    #   unless ( defined $add->{redirectUris} );
-    #
-    # return $self->sendError( $req,
-    #     'Invalid input: redirectUris must be an array', 400 )
-    #   unless ( ref( $add->{redirectUris} ) eq "ARRAY" );
+    return $self->sendError( $req, 'Invalid input: service is missing', 400 )
+      unless ( defined $add->{options}->{service} );
+
+    return $self->sendError( $req, 'Invalid input: service is not a string',
+        400 )
+      if ( ref $add->{options}->{service} );
 
     $self->logger->debug(
 "[API] Add CAS App with confKey $add->{confKey} requested"
@@ -129,15 +124,11 @@ sub addCasApp {
         409
     ) if ( defined $self->_getCasAppByConfKey( $conf, $add->{confKey} ) );
 
-#     return $self->sendError(
-#         $req,
-# "Invalid input: An OIDC RP with clientId $add->{clientId} already exists",
-#         409
-#     ) if ( defined $self->_getOidcRpByClientId( $conf, $add->{clientId} ) );
-
-    # $add->{options} = {} unless ( defined $add->{options} );
-    # $add->{options}->{clientId}     = $add->{clientId};
-    # $add->{options}->{redirectUris} = $add->{redirectUris};
+    return $self->sendError(
+        $req,
+"Invalid input: A CAS application with service URL $add->{options}->{service} already exists",
+        409
+    ) if ( defined $self->_getCasAppByServiceUrl( $conf, $add->{options}->{service} ) );
 
     my $res = $self->_pushCasApp( $conf, $add->{confKey}, $add, 1 );
 
@@ -175,11 +166,11 @@ sub updateCasApp {
         "OIDC relying party '$confKey' not found", 404 )
       unless ( defined $current );
 
-    # # check if new clientID exists already
-    # my $res = $self->_isNewOidcRpClientIdUnique( $conf, $confKey, $update );
+    # check if new clientID exists already
+    my $res = $self->_isNewCasAppServiceUrlUnique( $conf, $confKey, $update );
 
-    # return $self->sendError( $req, $res->{msg}, 409 )
-    #   unless ( $res->{res} eq 'ok' );
+    return $self->sendError( $req, $res->{msg}, 409 )
+      unless ( $res->{res} eq 'ok' );
 
     my $res = $self->_pushCasApp( $conf, $confKey, $update, 0 );
 
@@ -206,21 +197,6 @@ sub replaceCasApp {
         400 )
       if ( ref $replace->{confKey} );
 
-    # return $self->sendError( $req, 'Invalid input: clientId is missing', 400 )
-    #   unless ( defined $replace->{clientId} );
-    #
-    # return $self->sendError( $req, 'Invalid input: clientId is not a string',
-    #     400 )
-    #   if ( ref $replace->{clientId} );
-    #
-    # return $self->sendError( $req, 'Invalid input: redirectUris is missing',
-    #     400 )
-    #   unless ( defined $replace->{redirectUris} );
-    #
-    # return $self->sendError( $req,
-    #     'Invalid input: redirectUris must be an array', 400 )
-    #   unless ( ref( $replace->{redirectUris} ) eq "ARRAY" );
-
     $self->logger->debug(
         "[API] CAS App $confKey configuration replace requested");
 
@@ -233,14 +209,10 @@ sub replaceCasApp {
         "OIDC relying party '$confKey' not found", 404 )
       unless ( defined $self->_getCasAppByConfKey( $conf, $confKey ) );
 
-    # # check if new clientID exists already
-    # my $res = $self->_isNewOidcRpClientIdUnique( $conf, $confKey, $replace );
-    # return $self->sendError( $req, $res->{msg}, 409 )
-    #   unless ( $res->{res} eq 'ok' );
-
-    # $replace->{options} = {} unless ( defined $replace->{options} );
-    # $replace->{options}->{clientId}     = $replace->{clientId};
-    # $replace->{options}->{redirectUris} = $replace->{redirectUris};
+    # check if new clientID exists already
+    my $res = $self->_isNewCasAppServiceUrlUnique( $conf, $confKey, $replace );
+    return $self->sendError( $req, $res->{msg}, 409 )
+      unless ( $res->{res} eq 'ok' );
 
     my $res = $self->_pushCasApp( $conf, $confKey, $replace, 1 );
     return $self->sendError( $req, $res->{msg}, 400 )
@@ -285,10 +257,6 @@ sub _getCasAppByConfKey {
     # Check if confKey is defined
     return undef unless ( defined $conf->{casAppMetaDataOptions}->{$confKey} );
 
-    # # Get Client ID
-    # my $clientId = $conf->{casAppMetaDataOptions}->{$confKey}
-    #   ->{casAppMetaDataOptionsClientID};
-
     # Get exported vars
     my $exportedVars = $conf->{casAppMetaDataExportedVars}->{$confKey};
 
@@ -309,35 +277,47 @@ sub _getCasAppByConfKey {
 
     return {
         confKey      => $confKey,
-        # clientId     => $clientId,
         exportedVars => $exportedVars,
-        # extraClaims  => $extraClaims,
         macros       => $macros,
         options      => $options
     };
 }
 
-sub _getCasAppsByServiceUrl {
+sub _getCasAppByServiceUrl {
     my ( $self, $conf, $serviceUrl ) = @_;
 
-    my @casApps =
-      map { $conf->{casAppMetaDataOptions}->{$_}->{casAppMetaDataOptionsService} eq $serviceUrl ?
-        $self->_getCasAppByConfKey( $conf, $_ ) : () }
-      keys %{ $conf->{casAppMetaDataOptions} };
+    foreach ( keys %{ $conf->{casAppMetaDataOptions} } ) {
+        return $self->_getCasAppByConfKey( $conf, $_ )
+          if ( $conf->{casAppMetaDataOptions}->{$_}
+            ->{casAppMetaDataOptionsService} eq $serviceUrl );
+    }
 
-    return @casApps;
+    return undef;
+}
+
+sub _isNewCasAppServiceUrlUnique {
+    my ( $self, $conf, $confKey, $casApp ) = @_;
+    my $curServiceUrl = $self->_getCasAppByConfKey( $conf, $confKey )->{options}->{service};
+    my $newServiceUrl = $casApp->{options}->{service} || "";
+    if ( $newServiceUrl ne '' && $newServiceUrl ne $curServiceUrl ) {
+        return {
+            res => 'ko',
+            msg =>
+"A CAS application with service URL '$newServiceUrl' already exists"
+          }
+          if ( defined $self->_getCasAppByServiceUrl( $conf, $newServiceUrl ) );
+    }
+
+    return { res => 'ok' };
 }
 
 sub _pushCasApp {
     my ( $self, $conf, $confKey, $push, $replace ) = @_;
 
-    $self->logger->debug("PUSH");
-
     my $translatedOptions = {};
     if ($replace) {
         $conf->{casAppMetaDataOptions}->{$confKey}            = {};
         $conf->{casAppMetaDataExportedVars}->{$confKey}       = {};
-#        $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey} = {};
         $conf->{casAppMetaDataMacros}->{$confKey}             = {};
         $translatedOptions = $self->_getDefaultValues('casAppMetaDataNodes');
     }
@@ -345,25 +325,8 @@ sub _pushCasApp {
     if ( defined $push->{options} ) {
 
         foreach ( keys %{ $push->{options} } ) {
-
-            # # redirectUris is handled as an array
-            # if ( $_ eq 'redirectUris' ) {
-            #     my $option = $push->{options}->{$_};
-            #     return {
-            #         res => 'ko',
-            #         msg => "Invalid input: redirectUris is not an array"
-            #       }
-            #       unless ( ref($option) eq "ARRAY" );
-            #
-            #     $translatedOptions->{ $self->_translateOptionApiToConf( $_,
-            #             'casApp' ) } = join( ' ', @{ $push->{options}->{$_} } );
-            # }
-            # else {
-                $translatedOptions->{ $self->_translateOptionApiToConf( $_,
-                        'casApp' ) } = $push->{options}->{$_};
-            # }
-            $self->logger->debug("... translate " . $_  . " to " . $self->_translateOptionApiToConf( $_,
-                    'casApp' ));
+            $translatedOptions->{ $self->_translateOptionApiToConf( $_,
+                    'casApp' ) } = $push->{options}->{$_};
         }
 
         my $res = $self->_hasAllowedAttributes( $translatedOptions,
@@ -376,10 +339,6 @@ sub _pushCasApp {
         }
 
     }
-
-    # $conf->{casAppMetaDataOptions}->{$confKey}->{oidcRPMetaDataOptionsClientID}
-    #   = $push->{clientId}
-    #   if ( defined $push->{clientId} );
 
     if ( defined $push->{exportedVars} ) {
         if ( $self->_isSimpleKeyValueHash( $push->{exportedVars} ) ) {
@@ -412,22 +371,6 @@ sub _pushCasApp {
             };
         }
     }
-
-#     if ( defined $push->{extraClaims} ) {
-#         if ( $self->_isSimpleKeyValueHash( $push->{extraClaims} ) ) {
-#             foreach ( keys %{ $push->{extraClaims} } ) {
-#                 $conf->{oidcRPMetaDataOptionsExtraClaims}->{$confKey}->{$_} =
-#                   $push->{extraClaims}->{$_};
-#             }
-#         }
-#         else {
-#             return {
-#                 res => 'ko',
-#                 msg =>
-# "Invalid input: extraClaims is not a hash object with \"key\":\"value\" attributes"
-#             };
-#         }
-#     }
 
     # Test new configuration
     my $parser = Lemonldap::NG::Manager::Conf::Parser->new( {
