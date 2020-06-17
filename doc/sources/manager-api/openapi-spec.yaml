@@ -415,7 +415,7 @@ paths:
         example: http://mycasapp.example.com/
       responses:
         200:
-          $ref: '#/components/responses/ManyCasApp'
+          $ref: '#/components/responses/OneCasApp'
         400:
           $ref: '#/components/responses/Error'
 

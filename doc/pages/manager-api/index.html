@@ -2283,7 +2283,7 @@ public class CasappApiExample {
         CasappApi apiInstance = new CasappApi();
         String serviceUrl = serviceUrl_example; // String | Service URL to search
         try {
-            array[CasApp] result = apiInstance.findCasAppsByServiceUrl(serviceUrl);
+            CasApp result = apiInstance.findCasAppsByServiceUrl(serviceUrl);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling CasappApi#findCasAppsByServiceUrl");
@@ -2302,7 +2302,7 @@ public class CasappApiExample {
         CasappApi apiInstance = new CasappApi();
         String serviceUrl = serviceUrl_example; // String | Service URL to search
         try {
-            array[CasApp] result = apiInstance.findCasAppsByServiceUrl(serviceUrl);
+            CasApp result = apiInstance.findCasAppsByServiceUrl(serviceUrl);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling CasappApi#findCasAppsByServiceUrl");
@@ -2322,7 +2322,7 @@ CasappApi *apiInstance = [[CasappApi alloc] init];
 
 // Finds CAS applications by Service URL
 [apiInstance findCasAppsByServiceUrlWith:serviceUrl
-              completionHandler: ^(array[CasApp] output, NSError* error) {
+              completionHandler: ^(CasApp output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -2373,7 +2373,7 @@ namespace Example
             try
             {
                 // Finds CAS applications by Service URL
-                array[CasApp] result = apiInstance.findCasAppsByServiceUrl(serviceUrl);
+                CasApp result = apiInstance.findCasAppsByServiceUrl(serviceUrl);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -2476,7 +2476,7 @@ except ApiException as e:
                             </table>
 
                           <h2>Responses</h2>
-                            <h3> Status: 200 - Return a list of CAS Providers </h3>
+                            <h3> Status: 200 - Return a CAS Provider </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
@@ -2491,15 +2491,11 @@ except ApiException as e:
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
-  "description" : "Return a list of CAS Providers",
+  "description" : "Return a CAS Provider",
   "content" : {
     "application/json" : {
       "schema" : {
-        "type" : "array",
-        "items" : {
-          "$ref" : "#/components/schemas/CasApp"
-        },
-        "x-content-type" : "application/json"
+        "$ref" : "#/components/schemas/CasApp"
       }
     }
   }
