@@ -124,13 +124,18 @@ sub addCasApp {
         409
     ) if ( defined $self->_getCasAppByConfKey( $conf, $add->{confKey} ) );
 
-    return $self->sendError(
-        $req,
-"Invalid input: A CAS application with service URL $add->{options}->{service} already exists",
-        409
-    ) if ( defined $self->_getCasAppByServiceUrl( $conf, $add->{options}->{service} ) );
+    my $res =
+      $self->_getCasAppByServiceUrl( $conf, $add->{options}->{service} );
+    if ( defined $res ) {
+        my $conflict = $res->{options}->{service};
+        return $self->sendError(
+            $req,
+"Invalid input: A CAS application with service URL $conflict already exists",
+            409
+        );
+    }
 
-    my $res = $self->_pushCasApp( $conf, $add->{confKey}, $add, 1 );
+    $res = $self->_pushCasApp( $conf, $add->{confKey}, $add, 1 );
 
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
@@ -286,10 +291,15 @@ sub _getCasAppByConfKey {
 sub _getCasAppByServiceUrl {
     my ( $self, $conf, $serviceUrl ) = @_;
 
+    my ($serviceHost) = $serviceUrl =~ m#^(https?://[^/]+)(?:/.*)?$#;
+    return undef unless $serviceHost;
     foreach ( keys %{ $conf->{casAppMetaDataOptions} } ) {
-        return $self->_getCasAppByConfKey( $conf, $_ )
-          if ( $conf->{casAppMetaDataOptions}->{$_}
-            ->{casAppMetaDataOptionsService} eq $serviceUrl );
+        my $url =
+          $conf->{casAppMetaDataOptions}->{$_}->{casAppMetaDataOptionsService};
+        my ($curHost) = $url =~ m#^(https?://[^/]+)(?:/.*)?$#;
+        if ( $serviceHost eq $curHost ) {
+            return $self->_getCasAppByConfKey( $conf, $_ );
+        }
     }
 
     return undef;

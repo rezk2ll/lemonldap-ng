@@ -682,7 +682,12 @@ $casApp->{options}->{playingPossum} = 'ElephantInTheRoom';
 checkAddWithUnknownAttributes( $test, 'cas/app', $casApp );
 delete $casApp->{options}->{playingPossum};
 
+$test               = "CasApp - Add should fail because service host already exists";
+$casApp->{options}->{service} = 'http://mycasapp.acme.com/ignoredbyissuer';
+checkAddFailsIfExists( $test, 'cas/app', $casApp );
+
 $test = "CasApp - 2nd add should succeed";
+$casApp->{options}->{service} = 'http://mycasapp.skynet.com';
 checkAdd( $test, 'cas/app', $casApp );
 
 $test = "CasApp - Update should fail if confKey not found";
