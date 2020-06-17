@@ -801,6 +801,40 @@ sub tests {
             return ( $res, join( ', ', @msg ) );
         },
 
+        # CAS APP URL must be unique
+        casAppHostnameUniqueness => sub {
+            return 1
+              unless ( $conf->{casAppMetaDataOptions}
+                and %{ $conf->{casAppMetaDataOptions} } );
+            my @msg;
+            my $res = 1;
+            my %casHosts;
+            foreach my $casConfKey ( keys %{ $conf->{casAppMetaDataOptions} } )
+            {
+                my $appUrl =
+                  $conf->{casAppMetaDataOptions}->{$casConfKey}
+                  ->{casAppMetaDataOptionsService}
+                  || "";
+                $appUrl =~ m#^(https?://[^/]+)(/.*)?$#;
+                my $appHost = $1;
+                unless ($appHost) {
+                    push @msg,
+                      "$clientConfKey CAS Application has no Service URL";
+                    $res = 0;
+                    next;
+                }
+
+                if ( defined $casHosts{$appHost} ) {
+                    push @msg,
+"$casConfKey and $casHosts{$appHost} have the same Service hostname";
+                    $res = 0;
+                    next;
+                }
+                $casHosts{$appHost} = $casConfKey;
+            }
+            return ( $res, join( ', ', @msg ) );
+        },
+
         # Notification system required with removed SF notification
         sfRemovedNotification => sub {
             return 1 unless ( $conf->{sfRemovedMsgRule} );
