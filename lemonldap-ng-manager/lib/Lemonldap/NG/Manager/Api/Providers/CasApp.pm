@@ -172,7 +172,7 @@ sub updateCasApp {
     return $self->sendError( $req, $res->{msg}, 409 )
       unless ( $res->{res} eq 'ok' );
 
-    my $res = $self->_pushCasApp( $conf, $confKey, $update, 0 );
+    $res = $self->_pushCasApp( $conf, $confKey, $update, 0 );
 
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
@@ -214,7 +214,7 @@ sub replaceCasApp {
     return $self->sendError( $req, $res->{msg}, 409 )
       unless ( $res->{res} eq 'ok' );
 
-    my $res = $self->_pushCasApp( $conf, $confKey, $replace, 1 );
+    $res = $self->_pushCasApp( $conf, $confKey, $replace, 1 );
     return $self->sendError( $req, $res->{msg}, 400 )
       unless ( $res->{res} eq 'ok' );
 
