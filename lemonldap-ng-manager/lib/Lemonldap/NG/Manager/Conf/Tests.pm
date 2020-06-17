@@ -342,7 +342,7 @@ sub tests {
             return 1;
         },
 
-        # SAML entity ID must be uniq
+        # SAML entity ID must be unique
         samlIDPEntityIdUniqueness => sub {
             return 1
               unless ( $conf->{samlIDPMetaDataXML}
@@ -768,6 +768,37 @@ sub tests {
                 return ( 0, $msg );
             }
             return 1;
+        },
+
+        # OIDC RP Client ID must exist and be unique
+        oidcRPClientIdUniqueness => sub {
+            return 1
+              unless ( $conf->{oidcRPMetaDataOptions}
+                and %{ $conf->{oidcRPMetaDataOptions} } );
+            my @msg;
+            my $res = 1;
+            my %clientIds;
+            foreach
+              my $clientConfKey ( keys %{ $conf->{oidcRPMetaDataOptions} } )
+            {
+                my $clientId = $conf->{oidcRPMetaDataOptions}->{$clientConfKey}
+                  ->{oidcRPMetaDataOptionsClientID};
+                unless ($clientId) {
+                    push @msg,
+                      "$clientConfKey OIDC Relying Party has no Client ID";
+                    $res = 0;
+                    next;
+                }
+
+                if ( defined $clientIds{$clientId} ) {
+                    push @msg,
+"$clientConfKey and $clientIds{$clientId} have the same Client ID";
+                    $res = 0;
+                    next;
+                }
+                $clientIds{$clientId} = $clientConfKey;
+            }
+            return ( $res, join( ', ', @msg ) );
         },
 
         # Notification system required with removed SF notification
