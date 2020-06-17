@@ -12,6 +12,7 @@ extends 'Lemonldap::NG::Manager::Plugin',
 use Lemonldap::NG::Manager::Api::2F;
 use Lemonldap::NG::Manager::Api::Providers::OidcRp;
 use Lemonldap::NG::Manager::Api::Providers::SamlSp;
+use Lemonldap::NG::Manager::Api::Providers::CasApp;
 
 our $VERSION = '2.0.8';
 
@@ -53,6 +54,17 @@ sub init {
                             ':confKey' => 'getSamlSpByConfKey'
                         },
                     },
+                    cas => {
+                        app => {
+                            findByConfKey => {
+                                ':uPattern' => 'findCasAppByConfKey'
+                            },
+                            findByServiceUrl => {
+                                ':uServiceUrl' => 'findCasAppsByServiceUrl'
+                            },
+                            ':confKey' => 'getCasAppByConfKey'
+                        },
+                    },
                 },
                 secondFactor => {
                     ':uid' => {
@@ -80,6 +92,9 @@ sub init {
                     saml => {
                         sp => 'addSamlSp'
                     },
+                    cas => {
+                        app => 'addCasApp'
+                    },
                 },
             },
         },
@@ -95,6 +110,9 @@ sub init {
                     },
                     saml => {
                         sp => { ':confKey' => 'replaceSamlSp' }
+                    },
+                    cas => {
+                        app => { ':confKey' => 'replaceCasApp' }
                     },
                 },
             },
@@ -112,6 +130,9 @@ sub init {
                     saml => {
                         sp => { ':confKey' => 'updateSamlSp' }
                     },
+                    cas => {
+                        app => { ':confKey' => 'updateCasApp' }
+                    },
                 },
             },
         },
@@ -127,6 +148,9 @@ sub init {
                     },
                     saml => {
                         sp => { ':confKey' => 'deleteSamlSp' }
+                    },
+                    cas => {
+                        app => { ':confKey' => 'deleteCasApp' }
                     },
                 },
                 secondFactor => {

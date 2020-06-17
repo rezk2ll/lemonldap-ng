@@ -689,6 +689,71 @@
   <script>
     // Script section to load models into a JS Var
     var defs = {}
+            defs.CasApp = {
+  "required" : [ "confKey" ],
+  "type" : "object",
+  "properties" : {
+    "confKey" : {
+      "$ref" : "#/components/schemas/confKey"
+    },
+    "exportedVars" : {
+      "type" : "object",
+      "default" : {
+        "cn" : "cn",
+        "mail" : "mail",
+        "uid" : "uid"
+      }
+    },
+    "macros" : {
+      "type" : "object",
+      "example" : {
+        "myMacroName" : "$macro(rule)"
+      }
+    },
+    "options" : {
+      "$ref" : "#/components/schemas/casOptions"
+    }
+  }
+};
+            defs.CasAppUpdate = {
+  "type" : "object",
+  "properties" : {
+    "macros" : {
+      "type" : "object",
+      "example" : {
+        "myMacroName" : "$macro(rule)"
+      }
+    },
+    "exportedVars" : {
+      "type" : "object",
+      "default" : {
+        "cn" : "cn",
+        "mail" : "mail",
+        "uid" : "uid"
+      }
+    },
+    "options" : {
+      "$ref" : "#/components/schemas/casOptions"
+    }
+  }
+};
+            defs.casOptions = {
+  "type" : "object",
+  "properties" : {
+    "service" : {
+      "type" : "string",
+      "default" : "none"
+    },
+    "userAttribute" : {
+      "type" : "string",
+      "default" : "none"
+    },
+    "rule" : {
+      "type" : "string",
+      "default" : "none"
+    }
+  }
+};
             defs.confKey = {
   "pattern" : "^\\w[\\w\\.\\-]*$",
   "type" : "string"
@@ -1019,6 +1084,28 @@
             -->
             <li class="nav-fixed nav-header active" data-group="_"><a href="#api-_">API Summary</a></li>
 
+                  <li class="nav-header" data-group="Casapp"><a href="#api-Casapp">API Methods - Casapp</a></li>
+                    <li data-group="Casapp" data-name="addcasapp" class="">
+                      <a href="#api-Casapp-addcasapp">addcasapp</a>
+                    </li>
+                    <li data-group="Casapp" data-name="deleteCasApp" class="">
+                      <a href="#api-Casapp-deleteCasApp">deleteCasApp</a>
+                    </li>
+                    <li data-group="Casapp" data-name="findCasAppByConfKey" class="">
+                      <a href="#api-Casapp-findCasAppByConfKey">findCasAppByConfKey</a>
+                    </li>
+                    <li data-group="Casapp" data-name="findCasAppsByServiceUrl" class="">
+                      <a href="#api-Casapp-findCasAppsByServiceUrl">findCasAppsByServiceUrl</a>
+                    </li>
+                    <li data-group="Casapp" data-name="getCasAppByConfKey" class="">
+                      <a href="#api-Casapp-getCasAppByConfKey">getCasAppByConfKey</a>
+                    </li>
+                    <li data-group="Casapp" data-name="replaceCasApp" class="">
+                      <a href="#api-Casapp-replaceCasApp">replaceCasApp</a>
+                    </li>
+                    <li data-group="Casapp" data-name="updateCasApp" class="">
+                      <a href="#api-Casapp-updateCasApp">updateCasApp</a>
+                    </li>
                   <li class="nav-header" data-group="Class2fa"><a href="#api-Class2fa">API Methods - Class2fa</a></li>
                     <li data-group="Class2fa" data-name="deleteSecondFactors" class="">
                       <a href="#api-Class2fa-deleteSecondFactors">deleteSecondFactors</a>
@@ -1095,12 +1182,2672 @@
         <div id="header">
           <div id="api-_">
             <h2 id="welcome-to-apidoc">API and SDK Documentation</h2>
-              <div class="app-desc">Version: 2.0.8</div>
+              <div class="app-desc">Version: 2.0.9</div>
             <hr>
             <div>The Manager API allows an administrator to modify the LemonLDAP::NG configuration programmatically. It is not meant to be accessed by end users. The client libraries mentionned in examples can be generated from doc/sources/manager-api/openapi-spec.yaml</div>
           </div>
         </div>
         <div id="sections">
+                <section id="api-Casapp">
+                  <h1>Casapp</h1>
+                    <div id="api-Casapp-addcasapp">
+                      <article id="api-Casapp-addcasapp-0" data-group="User" data-name="addcasapp" data-version="0">
+                        <div class="pull-left">
+                          <h1>addcasapp</h1>
+                          <p>Create a new CAS Application</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/v1/providers/cas/app</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Casapp-addcasapp-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Casapp-addcasapp-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Casapp-addcasapp-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Casapp-addcasapp-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Casapp-addcasapp-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Casapp-addcasapp-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Casapp-addcasapp-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Casapp-addcasapp-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Casapp-addcasapp-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Casapp-addcasapp-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Casapp-addcasapp-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Casapp-addcasapp-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X POST "/api/v1/api/v1/providers/cas/app"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Casapp-addcasapp-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.CasappApi;
+
+import java.io.File;
+import java.util.*;
+
+public class CasappApiExample {
+
+    public static void main(String[] args) {
+        
+        CasappApi apiInstance = new CasappApi();
+        CasApp body = ; // CasApp | CAS Application to add
+        try {
+            apiInstance.addcasapp(body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CasappApi#addcasapp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Casapp-addcasapp-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CasappApi;
+
+public class CasappApiExample {
+
+    public static void main(String[] args) {
+        CasappApi apiInstance = new CasappApi();
+        CasApp body = ; // CasApp | CAS Application to add
+        try {
+            apiInstance.addcasapp(body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CasappApi#addcasapp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Casapp-addcasapp-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Casapp-addcasapp-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">CasApp *body = ; // CAS Application to add
+
+CasappApi *apiInstance = [[CasappApi alloc] init];
+
+// Create a new CAS Application
+[apiInstance addcasappWith:body
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-addcasapp-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.CasappApi()
+var body = ; // {{CasApp}} CAS Application to add
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.addcasapp(body, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Casapp-addcasapp-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Casapp-addcasapp-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class addcasappExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new CasappApi();
+            var body = new CasApp(); // CasApp | CAS Application to add
+
+            try
+            {
+                // Create a new CAS Application
+                apiInstance.addcasapp(body);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling CasappApi.addcasapp: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-addcasapp-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiCasappApi();
+$body = ; // CasApp | CAS Application to add
+
+try {
+    $api_instance->addcasapp($body);
+} catch (Exception $e) {
+    echo 'Exception when calling CasappApi->addcasapp: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-addcasapp-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::CasappApi;
+
+my $api_instance = WWW::SwaggerClient::CasappApi->new();
+my $body = WWW::SwaggerClient::Object::CasApp->new(); # CasApp | CAS Application to add
+
+eval { 
+    $api_instance->addcasapp(body => $body);
+};
+if ($@) {
+    warn "Exception when calling CasappApi->addcasapp: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-addcasapp-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.CasappApi()
+body =  # CasApp | CAS Application to add
+
+try: 
+    # Create a new CAS Application
+    api_instance.addcasapp(body)
+except ApiException as e:
+    print("Exception when calling CasappApi->addcasapp: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body <span style="color:red;">*</span></td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "description" : "CAS Application to add",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/CasApp"
+      }
+    }
+  },
+  "required" : true
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_addcasapp_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_addcasapp_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 201 - Successful creation </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-addcasapp-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-addcasapp-400-schema">
+                                  <div id='responses-addcasapp-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-addcasapp-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-addcasapp-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-addcasapp-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 409 - The specified object could not be created because its configuration key, client_id or entityID already exists </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-addcasapp-409-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-addcasapp-409-schema">
+                                  <div id='responses-addcasapp-409-schema-409' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified object could not be created because its configuration key, client_id or entityID already exists",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-addcasapp-409-schema-data').val(stringify(schema));
+                                        var result = $('#responses-addcasapp-409-schema-409');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-addcasapp-409-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Casapp-deleteCasApp">
+                      <article id="api-Casapp-deleteCasApp-0" data-group="User" data-name="deleteCasApp" data-version="0">
+                        <div class="pull-left">
+                          <h1>deleteCasApp</h1>
+                          <p>Deletes a CAS Application</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/v1/providers/cas/app/{confKey}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Casapp-deleteCasApp-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Casapp-deleteCasApp-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Casapp-deleteCasApp-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Casapp-deleteCasApp-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Casapp-deleteCasApp-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Casapp-deleteCasApp-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Casapp-deleteCasApp-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Casapp-deleteCasApp-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Casapp-deleteCasApp-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Casapp-deleteCasApp-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Casapp-deleteCasApp-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Casapp-deleteCasApp-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE "/api/v1/api/v1/providers/cas/app/{confKey}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Casapp-deleteCasApp-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.CasappApi;
+
+import java.io.File;
+import java.util.*;
+
+public class CasappApiExample {
+
+    public static void main(String[] args) {
+        
+        CasappApi apiInstance = new CasappApi();
+        confKey confKey = ; // confKey | Configuration key of CAS Application to delete
+        try {
+            apiInstance.deleteCasApp(confKey);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CasappApi#deleteCasApp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Casapp-deleteCasApp-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CasappApi;
+
+public class CasappApiExample {
+
+    public static void main(String[] args) {
+        CasappApi apiInstance = new CasappApi();
+        confKey confKey = ; // confKey | Configuration key of CAS Application to delete
+        try {
+            apiInstance.deleteCasApp(confKey);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CasappApi#deleteCasApp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Casapp-deleteCasApp-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Casapp-deleteCasApp-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of CAS Application to delete
+
+CasappApi *apiInstance = [[CasappApi alloc] init];
+
+// Deletes a CAS Application
+[apiInstance deleteCasAppWith:confKey
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-deleteCasApp-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.CasappApi()
+var confKey = ; // {{confKey}} Configuration key of CAS Application to delete
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.deleteCasApp(confKey, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Casapp-deleteCasApp-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Casapp-deleteCasApp-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class deleteCasAppExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new CasappApi();
+            var confKey = new confKey(); // confKey | Configuration key of CAS Application to delete
+
+            try
+            {
+                // Deletes a CAS Application
+                apiInstance.deleteCasApp(confKey);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling CasappApi.deleteCasApp: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-deleteCasApp-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiCasappApi();
+$confKey = ; // confKey | Configuration key of CAS Application to delete
+
+try {
+    $api_instance->deleteCasApp($confKey);
+} catch (Exception $e) {
+    echo 'Exception when calling CasappApi->deleteCasApp: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-deleteCasApp-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::CasappApi;
+
+my $api_instance = WWW::SwaggerClient::CasappApi->new();
+my $confKey = ; # confKey | Configuration key of CAS Application to delete
+
+eval { 
+    $api_instance->deleteCasApp(confKey => $confKey);
+};
+if ($@) {
+    warn "Exception when calling CasappApi->deleteCasApp: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-deleteCasApp-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.CasappApi()
+confKey =  # confKey | Configuration key of CAS Application to delete
+
+try: 
+    # Deletes a CAS Application
+    api_instance.delete_cas_app(confKey)
+except ApiException as e:
+    print("Exception when calling CasappApi->deleteCasApp: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">confKey*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_deleteCasApp_confKey">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      confKey
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Configuration key of CAS Application to delete
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 204 - Successful modification </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-deleteCasApp-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-deleteCasApp-400-schema">
+                                  <div id='responses-deleteCasApp-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-deleteCasApp-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-deleteCasApp-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-deleteCasApp-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-deleteCasApp-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-deleteCasApp-404-schema">
+                                  <div id='responses-deleteCasApp-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-deleteCasApp-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-deleteCasApp-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-deleteCasApp-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Casapp-findCasAppByConfKey">
+                      <article id="api-Casapp-findCasAppByConfKey-0" data-group="User" data-name="findCasAppByConfKey" data-version="0">
+                        <div class="pull-left">
+                          <h1>findCasAppByConfKey</h1>
+                          <p>Finds CAS applications by configuration key</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Takes a search pattern to be tested against existing applications</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/providers/cas/app/findByConfKey</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Casapp-findCasAppByConfKey-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Casapp-findCasAppByConfKey-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Casapp-findCasAppByConfKey-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Casapp-findCasAppByConfKey-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Casapp-findCasAppByConfKey-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Casapp-findCasAppByConfKey-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Casapp-findCasAppByConfKey-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Casapp-findCasAppByConfKey-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Casapp-findCasAppByConfKey-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Casapp-findCasAppByConfKey-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Casapp-findCasAppByConfKey-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Casapp-findCasAppByConfKey-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "/api/v1/api/v1/providers/cas/app/findByConfKey?pattern="</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Casapp-findCasAppByConfKey-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.CasappApi;
+
+import java.io.File;
+import java.util.*;
+
+public class CasappApiExample {
+
+    public static void main(String[] args) {
+        
+        CasappApi apiInstance = new CasappApi();
+        String pattern = pattern_example; // String | Search pattern
+        try {
+            array[CasApp] result = apiInstance.findCasAppByConfKey(pattern);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CasappApi#findCasAppByConfKey");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Casapp-findCasAppByConfKey-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CasappApi;
+
+public class CasappApiExample {
+
+    public static void main(String[] args) {
+        CasappApi apiInstance = new CasappApi();
+        String pattern = pattern_example; // String | Search pattern
+        try {
+            array[CasApp] result = apiInstance.findCasAppByConfKey(pattern);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CasappApi#findCasAppByConfKey");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Casapp-findCasAppByConfKey-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Casapp-findCasAppByConfKey-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *pattern = pattern_example; // Search pattern
+
+CasappApi *apiInstance = [[CasappApi alloc] init];
+
+// Finds CAS applications by configuration key
+[apiInstance findCasAppByConfKeyWith:pattern
+              completionHandler: ^(array[CasApp] output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-findCasAppByConfKey-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.CasappApi()
+var pattern = pattern_example; // {{String}} Search pattern
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.findCasAppByConfKey(pattern, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Casapp-findCasAppByConfKey-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Casapp-findCasAppByConfKey-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class findCasAppByConfKeyExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new CasappApi();
+            var pattern = pattern_example;  // String | Search pattern
+
+            try
+            {
+                // Finds CAS applications by configuration key
+                array[CasApp] result = apiInstance.findCasAppByConfKey(pattern);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling CasappApi.findCasAppByConfKey: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-findCasAppByConfKey-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiCasappApi();
+$pattern = pattern_example; // String | Search pattern
+
+try {
+    $result = $api_instance->findCasAppByConfKey($pattern);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling CasappApi->findCasAppByConfKey: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-findCasAppByConfKey-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::CasappApi;
+
+my $api_instance = WWW::SwaggerClient::CasappApi->new();
+my $pattern = pattern_example; # String | Search pattern
+
+eval { 
+    my $result = $api_instance->findCasAppByConfKey(pattern => $pattern);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling CasappApi->findCasAppByConfKey: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-findCasAppByConfKey-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.CasappApi()
+pattern = pattern_example # String | Search pattern
+
+try: 
+    # Finds CAS applications by configuration key
+    api_response = api_instance.find_cas_app_by_conf_key(pattern)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling CasappApi->findCasAppByConfKey: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">pattern*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_findCasAppByConfKey_pattern">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        Search pattern
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Return a list of CAS Providers </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-findCasAppByConfKey-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-findCasAppByConfKey-200-schema">
+                                  <div id='responses-findCasAppByConfKey-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Return a list of CAS Providers",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/CasApp"
+        },
+        "x-content-type" : "application/json"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-findCasAppByConfKey-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-findCasAppByConfKey-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-findCasAppByConfKey-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-findCasAppByConfKey-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-findCasAppByConfKey-400-schema">
+                                  <div id='responses-findCasAppByConfKey-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-findCasAppByConfKey-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-findCasAppByConfKey-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-findCasAppByConfKey-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Casapp-findCasAppsByServiceUrl">
+                      <article id="api-Casapp-findCasAppsByServiceUrl-0" data-group="User" data-name="findCasAppsByServiceUrl" data-version="0">
+                        <div class="pull-left">
+                          <h1>findCasAppsByServiceUrl</h1>
+                          <p>Finds CAS applications by Service URL</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/providers/cas/app/findByServiceUrl</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Casapp-findCasAppsByServiceUrl-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Casapp-findCasAppsByServiceUrl-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Casapp-findCasAppsByServiceUrl-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Casapp-findCasAppsByServiceUrl-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Casapp-findCasAppsByServiceUrl-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Casapp-findCasAppsByServiceUrl-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Casapp-findCasAppsByServiceUrl-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Casapp-findCasAppsByServiceUrl-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Casapp-findCasAppsByServiceUrl-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Casapp-findCasAppsByServiceUrl-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Casapp-findCasAppsByServiceUrl-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Casapp-findCasAppsByServiceUrl-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "/api/v1/api/v1/providers/cas/app/findByServiceUrl?serviceUrl="</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Casapp-findCasAppsByServiceUrl-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.CasappApi;
+
+import java.io.File;
+import java.util.*;
+
+public class CasappApiExample {
+
+    public static void main(String[] args) {
+        
+        CasappApi apiInstance = new CasappApi();
+        String serviceUrl = serviceUrl_example; // String | Service URL to search
+        try {
+            CasApp result = apiInstance.findCasAppsByServiceUrl(serviceUrl);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CasappApi#findCasAppsByServiceUrl");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Casapp-findCasAppsByServiceUrl-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CasappApi;
+
+public class CasappApiExample {
+
+    public static void main(String[] args) {
+        CasappApi apiInstance = new CasappApi();
+        String serviceUrl = serviceUrl_example; // String | Service URL to search
+        try {
+            CasApp result = apiInstance.findCasAppsByServiceUrl(serviceUrl);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CasappApi#findCasAppsByServiceUrl");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Casapp-findCasAppsByServiceUrl-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Casapp-findCasAppsByServiceUrl-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *serviceUrl = serviceUrl_example; // Service URL to search
+
+CasappApi *apiInstance = [[CasappApi alloc] init];
+
+// Finds CAS applications by Service URL
+[apiInstance findCasAppsByServiceUrlWith:serviceUrl
+              completionHandler: ^(CasApp output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-findCasAppsByServiceUrl-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.CasappApi()
+var serviceUrl = serviceUrl_example; // {{String}} Service URL to search
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.findCasAppsByServiceUrl(serviceUrl, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Casapp-findCasAppsByServiceUrl-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Casapp-findCasAppsByServiceUrl-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class findCasAppsByServiceUrlExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new CasappApi();
+            var serviceUrl = serviceUrl_example;  // String | Service URL to search
+
+            try
+            {
+                // Finds CAS applications by Service URL
+                CasApp result = apiInstance.findCasAppsByServiceUrl(serviceUrl);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling CasappApi.findCasAppsByServiceUrl: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-findCasAppsByServiceUrl-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiCasappApi();
+$serviceUrl = serviceUrl_example; // String | Service URL to search
+
+try {
+    $result = $api_instance->findCasAppsByServiceUrl($serviceUrl);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling CasappApi->findCasAppsByServiceUrl: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-findCasAppsByServiceUrl-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::CasappApi;
+
+my $api_instance = WWW::SwaggerClient::CasappApi->new();
+my $serviceUrl = serviceUrl_example; # String | Service URL to search
+
+eval { 
+    my $result = $api_instance->findCasAppsByServiceUrl(serviceUrl => $serviceUrl);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling CasappApi->findCasAppsByServiceUrl: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-findCasAppsByServiceUrl-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.CasappApi()
+serviceUrl = serviceUrl_example # String | Service URL to search
+
+try: 
+    # Finds CAS applications by Service URL
+    api_response = api_instance.find_cas_apps_by_service_url(serviceUrl)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling CasappApi->findCasAppsByServiceUrl: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">serviceUrl*</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_findCasAppsByServiceUrl_serviceUrl">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        Service URL to search
+                                                    </div>
+                                            </div>
+                                                <div class="inner required">
+                                                    Required
+                                                </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Return a CAS Provider </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-findCasAppsByServiceUrl-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-findCasAppsByServiceUrl-200-schema">
+                                  <div id='responses-findCasAppsByServiceUrl-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Return a CAS Provider",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/CasApp"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-findCasAppsByServiceUrl-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-findCasAppsByServiceUrl-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-findCasAppsByServiceUrl-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-findCasAppsByServiceUrl-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-findCasAppsByServiceUrl-400-schema">
+                                  <div id='responses-findCasAppsByServiceUrl-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-findCasAppsByServiceUrl-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-findCasAppsByServiceUrl-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-findCasAppsByServiceUrl-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Casapp-getCasAppByConfKey">
+                      <article id="api-Casapp-getCasAppByConfKey-0" data-group="User" data-name="getCasAppByConfKey" data-version="0">
+                        <div class="pull-left">
+                          <h1>getCasAppByConfKey</h1>
+                          <p>Get CAS Application by configuration key</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Returns a single Application</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/providers/cas/app/{confKey}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Casapp-getCasAppByConfKey-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Casapp-getCasAppByConfKey-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Casapp-getCasAppByConfKey-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Casapp-getCasAppByConfKey-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Casapp-getCasAppByConfKey-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Casapp-getCasAppByConfKey-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Casapp-getCasAppByConfKey-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Casapp-getCasAppByConfKey-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Casapp-getCasAppByConfKey-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Casapp-getCasAppByConfKey-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Casapp-getCasAppByConfKey-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Casapp-getCasAppByConfKey-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "/api/v1/api/v1/providers/cas/app/{confKey}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Casapp-getCasAppByConfKey-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.CasappApi;
+
+import java.io.File;
+import java.util.*;
+
+public class CasappApiExample {
+
+    public static void main(String[] args) {
+        
+        CasappApi apiInstance = new CasappApi();
+        confKey confKey = ; // confKey | Configuration key of CAS Application
+        try {
+            CasApp result = apiInstance.getCasAppByConfKey(confKey);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CasappApi#getCasAppByConfKey");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Casapp-getCasAppByConfKey-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CasappApi;
+
+public class CasappApiExample {
+
+    public static void main(String[] args) {
+        CasappApi apiInstance = new CasappApi();
+        confKey confKey = ; // confKey | Configuration key of CAS Application
+        try {
+            CasApp result = apiInstance.getCasAppByConfKey(confKey);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CasappApi#getCasAppByConfKey");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Casapp-getCasAppByConfKey-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Casapp-getCasAppByConfKey-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of CAS Application
+
+CasappApi *apiInstance = [[CasappApi alloc] init];
+
+// Get CAS Application by configuration key
+[apiInstance getCasAppByConfKeyWith:confKey
+              completionHandler: ^(CasApp output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-getCasAppByConfKey-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.CasappApi()
+var confKey = ; // {{confKey}} Configuration key of CAS Application
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.getCasAppByConfKey(confKey, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Casapp-getCasAppByConfKey-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Casapp-getCasAppByConfKey-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class getCasAppByConfKeyExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new CasappApi();
+            var confKey = new confKey(); // confKey | Configuration key of CAS Application
+
+            try
+            {
+                // Get CAS Application by configuration key
+                CasApp result = apiInstance.getCasAppByConfKey(confKey);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling CasappApi.getCasAppByConfKey: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-getCasAppByConfKey-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiCasappApi();
+$confKey = ; // confKey | Configuration key of CAS Application
+
+try {
+    $result = $api_instance->getCasAppByConfKey($confKey);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling CasappApi->getCasAppByConfKey: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-getCasAppByConfKey-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::CasappApi;
+
+my $api_instance = WWW::SwaggerClient::CasappApi->new();
+my $confKey = ; # confKey | Configuration key of CAS Application
+
+eval { 
+    my $result = $api_instance->getCasAppByConfKey(confKey => $confKey);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling CasappApi->getCasAppByConfKey: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-getCasAppByConfKey-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.CasappApi()
+confKey =  # confKey | Configuration key of CAS Application
+
+try: 
+    # Get CAS Application by configuration key
+    api_response = api_instance.get_cas_app_by_conf_key(confKey)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling CasappApi->getCasAppByConfKey: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">confKey*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_getCasAppByConfKey_confKey">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      confKey
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Configuration key of CAS Application
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Return a CAS Provider </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getCasAppByConfKey-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getCasAppByConfKey-200-schema">
+                                  <div id='responses-getCasAppByConfKey-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Return a CAS Provider",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/CasApp"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getCasAppByConfKey-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getCasAppByConfKey-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getCasAppByConfKey-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getCasAppByConfKey-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getCasAppByConfKey-400-schema">
+                                  <div id='responses-getCasAppByConfKey-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getCasAppByConfKey-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getCasAppByConfKey-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getCasAppByConfKey-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getCasAppByConfKey-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getCasAppByConfKey-404-schema">
+                                  <div id='responses-getCasAppByConfKey-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getCasAppByConfKey-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getCasAppByConfKey-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getCasAppByConfKey-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Casapp-replaceCasApp">
+                      <article id="api-Casapp-replaceCasApp-0" data-group="User" data-name="replaceCasApp" data-version="0">
+                        <div class="pull-left">
+                          <h1>replaceCasApp</h1>
+                          <p>Replaces a CAS Application</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/v1/providers/cas/app/{confKey}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Casapp-replaceCasApp-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Casapp-replaceCasApp-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Casapp-replaceCasApp-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Casapp-replaceCasApp-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Casapp-replaceCasApp-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Casapp-replaceCasApp-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Casapp-replaceCasApp-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Casapp-replaceCasApp-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Casapp-replaceCasApp-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Casapp-replaceCasApp-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Casapp-replaceCasApp-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Casapp-replaceCasApp-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT "/api/v1/api/v1/providers/cas/app/{confKey}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Casapp-replaceCasApp-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.CasappApi;
+
+import java.io.File;
+import java.util.*;
+
+public class CasappApiExample {
+
+    public static void main(String[] args) {
+        
+        CasappApi apiInstance = new CasappApi();
+        confKey confKey = ; // confKey | Configuration key of CAS Application that needs to be replaced
+        CasApp body = ; // CasApp | 
+        try {
+            apiInstance.replaceCasApp(confKey, body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CasappApi#replaceCasApp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Casapp-replaceCasApp-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CasappApi;
+
+public class CasappApiExample {
+
+    public static void main(String[] args) {
+        CasappApi apiInstance = new CasappApi();
+        confKey confKey = ; // confKey | Configuration key of CAS Application that needs to be replaced
+        CasApp body = ; // CasApp | 
+        try {
+            apiInstance.replaceCasApp(confKey, body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CasappApi#replaceCasApp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Casapp-replaceCasApp-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Casapp-replaceCasApp-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of CAS Application that needs to be replaced
+CasApp *body = ; //  (optional)
+
+CasappApi *apiInstance = [[CasappApi alloc] init];
+
+// Replaces a CAS Application
+[apiInstance replaceCasAppWith:confKey
+    body:body
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-replaceCasApp-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.CasappApi()
+var confKey = ; // {{confKey}} Configuration key of CAS Application that needs to be replaced
+var opts = { 
+  'body':  // {{CasApp}} 
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.replaceCasApp(confKey, opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Casapp-replaceCasApp-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Casapp-replaceCasApp-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class replaceCasAppExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new CasappApi();
+            var confKey = new confKey(); // confKey | Configuration key of CAS Application that needs to be replaced
+            var body = new CasApp(); // CasApp |  (optional) 
+
+            try
+            {
+                // Replaces a CAS Application
+                apiInstance.replaceCasApp(confKey, body);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling CasappApi.replaceCasApp: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-replaceCasApp-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiCasappApi();
+$confKey = ; // confKey | Configuration key of CAS Application that needs to be replaced
+$body = ; // CasApp | 
+
+try {
+    $api_instance->replaceCasApp($confKey, $body);
+} catch (Exception $e) {
+    echo 'Exception when calling CasappApi->replaceCasApp: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-replaceCasApp-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::CasappApi;
+
+my $api_instance = WWW::SwaggerClient::CasappApi->new();
+my $confKey = ; # confKey | Configuration key of CAS Application that needs to be replaced
+my $body = WWW::SwaggerClient::Object::CasApp->new(); # CasApp | 
+
+eval { 
+    $api_instance->replaceCasApp(confKey => $confKey, body => $body);
+};
+if ($@) {
+    warn "Exception when calling CasappApi->replaceCasApp: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-replaceCasApp-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.CasappApi()
+confKey =  # confKey | Configuration key of CAS Application that needs to be replaced
+body =  # CasApp |  (optional)
+
+try: 
+    # Replaces a CAS Application
+    api_instance.replace_cas_app(confKey, body=body)
+except ApiException as e:
+    print("Exception when calling CasappApi->replaceCasApp: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">confKey*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_replaceCasApp_confKey">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      confKey
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Configuration key of CAS Application that needs to be replaced
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body </td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/CasApp"
+      }
+    }
+  }
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_replaceCasApp_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_replaceCasApp_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 204 - Successful modification </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-replaceCasApp-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-replaceCasApp-400-schema">
+                                  <div id='responses-replaceCasApp-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-replaceCasApp-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-replaceCasApp-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-replaceCasApp-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-replaceCasApp-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-replaceCasApp-404-schema">
+                                  <div id='responses-replaceCasApp-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-replaceCasApp-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-replaceCasApp-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-replaceCasApp-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 409 - The specified object could not be created because its configuration key, client_id or entityID already exists </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-replaceCasApp-409-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-replaceCasApp-409-schema">
+                                  <div id='responses-replaceCasApp-409-schema-409' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified object could not be created because its configuration key, client_id or entityID already exists",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-replaceCasApp-409-schema-data').val(stringify(schema));
+                                        var result = $('#responses-replaceCasApp-409-schema-409');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-replaceCasApp-409-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Casapp-updateCasApp">
+                      <article id="api-Casapp-updateCasApp-0" data-group="User" data-name="updateCasApp" data-version="0">
+                        <div class="pull-left">
+                          <h1>updateCasApp</h1>
+                          <p>Updates a CAS Application.</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="patch"><code><span class="pln">/api/v1/providers/cas/app/{confKey}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Casapp-updateCasApp-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Casapp-updateCasApp-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Casapp-updateCasApp-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Casapp-updateCasApp-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Casapp-updateCasApp-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Casapp-updateCasApp-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Casapp-updateCasApp-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Casapp-updateCasApp-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Casapp-updateCasApp-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Casapp-updateCasApp-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Casapp-updateCasApp-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Casapp-updateCasApp-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X PATCH "/api/v1/api/v1/providers/cas/app/{confKey}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Casapp-updateCasApp-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.CasappApi;
+
+import java.io.File;
+import java.util.*;
+
+public class CasappApiExample {
+
+    public static void main(String[] args) {
+        
+        CasappApi apiInstance = new CasappApi();
+        confKey confKey = ; // confKey | Configuration key of CAS Application that needs to be updated
+        CasAppUpdate body = ; // CasAppUpdate | 
+        try {
+            apiInstance.updateCasApp(confKey, body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CasappApi#updateCasApp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Casapp-updateCasApp-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.CasappApi;
+
+public class CasappApiExample {
+
+    public static void main(String[] args) {
+        CasappApi apiInstance = new CasappApi();
+        confKey confKey = ; // confKey | Configuration key of CAS Application that needs to be updated
+        CasAppUpdate body = ; // CasAppUpdate | 
+        try {
+            apiInstance.updateCasApp(confKey, body);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CasappApi#updateCasApp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Casapp-updateCasApp-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Casapp-updateCasApp-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of CAS Application that needs to be updated
+CasAppUpdate *body = ; //  (optional)
+
+CasappApi *apiInstance = [[CasappApi alloc] init];
+
+// Updates a CAS Application.
+[apiInstance updateCasAppWith:confKey
+    body:body
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-updateCasApp-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.CasappApi()
+var confKey = ; // {{confKey}} Configuration key of CAS Application that needs to be updated
+var opts = { 
+  'body':  // {{CasAppUpdate}} 
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.updateCasApp(confKey, opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Casapp-updateCasApp-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Casapp-updateCasApp-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class updateCasAppExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new CasappApi();
+            var confKey = new confKey(); // confKey | Configuration key of CAS Application that needs to be updated
+            var body = new CasAppUpdate(); // CasAppUpdate |  (optional) 
+
+            try
+            {
+                // Updates a CAS Application.
+                apiInstance.updateCasApp(confKey, body);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling CasappApi.updateCasApp: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-updateCasApp-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiCasappApi();
+$confKey = ; // confKey | Configuration key of CAS Application that needs to be updated
+$body = ; // CasAppUpdate | 
+
+try {
+    $api_instance->updateCasApp($confKey, $body);
+} catch (Exception $e) {
+    echo 'Exception when calling CasappApi->updateCasApp: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-updateCasApp-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::CasappApi;
+
+my $api_instance = WWW::SwaggerClient::CasappApi->new();
+my $confKey = ; # confKey | Configuration key of CAS Application that needs to be updated
+my $body = WWW::SwaggerClient::Object::CasAppUpdate->new(); # CasAppUpdate | 
+
+eval { 
+    $api_instance->updateCasApp(confKey => $confKey, body => $body);
+};
+if ($@) {
+    warn "Exception when calling CasappApi->updateCasApp: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Casapp-updateCasApp-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.CasappApi()
+confKey =  # confKey | Configuration key of CAS Application that needs to be updated
+body =  # CasAppUpdate |  (optional)
+
+try: 
+    # Updates a CAS Application.
+    api_instance.update_cas_app(confKey, body=body)
+except ApiException as e:
+    print("Exception when calling CasappApi->updateCasApp: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">confKey*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_updateCasApp_confKey">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      confKey
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Configuration key of CAS Application that needs to be updated
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body </td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/CasAppUpdate"
+      }
+    }
+  }
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_updateCasApp_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_updateCasApp_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 204 - Successful modification </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateCasApp-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateCasApp-400-schema">
+                                  <div id='responses-updateCasApp-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateCasApp-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateCasApp-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateCasApp-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateCasApp-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateCasApp-404-schema">
+                                  <div id='responses-updateCasApp-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateCasApp-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateCasApp-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateCasApp-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 409 - The specified object could not be created because its configuration key, client_id or entityID already exists </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-updateCasApp-409-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-updateCasApp-409-schema">
+                                  <div id='responses-updateCasApp-409-schema-409' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified object could not be created because its configuration key, client_id or entityID already exists",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-updateCasApp-409-schema-data').val(stringify(schema));
+                                        var result = $('#responses-updateCasApp-409-schema-409');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-updateCasApp-409-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                  </section>
                 <section id="api-Class2fa">
                   <h1>Class2fa</h1>
                     <div id="api-Class2fa-deleteSecondFactors">
@@ -5032,7 +7779,9 @@ OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
 var api = new LemonLdapngManagerApi.OidcrpApi()
 var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relaying Party that needs to be replaced
-
+var opts = { 
+  'body':  // {{OidcRp}} 
+};
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -5040,7 +7789,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.replaceOidcRp(confKey, callback);
+api.replaceOidcRp(confKey, opts, callback);
 </code></pre>
                             </div>
 
@@ -5471,7 +8220,9 @@ OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
 var api = new LemonLdapngManagerApi.OidcrpApi()
 var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relaying Party that needs to be updated
-
+var opts = { 
+  'body':  // {{OidcRpUpdate}} 
+};
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -5479,7 +8230,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.updateOidcRp(confKey, callback);
+api.updateOidcRp(confKey, opts, callback);
 </code></pre>
                             </div>
 
@@ -7736,7 +10487,9 @@ SamlspApi *apiInstance = [[SamlspApi alloc] init];
 
 var api = new LemonLdapngManagerApi.SamlspApi()
 var confKey = ; // {{confKey}} Configuration key of SAML Service Provider that needs to be replaced
-
+var opts = { 
+  'body':  // {{SamlSp}} 
+};
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -7744,7 +10497,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.replaceSamlSp(confKey, callback);
+api.replaceSamlSp(confKey, opts, callback);
 </code></pre>
                             </div>
 
@@ -8175,7 +10928,9 @@ SamlspApi *apiInstance = [[SamlspApi alloc] init];
 
 var api = new LemonLdapngManagerApi.SamlspApi()
 var confKey = ; // {{confKey}} Configuration key of SAML Service Provider that needs to be updated
-
+var opts = { 
+  'body':  // {{SamlSpUpdate}} 
+};
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -8183,7 +10938,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.updateSamlSp(confKey, callback);
+api.updateSamlSp(confKey, opts, callback);
 </code></pre>
                             </div>
 
