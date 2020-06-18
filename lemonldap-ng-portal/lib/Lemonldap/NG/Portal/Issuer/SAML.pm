@@ -18,7 +18,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_UNAUTHORIZEDPARTNER
 );
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::SAML';
@@ -393,14 +393,14 @@ sub run {
                 unless ( $rule->( $req, $req->sessionInfo ) ) {
                     $self->userLogger->warn( 'User '
                           . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                          . " is not authorized to access to $sp" );
+                          . " is not authorized to access to $spConfKey" );
                     return PE_UNAUTHORIZEDPARTNER;
                 }
             }
 
             $self->userLogger->notice( 'User '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                  . " is authorized to access to $sp" );
+                  . " is authorized to access to $spConfKey" );
 
             # Do we check signature?
             my $checkSSOMessageSignature =
@@ -473,7 +473,7 @@ sub run {
             {
 
                 $self->userLogger->info(
-                    "SAML SP $sp ask to refresh session of "
+                    "SAML SP $spConfKey ask to refresh session of "
                       . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
                 # Replay authentication process
