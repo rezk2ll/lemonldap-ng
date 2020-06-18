@@ -71,18 +71,36 @@ Logout:
 
    [notice] User clement.oudot has been disconnected from LDAP (81.20.13.21)
 
-Access to an SAML SP:
+Access to a CAS application non registered in configuration (when CAS server is open):
 
 ::
 
-   [notice] User clement.oudot is authorized to access to sp-example-entityid
-   [notice] SAML authentication response sent to SAML SP sp-example for clement.oudot
+   [notice] User clement.oudot is redirected to https://cas.service.url
 
-Access to an OIDC RP:
+Access to a CAS application whose configuration key is ``app-example``:
+
+::
+
+   [notice] User clement.oudot is authorized to access to app-example
+
+Access to an SAML SP whose configuration key is ``sp-example``:
+
+::
+
+   [notice] User clement.oudot is authorized to access to sp-example
+
+Access to an OIDC RP whose configuration key is ``rp-example``:
 
 ::
 
    [notice] User clement.oudot is authorized to access to rp-example
+
+Access to a Get application whose vhost configuration key is ``host.example.com``:
+
+::
+
+   [notice] User clement.oudot is authorized to access to host.example.com
+
 
 Default loggers
 ---------------
