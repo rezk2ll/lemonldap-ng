@@ -14,7 +14,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::CAS';
@@ -195,7 +195,7 @@ sub run {
                 else {
                     $self->userLogger->warn( 'User '
                           . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                          . " is not authorized to access to $service" );
+                          . " is not authorized to access to $app" );
 
                     if ( $casAccessControlPolicy =~ /^(error)$/i ) {
                         $self->logger->debug(
@@ -213,9 +213,16 @@ sub run {
             }
         }
 
-        $self->userLogger->notice( 'User '
-              . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-              . " is authorized to access to $service" );
+        if ($app) {
+            $self->userLogger->notice( 'User '
+                  . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                  . " is authorized to access to $app" );
+        }
+        else {
+            $self->userLogger->notice( 'User '
+                  . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                  . " is redirected to $service" );
+        }
 
         unless ($casServiceTicket) {
 
