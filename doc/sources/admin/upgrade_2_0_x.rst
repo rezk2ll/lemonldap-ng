@@ -22,6 +22,8 @@ backups and a rollback plan ready!
 
 -  | Bad default value to display OIDC Consents tab has been fixed.
    | The default value is ``$_oidcConsents``
+-  Some user log messages have been modified, check :doc:`logs documentation <logs>`
+   (see also `#2244 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/2244>`__)
 
 2.0.8
 -----
