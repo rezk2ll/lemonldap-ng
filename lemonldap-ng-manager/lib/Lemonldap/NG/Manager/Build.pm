@@ -326,6 +326,12 @@ use constant HANDLERSECTION  => "handler";
 use constant MANAGERSECTION  => "manager";
 use constant SESSIONSEXPLORERSECTION => "sessionsExplorer";
 use constant APPLYSECTION            => "apply";
+
+# Default configuration backend
+use constant DEFAULTCONFBACKEND => "File";
+use constant DEFAULTCONFBACKENDOPTIONS => (
+    dirName => '/usr/local/lemonldap-ng/data/conf',
+);
 $confConstants
 our \@sessionTypes = ( '$sessionTypes' );
 
@@ -348,6 +354,8 @@ our %EXPORT_TAGS = (
           MANAGERSECTION
           SESSIONSEXPLORERSECTION
           APPLYSECTION
+          DEFAULTCONFBACKEND
+          DEFAULTCONFBACKENDOPTIONS
           NO
           \$hashParameters
           \@sessionTypes
