@@ -328,7 +328,7 @@ sub newRawConf {
 }
 
 ## @method private applyConf()
-# Try to prevent other servers declared in `reloadUrls` that a new
+# Try to inform other servers declared in `reloadUrls` that a new
 # configuration is available.
 #
 #@return reload status as boolean

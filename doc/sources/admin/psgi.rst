@@ -128,7 +128,7 @@ Then adapt your Nginx configuration to use this uWSGI app.
 Configuration
 ^^^^^^^^^^^^^
 
-To serve large requests with uWsgi, you could have to modify in uWsgi
+To serve large requests with uWSGI, you could have to modify in uWSGI
 and/or Nginx init files several options. Example:
 
 .. code-block:: ini
@@ -145,6 +145,28 @@ and/or Nginx init files several options. Example:
    proxy_connect_timeout 600;
    uwsgi_read_timeout 120;
    uwsgi_send_timeout 120;
+
+.. note::
+    Nginx natively includes support for upstream servers speaking the uwsgi protocol since version 0.8.40.
+    To improve performances, you can switch from a TCP socket to an Unix Domain Socket by editing
+    ``llng-server.yaml`` and adapting Nignx configuration files:
+  .. code-block:: ini
+
+    uwsgi:
+            plugins: psgi
+            socket: /tmp/uwsgi.sock
+
+  .. code-block:: nginx
+
+    # OR TO USE uWSGI
+    include /etc/nginx/uwsgi_params;
+    uwsgi_pass unix:///tmp/uwsgi.sock;
+    uwsgi_param LLTYPE psgi;
+    uwsgi_param SCRIPT_FILENAME $document_root$sc;
+    uwsgi_param SCRIPT_NAME $sc;
+    # Uncomment this if you use Auth SSL:
+    #uwsgi_param  SSL_CLIENT_S_DN_CN $ssl_client_s_dn_cn;
+
 
 Protect a PSGI application
 --------------------------
