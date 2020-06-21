@@ -159,7 +159,7 @@ sub prx {
 #  - getConfByNum: override SUPER method to be able to use Zero
 #  - newConf()
 #  - newRawConf(): restore a saved conf
-#  - applyConf(): called by the 2 previous to prevent other servers that a new
+#  - applyConf(): called by the 2 previous to inform other servers that a new
 #                 configuration is available
 
 sub getConfByNum {
@@ -352,6 +352,7 @@ sub applyConf {
     # Parse apply values
     while ( my ( $host, $request ) = each %reloadUrls ) {
         my $r = HTTP::Request->new( 'GET', "http://$host$request" );
+        $self->logger->debug("Sending reload request to $host");
         if ( $request =~ /^https?:\/\/[^\/]+.*$/ ) {
             my $url       = URI::URL->new($request);
             my $targetUrl = $url->scheme . "://" . $host;
