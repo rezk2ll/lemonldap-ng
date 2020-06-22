@@ -298,32 +298,32 @@ ok(
 );
 ok(
     $res->[2]->[0] =~
-      m%<li><span trspan="passwordPolicyMinSize">Minimal size:</span> 6</li>%,
+      m%<span trspan="passwordPolicyMinSize">Minimal size:</span> 6%,
     ' passwordPolicyMinSize'
 ) or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinSize' );
 ok(
     $res->[2]->[0] =~
-m%<li><span trspan="passwordPolicyMinLower">Minimal lower characters:</span> 3</li>%,
+m%<span trspan="passwordPolicyMinLower">Minimal lower characters:</span> 3%,
     ' passwordPolicyMinLower'
 ) or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinLower' );
 ok(
     $res->[2]->[0] =~
-m%<li><span trspan="passwordPolicyMinUpper">Minimal upper characters:</span> 3</li>%,
+m%<span trspan="passwordPolicyMinUpper">Minimal upper characters:</span> 3%,
     ' passwordPolicyMinUpper'
 ) or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinUpper' );
 ok(
     $res->[2]->[0] =~
-m%<li><span trspan="passwordPolicyMinDigit">Minimal digit characters:</span> 1</li>%,
+m%<span trspan="passwordPolicyMinDigit">Minimal digit characters:</span> 1%,
     ' passwordPolicyMinDigit'
 ) or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinDigit' );
 ok(
     $res->[2]->[0] =~
-m%<li><span trspan="passwordPolicyMinSpeChar">Minimal special characters:</span> 2</li>%,
+m%<span trspan="passwordPolicyMinSpeChar">Minimal special characters:</span> 2%,
     ' passwordPolicyMinSpeChar'
 ) or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinSpeChar' );
 ok(
     $res->[2]->[0] =~
-m%\Q<li><span trspan="passwordPolicySpecialChar">Allowed special characters:</span> [ } \</li>\E%,
+m%\Q<span trspan="passwordPolicySpecialChar">Allowed special characters:</span> [ } \E%,
     ' passwordPolicySpecialChar'
 ) or print STDERR Dumper( $res->[2]->[0], 'passwordPolicySpecialChar' );
 ok(
