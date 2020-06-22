@@ -168,7 +168,7 @@ sub updateCasApp {
     # Return 404 if not found
 
     return $self->sendError( $req,
-        "OIDC relying party '$confKey' not found", 404 )
+        "CAS application '$confKey' not found", 404 )
       unless ( defined $current );
 
     # check if new clientID exists already
@@ -211,7 +211,7 @@ sub replaceCasApp {
     # Return 404 if not found
 
     return $self->sendError( $req,
-        "OIDC relying party '$confKey' not found", 404 )
+        "CAS application '$confKey' not found", 404 )
       unless ( defined $self->_getCasAppByConfKey( $conf, $confKey ) );
 
     # check if new clientID exists already
@@ -242,7 +242,7 @@ sub deleteCasApp {
     # Return 404 if not found
 
     return $self->sendError( $req,
-        "OIDC relying party '$confKey' not found", 404 )
+        "CAS application '$confKey' not found", 404 )
       unless ( defined $delete );
 
     delete $conf->{casAppMetaDataOptions}->{$confKey};
