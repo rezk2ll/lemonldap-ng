@@ -139,7 +139,6 @@ sub defaultValues {
         'ldapGroupObjectClass'            => 'groupOfNames',
         'ldapPasswordResetAttribute'      => 'pwdReset',
         'ldapPasswordResetAttributeValue' => 'TRUE',
-        'ldapPort'                        => 389,
         'ldapPwdEnc'                      => 'utf-8',
         'ldapSearchDeref'                 => 'find',
         'ldapServer'                      => 'ldap://localhost',

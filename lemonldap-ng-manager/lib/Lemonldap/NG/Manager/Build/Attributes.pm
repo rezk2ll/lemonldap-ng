@@ -3118,7 +3118,6 @@ sub attributes {
         },
         ldapPort => {
             type          => 'int',
-            default       => 389,
             documentation => 'LDAP port',
         },
         ldapServer => {

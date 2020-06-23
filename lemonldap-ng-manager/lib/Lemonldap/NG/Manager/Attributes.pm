@@ -1644,8 +1644,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'text'
         },
         'ldapPort' => {
-            'default' => 389,
-            'type'    => 'int'
+            'type' => 'int'
         },
         'ldapPpolicyControl' => {
             'default' => 0,
