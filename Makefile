@@ -1152,12 +1152,12 @@ documentation:
 		echo "Skipped documentation building" ;\
 	else \
 		sphinx-build -b html -d /tmp/doctrees \
-			-Dhtml_theme_path=. -Dhtml_theme=manager_doc_theme \
+			-Dhtml_theme=bootstrap\
 			doc/sources/admin/ doc/pages/documentation/current/ ;\
 	fi
 
 website_documentation:
-	sphinx-build -b html -d /tmp/doctrees \
+	LLNGSPHINXWEBSITE=1 sphinx-build -b html -d /tmp/doctrees \
 		doc/sources/admin/ "$(WEBSITE_DIR)"
 
 test-diff:
