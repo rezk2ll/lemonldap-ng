@@ -177,6 +177,15 @@ BuildRequires:  systemd-rpm-macros
 BuildRequires:  systemd
 %endif
 
+# Doc
+%if 0%{?fedora}%{?el8}
+BuildRequires:  python3-sphinx-bootstrap-theme
+BuildRequires:  python3-sphinx
+%else
+BuildRequires:  python-sphinx
+BuildRequires:  python2-sphinx-bootstrap-theme
+%endif
+
 Requires: lemonldap-ng-conf = %{version}-%{release}
 Requires: lemonldap-ng-doc = %{version}-%{release}
 Requires: lemonldap-ng-handler = %{version}-%{release}
