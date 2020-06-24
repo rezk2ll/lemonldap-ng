@@ -45,9 +45,6 @@ build_centos_7:
   script:
      - rm -f /etc/yum.repos.d/CentOS-Sources.repo
      - yum -y install epel-release
-     - yum -y install python-pip
-     - pip install -U pip
-     - pip install sphinx==1.8.5 sphinx-rtd_theme==0.4.3
      - make rpm-dist
      - ci-build-pkg
   artifacts:
