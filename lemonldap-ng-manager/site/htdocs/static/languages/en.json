@@ -271,7 +271,7 @@
 "disabled":"Disabled",
 "done":"done",
 "dones":"Done",
-"down":"Move up",
+"down":"Move down",
 "doubleCookie":"Double cookie (HTTP and HTTPS)",
 "doubleCookieForSingleSession":"Double cookie for a single session",
 "databaseLocked":"Database locked by another process",

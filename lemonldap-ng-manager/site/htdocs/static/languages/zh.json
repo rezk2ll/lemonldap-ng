@@ -271,7 +271,7 @@
 "disabled":"Disabled",
 "done":"完成",
 "dones":"完成",
-"down":"Move up",
+"down":"Move down",
 "doubleCookie":"Double cookie (HTTP and HTTPS)",
 "doubleCookieForSingleSession":"Double cookie for a single session",
 "databaseLocked":"数据库被另一进程锁定",
