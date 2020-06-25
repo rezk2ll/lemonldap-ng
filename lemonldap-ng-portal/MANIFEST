@@ -691,6 +691,8 @@ t/77-2F-Mail-with-global-storage.t
 t/77-2F-Mail.t
 t/78-2F-Upgrade-Many.t
 t/78-2F-Upgrade.t
+t/79-2F-Yubikey-from-Session.t
+t/79-2F-Yubikey.t
 t/90-Translations.t
 t/91-Memory-Leak.t
 t/99-Dont-load-Dumper.t
@@ -722,6 +724,7 @@ t/smtp.pm
 t/test-ldap.pm
 t/test-lib.pm
 t/test-psgi.pm
+t/test-yubikey.pm
 t/testslapd/confs-sessions.ldif
 t/testslapd/slapd.ldif
 t/testslapd/users.ldif
