@@ -451,7 +451,7 @@ sub fetchId {
     my $value =
       $lookForHttpCookie
       ? ( $t =~ /${cn}http=([^,; ]+)/o ? $1 : 0 )
-      : ( $t =~ /$cn=([^,; ]+)/o ? $1 : 0 );
+      : ( $t =~ /$cn=([^,; ]+)/o       ? $1 : 0 );
 
     if ( $value && $lookForHttpCookie && $class->tsv->{securedCookie} == 3 ) {
         $value = $class->tsv->{cipher}->decryptHex( $value, "http" );
@@ -620,7 +620,7 @@ sub _isHttps {
             return $class->tsv->{https}->{_};
         }
         else {
-            return ( ( uc( $req->{env}->{HTTPS} ) || "OFF" ) eq "ON" );
+            return ( uc( $req->{env}->{HTTPS} || "OFF" ) eq "ON" );
         }
     }
 }
