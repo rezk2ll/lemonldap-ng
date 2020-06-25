@@ -163,6 +163,18 @@ You can choose facility in lemonldap-ng.ini file. Default values:
    syslogFacility     = daemon
    userSyslogFacility = auth
 
+You can also override options. Default values:
+
+.. code-block:: ini
+
+   syslogOptions      = cons,pid,ndelay
+   userSyslogOptions  = cons,pid,ndelay
+
+
+.. tip:: You can find more information on Syslog options in
+         `Sys::Syslog <https://metacpan.org/pod/Sys::Syslog>`__ Perl
+         module.
+
 Log4perl
 ~~~~~~~~
 
