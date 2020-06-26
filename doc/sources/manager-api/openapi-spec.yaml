@@ -1348,8 +1348,8 @@ components:
           type: string
           default: auto
           enum:
-            - enabled
-            - disabled
+            - 'on'
+            - 'off'
             - auto
             - (Any special rule to apply for example "$uid eq 'dwho'")
     MenuAppUpdate:
