@@ -76,6 +76,10 @@ sub addMenuCat {
         400 )
       if ( ref $add->{confKey} );
 
+    return $self->sendError( $req, 'Invalid input: confKey contains invalid characters',
+        400 )
+      unless ( $add->{confKey} =~ '^\w[\w\.\-]*$' );
+
     return $self->sendError( $req, 'Invalid input: catname is missing', 400 )
       unless ( defined $add->{catname} );
 
@@ -154,6 +158,10 @@ sub replaceMenuCat {
     return $self->sendError( $req, 'Invalid input: confKey is not a string',
         400 )
       if ( ref $replace->{confKey} );
+
+    return $self->sendError( $req, 'Invalid input: confKey contains invalid characters',
+        400 )
+      unless ( $replace->{confKey} =~ '^\w[\w\.\-]*$' );
 
     return $self->sendError( $req, 'Invalid input: catname is missing', 400 )
       unless ( defined $replace->{catname} );

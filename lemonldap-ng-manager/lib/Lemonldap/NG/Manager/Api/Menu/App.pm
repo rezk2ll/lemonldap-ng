@@ -133,6 +133,10 @@ sub addMenuApp {
         400 )
       if ( ref $add->{confKey} );
 
+    return $self->sendError( $req, 'Invalid input: confKey contains invalid characters',
+        400 )
+      unless ( $add->{confKey} =~ '^\w[\w\.\-]*$' );
+
     return $self->sendError( $req, 'Invalid input: name is missing', 400 )
       unless ( defined $add->{options} && defined $add->{options}{name} );
 
@@ -150,10 +154,10 @@ sub addMenuApp {
     return $self->sendError( $req,
         "Menu category '$catConfKey' not found", 404 )
       unless ( defined $conf->{applicationList}->{$catConfKey} );
-      
+
     return $self->sendError(
         $req,
-"Invalid input: A Menu Application with confKey $add->{confKey} already exists",
+"Invalid input: A Menu Application with confKey $add->{confKey} already exists in category $catConfKey",
         409
       )
       if (
@@ -238,6 +242,10 @@ sub replaceMenuApp {
         400 )
       if ( ref $replace->{confKey} );
 
+    return $self->sendError( $req, 'Invalid input: confKey contains invalid characters',
+        400 )
+      unless ( $replace->{confKey} =~ '^\w[\w\.\-]*$' );
+        
     return $self->sendError( $req, 'Invalid input: name is missing', 400 )
       unless ( defined $replace->{options}
         && defined $replace->{options}{name} );

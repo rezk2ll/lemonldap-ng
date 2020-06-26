@@ -110,7 +110,7 @@ sub checkAddFailsIfExists {
     check409( $test, add( $test, $type, $add ) );
 }
 
-sub checkAddWithUnknownAttributes {
+sub checkAddFailsOnInvalidConfkey {
     my ( $test, $type, $add ) = splice @_;
     check400( $test, add( $test, $type, $add ) );
 }
@@ -305,7 +305,11 @@ my $cat2 = {
     catname => 'My Cat 2',
     order   => 2
 };
-
+my $cat3 = {
+    confKey => 'mycat/mycat3',
+    catname => 'My Cat 3',
+    order   => 2
+};
 $test = "Cat - Get mycat1 cat should err on not found";
 checkGetNotFound( $test, 'cat', 'mycat1' );
 
@@ -316,6 +320,11 @@ checkGet( $test, 'cat', 'mycat1', 'order',   1 );
 
 $test = "Cat - Add should fail on duplicate confKey";
 checkAddFailsIfExists( $test, 'cat', $cat1 );
+
+$test = "Cat - Add should fail on invalid confKey";
+checkAddFailsOnInvalidConfkey( $test, 'cat', $cat3 );
+
+checkAddFailsOnInvalidConfkey
 
 $test = "Cat - Update should succeed and keep existing values";
 $cat1->{order} = 3;
@@ -389,6 +398,16 @@ my $app3 = {
     },
     order => 1
 };
+my $app4 = {
+    confKey => 'myapp1/myapp4',
+    options => {
+        name        => 'My App 4',
+        description => 'My app 4 description',
+        tooltip     => 'My app 4 tooltip',
+        uri         => 'http://app4.example.com/'
+    },
+    order => 1
+};
 
 $test = "App - Get mycat3 apps should err on not found";
 checkGetNotFound( $test, 'app', 'mycat3' );
@@ -426,6 +445,9 @@ checkGet( $test, 'app/mycat2', 'myapp3', 'options/display', "\$uid eq 'dwho'" );
 
 $test = "App - Add should fail on duplicate confKey";
 checkAddFailsIfExists( $test, 'app/mycat1', $app1 );
+
+$test = "App - Add should fail on invalid confKey";
+checkAddFailsOnInvalidConfkey( $test, 'app/mycat1', $app4 );
 
 $test = "App - Check default value were set";
 checkGet( $test, 'app/mycat1', 'myapp1', 'options/logo',    'network.png' );
