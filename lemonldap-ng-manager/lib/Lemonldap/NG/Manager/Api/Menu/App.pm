@@ -146,6 +146,11 @@ sub addMenuApp {
     # Get latest configuration
     my $conf = $self->_confAcc->getConf( { noCache => 1 } );
 
+    # Check if catConfKey is defined
+    return $self->sendError( $req,
+        "Menu category '$catConfKey' not found", 404 )
+      unless ( defined $conf->{applicationList}->{$catConfKey} );
+      
     return $self->sendError(
         $req,
 "Invalid input: A Menu Application with confKey $add->{confKey} already exists",

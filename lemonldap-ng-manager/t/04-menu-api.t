@@ -100,6 +100,11 @@ sub checkAdd {
     check201( $test, add( $test, $type, $add ) );
 }
 
+sub checkAddNotFound {
+    my ( $test, $type, $add ) = splice @_;
+    check404( $test, add( $test, $type, $add ) );
+}
+
 sub checkAddFailsIfExists {
     my ( $test, $type, $add ) = splice @_;
     check409( $test, add( $test, $type, $add ) );
@@ -393,6 +398,9 @@ checkGetNotFound( $test, 'app/mycat2', 'myapp1' );
 
 $test = "App - Get app myapp1 from mycat3 should err on not found";
 checkGetNotFound( $test, 'app/mycat3', 'myapp1' );
+
+$test = "App - Add app myapp1 to mycat3 should err on not found";
+checkAddNotFound( $test, 'app/mycat3', $app1);
 
 $test = "App - Add app1 to cat1 should succeed";
 checkAdd( $test, 'app/mycat1', $app1 );
