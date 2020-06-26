@@ -65,6 +65,13 @@ Authentication:
    [notice] User clement.oudot.com successfully authenticated at level 2
    [notice] clement.oudot connected
 
+Failed authentication:
+
+::
+
+   [warn] foo.bar was not found in LDAP directory (81.20.13.21)
+   [warn] Bad password for clement.oudot (81.20.13.21)
+
 Logout:
 
 ::
