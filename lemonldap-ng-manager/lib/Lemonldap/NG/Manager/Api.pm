@@ -13,8 +13,10 @@ use Lemonldap::NG::Manager::Api::2F;
 use Lemonldap::NG::Manager::Api::Providers::OidcRp;
 use Lemonldap::NG::Manager::Api::Providers::SamlSp;
 use Lemonldap::NG::Manager::Api::Providers::CasApp;
+use Lemonldap::NG::Manager::Api::Menu::Cat;
+use Lemonldap::NG::Manager::Api::Menu::App;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 #############################
 # I. INITIALIZATION METHODS #
@@ -77,6 +79,24 @@ sub init {
                         '*' => 'getSecondFactors'
                     },
                 },
+                menu => {
+                    cat => {
+                        findByConfKey => {
+                            ':uPattern' => 'findMenuCatByConfKey'
+                        },
+                        ':confKey' => {
+                            '*' => 'getMenuCatByConfKey'
+                        }
+                    },
+                    app => {
+                        ':confKey' => {
+                            findByConfKey => {
+                                ':uPattern' => 'findMenuAppByConfKey'
+                            },
+                            ':appConfKey' => 'getMenuApp'
+                        }
+                    },
+                },
             },
         },
         ['GET']
@@ -95,6 +115,12 @@ sub init {
                     cas => {
                         app => 'addCasApp'
                     },
+                },
+                menu => {
+                    cat => 'addMenuCat',
+                    app => {
+                        ':confKey' => 'addMenuApp'
+                    }
                 },
             },
         },
@@ -115,6 +141,14 @@ sub init {
                         app => { ':confKey' => 'replaceCasApp' }
                     },
                 },
+                menu => {
+                    cat => { ':confKey' => 'replaceMenuCat' },
+                    app => {
+                        ':confKey' => {
+                            ':appConfKey' => 'replaceMenuApp'
+                        }
+                    }
+                },
             },
         },
         ['PUT']
@@ -133,6 +167,14 @@ sub init {
                     cas => {
                         app => { ':confKey' => 'updateCasApp' }
                     },
+                },
+                menu => {
+                    cat => { ':confKey' => 'updateMenuCat' },
+                    app => {
+                        ':confKey' => {
+                            ':appConfKey' => 'updateMenuApp'
+                        }
+                    }
                 },
             },
         },
@@ -163,6 +205,14 @@ sub init {
                         },
                         '*' => 'deleteSecondFactors'
                     },
+                },
+                menu => {
+                    cat => { ':confKey' => 'deleteMenuCat' },
+                    app => {
+                        ':confKey' => {
+                            ':appConfKey' => 'deleteMenuApp'
+                        }
+                    }
                 },
             },
         },

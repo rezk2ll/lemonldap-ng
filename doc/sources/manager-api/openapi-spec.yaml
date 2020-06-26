@@ -622,6 +622,357 @@ paths:
         404:
           $ref: '#/components/responses/NotFound'
 
+  /api/v1/menu/cat:
+    post:
+      tags:
+      - menucat
+      summary: Create a new Menu Category
+      operationId: addMenuCat
+      requestBody:
+        description: Menu Category to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuCat'
+        required: true
+      responses:
+        201:
+          $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/Error'
+        409:
+          $ref: '#/components/responses/Conflict'
+
+  /api/v1/menu/cat/findByConfKey:
+    get:
+      tags:
+      - menucat
+      summary: Finds Menu Categories by configuration key
+      description: Takes a search pattern to be tested against existing categories
+      operationId: findMenuCatByConfKey
+      parameters:
+      - name: pattern
+        in: query
+        description: Search pattern
+        required: true
+        schema:
+          type: "string"
+        examples:
+          any:
+           summary: Any value
+           value: "*"
+          prefix:
+           summary: Given prefix
+           value: "zone1-*"
+          anywhere:
+           summary: Substring
+           value: "something"
+      responses:
+        200:
+          $ref: '#/components/responses/ManyMenuCat'
+        400:
+          $ref: '#/components/responses/Error'
+
+  /api/v1/menu/cat/{confKey}:
+    get:
+      tags:
+      - menucat
+      summary: Get Menu Category by configuration key
+      description: Returns a single Category
+      operationId: getMenuCatByConfKey
+      parameters:
+      - name: confKey
+        in: path
+        description: Configuration key of Menu Category
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+      responses:
+        200:
+          $ref: '#/components/responses/OneMenuCat'
+        400:
+          $ref: '#/components/responses/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+      - menucat
+      summary: Replaces a Menu Category
+      operationId: replaceMenuCat
+      parameters:
+      - name: confKey
+        in: path
+        description: Configuration key of Menu Category that needs to be replaced
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuCat'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+        409:
+          $ref: '#/components/responses/Conflict'
+    patch:
+      tags:
+      - menucat
+      summary: Updates a Menu Category
+      operationId: updateMenuCat
+      parameters:
+      - name: confKey
+        in: path
+        description: Configuration key of Menu Category that needs to be updated
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuCatUpdate'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+        409:
+          $ref: '#/components/responses/Conflict'
+
+    delete:
+      tags:
+      - menucat
+      summary: Deletes a Menu Category
+      operationId: deleteMenuCat
+      parameters:
+      - name: confKey
+        in: path
+        description: Configuration key of Menu Category to delete
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /api/v1/menu/app/{cat}:
+    get:
+      tags:
+      - menuapp
+      summary: Get Menu Applications within a Menu Category
+      description: Return existing applications within a menu category
+      operationId: getMenuApps
+      parameters:
+      - name: cat
+        in: path
+        description: Configuration key of Menu Category to work with
+        required: true
+        schema:
+          $ref: '#/components/schemas/menuCatConfKey'
+      responses:
+        200:
+          $ref: '#/components/responses/ManyMenuApp'
+        400:
+          $ref: '#/components/responses/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+    post:
+      tags:
+      - menuapp
+      summary: Create a new Menu Application within a Menu Category
+      operationId: addMenuApp
+      parameters:
+      - name: cat
+        in: path
+        description: Configuration key of Menu Category to work with
+        required: true
+        schema:
+          $ref: '#/components/schemas/menuCatConfKey'
+      requestBody:
+        description: Menu Application to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuApp'
+        required: true
+      responses:
+        201:
+          $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+        409:
+          $ref: '#/components/responses/Conflict'
+
+  /api/v1/menu/app/{cat}/findByConfKey:
+    get:
+      tags:
+      - menuapp
+      summary: Finds Menu Applications by configuration key within a Menu Category
+      description: Takes a search pattern to be tested against existing applications within a menu category
+      operationId: findMenuAppByConfKey
+      parameters:
+      - name: cat
+        in: path
+        description: Configuration key of Menu Category to work with
+        required: true
+        schema:
+          $ref: '#/components/schemas/menuCatConfKey'
+      - name: pattern
+        in: query
+        description: Search pattern
+        required: true
+        schema:
+          type: "string"
+        examples:
+          any:
+           summary: Any value
+           value: "*"
+          prefix:
+           summary: Given prefix
+           value: "zone1-*"
+          anywhere:
+           summary: Substring
+           value: "something"
+      responses:
+        200:
+          $ref: '#/components/responses/ManyMenuApp'
+        400:
+          $ref: '#/components/responses/Error'
+
+  /api/v1/menu/app/{cat}/{confKey}:
+    get:
+      tags:
+      - menuapp
+      summary: Get Menu Application within a Menu Category by configuration key
+      description: Returns a single application
+      operationId: getMenuAppByConfKey
+      parameters:
+      - name: cat
+        in: path
+        description: Configuration key of Menu Category to work with
+        required: true
+        schema:
+          $ref: '#/components/schemas/menuCatConfKey'
+      - name: confKey
+        in: path
+        description: Configuration key of Menu Application
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+      responses:
+        200:
+          $ref: '#/components/responses/OneMenuApp'
+        400:
+          $ref: '#/components/responses/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+      - menuapp
+      summary: Replaces a Menu Application
+      operationId: replaceMenuApp
+      parameters:
+      - name: cat
+        in: path
+        description: Configuration key of Menu Category to work with
+        required: true
+        schema:
+          $ref: '#/components/schemas/menuCatConfKey'
+      - name: confKey
+        in: path
+        description: Configuration key of Menu Application that needs to be replaced
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuApp'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+        409:
+          $ref: '#/components/responses/Conflict'
+    patch:
+      tags:
+      - menuapp
+      summary: Updates a Menu Application
+      operationId: updateMenuApp
+      parameters:
+      - name: cat
+        in: path
+        description: Configuration key of Menu Category to work with
+        required: true
+        schema:
+          $ref: '#/components/schemas/menuCatConfKey'
+      - name: confKey
+        in: path
+        description: Configuration key of Menu Application that needs to be updated
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuAppUpdate'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+        409:
+          $ref: '#/components/responses/Conflict'
+
+    delete:
+      tags:
+      - menuapp
+      summary: Deletes a Menu Application
+      operationId: deleteMenuApp
+      parameters:
+      - name: cat
+        in: path
+        description: Configuration key of Menu Category to work with
+        required: true
+        schema:
+          $ref: '#/components/schemas/menuCatConfKey'
+      - name: confKey
+        in: path
+        description: Configuration key of Menu Application to delete
+        required: true
+        schema:
+          $ref: '#/components/schemas/confKey'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
 components:
   schemas:
     confKey:
@@ -925,6 +1276,90 @@ components:
       items:
         $ref: "#/components/schemas/SecondFactor"
 
+    menuCatConfKey:
+      type: string
+      pattern: '^\w[\w\.\-]*$'
+    MenuCat:
+      required:
+      - confKey
+      - catname
+      type: object
+      properties:
+        confKey:
+          $ref: '#/components/schemas/confKey'
+        catname:
+          type: string
+        order:
+          type: integer
+    MenuCatUpdate:
+      type: object
+      properties:
+        catname:
+          type: string
+        order:
+          type: integer
+    MenuApp:
+      required:
+      - confKey
+      type: object
+      properties:
+        confKey:
+          $ref: '#/components/schemas/confKey'
+        order:
+          type: integer
+        options:
+          $ref: '#/components/schemas/MenuAppOptions'
+    MenuAppOptions:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        tooltip:
+          type: string
+        description:
+          type: string
+        uri:
+          type: string
+        logo:
+          type: string
+          default: network.png
+          enum:
+            - attach.png
+            - bell.png
+            - bookmark.png
+            - configure.png
+            - database.png
+            - demo.png
+            - folder.png
+            - gear.png
+            - help.png
+            - llng.png
+            - mailappt.png
+            - money.png
+            - network.png
+            - terminal.png
+            - thumbnail.png
+            - tux.png
+            - web.png
+            - (Any reference to an available image in app logo folder)
+        display:
+          type: string
+          default: auto
+          enum:
+            - 'on'
+            - 'off'
+            - auto
+            - (Any special rule to apply for example "$uid eq 'dwho'")
+    MenuAppUpdate:
+      type: object
+      properties:
+        order:
+          type: integer
+        options:
+          $ref: '#/components/schemas/MenuAppOptions'
+
   responses:
     NoContent:
       description: Successful modification
@@ -1002,3 +1437,31 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/SecondFactors"
+    OneMenuCat:
+      description: Return a Menu Category
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MenuCat'
+    ManyMenuCat:
+      description: Return a list of Menu Categories
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/MenuCat'
+    OneMenuApp:
+      description: Return a Menu Application
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MenuApp'
+    ManyMenuApp:
+      description: Return a list of Menu Applications
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/MenuApp'
