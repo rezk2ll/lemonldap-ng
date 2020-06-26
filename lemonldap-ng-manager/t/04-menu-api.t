@@ -301,6 +301,9 @@ my $cat2 = {
     order   => 2
 };
 
+$test = "Cat - Get mycat1 cat should err on not found";
+checkGetNotFound( $test, 'cat', 'mycat1' );
+
 $test = "Cat - Add should succeed";
 checkAdd( $test, 'cat', $cat1 );
 checkGet( $test, 'cat', 'mycat1', 'catname', 'My Cat 1' );
@@ -381,6 +384,15 @@ my $app3 = {
     },
     order => 1
 };
+
+$test = "App - Get mycat3 apps should err on not found";
+checkGetNotFound( $test, 'app', 'mycat3' );
+
+$test = "App - Get app myapp1 from existing mycat2 should err on not found";
+checkGetNotFound( $test, 'app/mycat2', 'myapp1' );
+
+$test = "App - Get app myapp1 from mycat3 should err on not found";
+checkGetNotFound( $test, 'app/mycat3', 'myapp1' );
 
 $test = "App - Add app1 to cat1 should succeed";
 checkAdd( $test, 'app/mycat1', $app1 );

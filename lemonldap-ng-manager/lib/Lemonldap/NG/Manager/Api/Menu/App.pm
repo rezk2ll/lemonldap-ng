@@ -23,6 +23,11 @@ sub getMenuApp {
     # Get latest configuration
     my $conf = $self->_confAcc->getConf;
 
+    # Check if catConfKey is defined
+    return $self->sendError( $req,
+        "Menu category '$catConfKey' not found", 404 )
+      unless ( defined $conf->{applicationList}->{$catConfKey} );
+
     if ( defined $appConfKey ) {
 
         # Return one application referenced with this appConfKey
@@ -49,11 +54,6 @@ sub getMenuApp {
         $self->logger->debug(
 "[API] Menu applications from category $catConfKey configuration requested"
         );
-
-        # Check if catConfKey is defined
-        return $self->sendError( $req,
-            "Menu category '$catConfKey' not found", 404 )
-          unless ( defined $conf->{applicationList}->{$catConfKey} );
 
         my $cat = $conf->{applicationList}->{$catConfKey};
 
