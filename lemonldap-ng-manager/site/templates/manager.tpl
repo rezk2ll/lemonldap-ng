@@ -177,8 +177,8 @@
     </div>
     <div id="sbody" class="modal-body">
       <div class="input-group maxw">
-        <label id="slabel" class="input-group-addon" for="longtextinput" trspan="cfgLog"/>
-        <textarea id="longtextinput" rows="5" class="form-control" ng-model="result" aria-describedby="slabel" />
+        <label id="slabel" class="input-group-addon" for="longtextinput" trspan="cfgLog"></label>
+        <textarea id="longtextinput" rows="5" class="form-control" ng-model="result" aria-describedby="slabel"></textarea>
       </div>
     </div>
     <div class="modal-footer">
