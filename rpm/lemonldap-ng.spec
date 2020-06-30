@@ -596,7 +596,7 @@ fi
 %config(noreplace) %{_sysconfdir}/cron.d/lemonldap-ng-handler
 %{lm_sharedir}/handler
 %{lm_examplesdir}/handler
-%{lm_sharedir}/llng-server/llng-server.psgi
+%{lm_sharedir}/llng-server/
 
 %files manager
 %{lm_sharedir}/manager
