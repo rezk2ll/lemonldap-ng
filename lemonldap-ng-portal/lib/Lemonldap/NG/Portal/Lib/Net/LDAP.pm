@@ -180,8 +180,7 @@ sub userBind {
         # Return direct unless control resonse
         unless ( defined $resp ) {
             if ( $mesg->code == 49 ) {
-                my $ipAddr = $req->address;
-                $self->{portal}->userLogger->warn("Bad password for $req->{user} ($ipAddr)");
+                $self->{portal}->userLogger->warn("Bad password for $req->{user} (".$req->address.")");
                 return PE_BADCREDENTIALS;
             }
             elsif ( $mesg->code == 0 ) {
@@ -263,8 +262,7 @@ sub userBind {
             $req->data->{ldapError} = $mesg->error;
         }
     }
-    my $ipAddr = $req->address;
-    $self->{portal}->userLogger->warn("Bad password for $req->{user} ($ipAddr)");
+    $self->{portal}->userLogger->warn("Bad password for $req->{user} (".$req->address.")");
     return PE_BADCREDENTIALS;
 }
 
