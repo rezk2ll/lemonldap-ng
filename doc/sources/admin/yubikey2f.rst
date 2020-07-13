@@ -36,6 +36,8 @@ In the manager (second factors), you just have to enable it:
    what you are doing
 -  **Allow users to remove Yubikey**: If enabled, users can unregister
    Yubikey device.
+-  **Get Yubikey ID from session attribute**: If non-empty, the Yubikey ID will
+   be read from this session attribute. This allows external provisionning of Yubikeys.
 -  **Lifetime**: Unlimited by default. Set a Time To Live in seconds.
    TTL is checked at each login process if set. If TTL is expired,
    relative Yubikey is removed.
