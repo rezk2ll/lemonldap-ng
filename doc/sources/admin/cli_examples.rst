@@ -467,3 +467,52 @@ To update the master encryption key:
        set \
            key 'xxxxxxxxxxxxxxx'
 
+
+
+Sessions Management
+-------------------
+.. versionadded:: 2.0.9
+
+
+Get the content of a session ::
+
+   lemonldap-ng-sessions get 9684dd2a6489bf2be2fbdd799a8028e3
+
+Get the content of a persistent session ::
+
+   lemonldap-ng-sessions get --persistent dwho
+
+Search all sessions by username ::
+
+   lemonldap-ng-sessions search --where uid=dwho
+
+Modify session ::
+
+   lemonldap-ng-sessions setKey 9684dd2a6489bf2be2fbdd799a8028e3 \
+      authenticationLevel 1
+
+Second Factors management
+-------------------------
+
+.. versionadded:: 2.0.9
+
+List second factors of a user ::
+
+   lemonldap-ng-sessions secondfactors get dwho
+
+Deregister Yubikey of a user ::
+
+   lemonldap-ng-sessions secondfactors delType dwho UBK
+
+OIDC Consents management
+------------------------
+
+.. versionadded:: 2.0.9
+
+List consents of a user ::
+   
+   lemonldap-ng-sessions consents get dwho
+
+Revoke consents on OIDC provider 'test' for a user::
+
+   lemonldap-ng-sessions consents delete dwho test
