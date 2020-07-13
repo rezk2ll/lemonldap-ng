@@ -72,6 +72,16 @@ unless ($new) {
     exit 5;
 }
 
+my $oldtype = $old->{type} =~ s/^Lemonldap::NG::Common::Conf::Backends:://r;
+my $newtype = $new->{type} =~ s/^Lemonldap::NG::Common::Conf::Backends:://r;
+print STDERR "Converting from " . $oldtype . " to " . $newtype . "\n";
+
+if ( $oldtype eq $newtype ) {
+    print STDERR "\nWARNING: "
+      . "converting configuration without changing backend type.\n"
+      . "Make sure you know what you are doing.\n\n";
+}
+
 my @available;
 if ( $opts{latest} ) {
     @available = $old->lastCfg();
@@ -88,7 +98,7 @@ foreach my $e ( @available, @dstavailable ) { $tmp{$e}++ }
 my @isect = grep { $tmp{$_} > 1 } keys %tmp;
 
 if ( @isect and not $opts{overwrite} ) {
-    print STDERR "Warning, " . @isect
+    print STDERR "WARNING: " . @isect
       . " existing configurations found in destination \n";
     print STDERR "    use --overwrite to overwrite existing configurations\n";
     exit 8;
