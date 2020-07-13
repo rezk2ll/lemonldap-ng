@@ -19,7 +19,7 @@ Let's go
 
 -  Prepare your new lemonldap-ng.ini file
 -  Configure your new backend (create SQL database,...)
--  Launch that:
+-  Launch the following command:
 
 .. code-block:: shell
 
@@ -28,6 +28,14 @@ Let's go
 -  Install the new lemonldap-ng.ini file at the place of the old file in
    all LL::NG servers
 -  Restart all your Apache servers
+
+.. note::
+
+   Since LemonLDAP 2.0.9, you don't need the ``--current`` and ``--new`` options
+   when migrating from the default file-based backend. Simply run
+   `convertConfig` to migrate from the default configuration backend to the
+   currently configured backend.
+
 
 See also
 --------
