@@ -271,7 +271,7 @@
 "disabled":"Devre dışı",
 "done":"tamam",
 "dones":"Tamam",
-"down":"Yukarı taşı",
+"down":"Move down",
 "doubleCookie":"İkili çerez (HTTP ve HTTPS)",
 "doubleCookieForSingleSession":"Tek oturum için ikili çerez",
 "databaseLocked":"Veri tabanı başka bir işlem tarafından kilitlendi",
