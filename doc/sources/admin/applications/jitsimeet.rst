@@ -26,14 +26,15 @@ Configuration
 Pre-requisites
 ~~~~~~~~~~~~~~
 
-In this guide, it is assumed that you have followed the `Jitsi Meet
+This documentation assumes that you have already installed a :doc:`Nginx-based <../confignginx>`
+LemonLDAP::NG Handler on your Jitsi server.
+
+You need to install Nginx before Jitsi Meet. If you install Jitsi Meet first,
+the Jitsi Meet installer will not generate a Nginx configuration file.
+
+We assume that you have followed the `Jitsi Meet
 quick
 start <https://github.com/jitsi/jitsi-meet/blob/master/doc/quick-install.md>`__
-and that **you have installed Nginx on your Jitsi Meet server first**
-
-If you have not done that, the Jitsi Meet installer will not generate a
-Nginx configuration file for you. This is not a problem is you are
-already using your own reverse proxy.
 
 Jitsi Meet configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -59,26 +60,29 @@ configuration file:
 ::
 
 
-    location = /lmauth {
-       internal;
-       include /etc/nginx/fastcgi_params;
-       fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
-       fastcgi_pass_request_body  off;
-       fastcgi_param CONTENT_LENGTH "";
-       fastcgi_param HOST $http_host;
-       fastcgi_param X_ORIGINAL_URI  $request_uri;
-     }
+   # This block lets Nginx know how to contact the local LLNG handler
+   # for authentication
+   location = /lmauth {
+      internal;
+      include /etc/nginx/fastcgi_params;
+      fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+      fastcgi_pass_request_body  off;
+      fastcgi_param CONTENT_LENGTH "";
+      fastcgi_param HOST $http_host;
+      fastcgi_param X_ORIGINAL_URI  $request_uri;
+   }
 
    # Protect only the /login/ URL
    # You may want to change this is your goal is to make the whole Jitsi Meet instance private
-
    location /login/ {
 
+       # Protect the current path with LLNG
        auth_request /lmauth;
        auth_request_set $lmremote_user $upstream_http_lm_remote_user;
        auth_request_set $lmlocation $upstream_http_location;
        error_page 401 $lmlocation;
 
+       # Transmis user information to Jitsi through HTTP headers
        auth_request_set $mail $upstream_http_mail;
        proxy_set_header mail $mail;
        auth_request_set $displayname $upstream_http_displayName;
@@ -86,6 +90,7 @@ configuration file:
        auth_request_set $lmcookie $upstream_http_cookie;
        proxy_set_header Cookie: $lmcookie;
 
+       # Proxy requests to Jitsi Meet
        proxy_pass http://127.0.0.1:8888/login;
    }
 
