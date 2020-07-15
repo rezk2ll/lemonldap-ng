@@ -25,6 +25,14 @@ backups and a rollback plan ready!
 -  Some user log messages have been modified, check :doc:`logs documentation <logs>`
    (see also `#2244 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/2244>`__)
 -  SAML SOAP calls are now using ``text/xml`` instead of ``application/xml`` as the MIME Content Type, as required by `the SOAP standard <https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383526>`__
+-  The default config/session cache directory has been moved from ``/tmp`` to
+   ``/var/cache/lemonldap-ng`` in order to avoid `issues with cache purges
+   <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2254>`__  when
+   using Systemd. This change is only applied to new installations.  If your
+   installation is experiencing cache purge issues, you
+   need to manually change your existing
+   ``localSessionStorageOptions/cache_root`` parameter from ``/tmp`` to
+   ``/var/cache/lemonldap-ng``.
 
 2.0.8
 -----
