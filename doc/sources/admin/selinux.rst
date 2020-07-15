@@ -9,13 +9,13 @@ Disk cache (sessions an configuration)
 
 ::
 
-   chcon -R -t httpd_sys_rw_content_t /tmp
+   chcon -R -t httpd_sys_rw_content_t /var/cache/lemonldap-ng
 
 To persist the rule:
 
 ::
 
-   semanage fcontext -a -t http_sys_content_t /tmp
+   semanage fcontext -a -t http_sys_content_t /var/cache/lemonldap-ng
 
 LDAP
 ----

@@ -5,6 +5,7 @@
 %global lm_sharedir %{_datadir}/lemonldap-ng
 %global lm_examplesdir %{lm_sharedir}/examples
 %global lm_vardir %{_localstatedir}/lib/lemonldap-ng
+%global lm_cachedir %{_localstatedir}/cache/lemonldap-ng
 %global lm_confdir %{_sysconfdir}/lemonldap-ng
 %global lm_storagefile %{lm_confdir}/lemonldap-ng.ini
 %global lm_bindir %{_libexecdir}/%{name}/bin
@@ -368,6 +369,7 @@ This package installs the authentication portal.
 make %{?_smp_mflags} configure \
     STORAGECONFFILE=%{lm_storagefile} \
     DATADIR=%{lm_vardir} \
+    CACHEDIR=%{lm_cachedir} \
     PERLOPTIONS="INSTALLDIRS=vendor"
 make %{?_smp_mflags}
 
@@ -390,6 +392,7 @@ make %{?_smp_mflags} install \
     CONFDIR=%{lm_confdir} \
     CRONDIR=%{_sysconfdir}/cron.d \
     DATADIR=%{lm_vardir} \
+    CACHEDIR=%{lm_cachedir} \
     INITDIR=%{_sysconfdir}/init.d \
     ETCDEFAULTDIR=%{_sysconfdir}/default \
     DNSDOMAIN=%{lm_dnsdomain} \
@@ -454,6 +457,7 @@ chmod 770 %{buildroot}%{lm_vardir}/sessions/lock
 chmod 770 %{buildroot}%{lm_vardir}/psessions
 chmod 770 %{buildroot}%{lm_vardir}/psessions/lock
 chmod 770 %{buildroot}%{lm_vardir}/notifications
+chmod 770 %{buildroot}%{lm_cachedir}
 chmod 770 %{buildroot}%{lm_vardir}/captcha
 chmod 775 %{buildroot}%{lm_sbindir}/llng-fastcgi-server
 
@@ -584,6 +588,7 @@ fi
 %dir %{lm_vardir}/psessions
 %dir %{lm_vardir}/psessions/lock
 %dir %{lm_vardir}/notifications
+%dir %{lm_cachedir}
 %config(noreplace) %{lm_vardir}/conf/lmConf-1.json
 
 %files doc

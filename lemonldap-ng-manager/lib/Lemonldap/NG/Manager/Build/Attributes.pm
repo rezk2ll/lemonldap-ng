@@ -1336,7 +1336,7 @@ sub attributes {
                 'namespace'          => 'lemonldap-ng-sessions',
                 'default_expires_in' => 600,
                 'directory_umask'    => '007',
-                'cache_root'         => '/tmp',
+                'cache_root'         => '/var/cache/lemonldap-ng',
                 'cache_depth'        => 3,
             },
             documentation => 'Sessions cache module options',
