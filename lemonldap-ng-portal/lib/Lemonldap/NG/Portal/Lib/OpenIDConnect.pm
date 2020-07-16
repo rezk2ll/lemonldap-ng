@@ -19,7 +19,7 @@ use Mouse;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT);
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.9';
 
 # OpenID Connect standard claims
 use constant PROFILE => [
@@ -28,7 +28,7 @@ use constant PROFILE => [
 ];
 use constant EMAIL => [qw/email email_verified/];
 use constant ADDRESS =>
-  [qw/formatted street_address locality region postal_code/];
+  [qw/formatted street_address locality region postal_code country/];
 use constant PHONE => [qw/phone_number phone_number_verified/];
 
 # PROPERTIES
