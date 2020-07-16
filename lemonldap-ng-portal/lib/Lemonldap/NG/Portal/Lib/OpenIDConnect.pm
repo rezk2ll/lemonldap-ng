@@ -1370,6 +1370,14 @@ sub buildUserInfoResponse {
                     $session_value = $session->data->{$session_key};
                 }
 
+                # Convert mutli-valued attributes to arrays
+                my $separator = $self->conf->{multiValuesSeparator};
+                if ( $session_value and $session_value =~ /$separator/ ) {
+                    my @session_array =
+                      split( $separator, $session_value );
+                    $session_value = \@session_array;
+                }
+
                 # Address is a JSON object
                 if ( $claim eq "address" ) {
                     $userinfo_response->{address}->{$attribute} =
