@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::Main::Reload;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -553,9 +553,8 @@ sub conditionSub {
         eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
         return (
             sub {
-
                 my ($req) = @_;
-                $class->localUnlog;
+                $class->localUnlog( $req, @_ );
                 $req->{env}->{'psgi.r'}->add_output_filter(
                     sub {
                         my $r = $_[0]->r;
