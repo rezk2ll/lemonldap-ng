@@ -30,9 +30,11 @@ sub perlExpr {
     return $err ? ( -1, "__badExpression__: $err" ) : (1);
 }
 
-my $url = $RE{URI}{HTTP}{ -scheme => "https?" };
-$url =~ s/(?<=[^\\])\$/\\\$/g;
-$url = qr/$url/;
+my $url_re = $RE{URI}{HTTP}{ -scheme => "https?" };
+$url_re =~ s/(?<=[^\\])\$/\\\$/g;
+my $url = qr/$url_re/;
+my $urlOrEmpty = qr/(?:^$|$url_re)/;
+
 
 sub types {
     return {
@@ -51,7 +53,7 @@ sub types {
         },
         url => {
             form    => 'text',
-            test    => $url,
+            test    => $urlOrEmpty,
             msgFail => '__badUrl__',
         },
         PerlModule => {
