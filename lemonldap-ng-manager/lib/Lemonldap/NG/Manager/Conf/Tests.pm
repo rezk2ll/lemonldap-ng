@@ -843,6 +843,16 @@ sub tests {
             ) if ( $conf->{sfRemovedUseNotif} and not $conf->{notification} );
             return 1;
         },
+
+        # noAjaxHook and krbByJs are incompatible (#2237)
+        sfRemovedNotification => sub {
+            return ( 1,
+                    'noAjaxHook is not compatible with'
+                  . ' AJAX Kerberos authentication' )
+              if ( $conf->{noAjaxHook} and $conf->{krbByJs} );
+            return 1;
+        },
+
     };
 }
 
