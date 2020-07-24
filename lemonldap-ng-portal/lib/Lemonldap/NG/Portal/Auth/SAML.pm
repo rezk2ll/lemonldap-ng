@@ -1410,6 +1410,15 @@ sub authLogout {
         # Create Logout object
         $logout = $self->createLogout( $self->lassoServer );
 
+        # Do we check signature?
+        my $checkSLOMessageSignature =
+          $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
+          ->{samlIDPMetaDataOptionsCheckSLOMessageSignature};
+
+        unless ($checkSLOMessageSignature) {
+            $self->disableSignatureVerification($logout);
+        }
+
         # Process logout response
         my $result = $self->processLogoutResponseMsg( $logout, $response );
 
