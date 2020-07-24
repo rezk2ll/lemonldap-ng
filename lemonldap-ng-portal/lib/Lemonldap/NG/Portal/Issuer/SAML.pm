@@ -1758,7 +1758,8 @@ sub sloServer {
         $req->data->{samlSLOCalled} = 1;
 
         # Launch normal logout and ignore errors
-        $req->steps( [ @{ $self->p->beforeLogout }, 'deleteSession' ] );
+        $req->steps(
+            [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ] );
         $self->p->process($req);
 
         # Signature
