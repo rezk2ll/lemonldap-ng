@@ -59,6 +59,13 @@ getValues = () ->
 	console.log values
 	values
 
+# Gets a query string parametrer
+# We cannot use URLSearchParam because of IE (#2230)
+getQueryParam = (name) ->
+	match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search)
+	if match then decodeURIComponent(match[1].replace(/\+/g, ' ')) else null
+
+
 # Code from http://snipplr.com/view/29434/
 # ----------------------------------------
 setSelector = "#appslist"
@@ -315,14 +322,10 @@ $(window).on 'load', () ->
 	#  1 - cookie value
 	#  2 - first navigator.languages item that exists in window.availableLanguages
 	#  3 - first value of window.availableLanguages
-	queryString = window.location.search
-	if queryString
-		console.log 'Parsed queryString:', queryString
-		urlParams = new URLSearchParams queryString
-	if urlParams
-		queryLang = urlParams.get('llnglanguage')
+	if window.location.search
+		queryLang = getQueryParam('llnglanguage')
 		console.log 'Get lang from parameter' if queryLang
-		setCookieLang = urlParams.get('setCookieLang')
+		setCookieLang = getQueryParam('setCookieLang')
 		console.log 'Set lang cookie' if setCookieLang == 1
 	if !lang
 		lang = getCookie 'llnglanguage'
