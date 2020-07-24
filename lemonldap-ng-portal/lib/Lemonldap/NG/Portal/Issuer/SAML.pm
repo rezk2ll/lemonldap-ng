@@ -1054,7 +1054,7 @@ sub artifactServer {
     return [
         200,
         [
-            'Content-Type'   => 'application/xml',
+            'Content-Type'   => 'text/xml',
             'Content-Length' => length($art_response)
         ],
         [$art_response]
@@ -1259,7 +1259,7 @@ sub soapSloServer {
         return [
             200,
             [
-                'Content-Type'   => 'application/xml',
+                'Content-Type'   => 'text/xml',
                 'Content-Length' => length($slo_body)
             ],
             [$slo_body]
@@ -2107,7 +2107,7 @@ sub attributeServer {
     return [
         200,
         [
-            'Content-Type'   => 'application/xml',
+            'Content-Type'   => 'text/xml',
             'Content-Length' => length($att_response)
         ],
         [$att_response]

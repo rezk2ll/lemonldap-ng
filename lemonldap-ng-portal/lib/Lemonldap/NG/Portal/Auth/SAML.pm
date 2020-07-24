@@ -778,7 +778,7 @@ sub extractFormInfo {
                 $req->response( [
                         200,
                         [
-                            'Content-Type'   => 'application/xml',
+                            'Content-Type'   => 'text/xml',
                             'Content-Length' => length($slo_body)
                         ],
                         [$slo_body]
@@ -846,7 +846,7 @@ sub extractFormInfo {
         $req->response( [
                 200,
                 [
-                    'Content-Type'   => 'application/xml',
+                    'Content-Type'   => 'text/xml',
                     'Content-Length' => length($art_response)
                 ],
                 [$art_response]

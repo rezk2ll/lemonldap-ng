@@ -1779,8 +1779,8 @@ sub resolveArtifact {
         }
 
         my $request = HTTP::Request->new( 'POST' => $profile->msg_url );
-        $request->content_type('application/xml');
-        $request->header( Accept => 'application/xml' );
+        $request->content_type('text/xml');
+        $request->header( Accept => 'text/xml' );
         $request->content( $profile->msg_body );
 
         $self->logger->debug(
@@ -2001,8 +2001,8 @@ sub sendSOAPMessage {
     my $response;
 
     my $request = HTTP::Request->new( 'POST' => $endpoint );
-    $request->content_type('application/xml');
-    $request->header( Accept => 'application/xml' );
+    $request->content_type('text/xml');
+    $request->header( Accept => 'text/xml' );
     $request->content($message);
 
     $self->logger->debug("Send SOAP message $message to $endpoint");
@@ -3088,7 +3088,7 @@ sub sendSLOSoapErrorResponse {
     return [
         200,
         [
-            'Content-Type'   => 'application/xml',
+            'Content-Type'   => 'text/xml',
             'Content-Length' => length($slo_body)
         ],
         [$slo_body]
