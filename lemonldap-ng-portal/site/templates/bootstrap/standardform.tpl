@@ -3,7 +3,7 @@
 </TMPL_IF>
 
 <TMPL_IF NAME="WAITING_MESSAGE">
-<div class="alert alert-info"><span trspan="waitingmessage" /></div>
+<div class="alert alert-info"><span trspan="waitingmessage" ></span></div>
 <TMPL_ELSE>
 <div class="form">
   <div class="input-group mb-3">
