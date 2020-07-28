@@ -352,6 +352,8 @@ sub _reset {
         $body =~ s/\$url/$url/g;
         $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
 
+        $self->logger->info("User ".$req->data->{mailAddress}." is trying to reset his/her password");
+
         # Send mail
         unless (
             $self->send_mail(
