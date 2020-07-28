@@ -5,6 +5,7 @@ use Mouse;
 use Lemonldap::NG::Portal::Lib::SAML;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
+  PE_REDIRECT
   PE_SESSIONEXPIRED
   PE_SAML_ART_ERROR
   PE_SAML_DESTINATION_ERROR
@@ -1760,7 +1761,11 @@ sub sloServer {
         # Launch normal logout and ignore errors
         $req->steps(
             [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ] );
-        $self->p->process($req);
+        my $res = $self->p->process($req);
+
+        if ($res eq PE_REDIRECT) {
+            return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
+        }
 
         # Signature
         my $signSLOMessage = $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
