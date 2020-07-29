@@ -1584,6 +1584,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'test'    => qr/^(?:\w+=.*|)$/,
             'type'    => 'text'
         },
+        'ldapCAFile' => {
+            'type' => 'text'
+        },
+        'ldapCAPath' => {
+            'type' => 'text'
+        },
         'ldapChangePasswordAsUser' => {
             'default' => 0,
             'type'    => 'bool'
@@ -1708,6 +1714,23 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'ldapUsePasswordResetAttribute' => {
             'default' => 1,
             'type'    => 'bool'
+        },
+        'ldapVerify' => {
+            'default' => 'require',
+            'select'  => [ {
+                    'k' => 'none',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'optional',
+                    'v' => 'Optional'
+                },
+                {
+                    'k' => 'require',
+                    'v' => 'Require'
+                }
+            ],
+            'type' => 'select'
         },
         'ldapVersion' => {
             'default' => 3,

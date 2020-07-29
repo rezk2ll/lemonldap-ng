@@ -3270,6 +3270,25 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'bool',
             documentation => 'Support for IBM Tivoli Directory Server',
         },
+        ldapVerify => {
+            type          => 'bool',
+            documentation => 'Whether to validate LDAP certificates',
+            type          => "select",
+            select        => [
+                { k => 'none',     v => 'None' },
+                { k => 'optional', v => 'Optional' },
+                { k => 'require',  v => 'Require' },
+            ],
+            default => 'require',
+        },
+        ldapCAFile => {
+            type          => 'text',
+            documentation => 'Location of the certificate file for LDAP connections',
+        },
+        ldapCAPath => {
+            type          => 'text',
+            documentation => 'Location of the CA directory for LDAP connections',
+        },
 
         # SSL
         SSLAuthnLevel => {

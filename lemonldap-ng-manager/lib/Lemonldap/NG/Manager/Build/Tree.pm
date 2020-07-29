@@ -248,10 +248,11 @@ sub tree {
                                     help  => 'authldap.html#connection',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'ldapServer',      'ldapPort',
-                                        'ldapBase',        'managerDn',
-                                        'managerPassword', 'ldapTimeout',
-                                        'ldapVersion',     'ldapRaw'
+                                        'ldapServer',  'ldapPort',
+                                        'ldapVerify',  'ldapBase',
+                                        'managerDn',   'managerPassword',
+                                        'ldapTimeout', 'ldapVersion',
+                                        'ldapRaw', 'ldapCAFile', 'ldapCAPath',
                                     ]
                                 },
                                 {

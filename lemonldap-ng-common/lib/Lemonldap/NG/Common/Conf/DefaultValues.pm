@@ -144,6 +144,7 @@ sub defaultValues {
         'ldapServer'                      => 'ldap://localhost',
         'ldapTimeout'                     => 120,
         'ldapUsePasswordResetAttribute'   => 1,
+        'ldapVerify'                      => 'require',
         'ldapVersion'                     => 3,
         'linkedInAuthnLevel'              => 1,
         'linkedInFields'             => 'id,first-name,last-name,email-address',
