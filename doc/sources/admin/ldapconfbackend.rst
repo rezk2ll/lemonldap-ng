@@ -89,6 +89,14 @@ Parameters:
 -  **ldapAttributeId**: RDN attribute of configuration entry (optional)
 -  **ldapAttributeContent**: attribute used to store configuration
    values, must be multivalued (optional)
+-  **ldapVerify**: When using a LDAPS or TLS server, whether or not to validate the server certificate. Possible values: ``require``, ``optional`` or ``none``.
+-  **ldapCAFile**:  This allows you to override the default system-wide
+   certificate authorities by giving a single file containing the CA used by the
+   LDAP server.
+-  **ldapCAPath**: This allows you to override the default system-wide
+   certificate authorities by giving the path of a directory containing your
+   trusted certificates.
+
 
 .. |image0| image:: /documentation/configuration-ldap.png
    :class: align-center

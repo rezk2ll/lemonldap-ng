@@ -39,6 +39,28 @@ backups and a rollback plan ready!
 -  Incremental lock times values can now be set by using Manager.
    It must a list of comma separated values. Default values are ``5, 15, 60, 300, 600``
 
+LDAP certificate validation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+LDAP server certificates were previously not verified by default when using secure transports (LDAPS or TLS), see `CVE-2020-16093 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2250>`__. Starting from this release, certificate validation is now enabled by default, including on existing installations.
+
+If you have configured your CA certificates incorrectly, LemonLDAP::NG will now start complaining about invalid certificates. You may temporarily disable it again with the following command ::
+
+   /your/path/to/lemonldap-ng-cli set ldapVerify none
+
+If you use LDAP as a configuration storage, and wand to temporarily disable certificate validation, you must make the following addition to `/etc/lemonldap-ng/lemonldap-ng.ini` ::
+
+   [configuration]
+   ...
+   ldapVerify = none
+
+If you use LDAP as a session backend, and wand to temporarily disable certificate validation, you can add the following parameter to the list of Apache::Session module options:
+
+* key: ``ldapVerify``
+* value: ``none``
+
+Please note that it is HIGHLY recommended to set certificate validation to `require` when contacting LDAP servers over a secure transport to avoid man-in-the-middle attacks.
+
 2.0.8
 -----
 

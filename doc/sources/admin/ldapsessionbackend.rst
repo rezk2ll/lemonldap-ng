@@ -54,6 +54,9 @@ Name                     Comment                           Default value
 **ldapObjectClass**      Objectclass of the entry          applicationProcess
 **ldapAttributeId**      Attribute storing session ID      cn
 **ldapAttributeContent** Attribute storing session content description
+**ldapVerify**           Perform certificate validation    require (use none to disable)
+**ldapCAFile**           Path of CA file bundle            (system CA bundle)
+**ldapCAPath**           Perform CA directory              (system CA bundle)
 ======================== ================================= ===============================
 
 Security

@@ -82,8 +82,11 @@ Connection
       ``ldap+tls://server/verify=none&capath=/etc/ssl``. You can
       also use cafile and capath parameters.
 
--  **Server port**: TCP port used by LDAP server. Can be overridden by
-   an LDAP URI in server host.
+-  **Server port**: TCP port used by LDAP server if different from the standard
+   ports. Can also be specified in the server host URI.
+-  **Verify LDAP server certificate**: It is highly recommended to verify the
+   identity of the remote server. This setting is only enforced for LDAPS or
+   TLS connections.
 -  **Users search base**: Base of search in the LDAP directory.
 -  **Account**: DN used to connect to LDAP server. By default, anonymous
    bind is used.
@@ -95,6 +98,12 @@ Connection
    (see
    `Net::LDAP <http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod>`__
    documentation).
+-  **CA file path**: This allows you to override the default system-wide
+   certificate authorities by giving a single file containing the CA used by the
+   LDAP server.
+-  **CA directory path**: This allows you to override the default system-wide
+   certificate authorities by giving the path of a directory containing your
+   trusted certificates.
 
 
 .. attention::
