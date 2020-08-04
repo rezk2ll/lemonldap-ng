@@ -1425,7 +1425,9 @@ sub createLogoutRequest {
     }
 
     # Set RelayState
-    if ( my $relaystate = $self->storeRelayState( $req, 'urldc' ) ) {
+    if ( my $relaystate =
+        $self->storeRelayState( $req, 'urldc', 'issuerUrldc' ) )
+    {
         $logout->msg_relayState($relaystate);
         $self->logger->debug("Set $relaystate in RelayState");
     }

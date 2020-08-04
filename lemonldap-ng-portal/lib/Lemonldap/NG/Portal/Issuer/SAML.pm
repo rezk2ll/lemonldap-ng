@@ -2,6 +2,8 @@ package Lemonldap::NG::Portal::Issuer::SAML;
 
 use strict;
 use Mouse;
+use URI;
+use URI::QueryParam;
 use Lemonldap::NG::Portal::Lib::SAML;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
@@ -157,6 +159,10 @@ qr/^($saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_u
     );
     $self->addUnauthRoute(
         $self->path => { relaySingleLogoutPOST => 'sloRelayPost' },
+        [ 'GET', 'POST' ]
+    );
+    $self->addUnauthRoute(
+        $self->path => { singleLogoutResume => 'sloResume' },
         [ 'GET', 'POST' ]
     );
     $self->addUnauthRoute(
@@ -1577,6 +1583,64 @@ sub authSloServer {
     return $self->sloServer($req);
 }
 
+sub sloResume {
+    my ( $self, $req ) = @_;
+
+    my $ResumeParams = $req->params('ResumeParams');
+
+    unless ($ResumeParams) {
+        $self->logger->error("Could not find resumption info");
+        return PE_SAML_SLO_ERROR;
+    }
+
+    my $logoutContextSession = $self->getSamlSession($ResumeParams);
+
+    unless ($logoutContextSession) {
+        $self->logger->error("Could not find logout context session");
+        return PE_SAML_SLO_ERROR;
+    }
+
+    my $spConfKey   = $logoutContextSession->data->{spConfKey};
+    my $method      = $logoutContextSession->data->{method};
+    my $provider_nb = $logoutContextSession->data->{provider_nb};
+    my $relayID     = $logoutContextSession->data->{relayID};
+
+    # Restore Lasso logout object from XML dump
+    my $logout = $self->createLogout( $self->lassoServer,
+        $logoutContextSession->data->{logout} );
+    return $self->_finishSlo( $req, $logout, $method, $spConfKey, $provider_nb,
+        $relayID );
+}
+
+sub _finishSlo {
+    my ( $self, $req, $logout, $method, $spConfKey, $provider_nb, $relayID ) =
+      @_;
+
+    # Signature
+    my $signSLOMessage = $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
+      ->{samlSPMetaDataOptionsSignSLOMessage};
+
+    unless ($signSLOMessage) {
+        $self->logger->debug("Do not sign this SLO response");
+        return $self->sendSLOErrorResponse( $req, $logout, $method )
+          unless ( $self->disableSignature($logout) );
+    }
+
+    # If no waiting SP, return directly SLO response
+    unless ($provider_nb) {
+        return $self->sendLogoutResponseToServiceProvider( $req, $logout,
+            $method );
+    }
+
+    # Else build SLO status relay URL and display info
+    else {
+        $req->{urldc} =
+          $self->conf->{portal} . '/saml/relaySingleLogoutTermination';
+        $self->p->setHiddenFormValue( $req, 'relay', $relayID, '', 0 );
+        return $self->p->do( $req, [] );
+    }
+}
+
 sub sloServer {
     my ( $self, $req ) = @_;
     my $url            = $req->uri;
@@ -1758,38 +1822,46 @@ sub sloServer {
         # This flag is for logout() to say that SAML logout is already done
         $req->data->{samlSLOCalled} = 1;
 
+        # TODO: find a better way to decide if authLogout step should be run
+        # for now: only when using SAML auth
+        my $doAuthLogout = 0;
+        my $logoutContextSession;
+        if ( $req->sessionInfo->{_lassoSessionDump} ) {
+            $doAuthLogout = 1;
+
+            # In case we have to redirect to the IDP, save current state
+            # to allow resumption. This needs to be done here because
+            # issuerUrldc will be put in the IdP logout's RelayState
+            my $logoutInfos = {
+                logout      => $logout->dump,
+                spConfKey   => $spConfKey,
+                method      => $method,
+                provider_nb => $provider_nb,
+                relayID     => $relayID,
+            };
+            $logoutContextSession =
+              $self->getSamlSession( undef, $logoutInfos );
+            my $uri =
+              URI->new( $self->conf->{portal} . '/saml/singleLogoutResume' );
+            $uri->query_param( ResumeParams => $logoutContextSession->id );
+            $req->{issuerUrldc} = $uri->as_string;
+        }
+
         # Launch normal logout and ignore errors
-        $req->steps(
-            [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ] );
+        $req->steps( [
+                @{ $self->p->beforeLogout },
+                ( $doAuthLogout ? 'authLogout' : () ),
+                'deleteSession'
+            ]
+        );
         my $res = $self->p->process($req);
 
-        if ($res eq PE_REDIRECT) {
+        if ( $res eq PE_REDIRECT ) {
             return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
         }
 
-        # Signature
-        my $signSLOMessage = $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
-          ->{samlSPMetaDataOptionsSignSLOMessage};
-
-        unless ($signSLOMessage) {
-            $self->logger->debug("Do not sign this SLO response");
-            return $self->sendSLOErrorResponse( $req, $logout, $method )
-              unless ( $self->disableSignature($logout) );
-        }
-
-        # If no waiting SP, return directly SLO response
-        unless ($provider_nb) {
-            return $self->sendLogoutResponseToServiceProvider( $req, $logout,
-                $method );
-        }
-
-        # Else build SLO status relay URL and display info
-        else {
-            $req->{urldc} =
-              $self->conf->{portal} . '/saml/relaySingleLogoutTermination';
-            $self->p->setHiddenFormValue( $req, 'relay', $relayID, '', 0 );
-            return $self->p->do( $req, [] );
-        }
+        return $self->_finishSlo( $req, $logout, $method, $spConfKey,
+            $provider_nb, $relayID );
     }
 
     elsif ($response) {
