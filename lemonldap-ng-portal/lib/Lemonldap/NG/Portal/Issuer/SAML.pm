@@ -1608,6 +1608,11 @@ sub sloResume {
     # Restore Lasso logout object from XML dump
     my $logout = $self->createLogout( $self->lassoServer,
         $logoutContextSession->data->{logout} );
+
+    # Restore session info (for logout of other SPs)
+    $req->setInfo( $logoutContextSession->data->{info} )
+      if $logoutContextSession->data->{info};
+
     return $self->_finishSlo( $req, $logout, $method, $spConfKey, $provider_nb,
         $relayID );
 }
@@ -1822,11 +1827,17 @@ sub sloServer {
         # This flag is for logout() to say that SAML logout is already done
         $req->data->{samlSLOCalled} = 1;
 
-        # TODO: find a better way to decide if authLogout step should be run
-        # for now: only when using SAML auth
+        # This variable decides if we call the authLogout step
+        # (which can redirect away)
         my $doAuthLogout = 0;
         my $logoutContextSession;
+
+        # TODO: for now, we only try authLogout to disconnect an
+        # external IDP if the current session has been opened on a
+        # SAML IDP. We only propagate logout to the IDP our SP is SAML
+        # AND our IDP is SAML too
         if ( $req->sessionInfo->{_lassoSessionDump} ) {
+
             $doAuthLogout = 1;
 
             # In case we have to redirect to the IDP, save current state
@@ -1847,6 +1858,10 @@ sub sloServer {
             $req->{issuerUrldc} = $uri->as_string;
         }
 
+        # We don't want info to interfere with the auth logout process
+        my $savedInfo = $req->info;
+        $req->setInfo('');
+
         # Launch normal logout and ignore errors
         $req->steps( [
                 @{ $self->p->beforeLogout },
@@ -1855,10 +1870,18 @@ sub sloServer {
             ]
         );
         my $res = $self->p->process($req);
+        $self->logger->debug("MAXBES Process retuned $res");
 
         if ( $res eq PE_REDIRECT ) {
+
+            # Save session info (for logout of other SP)
+            if ($savedInfo) {
+                $logoutContextSession->update( { info => $savedInfo } );
+            }
             return $self->p->do( $req, [ sub { PE_REDIRECT } ] );
         }
+
+        $req->info($savedInfo);
 
         return $self->_finishSlo( $req, $logout, $method, $spConfKey,
             $provider_nb, $relayID );
