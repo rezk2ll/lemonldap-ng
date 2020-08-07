@@ -247,7 +247,7 @@ sub getNotifBack {
                 name    => $self->conf->{cookieName},
                 value   => 0,
                 domain  => $self->conf->{domain},
-                secure  => 0,
+                secure  => $self->conf->{securedCookie},
                 expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
             )
         );
