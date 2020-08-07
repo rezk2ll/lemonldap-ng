@@ -54,7 +54,7 @@ SKIP: {
     my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'token' );
     ok(
         $res->[2]->[0] =~
-m%<input name="password" type="text" class="form-control key" autocomplete="off" required aria-required="true" aria-hidden="true"/>%,
+m%<input[^>]*name="password"%,
         'Password: Found text input'
     );
 
