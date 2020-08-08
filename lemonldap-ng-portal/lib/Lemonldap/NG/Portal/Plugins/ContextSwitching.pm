@@ -193,7 +193,8 @@ sub run {
     $self->userLogger->notice(
 "ContextSwitching: Update \"$realId\" session with \"$spoofId\" session data"
     );
-
+    
+    $req->mustRedirect(1);
     return $self->p->do( $req, [ sub { $statut } ] );
 }
 

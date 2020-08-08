@@ -105,11 +105,8 @@ ok(
     ),
     'POST switchcontext'
 );
-ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_OFF">%,
-    'Found trspan="contextSwitching_OFF"' )
-  or explain( $res->[2]->[0], 'trspan="contextSwitching_OFF"' );
+expectRedirection( $res, 'http://auth.example.com/' );
 my $id2 = expectCookie($res);
-
 ok(
     $res = $client->_get(
         '/',
@@ -122,7 +119,7 @@ expectAuthenticatedAs( $res, 'dwho' );
 ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_OFF">%,
     'Found trspan="contextSwitching_OFF"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_OFF"' );
-count(4);
+count(3);
 
 # Stop ContextSwitching
 # ------------------------
@@ -238,9 +235,7 @@ ok(
     ),
     'POST switchcontext'
 );
-ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_OFF">%,
-    'Found trspan="contextSwitching_OFF"' )
-  or explain( $res->[2]->[0], 'trspan="contextSwitching_OFF"' );
+expectRedirection( $res, 'http://auth.example.com/' );
 $id2 = expectCookie($res);
 ok(
     $res = $client->_get(
@@ -254,7 +249,7 @@ expectAuthenticatedAs( $res, 'msmith' );
 ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_OFF">%,
     'Found trspan="contextSwitching_OFF"' )
   or explain( $res->[2]->[0], 'trspan="contextSwitching_OFF"' );
-count(4);
+count(3);
 
 $client->logout($id);
 $client->logout($id2);
