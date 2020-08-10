@@ -24,6 +24,7 @@ backups and a rollback plan ready!
    | The default value is ``$_oidcConsents``
 -  Some user log messages have been modified, check :doc:`logs documentation <logs>`
    (see also `#2244 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/2244>`__)
+-  SAML SOAP calls are now using ``text/xml`` instead of ``application/xml`` as the MIME Content Type, as required by `the SOAP standard <https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383526>`__
 
 2.0.8
 -----
