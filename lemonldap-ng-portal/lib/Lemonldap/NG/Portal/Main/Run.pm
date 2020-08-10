@@ -89,7 +89,8 @@ sub handler {
     # Save pdata
     if ( $sp or %{ $req->pdata } ) {
         my %v = (
-            name => $self->conf->{cookieName} . 'pdata',
+            name   => $self->conf->{cookieName} . 'pdata',
+            secure => $self->conf->{securedCookie},
             (
                 %{ $req->pdata }
                 ? ( value => uri_escape( JSON::to_json( $req->pdata ) ) )
