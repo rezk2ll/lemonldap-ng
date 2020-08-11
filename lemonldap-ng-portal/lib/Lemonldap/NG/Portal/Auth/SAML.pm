@@ -24,9 +24,12 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.9';
 
-extends 'Lemonldap::NG::Portal::Main::Auth', 'Lemonldap::NG::Portal::Lib::SAML';
+extends qw(
+  Lemonldap::NG::Portal::Main::Auth
+  Lemonldap::NG::Portal::Lib::SAML
+);
 
 # INTERFACE
 
@@ -1363,7 +1366,7 @@ sub authLogout {
 
         $req->urldc($slo_url);
 
-        # Redirect done in Portal/Simple.pm
+        # Redirect done in Portal
         return PE_OK;
     }
 
@@ -1384,7 +1387,7 @@ sub authLogout {
         $req->postFields->{'RelayState'} = $logout->msg_relayState
           if ( $logout->msg_relayState );
 
-        # Post done in Portal/Simple.pm
+        # Post done in Portal
         $req->steps( [ 'deleteSession', 'autoPost' ] );
         return PE_OK;
     }
