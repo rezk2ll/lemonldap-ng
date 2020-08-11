@@ -845,7 +845,7 @@ sub tests {
         },
 
         # noAjaxHook and krbByJs are incompatible (#2237)
-        sfRemovedNotification => sub {
+        noAjaxHookwithKrb => sub {
             return ( 1,
                     'noAjaxHook is not compatible with'
                   . ' AJAX Kerberos authentication' )
