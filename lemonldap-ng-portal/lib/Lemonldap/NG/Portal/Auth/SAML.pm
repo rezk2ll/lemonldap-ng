@@ -1381,7 +1381,7 @@ sub authLogout {
         $req->postFields( { 'SAMLRequest' => $slo_body } );
 
         # RelayState
-        $self->postFields->{'RelayState'} = $logout->msg_relayState
+        $req->postFields->{'RelayState'} = $logout->msg_relayState
           if ( $logout->msg_relayState );
 
         # Post done in Portal/Simple.pm
