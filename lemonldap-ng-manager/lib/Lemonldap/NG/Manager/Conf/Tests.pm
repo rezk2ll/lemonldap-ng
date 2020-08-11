@@ -853,6 +853,20 @@ sub tests {
             return 1;
         },
 
+        # Cookie SameSite=None requires Secure flag
+        SameSiteNoneWithSecure => sub {
+            return ( 1, 'SameSite value equal to None requires the secured flag' )
+              if ( !$conf->{securedCookie} and $conf->{sameSite} eq 'None' );
+            return 1;
+        },
+
+        # SAML authentication requires SameSite value equal to None
+        SAMLwithSameSiteNone => sub {
+            return ( 1, 'SAML authentication flow requires SameSite value equal to None' )
+              if ( $conf->{authentication} eq 'SAML' and $conf->{sameSite} ne 'None' );
+            return 1;
+        },
+
     };
 }
 
