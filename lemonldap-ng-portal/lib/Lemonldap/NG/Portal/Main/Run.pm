@@ -195,7 +195,6 @@ sub refresh {
     $req->steps( [
             'getUser',
             @{ $self->betweenAuthAndData },
-            'setAuthSessionInfo',
             'setSessionInfo',
             sub {
                 $req->sessionInfo->{authenticationLevel} = $lastAuthLevel
