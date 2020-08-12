@@ -180,8 +180,7 @@ sub postAuthenticatedRequest {
 sub refresh {
     my ( $self, $req ) = @_;
     $req->mustRedirect(1);
-    my %data          = %{ $req->userData };
-    my $lastAuthLevel = $req->userData->{authenticationLevel};
+    my %data = %{ $req->userData };
     $self->userLogger->notice(
         'Refresh request for ' . $data{ $self->conf->{whatToTrace} } );
     $req->user( $data{_user} || $data{ $self->conf->{whatToTrace} } );
@@ -196,11 +195,6 @@ sub refresh {
             'getUser',
             @{ $self->betweenAuthAndData },
             'setSessionInfo',
-            sub {
-                $req->sessionInfo->{authenticationLevel} = $lastAuthLevel
-                  ;    # Restore previous authentication level (#2179)
-                return PE_OK;
-            },
             $self->groupsAndMacros,
             'setLocalGroups',
             sub {
@@ -1122,8 +1116,7 @@ sub sendJSONresponse {
 
     # Handle caching
     if ( $args{ttl} and $args{ttl} =~ /^\d+$/ ) {
-        push @{ $res->[1] },
-          'Cache-Control' => 'public, max-age=' . $args{ttl};
+        push @{ $res->[1] }, 'Cache-Control' => 'public, max-age=' . $args{ttl};
     }
     else {
         push @{ $res->[1] },
