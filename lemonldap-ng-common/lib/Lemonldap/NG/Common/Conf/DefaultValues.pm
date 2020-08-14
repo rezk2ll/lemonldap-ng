@@ -152,7 +152,7 @@ sub defaultValues {
         'localSessionStorage'        => 'Cache::FileCache',
         'localSessionStorageOptions' => {
             'cache_depth'        => 3,
-            'cache_root'         => '/tmp',
+            'cache_root'         => '/var/cache/lemonldap-ng',
             'default_expires_in' => 600,
             'directory_umask'    => '007',
             'namespace'          => 'lemonldap-ng-sessions'

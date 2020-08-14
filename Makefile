@@ -96,6 +96,9 @@ APACHEFILENOTIFDIR=$(DATADIR)/notifications
 # LL::NG captcha dir
 CAPTCHADIR=$(DATADIR)/captcha
 
+# LL::NG cache dir
+CACHEDIR=$(DATADIR)/cache
+
 # Apache user/group
 APACHEUSER=
 APACHEGROUP=
@@ -178,6 +181,7 @@ RAPACHEPSESSIONFILEDIR=$(DESTDIR)/$(APACHEPSESSIONFILEDIR)
 RAPACHEPSESSIONFILELOCKDIR=$(DESTDIR)/$(APACHEPSESSIONFILELOCKDIR)
 RFILENOTIFDIR=$(DESTDIR)/$(APACHEFILENOTIFDIR)
 RCAPTCHADIR=$(DESTDIR)/$(CAPTCHADIR)
+RCACHEDIR=$(DESTDIR)/$(CACHEDIR)
 RFASTCGISOCKDIR=$(DESTDIR)/$(FASTCGISOCKDIR)
 
 VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
@@ -747,7 +751,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	@echo "5 - Connect to Manager at http://manager.${DNSDOMAIN}/ to edit configuration"
 	@echo
 	@if [ ! "$(APACHEUSER)" ]; then \
-		echo;echo "    Warning, since APACHEUSER was not set, $(APACHESESSIONFILEDIR), $(APACHEPSESSIONFILEDIR), $(CAPTCHADIR) and $(CONFDIR) have permissive permissions."; \
+		echo;echo "    Warning, since APACHEUSER was not set, $(APACHESESSIONFILEDIR), $(APACHEPSESSIONFILEDIR), $(CAPTCHADIR), $(CACHEDIR) and $(CONFDIR) have permissive permissions."; \
 		echo "    Fix them by yourself to restrict their view to apache process only"; \
 	fi
 	@echo
@@ -904,7 +908,7 @@ install_doc_site:
 		rm -rvf $(DOCLIBSTOREMOVEFORDEBIAN); \
 	fi && cd -
 
-install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir
+install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir install_cache_dir
 	# Configuration files install
 	@install -v -d $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR)
 	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
@@ -915,7 +919,8 @@ install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g;\
 		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)#g;\
 		s#__PSESSIONDIR__#$(APACHEPSESSIONFILEDIR)#g;\
-		s#__NOTIFICATIONDIR__#$(APACHEFILENOTIFDIR)#g;' $(RFILECONFIGDIR)/lmConf-1.json
+		s#__NOTIFICATIONDIR__#$(APACHEFILENOTIFDIR)#g;\
+		s#__CACHEDIR__#$(CACHEDIR)#g;' $(RFILECONFIGDIR)/lmConf-1.json
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		chown $(APACHEUSER) $(RFILECONFIGDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
@@ -927,7 +932,8 @@ install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir
 	fi
 	@cp $(SRCCOMMONDIR)/tools/lmConfig.* $(SRCCOMMONDIR)/tools/apache-session-mysql.sql $(RTOOLSDIR)
 	@cp $(SRCCOMMONDIR)/tools/sso.schema $(RTOOLSDIR)
-	$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/$(CONFFILENAME)
+	$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; s#__CACHEDIR__#$(CACHEDIR)#g;' \
+		$(RCONFDIR)/$(CONFFILENAME)
 	@rm -rf $$(find $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR) -type d -name .svn)
 
 install_sessions_dir:
@@ -967,6 +973,19 @@ install_captcha_dir:
 		chmod 770 $(RCAPTCHADIR); \
 	else \
 		chmod 777 $(RCAPTCHADIR); \
+	fi
+
+install_cache_dir:
+	@install -m 777 -v -d $(RCACHEDIR)
+	# Fix captcha directory permissions
+	@if [ "$(APACHEUSER)" != "" ]; then \
+		chown $(APACHEUSER) $(RCACHEDIR) || exit 1; \
+		if [ "$(APACHEGROUP)" != "" ]; then \
+			chgrp $(APACHEGROUP) $(RCACHEDIR) || exit 1; \
+		fi; \
+		chmod 770 $(RCACHEDIR); \
+	else \
+		chmod 777 $(RCACHEDIR); \
 	fi
 
 postconf_hosts:

@@ -5,6 +5,7 @@
 
 LMSHAREDIR=/usr/share/lemonldap-ng
 LMVARDIR  =/var/lib/lemonldap-ng
+LMCACHEDIR  =/var/cache/lemonldap-ng
 TMP       = $(CURDIR)/debian/tmp
 
 CONFDIR=/etc/lemonldap-ng
@@ -22,6 +23,7 @@ CAPTCHADIR=$(LMVARDIR)/captcha
 override_dh_auto_configure:
 	$(MAKE) configure STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini \
 		DATADIR=$(LMVARDIR) \
+		CACHEDIR=$(LMCACHEDIR) \
 		PERLOPTIONS="INSTALLDIRS=vendor"
 
 override_dh_auto_build:
@@ -45,6 +47,7 @@ override_dh_auto_install:
 			CONFDIR=/etc/lemonldap-ng \
 			CRONDIR=/etc/cron.d \
 			DATADIR=$(LMVARDIR) \
+			CACHEDIR=$(LMCACHEDIR) \
 			APACHEUSER=www-data \
 			APACHEGROUP=www-data \
 			DEFDOCDIR=/usr/share/doc/lemonldap-ng-doc \
@@ -70,6 +73,7 @@ override_dh_fixperms:
 		debian/*/$(PSESSIONSDIR)/lock \
 		debian/*/$(NOTIFICATIONSDIR) \
 		debian/liblemonldap-ng-common-perl/$(CONFSTORAGEDIR) \
+		debian/liblemonldap-ng-common-perl/$(LMCACHEDIR) \
 		debian/liblemonldap-ng-portal-perl/$(CAPTCHADIR)
 	chgrp www-data debian/liblemonldap-ng-common-perl/$(LMINIFILE) \
 		debian/liblemonldap-ng-common-perl/$(FIRSTCONFFILE)
@@ -77,6 +81,7 @@ override_dh_fixperms:
 	        debian/*/$(PSESSIONSDIR) debian/*/$(PSESSIONSDIR)/lock \
 		debian/*/$(NOTIFICATIONSDIR) \
 		debian/liblemonldap-ng-portal-perl/$(CAPTCHADIR)
-	chmod 750 debian/liblemonldap-ng-common-perl/$(CONFSTORAGEDIR)
+	chmod 750 debian/liblemonldap-ng-common-perl/$(CONFSTORAGEDIR) \
+		debian/liblemonldap-ng-common-perl/$(LMCACHEDIR)
 	chmod 640 debian/liblemonldap-ng-common-perl/$(FIRSTCONFFILE) \
 		debian/liblemonldap-ng-common-perl/$(LMINIFILE)
