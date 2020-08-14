@@ -32,9 +32,8 @@ sub perlExpr {
 
 my $url_re = $RE{URI}{HTTP}{ -scheme => "https?" };
 $url_re =~ s/(?<=[^\\])\$/\\\$/g;
-my $url = qr/$url_re/;
+my $url        = qr/$url_re/;
 my $urlOrEmpty = qr/(?:^$|$url_re)/;
-
 
 sub types {
     return {
@@ -1155,11 +1154,12 @@ sub attributes {
         sameSite => {
             type   => 'select',
             select => [
+                { k => '',       v => '' },
                 { k => 'Strict', v => 'Strict' },
                 { k => 'Lax',    v => 'Lax' },
                 { k => 'None',   v => 'None' },
             ],
-            default       => 'None',
+            default       => '',
             documentation => 'Cookie SameSite value',
             flags         => 'hp',
         },

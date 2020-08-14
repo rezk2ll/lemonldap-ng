@@ -2917,8 +2917,12 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'url'
         },
         'sameSite' => {
-            'default' => 'None',
+            'default' => '',
             'select'  => [ {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
                     'k' => 'Strict',
                     'v' => 'Strict'
                 },
