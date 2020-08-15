@@ -558,7 +558,12 @@ sub run {
             }
 
             my $nameIDContent;
-            if ( defined $req->{sessionInfo}->{$nameIDSessionKey} ) {
+            if ( $self->spMacros->{$sp}->{$nameIDSessionKey} ) {
+                $nameIDContent =
+                  $self->spMacros->{$sp}->{$nameIDSessionKey}
+                  ->( $req, $req->{sessionInfo} );
+            }
+            elsif ( defined $req->{sessionInfo}->{$nameIDSessionKey} ) {
                 $nameIDContent =
                   $self->p->getFirstValue(
                     $req->{sessionInfo}->{$nameIDSessionKey} );
