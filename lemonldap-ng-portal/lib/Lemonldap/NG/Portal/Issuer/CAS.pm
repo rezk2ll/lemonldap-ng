@@ -506,17 +506,8 @@ sub validate {
     }
 
     # Get username
-    my $app = $casServiceSession->data->{_casApp};
-    my $username_attribute =
-      (       $app
-          and $self->conf->{casAppMetaDataOptions}->{$app}
-          ->{casAppMetaDataOptionsUserAttribute} )
-      ? $self->conf->{casAppMetaDataOptions}->{$app}
-      ->{casAppMetaDataOptionsUserAttribute}
-      : (    $self->conf->{casAttr}
-          || $self->conf->{whatToTrace} );
-
-    my $username = $localSession->data->{$username_attribute};
+    my $app      = $casServiceSession->data->{_casApp};
+    my $username = $self->getUsernameForApp( $req, $app, $localSession->data );
 
     $self->logger->debug("Get username $username");
 
@@ -785,16 +776,7 @@ sub _validate2 {
     }
 
     # Get username
-    my $username_attribute =
-      (       $app
-          and $self->conf->{casAppMetaDataOptions}->{$app}
-          ->{casAppMetaDataOptionsUserAttribute} )
-      ? $self->conf->{casAppMetaDataOptions}->{$app}
-      ->{casAppMetaDataOptionsUserAttribute}
-      : (    $self->conf->{casAttr}
-          || $self->conf->{whatToTrace} );
-
-    my $username = $localSession->data->{$username_attribute};
+    my $username = $self->getUsernameForApp( $req, $app, $localSession->data );
 
     $self->logger->debug("Get username $username");
 
@@ -830,6 +812,34 @@ sub _validate2 {
     $self->deleteCasSession($casServiceSession);
     return $self->returnCasServiceValidateSuccess( $req, $username,
         $casProxyGrantingTicketIOU, $proxies, $attributes );
+}
+
+# Returns the main attribute (sub) to use for this App
+# It can be a session attribute, or per-App macro
+sub getUsernameForApp {
+    my ( $self, $req, $app, $data ) = @_;
+
+    my $username_attribute =
+      (       $app
+          and $self->conf->{casAppMetaDataOptions}->{$app}
+          ->{casAppMetaDataOptionsUserAttribute} )
+      ? $self->conf->{casAppMetaDataOptions}->{$app}
+      ->{casAppMetaDataOptionsUserAttribute}
+      : (    $self->conf->{casAttr}
+          || $self->conf->{whatToTrace} );
+
+    my $username;
+
+    # If the main attribute is a SP macro, resolve it
+    # else, get it directly from session data
+    if ( $app and $self->spMacros->{$app}->{$username_attribute} ) {
+        $username =
+          $self->spMacros->{$app}->{$username_attribute}->( $req, $data );
+    }
+    else {
+        $username = $data->{$username_attribute};
+    }
+    return $username;
 }
 
 1;
