@@ -1336,11 +1336,7 @@ sub buildUserInfoResponse {
     my ( $self, $req, $scope, $rp, $session ) = @_;
     my $userinfo_response = {};
 
-    my $user_id_attribute =
-      $self->conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsUserIDAttr}
-      || $self->conf->{whatToTrace};
-    my $user_id = $session->data->{$user_id_attribute};
+    my $user_id = $self->getUserIDForRP( $req, $rp, $session->data );
 
     $self->logger->debug("Found corresponding user: $user_id");
 
@@ -1742,6 +1738,30 @@ sub getAudiences {
     push @{$result}, @addAudiences;
 
     return $result;
+}
+
+# Returns the main attribute (sub) to use for this RP
+# It can be a session attribute, or per-RP macro
+sub getUserIDForRP {
+    my ( $self, $req, $rp, $data ) = @_;
+
+    my $user_id_attribute =
+      $self->conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsUserIDAttr}
+      || $self->conf->{whatToTrace};
+
+    my $user_id;
+
+    # If the main attribute is a SP macro, resolve it
+    # else, get it directly from session data
+    if ( $self->spMacros->{$rp}->{$user_id_attribute} ) {
+        $user_id =
+          $self->spMacros->{$rp}->{$user_id_attribute}->( $req, $data );
+    }
+    else {
+        $user_id = $data->{$user_id_attribute};
+    }
+    return $user_id;
 }
 
 1;

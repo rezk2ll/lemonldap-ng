@@ -393,11 +393,8 @@ sub run {
 
                 # Check that id_token_hint sub match current user
                 my $sub = $self->getIDTokenSub($id_token_hint);
-                my $user_id_attribute =
-                  $self->conf->{oidcRPMetaDataOptions}->{$rp}
-                  ->{oidcRPMetaDataOptionsUserIDAttr}
-                  || $self->conf->{whatToTrace};
-                my $user_id = $req->{sessionInfo}->{$user_id_attribute};
+                my $user_id =
+                  $self->getUserIDForRP( $req, $rp, $req->{sessionInfo} );
                 unless ( $sub eq $user_id ) {
                     $self->userLogger->error(
                         "ID Token hint sub $sub does not match user $user_id");
@@ -1080,11 +1077,7 @@ sub _handlePasswordGrant {
         }
     }
 
-    my $user_id_attribute =
-      $self->conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsUserIDAttr}
-      || $self->conf->{whatToTrace};
-    my $user_id = $req->sessionInfo->{$user_id_attribute};
+    my $user_id = $self->getUserIDForRP( $req, $rp, $req->sessionInfo );
 
     $self->logger->debug("Found corresponding user: $user_id");
 
@@ -1218,11 +1211,7 @@ sub _handleAuthorizationCodeGrant {
         return $self->p->sendError( $req, 'invalid_grant', 400 );
     }
 
-    my $user_id_attribute =
-      $self->conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsUserIDAttr}
-      || $self->conf->{whatToTrace};
-    my $user_id = $apacheSession->data->{$user_id_attribute};
+    my $user_id = $self->getUserIDForRP( $req, $rp, $apacheSession->data );
 
     $self->logger->debug("Found corresponding user: $user_id");
 
@@ -1438,11 +1427,7 @@ sub _handleRefreshTokenGrant {
                 'Invalid request', 401 );
         }
 
-        my $user_id_attribute =
-          $self->conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsUserIDAttr}
-          || $self->conf->{whatToTrace};
-        $user_id = $session->data->{$user_id_attribute};
+        $user_id = $self->getUserIDForRP( $req, $rp, $session->data );
 
         $auth_time = $session->data->{_lastAuthnUTime};
 
@@ -1508,11 +1493,7 @@ sub _handleRefreshTokenGrant {
             $refreshSession->data->{$_} = $req->sessionInfo->{$_};
         }
 
-        my $user_id_attribute =
-          $self->conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsUserIDAttr}
-          || $self->conf->{whatToTrace};
-        $user_id = $req->sessionInfo->{$user_id_attribute};
+        $user_id = $self->getUserIDForRP( $req, $rp, $req->sessionInfo );
         $self->logger->debug("Found corresponding user: $user_id");
 
         $auth_time = $refreshSession->data->{auth_time};
@@ -1748,11 +1729,8 @@ sub introspection {
 
         # The ID attribute we choose is the one of the calling webservice,
         # which might be different from the OIDC client the token was issued to.
-            my $user_id_attribute =
-              $self->conf->{oidcRPMetaDataOptions}->{$rp}
-              ->{oidcRPMetaDataOptionsUserIDAttr}
-              || $self->conf->{whatToTrace};
-            $response->{sub}   = $apacheSession->data->{$user_id_attribute};
+            $response->{sub} =
+              $self->getUserIDForRP( $req, $rp, $apacheSession->data );
             $response->{scope} = $oidcSession->{data}->{scope}
               if $oidcSession->{data}->{scope};
             $response->{client_id} =
@@ -1998,11 +1976,8 @@ sub logout {
                 if ( $rpConf->{oidcRPMetaDataOptionsLogoutType} eq 'front' ) {
                     if ( $rpConf->{oidcRPMetaDataOptionsLogoutSessionRequired} )
                     {
-                        my $user_id_attribute =
-                          $self->conf->{oidcRPMetaDataOptions}->{$rp}
-                          ->{oidcRPMetaDataOptionsUserIDAttr}
-                          || $self->conf->{whatToTrace};
-                        my $user_id = $req->{sessionInfo}->{$user_id_attribute};
+                        my $user_id = $self->getUserIDForRP( $req, $rp,
+                            $req->{sessionInfo} );
                         $url .= ( $url =~ /\?/ ? '&' : '?' )
                           . build_urlencoded(
                             iss => $self->iss,
@@ -2065,8 +2040,10 @@ sub metadata {
     }
 
     # If one of the RPs has refresh tokens enabled
-    if ( grep { $self->oidcRPList->{$_}->{oidcRPMetaDataOptionsRefreshToken} }
-        keys %{ $self->oidcRPList } )
+    if (
+        grep { $self->oidcRPList->{$_}->{oidcRPMetaDataOptionsRefreshToken} }
+        keys %{ $self->oidcRPList }
+      )
     {
         push( @$grant_types, "refresh_token" );
     }
@@ -2275,11 +2252,7 @@ sub _generateIDToken {
         }
     }
 
-    my $user_id_attribute =
-      $self->conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsUserIDAttr}
-      || $self->conf->{whatToTrace};
-    my $user_id = $req->{sessionInfo}->{$user_id_attribute};
+    my $user_id = $self->getUserIDForRP( $req, $rp, $req->{sessionInfo} );
 
     my $id_token_payload_hash = {
         iss       => $self->iss,                            # Issuer Identifier
