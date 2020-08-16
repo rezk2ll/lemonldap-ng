@@ -143,9 +143,9 @@ m#<img class="renewcaptchaclick" src="/static/common/icons/arrow_refresh.png" al
     ok( $res = $client->_get( '/renewcaptcha', accept => 'text/html' ),
         'Unauth request to renew Captcha' );
     $json = eval { JSON::from_json( $res->[2]->[0] ) };
-    ok( ( defined $json->{newtoken} and $json->{newtoken} =~ /^\d{10}_\d+$/ ),
+    ok( ( defined $json->{newtoken} and $json->{newtoken} =~ /^\w+$/ ),
         'New token has been received' )
-      or explain( $json->{newtoken}, 'NO token received' );
+      or explain( $json->{newtoken}, 'New token not received' );
     ok( (
             defined $json->{newimage}
               and $json->{newimage} =~ m%^data:image/png;base64,.+%
