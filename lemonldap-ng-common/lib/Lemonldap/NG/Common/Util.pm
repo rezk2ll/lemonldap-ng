@@ -2,18 +2,25 @@ package Lemonldap::NG::Common::Util;
 require Exporter;
 
 use Digest::MD5;
+use MIME::Base64 qw/encode_base64/;
 
 use 5.10.0;
 
 our $VERSION   = '2.0.9';
 our @ISA       = qw(Exporter);
-our @EXPORT_OK = qw(getSameSite getPSessionID);
+our @EXPORT_OK = qw(getSameSite getPSessionID genId2F);
 
-# Return stable psession ID from username
 sub getPSessionID {
     my ($uid) = @_;
     return substr( Digest::MD5::md5_hex($uid), 0, 32 );
 }
+
+sub genId2F {
+    my ( $device ) = @_;
+    return encode_base64( "$device->{epoch}::$device->{type}::$device->{name}",
+        "" );
+}
+
 
 sub getSameSite {
     my ($conf) = @_;
@@ -60,6 +67,10 @@ modules.
 =head3 getPSessionID($uid)
 
 This method computes the psession ID from the user login
+
+=head3 genId2F($device)
+
+This method computes the unique ID of each 2F device, for use with the API and CLI
 
 =head3 getSameSite($conf)
 

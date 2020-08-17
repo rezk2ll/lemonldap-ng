@@ -3,12 +3,11 @@ package Lemonldap::NG::Common::CliSessions;
 use strict;
 use Mouse;
 use JSON;
-use MIME::Base64;
 use Lemonldap::NG::Common::Conf;
 use Lemonldap::NG::Common::Logger::Std;
 use Lemonldap::NG::Common::Apache::Session;
 use Lemonldap::NG::Common::Session;
-use Lemonldap::NG::Common::Util qw/getPSessionID/;
+use Lemonldap::NG::Common::Util qw/getPSessionID genId2F/;
 
 our $VERSION = '2.0.8';
 
@@ -195,13 +194,6 @@ sub get {
     return 0;
 }
 
-# TODO factor with manager API function
-sub _genId2F {
-    my ( $self, $device ) = @_;
-    return encode_base64( "$device->{epoch}::$device->{type}::$device->{name}",
-        "" );
-}
-
 sub _get_psession {
     my ( $self, $uid ) = @_;
     my $psession_id = getPSessionID($uid);
@@ -280,7 +272,7 @@ sub secondfactors_get {
     my $target   = shift;
     my $o        = $self->stdout;
     my $consents = $self->_get_psession_special( $target, '_2fDevices',
-        sub { $self->_genId2F( $_[0] ) } );
+        sub { genId2F( $_[0] ) } );
     print $o $self->_to_json($consents);
     return 0;
 }
@@ -301,7 +293,7 @@ sub secondfactors_delete {
     my @ids    = @_;
     return unless @ids;
     $self->_del_psession_special( $target, '_2fDevices',
-        sub { $self->_genId2F( $_[0] ) }, @ids );
+        sub { genId2F( $_[0] ) }, @ids );
     return 0;
 }
 
