@@ -3,6 +3,7 @@ package Lemonldap::NG::Manager::Conf::Tests;
 use utf8;
 use Lemonldap::NG::Common::Regexp;
 use Lemonldap::NG::Handler::Main;
+use Lemonldap::NG::Common::Util qw(getSameSite);
 
 our $VERSION = '2.0.8';
 
@@ -854,16 +855,21 @@ sub tests {
         },
 
         # Cookie SameSite=None requires Secure flag
+        # Same with SameSite=(auto) and SAML issuer in use
         SameSiteNoneWithSecure => sub {
-            return ( 1, 'SameSite value equal to None requires the secured flag' )
-              if ( !$conf->{securedCookie} and $conf->{sameSite} eq 'None' );
+            return ( 1, 'SameSite value = None requires the secured flag' )
+              if ( getSameSite($conf) eq 'None' and !$conf->{securedCookie} );
             return 1;
         },
 
-        # SAML authentication requires SameSite value equal to None
-        SAMLwithSameSiteNone => sub {
-            return ( 1, 'SAML authentication flow requires SameSite value equal to None' )
-              if ( $conf->{authentication} eq 'SAML' and $conf->{sameSite} ne 'None' );
+        # Secure Cookies require HTTPS
+        SecureCookiesRequireHttps => sub {
+            if (    $conf->{securedCookie} == 1
+                and $conf->{portal}
+                and $conf->{portal} !~ /^https:/ )
+            {
+                return ( 1, 'Secure cookies require a HTTPS portal URL' );
+            }
             return 1;
         },
 
