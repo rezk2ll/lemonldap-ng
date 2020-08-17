@@ -33,6 +33,9 @@ backups and a rollback plan ready!
    need to manually change your existing
    ``localSessionStorageOptions/cache_root`` parameter from ``/tmp`` to
    ``/var/cache/lemonldap-ng``.
+-  This release fixes several issues when using ``SameSite=None``. The new
+   default value of the SameSite configuration parameter will set SameSite to
+   ``Lax`` unless you are using SAML, which requires ``None``
 
 2.0.8
 -----

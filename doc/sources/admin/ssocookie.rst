@@ -29,13 +29,17 @@ To edit SSO cookie parameters, go in Manager, ``General Parameters`` >
       only one session is created in session database
 
 -  **Javascript protection**: set httpOnly flag, to prevent cookie from
-   being caught by javascript code
+   being leaked by malicious javascript code
 -  **Cookie expiration time**: by default, SSO cookie is a session
    cookie, which means it will be destroyed when browser is closed. You
    can change this behavior by setting a cookie expiration time. It must
    be an integer. **Cookie Expiration Time** value is a number of
    seconds until the cookie expires. Set a zero value to disable
    expiration time and use a session cookie.
+-  **Cookie SameSite value**: the value of the SameSite cookie attribute. By
+   default, LemonLDAP::NG will set it to "Lax" in most cases, and "None" if you
+   use SAML. Using "None" requres Secured Cookies, and accessing applications
+   over HTTPS on most web browsers.
 
 
 .. danger::
