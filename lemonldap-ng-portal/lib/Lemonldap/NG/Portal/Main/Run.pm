@@ -16,6 +16,7 @@ package Lemonldap::NG::Portal::Main;
 use strict;
 use URI::Escape;
 use JSON;
+use Lemonldap::NG::Common::Util qw(getPSessionID);
 
 has trOverCache => ( is => 'rw', default => sub { {} } );
 
@@ -465,7 +466,7 @@ sub getPersistentSession {
     return unless ( defined $uid and !$self->conf->{disablePersistentStorage} );
 
     # Compute persistent identifier
-    my $pid = $self->_md5hash($uid);
+    my $pid = getPSessionID($uid);
 
     $info->{_session_uid} = $uid;
 
@@ -530,7 +531,7 @@ sub updatePersistentSession {
 
     if ( $persistentSession->error ) {
         $self->logger->error(
-            "Cannot update persistent session " . $self->_md5hash($uid) );
+            "Cannot update persistent session " . getPSessionID($uid) );
         $self->logger->error( $persistentSession->error );
     }
 }
@@ -637,12 +638,6 @@ sub _deleteSession {
     ) if $user;
 
     return $session->error ? 0 : 1;
-}
-
-# Return md5(s)
-sub _md5hash {
-    my ( $self, $s ) = @_;
-    return substr( Digest::MD5::md5_hex($s), 0, 32 );
 }
 
 # Check if an URL's domain name is declared in LL::NG config or is declared as

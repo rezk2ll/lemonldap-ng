@@ -1,11 +1,19 @@
 package Lemonldap::NG::Common::Util;
 require Exporter;
 
+use Digest::MD5;
+
 use 5.10.0;
 
-our $VERSION = '2.0.9';
-our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(getSameSite);
+our $VERSION   = '2.0.9';
+our @ISA       = qw(Exporter);
+our @EXPORT_OK = qw(getSameSite getPSessionID);
+
+# Return stable psession ID from username
+sub getPSessionID {
+    my ($uid) = @_;
+    return substr( Digest::MD5::md5_hex($uid), 0, 32 );
+}
 
 sub getSameSite {
     my ($conf) = @_;
@@ -48,6 +56,10 @@ This package contains various functions that need to be shared between
 modules.
 
 =head1 METHODS
+
+=head3 getPSessionID($uid)
+
+This method computes the psession ID from the user login
 
 =head3 getSameSite($conf)
 

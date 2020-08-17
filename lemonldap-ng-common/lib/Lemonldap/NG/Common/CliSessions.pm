@@ -3,12 +3,12 @@ package Lemonldap::NG::Common::CliSessions;
 use strict;
 use Mouse;
 use JSON;
-use Digest::MD5 qw(md5_hex);
 use MIME::Base64;
 use Lemonldap::NG::Common::Conf;
 use Lemonldap::NG::Common::Logger::Std;
 use Lemonldap::NG::Common::Apache::Session;
 use Lemonldap::NG::Common::Session;
+use Lemonldap::NG::Common::Util qw/getPSessionID/;
 
 our $VERSION = '2.0.8';
 
@@ -118,7 +118,7 @@ sub _get_one_session {
     # Handle --persistent
     elsif ( $self->opts->{persistent} ) {
         $backendStorage = "persistentStorage";
-        $id             = $self->_md5hash($id);
+        $id             = getPSessionID($id);
     }
 
     # In any case, fall back to global storage if we couldn't find the backend
@@ -195,13 +195,6 @@ sub get {
     return 0;
 }
 
-# Return md5(s)
-# TODO factor with portal function
-sub _md5hash {
-    my ( $self, $s ) = @_;
-    return substr( Digest::MD5::md5_hex($s), 0, 32 );
-}
-
 # TODO factor with manager API function
 sub _genId2F {
     my ( $self, $device ) = @_;
@@ -211,7 +204,7 @@ sub _genId2F {
 
 sub _get_psession {
     my ( $self, $uid ) = @_;
-    my $psession_id = $self->_md5hash($uid);
+    my $psession_id = getPSessionID($uid);
     my $res         = $self->_get_one_session( $psession_id, 'persistent' );
     die "Could not get psession for user $uid" unless $res;
     return $res;
