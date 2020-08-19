@@ -19,7 +19,7 @@ extends qw(
   Lemonldap::NG::Common::PSGI::Router
 );
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 has notifAccess => ( is => 'rw' );
 has notifFormat => ( is => 'rw' );
@@ -175,7 +175,8 @@ sub notifications {
             $value = qr/^$value$/;
             foreach my $k ( keys %$notifs ) {
                 delete $notifs->{$k}
-                  unless ( $notifs->{$k}->{$field} =~ $value );
+                  unless ( $notifs->{$k}->{$field}
+                    && $notifs->{$k}->{$field} =~ $value );
             }
         }
     }
