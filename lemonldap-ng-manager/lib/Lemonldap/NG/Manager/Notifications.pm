@@ -154,7 +154,11 @@ sub notifications {
       or die "Unknown type $type";
 
     # Case 1: a notification is required
-    return $self->notification( $req, $notif, $type ) if ($notif);
+    if ($notif) {
+        my $params = $req->parameters();
+        return $self->notification( $req, $notif, $type, $params->{uid},
+            $params->{reference} );
+    }
 
     # Case 2: list
     my $params = $req->parameters();
@@ -239,10 +243,10 @@ sub notifications {
 }
 
 sub notification {
-    my ( $self, $req, $id, $type ) = @_;
+    my ( $self, $req, $id, $type, $uid, $ref ) = @_;
 
     if ( $type eq 'actives' ) {
-        my ( $uid, $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
+        ( $uid, $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
         my $n = $self->notifAccess->get( $uid, $ref );
         unless ($n) {
             $self->userLogger->notice(
@@ -259,8 +263,20 @@ sub notification {
             { result => 1, count => 1, notifications => [ values %$n ] } );
     }
     else {
+        my $n = $self->notifAccess->getAccepted( $uid, $ref );
+        unless ($n) {
+            $self->userLogger->notice(
+                "Notification $ref not found for user $uid");
+            return $self->sendJSONresponse(
+                $req,
+                {
+                    result => 0,
+                    error  => "Notification $ref not found for user $uid"
+                }
+            );
+        }
         return $self->sendJSONresponse( $req,
-            { result => 1, count => 1, done => $id } );
+            { result => 1, count => 1, done => $id, notifications => [ values %$n ] } );
     }
 }
 

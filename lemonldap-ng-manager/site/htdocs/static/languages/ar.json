@@ -182,6 +182,7 @@
 "cfgVersion":"عملية ضبط الإصدارات",
 "checkXSS":"تحقق من هجمات XSS",
 "clickHereToForce":"انقر هنا لإجبار",
+"checkboxes":"Checkboxes",
 "checkState":"تفعيل",
 "checkStateSecret":"سر مشترك",
 "checkUsers":"SSO profile Check",

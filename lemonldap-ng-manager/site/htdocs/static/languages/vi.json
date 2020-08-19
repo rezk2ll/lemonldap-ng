@@ -182,6 +182,7 @@
 "cfgVersion":"Phiên bản cấu hình",
 "checkXSS":"Kiểm tra tấn công XSS",
 "clickHereToForce":"Nhấp vào đây để bắt buộc",
+"checkboxes":"Checkboxes",
 "checkState":"Kích hoạt",
 "checkStateSecret":"Chia sẻ bí mật",
 "checkUsers":"SSO profile Check",

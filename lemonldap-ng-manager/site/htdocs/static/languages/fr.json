@@ -182,6 +182,7 @@
 "cfgVersion":"Version de la configuration",
 "checkXSS":"Contrôler les attaques XSS",
 "clickHereToForce":"Cliquer ici pour forcer",
+"checkboxes":"Cases à cocher",
 "checkState":"Activation",
 "checkStateSecret":"Secret partagé",
 "checkUsers":"Vérification des profils SSO",

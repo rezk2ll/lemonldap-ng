@@ -182,6 +182,7 @@
 "cfgVersion":"Yapılandırma sürümü",
 "checkXSS":"XSS saldırılarını kontrol et",
 "clickHereToForce":"Zorlamak için buraya tıklayın",
+"checkboxes":"Checkboxes",
 "checkState":"Aktivasyon",
 "checkStateSecret":"Paylaşılan sır",
 "checkUsers":"TOA profil Kontrolü",

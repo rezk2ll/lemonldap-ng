@@ -182,6 +182,7 @@
 "cfgVersion":"配置信息",
 "checkXSS":"Check XSS attacks",
 "clickHereToForce":"Click here to force",
+"checkboxes":"Checkboxes",
 "checkState":"激活",
 "checkStateSecret":"Shared secret",
 "checkUsers":"SSO profile Check",
