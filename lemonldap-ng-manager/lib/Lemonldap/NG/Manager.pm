@@ -167,7 +167,11 @@ sub tplParams {
     my $res = eval {
         $self->hLoadedPlugins->{viewer}->brwRule->( $req, $req->{userData} );
     } || 0;
-    return ( VERSION => $VERSION, ALLOWBROWSER => $res );
+    return (
+        VERSION      => $VERSION,
+        ALLOWBROWSER => $res,
+        DOC_PREFIX   => ( $self->{docPrefix} || '/doc' ),
+    );
 }
 
 sub javascript {
