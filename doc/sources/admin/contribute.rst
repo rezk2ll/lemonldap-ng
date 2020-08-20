@@ -132,9 +132,10 @@ Install dependencies
    aptitude install nginx nginx-extras  # install Nginx
    cpanm perltidy@20181120
 
+For SAML:
+
 ::
 
-    SAML :
    aptitude install liblasso-perl libglib-perl
 
 Working Project
@@ -187,3 +188,20 @@ Other commands
      make manifest # to update manifest
      make tidy # to magnify perl files (perl best pratices)
 
+Documentation
+^^^^^^^^^^^^^
+
+Install dependencies:
+
+::
+
+    apt install python3-sphinx python3-sphinx-bootstrap-theme
+
+Then edit sources in doc/sources/admin.
+
+You can check the result with:
+
+::
+
+    make documentation
+    firefox doc/pages/documentation/current/start.html
