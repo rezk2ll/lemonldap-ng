@@ -17,7 +17,7 @@ Configuration
 -------------
 
 This feature can be enabled and configured in Manager, in
-``General Parameters`` » ``Advanced Parameters`` » ``Login History``.
+``General Parameters`` » ``Plugins`` » ``Login History``.
 You can define how many logins and failed logins will be stored.
 
 A login is considered as successful if user get authenticated and is
