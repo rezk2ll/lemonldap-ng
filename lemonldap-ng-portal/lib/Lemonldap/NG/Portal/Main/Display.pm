@@ -2,7 +2,7 @@
 # Display functions for LemonLDAP::NG Portal
 package Lemonldap::NG::Portal::Main::Display;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 package Lemonldap::NG::Portal::Main;
 use strict;
@@ -10,6 +10,8 @@ use Mouse;
 use JSON;
 use URI;
 
+has isPP          => ( is => 'rw' );
+has speChars      => ( is => 'rw' );
 has skinRules     => ( is => 'rw' );
 has requireOldPwd => ( is => 'rw', default => sub { 1 } );
 
@@ -37,6 +39,19 @@ sub displayInit {
         $self->logger->error( "Bad requireOldPwd rule: " . $error );
     }
     $self->requireOldPwd($rule);
+
+    my $speChars = $self->conf->{passwordPolicySpecialChar};
+    $speChars =~ s/\s+/ /g;
+    $speChars =~ s/(?:^\s|\s$)//g;
+    $self->speChars($speChars);
+
+    my $isPP =
+         $self->conf->{passwordPolicyMinSize}
+      || $self->conf->{passwordPolicyMinLower}
+      || $self->conf->{passwordPolicyMinUpper}
+      || $self->conf->{passwordPolicyMinDigit}
+      || $speChars;
+    $self->isPP($isPP);
 }
 
 # Call portal process and set template parameters
@@ -210,17 +225,7 @@ sub display {
 
     # 2.2 Case : display menu (with error or not)
     elsif ( $req->error == PE_OK ) {
-        my $speChars = $self->conf->{passwordPolicySpecialChar};
-        $speChars =~ s/\s+/ /g;
-        $speChars =~ s/(?:^\s|\s$)//g;
         $skinfile = 'menu';
-
-        my $isPP =
-             $self->conf->{passwordPolicyMinSize}
-          || $self->conf->{passwordPolicyMinLower}
-          || $self->conf->{passwordPolicyMinUpper}
-          || $self->conf->{passwordPolicyMinDigit}
-          || $speChars;
 
         #utf8::decode($auth_user);
         %templateParams = (
@@ -239,10 +244,10 @@ sub display {
             PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
             PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
             PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
-            PPOLICY_NOPOLICY => !$isPP,
-            PPOLICY_ALLOWEDSPECHAR => $speChars,
+            PPOLICY_NOPOLICY => !$self->isPP(),
+            PPOLICY_ALLOWEDSPECHAR => $self->speChars(),
             (
-                $speChars
+                $self->speChars()
                 ? ( PPOLICY_MINSPECHAR =>
                       $self->conf->{passwordPolicyMinSpeChar} )
                 : ()
@@ -398,8 +403,7 @@ sub display {
                 CHOICE_PARAM          => $self->conf->{authChoiceParam},
                 CHOICE_VALUE          => $req->data->{_authChoice},
                 OLDPASSWORD           => $self->checkXSSAttack( 'oldpassword',
-                    $req->data->{oldpassword} )
-                ? ""
+                    $req->data->{oldpassword} ) ? ""
                 : $req->data->{oldpassword},
                 HIDE_OLDPASSWORD => $self->conf->{hideOldPassword},
                 DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy},
@@ -407,6 +411,14 @@ sub display {
                 PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
                 PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
                 PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
+                PPOLICY_NOPOLICY => !$self->isPP(),
+                PPOLICY_ALLOWEDSPECHAR => $self->speChars(),
+                (
+                    $self->speChars()
+                    ? ( PPOLICY_MINSPECHAR =>
+                          $self->conf->{passwordPolicyMinSpeChar} )
+                    : ()
+                ),
             );
         }
 
