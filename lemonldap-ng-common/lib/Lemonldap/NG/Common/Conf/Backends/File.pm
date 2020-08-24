@@ -87,7 +87,18 @@ sub store {
         return UNKNOWN_ERROR;
     }
     binmode(FILE);
-    my $f = to_json( $fields, { allow_nonref => 1 } );
+    my $json_options = {
+        allow_nonref => 1,
+        (
+            $self->{prettyPrint}
+            ? (
+                pretty    => 1,
+                canonical => 1
+              )
+            : ()
+        )
+    };
+    my $f = to_json( $fields, $json_options );
     print FILE $f;
     close FILE;
     umask($mask);
