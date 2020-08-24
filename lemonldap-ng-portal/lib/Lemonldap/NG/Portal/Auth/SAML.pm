@@ -1270,7 +1270,8 @@ sub authFinish {
 
     $self->logger->debug( "Store NameID "
           . $nameid->dump
-          . " and SessionIndex $session_index for session $id" );
+          . ( $session_index ? " and SessionIndex $session_index" : "" )
+          . " for session $id" );
 
     my $infos;
     $infos->{type}          = 'saml';            # Session type
