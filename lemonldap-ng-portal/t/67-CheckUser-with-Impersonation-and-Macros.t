@@ -8,7 +8,8 @@ BEGIN {
 
 my $res;
 
-my $client = LLNG::Manager::Test->new( {
+my $client = LLNG::Manager::Test->new(
+    {
         ini => {
             logLevel                       => 'error',
             authentication                 => 'Demo',
@@ -95,7 +96,7 @@ count(1);
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok(
     $res->[2]->[0] =~
-m%<input name="user" type="text" class="form-control" value="dwho / rtyler" trplaceholder="user"%,
+m%<input id="userfield" name="user" type="text" class="form-control" value="dwho / rtyler" trplaceholder="user"%,
     'Found trplaceholder = "dwho / rtyler"'
 ) or explain( $res->[2]->[0], 'trplaceholder = "dwho / rtyler"' );
 count(1);

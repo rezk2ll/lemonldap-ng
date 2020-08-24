@@ -128,7 +128,7 @@ q{INSERT INTO notifications VALUES ('rtyler','testref2','2050-05-30 00:00:00',?,
     expectOK($res);
     my $id   = expectCookie($res);
     my @refs = ( $res->[2]->[0] =~
-          /<input type="hidden" name="reference[\dx]+" value="(\w+?)">/gs );
+          /<input type="hidden" name="reference[\dx]+" value="(\w+?)"\/>/gs );
     ok( @refs == 2, 'Two notification references found' )
       or print STDERR Dumper( $res->[2]->[0] );
     ok( $refs[0] eq 'testref2', '1st reference found is "testref2"' )
