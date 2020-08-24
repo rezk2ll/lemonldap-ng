@@ -26,4 +26,11 @@ it in [configuration] section in your lemonldap-ng.ini file:
    [configuration]
    type  = File
    dirName = /var/lib/lemonldap-ng/conf
+   prettyPrint = 1
 
+
+Parameters
+----------
+
+* `dirName`: directory under which the configuration files will be stored. It must be writable by your webserver account
+* `prettyPrint`: store files in a readable. Set it to 0 to get a small performance increase when loading/saving configuration

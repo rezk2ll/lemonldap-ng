@@ -620,12 +620,11 @@ Configuration backend parameters
 Full name                                                                     Key name             Configuration backend
 ============================================================================= ==================== ===========================================================
 Configuration load timeout                                                    confTimeout          all backends (default: 10)
-Directory                                                                     dirName              :doc:`File<fileconfbackend>`
 DBI connection string                                                         dbiChain             :doc:`CDBI / RDBI<sqlconfbackend>`
 DBI user                                                                      dbiUser
 DBI password                                                                  dbiPassword
 DBI table name                                                                dbiTable
-Storage directory                                                             dirName              :doc:`File<fileconfbackend>` / :doc:`YAML<yamlconfbackend>`
+Directory                                                                     dirName              :doc:`File<fileconfbackend>` / :doc:`YAML<yamlconfbackend>`
 LDAP server                                                                   ldapServer           :doc:`LDAP<ldapconfbackend>`
 LDAP port                                                                     ldapPort
 LDAP base                                                                     ldapConfBase
@@ -638,6 +637,7 @@ Certificate authorities file                                                  ca
 Certificate authorities directory                                             caPath
 MongoDB database                                                              dbName               :doc:`MongoDB<mongodbconfbackend>`
 MongoDB collection                                                            collectionName
+Pretty print                                                                  prettyPrint          :doc:`File<fileconfbackend>`
 REST base URL                                                                 baseUrl              :doc:`REST<restconfbackend>`
 REST realm                                                                    realm
 REST user                                                                     user
