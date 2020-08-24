@@ -158,7 +158,7 @@ sub run {
         # Merge specified groups/hGroups only
         my %intersct = %{ $realSession->{$sphg} };
         unless ( $self->{conf}->{impersonationMergeSSOgroups} eq 1 ) {
-            %intersct = {};
+            %intersct = ();
             my %SSOgroups = map { $_, 1 } split /\Q$separator/,
               $self->{conf}->{impersonationMergeSSOgroups};
 
