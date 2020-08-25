@@ -623,15 +623,12 @@ sub tests {
         },
 
         # Warn if ldapPpolicyControl is used with AD (#2007)
-
         ppolicyAd => sub {
-            if (    $conf->{ldapPpolicyControl}
-                and $conf->{authentication} eq "AD" )
-            {
-                return ( 1,
+            return ( 1,
 "LDAP password policy control should be disabled when using AD authentication"
-                );
-            }
+              )
+              if (  $conf->{ldapPpolicyControl}
+                and $conf->{authentication} eq "AD" );
             return 1;
         },
 
@@ -862,14 +859,12 @@ sub tests {
             return 1;
         },
 
-        # Secure Cookies require HTTPS
+        # Secure cookies require HTTPS
         SecureCookiesRequireHttps => sub {
-            if (    $conf->{securedCookie} == 1
+            return ( 1, 'Secure cookies require a HTTPS portal URL' )
+              if (  $conf->{securedCookie} == 1
                 and $conf->{portal}
-                and $conf->{portal} !~ /^https:/ )
-            {
-                return ( 1, 'Secure cookies require a HTTPS portal URL' );
-            }
+                and $conf->{portal} !~ /^https:/ );
             return 1;
         },
 
