@@ -15,23 +15,23 @@ Perl module.
 In the manager: set
 `Apache::Session::Browseable::Redis <https://metacpan.org/pod/Apache::Session::Browseable::Redis>`__
 in ``General parameters`` » ``Sessions`` » ``Session storage`` »
-``Apache::Session module`` and add the following parameters (case
-sensitive):
+``Apache::Session module`` and add the connection parameters for your Redis server(s).
 
-Parameters:
+This backend uses the perl bindings for Redis database provided by the `Redis perl module <https://metacpan.org/pod/Redis>`__.
+A complete list of supported constructor/connection options can be found in the `module documentation <https://metacpan.org/pod/Redis>`__.
 
-============= ==================== ===============================================
-Name          Comment              Example
-============= ==================== ===============================================
-**server**    Redis server         127.0.0.1:6379
-**sentinels** Redis sentinels list 127.0.0.1:26379,127.0.0.2:26379,127.0.0.3:26379
-============= ==================== ===============================================
+E.g., Parameters (case sensitive):
 
-You can specify either a single Redis server or a list of Sentinel hosts
-using the \*sentinels\* module parameter
+============= =========================== ===============================================
+Name          Comment                     Example
+============= =========================== ===============================================
+**server**    Redis server @ IP:PORT      127.0.0.1:6379
+**sock**      Redis server @ unix socket  unix:/path/to/redis.sock
+**sentinels** Redis sentinels list        127.0.0.1:26379,127.0.0.2:26379,127.0.0.3:26379
+**password**  password (== requirepass)   ChangeMe
+**select**    Redis DB                    1
+============= =========================== ===============================================
 
-You can find the complete list of supported options on the `Redis perl module
-documentation <https://metacpan.org/pod/Redis#new>`__.
 
 Security
 --------
