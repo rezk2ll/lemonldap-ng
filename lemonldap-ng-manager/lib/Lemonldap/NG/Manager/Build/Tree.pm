@@ -630,7 +630,8 @@ sub tree {
                                 'notificationStorageOptions',
                                 {
                                     title => 'serverNotification',
-                                    help  => 'notifications.html#notification-server',
+                                    help =>
+                                      'notifications.html#notification-server',
                                     nodes => [
                                         'notificationServer',
                                         'notificationDefaultCond',
@@ -959,7 +960,10 @@ sub tree {
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'bruteForceProtection',
+                                        'bruteForceProtectionTempo',
+                                        'bruteForceProtectionMaxFailed',
                                         'bruteForceProtectionIncrementalTempo',
+                                        'bruteForceProtectionLockTimes',
                                     ]
                                 },
                                 'lwpOpts',

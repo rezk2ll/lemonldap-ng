@@ -833,7 +833,7 @@ sub attributes {
         },
         bruteForceProtectionLockTimes => {
             type    => 'text',
-            default => '5 15 60 300 600',
+            default => '5, 15, 60, 300, 600',
             documentation =>
               'Incremental lock time values for brute force attack protection',
         },

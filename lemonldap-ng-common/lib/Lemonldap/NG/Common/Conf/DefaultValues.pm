@@ -19,7 +19,7 @@ sub defaultValues {
         'authentication'  => 'Demo',
         'available2F'     => 'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,Yubikey,Radius',
         'available2FSelfRegistration'        => 'TOTP,U2F,Yubikey',
-        'bruteForceProtectionLockTimes'      => '5 15 60 300 600',
+        'bruteForceProtectionLockTimes'      => '5, 15, 60, 300, 600',
         'bruteForceProtectionMaxAge'         => 300,
         'bruteForceProtectionMaxFailed'      => 3,
         'bruteForceProtectionMaxLockTime'    => 900,

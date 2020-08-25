@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_WAIT);
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -48,14 +48,24 @@ sub init {
     if ( $self->conf->{bruteForceProtectionIncrementalTempo} ) {
         my $lockTimes = @{ $self->lockTimes } =
           sort { $a <=> $b }
-          map { $_ < $self->conf->{bruteForceProtectionMaxLockTime} ? $_ : () }
+          map  { $_ < $self->conf->{bruteForceProtectionMaxLockTime} ? $_ : () }
           grep { /\d+/ }
-          split /\s+/, $self->conf->{bruteForceProtectionLockTimes};
+          split /\s*,\s*/, $self->conf->{bruteForceProtectionLockTimes};
 
         unless ($lockTimes) {
             @{ $self->lockTimes } = ( 5, 15, 60, 300, 600 );
             $lockTimes = 5;
         }
+
+        # for (
+        #     my $i = 1 ;
+        #     $i <= $self->conf->{bruteForceProtectionMaxFailed} ;
+        #     $i++
+        #   )
+        # {
+        #     unshift @{ $self->lockTimes }, 0;
+        #     $lockTimes++;
+        # }
 
         if ( $lockTimes > $self->conf->{failedLoginNumber} ) {
             $self->logger->warn( 'Number of incremental lock time values ('
@@ -96,9 +106,9 @@ sub run {
         my $delta = $now - $lastFailedLoginEpoch;
         $self->logger->debug(" -> Delta = $delta");
         my $waitingTime = $self->lockTimes->[ $countFailed - 1 ]
-          || $self->conf->{bruteForceProtectionMaxLockTime};
+          // $self->conf->{bruteForceProtectionMaxLockTime};
         $self->logger->debug(" -> Waiting time = $waitingTime");
-        unless ( $delta > $waitingTime ) {
+        if ( $waitingTime && $delta <= $waitingTime ) {
             $self->logger->debug("BruteForceProtection enabled");
             $req->lockTime($waitingTime);
             return PE_WAIT;
