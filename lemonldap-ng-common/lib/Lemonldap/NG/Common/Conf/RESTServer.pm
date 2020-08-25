@@ -769,8 +769,8 @@ sub metadata {
         return $self->sendJSONresponse(
             $req,
             $self->currentConf,
-            forceJSON => 1,
-            headers   => [
+            pretty  => 1,
+            headers => [
                 'Content-Disposition' => "Attachment; filename=lmConf-$c.json"
             ],
         );
