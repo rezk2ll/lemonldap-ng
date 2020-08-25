@@ -2576,7 +2576,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'boolOrExpr'
         },
         'portalDisplayOidcConsents' => {
-            'default' => '$_oidcConsents',
+            'default' => '$_oidcConsents && $_oidcConsents =~ /\\w+/',
             'type'    => 'boolOrExpr'
         },
         'portalDisplayPasswordPolicy' => {
