@@ -1088,7 +1088,7 @@ sub attributes {
         },
         portalDisplayOidcConsents => {
             type          => 'boolOrExpr',
-            default       => '$_oidcConsents',
+            default       => '$_oidcConsents && $_oidcConsents =~ /\w+/',
             documentation => 'Display OIDC consent tab in portal',
         },
         portalDisplayGeneratePassword => {
