@@ -14,6 +14,16 @@ tags:
   description: Registered Second Factors
 
 paths:
+  /api/v1/status:
+    get:
+      summary: Check the status of the API
+      operationId: status
+      responses:
+        200:
+          $ref: '#/components/responses/StatusResponse'
+        503:
+          $ref: '#/components/responses/StatusResponse'
+
   /api/v1/providers/saml/sp:
     post:
       tags:
@@ -975,6 +985,41 @@ paths:
 
 components:
   schemas:
+    Status:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Descriptive name of the software
+        version:
+          type: string
+          description: Version of the LemonLDAP::NG software
+        status_sessions:
+          type: string
+          description: Status of the sessions database
+          enum:
+            - ok
+            - ko
+            - unknown
+        status_psessions:
+          type: string
+          description: Status of the psessions database
+          enum:
+            - ok
+            - ko
+            - unknown
+        status_config:
+          type: string
+          description: Status of the configuration database
+          enum:
+            - ok
+            - ko
+        status:
+          type: string
+          description: Global status
+          enum:
+            - ok
+            - ko
     confKey:
       type: string
       pattern: '^\w[\w\.\-]*$'
@@ -1363,6 +1408,12 @@ components:
           $ref: '#/components/schemas/MenuAppOptions'
 
   responses:
+    StatusResponse:
+      description: Response to API health check
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
     NoContent:
       description: Successful modification
     Created:
