@@ -10,6 +10,7 @@ extends 'Lemonldap::NG::Manager::Plugin',
   'Lemonldap::NG::Common::Session::REST';
 
 use Lemonldap::NG::Manager::Api::2F;
+use Lemonldap::NG::Manager::Api::Misc;
 use Lemonldap::NG::Manager::Api::Providers::OidcRp;
 use Lemonldap::NG::Manager::Api::Providers::SamlSp;
 use Lemonldap::NG::Manager::Api::Providers::CasApp;
@@ -33,6 +34,7 @@ sub init {
       ->addRoute(
         api => {
             v1 => {
+                status    => 'status',
                 providers => {
                     oidc => {
                         rp => {

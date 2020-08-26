@@ -112,4 +112,18 @@ sub _getRegexpFromPattern {
     return qr/$pattern/;
 }
 
+sub _getPersistentMod {
+    my ($self) = @_;
+    my $mod = $self->sessionTypes->{persistent};
+    $mod->{options}->{backend} = $mod->{module};
+    return $mod;
+}
+
+sub _getSSOMod {
+    my ($self) = @_;
+    my $mod = $self->sessionTypes->{global};
+    $mod->{options}->{backend} = $mod->{module};
+    return $mod;
+}
+
 1;

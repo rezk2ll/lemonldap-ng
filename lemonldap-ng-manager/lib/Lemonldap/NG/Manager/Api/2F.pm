@@ -168,20 +168,6 @@ sub _get2F {
     return { res => 'ok', secondFactors => [@secondFactors] };
 }
 
-sub _getPersistentMod {
-    my ($self) = @_;
-    my $mod = $self->sessionTypes->{persistent};
-    $mod->{options}->{backend} = $mod->{module};
-    return $mod;
-}
-
-sub _getSSOMod {
-    my ($self) = @_;
-    my $mod = $self->sessionTypes->{global};
-    $mod->{options}->{backend} = $mod->{module};
-    return $mod;
-}
-
 sub _getSessions2F {
     my ( $self, $mod, $kind, $key, $uid ) = @_;
     $self->logger->debug("Looking for sessions for uid $uid ...");
