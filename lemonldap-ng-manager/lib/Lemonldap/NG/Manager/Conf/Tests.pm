@@ -301,38 +301,6 @@ sub tests {
             );
         },
 
-        # Test SMTP connection and authentication (warning only)
-        smtpConnectionAuthentication => sub {
-
-            # Skip test if no SMTP configuration
-            return 1 unless ( $conf->{SMTPServer} );
-
-            # Use SMTP
-            eval "use Net::SMTP";
-            return ( 1, "Net::SMTP module is required to use SMTP server" )
-              if ($@);
-
-            # Create SMTP object
-            my $smtp = Net::SMTP->new(
-                $conf->{SMTPServer},
-                Timeout => 5,
-                ( $conf->{SMTPPort} ? ( Port => $conf->{SMTPPort} ) : () ),
-            );
-            return ( 1,
-                "SMTP connection to " . $conf->{SMTPServer} . " failed" )
-              unless ($smtp);
-
-            # Skip other tests if no authentication
-            return 1
-              unless ( $conf->{SMTPAuthUser} and $conf->{SMTPAuthPass} );
-
-            # Try authentication
-            return ( 1, "SMTP authentication failed" )
-              unless $smtp->auth( $conf->{SMTPAuthUser},
-                $conf->{SMTPAuthPass} );
-            return 1;
-        },
-
         # SAML entity ID must be unique
         samlIDPEntityIdUniqueness => sub {
             return 1
