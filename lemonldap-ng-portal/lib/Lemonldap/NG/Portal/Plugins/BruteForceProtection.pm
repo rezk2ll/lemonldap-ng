@@ -38,9 +38,9 @@ sub init {
     unless ( $self->conf->{failedLoginNumber} >
         $self->conf->{bruteForceProtectionMaxFailed} )
     {
-        $self->logger->error( 'failedLoginNumber('
+        $self->logger->error( 'Number of failed logins history ('
               . $self->conf->{failedLoginNumber}
-              . ') must be higher than bruteForceProtectionMaxFailed('
+              . ') must be higher than allowed failed logins attempt ('
               . $self->conf->{bruteForceProtectionMaxFailed}
               . ')' );
         return 0;
@@ -57,18 +57,19 @@ sub init {
             $lockTimes = 5;
         }
 
-        # for (
-        #     my $i = 1 ;
-        #     $i <= $self->conf->{bruteForceProtectionMaxFailed} ;
-        #     $i++
-        #   )
-        # {
-        #     unshift @{ $self->lockTimes }, 0;
-        #     $lockTimes++;
-        # }
+        for (
+            my $i = 1 ;
+            $i <= $self->conf->{bruteForceProtectionMaxFailed} ;
+            $i++
+          )
+        {
+            unshift @{ $self->lockTimes }, 0;
+            $lockTimes++;
+        }
 
         if ( $lockTimes > $self->conf->{failedLoginNumber} ) {
-            $self->logger->warn( 'Number of incremental lock time values ('
+            $self->logger->warn(
+'Number of incremental lock time values plus allowed failed logins attempt('
                   . "$lockTimes) is higher than failed logins history ("
                   . $self->conf->{failedLoginNumber}
                   . ')' );
