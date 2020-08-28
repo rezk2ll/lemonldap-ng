@@ -10,13 +10,13 @@ my $res;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                             => 'debug',
+            logLevel                             => 'error',
             authentication                       => 'Demo',
             userDB                               => 'Same',
             loginHistoryEnabled                  => 1,
             bruteForceProtection                 => 1,
             bruteForceProtectionIncrementalTempo => 1,
-            failedLoginNumber                    => 5,
+            failedLoginNumber                    => 6,
             bruteForceProtectionMaxLockTime      => 300,
             bruteForceProtectionLockTimes        => '5 , 500, bad ,20, 10 ',
             bruteForceProtectionMaxFailed        => 2,

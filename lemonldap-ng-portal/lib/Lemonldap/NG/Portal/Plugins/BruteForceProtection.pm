@@ -71,11 +71,10 @@ sub init {
         }
 
         unless ( $lockTimes < $self->conf->{failedLoginNumber} ) {
-            $self->logger->warn(
-'Number of incremental lock time values plus allowed failed logins attempt('
-                  . "$lockTimes) is higher than failed logins history ("
+            $self->logger->warn( 'Number failed logins history ('
                   . $self->conf->{failedLoginNumber}
-                  . ')' );
+                  . ') must be higher than incremental lock time values plus allowed failed logins attempt ('
+                  . "$lockTimes)" );
             splice @{ $self->lockTimes }, $self->conf->{failedLoginNumber};
             $lockTimes = $self->conf->{failedLoginNumber};
         }
