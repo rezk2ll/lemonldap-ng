@@ -48,7 +48,10 @@ sub init {
     if ( $self->conf->{bruteForceProtectionIncrementalTempo} ) {
         my $lockTimes = @{ $self->lockTimes } =
           sort { $a <=> $b }
-          map  { $_ < $self->conf->{bruteForceProtectionMaxLockTime} ? $_ : () }
+          map {
+            $_ =~ s/\D//;
+            $_ < $self->conf->{bruteForceProtectionMaxLockTime} ? $_ : ()
+          }
           grep { /\d+/ }
           split /\s*,\s*/, $self->conf->{bruteForceProtectionLockTimes};
 
@@ -67,7 +70,7 @@ sub init {
             $lockTimes++;
         }
 
-        if ( $lockTimes > $self->conf->{failedLoginNumber} ) {
+        unless ( $lockTimes < $self->conf->{failedLoginNumber} ) {
             $self->logger->warn(
 'Number of incremental lock time values plus allowed failed logins attempt('
                   . "$lockTimes) is higher than failed logins history ("
