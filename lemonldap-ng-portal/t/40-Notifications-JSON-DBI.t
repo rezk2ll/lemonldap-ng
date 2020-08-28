@@ -137,7 +137,7 @@ q{INSERT INTO notifications VALUES ('rtyler','testref2','2050-05-30 00:00:00',?,
       or print STDERR Dumper( $res->[2]->[0] );
     expectForm( $res, undef, '/notifback', 'reference1x1', 'url' );
 
-    # Verify that cookie is ciphered (session unvalid)
+    # Verify that cookie is ciphered (session invalid)
     ok(
         $res = $client->_get(
             '/',

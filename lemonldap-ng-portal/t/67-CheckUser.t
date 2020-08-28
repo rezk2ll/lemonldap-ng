@@ -540,7 +540,7 @@ m%<div class="alert alert-warning alert"><div class="text-center"><span trspan="
 ) or explain( $res->[2]->[0], 'PE5 - Unknown identity' );
 count(2);
 
-# Request an unvalid identity
+# Request an invalid identity
 $query =~ s/user=dwho/user=%*'/;
 ok(
     $res = $client->_post(
@@ -556,7 +556,7 @@ ok(
     $res->[2]->[0] =~
 m%<div class="alert alert-warning alert"><div class="text-center"><span trspan="PE5"></span></div></div>%,
     ' PE5 found'
-) or explain( $res->[2]->[0], 'PE5 - Unvalid identity' );
+) or explain( $res->[2]->[0], 'PE5 - invalid identity' );
 count(2);
 
 $client->logout($id);

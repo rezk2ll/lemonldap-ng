@@ -194,7 +194,7 @@ sub _reset {
     );
     if ( my $error = $self->p->process( $req, useMail => $searchByMail ) ) {
         if ( $error == PE_USERNOTFOUND or $error == PE_BADCREDENTIALS ) {
-            $self->userLogger->warn( 'Reset asked for an unvalid user ('
+            $self->userLogger->warn( 'Reset asked for an invalid user ('
                   . $req->param('mail')
                   . ')' );
 

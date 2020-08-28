@@ -274,7 +274,7 @@ sub check {
         $self->logger->info("\"$user\" is an unrestricted user!") if $unUser;
         unless ( $unUser || $self->idRule->( $req, $attrs ) ) {
             $self->userLogger->warn(
-                "checkUser requested for an unvalid user ($user)");
+                "checkUser requested for an invalid user ($user)");
             $req->{sessionInfo} = {};
             $self->logger->debug('Identity not authorized');
             $req->error(PE_BADCREDENTIALS)
@@ -427,7 +427,7 @@ sub _userData {
     if ( my $error = $self->p->process($req) ) {
         if ( $error == PE_BADCREDENTIALS ) {
             $self->userLogger->warn(
-                    'checkUser requested for an unvalid user ('
+                    'checkUser requested for an invalid user ('
                   . $req->{user}
                   . ")" );
         }

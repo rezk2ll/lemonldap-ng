@@ -163,7 +163,7 @@ sub removeOther {
                 }
                 else {
                     $self->userLogger->warn(
-                        "SingleSession called with an unvalid token");
+                        "SingleSession called with an invalid token");
                     $res = PE_TOKENEXPIRED;
                 }
             }

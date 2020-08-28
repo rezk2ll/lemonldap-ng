@@ -139,7 +139,7 @@ sub globalLogout {
                     }
                     else {
                         $self->userLogger->warn(
-                            "GlobalLogout called with an unvalid token");
+                            "GlobalLogout called with an invalid token");
                         $res = PE_TOKENEXPIRED;
                     }
                 }

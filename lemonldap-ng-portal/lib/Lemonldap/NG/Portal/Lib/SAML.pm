@@ -3063,7 +3063,7 @@ sub sendSLOErrorResponse {
             "Could not set empty session in logout object", 500 );
     }
 
-    # Send unvalidated SLO response
+    # Send invalidated SLO response
     return $self->sendLogoutResponseToServiceProvider( $req, $logout, $method );
 }
 

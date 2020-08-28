@@ -215,7 +215,7 @@ sub _userData {
     if ( my $error = $self->p->process($req) ) {
         if ( $error == PE_BADCREDENTIALS ) {
             $self->userLogger->warn(
-                    'Impersonation requested for an unvalid user ('
+                    'Impersonation requested for an invalid user ('
                   . $req->{user}
                   . ")" );
         }
@@ -229,7 +229,7 @@ sub _userData {
         $self->logger->info("\"$realId\" is an unrestricted user!") if $unUser;
         unless ( $unUser || $self->idRule->( $req, $req->sessionInfo ) ) {
             $self->userLogger->warn(
-                    'Impersonation requested for an unvalid user ('
+                    'Impersonation requested for an invalid user ('
                   . $req->{user}
                   . ")" );
             $self->logger->debug('Identity NOT authorized');

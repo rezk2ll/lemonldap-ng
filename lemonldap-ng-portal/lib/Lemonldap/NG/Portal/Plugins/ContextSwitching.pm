@@ -216,7 +216,7 @@ sub _switchContext {
     );
     if ( my $error = $self->p->process($req) ) {
         $self->userLogger->warn(
-                'ContextSwitching requested for an unvalid user ('
+                'ContextSwitching requested for an invalid user ('
               . $req->{user}
               . ")" )
           if ( $error == PE_BADCREDENTIALS );
@@ -229,7 +229,7 @@ sub _switchContext {
     $self->logger->info("\"$realId\" is an unrestricted user!") if $unUser;
     unless ( $unUser || $self->idRule->( $req, $req->sessionInfo ) ) {
         $self->userLogger->warn(
-                'ContextSwitching requested for an unvalid user ('
+                'ContextSwitching requested for an invalid user ('
               . $req->{user}
               . ")" );
         $self->logger->debug('Identity NOT authorized');
