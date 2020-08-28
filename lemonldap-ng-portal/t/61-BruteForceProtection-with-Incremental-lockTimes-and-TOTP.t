@@ -26,6 +26,7 @@ SKIP: {
                 totp2fSelfRegistration               => 1,
                 totp2fActivation                     => 1,
                 failedLoginNumber                    => 4,
+                bruteForceProtectionMaxFailed        => 0,
             }
         }
     );

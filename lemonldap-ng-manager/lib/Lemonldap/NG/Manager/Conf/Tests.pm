@@ -254,8 +254,6 @@ sub tests {
             return ( 1, "Cookie TTL should be higher or equal than one hour" )
               unless ( $conf->{cookieExpiration} >= 3600
                 || $conf->{cookieExpiration} == 0 );
-
-            # Return
             return 1;
         },
 
@@ -265,8 +263,6 @@ sub tests {
             return ( -1, "Session timeout should be higher than ten minutes" )
               unless ( $conf->{timeout} > 600
                 || $conf->{timeout} == 0 );
-
-            # Return
             return 1;
         },
 
@@ -278,8 +274,6 @@ sub tests {
               )
               unless ( $conf->{timeoutActivity} > 59
                 || $conf->{timeoutActivity} == 0 );
-
-            # Return
             return 1;
         },
 
@@ -292,8 +286,6 @@ sub tests {
               if (  $conf->{timeoutActivity}
                 and $conf->{timeoutActivity} <=
                 $conf->{timeoutActivityInterval} );
-
-            # Return
             return 1;
         },
 
@@ -338,8 +330,6 @@ sub tests {
             return ( 1, "SMTP authentication failed" )
               unless $smtp->auth( $conf->{SMTPAuthUser},
                 $conf->{SMTPAuthPass} );
-
-            # Return
             return 1;
         },
 
@@ -441,8 +431,6 @@ sub tests {
               unless ( $conf->{combination} );
             return ( 0, 'userDB must be set to "Same" to enable Combination' )
               unless ( $conf->{userDB} eq "Same" );
-
-            # Return
             return 1;
         },
 
@@ -482,8 +470,6 @@ sub tests {
 "Auth::Yubikey_WebClient module is required to enable Yubikey"
                 ) if ($@);
             }
-
-            # Return
             return 1;
         },
 
@@ -521,8 +507,6 @@ sub tests {
               unless ( $conf->{totp2fRange} );
             return ( 1, "TOTP interval should be higher than 10s" )
               unless ( $conf->{totp2fInterval} > 10 );
-
-            # Return
             return 1;
         },
 
@@ -570,7 +554,6 @@ sub tests {
                 || $conf->{'totp2fSelfRegistration'} );
             $msg = "A self registrable module should be enabled to require 2FA"
               unless ($ok);
-
             return ( 1, $msg );
         },
 
@@ -583,8 +566,6 @@ sub tests {
                 return ( 0, "External 2F Validate command must be set" )
                   unless ( defined $conf->{ext2FValidateCommand} );
             }
-
-            # Return
             return 1;
         },
 
@@ -595,8 +576,6 @@ sub tests {
               unless ( $conf->{formTimeout} > 30 );
             return ( 1, "XSRF form token TTL should not be higher than 2mn" )
               if ( $conf->{formTimeout} > 120 );
-
-            # Return
             return 1;
         },
 
@@ -607,8 +586,6 @@ sub tests {
               unless ( $conf->{issuersTimeout} > 30 );
             return ( 1, "Issuers token TTL should not be higher than 2mn" )
               if ( $conf->{issuersTimeout} > 120 );
-
-            # Return
             return 1;
         },
 
@@ -617,8 +594,6 @@ sub tests {
             return 1 unless ( $conf->{portalDisplayResetPassword} );
             return ( 1, "Number of reset password retries should not be null" )
               unless ( $conf->{passwordResetAllowedRetries} );
-
-            # Return
             return 1;
         },
 
@@ -641,8 +616,18 @@ sub tests {
             return ( 1,
 'Number of failed logins must be higher than 2 to enable "BruteForceProtection" plugin'
             ) unless ( $conf->{failedLoginNumber} > 2 );
-
-            # Return
+            return ( 1,
+'Number of failed logins history must be higher than allowed failed logins plus lock time values'
+              )
+              if ( $conf->{bruteForceProtectionIncrementalTempo}
+                && $conf->{failedLoginNumber} <=
+                $conf->{bruteForceProtectionMaxFailed} +
+                $conf->{bruteForceProtectionLockTimes} );
+            return ( 1,
+'Number of failed logins history must be higher than allowed failed logins'
+              )
+              unless ( $conf->{failedLoginNumber} >
+                $conf->{bruteForceProtectionMaxFailed} );
             return 1;
         },
 
@@ -654,8 +639,6 @@ sub tests {
               )
               unless ( $conf->{requireToken}
                 or $conf->{captcha_mail_enabled} );
-
-            # Return
             return 1;
         },
 
@@ -666,8 +649,6 @@ sub tests {
               )
               if ( $conf->{impersonationRule}
                 && $conf->{contextSwitchingRule} );
-
-            # Return
             return 1;
         },
 
@@ -691,8 +672,6 @@ sub tests {
             return ( 1,
 "BruteForceProtection plugin enabled WITHOUT persistent session storage"
             ) if ( $conf->{bruteForceProtection} );
-
-            # Return
             return 1;
         },
 
@@ -707,8 +686,6 @@ sub tests {
             return ( 1,
 "XML::LibXSLT module is required to enable old format notifications"
             ) if ($@);
-
-            # Return
             return 1;
         },
 
@@ -722,8 +699,6 @@ sub tests {
             return ( 1,
 "DateTime::Format::RFC3339 module is required to enable CertificateResetByMail plugin"
             ) if ($@);
-
-            # Return
             return 1;
         },
 
@@ -867,7 +842,6 @@ sub tests {
                 and $conf->{portal} !~ /^https:/ );
             return 1;
         },
-
     };
 }
 
