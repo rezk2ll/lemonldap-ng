@@ -2,8 +2,11 @@ package Lemonldap::NG::Portal::Plugins::Impersonation;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants
-  qw( PE_OK PE_BADCREDENTIALS PE_IMPERSONATION_SERVICE_NOT_ALLOWED PE_MALFORMEDUSER );
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK PE_BADCREDENTIALS
+  PE_IMPERSONATION_SERVICE_NOT_ALLOWED
+  PE_MALFORMEDUSER
+);
 
 our $VERSION = '2.0.9';
 
@@ -77,7 +80,7 @@ sub run {
 
     return $req->authResult
       if $req->authResult >
-      PE_OK;    # Skip Impersonation if error during Auth process
+      PE_OK;    # Skip Impersonation if an error occurs during Auth process
 
     my $statut = PE_OK;
     my $unUser = 0;
@@ -86,7 +89,7 @@ sub run {
     $req->{user} ||= $req->{sessionInfo}->{_impUser};    # If 2FA is enabled
     my $spoofId = $req->param('spoofId')       # Impersonation required
       || $req->{sessionInfo}->{_impSpoofId}    # If 2FA is enabled
-      || $req->{user};                         # NO Impersonation required
+      || $req->{user};                         # Impersonation not required
 
     $self->logger->debug("No impersonation required")
       if ( $spoofId eq $req->{user} );

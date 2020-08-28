@@ -40,7 +40,7 @@ has unrestrictedUsersRule => ( is => 'rw', default => sub { 0 } );
 
 sub init {
     my ($self) = @_;
-    $self->addAuthRoute( switchcontext => 'run', ['POST'] )
+    $self->addAuthRoute( switchcontext => 'run',  ['POST'] )
       ->addAuthRoute( switchcontext => 'display', ['GET'] );
 
     # Parse ContextSwitching rules
@@ -193,7 +193,7 @@ sub run {
     $self->userLogger->notice(
 "ContextSwitching: Update \"$realId\" session with \"$spoofId\" session data"
     );
-    
+
     $req->mustRedirect(1);
     return $self->p->do( $req, [ sub { $statut } ] );
 }

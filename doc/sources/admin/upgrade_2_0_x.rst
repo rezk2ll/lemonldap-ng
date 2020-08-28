@@ -21,7 +21,7 @@ backups and a rollback plan ready!
 -----
 
 -  | Bad default value to display OIDC Consents tab has been fixed.
-   | The default value is ``$_oidcConsents``
+   | The default value is ``$_oidcConsents && $_oidcConsents =~ /\w+/``
 -  Some user log messages have been modified, check :doc:`logs documentation <logs>`
    (see also `#2244 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/2244>`__)
 -  SAML SOAP calls are now using ``text/xml`` instead of ``application/xml`` as the MIME Content Type, as required by `the SOAP standard <https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383526>`__
@@ -36,6 +36,8 @@ backups and a rollback plan ready!
 -  This release fixes several issues when using ``SameSite=None``. The new
    default value of the SameSite configuration parameter will set SameSite to
    ``Lax`` unless you are using SAML, which requires ``None``
+-  Incremental lock times values can now be set by using Manager.
+   It must a list of comma separated values. Default values are ``5, 15, 60, 300, 600``
 
 2.0.8
 -----
