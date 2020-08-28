@@ -16,12 +16,12 @@ sub getStatus {
     return from_json( $res->[2]->[0] );
 }
 
-# Make config file unreadable
-chmod 0000, 't/conf/lmConf-1.json';
+# "break" config file
+rename 't/conf/lmConf-1.json', 't/conf/lmConf-1.json.broken';
 my $brokenconfig = getStatus( "Broken config backend", 503 );
 is( $brokenconfig->{status},        'ko', 'Got expected global status' );
 is( $brokenconfig->{status_config}, 'ko', 'Got expected config status' );
-chmod 0644, 't/conf/lmConf-1.json';
+rename 't/conf/lmConf-1.json.broken', 't/conf/lmConf-1.json';
 
 my $allfine = getStatus( "Back to normal" );
 is( $allfine->{status},        'ok', 'Got expected global status' );
