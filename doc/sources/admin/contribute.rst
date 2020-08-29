@@ -167,7 +167,7 @@ Execute an unit test :
      # and execute the unit test:
      prove -v t/67-CheckUser.t
 
-Launch tests with LDAP backend, for example with OpenLDAP LTB package:
+Launch tests with LDAP backend, for example with OpenLDAP LTB package (https://ltb-project.org/documentation):
 
 ::
 
