@@ -1454,7 +1454,7 @@ sub attributes {
             type          => 'bool',
             documentation => 'Hide old password in portal',
         },
-        passwordPolicy => {
+        passwordPolicyActivation => {
             type          => 'boolOrExpr',
             default       => 1,
             documentation => 'Enable password policy',

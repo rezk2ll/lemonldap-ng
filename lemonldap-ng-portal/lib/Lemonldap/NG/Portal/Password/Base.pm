@@ -53,7 +53,7 @@ sub _modifyPassword {
 
     my $pwdPolicyRule = $self->p->HANDLER->buildSub(
         $self->p->HANDLER->substitute(
-            $self->conf->{passwordPolicy}
+            $self->conf->{passwordPolicyActivation}
         )
     );
     unless ($pwdPolicyRule) {

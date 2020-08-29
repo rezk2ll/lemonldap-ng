@@ -695,6 +695,8 @@
 "password":"Mot-de-passe",
 "passwordDB":"Module de mot de passe",
 "passwordManagement":"Gestion des mots de passe",
+"passwordPolicy":"Politique des mots de passe",
+"passwordPolicyActivation":"Activation",
 "passwordPolicyMinSize": "Taille minimale",
 "passwordPolicyMinLower": "Minimum de minuscules",
 "passwordPolicyMinUpper": "Minimum de majuscules",

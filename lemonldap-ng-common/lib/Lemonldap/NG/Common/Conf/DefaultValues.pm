@@ -224,7 +224,7 @@ sub defaultValues {
         'pamAuthnLevel'                       => 2,
         'pamService'                          => 'login',
         'passwordDB'                          => 'Demo',
-        'passwordPolicy'                      => 1,
+        'passwordPolicyActivation'            => 1,
         'passwordPolicyMinDigit'              => 0,
         'passwordPolicyMinLower'              => 0,
         'passwordPolicyMinSize'               => 0,
