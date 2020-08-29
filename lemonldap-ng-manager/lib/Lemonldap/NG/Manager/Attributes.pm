@@ -2485,10 +2485,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'passwordPolicy' => {
             'default' => 1,
-            'test'    => sub {
-                return perlExpr(@_);
-            },
-            'type' => 'text'
+            'type'    => 'boolOrExpr'
         },
         'passwordPolicyMinDigit' => {
             'default' => 0,

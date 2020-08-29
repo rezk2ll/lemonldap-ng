@@ -1455,8 +1455,7 @@ sub attributes {
             documentation => 'Hide old password in portal',
         },
         passwordPolicy => {
-            type          => 'text',
-            test          => sub { return perlExpr(@_) },
+            type          => 'boolOrExpr',
             default       => 1,
             documentation => 'Enable password policy',
         },

@@ -79,6 +79,7 @@ sub tree {
                                         'portalRequireOldPassword',
                                         'hideOldPassword',
                                         'mailOnPasswordChange',
+                                        'passwordPolicy',
                                         'passwordPolicyMinSize',
                                         'passwordPolicyMinLower',
                                         'passwordPolicyMinUpper',
