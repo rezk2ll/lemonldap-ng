@@ -2,7 +2,7 @@
 # Display functions for LemonLDAP::NG Portal
 package Lemonldap::NG::Portal::Main::Display;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 package Lemonldap::NG::Portal::Main;
 use strict;
@@ -40,7 +40,10 @@ sub displayInit {
     }
     $self->requireOldPwd($rule);
 
-    my $speChars = $self->conf->{passwordPolicySpecialChar};
+    my $speChars =
+      $self->conf->{passwordPolicySpecialChar} eq '__ALL__'
+      ? ''
+      : $self->conf->{passwordPolicySpecialChar};
     $speChars =~ s/\s+/ /g;
     $speChars =~ s/(?:^\s|\s$)//g;
     $self->speChars($speChars);
@@ -238,18 +241,17 @@ sub display {
             PING           => $self->conf->{portalPingInterval},
             REQUIRE_OLDPASSWORD =>
               $self->requireOldPwd->( $req, $req->userData ),
-            HIDE_OLDPASSWORD => 0,
-            DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy},
-            PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
-            PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
-            PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
-            PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
-            PPOLICY_NOPOLICY => !$self->isPP(),
-            PPOLICY_ALLOWEDSPECHAR => $self->speChars(),
+            HIDE_OLDPASSWORD   => 0,
+            PPOLICY_NOPOLICY   => !$self->isPP(),
+            DISPLAY_PPOLICY    => $self->conf->{portalDisplayPasswordPolicy},
+            PPOLICY_MINSIZE    => $self->conf->{passwordPolicyMinSize},
+            PPOLICY_MINLOWER   => $self->conf->{passwordPolicyMinLower},
+            PPOLICY_MINUPPER   => $self->conf->{passwordPolicyMinUpper},
+            PPOLICY_MINDIGIT   => $self->conf->{passwordPolicyMinDigit},
+            PPOLICY_MINSPECHAR => $self->conf->{passwordPolicyMinSpeChar},
             (
-                $self->speChars()
-                ? ( PPOLICY_MINSPECHAR =>
-                      $self->conf->{passwordPolicyMinSpeChar} )
+                $self->conf->{passwordPolicyMinSpeChar}
+                ? ( PPOLICY_ALLOWEDSPECHAR => $self->speChars() )
                 : ()
             ),
             $self->menu->params($req),
@@ -406,17 +408,16 @@ sub display {
                     $req->data->{oldpassword} ) ? ""
                 : $req->data->{oldpassword},
                 HIDE_OLDPASSWORD => $self->conf->{hideOldPassword},
+                PPOLICY_NOPOLICY => !$self->isPP(),
                 DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy},
                 PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
                 PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
                 PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
                 PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
-                PPOLICY_NOPOLICY => !$self->isPP(),
-                PPOLICY_ALLOWEDSPECHAR => $self->speChars(),
+                PPOLICY_MINSPECHAR => $self->conf->{passwordPolicyMinSpeChar},
                 (
-                    $self->speChars()
-                    ? ( PPOLICY_MINSPECHAR =>
-                          $self->conf->{passwordPolicyMinSpeChar} )
+                    $self->conf->{passwordPolicyMinSpeChar}
+                    ? ( PPOLICY_ALLOWEDSPECHAR => $self->speChars() )
                     : ()
                 ),
             );
