@@ -33,7 +33,7 @@ SKIP: {
                 passwordPolicyMinUpper        => 1,
                 passwordPolicyMinDigit        => 1,
                 passwordPolicyMinSpeChar      => 1,
-                passwordPolicySpecialChar     => '@',
+                passwordPolicySpecialChar     => '__ALL__',
                 portalDisplayPasswordPolicy   => 1
             }
         }
@@ -89,7 +89,7 @@ SKIP: {
         ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinSpeChar">%,
             ' passwordPolicyMinSpeChar' )
           or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinSpeChar' );
-        ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicySpecialChar">%,
+        ok( $res->[2]->[0] !~ m%<span trspan="passwordPolicySpecialChar">%,
             ' passwordPolicySpecialChar' )
           or print STDERR Dumper( $res->[2]->[0], 'passwordPolicySpecialChar' );
         ok( $query =~ /user=$user/, "User is $user" )
