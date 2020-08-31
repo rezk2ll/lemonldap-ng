@@ -59,6 +59,7 @@ Options:
  - force <0|1>                   : allow overwrite of existing config number
  - cfgNum <num>                  : set new configuration number (requires -force 1)
  - sep <char>                    : separator of hierarchical values (by default: /)
+ - iniFile <file>                : path to an alternate lemonldap-ng.ini file
 
 See Lemonldap::NG::Manager::Cli(3) for more
 };
