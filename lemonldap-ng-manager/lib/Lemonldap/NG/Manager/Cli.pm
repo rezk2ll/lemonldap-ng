@@ -4,9 +4,10 @@ use strict;
 use Crypt::URandom;
 use Mouse;
 use Data::Dumper;
+use JSON;
 use Lemonldap::NG::Common::Conf::ReConstants;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 $Data::Dumper::Useperl = 1;
 
 extends('Lemonldap::NG::Manager::Cli::Lib');
@@ -348,10 +349,22 @@ sub _save {
         printf STDERR "Modifications rejected: %s:\n", $parser->{message}
           if $parser->{message};
     }
+
+    # Open "en" lang file to get default messages
+    my $langFile = $self->mgr->templateDir . "/languages/en.json";
+    $langFile =~ s/templates/static/;
+    my $langMessages;
+    if ( open my $json, "<", $langFile ) {
+        local $/ = undef;
+        $langMessages = JSON::from_json(<$json>);
+    }
+
+    # Display result
     foreach (qw(errors warnings status)) {
         if ( $parser->{$_} and @{ $parser->{$_} } ) {
             my $s = Dumper( $parser->{$_} );
             $s =~ s/\$VAR1\s*=\s*//;
+            $s =~ s/__(\w+)__/$langMessages->{$1}/ if ( defined $langMessages );
             printf STDERR "%-8s: %s", ucfirst($_), $s;
         }
     }
