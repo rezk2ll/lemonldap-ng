@@ -257,6 +257,16 @@ To set a parameter, for example domain:
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli set domain example.org
 
+To delete a parameter, for example portalSkinBackground:
+
+::
+
+   /usr/share/lemonldap-ng/bin/lemonldap-ng-cli del portalSkinBackground
+
+.. tip::
+
+   Use addKey and delKey actions to manage values of hash configuration parameters
+
 You can use accessors (options) to change the behavior:
 
 -  -sep: separator of hierarchical values (by default: /).
