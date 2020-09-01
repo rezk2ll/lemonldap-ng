@@ -84,6 +84,43 @@ sub set {
     return $self->_save($new);
 }
 
+sub del {
+    my ( $self, @keys ) = @_;
+    die 'del requires at least one key' unless (@keys);
+    my $oldValues = {};
+    foreach my $key (@keys) {
+        my $value = $self->_getKey($key);
+        if ( ref $value eq 'HASH' ) {
+            print STDERR "$key seems to be a hash, delete refused\n";
+            next;
+        }
+        unless ( defined $value ) {
+            print STDERR "$key does not exists, skip it\n";
+            next;
+        }
+        $oldValues->{$key} = $value;
+    }
+    return unless keys %$oldValues;
+    unless ( $self->yes ) {
+        print "Proposed changes:\n";
+        printf "%-25s | %-25s\n", 'Key', 'Old value';
+        foreach ( keys %$oldValues ) {
+            printf "%-25s | %-25s\n", $_, $oldValues->{$_};
+        }
+        print "Confirm (N/y)? ";
+        my $c = <STDIN>;
+        unless ( $c =~ /^y(?:es)?$/ ) {
+            die "Aborting";
+        }
+    }
+    require Clone;
+    my $new = Clone::clone( $self->mgr->hLoadedPlugins->{conf}->currentConf );
+    foreach ( keys %$oldValues ) {
+        delete $new->{$_};
+    }
+    return $self->_save($new);
+}
+
 sub addKey {
     my $self = shift;
     unless ( @_ % 3 == 0 ) {
@@ -396,8 +433,11 @@ sub run {
     }
     $self->cfgNum( $self->lastCfg ) unless ( $self->cfgNum );
     my $action = shift;
-    unless ( $action =~ /^(?:get|set|addKey|delKey|save|restore|rollback)$/ ) {
-        die "Unknown action $action. Only get, set, addKey or delKey allowed";
+    unless (
+        $action =~ /^(?:get|set|del|addKey|delKey|save|restore|rollback)$/ )
+    {
+        die
+"Unknown action $action. Only get, set, del, addKey, delKey, save, restore, rollback allowed";
     }
 
     $self->$action(@_);
