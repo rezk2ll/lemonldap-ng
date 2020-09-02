@@ -5,7 +5,7 @@ use Lemonldap::NG::Common::Regexp;
 use Lemonldap::NG::Handler::Main;
 use Lemonldap::NG::Common::Util qw(getSameSite);
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
@@ -226,7 +226,7 @@ sub tests {
             eval { tied(%h)->delete; };
             return ( -1, "Unable to delete session ($@)" ) if ($@);
             return ( -1,
-'All sessions may be lost and you must restart all your Apache servers'
+'All sessions may be lost and you must restart all your web servers'
             ) if ( $gc and $conf->{globalStorage} ne $gc );
             return 1;
         },
