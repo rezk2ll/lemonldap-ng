@@ -132,7 +132,7 @@
       <h3 id="mtitle" class="modal-title" trspan="{{elem('message').title}}" />
       <TMPL_IF NAME="INSTANCE_NAME"><h4><TMPL_VAR NAME="INSTANCE_NAME"></h4></TMPL_IF>
     </div>
-    <div ng-if="elem('message').message" id="mbody" class="modal-body">
+    <div ng-if="elem('message').items[0] || elem('message').message" id="mbody" class="modal-body">
       <div class="modal-p">{{translateP(elem('message').message)}}</div>
       <ul class="main-modal-ul" ng-model="elem('message').items">
         <li ng-repeat="item in elem('message').items" ng-include="'messageitem.html'"/>
