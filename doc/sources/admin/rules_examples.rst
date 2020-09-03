@@ -34,7 +34,7 @@ attribute you see there can be used in a rule!
    $groups =~ /\b(?:admins|su)\b/ # admins OR su
    $groups =~ /\badmin_[1-3a]\b/ # admin_1 OR admin_2 OR admin_3 OR admin_a
 
-   defined $hGroups{'administrators'}
+   defined $hGroups->{'administrators'}
 
    # 2.0.8 and higher only
    inGroup('administrators')

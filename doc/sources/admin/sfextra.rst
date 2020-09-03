@@ -38,7 +38,7 @@ You can find the configuration for this feature in
 
    -  ``$homeMail`` : this second factor will only trigger if the
       ``$homeMail`` session key exists
-   -  ``defined $hGroups{'admin'}`` : this second factor will only
+   -  ``defined $hGroups->{'admin'}`` : this second factor will only
       trigger if the user is in the ``admin`` group
 
 After adding your second factors, don't forget to add overload
