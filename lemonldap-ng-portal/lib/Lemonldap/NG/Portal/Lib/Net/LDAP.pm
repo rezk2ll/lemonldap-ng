@@ -679,6 +679,9 @@ sub searchGroups {
 
                 # Launch group search
                 if ($group_value) {
+                    if ( $self->{conf}->{ldapGroupDecodeSearchedValue} ) {
+                        utf8::decode($group_value);
+                    }
 
                     if ( $dupcheck->{$group_value} ) {
                         $self->{portal}->logger->debug(
