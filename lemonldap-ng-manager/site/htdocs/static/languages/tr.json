@@ -849,6 +849,7 @@
 "sfaTitle":"İki faktörlü kimlik doğrulaması",
 "sfExtra":"Ek ikinci faktörler",
 "sfManagerRule":"Yönetici bağlantısını görüntüle",
+"sfOnlyUpgrade": "Use 2FA for session upgrade",
 "sfRequired":"Girişte 2FA kayıtlanmaya zorla",
 "sfRemovedNotification":"Süresi dolan 2FA kaldırıldığında uyar",
 "sfRemovedMsgRule":"Aktivasyon",

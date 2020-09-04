@@ -849,6 +849,7 @@
 "sfaTitle":"Second factors authentication",
 "sfExtra":"Additional second factors",
 "sfManagerRule":"Display Manager link",
+"sfOnlyUpgrade": "Use 2FA for session upgrade",
 "sfRequired":"Force 2FA registration at login",
 "sfRemovedNotification":"Warn if an expired 2FA is removed",
 "sfRemovedMsgRule":"Kích hoạt",

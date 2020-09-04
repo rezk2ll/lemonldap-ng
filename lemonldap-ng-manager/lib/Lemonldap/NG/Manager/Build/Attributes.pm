@@ -3018,6 +3018,11 @@ sub attributes {
             help          => 'secondfactor.html',
             documentation => 'Second factor required',
         },
+        sfOnlyUpgrade => {
+            type          => 'bool',
+            help          => 'secondfactor.html',
+            documentation => 'Only trigger second factor on session upgrade',
+        },
         sfManagerRule => {
             type          => 'boolOrExpr',
             default       => 1,
