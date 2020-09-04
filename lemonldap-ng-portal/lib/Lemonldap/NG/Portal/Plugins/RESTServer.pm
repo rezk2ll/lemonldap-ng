@@ -64,7 +64,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PASSWORD_OK
 );
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 extends
   qw (Lemonldap::NG::Portal::Main::Plugin Lemonldap::NG::Portal::Lib::Captcha);

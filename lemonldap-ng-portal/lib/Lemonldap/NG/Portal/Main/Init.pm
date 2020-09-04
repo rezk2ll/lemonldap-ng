@@ -8,7 +8,7 @@
 #                  of lemonldap-ng.ini) and underlying handler configuration
 package Lemonldap::NG::Portal::Main::Init;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 package Lemonldap::NG::Portal::Main;
 

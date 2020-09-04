@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Common::Session;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 use Lemonldap::NG::Common::Apache::Session;
 

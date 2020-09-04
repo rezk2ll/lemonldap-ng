@@ -31,7 +31,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_RESETCERTIFICATE_FIRSTACCESS
 );
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin

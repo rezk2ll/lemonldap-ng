@@ -6,7 +6,7 @@ use XML::LibXML;
 use XML::LibXSLT;
 use POSIX qw(strftime);
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 # Lemonldap::NG::Portal::Main::Plugin provides addAuthRoute() and
 # addUnauthRoute() methods in addition of Lemonldap::NG::Common::Module.

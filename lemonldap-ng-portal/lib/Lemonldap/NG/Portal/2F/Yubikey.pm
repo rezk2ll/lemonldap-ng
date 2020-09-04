@@ -15,7 +15,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor';
 

@@ -5,7 +5,7 @@ use Mouse;
 use JSON qw(from_json);
 use POSIX qw(strftime);
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 no warnings 'redefine';
 

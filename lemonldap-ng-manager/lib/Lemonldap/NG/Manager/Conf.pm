@@ -20,7 +20,7 @@ use feature 'state';
 extends 'Lemonldap::NG::Manager::Plugin',
   'Lemonldap::NG::Common::Conf::RESTServer';
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 #############################
 # I. INITIALIZATION METHODS #
