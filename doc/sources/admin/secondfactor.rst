@@ -56,6 +56,8 @@ rule to display or not the link.
 Session upgrade through 2FA
 ---------------------------
 
+|beta| 
+
 If you enable the *Use 2FA for session upgrade* option, second factor will only
 be asked on login if the target application requires an authentication level
 that is strictly higher than the one obtained by the Authentication backend
@@ -63,6 +65,8 @@ that is strictly higher than the one obtained by the Authentication backend
 
 The session upgrade mechanism will only require the second factor step, instead
 of doing a complete reauthentication.
+
+.. |beta| image:: /documentation/beta.png
 
 Providing tokens from an external source
 ----------------------------------------
@@ -118,4 +122,3 @@ To enable manager Second Factor Administration Module, set
 
    [portal]
    enabledModules = conf, sessions, notifications, 2ndFA
-
