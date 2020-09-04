@@ -307,6 +307,7 @@ sub display {
             and $req->{error} > PE_OK
             and $req->{error} != PE_FIRSTACCESS
             and $req->{error} != PE_BADCREDENTIALS
+            and $req->{error} != PE_PP_CHANGE_AFTER_RESET
             and $req->{error} != PE_PP_PASSWORD_EXPIRED )
       )
     {
