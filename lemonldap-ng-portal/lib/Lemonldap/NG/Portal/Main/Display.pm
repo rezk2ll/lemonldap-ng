@@ -261,15 +261,20 @@ sub display {
         );
     }
 
-    elsif ( $req->error == PE_RENEWSESSION ) {
+    # when upgrading session, the administrator can configure LLNG
+    # to ask only for 2FA
+    elsif ( $req->error == PE_UPGRADESESSION ) {
         $skinfile       = 'upgradesession';
         %templateParams = (
-            MAIN_LOGO  => $self->conf->{portalMainLogo},
-            LANGS      => $self->conf->{showLanguages},
-            MSG        => 'askToRenew',
-            CONFIRMKEY => $self->stamp,
-            PORTAL     => $self->conf->{portal},
-            URL        => $req->data->{_url},
+            MAIN_LOGO    => $self->conf->{portalMainLogo},
+            LANGS        => $self->conf->{showLanguages},
+            FORMACTION   => '/upgradesession',
+            MSG          => 'askToUpgrade',
+            PORTALBUTTON => 1,
+            BUTTON       => 'upgradeSession',
+            CONFIRMKEY   => $self->stamp,
+            PORTAL       => $self->conf->{portal},
+            URL          => $req->data->{_url},
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -278,13 +283,37 @@ sub display {
         );
     }
 
+    # renew uses the same plugin as upgrade, but first factor is mandatory
+    elsif ( $req->error == PE_RENEWSESSION ) {
+        $skinfile       = 'upgradesession';
+        %templateParams = (
+            MAIN_LOGO    => $self->conf->{portalMainLogo},
+            LANGS        => $self->conf->{showLanguages},
+            FORMACTION   => '/renewsession',
+            MSG          => 'askToRenew',
+            CONFIRMKEY   => $self->stamp,
+            PORTAL       => $self->conf->{portal},
+            PORTALBUTTON => 1,
+            BUTTON       => 'renewSession',
+            URL          => $req->data->{_url},
+            (
+                $req->data->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
+                : ()
+            ),
+        );
+    }
+
+    # Looks a lot like upgradesession, but no portal logo
     elsif ( $req->error == PE_MUSTAUTHN ) {
-        $skinfile       = 'updatesession';
+        $skinfile       = 'upgradesession';
         %templateParams = (
             MAIN_LOGO  => $self->conf->{portalMainLogo},
             LANGS      => $self->conf->{showLanguages},
+            FORMACTION => '/renewsession',
             MSG        => 'PE87',
             CONFIRMKEY => $self->stamp,
+            BUTTON     => 'renewSession',
             PORTAL     => $self->conf->{portal},
             URL        => $req->data->{_url},
             (

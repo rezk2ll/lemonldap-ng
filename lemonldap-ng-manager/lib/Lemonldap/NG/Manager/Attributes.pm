@@ -713,6 +713,9 @@ sub attributes {
         'casAppMetaDataOptions' => {
             'type' => 'subContainer'
         },
+        'casAppMetaDataOptionsAuthnLevel' => {
+            'type' => 'int'
+        },
         'casAppMetaDataOptionsRule' => {
             'test' => sub {
                 return perlExpr(@_);
@@ -2152,6 +2155,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 0,
             'type'    => 'bool'
         },
+        'oidcRPMetaDataOptionsAuthnLevel' => {
+            'type' => 'int'
+        },
         'oidcRPMetaDataOptionsAuthorizationCodeExpiration' => {
             'type' => 'int'
         },
@@ -3392,6 +3398,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'keyTest'    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
             'type'       => 'keyTextContainer'
         },
+        'samlSPMetaDataOptionsAuthnLevel' => {
+            'type' => 'int'
+        },
         'samlSPMetaDataOptionsCheckSLOMessageSignature' => {
             'default' => 1,
             'type'    => 'bool'
@@ -3629,6 +3638,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 1,
             'type'    => 'boolOrExpr'
         },
+        'sfOnlyUpgrade' => {
+            'type' => 'bool'
+        },
         'sfRemovedMsgRule' => {
             'default' => 0,
             'type'    => 'boolOrExpr'
@@ -3671,6 +3683,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'boolOrExpr'
         },
         'skipRenewConfirmation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'skipUpgradeConfirmation' => {
             'default' => 0,
             'type'    => 'bool'
         },

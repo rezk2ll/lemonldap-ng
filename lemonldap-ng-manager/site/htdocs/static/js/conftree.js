@@ -49,6 +49,12 @@ function templates(tpl,key) {
             "title" : "casAppMetaDataOptionsUserAttribute"
          },
          {
+            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAuthnLevel",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAuthnLevel",
+            "title" : "casAppMetaDataOptionsAuthnLevel",
+            "type" : "int"
+         },
+         {
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsRule",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsRule",
             "title" : "casAppMetaDataOptionsRule"
@@ -534,6 +540,12 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowPasswordGrant",
                   "title" : "oidcRPMetaDataOptionsAllowPasswordGrant",
                   "type" : "bool"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnLevel",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnLevel",
+                  "title" : "oidcRPMetaDataOptionsAuthnLevel",
+                  "type" : "int"
                },
                {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
@@ -1152,6 +1164,12 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsEnableIDPInitiatedURL",
                   "title" : "samlSPMetaDataOptionsEnableIDPInitiatedURL",
                   "type" : "bool"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsAuthnLevel",
+                  "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsAuthnLevel",
+                  "title" : "samlSPMetaDataOptionsAuthnLevel",
+                  "type" : "int"
                },
                {
                   "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsRule",

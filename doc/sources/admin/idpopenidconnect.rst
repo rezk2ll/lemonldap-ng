@@ -268,7 +268,8 @@ Options
       https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
       for details. These offline sessions can be administered through
       the Session Browser.
-   - **Allow OAuth2.0 Password Grant** (since version ``2.0.8``) Allow the use of the Resource Owner Password Credentials Grant on by this client. This feature only works if you have configured a form-based authentication module.
+   - **Allow OAuth2.0 Password Grant** (since version ``2.0.8``): Allow the use of the Resource Owner Password Credentials Grant on by this client. This feature only works if you have configured a form-based authentication module.
+   - **Authentication Level**: required authentication level to access this application
    - **Access Rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
 
 - **Logout**

@@ -907,6 +907,7 @@ sub tree {
                                 'sfRemovedNotifMsg',
                             ],
                         },
+                        'sfOnlyUpgrade',
                         'sfManagerRule',
                         'sfRequired',
                     ]
@@ -1015,6 +1016,7 @@ sub tree {
                             nodes => [
                                 'jsRedirect', 'noAjaxHook',
                                 'skipRenewConfirmation',
+                                'skipUpgradeConfirmation',
                             ]
                         },
                         'nginxCustomHandlers',

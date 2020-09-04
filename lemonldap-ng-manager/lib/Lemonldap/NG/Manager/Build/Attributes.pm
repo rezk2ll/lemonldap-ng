@@ -601,6 +601,12 @@ sub attributes {
             documentation =>
               'Avoid asking confirmation when an Issuer asks to renew auth',
         },
+        skipUpgradeConfirmation => {
+            type    => 'bool',
+            default => 0,
+            documentation =>
+              'Avoid asking confirmation during a session upgrade',
+        },
         refreshSessions => {
             type          => 'bool',
             documentation => 'Refresh sessions plugin',
@@ -2304,6 +2310,10 @@ sub attributes {
             type          => 'text',
             documentation => 'CAS User attribute',
         },
+        casAppMetaDataOptionsAuthnLevel => {
+            type          => 'int',
+            documentation => 'Authentication level requires to access to this CAS application',
+        },
         casAppMetaDataOptionsRule => {
             type          => 'text',
             test          => sub { return perlExpr(@_) },
@@ -2915,6 +2925,10 @@ sub attributes {
             type    => 'bool',
             default => 1,
         },
+        samlSPMetaDataOptionsAuthnLevel => {
+            type          => 'int',
+            documentation => 'Authentication level requires to access to this SP',
+        },
         samlSPMetaDataOptionsRule => {
             type          => 'text',
             test          => sub { return perlExpr(@_) },
@@ -3009,6 +3023,11 @@ sub attributes {
             default       => 0,
             help          => 'secondfactor.html',
             documentation => 'Second factor required',
+        },
+        sfOnlyUpgrade => {
+            type          => 'bool',
+            help          => 'secondfactor.html',
+            documentation => 'Only trigger second factor on session upgrade',
         },
         sfManagerRule => {
             type          => 'boolOrExpr',
@@ -4064,6 +4083,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'bool',
             default       => 0,
             documentation => 'Issue refresh tokens',
+        },
+        oidcRPMetaDataOptionsAuthnLevel => {
+            type          => 'int',
+            documentation => 'Authentication level requires to access to this RP',
         },
         oidcRPMetaDataOptionsRule => {
             type          => 'text',

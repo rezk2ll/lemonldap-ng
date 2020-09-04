@@ -17,6 +17,7 @@ use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_RENEWSESSION
+  PE_UPGRADESESSION
 );
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
@@ -248,6 +249,19 @@ qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/auto
     push @{ $req->pdata->{keepPdata} }, $self->ipath, $self->ipath . 'Path';
     $req->pdata->{issuerTs} = time;
     return PE_RENEWSESSION;
+}
+
+sub upgradeAuth {
+    my ( $self, $req ) = @_;
+    $req->data->{customScript} =
+qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/autoRenew.min.js"></script>'
+      if ( $self->conf->{skipUpgradeConfirmation} );
+    $req->data->{_url} =
+      encode_base64( $self->conf->{portal} . $req->path_info, '' );
+    $req->pdata->{ $self->ipath } = $self->storeRequest($req);
+    push @{ $req->pdata->{keepPdata} }, $self->ipath, $self->ipath . 'Path';
+    $req->pdata->{issuerTs} = time;
+    return PE_UPGRADESESSION;
 }
 
 1;
