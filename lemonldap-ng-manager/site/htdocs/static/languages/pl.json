@@ -849,7 +849,7 @@
 "sfaTitle":"Drugi czynnik uwierzytelniania",
 "sfExtra":"Dodatkowe drugie czynniki",
 "sfManagerRule":"Link do Menedżera wyświetlania",
-"sfOnlyUpgrade": "Use 2FA for session upgrade",
+"sfOnlyUpgrade":"Use 2FA for session upgrade",
 "sfRequired":"Wymuś rejestrację 2FA przy logowaniu",
 "sfRemovedNotification":"Ostrzeż, gdy przeterminowany 2FA został usunięty",
 "sfRemovedMsgRule":"Aktywacja",
