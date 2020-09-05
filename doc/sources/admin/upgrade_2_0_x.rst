@@ -25,19 +25,30 @@ backups and a rollback plan ready!
 -  Some user log messages have been modified, check :doc:`logs documentation <logs>`
    (see also `#2244 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/2244>`__)
 -  SAML SOAP calls are now using ``text/xml`` instead of ``application/xml`` as the MIME Content Type, as required by `the SOAP standard <https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383526>`__
--  The default config/session cache directory has been moved from ``/tmp`` to
-   ``/var/cache/lemonldap-ng`` in order to avoid `issues with cache purges
-   <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2254>`__  when
-   using Systemd. This change is only applied to new installations.  If your
-   installation is experiencing cache purge issues, you
-   need to manually change your existing
-   ``localSessionStorageOptions/cache_root`` parameter from ``/tmp`` to
-   ``/var/cache/lemonldap-ng``.
--  This release fixes several issues when using ``SameSite=None``. The new
-   default value of the SameSite configuration parameter will set SameSite to
-   ``Lax`` unless you are using SAML, which requires ``None``
 -  Incremental lock times values can now be set by using Manager.
    It must a list of comma separated values. Default values are ``5, 15, 60, 300, 600``
+
+Cookie issues with Chrome
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This release fixes several issues related to the change in SameSite cookie
+policy for Google Chrome users. The new default value of the SameSite
+configuration parameter will set SameSite to ``Lax`` unless you are using SAML,
+in which case it will be set to ``None``.
+
+This means that from now on, any LemonLDAP::NG installation using SAML must be
+served over HTTPS
+
+Change in default cache directory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The default config/session cache directory has been moved from ``/tmp`` to
+``/var/cache/lemonldap-ng`` in order to avoid `issues with cache purges
+<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2254>`__  when using
+Systemd. This change is only applied to new installations.  If your
+installation is experiencing cache purge issues, you need to manually change
+your existing ``localSessionStorageOptions/cache_root`` parameter from ``/tmp``
+to ``/var/cache/lemonldap-ng``.
 
 LDAP certificate validation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
