@@ -20,13 +20,13 @@ backups and a rollback plan ready!
 2.0.9
 -----
 
--  | Bad default value to display OIDC Consents tab has been fixed.
-   | The default value is ``$_oidcConsents && $_oidcConsents =~ /\w+/``
+-  Bad default value to display OIDC Consents tab has been fixed.
+   The default value is now:  ``$_oidcConsents && $_oidcConsents =~ /\w+/``
 -  Some user log messages have been modified, check :doc:`logs documentation <logs>`
    (see also `#2244 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/2244>`__)
 -  SAML SOAP calls are now using ``text/xml`` instead of ``application/xml`` as the MIME Content Type, as required by `the SOAP standard <https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383526>`__
--  Incremental lock times values can now be set by using Manager.
-   It must a list of comma separated values. Default values are ``5, 15, 60, 300, 600``
+-  Incremental lock times values can now be set in BruteForceProtection plugin through Manager.
+   It must be a list of comma separated values. Default values are ``5, 15, 60, 300, 600``
 
 Cookie issues with Chrome
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -37,7 +37,7 @@ configuration parameter will set SameSite to ``Lax`` unless you are using SAML,
 in which case it will be set to ``None``.
 
 This means that from now on, any LemonLDAP::NG installation using SAML must be
-served over HTTPS
+served over HTTPS, as SameSite ``None`` value requires the ``Secure`` flag in cookie.
 
 Change in default cache directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,7 +48,8 @@ The default config/session cache directory has been moved from ``/tmp`` to
 Systemd. This change is only applied to new installations.  If your
 installation is experiencing cache purge issues, you need to manually change
 your existing ``localSessionStorageOptions/cache_root`` parameter from ``/tmp``
-to ``/var/cache/lemonldap-ng``.
+to ``/var/cache/lemonldap-ng``. Be sure to create this directory on your
+file system before modifying your configuration.
 
 LDAP certificate validation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -59,13 +60,13 @@ If you have configured your CA certificates incorrectly, LemonLDAP::NG will now 
 
    /your/path/to/lemonldap-ng-cli set ldapVerify none
 
-If you use LDAP as a configuration storage, and wand to temporarily disable certificate validation, you must make the following addition to `/etc/lemonldap-ng/lemonldap-ng.ini` ::
+If you use LDAP as a configuration storage, and want to temporarily disable certificate validation, you must make the following addition to `/etc/lemonldap-ng/lemonldap-ng.ini` ::
 
    [configuration]
    ...
    ldapVerify = none
 
-If you use LDAP as a session backend, and wand to temporarily disable certificate validation, you can add the following parameter to the list of Apache::Session module options:
+If you use LDAP as a session backend, you are strongly encouraged to also upgrade corresponding ``Apache::Session`` modules (``Apache::Session::LDAP`` or ``Apache::Session::Browseable``). After this upgrade, if you want to temporarily disable certificate validation, you can add the following parameter to the list of Apache::Session module options:
 
 * key: ``ldapVerify``
 * value: ``none``
