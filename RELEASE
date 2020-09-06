@@ -52,10 +52,6 @@ For major release
 
 - Go on gitlab and create a new tag: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/tags/new
 
-- Change "latest" symlink in dokuwiki
-
-- Edit scripts/doc.pl in trunk to point on the new documentation path
-
 Make the distribution
 ---------------------
 
@@ -84,7 +80,6 @@ Packages are in /tmp
 
 Sign packages:
 $ dpkg-sig -p --sign builder /tmp/*.deb
-
 
 Upload the distribution
 ---------------------
@@ -121,6 +116,7 @@ Site
 
 - Update links on the download page
 - Close the milestone on Gitlab and create a new one
+- Update admin documentation and API documentation
 
 Spread the word
 ---------------
