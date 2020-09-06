@@ -51,8 +51,34 @@ your existing ``localSessionStorageOptions/cache_root`` parameter from ``/tmp``
 to ``/var/cache/lemonldap-ng``. Be sure to create this directory on your
 file system before modifying your configuration.
 
-LDAP certificate validation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Required changes in NGINX handler rules (CVE-2020-24660)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We discovered a vulnerability that affects LemonLDAP::NG installations when ALL of the following criteria apply:
+
+* You are using the :doc:`LemonLDAP::NG Handler<configvhost>` to protect applications
+* Your handler server uses Nginx
+* Your virtual host configuration containes per-URL access rules based on
+  regular expressions in addition to the built-in *default* access rule.
+
+.. note::
+
+   You are safe from this vulnerability if your virtualhost only uses a regexp-based rule to trigger logout
+
+If you are in this situation, you need to modify *all* your handler-protected
+virtualhosts by making the following change:
+
+* Replace ``fastcgi_param X_ORIGINAL_URI $request_uri`` by ``fastcgi_param X_ORIGINAL_URI $original_uri`` if you are using FastCGI
+* Replace ``uwsgi_param X_ORIGINAL_URI $request_uri`` by ``uwsgi_param X_ORIGINAL_URI $original_uri`` if you are using uWSGI
+* Right after ``auth_request /lmauth;``, add the following line ::
+
+   set $original_uri $uri$is_args$args;
+
+You can check the :doc:`configvhost` page for more information
+
+LDAP certificate validation (CVE-2020-16093)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 LDAP server certificates were previously not verified by default when using secure transports (LDAPS or TLS), see `CVE-2020-16093 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2250>`__. Starting from this release, certificate validation is now enabled by default, including on existing installations.
 

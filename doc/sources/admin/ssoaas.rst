@@ -75,7 +75,7 @@ request authorization from a central FastCGI server:
        # Keep original hostname
        fastcgi_param HOST $http_host;
        # Keep original request (LLNG server will received /lmauth)
-       fastcgi_param X_ORIGINAL_URI  $request_uri;
+       fastcgi_param X_ORIGINAL_URI  $original_uri;
 
        # Set dynamically rules (LLNG will poll it every 10 mn)
        fastcgi_param RULES_URL http://rulesserver/my.json
@@ -87,6 +87,7 @@ request authorization from a central FastCGI server:
      }
      location ~ ^(.*\.php)$ {
        auth_request /lmauth;
+       set $original_uri $uri$is_args$args;
        auth_request_set $lmremote_user $upstream_http_lm_remote_user;
        auth_request_set $lmlocation $upstream_http_location;
        error_page 401 $lmlocation;
@@ -232,7 +233,7 @@ directory.
        # Keep original hostname
        fastcgi_param HOST $http_host;
        # Keep original request (LLNG server will received /lmauth)
-       fastcgi_param X_ORIGINAL_URI  $request_uri;
+       fastcgi_param X_ORIGINAL_URI  $original_uri;
      }
      location /rules.json {
        auth_request off;
@@ -241,6 +242,7 @@ directory.
      }
      location / {
        auth_request /lmauth;
+       set $original_uri $uri$is_args$args;
        auth_request_set $lmremote_user $upstream_http_lm_remote_user;
        auth_request_set $lmlocation $upstream_http_location;
        error_page 401 $lmlocation;
