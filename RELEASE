@@ -24,11 +24,7 @@ Before release
 
 - Update documentation:
 
-  $ ./scripts/parameters-for-wiki.pl >/tmp/prmlist.txt
-
-  Replace https://lemonldap-ng.org/documentation/X.X/parameterlist by
-  /tmp/prmlist.txt content
-
+  $ ./scripts/parameters-for-doc.pl > doc/sources/admin/parameterlist.rst
   $ make documentation
 
 - Update changelog:
