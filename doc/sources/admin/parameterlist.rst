@@ -12,8 +12,6 @@ Parameter list
 Main parameters
 ---------------
 
-<sortable 1>
-
 ======================================================= ==================================================================================== ====== ======= ======= =============
 Key name                                                Documentation                                                                        Portal Handler Manager ini file only
 ======================================================= ==================================================================================== ====== ======= ======= =============
@@ -43,11 +41,11 @@ available2FSelfRegistration                             Available self-registrat
 browsersDontStorePassword                               Avoid browsers to store users password                                               ✔
 bruteForceProtection                                    Enable brute force attack protection                                                 ✔
 bruteForceProtectionIncrementalTempo                    Enable incremental lock time for brute force attack protection                       ✔
-bruteForceProtectionLockTimes                           Incremental lock time values for brute force attack protection                       ✔                      ✔
+bruteForceProtectionLockTimes                           Incremental lock time values for brute force attack protection                       ✔
 bruteForceProtectionMaxAge                              Brute force attack protection -> Max age between last and first allowed failed login ✔                      ✔
-bruteForceProtectionMaxFailed                           Brute force attack protection -> Max allowed failed login                            ✔                      ✔
+bruteForceProtectionMaxFailed                           Brute force attack protection -> Max allowed failed login                            ✔
 bruteForceProtectionMaxLockTime                         Brute force attack protection -> Max lock time                                       ✔                      ✔
-bruteForceProtectionTempo                               Brute force attack protection -> Tempo before try again                              ✔                      ✔
+bruteForceProtectionTempo                               Brute force attack protection -> Tempo before try again                              ✔
 captcha_login_enabled                                   Captcha on login page                                                                ✔
 captcha_mail_enabled                                    Captcha on password reset page                                                       ✔
 captcha_register_enabled                                Captcha on account creation page                                                     ✔
@@ -85,6 +83,7 @@ checkUserDisplayPersistentInfo                          Display persistent sessi
 checkUserHiddenAttributes                               Attributes to hide in CheckUser plugin                                               ✔
 checkUserIdRule                                         checkUser identities rule                                                            ✔
 checkUserSearchAttributes                               Attributes used for retrieving sessions in user DataBase                             ✔
+checkUserUnrestrictedUsersRule                          checkUser unrestricted users rule                                                    ✔
 checkXSS                                                Check XSS                                                                            ✔
 combModules                                             Combination module description                                                       ✔
 combination                                             Combination rule                                                                     ✔
@@ -95,6 +94,7 @@ contextSwitchingIdRule                                  Context switching identi
 contextSwitchingPrefix                                  Prefix to store real session Id                                                      ✔                      ✔
 contextSwitchingRule                                    Context switching activation rule                                                    ✔
 contextSwitchingStopWithLogout                          Stop context switching by logout                                                     ✔
+contextSwitchingUnrestrictedUsersRule                   Context switching unrestricted users rule                                            ✔
 cookieExpiration                                        Cookie expiration                                                                    ✔      ✔
 cookieName                                              Name of the main cookie                                                              ✔      ✔
 corsAllow_Credentials                                   Allow credentials for Cross-Origin Resource Sharing                                  ✔
@@ -190,6 +190,7 @@ impersonationMergeSSOgroups                             Merge spoofed and real S
 impersonationPrefix                                     Prefix to rename real session attributes                                             ✔                      ✔
 impersonationRule                                       Impersonation activation rule                                                        ✔
 impersonationSkipEmptyValues                            Skip session empty values                                                            ✔
+impersonationUnrestrictedUsersRule                      Impersonation unrestricted users rule                                                ✔
 infoFormMethod                                          HTTP method for info page form                                                       ✔
 issuerDBCASActivation                                   CAS server activation                                                                ✔
 issuerDBCASPath                                         CAS server request path                                                              ✔
@@ -217,6 +218,8 @@ krbRemoveDomain                                         Remove domain in Kerbero
 ldapAllowResetExpiredPassword                           Allow a user to reset his expired password                                           ✔
 ldapAuthnLevel                                          LDAP authentication level                                                            ✔
 ldapBase                                                LDAP search base                                                                     ✔
+ldapCAFile                                              Location of the certificate file for LDAP connections                                ✔
+ldapCAPath                                              Location of the CA directory for LDAP connections                                    ✔
 ldapChangePasswordAsUser                                                                                                                     ✔
 ldapExportedVars                                        LDAP exported variables                                                              ✔
 ldapGroupAttributeName                                  LDAP attribute name for member in groups                                             ✔
@@ -234,11 +237,12 @@ ldapPort                                                LDAP port               
 ldapPpolicyControl                                                                                                                           ✔
 ldapPwdEnc                                              LDAP password encoding                                                               ✔
 ldapRaw                                                                                                                                      ✔
-ldapSearchDeref                                         "deref" param of Net::LDAP::search ()                        ✔
+ldapSearchDeref                                         "deref" param of Net::LDAP::search()                                                 ✔
 ldapServer                                              LDAP server (host or URI)                                                            ✔
 ldapSetPassword                                                                                                                              ✔
 ldapTimeout                                             LDAP connection timeout                                                              ✔
 ldapUsePasswordResetAttribute                           LDAP store reset flag in an attribute                                                ✔
+ldapVerify                                              Whether to validate LDAP certificates                                                ✔
 ldapVersion                                             LDAP protocol version                                                                ✔
 linkedInAuthnLevel                                      LinkedIn authentication level                                                        ✔
 linkedInClientID                                                                                                                             ✔
@@ -434,11 +438,13 @@ rest2fLabel                                             Portal label for REST se
 rest2fLogo                                              Custom logo for REST 2F                                                              ✔
 rest2fVerifyArgs                                        Args for REST 2F init                                                                ✔
 rest2fVerifyUrl                                         REST 2F init URL                                                                     ✔
+restAuthServer                                          Enable REST authentication server                                                    ✔
 restAuthUrl                                                                                                                                  ✔
 restAuthnLevel                                          REST authentication level                                                            ✔
 restClockTolerance                                      How tolerant the REST session server will be to clock dift                           ✔
 restConfigServer                                        Enable REST config server                                                            ✔
 restExportSecretKeys                                    Allow to export secret keys in REST session server                                   ✔
+restPasswordServer                                      Enable REST password reset server                                                    ✔
 restPwdConfirmUrl                                                                                                                            ✔
 restPwdModifyUrl                                                                                                                             ✔
 restSessionServer                                       Enable REST session server                                                           ✔
@@ -509,6 +515,7 @@ sessionDataToRemember                                   Data to remember in logi
 sfEngine                                                Second factor engine                                                                 ✔                      ✔
 sfExtra                                                 Extra second factors                                                                 ✔
 sfManagerRule                                           Rule to display second factor Manager link                                           ✔
+sfOnlyUpgrade                                           Only trigger second factor on session upgrade                                        ✔
 sfRemovedMsgRule                                        Display a message if at leat one expired SF has been removed                         ✔
 sfRemovedNotifMsg                                       Notification message                                                                 ✔
 sfRemovedNotifRef                                       Notification reference                                                               ✔
@@ -520,6 +527,7 @@ singleIP                                                Allow only one session p
 singleSession                                           Allow only one session per user                                                      ✔
 singleUserByIP                                          Allow only one user per IP                                                           ✔
 skipRenewConfirmation                                   Avoid asking confirmation when an Issuer asks to renew auth                          ✔
+skipUpgradeConfirmation                                 Avoid asking confirmation during a session upgrade                                   ✔
 slaveAuthnLevel                                         Slave authentication level                                                           ✔
 slaveDisplayLogo                                        Display Slave authentication logo                                                    ✔
 slaveExportedVars                                       Slave exported variables                                                             ✔
@@ -593,6 +601,7 @@ wsdlServer                                              Enable /portal.wsdl serv
 yubikey2fActivation                                     Yubikey second factor activation                                                     ✔
 yubikey2fAuthnLevel                                     Authentication level for users authentified by Yubikey second factor                 ✔
 yubikey2fClientID                                       Yubico client ID                                                                     ✔
+yubikey2fFromSessionAttribute                           Provision yubikey from the given session variable                                    ✔
 yubikey2fLabel                                          Portal label for Yubikey second factor                                               ✔
 yubikey2fLogo                                           Custom logo for Yubikey 2F                                                           ✔
 yubikey2fNonce                                          Yubico nonce                                                                         ✔
@@ -608,8 +617,6 @@ zimbraPreAuthKey                                        Zimbra preauthentication
 zimbraSsoUrl                                            Zimbra local SSO URL pattern                                                                ✔               ✔
 zimbraUrl                                               Zimbra preauthentication URL                                                                ✔               ✔
 ======================================================= ==================================================================================== ====== ======= ======= =============
-
-</sortable>
 
 *[1]: complex nodes*
 
