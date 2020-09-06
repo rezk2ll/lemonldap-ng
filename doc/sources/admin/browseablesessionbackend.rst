@@ -198,6 +198,9 @@ Name                     Comment                           Default value
 **ldapAttributeId**      Attribute storing session ID      cn
 **ldapAttributeContent** Attribute storing session content description
 **ldapAttributeIndex**   Attribute storing index           ou
+**ldapVerify**           Perform certificate validation    require (use none to disable)
+**ldapCAFile**           Path of CA file bundle            (system CA bundle)
+**ldapCAPath**           Perform CA directory              (system CA bundle)
 ======================== ================================= ===============================
 
 Security
