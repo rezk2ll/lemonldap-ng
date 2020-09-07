@@ -59,7 +59,7 @@ We discovered a vulnerability that affects LemonLDAP::NG installations when ALL 
 
 * You are using the :doc:`LemonLDAP::NG Handler<configvhost>` to protect applications
 * Your handler server uses Nginx
-* Your virtual host configuration containes per-URL access rules based on
+* Your virtual host configuration contains per-URL access rules based on
   regular expressions in addition to the built-in *default* access rule.
 
 .. note::
