@@ -225,14 +225,14 @@ sub defaultValues {
         'pamAuthnLevel'                       => 2,
         'pamService'                          => 'login',
         'passwordDB'                          => 'Demo',
+        'passwordPolicyActivation'            => 1,
         'passwordPolicyMinDigit'              => 0,
         'passwordPolicyMinLower'              => 0,
         'passwordPolicyMinSize'               => 0,
         'passwordPolicyMinSpeChar'            => 0,
         'passwordPolicyMinUpper'              => 0,
-        'passwordPolicySpecialChar' =>
-          '! @ # $ % & * ( ) - = + [ ] { } ; : , . / ?',
-        'passwordResetAllowedRetries' => 3,
+        'passwordPolicySpecialChar'           => '__ALL__',
+        'passwordResetAllowedRetries'         => 3,
         'persistentSessionAttributes' =>
           '_loginHistory _2fDevices notification_',
         'port'                                => -1,

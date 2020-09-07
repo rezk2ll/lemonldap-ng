@@ -1460,6 +1460,11 @@ sub attributes {
             type          => 'bool',
             documentation => 'Hide old password in portal',
         },
+        passwordPolicyActivation => {
+            type          => 'boolOrExpr',
+            default       => 1,
+            documentation => 'Enable password policy',
+        },
         passwordPolicyMinSize => {
             default       => 0,
             type          => 'int',
@@ -1486,9 +1491,9 @@ sub attributes {
             documentation => 'Password policy: minimal special characters',
         },
         passwordPolicySpecialChar => {
-            default       => '! @ # $ % & * ( ) - = + [ ] { } ; : , . / ?',
+            default       => '__ALL__',
             type          => 'text',
-            test          => qr/^[\s\W_]*$/,
+            test          => qr/^(?:__ALL__|[\S\W]*)$/,
             documentation => 'Password policy: allowed special characters',
         },
         portalDisplayPasswordPolicy => {

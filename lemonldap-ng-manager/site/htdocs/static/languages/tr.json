@@ -700,6 +700,8 @@
 "password":"Parola",
 "passwordDB":"Parola modülü",
 "passwordManagement":"Parola yönetimi",
+"passwordPolicy":"Password policy",
+"passwordPolicyActivation":"Activation",
 "passwordPolicyMinSize":"Minimum parola uzunluğu",
 "passwordPolicyMinLower":"Minimum küçük harf karakter sayısı",
 "passwordPolicyMinUpper":"Minimum büyük harf karakter sayısı",

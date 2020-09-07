@@ -494,6 +494,24 @@ LemonLDAP::NG Portal jQuery scripts
           result = false;
         }
       }
+      if (window.datas.ppolicy.minspechar > 0 && !window.datas.ppolicy.allowedspechar) {
+        numspechar = 0;
+        i = 0;
+        while (i < password.length) {
+          if (!isAlphaNumeric(password.charAt(i))) {
+            numspechar++;
+          }
+          i++;
+        }
+        if (numspechar >= window.datas.ppolicy.minspechar) {
+          $('#ppolicy-minspechar-feedback').addClass('fa-check text-success');
+          $('#ppolicy-minspechar-feedback').removeClass('fa-times text-danger');
+        } else {
+          $('#ppolicy-minspechar-feedback').removeClass('fa-check text-success');
+          $('#ppolicy-minspechar-feedback').addClass('fa-times text-danger');
+          result = false;
+        }
+      }
       if (result) {
         $('.ppolicy').removeClass('border-danger').addClass('border-success');
         $('#newpassword')[0].setCustomValidity('');

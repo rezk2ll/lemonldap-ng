@@ -700,6 +700,8 @@
 "password":"Password",
 "passwordDB":"Password module",
 "passwordManagement":"Password management",
+"passwordPolicy":"Password policy",
+"passwordPolicyActivation":"Activation",
 "passwordPolicyMinSize":"Minimal size",
 "passwordPolicyMinLower":"Minimal lower characters",
 "passwordPolicyMinUpper":"Minimal upper characters",

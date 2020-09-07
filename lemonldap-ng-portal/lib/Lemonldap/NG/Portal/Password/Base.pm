@@ -17,7 +17,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.10';
 
 # INITIALIZATION
 
@@ -42,17 +42,26 @@ sub _modifyPassword {
     return PE_PASSWORD_MISMATCH
       unless ( $req->data->{newpassword} eq $req->param('confirmpassword') );
 
-    my $rule = $self->p->HANDLER->buildSub(
+    my $oldPwdRule = $self->p->HANDLER->buildSub(
         $self->p->HANDLER->substitute(
             $self->conf->{portalRequireOldPassword}
         )
     );
-    unless ($rule) {
+    unless ($oldPwdRule) {
+        my $error = $self->p->HANDLER->tsv->{jail}->error || '???';
+    }
+
+    my $pwdPolicyRule = $self->p->HANDLER->buildSub(
+        $self->p->HANDLER->substitute(
+            $self->conf->{passwordPolicyActivation}
+        )
+    );
+    unless ($pwdPolicyRule) {
         my $error = $self->p->HANDLER->tsv->{jail}->error || '???';
     }
 
     # Check if portal require old password
-    if ( $rule->( $req, $req->userData ) or $requireOldPwd ) {
+    if ( $oldPwdRule->( $req, $req->userData ) or $requireOldPwd ) {
 
         # TODO: verify oldpassword
         unless ( $req->data->{oldpassword} = $req->param('oldpassword') ) {
@@ -65,7 +74,10 @@ sub _modifyPassword {
           unless ( $self->confirm( $req, $req->data->{oldpassword} ) );
     }
 
-    my $cpq = $self->checkPasswordQuality( $req->data->{newpassword} );
+    my $cpq =
+        $pwdPolicyRule->( $req, $req->userData )
+      ? $self->checkPasswordQuality( $req->data->{newpassword} )
+      : PE_OK;
     return $cpq unless ( $cpq == PE_OK );
 
     # Call password package
@@ -142,29 +154,38 @@ sub checkPasswordQuality {
         }
     }
 
-    ## Special characters policy
+    ### Special characters policy
     my $speChars = $self->conf->{passwordPolicySpecialChar};
     $speChars =~ s/\s+//g;
 
-    # Min special characters
+    ## Min special characters
+    # Just number of special characters must be checked
+    if ( $self->conf->{passwordPolicyMinSpeChar} && $speChars eq '__ALL__' ) {
+        my $spe = $password =~ s/\w//g;
+        if ( $spe < $self->conf->{passwordPolicyMinSpeChar} ) {
+            $self->logger->error("Password has not enough special characters");
+            return PE_PP_INSUFFICIENT_PASSWORD_QUALITY;
+        }
+        return PE_OK;
+    }
+
+    # Number of special characters must be checked
     if ( $self->conf->{passwordPolicyMinSpeChar} && $speChars ) {
-        my $spe  = 0;
         my $test = $password;
-        $spe = $test =~ s/[\Q$speChars\E]//g;
+        my $spe  = $test =~ s/[\Q$speChars\E]//g;
         if ( $spe < $self->conf->{passwordPolicyMinSpeChar} ) {
             $self->logger->error("Password has not enough special characters");
             return PE_PP_INSUFFICIENT_PASSWORD_QUALITY;
         }
     }
 
-    # Fobidden special characters
+    ## Fobidden special characters
     $password =~ s/[\Q$speChars\E\w]//g;
     if ($password) {
         $self->logger->error( 'Password contains '
               . length($password)
               . " forbidden character(s): $password" );
-        return
-          length($password) > 1
+        return length($password) > 1
           ? PE_PP_NOT_ALLOWED_CHARACTERS
           : PE_PP_NOT_ALLOWED_CHARACTER;
     }

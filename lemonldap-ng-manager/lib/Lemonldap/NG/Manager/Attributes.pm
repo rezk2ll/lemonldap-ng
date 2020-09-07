@@ -2512,6 +2512,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             'type' => 'select'
         },
+        'passwordPolicyActivation' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
         'passwordPolicyMinDigit' => {
             'default' => 0,
             'type'    => 'int'
@@ -2533,8 +2537,8 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'int'
         },
         'passwordPolicySpecialChar' => {
-            'default' => '! @ # $ % & * ( ) - = + [ ] { } ; : , . / ?',
-            'test'    => qr/^[\s\W_]*$/,
+            'default' => '__ALL__',
+            'test'    => qr/^(?:__ALL__|[\S\W]*)$/,
             'type'    => 'text'
         },
         'passwordResetAllowedRetries' => {

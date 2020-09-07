@@ -700,6 +700,8 @@
 "password":"كلمة المرور",
 "passwordDB":"وحدة  كلمة المرور",
 "passwordManagement":"إدارة كلمة المرور",
+"passwordPolicy":"Password policy",
+"passwordPolicyActivation":"Activation",
 "passwordPolicyMinSize":"Minimal size",
 "passwordPolicyMinLower":"Minimal lower characters",
 "passwordPolicyMinUpper":"Minimal upper characters",
