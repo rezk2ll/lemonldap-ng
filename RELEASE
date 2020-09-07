@@ -23,12 +23,9 @@ Before release
   $ ./scripts/download_translations
 
 - Update documentation:
-
   $ ./scripts/parameters-for-doc.pl > doc/sources/admin/parameterlist.rst
-  $ make documentation
 
 - Update changelog:
-
   $ ./scripts/generate-changelog.pl
 
   This update "changelog" file using GitLab issues (tags Bug, New feature,
