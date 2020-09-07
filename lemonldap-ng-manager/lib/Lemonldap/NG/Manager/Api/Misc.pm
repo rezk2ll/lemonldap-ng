@@ -1,9 +1,11 @@
 # Miscenalleous endpoints
 package Lemonldap::NG::Manager::Api::Misc;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 package Lemonldap::NG::Manager::Api;
+
+use Mouse;
 extends 'Lemonldap::NG::Manager::Api::Common';
 
 # Health-check endpoint

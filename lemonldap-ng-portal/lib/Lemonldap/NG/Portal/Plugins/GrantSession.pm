@@ -8,7 +8,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.9';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 

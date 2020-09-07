@@ -69,12 +69,13 @@ Nginx configuration
        fastcgi_param HOST $http_host;
 
        # Keep original request (LLNG server will receive /lmauth)
-       fastcgi_param X_ORIGINAL_URI  $request_uri;
+       fastcgi_param X_ORIGINAL_URI  $original_uri;
      }
 
      # Client requests
      location / {
        auth_request /lmauth;
+       set $original_uri $uri$is_args$args;
        auth_request_set $lmremote_user $upstream_http_lm_remote_user;
        auth_request_set $lmlocation $upstream_http_location;
        error_page 401 $lmlocation;

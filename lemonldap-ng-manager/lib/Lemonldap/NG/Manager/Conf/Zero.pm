@@ -1,6 +1,6 @@
 package Lemonldap::NG::Manager::Conf::Zero;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 sub zeroConf {
     my ( $domain, $sessionDir, $persistentSessionDir, $notificationDir, $cacheDir ) = @_;

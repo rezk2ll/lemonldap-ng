@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Common::Session;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 use Lemonldap::NG::Common::Apache::Session;
 
@@ -123,12 +123,6 @@ sub BUILD {
         $data = $self->_tie_session;
     }
 
-    # If session is created
-    # Then set session kind in session
-    if ( $creation and $self->kind ) {
-        $data->{_session_kind} = $self->kind;
-    }
-
     if ( $self->{info} ) {
         foreach ( keys %{ $self->{info} } ) {
             next if ( $_ eq "_session_id" and $data->{_session_id} );
@@ -141,6 +135,12 @@ sub BUILD {
             }
         }
         delete $self->{info};
+    }
+
+    # If session is created
+    # Then set session kind in session
+    if ( $creation and $self->kind ) {
+        $data->{_session_kind} = $self->kind;
     }
 
     # Load session data into object

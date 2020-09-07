@@ -162,10 +162,12 @@ These options override service signature options (see
 Security
 ''''''''
 
--  **Encryption mode**: set the encryption mode for this IDP (None,
+-  **Encryption mode**: set the encryption mode for this SP (None,
    NameID or Assertion).
 -  **Enable use of IDP initiated URL**: set to ``On`` to enable IDP
    Initiated URL on this SP.
+-  **Authentication Level**: required authentication level to access this SP
+-  **Access Rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this SP
 
 
 .. tip::

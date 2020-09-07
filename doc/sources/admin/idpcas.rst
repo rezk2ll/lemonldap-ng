@@ -109,6 +109,8 @@ Options
    application.
 -  **User attribute** : session field that will be used as main
    identifier.
+-  **Authentication Level** : required authentication level to access this
+   application
 -  **Rule** : The access control rule to enforce on this application. If
    left blank, access will be allowed for everyone.
 

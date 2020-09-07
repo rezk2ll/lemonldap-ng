@@ -1,3 +1,18 @@
+lemonldap-ng (2.0.9-1) unstable; urgency=medium
+
+  This release fixes 2 CVE:
+  - CVE-2020-24660: Nginx configuration for Handler protected applications
+   must be updated if your virtual host configuration contains per-URL access
+   rules based on regular expressions in addition to the built-in default access rule.
+  - CVE-2020-16093: LDAP server certificates were previously not verified by default
+   when using secure transports (LDAPS or TLS). Starting from this release, certificate
+   validation is now enabled by default, including on existing installations. If
+   your SSL configuration is not valid, you can temporarily disable certificate
+   verification.
+  See upgrade notes in local documentation or on https://lemonldap-ng.org
+
+ -- Clement OUDOT <clement@oodo.net>  Sun, 06 Sep 2020 22:00:00 +0100
+
 lemonldap-ng (2.0.6-1) unstable; urgency=medium
 
   FastCGI / uWsgi servers require llng-lmlog.conf and llng-lua-headers.conf.

@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 extends 'Lemonldap::NG::Portal::Password::Base',
   'Lemonldap::NG::Portal::Lib::REST';
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.9';
 
 sub init {
     my ($self) = @_;

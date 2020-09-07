@@ -147,7 +147,7 @@ Then you can take any virtual host and modify it:
        fastcgi_param HOST $http_host;
 
        # Keep original request (LLNG server will receive /lmauth)
-       fastcgi_param X_ORIGINAL_URI  $request_uri;
+       fastcgi_param X_ORIGINAL_URI $original_uri;
      }
 
 -  Protect the application (/ or /path/to/protect):
@@ -156,6 +156,7 @@ Then you can take any virtual host and modify it:
 
      location /path/to/protect {
        auth_request /lmauth;
+       set $original_uri $uri$is_args$args;
        auth_request_set $lmremote_user $upstream_http_lm_remote_user;
        auth_request_set $lmlocation $upstream_http_location;
        auth_request_set $cookie_value $upstream_http_set_cookie;
@@ -220,12 +221,13 @@ Example of a protected virtual host for a local application:
        # Keep original hostname
        fastcgi_param HOST $http_host;
        # Keep original request (LLNG server will receive /lmauth)
-       fastcgi_param X_ORIGINAL_URI  $request_uri;
+       fastcgi_param X_ORIGINAL_URI $original_uri;
      }
 
      # Client requests
      location ~ \.php$ {
        auth_request /lmauth;
+       set $original_uri $uri$is_args$args;
        auth_request_set $lmremote_user $upstream_http_lm_remote_user;
        auth_request_set $lmlocation $upstream_http_location;
        error_page 401 $lmlocation;
@@ -280,12 +282,13 @@ Reverse proxy
        # Keep original hostname
        fastcgi_param HOST $http_host;
        # Keep original request (LLNG server will receive /lmauth)
-       fastcgi_param X_ORIGINAL_URI  $request_uri;
+       fastcgi_param X_ORIGINAL_URI  $original_uri;
      }
 
      # Client requests
      location / {
        auth_request /lmauth;
+       set $original_uri $uri$is_args$args;
        auth_request_set $lmremote_user $upstream_http_lm_remote_user;
        auth_request_set $lmlocation $upstream_http_location;
        error_page 401 $lmlocation;
@@ -327,7 +330,7 @@ by different types of handler :
        uwsgi_pass_request_body  off;
        uwsgi_param CONTENT_LENGTH "";
        uwsgi_param HOST $http_host;
-       uwsgi_param X_ORIGINAL_URI  $request_uri;
+       uwsgi_param X_ORIGINAL_URI  $original_uri;
        # Improve performances
        uwsgi_buffer_size 32k;
        uwsgi_buffers 32 32k;
@@ -342,7 +345,7 @@ by different types of handler :
        uwsgi_pass_request_body  off;
        uwsgi_param CONTENT_LENGTH "";
        uwsgi_param HOST $http_host;
-       uwsgi_param X_ORIGINAL_URI  $request_uri;
+       uwsgi_param X_ORIGINAL_URI  $original_uri;
        uwsgi_param VHOSTTYPE AuthBasic;
        # Improve performances
        uwsgi_buffer_size 32k;
@@ -358,7 +361,7 @@ by different types of handler :
        uwsgi_pass_request_body  off;
        uwsgi_param CONTENT_LENGTH "";
        uwsgi_param HOST $http_host;
-       uwsgi_param X_ORIGINAL_URI  $request_uri;
+       uwsgi_param X_ORIGINAL_URI  $original_uri;
        uwsgi_param VHOSTTYPE ServiceToken;
        # Improve performances
        uwsgi_buffer_size 32k;
@@ -371,6 +374,7 @@ by different types of handler :
        # CALLING AUTHENTICATION         #
        ##################################
        auth_request /lmauth;
+       set $original_uri $uri$is_args$args;
        auth_request_set $lmremote_user $upstream_http_lm_remote_user;
        auth_request_set $lmremote_custom $upstream_http_lm_remote_custom;
        auth_request_set $lmlocation $upstream_http_location;
@@ -389,6 +393,7 @@ by different types of handler :
        # CALLING AUTHENTICATION         #
        ##################################
        auth_request /lmauth-basic;
+       set $original_uri $uri$is_args$args;
        auth_request_set $lmremote_user $upstream_http_lm_remote_user;
        auth_request_set $lmremote_custom $upstream_http_lm_remote_custom;
        auth_request_set $lmlocation $upstream_http_location;
@@ -407,6 +412,7 @@ by different types of handler :
        # CALLING AUTHENTICATION         #
        ##################################
        auth_request /lmauth-service;
+       set $original_uri $uri$is_args$args;
        auth_request_set $lmremote_user $upstream_http_lm_remote_user;
        auth_request_set $lmlocation $upstream_http_location;
        # Remove this for AuthBasic handler

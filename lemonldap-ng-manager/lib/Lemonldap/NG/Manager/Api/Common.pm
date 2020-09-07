@@ -1,6 +1,6 @@
 package Lemonldap::NG::Manager::Api::Common;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.9';
 
 package Lemonldap::NG::Manager::Api;
 

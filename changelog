@@ -1,3 +1,86 @@
+lemonldap-ng (2.0.9) stable; urgency=medium
+
+  * Bugs:
+    * #1659: RESTProxy doesn't fully work as a UserDB module
+    * #1980: Refresh my rights causes error 500 with OIDC provider
+    * #2190: 2.0.6 -> 2.0.8 sends "ARRAY (xxxx)" instead of Groups
+    * #2196: Unable do display integer field with other fields in Manager
+    * #2199: StayConnected plugin not working due to error in fingerprint javascript
+    * #2200: Bad default value for portalDisplayOidcConsents
+    * #2211: Setting yubikey verification URL to an empty value does not fallback to Yubikey_Webclient URL
+    * #2212: Captcha or OTT is not renewed if Impersonation process failed
+    * #2215: CheckUser idRule is checked only if session is computed
+    * #2217: Error "Value must be BASE64 encoded" with some specific URL when Handler redirects on portal
+    * #2221: Bad error message when conf backend fails to load
+    * #2222: Errors in lemonldap-ng.ini are not correctly reported
+    * #2223: Misleading error reporting when failing to save conf in lemonldap-ng-cli
+    * #2224: regression in redirection to SAML urls with query string after #2085
+    * #2229: Impersonation plugin: real_hGroup value is overwritten when specified groups are merged
+    * #2230: LLNG 2.0.8 - Error on portal.js with IE 11
+    * #2234: Prevent browser caching in sendJSONresponse
+    * #2237: SAML SP error with auth kerberos
+    * #2250: [CVE-2020-16093] Peer certificate not checked when using LDAPS
+    * #2253: clearing oidcRPMetaDataOptionsLogoutUrl leads to Bad URL error
+    * #2254: Local session cache and systemd PrivateTmp
+    * #2256: Multivalued attributes are not returned as array in OpenID Connect userinfo endpoint
+    * #2257: Missing country in OpenID Connect Address Claim
+    * #2258: Error when using lougout_app_sso
+    * #2261: Refresh my rights fails when Auth=SAML and UserDB=LDAP
+    * #2263: Incorrect SOAP Content-Type
+    * #2271: Labels are not working in auth form
+    * #2272: Secure flag missing on lemonldappdata cookie and during logout
+    * #2274: pdata cookie with SameSite value not equal to NONE is not removed and logout request leads to an internal server error with federate flow on SP side
+    * #2275: sgRequired option does not work when global storage is enabled for token
+    * #2287: LL:NG-provided lua-header snippet -> "writing a global lua variable ('i') which may lead to race conditions between concurrent requests"
+    * #2288: LL:NG 2.0.8  manager missing doc-referenced "Login History" tab
+    * #2289: Special chars password policy is not displayed if password is expired
+    * #2290: [security:high, CVE-2020-24660] Lack of URL normalization by Nginx may lead to authorization bypass when URL access rules are used
+    * #2296: skippedGlobalTests / skippedUnitTests have no effect (again)
+    * #2305: Error in call to _launch in Lemonldap::NG::Common::Conf delete() method
+    * #2306: ldapGroupDecodeSearchedValue does not apply to recursive group search
+    * #2307: Password form not displayed when "password change after reset" is returned by LDAP ppolicy and Combination used for authentication
+
+  * New features:
+    * #1646: integrate documentation into the codebase
+    * #2124: use 2FA only if and when needed
+    * #2205: Add a session command line (CLI) tool
+
+  * Improvements:
+    * #1598: Proxy Backend support for Password Module (passwordDB)
+    * #2188: Declare vhost with wildcard and prefix/suffix
+    * #2189: Make externally-provisionned yubikeys easier to configure
+    * #2193: Polish translation
+    * #2195: Manager - Configuration's Author IP address field should honor $ipAddr
+    * #2201: Avoid Portal to crash with bad GrantSession rule
+    * #2203: Retrieve GPG keys and SSH keys in GitHub authentication module
+    * #2207: Append an "Unrestricted users" rule to CheckUser, ContextSwitching and Impersonation plugins
+    * #2214: add option to make convertConfig easier in most cases
+    * #2225: REST ression server is too intolerant of clock drift (2)
+    * #2233: Error/Warnings id not replaced with CLI
+    * #2239: Mail reset token should not be deleted at first page access
+    * #2240: Add tests for CAS service URL and OIDC client ID (presence/unicity) when configuration is saved
+    * #2241: Add CAS App management to the manager API
+    * #2242: Display new supported grant_types in OIDC discovery page
+    * #2244: Use configuration key in user log messages for all Issuer modules
+    * #2249: Check password policy on the client side when changing password
+    * #2251: Add a parameter for Syslog options
+    * #2252: No host in logs to use with Fail2ban
+    * #2265: increase log level for mail sending and password reset
+    * #2273: URL is not set to Portal URL after ContextSwitching
+    * #2276: Using bruteForceProtectionIncrementalTempo lock user at first attempt
+    * #2278: Display instance name when prompting a message
+    * #2280: User attribute based on local macro in Openid rp
+    * #2281: Manage SameSite default behavior
+    * #2283: Improve Notifications explorer to display done notifications content
+    * #2284: Improve serviceToken debug logs
+    * #2292: request "do not minify" json config option
+    * #2295: Erroneous use of NTLM should be explicitely reported to the user
+    * #2299: healthcheck endpoint for manager API
+    * #2302: correct usage of invalid vs unvalid in code & messaging
+    * #2303: Add del method to lemonldap-ng-cli
+
+ -- Clément <clem.oudot@gmail.com>  Sun, 06 Sep 2020 19:59:22 +0200
+
 lemonldap-ng (2.0.8) stable; urgency=medium
 
   * Bugs:

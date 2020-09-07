@@ -98,7 +98,7 @@ Comment: downloaded from
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/modules/GitHub.png
 Copyright: GitHub
-License: MIT
+License: Expat
 Comment: downloaded from
  https://commons.wikimedia.org/wiki/File:Octicons-mark-github.svg
 
@@ -126,13 +126,13 @@ Comment: This work, "decryptValue.png", is a derivative of
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/icons/switchcontext_OFF.png
 Copyright: Christophe Maudoux <chrmdx@gmail.com>
-License: CC-4
+License: CC-BY-4.0
 Comment: This work, "switchcontext_OFF.png", is a derivative of
  "Theater-Masken - Silhouetten und kontur vektoren" by Natasha Sinegina, under CC-BY-4.0.
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/icons/switchcontext_ON.png
 Copyright: Christophe Maudoux <chrmdx@gmail.com>
-License: CC-4
+License: CC-BY-4.0
 Comment: This work, "switchcontext_ON.png", is a derivative of
  "Theater-Masken - Silhouetten und kontur vektoren" by Natasha Sinegina, under CC-BY-4.0.
 
@@ -230,22 +230,17 @@ Copyright: 2014-2015, Google Inc.
 License: BSD-3-clause
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/apps/*
- doc/pages/documentation/current/icons/*
+ doc/sources/admin/icons/*
 Copyright: 2006-2007 Everaldo Coelho, Crystal Project
 License: LGPL-3
 
-Files: doc/pages/documentation/current/lib/images/*
-Copyright: 2004-2012 Andreas Gohr <andi@splitbrain.org>
- and the DokuWiki Community
-License: GPL-2
-
-Files: doc/pages/documentation/current/documentation/lasso*.png
+Files: doc/sources/admin/documentation/lasso.png
 Copyright: 2004, Entr'ouvert <https://www.entrouvert.com/>
  2004, Florent Monnier
 License: GPL-2+
 
 Files: debian/*
-Copyright: 2005-2019, Xavier Guimard <yadd@debian.org>
+Copyright: 2005-2020, Xavier Guimard <yadd@debian.org>
 License: GPL-2+
 
 License: Apache-2.0
@@ -728,7 +723,7 @@ License: CC-BY-NC-ND-3.0
     title of the Work if supplied; (iii) to the extent reasonably
     practicable, the URI, if any, that Licensor specifies to be associated
     with the Work, unless such URI does not refer to the copyright notice or
-    licensing information for the Work. The credit required by this Section 
+    licensing information for the Work. The credit required by this Section
     (c) may be implemented in any reasonable manner; provided, however, that
     in the case of a Collection, at a minimum such credit will appear, if a
     credit for all contributing authors of Collection appears, then as part
@@ -937,27 +932,27 @@ License: CC-BY-4.0
  .
     Attribution.
  .
-	If You Share the Licensed Material (including in modified form), You
-	must: retain the following if it is supplied by the Licensor with the
-	Licensed Material: identification of the creator(s) of the Licensed
-	Material and any others designated to receive attribution, in any
-	reasonable manner requested by the Licensor (including by pseudonym if
-	designated); a copyright notice; a notice that refers to this Public
-	License; a notice that refers to the disclaimer of warranties; a URI or
-	hyperlink to the Licensed Material to the extent reasonably practicable;
-	indicate if You modified the Licensed Material and retain an indication
-	of any previous modifications; and indicate the Licensed Material is
-	licensed under this Public License, and include the text of, or the URI
-	or hyperlink to, this Public License.  You may satisfy the conditions in
-	Section 3(a)(1) in any reasonable manner based on the medium, means, and
-	context in which You Share the Licensed Material. For example, it may be
-	reasonable to satisfy the conditions by providing a URI or hyperlink to
-	a resource that includes the required information.  If requested by the
-	Licensor, You must remove any of the information required by Section
-	3(a)(1)(A) to the extent reasonably practicable.  If You Share Adapted
-	Material You produce, the Adapter's License You apply must not prevent
-	recipients of the Adapted Material from complying with this Public
-	License.
+    If You Share the Licensed Material (including in modified form), You
+    must: retain the following if it is supplied by the Licensor with the
+    Licensed Material: identification of the creator(s) of the Licensed
+    Material and any others designated to receive attribution, in any
+    reasonable manner requested by the Licensor (including by pseudonym if
+    designated); a copyright notice; a notice that refers to this Public
+    License; a notice that refers to the disclaimer of warranties; a URI or
+    hyperlink to the Licensed Material to the extent reasonably practicable;
+    indicate if You modified the Licensed Material and retain an indication
+    of any previous modifications; and indicate the Licensed Material is
+    licensed under this Public License, and include the text of, or the URI
+    or hyperlink to, this Public License.  You may satisfy the conditions in
+    Section 3(a)(1) in any reasonable manner based on the medium, means, and
+    context in which You Share the Licensed Material. For example, it may be
+    reasonable to satisfy the conditions by providing a URI or hyperlink to
+    a resource that includes the required information.  If requested by the
+    Licensor, You must remove any of the information required by Section
+    3(a)(1)(A) to the extent reasonably practicable.  If You Share Adapted
+    Material You produce, the Adapter's License You apply must not prevent
+    recipients of the Adapted Material from complying with this Public
+    License.
  .
  Section 4 – Sui Generis Database Rights.
  .

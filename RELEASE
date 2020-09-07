@@ -23,16 +23,9 @@ Before release
   $ ./scripts/download_translations
 
 - Update documentation:
-
-  $ ./scripts/parameters-for-wiki.pl >/tmp/prmlist.txt
-
-  Replace https://lemonldap-ng.org/documentation/X.X/parameterlist by
-  /tmp/prmlist.txt content
-
-  $ make documentation
+  $ ./scripts/parameters-for-doc.pl > doc/sources/admin/parameterlist.rst
 
 - Update changelog:
-
   $ ./scripts/generate-changelog.pl
 
   This update "changelog" file using GitLab issues (tags Bug, New feature,
@@ -55,10 +48,6 @@ For major release
 - Go on gitlab and create a new branch: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/branches/new
 
 - Go on gitlab and create a new tag: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/tags/new
-
-- Change "latest" symlink in dokuwiki
-
-- Edit scripts/doc.pl in trunk to point on the new documentation path
 
 Make the distribution
 ---------------------
@@ -88,7 +77,6 @@ Packages are in /tmp
 
 Sign packages:
 $ dpkg-sig -p --sign builder /tmp/*.deb
-
 
 Upload the distribution
 ---------------------
@@ -125,6 +113,7 @@ Site
 
 - Update links on the download page
 - Close the milestone on Gitlab and create a new one
+- Update admin documentation and API documentation
 
 Spread the word
 ---------------

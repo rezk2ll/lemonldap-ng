@@ -321,6 +321,9 @@ sub run {
                 );
             }
 
+            my $spAuthnLevel = $self->conf->{oidcRPMetaDataOptions}->{$rp}
+              ->{oidcRPMetaDataOptionsAuthnLevel} || 0;
+
             # Check if user needs to be reauthenticated
             my $prompt = $oidc_request->{'prompt'};
             if (
@@ -334,6 +337,7 @@ sub run {
                 $self->logger->debug(
 "Reauthentication required by Relying Party in prompt parameter"
                 );
+                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
                 return $self->reAuth($req);
             }
 
@@ -343,7 +347,21 @@ sub run {
                 $self->logger->debug(
 "Reauthentication forced because authentication time ($_lastAuthnUTime) is too old (>$max_age s)"
                 );
+                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
                 return $self->reAuth($req);
+            }
+
+            # Check if we have sufficient auth level
+            my $authenticationLevel =
+              $req->{sessionInfo}->{authenticationLevel} || 0;
+            if ( $authenticationLevel < $spAuthnLevel ) {
+                $self->logger->debug(
+                        "Insufficient authentication level for service $rp"
+                      . " (has: $authenticationLevel, want: $spAuthnLevel)" );
+
+                # Reauth with sp auth level as target
+                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
+                return $self->upgradeAuth($req);
             }
 
             # Check scope validity
@@ -2162,6 +2180,12 @@ sub exportRequestParameters {
     if ( $req->param('client_id') ) {
         my $rp = $self->getRP( $req->param('client_id') );
         $req->env->{"llng_oidc_rp"} = $rp if $rp;
+
+        # Store target authentication level in pdata
+        my $targetAuthnLevel = $self->conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsAuthnLevel};
+        $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
+          if $targetAuthnLevel;
     }
 
     return PE_OK;

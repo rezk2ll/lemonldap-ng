@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 extends 'Lemonldap::NG::Portal::Lib::LDAP',
   'Lemonldap::NG::Portal::Password::Base';
 
-our $VERSION = '2.0.2';
+our $VERSION = '2.0.9';
 
 sub init {
     my ($self) = @_;

@@ -15,7 +15,7 @@ use Email::Date::Format qw(email_date);
 use MIME::Base64;
 use Encode;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.9';
 
 our $transport;
 
