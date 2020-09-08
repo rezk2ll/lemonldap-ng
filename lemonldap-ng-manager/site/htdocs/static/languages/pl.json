@@ -701,7 +701,7 @@
 "passwordDB":"Moduł hasła",
 "passwordManagement":"Zarządzanie hasłami",
 "passwordPolicy":"Password policy",
-"passwordPolicyActivation":"Activation",
+"passwordPolicyActivation":"Aktywacja",
 "passwordPolicyMinSize":"Minimalny rozmiar",
 "passwordPolicyMinLower":"Minimalna liczba małych liter",
 "passwordPolicyMinUpper":"Minimalna liczba dużych liter",
