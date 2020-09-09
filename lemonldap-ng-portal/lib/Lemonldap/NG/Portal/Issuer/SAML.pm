@@ -1421,7 +1421,8 @@ sub sloRelaySoap {
 
     # Store success status for this SLO request
     my $sloStatusSessionInfos =
-      $self->getSamlSession( $relayState, { $spConfKey => 1 } );
+      $self->getSamlSession( $relayState,
+        { $spConfKey => 1, _utime => time() } );
 
     if ($sloStatusSessionInfos) {
         $self->logger->debug(
@@ -1849,6 +1850,7 @@ sub sloServer {
                 method      => $method,
                 provider_nb => $provider_nb,
                 relayID     => $relayID,
+                _utime      => time(),
             };
             $logoutContextSession =
               $self->getSamlSession( undef, $logoutInfos );
