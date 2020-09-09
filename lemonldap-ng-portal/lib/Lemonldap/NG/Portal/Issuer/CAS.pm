@@ -170,9 +170,11 @@ sub run {
         my ( $host, $uri ) = ( $1, $2 );
         my $app = $self->casAppList->{$host};
 
-        my $spAuthnLevel =
-          $self->conf->{casAppMetaDataOptions}->{$app}
-          ->{casAppMetaDataOptionsAuthnLevel} || 0;
+        my $spAuthnLevel = 0;
+        if ($app) {
+            $spAuthnLevel = $self->conf->{casAppMetaDataOptions}->{$app}
+              ->{casAppMetaDataOptionsAuthnLevel} || 0;
+        }
 
         # Renew
         if (    $renew
