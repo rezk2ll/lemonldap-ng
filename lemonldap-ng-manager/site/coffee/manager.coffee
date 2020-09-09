@@ -661,6 +661,35 @@ llapp.controller 'TreeCtrl', [
 			#  virtualHost
 			return if node.type and node.type.match /^(?:s(?:aml(?:(?:ID|S)PMetaDataNod|Attribut)e|fExtra)|(?:(?:cmbMod|r)ul|authChoic)e|(?:virtualHos|keyTex)t|menu(?:App|Cat))$/ then true else false
 
+		# Send test Email
+		$scope.sendTestMail = ->
+			$scope.message =
+				title: 'sendTestMail'
+				field: 'dest'
+			$scope.showModal('prompt.html').then ->
+				n= $scope.result
+				$scope.waiting = true
+				dest = $scope.result
+				$http.post("#{window.confPrefix}/sendTestMail", {"dest": dest}).then (response) ->
+					success = response.data.success
+					error = response.data.error
+					$scope.waiting = false
+					if success
+						$scope.message =
+							title: 'ok'
+							message: '__sendTestMailSuccess__'
+							items: []
+					else
+						$scope.message =
+							title: 'error'
+							message: error
+							items: []
+					
+					$scope.showModal 'message.html'
+				, readError
+			, ->
+				console.log('Error sending test email')
+
 		# RSA keys generation
 		$scope.newRSAKey = ->
 			$scope.showModal('password.html').then ->

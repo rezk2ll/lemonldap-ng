@@ -976,6 +976,7 @@ sub tree {
                         {
                             title => 'SMTP',
                             help  => 'smtp.html',
+                            form => 'SMTP',
                             nodes => [
                                 'mailSessionKey',
                                 'SMTPServer',

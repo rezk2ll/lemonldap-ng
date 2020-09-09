@@ -805,6 +805,42 @@ This file contains:
           return false;
         }
       };
+      $scope.sendTestMail = function() {
+        $scope.message = {
+          title: 'sendTestMail',
+          field: 'dest'
+        };
+        return $scope.showModal('prompt.html').then(function() {
+          var dest, n;
+          n = $scope.result;
+          $scope.waiting = true;
+          dest = $scope.result;
+          return $http.post(window.confPrefix + "/sendTestMail", {
+            "dest": dest
+          }).then(function(response) {
+            var error, success;
+            success = response.data.success;
+            error = response.data.error;
+            $scope.waiting = false;
+            if (success) {
+              $scope.message = {
+                title: 'ok',
+                message: '__sendTestMailSuccess__',
+                items: []
+              };
+            } else {
+              $scope.message = {
+                title: 'error',
+                message: error,
+                items: []
+              };
+            }
+            return $scope.showModal('message.html');
+          }, readError);
+        }, function() {
+          return console.log('Error sending test email');
+        });
+      };
       $scope.newRSAKey = function() {
         return $scope.showModal('password.html').then(function() {
           var currentNode, password;

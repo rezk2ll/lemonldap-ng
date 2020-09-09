@@ -155,6 +155,7 @@ site/htdocs/static/forms/select.html
 site/htdocs/static/forms/sfExtra.html
 site/htdocs/static/forms/sfExtraContainer.html
 site/htdocs/static/forms/simpleInputContainer.html
+site/htdocs/static/forms/SMTP.html
 site/htdocs/static/forms/text.html
 site/htdocs/static/forms/trool.html
 site/htdocs/static/forms/virtualHost.html
