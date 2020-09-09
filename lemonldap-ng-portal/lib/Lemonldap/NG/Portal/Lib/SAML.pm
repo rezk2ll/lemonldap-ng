@@ -2702,18 +2702,21 @@ sub sendLogoutRequestToProvider {
                 return ( 0, $method, undef );
             }
 
-            # Store success status for this SLO request
-            my $sloStatusSessionInfos = $self->getSamlSession($relayState);
+            if ($relayState) {
 
-            if ($sloStatusSessionInfos) {
-                $sloStatusSessionInfos->update( { $confKey => 1 } );
-                $self->logger->debug(
-                    "Store SLO status for $confKey in session $relayState");
-            }
-            else {
-                $self->logger->warn(
+                # Store success status for this SLO request
+                my $sloStatusSessionInfos = $self->getSamlSession($relayState);
+
+                if ($sloStatusSessionInfos) {
+                    $sloStatusSessionInfos->update( { $confKey => 1 } );
+                    $self->logger->debug(
+                        "Store SLO status for $confKey in session $relayState");
+                }
+                else {
+                    $self->logger->warn(
 "Unable to store SLO status for $confKey in session $relayState"
-                );
+                    );
+                }
             }
 
             $self->logger->debug("Logout response is valid");
