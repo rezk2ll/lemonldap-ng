@@ -11,6 +11,10 @@ use utf8;
 use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::UserAgent;
+use Lemonldap::NG::Common::EmailTransport;
+use MIME::Entity;
+use Email::Sender::Simple qw(sendmail);
+use Email::Date::Format qw(email_date);
 use Crypt::OpenSSL::RSA;
 use Convert::PEM;
 use URI::URL;
@@ -58,9 +62,10 @@ sub init {
       # New key and conf save
       ->addRoute(
         confs => {
-            newRSAKey => 'newRSAKey',
-            raw       => 'newRawConf',
-            '*'       => 'newConf'
+            newRSAKey    => 'newRSAKey',
+            sendTestMail => 'sendTestMail',
+            raw          => 'newRawConf',
+            '*'          => 'newConf'
         },
         ['POST']
       )
@@ -117,6 +122,64 @@ sub newRSAKey {
         );
     }
     return $self->sendJSONresponse( $req, $keys );
+}
+
+#      Sending a test Email
+#      --------------------
+
+##@method public PSGI-JSON-response sendTestMail($req)
+# Sends a test email to the provided address
+# The posted data must contain a JSON object containing
+# {"dest":"target@example.com"}
+#
+#@param $req Lemonldap::NG::Common::PSGI::Request object
+#@return PSGI JSON response
+sub sendTestMail {
+    my ( $self, $req, @others ) = @_;
+    return $self->sendError( $req, 'There is no subkey for "sendTestMail"',
+        400 )
+      if (@others);
+    my $dest = $req->jsonBodyToObj->{dest};
+    unless ($dest) {
+        $self->logger->debug("Missing dest parameter for sending test mail");
+        return $self->sendJSONresponse(
+            $req,
+            {
+                success => \0,
+                error   => "You must provide an email address"
+            }
+        );
+    }
+    my $conf      = $self->confAcc->getConf();
+    my $transport = Lemonldap::NG::Common::EmailTransport->new($conf);
+    my $message   = MIME::Entity->build(
+        From    => $conf->{mailFrom},
+        To      => $dest,
+        Subject => 'LemonLDAP::NG test email',
+        Type    => 'TEXT',
+        Data    => 'This test message was sent from the LemonLDAP::NG Manager',
+        Type    => 'text/plain',
+        Date    => email_date,
+    );
+
+    # Send the mail
+    $self->logger->info("Sending test email to $dest");
+    my $success = 1;
+    my $error;
+    eval { sendmail( $message->stringify, { transport => $transport } ); };
+    if ($@) {
+        $success = 0;
+        $error   = ( $@->isa('Throwable::Error') ? $@->message : $@ );
+    }
+
+    $self->logger->debug("Mail sent, mebbe");
+    return $self->sendJSONresponse(
+        $req,
+        {
+            success => \$success,
+            ( $error ? ( error => $error ) : () )
+        }
+    );
 }
 
 # 36 - URL File loader
@@ -229,7 +292,7 @@ sub newConf {
 
     if ( $cfgNum ne $req->params('cfgNum') ) { $parser->confChanged(1); }
 
-    my $res = { result => $parser->check($self->p) };
+    my $res = { result => $parser->check( $self->p ) };
 
     # "message" fields: note that words enclosed by "__" (__word__) will be
     # translated
