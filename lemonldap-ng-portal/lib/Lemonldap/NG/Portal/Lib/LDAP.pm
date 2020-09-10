@@ -130,7 +130,7 @@ sub getUser {
             ? $self->mailFilter->($req)
             : $self->filter->($req)
         ),
-        defer => $self->conf->{ldapSearchDeref} || 'find',
+        deref => $self->conf->{ldapSearchDeref} || 'find',
         attrs => $self->attrs,
     );
     if ( $mesg->code() != 0 ) {
