@@ -23,12 +23,14 @@ Just enable it in the manager (section “plugins”).
       for searching sessions in backend if ``whatToTrace`` fails. Useful
       to look for sessions by mail or givenName. Let it blank to search
       by ``whatToTrace`` only.
-   -  **Display empty headers**: Rule to display ALL headers appended by
-      LemonLDAP::NG including empty ones
-   -  **Display empty value**: Rule to display ALL attributes even empty
-      ones
-   -  **Display persistent session**: Rule to display persistent session
-      attributes
+   -  **Display computed sessions**: Rule to define which users can display a
+      computed session if no SSO session is found
+   -  **Display empty headers**: Rule to define which users can display ALL headers
+      appended by LemonLDAP::NG including empty ones
+   -  **Display empty values**: Rule to define which users can display ALL attributes
+      even empty ones
+   -  **Display persistent session data**: Rule to define which users can display
+      persistent session data
 
 
 .. note::
