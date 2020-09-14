@@ -852,6 +852,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'checkUserDisplayComputedSession' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
         'checkUserDisplayEmptyHeaders' => {
             'default' => 0,
             'type'    => 'boolOrExpr'

@@ -4,12 +4,12 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
+  PE_MALFORMEDUSER
   PE_TOKENEXPIRED
   PE_NOTOKEN
-  PE_MALFORMEDUSER
 );
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -29,13 +29,14 @@ has ott => (
         return $ott;
     }
 );
-has idRule                    => ( is => 'rw', default => sub { 1 } );
-has displayEmptyValuesRule    => ( is => 'rw', default => sub { 0 } );
-has displayEmptyHeadersRule   => ( is => 'rw', default => sub { 0 } );
-has displayPersistentInfoRule => ( is => 'rw', default => sub { 0 } );
-has unrestrictedUsersRule     => ( is => 'rw', default => sub { 0 } );
-has sorted                    => ( is => 'rw', default => sub { 0 } );
-has merged                    => ( is => 'rw', default => '' );
+has idRule                     => ( is => 'rw', default => sub { 1 } );
+has displayEmptyValuesRule     => ( is => 'rw', default => sub { 0 } );
+has displayEmptyHeadersRule    => ( is => 'rw', default => sub { 0 } );
+has displayPersistentInfoRule  => ( is => 'rw', default => sub { 0 } );
+has displayComputedSessionRule => ( is => 'rw', default => sub { 0 } );
+has unrestrictedUsersRule      => ( is => 'rw', default => sub { 0 } );
+has sorted                     => ( is => 'rw', default => sub { 0 } );
+has merged                     => ( is => 'rw', default => '' );
 
 sub hAttr {
     $_[0]->{conf}->{checkUserHiddenAttributes} . ' '
@@ -49,7 +50,7 @@ sub persistentAttrs {
 
 sub init {
     my ($self) = @_;
-    $self->addAuthRoute( checkuser => 'check', ['POST'] );
+    $self->addAuthRoute( checkuser => 'check',               ['POST'] );
     $self->addAuthRouteWithRedirect( checkuser => 'display', ['GET'] );
 
     # Parse checkUser rules
@@ -84,10 +85,18 @@ sub init {
     $self->unrestrictedUsersRule(
         $self->p->buildRule(
             $self->conf->{checkUserUnrestrictedUsersRule},
-            'checkUserUnrestrictedUsers'
+            'checkUserUnrestrictedUsersRule'
         )
     );
     return 0 unless $self->unrestrictedUsersRule;
+
+    $self->displayComputedSessionRule(
+        $self->p->buildRule(
+            $self->conf->{checkUserDisplayComputedSession},
+            'checkUserdisplayComputedSession'
+        )
+    );
+    return 0 unless $self->displayComputedSessionRule;
 
     # Init. other options
     $self->sorted( $self->conf->{impersonationRule}
@@ -100,13 +109,12 @@ sub init {
 
 # RUNNING METHOD
 sub display {
-    my ( $self, $req ) = @_;
-    my ( $attrs, $array_attrs ) = ( {}, [] );
+    my ( $self,  $req )         = @_;
+    my ( $attrs, $array_attrs ) = ( $req->userData, [] );
 
     $self->logger->debug("Display current session data...");
     $self->userLogger->info("Using spoofed SSO groups if exist")
       if ( $self->conf->{impersonationRule} );
-    $attrs = $req->userData;
 
     $attrs = $self->_removePersistentAttributes($attrs)
       unless $self->displayPersistentInfoRule->( $req, $req->userData );
@@ -160,8 +168,9 @@ sub display {
 sub check {
     my ( $self, $req ) = @_;
     my ( $attrs, $array_attrs, $array_hdrs ) = ( {}, [], [] );
-    my $msg = my $auth = my $compute = '';
-    my $unUser = $self->unrestrictedUsersRule->( $req, $req->userData ) || 0;
+    my $msg           = my $auth = my $computed = '';
+    my $savedUserData = $req->userData;
+    my $unUser = $self->unrestrictedUsersRule->( $req, $savedUserData ) || 0;
 
     # Check token
     if ( $self->ottRule->( $req, {} ) ) {
@@ -266,8 +275,8 @@ sub check {
             $req->{user} = $user;
             $self->userLogger->info(
                 "No session found in DB. Compute userData...");
-            $attrs   = $self->_userData($req);
-            $compute = 1;
+            $attrs    = $self->_userData($req);
+            $computed = 1;
         }
 
         # Check identities rule
@@ -290,34 +299,42 @@ sub check {
     else {
         $msg   = 'checkUser' . $self->merged;
         $attrs = $self->_removePersistentAttributes($attrs)
-          unless $self->displayPersistentInfoRule->( $req, $req->userData );
+          unless $self->displayPersistentInfoRule->( $req, $savedUserData );
 
-        if ($compute) {
-            $msg = 'checkUserComputeSession';
-            if ( $self->conf->{impersonationRule} ) {
-                $self->logger->debug("Map real attributes...");
-                my %realAttrs = map {
-                    ( "$self->{conf}->{impersonationPrefix}$_" => $attrs->{$_} )
-                } keys %$attrs;
-                $attrs = { %$attrs, %realAttrs };
+        if ($computed) {
+            if ( $self->displayComputedSessionRule->( $req, $savedUserData ) ) {
+                $msg = 'checkUserComputedSession';
+                if ( $self->conf->{impersonationRule} ) {
+                    $self->logger->debug("Map real attributes...");
+                    my %realAttrs = map {
+                        ( "$self->{conf}->{impersonationPrefix}$_" =>
+                              $attrs->{$_} )
+                    } keys %$attrs;
+                    $attrs = { %$attrs, %realAttrs };
 
-                # Compute groups and macros with real and spoofed attributes
-                $self->logger->debug(
-                    "Compute groups and macros with real and spoofed attributes"
-                );
-                $req->sessionInfo($attrs);
-                delete $req->sessionInfo->{groups};
-                $req->steps( [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
-                if ( my $error = $self->p->process($req) ) {
-                    $self->logger->debug("Process returned error: $error");
-                    return $req->error($error);
+                    # Compute groups and macros with real and spoofed attributes
+                    $self->logger->debug(
+"Compute groups and macros with real and spoofed attributes"
+                    );
+                    $req->sessionInfo($attrs);
+                    delete $req->sessionInfo->{groups};
+                    $req->steps(
+                        [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
+                    if ( my $error = $self->p->process($req) ) {
+                        $self->logger->debug("Process returned error: $error");
+                        return $req->error($error);
+                    }
                 }
+            }
+            else {
+                $attrs = {};
+                $msg   = 'checkUserNoSessionFound';
             }
         }
 
         # Create an array of hashes for template loop
         $self->logger->debug("Delete hidden or empty attributes");
-        if ( $self->displayEmptyValuesRule->( $req, $req->userData ) ) {
+        if ( $self->displayEmptyValuesRule->( $req, $savedUserData ) ) {
             foreach my $k ( sort keys %$attrs ) {
 
                 # Ignore hidden attributes
@@ -356,7 +373,7 @@ sub check {
                   . "$auth to access to $url" );
 
             # Return VirtualHost headers
-            $array_hdrs = $self->_headers( $req, $url, $attrs );
+            $array_hdrs = $self->_headers( $req, $url, $attrs, $savedUserData );
         }
         else {
             $auth = 'VHnotFound';
@@ -446,7 +463,8 @@ sub _userData {
     $req->sessionInfo->{authenticationLevel} = $realAuthLevel;
     delete $req->sessionInfo->{groups};
 
-    $req->steps( [ 'setSessionInfo', $self->p->groupsAndMacros, 'setLocalGroups' ] );
+    $req->steps(
+        [ 'setSessionInfo', $self->p->groupsAndMacros, 'setLocalGroups' ] );
     if ( my $error = $self->p->process($req) ) {
         $self->logger->debug("CheckUser: Process returned error: $error");
         return $req->error($error);
@@ -479,7 +497,7 @@ sub _authorization {
 }
 
 sub _headers {
-    my ( $self, $req, $uri, $attrs ) = @_;
+    my ( $self, $req, $uri, $attrs, $savedUserData ) = @_;
     my ($vhost) = $uri =~ m#^https?://([^/]*).*#;
 
     $vhost =~ s/:\d+$//;
@@ -488,7 +506,7 @@ sub _headers {
     $self->logger->debug(
         "Return \"$attrs->{ $self->{conf}->{whatToTrace} }\" headers");
     return $self->p->HANDLER->checkHeaders( $req, $attrs )
-      if ( $self->displayEmptyHeadersRule->( $req, $req->userData ) );
+      if ( $self->displayEmptyHeadersRule->( $req, $savedUserData ) );
 
     $self->logger->debug("Remove empty headers");
     my @headers = grep $_->{value} =~ /.+/,

@@ -491,6 +491,12 @@ sub attributes {
             documentation => 'Display empty headers rule',
             flags         => 'p',
         },
+        checkUserDisplayComputedSession => {
+            default       => 1,
+            type          => 'boolOrExpr',
+            documentation => 'Display empty headers rule',
+            flags         => 'p',
+        },
         globalLogoutRule => {
             type          => 'boolOrExpr',
             default       => 0,

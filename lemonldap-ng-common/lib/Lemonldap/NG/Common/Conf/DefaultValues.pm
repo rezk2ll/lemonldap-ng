@@ -36,6 +36,7 @@ sub defaultValues {
           'http://auth.example.com/certificateReset',
         'certificateResetByMailValidityDelay' => 0,
         'checkTime'                           => 600,
+        'checkUserDisplayComputedSession'     => 1,
         'checkUserDisplayEmptyHeaders'        => 0,
         'checkUserDisplayEmptyValues'         => 0,
         'checkUserDisplayPersistentInfo'      => 0,

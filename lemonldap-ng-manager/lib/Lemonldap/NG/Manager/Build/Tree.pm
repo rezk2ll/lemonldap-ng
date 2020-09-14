@@ -796,6 +796,7 @@ sub tree {
                                 'checkUserUnrestrictedUsersRule',
                                 'checkUserHiddenAttributes',
                                 'checkUserSearchAttributes',
+                                'checkUserDisplayComputedSession',
                                 'checkUserDisplayEmptyHeaders',
                                 'checkUserDisplayEmptyValues',
                                 'checkUserDisplayPersistentInfo',
