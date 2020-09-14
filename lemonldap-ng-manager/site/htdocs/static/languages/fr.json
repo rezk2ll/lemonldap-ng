@@ -194,6 +194,7 @@
 "checkUserIdRule":"Règle d'utilisation des identités",
 "checkUserHiddenAttributes":"Attributs masqués",
 "checkUserUnrestrictedUsersRule":"Règle des utilisateurs non restreints",
+"checkUserDisplayComputedSession":"Afficher les sessions évaluées",
 "checkUserDisplayPersistentInfo":"Afficher les données de session persistante",
 "checkUserDisplayEmptyHeaders":"Afficher les entêtes nuls",
 "checkUserDisplayEmptyValues":"Afficher les valeurs nulles",
