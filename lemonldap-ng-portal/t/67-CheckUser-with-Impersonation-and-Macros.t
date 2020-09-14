@@ -8,25 +8,25 @@ BEGIN {
 
 my $res;
 
-my $client = LLNG::Manager::Test->new(
-    {
+my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                       => 'error',
-            authentication                 => 'Demo',
-            userDB                         => 'Same',
-            loginHistoryEnabled            => 0,
-            brutForceProtection            => 0,
-            portalMainLogo                 => 'common/logos/logo_llng_old.png',
-            requireToken                   => 0,
-            checkUser                      => 1,
-            checkUserSearchAttributes      => 'employee_nbr  test1 mail ',
-            impersonationRule              => 1,
-            checkUserDisplayPersistentInfo => 0,
-            checkUserDisplayEmptyValues    => 0,
-            impersonationMergeSSOgroups    => 0,
-            userControl                    => '^[\w\.\-/\s]+$',
-            whatToTrace                    => '_whatToTrace',
-            macros                         => {
+            logLevel                        => 'error',
+            authentication                  => 'Demo',
+            userDB                          => 'Same',
+            loginHistoryEnabled             => 0,
+            brutForceProtection             => 0,
+            portalMainLogo                  => 'common/logos/logo_llng_old.png',
+            requireToken                    => 0,
+            checkUser                       => 1,
+            checkUserSearchAttributes       => 'employee_nbr  test1 mail ',
+            impersonationRule               => 1,
+            checkUserDisplayComputedSession => 1,
+            checkUserDisplayPersistentInfo  => 0,
+            checkUserDisplayEmptyValues     => 0,
+            impersonationMergeSSOgroups     => 0,
+            userControl                     => '^[\w\.\-/\s]+$',
+            whatToTrace                     => '_whatToTrace',
+            macros                          => {
                 authLevel     => '"Macro_$authenticationLevel"',
                 realAuthLevel => '"realMacro_$real_authenticationLevel"',
                 _whatToTrace =>
@@ -165,9 +165,9 @@ ok(
     ),
     'POST checkuser'
 );
-ok( $res->[2]->[0] =~ m%<span trspan="checkUserComputeSession">%,
+ok( $res->[2]->[0] =~ m%<span trspan="checkUserComputedSession">%,
     'Found trspan="checkUserComputeSession"' )
-  or explain( $res->[2]->[0], 'trspan="checkUserComputeSession"' );
+  or explain( $res->[2]->[0], 'trspan="checkUserComputedSession"' );
 ok(
     $res->[2]->[0] =~
 m%<div class="alert alert-success"><div class="text-center"><b><span trspan="allowed"></span></b></div></div>%,

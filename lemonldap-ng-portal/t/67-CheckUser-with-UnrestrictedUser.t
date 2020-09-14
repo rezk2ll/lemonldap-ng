@@ -11,18 +11,19 @@ my $res;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                       => 'error',
-            authentication                 => 'Demo',
-            userDB                         => 'Same',
-            loginHistoryEnabled            => 0,
-            brutForceProtection            => 0,
-            checkUser                      => 1,
-            checkUserIdRule                => '$uid ne "rtyler"',
-            checkUserUnrestrictedUsersRule => '$uid eq "msmith"',
-            tokenUseGlobalStorage          => 0,
-            checkUserDisplayPersistentInfo => 0,
-            checkUserDisplayEmptyValues    => 0,
-            impersonationMergeSSOgroups    => 0,
+            logLevel                        => 'error',
+            authentication                  => 'Demo',
+            userDB                          => 'Same',
+            loginHistoryEnabled             => 0,
+            brutForceProtection             => 0,
+            checkUser                       => 1,
+            checkUserIdRule                 => '$uid ne "rtyler"',
+            checkUserUnrestrictedUsersRule  => '$uid eq "msmith"',
+            tokenUseGlobalStorage           => 0,
+            checkUserDisplayPersistentInfo  => 0,
+            checkUserDisplayComputedSession => 1,
+            checkUserDisplayEmptyValues     => 0,
+            impersonationMergeSSOgroups     => 0,
         }
     }
 );
@@ -80,7 +81,7 @@ count(1);
 
 ok( $res = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
-ok( $res->{MSG} eq 'checkUserComputeSession', 'Computed session' )
+ok( $res->{MSG} eq 'checkUserComputedSession', 'Computed session' )
   or print STDERR Dumper($res);
 count(2);
 
@@ -220,7 +221,7 @@ count(1);
 
 ok( $res = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
-ok( $res->{MSG} eq 'checkUserComputeSession', 'Computed session' )
+ok( $res->{MSG} eq 'checkUserComputedSession', 'Computed session' )
   or print STDERR Dumper($res);
 count(2);
 

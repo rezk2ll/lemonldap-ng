@@ -10,18 +10,19 @@ my $res;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                       => 'error',
-            authentication                 => 'Demo',
-            userDB                         => 'Same',
-            loginHistoryEnabled            => 0,
-            brutForceProtection            => 0,
-            checkUser                      => 1,
-            requireToken                   => 1,
-            tokenUseGlobalStorage          => 1,
-            formTimeout                    => 120,
-            checkUserDisplayPersistentInfo => 1,
-            checkUserDisplayEmptyValues    => 1,
-            macros                         => {
+            logLevel                        => 'error',
+            authentication                  => 'Demo',
+            userDB                          => 'Same',
+            loginHistoryEnabled             => 0,
+            brutForceProtection             => 0,
+            checkUser                       => 1,
+            requireToken                    => 1,
+            tokenUseGlobalStorage           => 1,
+            formTimeout                     => 120,
+            checkUserDisplayEmptyValues     => 1,
+            checkUserDisplayPersistentInfo  => 1,
+            checkUserDisplayComputedSession => 1,
+            macros                          => {
                 _whatToTrace =>
                   '$_auth eq "SAML" ? "$_user\@$_idpConfKey" : "$_user"',
                 mail => 'uc $mail',
@@ -109,9 +110,9 @@ count(1);
 
 ( $host, $url, $query ) =
   expectForm( $res, undef, '/checkuser', 'user', 'url', 'token' );
-ok( $res->[2]->[0] =~ m%<span trspan="checkUserComputeSession">%,
+ok( $res->[2]->[0] =~ m%<span trspan="checkUserComputedSession">%,
     'Found trspan="checkUserComputeSession"' )
-  or explain( $res->[2]->[0], 'trspan="checkUserComputeSession"' );
+  or explain( $res->[2]->[0], 'trspan="checkUserComputedSession"' );
 ok(
     $res->[2]->[0] =~
 m%<div class="alert alert-success"><div class="text-center"><b><span trspan="allowed"></span></b></div></div>%,
