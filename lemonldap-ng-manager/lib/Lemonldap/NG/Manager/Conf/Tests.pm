@@ -301,6 +301,20 @@ sub tests {
             );
         },
 
+        # Test SMTP connection and authentication (warning only)
+        smtpConfiguration => sub {
+
+            # Skip test if no SMTP configuration
+            return 1 unless ( $conf->{SMTPServer} );
+
+            # Use SMTP
+            eval "use Lemonldap::NG::Common::EmailTransport";
+            return ( 1, "Could not load Lemonldap::NG::Common::EmailTransport" )
+              if ($@);
+
+            return Lemonldap::NG::Common::EmailTransport->configTest($conf);
+        },
+
         # SAML entity ID must be unique
         samlIDPEntityIdUniqueness => sub {
             return 1

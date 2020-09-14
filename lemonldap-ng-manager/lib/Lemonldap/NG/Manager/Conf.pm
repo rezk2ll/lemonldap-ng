@@ -12,9 +12,6 @@ use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::EmailTransport;
-use MIME::Entity;
-use Email::Sender::Simple qw(sendmail);
-use Email::Date::Format qw(email_date);
 use Crypt::OpenSSL::RSA;
 use Convert::PEM;
 use URI::URL;
@@ -150,29 +147,17 @@ sub sendTestMail {
             }
         );
     }
-    my $conf      = $self->confAcc->getConf();
-    my $transport = Lemonldap::NG::Common::EmailTransport->new($conf);
-    my $message   = MIME::Entity->build(
-        From    => $conf->{mailFrom},
-        To      => $dest,
-        Subject => 'LemonLDAP::NG test email',
-        Type    => 'TEXT',
-        Data    => 'This test message was sent from the LemonLDAP::NG Manager',
-        Type    => 'text/plain',
-        Date    => email_date,
-    );
+    my $conf = $self->confAcc->getConf();
 
-    # Send the mail
+    # Try to send test Email
     $self->logger->info("Sending test email to $dest");
-    my $success = 1;
-    my $error;
-    eval { sendmail( $message->stringify, { transport => $transport } ); };
-    if ($@) {
-        $success = 0;
-        $error   = ( $@->isa('Throwable::Error') ? $@->message : $@ );
-    }
+    eval {
+        Lemonldap::NG::Common::EmailTransport::sendTestMail( $conf, $dest );
+    };
+    my $error   = $@;
+    my $success = ( $error ? 0 : 1 );
 
-    $self->logger->debug("Mail sent, mebbe");
+    $self->logger->debug("Email was sent") unless $error;
     return $self->sendJSONresponse(
         $req,
         {
