@@ -7,9 +7,10 @@ our $VERSION = '2.0.9';
 sub new {
     my ( $class, $conf ) = @_;
     my $transport;
+    my $smtpTls = $conf->{SMTPTLS};
     return undef
       unless ( $conf->{SMTPServer} );
-    if (    $conf->{SMTPTLS}
+    if (    $smtpTls
         and $Email::Sender::Transport::SMTP::VERSION < 1.300027 )
     {
         # Try to use Email::Sender::Transport::SMTPS
@@ -28,9 +29,17 @@ sub new {
                       )
                     : ()
                 ),
-                ssl => $conf->{SMTPTLS},
+                ssl => $smtpTls,
             );
             return $transport;
+        }
+        else {
+            if ( $smtpTls and $smtpTls eq "ssl" ) {
+                $smtpTls = 1;
+            }
+            else {
+                $smtpTls = 0;
+            }
         }
     }
     $transport = Email::Sender::Transport::SMTP->new(
@@ -44,7 +53,7 @@ sub new {
               )
             : ()
         ),
-        ( $conf->{SMTPTLS} ? ( ssl => $conf->{SMTPTLS} ) : () ),
+        ( $smtpTls ? ( ssl => $smtpTls ) : () ),
         (
             $conf->{SMTPTLSOpts} ? ( ssl_options => $conf->{SMTPTLSOpts} )
             : ()
