@@ -29,12 +29,12 @@ has ott => (
         return $ott;
     }
 );
-has idRule                     => ( is => 'rw', default => sub { 1 } );
+has unrestrictedUsersRule      => ( is => 'rw', default => sub { 0 } );
 has displayEmptyValuesRule     => ( is => 'rw', default => sub { 0 } );
 has displayEmptyHeadersRule    => ( is => 'rw', default => sub { 0 } );
 has displayPersistentInfoRule  => ( is => 'rw', default => sub { 0 } );
 has displayComputedSessionRule => ( is => 'rw', default => sub { 0 } );
-has unrestrictedUsersRule      => ( is => 'rw', default => sub { 0 } );
+has idRule                     => ( is => 'rw', default => sub { 1 } );
 has sorted                     => ( is => 'rw', default => sub { 0 } );
 has merged                     => ( is => 'rw', default => '' );
 
@@ -119,27 +119,10 @@ sub display {
     $attrs = $self->_removePersistentAttributes($attrs)
       unless $self->displayPersistentInfoRule->( $req, $req->userData );
 
-    # Create an array of hashes for template loop
-    $self->logger->debug("Delete hidden or empty attributes");
-    if ( $self->displayEmptyValuesRule->( $req, $req->userData ) ) {
-        foreach my $k ( sort keys %$attrs ) {
-
-            # Ignore hidden attributes
-            push @$array_attrs, { key => $k, value => $attrs->{$k} }
-              unless ( $self->hAttr =~ /\b$k\b/ );
-        }
-    }
-    else {
-        foreach my $k ( sort keys %$attrs ) {
-
-            # Ignore hidden attributes and empty values
-            push @$array_attrs, { key => $k, value => $attrs->{$k} }
-              unless ( $self->hAttr =~ /\b$k\b/ or !$attrs->{$k} );
-        }
-    }
-
+    # Create an array of hashes and dispatch attributes for template loop
     # ARRAY_REF = [ A_REF GROUPS, A_REF MACROS, A_REF OTHERS ]
-    $array_attrs = $self->_splitAttributes($array_attrs);
+    $array_attrs = $self->_dispatchAttributes(
+        $self->_createArray( $req, $req->userData, $attrs ) );
 
     # Display form
     my $params = {
@@ -159,7 +142,7 @@ sub display {
             : ''
         )
     };
-    return $self->sendJSONresponse( $req, $params ) if ( $req->wantJSON );
+    return $self->sendJSONresponse( $req, $params ) if $req->wantJSON;
 
     # Display form
     return $self->p->sendHtml( $req, 'checkuser', params => $params );
@@ -205,7 +188,7 @@ sub check {
     }
 
     ## Check user session datas
-    # Use submitted attribute if exists
+    # Use submitted attributes if exists
     my $url  = $req->param('url')  || '';
     my $user = $req->param('user') || '';
 
@@ -332,27 +315,10 @@ sub check {
             }
         }
 
-        # Create an array of hashes for template loop
-        $self->logger->debug("Delete hidden or empty attributes");
-        if ( $self->displayEmptyValuesRule->( $req, $savedUserData ) ) {
-            foreach my $k ( sort keys %$attrs ) {
-
-                # Ignore hidden attributes
-                push @$array_attrs, { key => $k, value => $attrs->{$k} }
-                  unless ( $self->hAttr =~ /\b$k\b/ );
-            }
-        }
-        else {
-            foreach my $k ( sort keys %$attrs ) {
-
-                # Ignore hidden attributes and empty values
-                push @$array_attrs, { key => $k, value => $attrs->{$k} }
-                  unless ( $self->hAttr =~ /\b$k\b/ or !$attrs->{$k} );
-            }
-        }
-
+        # Create an array of hashes and dispatch attributes for template loop
         # ARRAY_REF = [ A_REF GROUPS, A_REF MACROS, A_REF OTHERS ]
-        $array_attrs = $self->_splitAttributes($array_attrs);
+        $array_attrs = $self->_dispatchAttributes(
+            $self->_createArray( $req, $savedUserData, $attrs ) );
     }
 
     # Check if user is allowed to access submitted URL and compute headers
@@ -409,7 +375,7 @@ sub check {
             : ''
         )
     };
-    return $self->p->sendJSONresponse( $req, $params ) if ( $req->wantJSON );
+    return $self->p->sendJSONresponse( $req, $params ) if $req->wantJSON;
 
     # Display form
     return $self->p->sendHtml( $req, 'checkuser', params => $params );
@@ -417,10 +383,10 @@ sub check {
 
 sub _urlFormat {
     my ( $self, $url ) = @_;
-
     $url = 'http://' . $url unless ( $url =~ m#^https?://[^/]*.*#i );
     my ( $proto, $vhost, $appuri ) = $url =~ m#^(https?://)([^/]*)(.*)#i;
     my ($port) = $vhost =~ m#^.+(:\d+)$#;
+
     $port ||= '';
     $vhost =~ s/:\d+$//;
     $vhost .= $self->conf->{domain} unless ( $vhost =~ /\./ );
@@ -515,10 +481,37 @@ sub _headers {
     return \@headers;
 }
 
-sub _splitAttributes {
+sub _createArray {
+    my ( $self, $req, $userData, $attrs ) = @_;
+    my $array_attrs = [];
+
+    if ( $self->displayEmptyValuesRule->( $req, $userData ) ) {
+        $self->logger->debug("Delete hidden attributes");
+        foreach my $k ( sort keys %$attrs ) {
+
+            # Ignore hidden attributes
+            push @$array_attrs, { key => $k, value => $attrs->{$k} }
+              unless ( $self->hAttr =~ /\b$k\b/ );
+        }
+    }
+    else {
+        $self->logger->debug("Delete hidden and empty attributes");
+        foreach my $k ( sort keys %$attrs ) {
+
+            # Ignore hidden attributes and empty values
+            push @$array_attrs, { key => $k, value => $attrs->{$k} }
+              unless ( $self->hAttr =~ /\b$k\b/ or !$attrs->{$k} );
+        }
+    }
+
+    return $array_attrs;
+}
+
+sub _dispatchAttributes {
     my ( $self, $attrs ) = @_;
     my ( $grps, $mcrs, $others ) = ( [], [], [] );
     my $macros = $self->{conf}->{macros};
+
     $self->logger->debug("Dispatching attributes...");
     while (@$attrs) {
         my $element = shift @$attrs;
@@ -564,6 +557,7 @@ sub _splitAttributes {
         }
         @$others = ( @$spoofedAttrs, @$realAttrs );
     }
+
     return [ $grps, $mcrs, $others ];
 }
 
