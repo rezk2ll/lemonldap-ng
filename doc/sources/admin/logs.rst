@@ -72,6 +72,12 @@ Failed authentication:
    [warn] foo.bar was not found in LDAP directory (81.20.13.21)
    [warn] Bad password for clement.oudot (81.20.13.21)
 
+Failed authentication with Combination module:
+
+::
+
+   [warn] All schemes failed for user dwho (81.20.13.21)
+
 Logout:
 
 ::
