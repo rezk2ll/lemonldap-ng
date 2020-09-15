@@ -10,7 +10,7 @@ BEGIN {
 my $res;
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                        => 'debug',
+            logLevel                        => 'error',
             authentication                  => 'Demo',
             userDB                          => 'Same',
             loginHistoryEnabled             => 1,
@@ -107,7 +107,8 @@ ok( $res->{MSG} eq 'checkUserComputedSession', 'Computed session' )
   or print STDERR Dumper($res);
 ok( scalar @{ $res->{HEADERS} } == 4, 'Four headers found' )
   or print STDERR Dumper($res);
-my @emptyValue = map { $_->{key} eq 'emptyHeader' ? $_ : () } @{ $res->{HEADERS} };
+my @emptyValue =
+  map { $_->{key} eq 'emptyHeader' ? $_ : () } @{ $res->{HEADERS} };
 ok( scalar @emptyValue == 1, 'Empty header found' )
   or print STDERR Dumper($res);
 @emptyValue = map { $_->{key} eq 'emptyMacro' ? $_ : () } @{ $res->{MACROS} };
