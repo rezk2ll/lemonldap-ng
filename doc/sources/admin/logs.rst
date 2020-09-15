@@ -61,16 +61,16 @@ Authentication:
 
 ::
 
-   [notice] Session granted for clement.oudot by LDAP (81.20.13.21)
-   [notice] User clement.oudot.com successfully authenticated at level 2
-   [notice] clement.oudot connected
+   [notice] Session granted for dwho by LDAP (81.20.13.21)
+   [notice] User dwho.com successfully authenticated at level 2
+   [notice] dwho connected
 
 Failed authentication:
 
 ::
 
    [warn] foo.bar was not found in LDAP directory (81.20.13.21)
-   [warn] Bad password for clement.oudot (81.20.13.21)
+   [warn] Bad password for dwho (81.20.13.21)
 
 Failed authentication with Combination module:
 
@@ -82,37 +82,37 @@ Logout:
 
 ::
 
-   [notice] User clement.oudot has been disconnected from LDAP (81.20.13.21)
+   [notice] User dwho has been disconnected from LDAP (81.20.13.21)
 
 Access to a CAS application non registered in configuration (when CAS server is open):
 
 ::
 
-   [notice] User clement.oudot is redirected to https://cas.service.url
+   [notice] User dwho is redirected to https://cas.service.url
 
 Access to a CAS application whose configuration key is ``app-example``:
 
 ::
 
-   [notice] User clement.oudot is authorized to access to app-example
+   [notice] User dwho is authorized to access to app-example
 
 Access to an SAML SP whose configuration key is ``sp-example``:
 
 ::
 
-   [notice] User clement.oudot is authorized to access to sp-example
+   [notice] User dwho is authorized to access to sp-example
 
 Access to an OIDC RP whose configuration key is ``rp-example``:
 
 ::
 
-   [notice] User clement.oudot is authorized to access to rp-example
+   [notice] User dwho is authorized to access to rp-example
 
 Access to a Get application whose vhost configuration key is ``host.example.com``:
 
 ::
 
-   [notice] User clement.oudot is authorized to access to host.example.com
+   [notice] User dwho is authorized to access to host.example.com
 
 
 Default loggers
