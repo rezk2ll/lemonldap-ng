@@ -189,7 +189,8 @@ sub send_mail {
             ( $self->transport ? { transport => $self->transport } : () ) );
     };
     if ($@) {
-        $self->logger->error("Send message failed: $@");
+        $self->logger->error( "Send message failed: "
+              . ( $@->isa('Throwable::Error') ? $@->message : $@ ) );
         return 0;
     }
 
