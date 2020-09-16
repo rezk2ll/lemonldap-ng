@@ -18,7 +18,7 @@ attribute you see there can be used in a rule!
    $uid eq "dwho"
    $uidNumber == 1000
    $cn eq "Doctor Who"
-   $email eq "dwho@tardis.info"
+   $email eq "dwho@badwolf.org"
    etc.
 
 
