@@ -18,7 +18,6 @@ extends qw(
 );
 
 # INITIALIZATION
-
 has ott => (
     is      => 'rw',
     lazy    => 1,
@@ -107,7 +106,7 @@ sub init {
     return 1;
 }
 
-# RUNNING METHOD
+# RUNNING METHODS
 sub display {
     my ( $self,  $req )         = @_;
     my ( $attrs, $array_attrs ) = ( $req->userData, [] );
@@ -122,7 +121,7 @@ sub display {
     # Create an array of hashes and dispatch attributes for template loop
     # ARRAY_REF = [ A_REF GROUPS, A_REF MACROS, A_REF OTHERS ]
     $array_attrs = $self->_dispatchAttributes(
-        $self->_createArray( $req, $req->userData, $attrs ) );
+        $self->_createArray( $req, $attrs, $req->userData ) );
 
     # Display form
     my $params = {
@@ -318,7 +317,7 @@ sub check {
         # Create an array of hashes and dispatch attributes for template loop
         # ARRAY_REF = [ A_REF GROUPS, A_REF MACROS, A_REF OTHERS ]
         $array_attrs = $self->_dispatchAttributes(
-            $self->_createArray( $req, $savedUserData, $attrs ) );
+            $self->_createArray( $req, $attrs, $savedUserData ) );
     }
 
     # Check if user is allowed to access submitted URL and compute headers
@@ -482,7 +481,7 @@ sub _headers {
 }
 
 sub _createArray {
-    my ( $self, $req, $userData, $attrs ) = @_;
+    my ( $self, $req, $attrs, $userData ) = @_;
     my $array_attrs = [];
 
     if ( $self->displayEmptyValuesRule->( $req, $userData ) ) {
