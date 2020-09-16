@@ -14,8 +14,8 @@ my $client = LLNG::Manager::Test->new( {
             authentication                  => 'Demo',
             userDB                          => 'Same',
             loginHistoryEnabled             => 1,
-            brutForceProtection             => 0,
             checkUser                       => 1,
+            checkUserHiddenAttributes       => 'hGroups _session_id',
             checkUserDisplayPersistentInfo  => '$uid eq "dwho"',
             checkUserDisplayEmptyValues     => '$uid eq "dwho"',
             checkUserDisplayEmptyHeaders    => '$uid eq "dwho"',
@@ -40,6 +40,21 @@ ok(
 );
 count(1);
 my $id_dwho = expectCookie($res);
+expectRedirection( $res, 'http://auth.example.com/' );
+$client->logout($id_dwho);
+
+## Try to authenticate with 'dwho'
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new('user=dwho&password=dwho'),
+        length => 23,
+        accept => 'text/html',
+    ),
+    'Auth query with "dwho"'
+);
+count(1);
+$id_dwho = expectCookie($res);
 expectRedirection( $res, 'http://auth.example.com/' );
 
 ## Try to authenticate with 'msmith'
@@ -89,7 +104,11 @@ ok( $res = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
 ok( $res->{MSG} eq 'checkUser', 'checkUser found' )
   or print STDERR Dumper($res);
-count(3);
+my @persistentAttr =
+  map { $_->{key} eq '_loginHistory' ? $_ : () } @{ $res->{ATTRIBUTES} };
+ok( scalar @persistentAttr == 1, 'Persistent attribute found' )
+  or print STDERR Dumper($res);
+count(4);
 
 $query =~ s/user=dwho/user=rtyler/;
 ok(
@@ -176,7 +195,11 @@ ok( scalar @emptyValue == 0, 'No empty header found' )
 @emptyValue = map { $_->{key} eq 'emptyMacro' ? $_ : () } @{ $res->{MACROS} };
 ok( scalar @emptyValue == 0, 'No empty macro found' )
   or print STDERR Dumper($res);
-count(5);
+@persistentAttr =
+  map { $_->{key} eq '_loginHistory' ? $_ : () } @{ $res->{ATTRIBUTES} };
+ok( scalar @persistentAttr == 0, 'No persistent attribute found' )
+  or print STDERR Dumper($res);
+count(6);
 
 $client->logout($id_dwho);
 $client->logout($id_msmith);
