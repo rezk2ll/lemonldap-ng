@@ -27,7 +27,7 @@ if ( $action =~ /^(?:[gs]et|del|(?:add|del)Key|save|restore|rollback)$/ ) {
     die "Manager libraries not available, aborting ($@)" if ($@);
     Lemonldap::NG::Manager::Cli->run(@ARGV);
 }
-elsif ( $action =~ /^(?:info|update-cache)$/ ) {
+elsif ( $action =~ /^(?:info|update-cache|test-email)$/ ) {
     eval { require Lemonldap::NG::Common::Cli; };
     die "Lemonldap::NG common libraries not available, aborting ($@)" if ($@);
     Lemonldap::NG::Common::Cli->run(@ARGV);
@@ -43,6 +43,7 @@ Available actions:
  - help                          : print this
  - info                          : get currentconfiguration info
  - update-cache                  : force configuration cache to be updated
+ - test-email <destination>       : send a test email
  - get    <keys>                 : get values of parameters
  - set    <key> <value>          : set parameter(s) value(s)
  - del    <keys>                 : delete parameters
@@ -82,6 +83,10 @@ Get information about current configuration
 Update local configuration cache
 
   $ lemonldap-ng-cli update-cache
+
+Send a test email
+
+  $ lemonldap-ng-cli test-email dwho@badwolf.org
 
 Save configuration
 
@@ -127,6 +132,8 @@ and L<Lemonldap::NG::Common::Cli>
 =item info
 
 =item update-cache
+
+=item test-email
 
 =item save
 
