@@ -1,4 +1,3 @@
-.bowerrc
 bower.json
 Changes
 eg/manager.cgi
@@ -35,6 +34,7 @@ lib/Lemonldap/NG/Manager/Sessions.pm
 lib/Lemonldap/NG/Manager/Viewer.pm
 Makefile.PL
 MANIFEST			This list of files
+MANIFEST.SKIP
 META.json
 META.yml
 README

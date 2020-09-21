@@ -1,4 +1,3 @@
-.bowerrc
 bower.json
 Changes
 eg/index.cgi
@@ -152,6 +151,7 @@ lib/Lemonldap/NG/Portal/UserDB/Slave.pm
 lib/Lemonldap/NG/Portal/UserDB/WebID.pm
 Makefile.PL
 MANIFEST			This list of files
+MANIFEST.SKIP
 META.json
 META.yml
 README
@@ -220,7 +220,6 @@ site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.svg
 site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.ttf
 site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.woff
 site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.woff2
-site/htdocs/static/bwr/font-awesome/fonts/FontAwesome.otf
 site/htdocs/static/bwr/jquery-ui/jquery-ui.js
 site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js
 site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js.map

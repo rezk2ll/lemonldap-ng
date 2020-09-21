@@ -69,6 +69,7 @@ lib/Lemonldap/NG/Common/UserAgent.pm
 lib/Lemonldap/NG/Common/Util.pm
 Makefile.PL
 MANIFEST			This list of files
+MANIFEST.SKIP
 META.json
 META.yml
 README
