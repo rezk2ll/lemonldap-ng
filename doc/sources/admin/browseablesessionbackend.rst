@@ -23,16 +23,16 @@ and password reset self-service, you also need to index some fields.
 The following table list fields to index depending on the feature you
 want to increase performance:
 
-====================================== ===================================================================
-Feature                                Fields to index
-====================================== ===================================================================
-Database cleanup *(cron)*              \_session_kind \_utime
-Session explorer                       \_session_kind ipAddr \_httpSessionType *WHATTOTRACE*
-Session explorer (persistent sessions) \_session_kind \_session_uid ipAddr \_httpSessionType *WHATTOTRACE*
-Session restrictions                   \_session_kind ipAddr *WHATTOTRACE*
-Password reset by email                user
-SAML Session                           \_saml_id
-====================================== ===================================================================
+====================================== ============= ===================================================================
+Feature                                Session Type  Fields to index
+====================================== ============= ===================================================================
+Database cleanup *(cron)*              All           \_session_kind \_utime
+Session explorer                       Global        \_session_kind ipAddr \_httpSessionType *WHATTOTRACE*
+Session explorer                       Persistent    \_session_kind \_session_uid ipAddr \_httpSessionType *WHATTOTRACE*
+Session restrictions                   Global        \_session_kind ipAddr *WHATTOTRACE*
+Password reset by email                Global        user
+SAML Session                           SAML          \_saml_id ProxyID \_nameID \_assert_id \_art_id
+====================================== ============= ===================================================================
 
 See Apache::Session::Browseable man page to see how use indexes.
 
