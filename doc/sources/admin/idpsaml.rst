@@ -154,6 +154,7 @@ Signature
 These options override service signature options (see
 :ref:`SAML service configuration<samlservice-general-options>`).
 
+-  **Signature method**: signature method for messages sent to this service
 -  **Sign SSO message**: sign SSO message
 -  **Check SSO message signature**: check SSO message signature
 -  **Sign SLO message**: sign SLO message

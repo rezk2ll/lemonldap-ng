@@ -142,12 +142,16 @@ To define keys, you can:
    responses.
 -  **Signature method**: set the signature algorithm
 
+.. versionchanged:: 2.0.10
+
+   The signature method can now be overriden for a SP or IDP. This will only work
+   if you are using a certificate for signature instead of a public key.
+
 
 .. attention::
 
-    Default value is RSA SHA1 for compatibility purpose but
-    we recommend to use RSA SHA256. This requires to test all partners to
-    check their compatibility.
+   If you are running a version under 2.0.10, the choice of a signature
+   algorithm will affect all SP and IDP.
 
 Converting a RSA public key to a certificate
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
