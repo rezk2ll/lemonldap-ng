@@ -36,6 +36,7 @@ requires:
 resources:
   MailingList: mailto:lemonldap-ng-dev@ow2.org
   X_twitter: https://twitter.com/lemonldapng
+  bugtracker: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues
   homepage: http://lemonldap-ng.org/
   license: http://opensource.org/licenses/GPL-2.0
 version: v2.0.9
