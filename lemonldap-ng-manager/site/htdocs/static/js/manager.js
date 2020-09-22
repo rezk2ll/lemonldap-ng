@@ -841,6 +841,24 @@ This file contains:
           return console.log('Error sending test email');
         });
       };
+      $scope.newCertificate = function() {
+        return $scope.showModal('password.html').then(function() {
+          var currentNode, password;
+          $scope.waiting = true;
+          currentNode = $scope.currentNode;
+          password = $scope.result;
+          return $http.post(window.confPrefix + "/newCertificate", {
+            "password": password
+          }).then(function(response) {
+            currentNode.data[0].data = response.data["private"];
+            currentNode.data[1].data = password;
+            currentNode.data[2].data = response.data["public"];
+            return $scope.waiting = false;
+          }, readError);
+        }, function() {
+          return console.log('New key cancelled');
+        });
+      };
       $scope.newRSAKey = function() {
         return $scope.showModal('password.html').then(function() {
           var currentNode, password;

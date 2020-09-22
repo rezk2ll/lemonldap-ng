@@ -154,7 +154,7 @@ sub types {
             test => sub {
                 return (
                     $_[0] =~
-/^(?:(?:\-+\s*BEGIN\s+(?:RSA\s+)?PRIVATE\s+KEY\s*\-+\r?\n)?(?:Proc-Type:.*\r?\nDEK-Info:.*\r?\n[\r\n]*)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:RSA\s+)?PRIVATE\s+KEY\s*\-+)?[\r\n]*)?$/s
+/^(?:(?:\-+\s*BEGIN\s+(?:(?:RSA|ENCRYPTED)\s+)?PRIVATE\s+KEY\s*\-+\r?\n)?(?:Proc-Type:.*\r?\nDEK-Info:.*\r?\n[\r\n]*)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:(?:RSA|ENCRYPTED)\s+)?PRIVATE\s+KEY\s*\-+)?[\r\n]*)?$/s
                     ? (1)
                     : ( 1, '__badPemEncoding__' )
                 );

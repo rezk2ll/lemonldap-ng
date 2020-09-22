@@ -691,6 +691,19 @@ llapp.controller 'TreeCtrl', [
 				console.log('Error sending test email')
 
 		# RSA keys generation
+		$scope.newCertificate = ->
+			$scope.showModal('password.html').then ->
+				$scope.waiting = true
+				currentNode = $scope.currentNode
+				password = $scope.result
+				$http.post("#{window.confPrefix}/newCertificate", {"password": password}).then (response) ->
+					currentNode.data[0].data = response.data.private
+					currentNode.data[1].data = password
+					currentNode.data[2].data = response.data.public
+					$scope.waiting = false
+				, readError
+			, ->
+				console.log('New key cancelled')
 		$scope.newRSAKey = ->
 			$scope.showModal('password.html').then ->
 				$scope.waiting = true

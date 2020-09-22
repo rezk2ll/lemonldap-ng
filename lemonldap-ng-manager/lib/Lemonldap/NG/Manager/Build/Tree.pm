@@ -1065,7 +1065,7 @@ sub tree {
                     help  => 'samlservice.html#security-parameters',
                     nodes => [ {
                             title => 'samlServiceSecuritySig',
-                            form  => 'RSAKey',
+                            form  => 'RSACertKey',
                             group => [
                                 'samlServicePrivateKeySig',
                                 'samlServicePrivateKeySigPwd',
@@ -1074,7 +1074,7 @@ sub tree {
                         },
                         {
                             title => 'samlServiceSecurityEnc',
-                            form  => 'RSAKey',
+                            form  => 'RSACertKey',
                             group => [
                                 'samlServicePrivateKeyEnc',
                                 'samlServicePrivateKeyEncPwd',

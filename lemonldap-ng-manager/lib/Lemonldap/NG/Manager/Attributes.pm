@@ -171,7 +171,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'RSAPrivateKey' => {
             'test' => sub {
                 return $_[0] =~
-m[^(?:(?:\-+\s*BEGIN\s+(?:RSA\s+)?PRIVATE\s+KEY\s*\-+\r?\n)?(?:Proc-Type:.*\r?\nDEK-Info:.*\r?\n[\r\n]*)?[a-zA-Z0-9/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:RSA\s+)?PRIVATE\s+KEY\s*\-+)?[\r\n]*)?$]s
+m[^(?:(?:\-+\s*BEGIN\s+(?:(?:RSA|ENCRYPTED)\s+)?PRIVATE\s+KEY\s*\-+\r?\n)?(?:Proc-Type:.*\r?\nDEK-Info:.*\r?\n[\r\n]*)?[a-zA-Z0-9/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:(?:RSA|ENCRYPTED)\s+)?PRIVATE\s+KEY\s*\-+)?[\r\n]*)?$]s
                   ? 1
                   : ( 1, '__badPemEncoding__' );
             }
