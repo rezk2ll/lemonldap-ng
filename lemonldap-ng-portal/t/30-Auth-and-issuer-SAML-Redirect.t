@@ -204,7 +204,7 @@ qr@SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"
     $uri->query($query);
     is(
         $uri->query_param("SigAlg"),
-        'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256',
+        'http://www.w3.org/2001/04/xmldsig-more#rsa-sha384',
         'SHA256 used to sign Logout Request'
     );
 
@@ -339,7 +339,7 @@ sub sp {
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
                         samlIDPMetaDataOptionsForceUTF8                => 1,
-                        samlIDPMetaDataOptionsSignatureMethod => "RSA_SHA256",
+                        samlIDPMetaDataOptionsSignatureMethod => "RSA_SHA384",
                     }
                 },
                 samlIDPMetaDataExportedAttributes => {
