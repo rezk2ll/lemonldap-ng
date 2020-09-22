@@ -3427,7 +3427,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'RSAPublicKeyOrCertificate'
         },
         'samlServiceSignatureMethod' => {
-            'default' => 'RSA_SHA1',
+            'default' => 'RSA_SHA256',
             'select'  => [ {
                     'k' => 'RSA_SHA1',
                     'v' => 'RSA SHA1'

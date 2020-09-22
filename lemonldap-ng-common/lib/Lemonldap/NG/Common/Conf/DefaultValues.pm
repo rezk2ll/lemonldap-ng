@@ -310,7 +310,7 @@ sub defaultValues {
         'samlOrganizationURL'        => 'http://www.example.com',
         'samlOverrideIDPEntityID'    => '',
         'samlRelayStateTimeout'      => 600,
-        'samlServiceSignatureMethod' => 'RSA_SHA1',
+        'samlServiceSignatureMethod' => 'RSA_SHA256',
         'samlSPSSODescriptorArtifactResolutionServiceArtifact' =>
 '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact',
         'samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact' =>
