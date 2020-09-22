@@ -15,6 +15,7 @@ use Lemonldap::NG::Common::EmailTransport;
 use Crypt::OpenSSL::RSA;
 use Convert::PEM;
 use URI::URL;
+use Net::SSLeay;
 
 use feature 'state';
 
@@ -59,10 +60,11 @@ sub init {
       # New key and conf save
       ->addRoute(
         confs => {
-            newRSAKey    => 'newRSAKey',
-            sendTestMail => 'sendTestMail',
-            raw          => 'newRawConf',
-            '*'          => 'newConf'
+            newRSAKey      => 'newRSAKey',
+            newCertificate => 'newCertificate',
+            sendTestMail   => 'sendTestMail',
+            raw            => 'newRawConf',
+            '*'            => 'newConf'
         },
         ['POST']
       )
@@ -74,6 +76,31 @@ sub init {
       # Url loader
       ->addRoute( 'prx', undef, ['POST'] );
     return 1;
+}
+
+# 35 - New Certificate on demand
+#      --------------------------
+
+##@method public PSGI-JSON-response newRSAKey($req)
+# Return a hashref containing private and public keys
+# The posted data must contain a JSON object containing
+# {"password":"newpassword"}
+#
+#@param $req Lemonldap::NG::Common::PSGI::Request object
+#@return PSGI JSON response
+sub newCertificate {
+    my ( $self, $req, @others ) = @_;
+    return $self->sendError( $req, 'There is no subkey for "newCertificate"',
+        400 )
+      if (@others);
+    my $query = $req->jsonBodyToObj;
+
+    my ( $private, $cert ) = $self->_generateX509( $query->{password} );
+    my $keys = {
+        'private' => $private,
+        'public'  => $cert,
+    };
+    return $self->sendJSONresponse( $req, $keys );
 }
 
 # 35 - New RSA key pair on demand
@@ -90,8 +117,9 @@ sub newRSAKey {
     my ( $self, $req, @others ) = @_;
     return $self->sendError( $req, 'There is no subkey for "newRSAKey"', 400 )
       if (@others);
+    my $rsa = Crypt::OpenSSL::RSA->generate_key(2048);
+
     my $query = $req->jsonBodyToObj;
-    my $rsa   = Crypt::OpenSSL::RSA->generate_key(2048);
     my $keys  = {
         'private' => $rsa->get_private_key_string(),
         'public'  => $rsa->get_public_key_x509_string(),
@@ -119,6 +147,81 @@ sub newRSAKey {
         );
     }
     return $self->sendJSONresponse( $req, $keys );
+}
+
+# This function does the dirty X509 work,
+# mostly copied from IO::Socket::SSL::Utils
+# and adapter to work on old platforms (CentOS7)
+
+sub _generateX509 {
+    my ( $self, $password ) = @_;
+    Net::SSLeay::SSLeay_add_ssl_algorithms();
+    my $conf = $self->confAcc->getConf();
+
+    # Generate 2048 bits RSA key
+    my $key = Net::SSLeay::EVP_PKEY_new();
+    Net::SSLeay::EVP_PKEY_assign_RSA( $key,
+        Net::SSLeay::RSA_generate_key( 2048, 0x10001 ) );
+
+    my $cert = Net::SSLeay::X509_new();
+
+    # Serial
+    Net::SSLeay::ASN1_INTEGER_set(
+        Net::SSLeay::X509_get_serialNumber($cert),
+        rand( 2**32 ),
+    );
+
+    # Version
+    Net::SSLeay::X509_set_version( $cert, 2 );
+
+    # Make it last 20 years
+    Net::SSLeay::ASN1_TIME_set( Net::SSLeay::X509_get_notBefore($cert),
+        time() );
+    Net::SSLeay::ASN1_TIME_set( Net::SSLeay::X509_get_notAfter($cert),
+        time() + 20 * 365 * 86400 );
+
+    # set subject
+    my $portal_uri  = new URI::URL( $conf->{portal} || "http://localhost" );
+    my $portal_host = $portal_uri->host;
+    my $subj_e      = Net::SSLeay::X509_get_subject_name($cert);
+    my $subj        = { commonName => $portal_host, };
+
+    while ( my ( $k, $v ) = each %$subj ) {
+
+        # Not everything we get is nice - try with MBSTRING_UTF8 first and if it
+        # fails try V_ASN1_T61STRING and finally V_ASN1_OCTET_STRING
+        Net::SSLeay::X509_NAME_add_entry_by_txt( $subj_e, $k, 0x1000, $v, -1,
+            0 )
+          or
+          Net::SSLeay::X509_NAME_add_entry_by_txt( $subj_e, $k, 20, $v, -1, 0 )
+          or
+          Net::SSLeay::X509_NAME_add_entry_by_txt( $subj_e, $k, 4, $v, -1, 0 )
+          or croak( "failed to add entry for $k - "
+              . Net::SSLeay::ERR_error_string( Net::SSLeay::ERR_get_error() ) );
+    }
+
+    # Set to self-sign
+    Net::SSLeay::X509_set_pubkey( $cert, $key );
+    Net::SSLeay::X509_set_issuer_name( $cert,
+        Net::SSLeay::X509_get_subject_name($cert) );
+
+    # Sign with default alg
+    Net::SSLeay::X509_sign( $cert, $key, 0 );
+
+    my $strCert = Net::SSLeay::PEM_get_string_X509($cert);
+    my $strPrivate;
+    if ($password) {
+        $strPrivate = Net::SSLeay::PEM_get_string_PrivateKey( $key, $password );
+    }
+    else {
+        $strPrivate = Net::SSLeay::PEM_get_string_PrivateKey($key);
+    }
+
+    # Free OpenSSL objects
+    Net::SSLeay::X509_free($cert);
+    Net::SSLeay::EVP_PKEY_free($key);
+
+    return ( $strPrivate, $strCert );
 }
 
 #      Sending a test Email
