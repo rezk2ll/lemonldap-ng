@@ -3204,12 +3204,20 @@ sub getSignatureMethod {
       eval 'Lasso::Constants::SIGNATURE_METHOD_RSA_SHA1';
     my $signature_method_rsa_sha256 =
       eval 'Lasso::Constants::SIGNATURE_METHOD_RSA_SHA256';
+    my $signature_method_rsa_sha384 =
+      eval 'Lasso::Constants::SIGNATURE_METHOD_RSA_SHA384';
+    my $signature_method_rsa_sha512 =
+      eval 'Lasso::Constants::SIGNATURE_METHOD_RSA_SHA512';
     my $signature_method_none = eval 'Lasso::Constants::SIGNATURE_METHOD_NONE';
 
     return $signature_method_rsa_sha1
       if ( $signature_method =~ /^RSA_SHA1$/i );
     return $signature_method_rsa_sha256
       if ( $signature_method =~ /^RSA_SHA256$/i );
+    return $signature_method_rsa_sha384
+      if ( $signature_method =~ /^RSA_SHA384$/i );
+    return $signature_method_rsa_sha512
+      if ( $signature_method =~ /^RSA_SHA512$/i );
     return $signature_method_none;
 }
 

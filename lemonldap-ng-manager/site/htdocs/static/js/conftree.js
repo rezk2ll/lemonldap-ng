@@ -724,6 +724,14 @@ function templates(tpl,key) {
                {
                   "k" : "RSA_SHA256",
                   "v" : "RSA SHA256"
+               },
+               {
+                  "k" : "RSA_SHA384",
+                  "v" : "RSA SHA384"
+               },
+               {
+                  "k" : "RSA_SHA512",
+                  "v" : "RSA SHA512"
                }
             ],
             "title" : "samlIDPMetaDataOptionsSignatureMethod",
@@ -1139,6 +1147,14 @@ function templates(tpl,key) {
                      {
                         "k" : "RSA_SHA256",
                         "v" : "RSA SHA256"
+                     },
+                     {
+                        "k" : "RSA_SHA384",
+                        "v" : "RSA SHA384"
+                     },
+                     {
+                        "k" : "RSA_SHA512",
+                        "v" : "RSA SHA512"
                      }
                   ],
                   "title" : "samlSPMetaDataOptionsSignatureMethod",
