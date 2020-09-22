@@ -121,8 +121,12 @@ encryption.
 To define keys, you can:
 
 -  import your own private and public keys (``Replace by file`` input)
--  generate new public and private keys (``New keys`` button)
+-  generate new public and private keys (``New certificate`` button)
 
+.. versionchanged:: 2.0.10
+
+   A X.509 certificate is now generated instead of a plain public key. It has
+   20 years of validity, and is self signed with the 2048bit RSA key.
 
 .. tip::
 
@@ -131,22 +135,6 @@ To define keys, you can:
     in the ``Private key password``.
 
 |image1|
-
-You can import a certificate containing the public key instead the raw
-public key. However, certificate will not be really validated by other
-SAML components (expiration date, common name, etc.), but will just be a
-public key wrapper.
-
-
-.. tip::
-
-    You can easily generate a certificate to replace your public
-    key by saving the private key in a file, and use ``openssl`` commands to
-    issue a self-signed certificate:
-
-    ::
-
-       $ openssl req -new -key private.key -out cert.pem -x509 -days 3650
 
 
 
@@ -160,6 +148,19 @@ public key wrapper.
     Default value is RSA SHA1 for compatibility purpose but
     we recommend to use RSA SHA256. This requires to test all partners to
     check their compatibility.
+
+Converting a RSA public key to a certificate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If your application complains about the lack of certificate in SAML Metadatas, and you generated a public RSA key instead of a certificate in a previous version of LemonLDAP::NG, you can convert the public key into a certificate without changing the private key.
+
+Save the private key in a file, and use the ``openssl`` commands to
+issue a self-signed certificate:
+
+    ::
+
+       $ openssl req -new -key private.key -out cert.pem -x509 -days 3650
+
 
 NameID formats
 ~~~~~~~~~~~~~~
