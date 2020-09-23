@@ -6,7 +6,6 @@ Sessions database
 
    changesessionbackend
    filesessionbackend
-   restsessionbackend
    sqlsessionbackend
    ldapsessionbackend
    nosqlsessionbackend
