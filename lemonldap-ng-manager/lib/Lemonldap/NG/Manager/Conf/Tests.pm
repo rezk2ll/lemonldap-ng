@@ -5,7 +5,7 @@ use Lemonldap::NG::Common::Regexp;
 use Lemonldap::NG::Handler::Main;
 use Lemonldap::NG::Common::Util qw(getSameSite);
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
@@ -811,17 +811,25 @@ sub tests {
         # Cookie SameSite=None requires Secure flag
         # Same with SameSite=(auto) and SAML issuer in use
         SameSiteNoneWithSecure => sub {
-            return ( 1, 'SameSite value = None requires the secured flag' )
+            return ( -1, 'SameSite value = None requires the secured flag' )
               if ( getSameSite($conf) eq 'None' and !$conf->{securedCookie} );
             return 1;
         },
 
         # Secure cookies require HTTPS
         SecureCookiesRequireHttps => sub {
-            return ( 1, 'Secure cookies require a HTTPS portal URL' )
+            return ( -1, 'Secure cookies require a HTTPS portal URL' )
               if (  $conf->{securedCookie} == 1
                 and $conf->{portal}
                 and $conf->{portal} !~ /^https:/ );
+            return 1;
+        },
+
+        # Password module needs a password backend
+        passwordModuleNeedsBackend => sub {
+            return ( -1, 'Password module is enabled without password backend' )
+              if (  $conf->{portalDisplayChangePassword}
+                and $conf->{passwordDB} eq 'Null' );
             return 1;
         },
     };
