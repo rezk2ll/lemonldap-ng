@@ -27,7 +27,7 @@ Red Hat/CentOS
 
 ::
 
-   yum install lemonldap-ng-fastcgi-server
+   yum install lemonldap-ng-nginx lemonldap-ng-fastcgi-server
 
 Enable and start the service :
 
@@ -40,10 +40,8 @@ Files
 -----
 
 With tarball installation, Nginx configuration files will be installed
-in ``/usr/local/lemonldap-ng/etc/``, else they are in
-``/etc/lemonldap-ng``.
-
-You have to include them in Nginx main configuration.
+in ``/usr/local/lemonldap-ng/etc/``, else they are directly in web server
+configuration.
 
 .. _debianubuntu-1:
 
@@ -62,16 +60,6 @@ Debian/Ubuntu
 
    ln -s /etc/lemonldap-ng/nginx-lua-headers.conf /etc/nginx/snippets/llng-lua-headers.conf
 
--  Link LLNG components configuration file into ``sites-available``
-   directory (should already have been done if you used packages):
-
-::
-
-   ln -s /etc/lemonldap-ng/handler-nginx.conf /etc/nginx/sites-available/
-   ln -s /etc/lemonldap-ng/manager-nginx.conf /etc/nginx/sites-available/
-   ln -s /etc/lemonldap-ng/portal-nginx.conf /etc/nginx/sites-available/
-   ln -s /etc/lemonldap-ng/test-nginx.conf /etc/nginx/sites-available/
-
 -  Enable sites:
 
 ::
@@ -80,18 +68,3 @@ Debian/Ubuntu
    ln -s /etc/nginx/sites-available/manager-nginx.conf /etc/nginx/sites-enabled/
    ln -s /etc/nginx/sites-available/portal-nginx.conf /etc/nginx/sites-enabled/
    ln -s /etc/nginx/sites-available/test-nginx.conf /etc/nginx/sites-enabled/
-
-.. _red-hatcentos-1:
-
-Red Hat/CentOS
-~~~~~~~~~~~~~~
-
-Link files directly in ``conf.d`` directory:
-
-::
-
-   ln -s /etc/lemonldap-ng/handler-nginx.conf /etc/nginx/conf.d/
-   ln -s /etc/lemonldap-ng/manager-nginx.conf /etc/nginx/conf.d/
-   ln -s /etc/lemonldap-ng/portal-nginx.conf /etc/nginx/conf.d/
-   ln -s /etc/lemonldap-ng/test-nginx.conf /etc/nginx/conf.d/
-
