@@ -261,7 +261,7 @@ Example of a protected virtual host for a local application:
 Reverse proxy
 ~~~~~~~~~~~~~
 
-\* Example of a protected reverse-proxy:
+- Example of a protected reverse-proxy:
 
 .. code-block:: nginx
 
@@ -300,7 +300,7 @@ Reverse proxy
        # PASSING HEADERS TO APPLICATION #
        ##################################
        # IF LUA IS SUPPORTED
-       #include /path/to/nginx-lua-headers.conf
+       #include /path/to/nginx-lua-headers.conf;
 
        # ELSE
        # Set manually your headers
@@ -309,8 +309,17 @@ Reverse proxy
      }
    }
 
-\* Example of a Nginx Virtual Host using uWSGI with many URIs protected
-by different types of handler :
+If /etc/nginx/proxy_params file does not exist, you can create it with this content:
+
+.. code-block:: nginx
+
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+
+- Example of a Nginx Virtual Host using uWSGI with many URIs protected
+by different types of handler:
 
 .. code-block:: nginx
 
