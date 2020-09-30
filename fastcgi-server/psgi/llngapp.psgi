@@ -1,6 +1,6 @@
 # Plack app to use with Nginx
 #
-# This app can remplace FastCGI server using Starman, Twiggy, uWSGI-Plugin-PSGI,
+# This app can replace FastCGI server using Starman, Twiggy, uWSGI-Plugin-PSGI,
 # Feersum,...
 
 my %builder = (
