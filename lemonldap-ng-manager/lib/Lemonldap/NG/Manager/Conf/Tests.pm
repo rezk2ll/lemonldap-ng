@@ -825,7 +825,7 @@ sub tests {
             return 1;
         },
 
-        # Password module needs a password backend
+        # Password module requires a password backend
         passwordModuleNeedsBackend => sub {
             return ( -1, 'Password module is enabled without password backend' )
               if (  $conf->{portalDisplayChangePassword}
