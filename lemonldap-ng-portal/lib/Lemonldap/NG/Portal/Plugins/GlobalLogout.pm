@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -177,7 +177,18 @@ sub activeSessions {
       $self->module->searchOn( $moduleOptions, $self->conf->{whatToTrace},
         $user );
 
-    $self->logger->debug("Building array ref with sessions info...");
+    $self->logger->debug('Remove corrupted sessions...');
+    my $corrupted = 0;
+    foreach ( keys %$sessions ) {
+        unless ( $sessions->{$_}->{_session_kind} eq 'SSO' ) {
+            delete $sessions->{$_};
+            $corrupted++;
+        }
+    }
+    $self->logger->info("$corrupted corrupted session(s) removed")
+      if $corrupted;
+
+    $self->logger->debug('Build an array ref with sessions info...');
     @$activeSessions =
       map {
         my $epoch;
