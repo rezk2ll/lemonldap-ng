@@ -318,8 +318,7 @@ If /etc/nginx/proxy_params file does not exist, you can create it with this cont
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
 
-- Example of a Nginx Virtual Host using uWSGI with many URIs protected
-by different types of handler:
+- Example of a Nginx Virtual Host using uWSGI with many URIs protected by different types of handler:
 
 .. code-block:: nginx
 
