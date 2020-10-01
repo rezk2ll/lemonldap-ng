@@ -6,6 +6,9 @@ Your network infrastructure might require that LemonLDAP::NG components
 
 |image0|
 
+Transmitting the correct IP address to the portal
+-------------------------------------------------
+
 In this case, LemonLDAP::NG components will store the ip address of the
 connection between the reverse proxy and the webserver in the session,
 and in logs. This prevents features such as session restrictions and
@@ -19,7 +22,7 @@ to forward the original IP address all the way to LemonLDAP::NG.
 In order to do this you have several options.
 
 HTTP Header
------------
+~~~~~~~~~~~
 
 This generic method is the most likely to work in your particular
 environment.
@@ -68,7 +71,7 @@ uncomment the relevant parts of the configuration file.
     module documentation carefully.
 
 PROXY Protocol
---------------
+~~~~~~~~~~~~~~
 
 Alternatively, if your proxy supports the PROXY protocol (Nginx,
 HAProxy, Amazon ELB), you may use it to carry over the information
@@ -86,6 +89,41 @@ Portal/Manager/Handler:
    # or
    # listen 443 ssl proxy_protocol;
 
+   set_real_ip_from  127.0.0.1;
+   real_ip_header    proxy_protocol;
+
 .. |image0| image:: /documentation/reverseproxy.png
    :class: align-center
 
+
+Fixing handler redirections
+---------------------------
+
+If your handler server runs behind a reverse proxy, it may have trouble figuring
+out the right URL to redirect you to after logging in.
+
+In this case, you can force a particular port and scheme in the Virtual Host's
+Options.
+
+But is instead you want this scheme to be auto-detected by LemonLDAP (in order to have a
+same VHost domain available over multiple schemes), you can also use the following
+declarations in the handler's virtual host to force LemonLDAP to use the correct port
+and scheme
+
+Nginx
+~~~~~
+
+::
+
+   fastcgi_param SERVER_PORT 443
+   fastcgi_param HTTPS On
+
+Apache
+~~~~~~
+
+.. versionadded: 2.0.10
+
+::
+
+   PerlSetEnv SERVER_PORT 443
+   PerlSetEnv HTTPS On
