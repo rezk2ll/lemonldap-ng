@@ -9,17 +9,15 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
 );
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.10';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 # INITIALIZATION
 
-has prefix => ( is => 'rw', default => 'yubikey' );
-
+has prefix   => ( is => 'rw', default => 'yubikey' );
 has template => ( is => 'ro', default => 'yubikey2fregister' );
-
-has logo => ( is => 'rw', default => 'yubikey.png' );
+has logo     => ( is => 'rw', default => 'yubikey.png' );
 
 sub init {
     my ($self) = @_;
@@ -120,7 +118,6 @@ sub run {
                 _yubikey => $key,
                 epoch    => $epoch
               };
-
             $self->logger->debug(
                 "Append 2F Device : { type => 'UBK', name => $UBKName }");
             $self->p->updatePersistentSession( $req,
@@ -162,7 +159,7 @@ sub run {
 
         # Read existing 2FDevices
         $self->logger->debug("Looking for 2F Devices ...");
-        my $_2fDevices;
+        my ( $_2fDevices, $UBKName );
         if ( $req->userData->{_2fDevices} ) {
             $_2fDevices = eval {
                 from_json( $req->userData->{_2fDevices},
@@ -179,11 +176,10 @@ sub run {
         }
 
         # Delete Yubikey device
-        my $UBKName;
-        foreach (@$_2fDevices) {
-            $UBKName = $_->{name} if $_->{epoch} eq $epoch;
-        }
-        @$_2fDevices = grep { $_->{epoch} ne $epoch } @$_2fDevices;
+        @$_2fDevices = map {
+            if ( $_->{epoch} eq $epoch ) { $UBKName = $_->{name}; () }
+            else                         { $_ }
+        } @$_2fDevices;
         $self->logger->debug(
 "Delete 2F Device : { type => 'UBK', epoch => $epoch, name => $UBKName }"
         );

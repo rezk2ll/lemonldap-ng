@@ -16,7 +16,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_U2FFAILED
 );
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.10';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor',
   'Lemonldap::NG::Portal::Lib::U2F';
@@ -24,9 +24,7 @@ extends 'Lemonldap::NG::Portal::Main::SecondFactor',
 # INITIALIZATION
 
 has rule => ( is => 'rw' );
-
 has prefix => ( is => 'ro', default => 'u' );
-
 has logo => ( is => 'rw', default => 'u2f.png' );
 
 sub init {
@@ -109,6 +107,7 @@ sub run {
 
 sub verify {
     my ( $self, $req, $session ) = @_;
+    my $crypter;
 
     # Check U2F signature
     if (    my $resp = $req->param('signature')
@@ -136,10 +135,9 @@ sub verify {
             $req->error(PE_ERROR);
             return $self->fail($req);
         }
-        my $crypter;
-        foreach ( @{ $req->data->{crypter} } ) {
-            $crypter = $_ if ( $_->{keyHandle} eq $data->{keyHandle} );
-        }
+        $crypter = $_
+          foreach grep { $_->{keyHandle} eq $data->{keyHandle} }
+          @{ $req->data->{crypter} };
         unless ($crypter) {
             $self->userLogger->error("Unregistered U2F key");
             $req->error(PE_BADCREDENTIALS);
@@ -245,7 +243,7 @@ sub loadUser {
                     'U2F error: ' . Crypt::U2F::Server::u2fclib_getError() );
             }
         }
-        return -1 unless (@crypters);
+        return -1 unless @crypters;
 
         $req->data->{crypter} = \@crypters;
         return 1;

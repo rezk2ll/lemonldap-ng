@@ -5,18 +5,16 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.10';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin',
   'Lemonldap::NG::Portal::Lib::U2F';
 
 # INITIALIZATION
 
-has prefix => ( is => 'rw', default => 'u' );
-
+has prefix   => ( is => 'rw', default => 'u' );
 has template => ( is => 'ro', default => 'u2fregister' );
-
-has logo => ( is => 'rw', default => 'u2f.png' );
+has logo     => ( is => 'rw', default => 'u2f.png' );
 
 sub init {
     my ($self) = @_;
@@ -30,10 +28,10 @@ sub init {
 sub run {
     my ( $self, $req, $action ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
-    unless ($user) {
-        return $self->p->sendError( $req,
-            'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 );
-    }
+
+    return $self->p->sendError( $req,
+        'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 )
+      unless $user;
 
     if ( $action eq 'register' ) {
 
@@ -50,7 +48,6 @@ sub run {
                 return $self->p->sendError( $req, "Corrupted session", 500 );
             }
         }
-
         else {
             $self->logger->debug("No 2F Device found");
             $_2fDevices = [];
@@ -115,7 +112,6 @@ sub run {
                             500 );
                     }
                 }
-
                 else {
                     $self->logger->debug("No 2F Device found");
                     $_2fDevices = [];
@@ -182,13 +178,6 @@ sub run {
         }
 
         # Get registered keys
-
-        # my @rk;
-        # foreach ( @{ $req->data->{crypter} } ) {
-        #     my $k = push @rk,
-        #       { keyHandle => $_->{keyHandle}, version => $data->{version} };
-        # }
-
         my @rk =
           map { { keyHandle => $_->{keyHandle}, version => $data->{version} } }
           @{ $req->data->{crypter} };
@@ -230,10 +219,6 @@ sub run {
             return $self->p->sendError( $req, "U2FAnswerError" );
         }
 
-        # my $crypter;
-        # foreach ( @{ $req->data->{crypter} } ) {
-        #     $crypter = $_ if ( $_->{keyHandle} eq $data->{keyHandle} );
-        # }
         $crypter = $_
           foreach grep { $_->{keyHandle} eq $data->{keyHandle} }
           @{ $req->data->{crypter} };
@@ -246,7 +231,6 @@ sub run {
         if ( not $crypter->setChallenge($challenge) ) {
             $self->logger->error(
                 $@ ? $@ : Crypt::U2F::Server::Simple::lastError() );
-
             return $self->p->sendError( $req, "U2FServerError" );
         }
 
@@ -287,15 +271,10 @@ sub run {
         }
 
         # Delete U2F device
-
-        # my $keyName;
-        # foreach (@$_2fDevices) {
-        #     $keyName = $_->{name} if $_->{epoch} eq $epoch;
-        # }
-
-        $keyName = $_->{name}
-          foreach grep { $_->{epoch} eq $epoch } @$_2fDevices;
-        @$_2fDevices = grep { $_->{epoch} ne $epoch } @$_2fDevices;
+        @$_2fDevices = map {
+            if ( $_->{epoch} eq $epoch ) { $keyName = $_->{name}; () }
+            else                         { $_ }
+        } @$_2fDevices;
         $self->logger->debug(
 "Delete 2F Device : { type => 'U2F', epoch => $epoch, name => $keyName }"
         );

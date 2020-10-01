@@ -15,16 +15,14 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor';
 
 # INITIALIZATION
 
 has prefix => ( is => 'ro', default => 'yubikey' );
-
 has logo => ( is => 'rw', default => 'yubikey.png' );
-
 has yubi => ( is => 'rw' );
 
 sub init {
@@ -88,8 +86,7 @@ sub init {
 
 sub _findYubikey {
     my ( $self, $req, $sessionInfo ) = @_;
-    my $yubikey;
-    my $_2fDevices;
+    my ( $yubikey, $_2fDevices );
 
     # First, lookup from session attribute
     if ( $self->conf->{yubikey2fFromSessionAttribute} ) {

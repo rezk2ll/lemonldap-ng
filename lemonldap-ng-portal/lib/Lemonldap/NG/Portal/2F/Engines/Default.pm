@@ -22,7 +22,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NO_SECOND_FACTORS
 );
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 with 'Lemonldap::NG::Portal::Lib::OverConf';
@@ -177,12 +177,10 @@ sub init {
         # Registration base
         $self->addAuthRoute( '2fregisters' => '_displayRegister', ['GET'] );
         $self->addAuthRoute( '2fregisters' => 'register',         ['POST'] );
-        if ( $self->conf->{sfRequired} ) {
-            $self->addUnauthRoute(
-                '2fregisters' => 'restoreSession',
-                [ 'GET', 'POST' ]
-            );
-        }
+        $self->addUnauthRoute(
+            '2fregisters' => 'restoreSession',
+            [ 'GET', 'POST' ]
+        ) if ( $self->conf->{sfRequired} );
     }
     return 1;
 }
@@ -236,11 +234,11 @@ sub run {
             $self->logger->error("Bad encoding in _2fDevices: $@");
             return PE_ERROR;
         }
-
         $self->logger->debug(" -> 2F Device(s) found");
-        my $now     = time();
-        my $removed = 0;
+
         $self->logger->debug("Looking for expired 2F device(s)...");
+        my $removed = 0;
+        my $now     = time();
         foreach my $device (@$_2fDevices) {
             my $type = lc( $device->{type} );
             $type =~ s/2f$//i;
@@ -449,14 +447,10 @@ sub _displayRegister {
     if ($tpl) {
         my ($m) =
           grep { $_->{m}->prefix eq $tpl } @{ $self->sfRModules };
-        unless ($m) {
-            return $self->p->sendError( $req,
-                'Inexistent register module', 400 );
-        }
-        unless ( $m->{r}->( $req, $req->userData ) ) {
-            return $self->p->sendError( $req,
-                'Registration not authorized', 403 );
-        }
+        return $self->p->sendError( $req, 'Inexistent register module', 400 )
+          unless $m;
+        return $self->p->sendError( $req, 'Registration not authorized', 403 )
+          unless $m->{r}->( $req, $req->userData );
         return $self->p->sendHtml(
             $req,
             $m->{m}->template,
@@ -481,15 +475,13 @@ sub _displayRegister {
               };
         }
     }
-    if (
+
+    return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ], [] ]
+      if (
         @am == 1
         and not( $req->userData->{_2fDevices}
             or $req->data->{sfRegRequired} )
-      )
-    {
-        return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ],
-            [] ];
-    }
+      );
 
     # Retrieve user all second factors
     my $_2fDevices =
@@ -506,7 +498,6 @@ sub _displayRegister {
     my $action = '';
     foreach
       my $type ( split /,\s*/, $self->conf->{available2FSelfRegistration} )
-
     {
         foreach (@$_2fDevices) {
             $_->{type} =~ s/^UBK$/Yubikey/;

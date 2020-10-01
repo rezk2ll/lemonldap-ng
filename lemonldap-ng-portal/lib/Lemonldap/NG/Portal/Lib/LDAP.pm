@@ -115,10 +115,7 @@ sub getUser {
     my ( $self, $req, %args ) = @_;
 
     $self->validateLdap;
-
-    unless ( $self->ldap ) {
-        return PE_LDAPCONNECTFAILED;
-    }
+    return PE_LDAPCONNECTFAILED unless $self->ldap;
 
     $self->bind();
 
@@ -144,7 +141,10 @@ sub getUser {
         return PE_BADCREDENTIALS;
     }
     unless ( $req->data->{ldapentry} = $mesg->entry(0) ) {
-        $self->userLogger->warn("$req->{user} was not found in LDAP directory (".$req->address.")");
+        $self->userLogger->warn(
+                "$req->{user} was not found in LDAP directory ("
+              . $req->address
+              . ")" );
         eval { $self->p->_authentication->setSecurity($req) };
         return PE_BADCREDENTIALS;
     }
@@ -168,8 +168,8 @@ sub bind {
     my $self = shift;
 
     $self->validateLdap;
-
-    return undef unless ( $self->ldap );
+    return undef unless $self->ldap;
+    
     my $msg = $self->ldap->bind(@_);
     if ( $msg->code ) {
         $self->logger->error( $msg->error );
