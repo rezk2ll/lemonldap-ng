@@ -613,7 +613,7 @@ sub _getPort {
             return $class->tsv->{port}->{_};
         }
         else {
-            return $req->{env}->{SERVER_PORT};
+            return $req->port;
         }
     }
 }
@@ -637,7 +637,7 @@ sub _isHttps {
             return $class->tsv->{https}->{_};
         }
         else {
-            return ( uc( $req->{env}->{HTTPS} || "OFF" ) eq "ON" );
+            return $req->secure;
         }
     }
 }
