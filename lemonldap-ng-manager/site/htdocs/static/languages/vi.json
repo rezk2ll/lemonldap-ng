@@ -28,6 +28,7 @@
 "2ndFA":"Second Factors",
 "actives":"Hoạt động",
 "activeTimer":"Tự động chấp nhận thời gian",
+"adaptativeAuthenticationLevelRules":"Adaptative authentication rules",
 "addAppCasPartner":"Thêm ứng dụng CAS",
 "addIDPSamlPartner":"Thêm SAML IDP",
 "addOidcOp":"Thêm nhà cung cấp kết nối OpenID",

@@ -641,6 +641,7 @@ sub tree {
                     nodes => [
                         'stayConnected',
                         'portalStatus',
+			'adaptativeAuthenticationLevelRules',
                         'upgradeSession',
                         'refreshSessions',
                         {

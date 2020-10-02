@@ -263,6 +263,18 @@ sub attributes {
             'default' => 1,
             'type'    => 'bool'
         },
+        'adaptativeAuthenticationLevelRules' => {
+            'keyMsgFail' => '__badRegexp__',
+            'keyTest'    => sub {
+                eval {
+                    do {
+                        qr/$_[0]/;
+                    }
+                };
+                return $@ ? 0 : 1;
+            },
+            'type' => 'keyTextContainer'
+        },
         'ADPwdExpireWarning' => {
             'default' => 0,
             'type'    => 'int'

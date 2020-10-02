@@ -2107,6 +2107,18 @@ sub attributes {
             documentation => 'List of auto signin rules',
         },
 
+	# Adaptative Authentication Level plugin
+        adaptativeAuthenticationLevelRules => {
+            type => 'keyTextContainer',
+                keyTest => sub {
+                    eval { qr/$_[0]/ };
+                    return $@ ? 0 : 1;
+                },
+                keyMsgFail => '__badRegexp__',
+            documentation => 'Adaptative authentication level rules',
+            flags         => 'p',
+        },
+
         ## Virtualhosts
 
         # Fake attribute: used by manager REST API to agglomerate all other

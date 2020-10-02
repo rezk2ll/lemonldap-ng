@@ -28,6 +28,7 @@
 "2ndFA":"Second Factors",
 "actives":"Enabled",
 "activeTimer":"Auto accept time",
+"adaptativeAuthenticationLevelRules":"Adaptative authentication rules",
 "addAppCasPartner":"Add CAS application",
 "addIDPSamlPartner":"Add SAML IDP",
 "addOidcOp":"Add OpenID Connect Provider",

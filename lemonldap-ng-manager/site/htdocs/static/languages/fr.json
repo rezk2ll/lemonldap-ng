@@ -28,6 +28,7 @@
 "2ndFA":"Seconds Facteurs",
 "actives":"Actives",
 "activeTimer":"Délai d'acceptation automatique",
+"adaptativeAuthenticationLevelRules":"Règles d'authentification adaptative",
 "addAppCasPartner":"Ajouter une application CAS",
 "addIDPSamlPartner":"Ajouter un FI SAML",
 "addOidcOp":"Ajouter un fournisseur OpenID Connect",

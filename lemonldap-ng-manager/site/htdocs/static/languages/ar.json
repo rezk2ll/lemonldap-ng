@@ -28,6 +28,7 @@
 "2ndFA":"Second Factors",
 "actives":"مفعلة",
 "activeTimer":"قبول تلقائي للوقت",
+"adaptativeAuthenticationLevelRules":"Adaptative authentication rules",
 "addAppCasPartner":"إضافة تطبيق كاس",
 "addIDPSamlPartner":"أضف IDP SAML",
 "addOidcOp":"إضافة أوبين أيدي كونيكت بروفيدر",

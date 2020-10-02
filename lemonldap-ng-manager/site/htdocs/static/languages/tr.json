@@ -28,6 +28,7 @@
 "2ndFA":"İki Faktörlü Kimlik Doğrulama",
 "actives":"Etkin",
 "activeTimer":"Otomatik kabul süresi",
+"adaptativeAuthenticationLevelRules":"Adaptative authentication rules",
 "addAppCasPartner":"CAS uygulaması ekle",
 "addIDPSamlPartner":"SAML IDP ekle",
 "addOidcOp":"OpenID Connect Sağlayıcısı Ekle",
