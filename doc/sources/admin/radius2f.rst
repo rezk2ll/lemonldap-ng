@@ -63,3 +63,13 @@ Mail second factor".
 -  **Logo** (Optional): logo file *(in static/<skin> directory)*
 -  **Label** (Optional): label that should be displayed to the user on
    the choice screen
+
+Vendor specific
+~~~~~~~~~~~~~~~
+
+Some configuration examples for specific vendors:
+
+.. toctree::
+   :maxdepth: 1
+
+   radius2f-inwebo
