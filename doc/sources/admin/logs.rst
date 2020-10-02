@@ -6,8 +6,8 @@ Presentation
 
 Main settings:
 
--  **REMOTE_USER** : session attribute used for logging user access.
--  **REMOTE_CUSTOM** : can be used for logging a second user attribute
+-  **REMOTE_USER** : session attribute used for logging user access
+-  **REMOTE_CUSTOM** : can be used for logging an another user attribute or a macro
    (optional)
 -  **Hidden attributes** : session attributes never displayed or sent
 
