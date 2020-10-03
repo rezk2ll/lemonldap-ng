@@ -484,14 +484,20 @@ sub _displayRegister {
       );
 
     # Retrieve user all second factors
-    my $_2fDevices =
-      $req->userData->{_2fDevices}
-      ? eval {
-        from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } ); }
-      : undef;
-    unless ($_2fDevices) {
-        $self->logger->debug("No 2F Device found");
-        $_2fDevices = [];
+    my $_2fDevices = [];
+    if ( $self->allowedUpdateSfa($req) ) {
+        $_2fDevices = $req->userData->{_2fDevices}
+          ? eval {
+            from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
+          }
+          : undef;
+        unless ($_2fDevices) {
+            $self->logger->debug("No 2F Device found");
+            $_2fDevices = [];
+        }
+    }
+    else {
+        $self->userLogger->warn("Do not diplay 2F Devices!");
     }
 
     # Parse second factors to display delete button if allowed

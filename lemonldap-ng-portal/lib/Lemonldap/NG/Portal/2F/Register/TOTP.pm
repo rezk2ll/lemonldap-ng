@@ -36,6 +36,10 @@ sub run {
         'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 )
       unless $user;
 
+    # Check if TOTP can be updated
+    return $self->p->sendError( $req, 'notAuthorized', 400 )
+      unless $self->allowedUpdateSfa($req);
+
     # Verification that user has a valid TOTP app
     if ( $action eq 'verify' ) {
 
@@ -71,7 +75,7 @@ sub run {
         }
         $TOTPName =
           substr( $TOTPName, 0, $self->conf->{max2FDevicesNameLength} );
-        $self->logger->debug("TOTP name : $TOTPName");
+        $self->logger->debug("TOTP name: $TOTPName");
 
         unless ($code) {
             $self->userLogger->info('TOTP registration: empty validation form');
@@ -101,7 +105,7 @@ sub run {
         my $secret = '';
 
         # Reading existing 2FDevices
-        $self->logger->debug("Looking for 2F Devices ...");
+        $self->logger->debug("Looking for 2F Devices...");
         my $_2fDevices;
         if ( $req->userData->{_2fDevices} ) {
             $_2fDevices = eval {
@@ -128,7 +132,7 @@ sub run {
         }
 
         # Loading TOTP secret
-        $self->logger->debug("Reading TOTP secret if exists ...");
+        $self->logger->debug("Reading TOTP secret if exists...");
         $secret = $_->{_secret} foreach (@totp2f);
         return $self->p->sendError( $req, 'totpExistingKey', 200 )
           if ( $token->{_totp2fSecret} eq $secret );
@@ -141,16 +145,12 @@ sub run {
 
         # Check if user can register one more device
         my $maxSize = $self->conf->{max2FDevices};
-        $self->logger->debug("Nbr 2FDevices = $size / $maxSize");
+        $self->logger->debug("Registered 2F Device(s): $size / $maxSize");
         if ( $size >= $maxSize ) {
             $self->userLogger->warn("Max number of 2F devices is reached");
             return $self->p->sendError( $req, 'maxNumberof2FDevicesReached',
                 400 );
         }
-
-        # Check if TOTP can be stored
-        return $self->p->sendError( $req, 'notAuthorized', 400 )
-          unless $self->allowedUpdateSfa($req);
 
         # Store TOTP secret
         push @keep,
@@ -161,7 +161,7 @@ sub run {
             epoch   => $epoch
           };
         $self->logger->debug(
-            "Append 2F Device : { type => 'TOTP', name => $TOTPName }");
+            "Append 2F Device: { type => 'TOTP', name => $TOTPName }");
         $self->p->updatePersistentSession( $req,
             { _2fDevices => to_json( \@keep ) } );
         $self->userLogger->notice(
@@ -179,7 +179,7 @@ sub run {
         my $secret = '';
 
         # Read existing 2FDevices
-        $self->logger->debug("Looking for 2F Devices ...");
+        $self->logger->debug("Looking for 2F Devices...");
         my $_2fDevices;
         if ( $req->userData->{_2fDevices} ) {
             $_2fDevices = eval {
@@ -207,7 +207,7 @@ sub run {
         }
 
         # Loading TOTP secret
-        $self->logger->debug("Reading TOTP secret if exists ...");
+        $self->logger->debug("Reading TOTP secret if exists...");
         $secret = $_->{_secret} foreach (@totp2f);
 
         if ( ( $req->param('newkey') and $self->conf->{totp2fUserCanChangeKey} )
@@ -263,15 +263,14 @@ sub run {
 
         # Check if unregistration is allowed
         return $self->p->sendError( $req, 'notAuthorized', 400 )
-          unless ( $self->conf->{totp2fUserCanRemoveKey}
-            && $self->allowedUpdateSfa($req) );
+          unless $self->conf->{totp2fUserCanRemoveKey};
 
         my $epoch = $req->param('epoch')
           or return $self->p->sendError( $req, '"epoch" parameter is missing',
             400 );
 
         # Read existing 2FDevices
-        $self->logger->debug("Loading 2F Devices ...");
+        $self->logger->debug("Loading 2F Devices...");
         my ( $_2fDevices, $TOTPName );
         if ( $req->userData->{_2fDevices} ) {
             $_2fDevices = eval {
@@ -294,7 +293,7 @@ sub run {
             else                         { $_ }
         } @$_2fDevices;
         $self->logger->debug(
-"Delete 2F Device : { type => 'TOTP', epoch => $epoch, name => $TOTPName }"
+"Delete 2F Device: { type => 'TOTP', epoch => $epoch, name => $TOTPName }"
         );
         $self->p->updatePersistentSession( $req,
             { _2fDevices => to_json($_2fDevices) } );

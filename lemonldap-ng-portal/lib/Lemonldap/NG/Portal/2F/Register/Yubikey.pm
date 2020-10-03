@@ -34,6 +34,16 @@ sub run {
         'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 )
       unless $user;
 
+    # Check if UBK key can be updated
+    return $self->p->sendHtml(
+        $req, 'error',
+        params => {
+            MAIN_LOGO       => $self->conf->{portalMainLogo},
+            RAW_ERROR       => 'notAuthorized',
+            AUTH_ERROR_TYPE => 'warning',
+        }
+    ) unless $self->allowedUpdateSfa($req);
+
     if ( $action eq 'register' ) {
         my $otp     = $req->param('otp');
         my $UBKName = $req->param('UBKName');
@@ -46,7 +56,7 @@ sub run {
             return $self->p->sendError( $req, 'badName', 200 );
         }
         $UBKName = substr( $UBKName, 0, $self->conf->{max2FDevicesNameLength} );
-        $self->logger->debug("Yubikey name : $UBKName");
+        $self->logger->debug("Yubikey name: $UBKName");
 
         if ( $otp
             and length($otp) > $self->conf->{yubikey2fPublicIDSize} )
@@ -54,7 +64,7 @@ sub run {
             my $key = substr( $otp, 0, $self->conf->{yubikey2fPublicIDSize} );
 
             # Read existing 2FDevices
-            $self->logger->debug("Looking for 2F Devices ...");
+            $self->logger->debug("Looking for 2F Devices...");
             my $_2fDevices;
             if ( $req->userData->{_2fDevices} ) {
                 $_2fDevices = eval {
@@ -73,20 +83,10 @@ sub run {
                 $_2fDevices = [];
             }
 
-            # Check if UBK key can be stored
-            return $self->p->sendHtml(
-                $req, 'error',
-                params => {
-                    MAIN_LOGO       => $self->conf->{portalMainLogo},
-                    RAW_ERROR       => 'notAuthorized',
-                    AUTH_ERROR_TYPE => 'warning',
-                }
-            ) unless $self->allowedUpdateSfa($req);
-
             # Search if the Yubikey is already registered
             my $SameUBKFound = 0;
             foreach (@$_2fDevices) {
-                $self->logger->debug("Reading Yubikeys ...");
+                $self->logger->debug("Reading Yubikeys...");
                 if ( $_->{_yubikey} eq $key ) {
                     $SameUBKFound = 1;
                     last;
@@ -108,7 +108,7 @@ sub run {
             # Check if user can register one more device
             my $size    = @$_2fDevices;
             my $maxSize = $self->conf->{max2FDevices};
-            $self->logger->debug("Nbr 2FDevices = $size / $maxSize");
+            $self->logger->debug("Registered 2F Device(s): $size / $maxSize");
             if ( $size >= $maxSize ) {
                 $self->userLogger->warn("Max number of 2F devices is reached");
                 return $self->p->sendHtml(
@@ -129,7 +129,7 @@ sub run {
                 epoch    => $epoch
               };
             $self->logger->debug(
-                "Append 2F Device : { type => 'UBK', name => $UBKName }");
+                "Append 2F Device: { type => 'UBK', name => $UBKName }");
             $self->p->updatePersistentSession( $req,
                 { _2fDevices => to_json($_2fDevices) } );
             $self->userLogger->notice(
@@ -161,15 +161,14 @@ sub run {
 
         # Check if unregistration is allowed
         return $self->p->sendError( $req, 'notAuthorized', 400 )
-          unless ( $self->conf->{yubikey2fUserCanRemoveKey}
-            && $self->allowedUpdateSfa($req) );
+          unless $self->conf->{yubikey2fUserCanRemoveKey};
 
         my $epoch = $req->param('epoch')
           or return $self->p->sendError( $req, '"epoch" parameter is missing',
             400 );
 
         # Read existing 2FDevices
-        $self->logger->debug("Looking for 2F Devices ...");
+        $self->logger->debug("Looking for 2F Devices...");
         my ( $_2fDevices, $UBKName );
         if ( $req->userData->{_2fDevices} ) {
             $_2fDevices = eval {
@@ -192,7 +191,7 @@ sub run {
             else                         { $_ }
         } @$_2fDevices;
         $self->logger->debug(
-"Delete 2F Device : { type => 'UBK', epoch => $epoch, name => $UBKName }"
+"Delete 2F Device: { type => 'UBK', epoch => $epoch, name => $UBKName }"
         );
         $self->p->updatePersistentSession( $req,
             { _2fDevices => to_json($_2fDevices) } );

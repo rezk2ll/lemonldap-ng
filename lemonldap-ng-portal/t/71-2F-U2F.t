@@ -46,7 +46,7 @@ SKIP: {
         'Get Menu'
     );
     ok( $res->[2]->[0] !~ m%<span trspan="sfaManager">sfaManager</span>%,
-        'sfaManager link found' )
+        'sfaManager link not found' )
       or print STDERR Dumper( $res->[2]->[0] );
 
     # U2F form

@@ -106,6 +106,7 @@ sub createNotification {
 
 sub allowedUpdateSfa {
     my ( $self, $req ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
     my $res = 1;
     if ( $self->conf->{impersonationRule} ) {
         $self->logger->debug('Impersonation plugin is enabled!');
@@ -114,12 +115,12 @@ sub allowedUpdateSfa {
             $req->userData->{_user} )
         {
             $self->userLogger->warn(
-                'Impersonation in progress! User is not allowed to update SFA.'
+                "Impersonation in progress! $user is not allowed to update SFA."
             );
             undef $res;
         }
         else {
-            $self->userLogger->info('User is allowed to update SFA');
+            $self->userLogger->info("$user is allowed to update SFA");
         }
     }
     return $res;

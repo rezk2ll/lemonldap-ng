@@ -33,10 +33,14 @@ sub run {
         'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 )
       unless $user;
 
+    # Check if U2F key can be updated
+    return $self->p->sendError( $req, 'notAuthorized', 400 )
+      unless $self->allowedUpdateSfa($req);
+
     if ( $action eq 'register' ) {
 
         # Read existing 2FDevices
-        $self->logger->debug("Looking for 2F Devices ...");
+        $self->logger->debug("Looking for 2F Devices...");
         my $_2fDevices;
         if ( $req->userData->{_2fDevices} ) {
             $_2fDevices = eval {
@@ -56,7 +60,7 @@ sub run {
         # Check if user can register one more 2F device
         my $size    = @$_2fDevices;
         my $maxSize = $self->conf->{max2FDevices};
-        $self->logger->debug("Registered 2F Device(s) : $size / $maxSize");
+        $self->logger->debug("Registered 2F Device(s): $size / $maxSize");
         if ( $size >= $maxSize ) {
             $self->userLogger->warn("Max number of 2F devices is reached");
             return $self->p->sendError( $req, 'maxNumberof2FDevicesReached',
@@ -96,7 +100,7 @@ sub run {
             if ( $keyHandle and $userKey ) {
 
                 # Read existing 2FDevices
-                $self->logger->debug("Looking for 2F Devices ...");
+                $self->logger->debug("Looking for 2F Devices...");
                 my $_2fDevices;
                 if ( $req->userData->{_2fDevices} ) {
                     $_2fDevices = eval {
@@ -117,10 +121,6 @@ sub run {
                     $_2fDevices = [];
                 }
 
-                # Check if U2F key can be stored
-                return $self->p->sendError( $req, 'notAuthorized', 400 )
-                  unless $self->allowedUpdateSfa($req);
-
                 my $keyName = $req->param('keyName');
                 my $epoch   = time();
 
@@ -132,7 +132,7 @@ sub run {
                 }
                 $keyName =
                   substr( $keyName, 0, $self->conf->{max2FDevicesNameLength} );
-                $self->logger->debug("Key name : $keyName");
+                $self->logger->debug("Key name: $keyName");
 
                 push @{$_2fDevices},
                   {
@@ -143,7 +143,7 @@ sub run {
                     epoch      => $epoch
                   };
                 $self->logger->debug(
-                    "Append 2F Device : { type => 'U2F', name => $keyName }");
+                    "Append 2F Device: { type => 'U2F', name => $keyName }");
                 $self->p->updatePersistentSession( $req,
                     { _2fDevices => to_json($_2fDevices) } );
                 $self->userLogger->notice(
@@ -250,15 +250,14 @@ sub run {
 
         # Check if unregistration is allowed
         return $self->p->sendError( $req, 'notAuthorized', 200 )
-          unless ( $self->conf->{u2fUserCanRemoveKey}
-            && $self->allowedUpdateSfa($req) );
+          unless $self->conf->{u2fUserCanRemoveKey};
 
         my $epoch = $req->param('epoch')
           or return $self->p->sendError( $req, '"epoch" parameter is missing',
             400 );
 
         # Read existing 2FDevices
-        $self->logger->debug("Looking for 2F Devices ...");
+        $self->logger->debug("Looking for 2F Devices...");
         my ( $_2fDevices, $keyName );
         if ( $req->userData->{_2fDevices} ) {
             $_2fDevices = eval {
@@ -302,10 +301,10 @@ sub run {
 
 sub loadUser {
     my ( $self, $req ) = @_;
-    $self->logger->debug("Loading user U2F Devices ...");
+    $self->logger->debug("Loading user U2F Devices...");
 
     # Read existing 2FDevices
-    $self->logger->debug("Looking for 2F Devices ...");
+    $self->logger->debug("Looking for 2F Devices...");
     my ( $kh, $uk, $_2fDevices );
     my @u2fs = ();
 
@@ -325,7 +324,7 @@ sub loadUser {
 
     # Reading existing U2F keys
     foreach (@$_2fDevices) {
-        $self->logger->debug("Looking for registered U2F key(s) ...");
+        $self->logger->debug("Looking for registered U2F key(s)...");
         if ( $_->{type} eq 'U2F' ) {
             unless ( $_->{_userKey} and $_->{_keyHandle} ) {
                 $self->logger->error(
