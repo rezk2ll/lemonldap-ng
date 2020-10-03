@@ -5,11 +5,13 @@ use IO::String;
 BEGIN {
     require 't/test-lib.pm';
 }
+my $maintests = 27;
+
 SKIP: {
     require Lemonldap::NG::Common::TOTP;
     eval { require Crypt::U2F::Server; require Authen::U2F::Tester };
     if ( $@ or $Crypt::U2F::Server::VERSION < 0.42 ) {
-        skip 'Missing U2F libraries';
+        skip 'Missing U2F libraries', $maintests;
     }
     eval { require Convert::Base32 };
     if ($@) {
@@ -52,7 +54,6 @@ SKIP: {
         ),
         'Auth query'
     );
-    count(2);
 
     my $id = expectCookie($res);
     expectRedirection( $res, 'http://auth.example.com/' );
@@ -74,7 +75,6 @@ SKIP: {
         'Connected as dwho'
     ) or print STDERR Dumper( $res->[2]->[0] );
     expectAuthenticatedAs( $res, 'rtyler' );
-    count(2);
 
     ## Try to register a TOTP
     # TOTP form
@@ -91,7 +91,6 @@ SKIP: {
         $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
         'Found custom Main Logo'
     ) or print STDERR Dumper( $res->[2]->[0] );
-    count(4);
 
     # JS query
     ok(
@@ -109,7 +108,6 @@ SKIP: {
     ok( $key   = $res->{secret}, 'Found secret' );
     ok( $token = $res->{token},  'Found token' );
     $key = Convert::Base32::decode_base32($key);
-    count(4);
 
     # Post code
     my $code;
@@ -131,7 +129,6 @@ SKIP: {
       or explain( $res->[2]->[0], 'JSON content' );
     ok( $res->{error} eq 'notAuthorized', 'Not authorized to register a TOTP' )
       or explain( $res, 'Bad result' );
-    count(5);
 
     ## Tru to register an U2F key
     # U2F form
@@ -166,7 +163,6 @@ SKIP: {
       or explain( [ $@, $res->[2] ], 'JSON content' );
     ok( ( $data->{challenge} and $data->{appId} ), ' Get challenge and appId' )
       or explain( $data, 'challenge and appId' );
-    count(6);
 
     # Build U2F tester
     my $tester = Authen::U2F::Tester->new(
@@ -225,10 +221,10 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         $data->{error} eq 'notAuthorized',
         'Not authorized to register an U2F key'
     ) or explain( $data, 'Bad result' );
-    count(4);
 
     $client->logout($id);
 }
-clean_sessions();
 
+count($maintests);
+clean_sessions();
 done_testing( count() );

@@ -210,8 +210,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         );
     }
 }
+
 count($maintests);
-
 clean_sessions();
-
 done_testing( count() );
