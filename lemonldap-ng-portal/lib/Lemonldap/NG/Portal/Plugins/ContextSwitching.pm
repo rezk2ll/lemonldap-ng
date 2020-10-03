@@ -208,10 +208,10 @@ sub _switchContext {
 
     # Search user in database & create session
     $req->steps( [
-            'getUser',        'setAuthSessionInfo',
-            'setSessionInfo', $self->p->groupsAndMacros,
-            'setLocalGroups', 'store',
-            'buildCookie'
+            'getUser',                  'setAuthSessionInfo',
+            'setSessionInfo',           $self->p->groupsAndMacros,
+            'setPersistentSessionInfo', 'setLocalGroups',
+            'store',                    'buildCookie'
         ]
     );
     if ( my $error = $self->p->process($req) ) {
