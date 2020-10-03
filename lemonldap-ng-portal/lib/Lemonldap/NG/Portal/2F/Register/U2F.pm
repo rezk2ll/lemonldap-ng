@@ -117,6 +117,10 @@ sub run {
                     $_2fDevices = [];
                 }
 
+                # Check if U2F key can be stored
+                return $self->p->sendError( $req, 'notAuthorized', 400 )
+                  unless $self->allowedUpdateSfa($req);
+
                 my $keyName = $req->param('keyName');
                 my $epoch   = time();
 
@@ -246,7 +250,8 @@ sub run {
 
         # Check if unregistration is allowed
         return $self->p->sendError( $req, 'notAuthorized', 200 )
-          unless $self->conf->{u2fUserCanRemoveKey};
+          unless ( $self->conf->{u2fUserCanRemoveKey}
+            && $self->allowedUpdateSfa($req) );
 
         my $epoch = $req->param('epoch')
           or return $self->p->sendError( $req, '"epoch" parameter is missing',

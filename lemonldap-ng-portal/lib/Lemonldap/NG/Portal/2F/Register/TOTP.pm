@@ -148,6 +148,10 @@ sub run {
                 400 );
         }
 
+        # Check if TOTP can be stored
+        return $self->p->sendError( $req, 'notAuthorized', 400 )
+          unless $self->allowedUpdateSfa($req);
+
         # Store TOTP secret
         push @keep,
           {
@@ -259,7 +263,8 @@ sub run {
 
         # Check if unregistration is allowed
         return $self->p->sendError( $req, 'notAuthorized', 400 )
-          unless $self->conf->{totp2fUserCanRemoveKey};
+          unless ( $self->conf->{totp2fUserCanRemoveKey}
+            && $self->allowedUpdateSfa($req) );
 
         my $epoch = $req->param('epoch')
           or return $self->p->sendError( $req, '"epoch" parameter is missing',

@@ -73,6 +73,16 @@ sub run {
                 $_2fDevices = [];
             }
 
+            # Check if UBK key can be stored
+            return $self->p->sendHtml(
+                $req, 'error',
+                params => {
+                    MAIN_LOGO       => $self->conf->{portalMainLogo},
+                    RAW_ERROR       => 'notAuthorized',
+                    AUTH_ERROR_TYPE => 'warning',
+                }
+            ) unless $self->allowedUpdateSfa($req);
+
             # Search if the Yubikey is already registered
             my $SameUBKFound = 0;
             foreach (@$_2fDevices) {
@@ -151,7 +161,8 @@ sub run {
 
         # Check if unregistration is allowed
         return $self->p->sendError( $req, 'notAuthorized', 400 )
-          unless $self->conf->{yubikey2fUserCanRemoveKey};
+          unless ( $self->conf->{yubikey2fUserCanRemoveKey}
+            && $self->allowedUpdateSfa($req) );
 
         my $epoch = $req->param('epoch')
           or return $self->p->sendError( $req, '"epoch" parameter is missing',

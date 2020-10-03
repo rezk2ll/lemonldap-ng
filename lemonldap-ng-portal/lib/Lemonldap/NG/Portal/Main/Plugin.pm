@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
 );
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.10';
 
 extends 'Lemonldap::NG::Common::Module';
 
@@ -102,6 +102,27 @@ sub createNotification {
         $self->logger->debug("Notification $ref NOT created!");
         return PE_ERROR;
     }
+}
+
+sub allowedUpdateSfa {
+    my ( $self, $req ) = @_;
+    my $res = 1;
+    if ( $self->conf->{impersonationRule} ) {
+        $self->logger->debug('Impersonation plugin is enabled!');
+        if (   $req->userData->{"$self->{conf}->{impersonationPrefix}_user"}
+            && $req->userData->{"$self->{conf}->{impersonationPrefix}_user"} ne
+            $req->userData->{_user} )
+        {
+            $self->userLogger->warn(
+                'Impersonation in progress! User is not allowed to update SFA.'
+            );
+            undef $res;
+        }
+        else {
+            $self->userLogger->info('User is allowed to update SFA');
+        }
+    }
+    return $res;
 }
 
 1;
