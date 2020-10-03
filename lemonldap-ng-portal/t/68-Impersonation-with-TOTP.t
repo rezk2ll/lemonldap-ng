@@ -23,13 +23,13 @@ SKIP: {
                 requireToken        => 0,
                 checkUser           => 1,
                 impersonationRule   => 1,
-                checkUserDisplayPersistentInfo => 0,
-                checkUserDisplayEmptyValues    => 0,
+                checkUserDisplayPersistentInfo  => 0,
+                checkUserDisplayEmptyValues     => 0,
                 checkUserDisplayComputedSession => 1,
-                impersonationMergeSSOgroups    => 1,
-                totp2fSelfRegistration         => 1,
-                totp2fActivation               => 1,
-                totp2fAuthnLevel               => 8
+                impersonationMergeSSOgroups     => 1,
+                totp2fSelfRegistration          => 1,
+                totp2fActivation                => 1,
+                totp2fAuthnLevel                => 8
             }
         }
     );
