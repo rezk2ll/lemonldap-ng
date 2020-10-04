@@ -162,6 +162,7 @@
 "portalDisplayCertificateResetByMail":"Sertifikanızı sıfırlayın",
 "contentSecurityPolicy":"İçerik güvenlik ilkesi",
 "contextSwitching":"İçeriği başka bir kullanıcıyla değiştir",
+"contextSwitchingAllowed2fModifications":"Allow 2FA modifications",
 "contextSwitchingHiddenAttributes":"Gizli nitelikler",
 "contextSwitchingIdRule":"Kimlik kullanım kuralı",
 "contextSwitchingRule":"Kuralı kullan",

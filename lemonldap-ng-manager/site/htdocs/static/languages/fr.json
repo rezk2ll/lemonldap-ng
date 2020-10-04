@@ -162,6 +162,7 @@
 "portalDisplayCertificateResetByMail":"Réinitialiser votre certificat",
 "contentSecurityPolicy":"Politique de sécurité de contenu",
 "contextSwitching":"Endossement d'identité",
+"contextSwitchingAllowed2fModifications":"Autoriser les modifications des SF",
 "contextSwitchingHiddenAttributes":"Attributs masqués",
 "contextSwitchingIdRule":"Règle d'utilisation des identités",
 "contextSwitchingRule":"Règle d'utilisation",

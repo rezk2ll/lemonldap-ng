@@ -108,6 +108,8 @@ sub allowedUpdateSfa {
     my ( $self, $req, $action ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
     my $res  = 1;
+
+    # Test action
     if ( $action eq 'delete' ) {
         my $module = lc ref $self;
         $module = ( $module =~ /2f::register::(\w+)$/ )[0];
@@ -126,21 +128,36 @@ sub allowedUpdateSfa {
             undef $res;
         }
     }
+
+    # Test if impersonation is in progress
     if ( $res && $self->conf->{impersonationRule} ) {
-        $self->logger->debug('Impersonation plugin is enabled!');
+        $self->logger->debug('Impersonation plugin is enabled');
         if (   $req->userData->{"$self->{conf}->{impersonationPrefix}_user"}
             && $req->userData->{"$self->{conf}->{impersonationPrefix}_user"} ne
             $req->userData->{_user} )
         {
             $self->userLogger->warn(
-                "Impersonation in progress! $user is not allowed to update SFA."
+                "Impersonation in progress! $user is not allowed to update 2FA."
             );
             undef $res;
         }
-        else {
-            $self->userLogger->info("$user is allowed to update SFA");
+    }
+
+    # Test if contextSwitching is in progress
+    if ( $res && $self->conf->{contextSwitchingRule} ) {
+        $self->logger->debug('ContextSwitching plugin is enabled');
+        if (
+            $req->userData->{
+                "$self->{conf}->{contextSwitchingPrefix}_session_id"}
+            && !$self->conf->{contextSwitchingAllowed2fModifications} )
+        {
+            $self->userLogger->warn(
+"ContextSwitching in progress! $user is not allowed to update 2FA."
+            );
+            undef $res;
         }
     }
+    $self->userLogger->info("$user is allowed to update 2FA") if $res;
     return $res;
 }
 

@@ -1035,6 +1035,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             ],
             'type' => 'select'
         },
+        'contextSwitchingAllowed2fModifications' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'contextSwitchingIdRule' => {
             'default' => 1,
             'test'    => sub {

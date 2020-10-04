@@ -781,6 +781,7 @@ sub tree {
                                 'contextSwitchingRule',
                                 'contextSwitchingIdRule',
                                 'contextSwitchingUnrestrictedUsersRule',
+                                'contextSwitchingAllowed2fModifications',
                                 'contextSwitchingStopWithLogout',
                             ]
                         },

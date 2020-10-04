@@ -162,6 +162,7 @@
 "portalDisplayCertificateResetByMail":"Reset your certificate",
 "contentSecurityPolicy":"Politica di protezione dei contenuti",
 "contextSwitching":"Switch context another user",
+"contextSwitchingAllowed2fModifications":"Allow 2FA modifications",
 "contextSwitchingHiddenAttributes":"Attributi nascosti",
 "contextSwitchingIdRule":"Le identità usano la regola",
 "contextSwitchingRule":"Utilizza la regola",

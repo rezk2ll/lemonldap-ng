@@ -162,6 +162,7 @@
 "portalDisplayCertificateResetByMail":"Reset your certificate",
 "contentSecurityPolicy":"Chính sách bảo mật nội dung",
 "contextSwitching":"Switch context another user",
+"contextSwitchingAllowed2fModifications":"Allow 2FA modifications",
 "contextSwitchingHiddenAttributes":"Thuộc tính ẩn",
 "contextSwitchingIdRule":"Identities use rule",
 "contextSwitchingRule":"Quy tắc sử dụng",

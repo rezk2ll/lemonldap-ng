@@ -582,6 +582,12 @@ sub attributes {
             documentation => 'Stop context switching by logout',
             flags         => 'p',
         },
+        contextSwitchingAllowed2fModifications => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Allowed SFA modifications',
+            flags         => 'p',
+        },
         contextSwitchingPrefix => {
             type          => 'text',
             default       => 'switching',
