@@ -35,7 +35,7 @@ sub init {
 sub adaptAuthenticationLevel {
     my ( $self, $req ) = @_;
 
-    my $userid = $req->user;
+    my $userid = $req->sessionInfo->{ $self->conf->{whatToTrace} };
     $self->logger->debug("Check adaptative authentication rules for $userid");
 
     my $authenticationLevel = $req->sessionInfo->{authenticationLevel};
