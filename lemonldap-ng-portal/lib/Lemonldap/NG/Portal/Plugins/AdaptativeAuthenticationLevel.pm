@@ -16,22 +16,17 @@ has rules => ( is => 'rw', default => sub { {} } );
 sub init {
     my ($self) = @_;
     $self->logger->debug('Init AdaptativeAuthenticationLevel plugin');
-    my $hd = $self->p->HANDLER;
+
     foreach (
         keys %{ $self->conf->{adaptativeAuthenticationLevelRules} // {} } )
     {
         $self->logger->debug("adaptativeAuthenticationLevelRules key -> $_");
         $self->logger->debug( "adaptativeAuthenticationLevelRules value -> "
               . $self->conf->{adaptativeAuthenticationLevelRules}->{$_} );
-        my $rule = $hd->buildSub( $hd->substitute($_) );
-        unless ($rule) {
-            my $error = $hd->tsv->{jail}->error || '???';
-            $self->logger->error(
-                "Bad AdaptativeAuthenticationLevel rule -> $error");
-            $self->logger->debug(
-                "Skipping AdaptativeAuthenticationLevel rule \"$_\"");
-            next;
-        }
+
+        my $rule =
+          $self->p->buildRule( $_, 'adaptativeAuthenticationLevelRules' );
+        next unless $rule;
         $self->rules->{$_} = $rule;
     }
     return 1;
