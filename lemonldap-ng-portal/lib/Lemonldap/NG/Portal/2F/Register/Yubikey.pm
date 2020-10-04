@@ -42,7 +42,7 @@ sub run {
             RAW_ERROR       => 'notAuthorized',
             AUTH_ERROR_TYPE => 'warning',
         }
-    ) unless $self->allowedUpdateSfa($req);
+    ) unless $self->allowedUpdateSfa($req, $action);
 
     if ( $action eq 'register' ) {
         my $otp     = $req->param('otp');

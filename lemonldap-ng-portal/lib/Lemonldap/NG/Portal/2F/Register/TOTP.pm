@@ -38,7 +38,7 @@ sub run {
 
     # Check if TOTP can be updated
     return $self->p->sendError( $req, 'notAuthorized', 400 )
-      unless $self->allowedUpdateSfa($req);
+      unless $self->allowedUpdateSfa($req, $action);
 
     # Verification that user has a valid TOTP app
     if ( $action eq 'verify' ) {

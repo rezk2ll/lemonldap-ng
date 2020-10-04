@@ -105,9 +105,27 @@ sub createNotification {
 }
 
 sub allowedUpdateSfa {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, $action ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
-    my $res = 1;
+    my $res  = 1;
+    if ( $action eq 'delete' ) {
+        my $module = lc ref $self;
+        $module = ( $module =~ /2f::register::(\w+)$/ )[0];
+        $module =~ s/2f//;
+        $self->logger->debug("$user request to delete ${module}2f device");
+        if (   $self->{conf}->{"${module}2fAuthnLevel"}
+            && $req->userData->{authenticationLevel} <
+            $self->{conf}->{"${module}2fAuthnLevel"} )
+        {
+            $self->userLogger->warn(
+"$user request to delete ${module}2f device rejected due to insufficient authentication level!"
+            );
+            $self->logger->debug(
+"authLevel: $req->{userData}->{authenticationLevel} < requiredLevel: "
+                  . $self->{conf}->{"${module}2fAuthnLevel"} );
+            undef $res;
+        }
+    }
     if ( $self->conf->{impersonationRule} ) {
         $self->logger->debug('Impersonation plugin is enabled!');
         if (   $req->userData->{"$self->{conf}->{impersonationPrefix}_user"}
