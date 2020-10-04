@@ -44,14 +44,7 @@ sub adaptAuthenticationLevel {
 
     my $updatedAuthenticationLevel = $authenticationLevel;
 
-    sub sortByComment {
-
-        my $A = ( $a =~ /^.*?##(.*)$/ )[0];
-        my $B = ( $b =~ /^.*?##(.*)$/ )[0];
-        return !$A ? 1 : !$B ? -1 : $A cmp $B;
-    }
-
-    foreach ( sort sortByComment keys %{ $self->rules } ) {
+    foreach ( keys %{ $self->rules } ) {
         my $rule = $_;
         $self->logger->debug(
             "Check adaptativeAuthenticationLevelRules -> $rule");
