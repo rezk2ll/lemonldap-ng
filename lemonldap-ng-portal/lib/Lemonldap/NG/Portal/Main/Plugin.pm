@@ -126,7 +126,7 @@ sub allowedUpdateSfa {
             undef $res;
         }
     }
-    if ( $self->conf->{impersonationRule} ) {
+    if ( $res && $self->conf->{impersonationRule} ) {
         $self->logger->debug('Impersonation plugin is enabled!');
         if (   $req->userData->{"$self->{conf}->{impersonationPrefix}_user"}
             && $req->userData->{"$self->{conf}->{impersonationPrefix}_user"} ne
