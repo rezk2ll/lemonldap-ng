@@ -11,8 +11,7 @@ my $res;
 my $id;
 my $json;
 
-my $client = LLNG::Manager::Test->new(
-    {
+my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel                           => 'error',
             authentication                     => 'Demo',
@@ -51,6 +50,9 @@ $json = expectJSON($res);
 ok( $json == 3, 'Authentication level upgraded' );
 count(1);
 
+ok( $client->logout($id), 'Logout' );
+count(1);
+
 ok(
     $res = $client->_post(
         '/',
@@ -74,6 +76,9 @@ count(1);
 $json = expectJSON($res);
 
 ok( $json == 5, 'Authentication level upgraded' );
+count(1);
+
+ok( $client->logout($id), 'Logout' );
 count(1);
 
 clean_sessions();
