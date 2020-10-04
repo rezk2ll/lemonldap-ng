@@ -4,6 +4,7 @@ Plugins
 .. toctree::
    :maxdepth: 1
 
+   adaptativeauthenticationlevel
    autosignin
    bruteforceprotection
    cda
