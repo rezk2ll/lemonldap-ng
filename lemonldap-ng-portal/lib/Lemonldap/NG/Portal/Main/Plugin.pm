@@ -110,7 +110,7 @@ sub allowedUpdateSfa {
     my $res  = 1;
 
     # Test action
-    if ( $action eq 'delete' ) {
+    if ( $action && $action eq 'delete' ) {
         my $module = lc ref $self;
         $module = ( $module =~ /2f::register::(\w+)$/ )[0];
         $module =~ s/2f//;
