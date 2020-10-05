@@ -39,15 +39,14 @@ $id = expectCookie($res);
 
 ok(
     $res = $client->_get(
-        '/session/my/global/authenticationLevel',
-        cookie => "lemonldap=$id"
+        '/session/my/global', cookie => "lemonldap=$id"
     ),
     'Get session'
 );
 count(1);
 $json = expectJSON($res);
 
-ok( $json == 3, 'Authentication level upgraded' );
+ok( $json->{authenticationLevel} == 3, 'Authentication level upgraded' );
 count(1);
 
 ok( $client->logout($id), 'Logout' );
@@ -67,15 +66,14 @@ $id = expectCookie($res);
 
 ok(
     $res = $client->_get(
-        '/session/my/global/authenticationLevel',
-        cookie => "lemonldap=$id"
+        '/session/my/global', cookie => "lemonldap=$id"
     ),
     'Get session'
 );
 count(1);
 $json = expectJSON($res);
 
-ok( $json == 5, 'Authentication level upgraded' );
+ok( $json->{authenticationLevel} == 5, 'Authentication level upgraded' );
 count(1);
 
 ok( $client->logout($id), 'Logout' );
