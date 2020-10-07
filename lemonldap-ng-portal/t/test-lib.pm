@@ -598,8 +598,16 @@ our $defaultIni = {
     staticPrefix          => '/static',
     tokenUseGlobalStorage => 0,
     securedCookie         => 0,
-    https                 => 0,
-    globalStorageOptions  => {
+
+    # If lasso is too old, force algo to SHA1
+    (
+        eval
+'use Lasso; Lasso::check_version( 2, 5, 1, Lasso::Constants::CHECK_VERSION_NUMERIC) ? 0:1'
+        ? ( samlServiceSignatureMethod => "RSA_SHA1" )
+        : ()
+    ),
+    https                => 0,
+    globalStorageOptions => {
         Directory     => $tmpDir,
         LockDirectory => "$tmpDir/lock",
         generateModule =>
@@ -669,7 +677,7 @@ has ini => (
         main::ok( $self->{p} = $self->class->new(), 'Portal object' );
         main::count(1);
         unless ( $self->confFailure ) {
-            main::ok( $self->{p}->init($ini),           'Init' );
+            main::ok( $self->{p}->init($ini), 'Init' );
             main::ok( $self->{app} = $self->{p}->run(), 'Portal app' );
             main::count(2);
             no warnings 'redefine';

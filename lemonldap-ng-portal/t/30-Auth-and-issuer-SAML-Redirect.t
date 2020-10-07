@@ -33,6 +33,16 @@ SKIP: {
         skip 'Lasso not found', $maintests;
     }
 
+    # This test tries algs that do not work on old Lasso libs
+    unless (
+        Lasso::check_version(
+            2, 5, 1, Lasso::Constants::CHECK_VERSION_NUMERIC
+        )
+      )
+    {
+        skip 'Lasso is too old', $maintests;
+    }
+
     # Initialization
     $issuer = register( 'issuer', \&issuer );
     $sp     = register( 'sp',     \&sp );
