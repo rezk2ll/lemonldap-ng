@@ -28,19 +28,12 @@ LWP::Protocol::PSGI->register(
 );
 
 SKIP: {
-    eval "use Lasso";
-    if ($@) {
-        skip 'Lasso not found', $maintests;
-    }
-
-    # This test tries algs that do not work on old Lasso libs
     unless (
-        Lasso::check_version(
-            2, 5, 1, Lasso::Constants::CHECK_VERSION_NUMERIC
-        )
+        eval
+'use Lasso; (Lasso::check_version( 2, 5, 1, Lasso::Constants::CHECK_VERSION_NUMERIC) )? 1 : 0'
       )
     {
-        skip 'Lasso is too old', $maintests;
+        skip 'Lasso not found or too old', $maintests;
     }
 
     # Initialization
