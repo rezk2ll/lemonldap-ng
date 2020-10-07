@@ -405,6 +405,46 @@ sub tests {
                   . join( ", ", @offenders )
                   . " unless SAML signature key is in certificate form" );
         },
+        samlSignatureUnsupportedAlg => sub {
+
+            my $oldlasso = eval
+'use Lasso; Lasso::check_version( 2, 5, 1, Lasso::Constants::CHECK_VERSION_NUMERIC) ? 0:1';
+            return 1 unless ($oldlasso);
+
+            my $allsha1 = 1;
+            $allsha1 = 0
+              unless $conf->{samlServiceSignatureMethod} eq "RSA_SHA1";
+
+            for my $idp ( keys %{ $conf->{samlIDPMetaDataOptions} } ) {
+                if ( $conf->{samlIDPMetaDataOptions}->{$idp}
+                    ->{samlIDPMetaDataOptionsSignatureMethod} )
+                {
+                    if ( $conf->{samlIDPMetaDataOptions}->{$idp}
+                        ->{samlIDPMetaDataOptionsSignatureMethod} ne
+                        "RSA_SHA1" )
+                    {
+                        $allsha1 = 0;
+                        break;
+                    }
+                }
+            }
+            for my $sp ( keys %{ $conf->{samlSPMetaDataOptions} } ) {
+                if ( $conf->{samlSPMetaDataOptions}->{$sp}
+                    ->{samlSPMetaDataOptionsSignatureMethod} )
+                {
+                    if ( $conf->{samlSPMetaDataOptions}->{$sp}
+                        ->{samlSPMetaDataOptionsSignatureMethod} ne "RSA_SHA1" )
+                    {
+                        $allsha1 = 0;
+                        break;
+                    }
+                }
+            }
+            return 1 if $allsha1;
+            return ( 0,
+                "Algorithms other than SHA1 are only supported on Lasso>=2.5.1"
+            );
+        },
 
         # Try to parse combination with declared modules
         checkCombinations => sub {
