@@ -431,13 +431,18 @@ sub run {
     unless (@_) {
         die 'nothing to do, aborting';
     }
-    $self->cfgNum( $self->lastCfg ) unless ( $self->cfgNum );
     my $action = shift;
     unless (
         $action =~ /^(?:get|set|del|addKey|delKey|save|restore|rollback)$/ )
     {
         die
 "Unknown action $action. Only get, set, del, addKey, delKey, save, restore, rollback allowed";
+    }
+
+    unless ( $action eq "restore" ) {
+
+        # This step prevents restoring when config DB is empty (#2340)
+        $self->cfgNum( $self->lastCfg ) unless ( $self->cfgNum );
     }
 
     $self->$action(@_);
