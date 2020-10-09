@@ -47,7 +47,8 @@ sub new {
     }
     $self = Net::LDAP->new(
         \@servers,
-        onerror => undef,
+        onerror   => undef,
+        keepalive => 1,
         ( $conf->{ldapPort}    ? ( port    => $conf->{ldapPort} )    : () ),
         ( $conf->{ldapTimeout} ? ( timeout => $conf->{ldapTimeout} ) : () ),
         ( $conf->{ldapVersion} ? ( version => $conf->{ldapVersion} ) : () ),
@@ -66,7 +67,7 @@ sub new {
         # socket when certificate validation fails. Net::LDAP does not catch
         # it, and the process ends up crashing.
         # As a precaution, make sure the underlying socket is doing fine:
-        if ( $self->socket->isa('IO::Socket::SSL')
+        if (    $self->socket->isa('IO::Socket::SSL')
             and $self->socket->errstr < 0 )
         {
             $portal->logger->error(
