@@ -35,7 +35,7 @@ sub run {
 
     # Check if U2F key can be updated
     return $self->p->sendError( $req, 'notAuthorized', 400 )
-      unless $self->allowedUpdateSfa($req, $action);
+      unless $self->allowedUpdateSfa( $req, $action );
 
     if ( $action eq 'register' ) {
 
@@ -279,18 +279,26 @@ sub run {
             if ( $_->{epoch} eq $epoch ) { $keyName = $_->{name}; () }
             else                         { $_ }
         } @$_2fDevices;
-        $self->logger->debug(
-"Delete 2F Device : { type => 'U2F', epoch => $epoch, name => $keyName }"
-        );
-        $self->p->updatePersistentSession( $req,
-            { _2fDevices => to_json($_2fDevices) } );
-        $self->userLogger->notice(
-            "U2F key $keyName unregistration succeeds for $user");
-        return [
-            200,
-            [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
-            ['{"result":1}']
-        ];
+        if ($keyName) {
+            $self->logger->debug(
+"Delete 2F Device: { type => 'U2F', epoch => $epoch, name => $keyName }"
+            );
+            $self->p->updatePersistentSession( $req,
+                { _2fDevices => to_json($_2fDevices) } );
+            $self->userLogger->notice(
+                "U2F key $keyName unregistration succeeds for $user");
+            return [
+                200,
+                [
+                    'Content-Type'   => 'application/json',
+                    'Content-Length' => 12,
+                ],
+                ['{"result":1}']
+            ];
+        }
+        else {
+            $self->p->sendError( $req, '2FDeviceNotFound', 200 );
+        }
     }
     else {
         $self->logger->error("Unknown U2F action -> $action");

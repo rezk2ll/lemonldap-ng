@@ -1,11 +1,12 @@
 use Test::More;
 use strict;
 use IO::String;
+use JSON qw(to_json from_json);
 
 BEGIN {
     require 't/test-lib.pm';
 }
-my $maintests = 57;
+my $maintests = 64;
 
 SKIP: {
     require Lemonldap::NG::Common::TOTP;
@@ -17,51 +18,69 @@ SKIP: {
     if ($@) {
         skip 'Convert::Base32 is missing';
     }
-    use_ok('Lemonldap::NG::Common::FormEncode');
-
     my $res;
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel               => 'error',
-                authentication         => 'Demo',
-                userDB                 => 'Same',
-                portalMainLogo         => 'common/logos/logo_llng_old.png',
-                impersonationRule      => 1,
-                totp2fSelfRegistration => 1,
-                totp2fActivation       => 1,
-                totp2fAuthnLevel       => 8,
-                u2fSelfRegistration    => 1,
-                u2fActivation          => 1,
+                logLevel             => 'error',
+                authentication       => 'Demo',
+                userDB               => 'Same',
+                portalMainLogo       => 'common/logos/logo_llng_old.png',
+                contextSwitchingRule => 1,
+                contextSwitchingStopWithLogout         => 0,
+                contextSwitchingAllowed2fModifications => 1,
+                totp2fSelfRegistration                 => 1,
+                totp2fActivation                       => 1,
+                u2fSelfRegistration                    => 1,
+                u2fActivation                          => 1,
             }
         }
     );
 
-    # Try to authenticate
-    # -------------------
+    ## Try to authenticate
+    ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
+    my ( $host, $url, $query ) =
+      expectForm( $res, '#', undef, 'user', 'password' );
+
+    $query =~ s/user=/user=rtyler/;
+    $query =~ s/password=/password=rtyler/;
     ok(
         $res = $client->_post(
-            '/', IO::String->new('user=rtyler&password=rtyler'),
-            length => 27
+            '/',
+            IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
         ),
         'Auth query'
     );
     my $id = expectCookie($res);
+    expectRedirection( $res, 'http://auth.example.com/' );
 
+    # Get Menu
+    # ------------------------
     ok(
         $res = $client->_get(
             '/',
             cookie => "lemonldap=$id",
             accept => 'text/html'
         ),
-        'Get Menu'
+        'Get Menu',
     );
+    expectOK($res);
+    ok(
+        $res->[2]->[0] =~
+          m%<span trspan="connectedAs">Connected as</span> rtyler%,
+        'Connected as rtyler'
+    ) or print STDERR Dumper( $res->[2]->[0] );
     expectAuthenticatedAs( $res, 'rtyler' );
-    ok( $res->[2]->[0] =~ m%<span trspan="sfaManager">sfaManager</span>%,
-        'sfaManager link found' )
-      or print STDERR Dumper( $res->[2]->[0] );
+    ok(
+        $res->[2]->[0] =~
+          m%<span trspan="contextSwitching_ON">contextSwitching_ON</span>%,
+        'contextSwitching allowed'
+    ) or print STDERR Dumper( $res->[2]->[0] );
 
     ## Try to register a TOTP
     # TOTP form
+    my ( $key, $token, $code );
     ok(
         $res = $client->_get(
             '/2fregisters/totp',
@@ -88,7 +107,6 @@ SKIP: {
     eval { $res = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), 'Content is JSON' )
       or explain( $res->[2]->[0], 'JSON content' );
-    my ( $key, $token );
     ok( $key   = $res->{secret}, 'Found secret' ) or print STDERR Dumper($res);
     ok( $token = $res->{token},  'Found token' )  or print STDERR Dumper($res);
     ok( $res->{user} eq 'rtyler', 'Found user' )
@@ -96,7 +114,6 @@ SKIP: {
     $key = Convert::Base32::decode_base32($key);
 
     # Post code
-    my $code;
     ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 6 ),
         'Code' );
     ok( $code =~ /^\d{6}$/, 'Code contains 6 digits' );
@@ -184,7 +201,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
             version          => "U2F_V2"
         }
     );
-    my ( $host, $url, $query );
+    ( $host, $url, $query );
     $query = Lemonldap::NG::Common::FormEncode::build_urlencoded(
         registration => $registrationData,
         challenge    => $res->[2]->[0],
@@ -208,15 +225,13 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
 
     $client->logout($id);
 
-    ## Try to impersonate
+    ## Try to authenticate
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );
     ( $host, $url, $query ) =
-      expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
+      expectForm( $res, '#', undef, 'user', 'password' );
 
     $query =~ s/user=/user=rtyler/;
     $query =~ s/password=/password=rtyler/;
-    $query =~ s/spoofId=/spoofId=dwho/;
-
     ok(
         $res = $client->_post(
             '/',
@@ -262,13 +277,57 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         'Get Menu',
     );
     expectOK($res);
+    expectAuthenticatedAs( $res, 'rtyler' );
+
+    # Try to switch context 'dwho'
+    # ContextSwitching form
+    ok(
+        $res = $client->_get(
+            '/switchcontext',
+            cookie => "lemonldap=$id",
+            accept => 'text/html'
+        ),
+        'ContextSwitching form',
+    );
+
+    ( $host, $url, $query ) =
+      expectForm( $res, undef, '/switchcontext', 'spoofId' );
+    ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_ON">%,
+        'Found trspan="contextSwitching_ON"' )
+      or explain( $res->[2]->[0], 'trspan="contextSwitching_ON"' );
+
+    ## POST form
+    $query =~ s/spoofId=/spoofId=dwho/;
+    ok(
+        $res = $client->_post(
+            '/switchcontext',
+            IO::String->new($query),
+            cookie => "lemonldap=$id",
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'POST switchcontext'
+    );
+    expectRedirection( $res, 'http://auth.example.com/' );
+    my $id2 = expectCookie($res);
+    ok(
+        $res = $client->_get(
+            '/',
+            cookie => "lemonldap=$id2",
+            accept => 'text/html'
+        ),
+        'Get Menu',
+    );
     expectAuthenticatedAs( $res, 'dwho' );
+    ok( $res->[2]->[0] =~ m%<span trspan="contextSwitching_OFF">%,
+        'Found trspan="contextSwitching_OFF"' )
+      or explain( $res->[2]->[0], 'trspan="contextSwitching_OFF"' );
 
     # 2fregisters
     ok(
         $res = $client->_get(
             '/2fregisters',
-            cookie => "lemonldap=$id",
+            cookie => "lemonldap=$id2",
             accept => 'text/html',
         ),
         'Form 2fregisters'
@@ -276,16 +335,19 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok( $res->[2]->[0] =~ /<span id="msg" trspan="choose2f">/,
         'Found choose 2F' )
       or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0] !~ m%<span device=\'(TOTP|U2F)\' epoch=\'\d{10}\'%g,
-        'No 2F device found' )
+    my $devices;
+    ok( $devices = $res->[2]->[0] =~ s%<span device=\'(TOTP|U2F)\' epoch=\'\d{10}\'%%g,
+        '2F devices found' )
       or print STDERR Dumper( $res->[2]->[0] );
+    ok( $devices == 2, 'two 2F devices found' )
+      or explain( $devices, 'Two 2F devices registered' );
 
     ## Try to register a TOTP
     # TOTP form
     ok(
         $res = $client->_get(
             '/2fregisters/totp',
-            cookie => "lemonldap=$id",
+            cookie => "lemonldap=$id2",
             accept => 'text/html',
         ),
         'Form registration'
@@ -302,7 +364,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok(
         $res = $client->_post(
             '/2fregisters/totp/getkey', IO::String->new(''),
-            cookie => "lemonldap=$id",
+            cookie => "lemonldap=$id2",
             length => 0,
         ),
         'Get new key'
@@ -310,7 +372,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     eval { $res = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), 'Content is JSON' )
       or explain( $res->[2]->[0], 'JSON content' );
-    ok( $res->{error} eq 'notAuthorized', 'Not authorized to register a TOTP' )
+    ok( $res->{error} eq 'totpExistingKey', 'TOTP already registered' )
       or explain( $res, 'Bad result' );
 
     # Try to unregister TOTP
@@ -319,7 +381,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
             '/2fregisters/totp/delete',
             IO::String->new("epoch=1234567890"),
             length => 16,
-            cookie => "lemonldap=$id",
+            cookie => "lemonldap=$id2",
         ),
         'Delete TOTP query'
     );
@@ -327,8 +389,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok( not($@), ' Content is JSON' )
       or explain( [ $@, $res->[2] ], 'JSON content' );
     ok(
-        $data->{error} eq 'notAuthorized',
-        'Not authorized to unregister a TOTP'
+        $data->{error} eq '2FDeviceNotFound', '2F device not found'
     ) or explain( $data, 'Bad result' );
 
     # Try to verify TOTP
@@ -338,14 +399,14 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
             '/2fregisters/totp/verify',
             IO::String->new($s),
             length => length($s),
-            cookie => "lemonldap=$id",
+            cookie => "lemonldap=$id2",
         ),
         'Post code'
     );
     eval { $data = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), ' Content is JSON' )
       or explain( [ $@, $res->[2] ], 'JSON content' );
-    ok( $data->{error} eq 'notAuthorized', 'Not authorized to verify a TOTP' )
+    ok( $data->{error} eq 'PE82', 'PE82' )
       or explain( $data, 'Bad result' );
 
     ## Try to register an U2F key
@@ -353,7 +414,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok(
         $res = $client->_get(
             '/2fregisters/u',
-            cookie => "lemonldap=$id",
+            cookie => "lemonldap=$id2",
             accept => 'text/html',
         ),
         'Form registration'
@@ -369,7 +430,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         $res = $client->_post(
             '/2fregisters/u/register', IO::String->new(''),
             accept => 'application/json',
-            cookie => "lemonldap=$id",
+            cookie => "lemonldap=$id2",
             length => 0,
         ),
         'Get registration challenge'
@@ -378,8 +439,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok( not($@), ' Content is JSON' )
       or explain( [ $@, $res->[2] ], 'JSON content' );
     ok(
-        $data->{error} eq 'notAuthorized',
-        'Not authorized to register an U2F key'
+        $data->{challenge} =~ /\w+/, 'Get challenge'
     ) or explain( $data, 'Bad result' );
 
     # Try to unregister U2F key
@@ -388,7 +448,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
             '/2fregisters/u/delete',
             IO::String->new("epoch=1234567890"),
             length => 16,
-            cookie => "lemonldap=$id",
+            cookie => "lemonldap=$id2",
         ),
         'Delete U2F key query'
     );
@@ -396,13 +456,14 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok( not($@), ' Content is JSON' )
       or explain( [ $@, $res->[2] ], 'JSON content' );
     ok(
-        $data->{error} eq 'notAuthorized',
-        'Not authorized to unregister an U2F key'
+        $data->{error} eq '2FDeviceNotFound', '2F device not found'
     ) or explain( $data, 'Bad result' );
 
     $client->logout($id);
+    $client->logout($id2);
 }
 
 count($maintests);
+
 clean_sessions();
 done_testing( count() );

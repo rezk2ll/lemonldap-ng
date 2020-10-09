@@ -38,7 +38,7 @@ sub run {
 
     # Check if TOTP can be updated
     return $self->p->sendError( $req, 'notAuthorized', 400 )
-      unless $self->allowedUpdateSfa($req, $action);
+      unless $self->allowedUpdateSfa( $req, $action );
 
     # Verification that user has a valid TOTP app
     if ( $action eq 'verify' ) {
@@ -292,18 +292,26 @@ sub run {
             if ( $_->{epoch} eq $epoch ) { $TOTPName = $_->{name}; () }
             else                         { $_ }
         } @$_2fDevices;
-        $self->logger->debug(
+        if ($TOTPName) {
+            $self->logger->debug(
 "Delete 2F Device: { type => 'TOTP', epoch => $epoch, name => $TOTPName }"
-        );
-        $self->p->updatePersistentSession( $req,
-            { _2fDevices => to_json($_2fDevices) } );
-        $self->userLogger->notice(
-            "TOTP $TOTPName unregistration succeeds for $user");
-        return [
-            200,
-            [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
-            ['{"result":1}']
-        ];
+            );
+            $self->p->updatePersistentSession( $req,
+                { _2fDevices => to_json($_2fDevices) } );
+            $self->userLogger->notice(
+                "TOTP $TOTPName unregistration succeeds for $user");
+            return [
+                200,
+                [
+                    'Content-Type'   => 'application/json',
+                    'Content-Length' => 12,
+                ],
+                ['{"result":1}']
+            ];
+        }
+        else {
+            $self->p->sendError( $req, '2FDeviceNotFound', 200 );
+        }
     }
     else {
         $self->logger->error("Unknown TOTP action -> $action");

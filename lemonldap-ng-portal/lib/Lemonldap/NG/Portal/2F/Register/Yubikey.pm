@@ -42,7 +42,7 @@ sub run {
             RAW_ERROR       => 'notAuthorized',
             AUTH_ERROR_TYPE => 'warning',
         }
-    ) unless $self->allowedUpdateSfa($req, $action);
+    ) unless $self->allowedUpdateSfa( $req, $action );
 
     if ( $action eq 'register' ) {
         my $otp     = $req->param('otp');
@@ -190,18 +190,26 @@ sub run {
             if ( $_->{epoch} eq $epoch ) { $UBKName = $_->{name}; () }
             else                         { $_ }
         } @$_2fDevices;
-        $self->logger->debug(
+        if ($UBKName) {
+            $self->logger->debug(
 "Delete 2F Device: { type => 'UBK', epoch => $epoch, name => $UBKName }"
-        );
-        $self->p->updatePersistentSession( $req,
-            { _2fDevices => to_json($_2fDevices) } );
-        $self->userLogger->notice(
-            "Yubikey $UBKName unregistration succeeds for $user");
-        return [
-            200,
-            [ 'Content-Type' => 'application/json', 'Content-Length' => 12, ],
-            ['{"result":1}']
-        ];
+            );
+            $self->p->updatePersistentSession( $req,
+                { _2fDevices => to_json($_2fDevices) } );
+            $self->userLogger->notice(
+                "Yubikey $UBKName unregistration succeeds for $user");
+            return [
+                200,
+                [
+                    'Content-Type'   => 'application/json',
+                    'Content-Length' => 12,
+                ],
+                ['{"result":1}']
+            ];
+        }
+        else {
+            $self->p->sendError( $req, '2FDeviceNotFound', 200 );
+        }
     }
     else {
         $self->logger->error("Unknown Yubikey action -> $action");
