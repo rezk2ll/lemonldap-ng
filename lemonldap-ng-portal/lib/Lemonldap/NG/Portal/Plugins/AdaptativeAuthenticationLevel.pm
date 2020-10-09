@@ -1,5 +1,6 @@
 package Lemonldap::NG::Portal::Plugins::AdaptativeAuthenticationLevel;
 
+use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
@@ -29,6 +30,7 @@ sub init {
         next unless $rule;
         $self->rules->{$_} = $rule;
     }
+    
     return 1;
 }
 
@@ -74,9 +76,7 @@ sub adaptAuthenticationLevel {
                 'authenticationLevel' => $updatedAuthenticationLevel
             }
         );
-
     }
-
     return PE_OK;
 }
 

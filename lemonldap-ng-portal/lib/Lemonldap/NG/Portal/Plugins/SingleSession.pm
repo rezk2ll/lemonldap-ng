@@ -7,14 +7,16 @@ use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
-  PE_TOKENEXPIRED
   PE_NOTOKEN
+  PE_TOKENEXPIRED
 );
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.10';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin',
-  'Lemonldap::NG::Portal::Lib::OtherSessions';
+extends qw(
+  Lemonldap::NG::Portal::Main::Plugin
+  Lemonldap::NG::Portal::Lib::OtherSessions
+);
 
 use constant endAuth => 'run';
 

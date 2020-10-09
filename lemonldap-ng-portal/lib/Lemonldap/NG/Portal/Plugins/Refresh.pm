@@ -3,14 +3,18 @@ package Lemonldap::NG::Portal::Plugins::Refresh;
 use strict;
 use Mouse;
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.10';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin',
-  'Lemonldap::NG::Portal::Lib::OtherSessions';
+extends qw(
+  Lemonldap::NG::Portal::Main::Plugin
+  Lemonldap::NG::Portal::Lib::OtherSessions
+);
 
 sub init {
     my ($self) = @_;
     $self->addUnauthRoute( refreshsessions => 'run', ['POST'] );
+
+    return 1;
 }
 
 sub run {

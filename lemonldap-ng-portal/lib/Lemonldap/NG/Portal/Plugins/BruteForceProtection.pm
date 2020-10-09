@@ -2,9 +2,12 @@ package Lemonldap::NG::Portal::Plugins::BruteForceProtection;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_WAIT);
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK
+  PE_WAIT
+);
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -30,11 +33,13 @@ sub init {
         );
         return 0;
     }
+
     unless ( $self->conf->{loginHistoryEnabled} ) {
         $self->logger->error(
             '"BruteForceProtection" plugin enabled WITHOUT "History" plugin');
         return 0;
     }
+
     unless ( $self->conf->{failedLoginNumber} >
         $self->conf->{bruteForceProtectionMaxFailed} )
     {
@@ -45,6 +50,7 @@ sub init {
               . ')' );
         return 0;
     }
+
     if ( $self->conf->{bruteForceProtectionIncrementalTempo} ) {
         my $lockTimes = @{ $self->lockTimes } =
           sort { $a <=> $b }
@@ -87,6 +93,7 @@ sub init {
     else {
         $self->maxAge( $self->conf->{bruteForceProtectionMaxAge} );
     }
+    
     return 1;
 }
 

@@ -107,7 +107,7 @@ sub init {
             '::CertificateResetByMail::' . $self->conf->{registerDB}
         )
     ) or return 0;
-
+    
     return 1;
 }
 

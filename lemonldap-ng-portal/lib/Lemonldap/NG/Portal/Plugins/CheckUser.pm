@@ -3,10 +3,10 @@ package Lemonldap::NG::Portal::Plugins::CheckUser;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_BADCREDENTIALS
-  PE_MALFORMEDUSER
-  PE_TOKENEXPIRED
   PE_NOTOKEN
+  PE_TOKENEXPIRED
+  PE_MALFORMEDUSER
+  PE_BADCREDENTIALS
 );
 
 our $VERSION = '2.0.10';
@@ -49,8 +49,8 @@ sub persistentAttrs {
 
 sub init {
     my ($self) = @_;
-    $self->addAuthRoute( checkuser => 'check',               ['POST'] );
-    $self->addAuthRouteWithRedirect( checkuser => 'display', ['GET'] );
+    $self->addAuthRoute( checkuser => 'check', ['POST'] )
+      ->addAuthRouteWithRedirect( checkuser => 'display', ['GET'] );
 
     # Parse checkUser rules
     $self->idRule(

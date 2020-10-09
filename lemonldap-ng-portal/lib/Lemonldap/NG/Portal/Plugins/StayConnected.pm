@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.10';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -45,6 +45,7 @@ has timeout => (
 sub init {
     my ($self) = @_;
     $self->addAuthRoute( registerbrowser => 'storeBrowser', ['POST'] );
+
     return 1;
 }
 
