@@ -329,10 +329,10 @@ $(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coff
 	@echo "Compressing $*.js"
 	if test "$(UGLIFYJSVERSION)" = 2; then \
 		cd `dirname $*`; \
-		uglifyjs `basename $*`.js --compress --mangle --comments='/Copyr/i' --source-map `basename $*`.min.js.map -o `basename $*`.min.js; \
+		uglifyjs `basename $*`.js --compress --mangle --comments '/Copyr/i' --source-map `basename $*`.min.js.map -o `basename $*`.min.js; \
 	else \
 		cd `dirname $*`; \
-		uglifyjs `basename $*`.js --compress --mangle --comments='/Copyr/i' --source-map -o `basename $*`.min.js; \
+		uglifyjs `basename $*`.js --compress --mangle --comments '/Copyr/i' --source-map -o `basename $*`.min.js; \
 	fi
 
 fastcgi-server/man/llng-fastcgi-server.8p: fastcgi-server/sbin/llng-fastcgi-server
