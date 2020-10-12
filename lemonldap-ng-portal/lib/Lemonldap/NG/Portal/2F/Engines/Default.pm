@@ -526,7 +526,8 @@ sub _displayRegister {
             $_->{type} =~ s/^Yubikey$/UBK/;
         }
     }
-
+    $displayUpgBtn = 0 unless $self->conf->{upgradeSession};
+    
     # Display template
     return $self->p->sendHtml(
         $req,
