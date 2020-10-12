@@ -65,14 +65,14 @@ sub confirmRenew {
 # RUNNING METHOD
 
 sub ask {
-    my ( $self, $req, $url, $message, $buttonlabel ) = @_;
+    my ( $self, $req, $form_action, $message, $buttonlabel ) = @_;
 
     # Check if auth is already running
-    if ( $req->param('upgrading') or $req->param('kerberos') ) {
+    # and verify token
+    return $self->confirm($req)
+      if ( $req->param('upgrading') or $req->param('kerberos') );
 
-        # verify token
-        return $self->confirm($req);
-    }
+    my $url = $req->param('url') || '';
 
     # Display form
     return $self->p->sendHtml(
@@ -81,13 +81,13 @@ sub ask {
         params => {
             MAIN_LOGO    => $self->conf->{portalMainLogo},
             LANGS        => $self->conf->{showLanguages},
-            FORMACTION   => $url,
+            FORMACTION   => $form_action,
             PORTALBUTTON => 1,
             MSG          => $message,
             BUTTON       => $buttonlabel,
             CONFIRMKEY   => $self->p->stamp,
             PORTAL       => $self->conf->{portal},
-            URL          => $req->param('url'),
+            URL          => $url
         }
     );
 }

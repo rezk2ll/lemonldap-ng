@@ -4,7 +4,7 @@ use IO::String;
 use Data::Dumper;
 
 require 't/test-lib.pm';
-my $maintests = 56;
+my $maintests = 76;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -24,8 +24,10 @@ SKIP: {
                 logLevel               => 'error',
                 totp2fSelfRegistration => 1,
                 totp2fActivation       => 1,
+                totp2fAuthnLevel       => 1,
                 u2fSelfRegistration    => 1,
                 u2fActivation          => 1,
+                u2fAuthnLevel          => 5,
                 sfManagerRule          => '$uid eq "dwho"',
                 portalMainLogo         => 'common/logos/logo_llng_old.png',
             }
@@ -306,6 +308,9 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         ),
         'Delete TOTP query'
     );
+    eval { $data = JSON::from_json( $res->[2]->[0] ) };
+    ok( not($@), ' Content is JSON' )
+      or explain( [ $@, $res->[2] ], 'JSON content' );
     ok( $data->{result} == 1, 'TOTP is unregistered' )
       or explain( $data, '"result":1' );
 
@@ -324,6 +329,9 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok( $res->[2]->[0] =~ qr%<a href="/2fregisters/totp" class="nodecor">%,
         'Found 2fregisters/totp link' )
       or print STDERR Dumper($res);
+    ok( $res->[2]->[0] =~ qr%<span trspan="upgradeSession">%,
+        'Found upgradeSession button' )
+      or print STDERR Dumper($res);
 
     # One 2F device must be registered
     @sf = map m%<span device=\'(TOTP|U2F)\' epoch=\'\d{10}\'%g, $res->[2]->[0];
@@ -331,7 +339,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
       or print STDERR Dumper($res);
     ok( $sf[0] eq 'U2F', 'U2F device found' ) or print STDERR Dumper( \@sf );
 
-    # Unregister U2F key
+    # Try to unregister the U2F key
     ok( $res->[2]->[0] =~ qr%U2F.*epoch.*(\d{10})%m, "U2F key epoch $1 found" )
       or print STDERR Dumper( $res->[2]->[0] );
     ok(
@@ -343,19 +351,147 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         ),
         'Delete U2F key query'
     );
-    ok( $data->{result} == 1, 'U2F key is unregistered' )
+    eval { $data = JSON::from_json( $res->[2]->[0] ) };
+    ok( not($@), ' Content is JSON' )
+      or explain( [ $@, $res->[2] ], 'JSON content' );
+    ok(
+        $data->{error} eq 'notAuthorizedAuthLevel',
+        'Not authorized to unregister an U2F key'
+    ) or explain( $data, 'Bad result' );
+
+    # Try to upgrade
+    # ----------------------
+    ok(
+        $res = $client->_get(
+            '/upgradesession',
+            accept => 'text/html',
+            cookie => "lemonldap=$id",
+        ),
+        'Upgrade session query'
+    );
+    ( $host, $url, $query ) =
+      expectForm( $res, undef, '/upgradesession', 'confirm' );
+
+    # Accept session upgrade
+    ok(
+        $res = $client->_post(
+            '/upgradesession',
+            IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+            cookie => "lemonldap=$id",
+        ),
+        'Accept session upgrade query'
+    );
+    ( $host, $url, $query ) = expectForm( $res, '#', undef, 'upgrading' );
+    $query = $query . "&user=dwho&password=dwho";
+
+    ok(
+        $res = $client->_post(
+            '/upgradesession',
+            IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+            cookie => "lemonldap=$id",
+        ),
+        'Post login'
+    );
+    ( $host, $url, $query ) = expectForm( $res, undef, '/u2fcheck', 'token' );
+
+    # Get challenge
+    ok( $res->[2]->[0] =~ /^.*"keyHandle".*$/m, ' get keyHandle' );
+    $data = $&;
+    eval { $data = JSON::from_json($data) };
+    ok( not($@), ' Content is JSON' )
+      or explain( [ $@, $data ], 'JSON content' );
+
+    # Build U2F signature
+    $r =
+      $tester->sign( $data->{appId}, $data->{challenge},
+        $data->{registeredKeys}->[0]->{keyHandle} );
+    ok( $r->is_success, ' Good challenge value' )
+      or diag( $r->error_message );
+    my $sign = JSON::to_json( {
+            errorCode     => 0,
+            signatureData => $r->signature_data,
+            clientData    => $r->client_data,
+            keyHandle     => $data->{registeredKeys}->[0]->{keyHandle},
+        }
+    );
+    $sign =
+      Lemonldap::NG::Common::FormEncode::build_urlencoded( signature => $sign );
+    $query =~ s/signature=/$sign/e;
+    $query =~ s/challenge=/challenge=$data->{challenge}/;
+
+    # POST result
+    ok(
+        $res = $client->_post(
+            '/u2fcheck',
+            IO::String->new($query),
+            length => length($query),
+        ),
+        'Push U2F signature'
+    );
+    ok(
+        $res = $client->_get(
+            '/2fregisters',
+            cookie => "lemonldap=$id",
+            accept => 'text/html',
+        ),
+        'Form 2fregisters'
+    );
+
+    # Just U2F device left
+    @sf = map m%<span device=\'U2F\' epoch=\'\d{10}\'%g, $res->[2]->[0];
+    ok( scalar @sf == 1, 'U2F device found' )
+      or print STDERR Dumper($res);
+
+    # Try to unregister the U2F key
+    ok( $res->[2]->[0] =~ qr%U2F.*epoch.*(\d{10})%m, "U2F key epoch $1 found" )
+      or print STDERR Dumper( $res->[2]->[0] );
+    ok(
+        $res = $client->_post(
+            '/2fregisters/u/delete',
+            IO::String->new("epoch=$1"),
+            length => 16,
+            cookie => "lemonldap=$id",
+        ),
+        'Delete U2F key query'
+    );
+    eval { $data = JSON::from_json( $res->[2]->[0] ) };
+    ok( not($@), ' Content is JSON' )
+      or explain( [ $@, $res->[2] ], 'JSON content' );
+    ok( $data->{result} == 1, 'U2F is unregistered' )
       or explain( $data, '"result":1' );
 
-    # No more 2F device must be registered
-    @sf = map m%<span device=\'(TOTP|U2F)\' epoch=\'\d{10}\'%g, $res->[2]->[0];
+    # Get 2F register form
+    ok(
+        $res = $client->_get(
+            '/2fregisters',
+            cookie => "lemonldap=$id",
+            accept => 'text/html',
+        ),
+        'Form 2fregisters'
+    );
+    ok( $res->[2]->[0] =~ /2fregistration\.(?:min\.)?js/,
+        'Found 2f registration js' );
+    ok( $res->[2]->[0] =~ qr%<a href="/2fregisters/u" class="nodecor">%,
+        'Found 2fregisters/u link' )
+      or print STDERR Dumper($res);
+    ok( $res->[2]->[0] =~ qr%<a href="/2fregisters/totp" class="nodecor">%,
+        'Found 2fregisters/totp link' )
+      or print STDERR Dumper($res);
+
+    # No 2F device left
+    my @sf = map m%<span device=\'(TOTP|U2F)\' epoch=\'\d{10}\'%g,
+      $res->[2]->[0];
     ok( scalar @sf == 0, 'No 2F device found' )
       or print STDERR Dumper($res);
 
     $client->logout($id);
 }
+
 count($maintests);
-
 clean_sessions();
-
 done_testing( count() );
 

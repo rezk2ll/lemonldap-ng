@@ -519,7 +519,7 @@ sub _displayRegister {
                   && $self->conf->{ $t . '2fSelfRegistration' };
 
                 # Display upgrade button
-                $displayUpgBtn ||= $self->conf->{ $t . '2fAuthnLevel' } >
+                $displayUpgBtn ||= $self->conf->{ $t . '2fAuthnLevel' } && $self->conf->{ $t . '2fAuthnLevel' } >
                   $req->userData->{authenticationLevel};
             }
             $action ||= $_->{delAllowed};
