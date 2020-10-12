@@ -500,8 +500,9 @@ sub _displayRegister {
         $self->userLogger->warn("Do not diplay 2F Devices!");
     }
 
-    # Parse second factors to display delete button if allowed
-    my $action = '';
+   # Parse second factors to display delete button if allowed and upgrade button
+    my $displayUpgBtn = 0;
+    my $action        = '';
     foreach
       my $type ( split /,\s*/, $self->conf->{available2FSelfRegistration} )
     {
@@ -511,10 +512,15 @@ sub _displayRegister {
                 my $t = lc($type);
                 $t =~ s/2f$//i;
 
+                # Display delete button
                 $_->{delAllowed} =
                      $self->conf->{ $t . '2fActivation' }
                   && $self->conf->{ $t . '2fUserCanRemoveKey' }
                   && $self->conf->{ $t . '2fSelfRegistration' };
+
+                # Display upgrade button
+                $displayUpgBtn ||= $self->conf->{ $t . '2fAuthnLevel' } >
+                  $req->userData->{authenticationLevel};
             }
             $action ||= $_->{delAllowed};
             $_->{type} =~ s/^Yubikey$/UBK/;
@@ -533,6 +539,7 @@ sub _displayRegister {
             SFDEVICES    => $_2fDevices,
             ACTION       => $action,
             REG_REQUIRED => $req->data->{sfRegRequired},
+            DISPLAY_UPG  => $displayUpgBtn
         }
     );
 }

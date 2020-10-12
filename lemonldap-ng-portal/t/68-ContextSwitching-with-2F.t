@@ -369,7 +369,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     eval { $res = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), 'Content is JSON' )
       or explain( $res->[2]->[0], 'JSON content' );
-    ok( $res->{error} eq 'notAuthorized', 'Not authorized to register a TOTP' )
+    ok( $res->{error} eq 'notAuthorizedAuthLevel', 'Not authorized to register a TOTP' )
       or explain( $res, 'Bad result' );
 
     # Try to unregister TOTP
@@ -386,7 +386,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok( not($@), ' Content is JSON' )
       or explain( [ $@, $res->[2] ], 'JSON content' );
     ok(
-        $data->{error} eq 'notAuthorized',
+        $data->{error} eq 'notAuthorizedAuthLevel',
         'Not authorized to unregister a TOTP'
     ) or explain( $data, 'Bad result' );
 
@@ -404,7 +404,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     eval { $data = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), ' Content is JSON' )
       or explain( [ $@, $res->[2] ], 'JSON content' );
-    ok( $data->{error} eq 'notAuthorized', 'Not authorized to verify a TOTP' )
+    ok( $data->{error} eq 'notAuthorizedAuthLevel', 'Not authorized to verify a TOTP' )
       or explain( $data, 'Bad result' );
 
     ## Try to register an U2F key
@@ -437,7 +437,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok( not($@), ' Content is JSON' )
       or explain( [ $@, $res->[2] ], 'JSON content' );
     ok(
-        $data->{error} eq 'notAuthorized',
+        $data->{error} eq 'notAuthorizedAuthLevel',
         'Not authorized to register an U2F key'
     ) or explain( $data, 'Bad result' );
 
@@ -455,7 +455,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok( not($@), ' Content is JSON' )
       or explain( [ $@, $res->[2] ], 'JSON content' );
     ok(
-        $data->{error} eq 'notAuthorized',
+        $data->{error} eq 'notAuthorizedAuthLevel',
         'Not authorized to unregister an U2F key'
     ) or explain( $data, 'Bad result' );
 

@@ -207,6 +207,7 @@
 "noNotification":"None accepted notification found",
 "notAnEncryptedValue":"No es un valor encriptado",
 "notAuthorized":"Usted no está autorizado a hacer esto",
+"notAuthorizedAuthLevel":"This action requires a higher authentication level",
 "notFound":"No encontrado: página no disponible",
 "noTOTPFound":"TOTP no encontrado",
 "noU2FKeyFound":"Llave U2F no encontrada",

@@ -207,6 +207,7 @@
 "noNotification":"None accepted notification found",
 "notAnEncryptedValue":"It is not an encrypted value",
 "notAuthorized":"您没有权限进行该项操作",
+"notAuthorizedAuthLevel":"This action requires a higher authentication level",
 "notFound":"无法找到：您请求的网页不存在。",
 "noTOTPFound":"No TOTP found",
 "noU2FKeyFound":"No U2F key found",

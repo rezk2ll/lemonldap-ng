@@ -34,7 +34,7 @@ sub run {
       unless $user;
 
     # Check if U2F key can be updated
-    return $self->p->sendError( $req, 'notAuthorized', 400 )
+    return $self->p->sendError( $req, 'notAuthorizedAuthLevel', 400 )
       unless $self->allowedUpdateSfa( $req, $action );
 
     if ( $action eq 'register' ) {

@@ -207,6 +207,7 @@
 "noNotification":"None accepted notification found",
 "notAnEncryptedValue":"It is not an encrypted value",
 "notAuthorized":"You're not authorized to do this",
+"notAuthorizedAuthLevel":"This action requires a higher authentication level",
 "notFound":"Không tìm thấy: bạn cố gắng truy cập vào một trang không có sẵn",
 "noTOTPFound":"Đăng xuất khỏi các ứng dụng khác",
 "noU2FKeyFound":"No U2F key found",

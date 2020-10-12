@@ -207,6 +207,7 @@
 "noNotification":"Nie znaleziono zaakceptowanego powiadomienia",
 "notAnEncryptedValue":"To nie jest zaszyfrowana wartość",
 "notAuthorized":"Nie masz do tego uprawnień",
+"notAuthorizedAuthLevel":"This action requires a higher authentication level",
 "notFound":"Nie znaleziono: próbujesz uzyskać dostęp do niedostępnej strony",
 "noTOTPFound":"Nie znaleziono TOTP",
 "noU2FKeyFound":"Nie znaleziono klucza U2F",

@@ -207,6 +207,7 @@
 "noNotification":"Kabul edilen bildirim bulunamadı",
 "notAnEncryptedValue":"Bu şifrelenmiş bir değer değil",
 "notAuthorized":"Bunu yapmak için yetkili değilsiniz",
+"notAuthorizedAuthLevel":"This action requires a higher authentication level",
 "notFound":"Bulunamadı: mevcut olmayan bir sayfaya erişmeyi deniyorsunuz",
 "noTOTPFound":"TOTP bulunamadi",
 "noU2FKeyFound":"U2F anahtarı bulunamadı",

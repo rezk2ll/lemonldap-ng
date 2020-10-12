@@ -39,7 +39,7 @@ sub run {
         $req, 'error',
         params => {
             MAIN_LOGO       => $self->conf->{portalMainLogo},
-            RAW_ERROR       => 'notAuthorized',
+            RAW_ERROR       => 'notAuthorizedAuthLevel',
             AUTH_ERROR_TYPE => 'warning',
         }
     ) unless $self->allowedUpdateSfa( $req, $action );

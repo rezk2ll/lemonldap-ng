@@ -64,6 +64,12 @@
 </div>
 
 <div class="buttons">
+  <TMPL_IF NAME="DISPLAY_UPG">
+    <a href="<TMPL_VAR NAME="PORTAL_URL">upgradesession" class="btn btn-success" role="button">
+      <span class="fa fa-sign-in"></span>
+      <span trspan="upgradeSession">Upgrade session</span>
+    </a>
+  </TMPL_IF>
   <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1&skin=<TMPL_VAR NAME="SKIN">" class="btn btn-primary" role="button">
     <span class="fa fa-home"></span>
     <span trspan="goToPortal">Go to portal</span>
