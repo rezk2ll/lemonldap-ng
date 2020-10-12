@@ -603,9 +603,9 @@ sub tree {
                     nodes => [
                         'stayConnected',
                         'portalStatus',
-			'adaptativeAuthenticationLevelRules',
                         'upgradeSession',
                         'refreshSessions',
+                        'adaptativeAuthenticationLevelRules',
                         {
                             title => 'portalServers',
                             help  => 'portalservers.html',
