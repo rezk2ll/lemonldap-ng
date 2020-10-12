@@ -208,7 +208,7 @@ sub run {
             ];
         }
         else {
-            $self->p->sendError( $req, '2FDeviceNotFound', 200 );
+            $self->p->sendError( $req, '2FDeviceNotFound', 400 );
         }
     }
     else {

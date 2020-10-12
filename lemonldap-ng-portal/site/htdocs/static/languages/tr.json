@@ -93,6 +93,7 @@
 "PE101":"Parola izin verilmeyen karakterler içeriyor",
 "PE102":"Oturum yükseltilmeli",
 "PE103":"Hesabınız için ikinci faktör kullanılabilir değil",
+"2FDeviceNotFound":"2F device not found",
 "2fRegRequired":"Bu servis iki adımlı kimlik doğrulama gerektiriyor. Şimdi bir cihaz ekleyin ve ardından portala geri dönün",
 "accept":"Kabul Et",
 "accessDenied":"Bu uygulamaya erişim yetkiniz yok",

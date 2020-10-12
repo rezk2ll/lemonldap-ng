@@ -93,6 +93,7 @@
 "PE101":"Le mot de passe contient des caractères interdits",
 "PE102":"Mise à niveau de la session",
 "PE103":"Aucun second facteur disponible pour votre compte",
+"2FDeviceNotFound":"Second facteur non trouvé",
 "2fRegRequired":"Ce service requiert une authentification à deux facteurs. Enregistrez un équipement ici et retournez au portail.",
 "accept":"Accepter",
 "accessDenied":"Vous n'avez pas les droits d'accès à cette application",

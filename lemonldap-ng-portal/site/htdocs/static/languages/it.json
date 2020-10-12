@@ -93,6 +93,7 @@
 "PE101":"Password contains not allowed characters",
 "PE102":"Session must be upgraded",
 "PE103":"No second factors available for your account",
+"2FDeviceNotFound":"2F device not found",
 "2fRegRequired":"Questo servizio richiede un'autenticazione a doppio fattore. Registrare un dispositivo ora, quindi tornare al portale.",
 "accept":"Accetta",
 "accessDenied":"Non hai un'autorizzazione di accesso per questa applicazione",
