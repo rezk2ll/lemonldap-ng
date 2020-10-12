@@ -22,6 +22,8 @@ can be forbidden to assume.
       identities like CEO, administrators or anonymous/protected users.
    -  **Unrestricted users rule**: Rule to define which users can switch
       context of ALL users. ``Identities use rule`` is bypassed.
+   -  **Allow 2FA modifications**: This option must be enabled to append,
+      verify or delete a second factor during context switching.
    -  **Stop by logout**: Stop context switching by sending a logout
       request.
 
