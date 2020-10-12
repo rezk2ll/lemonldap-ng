@@ -2610,7 +2610,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'portalDisplayCertificateResetByMail' => {
             'default' => 0,
-            'type'    => 'boolOrExpr'
+            'type'    => 'bool'
         },
         'portalDisplayChangePassword' => {
             'default' => '$_auth =~ /^(LDAP|DBI|Demo)$/',

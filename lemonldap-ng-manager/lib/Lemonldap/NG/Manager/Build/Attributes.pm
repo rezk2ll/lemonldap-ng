@@ -1085,9 +1085,9 @@ sub attributes {
             documentation => 'Display logout tab in portal',
         },
         portalDisplayCertificateResetByMail => {
-            type          => 'boolOrExpr',
+            type          => 'bool',
             default       => 0,
-            documentation => 'Display Certificate Reset by mail tab in portal',
+            documentation => 'Display certificate reset by mail button in portal',
         },
         portalDisplayRegister => {
             default       => 1,
