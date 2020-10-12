@@ -380,8 +380,8 @@ sub tests {
                 && $conf->{samlServicePublicKeySig} );
             return 1;
         },
+        
         samlSignatureOverrideNeedsCertificate => sub {
-
             return 1 if $conf->{samlServicePublicKeySig} =~ /CERTIFICATE/;
 
             my @offenders;
@@ -399,20 +399,23 @@ sub tests {
                     push @offenders, $sp;
                 }
             }
-            return 1 unless @offenders;
-            return ( 0,
-                    "Cannot set non-default signature method on "
+            return @offenders
+              ? (
+                0,
+                "Cannot set non-default signature method on "
                   . join( ", ", @offenders )
-                  . " unless SAML signature key is in certificate form" );
+                  . " unless SAML signature key is in certificate form"
+              )
+              : 1;
         },
-        samlSignatureUnsupportedAlg => sub {
 
-            my $oldlasso = eval
+        samlSignatureUnsupportedAlg => sub {
+            return 1
+              unless eval
 'use Lasso; Lasso::check_version( 2, 5, 1, Lasso::Constants::CHECK_VERSION_NUMERIC) ? 0:1';
-            return 1 unless ($oldlasso);
 
             my $allsha1 = 1;
-            $allsha1 = 0
+            undef $allsha1
               unless $conf->{samlServiceSignatureMethod} eq "RSA_SHA1";
 
             for my $idp ( keys %{ $conf->{samlIDPMetaDataOptions} } ) {
@@ -423,7 +426,7 @@ sub tests {
                         ->{samlIDPMetaDataOptionsSignatureMethod} ne
                         "RSA_SHA1" )
                     {
-                        $allsha1 = 0;
+                        undef $allsha1;
                         break;
                     }
                 }
@@ -435,15 +438,17 @@ sub tests {
                     if ( $conf->{samlSPMetaDataOptions}->{$sp}
                         ->{samlSPMetaDataOptionsSignatureMethod} ne "RSA_SHA1" )
                     {
-                        $allsha1 = 0;
+                        undef $allsha1;
                         break;
                     }
                 }
             }
-            return 1 if $allsha1;
-            return ( 0,
+            return $allsha1
+              ? 1
+              : (
+                0,
                 "Algorithms other than SHA1 are only supported on Lasso>=2.5.1"
-            );
+              );
         },
 
         # Try to parse combination with declared modules
