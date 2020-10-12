@@ -1118,7 +1118,7 @@ sub attributes {
         portalDisplayRefreshMyRights => {
             default       => 1,
             type          => 'bool',
-            documentation => 'Displays the link to refresh the user session',
+            documentation => 'Display link to refresh the user session',
         },
 
         # Cookies
