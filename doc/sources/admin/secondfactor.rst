@@ -48,9 +48,9 @@ rule.
 Self-care on Portal
 -------------------
 
-User may register second facrots themselves on the Portal by using the 2FA Manager.
+User may register second factors themselves on the Portal by using the 2FA Manager.
 
-The link will be displayed if at least a SFA module is enabled. You can set a
+The link will be displayed if at least one SFA module is enabled. You can set a
 rule to display or not the link.
 
 Session upgrade through 2FA
