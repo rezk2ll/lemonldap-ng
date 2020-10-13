@@ -72,7 +72,11 @@ sub ask {
     return $self->confirm($req)
       if ( $req->param('upgrading') or $req->param('kerberos') );
 
-    my $url = $req->param('url') || '';
+    my $url    = $req->param('url') || '';
+    my $action = ( $message =~ /^askTo(\w+)$/ )[0];
+    $self->logger->debug(" -> $action required");
+    $self->logger->debug(" -> Skip confirmation is enabled")
+      if $self->conf->{"skip${action}Confirmation"};
 
     # Display form
     return $self->p->sendHtml(
@@ -87,7 +91,14 @@ sub ask {
             BUTTON       => $buttonlabel,
             CONFIRMKEY   => $self->p->stamp,
             PORTAL       => $self->conf->{portal},
-            URL          => $url
+            URL          => $url,
+            (
+                $self->conf->{"skip${action}Confirmation"}
+                ? ( CUSTOM_SCRIPT =>
+qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/autoRenew.min.js"></script>'
+                  )
+                : ()
+            )
         }
     );
 }
