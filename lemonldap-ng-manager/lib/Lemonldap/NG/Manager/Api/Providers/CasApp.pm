@@ -195,13 +195,6 @@ sub replaceCasApp {
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($replace);
 
-    return $self->sendError( $req, 'Invalid input: confKey is missing', 400 )
-      unless ( defined $replace->{confKey} );
-
-    return $self->sendError( $req, 'Invalid input: confKey is not a string',
-        400 )
-      if ( ref $replace->{confKey} );
-
     $self->logger->debug(
         "[API] CAS App $confKey configuration replace requested");
 

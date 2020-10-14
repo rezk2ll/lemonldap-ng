@@ -135,7 +135,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SamlSp'
+              $ref: '#/components/schemas/SamlSpReplace'
       responses:
         204:
           $ref: '#/components/responses/NoContent'
@@ -327,7 +327,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OidcRp'
+              $ref: '#/components/schemas/OidcRpReplace'
       responses:
         204:
           $ref: '#/components/responses/NoContent'
@@ -469,7 +469,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CasApp'
+              $ref: '#/components/schemas/CasAppReplace'
       responses:
         204:
           $ref: '#/components/responses/NoContent'
@@ -1067,6 +1067,24 @@ components:
             $ref: '#/components/schemas/samlAttribute'
         options:
           $ref: '#/components/schemas/samlOptions'
+    SamlSpReplace:
+      type: object
+      required:
+      - metadata
+      properties:
+        metadata:
+          type: string
+          example: '<?xml version="1.0"?><EntityDescriptor...'
+        macros:
+          type: object
+          example:
+            myMacroName: "$macro(rule)"
+        exportedAttributes:
+          type: object
+          items:
+            $ref: '#/components/schemas/samlAttribute'
+        options:
+          $ref: '#/components/schemas/samlOptions'
     samlOptions:
       type: object
       properties:
@@ -1257,6 +1275,30 @@ components:
             myMacroName: "$macro(rule)"
         options:
           $ref: '#/components/schemas/OidcOptions'
+    OidcRpReplace:
+      type: object
+      required:
+      - clientId
+      - redirectUris
+      properties:
+        clientId:
+          type: string
+        exportedVars:
+          type: object
+          example:
+            email: mail
+            family_name: sn
+            name: cn
+        extraClaims:
+          type: object
+          example:
+            myscope: "myattr1 myattr2 myattr3"
+        macros:
+          type: object
+          example:
+            myMacroName: "$macro(rule)"
+        options:
+          $ref: '#/components/schemas/OidcOptions'
 
     CasApp:
       required:
@@ -1278,6 +1320,21 @@ components:
         options:
           $ref: '#/components/schemas/casOptions'
     CasAppUpdate:
+      type: object
+      properties:
+        macros:
+          type: object
+          example:
+            myMacroName: "$macro(rule)"
+        exportedVars:
+          type: object
+          default:
+            cn: cn
+            mail: mail
+            uid: uid
+        options:
+          $ref: '#/components/schemas/casOptions'
+    CasAppReplace:
       type: object
       properties:
         macros:

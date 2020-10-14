@@ -715,6 +715,28 @@
     }
   }
 };
+            defs.CasAppReplace = {
+  "type" : "object",
+  "properties" : {
+    "macros" : {
+      "type" : "object",
+      "example" : {
+        "myMacroName" : "$macro(rule)"
+      }
+    },
+    "exportedVars" : {
+      "type" : "object",
+      "default" : {
+        "cn" : "cn",
+        "mail" : "mail",
+        "uid" : "uid"
+      }
+    },
+    "options" : {
+      "$ref" : "#/components/schemas/casOptions"
+    }
+  }
+};
             defs.CasAppUpdate = {
   "type" : "object",
   "properties" : {
@@ -977,6 +999,38 @@
     }
   }
 };
+            defs.OidcRpReplace = {
+  "required" : [ "clientId", "redirectUris" ],
+  "type" : "object",
+  "properties" : {
+    "clientId" : {
+      "type" : "string"
+    },
+    "exportedVars" : {
+      "type" : "object",
+      "example" : {
+        "email" : "mail",
+        "family_name" : "sn",
+        "name" : "cn"
+      }
+    },
+    "extraClaims" : {
+      "type" : "object",
+      "example" : {
+        "myscope" : "myattr1 myattr2 myattr3"
+      }
+    },
+    "macros" : {
+      "type" : "object",
+      "example" : {
+        "myMacroName" : "$macro(rule)"
+      }
+    },
+    "options" : {
+      "$ref" : "#/components/schemas/OidcOptions"
+    }
+  }
+};
             defs.OidcRpUpdate = {
   "type" : "object",
   "properties" : {
@@ -1105,6 +1159,31 @@
       "type" : "object",
       "example" : {
         "myMacroName" : "$macro(rule)"
+      }
+    },
+    "options" : {
+      "$ref" : "#/components/schemas/samlOptions"
+    }
+  }
+};
+            defs.SamlSpReplace = {
+  "required" : [ "metadata" ],
+  "type" : "object",
+  "properties" : {
+    "metadata" : {
+      "type" : "string",
+      "example" : "<?xml version=\"1.0\"?><EntityDescriptor..."
+    },
+    "macros" : {
+      "type" : "object",
+      "example" : {
+        "myMacroName" : "$macro(rule)"
+      }
+    },
+    "exportedAttributes" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/samlAttribute"
       }
     },
     "options" : {
@@ -3233,7 +3312,7 @@ public class CasappApiExample {
         
         CasappApi apiInstance = new CasappApi();
         confKey confKey = ; // confKey | Configuration key of CAS Application that needs to be replaced
-        CasApp body = ; // CasApp | 
+        CasAppReplace body = ; // CasAppReplace | 
         try {
             apiInstance.replaceCasApp(confKey, body);
         } catch (ApiException e) {
@@ -3252,7 +3331,7 @@ public class CasappApiExample {
     public static void main(String[] args) {
         CasappApi apiInstance = new CasappApi();
         confKey confKey = ; // confKey | Configuration key of CAS Application that needs to be replaced
-        CasApp body = ; // CasApp | 
+        CasAppReplace body = ; // CasAppReplace | 
         try {
             apiInstance.replaceCasApp(confKey, body);
         } catch (ApiException e) {
@@ -3268,7 +3347,7 @@ public class CasappApiExample {
   </div> -->
                             <div class="tab-pane" id="examples-Casapp-replaceCasApp-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of CAS Application that needs to be replaced
-CasApp *body = ; //  (optional)
+CasAppReplace *body = ; //  (optional)
 
 CasappApi *apiInstance = [[CasappApi alloc] init];
 
@@ -3289,7 +3368,7 @@ CasappApi *apiInstance = [[CasappApi alloc] init];
 var api = new LemonLdapngManagerApi.CasappApi()
 var confKey = ; // {{confKey}} Configuration key of CAS Application that needs to be replaced
 var opts = { 
-  'body':  // {{CasApp}} 
+  'body':  // {{CasAppReplace}} 
 };
 var callback = function(error, data, response) {
   if (error) {
@@ -3321,7 +3400,7 @@ namespace Example
 
             var apiInstance = new CasappApi();
             var confKey = new confKey(); // confKey | Configuration key of CAS Application that needs to be replaced
-            var body = new CasApp(); // CasApp |  (optional) 
+            var body = new CasAppReplace(); // CasAppReplace |  (optional) 
 
             try
             {
@@ -3344,7 +3423,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiCasappApi();
 $confKey = ; // confKey | Configuration key of CAS Application that needs to be replaced
-$body = ; // CasApp | 
+$body = ; // CasAppReplace | 
 
 try {
     $api_instance->replaceCasApp($confKey, $body);
@@ -3361,7 +3440,7 @@ use WWW::SwaggerClient::CasappApi;
 
 my $api_instance = WWW::SwaggerClient::CasappApi->new();
 my $confKey = ; # confKey | Configuration key of CAS Application that needs to be replaced
-my $body = WWW::SwaggerClient::Object::CasApp->new(); # CasApp | 
+my $body = WWW::SwaggerClient::Object::CasAppReplace->new(); # CasAppReplace | 
 
 eval { 
     $api_instance->replaceCasApp(confKey => $confKey, body => $body);
@@ -3381,7 +3460,7 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = swagger_client.CasappApi()
 confKey =  # confKey | Configuration key of CAS Application that needs to be replaced
-body =  # CasApp |  (optional)
+body =  # CasAppReplace |  (optional)
 
 try: 
     # Replaces a CAS Application
@@ -3440,7 +3519,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/CasApp"
+        "$ref" : "#/components/schemas/CasAppReplace"
       }
     }
   }
@@ -13528,7 +13607,7 @@ public class OidcrpApiExample {
         
         OidcrpApi apiInstance = new OidcrpApi();
         confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
-        OidcRp body = ; // OidcRp | 
+        OidcRpReplace body = ; // OidcRpReplace | 
         try {
             apiInstance.replaceOidcRp(confKey, body);
         } catch (ApiException e) {
@@ -13547,7 +13626,7 @@ public class OidcrpApiExample {
     public static void main(String[] args) {
         OidcrpApi apiInstance = new OidcrpApi();
         confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
-        OidcRp body = ; // OidcRp | 
+        OidcRpReplace body = ; // OidcRpReplace | 
         try {
             apiInstance.replaceOidcRp(confKey, body);
         } catch (ApiException e) {
@@ -13563,7 +13642,7 @@ public class OidcrpApiExample {
   </div> -->
                             <div class="tab-pane" id="examples-Oidcrp-replaceOidcRp-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relaying Party that needs to be replaced
-OidcRp *body = ; //  (optional)
+OidcRpReplace *body = ; //  (optional)
 
 OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
@@ -13584,7 +13663,7 @@ OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 var api = new LemonLdapngManagerApi.OidcrpApi()
 var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relaying Party that needs to be replaced
 var opts = { 
-  'body':  // {{OidcRp}} 
+  'body':  // {{OidcRpReplace}} 
 };
 var callback = function(error, data, response) {
   if (error) {
@@ -13616,7 +13695,7 @@ namespace Example
 
             var apiInstance = new OidcrpApi();
             var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
-            var body = new OidcRp(); // OidcRp |  (optional) 
+            var body = new OidcRpReplace(); // OidcRpReplace |  (optional) 
 
             try
             {
@@ -13639,7 +13718,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiOidcrpApi();
 $confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
-$body = ; // OidcRp | 
+$body = ; // OidcRpReplace | 
 
 try {
     $api_instance->replaceOidcRp($confKey, $body);
@@ -13656,7 +13735,7 @@ use WWW::SwaggerClient::OidcrpApi;
 
 my $api_instance = WWW::SwaggerClient::OidcrpApi->new();
 my $confKey = ; # confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
-my $body = WWW::SwaggerClient::Object::OidcRp->new(); # OidcRp | 
+my $body = WWW::SwaggerClient::Object::OidcRpReplace->new(); # OidcRpReplace | 
 
 eval { 
     $api_instance->replaceOidcRp(confKey => $confKey, body => $body);
@@ -13676,7 +13755,7 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = swagger_client.OidcrpApi()
 confKey =  # confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
-body =  # OidcRp |  (optional)
+body =  # OidcRpReplace |  (optional)
 
 try: 
     # Replaces an OpenID Connect Relaying Party
@@ -13735,7 +13814,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/OidcRp"
+        "$ref" : "#/components/schemas/OidcRpReplace"
       }
     }
   }
@@ -16236,7 +16315,7 @@ public class SamlspApiExample {
         
         SamlspApi apiInstance = new SamlspApi();
         confKey confKey = ; // confKey | Configuration key of SAML Service Provider that needs to be replaced
-        SamlSp body = ; // SamlSp | 
+        SamlSpReplace body = ; // SamlSpReplace | 
         try {
             apiInstance.replaceSamlSp(confKey, body);
         } catch (ApiException e) {
@@ -16255,7 +16334,7 @@ public class SamlspApiExample {
     public static void main(String[] args) {
         SamlspApi apiInstance = new SamlspApi();
         confKey confKey = ; // confKey | Configuration key of SAML Service Provider that needs to be replaced
-        SamlSp body = ; // SamlSp | 
+        SamlSpReplace body = ; // SamlSpReplace | 
         try {
             apiInstance.replaceSamlSp(confKey, body);
         } catch (ApiException e) {
@@ -16271,7 +16350,7 @@ public class SamlspApiExample {
   </div> -->
                             <div class="tab-pane" id="examples-Samlsp-replaceSamlSp-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of SAML Service Provider that needs to be replaced
-SamlSp *body = ; //  (optional)
+SamlSpReplace *body = ; //  (optional)
 
 SamlspApi *apiInstance = [[SamlspApi alloc] init];
 
@@ -16292,7 +16371,7 @@ SamlspApi *apiInstance = [[SamlspApi alloc] init];
 var api = new LemonLdapngManagerApi.SamlspApi()
 var confKey = ; // {{confKey}} Configuration key of SAML Service Provider that needs to be replaced
 var opts = { 
-  'body':  // {{SamlSp}} 
+  'body':  // {{SamlSpReplace}} 
 };
 var callback = function(error, data, response) {
   if (error) {
@@ -16324,7 +16403,7 @@ namespace Example
 
             var apiInstance = new SamlspApi();
             var confKey = new confKey(); // confKey | Configuration key of SAML Service Provider that needs to be replaced
-            var body = new SamlSp(); // SamlSp |  (optional) 
+            var body = new SamlSpReplace(); // SamlSpReplace |  (optional) 
 
             try
             {
@@ -16347,7 +16426,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiSamlspApi();
 $confKey = ; // confKey | Configuration key of SAML Service Provider that needs to be replaced
-$body = ; // SamlSp | 
+$body = ; // SamlSpReplace | 
 
 try {
     $api_instance->replaceSamlSp($confKey, $body);
@@ -16364,7 +16443,7 @@ use WWW::SwaggerClient::SamlspApi;
 
 my $api_instance = WWW::SwaggerClient::SamlspApi->new();
 my $confKey = ; # confKey | Configuration key of SAML Service Provider that needs to be replaced
-my $body = WWW::SwaggerClient::Object::SamlSp->new(); # SamlSp | 
+my $body = WWW::SwaggerClient::Object::SamlSpReplace->new(); # SamlSpReplace | 
 
 eval { 
     $api_instance->replaceSamlSp(confKey => $confKey, body => $body);
@@ -16384,7 +16463,7 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = swagger_client.SamlspApi()
 confKey =  # confKey | Configuration key of SAML Service Provider that needs to be replaced
-body =  # SamlSp |  (optional)
+body =  # SamlSpReplace |  (optional)
 
 try: 
     # Replaces a SAML Service
@@ -16443,7 +16522,7 @@ except ApiException as e:
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/SamlSp"
+        "$ref" : "#/components/schemas/SamlSpReplace"
       }
     }
   }
