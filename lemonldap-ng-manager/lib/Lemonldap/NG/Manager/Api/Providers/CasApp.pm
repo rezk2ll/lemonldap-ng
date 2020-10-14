@@ -11,7 +11,6 @@ use Lemonldap::NG::Manager::Conf::Parser;
 
 extends 'Lemonldap::NG::Manager::Api::Common';
 
-
 sub getCasAppByConfKey {
     my ( $self, $req ) = @_;
 
@@ -26,8 +25,7 @@ sub getCasAppByConfKey {
     my $casApp = $self->_getCasAppByConfKey( $conf, $confKey );
 
     # Return 404 if not found
-    return $self->sendError( $req,
-        "CAS application '$confKey' not found", 404 )
+    return $self->sendError( $req, "CAS application '$confKey' not found", 404 )
       unless ( defined $casApp );
 
     return $self->sendJSONresponse( $req, $casApp );
@@ -77,7 +75,8 @@ sub findCasAppsByServiceUrl {
     return $self->sendError( $req, 'Invalid input: serviceUrl is missing', 400 )
       unless ( defined $serviceUrl );
 
-    $self->logger->debug("[API] Find CAS Apps by service URL $serviceUrl requested");
+    $self->logger->debug(
+        "[API] Find CAS Apps by service URL $serviceUrl requested");
 
     # Get latest configuration
     my $conf = $self->_confAcc->getConf;
@@ -112,8 +111,7 @@ sub addCasApp {
       if ( ref $add->{options}->{service} );
 
     $self->logger->debug(
-"[API] Add CAS App with confKey $add->{confKey} requested"
-    );
+        "[API] Add CAS App with confKey $add->{confKey} requested");
 
     # Get latest configuration
     my $conf = $self->_confAcc->getConf( { noCache => 1 } );
@@ -167,8 +165,7 @@ sub updateCasApp {
 
     # Return 404 if not found
 
-    return $self->sendError( $req,
-        "CAS application '$confKey' not found", 404 )
+    return $self->sendError( $req, "CAS application '$confKey' not found", 404 )
       unless ( defined $current );
 
     # check if new clientID exists already
@@ -210,8 +207,7 @@ sub replaceCasApp {
 
     # Return 404 if not found
 
-    return $self->sendError( $req,
-        "CAS application '$confKey' not found", 404 )
+    return $self->sendError( $req, "CAS application '$confKey' not found", 404 )
       unless ( defined $self->_getCasAppByConfKey( $conf, $confKey ) );
 
     # check if new clientID exists already
@@ -241,8 +237,7 @@ sub deleteCasApp {
 
     # Return 404 if not found
 
-    return $self->sendError( $req,
-        "CAS application '$confKey' not found", 404 )
+    return $self->sendError( $req, "CAS application '$confKey' not found", 404 )
       unless ( defined $delete );
 
     delete $conf->{casAppMetaDataOptions}->{$confKey};
@@ -254,7 +249,6 @@ sub deleteCasApp {
 
     return $self->sendJSONresponse( $req, undef, code => 204 );
 }
-
 
 sub _getCasAppByConfKey {
     my ( $self, $conf, $confKey ) = @_;
@@ -277,7 +271,7 @@ sub _getCasAppByConfKey {
       my $configOption ( keys %{ $conf->{casAppMetaDataOptions}->{$confKey} } )
     {
         $options->{ $self->_translateOptionConfToApi($configOption) } =
-        $conf->{casAppMetaDataOptions}->{$confKey}->{$configOption};
+          $conf->{casAppMetaDataOptions}->{$confKey}->{$configOption};
     }
 
     return {
@@ -307,7 +301,8 @@ sub _getCasAppByServiceUrl {
 
 sub _isNewCasAppServiceUrlUnique {
     my ( $self, $conf, $confKey, $casApp ) = @_;
-    my $curServiceUrl = $self->_getCasAppByConfKey( $conf, $confKey )->{options}->{service};
+    my $curServiceUrl =
+      $self->_getCasAppByConfKey( $conf, $confKey )->{options}->{service};
     my $newServiceUrl = $casApp->{options}->{service} || "";
     if ( $newServiceUrl ne '' && $newServiceUrl ne $curServiceUrl ) {
         return {
@@ -326,9 +321,9 @@ sub _pushCasApp {
 
     my $translatedOptions = {};
     if ($replace) {
-        $conf->{casAppMetaDataOptions}->{$confKey}            = {};
-        $conf->{casAppMetaDataExportedVars}->{$confKey}       = {};
-        $conf->{casAppMetaDataMacros}->{$confKey}             = {};
+        $conf->{casAppMetaDataOptions}->{$confKey}      = {};
+        $conf->{casAppMetaDataExportedVars}->{$confKey} = {};
+        $conf->{casAppMetaDataMacros}->{$confKey}       = {};
         $translatedOptions = $self->_getDefaultValues('casAppMetaDataNodes');
     }
 
