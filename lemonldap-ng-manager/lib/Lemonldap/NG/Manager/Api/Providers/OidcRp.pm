@@ -103,6 +103,9 @@ sub addOidcRp {
         400 )
       if ( ref $add->{confKey} );
 
+    return $self->sendError( $req, 'Invalid input: confKey is empty', 400 )
+      unless ( $add->{confKey} );
+
     return $self->sendError( $req, 'Invalid input: clientId is missing', 400 )
       unless ( defined $add->{clientId} );
 

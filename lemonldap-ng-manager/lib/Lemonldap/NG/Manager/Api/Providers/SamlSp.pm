@@ -96,6 +96,9 @@ sub addSamlSp {
     return $self->sendError( $req, 'Invalid input: metadata is missing', 400 )
       unless ( defined $add->{metadata} );
 
+    return $self->sendError( $req, 'Invalid input: confKey is empty', 400 )
+      unless ( $add->{confKey} );
+
     my $entityId = $self->_readSamlSpEntityId( $add->{metadata} );
 
     return $self->sendError( $req,
