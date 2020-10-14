@@ -2,9 +2,10 @@ use Test::More;
 use strict;
 use IO::String;
 use Data::Dumper;
+use MIME::Base64;
 
 require 't/test-lib.pm';
-my $maintests = 76;
+my $maintests = 77;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -21,15 +22,16 @@ SKIP: {
 
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel               => 'error',
-                totp2fSelfRegistration => 1,
-                totp2fActivation       => 1,
-                totp2fAuthnLevel       => 1,
-                u2fSelfRegistration    => 1,
-                u2fActivation          => 1,
-                u2fAuthnLevel          => 5,
-                sfManagerRule          => '$uid eq "dwho"',
-                portalMainLogo         => 'common/logos/logo_llng_old.png',
+                logLevel                => 'error',
+                totp2fSelfRegistration  => 1,
+                totp2fActivation        => 1,
+                totp2fAuthnLevel        => 1,
+                u2fSelfRegistration     => 1,
+                u2fActivation           => 1,
+                u2fAuthnLevel           => 5,
+                skipUpgradeConfirmation => 1,
+                sfManagerRule           => '$uid eq "dwho"',
+                portalMainLogo          => 'common/logos/logo_llng_old.png',
             }
         }
     );
@@ -364,6 +366,8 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok(
         $res = $client->_get(
             '/upgradesession',
+            query => 'url='
+              . encode_base64( 'http://auth.example.com/2fregisters', '' ),
             accept => 'text/html',
             cookie => "lemonldap=$id",
         ),
@@ -371,6 +375,9 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     );
     ( $host, $url, $query ) =
       expectForm( $res, undef, '/upgradesession', 'confirm' );
+
+    ok( $res->[2]->[0] =~ /autoRenew\.(?:min\.)?js/, 'Found autoRenew JS' )
+      or explain( $res->[2]->[0], 'autoRenew JS not found' );
 
     # Accept session upgrade
     ok(
