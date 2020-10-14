@@ -34,9 +34,45 @@ authentication:
    </tomcat-users>
 
 
-LL::NG provides a valve, available on :doc:`download page</download>`.
-This valve will check an HTTP header to set the authenticated user on
+LL::NG provides a valve that will check an HTTP header to set the authenticated user on
 the J2EE container.
+
+Compilation
+-----------
+
+The sources are available at `<https://github.com/LemonLDAPNG/lemonldap-valve-tomcat>`__
+
+Required :
+
+-  ant
+-  jre > 1.4
+-  tomcat >= 5.5
+
+Configure your tomcat home in ``build.properties`` files.
+
+
+.. attention::
+
+    Be careful for Windows user, path must contains "/".
+    Example:
+
+    ::
+
+       c:/my hardisk/tomcat/
+
+
+
+Next run ant command:
+
+::
+
+   ant
+
+``ValveLemonLDAPNG.jar`` is created under ``/dist`` directory.
+
+.. |image0| image:: /applications/tomcat_logo.png
+   :class: align-center
+
 
 Installation
 ------------
@@ -84,41 +120,4 @@ Configure attributes:
     For debugging, this valve can print some helpful information
     in debug level. See `how configure logging in
     Tomcat <http://tomcat.apache.org/tomcat-5.5-doc/logging.html>`__ .
-
-
-Compilation
------------
-
-The sources are available on :doc:`download page</download>`.
-
-Required :
-
--  ant
--  jre > 1.4
--  tomcat >= 5.5
-
-Configure your tomcat home in ``build.properties`` files.
-
-
-.. attention::
-
-    Be careful for Windows user, path must contains "/".
-    Example:
-
-    ::
-
-       c:/my hardisk/tomcat/
-
-
-
-Next run ant command:
-
-::
-
-   ant
-
-``ValveLemonLDAPNG.jar`` is created under ``/dist`` directory.
-
-.. |image0| image:: /applications/tomcat_logo.png
-   :class: align-center
 
