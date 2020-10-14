@@ -11,6 +11,7 @@ package Lemonldap::NG::Portal::2F::Engines::Default;
 
 use strict;
 use Mouse;
+use MIME::Base64 qw(encode_base64);
 use JSON qw(from_json to_json);
 use POSIX qw(strftime);
 use Lemonldap::NG::Portal::Main::Constants qw(
@@ -519,7 +520,8 @@ sub _displayRegister {
                   && $self->conf->{ $t . '2fSelfRegistration' };
 
                 # Display upgrade button
-                $displayUpgBtn ||= $self->conf->{ $t . '2fAuthnLevel' } && $self->conf->{ $t . '2fAuthnLevel' } >
+                $displayUpgBtn ||= $self->conf->{ $t . '2fAuthnLevel' }
+                  && $self->conf->{ $t . '2fAuthnLevel' } >
                   $req->userData->{authenticationLevel};
             }
             $action ||= $_->{delAllowed};
@@ -527,7 +529,7 @@ sub _displayRegister {
         }
     }
     $displayUpgBtn = 0 unless $self->conf->{upgradeSession};
-    
+
     # Display template
     return $self->p->sendHtml(
         $req,
@@ -540,7 +542,9 @@ sub _displayRegister {
             SFDEVICES    => $_2fDevices,
             ACTION       => $action,
             REG_REQUIRED => $req->data->{sfRegRequired},
-            DISPLAY_UPG  => $displayUpgBtn
+            DISPLAY_UPG  => $displayUpgBtn,
+            SFREGISTERS_URL =>
+              encode_base64( "$self->{conf}->{portal}2fregisters", '' )
         }
     );
 }
