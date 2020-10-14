@@ -300,6 +300,9 @@ sub _getOidcRpByConfKey {
     # Get macros
     my $macros = $conf->{oidcRPMetaDataMacros}->{$confKey} || {};
 
+    # Redirect URIs, filled later
+    my $redirectUris;
+
     # Get options
     my $options = {};
     for
@@ -307,12 +310,15 @@ sub _getOidcRpByConfKey {
     {
         # redirectUris is handled as an array
         if ( $configOption eq "oidcRPMetaDataOptionsRedirectUris" ) {
-            $options->{ $self->_translateOptionConfToApi($configOption) } = [
+            $redirectUris = [
                 split(
                     /\s+/,
                     $conf->{oidcRPMetaDataOptions}->{$confKey}->{$configOption}
                 )
             ];
+            $options->{ $self->_translateOptionConfToApi($configOption) } =
+              $redirectUris;
+
         }
         else {
             $options->{ $self->_translateOptionConfToApi($configOption) } =
@@ -323,6 +329,7 @@ sub _getOidcRpByConfKey {
     return {
         confKey      => $confKey,
         clientId     => $clientId,
+        redirectUris => $redirectUris,
         exportedVars => $exportedVars,
         extraClaims  => $extraClaims,
         macros       => $macros,
