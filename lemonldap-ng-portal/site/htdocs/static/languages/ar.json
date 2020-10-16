@@ -318,5 +318,7 @@
 "yourPhone":"Know your phone number",
 "yourProfile":"Know your profile",
 "yourTotpKey":"Your TOTP key",
-"yubikey2f":"Yubikey"
+"yubikey2f":"Yubikey",
+"lastConnexionLabel":"Last connexions",
+"lastFailedConnexionLabel":"Last failed connexions"
 }

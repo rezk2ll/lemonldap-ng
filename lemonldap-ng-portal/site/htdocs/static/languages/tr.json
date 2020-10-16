@@ -318,5 +318,7 @@
 "yourPhone":"Telefon numaranı bil",
 "yourProfile":"Profilini bil",
 "yourTotpKey":"TOTP anahtarınız",
-"yubikey2f":"Yubikey"
+"yubikey2f":"Yubikey",
+"lastConnexionLabel":"Last connexions",
+"lastFailedConnexionLabel":"Last failed connexions"
 }

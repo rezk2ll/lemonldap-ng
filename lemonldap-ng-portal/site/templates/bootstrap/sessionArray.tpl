@@ -2,6 +2,11 @@
 <h3 trspan="<TMPL_VAR NAME="title">"></h3>
 </TMPL_IF>
 <table class="info">
+ <TMPL_IF NAME="displayError">
+   <caption trspan="lastFailedConnexionLabel">Last denied connexions</caption>
+ <TMPL_ELSE>
+   <caption trspan="lastConnexionLabel">Last connexions</caption>
+ </TMPL_IF>
  <thead>
   <tr>
    <TMPL_IF NAME="displayUser">
