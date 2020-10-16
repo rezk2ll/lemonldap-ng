@@ -243,19 +243,16 @@
         }
       };
       $scope.displayNotification = function(scope) {
-        var node, notificationId, query;
+        var node, notificationId;
         $scope.waiting = true;
         $scope.currentScope = scope;
         node = scope.$modelValue;
         notificationId = node.notification;
-        query = '';
         if ($scope.type === 'actives') {
-          notificationId = node.uid + "_" + node.reference;
+          node.reference.replace(/#/, '_');
+          notificationId = (node.uid + "_") + node.reference.replace(/#/, '_');
         }
-        if ($scope.type === 'done') {
-          query = "?uid=" + node.uid + "&reference=" + node.reference;
-        }
-        $http.get(scriptname + "notifications/" + $scope.type + "/" + notificationId + query).then(function(response) {
+        $http.get(scriptname + "notifications/" + $scope.type + "/" + notificationId).then(function(response) {
           var e, notif;
           $scope.currentNotification = {
             uid: node.uid,
