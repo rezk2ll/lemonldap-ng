@@ -359,11 +359,14 @@ sub run {
         $req,
         '2fchoice',
         params => {
-            MAIN_LOGO => $self->conf->{portalMainLogo},
-            SKIN      => $self->p->getSkin($req),
-            LANGS     => $self->conf->{showLanguages},
-            TOKEN     => $token,
-            MODULES   => [
+            MAIN_LOGO   => $self->conf->{portalMainLogo},
+            SKIN        => $self->p->getSkin($req),
+            LANGS       => $self->conf->{showLanguages},
+            CHECKLOGINS => $checkLogins,
+            TOKEN       => $token,
+            MSG         => $self->canUpdateSfa($req) || 'choose2f',
+            ALERT   => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
+            MODULES => [
                 map { {
                         CODE  => $_->prefix,
                         LOGO  => $_->logo,
@@ -371,7 +374,6 @@ sub run {
                     }
                 } @am
             ],
-            CHECKLOGINS => $checkLogins
         }
     );
     $req->response($tpl);
@@ -458,6 +460,8 @@ sub _displayRegister {
             params => {
                 MAIN_LOGO => $self->conf->{portalMainLogo},
                 LANGS     => $self->conf->{showLanguages},
+                MSG       => $self->canUpdateSfa($req) || $m->{m}->welcome,
+                ALERT => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
             }
         );
     }
@@ -486,7 +490,7 @@ sub _displayRegister {
 
     # Retrieve user all second factors
     my $_2fDevices = [];
-    if ( $self->allowedUpdateSfa($req) ) {
+    unless ( $self->canUpdateSfa($req) ) {
         $_2fDevices = $req->userData->{_2fDevices}
           ? eval {
             from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
@@ -543,6 +547,8 @@ sub _displayRegister {
             ACTION       => $action,
             REG_REQUIRED => $req->data->{sfRegRequired},
             DISPLAY_UPG  => $displayUpgBtn,
+            MSG          => $self->canUpdateSfa($req) || 'choose2f',
+            ALERT => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
             SFREGISTERS_URL =>
               encode_base64( "$self->{conf}->{portal}2fregisters", '' )
         }

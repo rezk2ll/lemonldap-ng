@@ -104,10 +104,10 @@ sub createNotification {
     }
 }
 
-sub allowedUpdateSfa {
+sub canUpdateSfa {
     my ( $self, $req, $action ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
-    my $res  = 1;
+    my $msg = undef;
 
     # Test action
     if ( $action && $action eq 'delete' ) {
@@ -125,12 +125,12 @@ sub allowedUpdateSfa {
             $self->logger->debug(
 "authLevel: $req->{userData}->{authenticationLevel} < requiredLevel: "
                   . $self->{conf}->{"${module}2fAuthnLevel"} );
-            undef $res;
+            $msg = 'notAuthorizedAuthLevel';
         }
     }
 
     # Test if impersonation is in progress
-    if ( $res && $self->conf->{impersonationRule} ) {
+    if ( !$msg && $self->conf->{impersonationRule} ) {
         $self->logger->debug('Impersonation plugin is enabled');
         if (   $req->userData->{"$self->{conf}->{impersonationPrefix}_user"}
             && $req->userData->{"$self->{conf}->{impersonationPrefix}_user"} ne
@@ -139,12 +139,12 @@ sub allowedUpdateSfa {
             $self->userLogger->warn(
                 "Impersonation in progress! $user is not allowed to update 2FA."
             );
-            undef $res;
+            $msg = 'notAuthorized';
         }
     }
 
     # Test if contextSwitching is in progress
-    if ( $res && $self->conf->{contextSwitchingRule} ) {
+    if ( !$msg && $self->conf->{contextSwitchingRule} ) {
         $self->logger->debug('ContextSwitching plugin is enabled');
         if (
             $req->userData->{
@@ -154,11 +154,11 @@ sub allowedUpdateSfa {
             $self->userLogger->warn(
 "ContextSwitching in progress! $user is not allowed to update 2FA."
             );
-            undef $res;
+            $msg = 'notAuthorized';
         }
     }
-    $self->userLogger->info("$user is allowed to update 2FA") if $res;
-    return $res;
+    $self->userLogger->info("$user is allowed to update 2FA") unless $msg;
+    return $msg;
 }
 
 1;

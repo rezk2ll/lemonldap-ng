@@ -13,6 +13,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin', 'Lemonldap::NG::Common::TOTP';
 
 has prefix   => ( is => 'rw', default => 'totp' );
 has template => ( is => 'ro', default => 'totp2fregister' );
+has welcome  => ( is => 'ro', default => 'yourNewTotpKey' );
 has logo     => ( is => 'rw', default => 'totp.png' );
 has ott      => (
     is      => 'rw',
@@ -37,8 +38,8 @@ sub run {
       unless $user;
 
     # Check if TOTP can be updated
-    return $self->p->sendError( $req, 'notAuthorizedAuthLevel', 400 )
-      unless $self->allowedUpdateSfa( $req, $action );
+    my $msg = $self->canUpdateSfa( $req, $action );
+    return $self->p->sendError( $req, $msg, 400 ) if $msg;
 
     # Verification that user has a valid TOTP app
     if ( $action eq 'verify' ) {

@@ -14,6 +14,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin',
 
 has prefix   => ( is => 'rw', default => 'u' );
 has template => ( is => 'ro', default => 'u2fregister' );
+has welcome  => ( is => 'ro', default => 'u2fWelcome' );
 has logo     => ( is => 'rw', default => 'u2f.png' );
 
 sub init {
@@ -34,8 +35,8 @@ sub run {
       unless $user;
 
     # Check if U2F key can be updated
-    return $self->p->sendError( $req, 'notAuthorizedAuthLevel', 400 )
-      unless $self->allowedUpdateSfa( $req, $action );
+    my $msg = $self->canUpdateSfa( $req, $action );
+    return $self->p->sendError( $req, $msg, 400 ) if $msg;
 
     if ( $action eq 'register' ) {
 

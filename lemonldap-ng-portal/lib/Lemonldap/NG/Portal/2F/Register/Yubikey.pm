@@ -17,6 +17,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 has prefix   => ( is => 'rw', default => 'yubikey' );
 has template => ( is => 'ro', default => 'yubikey2fregister' );
+has welcome  => ( is => 'ro', default => 'clickOnYubikey' );
 has logo     => ( is => 'rw', default => 'yubikey.png' );
 
 sub init {
@@ -35,6 +36,7 @@ sub run {
       unless $user;
 
     # Check if UBK key can be updated
+    my $msg = $self->canUpdateSfa( $req, $action );
     return $self->p->sendHtml(
         $req, 'error',
         params => {
@@ -42,7 +44,7 @@ sub run {
             RAW_ERROR       => 'notAuthorizedAuthLevel',
             AUTH_ERROR_TYPE => 'warning',
         }
-    ) unless $self->allowedUpdateSfa( $req, $action );
+    ) if $msg;
 
     if ( $action eq 'register' ) {
         my $otp     = $req->param('otp');
