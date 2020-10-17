@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::Main::Reload;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -57,6 +57,8 @@ sub checkConf {
             $class->logger->debug($Lemonldap::NG::Common::Conf::msg);
         }
     }
+    $Lemonldap::NG::Common::Conf::msg = '';
+
     if ( $force or !$class->cfgNum or $class->cfgNum != $conf->{cfgNum} ) {
         $class->logger->debug("Get configuration $conf->{cfgNum}");
         unless ( $class->cfgNum( $conf->{cfgNum} ) ) {
