@@ -178,6 +178,8 @@
 "info":"Thông tin",
 "ipAddr":"Địa chỉ IP",
 "key":"Khóa",
+"lastConnexionLabel":"Last connections",
+"lastFailedConnexionLabel":"Last failed connections",
 "lastFailedLogins":"Lần cuối đăng nhập thất bại",
 "lastLogins":"Đăng nhập lần cuối",
 "lastName":"Họ",
@@ -318,7 +320,5 @@
 "yourPhone":"Know your phone number",
 "yourProfile":"Know your profile",
 "yourTotpKey":"Your TOTP key",
-"yubikey2f":"Yubikey",
-"lastConnexionLabel":"Last connexions",
-"lastFailedConnexionLabel":"Last failed connexions"
+"yubikey2f":"Yubikey"
 }

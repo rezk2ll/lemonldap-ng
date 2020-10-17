@@ -178,6 +178,8 @@
 "info":"معلومات",
 "ipAddr":"عنوان الأي بي",
 "key":"المفتاح",
+"lastConnexionLabel":"Last connections",
+"lastFailedConnexionLabel":"Last failed connections",
 "lastFailedLogins":"عمليات تسجيل الدخول الأخيرة الغير الناجحة",
 "lastLogins":"آخر تسجيلات دخول",
 "lastName":"اسم العائلة",
@@ -318,7 +320,5 @@
 "yourPhone":"Know your phone number",
 "yourProfile":"Know your profile",
 "yourTotpKey":"Your TOTP key",
-"yubikey2f":"Yubikey",
-"lastConnexionLabel":"Last connexions",
-"lastFailedConnexionLabel":"Last failed connexions"
+"yubikey2f":"Yubikey"
 }

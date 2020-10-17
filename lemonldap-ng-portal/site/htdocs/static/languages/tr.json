@@ -178,6 +178,8 @@
 "info":"Bilgi",
 "ipAddr":"IP adresi",
 "key":"Anahtar",
+"lastConnexionLabel":"Last connections",
+"lastFailedConnexionLabel":"Last failed connections",
 "lastFailedLogins":"Son başarısız giriş denemeleri",
 "lastLogins":"Son girişler",
 "lastName":"Soyad",
@@ -318,7 +320,5 @@
 "yourPhone":"Telefon numaranı bil",
 "yourProfile":"Profilini bil",
 "yourTotpKey":"TOTP anahtarınız",
-"yubikey2f":"Yubikey",
-"lastConnexionLabel":"Last connexions",
-"lastFailedConnexionLabel":"Last failed connexions"
+"yubikey2f":"Yubikey"
 }

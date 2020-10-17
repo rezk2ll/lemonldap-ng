@@ -178,6 +178,8 @@
 "info":"Informacja",
 "ipAddr":"Adres IP",
 "key":"Klucz",
+"lastConnexionLabel":"Last connections",
+"lastFailedConnexionLabel":"Last failed connections",
 "lastFailedLogins":"Ostatnie nieudane logowania",
 "lastLogins":"Ostatnie logowania",
 "lastName":"Nazwisko",
@@ -318,7 +320,5 @@
 "yourPhone":"Twój numer telefonu",
 "yourProfile":"Twój profil",
 "yourTotpKey":"Twój klucz TOTP",
-"yubikey2f":"Yubikey",
-"lastConnexionLabel":"Last connexions",
-"lastFailedConnexionLabel":"Last failed connexions"
+"yubikey2f":"Yubikey"
 }
