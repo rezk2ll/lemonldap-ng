@@ -175,3 +175,8 @@ input.key {
   /*font-weight: 400;*/
   src: url(/static/common/fonts/password.ttf);
 }
+
+.info.table caption {
+  color: black;
+  caption-side: top;
+}

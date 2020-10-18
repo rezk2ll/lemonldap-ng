@@ -145,7 +145,7 @@
                           <div class="col-3">
                           <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/apps/<TMPL_VAR NAME="applogo">"
                             class="applogo <TMPL_VAR NAME="appid"> img-fluid"
-                            alt="<TMPL_VAR NAME="appname">" />
+                            alt="" />
                           </div>
                           <div class="col-9">
                         <TMPL_ELSE>
