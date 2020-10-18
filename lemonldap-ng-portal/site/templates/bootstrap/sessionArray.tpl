@@ -3,9 +3,9 @@
 </TMPL_IF>
 <table class="info">
  <TMPL_IF NAME="displayError">
-   <caption trspan="lastFailedConnexionLabel">Last denied connexions</caption>
+   <caption trspan="lastFailedLoginsCaptionLabel">Last failed logins</caption>
  <TMPL_ELSE>
-   <caption trspan="lastConnexionLabel">Last connexions</caption>
+   <caption trspan="lastLoginsCaptionLabel">Last logins</caption>
  </TMPL_IF>
  <thead>
   <tr>

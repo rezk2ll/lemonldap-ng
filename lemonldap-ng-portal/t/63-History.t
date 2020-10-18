@@ -47,6 +47,9 @@ my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
 ok( @c == 1, " -> One entry found" );
 count(2);
 
+ok( $res->[2]->[0] =~ /trspan="lastLoginsCaptionLabel"/, 'History array caption found' ) or explain( $res->[2]->[0] );
+count(1);
+
 ok( $res = $client->_get( '/', cookie => "lemonldap=$id1" ),
     'Verify connection' );
 count(1);
