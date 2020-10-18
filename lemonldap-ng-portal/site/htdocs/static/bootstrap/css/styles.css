@@ -178,5 +178,6 @@ input.key {
 
 .info.table caption {
   color: black;
-  caption-side: top;
+  text-align: center;
+  caption-side: bottom;
 }
