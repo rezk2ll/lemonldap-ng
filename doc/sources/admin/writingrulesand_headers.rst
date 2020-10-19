@@ -86,13 +86,13 @@ current URL.
 
 Rules can also be used to intercept logout URL:
 
-================================================================================================================= =================== ====
+================================================================================================================= =================== =====================================
 Goal                                                                                                              Regular expression  Rule
-================================================================================================================= =================== ====
-Logout user from Lemonldap::NG and redirect it to http://intranet/                                                ^/index.php\?logout
-Logout user from current application and redirect it to the menu **(Apache only)**                                ^/index.php\?logout
-Logout user from current application and from Lemonldap::NG and redirect it to http://intranet/ **(Apache only)** ^/index.php\?logout
-================================================================================================================= =================== ====
+================================================================================================================= =================== =====================================
+Logout user from Lemonldap::NG and redirect it to http://intranet/                                                ^/index.php\?logout logout_sso http://intranet/
+Logout user from current application and redirect it to the menu **(Apache only)**                                ^/index.php\?logout logout_app https://auth.example.com/
+Logout user from current application and from Lemonldap::NG and redirect it to http://intranet/ **(Apache only)** ^/index.php\?logout logout_app_sso http://intranet/
+================================================================================================================= =================== =====================================
 
 
 .. danger::
