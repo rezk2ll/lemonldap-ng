@@ -549,7 +549,7 @@
 "notificationServerSentAttributes":"Notification parameters to send",
 "serverNotification":"Server",
 "notificationCreated":"تم إنشاء إشعار",
-"notificationDeleted":"تم حذف الإشعار",
+"notificationDeleted":"Notification has been marked as done",
 "notificationDone":"انتهى الإشعار",
 "notificationsDone":"انتهت الإشعارات",
 "notificationsExplorer":"Explorer",

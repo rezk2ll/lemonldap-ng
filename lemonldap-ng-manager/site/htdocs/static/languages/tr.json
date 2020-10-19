@@ -549,7 +549,7 @@
 "notificationServerSentAttributes":"Gönderilecek bildirim parametreleri",
 "serverNotification":"Sunucu",
 "notificationCreated":"Bildirim oluşturuldu",
-"notificationDeleted":"Bildirim silindi",
+"notificationDeleted":"Notification has been marked as done",
 "notificationDone":"Bildirim tamamlandı",
 "notificationsDone":"Bildirimler tamamlandı",
 "notificationsExplorer":"Explorer",

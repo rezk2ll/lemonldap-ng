@@ -549,7 +549,7 @@
 "notificationServerSentAttributes":"Parametry powiadomienia do wysłania",
 "serverNotification":"Serwer",
 "notificationCreated":"Powiadomienie zostało utworzone",
-"notificationDeleted":"Powiadomienie zostało usunięte",
+"notificationDeleted":"Notification has been marked as done",
 "notificationDone":"Powiadomienie wykonane",
 "notificationsDone":"Powiadomienia wykonane",
 "notificationsExplorer":"Explorer",

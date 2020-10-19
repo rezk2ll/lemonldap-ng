@@ -549,7 +549,7 @@
 "notificationServerSentAttributes":"Notification parameters to send",
 "serverNotification":"Server",
 "notificationCreated":"Thông báo đã được tạo ra",
-"notificationDeleted":"Thông báo đã xoá",
+"notificationDeleted":"Notification has been marked as done",
 "notificationDone":"Thông báo được thực hiện",
 "notificationsDone":"Thông báo đã hoàn tất",
 "notificationsExplorer":"Explorer",
