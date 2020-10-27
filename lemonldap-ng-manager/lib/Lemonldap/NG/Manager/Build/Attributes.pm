@@ -3304,8 +3304,13 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         ldapTimeout => {
             type          => 'int',
-            default       => 120,
+            default       => 10,
             documentation => 'LDAP connection timeout',
+        },
+        ldapIOTimeout => {
+            type          => 'int',
+            default       => 10,
+            documentation => 'LDAP operation timeout',
         },
         ldapVersion => {
             type          => 'int',

@@ -259,9 +259,9 @@ sub tree {
                                         'ldapServer',  'ldapPort',
                                         'ldapVerify',  'ldapBase',
                                         'managerDn',   'managerPassword',
-                                        'ldapTimeout', 'ldapVersion',
-                                        'ldapRaw',     'ldapCAFile',
-                                        'ldapCAPath',
+                                        'ldapTimeout', 'ldapIOTimeout',
+                                        'ldapVersion', 'ldapRaw',
+                                        'ldapCAFile', 'ldapCAPath',
                                     ]
                                 },
                                 {

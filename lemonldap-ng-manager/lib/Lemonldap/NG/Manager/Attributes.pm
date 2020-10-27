@@ -1660,6 +1660,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 0,
             'type'    => 'bool'
         },
+        'ldapIOTimeout' => {
+            'default' => 10,
+            'type'    => 'int'
+        },
         'ldapITDS' => {
             'default' => 0,
             'type'    => 'bool'
@@ -1728,7 +1732,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'bool'
         },
         'ldapTimeout' => {
-            'default' => 120,
+            'default' => 10,
             'type'    => 'int'
         },
         'ldapUsePasswordResetAttribute' => {
