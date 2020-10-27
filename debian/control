@@ -287,6 +287,7 @@ Recommends: libcrypt-openssl-bignum-perl,
             libgd-securityimage-perl,
             libmime-tools-perl,
             libnet-ldap-perl,
+            libio-socket-timeout-perl,
             libunicode-string-perl
 Suggests: gpg,
           libcrypt-u2f-server-perl,
