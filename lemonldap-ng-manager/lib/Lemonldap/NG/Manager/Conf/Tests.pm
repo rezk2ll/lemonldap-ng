@@ -301,6 +301,28 @@ sub tests {
             );
         },
 
+        # Test support of timeouts for LDAPS connections
+        ldapsNoTimeout => sub {
+
+            # Skip test if no SMTP configuration
+            return (1) unless ( $conf->{ldapServer} );
+
+            if ( $conf->{ldapServer} =~ /ldaps:/ ) {
+
+                if ( eval "require IO::Socket::SSL; require IO::Socket::IP;" ) {
+                    if ( IO::Socket::SSL->isa('IO::Socket::IP') ) {
+                        unless ( eval { IO::Socket::IP->VERSION(0.31) } ) {
+                            return ( 1,
+"Your version of IO::Socket::IP is too old to enforce "
+                                  . "connection timeouts on ldaps:// URLs. Use ldap+tls:// instead"
+                            );
+                        }
+                    }
+                }
+            }
+            return (1);
+        },
+
         # Test SMTP connection and authentication (warning only)
         smtpConfiguration => sub {
 
@@ -380,7 +402,7 @@ sub tests {
                 && $conf->{samlServicePublicKeySig} );
             return 1;
         },
-        
+
         samlSignatureOverrideNeedsCertificate => sub {
             return 1 if $conf->{samlServicePublicKeySig} =~ /CERTIFICATE/;
 
