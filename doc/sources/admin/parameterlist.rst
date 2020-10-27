@@ -241,6 +241,7 @@ ldapSearchDeref                                         "deref" param of Net::LD
 ldapServer                                              LDAP server (host or URI)                                                            ✔
 ldapSetPassword                                                                                                                              ✔
 ldapTimeout                                             LDAP connection timeout                                                              ✔
+ldapIOTimeout                                           LDAP operation timeout                                                               ✔
 ldapUsePasswordResetAttribute                           LDAP store reset flag in an attribute                                                ✔
 ldapVerify                                              Whether to validate LDAP certificates                                                ✔
 ldapVersion                                             LDAP protocol version                                                                ✔

@@ -92,7 +92,8 @@ Connection
    bind is used.
 -  **Password**: password to used to connect to LDAP server. By default,
    anonymous bind is used.
--  **Timeout**: server idle timeout.
+-  **Connection timeout**: applies only when initiating the connection
+-  **Operation timeout**: applies to all LDAP operations
 -  **Version**: LDAP protocol version.
 -  **Binary attributes**: regular expression matching binary attributes
    (see
