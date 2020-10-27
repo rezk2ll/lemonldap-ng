@@ -10,6 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants ':all';
 use Encode;
 use Unicode::String qw(utf8);
 use Scalar::Util 'weaken';
+use IO::Socket::Timeout;
 use utf8;
 
 our $VERSION  = '2.0.9';
@@ -76,6 +77,13 @@ sub new {
         }
     }
     bless $self, $class;
+
+    # Set socket timeouts
+    my $socket = $self->socket;
+    IO::Socket::Timeout->enable_timeouts_on($socket);
+    $socket->read_timeout( $conf->{ldapIOTimeout} );
+    $socket->write_timeout( $conf->{ldapIOTimeout} );
+
     if ($useTls) {
         my %h = split( /[&=]/, $tlsParam );
         $h{cafile} ||= $conf->{ldapCAFile} if ( $conf->{ldapCAFile} );
