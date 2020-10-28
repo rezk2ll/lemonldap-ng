@@ -540,8 +540,10 @@ sub tree {
                     title => 'logParams',
                     help  => 'logs.html',
                     form  => 'simpleInputContainer',
-                    nodes =>
-                      [ 'whatToTrace', 'customToTrace', 'hiddenAttributes' ]
+                    nodes => [
+                        'whatToTrace',      'customToTrace',
+                        'hiddenAttributes'
+                    ]
                 },
                 {
                     title => 'cookieParams',
@@ -559,6 +561,7 @@ sub tree {
                     help  => 'sessions.html',
                     nodes => [
                         'storePassword',
+                        'displaySessionId',
                         'timeout',
                         'timeoutActivity',
                         'timeoutActivityInterval',

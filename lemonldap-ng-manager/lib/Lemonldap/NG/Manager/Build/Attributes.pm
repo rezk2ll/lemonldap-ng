@@ -867,6 +867,11 @@ sub attributes {
             default       => '_password _2fDevices',
             documentation => 'Name of attributes to hide in logs',
         },
+        displaySessionId => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Display _session_id with sessions explorer',
+        },
         persistentSessionAttributes => {
             type          => 'text',
             default       => '_loginHistory _2fDevices notification_',

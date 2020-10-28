@@ -72,8 +72,9 @@ sub defaultValues {
             'mail' => 'mail',
             'uid'  => 'uid'
         },
-        'domain'       => 'example.com',
-        'exportedVars' => {
+        'displaySessionId' => 1,
+        'domain'           => 'example.com',
+        'exportedVars'     => {
             'UA' => 'HTTP_USER_AGENT'
         },
         'ext2fActivation'      => 0,

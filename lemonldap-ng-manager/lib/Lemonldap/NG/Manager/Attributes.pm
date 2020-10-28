@@ -1250,6 +1250,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'displaySessionId' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'domain' => {
             'default' => 'example.com',
             'msgFail' => '__badDomainName__',

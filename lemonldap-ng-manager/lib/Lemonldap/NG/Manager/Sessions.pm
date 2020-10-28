@@ -18,7 +18,7 @@ extends 'Lemonldap::NG::Manager::Plugin',
   'Lemonldap::NG::Common::Conf::AccessLib',
   'Lemonldap::NG::Common::Session::REST';
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.10';
 
 #############################
 # I. INITIALIZATION METHODS #
@@ -55,7 +55,8 @@ sub init {
     $self->{ipField}              ||= 'ipAddr';
     $self->{multiValuesSeparator} ||= '; ';
     $self->{impersonationPrefix} = $conf->{impersonationPrefix} || 'real_';
-    $self->{hiddenAttributes} //= "_password";
+    $self->{hiddenAttributes} //= '_password';
+    $self->{hiddenAttributes} .= ' _session_id' unless $conf->{displaySessionId};
     return 1;
 }
 
