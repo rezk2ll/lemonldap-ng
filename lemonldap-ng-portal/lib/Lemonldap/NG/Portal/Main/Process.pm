@@ -44,6 +44,22 @@ sub process {
     return $err;
 }
 
+sub processHook {
+    my ( $self, $req, $hookName, @args ) = @_;
+
+    $self->logger->debug("Calling hook $hookName");
+    my $err = PE_OK;
+    for my $sub ( @{ $self->hook->{$hookName} } ) {
+        if ( ref $sub eq 'CODE' ) {
+            last if ( $err = $sub->( $req, @args ) );
+        }
+        else {
+            $self->logger->debug("Not a code ref: $sub");
+        }
+    }
+    return $err;
+}
+
 sub _formatProcessResult {
     my ( $self, $err ) = @_;
     return ( ( $err > 0 ? "error" : "status" )

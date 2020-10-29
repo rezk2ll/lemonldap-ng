@@ -74,6 +74,9 @@ BEGIN {
 has 'afterSub'  => ( is => 'rw', default => sub { {} } );
 has 'aroundSub' => ( is => 'rw', default => sub { {} } );
 
+# Issuer hooks
+has 'hook' => ( is => 'rw', default => sub { {} } );
+
 has spRules => (
     is      => 'rw',
     default => sub { {} }
@@ -489,6 +492,25 @@ sub findEP {
                     $self->logger->debug(
                         "Launching ${plugin}::$callback instead of $ep");
                     $obj->$callback( $previousSub, @_ );
+                };
+            }
+        }
+    }
+    if ( $obj->can('hook') ) {
+        $self->logger->debug("Found hook in $plugin");
+        my $h = $obj->hook;
+        unless ( ref $h and ref($h) eq 'HASH' ) {
+            $self->logger->error('"hook" endpoint must be a hashref, skipped');
+        }
+        else {
+            foreach my $hookname ( keys %$h ) {
+                my $callback = $h->{$hookname};
+                push @{ $self->hook->{$hookname} }, sub {
+                    eval {
+                        $obj->logger->debug(
+                            "Launching ${plugin}::$callback on hook $hookname");
+                    };
+                    $obj->$callback(@_);
                 };
             }
         }
