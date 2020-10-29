@@ -13,7 +13,7 @@ use LWP::UserAgent;
 use JSON;
 
 my $milestone = '2.0.9';
-my @cat = ( 'Bug', 'New feature', 'Improvement' );
+my @cat = ( 'Bug', 'New feature', 'Improvement', 'Template', 'WebServer Conf' );
 
 open F, "$ENV{HOME}/.ow2-token" or die "Unable to get OW2 token ($!)";
 my $token = join '', <F>;
@@ -28,20 +28,23 @@ for (@cat) {
     my $res = $ua->get(
 "https://gitlab.ow2.org/api/v4/projects/181/issues?labels=$_&milestone=$milestone&state=all&scope=all&per_page=100&private_token=$token"
     );
-    $result .= "  * ${_}s:\n";
+    my $tmp .= "  * ${_}s:\n";
     $res = JSON::from_json( $res->content );
+    my $add = 0;
     while ( my $i = pop @$res ) {
-        $result .=  "    * #$i->{iid}: $i->{title}\n";
+        $tmp .= "    * #$i->{iid}: $i->{title}\n";
+        $add++;
     }
-    $result .=  "\n";
+    $tmp    .= "\n";
+    $result .= $tmp if $add;
 }
 
 `dch -b -c changelog -v $milestone '##CONTENT##';dch -c changelog -r --force-save-on-release '';cp changelog tmp.dch`;
-open IN, 'tmp.dch';
+open IN,  'tmp.dch';
 open OUT, '>changelog';
 
 $result =~ s/\n\n$//s;
-while(<IN>) {
+while (<IN>) {
     chomp;
     s/.*##CONTENT##$/$result/;
     print OUT "$_\n";
