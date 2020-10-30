@@ -10,6 +10,7 @@ To configure sessions, go in Manager, ``General Parameters`` »
 
 -  **Store user password in session data**: see
    :doc:`password store documentation<passwordstore>`.
+-  **Display session identifier**: Should the session ID be displayed in the manager's session explorer. The session ID is a sensitive information that should only be shown to highly trusted administrators.
 -  **Sessions timeout**: Maximum lifetime of a session. Old sessions are
    deleted by a cron script.
 -  **Sessions activity timeout**: Maximum inactivity duration.
