@@ -24,7 +24,7 @@ sub perlExpr {
     );
     return -1, "__badExpression__: $err" if $err;
     return $val =~ qr/(?<=[^=<!>\|\?])=(?![=~])/
-      ? ( 0, '__badExpressionAssignment__' )
+      ? ( -1, '__badExpressionAssignment__' )
       : 1;
 }
 
