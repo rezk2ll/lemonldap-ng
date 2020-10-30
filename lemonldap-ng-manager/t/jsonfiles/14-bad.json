@@ -1822,7 +1822,7 @@
         "data": "logout_sso",
         "re": "^/logout"
       }, {
-        "data": "$uid = 1",
+        "data": "accept",
         "re": "default",
         "title": "default",
         "comment": "",

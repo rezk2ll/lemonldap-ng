@@ -43,16 +43,9 @@ foreach my $i ( 0 .. 2 ) {
 }
 count(4);
 ok(
-    @{ $resBody->{details}->{__needConfirmation__} } == 1,
-    'JSON response contains 1 needConfirmation'
+    @{ $resBody->{details}->{__needConfirmation__} } == 2,
+    'JSON response contains 2 needConfirmation'
 ) or print STDERR Dumper($resBody);
-
-ok(
-    $resBody->{details}->{__needConfirmation__}->[0]->{message} =~
-      /\bplugin is enabled without CSRF Token neither Captcha required\b/,
-    "Warning with confirmation needed found"
-) or print STDERR Dumper($resBody);
-
 ok(
     @{ $resBody->{details}->{__changes__} } == 23,
     'JSON response contains 23 changes'
@@ -65,9 +58,9 @@ ok(
     ),
     "Request succeed"
 );
-
 ok( -f $confFiles->[1], 'File is created' );
-count(5);
+count(4);
+
 my @changes = @{&changes};
 my @cmsg    = @{ $resBody->{details}->{__changes__} };
 my $bug;
