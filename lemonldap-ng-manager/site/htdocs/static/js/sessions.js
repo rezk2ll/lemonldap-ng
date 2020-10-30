@@ -312,7 +312,7 @@
                   delete session[attr];
                 } else if (session[attr].toString().match(/"rp":\s*"[\w-]+"/)) {
                   subres.push({
-                    title: "rp",
+                    title: "RP",
                     value: "scope",
                     epoch: "date",
                     td: "0"
