@@ -506,12 +506,13 @@ Some options are available:
 -  Type: handler type (normal,
    :doc:`ServiceToken Handler<servertoserver>`,
    :doc:`DevOps Handler<devopshandler>`,...)
--  Authentication level required: this option avoids to reject user with
-   a rule based on ``$_authenticationLevel``. When user hasn't got the
+-  Required authentication level: this option avoids to reject user with
+   a rule based on ``$_authenticationLevel``. When user has not got the
    required level, he is redirected to an upgrade page in the portal.
-   This level is applied to ALL VirtualHost locations.
--  ServiceToken timeout: The Service Token is only available during 30
-   seconds by default. This TTL can be customized for each virtual host.
+   This default level is required for ALL locations relative to this virtual host.
+   It can be overrided for each locations.
+-  ServiceToken timeout: by default, ServiceToken is just valid during 30
+   seconds. This TTL can be customized for each virtual host.
 
 
 .. danger::
