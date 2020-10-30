@@ -385,6 +385,10 @@ sub run {
                 return PE_SAML_SSO_ERROR;
             }
 
+            my $h =
+              $self->p->processHook( $req, 'samlGotAuthnRequest', $login );
+            return $h if ( $h != PE_OK );
+
             # Get SP entityID
             my $sp = $request ? $login->remote_providerID() : $idp_initiated_sp;
 
