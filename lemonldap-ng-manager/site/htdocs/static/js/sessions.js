@@ -194,9 +194,12 @@
         return $scope.showM = false;
       };
       $scope.deleteOIDCConsent = function(rp, epoch) {
-        var item;
-        item = angular.element(".data-" + epoch);
-        item.remove();
+        var e, i, items, len;
+        items = document.querySelectorAll(".data-" + epoch);
+        for (i = 0, len = items.length; i < len; i++) {
+          e = items[i];
+          e.remove();
+        }
         $scope.waiting = true;
         $http['delete'](scriptname + "sessions/OIDCConsent/" + sessionType + "/" + $scope.currentSession.id + "?rp=" + rp + "&epoch=" + epoch).then(function(response) {
           return $scope.waiting = false;
