@@ -56,7 +56,8 @@ sub init {
     $self->{multiValuesSeparator} ||= '; ';
     $self->{impersonationPrefix} = $conf->{impersonationPrefix} || 'real_';
     $self->{hiddenAttributes} //= '_password';
-    $self->{hiddenAttributes} .= ' _session_id' unless $conf->{displaySessionId};
+    $self->{hiddenAttributes} .= ' _session_id'
+      unless $conf->{displaySessionId};
     return 1;
 }
 

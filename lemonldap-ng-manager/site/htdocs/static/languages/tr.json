@@ -79,6 +79,7 @@
 "badDomainName":"Hatalı etki alanı adı",
 "badEncoding":"Hatalı kodlama",
 "badExpression":"Hatalı ifade",
+"badExpressionAssignment":"Expression containing an assignment",
 "badHeaderName":"Hatalı başlık adı",
 "badHostname":"Hatalı konak adı",
 "badLdapUri":"Hatalı LDAP URI",

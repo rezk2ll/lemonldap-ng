@@ -79,6 +79,7 @@
 "badDomainName":"اسم النطاق سيئ",
 "badEncoding":"تشفير خاطئ",
 "badExpression":"تعبير خاطئ",
+"badExpressionAssignment":"Expression containing an assignment",
 "badHeaderName":" حقل الهيدر خاطئ",
 "badHostname":"اسم الخادم خاطئ",
 "badLdapUri":"\n URI LDAP خاطئ",

@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -27,7 +27,10 @@ sub perlExpr {
     my $err = join( '',
         grep { $_ =~ /(?:Undefined subroutine|Devel::StackTrace)/ ? () : $_ }
           split( /\n/, $@ ) );
-    return $err ? ( -1, "__badExpression__: $err" ) : (1);
+    return ( -1, "__badExpression__: $err" ) if $err;
+    return $val =~ qr/(?<=[^=<!>\|\?])=(?![=~])/
+      ? ( -1, "__badExpressionAssignment__" )
+      : 1;
 }
 
 my $url_re = $RE{URI}{HTTP}{ -scheme => "https?" };
@@ -1090,9 +1093,10 @@ sub attributes {
             documentation => 'Display logout tab in portal',
         },
         portalDisplayCertificateResetByMail => {
-            type          => 'bool',
-            default       => 0,
-            documentation => 'Display certificate reset by mail button in portal',
+            type    => 'bool',
+            default => 0,
+            documentation =>
+              'Display certificate reset by mail button in portal',
         },
         portalDisplayRegister => {
             default       => 1,
@@ -2118,14 +2122,14 @@ sub attributes {
             documentation => 'List of auto signin rules',
         },
 
-	# Adaptative Authentication Level plugin
+        # Adaptative Authentication Level plugin
         adaptativeAuthenticationLevelRules => {
-            type => 'keyTextContainer',
-                keyTest => sub {
-                    eval { qr/$_[0]/ };
-                    return $@ ? 0 : 1;
-                },
-                keyMsgFail => '__badRegexp__',
+            type    => 'keyTextContainer',
+            keyTest => sub {
+                eval { qr/$_[0]/ };
+                return $@ ? 0 : 1;
+            },
+            keyMsgFail    => '__badRegexp__',
             documentation => 'Adaptative authentication level rules',
             flags         => 'p',
         },
@@ -2345,8 +2349,9 @@ sub attributes {
             documentation => 'CAS User attribute',
         },
         casAppMetaDataOptionsAuthnLevel => {
-            type          => 'int',
-            documentation => 'Authentication level requires to access to this CAS application',
+            type => 'int',
+            documentation =>
+              'Authentication level requires to access to this CAS application',
         },
         casAppMetaDataOptionsRule => {
             type          => 'text',
@@ -2984,8 +2989,9 @@ sub attributes {
             default => 1,
         },
         samlSPMetaDataOptionsAuthnLevel => {
-            type          => 'int',
-            documentation => 'Authentication level requires to access to this SP',
+            type => 'int',
+            documentation =>
+              'Authentication level requires to access to this SP',
         },
         samlSPMetaDataOptionsRule => {
             type          => 'text',
@@ -3345,12 +3351,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default => 'require',
         },
         ldapCAFile => {
-            type          => 'text',
-            documentation => 'Location of the certificate file for LDAP connections',
+            type => 'text',
+            documentation =>
+              'Location of the certificate file for LDAP connections',
         },
         ldapCAPath => {
-            type          => 'text',
-            documentation => 'Location of the CA directory for LDAP connections',
+            type => 'text',
+            documentation =>
+              'Location of the CA directory for LDAP connections',
         },
 
         # SSL
@@ -4167,8 +4175,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Issue refresh tokens',
         },
         oidcRPMetaDataOptionsAuthnLevel => {
-            type          => 'int',
-            documentation => 'Authentication level requires to access to this RP',
+            type => 'int',
+            documentation =>
+              'Authentication level requires to access to this RP',
         },
         oidcRPMetaDataOptionsRule => {
             type          => 'text',

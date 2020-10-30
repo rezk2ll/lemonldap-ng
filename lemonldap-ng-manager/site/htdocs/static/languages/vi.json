@@ -79,6 +79,7 @@
 "badDomainName":"Tên miền không hợp lệ",
 "badEncoding":"Mã hoá không hợp lệ",
 "badExpression":"Biểu thức không hợp lệ",
+"badExpressionAssignment":"Expression containing an assignment",
 "badHeaderName":"Tên tiêu đề không hợp lệ",
 "badHostname":"Tên máy chủ không hợp lệ",
 "badLdapUri":"URI LDAP không đúng",

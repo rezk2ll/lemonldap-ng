@@ -79,6 +79,7 @@
 "badDomainName":"Błędna nazwa domeny",
 "badEncoding":"Błędne kodowanie",
 "badExpression":"Błędne wyrażenie",
+"badExpressionAssignment":"Expression containing an assignment",
 "badHeaderName":"Błędna nazwa nagłówka",
 "badHostname":"Błędna nazwa hosta",
 "badLdapUri":"Błędny identyfikator URI LDAP",

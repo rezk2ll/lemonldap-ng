@@ -79,6 +79,7 @@
 "badDomainName":"无效的域名",
 "badEncoding":"无效的编码",
 "badExpression":"无效的表达式",
+"badExpressionAssignment":"Expression containing an assignment",
 "badHeaderName":"无效的头部名称",
 "badHostname":"无效的主机名",
 "badLdapUri":"无效的 LDAP URI ",

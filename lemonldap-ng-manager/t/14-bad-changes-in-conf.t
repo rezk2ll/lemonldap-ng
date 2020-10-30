@@ -22,9 +22,9 @@ ok( $resBody->{result} == 0, "JSON response contains \"result:0\"" )
   or print STDERR Dumper($res);
 ok( (
         $resBody->{details}->{__errors__}
-          and @{ $resBody->{details}->{__errors__} } == 1
+          and @{ $resBody->{details}->{__errors__} } == 2
     ),
-    '1 error detected'
+    '2 errors detected'
 ) or print STDERR Dumper($resBody);
 
 count(5);
