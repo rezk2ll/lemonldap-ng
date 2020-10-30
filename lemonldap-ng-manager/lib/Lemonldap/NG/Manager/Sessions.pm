@@ -67,7 +67,7 @@ sub init {
 
 sub delOIDCConsent {
 
-    my ( $self, $req, $session, $skey ) = @_;
+    my ( $self, $req ) = @_;
 
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
@@ -76,10 +76,15 @@ sub delOIDCConsent {
     my $epoch  = $params->{epoch};
     my $rp     = $params->{rp};
 
+    my $id =  $req->params('sessionId')
+      or return $self->sendError( $req, 'sessionId is missing', 400 );
+
+    $req->parameters->set('sessionId', $self->_maybeDecryptSessionId($id));
+
     if ( $rp =~ /\b[\w-]+\b/ and defined $epoch ) {
         $self->logger->debug(
             "Call procedure deleteOIDCConsent with RP=$rp and epoch=$epoch");
-        return $self->deleteOIDCConsent( $req, $session, $skey );
+        return $self->deleteOIDCConsent( $req );
     }
     else {
         return $self->sendError( $req, undef, 400 );
@@ -243,8 +248,9 @@ sub sessions {
                 count    => scalar( @{ $r->{$uid} } ),
                 sessions => [
                     map { {
-                            session => $_->{_sessionId},
-                            date    => $_->{_utime}
+                            session =>
+                              $self->_maybeEncryptSessionId( $_->{_sessionId} ),
+                            date => $_->{_utime}
                         }
                     } @{ $r->{$uid} }
                 ]
@@ -351,7 +357,7 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
     elsif ( my $f = $req->params('orderBy') ) {
         my @fields = split /,/, $f;
         my @r      = map {
-            my $tmp = { session => $_ };
+            my $tmp = { session => $self->_maybeEncryptSessionId($_) };
             foreach my $f (@fields) {
                 my $s = $f;
                 $s =~ s/^net(?:4|6|)\(([\w:]+)\)$/$1/;
@@ -392,7 +398,11 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
     else {
         $res = [
             sort { $a->{date} <=> $b->{date} }
-              map { { session => $_, date => $res->{$_}->{_utime} } }
+              map { {
+                    session => $self->_maybeEncryptSessionId($_),
+                    date    => $res->{$_}->{_utime}
+                }
+              }
               keys %$res
         ];
     }
@@ -406,6 +416,45 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
             values => $res
         }
     );
+}
+
+sub session {
+    my ( $self, $req, $session, $skey ) = @_;
+
+    $session = $self->_maybeDecryptSessionId($session);
+    return $self->SUPER::session( $req, $session, $skey );
+}
+
+sub _maybeDecryptSessionId {
+    my ( $self, $session ) = @_;
+
+    if ( $self->{hiddenAttributes} =~ /\b_session_id\b/ ) {
+        $session =
+          Lemonldap::NG::Handler::Main->tsv->{cipher}->decryptHex($session);
+    }
+
+    return $session;
+}
+
+sub _maybeEncryptSessionId {
+    my ( $self, $session ) = @_;
+
+    if ( $self->{hiddenAttributes} =~ /\b_session_id\b/ ) {
+        $session =
+          Lemonldap::NG::Handler::Main->tsv->{cipher}->encryptHex($session);
+    }
+
+    return $session;
+}
+
+sub delSession {
+    my ( $self, $req ) = @_;
+    my $id =  $req->params('sessionId')
+      or return $self->sendError( $req, 'sessionId is missing', 400 );
+
+    $req->parameters->set('sessionId', $self->_maybeDecryptSessionId($id));
+
+    return $self->SUPER::delSession( $req );
 }
 
 sub cmpIPv4 {
