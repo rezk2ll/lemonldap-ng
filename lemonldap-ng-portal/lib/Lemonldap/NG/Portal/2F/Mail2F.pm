@@ -54,6 +54,10 @@ sub run {
     my ( $self, $req, $token ) = @_;
 
     my $checkLogins = $req->param('checkLogins');
+    $self->logger->debug("Mail2F: checkLogins set") if $checkLogins;
+
+    my $stayconnected = $req->param('stayconnected');
+    $self->logger->debug("Mail2F: stayconnected set") if $stayconnected;
 
     my $code = $self->random->randregex( $self->conf->{mail2fCodeRegex} );
     $self->logger->debug("Generated two-factor code: $code");
@@ -117,8 +121,9 @@ sub run {
               . $self->prefix
               . '2fcheck?skin='
               . $self->p->getSkin($req),
-            LEGEND      => 'enterMail2fCode',
-            CHECKLOGINS => $checkLogins
+            LEGEND        => 'enterMail2fCode',
+            CHECKLOGINS   => $checkLogins,
+            STAYCONNECTED => $stayconnected
         }
     );
     $req->response($tmp);

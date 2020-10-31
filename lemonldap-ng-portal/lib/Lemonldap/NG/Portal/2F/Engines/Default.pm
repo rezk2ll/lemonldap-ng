@@ -193,8 +193,9 @@ sub init {
 # run() is called at each authentication, just after sessionInfo populated
 sub run {
     my ( $self, $req ) = @_;
-    my $checkLogins = $req->param('checkLogins');
-    my $spoofId     = $req->param('spoofId') || '';
+    my $checkLogins   = $req->param('checkLogins');
+    my $stayconnected = $req->param('stayconnected');
+    my $spoofId       = $req->param('spoofId') || '';
     $self->logger->debug("2F checkLogins set") if ($checkLogins);
 
     # Skip 2F unless a module has been registered
@@ -359,12 +360,13 @@ sub run {
         $req,
         '2fchoice',
         params => {
-            MAIN_LOGO   => $self->conf->{portalMainLogo},
-            SKIN        => $self->p->getSkin($req),
-            LANGS       => $self->conf->{showLanguages},
-            CHECKLOGINS => $checkLogins,
-            TOKEN       => $token,
-            MSG         => $self->canUpdateSfa($req) || 'choose2f',
+            MAIN_LOGO     => $self->conf->{portalMainLogo},
+            SKIN          => $self->p->getSkin($req),
+            LANGS         => $self->conf->{showLanguages},
+            CHECKLOGINS   => $checkLogins,
+            STAYCONNECTED => $stayconnected,
+            TOKEN         => $token,
+            MSG           => $self->canUpdateSfa($req) || 'choose2f',
             ALERT   => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
             MODULES => [
                 map { {

@@ -23,9 +23,9 @@ extends 'Lemonldap::NG::Portal::Main::SecondFactor',
 
 # INITIALIZATION
 
-has rule => ( is => 'rw' );
+has rule   => ( is => 'rw' );
 has prefix => ( is => 'ro', default => 'u' );
-has logo => ( is => 'rw', default => 'u2f.png' );
+has logo   => ( is => 'rw', default => 'u2f.png' );
 
 sub init {
     my ($self) = @_;
@@ -52,7 +52,10 @@ sub run {
     my ( $self, $req, $token ) = @_;
 
     my $checkLogins = $req->param('checkLogins');
-    $self->logger->debug("U2F checkLogins set") if ($checkLogins);
+    $self->logger->debug("U2F: checkLogins set") if $checkLogins;
+
+    my $stayconnected = $req->param('stayconnected');
+    $self->logger->debug("U2F: stayconnected set") if $stayconnected;
 
     # Check if user is registered
     if ( my $res = $self->loadUser( $req, $req->sessionInfo ) ) {
@@ -91,11 +94,12 @@ sub run {
             $req,
             'u2fcheck',
             params => {
-                MAIN_LOGO   => $self->conf->{portalMainLogo},
-                SKIN        => $self->p->getSkin($req),
-                DATA        => $data,
-                TOKEN       => $token,
-                CHECKLOGINS => $checkLogins
+                MAIN_LOGO     => $self->conf->{portalMainLogo},
+                SKIN          => $self->p->getSkin($req),
+                DATA          => $data,
+                TOKEN         => $token,
+                CHECKLOGINS   => $checkLogins,
+                STAYCONNECTED => $stayconnected
             }
         );
 

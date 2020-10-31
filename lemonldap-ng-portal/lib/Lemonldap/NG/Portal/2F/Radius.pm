@@ -56,7 +56,10 @@ sub run {
     my ( $self, $req, $token ) = @_;
 
     my $checkLogins = $req->param('checkLogins');
-    $self->logger->debug("Radius2F checkLogins set") if ($checkLogins);
+    $self->logger->debug("Radius2F: checkLogins set") if $checkLogins;
+
+    my $stayconnected = $req->param('stayconnected');
+    $self->logger->debug("Radius2F: stayconnected set") if $stayconnected;
 
     # Prepare form
     my $tmp = $self->p->sendHtml(
@@ -71,8 +74,9 @@ sub run {
               . $self->prefix
               . '2fcheck?skin='
               . $self->p->getSkin($req),
-            LEGEND      => 'enterRadius2fCode',
-            CHECKLOGINS => $checkLogins
+            LEGEND        => 'enterRadius2fCode',
+            CHECKLOGINS   => $checkLogins,
+            STAYCONNECTED => $stayconnected
         }
     );
     $self->logger->debug("Prepare Radius 2F verification");

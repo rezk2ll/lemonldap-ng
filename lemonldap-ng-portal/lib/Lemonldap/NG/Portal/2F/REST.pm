@@ -58,7 +58,10 @@ sub run {
     my ( $self, $req, $token ) = @_;
 
     my $checkLogins = $req->param('checkLogins');
-    $self->logger->debug("REST2F checkLogins set") if ($checkLogins);
+    $self->logger->debug("REST2F: checkLogins set") if $checkLogins;
+
+    my $stayconnected = $req->param('stayconnected');
+    $self->logger->debug("REST2F: stayconnected set") if $stayconnected;
 
     if ( $self->conf->{rest2fInitUrl} ) {
 
@@ -98,8 +101,9 @@ sub run {
               . $self->prefix
               . '2fcheck?skin='
               . $self->p->getSkin($req),
-            LEGEND      => 'enterRest2fCode',
-            CHECKLOGINS => $checkLogins
+            LEGEND        => 'enterRest2fCode',
+            CHECKLOGINS   => $checkLogins,
+            STAYCONNECTED => $stayconnected
         }
     );
     $self->logger->debug("Prepare external REST verification");

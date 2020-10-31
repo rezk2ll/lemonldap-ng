@@ -121,7 +121,10 @@ sub run {
     my ( $self, $req, $token, $_2fDevices ) = @_;
 
     my $checkLogins = $req->param('checkLogins');
-    $self->logger->debug("Yubikey checkLogins set") if ($checkLogins);
+    $self->logger->debug("Yubikey; checkLogins set") if ($checkLogins);
+
+    my $stayconnected = $req->param('stayconnected');
+    $self->logger->debug("Yubikey: stayconnected set") if $stayconnected;
 
     my $yubikey = $self->_findYubikey( $req, $req->sessionInfo );
 
@@ -144,7 +147,8 @@ sub run {
             TARGET      => '/yubikey2fcheck?skin=' . $self->p->getSkin($req),
             INPUTLOGO   => 'yubikey.png',
             LEGEND      => 'clickOnYubikey',
-            CHECKLOGINS => $checkLogins
+            CHECKLOGINS => $checkLogins,
+            STAYCONNECTED => $stayconnected
         }
     );
     $self->logger->debug("Display Yubikey form");

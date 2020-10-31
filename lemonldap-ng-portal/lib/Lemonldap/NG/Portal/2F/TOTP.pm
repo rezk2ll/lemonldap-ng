@@ -23,7 +23,7 @@ extends 'Lemonldap::NG::Portal::Main::SecondFactor',
 # INITIALIZATION
 
 has prefix => ( is => 'ro', default => 'totp' );
-has logo => ( is => 'rw', default => 'totp.png' );
+has logo   => ( is => 'rw', default => 'totp.png' );
 
 sub init {
     my ($self) = @_;
@@ -46,17 +46,21 @@ sub run {
     $self->logger->debug('Generate TOTP form');
 
     my $checkLogins = $req->param('checkLogins');
-    $self->logger->debug("TOTP checkLogins set") if ($checkLogins);
+    $self->logger->debug("TOTP: checkLogins set") if $checkLogins;
+
+    my $stayconnected = $req->param('stayconnected');
+    $self->logger->debug("TOTP: stayconnected set") if $stayconnected;
 
     # Prepare form
     my $tmp = $self->p->sendHtml(
         $req,
         'totp2fcheck',
         params => {
-            MAIN_LOGO   => $self->conf->{portalMainLogo},
-            SKIN        => $self->p->getSkin($req),
-            TOKEN       => $token,
-            CHECKLOGINS => $checkLogins
+            MAIN_LOGO     => $self->conf->{portalMainLogo},
+            SKIN          => $self->p->getSkin($req),
+            TOKEN         => $token,
+            CHECKLOGINS   => $checkLogins,
+            STAYCONNECTED => $stayconnected
         }
     );
     $self->logger->debug("Prepare TOTP 2F verification");

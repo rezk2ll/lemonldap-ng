@@ -61,13 +61,17 @@ sub run {
     $self->logger->debug('Generate TOTP form');
 
     my $checkLogins = $req->param('checkLogins');
-    $self->logger->debug("UTOTP checkLogins set") if ($checkLogins);
+    $self->logger->debug("UTOTP: checkLogins set") if $checkLogins;
+
+    my $stayconnected = $req->param('stayconnected');
+    $self->logger->debug("UTOTP: stayconnected set") if $stayconnected;
 
     my %tplPrms = (
-        MAIN_LOGO   => $self->conf->{portalMainLogo},
-        SKIN        => $self->p->getSkin($req),
-        TOKEN       => $token,
-        CHECKLOGINS => $checkLogins
+        MAIN_LOGO     => $self->conf->{portalMainLogo},
+        SKIN          => $self->p->getSkin($req),
+        TOKEN         => $token,
+        CHECKLOGINS   => $checkLogins,
+        STAYCONNECTED => $stayconnected
     );
 
     if ( my $res = $self->u2f->loadUser( $req, $req->sessionInfo ) ) {
