@@ -3,10 +3,10 @@ package Lemonldap::NG::Portal::2F::Ext2F;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_BADOTP
-  PE_ERROR
-  PE_FORMEMPTY
   PE_OK
+  PE_ERROR
+  PE_BADOTP
+  PE_FORMEMPTY
   PE_SENDRESPONSE
 );
 

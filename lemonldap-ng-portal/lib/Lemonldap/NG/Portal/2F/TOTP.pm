@@ -8,17 +8,19 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_BADOTP
-  PE_ERROR
-  PE_FORMEMPTY
   PE_OK
+  PE_ERROR
+  PE_BADOTP
+  PE_FORMEMPTY
   PE_SENDRESPONSE
 );
 
 our $VERSION = '2.0.10';
 
-extends 'Lemonldap::NG::Portal::Main::SecondFactor',
-  'Lemonldap::NG::Common::TOTP';
+extends qw(
+  Lemonldap::NG::Portal::Main::SecondFactor
+  Lemonldap::NG::Common::TOTP
+);
 
 # INITIALIZATION
 

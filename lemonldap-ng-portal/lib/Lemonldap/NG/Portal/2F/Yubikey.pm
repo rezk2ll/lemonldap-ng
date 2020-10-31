@@ -8,10 +8,10 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK
   PE_ERROR
   PE_BADOTP
   PE_FORMEMPTY
-  PE_OK
   PE_SENDRESPONSE
 );
 

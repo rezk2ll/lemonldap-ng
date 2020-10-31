@@ -13,17 +13,14 @@ extends 'Lemonldap::NG::Portal::Main::SecondFactor';
 # INITIALIZATION
 
 has prefix => ( is => 'ro', default => 'utotp' );
-
-has logo => ( is => 'rw', default => 'utotp.png' );
-
-has u2f => ( is => 'rw' );
-
-has totp => ( is => 'rw' );
+has logo   => ( is => 'rw', default => 'utotp.png' );
+has u2f    => ( is => 'rw' );
+has totp   => ( is => 'rw' );
 
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK
   PE_ERROR
   PE_FORMEMPTY
-  PE_OK
   PE_SENDRESPONSE
 );
 

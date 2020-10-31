@@ -10,17 +10,17 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.10';
 
-extends 'Lemonldap::NG::Portal::Main::SecondFactor',
-  'Lemonldap::NG::Portal::Lib::REST';
+extends qw(
+  Lemonldap::NG::Portal::Main::SecondFactor
+  Lemonldap::NG::Portal::Lib::REST
+);
 
 # INITIALIZATION
 
-has prefix => ( is => 'rw', default => 'rest' );
-
+has prefix    => ( is => 'rw', default => 'rest' );
 has initAttrs => ( is => 'rw', default => sub { {} } );
-
 has vrfyAttrs => ( is => 'rw', default => sub { {} } );
 
 sub init {

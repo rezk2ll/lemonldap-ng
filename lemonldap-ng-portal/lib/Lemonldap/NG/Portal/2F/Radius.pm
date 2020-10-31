@@ -10,14 +10,13 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.10';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor';
 
 # INITIALIZATION
 
 has prefix => ( is => 'rw', default => 'radius' );
-
 has radius => ( is => 'rw' );
 
 sub init {

@@ -3,18 +3,20 @@ package Lemonldap::NG::Portal::2F::Mail2F;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_BADOTP
-  PE_ERROR
-  PE_FORMEMPTY
   PE_OK
+  PE_ERROR
+  PE_BADOTP
+  PE_FORMEMPTY
   PE_SENDRESPONSE
   PE_MUSTHAVEMAIL
 );
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.10';
 
-extends 'Lemonldap::NG::Portal::Main::SecondFactor',
-  'Lemonldap::NG::Portal::Lib::SMTP';
+extends qw(
+  Lemonldap::NG::Portal::Main::SecondFactor
+  Lemonldap::NG::Portal::Lib::SMTP
+);
 
 # INITIALIZATION
 

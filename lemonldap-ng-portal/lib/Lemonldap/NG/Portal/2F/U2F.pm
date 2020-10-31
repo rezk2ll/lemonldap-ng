@@ -4,22 +4,23 @@
 # have registered their U2F key
 package Lemonldap::NG::Portal::2F::U2F;
 
-#use 5.16.0;
 use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_BADCREDENTIALS
-  PE_ERROR
   PE_OK
-  PE_SENDRESPONSE
+  PE_ERROR
   PE_U2FFAILED
+  PE_SENDRESPONSE
+  PE_BADCREDENTIALS
 );
 
 our $VERSION = '2.0.10';
 
-extends 'Lemonldap::NG::Portal::Main::SecondFactor',
-  'Lemonldap::NG::Portal::Lib::U2F';
+extends qw(
+  Lemonldap::NG::Portal::Main::SecondFactor
+  Lemonldap::NG::Portal::Lib::U2F
+);
 
 # INITIALIZATION
 
