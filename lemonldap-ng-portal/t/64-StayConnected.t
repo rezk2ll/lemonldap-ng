@@ -8,10 +8,12 @@ my $res;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel      => 'error',
-            useSafeJail   => 1,
-            stayConnected => 1,
-            accept        => 'text/html',
+            logLevel            => 'error',
+            useSafeJail         => 1,
+            stayConnected       => 1,
+            loginHistoryEnabled => 1,
+            portalMainLogo      => 'common/logos/logo_llng_old.png',
+            accept              => 'text/html',
         }
     }
 );
@@ -105,11 +107,57 @@ ok(
     ),
     'Post bad fingerprint'
 );
-count(1);
 ( $host, $url, $query ) = expectForm($res);
 ok( $query =~ /user/, ' Get login form' );
-count(1);
+count(2);
 
+# Try to authenticate with history
+# --------------------------------
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new(
+            'user=dwho&password=dwho&stayconnected=1&checkLogins=1'),
+        length => 53
+    ),
+    'Auth query'
+);
+count(1);
+$id = expectCookie($res);
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/registerbrowser', 'fg', 'token' );
+
+# Push fingerprint
+$query =~ s/fg=/fg=aaa/;
+ok(
+    $res = $client->_post(
+        '/registerbrowser',
+        IO::String->new($query),
+        length => length($query),
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+    ),
+    'Post fingerprint'
+);
+count(1);
+$cid = expectCookie( $res, 'llngconnexion' );
+
+ok( $res->[2]->[0] =~ qr%<img src="/static/common/logos/logo_llng_old.png"%,
+    'Found custom Main Logo' )
+  or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
+  or explain( $res->[2]->[0], 'trspan="lastLogins"' );
+my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
+
+# History with 2 successLogins
+ok( @c == 2, " -> Two entries found" )
+  or explain( $res->[2]->[0], 'Two entries found' );
+ok( $res = $client->_get( '/', cookie => "lemonldap=$cid" ),
+    'Verify connection' );
+count(4);
+expectOK($res);
+
+$client->logout($cid);
 clean_sessions();
 
 done_testing( count() );

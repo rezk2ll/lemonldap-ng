@@ -56,9 +56,17 @@ sub init {
 sub newDevice {
     my ( $self, $req ) = @_;
 
+    my $checkLogins = $req->param('checkLogins');
+    $self->logger->debug("StayConnected: checkLogins set") if $checkLogins;
+
     if ( $req->param('stayconnected') ) {
         my $token = $self->ott->createToken( {
-                name => $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                name => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+                (
+                    $checkLogins
+                    ? ( history => $req->sessionInfo->{_loginHistory} )
+                    : ()
+                )
             }
         );
         $req->response(
@@ -66,9 +74,10 @@ sub newDevice {
                 $req,
                 '../common/registerBrowser',
                 params => {
-                    URL    => $req->urldc,
-                    TOKEN  => $token,
-                    ACTION => '/registerbrowser',
+                    URL         => $req->urldc,
+                    TOKEN       => $token,
+                    ACTION      => '/registerbrowser',
+                    CHECKLOGINS => $checkLogins
                 }
             )
         );
@@ -109,6 +118,7 @@ sub storeBrowser {
                             max_age => 2592000,
                         )
                     );
+                    $req->sessionInfo->{_loginHistory} = $tmp->{history} if exists $tmp->{history};
                 }
                 else {
                     $self->logger->warn("Browser hasn't return fingerprint");
@@ -128,8 +138,8 @@ sub storeBrowser {
         $self->userLogger->error('StayConnected called without token');
     }
 
-    # Deliver cookie llngbrowser
-    return $self->p->do( $req, [ sub { PE_OK } ] );
+    # Return cookie llngconnexion
+    return $self->p->do( $req, [ @{ $self->p->endAuth }, sub { PE_OK } ] );
 }
 
 # Check for:

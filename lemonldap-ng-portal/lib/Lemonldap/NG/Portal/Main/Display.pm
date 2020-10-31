@@ -109,8 +109,9 @@ sub display {
             CHOICE_VALUE    => $req->data->{_authChoice},
             CHECK_LOGINS    => $self->conf->{portalCheckLogins}
               && $req->data->{login},
-            ASK_LOGINS => $req->param('checkLogins') || 0,
-            CONFIRMKEY => $self->stamp(),
+            ASK_LOGINS        => $req->param('checkLogins')   || 0,
+            ASK_STAYCONNECTED => $req->param('stayconnected') || 0,
+            CONFIRMKEY        => $self->stamp(),
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -137,9 +138,10 @@ sub display {
             CHOICE_VALUE    => $req->data->{_authChoice},
             CHECK_LOGINS    => $self->conf->{portalCheckLogins}
               && $req->data->{login},
-            ASK_LOGINS => $req->param('checkLogins') || 0,
-            CONFIRMKEY => $self->stamp(),
-            LIST       => $req->data->{list} || [],
+            ASK_LOGINS        => $req->param('checkLogins')   || 0,
+            ASK_STAYCONNECTED => $req->param('stayconnected') || 0,
+            CONFIRMKEY        => $self->stamp(),
+            LIST => $req->data->{list} || [],
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -377,6 +379,7 @@ sub display {
             DONT_STORE_PASSWORD   => $self->conf->{browsersDontStorePassword},
             CHECK_LOGINS          => $self->conf->{portalCheckLogins},
             ASK_LOGINS            => $req->param('checkLogins') || 0,
+            ASK_STAYCONNECTED     => $req->param('stayconnected') || 0,
             DISPLAY_RESETPASSWORD => $self->conf->{portalDisplayResetPassword},
             DISPLAY_REGISTER      => $self->conf->{portalDisplayRegister},
             DISPLAY_UPDATECERTIF =>
