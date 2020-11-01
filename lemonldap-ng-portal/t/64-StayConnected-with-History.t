@@ -12,6 +12,7 @@ my $client = LLNG::Manager::Test->new( {
             useSafeJail         => 1,
             stayConnected       => 1,
             loginHistoryEnabled => 1,
+            securedCookie       => 1,
             portalMainLogo      => 'common/logos/logo_llng_old.png',
             accept              => 'text/html',
         }
@@ -45,10 +46,11 @@ ok(
     ),
     'Post fingerprint'
 );
-count(1);
 expectRedirection( $res, 'http://auth.example.com/' );
 my $cid = expectCookie( $res, 'llngconnexion' );
-
+ok( $res->[1]->[5] =~ /\bsecure\b/, ' Secured cookie found' )
+  or print STDERR Dumper( $res->[1]->[5] );
+count(2);
 $client->logout($id);
 
 # Try to connect with persistent connection cookie
