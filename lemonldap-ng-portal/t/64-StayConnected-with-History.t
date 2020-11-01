@@ -152,12 +152,24 @@ my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
 # History with 2 successLogins
 ok( @c == 2, " -> Two entries found" )
   or explain( $res->[2]->[0], 'Two entries found' );
-ok( $res = $client->_get( '/', cookie => "lemonldap=$cid" ),
+ok( $res = $client->_get( '/', cookie => "lemonldap=$id" ),
     'Verify connection' );
-count(4);
+expectAuthenticatedAs( $res, 'dwho' );
+ok(
+    $res = $client->_get(
+        '/',
+        cookie => "lemonldap=$id",
+        accept => 'text/html'
+    ),
+    'Get Menu'
+);
+ok( $res->[2]->[0] =~ m%<span trspan="yourApps">Your applications</span>%,
+    ' Apps menu found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(6);
 expectOK($res);
 
-$client->logout($cid);
+$client->logout($id);
 clean_sessions();
 
 done_testing( count() );
