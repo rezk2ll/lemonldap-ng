@@ -116,6 +116,7 @@ sub storeBrowser {
                             name    => 'llngconnexion',
                             value   => $ps->id,
                             max_age => 2592000,
+                            secure  => $self->conf->{securedCookie},
                         )
                     );
                     $req->sessionInfo->{_loginHistory} = $tmp->{history} if exists $tmp->{history};
@@ -213,7 +214,8 @@ sub logout {
         $self->p->cookie(
             name    => 'llngconnexion',
             value   => 0,
-            expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
+            expires => 'Wed, 21 Oct 2015 00:00:00 GMT',
+            secure  => $self->conf->{securedCookie},
         )
     );
     return PE_OK;
