@@ -25,7 +25,7 @@ authentication process, then use ``afterSub``, for example:
 
      use constant afterSub => {
          getUser => 'mysub',
-     }
+     };
      sub mysub {
          my ( $self ,$req ) = @_;
          # Do something
