@@ -4,7 +4,7 @@ use strict;
 use Lemonldap::NG::Common::UserAgent;
 use JSON qw(from_json);
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.10';
 
 our $_ua;
 
