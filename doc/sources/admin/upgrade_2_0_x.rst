@@ -17,6 +17,11 @@ backups and a rollback plan ready!
     update.
 
 
+2.0.10
+------
+
+- New dependency: IO::Socket::Timeout
+
 2.0.9
 -----
 
