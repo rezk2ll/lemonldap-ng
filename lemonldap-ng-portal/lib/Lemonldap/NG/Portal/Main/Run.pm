@@ -199,8 +199,8 @@ sub refresh {
             $self->groupsAndMacros,
             'setLocalGroups',
             sub {
-                $req->sessionInfo->{$_} = $data{$_} foreach ( keys %data );
-                $req->refresh(1);
+                $_[0]->sessionInfo->{$_} = $data{$_} foreach ( keys %data );
+                $_[0]->refresh(1);
                 return PE_OK;
             },
             'store',
