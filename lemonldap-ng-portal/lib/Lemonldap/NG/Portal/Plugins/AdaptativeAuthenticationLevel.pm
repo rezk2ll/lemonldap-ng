@@ -10,7 +10,7 @@ our $VERSION = '2.0.10';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-use constant afterData => 'adaptAuthenticationLevel';
+use constant aroundSub => { 'store' => 'adaptAuthenticationLevel', };
 
 has rules => ( is => 'rw', default => sub { {} } );
 
@@ -30,12 +30,12 @@ sub init {
         next unless $rule;
         $self->rules->{$_} = $rule;
     }
-    
+
     return 1;
 }
 
 sub adaptAuthenticationLevel {
-    my ( $self, $req ) = @_;
+    my ( $self, $sub, $req ) = @_;
 
     my $userid = $req->sessionInfo->{ $self->conf->{whatToTrace} };
     $self->logger->debug("Check adaptative authentication rules for $userid");
@@ -68,16 +68,11 @@ sub adaptAuthenticationLevel {
     }
 
     if ( $authenticationLevel ne $updatedAuthenticationLevel ) {
-        $self->logger->debug(
-            "Authentication level has changed for $userid, update session");
-        $self->p->updateSession(
-            $req,
-            {
-                'authenticationLevel' => $updatedAuthenticationLevel
-            }
-        );
+        $self->logger->debug("Authentication level has changed for $userid");
+        $req->sessionInfo->{authenticationLevel} = $updatedAuthenticationLevel;
     }
-    return PE_OK;
+
+    return $sub->($req);
 }
 
 1;
