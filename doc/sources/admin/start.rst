@@ -286,7 +286,7 @@ Name                                                                 Description
 :doc:`Reset certificate by mail<resetcertificate>`  [11]_\ |image37| Allow users to reset their certificate
 :doc:`REST services<restservices>` |new|                             REST server for :doc:`Proxy<authproxy>`
 :doc:`SOAP services<soapservices>` |deprecated|                      SOAP server for :doc:`Proxy<authproxy>`
-Stay connected |new|                                                 Enable persistent connection on same browser
+:doc:`Stay connected<stayconnected>` |new|                           Enable persistent connection on same browser
 Upgrade session |new|                                                This plugin explains to an already authenticated user that a higher authentication level is required to access the URL instead of reject him
 ==================================================================== ============================================================================================================================================
 
