@@ -1,7 +1,7 @@
 ### Summary
 
-Summarize the new feature encountered concisely
+Summarize the desired feature concisely
 
 ### Design proposition
 
-Describe here the process imaginated (interface design suggest, proposed process,…)
+Describe here the proposed implementation of this feature (interface design suggestions, general architecture, pseudo-code,…)
