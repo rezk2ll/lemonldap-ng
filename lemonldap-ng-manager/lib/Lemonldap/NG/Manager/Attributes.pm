@@ -3915,6 +3915,16 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 0,
             'type'    => 'bool'
         },
+        'stayConnectedCookieName' => {
+            'default' => 'llngconnection',
+            'msgFail' => '__badCookieName__',
+            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'type'    => 'text'
+        },
+        'stayConnectedTimeout' => {
+            'default' => 2592000,
+            'type'    => 'int'
+        },
         'storePassword' => {
             'default' => 0,
             'type'    => 'bool'

@@ -604,11 +604,20 @@ sub tree {
                     title => 'plugins',
                     help  => 'start.html#plugins',
                     nodes => [
-                        'stayConnected',
                         'portalStatus',
                         'upgradeSession',
                         'refreshSessions',
                         'adaptativeAuthenticationLevelRules',
+                        {
+                            title => 'stayConnect',
+                            help  => 'stayconnected.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'stayConnected',
+                                'stayConnectedTimeout',
+                                'stayConnectedCookieName'
+                            ],
+                        },
                         {
                             title => 'portalServers',
                             help  => 'portalservers.html',

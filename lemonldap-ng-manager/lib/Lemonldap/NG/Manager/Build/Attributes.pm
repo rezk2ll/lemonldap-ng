@@ -432,10 +432,22 @@ sub attributes {
         },
         stayConnected => {
             type => 'bool',
-
-            #help          => 'stayconnected.html',
             default       => 0,
             documentation => 'Enable StayConnected plugin',
+        },
+        stayConnectedTimeout => {
+            type          => 'int',
+            default       => 2592000,
+            documentation => 'StayConnected persistent connexion session timeout',
+            flags         => 'm',
+        },
+        stayConnectedCookieName => {
+            type          => 'text',
+            test          => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
+            msgFail       => '__badCookieName__',
+            default       => 'llngconnection',
+            documentation => 'Name of the stayConnected plugin cookie',
+            flags         => 'p',
         },
         checkState => {
             type          => 'bool',
