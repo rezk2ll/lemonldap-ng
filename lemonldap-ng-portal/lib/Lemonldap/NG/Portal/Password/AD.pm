@@ -3,16 +3,18 @@ package Lemonldap::NG::Portal::Password::AD;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_PASSWORD_OK
-  PE_LDAPERROR
-  PE_LDAPCONNECTFAILED
   PE_ERROR
+  PE_LDAPERROR
+  PE_PASSWORD_OK
+  PE_LDAPCONNECTFAILED
 );
 
-extends 'Lemonldap::NG::Portal::Lib::LDAP',
-  'Lemonldap::NG::Portal::Password::Base';
+extends qw(
+  Lemonldap::NG::Portal::Lib::LDAP
+  Lemonldap::NG::Portal::Password::Base
+);
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 sub init {
     my ($self) = @_;
@@ -55,10 +57,7 @@ sub modifyPassword {
     my $code =
       $self->ldap->userModifyPassword( $dn, $pwd, $req->data->{oldpassword},
         1, $requireOldPassword );
-
-    unless ( $code == PE_PASSWORD_OK ) {
-        return $code;
-    }
+    return $code unless ( $code == PE_PASSWORD_OK );
 
     # If force reset, set reset flag
     if ( $req->data->{forceReset} ) {

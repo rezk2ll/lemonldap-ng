@@ -11,9 +11,9 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 our $VERSION = '2.0.10';
 
 extends qw(
-    Lemonldap::NG::Portal::Main::Plugin
+  Lemonldap::NG::Portal::Main::Plugin
   Lemonldap::NG::Portal::Lib::_tokenRule
-  );
+);
 
 # INITIALIZATION
 

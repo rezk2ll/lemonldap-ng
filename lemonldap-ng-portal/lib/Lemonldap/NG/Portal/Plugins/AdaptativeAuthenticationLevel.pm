@@ -10,7 +10,7 @@ our $VERSION = '2.0.10';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-use constant aroundSub => { 'store' => 'adaptAuthenticationLevel', };
+use constant aroundSub => { 'store' => 'adaptAuthenticationLevel' };
 
 has rules => ( is => 'rw', default => sub { {} } );
 

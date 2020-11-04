@@ -5,8 +5,8 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
-  PE_BADOLDPASSWORD
   PE_PASSWORD_OK
+  PE_BADOLDPASSWORD
   PE_PASSWORD_MISMATCH
   PE_PP_PASSWORD_TOO_SHORT
   PE_PP_NOT_ALLOWED_CHARACTER
