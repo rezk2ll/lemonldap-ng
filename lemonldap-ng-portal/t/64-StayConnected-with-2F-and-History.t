@@ -242,7 +242,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         ),
         'Post fingerprint'
     );
-    my $cid = expectCookie( $res, 'llngconnexion' );
+    my $cid = expectCookie( $res, 'llngconnection' );
 
     # History is displayed
     ok(
@@ -358,7 +358,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         ),
         'Post fingerprint'
     );
-    $cid = expectCookie( $res, 'llngconnexion' );
+    $cid = expectCookie( $res, 'llngconnection' );
 
     # History is displayed
     ok(
@@ -393,7 +393,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok(
         $res = $client->_get(
             '/',
-            cookie => "llngconnexion=$cid",
+            cookie => "llngconnection=$cid",
             accept => 'text/html',
         ),
         'Try to auth with persistent cookie'
@@ -407,7 +407,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         $res = $client->_post(
             '/',
             IO::String->new($query),
-            cookie => "llngconnexion=$cid",
+            cookie => "llngconnection=$cid",
             length => length($query),
             accept => 'text/html',
         ),
@@ -458,7 +458,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok(
         $res = $client->_get(
             '/',
-            cookie => "llngconnexion=$cid",
+            cookie => "llngconnection=$cid",
             accept => 'text/html',
         ),
         'Try to auth with persistent cookie'
@@ -472,7 +472,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         $res = $client->_post(
             '/',
             IO::String->new($query),
-            cookie => "llngconnexion=$cid",
+            cookie => "llngconnection=$cid",
             length => length($query),
             accept => 'text/html',
         ),
