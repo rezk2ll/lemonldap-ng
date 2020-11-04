@@ -409,6 +409,7 @@
 "krbByJs":"使用 Ajax 请求",
 "krbKeytab":"keytab file",
 "krbRemoveDomain":"Remove domain from Kerberos username",
+"krbAllowedDomains":"Allowed domains",
 "kerberosParams":"Kerberos 参数",
 "label":"Label",
 "languages":"语言",

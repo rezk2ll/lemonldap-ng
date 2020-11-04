@@ -3684,6 +3684,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 1,
             documentation => 'Remove domain in Kerberos username',
         },
+        krbAllowedDomains => {
+            type          => 'text',
+            documentation => 'Allowed domains',
+        },
 
         # Slave
         slaveAuthnLevel => {

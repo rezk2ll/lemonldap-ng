@@ -409,6 +409,7 @@
 "krbByJs":"استخدام طلب أجاكس",
 "krbKeytab":"كيتاب",
 "krbRemoveDomain":"Remove domain from Kerberos username",
+"krbAllowedDomains":"Allowed domains",
 "kerberosParams":"معايير كيربيروس",
 "label":"Label",
 "languages":"اللغات",

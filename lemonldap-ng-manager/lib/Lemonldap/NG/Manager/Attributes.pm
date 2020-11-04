@@ -1582,6 +1582,9 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'key' => {
             'type' => 'password'
         },
+        'krbAllowedDomains' => {
+            'type' => 'text'
+        },
         'krbAuthnLevel' => {
             'default' => 3,
             'type'    => 'int'

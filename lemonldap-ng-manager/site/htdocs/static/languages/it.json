@@ -409,6 +409,7 @@
 "krbByJs":"Utilizzare la richiesta Ajax",
 "krbKeytab":"File keytab",
 "krbRemoveDomain":"Rimuovi dominio dal nome utente Kerberos",
+"krbAllowedDomains":"Allowed domains",
 "kerberosParams":"Parametri di Kerberos",
 "label":"Label",
 "languages":"Lingue",

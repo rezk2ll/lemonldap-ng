@@ -409,6 +409,7 @@
 "krbByJs":"Ajax isteği kullan",
 "krbKeytab":"keytab dosyası",
 "krbRemoveDomain":"Kerberos kullanıcı adından etki alanını kaldır",
+"krbAllowedDomains":"Allowed domains",
 "kerberosParams":"Kerberos parametreleri",
 "label":"Etiket",
 "languages":"Diller",

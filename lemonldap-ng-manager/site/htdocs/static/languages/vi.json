@@ -409,6 +409,7 @@
 "krbByJs":"Sử dụng yêu cầu Ajax",
 "krbKeytab":"tệp keytab",
 "krbRemoveDomain":"Remove domain from Kerberos username",
+"krbAllowedDomains":"Allowed domains",
 "kerberosParams":"Tham số Kerberos",
 "label":"Label",
 "languages":"Ngôn ngữ",

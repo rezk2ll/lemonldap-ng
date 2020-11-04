@@ -242,7 +242,8 @@ sub tree {
                             help  => 'authkerberos.html',
                             nodes => [
                                 'krbAuthnLevel', 'krbKeytab',
-                                'krbByJs',       'krbRemoveDomain'
+                                'krbByJs',       'krbRemoveDomain',
+                                'krbAllowedDomains',
                             ]
                         },
                         {
