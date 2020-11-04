@@ -2,7 +2,6 @@
 
 package Lemonldap::NG::Portal::Plugins::StayConnected;
 
-use 5.16.0;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
@@ -58,8 +57,8 @@ sub init {
 
 # RUNNING METHODS
 
-# Registration: detect if user wants to stay connected. Then ask for
-#               fingerprint
+# Registration: detect if user wants to stay connected.
+# Then ask for browser fingerprint
 sub newDevice {
     my ( $self, $req ) = @_;
 
@@ -109,7 +108,7 @@ sub storeBrowser {
                           $self->conf->{globalStorageOptions},
                         kind => "SSO",
                         info => {
-                            _utime          => time + $self->timeout,
+                            _utime          => time + $self->timeout(),
                             _session_uid    => $uid,
                             _connectedSince => time,
                             dataKeep        => $req->data->{dataToKeep},
@@ -122,7 +121,7 @@ sub storeBrowser {
                         $self->p->cookie(
                             name    => $self->cookieName(),
                             value   => $ps->id,
-                            max_age => $self->timeout,
+                            max_age => $self->timeout(),
                             secure  => $self->conf->{securedCookie},
                         )
                     );
@@ -147,7 +146,7 @@ sub storeBrowser {
         $self->userLogger->error('StayConnected called without token');
     }
 
-    # Return llngconnection cookie
+    # Return persistent connection cookie
     return $self->p->do( $req, [ @{ $self->p->endAuth }, sub { PE_OK } ] );
 }
 
