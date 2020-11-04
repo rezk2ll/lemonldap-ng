@@ -392,10 +392,10 @@ sub expectPortalError {
     count(1);
 }
 
-=head4 expectReject( $res, $code )
+=head4 expectReject( $res, $status, $code )
 
-Verify that returned code is 401 and JSON result contains C<error:"$code">.
-Note that it works only for Ajax request (see below).
+Verify that returned code is 401 (or $status)  and JSON result contains
+C<error:"$code">.  Note that it works only for Ajax request (see below).
 
 =cut
 
