@@ -34,6 +34,7 @@ and configure the following parameters:
    Kerberos code to validate Kerberos ticket
 -  **Remove domain in username**: set to "enabled" to strip username
    value and remove the '@domain'.
+-  **Allowed domains**: if set, tickets will only be accepted if they come from one of the domains listed here. This is a space-separated list. This feature can be useful when using :doc:`combination<authcombination>` and cross-realm Kerberos trusts.
 
 
 .. attention::
