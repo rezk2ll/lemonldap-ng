@@ -446,7 +446,7 @@
 "ldapServer":"مضيف الخادم",
 "ldapSetPassword":"تعديل كلمة المرور مع عملية موسعة",
 "ldapTimeout":"Connection timeout",
-"ldapIOTimeout": "Operation timeout",
+"ldapIOTimeout":"Operation timeout",
 "ldapUsePasswordResetAttribute":"استخدام سمة إعادة الضبط",
 "ldapVerify":"Verify LDAP server certificate",
 "ldapVersion":"الإصدار",

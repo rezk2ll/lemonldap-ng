@@ -446,7 +446,7 @@
 "ldapServer":"Konak sunucu",
 "ldapSetPassword":"Parola değiştirme işlemi genişletilmiş",
 "ldapTimeout":"Connection timeout",
-"ldapIOTimeout": "Operation timeout",
+"ldapIOTimeout":"Operation timeout",
 "ldapUsePasswordResetAttribute":"Sıfırlama niteliklerini kullan",
 "ldapVerify":"LDAP sunucu sertifikasını doğrulayın",
 "ldapVersion":"Sürüm",

@@ -446,7 +446,7 @@
 "ldapServer":"Server host",
 "ldapSetPassword":"Password modify extended operation",
 "ldapTimeout":"Connection timeout",
-"ldapIOTimeout": "Operation timeout",
+"ldapIOTimeout":"Operation timeout",
 "ldapUsePasswordResetAttribute":"Use reset attribute",
 "ldapVerify":"Verify LDAP server certificate",
 "ldapVersion":"版本",

@@ -446,7 +446,7 @@
 "ldapServer":"Máy chủ lưu trữ",
 "ldapSetPassword":"Mật khẩu sửa đổi hoạt động mở rộng",
 "ldapTimeout":"Connection timeout",
-"ldapIOTimeout": "Operation timeout",
+"ldapIOTimeout":"Operation timeout",
 "ldapUsePasswordResetAttribute":"Sử dụng thuộc tính đặt lại",
 "ldapVerify":"Verify LDAP server certificate",
 "ldapVersion":"Phiên bản",
