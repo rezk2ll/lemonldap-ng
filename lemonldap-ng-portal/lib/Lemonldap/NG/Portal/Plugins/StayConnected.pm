@@ -32,13 +32,20 @@ has ott => (
         return $ott;
     }
 );
+has cookieName => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        $_[0]->{conf}->{stayConnectedCookieName} || 'llngconnection';
+    }
+);
 
 # Default timeout: 1 month
 has timeout => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        $_[0]->{conf}->{stayConnectedTimeout} || 2678400;
+        $_[0]->{conf}->{stayConnectedTimeout} || 2592000;
     }
 );
 
@@ -113,13 +120,14 @@ sub storeBrowser {
                     # Cookie available 30 days
                     $req->addCookie(
                         $self->p->cookie(
-                            name    => 'llngconnexion',
+                            name    => $self->cookieName(),
                             value   => $ps->id,
-                            max_age => 2592000,
+                            max_age => $self->timeout,
                             secure  => $self->conf->{securedCookie},
                         )
                     );
-                    $req->sessionInfo->{_loginHistory} = $tmp->{history} if exists $tmp->{history};
+                    $req->sessionInfo->{_loginHistory} = $tmp->{history}
+                      if exists $tmp->{history};
                 }
                 else {
                     $self->logger->warn("Browser hasn't return fingerprint");
@@ -139,7 +147,7 @@ sub storeBrowser {
         $self->userLogger->error('StayConnected called without token');
     }
 
-    # Return cookie llngconnexion
+    # Return llngconnection cookie
     return $self->p->do( $req, [ @{ $self->p->endAuth }, sub { PE_OK } ] );
 }
 
@@ -150,14 +158,17 @@ sub storeBrowser {
 # Then delete authentication methods from "steps" array.
 sub check {
     my ( $self, $req ) = @_;
-    if ( my $cid = $req->cookies->{llngconnexion} ) {
+    if ( my $cid = $req->cookies->{ $self->cookieName() } ) {
         my $ps = Lemonldap::NG::Common::Session->new(
             storageModule        => $self->conf->{globalStorage},
             storageModuleOptions => $self->conf->{globalStorageOptions},
             kind                 => "SSO",
             id                   => $cid,
         );
-        if ( $ps and my $uid = $ps->data->{_session_uid} ) {
+        if (    $ps
+            and my $uid = $ps->data->{_session_uid}
+            and time() < $ps->data->{_utime} )
+        {
             $self->logger->debug('Persistent connection found');
             if (    my $fg = $req->param('fg')
                 and my $token = $req->param('token') )
@@ -179,6 +190,8 @@ sub check {
                     }
                     else {
                         $self->userLogger->warn("Fingerprint changed for $uid");
+                        $ps->remove;
+                        $self->logout($req);
                     }
                 }
                 else {
@@ -203,6 +216,13 @@ sub check {
         }
         else {
             $self->userLogger->notice('Persistent connection expired');
+            unless ( $ps->{error} ) {
+                $self->logger->debug(
+                    'Persistent connection session id = ' . $ps->{id} );
+                $self->logger->debug( 'Persistent connection session _utime = '
+                      . $ps->data->{_utime} );
+                $ps->remove;
+            }
         }
     }
     return PE_OK;
@@ -212,7 +232,7 @@ sub logout {
     my ( $self, $req ) = @_;
     $req->addCookie(
         $self->p->cookie(
-            name    => 'llngconnexion',
+            name    => $self->cookieName(),
             value   => 0,
             expires => 'Wed, 21 Oct 2015 00:00:00 GMT',
             secure  => $self->conf->{securedCookie},
