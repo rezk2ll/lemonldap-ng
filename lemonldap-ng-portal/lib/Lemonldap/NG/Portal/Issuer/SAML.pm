@@ -1635,8 +1635,8 @@ sub sloResume {
     $req->setInfo( $logoutContextSession->data->{info} )
       if $logoutContextSession->data->{info};
 
-    return $self->_finishSlo( $req, $logout, $method, $spConfKey, $provider_nb,
-        $relayID );
+    return $self->_finishSlo( $req, $logout, $method, $spConfKey,
+        $provider_nb, $relayID );
 }
 
 sub _finishSlo {
@@ -2048,8 +2048,8 @@ sub attributeServer {
     my $name_id = $query->nameIdentifier();
 
     unless ($name_id) {
-        $self->p->sendError( $req, "Fail to get NameID from attribute request",
-            400 );
+        $self->p->sendError( $req,
+            "Fail to get NameID from attribute request", 400 );
     }
 
     my $user = $name_id->content();
@@ -2107,8 +2107,8 @@ sub attributeServer {
     eval { @requested_attributes = $query->request()->Attribute(); };
     if ($@) {
         $self->checkLassoError($@);
-        return $self->p->sendError( $req, "Unable to get requested attributes",
-            400 );
+        return $self->p->sendError( $req,
+            "Unable to get requested attributes", 400 );
     }
 
     # Returned attributes
