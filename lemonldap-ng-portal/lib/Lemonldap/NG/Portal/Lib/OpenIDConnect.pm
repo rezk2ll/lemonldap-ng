@@ -1588,6 +1588,9 @@ sub createIDToken {
       ->{oidcRPMetaDataOptionsIDTokenSignAlg};
     $self->logger->debug("ID Token signature algorithm: $alg");
 
+    my $h = $self->p->processHook( $req, 'oidcGenerateIDToken', $payload, $rp );
+    return undef if ( $h != PE_OK );
+
     return $self->createJWT( $payload, $alg, $rp );
 }
 
