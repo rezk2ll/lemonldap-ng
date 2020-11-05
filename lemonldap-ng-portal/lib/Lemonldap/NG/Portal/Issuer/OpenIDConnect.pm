@@ -178,6 +178,10 @@ sub run {
                 }
             }
 
+            my $h =
+              $self->p->processHook( $req, 'oidcGotRequest', $oidc_request );
+            return PE_ERROR if ( $h != PE_OK );
+
             # Detect requested flow
             my $response_type = $oidc_request->{'response_type'};
             my $flow          = $self->getFlowType($response_type);
