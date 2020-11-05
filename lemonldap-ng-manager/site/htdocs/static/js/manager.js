@@ -451,6 +451,16 @@ This file contains:
           data: ['0', 'New', '', '']
         });
       };
+      $scope.addOidcAttribute = function() {
+        var node;
+        node = $scope._findContainer();
+        return node.nodes.push({
+          id: node.id + "/n" + (idinc++),
+          title: 'new',
+          type: 'oidcAttribute',
+          data: ['', 'string', 'auto']
+        });
+      };
       $scope.addVhost = function() {
         var name;
         name = $scope.domain ? "." + $scope.domain.data : '.example.com';

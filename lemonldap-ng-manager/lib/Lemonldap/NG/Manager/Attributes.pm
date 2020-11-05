@@ -114,6 +114,11 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
                 1;
             }
         },
+        'oidcAttribute' => {
+            'test' => sub {
+                1;
+            }
+        },
         'oidcmetadatajson' => {
             'test' => sub {
                 1;
@@ -2179,7 +2184,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 'family_name' => 'sn',
                 'name'        => 'cn'
             },
-            'type' => 'keyTextContainer'
+            'keyTest' => qr/\w/,
+            'test'    => qr/\w/,
+            'type'    => 'oidcAttributeContainer'
         },
         'oidcRPMetaDataMacros' => {
             'default' => {},

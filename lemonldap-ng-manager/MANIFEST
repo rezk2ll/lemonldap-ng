@@ -128,6 +128,8 @@ site/htdocs/static/forms/longtext.html
 site/htdocs/static/forms/menuApp.html
 site/htdocs/static/forms/menuCat.html
 site/htdocs/static/forms/mini.html
+site/htdocs/static/forms/oidcAttribute.html
+site/htdocs/static/forms/oidcAttributeContainer.html
 site/htdocs/static/forms/oidcOPMetaDataNode.html
 site/htdocs/static/forms/oidcOPMetaDataNodeContainer.html
 site/htdocs/static/forms/oidcRPMetaDataNode.html

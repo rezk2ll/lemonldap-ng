@@ -377,6 +377,15 @@ llapp.controller 'TreeCtrl', [
 				type: 'samlAttribute'
 				data: ['0', 'New', '', '']
 
+		# OIDC attribute entry
+		$scope.addOidcAttribute = ->
+			node = $scope._findContainer()
+			node.nodes.push
+				id: "#{node.id}/n#{idinc++}"
+				title: 'new'
+				type: 'oidcAttribute'
+				data: ['', 'string', 'auto']
+
 		# Nodes with template
 		$scope.addVhost = ->
 			name = if $scope.domain then ".#{$scope.domain.data}" else '.example.com'

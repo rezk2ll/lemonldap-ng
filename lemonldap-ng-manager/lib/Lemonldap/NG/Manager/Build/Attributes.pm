@@ -184,6 +184,9 @@ sub types {
         menuCat => {
             test => sub { 1 }
         },
+        oidcAttribute => {
+            test => sub { 1 }
+        },
         oidcOPMetaDataNode => {
             test => sub { 1 }
         },
@@ -431,15 +434,16 @@ sub attributes {
             flags         => 'hmp',
         },
         stayConnected => {
-            type => 'bool',
+            type          => 'bool',
             default       => 0,
             documentation => 'Enable StayConnected plugin',
         },
         stayConnectedTimeout => {
-            type          => 'int',
-            default       => 2592000,
-            documentation => 'StayConnected persistent connexion session timeout',
-            flags         => 'm',
+            type    => 'int',
+            default => 2592000,
+            documentation =>
+              'StayConnected persistent connexion session timeout',
+            flags => 'm',
         },
         stayConnectedCookieName => {
             type          => 'text',
@@ -4100,11 +4104,13 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
 
         # OpenID Connect relying parties
         oidcRPMetaDataExportedVars => {
-            type    => 'keyTextContainer',
+            type    => 'oidcAttributeContainer',
+            keyTest => qr/\w/,
+            test    => qr/\w/,
             default => {
                 'name'        => 'cn',
                 'family_name' => 'sn',
-                'email'       => 'mail'
+                'email'       => 'mail',
             }
         },
         oidcRPMetaDataOptionsClientID       => { type => 'text', },

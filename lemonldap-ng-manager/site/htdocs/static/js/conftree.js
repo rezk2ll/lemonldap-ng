@@ -381,27 +381,39 @@ function templates(tpl,key) {
       "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars",
       "default" : [
          {
-            "data" : "mail",
+            "data" : [
+               "mail",
+               "string",
+               "auto"
+            ],
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars/email",
             "title" : "email",
-            "type" : "keyText"
+            "type" : "oidcAttribute"
          },
          {
-            "data" : "sn",
+            "data" : [
+               "sn",
+               "string",
+               "auto"
+            ],
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars/family_name",
             "title" : "family_name",
-            "type" : "keyText"
+            "type" : "oidcAttribute"
          },
          {
-            "data" : "cn",
+            "data" : [
+               "cn",
+               "string",
+               "auto"
+            ],
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars/name",
             "title" : "name",
-            "type" : "keyText"
+            "type" : "oidcAttribute"
          }
       ],
       "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars",
       "title" : "oidcRPMetaDataExportedVars",
-      "type" : "keyTextContainer"
+      "type" : "oidcAttributeContainer"
    },
    {
       "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
