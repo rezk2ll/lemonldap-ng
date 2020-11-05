@@ -910,7 +910,7 @@
 "stateCheck":"Controllo dello stato",
 "stayConnect":"Connessioni persistenti",
 "stayConnected":"Activation",
-"stayConnectedCookieName":"Cookie name",
+"stayConnectedCookieName":"Nome del cookie",
 "stayConnectedTimeout":"Expiration time",
 "successfullySaved":"Salvato con successo",
 "storePassword":"Memorizzare la password dell'utente nei dati di sessione",
