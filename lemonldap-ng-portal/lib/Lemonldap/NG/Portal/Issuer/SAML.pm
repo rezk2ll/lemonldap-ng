@@ -851,6 +851,10 @@ sub run {
 "SAML authentication response sent to SAML SP $spConfKey for $user$nameIDLog"
             );
 
+            $h =
+              $self->p->processHook( $req, 'samlBuildAuthnResponse', $login );
+            return $h if ( $h != PE_OK );
+
             # Build SAML response
             $protocolProfile = $login->protocolProfile();
 
