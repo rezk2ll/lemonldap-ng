@@ -1368,7 +1368,7 @@ sub _handleAuthorizationCodeGrant {
     }
 
     # Create ID Token
-    my $id_token = $self->createIDToken( $id_token_payload_hash, $rp );
+    my $id_token = $self->createIDToken( $req, $id_token_payload_hash, $rp );
 
     unless ($id_token) {
         $self->logger->error(
@@ -1586,7 +1586,7 @@ sub _handleRefreshTokenGrant {
     }
 
     # Create ID Token
-    my $id_token = $self->createIDToken( $id_token_payload_hash, $rp );
+    my $id_token = $self->createIDToken( $req, $id_token_payload_hash, $rp );
 
     unless ($id_token) {
         $self->logger->error(
@@ -2302,7 +2302,7 @@ sub _generateIDToken {
     }
 
     # Create ID Token
-    return $self->createIDToken( $id_token_payload_hash, $rp );
+    return $self->createIDToken( $req, $id_token_payload_hash, $rp );
 }
 
 sub _redirectToUrl {
