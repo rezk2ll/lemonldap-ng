@@ -1132,6 +1132,12 @@ sub soapSloServer {
 
         $self->logger->debug("SLO: Logout request is valid");
 
+        my $h = $self->p->processHook( $req, 'samlGotLogoutRequest', $logout );
+        if ( $h != PE_OK ) {
+            return $self->p->sendError( $req,
+                "SLO: samlGotLogoutRequest hook returned error", 400 );
+        }
+
         # We accept only SOAP here
         unless ( $method eq $self->getHttpMethod('soap') ) {
             return $self->p->sendError( $req,
@@ -1687,6 +1693,12 @@ sub sloServer {
 
         $self->logger->debug("SLO: Logout request is valid");
 
+        my $h = $self->p->processHook( $req, 'samlGotLogoutRequest', $logout );
+        if ( $h != PE_OK ) {
+            return $self->p->sendError( $req,
+                "SLO: samlGotLogoutRequest hook returned error", 400 );
+        }
+
         # Get SP entityID
         my $sp = $logout->remote_providerID();
         $req->env->{llng_saml_sp} = $sp;
@@ -1908,6 +1920,9 @@ sub sloServer {
         }
 
         $self->logger->debug("Logout response is valid");
+
+        my $h = $self->p->processHook( $req, 'samlGotLogoutResponse', $logout );
+        $self->imgnok($req) if ( $h != PE_OK );
 
         # Check Destination
         $self->imgnok($req)
