@@ -1297,6 +1297,13 @@ sub soapSloServer {
                 "SLO response signature according to metadata");
         }
 
+        $h =
+          $self->p->processHook( $req, 'samlBuildLogoutResponse', $logout );
+        if ( $h != PE_OK ) {
+            return $self->p->sendError( $req,
+                "SLO: samlBuildLogoutResponse hook returned error", 400 );
+        }
+
         # Send logout response
         unless ( $self->buildLogoutResponseMsg($logout) ) {
             $self->logger->error("Unable to build SLO response");
