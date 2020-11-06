@@ -548,6 +548,7 @@ t/32-Auth-and-issuer-OIDC-implicit.t
 t/32-Auth-and-issuer-OIDC-sorted.t
 t/32-CAS-10.t
 t/32-CAS-Macros.t
+t/32-OIDC-ClaimTypes.t
 t/32-OIDC-Code-Flow-with-2F-UpgradeOnly.t
 t/32-OIDC-Code-Flow-with-2F.t
 t/32-OIDC-Macro.t
