@@ -166,17 +166,23 @@ claim <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__.
 
 .. include:: openidconnectclaims.rst
 
-So you can define for example:
+For each OpenID Connect claim you want to release to applications, you can define:
 
--  name => cn
--  family_name => sn
--  email => mail
+* **Claim name**: the name of the claim as it will appear in Userinfo responses
+* **Variable name**: the name of the LemonLDAP::NG session variable containing the claim value
+* **Type**: the data type of the attribute. By default, a string. Choosing integer or boolean will make the claim appear as the corresponding JSON type.
+* **Array**: choose how to process multi-valued attributes
+
+  * **Auto**: If the session key contains a single value, it will be released as a JSON number, string or boolean, depending on the previously specified type. If the session key contains multiple values, it will be released as an array of numbers, strings or booleans.
+  * **Always**: Return an array even if the attribute only contains one value
+  * **Never**: If the session key contains a single value, it will be released as a JSON number, string or boolean. If the session key contains multiple values, it will be released as a single string with a separator character.
 
 
 .. attention::
 
     The specific ``sub`` attribute is not defined here, but
     in User attribute parameter (see below).
+
 
 Extra Claims
 ^^^^^^^^^^^^

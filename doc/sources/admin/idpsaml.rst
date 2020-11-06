@@ -89,9 +89,9 @@ Exported attributes
 
 For each attribute, you can set:
 
--  **Key name**: name of the key in LemonLDAP::NG session
--  **Name**: SAML attribute name.
--  **Friendly Name**: optional, SAML attribute friendly name.
+-  **Variable name**: name of the variable in LemonLDAP::NG session
+-  **Attribute name**: name of the SAML attribute that will be seen by applications
+-  **Friendly Name**: optional, friendly name of the SAML attribute seen by applications
 -  **Mandatory**: if set to "On", then this attribute is required to
    build the SAML response, an error will displayed if there is no value
    for it. Optional attribute will be sent only if there is a value

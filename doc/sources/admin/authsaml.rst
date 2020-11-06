@@ -98,12 +98,12 @@ Exported attributes
 
 For each attribute, you can set:
 
--  **Key name**: name of the key in LemonLDAP::NG session (for example
-   "uid" will then be used as $uid in access rules)
+-  **Variable name**: name of the variable in LemonLDAP::NG session that will contain this attribute. For example
+   "uid" will then be used as $uid in access rules
+-  **Attribute name**: name of the SAML attribute coming from the remote IDP
+-  **Friendly Name**: optional, SAML attribute friendly name.
 -  **Mandatory**: if set to On, then session will not open if this
    attribute is not given by IDP.
--  **Name**: SAML attribute name.
--  **Friendly Name**: optional, SAML attribute friendly name.
 -  **Format** (optional): SAML attribute format.
 
 |image1|
