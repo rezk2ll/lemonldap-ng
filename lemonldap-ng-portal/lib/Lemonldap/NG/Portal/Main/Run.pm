@@ -277,7 +277,7 @@ sub do {
                 code    => 401,
                 headers => [
                     'WWW-Authenticate' => "SSO " . $self->conf->{portal},
-                    "Content-Type"     => "application/javascript"
+                    "Content-Type"     => "application/json"
                 ],
             );
         }
