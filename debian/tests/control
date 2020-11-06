@@ -31,7 +31,10 @@ Restrictions: superficial, skippable
 # Use pkg-perl-autopkgtest test for runtime-deps-and-recommends
 # Some portal suggested dependencies are added here
 Test-Command: /usr/share/pkg-perl-autopkgtest/runner runtime-deps-and-recommends
-Depends: @, @builddeps@, pkg-perl-autopkgtest, libyaml-perl, liblog-log4perl-perl, libauthen-pam-perl, libauthen-radius-perl, libweb-id-perl
+Depends: @, @builddeps@, pkg-perl-autopkgtest
+ , libyaml-perl, liblog-log4perl-perl
+ , libauthen-pam-perl, libauthen-radius-perl
+ , libweb-id-perl, libio-socket-timeout-perl
 Restrictions: superficial
 
 #Test-Command: ./debian/tests/runner heavy-deps
