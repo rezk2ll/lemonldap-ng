@@ -7,7 +7,7 @@ require 't/test-lib.pm';
 use lib 't/lib';
 
 my $res;
-my $maintests = 26;
+my $maintests = 32;
 
 SKIP: {
     skip( 'LLNGTESTLDAP is not set', $maintests ) unless ( $ENV{LLNGTESTLDAP} );
@@ -22,6 +22,7 @@ SKIP: {
                 userDB                   => 'Same',
                 passwordDB               => 'LDAP',
                 portalRequireOldPassword => 1,
+                hideOldPassword          => 1,
                 ldapServer               => 'ldap://127.0.0.1:19389/',
                 ldapBase                 => 'ou=users,dc=example,dc=com',
                 managerDn       => 'cn=lemonldapng,ou=dsa,dc=example,dc=com',
@@ -35,12 +36,21 @@ SKIP: {
                 passwordPolicyMinDigit        => 1,
                 passwordPolicyMinSpeChar      => 1,
                 passwordPolicySpecialChar     => '# &',
+                whatToTrace                   => 'uid',
+                macros                        => {
+                    _whatToTrace => ''    # Test 2377
+                },
             }
         }
     );
-    use Lemonldap::NG::Portal::Main::Constants 'PE_PP_CHANGE_AFTER_RESET',
-      'PE_PP_PASSWORD_EXPIRED', 'PE_PASSWORD_OK', 'PE_PP_ACCOUNT_LOCKED',
-      'PE_PP_PASSWORD_TOO_SHORT', 'PE_PP_GRACE';
+    use Lemonldap::NG::Portal::Main::Constants qw(
+      PE_PP_GRACE
+      PE_PASSWORD_OK
+      PE_PP_ACCOUNT_LOCKED
+      PE_PP_PASSWORD_EXPIRED
+      PE_PP_PASSWORD_TOO_SHORT
+      PE_PP_CHANGE_AFTER_RESET
+    );
 
     my ( $user, $code, $postString, $match );
 
@@ -74,13 +84,31 @@ SKIP: {
         my ( $host, $url, $query ) =
           expectForm( $res, '#', undef, 'user', 'oldpassword', 'newpassword',
             'confirmpassword' );
+        ok(
+            $res->[2]->[0] =~
+              m%<input name="user" type="hidden" value="$user" />%,
+            ' Hidden user input found'
+        ) or print STDERR Dumper( $res->[2]->[0], 'Hidden user input' );
+        ok(
+            $res->[2]->[0] =~
+m%<input id="oldpassword" name="oldpassword" type="hidden" value="$user" aria-required="true">%,
+            ' Hidden oldpassword input found'
+          )
+          or print STDERR Dumper( $res->[2]->[0], 'Hidden oldpassword input' );
+        ok(
+            $res->[2]->[0] =~
+m%<input id="staticUser" type="text" readonly class="form-control" value="$user" />%,
+            ' staticUser found'
+        ) or print STDERR Dumper( $res->[2]->[0], 'staticUser' );
         ok( $res->[2]->[0] !~ m%<span trspan="passwordPolicyMinSize">%,
             ' passwordPolicyMinSize' )
           or print STDERR Dumper( $res->[2]->[0], 'passwordPolicyMinSize' );
         ok( $query =~ /user=$user/, "User is $user" )
           or explain( $query, "user=$user" );
-        $query =~ s/(oldpassword)=/$1=$user/g;
+
+#$query =~ s/(oldpassword)=$user/$1=$user/g; -> Now old password is defined #2377
         $query =~ s/((?:confirm|new)password)=/$1=newp/g;
+
         ok(
             $res = $client->_post(
                 '/', IO::String->new($query),

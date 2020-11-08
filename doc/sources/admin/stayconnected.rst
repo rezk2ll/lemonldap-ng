@@ -1,5 +1,5 @@
 Stay connected plugin
-=================
+=====================
 
 This plugin enables persistent connection. It allows us to connect
 automatically from the same browser.

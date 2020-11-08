@@ -3,12 +3,14 @@ package Lemonldap::NG::Portal::Lib::LDAP;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Lib::Net::LDAP;
-use Lemonldap::NG::Portal::Main::Constants
-  qw(PE_OK PE_LDAPCONNECTFAILED PE_LDAPERROR PE_BADCREDENTIALS);
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK PE_LDAPCONNECTFAILED
+  PE_LDAPERROR PE_BADCREDENTIALS
+);
 
 extends 'Lemonldap::NG::Common::Module';
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 # PROPERTIES
 
@@ -149,7 +151,8 @@ sub getUser {
         return PE_BADCREDENTIALS;
     }
     $req->data->{dn} = $req->data->{ldapentry}->dn();
-    PE_OK;
+
+    return PE_OK;
 }
 
 # Validate LDAP connection before use
@@ -169,12 +172,13 @@ sub bind {
 
     $self->validateLdap;
     return undef unless $self->ldap;
-    
+
     my $msg = $self->ldap->bind(@_);
     if ( $msg->code ) {
         $self->logger->error( $msg->error );
         return undef;
     }
+    
     return 1;
 }
 

@@ -503,7 +503,7 @@ sub display {
                   eval { $self->_authentication->getDisplayType($req) }
                   || 'logo';
 
-                $self->logger->debug("Display type $displayType ");
+                $self->logger->debug("Display type $displayType");
 
                 %templateParams = (
                     %templateParams,
