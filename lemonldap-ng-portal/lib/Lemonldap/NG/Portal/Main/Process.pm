@@ -1,6 +1,6 @@
 package Lemonldap::NG::Portal::Main::Process;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -136,12 +136,12 @@ sub controlUrl {
         }
 
         # Unprotected hosts
-        my ( $vhost, $appuri ) = $tmp =~ m#^https?://([^/]*)(.*)#;
+        my ( $proto, $vhost, $appuri ) = $tmp =~ m#^(https?://)([^/]*)(.*)#;
         $vhost =~ s/:\d+$//;
 
-        # try to resolve alias
+        # Try to resolve alias
         my $originalVhost = $self->HANDLER->resolveAlias($vhost);
-        $vhost = 'http://' . $originalVhost;
+        $vhost = $proto . $originalVhost;
         $self->logger->debug( "Required URL (param: "
               . ( $req->param('logout') ? 'HTTP Referer' : 'urldc' )
               . " | value: $tmp | alias: $vhost)" );
