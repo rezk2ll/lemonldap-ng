@@ -623,7 +623,7 @@ sub substitute {
     $expr =~ s/\bskip\b/q\{999_SKIP\}/g;
 
     # handle inGroup
-    $expr =~ s/\binGroup\(([^)]*)\)/listMatch(\$s->{'hGroups'},$1,1),/g;
+    $expr =~ s/\binGroup\(([^)]*)\)/listMatch(\$s->{'hGroups'},$1,1)/g;
 
     return $expr;
 }
