@@ -698,6 +698,11 @@ has ini => (
                 cn   => 'Русский',
                 mail => 'ru@badwolf.org',
             };
+            push
+              @{ $Lemonldap::NG::Portal::UserDB::Demo::demoGroups{earthlings} },
+              "french", "russian";
+            push @{ $Lemonldap::NG::Portal::UserDB::Demo::demoGroups{users} },
+              "french", "russian", "davros";
         }
         $self;
     }
