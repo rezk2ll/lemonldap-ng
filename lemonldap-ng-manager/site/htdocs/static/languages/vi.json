@@ -1001,6 +1001,7 @@
 "verifyU2FKey":"Verify U2F key",
 "verifyTOTPKey":"Verify TOTP key",
 "version":"Phiên bản",
+"vhostAccessToTrace":"Access to trace",
 "vhostAliases":"Bí danh",
 "vhostAuthnLevel":"Mức xác thực bắt buộc",
 "vhostHttps":"HTTPS",
