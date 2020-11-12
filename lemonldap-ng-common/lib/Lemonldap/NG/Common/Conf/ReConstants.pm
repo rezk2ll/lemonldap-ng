@@ -30,7 +30,7 @@ our $oidcOPMetaDataNodeKeys = 'oidcOPMetaData(?:Options(?:C(?:lient(?:Secret|ID)
 our $oidcRPMetaDataNodeKeys = 'oidcRPMetaData(?:Options(?:A(?:uth(?:orizationCodeExpiration|nLevel)|llow(?:PasswordGrant|Offline)|ccessTokenExpiration|dditionalAudiences)|I(?:DToken(?:ForceClaims|Expiration|SignAlg)|con)|R(?:e(?:directUris|freshToken|quirePKCE)|ule)|Logout(?:SessionRequired|Type|Url)|P(?:ostLogoutRedirectUris|ublic)|OfflineSessionExpiration|Client(?:Secret|ID)|BypassConsent|DisplayName|ExtraClaims|UserIDAttr)|(?:ExportedVar|Macro)s)';
 our $samlIDPMetaDataNodeKeys = 'samlIDPMetaData(?:Options(?:(?:Check(?:S[LS]OMessageSignatur|Audienc|Tim)|EncryptionMod|UserAttribut|DisplayNam)e|S(?:ign(?:S[LS]OMessage|atureMethod)|toreSAMLToken|[LS]OBinding|ortNumber)|A(?:llow(?:LoginFromIDP|ProxiedAuthn)|daptSessionUtime)|Re(?:questedAuthnContext|solutionRule|layStateURL)|Force(?:Authn|UTF8)|I(?:sPassive|con)|NameIDFormat)|ExportedAttributes|XML)';
 our $samlSPMetaDataNodeKeys = 'samlSPMetaData(?:Options(?:S(?:ign(?:S[LS]OMessage|atureMethod)|essionNotOnOrAfterTimeout)|N(?:ameID(?:SessionKey|Format)|otOnOrAfterTimeout)|(?:CheckS[LS]OMessageSignatur|OneTimeUs|Rul)e|En(?:ableIDPInitiatedURL|cryptionMode)|AuthnLevel|ForceUTF8)|(?:ExportedAttribute|Macro)s|XML)';
-our $virtualHostKeys = '(?:vhost(?:A(?:uthnLevel|liases)|(?:Maintenanc|Typ)e|ServiceTokenTTL|Https|Port)|(?:exportedHeader|locationRule)s|post)';
+our $virtualHostKeys = '(?:vhost(?:A(?:ccessToTrace|uthnLevel|liases)|(?:Maintenanc|Typ)e|ServiceTokenTTL|Https|Port)|(?:exportedHeader|locationRule)s|post)';
 
 our $authParameters = {
   adParams => [qw(ADPwdMaxAge ADPwdExpireWarning)],

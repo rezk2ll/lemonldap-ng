@@ -1328,6 +1328,12 @@ function templates(tpl,key) {
             "title" : "vhostAliases"
          },
          {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"vhostAccessToTrace",
+            "id" : tpl+"s/"+key+"/"+"vhostAccessToTrace",
+            "title" : "vhostAccessToTrace"
+         },
+         {
             "default" : "Main",
             "get" : tpl+"s/"+key+"/"+"vhostType",
             "id" : tpl+"s/"+key+"/"+"vhostType",
