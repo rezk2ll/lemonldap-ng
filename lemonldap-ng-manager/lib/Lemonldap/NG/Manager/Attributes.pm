@@ -90,8 +90,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'form' => 'text',
             'test' => sub {
                 my ( $val, $conf ) = @_;
-                return 1
-                  if defined $conf->{'macros'}{$val} or $val eq '_timezone';
+                return 1 if defined $conf->{'macros'}{$val} or $val =~ /^_/;
                 foreach $_ ( keys %$conf ) {
                     return 1
                       if $_ =~ /exportedvars$/i and defined $conf->{$_}{$val};
