@@ -133,7 +133,7 @@ You have to run this command on Active Directory:
 
 ::
 
-   ktpass -princ HTTP/auth.example.com@EXAMPLE.COM -mapuser KERB_AUTH@EXAMPLE.COM -crypto DES-CBC-MD5 -ptype KRB5_NT_PRINCIPAL -mapOp set -pass <PASSWORD> -out c:\auth.keytab
+   ktpass -princ HTTP/auth.example.com@EXAMPLE.COM -mapuser KERB_AUTH@EXAMPLE.COM -crypto All -ptype KRB5_NT_PRINCIPAL -mapOp set -pass <PASSWORD> -out c:\auth.keytab
 
 
 .. attention::
