@@ -577,7 +577,9 @@ llapp.controller 'TreeCtrl', [
 			d = $q.defer()
 			d.notify 'Trying to get datas'
 			$scope.waiting = true
-			$http.get("#{window.confPrefix}#{$scope.currentCfg.cfgNum}/#{node.cnodes}").then (response) ->
+			console.log "Trying to get key #{node.cnodes}"
+			key = node.cnodes.replace(/%/, '%25') if node.cnodes.match /^virtualHosts/	
+			$http.get("#{window.confPrefix}#{$scope.currentCfg.cfgNum}/#{key}").then (response) ->
 				data = response.data
 				# Manage datas errors
 				if not data
@@ -759,7 +761,13 @@ llapp.controller 'TreeCtrl', [
 						d.reject response.statusLine
 						$scope.waiting = false
 				else
-					$http.get("#{window.confPrefix}#{$scope.currentCfg.cfgNum}/#{if node.get then node.get else node.title}").then (response) ->
+					key = ''
+					if node.get
+						console.log "Trying to get key #{node.get}"
+						key = node.get.replace(/%/, '%25') if node.get.match /^virtualHosts/
+					else
+						console.log "Trying to get title #{node.title}"
+					$http.get("#{window.confPrefix}#{$scope.currentCfg.cfgNum}/#{if node.get then key else node.title}").then (response) ->
 						# Set default value if response is null or if asked by server
 						data = response.data
 						if (data.value == null or (data.error and data.error.match /setDefault$/ ) ) and node['default'] != null

@@ -1140,6 +1140,18 @@ sub sendJSONresponse {
     return $res;
 }
 
+sub sendRawHtml {
+    my ($self) = $_[0];
+    my $res = Lemonldap::NG::Common::PSGI::sendRawHtml(@_);
+    if ( $self->conf->{corsEnabled} ) {
+        my @cors = split /;/, $self->cors;
+        push @{ $res->[1] }, @cors;
+        $self->logger->debug('Apply following CORS policy :');
+        $self->logger->debug(" $_") for @cors;
+    }
+    return $res;
+}
+
 # Temlate loader
 sub loadTemplate {
     my ( $self, $req, $name, %prm ) = @_;

@@ -81,7 +81,7 @@ sub types {
                 my ( $val, $conf ) = @_;
                 return 1
                   if ( defined $conf->{macros}->{$val}
-                    or $val eq '_timezone' );
+                    or $val =~ m/^_/ );
                 foreach ( keys %$conf ) {
                     return 1
                       if ( $_ =~ /exportedvars$/i

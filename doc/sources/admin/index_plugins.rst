@@ -27,3 +27,4 @@ Plugins
    resetcertificate
    restservices
    soapservices
+   stayconnected
