@@ -718,15 +718,13 @@ This file contains:
         return _download(node);
       };
       _download = function(node) {
-        var d, key;
+        var d, uri;
         d = $q.defer();
         d.notify('Trying to get datas');
         $scope.waiting = true;
         console.log("Trying to get key " + node.cnodes);
-        if (node.cnodes.match(/^virtualHosts/)) {
-          key = node.cnodes.replace(/%/, '%25');
-        }
-        $http.get("" + window.confPrefix + $scope.currentCfg.cfgNum + "/" + key).then(function(response) {
+        uri = encodeURI(node.cnodes);
+        $http.get("" + window.confPrefix + $scope.currentCfg.cfgNum + "/" + uri).then(function(response) {
           var a, data, len, o;
           data = response.data;
           if (!data) {
@@ -904,7 +902,7 @@ This file contains:
         }, readError);
       };
       $scope.getKey = function(node) {
-        var d, i, key, len, n, o, ref, tmp;
+        var d, i, len, n, o, ref, tmp, uri;
         d = $q.defer();
         if (!node.data) {
           $scope.waiting = true;
@@ -927,16 +925,14 @@ This file contains:
               return $scope.waiting = false;
             });
           } else {
-            key = '';
+            uri = '';
             if (node.get) {
               console.log("Trying to get key " + node.get);
-              if (node.get.match(/^virtualHosts/)) {
-                key = node.get.replace(/%/, '%25');
-              }
+              uri = encodeURI(node.get);
             } else {
               console.log("Trying to get title " + node.title);
             }
-            $http.get("" + window.confPrefix + $scope.currentCfg.cfgNum + "/" + (node.get ? key : node.title)).then(function(response) {
+            $http.get("" + window.confPrefix + $scope.currentCfg.cfgNum + "/" + (node.get ? uri : node.title)).then(function(response) {
               var data;
               data = response.data;
               if ((data.value === null || (data.error && data.error.match(/setDefault$/))) && node['default'] !== null) {
