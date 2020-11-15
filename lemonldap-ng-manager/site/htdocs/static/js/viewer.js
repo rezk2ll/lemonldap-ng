@@ -424,7 +424,7 @@ This file contains:
         }
       };
       $scope.getKey = function(node) {
-        var d, i, l, len, n, ref, tmp;
+        var d, i, key, l, len, n, ref, tmp;
         d = $q.defer();
         if (!node.data) {
           $scope.waiting = true;
@@ -447,7 +447,16 @@ This file contains:
               return $scope.waiting = false;
             });
           } else {
-            $http.get("" + window.viewPrefix + $scope.currentCfg.cfgNum + "/" + (node.get ? node.get : node.title)).then(function(response) {
+            key = '';
+            if (node.get) {
+              console.log("Trying to get key " + node.get);
+              if (node.get.match(/^virtualHosts/)) {
+                key = node.get.replace(/%/, '%25');
+              }
+            } else {
+              console.log("Trying to get title " + node.title);
+            }
+            $http.get("" + window.confPrefix + $scope.currentCfg.cfgNum + "/" + (node.get ? key : node.title)).then(function(response) {
               var data;
               data = response.data;
               if ((data.value === null || (data.error && data.error.match(/setDefault$/))) && node['default'] !== null) {

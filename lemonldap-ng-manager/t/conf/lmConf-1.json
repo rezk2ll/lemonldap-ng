@@ -112,6 +112,9 @@
     },
     "test2.example.com": {
       "Auth-User": "$uid"
+    },
+    "test3%.example.com": {
+      "Auth-User": "$uid"
     }
   },
   "exportedVars": {},
@@ -133,6 +136,9 @@
     },
     "test2.example.com": {
       "^/logout": "logout_sso",
+      "default": "accept"
+    },
+    "test3%.example.com": {
       "default": "accept"
     }
   },

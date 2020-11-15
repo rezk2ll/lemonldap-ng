@@ -362,7 +362,13 @@ llapp.controller 'TreeCtrl', [
 						d.reject response.statusLine
 						$scope.waiting = false
 				else
-					$http.get("#{window.viewPrefix}#{$scope.currentCfg.cfgNum}/#{if node.get then node.get else node.title}").then (response) ->
+					key = ''
+					if node.get
+						console.log "Trying to get key #{node.get}"
+						key = node.get.replace(/%/, '%25') if node.get.match /^virtualHosts/
+					else
+						console.log "Trying to get title #{node.title}"
+					$http.get("#{window.confPrefix}#{$scope.currentCfg.cfgNum}/#{if node.get then key else node.title}").then (response) ->
 						# Set default value if response is null or if asked by server
 						data = response.data
 						if (data.value == null or (data.error and data.error.match /setDefault$/ ) ) and node['default'] != null
