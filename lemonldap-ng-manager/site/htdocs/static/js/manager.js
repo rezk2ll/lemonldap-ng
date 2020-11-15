@@ -718,11 +718,15 @@ This file contains:
         return _download(node);
       };
       _download = function(node) {
-        var d;
+        var d, key;
         d = $q.defer();
         d.notify('Trying to get datas');
         $scope.waiting = true;
-        $http.get("" + window.confPrefix + $scope.currentCfg.cfgNum + "/" + node.cnodes).then(function(response) {
+        console.log("Trying to get key " + node.cnodes);
+        if (node.cnodes.match(/^virtualHosts/)) {
+          key = node.cnodes.replace(/%/, '%25');
+        }
+        $http.get("" + window.confPrefix + $scope.currentCfg.cfgNum + "/" + key).then(function(response) {
           var a, data, len, o;
           data = response.data;
           if (!data) {

@@ -258,7 +258,9 @@ llapp.controller 'TreeCtrl', [
 			d = $q.defer()
 			d.notify 'Trying to get datas'
 			$scope.waiting = true
-			$http.get("#{window.viewPrefix}#{$scope.currentCfg.cfgNum}/#{node.cnodes}").then (response) ->
+			console.log "Trying to get key #{node.cnodes}"
+			key = node.cnodes.replace(/%/, '%25') if node.cnodes.match /^virtualHosts/	
+			$http.get("#{window.confPrefix}#{$scope.currentCfg.cfgNum}/#{key}").then (response) ->
 				data = response.data
 				# Manage datas errors
 				if not data
