@@ -813,6 +813,7 @@ sub _get {
             'SERVER_NAME'     => 'auth.example.com',
             'SERVER_PORT'     => '80',
             'SERVER_PROTOCOL' => 'HTTP/1.1',
+            'psgi.url_scheme' => ( $args{secure} ? 'https' : 'http' ),
             ( $args{custom} ? %{ $args{custom} } : () ),
         }
     );
@@ -865,6 +866,7 @@ sub _post {
             'SERVER_NAME'    => 'auth.example.com',
             'SERVER_PORT'    => '80',
             'SERVER_PROTOCOL' => 'HTTP/1.1',
+            'psgi.url_scheme' => ( $args{secure} ? 'https' : 'http' ),
             ( $args{custom} ? %{ $args{custom} } : () ),
             'psgix.input.buffered' => 0,
             'psgi.input'           => $body,
