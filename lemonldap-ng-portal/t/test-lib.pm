@@ -59,6 +59,7 @@ use File::Find;
 use LWP::UserAgent;
 use Time::Fake;
 use URI::Escape;
+use MIME::Base64;
 use Lemonldap::NG::Common::FormEncode;
 
 #use 5.10.0;
@@ -567,6 +568,17 @@ sub switch {
     @Lemonldap::NG::Handler::Main::_onReload = @{
         $handlerOR{$type};
     };
+}
+
+=head4 encodeUrl( $url );
+
+Encode URL like the handler would, see ::Handler::Main
+
+=cut
+
+sub encodeUrl {
+    my ($url) = @_;
+    return uri_escape( encode_base64( $url, '' ) );
 }
 
 =head2 LLNG::Manager::Test Class
