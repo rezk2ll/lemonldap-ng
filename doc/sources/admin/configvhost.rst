@@ -504,8 +504,8 @@ Some options are available:
 -  Aliases: list of aliases for this virtual host *(avoid to rewrite
    rules,...)*
 -  Access to trace: can be used for overwriting REMOTE_CUSTOM with a custom function.
-   Provide a comma separated list with custom function path and args.
-   By example: My::accessToTrace, 'Dr Who', 'dwho@badwolf.org'
+   Provide a comma separated parameters list with custom function path and args.
+   By example: My::accessToTrace, Doctor, Who
 -  Type: handler type (normal,
    :doc:`ServiceToken Handler<servertoserver>`,
    :doc:`DevOps Handler<devopshandler>`,...)
@@ -521,21 +521,22 @@ Some options are available:
 .. attention::
 
     A hash reference containing $req, $session, $vhost, $custom and an array reference
-    with provided parameters is passed to accessToTrace custom function.
+    with provided parameters is passed to the custom function.
 
     ::
 
       package My;
 
       sub accessToTrace {
-          my $hash = shift;
-          my $custom = $hash->{custom};
-          my $req = $hash->{req};
-          my $vhost = $hash->{vhost};
-          my $custom = hash->{custom};
+          my $hash    = shift;
+          my $custom  = $hash->{custom};
+          my $req     = $hash->{req};
+          my $vhost   = $hash->{vhost};
+          my $custom  = $hash->{custom};
+          my $params  = $hash->{params};
+          my $session = $hash->{session};
 
-          return
-      "$custom alias $hash->{params}->[0]#$hash->{params}->[1]:$hash->{session}->{groups}";
+          return "$custom alias $params->[0]_$params->[1]:$session->{groups}";
       }
 
       1;

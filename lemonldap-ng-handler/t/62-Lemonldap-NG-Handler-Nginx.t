@@ -47,11 +47,11 @@ count(2);
 %h = @{ $res->[1] };
 ok(
     $h{'Lm-Remote-Custom'} eq
-      'dwho@badwolf.org alias Doctor Who:users; timelords',
-    'Lm-Remote-User is overwriten'
+      'dwho@badwolf.org alias Doctor_Who:users; timelords',
+    'Lm-Remote-Custom is overwriten'
   )
   or explain( \%h,
-    'Lm-Remote-User => "dwho@badwolf.org alias Doctor Who:users; timelords"' );
+    'Lm-Remote-Custom => "dwho@badwolf.org alias Doctor_Who:users; timelords"' );
 count(1);
 
 # Authorized query
@@ -68,7 +68,7 @@ ok( $h{'Headervalue1'} eq 'dwho', 'Headervalue1 is set to "dwho"' )
   or explain( \%h, 'Headervalue1 => "dwho"' );
 ok(
     $h{'Lm-Remote-Custom'} eq 'dwho@badwolf.org',
-    'Lm-Remote-User is set "dwho@badwolf.org"'
+    'Lm-Remote-Custom is set "dwho@badwolf.org"'
 ) or explain( \%h, 'Lm-Remote-User => "dwho@badwolf.org"' );
 count(3);
 

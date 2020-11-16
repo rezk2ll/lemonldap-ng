@@ -9,9 +9,15 @@ sub get_additional_arg {
 }
 
 sub accessToTrace {
-    my $hash = shift;
-    return
-"$hash->{custom} alias $hash->{params}->[0] $hash->{params}->[1]:$hash->{session}->{groups}";
+    my $hash    = shift;
+    my $custom  = $hash->{custom};
+    my $req     = $hash->{req};
+    my $vhost   = $hash->{vhost};
+    my $custom  = $hash->{custom};
+    my $params  = $hash->{params};
+    my $session = $hash->{session};
+
+    return "$custom alias $params->[0]_$params->[1]:$session->{groups}";
 }
 
 1;
