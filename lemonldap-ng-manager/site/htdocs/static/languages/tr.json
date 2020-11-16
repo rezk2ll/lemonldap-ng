@@ -583,7 +583,7 @@
 "offlineSessions":"Çevrimdışı oturumlar",
 "oldValue":"Eski değer",
 "on":"Açık",
-"oidcAttribute":"OIDC Attribute",
+"oidcAttribute":"OIDC niteliği",
 "oidcAuthnLevel":"Doğrulama seviyesi",
 "oidcConsents":"OpenID Connect İzinleri",
 "oidcOP":"OpenID Connect Sağlayıcısı",

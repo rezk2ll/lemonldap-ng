@@ -583,7 +583,7 @@
 "offlineSessions":"Offline sessions",
 "oldValue":"قيمة قديمة",
 "on":"تنشيط",
-"oidcAttribute":"OIDC Attribute",
+"oidcAttribute":"خاصيات OIDC",
 "oidcAuthnLevel":"مستوى إثبات الهوية",
 "oidcConsents":"OpenID Connect Consents",
 "oidcOP":" أوبين أيدي كونيكت بروفيدر",

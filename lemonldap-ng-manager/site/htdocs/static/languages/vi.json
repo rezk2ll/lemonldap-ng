@@ -583,7 +583,7 @@
 "offlineSessions":"Offline sessions",
 "oldValue":"Giá trị cũ",
 "on":"Vào",
-"oidcAttribute":"OIDC Attribute",
+"oidcAttribute":"thuộc tính OIDC",
 "oidcAuthnLevel":"Mức xác thực",
 "oidcConsents":"OpenID Connect Consents",
 "oidcOP":"Bộ cung cấp Kết nối OpenID",

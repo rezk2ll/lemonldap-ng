@@ -583,7 +583,7 @@
 "offlineSessions":"Offline sessions",
 "oldValue":"Vecchio valore",
 "on":"On",
-"oidcAttribute":"OIDC Attribute",
+"oidcAttribute":"Attributo OIDC",
 "oidcAuthnLevel":"Livello di autenticazione",
 "oidcConsents":"OpenID Connect Consents",
 "oidcOP":"Provider di OpenID Connect",
