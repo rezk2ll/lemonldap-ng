@@ -1001,6 +1001,7 @@
 "verifyU2FKey":"Verify U2F key",
 "verifyTOTPKey":"Verify TOTP key",
 "version":"Version",
+"vhostAccessToTrace":"Access to trace",
 "vhostAliases":"Aliases",
 "vhostAuthnLevel":"Required authentication level",
 "vhostHttps":"HTTPS",

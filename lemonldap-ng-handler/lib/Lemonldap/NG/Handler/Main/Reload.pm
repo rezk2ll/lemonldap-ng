@@ -238,6 +238,8 @@ sub defaultValuesInit {
               $conf->{vhostOptions}->{$vhost}->{vhostAuthnLevel};
             $class->tsv->{serviceTokenTTL}->{$vhost} =
               $conf->{vhostOptions}->{$vhost}->{vhostServiceTokenTTL};
+            $class->tsv->{accessToTrace}->{$vhost} =
+              $conf->{vhostOptions}->{$vhost}->{vhostAccessToTrace};
         }
     }
     return 1;

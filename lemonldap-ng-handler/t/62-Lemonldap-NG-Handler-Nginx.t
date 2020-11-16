@@ -4,7 +4,10 @@ use MIME::Base64;
 use Data::Dumper;
 use URI::Escape;
 
-require 't/test-psgi-lib.pm';
+BEGIN {
+    require 't/test-psgi-lib.pm';
+    require 't/custom.pm';
+}
 
 init('Lemonldap::NG::Handler::Server::Nginx');
 
@@ -32,6 +35,26 @@ count(4);
 # --------------------
 
 # Authorized query
+ok(
+    $res =
+      $client->_get( '/', undef, 'test4.example.com', "lemonldap=$sessionId" ),
+    'Authentified query'
+);
+ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
+count(2);
+
+# Check headers
+%h = @{ $res->[1] };
+ok(
+    $h{'Lm-Remote-Custom'} eq
+      'dwho@badwolf.org alias Doctor Who:users; timelords',
+    'Lm-Remote-User is overwriten'
+  )
+  or explain( \%h,
+    'Lm-Remote-User => "dwho@badwolf.org alias Doctor Who:users; timelords"' );
+count(1);
+
+# Authorized query
 ok( $res = $client->_get( '/', undef, undef, "lemonldap=$sessionId" ),
     'Authentified query' );
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
@@ -43,7 +66,11 @@ ok( $h{'Headername1'} eq 'Auth-User', 'Headername1 is set to "Auth-User"' )
   or explain( \%h, 'Headername1 => "Auth-User"' );
 ok( $h{'Headervalue1'} eq 'dwho', 'Headervalue1 is set to "dwho"' )
   or explain( \%h, 'Headervalue1 => "dwho"' );
-count(2);
+ok(
+    $h{'Lm-Remote-Custom'} eq 'dwho@badwolf.org',
+    'Lm-Remote-User is set "dwho@badwolf.org"'
+) or explain( \%h, 'Lm-Remote-User => "dwho@badwolf.org"' );
+count(3);
 
 # Request an URI protected by custom function -> allowed
 ok(

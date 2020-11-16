@@ -1,7 +1,7 @@
 # Main running methods file
 package Lemonldap::NG::Handler::Main::Run;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -105,6 +105,7 @@ sub checkType {
 sub run {
     my ( $class, $req, $rule, $protection ) = @_;
     my ( $id, $session );
+    my $vhost = $class->resolveAlias($req);
 
     return $class->DECLINED unless ( $class->is_initial_req($req) );
 
@@ -149,9 +150,41 @@ sub run {
 
         # ACCOUNTING (1. Inform web server)
         $class->set_user( $req, $session->{ $class->tsv->{whatToTrace} } );
-        $class->set_custom( $req, $session->{ $class->tsv->{customToTrace} } )
-          if $class->tsv->{customToTrace}
-          and $session->{ $class->tsv->{customToTrace} };
+
+        my $custom;
+        $custom = $session->{ $class->tsv->{customToTrace} }
+          if (  $class->tsv->{customToTrace}
+            and $session->{ $class->tsv->{customToTrace} } );
+        if ( $class->tsv->{accessToTrace}->{$vhost} ) {
+            my ( $function, @params ) = split /\s*,\s*/,
+              $class->tsv->{accessToTrace}->{$vhost};
+            if ( $function =~ qr/^(?:\w+(?:::\w+)*(?:\s+\w+(?:::\w+)*)*)?$/ ) {
+                my $c = eval {
+                    no strict 'refs';
+                    &{$function}( {
+                            req     => $req,
+                            vhost   => $vhost,
+                            session => $session,
+                            custom  => $custom,
+                            params  => \@params
+                        }
+                    );
+                };
+                if ($@) {
+                    $class->logger->error(
+                        "Failed to overwrite customToTrace: $@");
+                }
+                else {
+                    $class->logger->debug("Overwrite customToTrace with: $c");
+                    $custom = $c;
+                }
+            }
+            else {
+                $class->logger->error(
+                    "accessToTrace: Bad custom function name");
+            }
+        }
+        $class->set_custom( $req, $custom ) if $custom;
 
         # AUTHORIZATION
         return ( $class->forbidden( $req, $session ), $session )

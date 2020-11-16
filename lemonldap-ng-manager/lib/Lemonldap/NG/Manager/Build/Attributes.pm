@@ -2227,8 +2227,9 @@ sub attributes {
             type    => 'int',
             default => -1,
         },
-        vhostAliases => { type => 'text', default => '' },
-        vhostType    => {
+        vhostAccessToTrace => { type => 'text', default => '' },
+        vhostAliases       => { type => 'text', default => '' },
+        vhostType          => {
             type   => 'select',
             select => [
                 { k => 'AuthBasic',     v => 'AuthBasic' },

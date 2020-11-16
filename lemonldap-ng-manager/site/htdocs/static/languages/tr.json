@@ -1001,6 +1001,7 @@
 "verifyU2FKey":"U2F anahtarını doğrula",
 "verifyTOTPKey":"TOTP anahtarını doğrula",
 "version":"Sürüm",
+"vhostAccessToTrace":"Access to trace",
 "vhostAliases":"Takma adlar",
 "vhostAuthnLevel":"Gereken doğrulama seviyesi",
 "vhostHttps":"HTTPS",

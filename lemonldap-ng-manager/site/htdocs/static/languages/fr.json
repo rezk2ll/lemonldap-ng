@@ -1001,6 +1001,7 @@
 "verifyU2FKey":"Vérifier la clef U2F",
 "verifyTOTPKey":"Vérifier la clef TOTP",
 "version":"Version",
+"vhostAccessToTrace":"Accès à tracer",
 "vhostAliases":"Alias",
 "vhostAuthnLevel":"Niveau d'authentification requis",
 "vhostHttps":"HTTPS",

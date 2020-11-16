@@ -503,6 +503,9 @@ Some options are available:
 -  Maintenance mode: reject all requests with a maintenance message
 -  Aliases: list of aliases for this virtual host *(avoid to rewrite
    rules,...)*
+-  Access to trace: can be used for overwriting REMOTE_CUSTOM with a custom function.
+   Provide a comma separated list with custom function path and args.
+   By example: My::accessToTrace, 'Dr Who', 'dwho@badwolf.org'
 -  Type: handler type (normal,
    :doc:`ServiceToken Handler<servertoserver>`,
    :doc:`DevOps Handler<devopshandler>`,...)
@@ -513,6 +516,29 @@ Some options are available:
    It can be overrided for each locations.
 -  ServiceToken timeout: by default, ServiceToken is just valid during 30
    seconds. This TTL can be customized for each virtual host.
+
+
+.. attention::
+
+    A hash reference containing $req, $session, $vhost, $custom and an array reference
+    with provided parameters is passed to accessToTrace custom function.
+
+    ::
+
+      package My;
+
+      sub accessToTrace {
+          my $hash = shift;
+          my $custom = $hash->{custom};
+          my $req = $hash->{req};
+          my $vhost = $hash->{vhost};
+          my $custom = hash->{custom};
+
+          return
+      "$custom alias $hash->{params}->[0]#$hash->{params}->[1]:$hash->{session}->{groups}";
+      }
+
+      1;
 
 
 .. danger::

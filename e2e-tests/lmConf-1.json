@@ -164,6 +164,16 @@
       "default": "accept"
     }
   },
+  "vhostOptions":{
+    "manager.example.com": {
+      "vhostMaintenance": 0,
+      "vhostPort": -1,
+      "vhostHttps": -1,
+      "vhostAliases": "",
+      "vhostServiceTokenTTL": -1,
+      "vhostAccessToTrace": "My::accessToTrace, Doctor, Who","vhostType":"Main"
+    }
+  },
   "loginHistoryEnabled": 1,
   "macros": {
       "UA" : "$ENV{HTTP_USER_AGENT}",

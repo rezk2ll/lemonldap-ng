@@ -1001,6 +1001,7 @@
 "verifyU2FKey":"Verify U2F key",
 "verifyTOTPKey":"Verify TOTP key",
 "version":"الإصدار",
+"vhostAccessToTrace":"Access to trace",
 "vhostAliases":"اسماء مستعارة",
 "vhostAuthnLevel":"مستوى إثبات الهوية  واجب",
 "vhostHttps":"إتش تي تي بي س",

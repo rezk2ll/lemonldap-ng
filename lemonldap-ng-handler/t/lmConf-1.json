@@ -58,6 +58,9 @@
       "^/logout": "logout_sso",
       "default": "accept"
     },
+    "test4.example.com": {
+      "default": "accept"
+    },
     "*.example.org": {
       "^/orgdeny": "deny",
       "default": "accept"
@@ -80,8 +83,12 @@
   "userDB": "Demo",
   "vhostOptions": {
     "test2.example.com": {
-        "vhostAuthnLevel": 5
-      }
+      "vhostAuthnLevel": 5
+    },
+    "test4.example.com": {
+      "vhostAccessToTrace": "My::accessToTrace, Doctor, Who"
+    }
   },
-  "whatToTrace": "_whatToTrace"
+  "whatToTrace": "_whatToTrace",
+  "customToTrace": "mail"
 }

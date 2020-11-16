@@ -4136,6 +4136,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'utotp2fLogo' => {
             'type' => 'text'
         },
+        'vhostAccessToTrace' => {
+            'default' => '',
+            'type'    => 'text'
+        },
         'vhostAliases' => {
             'default' => '',
             'type'    => 'text'
