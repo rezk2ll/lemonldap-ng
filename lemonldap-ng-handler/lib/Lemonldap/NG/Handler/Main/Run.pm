@@ -826,10 +826,13 @@ sub localUnlog {
     if ( $id //= $class->fetchId($req) ) {
 
         # Delete local cache
-        if (    $class->tsv->{refLocalStorage}
-            and $class->tsv->{refLocalStorage}->get($id) )
-        {
-            $class->tsv->{refLocalStorage}->remove($id);
+        if ( $class->tsv->{sessionCacheModule} ) {
+            my $module  = $class->tsv->{sessionCacheModule};
+            my $options = $class->tsv->{sessionCacheOptions};
+            my $cache   = $module->new($options);
+            if ( $cache->get($id) ) {
+                $cache->remove($id);
+            }
         }
     }
 }
