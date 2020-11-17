@@ -397,8 +397,10 @@ sub _resolveURL {
 
     my $originalVhost = $self->p->HANDLER->resolveAlias($vhost);
 
-    return ( lc "$proto$vhost$port$appuri",
-        lc "$proto$originalVhost$port$appuri" );
+    return (
+        lc("$proto$vhost$port") . $appuri,
+        lc("$proto$originalVhost$port") . $appuri
+    );
 }
 
 sub _userData {
