@@ -9,6 +9,7 @@ use strict;
 use Encode;
 use MIME::Base64;
 use Lemonldap::NG::Common::IPv6;
+use JSON::XS;
 
 #use AutoLoader qw(AUTOLOAD);
 
@@ -18,7 +19,7 @@ our $VERSION = '2.0.7';
 # Not that only functions, not methods, can be written here
 our $functions =
   [
-    qw(&checkLogonHours &date &checkDate &basic &unicode2iso &iso2unicode &groupMatch &isInNet6 &varIsInUri)
+    qw(&checkLogonHours &date &checkDate &basic &unicode2iso &iso2unicode &groupMatch &isInNet6 &varIsInUri &has2f)
   ];
 
 ## @function boolean checkLogonHours(string logon_hours, string syntax, string time_correction, boolean default_access)
@@ -222,6 +223,35 @@ sub varIsInUri {
     return $restricted
       ? $uri =~ /$wanteduri$attribute$/o
       : $uri =~ /$wanteduri$attribute/o;
+}
+
+my $json = JSON::XS->new;
+
+sub has2f {
+    my ( $session, $type ) = @_;
+    unless ( $session->{_2fDevices} ) {
+        return 0;
+    }
+    my $_2fDevices;
+    eval { $_2fDevices = $json->decode( $session->{_2fDevices} ); };
+    if ( $@ or ref($_2fDevices) ne "ARRAY" ) {
+        return 0;
+    }
+
+    # Empty array
+    if ( length @{$_2fDevices} == 0 ) {
+        return 0;
+
+        # Array has one value and we did not specify a type, succeed
+    }
+    elsif ( not $type ) {
+        return 1;
+    }
+    else {
+        my @found = grep { lc( $_->{type} ) eq lc($type) } @{$_2fDevices};
+        return ( @found ? 1 : 0 );
+    }
+    return 0;
 }
 
 1;

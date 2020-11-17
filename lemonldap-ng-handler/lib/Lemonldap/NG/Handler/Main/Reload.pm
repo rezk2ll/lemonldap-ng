@@ -627,6 +627,9 @@ sub substitute {
     # handle inGroup
     $expr =~ s/\binGroup\(([^)]*)\)/listMatch(\$s->{'hGroups'},$1,1)/g;
 
+    # handle has2f
+    $expr =~ s/\bhas2f\(([^),]*)\)/has2f(\$s,$1)/g;
+
     return $expr;
 }
 
