@@ -367,7 +367,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ /trspan="lastLogins"/, 'History found' )
       or explain( $res->[2]->[0], 'trspan="lastLogins"' );
-    my @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
+    @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
 
     # History with 3 successLogins
     ok( @c == 3, " -> Three entries found" )

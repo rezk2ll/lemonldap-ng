@@ -490,7 +490,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
       or print STDERR Dumper($res);
 
     # No 2F device left
-    my @sf = map m%<span device=\'(TOTP|U2F)\' epoch=\'\d{10}\'%g,
+    @sf = map m%<span device=\'(TOTP|U2F)\' epoch=\'\d{10}\'%g,
       $res->[2]->[0];
     ok( scalar @sf == 0, 'No 2F device found' )
       or print STDERR Dumper($res);

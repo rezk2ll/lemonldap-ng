@@ -113,7 +113,7 @@ ok(
 );
 count(1);
 
-( my $host, my $url, $query ) =
+( $host, $url, $query ) =
   expectForm( $res, undef, '/upgradesession', 'confirm', 'url' );
 
 # Accept session upgrade
@@ -131,7 +131,7 @@ ok(
 );
 count(1);
 
-my $pdata = expectCookie( $res, 'lemonldappdata' );
+$pdata = expectCookie( $res, 'lemonldappdata' );
 
 ( $host, $url, $query ) =
   expectForm( $res, undef, '/mail2fcheck?skin=bootstrap', 'token', 'code' );

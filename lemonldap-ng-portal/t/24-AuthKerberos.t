@@ -154,7 +154,7 @@ SKIP: {
         ),
         'Push fake kerberos in an allowed domain'
     );
-    my $id = expectCookie($res);
+    $id = expectCookie($res);
 }
 
 count($maintests);

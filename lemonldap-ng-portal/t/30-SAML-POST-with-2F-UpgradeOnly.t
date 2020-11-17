@@ -170,7 +170,7 @@ qr%<input name="code" value="" type="text" class="form-control" id="extcode" trp
         'Unauth SP request'
     );
     expectOK($res);
-    my ( $host, $url, $s ) =
+    ( $host, $url, $s ) =
       expectAutoPost( $res, 'auth.idp.com', '/saml/singleSignOn',
         'SAMLRequest' );
 
@@ -218,7 +218,7 @@ qr%<input name="code" value="" type="text" class="form-control" id="extcode" trp
     ok( mail() =~ m%<b>(\d{4})</b>%, 'Found 2F code in mail' )
       or print STDERR Dumper( mail() );
 
-    my $code = $1;
+    $code = $1;
 
     $s =~ s/code=/code=${code}/;
     ok(
@@ -265,7 +265,7 @@ qr%<input name="code" value="" type="text" class="form-control" id="extcode" trp
 
     # Verify authentication on SP
     expectRedirection( $res, 'http://auth.sp.com' );
-    my $spId = expectCookie($res);
+    $spId = expectCookie($res);
 
     ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
     expectOK($res);
