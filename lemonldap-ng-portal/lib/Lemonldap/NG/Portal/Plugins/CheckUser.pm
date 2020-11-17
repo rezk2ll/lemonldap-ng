@@ -320,17 +320,23 @@ sub check {
             $self->_createArray( $req, $attrs, $savedUserData ) );
     }
 
+    if ( $self->p->checkXSSAttack( 'CheckUser URL', $url ) ) {
+        $url  = '';
+        $auth = 'VHnotFound';
+    }
+
     # Check if user is allowed to access submitted URL and compute headers
     if ( $url and %$attrs ) {
 
         # Check url format
-        $url = $self->_urlFormat($url);
+        my $originalUrl;
+        ( $url, $originalUrl ) = $self->_resolveURL($url);
 
         # User is allowed ?
         $self->logger->debug(
-"checkUser requested for user: $attrs->{ $self->{conf}->{whatToTrace} } and URL: $url"
+"checkUser requested for user: $attrs->{ $self->{conf}->{whatToTrace} } and URL: $url | alias: $originalUrl"
         );
-        $auth = $self->_authorization( $req, $url, $attrs );
+        $auth = $self->_authorization( $req, $originalUrl, $attrs );
         if ( $auth >= 0 ) {
             $auth = $auth ? "allowed" : "forbidden";
             $self->logger->debug(
@@ -338,7 +344,8 @@ sub check {
                   . "$auth to access to $url" );
 
             # Return VirtualHost headers
-            $array_hdrs = $self->_headers( $req, $url, $attrs, $savedUserData );
+            $array_hdrs =
+              $self->_headers( $req, $originalUrl, $attrs, $savedUserData );
         }
         else {
             $auth = 'VHnotFound';
@@ -352,17 +359,14 @@ sub check {
 
     # TODO:
     my $params = {
-        PORTAL    => $self->conf->{portal},
-        MAIN_LOGO => $self->conf->{portalMainLogo},
-        SKIN      => $self->p->getSkin($req),
-        LANGS     => $self->conf->{showLanguages},
-        MSG       => $msg,
-        ALERTE    => ( $msg eq 'checkUser' ? 'alert-info' : 'alert-warning' ),
-        LOGIN     => $user,
-        URL       => (
-              $self->p->checkXSSAttack( 'URL', $url ) ? ""
-            : $url
-        ),
+        PORTAL      => $self->conf->{portal},
+        MAIN_LOGO   => $self->conf->{portalMainLogo},
+        SKIN        => $self->p->getSkin($req),
+        LANGS       => $self->conf->{showLanguages},
+        MSG         => $msg,
+        ALERTE      => ( $msg eq 'checkUser' ? 'alert-info' : 'alert-warning' ),
+        LOGIN       => $user,
+        URL         => $url,
         ALLOWED     => $auth,
         ALERTE_AUTH => $alert_auth,
         HEADERS     => $array_hdrs,
@@ -370,7 +374,8 @@ sub check {
         MACROS      => $array_attrs->[1],
         GROUPS      => $array_attrs->[0],
         TOKEN       => (
-            $self->ottRule->( $req, {} ) ? $self->ott->createToken()
+              $self->ottRule->( $req, {} )
+            ? $self->ott->createToken()
             : ''
         )
     };
@@ -380,7 +385,7 @@ sub check {
     return $self->p->sendHtml( $req, 'checkuser', params => $params );
 }
 
-sub _urlFormat {
+sub _resolveURL {
     my ( $self, $url ) = @_;
     $url = 'http://' . $url unless ( $url =~ m#^https?://[^/]*.*#i );
     my ( $proto, $vhost, $appuri ) = $url =~ m#^(https?://)([^/]*)(.*)#i;
@@ -390,7 +395,10 @@ sub _urlFormat {
     $vhost =~ s/:\d+$//;
     $vhost .= $self->conf->{domain} unless ( $vhost =~ /\./ );
 
-    return lc("$proto$vhost$port") . "$appuri";
+    my $originalVhost = $self->p->HANDLER->resolveAlias($vhost);
+
+    return ( lc "$proto$vhost$port$appuri",
+        lc "$proto$originalVhost$port$appuri" );
 }
 
 sub _userData {
