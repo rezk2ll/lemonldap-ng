@@ -72,16 +72,17 @@ sub run {
                         $req, 'simpleInfo', params => { trspan => $msg }
                     )
                 );
-                $self->userLogger->error( 'User '
-                      . $req->sessionInfo->{uid}
-                      . " was not granted to open session (rule -> $rule)" );
+                $self->userLogger->error( 'User "'
+                      . $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
+                      . '" was not granted to open session (rule ->'
+                      . "$rule)" );
                 $req->urldc( $self->conf->{portal} );
                 return $req->authResult(PE_SESSIONNOTGRANTED);
             }
             else {
-                $self->userLogger->error( 'User '
-                      . $req->sessionInfo->{uid}
-                      . " was not granted to open session (rule -> "
+                $self->userLogger->error( 'User "'
+                      . $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
+                      . '" was not granted to open session (rule -> '
                       . $self->conf->{grantSessionRules}->{$_}
                       . ")" );
                 $req->urldc( $self->conf->{portal} );
