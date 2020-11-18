@@ -64,12 +64,24 @@ attribute you see there can be used in a rule!
 
    $_auth ne 'Demo'
 
+-  Checking if the user has a an **available** second factor.
+
+::
+
+   # Since 2.0.10
+   has2f()
+   has2f('TOTP')
+   has2f('TOTP') or has2f('U2F')
+
+   # Before 2.0.10
+   $_2fDevices =~ /"type":\s*"TOTP"/s
 
 .. tip::
 
     In Perl, ``ne`` means *Not Equal* and must be used on
     strings. ``\b`` means *word Boundary*. (?:) means *non capturing*
     parenthesis.
+
 
 Using environment variables
 ---------------------------

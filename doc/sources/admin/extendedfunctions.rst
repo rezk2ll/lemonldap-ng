@@ -25,19 +25,20 @@ Inside this jail, you can access to:
 * Information about current request
 * Extended functions:
 
-  * date_
-  * checkLogonHours_
-  * checkDate_
   * basic_
-  * unicode2iso_
-  * iso2unicode_
-  * groupMatch_
-  * listMatch_ (|new| *since 2.0.7*)
-  * inGroup_ (|new| *since 2.0.8*)
+  * checkDate_
+  * checkLogonHours_
+  * date_
   * encrypt_
-  * token_
+  * groupMatch_
+  * has2f_ (|new| in version 2.0.10)
+  * inGroup_ (|new| in version 2.0.8)
   * isInNet6_
-  * varIsInUri_
+  * iso2unicode_
+  * listMatch_ (|new| in version 2.0.7)
+  * token_
+  * unicode2iso_
+  * varIsInUri_ (|new| in version 2.0.7)
 
 
 .. |new| image:: /documentation/new.png
@@ -238,12 +239,46 @@ Simple usage example:
 
    groupMatch($hGroups, 'description', 'Service 1')
 
+
+.. _has2f:
+
+has2f
+~~~~~
+
+.. versionadded:: 2.0.10
+
+This function tests if the current user has registered a second factor. The following types are supported:
+
+* :doc:`TOTP<totp2f>`
+* :doc:`U2F<u2f>`
+* :doc:`UBK<yubikey2f>`
+
+Example::
+
+   has2f()
+   has2f('UBK')
+   has2f('UBK') or has2f('TOTP')
+
+
+.. warning::
+
+   Do **NOT** use this test to check if the user has **used** their second factor for logging in!
+   This test only checks if the user has registered a second factor. Regardless of their **current**
+   authentication level. It can be used to simplify second factor activation rules.
+
+
+.. note::
+
+   Before version 2.0.10, you need to use the following syntax ::
+
+      $_2fDevices =~ /"type":\s*"TOTP"/s
+
 .. _listMatch:
 
 listMatch
 ~~~~~~~~~
 
-(|image0| since 2.0.7)
+.. versionadded:: 2.0.7
 
 This function lets you test if a particular value can be found with a
 multi-valued session attribute.
@@ -271,7 +306,7 @@ found.
 inGroup
 ~~~~~~~
 
-(|image1| since 2.0.8)
+.. versionadded:: 2.0.8
 
 This function lets you test if the user is in a given group. It is
 case-insensitive.
@@ -327,8 +362,9 @@ IP address is local*:
 varIsInUri
 ~~~~~~~~~~
 
-Function to check if a variable is in requested URI (Require LL::NG >=
-2.0.7).
+.. versionadded:: 2.0.7
+
+Function to check if a variable is in requested URI
 
 Example *check if $uid is in /check-auth/ URI*:
 
