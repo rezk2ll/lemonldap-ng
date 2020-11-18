@@ -829,8 +829,8 @@ sub localUnlog {
         if ( $class->tsv->{sessionCacheModule} ) {
             my $module  = $class->tsv->{sessionCacheModule};
             my $options = $class->tsv->{sessionCacheOptions};
-            my $cache   = $module->new($options);
             eval "use $module;";
+            my $cache   = $module->new($options);
             if ( $cache->get($id) ) {
                 $cache->remove($id);
             }
