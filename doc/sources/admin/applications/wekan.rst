@@ -27,6 +27,9 @@ theses :
 * **OAUTH2_USERINFO_ENDPOINT**: ``oauth2/userinfo``
 * **OAUTH2_TOKEN_ENDPOINT**: ``oauth2/token``
 * **OAUTH2_ID_MAP**: ``sub``
+* **OAUTH2_USERNAME_MAP**: ``sub``
+* **OAUTH2_FULLNAME_MAP**: ``name``
+* **OAUTH2_EMAIL_MAP**: ``email``
 
 
 .. danger::
