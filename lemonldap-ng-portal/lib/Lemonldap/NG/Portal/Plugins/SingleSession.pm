@@ -182,7 +182,7 @@ sub removeOther {
     }
 
     return $self->p->do( $req, [ sub { $res } ] ) if $res;
-    $self->userLogger->info("$count remaining session(s) have been removed");
+    $self->userLogger->info("$count remaining session(s) removed");
     $req->mustRedirect(1);
     return $self->p->autoRedirect($req);
 }

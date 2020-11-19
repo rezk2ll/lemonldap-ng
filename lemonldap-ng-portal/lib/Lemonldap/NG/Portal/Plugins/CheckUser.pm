@@ -262,7 +262,10 @@ sub check {
         }
 
         # Check identities rule
-        $self->logger->info("\"$user\" is an unrestricted user!") if $unUser;
+        $self->logger->info( '"'
+              . $savedUserData->{ $self->conf->{whatToTrace} }
+              . '" is an unrestricted user!' )
+          if $unUser;
         unless ( $unUser || $self->idRule->( $req, $attrs ) ) {
             $self->userLogger->warn(
                 "checkUser requested for an invalid user ($user)");
