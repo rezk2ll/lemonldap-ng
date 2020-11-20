@@ -76,7 +76,8 @@
     }
   },
   "macros": {
-    "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : \"$_user\""
+    "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : \"$_user\"",
+    "UA": "$ENV{HTTP_USER_AGENT}"
   },
   "portal": "http://auth.example.com/",
   "reloadUrls": {},
@@ -86,7 +87,7 @@
       "vhostAuthnLevel": 5
     },
     "test4.example.com": {
-      "vhostAccessToTrace": "My::accessToTrace, Doctor, Who"
+      "vhostAccessToTrace": "My::accessToTrace, Doctor, Who, UA"
     }
   },
   "whatToTrace": "_whatToTrace",

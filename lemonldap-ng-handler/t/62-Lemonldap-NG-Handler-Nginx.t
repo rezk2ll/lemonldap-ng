@@ -47,11 +47,13 @@ count(2);
 %h = @{ $res->[1] };
 ok(
     $h{'Lm-Remote-Custom'} eq
-      'dwho@badwolf.org alias Doctor_Who:users; timelords',
+'dwho@badwolf.org alias Doctor_Who:users; timelords by using Mozilla/5.0 (X11; VAX4000; rv:43.0) Gecko/20100101 Firefox/143.0 Iceweasel/143.0.1',
     'Lm-Remote-Custom is overwriten'
   )
-  or explain( \%h,
-    'Lm-Remote-Custom => "dwho@badwolf.org alias Doctor_Who:users; timelords"' );
+  or explain(
+    \%h,
+'Lm-Remote-Custom => "dwho@badwolf.org alias Doctor_Who:users; timelords by using Mozilla/5.0 (X11; VAX4000; rv:43.0) Gecko/20100101 Firefox/143.0 Iceweasel/143.0.1"'
+  );
 count(1);
 
 # Authorized query

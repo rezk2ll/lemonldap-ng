@@ -9,7 +9,8 @@ sub accessToTrace {
     my $params  = $hash->{params};
     my $session = $hash->{session};
 
-    return "$custom alias $params->[0]_$params->[1]:$session->{groups}";
+    return
+"$custom alias $params->[0]_$params->[1]:$session->{groups} by using $session->{ $params->[2] }";
 }
 
 1;
