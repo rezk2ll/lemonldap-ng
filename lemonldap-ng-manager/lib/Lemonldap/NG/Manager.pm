@@ -10,14 +10,14 @@
 # Sessions.pm to manage sessions
 package Lemonldap::NG::Manager;
 
-use 5.10.0;
+use strict;
 use utf8;
 use Mouse;
 use JSON;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 extends 'Lemonldap::NG::Common::Conf::AccessLib',
   'Lemonldap::NG::Handler::PSGI::Router';

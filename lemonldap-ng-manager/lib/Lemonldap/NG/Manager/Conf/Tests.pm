@@ -1,5 +1,6 @@
 package Lemonldap::NG::Manager::Conf::Tests;
 
+use strict;
 use utf8;
 use Lemonldap::NG::Common::Regexp;
 use Lemonldap::NG::Handler::Main;
@@ -449,7 +450,7 @@ sub tests {
                         "RSA_SHA1" )
                     {
                         undef $allsha1;
-                        break;
+                        last;
                     }
                 }
             }
@@ -461,7 +462,7 @@ sub tests {
                         ->{samlSPMetaDataOptionsSignatureMethod} ne "RSA_SHA1" )
                     {
                         undef $allsha1;
-                        break;
+                        last;
                     }
                 }
             }
@@ -865,8 +866,7 @@ sub tests {
                 $appUrl =~ m#^(https?://[^/]+)(/.*)?$#;
                 my $appHost = $1;
                 unless ($appHost) {
-                    push @msg,
-                      "$clientConfKey CAS Application has no Service URL";
+                    push @msg, "$casConfKey CAS Application has no Service URL";
                     $res = 0;
                     next;
                 }

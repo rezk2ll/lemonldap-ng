@@ -1,6 +1,6 @@
 package Lemonldap::NG::Manager::Viewer;
 
-use 5.10.0;
+use strict;
 use utf8;
 use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;

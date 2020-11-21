@@ -1,10 +1,10 @@
 package Lemonldap::NG::Manager::Api::Providers::SamlSp;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.10';
 
 package Lemonldap::NG::Manager::Api;
 
-use 5.10.0;
+use strict;
 use utf8;
 use Mouse;
 

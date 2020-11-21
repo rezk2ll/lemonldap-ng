@@ -1,10 +1,11 @@
 # Miscenalleous endpoints
 package Lemonldap::NG::Manager::Api::Misc;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 package Lemonldap::NG::Manager::Api;
 
+use strict;
 use Mouse;
 extends 'Lemonldap::NG::Manager::Api::Common';
 

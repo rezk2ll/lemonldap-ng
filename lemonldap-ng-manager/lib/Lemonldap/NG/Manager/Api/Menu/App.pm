@@ -1,14 +1,13 @@
 package Lemonldap::NG::Manager::Api::Menu::App;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 package Lemonldap::NG::Manager::Api;
 
-use 5.10.0;
+use strict;
 use utf8;
 use Mouse;
 use Lemonldap::NG::Manager::Conf::Parser;
-use Data::Dumper;
 
 extends 'Lemonldap::NG::Manager::Api::Common';
 

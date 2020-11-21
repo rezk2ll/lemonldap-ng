@@ -8,7 +8,7 @@
 #                  of lemonldap-ng.ini) and underlying handler configuration
 package Lemonldap::NG::Portal::Main::Init;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -161,24 +161,24 @@ sub setPortalRoutes {
 
       # psgi.js
       ->addUnauthRoute( 'psgi.js' => 'sendJs', ['GET'] )
-      ->addAuthRoute( 'psgi.js' => 'sendJs', ['GET'] )
+      ->addAuthRoute( 'psgi.js' => 'sendJs',   ['GET'] )
 
       # portal.css
       ->addUnauthRoute( 'portal.css' => 'sendCss', ['GET'] )
-      ->addAuthRoute( 'portal.css' => 'sendCss', ['GET'] )
+      ->addAuthRoute( 'portal.css' => 'sendCss',   ['GET'] )
 
       # lmerror
       ->addUnauthRoute( lmerror => { ':code' => 'lmError' }, ['GET'] )
-      ->addAuthRoute( lmerror => { ':code' => 'lmError' }, ['GET'] )
+      ->addAuthRoute( lmerror => { ':code'   => 'lmError' }, ['GET'] )
 
       # Core REST API
-      ->addUnauthRoute( ping => 'pleaseAuth', ['GET'] )
+      ->addUnauthRoute( ping => 'pleaseAuth',  ['GET'] )
       ->addAuthRoute( ping => 'authenticated', ['GET'] )
 
       # Refresh session
       ->addAuthRoute( refresh => 'refresh', ['GET'] )
 
-      ->addAuthRoute( '*' => 'corsPreflight', ['OPTIONS'] )
+      ->addAuthRoute( '*' => 'corsPreflight',   ['OPTIONS'] )
       ->addUnauthRoute( '*' => 'corsPreflight', ['OPTIONS'] )
 
       # Logout
@@ -239,9 +239,11 @@ sub reloadConf {
 
     # Initialize templateDir
     $self->{templateDir} =
-      $self->conf->{templateDir} . '/' . $self->conf->{portalSkin};
+      $self->conf->{templateDir} . '/' . $self->conf->{portalSkin}
+      if ( $self->conf->{templateDir} and $self->conf->{portalSkin} );
     unless ( -d $self->{templateDir} ) {
-        $self->error("Template dir $self->{templateDir} doesn't exist");
+        $self->error("Template dir $self->{templateDir} doesn't exist")
+          if ref( $self->{templateDir} ) eq 'SCALAR';
         return $self->fail;
     }
     $self->templateDir(

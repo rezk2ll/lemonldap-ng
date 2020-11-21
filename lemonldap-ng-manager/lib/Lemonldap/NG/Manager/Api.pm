@@ -1,13 +1,15 @@
 # This module implements all the methods that responds to '/api/*' requests
 package Lemonldap::NG::Manager::Api;
 
-use 5.10.0;
+use strict;
 use utf8;
 use Mouse;
 
-extends 'Lemonldap::NG::Manager::Plugin',
-  'Lemonldap::NG::Common::Conf::RESTServer',
-  'Lemonldap::NG::Common::Session::REST';
+extends qw(
+  Lemonldap::NG::Manager::Plugin
+  Lemonldap::NG::Common::Session::REST
+  Lemonldap::NG::Common::Conf::RESTServer
+);
 
 use Lemonldap::NG::Manager::Api::2F;
 use Lemonldap::NG::Manager::Api::Misc;
@@ -17,7 +19,7 @@ use Lemonldap::NG::Manager::Api::Providers::CasApp;
 use Lemonldap::NG::Manager::Api::Menu::Cat;
 use Lemonldap::NG::Manager::Api::Menu::App;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 #############################
 # I. INITIALIZATION METHODS #

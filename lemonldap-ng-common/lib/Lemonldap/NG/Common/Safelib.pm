@@ -13,7 +13,7 @@ use JSON::XS;
 
 #use AutoLoader qw(AUTOLOAD);
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.10';
 
 # Set here all the names of functions that must be available in Safe objects.
 # Not that only functions, not methods, can be written here
@@ -65,8 +65,8 @@ sub checkLogonHours {
     # Use time_correction
     if ($time_correction) {
         my ( $sign, $time ) = ( $time_correction =~ /([+|-]?)(\d+)/ );
-        if ( $sign =~ /-/ ) { $hourpos -= $time; }
-        else                { $hourpos += $time; }
+        if   ( $sign =~ /-/ ) { $hourpos -= $time; }
+        else                  { $hourpos += $time; }
     }
 
     # Get the corresponding byte
@@ -229,29 +229,22 @@ my $json = JSON::XS->new;
 
 sub has2f {
     my ( $session, $type ) = @_;
-    unless ( $session->{_2fDevices} ) {
-        return 0;
-    }
-    my $_2fDevices;
-    eval { $_2fDevices = $json->decode( $session->{_2fDevices} ); };
-    if ( $@ or ref($_2fDevices) ne "ARRAY" ) {
-        return 0;
-    }
+    return 0 unless ( $session->{_2fDevices} );
+
+    my $_2fDevices = eval { $json->decode( $session->{_2fDevices} ); };
+    return 0 if ( $@ or ref($_2fDevices) ne "ARRAY" );
+
+    my $length = scalar @{$_2fDevices};
 
     # Empty array
-    if ( length @{$_2fDevices} == 0 ) {
-        return 0;
+    return 0 unless $length;
 
-        # Array has one value and we did not specify a type, succeed
-    }
-    elsif ( not $type ) {
-        return 1;
-    }
-    else {
+    # Array has one value and we did not specify a type, succeed
+    if ($type) {
         my @found = grep { lc( $_->{type} ) eq lc($type) } @{$_2fDevices};
         return ( @found ? 1 : 0 );
     }
-    return 0;
+    return 1;
 }
 
 1;

@@ -1,9 +1,10 @@
 package Lemonldap::NG::Manager::Api::Common;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 package Lemonldap::NG::Manager::Api;
 
+use strict;
 use Lemonldap::NG::Manager::Build::Attributes;
 use Lemonldap::NG::Manager::Build::CTrees;
 
@@ -26,7 +27,7 @@ sub _getDefaultValues {
     my $defaultAttrs = Lemonldap::NG::Manager::Build::Attributes::attributes();
     my $attrs        = {};
 
-    foreach $attr (@allAttrs) {
+    foreach my $attr (@allAttrs) {
         $attrs->{$attr} = $defaultAttrs->{$attr}->{default}
           if ( defined $defaultAttrs->{$attr}
             && defined $defaultAttrs->{$attr}->{default} );
@@ -39,7 +40,7 @@ sub _hasAllowedAttributes {
     my ( $self, $attributes, $rootNode ) = @_;
     my @allowedAttributes = $self->_listAttributes($rootNode);
 
-    foreach $attribute ( keys %{$attributes} ) {
+    foreach my $attribute ( keys %{$attributes} ) {
         if ( length( ref($attribute) ) ) {
             return {
                 res => "ko",

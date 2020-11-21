@@ -6,7 +6,7 @@
 # Read methods are inherited from Lemonldap::NG::Common::Conf::RESTServer
 package Lemonldap::NG::Manager::Conf;
 
-use 5.10.0;
+use strict;
 use utf8;
 use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;

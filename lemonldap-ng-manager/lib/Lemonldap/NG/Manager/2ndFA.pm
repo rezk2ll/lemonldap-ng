@@ -1,6 +1,5 @@
 package Lemonldap::NG::Manager::2ndFA;
 
-use 5.10.0;
 use utf8;
 use strict;
 use Mouse;
@@ -12,11 +11,13 @@ use Lemonldap::NG::Common::Conf::ReConstants;
 
 use feature 'state';
 
-extends 'Lemonldap::NG::Manager::Plugin',
-  'Lemonldap::NG::Common::Conf::AccessLib',
-  'Lemonldap::NG::Common::Session::REST';
+extends qw(
+  Lemonldap::NG::Manager::Plugin
+  Lemonldap::NG::Common::Session::REST
+  Lemonldap::NG::Common::Conf::AccessLib
+);
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 #############################
 # I. INITIALIZATION METHODS #
