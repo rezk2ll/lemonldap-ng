@@ -84,6 +84,7 @@ t/69-Lemonldap-NG-Handler-PSGI-SecureToken.t
 t/70-Lemonldap-NG-Handler-PSGI-AuthBasic.t
 t/71-Lemonldap-NG-Handler-PSGI-OAuth2.t
 t/99-pod.t
+t/custom.pm
 t/lmConf-1.json
 t/sessions/lock/.exists
 t/test-psgi-lib.pm

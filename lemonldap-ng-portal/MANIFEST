@@ -366,6 +366,7 @@ site/htdocs/static/common/ro.png
 site/htdocs/static/common/tr.png
 site/htdocs/static/common/vi.png
 site/htdocs/static/common/zh.png
+site/htdocs/static/common/zh_TW.png
 site/htdocs/static/languages/ar.json
 site/htdocs/static/languages/de.json
 site/htdocs/static/languages/en.json
@@ -380,6 +381,7 @@ site/htdocs/static/languages/ro.json
 site/htdocs/static/languages/tr.json
 site/htdocs/static/languages/vi.json
 site/htdocs/static/languages/zh.json
+site/htdocs/static/languages/zh_TW.json
 site/templates/bootstrap/2fchoice.tpl
 site/templates/bootstrap/2fregisters.tpl
 site/templates/bootstrap/captcha.tpl
@@ -454,6 +456,7 @@ site/templates/common/mail/ms.json
 site/templates/common/mail/tr.json
 site/templates/common/mail/vi.json
 site/templates/common/mail/zh_CN.json
+site/templates/common/mail/zh_TW.json
 site/templates/common/mail_2fcode.tpl
 site/templates/common/mail_certificateConfirm.tpl
 site/templates/common/mail_certificateReset.tpl
@@ -648,6 +651,7 @@ t/64-StayConnected-with-History.t
 t/65-AutoSignin.t
 t/66-CDA-already-auth.t
 t/66-CDA-PSGI-Try.t
+t/66-CDA-with-doubleCookies.t
 t/66-CDA-with-REST.t
 t/66-CDA-with-SOAP.t
 t/66-CDA.t
