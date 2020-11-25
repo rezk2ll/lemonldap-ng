@@ -177,16 +177,16 @@ sub activeSessions {
       $self->module->searchOn( $moduleOptions, $self->conf->{whatToTrace},
         $user );
 
-    $self->logger->debug('Remove corrupted sessions...');
-    my $corrupted = 0;
+    $self->logger->debug('Remove non-SSO session(s)...');
+    my $other = 0;
     foreach ( keys %$sessions ) {
         unless ( $sessions->{$_}->{_session_kind} eq 'SSO' ) {
             delete $sessions->{$_};
-            $corrupted++;
+            $other++;
         }
     }
-    $self->logger->info("$corrupted corrupted session(s) removed")
-      if $corrupted;
+    $self->logger->info("$other non-SSO session(s) removed")
+      if $other;
 
     $self->logger->debug('Build an array ref with sessions info...');
     @$activeSessions =
