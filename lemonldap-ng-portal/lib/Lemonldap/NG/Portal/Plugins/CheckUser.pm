@@ -333,7 +333,7 @@ sub check {
 
         # Check url format
         my $originalUrl;
-        ( $url, $originalUrl ) = $self->_resolveURL($url);
+        ( $url, $originalUrl ) = $self->_resolveURL( $req, $url );
 
         # User is allowed ?
         $self->logger->debug(
@@ -389,15 +389,17 @@ sub check {
 }
 
 sub _resolveURL {
-    my ( $self, $url ) = @_;
-    $url = 'http://' . $url unless ( $url =~ m#^https?://[^/]*.*#i );
-    my ( $proto, $vhost, $appuri ) = $url =~ m#^(https?://)([^/]*)(.*)#i;
+    my ( $self, $req, $url ) = @_;
+    my ($proto) = $url =~ m#^(https?://).*#i;
+    my ( $vhost, $appuri ) = $url =~ m#^(?:https?://)?([^/]*)(.*)#i;
     my ($port) = $vhost =~ m#^.+(:\d+)$#;
-
     $port ||= '';
     $vhost =~ s/:\d+$//;
     $vhost .= $self->conf->{domain} unless ( $vhost =~ /\./ );
-
+    $proto =
+      $self->p->HANDLER->_isHttps( $req, $vhost ) ? 'https://' : 'http://'
+      unless $proto;
+    $self->logger->debug( 'VHost is ' . uc( ( split( /:/, $proto ) )[0] ) );
     my $originalVhost = $self->p->HANDLER->resolveAlias($vhost);
 
     return (
