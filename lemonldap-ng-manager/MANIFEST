@@ -202,6 +202,7 @@ site/htdocs/static/languages/pl.json
 site/htdocs/static/languages/tr.json
 site/htdocs/static/languages/vi.json
 site/htdocs/static/languages/zh.json
+site/htdocs/static/languages/zh_TW.json
 site/htdocs/static/logos/ar.png
 site/htdocs/static/logos/bootstrap.png
 site/htdocs/static/logos/custom.png
@@ -216,6 +217,7 @@ site/htdocs/static/logos/pl.png
 site/htdocs/static/logos/tr.png
 site/htdocs/static/logos/vi.png
 site/htdocs/static/logos/zh.png
+site/htdocs/static/logos/zh_TW.png
 site/htdocs/static/reverseTree.json
 site/htdocs/static/struct.json
 site/templates/2ndfa.tpl
