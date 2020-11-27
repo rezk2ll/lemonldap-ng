@@ -15,6 +15,7 @@ Applications
    applications/dokuwiki
    applications/drupal
    applications/fusiondirectory
+   applications/gerrit
    applications/gitlab
    applications/glpi
    applications/googleapps
@@ -89,6 +90,7 @@ Application                                                       Configuration 
 .. image:: applications/dokuwiki_logo.png                         :doc:`Dokuwiki<applications/dokuwiki>`               ✔
 .. image:: applications/drupal_logo.png                           :doc:`Drupal<applications/drupal>`                   ✔
 .. image:: applications/fusiondirectory-logo.jpg                  :doc:`FusionDirectory<applications/fusiondirectory>` ✔
+.. image:: applications/gerrit_logo.png                           :doc:`Gerrit<applications/gerrit>`                                                          ✔
 .. image:: applications/gitlab_logo.png                           :doc:`Gitlab<applications/gitlab>`                                                     ✔    ✔
 .. image:: applications/glpi_logo.png                             :doc:`GLPI<applications/glpi>`                       ✔
 .. image:: applications/googleapps_logo.png                       :doc:`Google Apps<applications/googleapps>`                                            ✔
