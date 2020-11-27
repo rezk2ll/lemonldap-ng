@@ -4,6 +4,9 @@ Write a custom plugin
 Presentation
 ------------
 
+Standard entry points
+~~~~~~~~~~~~~~~~~~~~~
+
 You can now write a custom portal plugin that will hook in the
 authentication process:
 
@@ -17,6 +20,9 @@ authentication process:
    process
 -  ``forAuthUser``: method called for already authenticated users
 -  ``beforeLogout``: method called before logout
+
+Extended entry points
+~~~~~~~~~~~~~~~~~~~~~
 
 If you need to call a method just after any standard method in
 authentication process, then use ``afterSub``, for example:
@@ -47,6 +53,23 @@ authentication process, then use ``aroundSub``, for example:
          # Do something after
          return $ret;
      }
+
+
+Hooks
+~~~~~
+
+.. versionadded:: 2.0.10
+
+Your plugin can also register itself to be called at some points of interest
+within the main LemonLDAP::NG code.
+
+.. toctree::
+   :maxdepth: 1
+
+   hooks
+
+Routes
+~~~~~~
 
 The plugin can also define new routes and call actions on them.
 
