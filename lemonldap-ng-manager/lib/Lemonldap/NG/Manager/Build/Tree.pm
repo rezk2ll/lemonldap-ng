@@ -760,7 +760,6 @@ sub tree {
                         {
                             title => 'checkUsers',
                             help  => 'checkuser.html',
-                            form  => 'simpleInputContainer',
                             nodes => [
                                 'checkUser',
                                 'checkUserIdRule',
@@ -771,6 +770,7 @@ sub tree {
                                 'checkUserDisplayEmptyHeaders',
                                 'checkUserDisplayEmptyValues',
                                 'checkUserDisplayPersistentInfo',
+                                'checkUserHiddenHeaders'
                             ]
                         },
                         {

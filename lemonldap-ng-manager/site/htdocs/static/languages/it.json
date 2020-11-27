@@ -206,6 +206,7 @@
 "checkUserDisplayPersistentInfo":"Display persistent session data",
 "checkUserDisplayEmptyHeaders":"Display empty headers",
 "checkUserDisplayEmptyValues":"Mostra valori vuoti",
+"checkUserHiddenHeaders":"Hidden headers",
 "checkUserSearchAttributes":"Attributes used for searching sessions",
 "choiceParams":"Scelta parametri",
 "chooseLogo":"Scegli logo",

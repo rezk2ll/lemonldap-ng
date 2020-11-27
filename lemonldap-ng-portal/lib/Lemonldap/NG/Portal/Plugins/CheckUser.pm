@@ -115,7 +115,9 @@ sub display {
     $self->userLogger->info("Using spoofed SSO groups if exist")
       if ( $self->conf->{impersonationRule} );
 
-    $attrs = $self->_removePersistentAttributes($attrs)
+    $attrs =
+      $self->_removeKeys( $attrs, $self->persistentAttrs,
+        'Remove persistent session attributes...' )
       unless $self->displayPersistentInfoRule->( $req, $req->userData );
 
     # Create an array of hashes and dispatch attributes for template loop
@@ -180,8 +182,7 @@ sub check {
             LOGIN     => '',
             TOKEN     => $token,
         };
-        return $self->p->sendJSONresponse( $req, $params )
-          if ( $req->wantJSON );
+        return $self->p->sendJSONresponse( $req, $params ) if $req->wantJSON;
         return $self->p->sendHtml( $req, 'checkuser', params => $params )
           if $msg;
     }
@@ -195,7 +196,7 @@ sub check {
         $user  = '';
         $attrs = {};
         return $self->p->sendError( $req, 'Malformed user', 400 )
-          if ( $req->wantJSON );
+          if $req->wantJSON;
         return $self->p->sendHtml(
             $req,
             'checkuser',
@@ -219,7 +220,7 @@ sub check {
     if ( !$user or $user eq $req->{user} ) {
         $self->userLogger->info("checkUser requested for himself");
         $self->userLogger->info("Using spoofed SSO groups if exist")
-          if ( $self->conf->{impersonationRule} );
+          if $self->conf->{impersonationRule};
         $attrs = $req->userData;
         $user  = $req->{user};
     }
@@ -282,8 +283,10 @@ sub check {
         $attrs       = {};
     }
     else {
-        $msg   = 'checkUser' . $self->merged;
-        $attrs = $self->_removePersistentAttributes($attrs)
+        $msg = 'checkUser' . $self->merged;
+        $attrs =
+          $self->_removeKeys( $attrs, $self->persistentAttrs,
+            'Remove persistent session attributes...' )
           unless $self->displayPersistentInfoRule->( $req, $savedUserData );
 
         if ($computed) {
@@ -422,12 +425,9 @@ sub _userData {
       : push @$steps, 'setLocalGroups';
     $req->steps($steps);
     if ( my $error = $self->p->process($req) ) {
-        if ( $error == PE_BADCREDENTIALS ) {
-            $self->userLogger->warn(
-                    'checkUser requested for an invalid user ('
-                  . $req->{user}
-                  . ")" );
-        }
+        $self->userLogger->warn(
+            'checkUser requested for an invalid user (' . $req->{user} . ")" )
+          if ( $error == PE_BADCREDENTIALS );
         $self->logger->debug("Process returned error: $error");
         return $req->error(PE_BADCREDENTIALS);
     }
@@ -483,16 +483,44 @@ sub _headers {
     $vhost =~ s/:\d+$//;
     $req->{env}->{HTTP_HOST} = $vhost;
     $self->p->HANDLER->headersInit( $self->{conf} );
+    my $headers = $self->p->HANDLER->checkHeaders( $req, $attrs );
+
+    # Remove hidden headers relative to VHost if required
+    unless ( $self->unrestrictedUsersRule->( $req, $savedUserData ) ) {
+        my $keysToRemove = '';
+        $keysToRemove = '__all__'
+          if exists $self->conf->{checkUserHiddenHeaders}->{$vhost};
+        $keysToRemove = $self->conf->{checkUserHiddenHeaders}->{$vhost}
+          if ( $keysToRemove
+            && $self->conf->{checkUserHiddenHeaders}->{$vhost} =~ /\w+/ );
+
+        if ( $keysToRemove eq '__all__' ) {
+            $self->logger->debug(
+                "Remove for VirtualHost: $vhost ALL header(s)...");
+            $headers = [];
+        }
+        else {
+            $self->logger->debug(
+                "Mask hidden header(s) for VirtualHost: $vhost");
+            my $hash = { map { $_->{key} => $_->{value} } @$headers };
+            $hash = $self->_removeKeys( $hash, $keysToRemove,
+                "Overwrite \"$keysToRemove\" header(s)...", 1 );
+            @$headers = (
+                map { { 'key' => $_, 'value' => $hash->{$_} } }
+                sort keys %$hash
+            );
+        }
+    }
+
+    # Remove empty headers if required
+    unless ( $self->displayEmptyHeadersRule->( $req, $savedUserData ) ) {
+        $self->logger->debug("Remove empty headers...");
+        @$headers = grep $_->{value} =~ /.+/, @$headers;
+    }
     $self->logger->debug(
         "Return \"$attrs->{ $self->{conf}->{whatToTrace} }\" headers");
-    return $self->p->HANDLER->checkHeaders( $req, $attrs )
-      if ( $self->displayEmptyHeadersRule->( $req, $savedUserData ) );
 
-    $self->logger->debug("Remove empty headers");
-    my @headers = grep $_->{value} =~ /.+/,
-      @{ $self->p->HANDLER->checkHeaders( $req, $attrs ) };
-
-    return \@headers;
+    return $headers;
 }
 
 sub _createArray {
@@ -526,7 +554,7 @@ sub _dispatchAttributes {
     my ( $grps, $mcrs, $others ) = ( [], [], [] );
     my $macros = $self->{conf}->{macros};
 
-    $self->logger->debug("Dispatching attributes...");
+    $self->logger->debug("Dispatch attributes...");
     while (@$attrs) {
         my $element = shift @$attrs;
         $self->logger->debug( "Processing element: $element->{key} => "
@@ -554,9 +582,9 @@ sub _dispatchAttributes {
 
     # Sort real and spoofed attributes if required
     if ( $self->sorted ) {
-        $self->logger->debug('Dispatching real and spoofed attributes...');
+        $self->logger->debug('Sort real and spoofed attributes...');
         my ( $realAttrs, $spoofedAttrs ) = ( [], [] );
-        my $prefix = "$self->{conf}->{impersonationPrefix}";
+        my $prefix = $self->{conf}->{impersonationPrefix};
         while (@$others) {
             my $element = shift @$others;
             $self->logger->debug( "Processing attribute $element->{key} => "
@@ -575,12 +603,22 @@ sub _dispatchAttributes {
     return [ $grps, $mcrs, $others ];
 }
 
-sub _removePersistentAttributes {
-    my ( $self, $attrs ) = @_;
-    my $regex = join '|',      split /\s+/, $self->persistentAttrs;
+sub _removeKeys {
+    my ( $self, $attrs, $hidden, $msg, $mask ) = @_;
+    my $regex = join '|',      split /\s+/, $hidden;
     my @keys  = grep /$regex/, keys %$attrs;
-    $self->logger->debug("Remove persistent session attributes");
-    delete @$attrs{@keys};
+
+    $self->logger->debug($msg);
+    if ($mask) {
+        $self->userLogger->info('Hide some headers');
+        foreach (@keys) {
+            $attrs->{$_} = '******';
+        }
+    }
+    else {
+        $self->userLogger->info('Remove some headers');
+        delete @$attrs{@keys};
+    }
 
     return $attrs;
 }

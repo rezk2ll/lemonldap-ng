@@ -206,6 +206,7 @@
 "checkUserDisplayPersistentInfo":"顯示持久工作階段資料",
 "checkUserDisplayEmptyHeaders":"顯示空標頭",
 "checkUserDisplayEmptyValues":"顯示空值",
+"checkUserHiddenHeaders":"Hidden headers",
 "checkUserSearchAttributes":"用於搜尋工作階段的屬性",
 "choiceParams":"選擇參數",
 "chooseLogo":"選擇圖示",

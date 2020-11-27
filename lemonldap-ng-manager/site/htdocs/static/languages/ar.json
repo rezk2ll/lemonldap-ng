@@ -206,6 +206,7 @@
 "checkUserDisplayPersistentInfo":"Display persistent session data",
 "checkUserDisplayEmptyHeaders":"Display empty headers",
 "checkUserDisplayEmptyValues":"Display empty values",
+"checkUserHiddenHeaders":"Hidden headers",
 "checkUserSearchAttributes":"Attributes used for searching sessions",
 "choiceParams":"اختيارالإعدادات",
 "chooseLogo":"اختيار الشعار",

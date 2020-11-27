@@ -516,6 +516,17 @@ sub attributes {
             documentation => 'Display empty headers rule',
             flags         => 'p',
         },
+        checkUserHiddenHeaders => {
+            type       => 'keyTextContainer',
+            keyTest    => qr/^\S+$/,
+            keyMsgFail => '__badHostname__',
+            test       => {
+                keyTest    => qr/^(?=[^\-])[\w\-\s]+(?<=[^-])$/,
+                keyMsgFail => '__badHeaderName__',
+                test       => sub { return perlExpr(@_) },
+            },
+            documentation => 'Header values to hide if not empty',
+        },
         globalLogoutRule => {
             type          => 'boolOrExpr',
             default       => 0,

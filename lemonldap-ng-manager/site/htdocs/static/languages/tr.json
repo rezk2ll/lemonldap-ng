@@ -206,6 +206,7 @@
 "checkUserDisplayPersistentInfo":"Kalıcı oturum verisini görüntüle",
 "checkUserDisplayEmptyHeaders":"Boş başlıkları görüntüle",
 "checkUserDisplayEmptyValues":"Boş değerleri görüntüle",
+"checkUserHiddenHeaders":"Hidden headers",
 "checkUserSearchAttributes":"Arama oturumlarında kullanılan nitelikler",
 "choiceParams":"Tercih parametreleri",
 "chooseLogo":"Logo seçin",

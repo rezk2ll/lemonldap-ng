@@ -891,6 +891,18 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => '_loginHistory _session_id hGroups',
             'type'    => 'text'
         },
+        'checkUserHiddenHeaders' => {
+            'keyMsgFail' => '__badHostname__',
+            'keyTest'    => qr/^\S+$/,
+            'test'       => {
+                'keyMsgFail' => '__badHeaderName__',
+                'keyTest'    => qr/^(?=[^\-])[\w\-\s]+(?<=[^-])$/,
+                'test'       => sub {
+                    return perlExpr(@_);
+                }
+            },
+            'type' => 'keyTextContainer'
+        },
         'checkUserIdRule' => {
             'default' => 1,
             'test'    => sub {
