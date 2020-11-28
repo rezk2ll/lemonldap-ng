@@ -181,3 +181,8 @@ input.key {
   text-align: center;
   caption-side: bottom;
 }
+
+/* Allow full height for check box label */
+div.input-group > p.form-control {
+  height: auto;
+}
