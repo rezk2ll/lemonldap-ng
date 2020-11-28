@@ -186,3 +186,8 @@ input.key {
 div.input-group > p.form-control {
   height: auto;
 }
+div.input-group > p.form-control > label {
+  display: revert;
+  user-select: none;
+  cursor: pointer;
+}
