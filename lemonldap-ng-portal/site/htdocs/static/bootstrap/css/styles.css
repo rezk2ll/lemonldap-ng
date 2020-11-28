@@ -152,7 +152,7 @@ div.oidc_consent_message > ul {
   cursor: pointer;
 }
 
-.nodecor:hover, .nodecor:active.nodecor:focus {
+.nodecor:hover, .nodecor:active, .nodecor:focus {
   text-decoration: none;
 }
 
