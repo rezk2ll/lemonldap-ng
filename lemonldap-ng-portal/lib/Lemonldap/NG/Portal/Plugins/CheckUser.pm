@@ -496,17 +496,21 @@ sub _headers {
 
         if ( $keysToRemove eq '__all__' ) {
             $self->logger->debug(
-                "Remove for VirtualHost: $vhost ALL header(s)...");
-            $headers = [];
+                "Overwrite for VirtualHost: $vhost ALL valued header(s)...");
+            @$headers = map {
+                $_->{value} =~ /\w+/
+                  ? { key => $_->{key}, value => '******' }
+                  : $_
+            } @$headers;
         }
         else {
             $self->logger->debug(
                 "Mask hidden header(s) for VirtualHost: $vhost");
             my $hash = { map { $_->{key} => $_->{value} } @$headers };
             $hash = $self->_removeKeys( $hash, $keysToRemove,
-                "Overwrite \"$keysToRemove\" header(s)...", 1 );
+                "Overwrite valued \"$keysToRemove\" header(s)...", 1 );
             @$headers = (
-                map { { 'key' => $_, 'value' => $hash->{$_} } }
+                map { { key => $_, value => $hash->{$_} } }
                 sort keys %$hash
             );
         }
@@ -612,7 +616,7 @@ sub _removeKeys {
     if ($mask) {
         $self->userLogger->info('Hide some headers');
         foreach (@keys) {
-            $attrs->{$_} = '******';
+            $attrs->{$_} = '******' if $attrs->{$_} =~ /\w+/;
         }
     }
     else {
