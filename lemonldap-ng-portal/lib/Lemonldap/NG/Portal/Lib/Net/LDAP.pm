@@ -13,7 +13,7 @@ use Scalar::Util 'weaken';
 use IO::Socket::Timeout;
 use utf8;
 
-our $VERSION  = '2.0.9';
+our $VERSION  = '2.0.10';
 our $ppLoaded = 0;
 
 BEGIN {
@@ -455,7 +455,7 @@ sub userModifyPassword {
             return PE_LDAPERROR;
         }
 
-        $self->{portal}->userLogger->notice("Password changed for $dn");
+        $self->{portal}->logger->notice("Password changed for $dn");
 
         # Rebind as manager for next LDAP operations if we were bound as user
         $self->bind() if $asUser;
@@ -588,8 +588,7 @@ sub userModifyPassword {
         return PE_WRONGMANAGERACCOUNT
           if ( $mesg->code == 50 || $mesg->code == 8 );
         if ( $mesg->code == 0 ) {
-            $self->{portal}
-              ->userLogger->notice("Password changed $self->{portal}->{user}");
+            $self->{portal}->logger->notice("Password changed for $dn");
 
            # Rebind as manager for next LDAP operations if we were bound as user
             $self->bind() if $asUser;

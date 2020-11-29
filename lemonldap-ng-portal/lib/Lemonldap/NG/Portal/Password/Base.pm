@@ -84,6 +84,10 @@ sub _modifyPassword {
     my $res = $self->modifyPassword( $req, $req->data->{newpassword} );
     if ( $res == PE_PASSWORD_OK ) {
         $self->logger->debug( 'Update password in session for ' . $req->user );
+        my $userlog = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+        my $iplog   = $req->sessionInfo->{ipAddr};
+        $self->userLogger->notice("Password changed for $userlog ($iplog)")
+          if ( defined $userlog and $iplog );
         my $infos;
 
         # Store new password if asked

@@ -490,6 +490,11 @@ sub changePwd {
         return $result;
     }
 
+    my $userlog = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+    my $iplog   = $req->sessionInfo->{ipAddr};
+    $self->userLogger->notice("Password changed for $userlog ($iplog)")
+      if ( defined $userlog and $iplog );
+
     # Send mail containing the new password
     $req->data->{mailAddress} ||=
       $self->p->getFirstValue(
