@@ -90,6 +90,12 @@ Logout:
 
    [notice] User dwho has been disconnected from LDAP (81.20.13.21)
 
+Password change:
+
+::
+
+   [notice] Password changed for dwho (81.20.13.21)
+
 Access to a CAS application non registered in configuration (when CAS server is open):
 
 ::
