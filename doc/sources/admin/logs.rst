@@ -57,6 +57,12 @@ logs, go into Manager, ``General Parameters`` > ``Logging`` >
 User log samples
 ----------------
 
+.. note::
+
+    The user name set in user log messages is configured with `whatToTrace` parameter, except
+    for messages corresponding to failed authentification, whe the user name logged is the
+    login used by the user.
+
 Authentication:
 
 ::
