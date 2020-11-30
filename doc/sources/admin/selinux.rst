@@ -7,15 +7,12 @@ options.
 Disk cache (sessions an configuration)
 --------------------------------------
 
-::
-
-   chcon -R -t httpd_sys_rw_content_t /var/cache/lemonldap-ng
-
-To persist the rule:
+You need to set the correct context on the cache directory
 
 ::
 
-   semanage fcontext -a -t http_sys_content_t /var/cache/lemonldap-ng
+   semanage fcontext --add -t httpd_cache_t -f a '/var/cache/lemonldap-ng(/.*)?'
+   restorecon -R /var/cache/lemonldap-ng/
 
 LDAP
 ----
