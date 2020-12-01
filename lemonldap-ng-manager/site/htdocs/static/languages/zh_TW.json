@@ -83,7 +83,7 @@
 "badDomainName":"錯誤的域名",
 "badEncoding":"錯誤編碼",
 "badExpression":"錯誤的表達式",
-"badExpressionAssignment":"包含賦值的表達式",
+"badExpressionAssignment":"Expression containing an assignment. You can use \\x3D to avoid this warning.",
 "badHeaderName":"錯誤的標頭名稱",
 "badHostname":"錯誤的主機名稱",
 "badLdapUri":"錯誤的 LDAP URI",

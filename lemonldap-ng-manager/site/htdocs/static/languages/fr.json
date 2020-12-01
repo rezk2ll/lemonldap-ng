@@ -83,7 +83,7 @@
 "badDomainName":"Mauvais nom de domaine",
 "badEncoding":"Mauvais encodage",
 "badExpression":"Mauvaise expression",
-"badExpressionAssignment":"Expression contenant une affectation",
+"badExpressionAssignment":"Expression contenant une affectation. Vous pouvez utliser \\x3D pour éviter cet avertissement.",
 "badHeaderName":"Mauvais nom d'en-tête",
 "badHostname":"Mauvais nom d'hôte",
 "badLdapUri":"Mauvaise URI LDAP",

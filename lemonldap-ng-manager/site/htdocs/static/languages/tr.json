@@ -83,7 +83,7 @@
 "badDomainName":"Hatalı etki alanı adı",
 "badEncoding":"Hatalı kodlama",
 "badExpression":"Hatalı ifade",
-"badExpressionAssignment":"İfade bir atama içeriyor",
+"badExpressionAssignment":"Expression containing an assignment. You can use \\x3D to avoid this warning.",
 "badHeaderName":"Hatalı başlık adı",
 "badHostname":"Hatalı konak adı",
 "badLdapUri":"Hatalı LDAP URI",

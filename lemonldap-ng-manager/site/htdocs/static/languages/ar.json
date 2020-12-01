@@ -83,7 +83,7 @@
 "badDomainName":"اسم النطاق سيئ",
 "badEncoding":"تشفير خاطئ",
 "badExpression":"تعبير خاطئ",
-"badExpressionAssignment":"Expression containing an assignment",
+"badExpressionAssignment":"Expression containing an assignment. You can use \\x3D to avoid this warning.",
 "badHeaderName":" حقل الهيدر خاطئ",
 "badHostname":"اسم الخادم خاطئ",
 "badLdapUri":"\n URI LDAP خاطئ",

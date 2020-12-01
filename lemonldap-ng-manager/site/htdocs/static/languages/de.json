@@ -83,7 +83,7 @@
 "badDomainName":"Ungültiger Domainname",
 "badEncoding":"Ungültige Codierung",
 "badExpression":"Bad expression",
-"badExpressionAssignment":"Expression containing an assignment",
+"badExpressionAssignment":"Expression containing an assignment. You can use \\x3D to avoid this warning.",
 "badHeaderName":"Bad header name",
 "badHostname":"Ungültiger Hostname",
 "badLdapUri":"Bad LDAP URI",

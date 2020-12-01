@@ -83,7 +83,7 @@
 "badDomainName":"Błędna nazwa domeny",
 "badEncoding":"Błędne kodowanie",
 "badExpression":"Błędne wyrażenie",
-"badExpressionAssignment":"Expression containing an assignment",
+"badExpressionAssignment":"Expression containing an assignment. You can use \\x3D to avoid this warning.",
 "badHeaderName":"Błędna nazwa nagłówka",
 "badHostname":"Błędna nazwa hosta",
 "badLdapUri":"Błędny identyfikator URI LDAP",
