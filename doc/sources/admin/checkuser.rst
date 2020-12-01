@@ -18,7 +18,7 @@ Just enable it in the manager (section “plugins”).
       displayed (by example: ``!$anonymous``)
    -  **Unrestricted users rule**: Rule to define which users can check
       ALL users. ``Identities use rule`` is bypassed.
-   -  **Hidden attributes**: Attributes not displayed
+   -  **Hidden attributes**: Session attributes not displayed
    -  **Attributes used for searching sessions**: User's attributes used
       for searching sessions in backend if ``whatToTrace`` fails. Useful
       to look for sessions by mail or givenName. Let it blank to search
@@ -31,11 +31,27 @@ Just enable it in the manager (section “plugins”).
       even empty ones
    -  **Display persistent session data**: Rule to define which users can display
       persistent session data
+   -  **Hidden headers**: Sent headers whose value is masked except for unrestricted users.
+      Key is a Virtualhost name and value represents a headers list.
+      A blank value obfuscates ALL relative Virtualhost sent headers.
+      Note that just valued hearders are masked.
 
 
 .. note::
 
-    By examples :
+    By example:
+
+    \* test1.example.com => ``Auth-User mail``
+    Just 'Auth-User' and 'mail' headers are masked if valued.
+
+    \* test2.example.com => '' ALL valued headers are masked.
+
+    Unrestricted users can see the masked headers.
+
+
+.. note::
+
+    By example:
 
     \* Search attributes => ``mail uid givenName``
 
