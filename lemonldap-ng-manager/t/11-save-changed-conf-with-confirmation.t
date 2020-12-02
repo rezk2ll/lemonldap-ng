@@ -25,26 +25,25 @@ ok( $resBody = from_json( $res->[2]->[0] ), "Result body contains JSON text" );
 
 ok( $resBody->{result} == 0, "JSON response contains \"result:0\"" )
   or print STDERR Dumper($resBody);
-
 ok( $resBody->{needConfirm} == 1, "JSON response contains \"needConfirm:1\"" )
   or print STDERR Dumper($resBody);
-
 ok(
-    @{ $resBody->{details}->{__warnings__} } == 3,
-    'JSON response contains 3 warnings'
+    @{ $resBody->{details}->{__warnings__} } == 4,
+    'JSON response contains 4 warnings'
 ) or print STDERR Dumper($resBody);
+count(6);
 
-foreach my $i ( 0 .. 2 ) {
+foreach my $i ( 0 .. 3 ) {
     ok(
         $resBody->{details}->{__warnings__}->[$i]->{message} =~
-          /\b(unprotected|cross-domain-authentication|retries)\b/,
+          /\b(unprotected|cross-domain-authentication|retries|__badExpressionAssignment__)\b/,
         "Warning with 'unprotect', 'CDA' or 'retries' found"
     ) or print STDERR Dumper($resBody);
+    count(1);
 }
-count(4);
 ok(
-    @{ $resBody->{details}->{__needConfirmation__} } == 2,
-    'JSON response contains 2 needConfirmation'
+    @{ $resBody->{details}->{__needConfirmation__} } == 1,
+    'JSON response contains 1 needConfirmation'
 ) or print STDERR Dumper($resBody);
 ok(
     @{ $resBody->{details}->{__changes__} } == 23,
@@ -89,7 +88,7 @@ while ( my $c = shift @{ $resBody->{details}->{__changes__} } ) {
     }
 }
 ok( !@changes, 'All changes detected' ) or $bug = 1;
-
+count(1);
 if ($bug) {
     print STDERR 'Expected not found: '
       . Dumper( \@changes )
@@ -98,8 +97,6 @@ if ($bug) {
 }
 
 #print STDERR Dumper(\@changes,\@cmsg);
-
-count(6);
 
 # TODO: check result of this
 ok( $res = &client->jsonResponse('/diff/1/2'), 'Diff called' );
