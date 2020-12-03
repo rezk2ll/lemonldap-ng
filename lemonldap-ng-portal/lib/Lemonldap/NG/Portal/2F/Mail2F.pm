@@ -40,11 +40,20 @@ has ott => (
     }
 );
 
+has sessionKey => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        return $_[0]->{conf}->{mail2fSessionKey}
+          || $_[0]->{conf}->{mailSessionKey};
+    }
+);
+
 sub init {
     my ($self) = @_;
     $self->{conf}->{mail2fCodeRegex} ||= '\d{6}';
-    unless ( $self->conf->{mailSessionKey} ) {
-        $self->error("Missing 'mailSessionKey' parameter, aborting");
+    unless ( $self->sessionKey ) {
+        $self->error("Missing session key parameter, aborting");
         return 0;
     }
     $self->prefix( $self->conf->{sfPrefix} )
@@ -65,7 +74,7 @@ sub run {
     $self->logger->debug("Generated two-factor code: $code");
     $self->ott->updateToken( $token, __mail2fcode => $code );
 
-    my $dest = $req->{sessionInfo}->{ $self->conf->{mailSessionKey} };
+    my $dest = $req->{sessionInfo}->{ $self->sessionKey };
     unless ($dest) {
         $self->logger->error( "Could not find mail attribute for login "
               . $req->{sessionInfo}->{_user} );
