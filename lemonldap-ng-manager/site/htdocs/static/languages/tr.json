@@ -492,6 +492,7 @@
 "mail2fAuthnLevel":"Doğrulama seviyesi",
 "mail2fLabel":"Etiket",
 "mail2fLogo":"Logo",
+"mail2fSessionKey":"Oturum anahtarı e-posta adresini içeriyor",
 "mailBody":"Başarılı e-posta içeriği",
 "mailCharset":"Karakter seti",
 "mailConfirmBody":"Doğrulama e-postası içeriği",

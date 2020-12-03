@@ -492,6 +492,7 @@
 "mail2fAuthnLevel":"Mức xác thực",
 "mail2fLabel":"Label",
 "mail2fLogo":"Logo",
+"mail2fSessionKey":"Khóa phiên chứa địa chỉ thư",
 "mailBody":"Nội dung thư thành công",
 "mailCharset":"Charset",
 "mailConfirmBody":"Xác nhận nội dung thư",

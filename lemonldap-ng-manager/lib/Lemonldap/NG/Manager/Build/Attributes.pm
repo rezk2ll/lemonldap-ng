@@ -1877,6 +1877,10 @@ sub attributes {
             type          => 'text',
             documentation => 'Custom logo for Mail 2F',
         },
+        mail2fSessionKey => {
+            type          => 'text',
+            documentation => 'Session parameter where mail is stored',
+        },
 
         # External second factor
         ext2fActivation => {

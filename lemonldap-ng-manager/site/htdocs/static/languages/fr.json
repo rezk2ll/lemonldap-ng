@@ -492,6 +492,7 @@
 "mail2fAuthnLevel":"Niveau de l'authentification",
 "mail2fLabel":"Label",
 "mail2fLogo":"Logo",
+"mail2fSessionKey":"Clef de session contenant l'adresse email",
 "mailBody":"Contenu du message de succès",
 "mailCharset":"Charset",
 "mailConfirmBody":"Contenu du message de confirmation",

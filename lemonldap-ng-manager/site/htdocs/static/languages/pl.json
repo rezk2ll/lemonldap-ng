@@ -492,6 +492,7 @@
 "mail2fAuthnLevel":"Poziom uwierzytelnienia",
 "mail2fLabel":"Etykieta",
 "mail2fLogo":"Logo",
+"mail2fSessionKey":"Klucz sesji zawierający adres e-mail",
 "mailBody":"Treść wiadomości o powodzeniu",
 "mailCharset":"Zestaw znaków",
 "mailConfirmBody":"Treść wiadomości potwierdzającej",

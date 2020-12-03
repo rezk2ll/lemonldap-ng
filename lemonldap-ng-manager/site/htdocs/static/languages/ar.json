@@ -492,6 +492,7 @@
 "mail2fAuthnLevel":"مستوى إثبات الهوية",
 "mail2fLabel":"Label",
 "mail2fLogo":"شعار",
+"mail2fSessionKey":"مفتاح الجلسة الذي يحتوي على عنوان البريد الإلكتروني",
 "mailBody":"محتوى البريد الناجح",
 "mailCharset":"charset",
 "mailConfirmBody":"تأكيد محتوى البريد",

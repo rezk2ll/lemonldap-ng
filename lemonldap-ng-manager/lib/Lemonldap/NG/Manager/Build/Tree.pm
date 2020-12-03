@@ -262,7 +262,7 @@ sub tree {
                                         'managerDn',   'managerPassword',
                                         'ldapTimeout', 'ldapIOTimeout',
                                         'ldapVersion', 'ldapRaw',
-                                        'ldapCAFile', 'ldapCAPath',
+                                        'ldapCAFile',  'ldapCAPath',
                                     ]
                                 },
                                 {
@@ -541,10 +541,8 @@ sub tree {
                     title => 'logParams',
                     help  => 'logs.html',
                     form  => 'simpleInputContainer',
-                    nodes => [
-                        'whatToTrace',      'customToTrace',
-                        'hiddenAttributes'
-                    ]
+                    nodes =>
+                      [ 'whatToTrace', 'customToTrace', 'hiddenAttributes' ]
                 },
                 {
                     title => 'cookieParams',
@@ -888,6 +886,7 @@ sub tree {
                                 'mail2fTimeout',    'mail2fSubject',
                                 'mail2fBody',       'mail2fAuthnLevel',
                                 'mail2fLabel',      'mail2fLogo',
+                                'mail2fSessionKey',
                             ]
                         },
                         {

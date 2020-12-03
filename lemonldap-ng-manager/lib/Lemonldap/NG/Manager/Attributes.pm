@@ -1911,6 +1911,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'mail2fLogo' => {
             'type' => 'text'
         },
+        'mail2fSessionKey' => {
+            'type' => 'text'
+        },
         'mail2fSubject' => {
             'type' => 'text'
         },

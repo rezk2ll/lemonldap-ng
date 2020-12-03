@@ -492,6 +492,7 @@
 "mail2fAuthnLevel":"驗證等級",
 "mail2fLabel":"標籤",
 "mail2fLogo":"圖示",
+"mail2fSessionKey":"包含郵件地址的工作階段金鑰",
 "mailBody":"成功郵件內容",
 "mailCharset":"字元集",
 "mailConfirmBody":"確認郵件內容",

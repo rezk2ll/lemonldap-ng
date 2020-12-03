@@ -492,6 +492,7 @@
 "mail2fAuthnLevel":"Authentication level",
 "mail2fLabel":"Label",
 "mail2fLogo":"Logo",
+"mail2fSessionKey":"Session key containing mail address",
 "mailBody":"Success mail content",
 "mailCharset":"Charset",
 "mailConfirmBody":"Confirmation mail content",
