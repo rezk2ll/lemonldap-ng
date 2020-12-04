@@ -449,6 +449,7 @@ site/templates/common/bullet_go.png
 site/templates/common/key.png
 site/templates/common/mail/ar.json
 site/templates/common/mail/en.json
+site/templates/common/mail/es.json
 site/templates/common/mail/fi.json
 site/templates/common/mail/fr.json
 site/templates/common/mail/it.json
@@ -699,6 +700,7 @@ t/76-2F-Ext-with-CodeActivation.t
 t/76-2F-Ext-with-GrantSession.t
 t/76-2F-Ext-with-History.t
 t/77-2F-Extra.t
+t/77-2F-Mail-SessionKey.t
 t/77-2F-Mail-with-global-storage.t
 t/77-2F-Mail.t
 t/78-2F-Upgrade-Many.t
