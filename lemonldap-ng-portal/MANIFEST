@@ -681,6 +681,7 @@ t/68-Impersonation.t
 t/70-2F-TOTP-8-with-global-storage.t
 t/70-2F-TOTP-and-U2F-with-TTL-and-JSON.t
 t/70-2F-TOTP-with-History-and-Refresh.t
+t/70-2F-TOTP-with-Range.t
 t/70-2F-TOTP-with-TTL-and-JSON.t
 t/70-2F-TOTP-with-TTL-and-XML.t
 t/70-2F-TOTP-with-TTL.t
