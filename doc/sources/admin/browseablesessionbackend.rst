@@ -246,7 +246,8 @@ Here are some recommended configurations:
        _whatToTrace varchar(64),
        _session_kind varchar(15),
        user text,
-       _utime bigint
+       _utime bigint,
+       ipAddr varchar(64)
    );
    CREATE INDEX uid1 ON sessions (_whatToTrace) USING BTREE;
    CREATE INDEX _s1 ON sessions (_session_kind);
