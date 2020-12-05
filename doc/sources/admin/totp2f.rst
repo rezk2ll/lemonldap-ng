@@ -74,6 +74,12 @@ In the manager (advanced parameters), you just have to enable it:
     required even if users are not registered. This is automatically done
     when "activation" is simply set to "on".
 
+
+.. danger::
+
+    Range is tested backward and forward to prevent
+    positive or negative clock drift.
+
 Enrollment
 ----------
 
