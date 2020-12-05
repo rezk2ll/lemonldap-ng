@@ -476,6 +476,7 @@ t/01-AuthDemo.t
 t/01-CSP-and-CORS-headers.t
 t/01-Handler-redirection-and-URL-check-by-portal.t
 t/01-pdata.t
+t/01-Unauth-Logout.t
 t/02-Password-Demo-Local-noPpolicy.t
 t/02-Password-Demo-Local-Ppolicy.t
 t/02-Password-Demo.t

@@ -182,6 +182,8 @@ sub checkLogout {
 sub checkUnauthLogout {
     my ( $self, $req ) = @_;
     if ( defined $req->param('logout') ) {
+        $self->logger->debug('Cleaning pdata');
+        $self->logger->debug("Removing $self->{conf}->{cookieName} cookie");
         $req->pdata({});
         $req->addCookie(
             $self->cookie(
