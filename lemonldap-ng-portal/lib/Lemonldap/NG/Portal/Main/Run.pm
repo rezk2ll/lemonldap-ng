@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -133,10 +133,11 @@ sub login {
     return $self->do(
         $req,
         [
-            'controlUrl',        @{ $self->beforeAuth },
-            $self->authProcess,  @{ $self->betweenAuthAndData },
-            $self->sessionData,  @{ $self->afterData },
-            $self->validSession, @{ $self->endAuth },
+            'checkUnauthLogout', 'controlUrl',    # Fix 2342
+            @{ $self->beforeAuth },         $self->authProcess,
+            @{ $self->betweenAuthAndData }, $self->sessionData,
+            @{ $self->afterData },          $self->validSession,
+            @{ $self->endAuth }
         ]
     );
 }
@@ -146,11 +147,11 @@ sub postLogin {
     return $self->do(
         $req,
         [
-            'restoreArgs',                  'controlUrl',
-            @{ $self->beforeAuth },         $self->authProcess,
-            @{ $self->betweenAuthAndData }, $self->sessionData,
-            @{ $self->afterData },          $self->validSession,
-            @{ $self->endAuth },
+            'checkUnauthLogout', 'restoreArgs',            # Fix 2342
+            'controlUrl',        @{ $self->beforeAuth },
+            $self->authProcess,  @{ $self->betweenAuthAndData },
+            $self->sessionData,  @{ $self->afterData },
+            $self->validSession, @{ $self->endAuth }
         ]
     );
 }
@@ -1053,7 +1054,7 @@ sub registerLogin {
     }
 
     my $history = $req->sessionInfo->{_loginHistory} ||= {};
-    my $type = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
+    my $type    = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
     $history->{$type} ||= [];
     $self->logger->debug("Current login saved into $type");
 

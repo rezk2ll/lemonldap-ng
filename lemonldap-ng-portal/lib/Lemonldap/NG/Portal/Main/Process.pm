@@ -179,6 +179,24 @@ sub checkLogout {
     PE_OK;
 }
 
+sub checkUnauthLogout {
+    my ( $self, $req ) = @_;
+    if ( defined $req->param('logout') ) {
+        $req->pdata({});
+        $req->addCookie(
+            $self->cookie(
+                name    => $self->conf->{cookieName},
+                domain  => $self->conf->{domain},
+                secure  => $self->conf->{securedCookie},
+                expires => 'Wed, 21 Oct 2015 00:00:00 GMT',
+                value   => 0
+            )
+        );
+        $req->steps( [ sub { PE_LOGOUT_OK } ] );
+    }
+    PE_OK;
+}
+
 sub authLogout {
     my ( $self, $req ) = @_;
     my $res = $self->_authentication->authLogout($req);
@@ -349,7 +367,7 @@ sub authenticate {
     $req->steps( [
             'setSessionInfo',           'setMacros',
             'setPersistentSessionInfo', 'storeHistory',
-            @{ $self->afterData }, sub { PE_BADCREDENTIALS }
+            @{ $self->afterData },      sub { PE_BADCREDENTIALS }
         ]
     );
 
