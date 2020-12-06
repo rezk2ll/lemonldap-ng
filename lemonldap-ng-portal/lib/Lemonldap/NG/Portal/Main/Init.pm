@@ -182,7 +182,8 @@ sub setPortalRoutes {
       ->addUnauthRoute( '*' => 'corsPreflight', ['OPTIONS'] )
 
       # Logout
-      ->addAuthRoute( logout => 'logout', ['GET'] );
+      ->addAuthRoute( logout => 'logout', ['GET'] )
+      ->addUnauthRoute( logout => 'unauthLogout', ['GET'] );
 
     # Default routes must point to routines declared above
     $self->defaultAuthRoute('');

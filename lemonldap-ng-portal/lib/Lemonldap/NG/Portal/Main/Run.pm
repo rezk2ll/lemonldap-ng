@@ -233,6 +233,24 @@ sub logout {
     );
 }
 
+sub unauthLogout {
+    my ( $self, $req ) = @_;
+    $self->userLogger->info('Unauthenticated logout request');
+    $self->logger->debug('Cleaning pdata');
+    $self->logger->debug("Removing $self->{conf}->{cookieName} cookie");
+    $req->pdata( {} );
+    $req->addCookie(
+        $self->cookie(
+            name    => $self->conf->{cookieName},
+            domain  => $self->conf->{domain},
+            secure  => $self->conf->{securedCookie},
+            expires => 'Wed, 21 Oct 2015 00:00:00 GMT',
+            value   => 0
+        )
+    );
+    return $self->do( $req, [ sub { PE_LOGOUT_OK } ] );
+}
+
 # RUNNING METHODS
 # ---------------
 
