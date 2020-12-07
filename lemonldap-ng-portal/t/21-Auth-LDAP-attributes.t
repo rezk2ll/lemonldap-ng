@@ -5,7 +5,7 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $maintests = 8;
+my $maintests = 11;
 
 SKIP: {
     skip 'LLNGTESTLDAP is not set', $maintests unless ( $ENV{LLNGTESTLDAP} );
@@ -26,7 +26,9 @@ SKIP: {
                 managerPassword          => 'admin',
                 restSessionServer        => 1,
                 ldapExportedVars         => {
-                    cn => 'cn',
+                    cn          => 'cn',
+                    displayName => 'displayName',
+                    roomNumber  => 'roomNumber',
                 },
             }
         }
@@ -56,6 +58,7 @@ SKIP: {
       or print STDERR $@;
     ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
       or explain( $res, 'cn => Frédéric Accents' );
+    ok( exists $res->{displayName}, 'displayName is present' );
 
     # 2- Characters UTF-8 only
     ok(
@@ -74,6 +77,8 @@ SKIP: {
       or print STDERR $@;
     ok( $res->{cn} eq 'Русский', 'UTF-8 values' )
       or explain( $res, 'cn => Русский' );
+    is( $res->{roomNumber}, 0, 'attribute with value of 0 present' );
+    ok( !exists $res->{displayName}, 'missing LDAP attribute is not stored' );
 
     clean_sessions();
 }
