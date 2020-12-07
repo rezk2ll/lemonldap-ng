@@ -18,9 +18,8 @@ our $VERSION = '2.0.10';
 
 sub init {
     my ($self) = @_;
-    $self->ldap
-      and $self->filter
-      and $self->Lemonldap::NG::Portal::Password::Base::init;
+    return (  $self->Lemonldap::NG::Portal::Password::Base::init
+          and $self->Lemonldap::NG::Portal::Lib::LDAP::init );
 }
 
 # Confirmation is done by Lib::Net::LDAP::userModifyPassword
