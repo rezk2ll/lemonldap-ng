@@ -482,7 +482,7 @@ $(window).on 'load', () ->
 			$('#newpassword')[0].setCustomValidity(translate('PE28'))
 		return
 
-	if window.datas.ppolicy?
+	if window.datas.ppolicy? and $('#newpassword').length
 		# Initialize display
 		checkpassword ''
 

@@ -520,7 +520,7 @@ LemonLDAP::NG Portal jQuery scripts
         $('#newpassword')[0].setCustomValidity(translate('PE28'));
       }
     };
-    if (window.datas.ppolicy != null) {
+    if ((window.datas.ppolicy != null) && $('#newpassword').length) {
       checkpassword('');
       $('#newpassword').keyup(function(e) {
         checkpassword(e.target.value);
