@@ -529,7 +529,11 @@ sub loadModule {
         $self->error("Unable to build $module object: $@");
         return 0;
     }
-    ( $obj and $obj->init ) or return 0;
+    unless ( $obj and $obj->init ) {
+        $self->error("$module init failed");
+        return 0;
+    }
+
     $self->loadedModules->{$module} = $obj;
     return $obj;
 }
