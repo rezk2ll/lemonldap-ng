@@ -23,7 +23,7 @@ sub init {
     }
     $self->addUnauthRoute( checkstate => 'check', ['GET'] )
       ->addAuthRoute( checkstate => 'check', ['GET'] );
-      
+
     return 1;
 }
 
@@ -49,7 +49,7 @@ sub check {
         #  - "buildCookie" useless here
         $req->steps( [
                 'getUser',                         'authenticate',
-                @{ $self->p->betweenAuthAndData }, $self->sessionData,
+                @{ $self->p->betweenAuthAndData }, $self->p->sessionData,
                 @{ $self->p->afterData },          'storeHistory',
                 @{ $self->p->endAuth }
             ]
