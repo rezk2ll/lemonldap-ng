@@ -21,6 +21,8 @@ backups and a rollback plan ready!
 ------
 
 - New dependency: IO::Socket::Timeout
+- TOTP check tolerates forward AND backward clock drift (totp2fRange)
+- Avoid assignment in expressions option is disabled by default
 
 2.0.9
 -----
@@ -31,7 +33,7 @@ backups and a rollback plan ready!
    (see also `#2244 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/2244>`__)
 -  SAML SOAP calls are now using ``text/xml`` instead of ``application/xml`` as the MIME Content Type, as required by `the SOAP standard <https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383526>`__
 -  Incremental lock times values can now be set in BruteForceProtection plugin through Manager.
-   It must be a list of comma separated values. Default values are ``5, 15, 60, 300, 600``
+   It MUST be a list of comma separated values. Default values are ``5, 15, 60, 300, 600``
 
 Cookie issues with Chrome
 ~~~~~~~~~~~~~~~~~~~~~~~~~
