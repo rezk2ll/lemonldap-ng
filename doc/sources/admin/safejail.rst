@@ -6,8 +6,8 @@ Presentation
 
 LemonLDAP::NG uses Safe jail to evaluate all expressions:
 
--  Access rule
--  Header
+-  Access rules
+-  Headers
 -  Form replay parameters
 -  Macros
 -  Groups
@@ -31,3 +31,19 @@ to disable it.
 
 To do this, go into Manager > General Parameters > Advanced Parameters >
 Security > Use Safe Jail and disable it.
+
+
+Assignment test
+===============
+
+Presentation
+------------
+
+Perl comparaisons are done by using ``eq`` for strings or ``==`` for integers.
+To avoid an unwanted assignment like ``$authLevel = 5`` (BAD EXPRESSION!),
+you can enable ``Avoid assignment in expressions`` option.
+
+To do this, go into Manager > General Parameters > Advanced Parameters >
+Security > Avoid assignment in expressions and enable it.
+
+DISABLE by default.
