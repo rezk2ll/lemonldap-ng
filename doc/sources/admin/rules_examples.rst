@@ -27,6 +27,16 @@ attribute you see there can be used in a rule!
     In Perl, ``eq`` means *Equal* and must be used on strings.
     ``==`` should be used only on numbers
 
+.. danger::
+
+    In Perl, ``@`` character means an array and ``%`` a hash!
+    If you want to write a macro with these characters, you have to escape them like this:
+
+::
+
+    $my_email = "$uid\@my-domain.com"
+    $percent = "$rate\%more"
+
 -  Restricting access to specific groups
 
 ::

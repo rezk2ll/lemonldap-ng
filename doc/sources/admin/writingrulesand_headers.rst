@@ -173,14 +173,14 @@ use macros, local macros,...
 
 .. attention::
 
-
-
     -  Since many HTTP servers refuse non ascii headers, it is recommended
        to use encode_base64() function to transmit those headers
     -  Don't forget to add an empty string as second argument to
        encode_base64 function to avoid a "newline" characters insertion in
        result
-    -  Header names must contain only letters and "-" character
+    -  Header names must contain only letters and "-" character.
+       With Nginx, you can bypass this restriction by using
+       ``underscores_in_headers on;`` directive
 
 
 
