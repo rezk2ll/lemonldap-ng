@@ -372,7 +372,7 @@
 "impersonationMergeSSOgroups":"Fusionner les groupes SSO réels et usurpés",
 "impersonationSkipEmptyValues":"Ignorer les valeurs nulles",
 "impersonationUnrestrictedUsersRule":"Règle des utilisateurs non restreints",
-"incompleteForm":"Des champs requis manquent",
+"incompleteForm":"Des champs requis sont manquants",
 "index":"Index",
 "infoFormMethod":"Méthode du formulaire d'information",
 "invalidSessionData":"Donnée de session invalide",
