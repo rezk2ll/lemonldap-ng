@@ -9,8 +9,7 @@ require 't/smtp.pm';
 use_ok('Lemonldap::NG::Common::FormEncode');
 count(1);
 
-my $client = LLNG::Manager::Test->new(
-    {
+my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel         => 'error',
             mail2fActivation => 1,
@@ -18,7 +17,8 @@ my $client = LLNG::Manager::Test->new(
             authentication   => 'Demo',
             userDB           => 'Same',
             mailSessionKey   => 'mail',
-            macros           => { 'mail2f' => '"test\@example.com"', },
+            macros =>
+              { mail2f => '"test\@example.com"', _whatToTrace => '$uid' },
             mail2fSessionKey => 'mail2f',
         }
     }

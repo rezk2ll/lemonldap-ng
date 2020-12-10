@@ -35,7 +35,7 @@ sub check {
         and $req->param('secret') eq $self->conf->{checkStateSecret} );
     $req->steps( [ 'controlUrl', @{ $self->p->beforeAuth } ] );
     my $res = $self->p->process($req);
-    if ( $res > 0 ) {
+    if ( $res && $res > 0 ) {
         push @rep, "Bad result before auth: $res";
     }
 
