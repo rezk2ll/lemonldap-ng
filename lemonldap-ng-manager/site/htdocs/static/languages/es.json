@@ -75,6 +75,7 @@
 "auto":"Automático",
 "autoSignin":"Autofirma",
 "autoSigninRules":"Reglas",
+"avoidAssignment":"Avoid assignment in expressions",
 "backtoportal":"Regreso al portal",
 "badCasProxyId":"Bad CAS proxied service identifier",
 "badChoiceKey":"Bad key name in Choice menu",

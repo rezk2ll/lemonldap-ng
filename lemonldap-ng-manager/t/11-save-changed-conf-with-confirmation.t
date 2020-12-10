@@ -37,7 +37,7 @@ foreach my $i ( 0 .. 3 ) {
     ok(
         $resBody->{details}->{__warnings__}->[$i]->{message} =~
           /\b(unprotected|cross-domain-authentication|retries|__badExpressionAssignment__)\b/,
-        "Warning with 'unprotect', 'CDA' or 'retries' found"
+        "Warning with 'unprotect', 'CDA', 'assignment' or 'retries' found"
     ) or print STDERR Dumper($resBody);
     count(1);
 }
@@ -46,8 +46,8 @@ ok(
     'JSON response contains 1 needConfirmation'
 ) or print STDERR Dumper($resBody);
 ok(
-    @{ $resBody->{details}->{__changes__} } == 23,
-    'JSON response contains 23 changes'
+    @{ $resBody->{details}->{__changes__} } == 24,
+    'JSON response contains 24 changes'
 ) or print STDERR Dumper($resBody);
 
 #print STDERR Dumper($resBody);
@@ -105,8 +105,8 @@ ok( ( @c1 = sort keys %{ $res->[0] } ), 'diff() detects changes in conf 1' );
 ok( ( @c2 = sort keys %{ $res->[1] } ), 'diff() detects changes in conf 2' );
 ok( @c1 == 12, '12 keys changed in conf 1' )
   or print STDERR "Expect: 12 keys, get: " . join( ', ', @c1 ) . "\n";
-ok( @c2 == 16, '16 keys changed or created in conf 2' )
-  or print STDERR "Expect: 16 keys, get: " . join( ',', @c2 ) . "\n";
+ok( @c2 == 17, '17 keys changed or created in conf 2' )
+  or print STDERR "Expect: 17 keys, get: " . join( ',', @c2 ) . "\n";
 count(5);
 
 unlink $confFiles->[1];
@@ -239,6 +239,11 @@ sub changes {
         {
             'confCompacted' => '1',
             'removedKeys'   => 'some; keys'
+        },
+        {
+            'new' => 1,
+            'key' => 'avoidAssignment',
+            'old' => '0'
         }
     ];
 }

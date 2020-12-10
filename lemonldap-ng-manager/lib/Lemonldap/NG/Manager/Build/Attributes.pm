@@ -27,8 +27,9 @@ sub perlExpr {
     my $err = join( '',
         grep { $_ =~ /(?:Undefined subroutine|Devel::StackTrace)/ ? () : $_ }
           split( /\n/, $@ ) );
-    return ( -1, "__badExpression__: $err" ) if $err;
-    return $val =~ qr/(?<=[^=<!>\|\?])=(?![=~])/
+    return ( -1, "__badExpression__: $err" )
+      if ( $err && $conf->{useSafeJail} );
+    return ( $val =~ qr/(?<=[^=<!>\|\?])=(?![=~])/ && $conf->{avoidAssignment} )
       ? ( 1, "__badExpressionAssignment__" )
       : 1;
 }
@@ -1059,6 +1060,13 @@ sub attributes {
             type          => 'bool',
             help          => 'safejail.html',
             documentation => 'Activate Safe jail',
+            flags         => 'hp',
+        },
+        avoidAssignment => {
+            default       => 0,
+            type          => 'bool',
+            help          => 'safejail.html',
+            documentation => 'Avoid assignment in expressions',
             flags         => 'hp',
         },
         whatToTrace => {

@@ -75,6 +75,7 @@
 "auto":"Otomatik",
 "autoSignin":"Otomatik Oturum Açma",
 "autoSigninRules":"Kurallar",
+"avoidAssignment":"Avoid assignment in expressions",
 "backtoportal":"Portala geri dön",
 "badCasProxyId":"Hatalı CAS vekil servis tanımlayıcısı",
 "badChoiceKey":"Tercih menüsünde hatalı anahtar adı",

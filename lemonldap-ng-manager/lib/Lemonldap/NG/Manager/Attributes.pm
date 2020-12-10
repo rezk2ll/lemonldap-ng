@@ -22,10 +22,9 @@ sub perlExpr {
         grep( { $_ =~ /(?:Undefined subroutine|Devel::StackTrace)/ ? () : $_; }
             split( /\n/, $@, 0 ) )
     );
-    return -1, "__badExpression__: $err" if $err;
+    return -1, "__badExpression__: $err" if $err and $conf->{'useSafeJail'};
     return $val =~ qr/(?<=[^=<!>\|\?])=(?![=~])/
-      ? ( 1, '__badExpressionAssignment__' )
-      : 1;
+      && $conf->{'avoidAssignment'} ? ( 1, '__badExpressionAssignment__' ) : 1;
 }
 
 sub types {
@@ -641,6 +640,10 @@ sub attributes {
         'available2FSelfRegistration' => {
             'default' => 'TOTP,U2F,Yubikey',
             'type'    => 'text'
+        },
+        'avoidAssignment' => {
+            'default' => 0,
+            'type'    => 'bool'
         },
         'browsersDontStorePassword' => {
             'default' => 0,

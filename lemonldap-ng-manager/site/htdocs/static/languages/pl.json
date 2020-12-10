@@ -75,6 +75,7 @@
 "auto":"Automatycznie",
 "autoSignin":"Zaloguj się automatycznie",
 "autoSigninRules":"Zasady",
+"avoidAssignment":"Avoid assignment in expressions",
 "backtoportal":"Powrót do portalu",
 "badCasProxyId":"Nieprawidłowy identyfikator usługi proxy CAS",
 "badChoiceKey":"Błędna nazwa klucza w menu Wybór",

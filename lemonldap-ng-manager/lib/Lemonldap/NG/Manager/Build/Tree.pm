@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.10';
 
 # TODO: Missing:
 #  * activeTimer
@@ -978,6 +978,7 @@ sub tree {
                                 'key',
                                 'trustedDomains',
                                 'useSafeJail',
+                                'avoidAssignment',
                                 'checkXSS',
                                 'requireToken',
                                 'formTimeout',

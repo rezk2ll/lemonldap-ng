@@ -75,6 +75,7 @@
 "auto":"自動",
 "autoSignin":"自動登入",
 "autoSigninRules":"規則",
+"avoidAssignment":"Avoid assignment in expressions",
 "backtoportal":"回到首頁",
 "badCasProxyId":"錯誤的 CAS 代理服務識別符號",
 "badChoiceKey":"選擇選單中的錯誤金鑰名稱",

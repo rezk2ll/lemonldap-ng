@@ -75,6 +75,7 @@
 "auto":"Tự động",
 "autoSignin":"Auto Signin",
 "autoSigninRules":"Quy tắc",
+"avoidAssignment":"Avoid assignment in expressions",
 "backtoportal":"Quay lại cổng thông tin",
 "badCasProxyId":"Dịch vụ định danh đệm bởi CAS không hợp lệ",
 "badChoiceKey":"Tên khoá không hợp lệ trong trình đơn Chọn",

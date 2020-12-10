@@ -75,6 +75,7 @@
 "auto":"تلقائي",
 "autoSignin":"Auto Signin",
 "autoSigninRules":"القواعد",
+"avoidAssignment":"Avoid assignment in expressions",
 "backtoportal":"العودة إلى البوابة",
 "badCasProxyId":"معرف خدمة بروكسي كاس غير صالح",
 "badChoiceKey":"اسم مفتاح سيئ في قائمة الاختيارات",

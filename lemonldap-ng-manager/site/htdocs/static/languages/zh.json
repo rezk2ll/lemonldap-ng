@@ -75,6 +75,7 @@
 "auto":"自动",
 "autoSignin":"Auto Signin",
 "autoSigninRules":"Rules",
+"avoidAssignment":"Avoid assignment in expressions",
 "backtoportal":"返回 portal",
 "badCasProxyId":"无效的 CAS proxied service identifier",
 "badChoiceKey":"选择菜单的无效 key ",
