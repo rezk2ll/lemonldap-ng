@@ -851,27 +851,24 @@ sub attributes {
             documentation => 'Enable brute force attack protection',
         },
         bruteForceProtectionTempo => {
-            default => 30,
-            type    => 'int',
-            documentation =>
-              'Brute force attack protection -> Tempo before try again',
+            default       => 30,
+            type          => 'int',
+            documentation => 'Lock time',
         },
         bruteForceProtectionMaxAge => {
-            default => 300,
-            type    => 'int',
-            documentation =>
-'Brute force attack protection -> Max age between last and first allowed failed login',
+            default       => 300,
+            type          => 'int',
+            documentation => 'Max age between current and first failed login',
         },
         bruteForceProtectionMaxFailed => {
-            default => 3,
-            type    => 'int',
-            documentation =>
-              'Brute force attack protection -> Max allowed failed login',
+            default       => 3,
+            type          => 'int',
+            documentation => 'Max allowed failed login',
         },
         bruteForceProtectionMaxLockTime => {
             default       => 900,
             type          => 'int',
-            documentation => 'Brute force attack protection -> Max lock time',
+            documentation => 'Max lock time',
         },
         bruteForceProtectionIncrementalTempo => {
             default => 0,
@@ -882,7 +879,7 @@ sub attributes {
         },
         bruteForceProtectionLockTimes => {
             type    => 'text',
-            default => '5, 15, 60, 300, 600',
+            default => '15, 30, 60, 300, 600',
             documentation =>
               'Incremental lock time values for brute force attack protection',
         },

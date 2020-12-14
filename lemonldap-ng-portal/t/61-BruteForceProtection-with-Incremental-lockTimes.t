@@ -10,7 +10,7 @@ my $res;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                             => 'error',
+            logLevel                             => 'debug',
             authentication                       => 'Demo',
             userDB                               => 'Same',
             loginHistoryEnabled                  => 1,
@@ -121,8 +121,29 @@ ok(
 ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
     'Rejected -> Protection enabled' )
   or print STDERR Dumper( $res->[2]->[0] );
+ok( $res->[2]->[0] =~ m%5 <span trspan="seconds">seconds</span>%,
+    'LockTime = 5' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(3);
+
+# Waiting
+Time::Fake->offset("+6s");
+
+## Third failed connection
+ok(
+    $res = $client->_post(
+        '/',
+        IO::String->new('user=dwho&password=ohwd'),
+        length => 23,
+        accept => 'text/html',
+    ),
+    '3rd Bad Auth query'
+);
+ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
+    'Rejected -> Protection enabled' )
+  or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ m%10 <span trspan="seconds">seconds</span>%,
-    'LockTime = 10' )
+    'LockTime = 10**************' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(3);
 

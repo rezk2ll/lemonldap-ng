@@ -185,7 +185,7 @@ sub checkUnauthLogout {
         $self->userLogger->info('Unauthenticated logout request');
         $self->logger->debug('Cleaning pdata');
         $self->logger->debug("Removing $self->{conf}->{cookieName} cookie");
-        $req->pdata({});
+        $req->pdata( {} );
         $req->addCookie(
             $self->cookie(
                 name    => $self->conf->{cookieName},
@@ -449,12 +449,13 @@ sub setGroups {
 }
 
 sub setPersistentSessionInfo {
-    my ( $self, $req ) = @_;
+
+    # $user passed by BruteForceProtection plugin
+    my ( $self, $req, $user ) = @_;
 
     # Do not restore infos if session already opened
     unless ( $req->id ) {
-        my $key = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
-
+        my $key = $req->{sessionInfo}->{ $self->conf->{whatToTrace} } || $user;
         return PE_OK unless ( $key and length($key) );
 
         my $persistentSession = $self->getPersistentSession($key);
@@ -593,9 +594,9 @@ sub secondFactor {
 }
 
 sub storeHistory {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, $uid ) = @_;  # $uid passed by BruteForceProtection plugin
     if ( $self->conf->{loginHistoryEnabled} ) {
-        $self->registerLogin($req);
+        $self->registerLogin( $req, $uid );
     }
     PE_OK;
 }

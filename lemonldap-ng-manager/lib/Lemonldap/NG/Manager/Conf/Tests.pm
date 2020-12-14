@@ -689,19 +689,19 @@ sub tests {
 '"History" plugin is required to enable "BruteForceProtection" plugin'
             ) unless ( $conf->{loginHistoryEnabled} );
             return ( 1,
-'Number of failed logins must be higher than 2 to enable "BruteForceProtection" plugin'
-            ) unless ( $conf->{failedLoginNumber} > 2 );
+'Number of failed logins must be higher than 1 to enable "BruteForceProtection" plugin'
+            ) unless ( $conf->{failedLoginNumber} > 1 );
             return ( 1,
-'Number of failed logins history must be higher than allowed failed logins plus lock time values'
+'Number of failed logins history must be higher or equal than allowed failed logins plus lock time values'
               )
               if ( $conf->{bruteForceProtectionIncrementalTempo}
-                && $conf->{failedLoginNumber} <=
+                && $conf->{failedLoginNumber} <
                 $conf->{bruteForceProtectionMaxFailed} +
                 $conf->{bruteForceProtectionLockTimes} );
             return ( 1,
-'Number of failed logins history must be higher than allowed failed logins'
+'Number of failed logins history must be higher or equal than allowed failed logins'
               )
-              unless ( $conf->{failedLoginNumber} >
+              unless ( $conf->{failedLoginNumber} >=
                 $conf->{bruteForceProtectionMaxFailed} );
             return 1;
         },
