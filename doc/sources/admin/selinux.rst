@@ -4,10 +4,26 @@ SELinux
 To make LemonLDAP::NG work with SELinux, you may need to set up some
 options.
 
+SELinux policy package
+----------------------
+
+If you are using a RPM distribution and Apache as the web server, you need to
+install the ``lemonldap-ng-selinux`` package to configure SELinux context correctly ::
+
+   yum install lemonldap-ng-selinux
+
+.. note::
+   On CentOS 8 and Fedora, this is done automatically
+
+This package will not configure SELinux booleans, please read the next sections to see which booleans you need to enable manually
+
 Disk cache (sessions an configuration)
 --------------------------------------
 
 You need to set the correct context on the cache directory
+
+.. deprecated:: 2.0.10
+   this is now done by the ``lemonldap-ng-selinux`` package
 
 ::
 
