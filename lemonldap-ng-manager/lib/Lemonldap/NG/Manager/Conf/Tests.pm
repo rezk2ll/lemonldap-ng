@@ -692,6 +692,9 @@ sub tests {
 'Number of failed logins must be higher than 1 to enable "BruteForceProtection" plugin'
             ) unless ( $conf->{failedLoginNumber} > 1 );
             return ( 1,
+'Number of allowed failed logins must be higher than 0 to enable "BruteForceProtection" plugin'
+            ) unless ( $conf->{bruteForceProtectionMaxFailed} > 0 );
+            return ( 1,
 'Number of failed logins history must be higher or equal than allowed failed logins plus lock time values'
               )
               if ( $conf->{bruteForceProtectionIncrementalTempo}

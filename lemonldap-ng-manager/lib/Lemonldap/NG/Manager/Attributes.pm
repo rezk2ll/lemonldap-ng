@@ -658,7 +658,7 @@ sub attributes {
             'type'    => 'bool'
         },
         'bruteForceProtectionLockTimes' => {
-            'default' => '5, 15, 60, 300, 600',
+            'default' => '15, 30, 60, 300, 600',
             'type'    => 'text'
         },
         'bruteForceProtectionMaxAge' => {

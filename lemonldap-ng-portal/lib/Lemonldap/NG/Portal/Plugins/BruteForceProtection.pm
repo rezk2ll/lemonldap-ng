@@ -61,7 +61,7 @@ sub init {
           sort { $a <=> $b }
           map {
             $_ =~ s/\D//;
-            $_ < $self->conf->{bruteForceProtectionMaxLockTime} ? $_ : ()
+            abs $_ < $self->conf->{bruteForceProtectionMaxLockTime} ? abs $_ : ()
           }
           grep { /\d+/ }
           split /\s*,\s*/, $self->conf->{bruteForceProtectionLockTimes};
