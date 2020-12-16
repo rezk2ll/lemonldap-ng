@@ -58,6 +58,10 @@ your existing ``localSessionStorageOptions/cache_root`` parameter from ``/tmp``
 to ``/var/cache/lemonldap-ng``. Be sure to create this directory on your
 file system before modifying your configuration.
 
+If you are using SELinux, you also need to run the following commands ::
+
+   semanage fcontext --add -t httpd_cache_t -f a '/var/cache/lemonldap-ng(/.*)?'
+   restorecon -R /var/cache/lemonldap-ng/
 
 Required changes in NGINX handler rules (CVE-2020-24660)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
