@@ -498,10 +498,9 @@ sub fetchId {
     my $lookForHttpCookie = ( $class->tsv->{securedCookie} =~ /^(2|3)$/
           and not $class->_isHttps( $req, $vhost ) );
     my $cn = $class->tsv->{cookieName};
-    my $value =
-      $lookForHttpCookie
-      ? ( $t =~ /${cn}http=([^,; ]+)/o ? $1 : 0 )
-      : ( $t =~ /$cn=([^,; ]+)/o       ? $1 : 0 );
+    my $value = $lookForHttpCookie    # Avoid prefix and bad cookie name (#2417)
+      ? ( $t =~ /(?<!-)\b${cn}http=([^,; ]+)/o ? $1 : 0 )
+      : ( $t =~ /(?<!-)\b$cn=([^,; ]+)/o       ? $1 : 0 );
 
     if ( $value && $lookForHttpCookie && $class->tsv->{securedCookie} == 3 ) {
         $value = $class->tsv->{cipher}->decryptHex( $value, "http" );
@@ -830,7 +829,7 @@ sub localUnlog {
             my $module  = $class->tsv->{sessionCacheModule};
             my $options = $class->tsv->{sessionCacheOptions};
             eval "use $module;";
-            my $cache   = $module->new($options);
+            my $cache = $module->new($options);
             if ( $cache->get($id) ) {
                 $cache->remove($id);
             }

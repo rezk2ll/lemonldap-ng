@@ -125,6 +125,18 @@ ok(
   );
 count(3);
 
+# Bad cookie name
+ok( $res = $client->_get( '/', undef, undef, "fakelemonldap=$sessionId" ),
+    'Unauthentified query' );
+ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
+count(2);
+
+# Bad cookie name
+ok( $res = $client->_get( '/', undef, undef, "fake-lemonldap=$sessionId" ),
+    'Unauthentified query' );
+ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
+count(2);
+
 # Bad cookie
 ok(
     $res = $client->_get(
