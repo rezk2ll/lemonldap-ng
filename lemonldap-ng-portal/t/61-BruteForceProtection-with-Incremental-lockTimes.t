@@ -18,8 +18,8 @@ my $client = LLNG::Manager::Test->new( {
             bruteForceProtectionIncrementalTempo => 1,
             failedLoginNumber                    => 6,
             bruteForceProtectionMaxLockTime      => 600,
-            bruteForceProtectionLockTimes        => '5 , 500, bad ,20, -10, 700',
-            bruteForceProtectionMaxFailed        => 2,
+            bruteForceProtectionLockTimes => '5 , 500, bad ,20, -10, 700',
+            bruteForceProtectionMaxFailed => 2,
         }
     }
 );
@@ -49,8 +49,7 @@ ok(
     ),
     '1st allowed Bad Auth query'
 );
-ok( $res->[2]->[0] =~ /<span trmsg="5"><\/span>/,
-    'Bad credential' )
+ok( $res->[2]->[0] =~ /<span trmsg="5"><\/span>/, 'Bad credential' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
@@ -64,8 +63,7 @@ ok(
     ),
     '2nd allowed Bad Auth query'
 );
-ok( $res->[2]->[0] =~ /<span trmsg="5"><\/span>/,
-    'Bad credential' )
+ok( $res->[2]->[0] =~ /<span trmsg="5"><\/span>/, 'Bad credential' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
@@ -104,10 +102,8 @@ ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
     'Rejected -> Protection enabled' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ m%(\d) <span trspan="seconds">seconds</span>%,
-    "LockTime = $1" )
-  or print STDERR Dumper( $res->[2]->[0] );
-ok( $1 <=6 && $1 >= 3 ,
-    'LockTime in range' )
+    "LockTime = $1" );
+ok( $1 <= 6 && $1 >= 3, 'LockTime in range' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(4);
 
@@ -128,10 +124,8 @@ ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
     'Rejected -> Protection enabled' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ m%(\d{2}) <span trspan="seconds">seconds</span>%,
-    "LockTime = $1" )
-  or print STDERR Dumper( $res->[2]->[0] );
-ok( $1 <=18 && $1 >= 15 ,
-    'LockTime in range' )
+    "LockTime = $1" );
+ok( $1 <= 18 && $1 >= 15, 'LockTime in range' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(4);
 
@@ -152,10 +146,8 @@ ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
     'Rejected -> Protection enabled' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ m%(\d{3}) <span trspan="seconds">seconds</span>%,
-    "LockTime = $1" )
-  or print STDERR Dumper( $res->[2]->[0] );
-ok( $1 <=490 && $1 >= 480 ,
-    'LockTime in range' )
+    "LockTime = $1" );
+ok( $1 <= 490 && $1 >= 480, 'LockTime in range' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(4);
 
@@ -190,8 +182,7 @@ ok(
     ),
     '2nd allowed Bad Auth query'
 );
-ok( $res->[2]->[0] =~ /<span trmsg="5"><\/span>/,
-    'Bad credential' )
+ok( $res->[2]->[0] =~ /<span trmsg="5"><\/span>/, 'Bad credential' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(2);
 
@@ -209,10 +200,8 @@ ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
     'Rejected -> Protection enabled' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ m%(\d{3}) <span trspan="seconds">seconds</span>%,
-    "LockTime = $1" )
-  or print STDERR Dumper( $res->[2]->[0] );
-ok( $1 <=5000 && $1 >= 490 ,
-    'LockTime in range' )
+    "LockTime = $1" );
+ok( $1 <= 5000 && $1 >= 490, 'LockTime in range' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(4);
 
