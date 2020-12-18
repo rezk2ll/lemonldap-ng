@@ -127,14 +127,32 @@ count(3);
 
 # Bad cookie name
 ok( $res = $client->_get( '/', undef, undef, "fakelemonldap=$sessionId" ),
-    'Unauthentified query' );
-ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
+    'Bad cookie name' );
+ok( $res->[0] == 302, ' Code is 302 (name)' ) or explain( $res, 302 );
 count(2);
 
 # Bad cookie name
 ok( $res = $client->_get( '/', undef, undef, "fake-lemonldap=$sessionId" ),
-    'Unauthentified query' );
-ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
+    'Bad cookie name (-)' );
+ok( $res->[0] == 302, ' Code is 302 (-)' ) or explain( $res, 302 );
+count(2);
+
+# Bad cookie name
+ok( $res = $client->_get( '/', undef, undef, "fake.lemonldap=$sessionId" ),
+    'Bad cookie name (.)' );
+ok( $res->[0] == 302, ' Code is 302 (.)' ) or explain( $res, 302 );
+count(2);
+
+# Bad cookie name
+ok( $res = $client->_get( '/', undef, undef, "fake_lemonldap=$sessionId" ),
+    'Bad cookie name (_)' );
+ok( $res->[0] == 302, ' Code is 302 (_)' ) or explain( $res, 302 );
+count(2);
+
+# Bad cookie name
+ok( $res = $client->_get( '/', undef, undef, "fake~lemonldap=$sessionId" ),
+    'Bad cookie name (~)' );
+ok( $res->[0] == 302, ' Code is 302 (~)' ) or explain( $res, 302 );
 count(2);
 
 # Bad cookie
