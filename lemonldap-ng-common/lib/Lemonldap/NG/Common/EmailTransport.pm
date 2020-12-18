@@ -1,11 +1,12 @@
 package Lemonldap::NG::Common::EmailTransport;
 
+use strict;
 use Email::Sender::Transport::SMTP qw();
 use MIME::Entity;
 use Email::Sender::Simple qw(sendmail);
 use Email::Date::Format qw(email_date);
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 sub new {
     my ( $class, $conf ) = @_;

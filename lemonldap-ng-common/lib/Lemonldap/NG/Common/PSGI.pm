@@ -1,12 +1,12 @@
 package Lemonldap::NG::Common::PSGI;
 
-use 5.10.0;
+use strict;
 use Mouse;
 use JSON;
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::PSGI::Request;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 our $_json = JSON->new->allow_nonref;
 
