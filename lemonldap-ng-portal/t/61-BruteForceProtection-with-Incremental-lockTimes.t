@@ -80,10 +80,11 @@ ok(
 ok( $res->[2]->[0] =~ /<span trmsg="86"><\/span>/,
     'Rejected -> Protection enabled' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ m%5 <span trspan="seconds">seconds</span>%,
-    'LockTime = 5' )
+ok( $res->[2]->[0] =~ m%(\d) <span trspan="seconds">seconds</span>%,
+    "LockTime = $1" );
+ok( $1 <= 5 && $1 >= 3, 'LockTime in range' )
   or print STDERR Dumper( $res->[2]->[0] );
-count(3);
+count(4);
 
 # Waiting
 Time::Fake->offset("+4s");

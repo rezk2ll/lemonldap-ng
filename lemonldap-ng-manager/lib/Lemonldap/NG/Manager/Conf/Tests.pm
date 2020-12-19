@@ -684,6 +684,15 @@ sub tests {
 
         # Warn if bruteForceProtection enabled without History
         bruteForceProtection => sub {
+            my @lockTimes =
+              sort { $a <=> $b }
+              map {
+                $_ =~ s/\D//;
+                abs $_;
+              }
+              grep { /\d+/ }
+              split /\s*,\s*/, $conf->{bruteForceProtectionLockTimes};
+            $conf->{bruteForceProtectionLockTimes} = join ', ', @lockTimes;
             return 1 unless ( $conf->{bruteForceProtection} );
             return ( 1,
 '"History" plugin is required to enable "BruteForceProtection" plugin'
@@ -699,8 +708,7 @@ sub tests {
               )
               if ( $conf->{bruteForceProtectionIncrementalTempo}
                 && $conf->{failedLoginNumber} <
-                $conf->{bruteForceProtectionMaxFailed} +
-                $conf->{bruteForceProtectionLockTimes} );
+                $conf->{bruteForceProtectionMaxFailed} + scalar @lockTimes );
             return ( 1,
 'Number of failed logins history must be higher or equal than allowed failed logins'
               )
