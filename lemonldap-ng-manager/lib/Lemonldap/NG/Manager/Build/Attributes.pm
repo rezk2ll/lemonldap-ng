@@ -528,6 +528,22 @@ sub attributes {
             },
             documentation => 'Header values to hide if not empty',
         },
+        findUser => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable find user',
+            flags         => 'p',
+        },
+        findUserSearchingAttributes => {
+            type       => 'keyTextContainer',
+            keyTest    => qr/^\S+$/,
+            documentation => 'Attributes used for searching accounts',
+        },
+        findUserExcludingAttributes => {
+            type       => 'keyTextContainer',
+            keyTest    => qr/^\S+$/,
+            documentation => 'Attributes used for excluding accounts',
+        },
         globalLogoutRule => {
             type          => 'boolOrExpr',
             default       => 0,

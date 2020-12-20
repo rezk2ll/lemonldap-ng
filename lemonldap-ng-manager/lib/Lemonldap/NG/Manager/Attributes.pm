@@ -1357,6 +1357,18 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
             'default' => 5,
             'type'    => 'int'
         },
+        'findUser' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'findUserExcludingAttributes' => {
+            'keyTest' => qr/^\S+$/,
+            'type'    => 'keyTextContainer'
+        },
+        'findUserSearchingAttributes' => {
+            'keyTest' => qr/^\S+$/,
+            'type'    => 'keyTextContainer'
+        },
         'forceGlobalStorageIssuerOTT' => {
             'type' => 'bool'
         },

@@ -69,6 +69,36 @@ sub getUser {
     PE_BADCREDENTIALS;
 }
 
+## @apmethod int findUser()
+# Search for accounts
+# @return Lemonldap::NG::Portal constant
+sub findUser {
+    my ( $self, $req, %args ) = @_;
+    my $plugin =
+      $self->p->loadedModules->{"Lemonldap::NG::Portal::Plugins::FindUser"};
+    my @params = $plugin->retreiveFindUserParams($req);
+    my $cond   = '';
+
+    $cond .= '$' . $_->{key} . " eq '$_->{value}' && " foreach (@params);
+    $cond =~ s/&&\s$//;
+    $self->logger->debug("Demo UserDB built condition: $cond");
+    my @results = map {
+        my $cn   = $demoAccounts{$_}->{cn};
+        my $mail = $demoAccounts{$_}->{mail};
+        my $uid  = $demoAccounts{$_}->{uid};
+        eval "($cond)"
+          ? $_
+          : ();
+    } keys %demoAccounts;
+
+    my $rank = rand( scalar @results );
+    $self->logger->debug("Demo UserDB random rank: $rank");
+    $req->{findUser} = $results[$rank];
+
+    eval { $self->p->_authentication->setSecurity($req) };
+    PE_OK;
+}
+
 ## @apmethod int setSessionInfo()
 # Get sample data
 # @return Lemonldap::NG::Portal constant

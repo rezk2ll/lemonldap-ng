@@ -46,6 +46,31 @@ sub getUser {
     PE_OK;
 }
 
+sub findUser {
+    my ( $self, $req, %args ) = @_;
+    my $table = $self->table;
+    my $pivot = $args{useMail} ? $self->mailField : $self->pivot;
+    my $user  = $req->{user};
+    my $sth;
+    eval {
+        $sth = $self->dbh->prepare("SELECT * FROM $table WHERE $pivot=?");
+        $sth->execute($user);
+    };
+    if ($@) {
+
+        # If connection isn't available, error is displayed by dbh()
+        $self->logger->error("DBI error: $@") if ( $self->_dbh );
+        eval { $self->p->_authentication->setSecurity($req) };
+        return PE_ERROR;
+    }
+    unless ( $req->data->{dbientry} = $sth->fetchrow_hashref() ) {
+        $self->userLogger->warn("User $user not found");
+        eval { $self->p->_authentication->setSecurity($req) };
+        return PE_BADCREDENTIALS;
+    }
+    PE_OK;
+}
+
 sub setSessionInfo {
     my ( $self, $req ) = @_;
 
