@@ -78,8 +78,9 @@ sub findUser {
       $self->p->loadedModules->{"Lemonldap::NG::Portal::Plugins::FindUser"};
     my @params = $plugin->retreiveFindUserParams($req);
     my $cond   = '';
-
-    $cond .= '$' . $_->{key} . " eq '$_->{value}' && " foreach (@params);
+    foreach (@params) {
+        $cond .= '$' . $_->{key} . " eq '$_->{value}' && " if $_->{value};
+    }
     $cond =~ s/&&\s$//;
     $self->logger->debug("Demo UserDB built condition: $cond");
     my @results = map {
@@ -92,6 +93,8 @@ sub findUser {
     } keys %demoAccounts;
 
     my $rank = rand( scalar @results );
+    $self->logger->debug(
+        'Demo UserDB number of result(s): ' . scalar @results );
     $self->logger->debug("Demo UserDB random rank: $rank");
     $req->{findUser} = $results[$rank];
 
