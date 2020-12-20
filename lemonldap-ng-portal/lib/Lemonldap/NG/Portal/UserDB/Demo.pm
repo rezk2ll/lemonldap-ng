@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_BADCREDENTIALS);
 
 extends 'Lemonldap::NG::Common::Module';
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.11';
 
 # Sample accounts from Doctor Who characters
 our %demoAccounts = (
@@ -76,12 +76,16 @@ sub findUser {
     my ( $self, $req, %args ) = @_;
     my $plugin =
       $self->p->loadedModules->{"Lemonldap::NG::Portal::Plugins::FindUser"};
-    my @params = $plugin->retreiveFindUserParams($req);
-    my $cond   = '';
-    foreach (@params) {
+    my ( $searching, $excluding ) = $plugin->retreiveFindUserParams($req);
+    my $cond = '';
+    foreach (@$searching) {
         $cond .= '$' . $_->{key} . " eq '$_->{value}' && " if $_->{value};
     }
+    foreach (@$excluding) {
+        $cond .= '$' . $_->{key} . " ne '$_->{value}' && " if $_->{value};
+    }
     $cond =~ s/&&\s$//;
+
     $self->logger->debug("Demo UserDB built condition: $cond");
     my @results = map {
         my $cn   = $demoAccounts{$_}->{cn};
