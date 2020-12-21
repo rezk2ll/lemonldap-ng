@@ -72,6 +72,8 @@ Command-line tools
 
 You can use the ``lemonldap-ng-sessions`` tool to search, update or delete sessions. See a few examples in :ref:`the examples page <cli-sessions>`
 
+.. deprecated:: 2.0.10
+
 -  LLNG Portal provides a simple tool to delete a session:
    ``llngDeleteSession``. To use it, simply give it the user identifier
    *(wildcard are authorizated)*:
