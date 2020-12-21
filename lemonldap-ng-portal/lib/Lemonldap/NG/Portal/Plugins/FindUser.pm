@@ -34,18 +34,23 @@ sub provideUser {
 
 sub retreiveFindUserParams {
     my ( $self,   $req )            = @_;
-    my ( $params, $excludedParams ) = ( [], [] );
+    my ( $params, $excludedParams ) = ( [ {} ], [ {} ] );
     $self->logger->debug("FindUser: reading parameters...");
     foreach ( sort keys %{ $self->conf->{findUserSearchingAttributes} } ) {
-        $self->logger->debug("Pushing param $_");
+        $self->logger->debug( "Pushing searching parameter: $_ => " . $req->params($_) );
         push @$params, { key => $_, value => $req->params($_) };
     }
     $self->logger->debug("FindUser: reading excluding parameters...");
     foreach ( sort keys %{ $self->conf->{findUserExcludingAttributes} } ) {
-        $self->logger->debug("Pushing excluded param $_");
-        push @$excludedParams, { key => $_, value => $_->{value} };
+        $self->logger->debug( "Pushing excluded parameter: $_ => "
+              . $self->conf->{findUserExcludingAttributes}->{$_} );
+        push @$excludedParams,
+          {
+            key   => $_,
+            value => $self->conf->{findUserExcludingAttributes}->{$_}
+          };
     }
-    return [ $params, $excludedParams ];
+    return ( $params, $excludedParams );
 }
 
 1;
