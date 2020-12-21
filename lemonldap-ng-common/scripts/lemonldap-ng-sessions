@@ -48,7 +48,7 @@ if ( $action eq "get" ) {
     }
 }
 if ( $action eq "delete" ) {
-    unless ( @ARGV >= 1 ) {
+    unless ( @ARGV >= 1 or $opts->{where} ) {
         pod2usage(
             -exitval  => 1,
             -verbose  => 99,
