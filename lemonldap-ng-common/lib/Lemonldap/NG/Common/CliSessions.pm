@@ -74,7 +74,7 @@ sub _search {
                 $selectField, $value, @fields );
         }
         else {
-            die "Invalid --where option" . $self->opts->{where};
+            die "Invalid --where option : " . $self->opts->{where};
         }
     }
     else {
