@@ -320,6 +320,19 @@ method. Example:
 Do not launch "getUser" but use the given C<$sub>. This permits multiple
 plugins to use "aroundSub" in the same time.
 
+=item C<hook>: hash ref that gives methods to call when a hook is triggered in the 
+LemonLDAP::NG code. Example:
+
+  use constant hook => {
+      oidcGenerateIDToken          => 'addClaimToIDToken'
+  };
+
+  sub addClaimToIDToken {
+    my ( $self, $req, $payload, $rp ) = @_;
+    $payload->{"id_token_hook"} = 1;
+    return PE_OK;
+  }
+
 =back
 
 =head1 LOGGING
