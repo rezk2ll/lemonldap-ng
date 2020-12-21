@@ -297,9 +297,13 @@ sub extractFormInfo {
             }
 
             # Get NameID
-            my $nameid         = $login->nameIdentifier;
-            my $nameid_content = $nameid->content;
+            my $nameid = $login->nameIdentifier;
+            unless ($nameid) {
+                $self->userLogger->error("No NameID element found");
+                return PE_SAML_SSO_ERROR;
+            }
 
+            my $nameid_content = $nameid->content;
             unless ($nameid_content) {
                 $self->userLogger->error("No NameID value found");
                 return PE_SAML_SSO_ERROR;
