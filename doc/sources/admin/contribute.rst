@@ -37,14 +37,14 @@ Go to your gitlab account : https://gitlab.ow2.org/profile/keys
 
    cat ~/.ssh/id_rsa.pub
 
-copy id_rsa.pub content to key section and enter a name into "Title"
-tans "Add key" button Test ssh connexion :
+Copy id_rsa.pub content to key section and enter a name into "Title" and click "Add key" button. 
+Test ssh connexion :
 
 ::
 
    ssh -T git@gitlab.com
 
-accept messages
+Accept messages
 
 Install basic tools
 -------------------
@@ -52,13 +52,13 @@ Install basic tools
 Debian
 ^^^^^^
 
-*root :*
+As *root :*
 
 ::
 
    apt install aptitude
    aptitude install vim make devscripts yui-compressor git git-gui libjs-uglify coffeescript cpanminus autopkgtest pkg-perl-autopkgtest
-   aptitude install libauth-yubikey-webclient-perl libnet-smtp-server-perl
+   aptitude install libauth-yubikey-webclient-perl libnet-smtp-server-perl libtime-fake-perl libtest-output-perl libtest-pod-perl libtest-leaktrace-perl
 
    cpanm Authen::U2F Authen::U2F::Tester Crypt::U2F::Server::Simple
 
@@ -71,7 +71,7 @@ Debian
 Configure Git
 ^^^^^^^^^^^^^
 
-*user :*
+As *user :*
 
 ::
 
@@ -85,7 +85,7 @@ Configure Git
 Import Project and using Git
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*user :* create directory in directory :
+As *user*, create directory in directory:
 
 ::
 
@@ -98,7 +98,7 @@ Import Project and using Git
    git checkout v2.0 # to change branch
    git fetch upstream
 
-*import version branch* *on linux station :*
+Import version branch on linux station:
 
 ::
 
@@ -106,8 +106,7 @@ Import Project and using Git
    git fetch upstream
    git rebase upstream/v2.0 # to align to parent project remote branch
 
-*on gitlab, create working branch, one per thematic* *on linux station
-:*
+On gitlab, create working branch, one per thematic on linux station:
 
 ::
 
@@ -140,6 +139,12 @@ For SAML:
 
 Working Project
 ---------------
+
+Configure hosts file
+^^^^^^^^^^^^^^^^^^^^
+::
+
+     echo '127.0.0.1       auth.example.com manager.example.com test1.example.com test2.example.com' >> /etc/hosts
 
 Unit tests
 ^^^^^^^^^^

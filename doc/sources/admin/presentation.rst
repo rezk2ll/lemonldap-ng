@@ -26,7 +26,7 @@ Main components
    `CAS <http://en.wikipedia.org/wiki/Central_Authentication_Service>`__).
    Futhermore, Portal affordes many other features (see
    :doc:`portal<portal>` for more)
--  **Handler**: used to protect applications which can read HTTP headers
+-  :doc:`Handler<index_handler>`: used to protect applications which can read HTTP headers
    or environment variables to get user information
 
 Databases
@@ -36,7 +36,7 @@ Databases
 .. attention::
 
     We call "database" a backend where we can read or write a data.
-    This can be a file, an LDAP directory, ...
+    This can be a file, an LDAP directory, etc.
 
 We split databases in two categories:
 
@@ -130,12 +130,13 @@ Session expiration
 ~~~~~~~~~~~~~~~~~~
 
 The session expires after 20 hours by default.
+This duration can be set in the manager's Configuration tab (General Parameters > Sessions > Sessions Timeout).
 
 .. attention::
 
     -  Handlers have a session cache, with a default lifetime of 10 minutes.
-       So for Handlers on different physical servers than the Portal, a user
-       with an expired session can still be authorized till the cache
+       So for Handlers located on different physical servers than the Portal, a user
+       with an expired session can still be authorized until the cache
        expires.
     -  Sessions are deleted by a scheduled task. Don't forget to install
        cron files !

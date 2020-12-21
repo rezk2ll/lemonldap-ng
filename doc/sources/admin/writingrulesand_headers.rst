@@ -1,7 +1,7 @@
 Writing rules and headers
 =========================
 
-Lemonldap::NG manage applications by their hostname (Apache's
+Lemonldap::NG manages applications by their hostname (Apache's
 virtualHosts). Rules are used to protect applications, headers are HTTP
 headers added to the request to give datas to the application (for logs,
 profiles,...).
