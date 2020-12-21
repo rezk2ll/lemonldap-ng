@@ -774,13 +774,20 @@ sub tree {
                         {
                             title => 'impersonation',
                             help  => 'impersonation.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'impersonationRule',
                                 'impersonationIdRule',
                                 'impersonationUnrestrictedUsersRule',
                                 'impersonationHiddenAttributes',
                                 'impersonationSkipEmptyValues',
-                                'impersonationMergeSSOgroups',
+                                'impersonationMergeSSOgroups'
+                            ]
+                        },
+                        {
+                        title => 'findUsers',
+                            help  => 'finduser.html',
+                            nodes => [
                                 'findUser',
                                 'findUserSearchingAttributes',
                                 'findUserExcludingAttributes'

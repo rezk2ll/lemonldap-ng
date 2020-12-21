@@ -692,7 +692,8 @@ sub tests {
               }
               grep { /\d+/ }
               split /\s*,\s*/, $conf->{bruteForceProtectionLockTimes};
-            $conf->{bruteForceProtectionLockTimes} = join ', ', @lockTimes if scalar @lockTimes;
+            $conf->{bruteForceProtectionLockTimes} = join ', ', @lockTimes
+              if scalar @lockTimes;
             return 1 unless ( $conf->{bruteForceProtection} );
             return ( 0,
 '"History" plugin is required to enable "BruteForceProtection" plugin'
@@ -935,6 +936,16 @@ sub tests {
                 and $conf->{passwordDB} eq 'Null' );
             return 1;
         },
+
+        # Password module requires a password backend
+        findUserWithoutImpersonation => sub {
+            return ( -1,
+                '"Impersonation" plugin is required to enable "FindUser" plugin'
+              )
+              if ( $conf->{findUser}
+                and !$conf->{impersonationRule} );
+            return 1;
+        }
     };
 }
 
