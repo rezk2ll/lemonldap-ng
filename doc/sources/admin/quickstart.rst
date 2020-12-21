@@ -42,6 +42,8 @@ CentOS / RHEL
    yum update
    yum install epel-release
    yum install lemonldap-ng
+   # If you use SELinux
+   yum install lemonldap-ng-selinux
 
 SSO domain configuration
 ------------------------

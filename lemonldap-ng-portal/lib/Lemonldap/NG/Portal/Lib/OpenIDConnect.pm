@@ -1394,6 +1394,10 @@ sub buildUserInfoResponse {
         }
     }
 
+    my $h = $self->p->processHook( $req, 'oidcGenerateUserInfoResponse',
+        $userinfo_response );
+    return {} if ( $h != PE_OK );
+
     return $userinfo_response;
 }
 
@@ -1577,12 +1581,15 @@ sub createJWT {
 # @param rp Internal Relying Party identifier
 # @return String id_token ID Token as JWT
 sub createIDToken {
-    my ( $self, $payload, $rp ) = @_;
+    my ( $self, $req, $payload, $rp ) = @_;
 
     # Get signature algorithm
     my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
       ->{oidcRPMetaDataOptionsIDTokenSignAlg};
     $self->logger->debug("ID Token signature algorithm: $alg");
+
+    my $h = $self->p->processHook( $req, 'oidcGenerateIDToken', $payload, $rp );
+    return undef if ( $h != PE_OK );
 
     return $self->createJWT( $payload, $alg, $rp );
 }

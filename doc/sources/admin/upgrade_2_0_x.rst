@@ -23,6 +23,7 @@ backups and a rollback plan ready!
 - New dependency: IO::Socket::Timeout
 - TOTP check tolerates forward AND backward clock drift (totp2fRange)
 - Avoid assignment in expressions option is disabled by default
+- RHEL/CentOS SELinux users should install the new ``lemonldap-ng-selinux`` package to fix `an issue with the new default cache directory <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2401>`__
 
 2.0.9
 -----

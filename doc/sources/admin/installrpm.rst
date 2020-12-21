@@ -25,6 +25,7 @@ LemonLDAP::NG provides packages for Red Hat/Centos 7:
 -  lemonldap-ng-fastcgi-server: FastCGI server needed to use Nginx
 -  lemonldap-ng-nginx: contains Nginx configuration and dependencies
 -  lemonldap-ng-uwsgi-app: contains Uwsgi application
+-  lemonldap-ng-selinux: contains the SELinux policy for httpd
 -  perl-Lemonldap-NG-Common: CPAN - Shared modules
 -  perl-Lemonldap-NG-Handler: CPAN - Handler modules
 -  perl-Lemonldap-NG-Manager: CPAN - Manager modules
@@ -123,6 +124,9 @@ If the packages are stored in a yum repository:
 .. code-block:: shell
 
    yum install lemonldap-ng
+
+   # If you use SELinux
+   yum install lemonldap-ng-selinux
 
 You can also use yum on local RPMs file:
 

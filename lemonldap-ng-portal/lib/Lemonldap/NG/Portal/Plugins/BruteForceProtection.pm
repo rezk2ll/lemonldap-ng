@@ -47,7 +47,7 @@ sub init {
         return 0;
     }
 
-    unless ( $self->conf->{failedLoginNumber} > $self->maxFailed ) {
+    unless ( $self->conf->{failedLoginNumber} >= $self->maxFailed ) {
         $self->logger->error( 'Number of failed logins history ('
               . $self->conf->{failedLoginNumber}
               . ') must be higher than allowed failed logins attempt ('

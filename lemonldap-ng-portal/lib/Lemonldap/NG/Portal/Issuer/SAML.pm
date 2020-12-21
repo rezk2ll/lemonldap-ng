@@ -385,6 +385,10 @@ sub run {
                 return PE_SAML_SSO_ERROR;
             }
 
+            my $h =
+              $self->p->processHook( $req, 'samlGotAuthnRequest', $login );
+            return $h if ( $h != PE_OK );
+
             # Get SP entityID
             my $sp = $request ? $login->remote_providerID() : $idp_initiated_sp;
 
@@ -847,6 +851,10 @@ sub run {
 "SAML authentication response sent to SAML SP $spConfKey for $user$nameIDLog"
             );
 
+            $h =
+              $self->p->processHook( $req, 'samlBuildAuthnResponse', $login );
+            return $h if ( $h != PE_OK );
+
             # Build SAML response
             $protocolProfile = $login->protocolProfile();
 
@@ -1124,6 +1132,12 @@ sub soapSloServer {
 
         $self->logger->debug("SLO: Logout request is valid");
 
+        my $h = $self->p->processHook( $req, 'samlGotLogoutRequest', $logout );
+        if ( $h != PE_OK ) {
+            return $self->p->sendError( $req,
+                "SLO: samlGotLogoutRequest hook returned error", 400 );
+        }
+
         # We accept only SOAP here
         unless ( $method eq $self->getHttpMethod('soap') ) {
             return $self->p->sendError( $req,
@@ -1281,6 +1295,13 @@ sub soapSloServer {
         else {
             $self->logger->debug(
                 "SLO response signature according to metadata");
+        }
+
+        $h =
+          $self->p->processHook( $req, 'samlBuildLogoutResponse', $logout );
+        if ( $h != PE_OK ) {
+            return $self->p->sendError( $req,
+                "SLO: samlBuildLogoutResponse hook returned error", 400 );
         }
 
         # Send logout response
@@ -1614,8 +1635,8 @@ sub sloResume {
     $req->setInfo( $logoutContextSession->data->{info} )
       if $logoutContextSession->data->{info};
 
-    return $self->_finishSlo( $req, $logout, $method, $spConfKey, $provider_nb,
-        $relayID );
+    return $self->_finishSlo( $req, $logout, $method, $spConfKey,
+        $provider_nb, $relayID );
 }
 
 sub _finishSlo {
@@ -1678,6 +1699,12 @@ sub sloServer {
         }
 
         $self->logger->debug("SLO: Logout request is valid");
+
+        my $h = $self->p->processHook( $req, 'samlGotLogoutRequest', $logout );
+        if ( $h != PE_OK ) {
+            return $self->p->sendError( $req,
+                "SLO: samlGotLogoutRequest hook returned error", 400 );
+        }
 
         # Get SP entityID
         my $sp = $logout->remote_providerID();
@@ -1901,6 +1928,9 @@ sub sloServer {
 
         $self->logger->debug("Logout response is valid");
 
+        my $h = $self->p->processHook( $req, 'samlGotLogoutResponse', $logout );
+        $self->imgnok($req) if ( $h != PE_OK );
+
         # Check Destination
         $self->imgnok($req)
           unless ( $self->checkDestination( $logout->response, $url ) );
@@ -2018,8 +2048,8 @@ sub attributeServer {
     my $name_id = $query->nameIdentifier();
 
     unless ($name_id) {
-        $self->p->sendError( $req, "Fail to get NameID from attribute request",
-            400 );
+        $self->p->sendError( $req,
+            "Fail to get NameID from attribute request", 400 );
     }
 
     my $user = $name_id->content();
@@ -2077,8 +2107,8 @@ sub attributeServer {
     eval { @requested_attributes = $query->request()->Attribute(); };
     if ($@) {
         $self->checkLassoError($@);
-        return $self->p->sendError( $req, "Unable to get requested attributes",
-            400 );
+        return $self->p->sendError( $req,
+            "Unable to get requested attributes", 400 );
     }
 
     # Returned attributes

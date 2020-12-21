@@ -23,6 +23,11 @@
 
 %global lm_dnsdomain example.com
 
+# SELinux
+%global with_selinux 1
+%global modulename lemonldap-ng
+%global selinuxtype targeted
+
 #global pre_release beta1
 
 #==============================================================================
@@ -194,6 +199,14 @@ Requires: lemonldap-ng-manager = %{version}-%{release}
 Requires: lemonldap-ng-portal = %{version}-%{release}
 Requires: lemonldap-ng-test = %{version}-%{release}
 
+%if 0%{?with_selinux} && 0%{?fedora}%{?el8}
+# ! Not available in Centos7, you need to install lemonldap-ng-selinux manually
+# This ensures that the *-selinux package and all it’s dependencies are not pulled
+# into containers and other systems that do not use SELinux
+Requires:        (%{name}-selinux if selinux-policy-%{selinuxtype})
+%endif
+
+
 # Setup requires filtering
 %{?perl_default_filter}
 %{?el7:%global __requires_exclude perl\\(Lasso|perl\\(Web::ID|perl\\(Sentry::Raven}
@@ -356,6 +369,22 @@ Summary:        LemonLDAP-NG Portal Modules
 This package installs the authentication portal.
 
 #==============================================================================
+# SELinux policy package
+#==============================================================================
+%if 0%{?with_selinux}
+%package selinux
+Summary:             LemonLDAP-NG SELinux policy
+BuildArch:           noarch
+Requires:            selinux-policy-%{selinuxtype}
+Requires(post):      selinux-policy-%{selinuxtype}
+BuildRequires:       selinux-policy-devel
+%{?selinux_requires}
+
+%description selinux
+Custom SELinux policy module
+%endif
+
+#==============================================================================
 # Source preparation
 #==============================================================================
 %prep
@@ -372,6 +401,17 @@ make %{?_smp_mflags} configure \
     CACHEDIR=%{lm_cachedir} \
     PERLOPTIONS="INSTALLDIRS=vendor"
 make %{?_smp_mflags}
+
+%if 0%{?with_selinux}
+# SELinux policy (originally from selinux-policy-contrib)
+# this policy module will override the production module
+mkdir selinux
+cp -p rpm/lemonldap-ng.fc selinux/
+cp -p rpm/lemonldap-ng.te selinux/
+
+make -f %{_datadir}/selinux/devel/Makefile %{modulename}.pp
+bzip2 -9 %{modulename}.pp
+%endif
 
 #==============================================================================
 # Installation
@@ -500,6 +540,11 @@ sed -i -e '1i#!/usr/bin/plackup' \
     %{buildroot}/usr/share/lemonldap-ng/examples/llngapp.psgi
 chmod 644 %{buildroot}/usr/share/lemonldap-ng/test/cas.php
 
+# Install SELinux policy
+%if 0%{?with_selinux}
+install -D -m 0644 %{modulename}.pp.bz2 %{buildroot}%{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
+%endif
+
 #==============================================================================
 # Run test
 #==============================================================================
@@ -552,6 +597,25 @@ fi
 
 %postun fastcgi-server
 %systemd_postun_with_restart llng-fastcgi-server.service
+
+%if 0%{?with_selinux}
+# SELinux contexts are saved so that only affected files can be
+# relabeled after the policy module installation
+%pre selinux
+%selinux_relabel_pre -s %{selinuxtype}
+
+%post selinux
+%selinux_modules_install -s %{selinuxtype} %{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
+
+%postun selinux
+if [ $1 -eq 0 ]; then
+    %selinux_modules_uninstall -s %{selinuxtype} %{modulename}
+fi
+
+%posttrans selinux
+%selinux_relabel_post -s %{selinuxtype}
+# if with_selinux
+%endif
 
 %files
 
@@ -669,6 +733,12 @@ fi
 %{_mandir}/man3/Lemonldap::NG::Portal*.3pm.*
 %{perl_vendorlib}/Lemonldap/NG/Portal.pm
 %{perl_vendorlib}/Lemonldap/NG/Portal/
+
+%if 0%{?with_selinux}
+%files selinux
+%{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.*
+%ghost %{_sharedstatedir}/selinux/%{selinuxtype}/active/modules/200/%{modulename}
+%endif
 
 #==============================================================================
 # Changelog

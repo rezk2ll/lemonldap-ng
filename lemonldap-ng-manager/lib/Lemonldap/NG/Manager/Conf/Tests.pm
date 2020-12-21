@@ -692,24 +692,24 @@ sub tests {
               }
               grep { /\d+/ }
               split /\s*,\s*/, $conf->{bruteForceProtectionLockTimes};
-            $conf->{bruteForceProtectionLockTimes} = join ', ', @lockTimes;
+            $conf->{bruteForceProtectionLockTimes} = join ', ', @lockTimes if scalar @lockTimes;
             return 1 unless ( $conf->{bruteForceProtection} );
-            return ( 1,
+            return ( 0,
 '"History" plugin is required to enable "BruteForceProtection" plugin'
             ) unless ( $conf->{loginHistoryEnabled} );
-            return ( 1,
+            return ( 0,
 'Number of failed logins must be higher than 1 to enable "BruteForceProtection" plugin'
             ) unless ( $conf->{failedLoginNumber} > 1 );
-            return ( 1,
+            return ( 0,
 'Number of allowed failed logins must be higher than 0 to enable "BruteForceProtection" plugin'
             ) unless ( $conf->{bruteForceProtectionMaxFailed} > 0 );
-            return ( 1,
+            return ( 0,
 'Number of failed logins history must be higher or equal than allowed failed logins plus lock time values'
               )
               if ( $conf->{bruteForceProtectionIncrementalTempo}
                 && $conf->{failedLoginNumber} <
                 $conf->{bruteForceProtectionMaxFailed} + scalar @lockTimes );
-            return ( 1,
+            return ( 0,
 'Number of failed logins history must be higher or equal than allowed failed logins'
               )
               unless ( $conf->{failedLoginNumber} >=
