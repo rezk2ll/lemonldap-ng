@@ -52,6 +52,7 @@ Build-Depends-Indep: libapache-session-perl <!nocheck>,
                      libxml-libxml-perl <!nocheck>,
                      libxml-libxslt-perl <!nocheck>,
                      libxml-simple-perl <!nocheck>,
+                     libtest-leaktrace-perl <!nocheck>,
                      python3-sphinx,
                      python3-sphinx-bootstrap-theme,
                      perl
