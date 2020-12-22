@@ -101,15 +101,15 @@ with the following parameters:
    * ``username``: set it to the session attribute containing the user login
    * ``name``: session attribute containing the user's full name
    * ``email``: session attribute containing the user's email
-   * ``id``: session attribute containing the user's numeric ID
-
+   * ``id``: session attribute containing the user's numeric ID. You must set
+     this claim type to *Integer*
 
 .. danger::
 
-    Mattermost absolutely needs to receive a numerical value
-    in the ``id`` claim. If you are using a LDAP server, you could use the
-    ``uidNumber`` LDAP attribute. If you use something else, you will have
-    to find a trick to assign a unique numeric ID to each Mattermost user.
+    Mattermost absolutely needs to receive a numerical value in the ``id``
+    claim. If you are using a LDAP server, you could use the ``uidNumber`` LDAP
+    attribute. If you use something else, you will have to find a way to
+    assign a unique numeric ID to each Mattermost user.
 
     The ``id`` attribute has to be different for each user, since this is
     the field Mattermost will use internally to map Gitlab identities to
@@ -123,10 +123,10 @@ in ``(*GitLabUser).IsValid(...)`` , it probably means that you are not
 exporting the correct attributes, but it can also mean that ``id`` is
 exported as a JSON string.
 
-If this case, it can help to create a macro, for example
-``uidNumber_n``, with a value of ``$uidNumber + 0`` to force conversion
-to a numeric value. You must then export it as the ``id`` field in the
-Relaying Party configuration.
+.. note::
+   An issue in version 2.0.9 prevented the ``id`` field from being sent correctly.
+   Upgrade your LemonLDAP-NG installation to at least 2.0.10 and :ref:`set the claim
+   type <oidcexportedattr>` to *Integer*
 
 .. |image0| image:: /applications/mattermost_logo.png
    :class: align-center
