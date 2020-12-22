@@ -6,7 +6,7 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $maintests = 31;
+my $maintests = 34;
 
 my $userdb = tempdb();
 
@@ -39,7 +39,7 @@ SKIP: {
     );
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel              => 'debug',
+                logLevel              => 'error',
                 useSafeJail           => 1,
                 authentication        => 'DBI',
                 userDB                => 'Same',
@@ -82,6 +82,18 @@ SKIP: {
       or explain( $res->[2]->[0], 'value="dwho"' );
     ok( $res->[2]->[0] =~ m%autocomplete="off"%, 'autocomplete="off"' )
       or explain( $res->[2]->[0], 'autocomplete="off"' );
+    ok( $res->[2]->[0] =~ m%<span trspan="searchAccount">Search an account</span>%, 'Search an account' )
+      or explain( $res->[2]->[0], 'Search an account' );
+    ok(
+        $res->[2]->[0] =~
+m%<input id="findUserguy" name="guy" type="text" autocomplete="off" class="form-control" placeholder="Kind" />%,
+        'id="findUserguy"'
+    ) or explain( $res->[2]->[0], 'id="findUserguy"' );
+    ok(
+        $res->[2]->[0] =~
+m%<input id="findUseruser" name="user" type="text" autocomplete="off" class="form-control" placeholder="Login" />%,
+        'id="findUseruser"'
+    ) or explain( $res->[2]->[0], 'id="findUseruser"' );
 
     $request = 'user=dwho';
     ok(
