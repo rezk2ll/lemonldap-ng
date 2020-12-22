@@ -25,6 +25,7 @@ backups and a rollback plan ready!
 - Avoid assignment in expressions option is disabled by default
 - RHEL/CentOS SELinux users should install the new ``lemonldap-ng-selinux`` package to fix `an issue with the new default cache directory <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2401>`__
 - If you use :doc:`applications/mattermost` with OpenID Connect, you need to set the ``id`` claim type to *Integer*
+- BruteForceProtection plugin now prevents authentication on backend if account is locked
 
 2.0.9
 -----
