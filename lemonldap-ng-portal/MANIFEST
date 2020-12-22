@@ -489,9 +489,9 @@ t/20-Auth-and-password-DBI-dynamic-hash.t
 t/20-Auth-and-password-DBI.t
 t/20-Auth-DBI-utf8.t
 t/21-Auth-and-password-LDAP.t
+t/21-Auth-LDAP-attributes.t
 t/21-Auth-LDAP-Policy-only.t
 t/21-Auth-LDAP-Policy.t
-t/21-Auth-LDAP-utf8.t
 t/22-Auth-and-password-AD.t
 t/23-Auth-and-password-REST.t
 t/24-AuthApache.t
@@ -510,6 +510,7 @@ t/29-AuthSSL.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO.t
 t/30-Auth-and-issuer-SAML-Metadata.t
+t/30-Auth-and-issuer-SAML-POST-Hook.t
 t/30-Auth-and-issuer-SAML-POST-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-POST-Missing-SLO.t
 t/30-Auth-and-issuer-SAML-POST.t
@@ -556,6 +557,7 @@ t/32-CAS-Macros.t
 t/32-OIDC-ClaimTypes.t
 t/32-OIDC-Code-Flow-with-2F-UpgradeOnly.t
 t/32-OIDC-Code-Flow-with-2F.t
+t/32-OIDC-Hooks.t
 t/32-OIDC-Macro.t
 t/32-OIDC-Offline-Session.t
 t/32-OIDC-Password-Grant-with-Bruteforce.t
@@ -651,6 +653,7 @@ t/63-History.t
 t/64-StayConnected-with-2F-and-History.t
 t/64-StayConnected-with-History.t
 t/65-AutoSignin.t
+t/65-CheckState.t
 t/66-CDA-already-auth.t
 t/66-CDA-PSGI-Try.t
 t/66-CDA-with-doubleCookies.t
@@ -727,9 +730,11 @@ t/lib/Lemonldap/NG/Portal/Auth/LDAPPolicy.pm
 t/lib/Lemonldap/NG/Portal/Custom.pm
 t/lmConf-1.json
 t/oidc-lib.pm
+t/OidcHookPlugin.pm
 t/pdata.pm
 t/README.md
 t/saml-lib.pm
+t/SamlHookPlugin.pm
 t/sendCode.pl
 t/sendOTP.pl
 t/separate-handler.pm
