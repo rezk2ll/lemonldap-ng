@@ -58,7 +58,7 @@ sub getMenuApp {
 
         my @menuApps =
           map {
-            $self->_isCatApp( $cat->{$_} )
+                $self->_isCatApp( $cat->{$_} )
               ? $self->_getMenuAppByConfKey( $conf, $catConfKey, $_ )
               : ()
           }
@@ -105,7 +105,7 @@ sub findMenuAppByConfKey {
 
     my @menuApps =
       map {
-        $self->_isCatApp( $cat->{$_} )
+             $self->_isCatApp( $cat->{$_} )
           && $_ =~ $pattern
           ? $self->_getMenuAppByConfKey( $conf, $catConfKey, $_ )
           : ()
@@ -117,7 +117,7 @@ sub findMenuAppByConfKey {
 
 sub addMenuApp {
     my ( $self, $req ) = @_;
-    my $add = $req->jsonBodyToObj;
+    my $add = $self->getJsonBody($req);
 
     my $catConfKey = $req->params('confKey')
       or return $self->sendError( $req, 'Category confKey is missing', 400 );
@@ -132,8 +132,8 @@ sub addMenuApp {
         400 )
       if ( ref $add->{confKey} );
 
-    return $self->sendError( $req, 'Invalid input: confKey contains invalid characters',
-        400 )
+    return $self->sendError( $req,
+        'Invalid input: confKey contains invalid characters', 400 )
       unless ( $add->{confKey} =~ '^\w[\w\.\-]*$' );
 
     return $self->sendError( $req, 'Invalid input: name is missing', 400 )
@@ -185,7 +185,7 @@ sub updateMenuApp {
     my $appConfKey = $req->params('appConfKey')
       or return $self->sendError( $req, 'Application confKey is missing', 400 );
 
-    my $update = $req->jsonBodyToObj;
+    my $update = $self->getJsonBody($req);
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($update);
@@ -229,7 +229,7 @@ sub replaceMenuApp {
     my $appConfKey = $req->params('appConfKey')
       or return $self->sendError( $req, 'Application confKey is missing', 400 );
 
-    my $replace = $req->jsonBodyToObj;
+    my $replace = $self->getJsonBody($req);
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($replace);
@@ -241,10 +241,10 @@ sub replaceMenuApp {
         400 )
       if ( ref $replace->{confKey} );
 
-    return $self->sendError( $req, 'Invalid input: confKey contains invalid characters',
-        400 )
+    return $self->sendError( $req,
+        'Invalid input: confKey contains invalid characters', 400 )
       unless ( $replace->{confKey} =~ '^\w[\w\.\-]*$' );
-        
+
     return $self->sendError( $req, 'Invalid input: name is missing', 400 )
       unless ( defined $replace->{options}
         && defined $replace->{options}{name} );
