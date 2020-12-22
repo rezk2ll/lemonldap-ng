@@ -50,31 +50,32 @@ sub findUser {
     my ( $self, $req, %args ) = @_;
     my $plugin =
       $self->p->loadedModules->{"Lemonldap::NG::Portal::Plugins::FindUser"};
-    my ( $searching, $excluding ) = $plugin->retreiveFindUserParams($req);
+    my ( $searching, $excluding, $result ) = $plugin->retreiveFindUserParams($req);
     return PE_OK unless scalar @$searching;
 
     my $table   = $self->table;
     my $pivot   = $args{useMail} ? $self->mailField : $self->pivot;
-    my $request = 'SELECT $pivot FROM $table WHERE ';
+    my $request = "SELECT $pivot FROM $table WHERE ";
     my @args;
     my $sth;
     foreach (@$searching) {
         if ( $_->{value} ) {
-            $request .= '$' . $_->{key} . '=? AND ';
+            $request .= "$_->{key} = ? AND ";
             push @args, $_->{value};
         }
     }
     foreach (@$excluding) {
         if ( $_->{value} ) {
-            $request .= '$' . $_->{key} . '!=? AND ';
+            $request .= "$_->{key} != ? AND ";
             push @args, $_->{value};
         }
     }
     $request =~ s/AND\s$//;
 
     $self->logger->debug("DBI UserDB built condition: $request");
+    $self->logger->debug( "DBI UserDB built args: " . join '|', @args );
     eval {
-        $sth = $self->dbh->prepare(eval "$request");
+        $sth = $self->dbh->prepare($request);
         $sth->execute(@args);
     };
     eval { $self->p->_authentication->setSecurity($req) };
@@ -85,12 +86,14 @@ sub findUser {
         $self->logger->error("DBI error: $@") if ( $self->_dbh );
         return PE_ERROR;
     }
-    if ( my $results = $sth->fetchrow_arrayref() ) {
+    my $results = $sth->fetchall_arrayref();
+    if ( $results->[0]->[0] ) {
         my $rank = rand( scalar @$results );
         $self->logger->debug(
             'DBI UserDB number of result(s): ' . scalar @$results );
         $self->logger->debug("Demo UserDB random rank: $rank");
-        $req->{findUser} = $results->[$rank];
+        $self->userLogger->info("FindUser: DBI UserDB returns $results->[$rank]->[0]");
+        $req->{findUser} = $results->[$rank]->[0];
     }
 
     PE_OK;

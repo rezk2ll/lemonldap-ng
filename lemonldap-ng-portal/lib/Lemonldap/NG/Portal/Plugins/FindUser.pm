@@ -29,28 +29,45 @@ sub provideUser {
         return $req->error($error);
     }
     $req->mustRedirect(1);
+
+    return $self->sendJSONresponse(
+        $req,
+        {
+            user   => ( $req->{findUser} ? $req->{findUser} : '' ),
+            result => 1
+        }
+    ) if $req->wantJSON;
     return $self->p->do( $req, [ sub { PE_FIRSTACCESS } ] );
 }
 
 sub retreiveFindUserParams {
-    my ( $self,   $req )            = @_;
-    my ( $params, $excludedParams ) = ( [ {} ], [ {} ] );
+    my ( $self,      $req )       = @_;
+    my ( $searching, $excluding ) = ( [], [] );
     $self->logger->debug("FindUser: reading parameters...");
     foreach ( sort keys %{ $self->conf->{findUserSearchingAttributes} } ) {
-        $self->logger->debug( "Pushing searching parameter: $_ => " . $req->params($_) );
-        push @$params, { key => $_, value => $req->params($_) };
+        if ( $req->params($_) ) {
+            $self->logger->debug(
+                "Pushing searching parameter: $_ => " . $req->params($_) );
+            push @$searching, { key => $_, value => $req->params($_) };
+        }
     }
-    $self->logger->debug("FindUser: reading excluding parameters...");
-    foreach ( sort keys %{ $self->conf->{findUserExcludingAttributes} } ) {
-        $self->logger->debug( "Pushing excluded parameter: $_ => "
-              . $self->conf->{findUserExcludingAttributes}->{$_} );
-        push @$excludedParams,
-          {
-            key   => $_,
-            value => $self->conf->{findUserExcludingAttributes}->{$_}
-          };
+
+    if ( scalar @$searching ) {
+        $self->logger->debug("FindUser: reading excluding parameters...");
+        foreach ( sort keys %{ $self->conf->{findUserExcludingAttributes} } ) {
+            if ( $req->params($_) ) {
+                $self->logger->debug( "Pushing excluded parameter: $_ => "
+                      . $self->conf->{findUserExcludingAttributes}->{$_} );
+                push @$excluding,
+                  {
+                    key   => $_,
+                    value => $self->conf->{findUserExcludingAttributes}->{$_}
+                  };
+            }
+        }
     }
-    return ( $params, $excludedParams );
+
+    return ( $searching, $excluding );
 }
 
 1;
