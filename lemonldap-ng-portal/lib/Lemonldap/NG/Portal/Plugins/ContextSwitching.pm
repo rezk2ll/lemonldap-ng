@@ -125,7 +125,6 @@ sub display {
         LANGS         => $self->conf->{showLanguages},
         MSG           => 'contextSwitching_ON',
         ALERTE        => 'alert-danger',
-        LOGIN         => '',
         IMPERSONATION => $self->conf->{contextSwitchingRule},
         TOKEN         => (
               $self->ottRule->( $req, {} )
