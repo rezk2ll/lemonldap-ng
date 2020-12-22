@@ -77,6 +77,8 @@ sub findUser {
     my $plugin =
       $self->p->loadedModules->{"Lemonldap::NG::Portal::Plugins::FindUser"};
     my ( $searching, $excluding ) = $plugin->retreiveFindUserParams($req);
+    return PE_OK unless scalar @$searching;
+
     my $cond = '';
     foreach (@$searching) {
         $cond .= '$' . $_->{key} . " eq '$_->{value}' && " if $_->{value};

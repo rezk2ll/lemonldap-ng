@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Common::Module', 'Lemonldap::NG::Portal::Lib::REST';
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.11';
 
 # INITIALIZATION
 
@@ -52,6 +52,33 @@ sub getUser {
         return PE_BADCREDENTIALS;
     }
     $req->data->{restUserDBInfo} = $res->{info} || {};
+    return PE_OK;
+}
+
+sub findUser {
+    my ( $self, $req, %args ) = @_;
+    my $res;
+    # $res = eval {
+    #     $self->restCall(
+    #         $self->conf->{restUserDBUrl},
+    #         {
+    #             ( $args{useMail} ? 'mail' : 'user' ) => $req->user,
+    #             'useMail' => ( $args{useMail} ? JSON::true : JSON::false ),
+
+    #         }
+    #     );
+    # };
+    # if ($@) {
+    #     $self->logger->error("UserDB REST error: $@");
+    #     eval { $self->p->_authentication->setSecurity($req) };
+    #     return PE_ERROR;
+    # }
+    # unless ( $res->{result} ) {
+    #     $self->userLogger->warn( 'User ' . $req->user . ' not found' );
+    #     eval { $self->p->_authentication->setSecurity($req) };
+    #     return PE_BADCREDENTIALS;
+    # }
+    # $req->data->{restUserDBInfo} = $res->{info} || {};
     return PE_OK;
 }
 

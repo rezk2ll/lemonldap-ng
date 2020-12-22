@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Common::Module';
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.11';
 
 # PROPERTIES
 
@@ -162,37 +162,6 @@ sub findUser {
     return PE_LDAPCONNECTFAILED unless $self->ldap;
 
     $self->bind();
-
-    my $mesg = $self->ldap->search(
-        base   => $self->conf->{ldapBase},
-        scope  => 'sub',
-        filter => (
-              $args{useMail}
-            ? $self->mailFilter->($req)
-            : $self->filter->($req)
-        ),
-        deref => $self->conf->{ldapSearchDeref} || 'find',
-        attrs => $self->attrs,
-    );
-    if ( $mesg->code() != 0 ) {
-        $self->logger->error(
-            'LDAP Search error ' . $mesg->code . ": " . $mesg->error );
-        return PE_LDAPERROR;
-    }
-    if ( $mesg->count() > 1 ) {
-        $self->logger->error('More than one entry returned by LDAP directory');
-        eval { $self->p->_authentication->setSecurity($req) };
-        return PE_BADCREDENTIALS;
-    }
-    unless ( $req->data->{ldapentry} = $mesg->entry(0) ) {
-        $self->userLogger->warn(
-                "$req->{user} was not found in LDAP directory ("
-              . $req->address
-              . ")" );
-        eval { $self->p->_authentication->setSecurity($req) };
-        return PE_BADCREDENTIALS;
-    }
-    $req->data->{dn} = $req->data->{ldapentry}->dn();
 
     return PE_OK;
 }

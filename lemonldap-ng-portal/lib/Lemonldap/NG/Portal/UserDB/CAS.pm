@@ -7,7 +7,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
 );
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.11';
 
 extends 'Lemonldap::NG::Common::Module';
 
@@ -20,6 +20,11 @@ sub init {
 # RUNNING METHODS
 
 sub getUser {
+    my ( $self, $req ) = @_;
+    return PE_OK;
+}
+
+sub findUser {
     my ( $self, $req ) = @_;
     return PE_OK;
 }
