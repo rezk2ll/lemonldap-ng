@@ -233,7 +233,7 @@ LemonLDAP::NG Portal jQuery scripts
   datas = {};
 
   $(window).on('load', function() {
-    var action, al, authMenuIndex, authMenuTabs, back_url, checkpassword, checksamepass, hiddenParams, isAlphaNumeric, l, lang, langdiv, langs, langs2, len1, len2, len3, len4, link, m, menuIndex, menuTabs, method, n, nl, nlangs, o, queryLang, re, ref, ref1, ref2, setCookieLang;
+    var action, al, authMenuIndex, authMenuTabs, back_url, checkpassword, checksamepass, hiddenParams, isAlphaNumeric, l, lang, langdiv, langs, langs2, len1, len2, len3, len4, link, m, menuIndex, menuTabs, method, n, nl, nlangs, o, queryLang, re, ref, ref1, ref2, setCookieLang, togglecheckpassword;
     datas = getValues();
     if ("datas" in window && "choicetab" in window.datas) {
       datas.choicetab = window.datas.choicetab;
@@ -526,6 +526,17 @@ LemonLDAP::NG Portal jQuery scripts
         checkpassword(e.target.value);
       });
     }
+    togglecheckpassword = function(e) {
+      if (e.target.checked) {
+        $('#newpassword').off('keyup');
+        return $('#newpassword')[0].setCustomValidity('');
+      } else {
+        $('#newpassword').keyup(function(e) {
+          checkpassword(e.target.value);
+        });
+        return checkpassword('');
+      }
+    };
     checksamepass = function() {
       if ($('#confirmpassword')[0].value === $('#newpassword')[0].value) {
         $('#confirmpassword')[0].setCustomValidity('');
@@ -537,6 +548,9 @@ LemonLDAP::NG Portal jQuery scripts
     };
     $('#newpassword').change(checksamepass);
     $('#confirmpassword').change(checksamepass);
+    if ((window.datas.ppolicy != null) && $('#newpassword').length) {
+      $('#reset').change(togglecheckpassword);
+    }
     if (datas['pingInterval'] && datas['pingInterval'] > 0) {
       window.setTimeout(ping, datas['pingInterval']);
     }

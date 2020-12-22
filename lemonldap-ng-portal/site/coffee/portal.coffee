@@ -490,6 +490,18 @@ $(window).on 'load', () ->
 			checkpassword e.target.value
 			return
 
+	# If generating password, disable policy check
+	togglecheckpassword = (e) ->
+		if e.target.checked
+			$('#newpassword').off('keyup')
+			$('#newpassword')[0].setCustomValidity('')
+		# Restore check
+		else
+			$('#newpassword').keyup (e) ->
+				checkpassword e.target.value
+				return
+			checkpassword ''
+
 	checksamepass = () ->
 		if $('#confirmpassword')[0].value == $('#newpassword')[0].value
 			$('#confirmpassword')[0].setCustomValidity('')
@@ -500,6 +512,8 @@ $(window).on 'load', () ->
 
 	$('#newpassword').change checksamepass
 	$('#confirmpassword').change checksamepass
+	if window.datas.ppolicy? and $('#newpassword').length
+		$('#reset').change togglecheckpassword
 
 	# Ping if asked
 	if datas['pingInterval'] and datas['pingInterval'] > 0
