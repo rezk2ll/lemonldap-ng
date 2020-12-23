@@ -12,15 +12,13 @@ use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::Conf::ReConstants;
 require Lemonldap::NG::Common::Notifications;
 
-use feature 'state';
-
 extends qw(
   Lemonldap::NG::Manager::Plugin
-  Lemonldap::NG::Common::Conf::AccessLib
   Lemonldap::NG::Common::PSGI::Router
+  Lemonldap::NG::Common::Conf::AccessLib
 );
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 has notifAccess => ( is => 'rw' );
 has notifFormat => ( is => 'rw' );

@@ -1,7 +1,7 @@
 package Lemonldap::NG::Manager::Sessions;
 
-use utf8;
 use strict;
+use utf8;
 use Mouse;
 
 use Lemonldap::NG::Common::Session;
@@ -11,11 +11,13 @@ use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::Conf::ReConstants;
 use Lemonldap::NG::Common::IPv6;
 
-use feature 'state';
+#use feature 'state';
 
-extends 'Lemonldap::NG::Manager::Plugin',
-  'Lemonldap::NG::Common::Conf::AccessLib',
-  'Lemonldap::NG::Common::Session::REST';
+extends qw(
+  Lemonldap::NG::Manager::Plugin
+  Lemonldap::NG::Common::Session::REST
+  Lemonldap::NG::Common::Conf::AccessLib
+);
 
 our $VERSION = '2.0.10';
 
@@ -75,15 +77,15 @@ sub delOIDCConsent {
     my $epoch  = $params->{epoch};
     my $rp     = $params->{rp};
 
-    my $id =  $req->params('sessionId')
+    my $id = $req->params('sessionId')
       or return $self->sendError( $req, 'sessionId is missing', 400 );
 
-    $req->parameters->set('sessionId', $self->_maybeDecryptSessionId($id));
+    $req->parameters->set( 'sessionId', $self->_maybeDecryptSessionId($id) );
 
     if ( $rp =~ /\b[\w-]+\b/ and defined $epoch ) {
         $self->logger->debug(
             "Call procedure deleteOIDCConsent with RP=$rp and epoch=$epoch");
-        return $self->deleteOIDCConsent( $req );
+        return $self->deleteOIDCConsent($req);
     }
     else {
         return $self->sendError( $req, undef, 400 );
@@ -448,12 +450,12 @@ sub _maybeEncryptSessionId {
 
 sub delSession {
     my ( $self, $req ) = @_;
-    my $id =  $req->params('sessionId')
+    my $id = $req->params('sessionId')
       or return $self->sendError( $req, 'sessionId is missing', 400 );
 
-    $req->parameters->set('sessionId', $self->_maybeDecryptSessionId($id));
+    $req->parameters->set( 'sessionId', $self->_maybeDecryptSessionId($id) );
 
-    return $self->SUPER::delSession( $req );
+    return $self->SUPER::delSession($req);
 }
 
 sub cmpIPv4 {

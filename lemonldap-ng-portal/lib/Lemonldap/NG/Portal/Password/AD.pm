@@ -29,25 +29,19 @@ sub confirm {
 }
 
 sub modifyPassword {
-    my ( $self, $req, $pwd ) = @_;
+    my ( $self, $req, $pwd, $useMail ) = @_;
     my $dn = $req->data->{dn} || $req->sessionInfo->{_dn};
     unless ($dn) {
-        $self->logger->error('"dn" is not set, aborting password modification');
+        $self->logger->error('"dn" is not set, abort password modification');
         return PE_ERROR;
     }
-    my $rule = $self->p->HANDLER->buildSub(
-        $self->p->HANDLER->substitute(
-            $self->conf->{portalRequireOldPassword}
-        )
-    );
-    unless ($rule) {
-        my $error = $self->p->HANDLER->tsv->{jail}->error || '???';
-    }
+
     my $requireOldPassword = (
           $req->userData
-        ? $rule->( $req, $req->userData )
-        : $rule->( $req, $req->sessionInfo )
+        ? $self->requireOldPwdRule->( $req, $req->userData )
+        : $self->requireOldPwdRule->( $req, $req->sessionInfo )
     );
+    $requireOldPassword = 0 if $useMail;
 
     # Ensure connection is valid
     $self->bind;

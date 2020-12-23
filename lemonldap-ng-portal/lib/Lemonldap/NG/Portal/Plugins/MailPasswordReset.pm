@@ -473,16 +473,11 @@ sub changePwd {
         return $cpq;
     }
 
-    # Modify the password TODO: change this
-    # Populate $req->{user} for logging purpose
-    my $tmp = $self->conf->{portalRequireOldPassword};
-    $self->conf->{portalRequireOldPassword} = 0;
     $req->user( $req->{sessionInfo}->{_user} );
     my $result =
       $self->p->_passwordDB->modifyPassword( $req,
         $req->data->{newpassword}, 1 );
     $req->{user} = undef;
-    $self->conf->{portalRequireOldPassword} = $tmp;
 
     # Mail token can be used only one time, delete the session if all is ok
     unless ( $result == PE_PASSWORD_OK or $result == PE_OK ) {

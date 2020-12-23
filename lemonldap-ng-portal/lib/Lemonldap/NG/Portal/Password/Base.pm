@@ -21,8 +21,19 @@ our $VERSION = '2.0.10';
 
 # INITIALIZATION
 
+has requireOldPwdRule => ( is => 'rw' );
+
 sub init {
-    $_[0]->p->{_passwordDB} = $_[0];
+    my ($self) = shift;
+    $self->requireOldPwdRule(
+        $self->p->buildRule(
+            $self->conf->{portalRequireOldPassword},
+            'portalRequireOldPassword'
+        )
+    );
+    return 0 unless $self->requireOldPwdRule;
+
+    $self->p->{_passwordDB} = $self;
 }
 
 # INTERFACE
