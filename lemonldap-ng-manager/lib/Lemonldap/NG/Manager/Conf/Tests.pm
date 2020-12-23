@@ -937,13 +937,18 @@ sub tests {
             return 1;
         },
 
-        # Password module requires a password backend
-        findUserWithoutImpersonation => sub {
+        # FindUser requires Impersonation and attributes
+        findUserWithoutImpersonationOrAttributes => sub {
             return ( -1,
                 '"Impersonation" plugin is required to enable "FindUser" plugin'
               )
               if ( $conf->{findUser}
                 and !$conf->{impersonationRule} );
+            return ( 1,
+                '"FindUser" plugin enabled without searching attributes' )
+              if ( $conf->{findUser}
+                and scalar
+                keys %{ $conf->{findUserSearchingAttributes} } == 0 );
             return 1;
         }
     };
