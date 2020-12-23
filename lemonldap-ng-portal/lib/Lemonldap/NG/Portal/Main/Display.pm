@@ -485,7 +485,7 @@ sub display {
             {
                 $login = $req->{findUser};
                 $self->logger->debug(
-                    'Build an array ref with searching fields...');
+                    'Building array ref with searching fields...');
                 @$fields = map { {
                         key => $_,
                         value =>

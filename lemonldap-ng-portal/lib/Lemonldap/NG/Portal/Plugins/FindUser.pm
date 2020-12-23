@@ -64,8 +64,6 @@ sub provideUser {
         $self->logger->debug("Process returned error: $error");
         return $req->error($error);
     }
-
-    $req->mustRedirect(0);
     return $self->sendJSONresponse(
         $req,
         {
@@ -88,7 +86,9 @@ sub retreiveFindUserParams {
         }
     }
 
-    if ( scalar @$searching ) {
+    if ( scalar @$searching
+        && keys %{ $self->conf->{findUserExcludingAttributes} } )
+    {
         $self->logger->debug("FindUser: reading excluding parameters...");
         foreach ( sort keys %{ $self->conf->{findUserExcludingAttributes} } ) {
             if ( $req->params($_) ) {

@@ -99,13 +99,16 @@ sub findUser {
           : ();
     } keys %demoAccounts;
 
-    my $rank = rand( scalar @results );
     $self->logger->debug(
         'Demo UserDB number of result(s): ' . scalar @results );
-    $self->logger->debug("Demo UserDB random rank: $rank");
-    $self->userLogger->info("FindUser: Demo UserDB returns $results[$rank]");
-    $req->{findUser} = $results[$rank];
-
+    if ( scalar @results ) {
+        my $rank = rand( scalar @results );
+        $self->logger->debug("Demo UserDB random rank: $rank");
+        $self->userLogger->info(
+            "FindUser: Demo UserDB returns $results[$rank]");
+        $req->{findUser} = $results[$rank];
+    }
+    
     PE_OK;
 }
 

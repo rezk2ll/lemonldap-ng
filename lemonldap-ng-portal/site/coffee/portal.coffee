@@ -529,3 +529,7 @@ $(window).on 'load', () ->
 			$("#show-hide-icon-button").addClass 'fa-eye'
 
 	#$('#formpass').on 'submit', changePwd
+
+	if window.location.href.match /\/finduser/
+		console.log 'Set Portal URL: ' + portal
+		window.history.pushState({page: 'Portal'}, 'Portal', portal)

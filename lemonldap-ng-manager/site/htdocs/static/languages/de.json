@@ -329,7 +329,7 @@
 "failedLoginNumber":"Number of registered failed logins",
 "fileToUpload":"File to upload",
 "findUser":"Activation",
-"findUsers":"Search user account",
+"findUsers":"Search for user account",
 "findUserSearchingAttributes":"Searching attributes",
 "findUserExcludingAttributes":"Excluding attributes",
 "forbidden":"You're not authorized to show this page",
