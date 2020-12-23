@@ -17,12 +17,12 @@ use Convert::PEM;
 use URI::URL;
 use Net::SSLeay;
 
-use feature 'state';
+extends qw(
+  Lemonldap::NG::Manager::Plugin
+  Lemonldap::NG::Common::Conf::RESTServer
+);
 
-extends 'Lemonldap::NG::Manager::Plugin',
-  'Lemonldap::NG::Common::Conf::RESTServer';
-
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 #############################
 # I. INITIALIZATION METHODS #
@@ -315,7 +315,8 @@ sub prx {
 
 sub getConfByNum {
     my ( $self, $cfgNum, @args ) = @_;
-    unless ( %{ $self->currentConf }
+    unless ($self->currentConf
+        and %{ $self->currentConf }
         and $cfgNum == $self->currentConf->{cfgNum} )
     {
         my $tmp;
