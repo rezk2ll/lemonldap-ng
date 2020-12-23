@@ -52,7 +52,7 @@ SKIP: {
                 dbiAuthPasswordHash   => '',
                 dbiDynamicHashEnabled => 0,
                 passwordDB            => 'DBI',
-                requireToken          => 1,
+                requireToken          => 0,
                 findUser              => 1,
                 impersonationRule     => 1,
                 findUserSearchingAttributes =>
@@ -65,7 +65,7 @@ SKIP: {
     ## Simple access
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Portal', );
     my ( $host, $url, $query ) =
-      expectForm( $res, '#', undef, 'user', 'password', 'spoofId', 'token' );
+      expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
 
     $request = 'user=dwho';
     ok(
@@ -77,7 +77,7 @@ SKIP: {
         'Post FindFuser request'
     );
     ( $host, $url, $query ) =
-      expectForm( $res, '#', undef, 'user', 'password', 'spoofId', 'token' );
+      expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
     ok( $res->[2]->[0] =~ m%value="dwho"%, 'value="dwho"' )
       or explain( $res->[2]->[0], 'value="dwho"' );
     ok( $res->[2]->[0] =~ m%autocomplete="off"%, 'autocomplete="off"' )

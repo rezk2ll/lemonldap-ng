@@ -50,7 +50,8 @@ sub findUser {
     my ( $self, $req, %args ) = @_;
     my $plugin =
       $self->p->loadedModules->{"Lemonldap::NG::Portal::Plugins::FindUser"};
-    my ( $searching, $excluding, $result ) = $plugin->retreiveFindUserParams($req);
+    my ( $searching, $excluding ) = $plugin->retreiveFindUserParams($req);
+    eval { $self->p->_authentication->setSecurity($req) };
     return PE_OK unless scalar @$searching;
 
     my $table   = $self->table;
@@ -78,21 +79,21 @@ sub findUser {
         $sth = $self->dbh->prepare($request);
         $sth->execute(@args);
     };
-    eval { $self->p->_authentication->setSecurity($req) };
-
     if ($@) {
 
         # If connection isn't available, error is displayed by dbh()
         $self->logger->error("DBI error: $@") if ( $self->_dbh );
         return PE_ERROR;
     }
+
     my $results = $sth->fetchall_arrayref();
     if ( $results->[0]->[0] ) {
         my $rank = rand( scalar @$results );
         $self->logger->debug(
             'DBI UserDB number of result(s): ' . scalar @$results );
         $self->logger->debug("Demo UserDB random rank: $rank");
-        $self->userLogger->info("FindUser: DBI UserDB returns $results->[$rank]->[0]");
+        $self->userLogger->info(
+            "FindUser: DBI UserDB returns $results->[$rank]->[0]");
         $req->{findUser} = $results->[$rank]->[0];
     }
 

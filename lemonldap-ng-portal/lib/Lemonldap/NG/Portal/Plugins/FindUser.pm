@@ -4,14 +4,30 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
+  PE_NOTOKEN
+  PE_TOKENEXPIRED
   PE_FIRSTACCESS
 );
 
 our $VERSION = '2.0.11';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin';
+extends qw(
+  Lemonldap::NG::Portal::Main::Plugin
+  Lemonldap::NG::Portal::Lib::_tokenRule
+);
 
 # INITIALIZATION
+has ott => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        my $ott =
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        $ott->timeout( $_[0]->{conf}->{formTimeout} );
+        return $ott;
+    }
+);
+
 sub init {
     my ($self) = @_;
     my $imp = grep /::Plugins::Impersonation$/, $self->p->enabledPlugins;
@@ -23,13 +39,33 @@ sub init {
 # RUNNING METHOD
 sub provideUser {
     my ( $self, $req ) = @_;
+    my $error;
+
+    # Check token
+    if ( $self->ottRule->( $req, {} ) ) {
+        my $token = $req->param('token');
+        unless ($token) {
+            $self->userLogger->warn('FindUser called without token');
+            $error = PE_NOTOKEN;
+        }
+        unless ( $self->ott->getToken($token) ) {
+            $self->userLogger->warn(
+                'FindUser called with an expired/bad token');
+            $error = PE_TOKENEXPIRED;
+        }
+    }
+    if ($error) {
+        eval { $self->p->_authentication->setSecurity($req) };
+        return $self->p->do( $req, [ sub { $error } ] );
+    }
+
     $req->steps( ['findUser'] );
-    if ( my $error = $self->p->process($req) ) {
+    if ( $error = $self->p->process($req) ) {
         $self->logger->debug("Process returned error: $error");
         return $req->error($error);
     }
-    $req->mustRedirect(1);
 
+    $req->mustRedirect(0);
     return $self->sendJSONresponse(
         $req,
         {

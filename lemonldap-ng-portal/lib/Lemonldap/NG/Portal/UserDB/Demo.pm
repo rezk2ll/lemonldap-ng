@@ -77,6 +77,7 @@ sub findUser {
     my $plugin =
       $self->p->loadedModules->{"Lemonldap::NG::Portal::Plugins::FindUser"};
     my ( $searching, $excluding ) = $plugin->retreiveFindUserParams($req);
+    eval { $self->p->_authentication->setSecurity($req) };
     return PE_OK unless scalar @$searching;
 
     my $cond = '';
@@ -105,7 +106,6 @@ sub findUser {
     $self->userLogger->info("FindUser: Demo UserDB returns $results[$rank]");
     $req->{findUser} = $results[$rank];
 
-    eval { $self->p->_authentication->setSecurity($req) };
     PE_OK;
 }
 
