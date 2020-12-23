@@ -201,7 +201,6 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
             version          => "U2F_V2"
         }
     );
-    ( $host, $url, $query );
     $query = Lemonldap::NG::Common::FormEncode::build_urlencoded(
         registration => $registrationData,
         challenge    => $res->[2]->[0],

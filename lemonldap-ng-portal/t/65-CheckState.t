@@ -80,7 +80,7 @@ ok(
     ),
     'Test correct secret with good user auth'
 );
-my $j = expectJSON($res);
+$j = expectJSON($res);
 is( $j->{result}, 1, "response has a result key with value 1" );
 
 done_testing();

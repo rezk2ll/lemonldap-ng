@@ -192,7 +192,6 @@ $pdata = expectCookie( $res, 'lemonldappdata' );
 is( $pdata, '', "Pdata was cleared" );
 count(1);
 
-( $host, my $tmp );
 ( $host, $url, $query ) =
   expectForm( $res, undef, qr#/oauth2/authorize.*#, 'confirm' );
 

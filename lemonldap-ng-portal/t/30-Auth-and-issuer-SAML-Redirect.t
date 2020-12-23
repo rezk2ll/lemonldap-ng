@@ -106,7 +106,6 @@ SKIP: {
         ),
         'Unauth SP request'
     );
-    ( $host, $url, $query );
     ( $url, $query ) = expectRedirection( $res,
         qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
 
