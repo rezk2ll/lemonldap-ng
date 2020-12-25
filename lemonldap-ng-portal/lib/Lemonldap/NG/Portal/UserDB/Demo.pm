@@ -15,20 +15,20 @@ our $VERSION = '2.0.11';
 
 # Sample accounts from Doctor Who characters
 our %demoAccounts = (
+    'dwho' => {
+        uid  => 'dwho',
+        cn   => 'Doctor Who',
+        mail => 'dwho@badwolf.org',
+    },
     'rtyler' => {
-        'uid'  => 'rtyler',
-        'cn'   => 'Rose Tyler',
-        'mail' => 'rtyler@badwolf.org',
+        uid  => 'rtyler',
+        cn   => 'Rose Tyler',
+        mail => 'rtyler@badwolf.org',
     },
     'msmith' => {
-        'uid'  => 'msmith',
-        'cn'   => 'Mickey Smith',
-        'mail' => 'msmith@badwolf.org',
-    },
-    'dwho' => {
-        'uid'  => 'dwho',
-        'cn'   => 'Doctor Who',
-        'mail' => 'dwho@badwolf.org',
+        uid  => 'msmith',
+        cn   => 'Mickey Smith',
+        mail => 'msmith@badwolf.org',
     },
 );
 
@@ -91,9 +91,11 @@ sub findUser {
 
     $self->logger->debug("Demo UserDB built condition: $cond");
     my @results = map {
+        my $uid  = $demoAccounts{$_}->{uid};
         my $cn   = $demoAccounts{$_}->{cn};
         my $mail = $demoAccounts{$_}->{mail};
-        my $uid  = $demoAccounts{$_}->{uid};
+        my $guy  = $demoAccounts{$_}->{guy} // 'good';
+        my $type = $demoAccounts{$_}->{type} // 'character';
         eval "($cond)"
           ? $_
           : ();
@@ -108,7 +110,7 @@ sub findUser {
             "FindUser: Demo UserDB returns $results[$rank]");
         $req->{findUser} = $results[$rank];
     }
-    
+
     PE_OK;
 }
 

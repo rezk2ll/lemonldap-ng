@@ -5,9 +5,8 @@ use IO::String;
 
 require 't/test-lib.pm';
 
-my $res;
-my $maintests = 34;
 
+my $maintests = 41;
 my $userdb = tempdb();
 
 SKIP: {
@@ -20,44 +19,44 @@ SKIP: {
     my $request;
     my $dbh = DBI->connect("dbi:SQLite:dbname=$userdb");
     $dbh->do(
-'CREATE TABLE users (user text,password text,name text, type text, guy text)'
+'CREATE TABLE users (uid text,password text,cn text, type text, guy text)'
     );
     $dbh->do(
-        "INSERT INTO users VALUES ('dwho','dwho','Doctor who', 'serie', 'good')"
+"INSERT INTO users VALUES ('dwho','dwho','Doctor who', 'character', 'good')"
     );
     $dbh->do(
-"INSERT INTO users VALUES ('rtyler','rtyler','Rose Tyler', 'serie', 'good')"
+"INSERT INTO users VALUES ('rtyler','rtyler','Rose Tyler', 'character', 'good')"
     );
     $dbh->do(
-        "INSERT INTO users VALUES ('davros','davros','Davros', 'serie', 'bad')"
+"INSERT INTO users VALUES ('davros','davros','Bad Guy', 'character', 'bad')"
     );
     $dbh->do(
-"INSERT INTO users VALUES ('msmith','msmith','Mr Smith', 'serie', 'good')"
+"INSERT INTO users VALUES ('msmith','msmith','Mr Smith', 'character', 'good')"
     );
     $dbh->do(
-        "INSERT INTO users VALUES ('spoke','spoke','Mr Spoke', 'movie', 'good')"
+"INSERT INTO users VALUES ('dalek','dalek,'The Daleks', 'mutant', 'bad')"
     );
     my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel              => 'error',
-                useSafeJail           => 1,
                 authentication        => 'DBI',
                 userDB                => 'Same',
                 dbiAuthChain          => "dbi:SQLite:dbname=$userdb",
                 dbiAuthUser           => '',
                 dbiAuthPassword       => '',
                 dbiAuthTable          => 'users',
-                dbiAuthLoginCol       => 'user',
+                dbiAuthLoginCol       => 'uid',
                 dbiAuthPasswordCol    => 'password',
                 dbiAuthPasswordHash   => '',
                 dbiDynamicHashEnabled => 0,
-                passwordDB            => 'DBI',
+                useSafeJail           => 1,
                 requireToken          => 0,
                 findUser              => 1,
                 impersonationRule     => 1,
                 findUserSearchingAttributes =>
-                  { user => 'Login', guy => 'Kind' },
-                findUserExcludingAttributes => { type => 'movie' },
+                  { uid => 'Login', guy => 'Kind', cn => 'Name' },
+                findUserExcludingAttributes =>
+                  { type => 'mutant', uid => 'rtyler' },
             }
         }
     );
@@ -65,9 +64,28 @@ SKIP: {
     ## Simple access
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Portal', );
     my ( $host, $url, $query ) =
-      expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
+      expectForm( $res, '#', undef, 'uid', 'password', 'spoofId' );
 
-    $request = 'user=dwho';
+    $request = '';
+    ok(
+        $res = $client->_post(
+            '/finduser', IO::String->new($request),
+            accept => 'text/html',
+            length => length($request)
+        ),
+        'Post empty FindFuser request'
+    );
+    ( $host, $url, $query ) =
+      expectForm( $res, '#', undef, 'uid', 'password', 'spoofId' );
+    ( $host, $url, $query ) =
+      expectForm( $res, '#', undef, 'user', 'guy', 'cn' );
+    ok(
+        $res->[2]->[0] =~
+m%<input id="spoofIdfield" name="spoofId" type="text" class="form-control" value="" autocomplete="off"%,
+        'value=""'
+    ) or explain( $res->[2]->[0], 'value=""' );
+
+    $request = 'uid=dwho';
     ok(
         $res = $client->_post(
             '/finduser', IO::String->new($request),
@@ -76,26 +94,32 @@ SKIP: {
         ),
         'Post FindFuser request'
     );
-    ( $host, $url, $query ) =
-      expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
     ok( $res->[2]->[0] =~ m%value="dwho"%, 'value="dwho"' )
       or explain( $res->[2]->[0], 'value="dwho"' );
     ok( $res->[2]->[0] =~ m%autocomplete="off"%, 'autocomplete="off"' )
       or explain( $res->[2]->[0], 'autocomplete="off"' );
-    ok( $res->[2]->[0] =~ m%<span trspan="searchAccount">Search for an account</span>%, 'Search an account' )
-      or explain( $res->[2]->[0], 'Search for an account' );
+    ok(
+        $res->[2]->[0] =~
+          m%<span trspan="searchAccount">Search for an account</span>%,
+        'Search an account'
+    ) or explain( $res->[2]->[0], 'Search for an account' );
     ok(
         $res->[2]->[0] =~
 m%<input id="findUser_guy" name="guy" type="text" autocomplete="off" class="form-control" placeholder="Kind" />%,
-        'id="findUserguy"'
-    ) or explain( $res->[2]->[0], 'id="findUserguy"' );
+        'id="findUser_guy"'
+    ) or explain( $res->[2]->[0], 'id="findUser_guy"' );
     ok(
         $res->[2]->[0] =~
-m%<input id="findUser_user" name="user" type="text" autocomplete="off" class="form-control" placeholder="Login" />%,
-        'id="findUseruser"'
-    ) or explain( $res->[2]->[0], 'id="findUseruser"' );
+m%<input id="findUser_uid" name="uid" type="text" autocomplete="off" class="form-control" placeholder="Login" />%,
+        'id="findUser_uid"'
+    ) or explain( $res->[2]->[0], 'id="findUser_uid"' );
+    ok(
+        $res->[2]->[0] =~
+m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-control" placeholder="Name" />%,
+        'id="findUser_cn"'
+    ) or explain( $res->[2]->[0], 'id="findUser_cn"' );
 
-    $request = 'user=dwho';
+    $request = 'uid=dwho';
     ok(
         $res = $client->_post(
             '/finduser', IO::String->new($request),
@@ -109,7 +133,7 @@ m%<input id="findUser_user" name="user" type="text" autocomplete="off" class="fo
     ok( $json->{user} eq 'dwho', ' Good user' )
       or explain( $json, 'user => dwho' );
 
-    $request = 'user=dwo';
+    $request = 'user=ohwd';
     ok(
         $res = $client->_post(
             '/finduser', IO::String->new($request),
@@ -123,7 +147,7 @@ m%<input id="findUser_user" name="user" type="text" autocomplete="off" class="fo
     ok( $json->{user} eq '', ' No user' )
       or explain( $json, "user => ''" );
 
-    $request = 'guy=bad';
+    $request = 'cn=Bad Guy';
     ok(
         $res = $client->_post(
             '/finduser', IO::String->new($request),
@@ -137,7 +161,7 @@ m%<input id="findUser_user" name="user" type="text" autocomplete="off" class="fo
     ok( $json->{user} eq 'davros', ' Good user' )
       or explain( $json, "user => 'davros'" );
 
-    $request = 'guy=good&type=serie';
+    $request = 'guy=good';
     ok(
         $res = $client->_post(
             '/finduser', IO::String->new($request),
@@ -148,7 +172,7 @@ m%<input id="findUser_user" name="user" type="text" autocomplete="off" class="fo
     );
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
       or print STDERR "$@\n" . Dumper($res);
-    ok( $json->{user} =~ /^(dwho|rtyler|msmith)$/, " Good user ($1)" )
+    ok( $json->{user} =~ /^(dwho|msmith)$/, " Good user ($1)" )
       or explain( $json, "user => $1" );
 
     $request = 'arg=good';
@@ -167,7 +191,7 @@ m%<input id="findUser_user" name="user" type="text" autocomplete="off" class="fo
     ok( $json->{user} eq '', ' No user' )
       or explain( $json, 'user => ?' );
 
-    $request = 'guy=good&user=msmith';
+    $request = 'guy=good&uid=msmith';
     ok(
         $res = $client->_post(
             '/finduser', IO::String->new($request),
@@ -181,7 +205,7 @@ m%<input id="findUser_user" name="user" type="text" autocomplete="off" class="fo
     ok( $json->{user} eq 'msmith', ' Good user' )
       or explain( $json, 'user => msmith' );
 
-    $request = 'guy=bad&user=msmith';
+    $request = 'guy=bad&uid=msmith';
     ok(
         $res = $client->_post(
             '/finduser', IO::String->new($request),
@@ -197,7 +221,23 @@ m%<input id="findUser_user" name="user" type="text" autocomplete="off" class="fo
     ok( $json->{user} eq '', ' No user' )
       or explain( $json, 'user => ?' );
 
-    $request = 'user=spoke&type=good';
+    $request = 'uid=dalek';
+    ok(
+        $res = $client->_post(
+            '/finduser', IO::String->new($request),
+            accept => 'application/json',
+            length => length($request)
+        ),
+        'Post FindFuser request with excluding result'
+    );
+    ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+      or print STDERR "$@\n" . Dumper($res);
+    ok( $json->{result} == 1, ' Good result' )
+      or explain( $json, 'result => 1' );
+    ok( $json->{user} eq '', ' No user' )
+      or explain( $json, 'user => ?' );
+
+    $request = 'uid=rtyler';
     ok(
         $res = $client->_post(
             '/finduser', IO::String->new($request),

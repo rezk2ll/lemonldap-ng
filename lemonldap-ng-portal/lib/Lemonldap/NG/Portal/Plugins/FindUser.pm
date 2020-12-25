@@ -30,8 +30,9 @@ has ott => (
 
 sub init {
     my ($self) = @_;
-    my $imp = grep /::Plugins::Impersonation$/, $self->p->enabledPlugins;
-    $self->addUnauthRoute( finduser => 'provideUser', ['POST'] ) if $imp;
+    ( my $imp = grep /::Plugins::Impersonation$/, $self->p->enabledPlugins )
+      ? $self->addUnauthRoute( finduser => 'provideUser', ['POST'] )
+      : $self->logger->warn('FindUser plugin enabled without Impersonation');
 
     return 1;
 }
@@ -91,15 +92,13 @@ sub retreiveFindUserParams {
     {
         $self->logger->debug("FindUser: reading excluding parameters...");
         foreach ( sort keys %{ $self->conf->{findUserExcludingAttributes} } ) {
-            if ( $req->params($_) ) {
-                $self->logger->debug( "Pushing excluded parameter: $_ => "
-                      . $self->conf->{findUserExcludingAttributes}->{$_} );
-                push @$excluding,
-                  {
-                    key   => $_,
-                    value => $self->conf->{findUserExcludingAttributes}->{$_}
-                  };
-            }
+            $self->logger->debug( "Pushing excluded parameter: $_ => "
+                  . $self->conf->{findUserExcludingAttributes}->{$_} );
+            push @$excluding,
+              {
+                key   => $_,
+                value => $self->conf->{findUserExcludingAttributes}->{$_}
+              };
         }
     }
 
