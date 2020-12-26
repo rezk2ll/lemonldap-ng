@@ -5,7 +5,7 @@ Release notes
 -------------
 
 Release notes for latest version:
-https://projects.ow2.org/view/lemonldap-ng/lemonldap-ng-2-0-8-is-out/
+https://projects.ow2.org/view/lemonldap-ng/lemonldap-ng-2-0-9-is-out
 
 Go on https://projects.ow2.org/bin/view/lemonldap-ng/ for older
 versions.
@@ -15,13 +15,13 @@ See also :doc:`upgrade notes<upgrade>`.
 Packages and archives
 ---------------------
 
-Stable version (2.0.8)
+Stable version (2.0.9)
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Tarball
 ^^^^^^^
 
--  `Tarball <https://release.ow2.org/lemonldap/lemonldap-ng-2.0.8.tar.gz>`__
+-  `Tarball <https://release.ow2.org/lemonldap/lemonldap-ng-2.0.9.tar.gz>`__
 
 RPM
 ^^^
@@ -38,17 +38,17 @@ RHEL/CentOS 7
 '''''''''''''
 
 -  `RPM
-   bundle <https://release.ow2.org/lemonldap/lemonldap-ng-2.0.8_el7.rpm.tar.gz>`__
+   bundle <https://release.ow2.org/lemonldap/lemonldap-ng-2.0.9_el7.rpm.tar.gz>`__
 -  `Source
-   RPM <https://release.ow2.org/lemonldap/lemonldap-ng-2.0.8-1.el7.src.rpm>`__
+   RPM <https://release.ow2.org/lemonldap/lemonldap-ng-2.0.9-1.el7.src.rpm>`__
 
 RHEL/CentOS 8
 '''''''''''''
 
 -  `RPM
-   bundle <https://release.ow2.org/lemonldap/lemonldap-ng-2.0.8_el8.rpm.tar.gz>`__
+   bundle <https://release.ow2.org/lemonldap/lemonldap-ng-2.0.9_el8.rpm.tar.gz>`__
 -  `Source
-   RPM <https://release.ow2.org/lemonldap/lemonldap-ng-2.0.8-1.el8.src.rpm>`__
+   RPM <https://release.ow2.org/lemonldap/lemonldap-ng-2.0.9-1.el8.src.rpm>`__
 
 Debian
 ^^^^^^
@@ -67,7 +67,7 @@ Debian
 
 
 -  `DEB
-   bundle <https://release.ow2.org/lemonldap/lemonldap-ng-2.0.8_deb.tar.gz>`__
+   bundle <https://release.ow2.org/lemonldap/lemonldap-ng-2.0.9_deb.tar.gz>`__
 
 Docker
 ^^^^^^

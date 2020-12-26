@@ -14,13 +14,13 @@ LL::NG is designed using `Model–View–Controller software
 architecture <http://en.wikipedia.org/wiki/Model%E2%80%93View%E2%80%93Controller>`__,
 so you just have to
 :doc:`change HTML/CSS files<portalcustom>` to
-custom portal.
+customize the portal.
 
 Easy to integrate
 -----------------
 
 :doc:`Integrating applications<applications>` in
-LL::NG is easy since its dialog with applications is based on
+LL::NG is easy since its dialogue with applications is based on
 :ref:`customizable HTTP headers<headers>`.
 
 Unifying authentications (Identity Federation)
@@ -32,7 +32,7 @@ heterogeneous architecture. LL:NG can be set as Identity provider,
 Service Provider or Protocol Proxy
 (:doc:`LL::NG as federation protocol proxy<federationproxy>`).
 
-Its SOAP API can also be used to dialog directly with your custom
+Its SOAP API can also be used to dialogue directly with your custom
 applications.
 
 Sessions
@@ -48,9 +48,9 @@ opened sessions:
 
 -  by users
 -  by IP *(IPv4 and IPv6)*
--  by date
 -  by double IP (sessions opened by the same user from multiple
    computers)
+-  by date
 
 It can be used to delete a session
 
@@ -61,7 +61,7 @@ Session restrictions
 
 By default, a user can open several
 :doc:`sessions<sessions>`. LL::NG can restrict
-this:
+the following:
 
 -  Allow only one session per user
 -  Allow only one IP address per user
@@ -78,11 +78,11 @@ LL::NG can be configured to provides
 -  one secured (SSL only) for sensitive applications
 -  one unsecured for other applications
 
-So if the http cookie is stolen, sensitive applications stay secured.
+So that if the http cookie is stolen, sensitive applications remain secured.
 
 Notifications
 -------------
 
-LL::NG can be used to prompt users with a message. This can be used to
-notify right changes,... See
-:doc:`notifications<notifications>` for more.
+LL::NG can be used to notify users with a message when authenticating. This can be used to
+inform of a change in access rights, the publication of a new IT charter, etc. (See
+:doc:`notifications<notifications>` for more details)
