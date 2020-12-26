@@ -164,12 +164,13 @@ sub check {
             $msg   = PE_NOTOKEN;
             $token = $self->ott->createToken();
         }
-
-        unless ( $self->ott->getToken($token) ) {
-            $self->userLogger->warn(
-                'CheckUser called with an expired/bad token');
-            $msg   = PE_TOKENEXPIRED;
-            $token = $self->ott->createToken();
+        else {
+            unless ( $self->ott->getToken($token) ) {
+                $self->userLogger->warn(
+                    'CheckUser called with an expired/bad token');
+                $msg   = PE_TOKENEXPIRED;
+                $token = $self->ott->createToken();
+            }
         }
 
         my $params = {
