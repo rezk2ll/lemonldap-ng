@@ -7,16 +7,12 @@ use Safe;
 extends 'Lemonldap::NG::Portal::Lib::Wrapper';
 with 'Lemonldap::NG::Portal::Lib::OverConf';
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.11';
 
 has modules => ( is => 'rw', default => sub { {} } );
-
-has rules => ( is => 'rw', default => sub { {} } );
-
-has type => ( is => 'rw' );
-
-has catch => ( is => 'rw', default => sub { {} } );
-
+has rules   => ( is => 'rw', default => sub { {} } );
+has type    => ( is => 'rw' );
+has catch      => ( is => 'rw', default => sub { {} } );
 has sessionKey => ( is => 'ro', default => '_choice' );
 
 my $_choiceRules;
@@ -102,7 +98,6 @@ sub checkChoice {
 
     # Check Choice from pdata
     if ( defined $req->pdata->{_choice} ) {
-
         $name = $req->pdata->{_choice};
         $self->logger->debug("Choice $name selected from pdata");
     }
@@ -127,8 +122,8 @@ sub checkChoice {
              $req->param( $self->conf->{authChoiceParam} )
           || $req->userData->{_choice}
           || $req->sessionInfo->{_choice}
+          || $req->data->{findUserChoice}
           or return 0;
-
         $self->logger->debug("Choice $name selected");
     }
 
@@ -137,13 +132,18 @@ sub checkChoice {
         return 0;
     }
 
-    # Store choice if module loops
-    $req->pdata->{_choice}    = $name;
-    $req->data->{_authChoice} = $name;
+    unless ( $req->data->{findUserChoice} ) {
+
+        # Store choice if module loops
+        $req->pdata->{_choice}       = $name;
+        $req->data->{_authChoice}    = $name;
+        $req->sessionInfo->{_choice} = $name;
+        $self->p->_authentication->authnLevel("${name}AuthnLevel");
+    }
+
     return $name if ( $req->data->{ "enabledMods" . $self->type } );
-    $req->sessionInfo->{_choice} = $name;
-    $req->data->{ "enabledMods" . $self->type } = [ $self->modules->{$name} ];
-    $self->p->_authentication->authnLevel("${name}AuthnLevel");
+    $req->data->{ "enabledMods" . $self->type } =
+      [ $self->modules->{$name} ];
     return $name;
 }
 

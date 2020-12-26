@@ -60,6 +60,7 @@
 "authChain":"Chaîne d'authentification",
 "authChoice":"Choix d'authentification",
 "authChoiceAuthBasic":"Paramètre du handler AuthBasic",
+"authChoiceFindUser":"Paramètre de recherche de compte",
 "authChoiceModules":"Modules autorisés",
 "authChoiceParam":"Paramètre de l'URL",
 "authentication":"Module d'authentification",

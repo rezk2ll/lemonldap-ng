@@ -60,6 +60,7 @@
 "authChain":"Łańcuch uwierzytelnienia",
 "authChoice":"Wybór uwierzytelnienia",
 "authChoiceAuthBasic":"Parametr handlera AuthBasic",
+"authChoiceFindUser":"FindUser plugin parameter",
 "authChoiceModules":"Dozwolone moduły",
 "authChoiceParam":"Parametr adresu URL",
 "authentication":"Moduł uwierzytelnienia",

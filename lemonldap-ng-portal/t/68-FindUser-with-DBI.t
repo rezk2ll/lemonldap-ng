@@ -18,22 +18,22 @@ SKIP: {
     my $request;
     my $dbh = DBI->connect("dbi:SQLite:dbname=$userdb");
     $dbh->do(
-'CREATE TABLE users (uid text,password text,cn text, type text, guy text)'
+'CREATE TABLE users (uid text,password text,cn text,type text,guy text)'
     );
     $dbh->do(
-"INSERT INTO users VALUES ('dwho','dwho','Doctor who', 'character', 'good')"
+"INSERT INTO users VALUES ('dwho','dwho','Doctor who', 'character','good')"
     );
     $dbh->do(
-"INSERT INTO users VALUES ('rtyler','rtyler','Rose Tyler', 'character', 'good')"
+"INSERT INTO users VALUES ('rtyler','rtyler','Rose Tyler','character','good')"
     );
     $dbh->do(
-"INSERT INTO users VALUES ('davros','davros','Bad Guy', 'character', 'bad')"
+"INSERT INTO users VALUES ('davros','davros','Bad Guy','character','bad')"
     );
     $dbh->do(
-"INSERT INTO users VALUES ('msmith','msmith','Mr Smith', 'character', 'good')"
+"INSERT INTO users VALUES ('msmith','msmith','Mr Smith','character','good')"
     );
     $dbh->do(
-"INSERT INTO users VALUES ('dalek','dalek,'The Daleks', 'mutant', 'bad')"
+"INSERT INTO users VALUES ('dalek','dalek', 'The Daleks','mutant','bad')"
     );
     my $client = LLNG::Manager::Test->new( {
             ini => {

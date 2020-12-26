@@ -3769,6 +3769,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             documentation => 'Auth module used by AuthBasic handler',
         },
+        authChoiceFindUser => {
+            type          => 'text',
+            documentation => 'Auth module used by FindUser plugin',
+        },
         authChoiceModules => {
             type       => 'authChoiceContainer',
             keyTest    => qr/^(\d*)?[a-zA-Z0-9_]+$/,

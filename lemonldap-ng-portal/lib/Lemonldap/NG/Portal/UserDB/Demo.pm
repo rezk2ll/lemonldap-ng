@@ -66,6 +66,7 @@ sub getUser {
     }
 
     eval { $self->p->_authentication->setSecurity($req) };
+    
     PE_BADCREDENTIALS;
 }
 
@@ -108,7 +109,7 @@ sub findUser {
         $self->logger->debug("Demo UserDB random rank: $rank");
         $self->userLogger->info(
             "FindUser: Demo UserDB returns $results[$rank]");
-        $req->{findUser} = $results[$rank];
+        $req->data->{findUser} = $results[$rank];
     }
 
     PE_OK;
@@ -148,6 +149,7 @@ sub setGroups {
     }
     $req->sessionInfo->{groups}  = $groups;
     $req->sessionInfo->{hGroups} = $hGroups;
+
     PE_OK;
 }
 

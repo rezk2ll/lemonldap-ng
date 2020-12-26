@@ -950,6 +950,21 @@ sub tests {
                 and scalar
                 keys %{ $conf->{findUserSearchingAttributes} } == 0 );
             return 1;
+        },
+
+        # AuthChoice parameters must be defined
+        AuthChoiceParams => sub {
+            return 1 unless %{ $conf->{authChoiceModules} };
+            foreach (qw(AuthBasic FindUser)) {
+                if ( $conf->{"authChoice$_"} ) {
+                    my $test = $conf->{"authChoice$_"};
+                    my $choice = grep /$test/,
+                      keys %{ $conf->{authChoiceModules} };
+                    return ( -1, "Choice $_ parameter is not defined" )
+                      unless $choice;
+                }
+            }
+            return 1;
         }
     };
 }

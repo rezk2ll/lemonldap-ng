@@ -306,6 +306,9 @@ sub attributes {
         'authChoiceAuthBasic' => {
             'type' => 'text'
         },
+        'authChoiceFindUser' => {
+            'type' => 'text'
+        },
         'authChoiceModules' => {
             'keyMsgFail' => '__badChoiceKey__',
             'keyTest'    => qr/^(\d*)?[a-zA-Z0-9_]+$/,

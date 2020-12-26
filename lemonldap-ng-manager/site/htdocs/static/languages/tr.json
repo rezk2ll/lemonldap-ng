@@ -60,6 +60,7 @@
 "authChain":"Doğrulama zinciri",
 "authChoice":"Kimlik doğrulama tercihi",
 "authChoiceAuthBasic":"AuthBasic işleyici parametresi",
+"authChoiceFindUser":"FindUser plugin parameter",
 "authChoiceModules":"İzin verilen modüller",
 "authChoiceParam":"URL parametresi",
 "authentication":"Doğrulama modülü",

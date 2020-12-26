@@ -144,8 +144,8 @@ sub tree {
                             title => 'choiceParams',
                             help  => 'authchoice.html',
                             nodes => [
-                                'authChoiceParam', 'authChoiceModules',
-                                'authChoiceAuthBasic'
+                                'authChoiceParam',     'authChoiceModules',
+                                'authChoiceAuthBasic', 'authChoiceFindUser'
                             ]
                         },
                         {
@@ -785,7 +785,7 @@ sub tree {
                             ]
                         },
                         {
-                        title => 'findUsers',
+                            title => 'findUsers',
                             help  => 'finduser.html',
                             nodes => [
                                 'findUser',

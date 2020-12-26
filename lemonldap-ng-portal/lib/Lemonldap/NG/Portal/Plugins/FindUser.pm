@@ -48,8 +48,7 @@ sub provideUser {
     if ( $self->ottRule->( $req, {} ) ) {
         my $token = $req->param('token');
         unless ($token) {
-            $self->userLogger->warn(
-                'FindUser called without token ' . $token );
+            $self->userLogger->warn('FindUser called without token');
             $error = PE_NOTOKEN;
         }
         else {
@@ -66,14 +65,16 @@ sub provideUser {
     }
 
     $req->steps( ['findUser'] );
+    $req->data->{findUserChoice} = $self->conf->{authChoiceFindUser};
     if ( $error = $self->p->process($req) ) {
         $self->logger->debug("Process returned error: $error");
-        return $req->error($error);
+        eval { $self->p->_authentication->setSecurity($req) };
+        return $self->p->do( $req, [ sub { $error } ] );
     }
     return $self->sendJSONresponse(
         $req,
         {
-            user   => ( $req->{findUser} ? $req->{findUser} : '' ),
+            user   => ( $req->data->{findUser} ? $req->data->{findUser} : '' ),
             result => 1
         }
     ) if $req->wantJSON;

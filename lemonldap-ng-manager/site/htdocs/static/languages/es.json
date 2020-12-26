@@ -60,6 +60,7 @@
 "authChain":"Cadena de autentificación",
 "authChoice":"Opción de autentificación",
 "authChoiceAuthBasic":"AuthBasic handler parameter",
+"authChoiceFindUser":"FindUser plugin parameter",
 "authChoiceModules":"Módulos permitidos",
 "authChoiceParam":"Parámetro URL",
 "authentication":"Módulo de autentificación",
