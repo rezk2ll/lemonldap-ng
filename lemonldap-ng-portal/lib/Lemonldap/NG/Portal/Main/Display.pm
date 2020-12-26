@@ -479,11 +479,12 @@ sub display {
 
         # Display authentication form
         else {
-            my $fields = [];
+            my $fields   = [];
             if (   $self->conf->{findUser}
+                && $self->conf->{impersonationRule}
                 && $self->conf->{findUserSearchingAttributes} )
             {
-                $login = $req->{findUser};
+                $login    = $req->{findUser};
                 $self->logger->debug(
                     'Building array ref with searching fields...');
                 @$fields = map { {
@@ -509,7 +510,7 @@ sub display {
                     DISPLAY_YUBIKEY_FORM => 0,
                     FIELDS               => $fields,
                     SPOOFID              => $req->{findUser},
-                    FINDUSER => $self->conf->{findUser} && scalar @$fields
+                    FINDUSER             => scalar @$fields
                 );
             }
 
@@ -543,7 +544,7 @@ sub display {
                     MSG      => $req->info(),
                     FIELDS   => $fields,
                     SPOOFID  => $req->{findUser},
-                    FINDUSER => $self->conf->{findUser} && scalar @$fields
+                    FINDUSER => scalar @$fields
                 );
 
             }

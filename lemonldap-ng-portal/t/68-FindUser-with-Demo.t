@@ -30,7 +30,7 @@ my $client = LLNG::Manager::Test->new( {
 ## Simple access
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Portal', );
 my ( $host, $url, $query ) =
-  expectForm( $res, '#', undef, 'uid', 'password', 'spoofId' );
+  expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
 
 $request = '';
 ok(

@@ -679,6 +679,8 @@ t/68-ContextSwitching.t
 t/68-FindUser-with-DBI.t
 t/68-FindUser-with-Demo-and-token.t
 t/68-FindUser-with-Demo.t
+t/68-FindUser-without-attribute.t
+t/68-FindUser-without-Impersonation.t
 t/68-Impersonation-with-2F.t
 t/68-Impersonation-with-doubleCookies.t
 t/68-Impersonation-with-filtered-merge.t

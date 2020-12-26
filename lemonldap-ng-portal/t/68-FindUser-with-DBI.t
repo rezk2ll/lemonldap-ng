@@ -5,9 +5,8 @@ use IO::String;
 
 require 't/test-lib.pm';
 
-
 my $maintests = 41;
-my $userdb = tempdb();
+my $userdb    = tempdb();
 
 SKIP: {
     eval { require DBI; require DBD::SQLite; };
@@ -64,8 +63,9 @@ SKIP: {
     ## Simple access
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Portal', );
     my ( $host, $url, $query ) =
-      expectForm( $res, '#', undef, 'uid', 'password', 'spoofId' );
-
+      expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
+    ( $host, $url, $query ) =
+      expectForm( $res, '#', undef, 'uid', 'guy', 'cn' );
     $request = '';
     ok(
         $res = $client->_post(

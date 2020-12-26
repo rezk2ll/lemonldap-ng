@@ -33,6 +33,8 @@ sub init {
     ( my $imp = grep /::Plugins::Impersonation$/, $self->p->enabledPlugins )
       ? $self->addUnauthRoute( finduser => 'provideUser', ['POST'] )
       : $self->logger->warn('FindUser plugin enabled without Impersonation');
+    $self->logger->warn('FindUser plugin enabled without searching attribute')
+      unless keys %{ $self->conf->{findUserSearchingAttributes} };
 
     return 1;
 }

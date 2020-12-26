@@ -8,7 +8,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_DECRYPTVALUE_SERVICE_NOT_ALLOWED
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.11';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
