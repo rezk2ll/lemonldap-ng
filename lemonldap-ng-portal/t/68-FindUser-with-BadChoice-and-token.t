@@ -37,8 +37,11 @@ my ( $host, $url, $query ) =
 ( $host, $url, $query ) =
   expectForm( $res, '#', undef, 'uid', 'guy', 'cn', 'token' );
 my @form = ( $res->[2]->[0] =~ m#<form.*?</form>#sg );
-ok( @form == 3, 'Display 3 forms' );
-count(2);
+ok( @form == 3, 'Display 3 forms' )
+  or explain( $res->[2]->[0], 'Forms are missing' );
+ok( $query =~ /lmAuth=2_ssl/, 'lmAuth=2_ssl' )
+  or explain( $query, 'lmAuth is not well defined' );
+count(3);
 
 $query =~ s/uid=/uid=dwho/;
 ok(

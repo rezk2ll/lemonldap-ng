@@ -71,6 +71,7 @@ sub provideUser {
         eval { $self->p->_authentication->setSecurity($req) };
         return $self->p->do( $req, [ sub { $error } ] );
     }
+    
     return $self->sendJSONresponse(
         $req,
         {

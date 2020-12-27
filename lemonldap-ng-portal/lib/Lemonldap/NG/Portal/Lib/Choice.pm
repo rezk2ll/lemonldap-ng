@@ -124,7 +124,12 @@ sub checkChoice {
           || $req->userData->{_choice}
           || $req->sessionInfo->{_choice}
           or return 0;
-        $self->logger->debug("Choice $name selected");
+        my $from =
+            $req->data->{findUserChoice}                  ? 'findUser'
+          : $req->param( $self->conf->{authChoiceParam} ) ? 'param'
+          : $req->userData->{_choice}                     ? 'userData'
+          :                                                 'sessionInfo';
+        $self->logger->debug("Choice $name selected from $from");
     }
 
     unless ( defined $self->modules->{$name} ) {
