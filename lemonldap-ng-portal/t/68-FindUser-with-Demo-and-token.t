@@ -100,7 +100,7 @@ ok(
         accept => 'application/json',
         length => length($query)
     ),
-    'Post FindFuser request without token'
+    'Post FindFuser request with token'
 );
 my $id = expectCookie($res);
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )

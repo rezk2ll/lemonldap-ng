@@ -119,10 +119,10 @@ sub checkChoice {
 
         # Check with other methods
         $name ||=
-             $req->param( $self->conf->{authChoiceParam} )
+             $req->data->{findUserChoice}
+          || $req->param( $self->conf->{authChoiceParam} )
           || $req->userData->{_choice}
           || $req->sessionInfo->{_choice}
-          || $req->data->{findUserChoice}
           or return 0;
         $self->logger->debug("Choice $name selected");
     }

@@ -676,6 +676,8 @@ t/68-ContextSwitching-with-Logout.t
 t/68-ContextSwitching-with-TOTP-and-Notification.t
 t/68-ContextSwitching-with-UnrestrictedUser.t
 t/68-ContextSwitching.t
+t/68-FindUser-with-BadChoice-and-token.t
+t/68-FindUser-with-Choice-and-token.t
 t/68-FindUser-with-DBI.t
 t/68-FindUser-with-Demo-and-token.t
 t/68-FindUser-with-Demo.t
