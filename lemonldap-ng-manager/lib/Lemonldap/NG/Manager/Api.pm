@@ -5,12 +5,6 @@ use strict;
 use utf8;
 use Mouse;
 
-extends qw(
-  Lemonldap::NG::Manager::Plugin
-  Lemonldap::NG::Common::Session::REST
-  Lemonldap::NG::Common::Conf::RESTServer
-);
-
 use Lemonldap::NG::Manager::Api::2F;
 use Lemonldap::NG::Manager::Api::Misc;
 use Lemonldap::NG::Manager::Api::Providers::OidcRp;
@@ -18,6 +12,12 @@ use Lemonldap::NG::Manager::Api::Providers::SamlSp;
 use Lemonldap::NG::Manager::Api::Providers::CasApp;
 use Lemonldap::NG::Manager::Api::Menu::Cat;
 use Lemonldap::NG::Manager::Api::Menu::App;
+
+extends qw(
+  Lemonldap::NG::Manager::Plugin
+  Lemonldap::NG::Common::Conf::RESTServer
+  Lemonldap::NG::Common::Session::REST
+);
 
 our $VERSION = '2.0.10';
 

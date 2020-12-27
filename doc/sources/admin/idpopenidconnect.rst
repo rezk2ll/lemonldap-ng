@@ -166,6 +166,8 @@ claim <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__.
 
 .. include:: openidconnectclaims.rst
 
+.. _oidcexportedattr:
+
 For each OpenID Connect claim you want to release to applications, you can define:
 
 * **Claim name**: the name of the claim as it will appear in Userinfo responses

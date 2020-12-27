@@ -69,14 +69,15 @@ or change it, for example for ``mydomain.com``:
       /etc/apache2/sites-available/*
 
 In order to be able to test, update your DNS or your local ``hosts``
-file to map this names to the SSO server IP:
+file to map these names to the SSO server IP:
 
 -  auth.mydomain.com
 -  manager.mydomain.com
 -  test1.mydomain.com
 -  test2.mydomain.com
 
-For example on your local computer (adjust your server IP and test domain)
+For example, you can enter the following command on your local computer: 
+(adjust according to your server IP and test domain)
 
 ::
 
@@ -87,7 +88,11 @@ For example on your local computer (adjust your server IP and test domain)
 Using nip.io (or other DNS wildcard services)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you cannot edit /etc/hosts or your DNS zone, don't give up yet, you can use services such as http://nip.io, http://xip.io, https://sslip.io/, or others.
+If you cannot edit /etc/hosts or your DNS zone, don't give up yet, you can use services such as `nip.io`_, `xip.io`_, `sslip.io`_ or others.
+
+.. _nip.io: http://nip.io/
+.. _xip.io: http://xip.io/
+.. _sslip.io: https://sslip.io
 
 For example, if your server IP is 192.168.12.13, you can use 192-168-12-13.nip.io as your SSO domain:
 

@@ -127,4 +127,25 @@ sub _getSSOMod {
     return $mod;
 }
 
+sub _fix_bool {
+    my $h = shift;
+    if ( ref($h) eq "HASH" ) {
+        for my $k ( keys %{$h} ) {
+            if ( JSON::is_bool( $h->{$k} ) ) {
+                $h->{$k} = $h->{$k} ? 1 : 0;
+            }
+            else {
+                _fix_bool( $h->{$k} );
+            }
+        }
+    }
+}
+
+sub getJsonBody {
+    my ( $self, $req ) = @_;
+    my $obj = $req->jsonBodyToObj;
+    _fix_bool($obj);
+    return $obj;
+}
+
 1;

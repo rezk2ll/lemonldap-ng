@@ -88,8 +88,6 @@ my $metadata = $res->[2]->[0];
 count(3);
 
 # Do a user login to have an existing session
-
-$res;
 my $query = "user=french&password=french";
 ok(
     $res = $op->_post(

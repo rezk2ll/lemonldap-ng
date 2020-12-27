@@ -468,6 +468,7 @@ To update the master encryption key:
            key 'xxxxxxxxxxxxxxx'
 
 
+.. _cli-sessions:
 
 Sessions Management
 -------------------
@@ -490,6 +491,15 @@ Modify session ::
 
    lemonldap-ng-sessions setKey 9684dd2a6489bf2be2fbdd799a8028e3 \
       authenticationLevel 1
+
+
+.. versionadded:: 2.0.10
+   Delete all sessions by username
+
+::
+
+   lemonldap-ng-sessions delete --where uid=dwho
+
 
 Second Factors management
 -------------------------

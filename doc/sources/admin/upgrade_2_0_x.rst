@@ -24,6 +24,8 @@ backups and a rollback plan ready!
 - TOTP check tolerates forward AND backward clock drift (totp2fRange)
 - Avoid assignment in expressions option is disabled by default
 - RHEL/CentOS SELinux users should install the new ``lemonldap-ng-selinux`` package to fix `an issue with the new default cache directory <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2401>`__
+- If you use :doc:`applications/mattermost` with OpenID Connect, you need to set the ``id`` claim type to *Integer*
+- BruteForceProtection plugin now prevents authentication on backend if an account is locked
 
 2.0.9
 -----
@@ -35,6 +37,7 @@ backups and a rollback plan ready!
 -  SAML SOAP calls are now using ``text/xml`` instead of ``application/xml`` as the MIME Content Type, as required by `the SOAP standard <https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383526>`__
 -  Incremental lock times values can now be set in BruteForceProtection plugin through Manager.
    It MUST be a list of comma separated values. Default values are ``5, 15, 60, 300, 600``
+-  This version is not compatible with :doc:`applications/mattermost`
 
 Cookie issues with Chrome
 ~~~~~~~~~~~~~~~~~~~~~~~~~

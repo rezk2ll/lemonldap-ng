@@ -2,6 +2,10 @@ Documentation for LemonLDAP::NG 2.0
 ===================================
 
 .. toctree::
+   
+   Documentation index<documentation>
+
+.. toctree::
    :caption: Getting started
    :hidden:
 

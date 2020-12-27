@@ -91,7 +91,7 @@ sub findOidcRpByClientId {
 
 sub addOidcRp {
     my ( $self, $req ) = @_;
-    my $add = $req->jsonBodyToObj;
+    my $add = $self->getJsonBody($req);
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($add);
@@ -161,7 +161,7 @@ sub updateOidcRp {
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
-    my $update = $req->jsonBodyToObj;
+    my $update = $self->getJsonBody($req);
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($update);
@@ -199,7 +199,7 @@ sub replaceOidcRp {
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
-    my $replace = $req->jsonBodyToObj;
+    my $replace = $self->getJsonBody($req);
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($replace);
