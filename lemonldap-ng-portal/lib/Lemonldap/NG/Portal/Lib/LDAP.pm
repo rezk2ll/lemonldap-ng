@@ -69,6 +69,16 @@ has mailFilter => (
     builder => 'buildMailFilter',
 );
 
+has findUserFilter => (
+    is      => 'ro',
+    lazy    => 1,
+    builder => sub {
+        $_[0]->conf->{AuthLDAPFilter}
+          || $_[0]->conf->{LDAPFilter}
+          || '(&(uid=$user)(objectClass=inetOrgPerson))';
+    }
+);
+
 sub buildFilter {
     return $_[0]->_buildFilter( $_[0]->conf->{AuthLDAPFilter}
           || $_[0]->conf->{LDAPFilter}
@@ -157,11 +167,47 @@ sub getUser {
 
 sub findUser {
     my ( $self, $req, %args ) = @_;
+    my $plugin =
+      $self->p->loadedModules->{"Lemonldap::NG::Portal::Plugins::FindUser"};
+    my ( $searching, $excluding ) = $plugin->retreiveFindUserParams($req);
+    eval { $self->p->_authentication->setSecurity($req) };
+    return PE_OK unless scalar @$searching;
 
     $self->validateLdap;
     return PE_LDAPCONNECTFAILED unless $self->ldap;
 
+    $self->findUserFilter =~ /\bobjectClass=(\w+)\b/;
+    my $filter = "(&(objectClass=$1)";
+    $filter .= "($_->{key}=$_->{value})"    foreach (@$searching);
+    $filter .= "(!($_->{key}=$_->{value}))" foreach (@$excluding);
+    $filter .= ')';
+    $self->logger->debug("LDAP UserDB built filter: $filter");
+
     $self->bind();
+    my $mesg = $self->ldap->search(
+        base   => $self->conf->{ldapBase},
+        scope  => 'sub',
+        filter => $filter,
+        deref  => $self->conf->{ldapSearchDeref} || 'find',
+        attrs  => $self->attrs,
+    );
+    if ( $mesg->code() != 0 ) {
+        $self->logger->error(
+            'LDAP Search error ' . $mesg->code . ": " . $mesg->error );
+        return PE_LDAPERROR;
+    }
+
+    $self->logger->debug(
+        'LDAP UserDB number of result(s): ' . $mesg->count() );
+    if ( $mesg->count() ) {
+        my $rank = rand( $mesg->count() );
+        $self->logger->debug("Demo UserDB random rank: $rank");
+        my $entry =
+          ( $mesg->entry($rank)->dn() =~ /\b(?:uid|sAMAccountName)=(\w+?)\b/ )
+          [0];
+        $self->userLogger->info("FindUser: LDAP UserDB returns $entry");
+        $req->data->{findUser} = $entry;
+    }
 
     return PE_OK;
 }
@@ -189,7 +235,7 @@ sub bind {
         $self->logger->error( $msg->error );
         return undef;
     }
-    
+
     return 1;
 }
 

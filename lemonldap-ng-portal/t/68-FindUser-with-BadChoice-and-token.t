@@ -58,7 +58,7 @@ m%<input id="spoofIdfield" name="spoofId" type="text" class="form-control" value
         'value=""'
     ) or explain( $res->[2]->[0], 'value=""' );
 ( $host, $url, $query ) =
-      expectForm( $res, '#', undef, 'user', 'guy', 'cn', 'token' );
+      expectForm( $res, '#', undef, 'uid', 'guy', 'cn', 'token' );
 $query =~ s/user=/user=rtyler/;
 $query =~ s/password=/password=rtyler/;
 $query =~ s/2_ssl/1_demo/;

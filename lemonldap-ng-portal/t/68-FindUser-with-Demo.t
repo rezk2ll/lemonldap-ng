@@ -42,8 +42,8 @@ ok(
     'Post empty FindFuser request'
 );
 ( $host, $url, $query ) =
-  expectForm( $res, '#', undef, 'uid', 'password', 'spoofId' );
-( $host, $url, $query ) = expectForm( $res, '#', undef, 'user', 'guy', 'cn' );
+  expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
+( $host, $url, $query ) = expectForm( $res, '#', undef, 'uid', 'guy', 'cn' );
 ok(
     $res->[2]->[0] =~
 m%<input id="spoofIdfield" name="spoofId" type="text" class="form-control" value="" autocomplete="off"%,
@@ -98,7 +98,7 @@ ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
 ok( $json->{user} eq 'dwho', ' Good user' )
   or explain( $json, 'user => dwho' );
 
-$request = 'user=ohwd';
+$request = 'uid=ohwd';
 ok(
     $res = $client->_post(
         '/finduser', IO::String->new($request),

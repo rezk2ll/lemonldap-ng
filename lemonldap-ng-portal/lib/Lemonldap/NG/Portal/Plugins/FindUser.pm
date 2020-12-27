@@ -71,7 +71,7 @@ sub provideUser {
         eval { $self->p->_authentication->setSecurity($req) };
         return $self->p->do( $req, [ sub { $error } ] );
     }
-    
+
     return $self->sendJSONresponse(
         $req,
         {
@@ -87,10 +87,11 @@ sub retreiveFindUserParams {
     my ( $searching, $excluding ) = ( [], [] );
     $self->logger->debug("FindUser: reading parameters...");
     foreach ( sort keys %{ $self->conf->{findUserSearchingAttributes} } ) {
-        if ( $req->params($_) ) {
+        my $param = $req->params($_) // '';
+        if ( $param =~ /.+/ ) {
             $self->logger->debug(
-                "Pushing searching parameter: $_ => " . $req->params($_) );
-            push @$searching, { key => $_, value => $req->params($_) };
+                "Pushing searching parameter: $_ =>  $param" );
+            push @$searching, { key => $_, value => $param };
         }
     }
 

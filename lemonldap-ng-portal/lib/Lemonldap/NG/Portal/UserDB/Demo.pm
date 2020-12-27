@@ -66,7 +66,7 @@ sub getUser {
     }
 
     eval { $self->p->_authentication->setSecurity($req) };
-    
+
     PE_BADCREDENTIALS;
 }
 
@@ -82,15 +82,11 @@ sub findUser {
     return PE_OK unless scalar @$searching;
 
     my $cond = '';
-    foreach (@$searching) {
-        $cond .= '$' . $_->{key} . " eq '$_->{value}' && " if $_->{value};
-    }
-    foreach (@$excluding) {
-        $cond .= '$' . $_->{key} . " ne '$_->{value}' && " if $_->{value};
-    }
+    $cond .= '$' . $_->{key} . " eq '$_->{value}' && " foreach (@$searching);
+    $cond .= '$' . $_->{key} . " ne '$_->{value}' && " foreach (@$excluding);
     $cond =~ s/&&\s$//;
-
     $self->logger->debug("Demo UserDB built condition: $cond");
+    
     my @results = map {
         my $uid  = $demoAccounts{$_}->{uid};
         my $cn   = $demoAccounts{$_}->{cn};

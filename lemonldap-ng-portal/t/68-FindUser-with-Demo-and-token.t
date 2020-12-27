@@ -49,7 +49,7 @@ count(3);
 
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Portal', );
 ( $host, $url, $query ) =
-  expectForm( $res, '#', undef, 'user', 'guy', 'cn', 'token' );
+  expectForm( $res, '#', undef, 'uid', 'guy', 'cn', 'token' );
 Time::Fake->offset("+150s");
 $query =~ s/uid=/uid=dwho/;
 ok(
@@ -113,6 +113,7 @@ ok(
         '/finduser',
         IO::String->new($query),
         accept => 'application/json',
+        length => length($query),
         cookie => "lemonldap=$id"
     ),
     'Get findUser'

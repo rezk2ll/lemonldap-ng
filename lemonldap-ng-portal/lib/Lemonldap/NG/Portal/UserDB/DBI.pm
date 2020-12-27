@@ -60,21 +60,17 @@ sub findUser {
     my @args;
     my $sth;
     foreach (@$searching) {
-        if ( $_->{value} ) {
-            $request .= "$_->{key} = ? AND ";
-            push @args, $_->{value};
-        }
+        $request .= "$_->{key} = ? AND ";
+        push @args, $_->{value};
     }
     foreach (@$excluding) {
-        if ( $_->{value} ) {
-            $request .= "$_->{key} != ? AND ";
-            push @args, $_->{value};
-        }
+        $request .= "$_->{key} != ? AND ";
+        push @args, $_->{value};
     }
     $request =~ s/AND\s$//;
-
     $self->logger->debug("DBI UserDB built condition: $request");
     $self->logger->debug( "DBI UserDB built args: " . join '|', @args );
+    
     eval {
         $sth = $self->dbh->prepare($request);
         $sth->execute(@args);
