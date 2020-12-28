@@ -255,8 +255,11 @@ sub _getSamlSpByConfKey {
     my $options = {};
     for my $confOption ( keys %{ $conf->{samlSPMetaDataOptions}->{$confKey} } )
     {
-        $options->{ $self->_translateOptionConfToApi($confOption) } =
-          $conf->{samlSPMetaDataOptions}->{$confKey}->{$confOption};
+        my $optionName  = $self->_translateOptionConfToApi($confOption);
+        my $optionValue = $self->_translateValueConfToApi( $confOption,
+            $conf->{samlSPMetaDataOptions}->{$confKey}->{$confOption} );
+
+        $options->{$optionName} = $optionValue;
     }
 
     # Get macros
@@ -378,8 +381,10 @@ sub _pushSamlSp {
     if ( defined $push->{options} ) {
 
         foreach ( keys %{ $push->{options} } ) {
-            $translatedOptions->{ $self->_translateOptionApiToConf( $_,
-                    'samlSP' ) } = $push->{options}->{$_};
+            my $optionName = $self->_translateOptionApiToConf( $_, 'samlSP' );
+            my $optionValue =
+              $self->_translateValueApiToConf( $_, $push->{options}->{$_} );
+            $translatedOptions->{$optionName} = $optionValue;
         }
 
         my $res = $self->_hasAllowedAttributes( $translatedOptions,

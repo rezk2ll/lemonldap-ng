@@ -266,8 +266,10 @@ sub _getCasAppByConfKey {
     for
       my $configOption ( keys %{ $conf->{casAppMetaDataOptions}->{$confKey} } )
     {
-        $options->{ $self->_translateOptionConfToApi($configOption) } =
-          $conf->{casAppMetaDataOptions}->{$confKey}->{$configOption};
+        my $optionName  = $self->_translateOptionConfToApi($configOption);
+        my $optionValue = $self->_translateValueConfToApi( $configOption,
+            $conf->{casAppMetaDataOptions}->{$confKey}->{$configOption} );
+        $options->{$optionName} = $optionValue;
     }
 
     return {
@@ -326,8 +328,11 @@ sub _pushCasApp {
     if ( defined $push->{options} ) {
 
         foreach ( keys %{ $push->{options} } ) {
-            $translatedOptions->{ $self->_translateOptionApiToConf( $_,
-                    'casApp' ) } = $push->{options}->{$_};
+            my $optionName = $self->_translateOptionApiToConf( $_, 'casApp' );
+            my $optionValue =
+              $self->_translateValueApiToConf( $_, $push->{options}->{$_} );
+
+            $translatedOptions->{$optionName} = $optionValue;
         }
 
         my $res = $self->_hasAllowedAttributes( $translatedOptions,
