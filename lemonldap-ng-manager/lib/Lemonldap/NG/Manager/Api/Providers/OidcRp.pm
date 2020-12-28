@@ -301,22 +301,10 @@ sub _getOidcRpByConfKey {
     for
       my $configOption ( keys %{ $conf->{oidcRPMetaDataOptions}->{$confKey} } )
     {
-        # redirectUris is handled as an array
-        if ( $configOption eq "oidcRPMetaDataOptionsRedirectUris" ) {
-            $redirectUris = [
-                split(
-                    /\s+/,
-                    $conf->{oidcRPMetaDataOptions}->{$confKey}->{$configOption}
-                )
-            ];
-            $options->{ $self->_translateOptionConfToApi($configOption) } =
-              $redirectUris;
-
-        }
-        else {
-            $options->{ $self->_translateOptionConfToApi($configOption) } =
-              $conf->{oidcRPMetaDataOptions}->{$confKey}->{$configOption};
-        }
+        my $apiName  = $self->_translateOptionConfToApi($configOption);
+        my $apiValue = $self->_translateValueConfToApi( $configOption,
+            $conf->{oidcRPMetaDataOptions}->{$confKey}->{$configOption} );
+        $options->{$apiName} = $apiValue;
     }
 
     return {
@@ -377,21 +365,17 @@ sub _pushOidcRp {
 
         foreach ( keys %{ $push->{options} } ) {
 
-            # redirectUris is handled as an array
-            if ( $_ eq 'redirectUris' ) {
-                my $option = $push->{options}->{$_};
+            my $optionName = $self->_translateOptionApiToConf( $_, 'oidcRP' );
+            eval {
+                my $optionValue =
+                  $self->_translateValueApiToConf( $_, $push->{options}->{$_} );
+                $translatedOptions->{$optionName} = $optionValue;
+            };
+            if ($@) {
                 return {
                     res => 'ko',
-                    msg => "Invalid input: redirectUris is not an array"
-                  }
-                  unless ( ref($option) eq "ARRAY" );
-
-                $translatedOptions->{ $self->_translateOptionApiToConf( $_,
-                        'oidcRP' ) } = join( ' ', @{ $push->{options}->{$_} } );
-            }
-            else {
-                $translatedOptions->{ $self->_translateOptionApiToConf( $_,
-                        'oidcRP' ) } = $push->{options}->{$_};
+                    msg => "Invalid input: $@",
+                };
             }
         }
 

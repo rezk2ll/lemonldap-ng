@@ -99,6 +99,30 @@ sub _translateOptionConfToApi {
     return $optionName;
 }
 
+sub _translateValueConfToApi {
+    my ( $self, $optionName, $optionValue ) = @_;
+    if ( $optionName eq "oidcRPMetaDataOptionsRedirectUris" ) {
+        return [ split( /\s+/, $optionValue, ) ];
+    }
+    else {
+        return $optionValue;
+    }
+}
+
+sub _translateValueApiToConf {
+    my ( $self, $optionName, $optionValue ) = @_;
+
+    # redirectUris is handled as an array
+    if ( $optionName eq 'redirectUris' ) {
+        die "redirectUris is not an array"
+          unless ( ref($optionValue) eq "ARRAY" );
+        return join( ' ', @{$optionValue} );
+    }
+    else {
+        return $optionValue;
+    }
+}
+
 sub _getRegexpFromPattern {
     my ( $self, $pattern ) = @_;
     return unless ( $pattern =~ /[\w\.\-\*]+/ );
