@@ -121,10 +121,17 @@ sub _translateValueApiToConf {
           unless ( ref($optionValue) eq "ARRAY" );
         return join( ' ', @{$optionValue} );
     }
+
+    # postLogoutRedirectUris is handled as an array
     elsif ( $optionName eq 'postLogoutRedirectUris' ) {
         die "postLogoutRedirectUris is not an array\n"
           unless ( ref($optionValue) eq "ARRAY" );
         return join( ' ', @{$optionValue} );
+    }
+
+    # Translate JSON booleans to integers
+    elsif ( JSON::is_bool($optionValue) ) {
+        return $optionValue ? 1 : 0;
     }
     else {
         return $optionValue;
