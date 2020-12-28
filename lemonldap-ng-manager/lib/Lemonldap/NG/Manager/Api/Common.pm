@@ -166,4 +166,10 @@ sub _getSSOMod {
     return $mod;
 }
 
+sub _saveApplyConf {
+    my ( $self, $conf ) = @_;
+    $self->_confAcc->saveConf($conf);
+    $self->applyConf($conf);
+}
+
 1;
