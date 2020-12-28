@@ -64,7 +64,7 @@ sub findMenuCatByConfKey {
 
 sub addMenuCat {
     my ( $self, $req ) = @_;
-    my $add = $self->getJsonBody($req);
+    my $add = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($add);
@@ -76,8 +76,8 @@ sub addMenuCat {
         400 )
       if ( ref $add->{confKey} );
 
-    return $self->sendError( $req,
-        'Invalid input: confKey contains invalid characters', 400 )
+    return $self->sendError( $req, 'Invalid input: confKey contains invalid characters',
+        400 )
       unless ( $add->{confKey} =~ '^\w[\w\.\-]*$' );
 
     return $self->sendError( $req, 'Invalid input: catname is missing', 400 )
@@ -116,7 +116,7 @@ sub updateMenuCat {
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
-    my $update = $self->getJsonBody($req);
+    my $update = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($update);
@@ -147,7 +147,7 @@ sub replaceMenuCat {
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
-    my $replace = $self->getJsonBody($req);
+    my $replace = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($replace);
@@ -159,8 +159,8 @@ sub replaceMenuCat {
         400 )
       if ( ref $replace->{confKey} );
 
-    return $self->sendError( $req,
-        'Invalid input: confKey contains invalid characters', 400 )
+    return $self->sendError( $req, 'Invalid input: confKey contains invalid characters',
+        400 )
       unless ( $replace->{confKey} =~ '^\w[\w\.\-]*$' );
 
     return $self->sendError( $req, 'Invalid input: catname is missing', 400 )

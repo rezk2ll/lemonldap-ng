@@ -91,7 +91,7 @@ sub findCasAppsByServiceUrl {
 
 sub addCasApp {
     my ( $self, $req ) = @_;
-    my $add = $self->getJsonBody($req);
+    my $add = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($add);
@@ -153,7 +153,7 @@ sub updateCasApp {
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
-    my $update = $self->getJsonBody($req);
+    my $update = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($update);
@@ -190,7 +190,7 @@ sub replaceCasApp {
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
-    my $replace = $self->getJsonBody($req);
+    my $replace = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($replace);
