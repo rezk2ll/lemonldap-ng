@@ -953,18 +953,36 @@ sub tests {
             return 1;
         },
 
-        # AuthChoice parameters must be defined
+        # AuthChoice parameters must exist
         AuthChoiceParams => sub {
             return 1 unless %{ $conf->{authChoiceModules} };
             foreach (qw(AuthBasic FindUser)) {
                 if ( $conf->{"authChoice$_"} ) {
-                    my $test = $conf->{"authChoice$_"};
-                    my $choice = grep /$test/,
+                    my $test   = $conf->{"authChoice$_"};
+                    my $param = grep /^$test$/,
                       keys %{ $conf->{authChoiceModules} };
-                    return ( -1, "Choice $_ parameter is not defined" )
-                      unless $choice;
+                    return ( -1, "Choice $_ parameter does not exist" )
+                      unless $param;
                 }
             }
+            return 1;
+        },
+
+        # FindUser authChoice parameter must be defined
+        findUserChoiceParam => sub {
+            return ( -1, 'FindUser choice parameter must be defined' )
+              if (  $conf->{findUser}
+                and $conf->{impersonationRule}
+                and $conf->{authentication} eq 'Choice'
+                and !$conf->{authChoiceFindUser} );
+            return 1;
+        },
+
+        # FindUser authChoice parameter must be defined
+        authChoiceChains => sub {
+            return ( -1, 'Authentication choice enabled without chain' )
+              if ( $conf->{authentication} eq 'Choice'
+                and scalar keys %{ $conf->{authChoiceModules} } == 0 );
             return 1;
         }
     };
