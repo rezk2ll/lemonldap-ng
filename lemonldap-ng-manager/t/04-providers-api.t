@@ -338,7 +338,9 @@ my $oidcRp = {
     },
     options => {
         clientSecret => 'secret',
-        icon         => 'web.png'
+        icon         => 'web.png',
+        postLogoutRedirectUris =>
+          [ "http://url/logout1", "http://url/logout2" ],
     }
 };
 
@@ -378,6 +380,8 @@ checkGet( $test, 'oidc/rp', 'myOidcRp1', 'extraClaims/phone',
     'telephoneNumber' );
 checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/redirectUris/1',
     'http://url/2' );
+checkGet( $test, 'oidc/rp', 'myOidcRp1', 'options/postLogoutRedirectUris/1',
+    'http://url/logout2' );
 
 $test = "OidcRp - Update should fail on non existing options";
 $oidcRp->{options}->{playingPossum} = 'elephant';
@@ -411,6 +415,7 @@ $test                   = "OidcRp - Replace should succeed";
 $oidcRp->{confKey}      = 'myOidcRp2';
 $oidcRp->{clientId}     = 'myOidcClient2';
 $oidcRp->{redirectUris} = ["http://url/3"];
+$oidcRp->{options}->{postLogoutRedirectUris} = [];
 delete $oidcRp->{options}->{icon};
 delete $oidcRp->{options}->{IDTokenSignAlg};
 checkReplace( $test, 'oidc/rp', 'myOidcRp2', $oidcRp );
@@ -419,6 +424,8 @@ $test = "OidcRp - Check attribute default value was set after replace";
 checkGet( $test, 'oidc/rp', 'myOidcRp2', 'options/IDTokenSignAlg', 'HS512' );
 checkGet( $test, 'oidc/rp', 'myOidcRp2', 'options/redirectUris/0',
     'http://url/3' );
+checkGet( $test, 'oidc/rp', 'myOidcRp2', 'options/postLogoutRedirectUris/0',
+    '' );
 
 $test = "OidcRp - Replace should fail on non existing or invalid options";
 $oidcRp->{options}->{playingPossum} = 'elephant';
