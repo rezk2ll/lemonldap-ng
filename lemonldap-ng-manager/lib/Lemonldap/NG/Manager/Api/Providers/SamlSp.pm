@@ -372,7 +372,8 @@ sub _pushSamlSp {
     }
 
     $conf->{samlSPMetaDataXML}->{$confKey}->{samlSPMetaDataXML} =
-      $push->{metadata};
+      $push->{metadata}
+      if defined $push->{metadata};
 
     if ( defined $push->{options} ) {
 
