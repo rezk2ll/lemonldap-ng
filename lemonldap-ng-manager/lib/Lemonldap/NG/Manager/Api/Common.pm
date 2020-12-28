@@ -104,6 +104,9 @@ sub _translateValueConfToApi {
     if ( $optionName eq "oidcRPMetaDataOptionsRedirectUris" ) {
         return [ split( /\s+/, $optionValue, ) ];
     }
+    elsif ( $optionName eq "oidcRPMetaDataOptionsPostLogoutRedirectUris" ) {
+        return [ split( /\s+/, $optionValue, ) ];
+    }
     else {
         return $optionValue;
     }
@@ -114,7 +117,12 @@ sub _translateValueApiToConf {
 
     # redirectUris is handled as an array
     if ( $optionName eq 'redirectUris' ) {
-        die "redirectUris is not an array"
+        die "redirectUris is not an array\n"
+          unless ( ref($optionValue) eq "ARRAY" );
+        return join( ' ', @{$optionValue} );
+    }
+    elsif ( $optionName eq 'postLogoutRedirectUris' ) {
+        die "postLogoutRedirectUris is not an array\n"
           unless ( ref($optionValue) eq "ARRAY" );
         return join( ' ', @{$optionValue} );
     }
