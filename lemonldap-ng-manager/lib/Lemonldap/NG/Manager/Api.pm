@@ -30,6 +30,8 @@ use constant defaultRoute => 'api.html';
 sub init {
     my ( $self, $conf ) = @_;
 
+    $self->ua( Lemonldap::NG::Common::UserAgent->new($conf) );
+
     # HTML template
     $self->addRoute( 'api.html', undef, ['GET'] )
 
