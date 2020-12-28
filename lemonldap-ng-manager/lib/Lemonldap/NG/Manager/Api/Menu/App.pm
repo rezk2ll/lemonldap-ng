@@ -58,7 +58,7 @@ sub getMenuApp {
 
         my @menuApps =
           map {
-            $self->_isCatApp( $cat->{$_} )
+                $self->_isCatApp( $cat->{$_} )
               ? $self->_getMenuAppByConfKey( $conf, $catConfKey, $_ )
               : ()
           }
@@ -105,7 +105,7 @@ sub findMenuAppByConfKey {
 
     my @menuApps =
       map {
-        $self->_isCatApp( $cat->{$_} )
+             $self->_isCatApp( $cat->{$_} )
           && $_ =~ $pattern
           ? $self->_getMenuAppByConfKey( $conf, $catConfKey, $_ )
           : ()
@@ -132,8 +132,8 @@ sub addMenuApp {
         400 )
       if ( ref $add->{confKey} );
 
-    return $self->sendError( $req, 'Invalid input: confKey contains invalid characters',
-        400 )
+    return $self->sendError( $req,
+        'Invalid input: confKey contains invalid characters', 400 )
       unless ( $add->{confKey} =~ '^\w[\w\.\-]*$' );
 
     return $self->sendError( $req, 'Invalid input: name is missing', 400 )
@@ -241,10 +241,10 @@ sub replaceMenuApp {
         400 )
       if ( ref $replace->{confKey} );
 
-    return $self->sendError( $req, 'Invalid input: confKey contains invalid characters',
-        400 )
+    return $self->sendError( $req,
+        'Invalid input: confKey contains invalid characters', 400 )
       unless ( $replace->{confKey} =~ '^\w[\w\.\-]*$' );
-        
+
     return $self->sendError( $req, 'Invalid input: name is missing', 400 )
       unless ( defined $replace->{options}
         && defined $replace->{options}{name} );
