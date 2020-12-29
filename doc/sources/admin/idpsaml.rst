@@ -170,21 +170,32 @@ Security
 -  **Authentication Level**: required authentication level to access this SP
 -  **Access Rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this SP
 
+Extra variables
+^^^^^^^^^^^^^^^
 
-.. tip::
+The following environment variables are available in SAML access rules and macros:
 
-    The IDP Initiated URL is the SSO SAML URL with GET
-    parameters:
+* ``$env->{llng_saml_sp}`` : entityID of the SAML service
+* ``$env->{llng_saml_spconfkey}`` : configuration key of the SAML service
 
-    -  IDPInitiated: 1
-    -  One of:
+.. versionadded:: 2.0.10
 
-       -  sp: SP entity ID
-       -  spConfKey: SP configuration key
+* ``$env->{llng_saml_acs}`` : AssertionConsumerServiceURL, if specified in the AuthnRequest
 
-    For example:
-    http://auth.example.com/saml/singleSignOn?IDPInitiated=1&spConfKey=simplesamlphp
+IDP Initiated mode
+^^^^^^^^^^^^^^^^^^
 
+The IDP Initiated URL is the SSO SAML URL with GET
+parameters:
+
+-  IDPInitiated: 1
+-  One of:
+
+   -  sp: SP entity ID
+   -  spConfKey: SP configuration key
+
+For example:
+http://auth.example.com/saml/singleSignOn?IDPInitiated=1&spConfKey=simplesamlphp
 
 Macros
 ^^^^^^
