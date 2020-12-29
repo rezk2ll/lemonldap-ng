@@ -200,6 +200,10 @@ sub storeEnv {
             $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
               if $targetAuthnLevel;
         }
+        if ( $login->request ) {
+            my $acs = $login->request->AssertionConsumerServiceURL;
+            $req->env->{llng_saml_acs} = $acs if $acs;
+        }
     }
     return PE_OK;
 }
@@ -406,6 +410,15 @@ sub run {
 
             $self->logger->debug("$sp match $spConfKey SP in configuration");
             $req->env->{llng_saml_spconfkey} = $spConfKey;
+
+            if ( $login->request ) {
+                my $acs = $login->request->AssertionConsumerServiceURL;
+                if ($acs) {
+                    $req->env->{llng_saml_acs} = $acs;
+                    $self->logger->debug(
+                        "Using AssertionConsumerServiceURL $acs");
+                }
+            }
 
             # Check access rule
             if ( my $rule = $self->spRules->{$spConfKey} ) {
