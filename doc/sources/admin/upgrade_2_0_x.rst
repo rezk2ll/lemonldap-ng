@@ -26,6 +26,7 @@ backups and a rollback plan ready!
 - RHEL/CentOS SELinux users should install the new ``lemonldap-ng-selinux`` package to fix `an issue with the new default cache directory <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2401>`__
 - If you use :doc:`applications/mattermost` with OpenID Connect, you need to set the ``id`` claim type to *Integer*
 - BruteForceProtection plugin now prevents authentication on backend if an account is locked
+- In the Manager API, postLogoutRedirectUri is now `returned and consumed as an array <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2347>`__
 
 2.0.9
 -----

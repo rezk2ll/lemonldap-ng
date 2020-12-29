@@ -85,7 +85,7 @@ sub findSamlSpByEntityId {
 
 sub addSamlSp {
     my ( $self, $req ) = @_;
-    my $add = $self->getJsonBody($req);
+    my $add = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($add);
@@ -140,7 +140,7 @@ sub replaceSamlSp {
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
-    my $replace = $self->getJsonBody($req);
+    my $replace = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($replace);
@@ -180,7 +180,7 @@ sub updateSamlSp {
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
-    my $update = $self->getJsonBody($req);
+    my $update = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($update);
@@ -237,7 +237,7 @@ sub deleteSamlSp {
     delete $conf->{samlSPMetaDataMacros}->{$confKey};
 
     # Save configuration
-    $self->_confAcc->saveConf($conf);
+    $self->_saveApplyConf($conf);
 
     return $self->sendJSONresponse( $req, undef, code => 204 );
 }
@@ -255,8 +255,11 @@ sub _getSamlSpByConfKey {
     my $options = {};
     for my $confOption ( keys %{ $conf->{samlSPMetaDataOptions}->{$confKey} } )
     {
-        $options->{ $self->_translateOptionConfToApi($confOption) } =
-          $conf->{samlSPMetaDataOptions}->{$confKey}->{$confOption};
+        my $optionName  = $self->_translateOptionConfToApi($confOption);
+        my $optionValue = $self->_translateValueConfToApi( $confOption,
+            $conf->{samlSPMetaDataOptions}->{$confKey}->{$confOption} );
+
+        $options->{$optionName} = $optionValue;
     }
 
     # Get macros
@@ -372,13 +375,16 @@ sub _pushSamlSp {
     }
 
     $conf->{samlSPMetaDataXML}->{$confKey}->{samlSPMetaDataXML} =
-      $push->{metadata};
+      $push->{metadata}
+      if defined $push->{metadata};
 
     if ( defined $push->{options} ) {
 
         foreach ( keys %{ $push->{options} } ) {
-            $translatedOptions->{ $self->_translateOptionApiToConf( $_,
-                    'samlSP' ) } = $push->{options}->{$_};
+            my $optionName = $self->_translateOptionApiToConf( $_, 'samlSP' );
+            my $optionValue =
+              $self->_translateValueApiToConf( $_, $push->{options}->{$_} );
+            $translatedOptions->{$optionName} = $optionValue;
         }
 
         my $res = $self->_hasAllowedAttributes( $translatedOptions,
@@ -434,7 +440,7 @@ sub _pushSamlSp {
     }
 
     # Save configuration
-    $self->_confAcc->saveConf($conf);
+    $self->_saveApplyConf($conf);
 
     return { res => 'ok' };
 }

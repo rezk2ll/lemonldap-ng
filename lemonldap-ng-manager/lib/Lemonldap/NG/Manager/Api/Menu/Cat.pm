@@ -64,7 +64,7 @@ sub findMenuCatByConfKey {
 
 sub addMenuCat {
     my ( $self, $req ) = @_;
-    my $add = $self->getJsonBody($req);
+    my $add = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($add);
@@ -116,7 +116,7 @@ sub updateMenuCat {
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
-    my $update = $self->getJsonBody($req);
+    my $update = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($update);
@@ -147,7 +147,7 @@ sub replaceMenuCat {
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
-    my $replace = $self->getJsonBody($req);
+    my $replace = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($replace);
@@ -209,7 +209,7 @@ sub deleteMenuCat {
     delete $conf->{applicationList}->{$confKey};
 
     # Save configuration
-    $self->_confAcc->saveConf($conf);
+    $self->_saveApplyConf($conf);
 
     return $self->sendJSONresponse( $req, undef, code => 204 );
 }
@@ -262,7 +262,7 @@ sub _pushMenuCat {
     }
 
     # Save configuration
-    $self->_confAcc->saveConf($conf);
+    $self->_saveApplyConf($conf);
 
     return { res => 'ok' };
 }

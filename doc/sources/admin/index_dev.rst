@@ -7,4 +7,5 @@ Development
    bugreport
    contribute
    handlerarch
+   plugincustom
    customhandlers

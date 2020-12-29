@@ -117,7 +117,7 @@ sub findMenuAppByConfKey {
 
 sub addMenuApp {
     my ( $self, $req ) = @_;
-    my $add = $self->getJsonBody($req);
+    my $add = $req->jsonBodyToObj;
 
     my $catConfKey = $req->params('confKey')
       or return $self->sendError( $req, 'Category confKey is missing', 400 );
@@ -185,7 +185,7 @@ sub updateMenuApp {
     my $appConfKey = $req->params('appConfKey')
       or return $self->sendError( $req, 'Application confKey is missing', 400 );
 
-    my $update = $self->getJsonBody($req);
+    my $update = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($update);
@@ -229,7 +229,7 @@ sub replaceMenuApp {
     my $appConfKey = $req->params('appConfKey')
       or return $self->sendError( $req, 'Application confKey is missing', 400 );
 
-    my $replace = $self->getJsonBody($req);
+    my $replace = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($replace);
@@ -313,7 +313,7 @@ sub deleteMenuApp {
     delete $conf->{applicationList}->{$catConfKey}->{$appConfKey};
 
     # Save configuration
-    $self->_confAcc->saveConf($conf);
+    $self->_saveApplyConf($conf);
 
     return $self->sendJSONresponse( $req, undef, code => 204 );
 }
@@ -399,7 +399,7 @@ sub _pushMenuApp {
     }
 
     # Save configuration
-    $self->_confAcc->saveConf($conf);
+    $self->_saveApplyConf($conf);
 
     return { res => 'ok' };
 }

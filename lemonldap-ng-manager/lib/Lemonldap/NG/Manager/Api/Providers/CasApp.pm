@@ -91,7 +91,7 @@ sub findCasAppsByServiceUrl {
 
 sub addCasApp {
     my ( $self, $req ) = @_;
-    my $add = $self->getJsonBody($req);
+    my $add = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($add);
@@ -153,7 +153,7 @@ sub updateCasApp {
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
-    my $update = $self->getJsonBody($req);
+    my $update = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($update);
@@ -190,7 +190,7 @@ sub replaceCasApp {
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
-    my $replace = $self->getJsonBody($req);
+    my $replace = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($replace);
@@ -241,7 +241,7 @@ sub deleteCasApp {
     delete $conf->{casAppMetaDataMacros}->{$confKey};
 
     # Save configuration
-    $self->_confAcc->saveConf($conf);
+    $self->_saveApplyConf($conf);
 
     return $self->sendJSONresponse( $req, undef, code => 204 );
 }
@@ -266,8 +266,10 @@ sub _getCasAppByConfKey {
     for
       my $configOption ( keys %{ $conf->{casAppMetaDataOptions}->{$confKey} } )
     {
-        $options->{ $self->_translateOptionConfToApi($configOption) } =
-          $conf->{casAppMetaDataOptions}->{$confKey}->{$configOption};
+        my $optionName  = $self->_translateOptionConfToApi($configOption);
+        my $optionValue = $self->_translateValueConfToApi( $configOption,
+            $conf->{casAppMetaDataOptions}->{$confKey}->{$configOption} );
+        $options->{$optionName} = $optionValue;
     }
 
     return {
@@ -326,8 +328,11 @@ sub _pushCasApp {
     if ( defined $push->{options} ) {
 
         foreach ( keys %{ $push->{options} } ) {
-            $translatedOptions->{ $self->_translateOptionApiToConf( $_,
-                    'casApp' ) } = $push->{options}->{$_};
+            my $optionName = $self->_translateOptionApiToConf( $_, 'casApp' );
+            my $optionValue =
+              $self->_translateValueApiToConf( $_, $push->{options}->{$_} );
+
+            $translatedOptions->{$optionName} = $optionValue;
         }
 
         my $res = $self->_hasAllowedAttributes( $translatedOptions,
@@ -390,7 +395,7 @@ sub _pushCasApp {
     }
 
     # Save configuration
-    $self->_confAcc->saveConf($conf);
+    $self->_saveApplyConf($conf);
 
     return { res => 'ok' };
 }

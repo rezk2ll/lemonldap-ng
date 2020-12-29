@@ -12,7 +12,6 @@ Plugins
    checkuser
    viewer
    contextswitching
-   plugincustom
    decryptvalue
    loginhistory
    forcereauthn

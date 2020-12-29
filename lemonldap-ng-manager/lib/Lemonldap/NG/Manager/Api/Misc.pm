@@ -86,7 +86,7 @@ sub _getSessionDBState {
 
     # Handle DBI-type session stores
     if ( $fakeobj->{object_store}->isa("Apache::Session::Store::DBI") ) {
-        
+
         # The 'connection' method will fail if the DB is unreachable
         # this is good enough a test for now
         eval { $fakeobj->{object_store}->connection($fakeobj) };

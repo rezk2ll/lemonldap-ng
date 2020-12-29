@@ -476,10 +476,10 @@ $(window).on 'load', () ->
 
 		if result
 			$('.ppolicy').removeClass('border-danger').addClass 'border-success'
-			$('#newpassword')[0].setCustomValidity('')
+			$('#newpassword').get(0)?.setCustomValidity('')
 		else
 			$('.ppolicy').removeClass('border-success').addClass 'border-danger'
-			$('#newpassword')[0].setCustomValidity(translate('PE28'))
+			$('#newpassword').get(0)?.setCustomValidity(translate('PE28'))
 		return
 
 	if window.datas.ppolicy? and $('#newpassword').length
@@ -490,16 +490,30 @@ $(window).on 'load', () ->
 			checkpassword e.target.value
 			return
 
+	# If generating password, disable policy check
+	togglecheckpassword = (e) ->
+		if e.target.checked
+			$('#newpassword').off('keyup')
+			$('#newpassword').get(0)?.setCustomValidity('')
+		# Restore check
+		else
+			$('#newpassword').keyup (e) ->
+				checkpassword e.target.value
+				return
+			checkpassword ''
+
 	checksamepass = () ->
-		if $('#confirmpassword')[0].value == $('#newpassword')[0].value
-			$('#confirmpassword')[0].setCustomValidity('')
+		if $('#confirmpassword').get(0)?.value == $('#newpassword').get(0)?.value
+			$('#confirmpassword').get(0)?.setCustomValidity('')
 			return true
 		else
-			$('#confirmpassword')[0].setCustomValidity(translate('PE34'))
+			$('#confirmpassword').get(0)?.setCustomValidity(translate('PE34'))
 			return false
 
 	$('#newpassword').change checksamepass
 	$('#confirmpassword').change checksamepass
+	if window.datas.ppolicy? and $('#newpassword').length
+		$('#reset').change togglecheckpassword
 
 	# Ping if asked
 	if datas['pingInterval'] and datas['pingInterval'] > 0

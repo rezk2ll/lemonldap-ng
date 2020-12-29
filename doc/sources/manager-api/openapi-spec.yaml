@@ -1221,7 +1221,9 @@ components:
         public:
           type: boolean
         postLogoutRedirectUris:
-          type: string
+          type: array
+          items:
+            type: string
         logoutType:
           type: string
           enum:

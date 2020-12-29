@@ -30,8 +30,8 @@ Name          Comment                     Example
 **sentinels** Redis sentinels list        127.0.0.1:26379,127.0.0.2:26379,127.0.0.3:26379
 **password**  password (== requirepass)   ChangeMe
 **select**    Redis DB                    1
+**Index**     Fields to index             refer to :ref:`fieldstoindex`
 ============= =========================== ===============================================
-
 
 Security
 --------

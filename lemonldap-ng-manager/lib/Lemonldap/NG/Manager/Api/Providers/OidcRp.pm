@@ -91,7 +91,7 @@ sub findOidcRpByClientId {
 
 sub addOidcRp {
     my ( $self, $req ) = @_;
-    my $add = $self->getJsonBody($req);
+    my $add = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($add);
@@ -161,7 +161,7 @@ sub updateOidcRp {
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
-    my $update = $self->getJsonBody($req);
+    my $update = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($update);
@@ -199,7 +199,7 @@ sub replaceOidcRp {
     my $confKey = $req->params('confKey')
       or return $self->sendError( $req, 'confKey is missing', 400 );
 
-    my $replace = $self->getJsonBody($req);
+    my $replace = $req->jsonBodyToObj;
 
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($replace);
@@ -269,7 +269,7 @@ sub deleteOidcRp {
     delete $conf->{oidcRPMetaDataMacros}->{$confKey};
 
     # Save configuration
-    $self->_confAcc->saveConf($conf);
+    $self->_saveApplyConf($conf);
 
     return $self->sendJSONresponse( $req, undef, code => 204 );
 }
@@ -301,22 +301,10 @@ sub _getOidcRpByConfKey {
     for
       my $configOption ( keys %{ $conf->{oidcRPMetaDataOptions}->{$confKey} } )
     {
-        # redirectUris is handled as an array
-        if ( $configOption eq "oidcRPMetaDataOptionsRedirectUris" ) {
-            $redirectUris = [
-                split(
-                    /\s+/,
-                    $conf->{oidcRPMetaDataOptions}->{$confKey}->{$configOption}
-                )
-            ];
-            $options->{ $self->_translateOptionConfToApi($configOption) } =
-              $redirectUris;
-
-        }
-        else {
-            $options->{ $self->_translateOptionConfToApi($configOption) } =
-              $conf->{oidcRPMetaDataOptions}->{$confKey}->{$configOption};
-        }
+        my $apiName  = $self->_translateOptionConfToApi($configOption);
+        my $apiValue = $self->_translateValueConfToApi( $configOption,
+            $conf->{oidcRPMetaDataOptions}->{$confKey}->{$configOption} );
+        $options->{$apiName} = $apiValue;
     }
 
     return {
@@ -377,21 +365,17 @@ sub _pushOidcRp {
 
         foreach ( keys %{ $push->{options} } ) {
 
-            # redirectUris is handled as an array
-            if ( $_ eq 'redirectUris' ) {
-                my $option = $push->{options}->{$_};
+            my $optionName = $self->_translateOptionApiToConf( $_, 'oidcRP' );
+            eval {
+                my $optionValue =
+                  $self->_translateValueApiToConf( $_, $push->{options}->{$_} );
+                $translatedOptions->{$optionName} = $optionValue;
+            };
+            if ($@) {
                 return {
                     res => 'ko',
-                    msg => "Invalid input: redirectUris is not an array"
-                  }
-                  unless ( ref($option) eq "ARRAY" );
-
-                $translatedOptions->{ $self->_translateOptionApiToConf( $_,
-                        'oidcRP' ) } = join( ' ', @{ $push->{options}->{$_} } );
-            }
-            else {
-                $translatedOptions->{ $self->_translateOptionApiToConf( $_,
-                        'oidcRP' ) } = $push->{options}->{$_};
+                    msg => "Invalid input: $@",
+                };
             }
         }
 
@@ -475,7 +459,7 @@ sub _pushOidcRp {
     }
 
     # Save configuration
-    $self->_confAcc->saveConf($conf);
+    $self->_saveApplyConf($conf);
 
     return { res => 'ok' };
 }

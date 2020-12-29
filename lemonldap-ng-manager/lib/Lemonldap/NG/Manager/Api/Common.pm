@@ -99,6 +99,45 @@ sub _translateOptionConfToApi {
     return $optionName;
 }
 
+sub _translateValueConfToApi {
+    my ( $self, $optionName, $optionValue ) = @_;
+    if ( $optionName eq "oidcRPMetaDataOptionsRedirectUris" ) {
+        return [ split( /\s+/, $optionValue, ) ];
+    }
+    elsif ( $optionName eq "oidcRPMetaDataOptionsPostLogoutRedirectUris" ) {
+        return [ split( /\s+/, $optionValue, ) ];
+    }
+    else {
+        return $optionValue;
+    }
+}
+
+sub _translateValueApiToConf {
+    my ( $self, $optionName, $optionValue ) = @_;
+
+    # redirectUris is handled as an array
+    if ( $optionName eq 'redirectUris' ) {
+        die "redirectUris is not an array\n"
+          unless ( ref($optionValue) eq "ARRAY" );
+        return join( ' ', @{$optionValue} );
+    }
+
+    # postLogoutRedirectUris is handled as an array
+    elsif ( $optionName eq 'postLogoutRedirectUris' ) {
+        die "postLogoutRedirectUris is not an array\n"
+          unless ( ref($optionValue) eq "ARRAY" );
+        return join( ' ', @{$optionValue} );
+    }
+
+    # Translate JSON booleans to integers
+    elsif ( JSON::is_bool($optionValue) ) {
+        return $optionValue ? 1 : 0;
+    }
+    else {
+        return $optionValue;
+    }
+}
+
 sub _getRegexpFromPattern {
     my ( $self, $pattern ) = @_;
     return unless ( $pattern =~ /[\w\.\-\*]+/ );
@@ -127,25 +166,10 @@ sub _getSSOMod {
     return $mod;
 }
 
-sub _fix_bool {
-    my $h = shift;
-    if ( ref($h) eq "HASH" ) {
-        for my $k ( keys %{$h} ) {
-            if ( JSON::is_bool( $h->{$k} ) ) {
-                $h->{$k} = $h->{$k} ? 1 : 0;
-            }
-            else {
-                _fix_bool( $h->{$k} );
-            }
-        }
-    }
-}
-
-sub getJsonBody {
-    my ( $self, $req ) = @_;
-    my $obj = $req->jsonBodyToObj;
-    _fix_bool($obj);
-    return $obj;
+sub _saveApplyConf {
+    my ( $self, $conf ) = @_;
+    $self->_confAcc->saveConf($conf);
+    $self->applyConf($conf);
 }
 
 1;
