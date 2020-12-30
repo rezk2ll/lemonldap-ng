@@ -1912,7 +1912,6 @@ sub sloServer {
             ]
         );
         my $res = $self->p->process($req);
-        $self->logger->debug("MAXBES Process retuned $res");
 
         if ( $res eq PE_REDIRECT ) {
 
