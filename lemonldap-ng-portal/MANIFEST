@@ -95,6 +95,7 @@ lib/Lemonldap/NG/Portal/Main/SecondFactor.pm
 lib/Lemonldap/NG/Portal/Password/AD.pm
 lib/Lemonldap/NG/Portal/Password/Base.pm
 lib/Lemonldap/NG/Portal/Password/Choice.pm
+lib/Lemonldap/NG/Portal/Password/Combination.pm
 lib/Lemonldap/NG/Portal/Password/Custom.pm
 lib/Lemonldap/NG/Portal/Password/DBI.pm
 lib/Lemonldap/NG/Portal/Password/Demo.pm
