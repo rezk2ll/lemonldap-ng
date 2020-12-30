@@ -618,11 +618,12 @@ t/42-Register-LDAP.t
 t/42-Register-Security.t
 t/43-MailPasswordReset-Choice.t
 t/43-MailPasswordReset-Combination-LDAP.t
+t/43-MailPasswordReset-Combination.t
 t/43-MailPasswordReset-DBI.t
 t/43-MailPasswordReset-LDAP.t
+t/43-MailPasswordReset.t
 t/43-MailPasswordReset-with-captcha.t
 t/43-MailPasswordReset-with-token.t
-t/43-MailPasswordReset.t
 t/44-CertificateResetByMail-Demo.t
 t/44-CertificateResetByMail-LDAP.t
 t/50-IssuerGet.t
