@@ -2564,6 +2564,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     'v' => 'None'
                 },
                 {
+                    'k' => 'Combination',
+                    'v' => 'combineMods'
+                },
+                {
                     'k' => 'Custom',
                     'v' => 'customModule'
                 }
