@@ -56,7 +56,7 @@ Google          France Connect
 
 .. attention::
 
-    OpenID-Connect specification isn't finished for logout
+    OpenID-Connect specification is not finished for logout
     propagation. So logout initiated by relaying-party will be forward to
     OpenID-Connect provider but logout initiated by the provider (or another
     RP) will not be propagated. LLNG will implement this when spec will be
@@ -127,7 +127,9 @@ parameter, for example:
 .. attention::
 
     If you use the :doc:`choice backend<authchoice>`, you
-    need to add the choice parameter in redirect URL
+    need to add the choice parameter in redirect URL or
+    set SameSite cookie value to "Lax" or "None".
+    See :doc:`SSO cookie parameters<ssocookie>`
 
 After registration, the OP must give you a client ID and a client
 secret, that will be used to configure the OP in LL::NG.
@@ -148,6 +150,8 @@ The OP should publish its metadata in a JSON file (see for example
 `Google
 metadata <https://accounts.google.com/.well-known/openid-configuration>`__).
 Copy the content of this file in the textarea.
+Portal discovery document can be found here:
+https://#portal#/.well-known/openid-configuration
 
 If no metadata is available, you need to write them in the textarea.
 Mandatory fields are:
@@ -217,7 +221,7 @@ Options
    -  **Client ID**: Client ID given by OP
    -  **Client secret**: Client secret given by OP
    -  **Store ID token**: Allows one to store the ID token (JWT) inside
-      user session. Don't enable it unless you need to replay this token
+      user session. Do not enable it unless you need to replay this token
       on an application, or if you need the id_token_hint parameter when
       using logout.
 

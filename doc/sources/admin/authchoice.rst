@@ -77,6 +77,12 @@ Define here:
 
 .. note::
 
+    Federated authentication need pdata cookie.
+    SameSite cookie value must be set to "Lax" or "None".
+    See :doc:`SSO cookie parameters<ssocookie>`
+
+.. note::
+
     Authentication request to an another URL than Portal URL can lead
     to a persistent loop between Portal and a redirection URL (pdata is not
     removed because domains mismatch). To avoid this, you have to set pdata
@@ -100,7 +106,7 @@ Define here:
 .. tip::
 
     You can also override some LLNG parameters for each chain. See
-    :doc:`Parameter list<parameterlist>` to have the key names to use
+    :doc:`Parameters list<parameterlist>` to have the key names to use
 
 .. |image0| image:: /documentation/manager-choice.png
    :class: align-center

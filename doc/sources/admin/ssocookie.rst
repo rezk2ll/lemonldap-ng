@@ -38,8 +38,8 @@ To edit SSO cookie parameters, go in Manager, ``General Parameters`` >
    expiration time and use a session cookie.
 -  **Cookie SameSite value**: the value of the SameSite cookie attribute. By
    default, LemonLDAP::NG will set it to "Lax" in most cases, and "None" if you
-   use SAML. Using "None" requres Secured Cookies, and accessing applications
-   over HTTPS on most web browsers.
+   use federated authentiication like SAML or OIdC. Using "None" requires Secured Cookies,
+   and accessing applications over HTTPS on most web browsers.
 
 
 .. danger::
