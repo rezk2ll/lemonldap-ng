@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::UserDB::REST;
 
 use strict;
 use Mouse;
-use JSON;
+use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
   PE_OK
@@ -57,28 +57,61 @@ sub getUser {
 
 sub findUser {
     my ( $self, $req, %args ) = @_;
-    my $res;
-    # $res = eval {
-    #     $self->restCall(
-    #         $self->conf->{restUserDBUrl},
-    #         {
-    #             ( $args{useMail} ? 'mail' : 'user' ) => $req->user,
-    #             'useMail' => ( $args{useMail} ? JSON::true : JSON::false ),
+    my $plugin =
+      $self->p->loadedModules->{"Lemonldap::NG::Portal::Plugins::FindUser"};
+    my ( $searching, $excluding ) = $plugin->retreiveFindUserParams($req);
+    eval { $self->p->_authentication->setSecurity($req) };
+    return PE_OK unless scalar @$searching;
 
-    #         }
-    #     );
-    # };
-    # if ($@) {
-    #     $self->logger->error("UserDB REST error: $@");
-    #     eval { $self->p->_authentication->setSecurity($req) };
-    #     return PE_ERROR;
-    # }
-    # unless ( $res->{result} ) {
-    #     $self->userLogger->warn( 'User ' . $req->user . ' not found' );
-    #     eval { $self->p->_authentication->setSecurity($req) };
-    #     return PE_BADCREDENTIALS;
-    # }
-    # $req->data->{restUserDBInfo} = $res->{info} || {};
+    my $res;
+    $searching = [
+        map {
+            { $_->{key} => $_->{value} }
+        } @$searching
+    ];
+    $excluding = [
+        map {
+            { $_->{key} => $_->{value} }
+        } @$excluding
+    ];
+    $res = eval {
+        $self->restCall(
+            $self->conf->{restUserDBUrl},
+            {
+                searchingAttributes => to_json($searching),
+                (
+                    scalar @$excluding
+                    ? excludingAttributes => to_json($excluding)
+                    : ()
+                )
+            }
+        );
+    };
+    if ($@) {
+        $self->logger->error("UserDB REST error: $@");
+        return PE_ERROR;
+    }
+    unless ( $res->{result} ) {
+        $self->userLogger->info('FindUser: no user found from REST UserDB');
+        return PE_OK;
+    }
+
+    my $results = eval { from_json( $res->user, { allow_nonref => 1 } ) };
+    if ($@) {
+        $self->logger->error(
+            "FindUser: received invalid JSON from REST UserDB $@");
+        return PE_ERROR;
+    }
+    $self->logger->debug(
+        'REST UserDB number of result(s): ' . scalar @$results );
+    if ( scalar @$results ) {
+        my $rank = rand( scalar @$results );
+        $self->logger->debug("REST UserDB random rank: $rank");
+        $self->userLogger->info(
+            "FindUser: REST UserDB returns $results->[$rank]");
+        $req->data->{findUser} = $results->[$rank];
+    }
+
     return PE_OK;
 }
 
