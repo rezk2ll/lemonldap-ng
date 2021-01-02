@@ -86,7 +86,7 @@ sub findUser {
     $cond .= '$' . $_->{key} . " ne '$_->{value}' && " foreach (@$excluding);
     $cond =~ s/&&\s$//;
     $self->logger->debug("Demo UserDB built condition: $cond");
-    
+
     my @results = map {
         my $uid  = $demoAccounts{$_}->{uid};
         my $cn   = $demoAccounts{$_}->{cn};
@@ -101,7 +101,7 @@ sub findUser {
     $self->logger->debug(
         'Demo UserDB number of result(s): ' . scalar @results );
     if ( scalar @results ) {
-        my $rank = rand( scalar @results );
+        my $rank = int( rand( scalar @results ) );
         $self->logger->debug("Demo UserDB random rank: $rank");
         $self->userLogger->info(
             "FindUser: Demo UserDB returns $results[$rank]");

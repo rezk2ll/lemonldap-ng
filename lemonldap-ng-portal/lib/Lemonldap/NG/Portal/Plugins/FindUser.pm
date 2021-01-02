@@ -100,7 +100,7 @@ sub retreiveFindUserParams {
     {
         $self->logger->debug("FindUser: reading excluding parameters...");
         foreach ( sort keys %{ $self->conf->{findUserExcludingAttributes} } ) {
-            $self->logger->debug( "Pushing excluded parameter: $_ => "
+            $self->logger->debug( "Pushing excluding parameter: $_ => "
                   . $self->conf->{findUserExcludingAttributes}->{$_} );
             push @$excluding,
               {

@@ -96,16 +96,11 @@ sub findUser {
         return PE_OK;
     }
 
-    my $results = eval { from_json( $res->user, { allow_nonref => 1 } ) };
-    if ($@) {
-        $self->logger->error(
-            "FindUser: received invalid JSON from REST UserDB $@");
-        return PE_ERROR;
-    }
+    my $results = $res->{users};
     $self->logger->debug(
         'REST UserDB number of result(s): ' . scalar @$results );
     if ( scalar @$results ) {
-        my $rank = rand( scalar @$results );
+        my $rank = int( rand( scalar @$results ) );
         $self->logger->debug("REST UserDB random rank: $rank");
         $self->userLogger->info(
             "FindUser: REST UserDB returns $results->[$rank]");

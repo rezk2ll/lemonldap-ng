@@ -191,6 +191,7 @@ sub findUser {
         deref  => $self->conf->{ldapSearchDeref} || 'find',
         attrs  => $self->attrs,
     );
+
     if ( $mesg->code() != 0 ) {
         $self->logger->error(
             'LDAP Search error ' . $mesg->code . ": " . $mesg->error );
@@ -200,7 +201,7 @@ sub findUser {
     $self->logger->debug(
         'LDAP UserDB number of result(s): ' . $mesg->count() );
     if ( $mesg->count() ) {
-        my $rank = rand( $mesg->count() );
+        my $rank = int( rand( $mesg->count() ) );
         $self->logger->debug("Demo UserDB random rank: $rank");
         my $entry =
           ( $mesg->entry($rank)->dn() =~ /\b(?:uid|sAMAccountName)=(\w+?)\b/ )

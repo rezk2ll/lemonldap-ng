@@ -70,7 +70,7 @@ sub findUser {
     $request =~ s/AND\s$//;
     $self->logger->debug("DBI UserDB built condition: $request");
     $self->logger->debug( "DBI UserDB built args: " . join '|', @args );
-    
+
     eval {
         $sth = $self->dbh->prepare($request);
         $sth->execute(@args);
@@ -84,7 +84,7 @@ sub findUser {
 
     my $results = $sth->fetchall_arrayref();
     if ( $results->[0]->[0] ) {
-        my $rank = rand( scalar @$results );
+        my $rank = int( rand( scalar @$results ) );
         $self->logger->debug(
             'DBI UserDB number of result(s): ' . scalar @$results );
         $self->logger->debug("Demo UserDB random rank: $rank");

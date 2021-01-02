@@ -173,7 +173,7 @@ m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-c
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
       or print STDERR "$@\n" . Dumper($res);
     ok( $json->{user} =~ /^(dwho|msmith)$/, " Good user ($1)" )
-      or explain( $json, "user => $1" );
+      or explain( $json, "user => ?" );
 
     $request = 'arg=good';
     ok(
