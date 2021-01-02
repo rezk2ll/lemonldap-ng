@@ -5,7 +5,7 @@ use IO::String;
 
 require 't/test-lib.pm';
 
-my $maintests = 41;
+my $maintests = 46;
 my $userdb    = tempdb();
 
 SKIP: {
@@ -18,26 +18,26 @@ SKIP: {
     my $request;
     my $dbh = DBI->connect("dbi:SQLite:dbname=$userdb");
     $dbh->do(
-'CREATE TABLE users (uid text,password text,cn text,type text,guy text)'
+'CREATE TABLE users (uid text,password text,cn text,type text,guy text, room text)'
     );
     $dbh->do(
-"INSERT INTO users VALUES ('dwho','dwho','Doctor who', 'character','good')"
+"INSERT INTO users VALUES ('dwho','dwho','Doctor who', 'character','good','0')"
     );
     $dbh->do(
-"INSERT INTO users VALUES ('rtyler','rtyler','Rose Tyler','character','good')"
+"INSERT INTO users VALUES ('rtyler','rtyler','Rose Tyler','character','good','0')"
     );
     $dbh->do(
-"INSERT INTO users VALUES ('davros','davros','Bad Guy','character','bad')"
+"INSERT INTO users VALUES ('davros','davros','Bad Guy','character','bad','0')"
     );
     $dbh->do(
-"INSERT INTO users VALUES ('msmith','msmith','Mr Smith','character','good')"
+"INSERT INTO users VALUES ('msmith','msmith','Mr Smith','character','good','0')"
     );
     $dbh->do(
-"INSERT INTO users VALUES ('dalek','dalek', 'The Daleks','mutant','bad')"
+"INSERT INTO users VALUES ('dalek','dalek', 'The Daleks','mutant','bad','1')"
     );
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel              => 'error',
+                logLevel              => 'debug',
                 authentication        => 'DBI',
                 userDB                => 'Same',
                 dbiAuthChain          => "dbi:SQLite:dbname=$userdb",
@@ -53,7 +53,7 @@ SKIP: {
                 findUser              => 1,
                 impersonationRule     => 1,
                 findUserSearchingAttributes =>
-                  { uid => 'Login', guy => 'Kind', cn => 'Name' },
+                  { uid => 'Login', guy => 'Kind', cn => 'Name', room => 'Room' },
                 findUserExcludingAttributes =>
                   { type => 'mutant', uid => 'rtyler' },
             }
@@ -65,7 +65,7 @@ SKIP: {
     my ( $host, $url, $query ) =
       expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
     ( $host, $url, $query ) =
-      expectForm( $res, '#', undef, 'uid', 'guy', 'cn' );
+      expectForm( $res, '#', undef, 'uid', 'guy', 'cn', 'room' );
     $request = '';
     ok(
         $res = $client->_post(
@@ -78,7 +78,7 @@ SKIP: {
     ( $host, $url, $query ) =
       expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
     ( $host, $url, $query ) =
-      expectForm( $res, '#', undef, 'uid', 'guy', 'cn' );
+      expectForm( $res, '#', undef, 'uid', 'guy', 'cn', 'room' );
     ok(
         $res->[2]->[0] =~
 m%<input id="spoofIdfield" name="spoofId" type="text" class="form-control" value="" autocomplete="off"%,
@@ -118,6 +118,11 @@ m%<input id="findUser_uid" name="uid" type="text" autocomplete="off" class="form
 m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-control" placeholder="Name" />%,
         'id="findUser_cn"'
     ) or explain( $res->[2]->[0], 'id="findUser_cn"' );
+    ok(
+        $res->[2]->[0] =~
+m%<input id="findUser_room" name="room" type="text" autocomplete="off" class="form-control" placeholder="Room" />%,
+        'id="findUser_room"'
+    ) or explain( $res->[2]->[0], 'id="findUser_room"' );
 
     $request = 'uid=dwho';
     ok(
@@ -252,6 +257,22 @@ m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-c
       or explain( $json, 'result => 1' );
     ok( $json->{user} eq '', ' No user' )
       or explain( $json, 'user => ?' );
+
+    $request = 'room=0';
+    ok(
+        $res = $client->_post(
+            '/finduser', IO::String->new($request),
+            accept => 'application/json',
+            length => length($request)
+        ),
+        'Post FindFuser request 0 with multi results'
+    );
+    ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+      or print STDERR "$@\n" . Dumper($res);
+    ok( $json->{result} == 1, ' Good result' )
+      or explain( $json, 'result => 1' );
+    ok( $json->{user} =~ /^(dwho|msmith|davros)$/, " Good user ($1)" )
+      or explain( $json, "user => ?" );
 }
 count($maintests);
 done_testing( count() );
