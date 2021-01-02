@@ -30,7 +30,15 @@ my ( $host, $url, $query ) =
   expectForm( $res, '#', undef, 'user', 'password', 'spoofId', 'token' );
 ( $host, $url, $query ) =
   expectForm( $res, '#', undef, 'uid', 'guy', 'cn', 'token' );
-count(1);
+ok(
+    $res->[2]->[0] =~
+      m%<input id="token" type="hidden" name="token" value="([\d_]+?)" />%,
+    'Token value found'
+) or explain( $res->[2]->[0], 'Token value' );
+my $count = $res->[2]->[0] =~ s/$1//g;
+ok( $count == 2, 'Two token value found' )
+  or explain( $res->[2]->[0], '2 token values found' );
+count(3);
 
 $query =~ s/uid=/uid=dwho/;
 ok(
