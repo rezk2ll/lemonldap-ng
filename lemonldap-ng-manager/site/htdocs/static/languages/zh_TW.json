@@ -848,6 +848,7 @@
 "restSessionServer":"REST 工作階段伺服器",
 "restAuthServer":"REST 驗證伺服器",
 "restClockTolerance":"REST 伺服器時鐘公差",
+"restFindUserDBUrl":"User accounts URL",
 "restPasswordServer":"REST 密碼重設伺服器",
 "restUserDBUrl":"使用者資料 URL",
 "returnUrl":"回傳 URL",

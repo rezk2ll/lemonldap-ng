@@ -535,13 +535,13 @@ sub attributes {
             flags         => 'p',
         },
         findUserSearchingAttributes => {
-            type       => 'keyTextContainer',
-            keyTest    => qr/^\S+$/,
+            type          => 'keyTextContainer',
+            keyTest       => qr/^\S+$/,
             documentation => 'Attributes used for searching accounts',
         },
         findUserExcludingAttributes => {
-            type       => 'keyTextContainer',
-            keyTest    => qr/^\S+$/,
+            type          => 'keyTextContainer',
+            keyTest       => qr/^\S+$/,
             documentation => 'Attributes used for excluding accounts',
         },
         globalLogoutRule => {
@@ -3521,8 +3521,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         radiusServer => { type => 'text', },
 
         # REST
-        restAuthUrl   => { type => 'url' },
-        restUserDBUrl => { type => 'url' },
+        restAuthUrl       => { type => 'url' },
+        restUserDBUrl     => { type => 'url' },
+        restFindUserDBUrl => { type => 'url' },
 
         restPwdConfirmUrl => { type => 'url' },
         restPwdModifyUrl  => { type => 'url' },

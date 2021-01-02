@@ -848,6 +848,7 @@
 "restSessionServer":"Server di sessione REST",
 "restAuthServer":"REST authentication server",
 "restClockTolerance":"REST server clock tolerance",
+"restFindUserDBUrl":"User accounts URL",
 "restPasswordServer":"REST password reset server",
 "restUserDBUrl":"URL dei dati utente",
 "returnUrl":"URL di ritorno",

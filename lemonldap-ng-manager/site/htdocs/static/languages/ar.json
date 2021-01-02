@@ -848,6 +848,7 @@
 "restSessionServer":"خادم جلسة ريست",
 "restAuthServer":"REST authentication server",
 "restClockTolerance":"REST server clock tolerance",
+"restFindUserDBUrl":"User accounts URL",
 "restPasswordServer":"REST password reset server",
 "restUserDBUrl":"عنوان يو آر إل لبيانات المستخدم",
 "returnUrl":"إرجاع اليو آر إل",

@@ -848,6 +848,7 @@
 "restSessionServer":"REST oturum sunucusu",
 "restAuthServer":"REST doğrulama sunucusu",
 "restClockTolerance":"REST sunucu saat toleransı",
+"restFindUserDBUrl":"User accounts URL",
 "restPasswordServer":"REST parola sıfırlama sunucusu",
 "restUserDBUrl":"Kullanıcı verisi URL'si",
 "returnUrl":"Dönüş URL'si",

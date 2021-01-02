@@ -76,7 +76,7 @@ sub findUser {
     ];
     $res = eval {
         $self->restCall(
-            $self->conf->{restUserDBUrl},
+            $self->conf->{restFindUserDBUrl},
             {
                 searchingAttributes => to_json($searching),
                 (

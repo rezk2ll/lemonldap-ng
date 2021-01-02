@@ -392,9 +392,9 @@ sub tree {
                             help  => 'authrest.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'restAuthnLevel', 'restAuthUrl',
-                                'restUserDBUrl',  'restPwdConfirmUrl',
-                                'restPwdModifyUrl'
+                                'restAuthnLevel',   'restAuthUrl',
+                                'restUserDBUrl',    'restPwdConfirmUrl',
+                                'restPwdModifyUrl', 'restFindUserDBUrl'
                             ]
                         },
                         {

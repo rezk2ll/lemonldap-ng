@@ -848,6 +848,7 @@
 "restPwdModifyUrl":"URL de modification de mot-de-passe",
 "restSessionServer":"Serveur de sessions REST",
 "restAuthServer":"Serveur d'authentification REST",
+"restFindUserDBUrl":"URL des comptes utilisateurs",
 "restClockTolerance":"Tolérance aux écarts d'horloge",
 "restPasswordServer":"Serveur de réinitialisation de mdp REST",
 "restUserDBUrl":"URL de données utilisateurs",
