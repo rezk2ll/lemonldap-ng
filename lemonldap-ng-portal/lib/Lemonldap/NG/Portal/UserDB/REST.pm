@@ -81,7 +81,7 @@ sub findUser {
                 searchingAttributes => to_json($searching),
                 (
                     scalar @$excluding
-                    ? excludingAttributes => to_json($excluding)
+                    ? ( excludingAttributes => to_json($excluding) )
                     : ()
                 )
             }

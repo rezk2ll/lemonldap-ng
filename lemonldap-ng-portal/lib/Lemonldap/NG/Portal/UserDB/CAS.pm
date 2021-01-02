@@ -26,6 +26,8 @@ sub getUser {
 
 sub findUser {
     my ( $self, $req ) = @_;
+
+    # Nothing to do here
     return PE_OK;
 }
 
