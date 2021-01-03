@@ -279,6 +279,29 @@ for my $options (@backends) {
             }
         }
     }
+
+    # Force deletion of corrupted sessions for LDAP backend
+    if (    $options->{backend} =~ /^Apache::Session::(?:Browseable::)?LDAP$/i
+        and $force )
+    {
+        my $ldap = Net::LDAP->new( $options->{ldapServer} );
+        my $bind = $ldap->bind( $options->{ldapBindDN},
+            password => $options->{ldapBindPassword} );
+        my $attrId = $options->{ldapAttributeId} | "cn";
+        foreach (@errors) {
+            my $id = $_;
+            my $sessionDn =
+              $attrId . "=" . $id . "," . $options->{ldapConfBase};
+            my $delete = $ldap->delete($sessionDn);
+            if ( $delete->is_error ) {
+                print STDERR "Fail to delete session $id with force\n";
+            }
+            else {
+                print STDERR "Session $id removed with force\n";
+                $nb_error--;
+            }
+        }
+    }
 }
 
 #=============================================================================
