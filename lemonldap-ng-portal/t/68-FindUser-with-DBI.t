@@ -37,28 +37,33 @@ SKIP: {
     );
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel              => 'debug',
-                authentication        => 'DBI',
-                userDB                => 'Same',
-                dbiAuthChain          => "dbi:SQLite:dbname=$userdb",
-                dbiAuthUser           => '',
-                dbiAuthPassword       => '',
-                dbiAuthTable          => 'users',
-                dbiAuthLoginCol       => 'uid',
-                dbiAuthPasswordCol    => 'password',
-                dbiAuthPasswordHash   => '',
-                dbiDynamicHashEnabled => 0,
-                useSafeJail           => 1,
-                requireToken          => 0,
-                findUser              => 1,
-                impersonationRule     => 1,
-                findUserSearchingAttributes =>
-                  { uid => 'Login', guy => 'Kind', cn => 'Name', room => 'Room' },
+                logLevel                    => 'error',
+                authentication              => 'DBI',
+                userDB                      => 'Same',
+                dbiAuthChain                => "dbi:SQLite:dbname=$userdb",
+                dbiAuthUser                 => '',
+                dbiAuthPassword             => '',
+                dbiAuthTable                => 'users',
+                dbiAuthLoginCol             => 'uid',
+                dbiAuthPasswordCol          => 'password',
+                dbiAuthPasswordHash         => '',
+                dbiDynamicHashEnabled       => 0,
+                useSafeJail                 => 1,
+                requireToken                => 0,
+                findUser                    => 1,
+                impersonationRule           => 1,
+                findUserSearchingAttributes => {
+                    uid  => 'Login',
+                    guy  => 'Kind',
+                    cn   => 'Name',
+                    room => 'Room'
+                },
                 findUserExcludingAttributes =>
                   { type => 'mutant', uid => 'rtyler' },
             }
         }
     );
+    use Lemonldap::NG::Portal::Main::Constants 'PE_USERNOTFOUND';
 
     ## Simple access
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Portal', );
@@ -221,10 +226,10 @@ m%<input id="findUser_room" name="room" type="text" autocomplete="off" class="fo
     );
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
       or print STDERR "$@\n" . Dumper($res);
-    ok( $json->{result} == 1, ' Good result' )
-      or explain( $json, 'result => 1' );
-    ok( $json->{user} eq '', ' No user' )
-      or explain( $json, 'user => ?' );
+    ok( $json->{result} == 0, ' Good result' )
+      or explain( $json, 'result => 0' );
+    ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
+      or explain( $json, 'error => 4' );
 
     $request = 'uid=dalek';
     ok(
@@ -237,10 +242,10 @@ m%<input id="findUser_room" name="room" type="text" autocomplete="off" class="fo
     );
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
       or print STDERR "$@\n" . Dumper($res);
-    ok( $json->{result} == 1, ' Good result' )
-      or explain( $json, 'result => 1' );
-    ok( $json->{user} eq '', ' No user' )
-      or explain( $json, 'user => ?' );
+    ok( $json->{result} == 0, ' Good result' )
+      or explain( $json, 'result => 0' );
+    ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
+      or explain( $json, 'error => 4' );
 
     $request = 'uid=rtyler';
     ok(
@@ -253,10 +258,10 @@ m%<input id="findUser_room" name="room" type="text" autocomplete="off" class="fo
     );
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
       or print STDERR "$@\n" . Dumper($res);
-    ok( $json->{result} == 1, ' Good result' )
-      or explain( $json, 'result => 1' );
-    ok( $json->{user} eq '', ' No user' )
-      or explain( $json, 'user => ?' );
+    ok( $json->{result} == 0, ' Good result' )
+      or explain( $json, 'result => 0' );
+    ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
+      or explain( $json, 'error => 4' );
 
     $request = 'room=0';
     ok(

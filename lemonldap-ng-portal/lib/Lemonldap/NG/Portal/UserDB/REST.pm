@@ -4,12 +4,16 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_ERROR
   PE_OK
+  PE_ERROR
+  PE_USERNOTFOUND
   PE_BADCREDENTIALS
 );
 
-extends 'Lemonldap::NG::Common::Module', 'Lemonldap::NG::Portal::Lib::REST';
+extends qw(
+  Lemonldap::NG::Common::Module
+  Lemonldap::NG::Portal::Lib::REST
+);
 
 our $VERSION = '2.0.11';
 
@@ -52,6 +56,7 @@ sub getUser {
         return PE_BADCREDENTIALS;
     }
     $req->data->{restUserDBInfo} = $res->{info} || {};
+
     return PE_OK;
 }
 
@@ -93,7 +98,7 @@ sub findUser {
     }
     unless ( $res->{result} ) {
         $self->userLogger->info('FindUser: no user found from REST UserDB');
-        return PE_OK;
+        return PE_USERNOTFOUND;
     }
 
     my $results = $res->{users};
@@ -105,9 +110,10 @@ sub findUser {
         $self->userLogger->info(
             "FindUser: REST UserDB returns $results->[$rank]");
         $req->data->{findUser} = $results->[$rank];
+        return PE_OK;
     }
 
-    return PE_OK;
+    return PE_USERNOTFOUND;
 }
 
 sub setSessionInfo {

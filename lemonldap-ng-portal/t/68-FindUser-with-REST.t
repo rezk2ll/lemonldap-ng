@@ -48,17 +48,12 @@ LWP::Protocol::PSGI->register(
                 return [
                     200,
                     [ 'Content-Type' => 'application/json' ],
-                    ['{"result":true,"users":[]}']
+                    ['{"result":0,"users":[]}']
                 ];
             }
-            elsif ( $res->{searchingAttributes} eq
-                '[{"guy":"good"}]' )
-            {
-                ok(
-                    $res->{searchingAttributes} eq
-                      '[{"guy":"good"}]',
-                    ' guy:good'
-                );
+            elsif ( $res->{searchingAttributes} eq '[{"guy":"good"}]' ) {
+                ok( $res->{searchingAttributes} eq '[{"guy":"good"}]',
+                    ' guy:good' );
                 count(1);
                 return [
                     200,
@@ -97,6 +92,7 @@ my $client = LLNG::Manager::Test->new( {
         }
     }
 );
+use Lemonldap::NG::Portal::Main::Constants 'PE_USERNOTFOUND';
 
 $request = 'uid=dwho';
 ok(
@@ -125,13 +121,12 @@ ok(
     ),
     'Post null response FindFuser request'
 );
-expectOK($res);
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
-ok( $json->{user} eq '', ' Empty user' )
-  or explain( $json, "user => ''" );
-ok( $json->{result} == 1, ' result => 1' )
-  or explain( $json, 'Result => 1' );
+ok( $json->{result} == 0, ' Good result' )
+  or explain( $json, 'result => 0' );
+ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
+  or explain( $json, 'error => 4' );
 count(4);
 
 $request = 'other=dwho';

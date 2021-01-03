@@ -8,7 +8,7 @@ require 't/test-lib.pm';
 my $res;
 my $json;
 my $request;
-my $maintests = 41;
+my $maintests = 42;
 
 SKIP: {
     skip 'LLNGTESTLDAP is not set', $maintests unless ( $ENV{LLNGTESTLDAP} );
@@ -16,15 +16,15 @@ SKIP: {
 
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel                 => 'error',
-                authentication           => 'LDAP',
-                portal                   => 'http://auth.example.com/',
-                userDB                   => 'Same',
-                ldapServer               => 'ldap://127.0.0.1:19389/',
-                ldapBase                 => 'ou=users,dc=example,dc=com',
-                managerDn                => 'cn=admin,dc=example,dc=com',
-                managerPassword          => 'admin',
-                ldapExportedVars         => {
+                logLevel         => 'error',
+                authentication   => 'LDAP',
+                portal           => 'http://auth.example.com/',
+                userDB           => 'Same',
+                ldapServer       => 'ldap://127.0.0.1:19389/',
+                ldapBase         => 'ou=users,dc=example,dc=com',
+                managerDn        => 'cn=admin,dc=example,dc=com',
+                managerPassword  => 'admin',
+                ldapExportedVars => {
                     uid         => 'uid',
                     cn          => 'cn',
                     sn          => 'sn',
@@ -42,6 +42,8 @@ SKIP: {
             }
         }
     );
+    use Lemonldap::NG::Portal::Main::Constants 'PE_USERNOTFOUND';
+
     ## Simple access
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Portal', );
     my ( $host, $url, $query ) =
@@ -125,8 +127,10 @@ m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-c
     );
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
       or print STDERR "$@\n" . Dumper($res);
-    ok( $json->{user} eq '', ' No user' )
-      or explain( $json, "user => ''" );
+    ok( $json->{result} == 0, ' Good result' )
+      or explain( $json, 'result => 0' );
+    ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
+      or explain( $json, 'error => 4' );
 
     $request = 'cn=Rose Tyler';
     ok(
@@ -197,10 +201,10 @@ m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-c
     );
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
       or print STDERR "$@\n" . Dumper($res);
-    ok( $json->{result} == 1, ' Good result' )
-      or explain( $json, 'result => 1' );
-    ok( $json->{user} eq '', ' No user' )
-      or explain( $json, 'user => ?' );
+    ok( $json->{result} == 0, ' Good result' )
+      or explain( $json, 'result => 0' );
+    ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
+      or explain( $json, 'error => 4' );
 
     $request = 'uid=russian';
     ok(
@@ -213,10 +217,10 @@ m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-c
     );
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
       or print STDERR "$@\n" . Dumper($res);
-    ok( $json->{result} == 1, ' Good result' )
-      or explain( $json, 'result => 1' );
-    ok( $json->{user} eq '', ' No user' )
-      or explain( $json, 'user => ?' );
+    ok( $json->{result} == 0, ' Good result' )
+      or explain( $json, 'result => 0' );
+    ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
+      or explain( $json, 'error => 4' );
 
     $request = 'uid=french';
     ok(
@@ -229,10 +233,10 @@ m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-c
     );
     ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
       or print STDERR "$@\n" . Dumper($res);
-    ok( $json->{result} == 1, ' Good result' )
-      or explain( $json, 'result => 1' );
-    ok( $json->{user} eq '', ' No user' )
-      or explain( $json, 'user => ?' );
+    ok( $json->{result} == 0, ' Good result' )
+      or explain( $json, 'result => 0' );
+    ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
+      or explain( $json, 'error => 4' );
 
     clean_sessions();
 }

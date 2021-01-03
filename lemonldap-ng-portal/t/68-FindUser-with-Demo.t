@@ -5,7 +5,7 @@ use IO::String;
 
 require 't/test-lib.pm';
 
-my $maintests = 41;
+my $maintests = 42;
 
 my $res;
 my $json;
@@ -26,6 +26,7 @@ my $client = LLNG::Manager::Test->new( {
         }
     }
 );
+use Lemonldap::NG::Portal::Main::Constants 'PE_USERNOTFOUND';
 
 ## Simple access
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Portal', );
@@ -109,8 +110,10 @@ ok(
 );
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
-ok( $json->{user} eq '', ' No user' )
-  or explain( $json, "user => ''" );
+ok( $json->{result} == 0, ' Good result' )
+  or explain( $json, 'result => 0' );
+ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
+  or explain( $json, 'error => 4' );
 
 $request = 'cn=Bad Guy';
 ok(
@@ -181,10 +184,10 @@ ok(
 );
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
-ok( $json->{result} == 1, ' Good result' )
-  or explain( $json, 'result => 1' );
-ok( $json->{user} eq '', ' No user' )
-  or explain( $json, 'user => ?' );
+ok( $json->{result} == 0, ' Good result' )
+  or explain( $json, 'result => 0' );
+ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
+  or explain( $json, 'error => 4' );
 
 $request = 'uid=dalek';
 ok(
@@ -197,10 +200,10 @@ ok(
 );
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
-ok( $json->{result} == 1, ' Good result' )
-  or explain( $json, 'result => 1' );
-ok( $json->{user} eq '', ' No user' )
-  or explain( $json, 'user => ?' );
+ok( $json->{result} == 0, ' Good result' )
+  or explain( $json, 'result => 0' );
+ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
+  or explain( $json, 'error => 4' );
 
 $request = 'uid=rtyler';
 ok(
@@ -213,10 +216,10 @@ ok(
 );
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
-ok( $json->{result} == 1, ' Good result' )
-  or explain( $json, 'result => 1' );
-ok( $json->{user} eq '', ' No user' )
-  or explain( $json, 'user => ?' );
+ok( $json->{result} == 0, ' Good result' )
+  or explain( $json, 'result => 0' );
+ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
+  or explain( $json, 'error => 4' );
 
 count($maintests);
 done_testing( count() );

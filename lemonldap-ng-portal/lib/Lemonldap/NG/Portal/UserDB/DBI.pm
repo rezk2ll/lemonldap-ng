@@ -2,7 +2,12 @@ package Lemonldap::NG::Portal::UserDB::DBI;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_BADCREDENTIALS);
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK
+  PE_ERROR
+  PE_USERNOTFOUND
+  PE_BADCREDENTIALS
+);
 
 extends 'Lemonldap::NG::Portal::Lib::DBI';
 
@@ -43,7 +48,8 @@ sub getUser {
         eval { $self->p->_authentication->setSecurity($req) };
         return PE_BADCREDENTIALS;
     }
-    PE_OK;
+
+    return PE_OK;
 }
 
 sub findUser {
@@ -91,9 +97,10 @@ sub findUser {
         $self->userLogger->info(
             "FindUser: DBI UserDB returns $results->[$rank]->[0]");
         $req->data->{findUser} = $results->[$rank]->[0];
+        return PE_OK;
     }
 
-    PE_OK;
+    return PE_USERNOTFOUND;
 }
 
 sub setSessionInfo {
@@ -107,11 +114,13 @@ sub setSessionInfo {
         $req->{sessionInfo}->{$var} = $req->data->{dbientry}->{$attr}
           if ( defined $req->data->{dbientry}->{$attr} );
     }
-    PE_OK;
+    
+    return PE_OK;
 }
 
 sub setGroups {
-    PE_OK;
+    
+    return PE_OK;
 }
 
 1;

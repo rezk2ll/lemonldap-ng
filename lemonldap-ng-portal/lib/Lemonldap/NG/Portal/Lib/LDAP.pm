@@ -4,8 +4,11 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Lib::Net::LDAP;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK PE_LDAPCONNECTFAILED
-  PE_LDAPERROR PE_BADCREDENTIALS
+  PE_OK
+  PE_LDAPERROR
+  PE_USERNOTFOUND
+  PE_BADCREDENTIALS
+  PE_LDAPCONNECTFAILED
 );
 
 extends 'Lemonldap::NG::Common::Module';
@@ -208,9 +211,10 @@ sub findUser {
           [0];
         $self->userLogger->info("FindUser: LDAP UserDB returns $entry");
         $req->data->{findUser} = $entry;
+        return PE_OK;
     }
 
-    return PE_OK;
+    return PE_USERNOTFOUND;
 }
 
 # Validate LDAP connection before use

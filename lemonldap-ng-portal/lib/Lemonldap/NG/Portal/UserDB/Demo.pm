@@ -7,7 +7,11 @@ package Lemonldap::NG::Portal::UserDB::Demo;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_BADCREDENTIALS);
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK
+  PE_USERNOTFOUND
+  PE_BADCREDENTIALS
+);
 
 extends 'Lemonldap::NG::Common::Module';
 
@@ -67,7 +71,7 @@ sub getUser {
 
     eval { $self->p->_authentication->setSecurity($req) };
 
-    PE_BADCREDENTIALS;
+    return PE_BADCREDENTIALS;
 }
 
 ## @apmethod int findUser()
@@ -106,9 +110,10 @@ sub findUser {
         $self->userLogger->info(
             "FindUser: Demo UserDB returns $results[$rank]");
         $req->data->{findUser} = $results[$rank];
+        return PE_OK;
     }
 
-    PE_OK;
+    return PE_USERNOTFOUND;
 }
 
 ## @apmethod int setSessionInfo()
@@ -123,7 +128,7 @@ sub setSessionInfo {
         $req->{sessionInfo}->{$k} = $demoAccounts{ $req->{user} }->{$v};
     }
 
-    PE_OK;
+    return PE_OK;
 }
 
 ## @apmethod int setGroups()
@@ -146,7 +151,7 @@ sub setGroups {
     $req->sessionInfo->{groups}  = $groups;
     $req->sessionInfo->{hGroups} = $hGroups;
 
-    PE_OK;
+    return PE_OK;
 }
 
 1;
