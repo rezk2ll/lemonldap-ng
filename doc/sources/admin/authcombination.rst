@@ -207,23 +207,23 @@ Then you can configure the ``Combination`` password module to automatically
 send password changes to the LDAP server which was used during authentication.
 This module also enables password reset.
 
-.. warning::
-
-   When using password reset with a combination of 2 or more LDAP servers, you
-   need to make sure that there is no duplication of email addresses between
-   all your servers. If an email exists in more than one server, the password
-   will be reset on the first LDAP server that contains this email address
-
-
 .. note::
 
-   Combinations using the ``and`` boolean expression will not cause passwords
-   to be changed in both backends for now
+   You can set the ``_cmbPasswordDB`` session variable to manually select which
+   backend will be called when changing the password. This is useful when using
+   SASL delegation
 
-.. note::
+Limitations
+~~~~~~~~~~~
 
-   Forcing the user to reset their password on next login is not currently
-   supported by the combination module
+* When using password reset with a combination of 2 or more LDAP servers, you
+  need to make sure that there is no duplication of email addresses between all
+  your servers. If an email exists in more than one server, the password will
+  be reset on the first LDAP server that contains this email address
+* Combinations using the ``and`` boolean expression will not cause passwords to
+  be changed in both backends for now
+* Forcing the user to reset their password on next login is not currently
+  supported by the combination module
 
 Known problems
 --------------
