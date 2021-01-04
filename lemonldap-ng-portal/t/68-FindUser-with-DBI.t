@@ -33,6 +33,9 @@ SKIP: {
 "INSERT INTO users VALUES ('msmith','msmith','Mr Smith','character','good','0')"
     );
     $dbh->do(
+"INSERT INTO users VALUES ('davrosjr','davrosjr','Davros Junior','character','bad','0')"
+    );
+    $dbh->do(
 "INSERT INTO users VALUES ('dalek','dalek', 'The Daleks','mutant','bad','1')"
     );
     my $client = LLNG::Manager::Test->new( {
@@ -41,6 +44,7 @@ SKIP: {
                 authentication              => 'DBI',
                 userDB                      => 'Same',
                 dbiAuthChain                => "dbi:SQLite:dbname=$userdb",
+                multiValuesSeparator        => ' # ',
                 dbiAuthUser                 => '',
                 dbiAuthPassword             => '',
                 dbiAuthTable                => 'users',
@@ -59,7 +63,7 @@ SKIP: {
                     room => 'Room'
                 },
                 findUserExcludingAttributes =>
-                  { type => 'mutant', uid => 'rtyler' },
+                  { type => 'mutant', uid => 'rtyler # davrosjr # ' },
             }
         }
     );

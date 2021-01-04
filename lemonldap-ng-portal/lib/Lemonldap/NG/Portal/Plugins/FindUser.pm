@@ -85,29 +85,28 @@ sub provideUser {
 sub retreiveFindUserParams {
     my ( $self,      $req )       = @_;
     my ( $searching, $excluding ) = ( [], [] );
+
     $self->logger->debug("FindUser: reading parameters...");
-    foreach ( sort keys %{ $self->conf->{findUserSearchingAttributes} } ) {
+    @$searching = map {
         my $param = $req->params($_) // '';
-        if ( $param =~ /.+/ ) {
-            $self->logger->debug(
-                "Pushing searching parameter: $_ =>  $param" );
-            push @$searching, { key => $_, value => $param };
-        }
-    }
+        $self->logger->debug("Push searching parameter: $_ =>  $param")
+          if $param =~ /.+/;
+        $param =~ /.+/ ? { key => $_, value => $param } : ();
+    } sort keys %{ $self->conf->{findUserSearchingAttributes} };
 
     if ( scalar @$searching
         && keys %{ $self->conf->{findUserExcludingAttributes} } )
     {
         $self->logger->debug("FindUser: reading excluding parameters...");
-        foreach ( sort keys %{ $self->conf->{findUserExcludingAttributes} } ) {
-            $self->logger->debug( "Pushing excluding parameter: $_ => "
-                  . $self->conf->{findUserExcludingAttributes}->{$_} );
-            push @$excluding,
-              {
-                key   => $_,
-                value => $self->conf->{findUserExcludingAttributes}->{$_}
-              };
-        }
+        @$excluding = map {
+            my $key = $_;
+            map {
+                $self->logger->debug("Push excluding parameter: $key => $_");
+                { key => $key,
+                    value => $_ }    # Allow multivalued excluding parameters
+              } split $self->conf->{multiValuesSeparator},
+              $self->conf->{findUserExcludingAttributes}->{$_};
+        } sort keys %{ $self->conf->{findUserExcludingAttributes} };
     }
 
     return ( $searching, $excluding );
