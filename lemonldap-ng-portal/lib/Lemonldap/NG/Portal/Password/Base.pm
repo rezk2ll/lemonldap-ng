@@ -107,7 +107,7 @@ sub _modifyPassword {
                 $req,
                 {
                     _passwordDB => $self->p->getModule( $req, 'password' ),
-                    _password   => $req->{newpassword}
+                    _password   => $req->data->{newpassword}
                 }
             );
         }
