@@ -27,6 +27,7 @@ backups and a rollback plan ready!
 - If you use :doc:`applications/mattermost` with OpenID Connect, you need to set the ``id`` claim type to *Integer*
 - BruteForceProtection plugin now prevents authentication on backend if an account is locked
 - In the Manager API, postLogoutRedirectUri is now `returned and consumed as an array <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2347>`__
+- We fixed a bug that caused SAML sessions to be created and never deleted, you should check your session databases for sessions that have ``"_session_kind": "ISAML"`` but no ``_utime``. You can safely delete SAML sessions with no ``_utime`` during the upgrade.
 
 2.0.9
 -----
