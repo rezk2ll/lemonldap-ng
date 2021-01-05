@@ -55,6 +55,7 @@ SKIP: {
                 useSafeJail                 => 1,
                 requireToken                => 0,
                 findUser                    => 1,
+                findUserControl             => '^[\w#%\s]+$',
                 findUserWildcard            => '#',
                 impersonationRule           => 1,
                 findUserSearchingAttributes => {

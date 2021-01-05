@@ -89,9 +89,11 @@ sub retreiveFindUserParams {
     $self->logger->debug("FindUser: reading parameters...");
     @$searching = map {
         my $param = $req->params($_) // '';
-        $self->logger->debug("Push searching parameter: $_ =>  $param")
-          if $param =~ /.+/;
-        $param =~ /.+/ ? { key => $_, value => $param } : ();
+        if ( $param =~ /$self->{conf}->{findUserControl}/o ) {
+            $self->logger->debug("Push searching parameter: $_ =>  $param");
+            { key => $_, value => $param };
+        }
+        else { () }
     } sort keys %{ $self->conf->{findUserSearchingAttributes} };
 
     if ( scalar @$searching
@@ -102,8 +104,10 @@ sub retreiveFindUserParams {
             my $key = $_;
             map {
                 $self->logger->debug("Push excluding parameter: $key => $_");
-                { key => $key,
-                    value => $_ }    # Allow multivalued excluding parameters
+                {
+                    key   => $key,
+                    value => $_
+                }    # Allow multivalued excluding parameters
               } split $self->conf->{multiValuesSeparator},
               $self->conf->{findUserExcludingAttributes}->{$_};
         } sort keys %{ $self->conf->{findUserExcludingAttributes} };

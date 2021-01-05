@@ -36,6 +36,7 @@ SKIP: {
                 findUser          => 1,
                 impersonationRule => 1,
                 findUserWildcard  => '#',
+                findUserControl   => '^[\w#\s]+$',
                 findUserSearchingAttributes =>
                   { uid => 'Login', roomNumber => 'Room', cn => 'Name' },
                 findUserExcludingAttributes =>

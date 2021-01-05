@@ -978,7 +978,7 @@ sub tests {
             return 1;
         },
 
-        # FindUser authChoice parameter must be defined
+        # Chain must be defined with AuthChoice
         authChoiceChains => sub {
             return ( -1, 'Authentication choice enabled without chain' )
               if ( $conf->{authentication} eq 'Choice'

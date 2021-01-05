@@ -19,6 +19,7 @@ my $client = LLNG::Manager::Test->new( {
             requireToken      => 0,
             findUser          => 1,
             impersonationRule => 1,
+            findUserControl   => '^[\w*\s]+$',
             findUserWildcard  => '*',
             findUserSearchingAttributes =>
               { uid => 'Login', guy => 'Kind', cn => 'Name' },
