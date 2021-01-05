@@ -1,5 +1,6 @@
 .gitignore
 .vstags
+tags
 doc/sources/admin/_build/
 doc/pages/documentation/
 e2e-tests/conf

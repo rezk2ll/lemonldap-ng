@@ -37,7 +37,7 @@ configuration file with the following content:
        'TableName' => 'psessions', \\
    }
 
-Invokation
+Invocation
 ----------
 
 ``convertSessions -c job.ini``

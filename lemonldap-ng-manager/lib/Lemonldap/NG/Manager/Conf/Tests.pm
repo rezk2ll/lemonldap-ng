@@ -862,14 +862,14 @@ sub tests {
             return ( $res, join( ', ', @msg ) );
         },
 
-        # CAS APP URL must be unique
+        # CAS APP URL must be defined and unique
         casAppHostnameUniqueness => sub {
             return 1
               unless ( $conf->{casAppMetaDataOptions}
                 and %{ $conf->{casAppMetaDataOptions} } );
             my @msg;
             my $res = 1;
-            my %casHosts;
+            my %casUrl;
             foreach my $casConfKey ( keys %{ $conf->{casAppMetaDataOptions} } )
             {
                 my $appUrl =
@@ -884,13 +884,13 @@ sub tests {
                     next;
                 }
 
-                if ( defined $casHosts{$appHost} ) {
+                if ( defined $casUrl{$appUrl} ) {
                     push @msg,
-"$casConfKey and $casHosts{$appHost} have the same Service hostname";
+"$casConfKey and $casUrl{$appUrl} have the same Service URL";
                     $res = 0;
                     next;
                 }
-                $casHosts{$appHost} = $casConfKey;
+                $casUrl{$appUrl} = $casConfKey;
             }
             return ( $res, join( ', ', @msg ) );
         },

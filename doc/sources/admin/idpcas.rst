@@ -106,7 +106,7 @@ Options
 ^^^^^^^
 
 -  **Service URL** : the service (user-facing) URL of the CAS-enabled
-   application.
+   application. See :ref:`idpcas-url-matching`
 -  **User attribute** : session field that will be used as main
    identifier.
 -  **Authentication Level** : required authentication level to access this
@@ -125,3 +125,21 @@ Macros
 
 You can define here macros that will be only evaluated for this service,
 and not registered in the session of the user.
+
+.. _idpcas-url-matching:
+
+URL Matching
+^^^^^^^^^^^^
+
+.. versionchanged:: 2.0.10
+
+Before version 2.0.10, only the hostname was taken into account, which made it impossible to have two different CAS services behind the same hostname.
+
+Since version 2.0.10, the entire service URL is compared to the Service URL defined in LemonLDAP::NG. The longest prefix wins.
+
+For example, if you declared two applications in LemonLDAP::NG with the following service URLs:
+
+* https://cas.example.com/applications/zone1
+* https://cas.example.com/applications/
+
+An application located at https://cas.example.com/applications/zone1/myapp will match the first CAS service definition
