@@ -501,20 +501,55 @@ sub retrievePT {
 
 # Get CAS App from service URL
 sub getCasApp {
-    my ( $self, $url ) = @_;
+    my ( $self, $uri_param ) = @_;
 
-    my $hostname = URI->new($url)->host;
+    my $uri      = URI->new($uri_param);
+    my $hostname = $uri->authority;
+    my $uriCanon = $uri->canonical;
     return undef unless $hostname;
 
+    my $prefixConfKey;
+    my $longestCandidate = "";
+    my $hostnameConfKey;
+
     for my $app ( keys %{ $self->casAppList } ) {
-        my $appHost =
-          URI->new( $self->casAppList->{$app}->{casAppMetaDataOptionsService} )
-          ->host;
 
-        return $app if ( $hostname eq $appHost );
+        my $candidateUri =
+          URI->new( $self->casAppList->{$app}->{casAppMetaDataOptionsService} );
+        my $candidateHost  = $candidateUri->authority;
+        my $candidateCanon = $candidateUri->canonical;
 
+        # Try to match prefix, remembering the longest match found
+        if ( index( $uriCanon, $candidateCanon ) == 0 ) {
+            if ( length($longestCandidate) < length($candidateCanon) ) {
+                $longestCandidate = $candidateCanon;
+                $prefixConfKey    = $app;
+            }
+        }
+
+        # Try to match host
+        $hostnameConfKey = $app if ( $hostname eq $candidateHost );
     }
-    return undef;
+
+    # Application found by prefix has priority
+    return $prefixConfKey if $prefixConfKey;
+    $self->logger->warn(
+            "Matched CAS service $hostnameConfKey based on hostname only. "
+          . "This will be deprecated in a future version" )
+      if $hostnameConfKey;
+    return $hostnameConfKey;
+}
+
+# This method returns the host part of the given URL
+# If the URL has no scheme, return it completely
+# http://example.com/uri => example.com
+# foo.bar => foo.bar
+sub _getHostForService {
+    my ( $self, $service ) = @_;
+    return undef unless $service;
+
+    my $uri = URI->new($service);
+    return $uri->scheme ? $uri->host : $uri->as_string;
 }
 
 1;
