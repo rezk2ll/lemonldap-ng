@@ -5,6 +5,7 @@ use Mouse;
 use Lemonldap::NG::Common::FormEncode;
 use XML::Simple;
 use Lemonldap::NG::Common::UserAgent;
+use URI;
 
 our $VERSION = '2.0.8';
 
@@ -43,20 +44,21 @@ sub loadSrv {
     return 1;
 }
 
-# Load CAS application list, key is the service URL
+# Load CAS application list
 sub loadApp {
     my ($self) = @_;
-    unless ( $self->conf->{casAppMetaDataOptions}
+    if ( $self->conf->{casAppMetaDataOptions}
         and %{ $self->conf->{casAppMetaDataOptions} } )
     {
+        $self->casAppList( $self->conf->{casAppMetaDataOptions} );
+    }
+    else {
         $self->logger->info("No CAS apps found in configuration");
     }
+
     foreach ( keys %{ $self->conf->{casAppMetaDataOptions} } ) {
-        my $tmp =
-          $self->conf->{casAppMetaDataOptions}->{$_}
-          ->{casAppMetaDataOptionsService};
-        $tmp =~ s#^(https?://[^/]+).*$#$1#;
-        $self->casAppList->{$tmp} = $_;
+
+        # Load access rule
         my $rule = $self->conf->{casAppMetaDataOptions}->{$_}
           ->{casAppMetaDataOptionsRule};
         if ( length $rule ) {
@@ -495,6 +497,24 @@ sub retrievePT {
     my $pt = $xml->{'cas:proxySuccess'}->{'cas:proxyTicket'};
 
     return $pt;
+}
+
+# Get CAS App from service URL
+sub getCasApp {
+    my ( $self, $url ) = @_;
+
+    my $hostname = URI->new($url)->host;
+    return undef unless $hostname;
+
+    for my $app ( keys %{ $self->casAppList } ) {
+        my $appHost =
+          URI->new( $self->casAppList->{$app}->{casAppMetaDataOptionsService} )
+          ->host;
+
+        return $app if ( $hostname eq $appHost );
+
+    }
+    return undef;
 }
 
 1;
