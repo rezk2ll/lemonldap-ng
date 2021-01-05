@@ -789,6 +789,8 @@ sub tree {
                             help  => 'finduser.html',
                             nodes => [
                                 'findUser',
+                                'findUserWildcard',
+                                'findUserControl',
                                 'findUserSearchingAttributes',
                                 'findUserExcludingAttributes'
                             ]

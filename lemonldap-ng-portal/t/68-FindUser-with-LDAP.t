@@ -8,7 +8,7 @@ require 't/test-lib.pm';
 my $res;
 my $json;
 my $request;
-my $maintests = 42;
+my $maintests = 46;
 
 SKIP: {
     skip 'LLNGTESTLDAP is not set', $maintests unless ( $ENV{LLNGTESTLDAP} );
@@ -35,6 +35,7 @@ SKIP: {
                 requireToken      => 0,
                 findUser          => 1,
                 impersonationRule => 1,
+                findUserWildcard  => '#',
                 findUserSearchingAttributes =>
                   { uid => 'Login', roomNumber => 'Room', cn => 'Name' },
                 findUserExcludingAttributes =>
@@ -237,6 +238,22 @@ m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-c
       or explain( $json, 'result => 0' );
     ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
       or explain( $json, 'error => 4' );
+
+    $request = 'uid=r#';
+    ok(
+        $res = $client->_post(
+            '/finduser', IO::String->new($request),
+            accept => 'application/json',
+            length => length($request)
+        ),
+        'Post FindFuser request with wildcard'
+    );
+    ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+      or print STDERR "$@\n" . Dumper($res);
+    ok( $json->{result} == 1, ' Good result' )
+      or explain( $json, 'result => 1' );
+    ok( $json->{user} =~ /^(reset|rtyler)$/, " Good user ($1)" )
+      or explain( $json, "user => ?" );
 
     clean_sessions();
 }

@@ -544,6 +544,16 @@ sub attributes {
             keyTest       => qr/^\S+$/,
             documentation => 'Attributes used for excluding accounts',
         },
+        findUserWildcard => {
+            type          => 'text',
+            default       => '',
+            documentation => 'Character used as wildcard',
+        },
+        findUserControl => {
+            type          => 'pcre',
+            default       => '^[\w]+$',
+            documentation => 'Regular expression to validate parameters',
+        },
         globalLogoutRule => {
             type          => 'boolOrExpr',
             default       => 0,

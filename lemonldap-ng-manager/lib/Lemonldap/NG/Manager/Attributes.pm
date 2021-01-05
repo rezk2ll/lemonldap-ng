@@ -1364,6 +1364,10 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
             'default' => 0,
             'type'    => 'bool'
         },
+        'findUserControl' => {
+            'default' => '^[\\w]+$',
+            'type'    => 'pcre'
+        },
         'findUserExcludingAttributes' => {
             'keyTest' => qr/^\S+$/,
             'type'    => 'keyTextContainer'
@@ -1371,6 +1375,10 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
         'findUserSearchingAttributes' => {
             'keyTest' => qr/^\S+$/,
             'type'    => 'keyTextContainer'
+        },
+        'findUserWildcard' => {
+            'default' => '',
+            'type'    => 'text'
         },
         'forceGlobalStorageIssuerOTT' => {
             'type' => 'bool'

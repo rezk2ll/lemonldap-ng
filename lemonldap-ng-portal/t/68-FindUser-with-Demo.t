@@ -5,7 +5,7 @@ use IO::String;
 
 require 't/test-lib.pm';
 
-my $maintests = 42;
+my $maintests = 46;
 
 my $res;
 my $json;
@@ -19,6 +19,7 @@ my $client = LLNG::Manager::Test->new( {
             requireToken      => 0,
             findUser          => 1,
             impersonationRule => 1,
+            findUserWildcard  => '*',
             findUserSearchingAttributes =>
               { uid => 'Login', guy => 'Kind', cn => 'Name' },
             findUserExcludingAttributes =>
@@ -220,6 +221,22 @@ ok( $json->{result} == 0, ' Good result' )
   or explain( $json, 'result => 0' );
 ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
   or explain( $json, 'error => 4' );
+
+$request = 'uid=d*';
+ok(
+    $res = $client->_post(
+        '/finduser', IO::String->new($request),
+        accept => 'application/json',
+        length => length($request)
+    ),
+    'Post FindFuser request with wildcard'
+);
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+  or print STDERR "$@\n" . Dumper($res);
+ok( $json->{result} == 1, ' Good result' )
+  or explain( $json, 'result => 1' );
+ok( $json->{user} =~ /^(dwho|davros)$/, " Good user ($1)" )
+  or explain( $json, "user => ?" );
 
 count($maintests);
 done_testing( count() );

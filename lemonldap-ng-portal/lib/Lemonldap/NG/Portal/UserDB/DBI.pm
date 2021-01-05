@@ -60,13 +60,16 @@ sub findUser {
     eval { $self->p->_authentication->setSecurity($req) };
     return PE_OK unless scalar @$searching;
 
-    my $table   = $self->table;
-    my $pivot   = $args{useMail} ? $self->mailField : $self->pivot;
-    my $request = "SELECT $pivot FROM $table WHERE ";
+    my $table = $self->table;
+    my $pivot = $args{useMail} ? $self->mailField : $self->pivot;
     my @args;
-    my $sth;
+    my $request = "SELECT $pivot FROM $table WHERE ";
+    my ( $iswc, $sth );
+    my $wildcard = $self->conf->{findUserWildcard};
+    $self->logger->info("DBI UserDB with wildcard ($wildcard)") if $wildcard;
     foreach (@$searching) {
-        $request .= "$_->{key} = ? AND ";
+        $iswc = $_->{value} =~ s/\Q$wildcard\E+/%/ if $wildcard;
+        $request .= $iswc ? "$_->{key} LIKE ? AND " : "$_->{key} = ? AND ";
         push @args, $_->{value};
     }
     foreach (@$excluding) {
@@ -114,12 +117,12 @@ sub setSessionInfo {
         $req->{sessionInfo}->{$var} = $req->data->{dbientry}->{$attr}
           if ( defined $req->data->{dbientry}->{$attr} );
     }
-    
+
     return PE_OK;
 }
 
 sub setGroups {
-    
+
     return PE_OK;
 }
 

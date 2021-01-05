@@ -85,8 +85,23 @@ sub findUser {
     eval { $self->p->_authentication->setSecurity($req) };
     return PE_OK unless scalar @$searching;
 
-    my $cond = '';
-    $cond .= '$' . $_->{key} . " eq '$_->{value}' && " foreach (@$searching);
+    my $iswc;
+    my $cond     = '';
+    my $wildcard = $self->conf->{findUserWildcard};
+    $self->logger->info("Demo UserDB with wildcard ($wildcard)") if $wildcard;
+    foreach (@$searching) {
+        if ($wildcard) {
+            $iswc = $_->{value} =~ s/\Q$wildcard\E+//;
+            my $val = $_->{value};
+            $cond .=
+              $iswc
+              ? '( $' . $_->{key} . " =~ /$val/ ) && "
+              : '$' . $_->{key} . " eq '$_->{value}' && ";
+        }
+        else {
+            $cond .= '$' . $_->{key} . " eq '$_->{value}' && ";
+        }
+    }
     $cond .= '$' . $_->{key} . " ne '$_->{value}' && " foreach (@$excluding);
     $cond =~ s/&&\s$//;
     $self->logger->debug("Demo UserDB built condition: $cond");

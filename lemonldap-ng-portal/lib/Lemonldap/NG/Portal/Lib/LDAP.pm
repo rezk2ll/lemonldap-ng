@@ -180,8 +180,18 @@ sub findUser {
     return PE_LDAPCONNECTFAILED unless $self->ldap;
 
     $self->findUserFilter =~ /\bobjectClass=(\w+)\b/;
-    my $filter = "(&(objectClass=$1)";
-    $filter .= "($_->{key}=$_->{value})"    foreach (@$searching);
+    my $filter   = "(&(objectClass=$1)";
+    my $wildcard = $self->conf->{findUserWildcard};
+    $self->logger->info("LDAP UserDB with wildcard ($wildcard)") if $wildcard;
+    foreach (@$searching) {
+        if ($wildcard) {
+            $_->{value} =~ s/\Q$wildcard\E+/*/;
+        }
+        else {
+            $_->{value} =~ s/\Q*\E+//;
+        }
+        $filter .= "($_->{key}=$_->{value})";
+    }
     $filter .= "(!($_->{key}=$_->{value}))" foreach (@$excluding);
     $filter .= ')';
     $self->logger->debug("LDAP UserDB built filter: $filter");

@@ -5,7 +5,7 @@ use IO::String;
 
 require 't/test-lib.pm';
 
-my $maintests = 46;
+my $maintests = 54;
 my $userdb    = tempdb();
 
 SKIP: {
@@ -55,6 +55,7 @@ SKIP: {
                 useSafeJail                 => 1,
                 requireToken                => 0,
                 findUser                    => 1,
+                findUserWildcard            => '#',
                 impersonationRule           => 1,
                 findUserSearchingAttributes => {
                     uid  => 'Login',
@@ -281,6 +282,38 @@ m%<input id="findUser_room" name="room" type="text" autocomplete="off" class="fo
     ok( $json->{result} == 1, ' Good result' )
       or explain( $json, 'result => 1' );
     ok( $json->{user} =~ /^(dwho|msmith|davros)$/, " Good user ($1)" )
+      or explain( $json, "user => ?" );
+
+    $request = 'uid=d%';
+    ok(
+        $res = $client->_post(
+            '/finduser', IO::String->new($request),
+            accept => 'application/json',
+            length => length($request)
+        ),
+        'Post FindFuser request with bad wildcard'
+    );
+    ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+      or print STDERR "$@\n" . Dumper($res);
+    ok( $json->{result} == 0, ' Good result' )
+      or explain( $json, 'result => 0' );
+    ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
+      or explain( $json, 'error => 4' );
+
+    $request = 'uid=d#';
+    ok(
+        $res = $client->_post(
+            '/finduser', IO::String->new($request),
+            accept => 'application/json',
+            length => length($request)
+        ),
+        'Post FindFuser request with wildcard'
+    );
+    ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+      or print STDERR "$@\n" . Dumper($res);
+    ok( $json->{result} == 1, ' Good result' )
+      or explain( $json, 'result => 1' );
+    ok( $json->{user} =~ /^(dwho|davros)$/, " Good user ($1)" )
       or explain( $json, "user => ?" );
 }
 count($maintests);

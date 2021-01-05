@@ -83,6 +83,8 @@ sub defaultValues {
         'facebookExportedVars' => {},
         'facebookUserField'    => 'id',
         'failedLoginNumber'    => 5,
+        'findUserControl'      => '^[\\w]+$',
+        'findUserWildcard'     => '',
         'formTimeout'          => 120,
         'githubAuthnLevel'     => 1,
         'githubScope'          => 'user:email',
