@@ -104,10 +104,10 @@ sub retreiveFindUserParams {
             my $key = $_;
             map {
                 $self->logger->debug("Push excluding parameter: $key => $_");
-                {
+                {    # Allow multivalued excluding parameters
                     key   => $key,
                     value => $_
-                }    # Allow multivalued excluding parameters
+                }
               } split $self->conf->{multiValuesSeparator},
               $self->conf->{findUserExcludingAttributes}->{$_};
         } sort keys %{ $self->conf->{findUserExcludingAttributes} };
