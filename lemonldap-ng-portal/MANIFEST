@@ -557,6 +557,7 @@ t/32-Auth-and-issuer-OIDC-implicit.t
 t/32-Auth-and-issuer-OIDC-sorted.t
 t/32-CAS-10.t
 t/32-CAS-Macros.t
+t/32-CAS-Prefix.t
 t/32-OIDC-ClaimTypes.t
 t/32-OIDC-Code-Flow-with-2F-UpgradeOnly.t
 t/32-OIDC-Code-Flow-with-2F.t
@@ -582,11 +583,11 @@ t/35-SOAP-config-backend.t
 t/35-SOAP-sessions-with-SOAP-server.t
 t/36-Combination-Kerberos-or-Demo.t
 t/36-Combination-Password.t
-t/36-Combination.t
 t/36-Combination-with-Choice.t
 t/36-Combination-with-over.t
 t/36-Combination-with-token.t
 t/36-Combination-with-TOTP.t
+t/36-Combination.t
 t/37-CAS-App-to-SAML-IdP-POST-with-WAYF.t
 t/37-CAS-App-to-SAML-IdP-POST.t
 t/37-Issuer-Timeout.t
@@ -623,9 +624,9 @@ t/43-MailPasswordReset-Combination-LDAP.t
 t/43-MailPasswordReset-Combination.t
 t/43-MailPasswordReset-DBI.t
 t/43-MailPasswordReset-LDAP.t
-t/43-MailPasswordReset.t
 t/43-MailPasswordReset-with-captcha.t
 t/43-MailPasswordReset-with-token.t
+t/43-MailPasswordReset.t
 t/44-CertificateResetByMail-Demo.t
 t/44-CertificateResetByMail-LDAP.t
 t/50-IssuerGet.t
