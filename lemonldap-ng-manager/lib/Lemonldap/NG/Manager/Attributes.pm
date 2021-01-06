@@ -1365,7 +1365,7 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
             'type'    => 'bool'
         },
         'findUserControl' => {
-            'default' => '^[\\w]+$',
+            'default' => '^[*\\w]+$',
             'type'    => 'pcre'
         },
         'findUserExcludingAttributes' => {
@@ -1377,7 +1377,7 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
             'type'    => 'keyTextContainer'
         },
         'findUserWildcard' => {
-            'default' => '',
+            'default' => '*',
             'type'    => 'text'
         },
         'forceGlobalStorageIssuerOTT' => {

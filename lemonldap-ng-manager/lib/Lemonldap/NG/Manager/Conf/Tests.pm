@@ -953,12 +953,25 @@ sub tests {
             return 1;
         },
 
+        # FindUser wildcard must be allowed
+        findUserWildcard => sub {
+            return 1
+              unless ( $conf->{findUser}
+                and $conf->{findUserWildcard}
+                and $conf->{findUserControl} );
+            return ( 1,
+                'FindUser wildcard should be allowed by parameters control' )
+              unless (
+                $conf->{findUserWildcard} =~ /$conf->{findUserControl}/o );
+            return 1;
+        },
+
         # AuthChoice parameters must exist
         AuthChoiceParams => sub {
             return 1 unless %{ $conf->{authChoiceModules} };
             foreach (qw(AuthBasic FindUser)) {
                 if ( $conf->{"authChoice$_"} ) {
-                    my $test   = $conf->{"authChoice$_"};
+                    my $test  = $conf->{"authChoice$_"};
                     my $param = grep /^$test$/,
                       keys %{ $conf->{authChoiceModules} };
                     return ( -1, "Choice $_ parameter does not exist" )

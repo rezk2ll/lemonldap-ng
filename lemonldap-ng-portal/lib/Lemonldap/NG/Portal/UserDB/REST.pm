@@ -24,7 +24,11 @@ sub init {
 
     # Add warning in log
     unless ( $self->conf->{restUserDBUrl} ) {
-        $self->logger->error('No User REST URL given');
+        $self->logger->error('User REST URL ids not set');
+        return 0;
+    }
+    if ( !$self->conf->{restFindUserDBUrl} && $self->conf->{findUser} ) {
+        $self->logger->error('findUser REST URL is not set');
         return 0;
     }
     return 1;

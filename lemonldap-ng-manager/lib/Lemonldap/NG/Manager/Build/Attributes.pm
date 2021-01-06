@@ -546,12 +546,12 @@ sub attributes {
         },
         findUserWildcard => {
             type          => 'text',
-            default       => '',
+            default       => '*',
             documentation => 'Character used as wildcard',
         },
         findUserControl => {
             type          => 'pcre',
-            default       => '^[\w]+$',
+            default       => '^[*\w]+$',
             documentation => 'Regular expression to validate parameters',
         },
         globalLogoutRule => {
