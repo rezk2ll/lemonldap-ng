@@ -738,8 +738,10 @@ sub run {
 
                     # Store data in access token
                     # Generate access_token
-                    my $accessTokenSession = $self->newAccessToken(
+                    $access_token = $self->newAccessToken(
+                        $req,
                         $rp,
+                        $oidc_request->{'scope'},
                         {
                             scope           => $scope,
                             rp              => $rp,
@@ -747,16 +749,13 @@ sub run {
                         }
                     );
 
-                    unless ($accessTokenSession) {
-                        $self->logger->error(
-                            "Unable to create OIDC session for access_token");
+                    unless ($access_token) {
+                        $self->logger->error("Unable to create Access Token");
                         $self->returnRedirectError( $req,
                             $oidc_request->{'redirect_uri'},
                             "server_error", undef, undef,
                             $oidc_request->{'state'}, 1 );
                     }
-
-                    $access_token = $accessTokenSession->id;
 
                     $self->logger->debug(
                         "Generated access token: $access_token");
@@ -836,8 +835,10 @@ sub run {
                 if ( $response_type =~ /\btoken\b/ ) {
 
                     # Generate access_token
-                    my $accessTokenSession = $self->newAccessToken(
+                    $access_token = $self->newAccessToken(
+                        $req,
                         $rp,
+                        $oidc_request->{'scope'},
                         {
                             scope           => $scope,
                             rp              => $rp,
@@ -845,16 +846,13 @@ sub run {
                         }
                     );
 
-                    unless ($accessTokenSession) {
-                        $self->logger->error(
-                            "Unable to create OIDC session for access_token");
+                    unless ($access_token) {
+                        $self->logger->error("Unable to create Access Token");
                         return $self->returnRedirectError( $req,
                             $oidc_request->{'redirect_uri'},
                             "server_error", undef, undef,
                             $oidc_request->{'state'}, 1 );
                     }
-
-                    $access_token = $accessTokenSession->id;
 
                     $self->logger->debug(
                         "Generated access token: $access_token");
@@ -1194,24 +1192,21 @@ sub _handlePasswordGrant {
     );
 
     # Generate access_token
-    my $accessTokenSession = $self->newAccessToken(
+    my $access_token = $self->newAccessToken(
+        $req,
         $rp,
+        $scope,
         {
-            scope           => $scope,
-            rp              => $rp,
             user_session_id => $req->id,
         }
     );
 
-    unless ($accessTokenSession) {
-        $self->userLogger->error(
-            "Unable to create OIDC session for access_token");
+    unless ($access_token) {
+        $self->userLogger->error("Unable to create Access Token");
 
         #FIXME: should be an error 500
         return $self->p->sendError( $req, 'invalid_request', 400 );
     }
-
-    my $access_token = $accessTokenSession->id;
 
     $self->logger->debug("Generated access token: $access_token");
 
@@ -1325,24 +1320,21 @@ sub _handleAuthorizationCodeGrant {
     $self->logger->debug("Found corresponding user: $user_id");
 
     # Generate access_token
-    my $accessTokenSession = $self->newAccessToken(
+    my $access_token = $self->newAccessToken(
+        $req,
         $rp,
+        $codeSession->data->{scope},
         {
-            scope           => $codeSession->data->{scope},
-            rp              => $rp,
             user_session_id => $apacheSession->id,
         }
     );
 
-    unless ($accessTokenSession) {
-        $self->userLogger->error(
-            "Unable to create OIDC session for access_token");
+    unless ($access_token) {
+        $self->userLogger->error("Unable to create Access Token");
 
         #FIXME: should be an error 500
         return $self->p->sendError( $req, 'invalid_request', 400 );
     }
-
-    my $access_token = $accessTokenSession->id;
 
     $self->logger->debug("Generated access token: $access_token");
 
@@ -1539,23 +1531,20 @@ sub _handleRefreshTokenGrant {
         $auth_time = $session->data->{_lastAuthnUTime};
 
         # Generate access_token
-        my $accessTokenSession = $self->newAccessToken(
+        $access_token = $self->newAccessToken(
+            $req,
             $rp,
+            $refreshSession->data->{scope},
             {
-                scope           => $refreshSession->data->{scope},
-                rp              => $rp,
                 user_session_id => $user_session_id,
             }
         );
 
-        unless ($accessTokenSession) {
-            $self->userLogger->error(
-                "Unable to create OIDC session for access_token");
+        unless ($access_token) {
+            $self->userLogger->error("Unable to create Access Token");
             return $self->p->sendError( $req,
                 'Unable to create Access Token', 500 );
         }
-
-        $access_token = $accessTokenSession->id;
 
         $self->logger->debug("Generated access token: $access_token");
     }
@@ -1606,23 +1595,20 @@ sub _handleRefreshTokenGrant {
         $auth_time = $refreshSession->data->{auth_time};
 
         # Generate access_token
-        my $accessTokenSession = $self->newAccessToken(
+        $access_token = $self->newAccessToken(
+            $req,
             $rp,
+            $refreshSession->data->{scope},
             {
-                scope              => $refreshSession->data->{scope},
-                rp                 => $rp,
                 offline_session_id => $refreshSession->id,
             }
         );
 
-        unless ($accessTokenSession) {
-            $self->userLogger->error(
-                "Unable to create OIDC session for access_token");
+        unless ($access_token) {
+            $self->userLogger->error("Unable to create Access Token");
             return $self->p->sendError( $req,
                 'Unable to create Access Token', 500 );
         }
-
-        $access_token = $accessTokenSession->id;
 
         $self->logger->debug("Generated access token: $access_token");
     }

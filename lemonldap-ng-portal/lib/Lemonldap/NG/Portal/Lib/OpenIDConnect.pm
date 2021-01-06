@@ -698,16 +698,28 @@ sub getAuthorizationCode {
 # @return new Lemonldap::NG::Common::Session object
 
 sub newAccessToken {
-    my ( $self, $rp, $info ) = @_;
+    my ( $self, $req, $rp, $scope, $info ) = @_;
 
-    return $self->getOpenIDConnectSession(
+    my $session = $self->getOpenIDConnectSession(
         undef,
         "access_token",
         $self->conf->{oidcRPMetaDataOptions}->{$rp}
           ->{oidcRPMetaDataOptionsAccessTokenExpiration}
           || $self->conf->{oidcServiceAccessTokenExpiration},
-        $info
+          {
+
+              scope           => $scope,
+              rp              => $rp,
+              %{$info},
+          }
     );
+
+    if ($session) {
+        return $session->id;
+    }
+    else {
+        return undef;
+    }
 }
 
 # Get existing Access Token
