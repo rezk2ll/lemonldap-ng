@@ -722,13 +722,30 @@ sub newAccessToken {
     }
 }
 
-# Get existing Access Token
+# Get an session from the supplied Access Token
 # @param id
 # @return new Lemonldap::NG::Common::Session object
-
 sub getAccessToken {
-    my ( $self, $id ) = @_;
+    my ( $self, $access_token ) = @_;
 
+    my $id;
+
+    # Access Token is a JWT, extract the JTI field
+    # and use it as session ID
+    if ( index( $access_token, '.' ) > 0 ) {
+        my $data = $self->getJWTJSONData($access_token);
+        if ( $data and $data->{jti} ) {
+            $id = $data->{jti};
+        }
+        else {
+            return;
+        }
+    }
+
+    # Access Token is the session ID directly
+    else {
+        $id = $access_token;
+    }
     return $self->getOpenIDConnectSession( $id, "access_token" );
 }
 
@@ -1320,7 +1337,7 @@ sub getEndPointAccessToken {
     my $access_token;
 
     my $authorization = $req->authorization;
-    if ( $authorization and $authorization =~ /^Bearer (\w+)/i ) {
+    if ( $authorization and $authorization =~ /^Bearer ([\w\-\.]+)/i ) {
         $self->logger->debug("Bearer access token");
         $access_token = $1;
     }

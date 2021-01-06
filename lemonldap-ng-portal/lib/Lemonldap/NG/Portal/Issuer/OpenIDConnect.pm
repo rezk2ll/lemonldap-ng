@@ -1801,7 +1801,7 @@ sub introspection {
     return $self->p->sendError( $req, 'invalid_request', 400 ) unless ($token);
 
     my $response    = { active => JSON::false };
-    my $oidcSession = $self->getOpenIDConnectSession($token);
+    my $oidcSession = $self->getAccessToken($token);
     if ($oidcSession) {
         my $apacheSession =
           $self->_getSessionFromAccessTokenData( $oidcSession->{data} );
