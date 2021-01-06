@@ -247,10 +247,9 @@
         $scope.waiting = true;
         $scope.currentScope = scope;
         node = scope.$modelValue;
-        notificationId = node.notification;
+        notificationId = node.notification.replace(/#/g, '_');
         if ($scope.type === 'actives') {
-          node.reference.replace(/#/, '_');
-          notificationId = (node.uid + "_") + node.reference.replace(/#/, '_');
+          notificationId = node.uid + "_" + node.reference;
         }
         $http.get(scriptname + "notifications/" + $scope.type + "/" + notificationId).then(function(response) {
           var e, notif;

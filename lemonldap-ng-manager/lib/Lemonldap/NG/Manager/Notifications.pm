@@ -244,7 +244,8 @@ sub notifications {
 sub notification {
     my ( $self, $req, $id, $type ) = @_;
     my $backend = $self->{notificationStorage};
-    $self->logger->debug("Notification storage: $backend");
+    $self->logger->debug("Notification storage backend: $backend");
+    $self->logger->debug("Notification id: $id");
 
     if ( $type eq 'actives' ) {
         my ( $uid, $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
@@ -256,7 +257,7 @@ sub notification {
                 $req,
                 {
                     result => 0,
-                    error  => "Active otification $ref not found for user $uid"
+                    error  => "Active notification $ref not found for user $uid"
                 }
             );
         }
@@ -272,13 +273,16 @@ sub notification {
         $ref = decode_base64($ref) if ( $backend eq 'File' );
         my $n = $self->notifAccess->getAccepted( $uid, $ref );
         unless ($n) {
-            $self->userLogger->notice(
-                "Done notification $ref not found for user $uid");
+            my $msg =
+              $ref && $uid
+              ? "Done notification $ref not found for user $uid"
+              : 'Done notification not found';
+            $self->userLogger->notice($msg);
             return $self->sendJSONresponse(
                 $req,
                 {
                     result => 0,
-                    error  => "Done notification $ref not found for user $uid"
+                    error  => $msg
                 }
             );
         }
