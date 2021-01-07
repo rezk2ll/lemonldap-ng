@@ -185,10 +185,10 @@ sub findUser {
     $self->logger->info("LDAP UserDB with wildcard ($wildcard)") if $wildcard;
     foreach (@$searching) {
         if ($wildcard) {
-            $_->{value} =~ s/\Q$wildcard\E+/*/;
+            $_->{value} =~ s/\Q$wildcard\E+/*/g;
         }
         else {
-            $_->{value} =~ s/\Q*\E+//;
+            $_->{value} =~ s/\Q*\E+//g;
         }
         $filter .= "($_->{key}=$_->{value})";
     }

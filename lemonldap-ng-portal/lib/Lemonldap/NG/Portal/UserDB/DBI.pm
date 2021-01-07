@@ -68,7 +68,7 @@ sub findUser {
     my $wildcard = $self->conf->{findUserWildcard};
     $self->logger->info("DBI UserDB with wildcard ($wildcard)") if $wildcard;
     foreach (@$searching) {
-        $iswc = $_->{value} =~ s/\Q$wildcard\E+/%/ if $wildcard;
+        $iswc = $_->{value} =~ s/\Q$wildcard\E+/%/g if $wildcard;
         $request .= $iswc ? "$_->{key} LIKE ? AND " : "$_->{key} = ? AND ";
         push @args, $_->{value};
     }

@@ -91,11 +91,10 @@ sub findUser {
     $self->logger->info("Demo UserDB with wildcard ($wildcard)") if $wildcard;
     foreach (@$searching) {
         if ($wildcard) {
-            $iswc = $_->{value} =~ s/\Q$wildcard\E+//;
-            my $val = $_->{value};
+            $iswc = $_->{value} =~ s/\Q$wildcard\E+//g;
             $cond .=
               $iswc
-              ? '( $' . $_->{key} . " =~ /$val/ ) && "
+              ? '( $' . $_->{key} . " =~ /\Q$_->{value}\E/ ) && "
               : '$' . $_->{key} . " eq '$_->{value}' && ";
         }
         else {
