@@ -1402,10 +1402,21 @@ sub buildUserInfoResponseFromId {
 # @return hashref UserInfo data
 sub buildUserInfoResponse {
     my ( $self, $req, $scope, $rp, $session ) = @_;
+    return $self->buildUserInfoResponseFromData( $req, $scope, $rp,
+        $session->data );
+}
+
+# Return Hash of UserInfo data
+# @param scope OIDC scope
+# @param rp Internal Relying Party identifier
+# @param sessionInfo hash of session data
+# @return hashref UserInfo data
+sub buildUserInfoResponseFromData {
+    my ( $self, $req, $scope, $rp, $session_data ) = @_;
     my $userinfo_response = {};
 
     my $data = {
-        %{ $session->data },
+        %{ $session_data },
         _clientId => $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID},
         _clientConfKey => $rp,
         _scope         => $scope,
