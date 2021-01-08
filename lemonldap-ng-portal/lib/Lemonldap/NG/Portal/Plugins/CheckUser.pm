@@ -534,7 +534,8 @@ sub _headers {
     # Normalize headers name if required
     if ( $self->displayNormalizedHeadersRule->( $req, $savedUserData ) ) {
         $self->logger->debug("Normalize headers...");
-        @$headers = map {;
+        @$headers = map {
+            ;    # Prevent compilation error with old Perl versions
             no strict 'refs';
             {
                 key   => &{ $self->p->HANDLER . '::cgiName' }( $_->{key} ),
