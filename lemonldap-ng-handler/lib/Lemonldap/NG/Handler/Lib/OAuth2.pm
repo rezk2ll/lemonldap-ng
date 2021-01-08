@@ -1,4 +1,5 @@
 package Lemonldap::NG::Handler::Lib::OAuth2;
+use Lemonldap::NG::Common::JWT qw(getAccessTokenSessionId);
 
 use strict;
 
@@ -86,7 +87,12 @@ sub fetchId {
     }
 
     # Get access token session
-    my $infos = $class->getOIDCInfos($access_token);
+    my $access_token_sid = getAccessTokenSessionId($access_token);
+    unless ($access_token_sid) {
+        $req->data->{oauth2_error} = 'invalid_token';
+        return;
+    }
+    my $infos = $class->getOIDCInfos($access_token_sid);
 
     # Store scope and rpid for future session attributes
     if ( $infos->{rp} ) {

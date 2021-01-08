@@ -4,7 +4,7 @@ BEGIN {
     require 't/test-psgi-lib.pm';
 }
 
-my $maintests = 18;
+my $maintests = 21;
 
 init(
     'Lemonldap::NG::Handler::Server',
@@ -171,6 +171,24 @@ ok(
     'Invalid access token'
 );
 is( $res->[0], 403, "Unauthorized because the write scope is not granted" );
+
+# Request with JWT Access Token
+ok(
+    $res = $client->_get(
+        '/test',             undef,
+        'test1.example.com', '',
+        VHOSTTYPE => 'OAuth2',
+        HTTP_AUTHORIZATION =>
+'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwianRpIjoiZjBmZDRlODUwMDBjZTM1ZDA2MmY5N2Y1YjQ2NmZjMDBhYmMyZmFkMDQwNmUwM2UwODY2MDVmOTI5ZWM0YTI0OSJ9.h0RDBLo5Vy8lqbltEP2L496KOzJLhLCIRZZmEqcPuN8',
+    ),
+    'Invalid access token'
+);
+
+# Check headers
+%h = @{ $res->[1] };
+is( $res->[0], 200, "Request accepted" );
+ok( $h{'Auth-User'} eq 'dwho', 'Header Auth-User is set to "dwho"' )
+  or explain( \%h, 'Auth-User => "dwho"' );
 
 # Request with Access token from offline session
 ok(
