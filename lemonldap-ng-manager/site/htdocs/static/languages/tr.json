@@ -434,6 +434,7 @@
 "ldapExportedVars":"Dışa aktarılan değişkenler",
 "ldapFilters":"Filtreler",
 "LDAPFilter":"Varsayılan filtre",
+"ldapGetUserBeforePasswordChange":"Search for user before password change",
 "ldapGroupAttributeName":"Hedef nitelik",
 "ldapGroupAttributeNameGroup":"Grup kaynağı niteliği",
 "ldapGroupAttributeNameSearch":"Aranan nitelikler",

@@ -302,6 +302,7 @@ sub tree {
                                         'ldapPasswordResetAttribute',
                                         'ldapPasswordResetAttributeValue',
                                         'ldapAllowResetExpiredPassword',
+                                        'ldapGetUserBeforePasswordChange',
                                         'ldapITDS'
                                     ]
                                 },

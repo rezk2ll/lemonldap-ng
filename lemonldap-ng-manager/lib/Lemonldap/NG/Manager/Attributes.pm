@@ -1658,6 +1658,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'LDAPFilter' => {
             'type' => 'text'
         },
+        'ldapGetUserBeforePasswordChange' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'ldapGroupAttributeName' => {
             'default' => 'member',
             'type'    => 'text'

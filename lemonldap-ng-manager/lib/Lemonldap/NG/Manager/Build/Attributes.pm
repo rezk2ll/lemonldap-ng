@@ -3292,6 +3292,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default => 0,
             type    => 'bool',
         },
+        ldapGetUserBeforePasswordChange => {
+            default => 0,
+            type    => 'bool',
+        },
         ldapSearchDeref => {
             type   => 'select',
             select => [

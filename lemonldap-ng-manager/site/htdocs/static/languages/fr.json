@@ -434,6 +434,7 @@
 "ldapExportedVars":"Variables exportées",
 "ldapFilters":"Filtres",
 "LDAPFilter":"Filtre par défaut",
+"ldapGetUserBeforePasswordChange":"Rechercher l'utilisateur avant le changement de mot de passe",
 "ldapGroupAttributeName":"Attribut cible",
 "ldapGroupAttributeNameGroup":"Attribut source groupe",
 "ldapGroupAttributeNameSearch":"Attributs recherchés",

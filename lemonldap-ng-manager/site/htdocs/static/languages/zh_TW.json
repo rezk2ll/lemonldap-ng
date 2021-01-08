@@ -434,6 +434,7 @@
 "ldapExportedVars":"已匯出的變數",
 "ldapFilters":"過濾器",
 "LDAPFilter":"預設過濾器",
+"ldapGetUserBeforePasswordChange":"Search for user before password change",
 "ldapGroupAttributeName":"目標屬性",
 "ldapGroupAttributeNameGroup":"群組來源屬性",
 "ldapGroupAttributeNameSearch":"已搜尋的屬性",
