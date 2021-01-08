@@ -32,6 +32,11 @@ sub modifyPassword {
     my $dn;
     my $requireOldPassword;
 
+    # If the password change is done in a different backend,
+    # we need to reload the correct DN
+    $self->getUser( $req, useMail => $useMail )
+      if $self->conf->{ldapGetUserBeforePasswordChange};
+
     if ( $req->data->{dn} ) {
         $dn                 = $req->data->{dn};
         $requireOldPassword = $self->requireOldPwdRule->( $req, $req->userData );
