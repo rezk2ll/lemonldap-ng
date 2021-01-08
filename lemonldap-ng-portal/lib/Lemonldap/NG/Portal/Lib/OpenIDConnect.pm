@@ -14,6 +14,7 @@ use Digest::SHA
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::UserAgent;
+use Lemonldap::NG::Common::JWT qw(getAccessTokenSessionId);
 use MIME::Base64 qw/encode_base64 decode_base64/;
 use Mouse;
 
@@ -793,24 +794,9 @@ sub maybeJWT {
 sub getAccessToken {
     my ( $self, $access_token ) = @_;
 
-    my $id;
+    my $id = getAccessTokenSessionId($access_token);
+    return unless $id;
 
-    # Access Token is a JWT, extract the JTI field
-    # and use it as session ID
-    if ( index( $access_token, '.' ) > 0 ) {
-        my $data = $self->getJWTJSONData($access_token);
-        if ( $data and $data->{jti} ) {
-            $id = $data->{jti};
-        }
-        else {
-            return;
-        }
-    }
-
-    # Access Token is the session ID directly
-    else {
-        $id = $access_token;
-    }
     return $self->getOpenIDConnectSession( $id, "access_token" );
 }
 
