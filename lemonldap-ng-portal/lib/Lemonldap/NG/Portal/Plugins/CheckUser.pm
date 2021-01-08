@@ -1,7 +1,6 @@
 package Lemonldap::NG::Portal::Plugins::CheckUser;
 
 use strict;
-no strict 'refs';
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NOTOKEN
@@ -535,7 +534,8 @@ sub _headers {
     # Normalize headers name if required
     if ( $self->displayNormalizedHeadersRule->( $req, $savedUserData ) ) {
         $self->logger->debug("Normalize headers...");
-        @$headers = map {
+        @$headers = map {;
+            no strict 'refs';
             {
                 key   => &{ $self->p->HANDLER . '::cgiName' }( $_->{key} ),
                 value => $_->{value}
