@@ -511,6 +511,12 @@ sub attributes {
             documentation => 'Display empty headers rule',
             flags         => 'p',
         },
+        checkUserDisplayNormalizedHeaders => {
+            default       => 0,
+            type          => 'boolOrExpr',
+            documentation => 'Display normalized headers rule',
+            flags         => 'p',
+        },
         checkUserDisplayComputedSession => {
             default       => 1,
             type          => 'boolOrExpr',

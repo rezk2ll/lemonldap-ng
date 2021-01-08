@@ -766,6 +766,7 @@ sub tree {
                                 'checkUserSearchAttributes',
                                 'checkUserDisplayComputedSession',
                                 'checkUserDisplayEmptyHeaders',
+                                'checkUserDisplayNormalizedHeaders',
                                 'checkUserDisplayEmptyValues',
                                 'checkUserDisplayPersistentInfo',
                                 'checkUserHiddenHeaders'

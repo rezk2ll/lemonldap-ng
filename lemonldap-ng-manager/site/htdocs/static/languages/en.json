@@ -208,6 +208,7 @@
 "checkUserDisplayPersistentInfo":"Display persistent session data",
 "checkUserDisplayEmptyHeaders":"Display empty headers",
 "checkUserDisplayEmptyValues":"Display empty values",
+"checkUserDisplayNormalizedHeaders":"Display normalized headers",
 "checkUserHiddenHeaders":"Hidden headers",
 "checkUserSearchAttributes":"Attributes used for searching sessions",
 "choiceParams":"Choice parameters",
