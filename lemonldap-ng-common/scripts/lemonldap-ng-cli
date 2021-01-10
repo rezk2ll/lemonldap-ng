@@ -22,7 +22,10 @@ for ( my $i = 0 ; $i < @ARGV ; $i++ ) {
 
 $action ||= "help";
 
-if ( $action =~ /^(?:[gs]et|del|(?:add|del)Key|save|restore|rollback)$/ ) {
+if ( $action =~
+    /^(?:[gs]et|del|(?:add|del)Key|(?:add|del)PostVars|save|restore|rollback)$/
+  )
+{
     eval { require Lemonldap::NG::Manager::Cli; };
     die "Manager libraries not available, aborting ($@)" if ($@);
     Lemonldap::NG::Manager::Cli->run(@ARGV);
@@ -40,19 +43,21 @@ sub help {
     print STDERR qq{Usage: $0 <options> action <parameters>
 
 Available actions:
- - help                          : print this
- - info                          : get currentconfiguration info
- - update-cache                  : force configuration cache to be updated
- - test-email <destination>       : send a test email
- - get    <keys>                 : get values of parameters
- - set    <key> <value>          : set parameter(s) value(s)
- - del    <keys>                 : delete parameters
- - addKey <key> <subkey> <value> : add or set a subkey in a parameter
- - delKey <key> <subkey>         : delete subkey of a parameter
- - save                          : export configuration to STDOUT
- - restore -                     : import configuration from STDIN
- - restore <file>                : import configuration from file
- - rollback                      : restore previous configuration
+ - help                                      : print this
+ - info                                      : get currentconfiguration info
+ - update-cache                              : force configuration cache to be updated
+ - test-email <destination>                  : send a test email
+ - get <key>                                 : get values of parameters
+ - set <key> <value>                         : set parameter(s) value(s)
+ - del <key>                                 : delete parameters
+ - addKey <key> <subkey> <value>             : add or set a subkey in a parameter
+ - delKey <key> <subkey>                     : delete subkey of a parameter
+ - addPostVars <host> <uri> <key> <value>    : add post vars for form replay
+ - delPostVars <host> <uri> <key>            : delete post vars for form replay
+ - save                                      : export configuration to STDOUT
+ - restore -                                 : import configuration from STDIN
+ - restore <file>                            : import configuration from file
+ - rollback                                  : restore previous configuration
 
 Options:
  - yes <0|1>                     : accept confirmation prompt automatically

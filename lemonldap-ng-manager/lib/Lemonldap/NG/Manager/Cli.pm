@@ -247,6 +247,68 @@ sub delKey {
     return $self->_save($new);
 }
 
+sub addPostVars {
+    my $self = shift;
+    unless ( @_ % 4 == 0 ) {
+        die 'usage: "addPostVars (?:vhost uri key value)+';
+    }
+    my @list;
+    while (@_) {
+        my $vhost = shift;
+        my $uri   = shift;
+        my $key   = shift;
+        my $value = shift;
+        $self->logger->info(
+            "CLI: Append post vars $key $value to URI $uri for vhost $vhost");
+        push @list, [ $vhost, $uri, $key, $value ];
+    }
+    require Clone;
+    my $new = Clone::clone( $self->mgr->hLoadedPlugins->{conf}->currentConf );
+    foreach my $el (@list) {
+        $new->{post}->{ $el->[0] }->{ $el->[1] }->{vars} = []
+          unless ( defined $new->{post}->{ $el->[0] }->{ $el->[1] }->{vars} );
+        push(
+            @{ $new->{post}->{ $el->[0] }->{ $el->[1] }->{vars} },
+            [ $el->[2], $el->[3] ]
+        );
+    }
+    return $self->_save($new);
+}
+
+sub delPostVars {
+    my $self = shift;
+    unless ( @_ % 3 == 0 ) {
+        die 'usage: "delPostVars (?:vhost uri key)+';
+    }
+    my @list;
+    while (@_) {
+        my $vhost = shift;
+        my $uri   = shift;
+        my $key   = shift;
+        $self->logger->info(
+            "CLI: Delete post vars $key from URI $uri for vhost $vhost");
+        push @list, [ $vhost, $uri, $key ];
+    }
+    require Clone;
+    my $new = Clone::clone( $self->mgr->hLoadedPlugins->{conf}->currentConf );
+    foreach my $el (@list) {
+        $new->{post}->{ $el->[0] }->{ $el->[1] }->{vars} = []
+          unless ( defined $new->{post}->{ $el->[0] }->{ $el->[1] }->{vars} );
+        for (
+            my $i = 0 ;
+            $i <= $#{ $new->{post}->{ $el->[0] }->{ $el->[1] }->{vars} } ;
+            $i++
+          )
+        {
+            delete( $new->{post}->{ $el->[0] }->{ $el->[1] }->{vars}->[$i] )
+              if (
+                $new->{post}->{ $el->[0] }->{ $el->[1] }->{vars}->[$i]->[0] eq
+                $el->[2] );
+        }
+    }
+    return $self->_save($new);
+}
+
 sub lastCfg {
     my ($self) = @_;
     $self->logger->info("CLI: Retrieve last conf.");
@@ -450,11 +512,12 @@ sub run {
         die 'nothing to do, aborting';
     }
     my $action = shift;
-    unless (
-        $action =~ /^(?:get|set|del|addKey|delKey|save|restore|rollback)$/ )
+    unless ( $action =~
+/^(?:get|set|del|addKey|delKey|addPostVars|delPostVars|save|restore|rollback)$/
+      )
     {
         die
-"Unknown action $action. Only get, set, del, addKey, delKey, save, restore, rollback allowed";
+"Unknown action $action. Only get, set, del, addKey, delKey, addPostVars, delPostVars, save, restore, rollback allowed";
     }
 
     unless ( $action eq "restore" ) {
