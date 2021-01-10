@@ -7,7 +7,7 @@ use Data::Dumper;
 use JSON;
 use Lemonldap::NG::Common::Conf::ReConstants;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 $Data::Dumper::Useperl = 1;
 
 extends('Lemonldap::NG::Manager::Cli::Lib');
@@ -42,6 +42,23 @@ sub get {
         if ( ref $value eq 'HASH' ) {
             print "$key has the following keys:\n";
             print "   $_\n" foreach ( sort keys %$value );
+        }
+        elsif ( ref $value eq 'ARRAY' ) {
+            print "$key is an array with values:\n";
+            foreach my $avalue ( sort @$value ) {
+                if ( ref $avalue eq 'HASH' ) {
+                    print "\tHash with following keys:\n";
+                    print "\t\t$_\n" foreach ( sort keys %$avalue );
+                }
+                elsif ( ref $value eq 'ARRAY' ) {
+                    print "\tArray with following keys:\n";
+                    print "\t\t$_\n" foreach ( sort @$avalue );
+                }
+                else {
+                    $avalue //= '';
+                    print "\tValue = $avalue\n";
+                }
+            }
         }
         else {
             $value //= '';
@@ -337,7 +354,8 @@ sub _setKey {
 sub _save {
     my ( $self, $new ) = @_;
     require Lemonldap::NG::Manager::Conf::Parser;
-    my $parser = Lemonldap::NG::Manager::Conf::Parser->new( {
+    my $parser = Lemonldap::NG::Manager::Conf::Parser->new(
+        {
             newConf => $new,
             refConf => $self->mgr->hLoadedPlugins->{conf}->currentConf,
             req     => $self->req
