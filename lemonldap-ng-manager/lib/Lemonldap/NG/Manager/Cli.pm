@@ -45,14 +45,14 @@ sub get {
         }
         elsif ( ref $value eq 'ARRAY' ) {
             print "$key is an array with values:\n";
-            foreach my $avalue ( sort @$value ) {
+            foreach my $avalue (@$value) {
                 if ( ref $avalue eq 'HASH' ) {
                     print "\tHash with following keys:\n";
                     print "\t\t$_\n" foreach ( sort keys %$avalue );
                 }
                 elsif ( ref $value eq 'ARRAY' ) {
                     print "\tArray with following keys:\n";
-                    print "\t\t$_\n" foreach ( sort @$avalue );
+                    print "\t\t$_\n" foreach (@$avalue);
                 }
                 else {
                     $avalue //= '';
