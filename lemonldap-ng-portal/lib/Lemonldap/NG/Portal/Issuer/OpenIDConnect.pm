@@ -438,6 +438,9 @@ sub run {
                 }
             }
 
+            # Compute scopes
+            my $scope = $self->getScope( $req, $rp, $oidc_request->{'scope'} );
+
             # Obtain consent
             my $bypassConsent = $self->conf->{oidcRPMetaDataOptions}->{$rp}
               ->{oidcRPMetaDataOptionsBypassConsent};
@@ -492,9 +495,7 @@ sub run {
                     );
 
                     # Check accepted scope
-                    foreach my $requested_scope (
-                        split( /\s+/, $oidc_request->{'scope'} ) )
-                    {
+                    foreach my $requested_scope ( split( /\s+/, $scope ) ) {
                         if (
                             $self->_hasScope(
                                 $requested_scope, $consent_scope
@@ -522,7 +523,7 @@ sub run {
                         and $req->param('confirm') == 1 )
                     {
                         $RPoidcConsent[0]{epoch} = time;
-                        $RPoidcConsent[0]{scope} = $oidc_request->{'scope'};
+                        $RPoidcConsent[0]{scope} = $scope;
 
                         # Build new consent list by removing all references
                         # to the current RP from the old list and appending the
@@ -597,9 +598,7 @@ sub run {
                             offline_access => 'yourOffline',
                         };
                         my @list;
-                        foreach my $requested_scope (
-                            split( /\s+/, $oidc_request->{'scope'} ) )
-                        {
+                        foreach my $requested_scope ( split( /\s+/, $scope ) ) {
                             if ( my $message =
                                 $scope_messages->{$requested_scope} )
                             {
@@ -654,9 +653,7 @@ sub run {
 
             # WIP: Offline access
             my $offline = 0;
-            if (
-                $self->_hasScope( 'offline_access', $oidc_request->{'scope'} ) )
-            {
+            if ( $self->_hasScope( 'offline_access', $scope ) ) {
                 $offline = 1;
 
                 # MUST ensure that the prompt parameter contains consent unless
@@ -691,10 +688,10 @@ sub run {
                 }
 
                 # Strip offline_access from scopes from now on
-                $oidc_request->{'scope'} = join " ",
+                $scope = join " ",
                   grep !/^offline_access$/,
                   split /\s+/,
-                  $oidc_request->{'scope'};
+                  $scope;
             }
 
             # Authorization Code Flow
@@ -710,7 +707,7 @@ sub run {
                         nonce           => $oidc_request->{'nonce'},
                         offline         => $offline,
                         redirect_uri    => $oidc_request->{'redirect_uri'},
-                        scope           => $oidc_request->{'scope'},
+                        scope           => $scope,
                         client_id       => $client_id,
                         user_session_id => $req->id,
                     }
@@ -744,7 +741,7 @@ sub run {
                     my $accessTokenSession = $self->newAccessToken(
                         $rp,
                         {
-                            scope           => $oidc_request->{'scope'},
+                            scope           => $scope,
                             rp              => $rp,
                             user_session_id => $req->id,
                         }
@@ -822,7 +819,7 @@ sub run {
                         offline         => $offline,
                         redirect_uri    => $oidc_request->{'redirect_uri'},
                         client_id       => $client_id,
-                        scope           => $oidc_request->{'scope'},
+                        scope           => $scope,
                         user_session_id => $req->id,
                     }
                 );
@@ -842,7 +839,7 @@ sub run {
                     my $accessTokenSession = $self->newAccessToken(
                         $rp,
                         {
-                            scope           => $oidc_request->{'scope'},
+                            scope           => $scope,
                             rp              => $rp,
                             user_session_id => $req->id,
                         }
@@ -1074,7 +1071,9 @@ sub _handleClientCredentialsGrant {
     my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
 
     # Populate minimal session info
-    my $scope = $req->param('scope') || '';
+    my $requested_scope = $req->param('scope') || '';
+    my $scope           = $self->getScope( $req, $rp, $requested_scope );
+
     my $infos = {
         $self->conf->{whatToTrace} => $client_id,
         _clientId                  => $client_id,
@@ -1136,6 +1135,8 @@ sub _handlePasswordGrant {
     my $username  = $req->param('username');
     my $password  = $req->param('password');
 
+    $scope = $self->getScope( $req, $rp, $scope );
+
     unless ( $username and $password ) {
         $self->logger->error("Missing username or password");
 
@@ -1181,6 +1182,9 @@ sub _handlePasswordGrant {
         }
     }
 
+    # Resolve scopes
+    $scope = $self->getScope( $req, $rp, $scope );
+
     my $user_id = $self->getUserIDForRP( $req, $rp, $req->sessionInfo );
 
     $self->logger->debug(
@@ -1220,7 +1224,7 @@ sub _handlePasswordGrant {
         my $refreshTokenSession = $self->newRefreshToken(
             $rp,
             {
-                scope           => $req->param('scope'),
+                scope           => $scope,
                 client_id       => $client_id,
                 user_session_id => $req->id,
             },
