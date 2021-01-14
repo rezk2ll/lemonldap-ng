@@ -204,11 +204,7 @@ count(3);
 ok( $res = $client->_get( '/skipif/za', undef, 'test1.example.com' ),
     'Test skip() rule 1' );
 ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
-$SKIPUSER = 1;
-ok( $res = $client->_get( '/skipif/zz', undef, 'test1.example.com' ),
-    'Test skip() rule 2' );
-ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
-count(4);
+count(2);
 
 # Wildcards
 ok(
@@ -216,6 +212,20 @@ ok(
       $client->_get( '/', undef, 'foo.example.org', "lemonldap=$sessionId" ),
     'Accept "*.example.org"'
 );
+ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
+count(2);
+
+# SKIP TESTS
+$SKIPUSER = 1;
+
+ok( $res = $client->_get( '/skipif/zz', undef, 'test1.example.com' ),
+    'Test skip() rule 2' );
+ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
+count(2);
+
+# Forged headers
+ok( $res = $client->_get( '/skipif/zz', undef, 'test1.example.com', undef, HTTP_AUTH_USER => 'rtyler' ),
+    'Test skip() rule 2' );
 ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
 count(2);
 
@@ -295,10 +305,14 @@ clean();
 
 sub Lemonldap::NG::Handler::PSGI::handler {
     my ( $self, $req ) = @_;
-    unless ($SKIPUSER) {
+    if ($SKIPUSER) {
+        ok( !$req->env->{HTTP_AUTH_USER}, 'No HTTP_AUTH_USER' )
+          or explain( $req->env->{HTTP_AUTH_USER}, '<empty>' );
+    }
+    else {
         ok( $req->env->{HTTP_AUTH_USER} eq 'dwho', 'Header is given to app' )
           or explain( $req->env->{HTTP_AUTH_USER}, 'dwho' );
-        count(1);
     }
+    count(1);
     return [ 200, [ 'Content-Type', 'text/plain' ], ['Hello'] ];
 }
