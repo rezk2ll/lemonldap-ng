@@ -630,6 +630,7 @@
 "oidcRPMetaDataOptionsAuthnLevel":"Authentication level",
 "oidcRPMetaDataOptionsRule":"Regla de acceso",
 "oidcRPMetaDataMacros":"Macros",
+"oidcRPMetaDataScopeRules":"Scope rules",
 "oidcOPMetaDataOptionsScope":"Ámbito",
 "oidcOPMetaDataOptionsStoreIDToken":"Guardar token ID",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod":"Token endpoint authentication method",

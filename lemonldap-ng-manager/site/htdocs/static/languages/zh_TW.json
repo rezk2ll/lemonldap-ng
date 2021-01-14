@@ -630,6 +630,7 @@
 "oidcRPMetaDataOptionsAuthnLevel":"驗證等級",
 "oidcRPMetaDataOptionsRule":"存取規則",
 "oidcRPMetaDataMacros":"巨集",
+"oidcRPMetaDataScopeRules":"Scope rules",
 "oidcOPMetaDataOptionsScope":"範圍",
 "oidcOPMetaDataOptionsStoreIDToken":"儲存 ID 權杖",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod":"權杖端點驗證方法",

@@ -4286,6 +4286,17 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => {},
             documentation => 'Macros',
         },
+        oidcRPMetaDataScopeRules => {
+            type => 'keyTextContainer',
+            help => 'idpopenidconnect.html#scope-rules',
+            test => {
+                keyTest    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                keyMsgFail => '__badMacroName__',
+                test       => sub { return perlExpr(@_) },
+            },
+            default       => {},
+            documentation => 'Scope rules',
+        },
     };
 }
 

@@ -630,6 +630,7 @@
 "oidcRPMetaDataOptionsAuthnLevel":"مستوى إثبات الهوية",
 "oidcRPMetaDataOptionsRule":"قاعدة الدخول",
 "oidcRPMetaDataMacros":"ماكرو",
+"oidcRPMetaDataScopeRules":"Scope rules",
 "oidcOPMetaDataOptionsScope":"نطاق",
 "oidcOPMetaDataOptionsStoreIDToken":"مخزن تعريف التوكن",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod":"توكن نقطة النهاية لطريقة إثبات الهوية",

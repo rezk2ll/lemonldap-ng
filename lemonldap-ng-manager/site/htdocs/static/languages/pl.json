@@ -630,6 +630,7 @@
 "oidcRPMetaDataOptionsAuthnLevel":"Poziom uwierzytelnienia",
 "oidcRPMetaDataOptionsRule":"Reguła dostępu",
 "oidcRPMetaDataMacros":"Makra",
+"oidcRPMetaDataScopeRules":"Scope rules",
 "oidcOPMetaDataOptionsScope":"Zakres",
 "oidcOPMetaDataOptionsStoreIDToken":"Przechowuj token identyfikacyjny",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod":"Metoda uwierzytelniania tokena punktu końcowego",

@@ -630,6 +630,7 @@
 "oidcRPMetaDataOptionsAuthnLevel":"Doğrulama seviyesi",
 "oidcRPMetaDataOptionsRule":"Erişim kuralı",
 "oidcRPMetaDataMacros":"Makrolar",
+"oidcRPMetaDataScopeRules":"Scope rules",
 "oidcOPMetaDataOptionsScope":"Kapsam",
 "oidcOPMetaDataOptionsStoreIDToken":"ID Jetonu Sakla",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod":"Jeton uç noktası doğrulama metodu",

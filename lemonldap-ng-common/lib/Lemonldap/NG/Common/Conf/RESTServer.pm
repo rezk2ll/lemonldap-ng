@@ -418,7 +418,7 @@ sub _oidcMetaDataNodes {
     }
     # Return all exported attributes if asked
     elsif ( $query =~
-/^(?:oidc${type}MetaDataExportedVars|oidcRPMetaDataOptionsExtraClaims|oidcRPMetaDataMacros)$/
+/^(?:oidc${type}MetaDataExportedVars|oidcRPMetaDataOptionsExtraClaims|oidcRPMetaDataMacros|oidcRPMetaDataScopeRules)$/
       )
     {
         my $pk = eval { $self->getConfKey( $req, $query )->{$partner} } // {};

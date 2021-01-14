@@ -630,6 +630,7 @@
 "oidcRPMetaDataOptionsAuthnLevel":"认证级别",
 "oidcRPMetaDataOptionsRule":"Access rule",
 "oidcRPMetaDataMacros":"Macros",
+"oidcRPMetaDataScopeRules":"Scope rules",
 "oidcOPMetaDataOptionsScope":"Scope",
 "oidcOPMetaDataOptionsStoreIDToken":"Store ID Token",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod":"Token endpoint authentication method",

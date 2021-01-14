@@ -252,6 +252,7 @@ sub cTrees {
                 ]
             },
             'oidcRPMetaDataMacros',
+            'oidcRPMetaDataScopeRules',
             {
                 title => 'oidcRPMetaDataOptionsDisplay',
                 form  => 'simpleInputContainer',

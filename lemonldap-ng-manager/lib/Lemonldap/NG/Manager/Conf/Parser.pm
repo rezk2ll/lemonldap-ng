@@ -439,7 +439,7 @@ sub _scanNodes {
                     }
                 }
                 elsif (
-                    $target =~ /^oidc(?:O|R)PMetaData(?:ExportedVars|Macros)$/ )
+                    $target =~ /^oidc(?:O|R)PMetaData(?:ExportedVars|Macros|ScopeRules)$/ )
                 {
                     hdebug("  $target");
                     if ( $leaf->{cnodes} ) {

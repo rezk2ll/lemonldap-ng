@@ -630,6 +630,7 @@
 "oidcRPMetaDataOptionsAuthnLevel":"Mức xác thực",
 "oidcRPMetaDataOptionsRule":"Quy tắc truy cập",
 "oidcRPMetaDataMacros":"Macros",
+"oidcRPMetaDataScopeRules":"Scope rules",
 "oidcOPMetaDataOptionsScope":"Phạm vi",
 "oidcOPMetaDataOptionsStoreIDToken":"Mã thông báo Cửa hàng",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod":"Phương pháp xác thực thiết bị đầu cuối Token",

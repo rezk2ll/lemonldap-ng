@@ -2384,6 +2384,17 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcRPMetaDataOptionsUserIDAttr' => {
             'type' => 'text'
         },
+        'oidcRPMetaDataScopeRules' => {
+            'default' => {},
+            'test'    => {
+                'keyMsgFail' => '__badMacroName__',
+                'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                'test'       => sub {
+                    return perlExpr(@_);
+                }
+            },
+            'type' => 'keyTextContainer'
+        },
         'oidcRPStateTimeout' => {
             'default' => 600,
             'type'    => 'int'
