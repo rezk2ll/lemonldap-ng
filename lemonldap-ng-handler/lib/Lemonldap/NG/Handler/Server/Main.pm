@@ -26,12 +26,18 @@ sub set_header_in {
 }
 
 sub unset_header_in {
-    my ( $class, $req, $header ) = @_;
-    $req->{respHeaders} = [ grep { $_ ne $header and $_ ne cgiName($header) }
-          @{ $req->{respHeaders} } ];
-    delete $req->{env}->{ cgiName($header) };
-    $header =~ s/-/_/g;
-    delete $req->{env}->{$header};
+    my ( $class, $req, @headers ) = @_;
+    my $i = 1;
+    foreach my $header(@headers) {
+        $class->logger->debug("Delete header $header");
+        $req->{respHeaders} = [ grep { $_ ne $header and $_ ne cgiName($header) }
+              @{ $req->{respHeaders} } ];
+        delete $req->{env}->{ cgiName($header) };
+        push @{ $req->{respHeaders} }, "Deleteheader$i", $header;
+        $header =~ s/-/_/g;
+        delete $req->{env}->{$header};
+        $i++;
+    }
 }
 
 # Inheritence is broken in this case with Debian >= jessie
