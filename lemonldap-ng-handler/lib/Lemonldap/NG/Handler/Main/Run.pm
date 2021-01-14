@@ -228,6 +228,10 @@ sub run {
     elsif ( $protection == $class->MAYSKIP
         and $class->grant( $req, $session, $uri, $cond ) eq '999_SKIP' )
     {
+        $class->logger->debug("Access control skipped");
+        $class->updateStatus( $req, 'SKIP' );
+        $class->hideCookie($req);
+        $class->cleanHeaders($req);
         return $class->OK;
     }
 
