@@ -77,7 +77,7 @@ my $op = LLNG::Manager::Test->new( {
             },
             oidcServicePrivateKeySig => oidc_key_op_private_sig,
             oidcServicePublicKeySig  => oidc_key_op_public_sig,
-            customPlugins => 't::OidcHookPlugin',
+            customPlugins            => 't::OidcHookPlugin',
         }
     }
 );
@@ -134,7 +134,7 @@ ok( $token, 'Access token present' );
 my $id_token = $json->{id_token};
 ok( $id_token, 'ID token present' );
 my $id_token_payload = id_token_payload($id_token);
-is ($id_token_payload->{id_token_hook}, 1, "Found hooked claim in ID token");
+is( $id_token_payload->{id_token_hook}, 1, "Found hooked claim in ID token" );
 
 # Get userinfo
 $res = $op->_post(
@@ -148,8 +148,7 @@ $res = $op->_post(
 );
 
 $json = expectJSON($res);
-is ($json->{userinfo_hook}, 1, "Found hooked claim in Userinfo token");
-
+is( $json->{userinfo_hook}, 1, "Found hooked claim in Userinfo token" );
 
 # Introspect to find scopes
 $query = "token=$token";
@@ -168,7 +167,8 @@ ok(
 
 expectOK($res);
 $json = from_json( $res->[2]->[0] );
-like($json->{scope}, qr/\bmy_hooked_scope\b/, "Found hook defined scope");
+like( $json->{scope}, qr/\bmy_hooked_scope\b/, "Found hook defined scope" );
+like( $json->{scope}, qr/\bmyscope\b/, "Found result of oidcResolveScope" );
 
 clean_sessions();
 done_testing();

@@ -54,6 +54,13 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsRule => '$uid eq "french"',
                 }
             },
+            oidcRPMetaDataScopeRules => {
+                rp => {
+                    "read"   => '$requested',
+                    "french"   => '$uid eq "french"',
+                    "always" => '1',
+                },
+            },
             oidcServicePrivateKeySig      => oidc_key_op_private_sig,
             oidcServicePublicKeySig       => oidc_key_op_public_sig,
             loginHistoryEnabled           => 1,
@@ -143,6 +150,25 @@ is( ref( $payload->{email} ),
     "ARRAY", "Single valued attribute forced as array" );
 is( ref( $payload->{nickname} ),
     "ARRAY", "Multi valued attribute exposed as array" );
+
+my $query = "token=$access_token";
+ok(
+    $res = $op->_post(
+        "/oauth2/introspect",
+        IO::String->new($query),
+        accept => 'text/html',
+        length => length $query,
+        custom => {
+            HTTP_AUTHORIZATION => "Basic " . encode_base64("rpid:rpsecret"),
+        },
+    ),
+    "Post introspection"
+);
+$payload = expectJSON($res);
+unlike( $payload->{scope}, qr/\bread\b/,
+    "Scope read not asked, and thus not found" );
+like( $payload->{scope}, qr/\bfrench\b/, "Attribute-based scope found" );
+like( $payload->{scope}, qr/\balways\b/, "Rule-enforced scope found" );
 
 clean_sessions();
 done_testing();

@@ -64,6 +64,12 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsUserIDAttr => "",
                 }
             },
+            oidcRPMetaDataScopeRules => {
+                rp => {
+                    "read"   => '$requested',
+                    "always" => '1',
+                },
+            },
             oidcServicePrivateKeySig      => oidc_key_op_private_sig,
             oidcServicePublicKeySig       => oidc_key_op_public_sig,
             loginHistoryEnabled           => 1,
@@ -164,7 +170,8 @@ ok(
     "Post introspection"
 );
 $payload = expectJSON($res);
-like( $payload->{scope}, qr/\bread\b/, "Scope read found" );
+like( $payload->{scope}, qr/\bread\b/,   "Scope read found" );
+like( $payload->{scope}, qr/\balways\b/, "Rule-enforced scope found" );
 
 clean_sessions();
 done_testing();

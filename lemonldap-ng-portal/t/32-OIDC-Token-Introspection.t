@@ -36,6 +36,14 @@ my $op = LLNG::Manager::Test->new( {
                     name        => "cn"
                 }
             },
+            oidcRPMetaDataScopeRules => {
+                rp => {
+                    "read" => '$requested and $uid eq "french"',
+                    "write" => '$uid eq "russian"',
+                    "ifrequested" => '$requested and $uid eq "french"',
+                    "always" => '$uid eq "french"',
+                },
+            },
             oidcServiceMetaDataAuthorizeURI       => "authorize",
             oidcServiceMetaDataCheckSessionURI    => "checksession.html",
             oidcServiceMetaDataJWKSURI            => "jwks",
@@ -97,8 +105,14 @@ ok(
 my $idpId = expectCookie($res);
 
 # Get code for RP1
-$query =
-"response_type=code&scope=openid%20profile%20email&client_id=rpid&state=af0ifjsldkj&redirect_uri=http%3A%2F%2Frp2.com%2F";
+$query = buildForm( {
+        response_type => "code",
+        scope => "openid profile email read write",
+        client_id => "rpid",
+        state => "af0ifjsldkj",
+        redirect_uri => "http://rp2.com/",
+    });
+
 ok(
     $res = $op->_get(
         "/oauth2/authorize",
@@ -165,9 +179,13 @@ is( $json->{sub}, "french", "Response contains the correct sub" );
 is( $json->{iss}, "http://auth.op.com",
     "Response contains the correct issuer" );
 is( $json->{client_id}, "rpid", "Response contains the correct client id" );
-like( $json->{scope}, qr/\bopenid\b/,  "Response contains the correct scopes" );
-like( $json->{scope}, qr/\bprofile\b/, "Response contains the correct scopes" );
-like( $json->{scope}, qr/\bemail\b/,   "Response contains the correct scopes" );
+like( $json->{scope}, qr/\bopenid\b/,  "Response contains the default scopes" );
+like( $json->{scope}, qr/\bprofile\b/, "Response contains the default scopes" );
+like( $json->{scope}, qr/\bemail\b/,   "Response contains the default scopes" );
+unlike( $json->{scope}, qr/\bwrite\b/,   "Response omits a dynamic scope that evaluates to false" );
+unlike( $json->{scope}, qr/\bifrequested\b/,   "Response omits a dynamic scope that was not requested" );
+like( $json->{scope}, qr/\bread\b/,   "Response contains a dynamic scope that is sent only when requested" );
+like( $json->{scope}, qr/\balways\b/,   "Response contains a dynamic scope that is not requested but always sent" );
 
 # Check status after expiration
 Time::Fake->offset("+2h");

@@ -11,6 +11,7 @@ use constant hook => {
     oidcGenerateIDToken          => 'addClaimToIDToken',
     oidcGenerateUserInfoResponse => 'addClaimToUserInfo',
     oidcGotRequest               => 'addScopeToRequest',
+    oidcResolveScope             => 'addHardcodedScope',
 };
 
 sub init {
@@ -33,6 +34,13 @@ sub addClaimToUserInfo {
 sub addScopeToRequest {
     my ( $self, $req, $oidc_request ) = @_;
     $oidc_request->{scope} = $oidc_request->{scope} . " my_hooked_scope";
+
+    return PE_OK;
+}
+
+sub addHardcodedScope {
+    my ( $self, $req, $scopeList, $rp ) = @_;
+    push @{$scopeList}, "myscope";
 
     return PE_OK;
 }
