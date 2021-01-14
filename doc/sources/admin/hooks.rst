@@ -72,6 +72,32 @@ Sample code::
        return PE_OK;
    }
 
+
+oidcResolveScope
+~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.12
+
+This hook is triggered when LemonLDAP::NG is resolving scopes.
+
+The hook's parameters are:
+
+* An array ref of currently granted scopes, which you can modify
+* The configuration key of the requested RP
+
+Sample code::
+
+   use constant hook => {
+       oidcResolveScope          => 'addHardcodedScope',
+   };
+
+   sub addHardcodedScope{
+       my ( $self, $req, $scopeList, $rp ) = @_;
+       push @{$scopeList}, "myscope";
+       return PE_OK;
+   }
+
+
 SAML Issuer hooks
 -----------------
 

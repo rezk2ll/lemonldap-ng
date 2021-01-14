@@ -216,6 +216,41 @@ Userinfo endpoint.
     LemonLDAP::NG session attribute in the **Exported Attributes**
     section
 
+Scope Rules
+^^^^^^^^^^^
+
+.. versionadded:: 2.0.12
+
+|beta| This feature may change in a future version in a way that breaks
+compatibility with existing configuration
+
+By default, LemonLDAP::NG grants all scopes requested by the application, as
+long as the user consents to them.
+
+This configuration screen allows you to change that behavior by attaching
+:ref:`a rule<rules>` to a particular scope.
+
+* If the rule evaluates to true, the scope is added to the current request,
+  even if it was not requested by the application
+* If the rule evaluates to false, the scope is removed from the current request
+* Scopes which are not declared in the "Scope rules" list are left untouched
+
+When writing scope rules, you can use the special ``$requested`` variable. This
+variables evaluates to `true` within a scope rule when the corresponding scope
+has been requested by the application. You can use this variable in a dynamic
+rule when you only want to add a scope when the application requested it.
+
+Examples:
+
+* ``read``: ``inGroup('readers')``
+
+  * the ``read`` scope will be granted if the user is a member of the ``readers`` group even if the application did not request it.
+
+* ``write``: ``$requested and inGroup('writers')``
+
+  * the ``write`` scope will be granted if the user is a member of the ``writers`` group, but only if the application requested it.
+
+
 Options
 ^^^^^^^
 
@@ -338,3 +373,5 @@ Display
 
 -  **Display name**: Name of the RP application
 -  **Logo**: Logo of the RP application
+
+.. |beta| image:: /documentation/beta.png
