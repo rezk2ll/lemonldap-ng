@@ -38,6 +38,7 @@ has oidcRPList   => ( is => 'rw', default => sub { {} }, );
 has rpAttributes => ( is => 'rw', default => sub { {} }, );
 has spRules      => ( is => 'rw', default => sub { {} } );
 has spMacros     => ( is => 'rw', default => sub { {} } );
+has spScopeRules => ( is => 'rw', default => sub { {} } );
 
 # return LWP::UserAgent object
 has ua => (
@@ -147,6 +148,22 @@ sub loadRPs {
                     return 0;
                 }
                 $self->spMacros->{$rp}->{$macroAttr} = $macroRule;
+            }
+        }
+
+        # Load per-RP dynamic scopes
+        my $scopes = $self->conf->{oidcRPMetaDataScopeRules}->{$rp};
+        for my $scopeName ( keys %{$scopes} ) {
+            my $scopeRule = $scopes->{$scopeName};
+            if ( length $scopeRule ) {
+                $scopeRule = $self->p->HANDLER->substitute($scopeRule);
+                unless ( $scopeRule = $self->p->HANDLER->buildSub($scopeRule) )
+                {
+                    $self->error( 'OIDC RP dynamic scope rule error: '
+                          . $self->p->HANDLER->tsv->{jail}->error );
+                    return 0;
+                }
+                $self->spScopeRules->{$rp}->{$scopeName} = $scopeRule;
             }
         }
     }
