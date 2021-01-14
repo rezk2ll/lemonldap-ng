@@ -191,6 +191,28 @@ ok(
   );
 count(3);
 
+# Clean headers
+ok(
+    $res = $client->_get(
+        '/skipif/zz', undef, 'test1.example.com', undef,
+        HTTP_AUTH_USER => 'rtyler'
+    ),
+    'Test skip() with forged header'
+);
+ok( $res->[0] == 200, 'Code is 200' ) or explain( $res, 200 );
+count(2);
+%h = @{ $res->[1] };
+my %delete;
+foreach ( keys %h ) {
+    /^Deleteheader\d$/ and $delete{ $h{$_} }++;
+}
+foreach (qw(Cookie HTTP_COOKIE Auth-User HTTP_AUTH_USER)) {
+    ok( $delete{$_}, "Delete command for $_" )
+      or explain( \%h, 'Delete* headers' );
+    ok( !$h{$_}, "$_ is deleted" ) or explain( \%h, 'Delete* headers' );
+    count(2);
+}
+
 done_testing( count() );
 
 clean();

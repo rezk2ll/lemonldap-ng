@@ -21,7 +21,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_UNAUTHORIZEDPARTNER
 );
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.10';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::SAML';
@@ -680,20 +680,20 @@ sub run {
                 unless ( defined $value ) {
                     if ($mandatory) {
                         $self->logger->error(
-"Session key $_ is required to set SAML $name attribute"
+"Session key $_ is required to set SAML $name attribute ($sp)"
                         );
                         return PE_ISSUERMISSINGREQATTR;
                     }
                     else {
                         $self->logger->debug(
-"SAML2 attribute $name has no value but is not mandatory, skip it"
+"SAML2 attribute $name has no value but is not mandatory ($sp), skip it"
                         );
                         next;
                     }
                 }
 
                 $self->logger->debug(
-                    "SAML2 attribute $name will be set with $_ session key");
+                    "SAML2 attribute $name will be set with $_ session key ($sp)");
 
                 # SAML2 attribute
                 my $attribute =

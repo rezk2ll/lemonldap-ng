@@ -228,6 +228,10 @@ sub run {
     elsif ( $protection == $class->MAYSKIP
         and $class->grant( $req, $session, $uri, $cond ) eq '999_SKIP' )
     {
+        $class->logger->debug("Access control skipped");
+        $class->updateStatus( $req, 'SKIP' );
+        $class->hideCookie($req);
+        $class->cleanHeaders($req);
         return $class->OK;
     }
 
@@ -764,6 +768,7 @@ sub cleanHeaders {
     my ( $class, $req ) = @_;
     my $vhost = $class->resolveAlias($req);
     if ( defined( $class->tsv->{headerList}->{$vhost} ) ) {
+        $class->logger->debug("Remove headers relative to $vhost");
         $class->unset_header_in( $req,
             @{ $class->tsv->{headerList}->{$vhost} } );
     }

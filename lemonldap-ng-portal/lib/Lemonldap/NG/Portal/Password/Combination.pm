@@ -37,7 +37,7 @@ sub init {
             $tmp =
               $self->loadModule( "::Password::$mod->{type}", $mod->{over} );
             unless ($tmp) {
-                $self->notice("Unable to load Password::$mod->{type}");
+                $self->logger->notice("Unable to load Password::$mod->{type}");
                 next;
             }
         }

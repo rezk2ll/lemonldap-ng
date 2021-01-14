@@ -166,6 +166,16 @@ sub updateOidcRp {
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
       unless ($update);
 
+    if ( $update->{redirectUris} ) {
+        if ( ref( $update->{redirectUris} ) eq "ARRAY" ) {
+            $update->{options}->{redirectUris} = $update->{redirectUris};
+        }
+        else {
+            return $self->sendError( $req,
+                'Invalid input: redirectUris must be an array', 400 );
+        }
+    }
+
     $self->logger->debug(
         "[API] OIDC RP $confKey configuration update requested");
 
@@ -294,7 +304,11 @@ sub _getOidcRpByConfKey {
     my $macros = $conf->{oidcRPMetaDataMacros}->{$confKey} || {};
 
     # Redirect URIs, filled later
-    my $redirectUris;
+    my $redirectUris = $self->_translateValueConfToApi(
+        'oidcRPMetaDataOptionsRedirectUris',
+        $conf->{oidcRPMetaDataOptions}->{$confKey}
+          ->{oidcRPMetaDataOptionsRedirectUris}
+    );
 
     # Get options
     my $options = {};

@@ -207,7 +207,11 @@ Password
    reset (default: TRUE).
 -  **Allow a user to reset his expired password**: if activated, the
    user will be prompted to change password if his password is expired
-   (default: 0)
+   (default: disabled)
+- **Search for user before password change**: this option forces the password
+   change module to search for the user again, refreshing its DN. This feature
+   is only useful in rare cases when you use LDAP as the password module, but
+   not as the UserDB module. (default: enabled)
 -  **IBM Tivoli DS support**: enable this option if you use ITDS. LL::NG
    will then scan error message to return a more precise error to the
    user.

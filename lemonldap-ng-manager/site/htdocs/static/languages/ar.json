@@ -443,6 +443,7 @@
 "ldapFilters":"فلتر",
 "LDAPFilter":"فلتر الاعْتيادي",
 "ldapGroupAttributeName":"السمات المستهدف",
+"ldapGetUserBeforePasswordChange":"Search for user before password change",
 "ldapGroupAttributeNameGroup":"سمات مصدر المجموعة",
 "ldapGroupAttributeNameSearch":"السمات التي تم البحث عنها",
 "ldapGroupAttributeNameUser":"سمة مصدر المستخدم",

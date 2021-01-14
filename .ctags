@@ -1,0 +1,2 @@
+--exclude=*/blib/*
+--exclude=*.js

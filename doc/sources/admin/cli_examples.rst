@@ -192,6 +192,33 @@ In this example we have:
            'exportedHeaders/test.example.com' 'Auth-User' '$uid' \
            'exportedHeaders/test.example.com' 'Auth-Mail' '$mail'
 
+Configure form replay
+---------------------
+
+To add form replay on a host, you need to set the catched URI and
+the variables to post.
+
+In this example we have:
+
+- Host: test.example.com
+- Catched URI: /login.php
+- jQuery URL: default
+
+- Variables:
+   - login: $uid
+   - password: $_password
+
+::
+
+   /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 -sep , \
+       addKey \
+           post,test.example.com,'/login.php' jqueryUrl default
+
+   /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 -sep , \
+       addPostVars \
+           post,test.example.com,'/login.php' login '$uid' \
+           post,test.example.com,'/login.php' password '$_password'
+
 Configure LDAP authentication backend
 -------------------------------------
 

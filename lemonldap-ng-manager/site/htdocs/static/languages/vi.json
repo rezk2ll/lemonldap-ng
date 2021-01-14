@@ -442,6 +442,7 @@
 "ldapExportedVars":"Biến đã được xuất",
 "ldapFilters":"Bộ lọc",
 "LDAPFilter":"Bộ lọc mặc định",
+"ldapGetUserBeforePasswordChange":"Search for user before password change",
 "ldapGroupAttributeName":"Thuộc tính đích",
 "ldapGroupAttributeNameGroup":"Thuộc tính nguồn nhóm",
 "ldapGroupAttributeNameSearch":"Thuộc tính đã tìm kiếm",
