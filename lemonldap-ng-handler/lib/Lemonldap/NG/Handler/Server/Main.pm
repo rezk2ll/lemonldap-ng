@@ -5,7 +5,7 @@ package Lemonldap::NG::Handler::Server::Main;
 
 use strict;
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.6';
 
 use base 'Lemonldap::NG::Handler::PSGI::Main';
 
@@ -25,17 +25,13 @@ sub set_header_in {
     push @{ $req->{respHeaders} }, %headers;
 }
 
-## @method void unset_header_in(array headers)
-# deletes request headers and push headers that will be removed by LUA
-# @param headers array containing header names
 sub unset_header_in {
     my ( $class, $req, @headers ) = @_;
     $req->data->{deleteIndex} //= 1;
     my $i = $req->data->{deleteIndex};
-    foreach my $header (@headers) {
+    foreach my $header(@headers) {
         $class->logger->debug("Delete header $header");
-        $req->{respHeaders} =
-          [ grep { $_ ne $header and $_ ne cgiName($header) }
+        $req->{respHeaders} = [ grep { $_ ne $header and $_ ne cgiName($header) }
               @{ $req->{respHeaders} } ];
         delete $req->{env}->{ cgiName($header) };
         push @{ $req->{respHeaders} }, "Deleteheader$i", $header;

@@ -20,13 +20,6 @@ backups and a rollback plan ready!
 2.0.10
 ------
 
-A vulnerability affecting LemonLDAP::NG installations has been found out when ALL following criteria apply:
-
-* Your handler server uses Nginx
-* Your virtual host configuration contains per-URL 'skip' or 'unprotect' access rule
-
-In this situation, you have to update your LUA configuration file like ``/etc/nginx/nginx-lua-headers.conf``
-
 - New dependency: IO::Socket::Timeout
 - TOTP check tolerates forward AND backward clock drift (totp2fRange)
 - Avoid assignment in expressions option is disabled by default
