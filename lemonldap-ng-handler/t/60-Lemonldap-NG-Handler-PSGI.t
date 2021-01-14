@@ -225,7 +225,7 @@ count(2);
 
 # Forged headers
 ok( $res = $client->_get( '/skipif/zz', undef, 'test1.example.com', undef, HTTP_AUTH_USER => 'rtyler' ),
-    'Test skip() rule 2' );
+    'Test skip() with forged header' );
 ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
 count(2);
 
