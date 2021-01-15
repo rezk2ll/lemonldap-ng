@@ -32,7 +32,7 @@
             <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
             <td>
               <TMPL_IF NAME="delAllowed">
-                <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger" role="button">
+                <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger remove2f" role="button">
                   <span class="fa fa-minus-circle"></span>
                   <span trspan="unregister">Unregister</span>
   	            </span>
