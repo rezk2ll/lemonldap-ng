@@ -36,6 +36,20 @@ In this situation, you have to update your LUA configuration file like ``/etc/ng
 - In the Manager API, postLogoutRedirectUri is now `returned and consumed as an array <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2347>`__
 - We fixed a bug that caused SAML sessions to be created and never deleted, you should check your session databases for sessions that have ``"_session_kind": "ISAML"`` but no ``_utime``. You can safely delete SAML sessions with no ``_utime`` during the upgrade.
 
+Required change in the 2FA manager template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you have developped a custom version of the ``2fregisters.tpl`` template, you need to update it to reflect a change in the portal javascript code. This change is not required if you are using the default ``bootstrap`` theme.
+
+You need to add the ``remove2f`` class to the button that triggers second factor removal:
+
+.. code-block:: diff
+
+   - <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger" role="button">
+   + <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger remove2f" role="button">
+
+Or, better yet, integrate the changes in ``2fregisters.tpl`` and ``skin.min.js`` into your custom theme to benefit from the `new 2F removal confirmation dialog <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2438>`__
+
 2.0.9
 -----
 
