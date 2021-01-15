@@ -35,6 +35,7 @@ Depends: @, @builddeps@, pkg-perl-autopkgtest
  , libyaml-perl, liblog-log4perl-perl
  , libauthen-pam-perl, libauthen-radius-perl
  , libweb-id-perl, libio-socket-timeout-perl
+ , libdatetime-format-rfc3339-perl
 Restrictions: superficial
 
 #Test-Command: ./debian/tests/runner heavy-deps
