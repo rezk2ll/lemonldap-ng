@@ -255,6 +255,7 @@
 "register":"Kaydol",
 "registerRequestAlreadyIssued":"Bu hesap için kayıt olma isteği zaten şu tarihte alındı:",
 "rememberChoice":"Seçimimi hatırla",
+"remove2fWarning":"This operation cannot be undone",
 "removeOtherSessions":"Diğer oturumları sil",
 "renewSession":"Oturumu yenile",
 "resendConfirmMail":"Doğrulama e-postasını tekrar gönder?",

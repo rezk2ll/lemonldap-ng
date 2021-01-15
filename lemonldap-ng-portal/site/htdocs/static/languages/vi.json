@@ -255,6 +255,7 @@
 "register":"Đăng ký",
 "registerRequestAlreadyIssued":"Yêu cầu đăng ký cho tài khoản này đã được cấp phát",
 "rememberChoice":"Hãy nhớ sự lựa chọn của tôi",
+"remove2fWarning":"This operation cannot be undone",
 "removeOtherSessions":"Xóa các phiên khác",
 "renewSession":"Renew session",
 "resendConfirmMail":"Gửi lại thư xác nhận?",
