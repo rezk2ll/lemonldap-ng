@@ -4,6 +4,9 @@
     expire_in: 1 hour
     paths:
       - result/*
+  except:
+    variables:
+      - $SONARJOB == "1"
 
 .debian_build_job:
   extends: .build_job
@@ -109,3 +112,25 @@ pages:
   only:
     - master
 
+sonar-inspect:
+  image: buildpkg/debian:buster
+  stage: build
+  script:
+        - scripts/sonar
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - lemonldap-ng-*/cover_db/sonar_generic.xml
+      - lemonldap-ng-*/perlcritic_report.txt
+  only:
+    variables:
+      - $SONARJOB == "1"
+
+sonar-upload:
+  stage: deploy
+  image: sonarsource/sonar-scanner-cli
+  script:
+      - sonar-scanner
+  only:
+    variables:
+      - $SONARJOB == "1"
