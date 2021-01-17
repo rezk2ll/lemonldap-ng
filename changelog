@@ -1,3 +1,114 @@
+lemonldap-ng (2.0.10) stable; urgency=medium
+
+  * Bugs:
+    * #1978: can't configure variables to post in virtual host's form replay with lemonldap-cli
+    * #2245: Manager API  does not call reloadUrls
+    * #2262: SAML: SP-initiated logout does not propagate to external authentication modules
+    * #2267: LDAP timeout does not apply to search/bind/etc
+    * #2293: LL:NG 2.0.8 Manager test for external/working SMTP fails @ SSL handshake, terminates connections
+    * #2304: Error when using SMTP over SSL in CentOS 7
+    * #2310: Misspelled parameter in call to ldap->search()
+    * #2315: CheckUser plugin: option rules rely on checked user rather than  connected user
+    * #2318: Manager API:  translate JSON booleans to int
+    * #2332: [security:low] removal of registrable 2F does not test the current authn level
+    * #2340: lemonldap-ng-cli restore does not work if the config backend is empty
+    * #2342: Calling logout page for unauthenticated user forces login
+    * #2344: Enable keepalive on LDAP connections
+    * #2347: [Manager API] postLogoutRedirectUris should be an array
+    * #2348: [Manager API] Bad URL in documentation
+    * #2352: skipRenewConfirmation and skipUpgradeConfirmation options do not work
+    * #2354: Lemonldap::NG::Common::Conf::msg is never reset and grows indefinitely
+    * #2355: Password policy checker broken in password reset by mail template
+    * #2357: CDA query parameter not parsed when query params are reordered
+    * #2361: Cannot remove OIDC consent from session explorer
+    * #2364: llngconnexion cookie in the StayConnected-Plugin rejected
+    * #2365: Check my last logins option does not work with StayConnected plugin
+    * #2366: StayConnected plugin does not work with 2FA
+    * #2367: skip rule doesn't work with DevOps handler
+    * #2369: Memory leak in Issuer::_redirect
+    * #2373: Remove spaces from generated login when user register account
+    * #2374: Missing form-check-input class in form groups
+    * #2375: Refresh session plugin: refresh result is not checked before returning JSON answer
+    * #2377: Reset expired password process does not work without _whatToTrace macro or if old password is not required
+    * #2378: Error in inGroup expansion
+    * #2383: Vhost with wildcard with % sign, configuration not loaded in manager
+    * #2387: logout does not clear handler cache
+    * #2399: Local password policy check should be disabled when clicking on "generate password" checkbox
+    * #2401: Selinux policy blocks cache after restorecon
+    * #2403: Missing Ldap attribute in CAS ticket if equals 0
+    * #2410: LDAP connectivity issues on startup cause fatal initialization error when passwordDB=LDAP
+    * #2411: Javascript error when local password policy configured and password tab disabled in menu
+    * #2413: checkstate returns error 500 with user parameter
+    * #2417: Error in cookie name used by lemonldap regexp
+    * #2420: Auth::SAML should handle missing NameID
+    * #2425: "Configuration error: xxx SAML metadata has no EntityID" when updating SAML sp in manager API
+    * #2426: twitter auth fails when coming from oidc/saml/cas service
+    * #2429: SAML sessions fill up with logout sessions that do not expire
+    * #2430: Password not updated in session after password change
+    * #2440: OIDC api: redirect URI not handled at top level during get/update operations
+
+  * New features:
+    * #2336: Adaptative Authentication Plugin
+    * #2391: Add extended function to test for registered second factor
+    * #2408: Add Chinese (Taiwan) translation
+
+  * Improvements:
+    * #714: Make password change compatible with Combination
+    * #716: Make password reset work with Combination
+    * #2232: lmAttrOrMacro test in Manager is too restrictive
+    * #2266: local password policy conflicts with LDAP password policy
+    * #2301: password reset page(s) CSS issues
+    * #2309: Unintialized $app in CAS Issuer during test
+    * #2314: CheckUser plugin: Append an option to display computed sessions data
+    * #2316: "New keys" in saml security configuration should generate a certificate
+    * #2317: Combination and fail2ban logs
+    * #2319: Allow the SAML signature alg to be set per-provider
+    * #2321: Can't save configuration with 2 CAS applications sharing the same hostname
+    * #2322: Support for SHA384 and SHA512 saml signatures
+    * #2329: Display a warning if password module is enabled without password backend
+    * #2330: Allow to configure OIDC claims type
+    * #2331: Warning in default Nginx configuration
+    * #2334: GlobalLogout plugin can sometimes found some non-SSO or corrupted sessions
+    * #2335: apache handler: allow users to override the port/scheme for redirections
+    * #2339: Plugins refactoring
+    * #2341: Make SHA256 the default signature method for SAML
+    * #2345: RGAA recommand alt tags to be empty for decoration images
+    * #2350: [security:low] Hiding session ids from the manager
+    * #2356: RGAA 5.4 requires arrays to have defined captions
+    * #2359: plugin engine for issuers
+    * #2360: Avoid assignment in expressions
+    * #2368: StayConnected-Plugin: when user-agent changes login is only possible after deleting cookies
+    * #2372: Add a domain whitelist to Auth::Kerberos
+    * #2380: CORS headers not sent by sendError
+    * #2381: Append a hook to be able to overwrite access log
+    * #2386: CheckUser does not resolve vhost aliases
+    * #2388: Allow custom SSL logos when using choice
+    * #2393: All messages printed in userLogger should use whatToTrace value to log user name
+    * #2398: CheckUser: Append an option to hide specific headers value depending on tested VHost
+    * #2404: Force deletion of corrupted sessions in DBI and LDAP backends
+    * #2406: Possibility to use a different mail for 2FA and password reset
+    * #2409: Update Spanish translation
+    * #2414: Manager evaluates macros with Safe Jail whereas useSafeJail has been disabled
+    * #2422: Missing alt attributes in mail HTML templates
+    * #2427: Make AssertionConsumerServiceURL available to SAML rules
+    * #2438: Add a confirmation when deleting second factor
+
+  * Templates:
+    * #2301: password reset page(s) CSS issues
+    * #2355: Password policy checker broken in password reset by mail template
+    * #2356: RGAA 5.4 requires arrays to have defined captions
+    * #2365: Check my last logins option does not work with StayConnected plugin
+    * #2366: StayConnected plugin does not work with 2FA
+    * #2374: Missing form-check-input class in form groups
+    * #2422: Missing alt attributes in mail HTML templates
+    * #2438: Add a confirmation when deleting second factor
+
+  * WebServer Confs:
+    * #2331: Warning in default Nginx configuration
+    * #2434: [security:medium] Headers are not deleted for unprotected or skip locations with nginx handler
+
+ -- Clément <clem.oudot@gmail.com>  Sun, 17 Jan 2021 16:52:38 +0100
+
 lemonldap-ng (2.0.9) stable; urgency=medium
 
   * Bugs:
