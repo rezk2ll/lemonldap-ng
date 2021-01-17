@@ -90,18 +90,21 @@ Upload dist and bundles on sftp://release-up.ow2.org/projects/lemonldap
 - RPM: see rpm/REDAME
 
 - DEB:
-The DEB repository is hosted on http://lemonldap-ng.org/deb
+The DEB repository is hosted on https://lemonldap-ng.org/deb
 
 Copy all generated files (*.deb):
-$ scp *.deb lemonldapng@lemonldap-ng.org:incoming/
+$ scp *.deb lemonldap-ng@lemonldap-ng.org:incoming/
 
-Then connect on the server and launch reprepro:
-$ ssh lemonldapng@lemonldap-ng.org
-lemonldapng@lemonldap-ng.org$ cd deb/
-lemonldapng@sd-22107:~/deb$ reprepro --ask-passphrase -Vb . includedeb stable ../incoming/*VERSION*deb
-lemonldapng@sd-22107:~/deb$ reprepro --ask-passphrase -Vb . includedeb 2.0 ../incoming/*VERSION*deb
+On the server, add packages is the appropriate repository, for example:
+$ aptly repo add 2.0 incoming/*
+$ aptly repo add stable incoming/*
 
-See also reprepro configuration file: 'distributions'
+Publish repositories:
+$ aptly publish update -gpg-key="57144D2148DD706967DBFF7C548B17BF81F18E7A" 2.0
+$ aptly publish update -gpg-key="57144D2148DD706967DBFF7C548B17BF81F18E7A" stable
+
+Remove files from incoming directory:
+$ rm incoming/*
 
 - Docker:
 Build a new image from https://github.com/LemonLDAPNG/lemonldap-ng-docker
@@ -120,7 +123,7 @@ Spread the word
 
 - News on OW2 projects page: https://projects.ow2.org/bin/view/lemonldap-ng/
 - Twitter account / Facebook page
-- IRC channel subject and Mattermost
+- IRC channel subject and OW2 Rocket.Chat channel
 - Mailing lists: lemonldap-ng-users / lemonldap-ng-announces
 - Optional: blogs and news sites (LinuxFR, etc.)
 
