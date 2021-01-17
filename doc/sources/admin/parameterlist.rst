@@ -29,6 +29,7 @@ SSLAuthnLevel                                           SSL authentication level
 SSLVar                                                                                                                                       ✔
 SSLVarIf                                                                                                                                     ✔
 activeTimer                                             Enable timers on portal pages                                                        ✔
+adaptativeAuthenticationLevelRules                      Adaptative authentication level rules                                                ✔
 apacheAuthnLevel                                        Apache authentication level                                                          ✔
 applicationList                                         Applications list                                                                    ✔
 authChoiceAuthBasic                                     Auth module used by AuthBasic handler                                                ✔
@@ -38,14 +39,15 @@ authentication                                          Authentication module   
 autoSigninRules                                         List of auto signin rules                                                            ✔
 available2F                                             Available second factor modules                                                      ✔                      ✔
 available2FSelfRegistration                             Available self-registration modules for second factor                                ✔                      ✔
+avoidAssignment                                         Avoid assignment in expressions                                                      ✔      ✔
 browsersDontStorePassword                               Avoid browsers to store users password                                               ✔
 bruteForceProtection                                    Enable brute force attack protection                                                 ✔
 bruteForceProtectionIncrementalTempo                    Enable incremental lock time for brute force attack protection                       ✔
 bruteForceProtectionLockTimes                           Incremental lock time values for brute force attack protection                       ✔
-bruteForceProtectionMaxAge                              Brute force attack protection -> Max age between last and first allowed failed login ✔                      ✔
-bruteForceProtectionMaxFailed                           Brute force attack protection -> Max allowed failed login                            ✔
-bruteForceProtectionMaxLockTime                         Brute force attack protection -> Max lock time                                       ✔                      ✔
-bruteForceProtectionTempo                               Brute force attack protection -> Tempo before try again                              ✔
+bruteForceProtectionMaxAge                              Max age between current and first failed login                                       ✔                      ✔
+bruteForceProtectionMaxFailed                           Max allowed failed login                                                             ✔
+bruteForceProtectionMaxLockTime                         Max lock time                                                                        ✔                      ✔
+bruteForceProtectionTempo                               Lock time                                                                            ✔
 captcha_login_enabled                                   Captcha on login page                                                                ✔
 captcha_mail_enabled                                    Captcha on password reset page                                                       ✔
 captcha_register_enabled                                Captcha on account creation page                                                     ✔
@@ -77,10 +79,12 @@ checkState                                              Enable CheckState plugin
 checkStateSecret                                        Secret token for CheckState plugin                                                   ✔
 checkTime                                               Timeout to check new configuration in local cache                                    ✔      ✔               ✔
 checkUser                                               Enable check user                                                                    ✔
+checkUserDisplayComputedSession                         Display empty headers rule                                                           ✔
 checkUserDisplayEmptyHeaders                            Display empty headers rule                                                           ✔
 checkUserDisplayEmptyValues                             Display session empty values rule                                                    ✔
 checkUserDisplayPersistentInfo                          Display persistent session info rule                                                 ✔
 checkUserHiddenAttributes                               Attributes to hide in CheckUser plugin                                               ✔
+checkUserHiddenHeaders                                  Header values to hide if not empty                                                   ✔
 checkUserIdRule                                         checkUser identities rule                                                            ✔
 checkUserSearchAttributes                               Attributes used for retrieving sessions in user DataBase                             ✔
 checkUserUnrestrictedUsersRule                          checkUser unrestricted users rule                                                    ✔
@@ -90,6 +94,7 @@ combination                                             Combination rule        
 compactConf                                             Compact configuration                                                                ✔
 configStorage                                           Configuration storage                                                                ✔      ✔       ✔       ✔
 confirmFormMethod                                       HTTP method for confirm page form                                                    ✔
+contextSwitchingAllowed2fModifications                  Allowed SFA modifications                                                            ✔
 contextSwitchingIdRule                                  Context switching identities rule                                                    ✔
 contextSwitchingPrefix                                  Prefix to store real session Id                                                      ✔                      ✔
 contextSwitchingRule                                    Context switching activation rule                                                    ✔
@@ -144,6 +149,7 @@ decryptValueFunctions                                   Custom function used for
 decryptValueRule                                        Decrypt value activation rule                                                        ✔
 demoExportedVars                                        Demo exported variables                                                              ✔
 disablePersistentStorage                                Enabled persistent storage                                                           ✔
+displaySessionId                                        Display _session_id with sessions explorer                                           ✔
 domain                                                  DNS domain                                                                           ✔      ✔
 exportedAttr                                            List of attributes to export by SOAP or REST servers                                 ✔
 exportedVars                                            Main exported variables                                                              ✔
@@ -211,6 +217,7 @@ issuerDBSAMLRule                                        SAML IDP rule           
 issuersTimeout                                          Token timeout for issuers                                                            ✔
 jsRedirect                                              Use javascript for redirections                                                      ✔
 key                                                     Secret key                                                                           ✔
+krbAllowedDomains                                       Allowed domains                                                                      ✔
 krbAuthnLevel                                           Null authentication level                                                            ✔
 krbByJs                                                 Launch Kerberos authentication by Ajax                                               ✔
 krbKeytab                                               Kerberos keytab                                                                      ✔
@@ -222,6 +229,7 @@ ldapCAFile                                              Location of the certific
 ldapCAPath                                              Location of the CA directory for LDAP connections                                    ✔
 ldapChangePasswordAsUser                                                                                                                     ✔
 ldapExportedVars                                        LDAP exported variables                                                              ✔
+ldapGetUserBeforePasswordChange                                                                                                              ✔
 ldapGroupAttributeName                                  LDAP attribute name for member in groups                                             ✔
 ldapGroupAttributeNameGroup                             LDAP attribute name in group entry referenced as member in groups                    ✔
 ldapGroupAttributeNameSearch                            LDAP attributes to search in groups                                                  ✔
@@ -230,6 +238,7 @@ ldapGroupBase                                                                   
 ldapGroupDecodeSearchedValue                            Decode value before searching it in LDAP groups                                      ✔
 ldapGroupObjectClass                                    LDAP object class of groups                                                          ✔
 ldapGroupRecursive                                      LDAP recursive search in groups                                                      ✔
+ldapIOTimeout                                           LDAP operation timeout                                                               ✔
 ldapITDS                                                Support for IBM Tivoli Directory Server                                              ✔
 ldapPasswordResetAttribute                              LDAP password reset attribute                                                        ✔
 ldapPasswordResetAttributeValue                         LDAP password reset value                                                            ✔
@@ -241,7 +250,6 @@ ldapSearchDeref                                         "deref" param of Net::LD
 ldapServer                                              LDAP server (host or URI)                                                            ✔
 ldapSetPassword                                                                                                                              ✔
 ldapTimeout                                             LDAP connection timeout                                                              ✔
-ldapIOTimeout                                           LDAP operation timeout                                                               ✔
 ldapUsePasswordResetAttribute                           LDAP store reset flag in an attribute                                                ✔
 ldapVerify                                              Whether to validate LDAP certificates                                                ✔
 ldapVersion                                             LDAP protocol version                                                                ✔
@@ -269,6 +277,7 @@ mail2fBody                                              Mail body for second fac
 mail2fCodeRegex                                         Regular expression to create a mail OTP code                                         ✔
 mail2fLabel                                             Portal label for Mail second factor                                                  ✔
 mail2fLogo                                              Custom logo for Mail 2F                                                              ✔
+mail2fSessionKey                                        Session parameter where mail is stored                                               ✔
 mail2fSubject                                           Mail subject for second factor authentication                                        ✔
 mail2fTimeout                                           Second factor code timeout                                                           ✔
 mailBody                                                Custom password reset mail body                                                      ✔
@@ -360,6 +369,7 @@ openIdSreg_timezone                                     OpenID SREG timezone ses
 pamAuthnLevel                                           PAM authentication level                                                             ✔
 pamService                                              PAM service                                                                          ✔
 passwordDB                                              Password module                                                                      ✔
+passwordPolicyActivation                                Enable password policy                                                               ✔
 passwordPolicyMinDigit                                  Password policy: minimal digit characters                                            ✔
 passwordPolicyMinLower                                  Password policy: minimal lower characters                                            ✔
 passwordPolicyMinSize                                   Password policy: minimal size                                                        ✔
@@ -377,14 +387,14 @@ portalAntiFrame                                         Avoid portal to be displ
 portalCheckLogins                                       Display login history checkbox in portal                                             ✔
 portalCustomCss                                         Path to custom CSS file                                                              ✔
 portalDisplayAppslist                                   Display applications tab in portal                                                   ✔
-portalDisplayCertificateResetByMail                     Display Certificate Reset by mail tab in portal                                      ✔
+portalDisplayCertificateResetByMail                     Display certificate reset by mail button in portal                                   ✔
 portalDisplayChangePassword                             Display password tab in portal                                                       ✔
 portalDisplayGeneratePassword                           Display password generate box in reset password form                                 ✔
 portalDisplayLoginHistory                               Display login history tab in portal                                                  ✔
 portalDisplayLogout                                     Display logout tab in portal                                                         ✔
 portalDisplayOidcConsents                               Display OIDC consent tab in portal                                                   ✔
 portalDisplayPasswordPolicy                             Display policy in password form                                                      ✔
-portalDisplayRefreshMyRights                            Displays the link to refresh the user session                                        ✔
+portalDisplayRefreshMyRights                            Display link to refresh the user session                                             ✔
 portalDisplayRegister                                   Display register button in portal                                                    ✔
 portalDisplayResetPassword                              Display reset password button in portal                                              ✔
 portalErrorOnExpiredSession                             Show error if session is expired                                                     ✔
@@ -544,6 +554,8 @@ sslHost                                                 URL for SSL Ajax request
 staticPrefix                                            Prefix of static files for HTML templates                                            ✔                      ✔
 status                                                  Status daemon activation                                                                    ✔               ✔
 stayConnected                                           Enable StayConnected plugin                                                          ✔
+stayConnectedCookieName                                 Name of the stayConnected plugin cookie                                              ✔
+stayConnectedTimeout                                    StayConnected persistent connexion session timeout                                                  ✔
 storePassword                                           Store password in session                                                            ✔
 successLoginNumber                                      Number of success stored in login history                                            ✔
 syslogFacility                                          Syslog logger technical facility                                                     ✔      ✔       ✔       ✔
