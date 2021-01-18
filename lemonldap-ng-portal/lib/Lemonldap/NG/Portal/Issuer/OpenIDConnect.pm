@@ -1100,9 +1100,11 @@ sub _handlePasswordGrant {
 
     my $user_id = $self->getUserIDForRP( $req, $rp, $req->sessionInfo );
 
-    $self->logger->debug( $user_id
+    $self->logger->debug(
+        $user_id
         ? "Found corresponding user: $user_id"
-        : 'Corresponding user not found' );
+        : 'Corresponding user not found'
+    );
 
     # Generate access_token
     my $accessTokenSession = $self->newAccessToken(

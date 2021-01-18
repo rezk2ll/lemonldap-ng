@@ -1432,8 +1432,10 @@ sub _applyType {
     # In auto array mode, split as array only if there are multiple values
     if ( $array eq "auto" ) {
         if ( $session_value and $session_value =~ /$separator/ ) {
-            $session_value = [ map { $self->_forceType( $_, $type ) }
-                  split( $separator, $session_value ) ];
+            $session_value = [
+                map { $self->_forceType( $_, $type ) }
+                  split( $separator, $session_value )
+            ];
         }
         else {
             $session_value = $self->_forceType( $session_value, $type );
@@ -1442,8 +1444,10 @@ sub _applyType {
         # In always array mode, always split (even on empty values)
     }
     elsif ( $array eq "always" ) {
-        $session_value = [ map { $self->_forceType( $_, $type ) }
-              split( $separator, $session_value ) ];
+        $session_value = [
+            map { $self->_forceType( $_, $type ) }
+              split( $separator, $session_value )
+        ];
     }
 
     # In never array mode, return the string as-is
