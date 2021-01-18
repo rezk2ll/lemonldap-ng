@@ -1034,6 +1034,18 @@ sub token {
         return $self->_handlePasswordGrant( $req, $rp );
     }
 
+    # Resource Owner Password Credenials
+    elsif ( $grant_type eq 'client_credentials' ) {
+        unless ( $self->oidcRPList->{$rp}
+            ->{oidcRPMetaDataOptionsAllowClientCredentialsGrant} )
+        {
+            $self->logger->warn(
+                "Access to Client Credentials grant is not allowed for RP $rp");
+            return $self->p->sendError( $req, 'unauthorized_client', 400 );
+        }
+        return $self->_handleClientCredentialsGrant( $req, $rp );
+    }
+
     # Unknown or unspecified grant type
     else {
         $self->userLogger->error(
@@ -1044,6 +1056,75 @@ sub token {
         return $self->p->sendError( $req, 'unsupported_grant_type', 400 );
     }
 
+}
+
+# RFC6749 section 4.4
+sub _handleClientCredentialsGrant {
+    my ( $self, $req, $rp ) = @_;
+
+    # The client credentials grant type MUST only be used by confidential
+    # clients.
+    if ( $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsPublic} ) {
+        $self->logger->error(
+            "Client Credentials grant cannot be used on public clients");
+        return $self->p->sendError( $req, 'invalid_client', 400 );
+    }
+    my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
+
+    # Populate minimal session info
+    my $scope = $req->param('scope') || '';
+    my $infos = {
+        $self->conf->{whatToTrace} => $client_id,
+        _clientId                  => $client_id,
+        _clientConfKey             => $rp,
+        _scope                     => $scope,
+    };
+
+    # Run rule against session info
+    if ( my $rule = $self->spRules->{$rp} ) {
+        unless ( $rule->( $req, $infos ) ) {
+            $self->userLogger->warn(
+                    "Relying party $rp did not validate the provided "
+                  . "Access Rule during Client Credentials Grant" );
+            return $self->p->sendError( $req, 'invalid_grant', 400 );
+        }
+    }
+
+    # Create access token
+    my $session = $self->p->getApacheSession( undef, info => $infos );
+    unless ($session) {
+        $self->logger->error("Unable to create session");
+        return $self->p->sendError( $req, 'server_error', 500 );
+    }
+
+    my $accessTokenSession = $self->newAccessToken(
+        $rp,
+        {
+            scope           => $scope,
+            rp              => $rp,
+            user_session_id => $session->id,
+        }
+    );
+    unless ($accessTokenSession) {
+        $self->logger->error("Unable to create Access Token session");
+        return $self->p->sendError( $req, 'server_error', 500 );
+    }
+
+    my $access_token = $accessTokenSession->id;
+
+    my $expires_in =
+      $self->conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsAccessTokenExpiration}
+      || $self->conf->{oidcServiceAccessTokenExpiration};
+
+    my $token_response = {
+        access_token => $access_token,
+        token_type   => 'Bearer',
+        expires_in   => $expires_in,
+    };
+
+    $self->logger->debug("Send token response");
+    return $self->p->sendJSONresponse( $req, $token_response );
 }
 
 sub _handlePasswordGrant {
