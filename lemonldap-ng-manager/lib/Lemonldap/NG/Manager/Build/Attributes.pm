@@ -4254,6 +4254,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation =>
               'Allow OAuth2 Resource Owner Password Credentials Grant',
         },
+        oidcRPMetaDataOptionsAllowClientCredentialsGrant => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Allow OAuth2 Client Credentials Grant',
+        },
         oidcRPMetaDataOptionsRefreshToken => {
             type          => 'bool',
             default       => 0,

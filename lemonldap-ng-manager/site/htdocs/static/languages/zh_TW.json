@@ -640,6 +640,7 @@
 "oidcRPMetaDataNode":"OpenID 連線提供方",
 "oidcRPMetaDataOptions":"選項",
 "oidcRPMetaDataOptionsAccessTokenExpiration":"存取權杖到期",
+"oidcRPMetaDataOptionsAllowClientCredentialsGrant":"Allow OAuth2.0 Client Credentials Grant",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"允許 OAuth2.0 密碼授權",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"授權碼到期",
 "oidcRPMetaDataOptionsBypassConsent":"繞過同意",

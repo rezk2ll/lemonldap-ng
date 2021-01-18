@@ -640,6 +640,7 @@
 "oidcRPMetaDataNode":"OpenID Connect Relying Parties",
 "oidcRPMetaDataOptions":"Tùy chọn",
 "oidcRPMetaDataOptionsAccessTokenExpiration":"Hết hạn truy cập Token",
+"oidcRPMetaDataOptionsAllowClientCredentialsGrant":"Allow OAuth2.0 Client Credentials Grant",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"Allow OAuth2.0 Password Grant",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Authorization Code expiration",
 "oidcRPMetaDataOptionsBypassConsent":"Bỏ qua sự đồng ý",

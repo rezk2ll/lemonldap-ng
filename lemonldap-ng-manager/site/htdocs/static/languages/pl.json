@@ -640,6 +640,7 @@
 "oidcRPMetaDataNode":"Strony zależne od OpenID Connect",
 "oidcRPMetaDataOptions":"Opcje",
 "oidcRPMetaDataOptionsAccessTokenExpiration":"Wygaśnięcie tokena dostępu",
+"oidcRPMetaDataOptionsAllowClientCredentialsGrant":"Allow OAuth2.0 Client Credentials Grant",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"Zezwól na przyznanie hasła OAuth2.0",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Wygaśnięcie kodu autoryzacji",
 "oidcRPMetaDataOptionsBypassConsent":"Obejdź zgodę",
