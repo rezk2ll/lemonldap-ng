@@ -2047,6 +2047,17 @@ sub metadata {
         push( @$grant_types, "password" );
     }
 
+    # If one of the RPs has client credentials grant enabled
+    if (
+        grep {
+            $self->oidcRPList->{$_}
+              ->{oidcRPMetaDataOptionsAllowClientCredentialsGrant}
+        } keys %{ $self->oidcRPList }
+      )
+    {
+        push( @$grant_types, "client_credentials" );
+    }
+
     # If one of the RPs has refresh tokens enabled
     if (
         grep { $self->oidcRPList->{$_}->{oidcRPMetaDataOptionsRefreshToken} }
