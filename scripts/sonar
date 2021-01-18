@@ -1,0 +1,18 @@
+#!/bin/sh
+
+mk-build-deps --install --remove \
+    --tool "apt-get -o Debug::pkgProblemResolver=yes -q -y" \
+    debian/control
+apt -y install libperl-critic-perl libdevel-cover-perl cpanminus
+cpanm install Devel::Cover::Report::SonarGeneric
+make SKIP_DOCUMENTATION=1
+
+for module in common handler portal manager; do
+    cd lemonldap-ng-$module
+    perlcritic --cruel --quiet --verbose "%f~|~%s~|~%l~|~%c~|~%m~|~%e~|~%p~||~%n" lib t > perlcritic_report.txt
+    cover -delete
+    HARNESS_PERL_SWITCHES=-MDevel::Cover prove
+    cover -report SonarGeneric
+    sed -i "s,path=\"blib,path=\"lemonldap-ng-$module,g" cover_db/sonar_generic.xml
+    cd ..
+done

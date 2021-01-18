@@ -67,7 +67,7 @@ LemonLDAP::NG 2F registration script
   };
 
   $(document).ready(function() {
-    $('body').on('click', '.btn-danger', function() {
+    $('body').on('click', '.remove2f', function() {
       return delete2F($(this).attr('device'), $(this).attr('epoch'));
     });
     $('#goback').attr('href', portal);

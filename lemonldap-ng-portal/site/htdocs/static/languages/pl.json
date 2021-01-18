@@ -255,6 +255,7 @@
 "register":"Zarejestruj",
 "registerRequestAlreadyIssued":"Wniosek o rejestrację tego konta został już złożony w dniu ",
 "rememberChoice":"Zapamiętaj mój wybór",
+"remove2fWarning":"This operation cannot be undone",
 "removeOtherSessions":"Usuń inne sesje",
 "renewSession":"Renew session",
 "resendConfirmMail":"Czy wysłać ponownie wiadomość z potwierdzeniem?",

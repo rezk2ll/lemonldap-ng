@@ -20,12 +20,23 @@ backups and a rollback plan ready!
 2.0.10
 ------
 
+Security
+~~~~~~~~
+
 A vulnerability affecting LemonLDAP::NG installations has been found out when ALL following criteria apply:
 
 * Your handler server uses Nginx
-* Your virtual host configuration contains per-URL 'skip' or 'unprotect' access rule
+* Your virtual host configuration contains per-URL ``skip`` or ``unprotect`` access rule
 
-In this situation, you have to update your LUA configuration file like ``/etc/nginx/nginx-lua-headers.conf``
+In this situation, you have to update your LUA configuration file like ``/etc/nginx/nginx-lua-headers.conf``. See also `issue 2434 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2434>`__.
+
+Other minor security fixes:
+
+* It is now possible to hide sessions identifier in Manager (parameter ``displaySessionId``). See also `issue 2350 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2350>`__.
+* Second factor management by end user now requires safer conditions. See also `issue 2332 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2332>`__, `issue 2337 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2337>`__ and `issue 2338 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2338>`__.
+
+Main changes
+~~~~~~~~~~~~
 
 - New dependency: IO::Socket::Timeout
 - TOTP check tolerates forward AND backward clock drift (totp2fRange)
@@ -35,6 +46,54 @@ In this situation, you have to update your LUA configuration file like ``/etc/ng
 - BruteForceProtection plugin now prevents authentication on backend if an account is locked
 - In the Manager API, postLogoutRedirectUri is now `returned and consumed as an array <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2347>`__
 - We fixed a bug that caused SAML sessions to be created and never deleted, you should check your session databases for sessions that have ``"_session_kind": "ISAML"`` but no ``_utime``. You can safely delete SAML sessions with no ``_utime`` during the upgrade.
+
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you created your own skin and modified some template files, you may need to update them, see below if they have been modified.
+
+No change is required if you are using the default ``bootstrap`` theme.
+
+2FA manager
+^^^^^^^^^^^
+
+In ``2fregisters.tpl`` you need to add the ``remove2f`` class to the button that triggers second factor removal:
+
+.. code-block:: diff
+
+   - <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger" role="button">
+   + <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger remove2f" role="button">
+
+Or, better yet, integrate the changes in ``2fregisters.tpl`` and ``skin.min.js`` into your custom theme to benefit from the `new 2F removal confirmation dialog <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2438>`__
+
+Checkboxes
+^^^^^^^^^^
+
+A CSS change has been done in ``styles.css`` to avoid checkbox labels overflow. See `issue 2301 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2301>`__.
+
+The ``form-check-input`` class is missing in ``register.tpl`` and ``notifinclude.tpl``. See `issue 2374 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2374>`__.
+
+Password checker
+^^^^^^^^^^^^^^^^
+
+Input id values have been modified in ``mail.tpl`` to work with password checker. See `issue 2355 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2355>`__.
+
+Tables caption
+^^^^^^^^^^^^^^
+
+Tables captions have been added in ``sessionArray.tpl``. See `issue 2356 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2356>`__.
+
+Stay connected
+^^^^^^^^^^^^^^
+
+A small change is required in ``checklogins.tpl`` for `issue 2365 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2365>`__.
+
+Other changes needed in ``2fchoice.tpl``, ``ext2check.tpl``, ``totp2fcheck.tpl``, ``u2fcheck.tpl`` and ``utotp2fcheck.tpl`` for `issue 2366 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2366>`__.
+
+Mails
+^^^^^
+
+The HTML ``alt`` attribute has been added on ``img`` in all ``mail_*.tpl``. See `issue 2422 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2422>`__.
 
 2.0.9
 -----

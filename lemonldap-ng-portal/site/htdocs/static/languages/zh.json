@@ -255,6 +255,7 @@
 "register":"注册",
 "registerRequestAlreadyIssued":"此账户已存在一个注册请求",
 "rememberChoice":"记住我的选择",
+"remove2fWarning":"This operation cannot be undone",
 "removeOtherSessions":"移除其他会话",
 "renewSession":"Renew session",
 "resendConfirmMail":"重新发送确认邮件？",

@@ -1,15 +1,25 @@
-.build_job: &job_build
+.build_job:
   stage: build
-  script:
-     - apt-get update && apt-get -y dist-upgrade
-    # Workaround for bionic
-     - DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata
-     - ci-build-pkg
   artifacts:
     expire_in: 1 hour
     paths:
       - result/*
+  except:
+    variables:
+      - $SONARJOB == "1"
 
+.debian_build_job:
+  extends: .build_job
+  script:
+     - apt-get update && apt-get -y dist-upgrade
+     - DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata
+     - ci-build-pkg
+  before_script:
+     - env | grep ^CI_
+     # Converting to native package...
+     - sed -i "1{s/-1) /$suffix) /}" debian/changelog
+     - sed -i "1{s/-2) /$suffix) /}" debian/changelog
+     - sed -i 's/3.0 (quilt)/3.0 (native)/' debian/source/format
 
 stages:
 - build
@@ -18,53 +28,42 @@ stages:
 
 before_script:
   - env | grep ^CI_
-  # Converting to native package...
-  - sed -i "1{s/-1) /$suffix) /}" debian/changelog
-  - sed -i "1{s/-2) /$suffix) /}" debian/changelog
-  - sed -i 's/3.0 (quilt)/3.0 (native)/' debian/source/format
 
 build_stretch:
+  extends: .debian_build_job
   image: buildpkg/debian:stretch
-  <<: *job_build
 
 build_buster:
+  extends: .debian_build_job
   image: buildpkg/debian:buster
-  <<: *job_build
 
 #build_xenial:
+#  extends: .debian_build_job
 #  image: buildpkg/ubuntu:xenial
 #  <<: *job_build
 
 build_bionic:
+  extends: .debian_build_job
   image: buildpkg/ubuntu:bionic
-  <<: *job_build
 
 build_centos_7:
+  extends: .build_job
   image: buildpkg/centos:7
-  stage: build
   script:
      - rm -f /etc/yum.repos.d/CentOS-Sources.repo
      - yum -y install epel-release
      - make rpm-dist
      - ci-build-pkg
-  artifacts:
-     expire_in: 1 day
-     paths:
-       - result/*
 
 build_centos_8:
+  extends: .build_job
   image: buildpkg/centos:8
-  stage: build
   script:
      - yum-config-manager --enable PowerTools
      - yum-config-manager --enable AppStream
      - yum -y install epel-release
      - make rpm-dist
      - ci-build-pkg
-  artifacts:
-     expire_in: 1 day
-     paths:
-       - result/*
 
 sign:
   image: buildpkg/debian:stretch
@@ -113,3 +112,25 @@ pages:
   only:
     - master
 
+sonar-inspect:
+  image: buildpkg/debian:buster
+  stage: build
+  script:
+        - scripts/sonar
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - lemonldap-ng-*/cover_db/sonar_generic.xml
+      - lemonldap-ng-*/perlcritic_report.txt
+  only:
+    variables:
+      - $SONARJOB == "1"
+
+sonar-upload:
+  stage: deploy
+  image: sonarsource/sonar-scanner-cli
+  script:
+      - sonar-scanner
+  only:
+    variables:
+      - $SONARJOB == "1"
