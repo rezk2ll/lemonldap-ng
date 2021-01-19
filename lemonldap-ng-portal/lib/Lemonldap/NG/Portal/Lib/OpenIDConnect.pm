@@ -19,7 +19,7 @@ use Mouse;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT);
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.11';
 
 # OpenID Connect standard claims
 use constant PROFILE => [
@@ -643,10 +643,7 @@ sub decodeJSON {
     my $json_hash;
 
     eval { $json_hash = from_json( $json, { allow_nonref => 1 } ); };
-
-    if ($@) {
-        $json_hash->{error} = "parse_error";
-    }
+    $json_hash->{error} = "parse_error" if ($@);
 
     return $json_hash;
 }
@@ -1476,15 +1473,12 @@ sub _applyType {
 
 sub _forceType {
     my ( $self, $val, $type ) = @_;
-    if ( $type eq "bool" ) {
-        return ( $val ? JSON::true : JSON::false );
-    }
 
-    if ( $type eq "int" ) {
+    # Boolean
+    return ( $val ? JSON::true : JSON::false ) if ( $type eq "bool" );
 
-        # Coax into int
-        return ( $val + 0 );
-    }
+    # Coax into int
+    return ( $val + 0 ) if ( $type eq "int" );
 
     # Coax into string
     return ( $val . "" );
