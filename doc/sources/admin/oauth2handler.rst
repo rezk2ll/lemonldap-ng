@@ -39,6 +39,23 @@ Example:
        user: "dwho"
    }
 
+Additional variables
+--------------------
+
+The OAuth2 handler defines a few extra variables that you can use in
+:doc:`rules and headers<writingrulesand_headers>`.
+
+* ``$_clientId``: client ID of the application which requested the Access Token
+* ``$_clientConfKey``: configuration key of the application which requested the
+  Access Token
+* ``$_scope``: list of space-separated scopes granted by the Access Token
+
+For example, to grant access to access tokens containing the ``write`` scope,
+use ::
+
+   $_scope =~ /(?<!\S)write(?!\S)/
+
+
 Configuration
 -------------
 
