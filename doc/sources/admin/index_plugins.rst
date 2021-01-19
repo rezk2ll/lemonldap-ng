@@ -18,6 +18,7 @@ Plugins
    globallogout
    grantsession
    impersonation
+   finduser
    notifications
    status
    public_pages

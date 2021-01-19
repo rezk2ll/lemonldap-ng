@@ -58,12 +58,16 @@ date
 Returns the date, in format YYYYMMDDHHMMSS, local time by default, GMT
 by calling ``date(1)``
 
+::
+
+    For example: date(1) lt '19551105080000'
+
 checkLogonHours
 ~~~~~~~~~~~~~~~
 
 This function will check the day and the hour of current request, and
 compare it to allowed days and hours. It returns 1 if this match, 0
-else. All e By default, the allowed days and hours is an hexadecimal
+else. By default, the allowed days and hours is an hexadecimal
 value, representing each hour of the week. A day has 24 hours, and a
 week 7 days, so the value contains 168 bits, converted into 42
 hexadecimal characters. Sunday is the first day.
