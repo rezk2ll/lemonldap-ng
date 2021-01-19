@@ -276,7 +276,8 @@ Options
       https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
       for details. These offline sessions can be administered through
       the Session Browser.
-   - **Allow OAuth2.0 Password Grant** (since version ``2.0.8``): Allow the use of the Resource Owner Password Credentials Grant on by this client. This feature only works if you have configured a form-based authentication module.
+   - **Allow OAuth2.0 Password Grant** (since version ``2.0.8``): Allow the use of the :ref:`Resource Owner Password Credentials Grant <resource-owner-password-grant>` by this client. This feature only works if you have configured a form-based authentication module.
+   - **Allow OAuth2.0 Client Credentials Grant** (since version ``2.0.11``): Allow the use of the :ref:`Resource Owner Password Credentials Grant <client-credentials-grant>` by this client.
    - **Authentication Level**: required authentication level to access this application
    - **Access Rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
 
@@ -286,6 +287,45 @@ Options
    - **URL**: Specify the relying party's logout URL
    - **Type**: Type of Logout to perform (only Front-Channel is implemented for now)
    - **Session required**: Whether to send the Session ID in the logout request
+
+.. _resource-owner-password-grant:
+
+Resource Owner Password Credentials Grant
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Resource Owner Password Credentials Grant allows you to exchange a user's login and password for an access token. This must be considered a legacy form of authentication, since the Authorization Code web-based flow is prefered for all applications that support it. It can however be useful in some scenarios involving technical accounts that cannot implement a web-based authentication flow.
+
+.. seealso::
+
+   `Specification for the Resource Owner Password Credentials Grant <https://tools.ietf.org/html/rfc6749#section-4.3>`__
+
+.. _client-credentials-grant:
+
+Client Credentials Grant
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Client Credentials Grant allows you to obtain an Access Token using only a Relying Party's Client ID and Client Secret.
+
+The following attributes are made available in the created session:
+
+* The ``_whatToTrace`` attribute (main session identifier), is set to the
+  relying party's configuration key
+* The ``_scope`` attribute is set to the requested scopes
+* The ``_clientId`` attribute is set to the Client ID that obtained the access
+  token.
+* The ``_clientConfKey`` attribute is set to the LemonLDAP::NG configuration
+  key for the client that obtained the access token.
+
+The Access Rule, if defined, will have access to those variables, as well as
+the `@ENV` array. You can use it to restrict the use of this grant to
+pre-determined scopes, a particular IP address, etc.
+
+These session attribute will be released on the UserInfo endpoint if they are
+mapped to Exported Attributes and Extra Claims
+
+.. seealso::
+
+   `Specification for the Client Credentials Grant <https://tools.ietf.org/html/rfc6749#section-4.4>`__
 
 Macros
 ^^^^^^
