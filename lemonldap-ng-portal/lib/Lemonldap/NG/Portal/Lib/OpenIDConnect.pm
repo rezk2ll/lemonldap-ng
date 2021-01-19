@@ -1336,7 +1336,13 @@ sub buildUserInfoResponse {
     my ( $self, $req, $scope, $rp, $session ) = @_;
     my $userinfo_response = {};
 
-    my $user_id = $self->getUserIDForRP( $req, $rp, $session->data );
+    my $data = {
+        %{ $session->data },
+        _clientId => $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID},
+        _clientConfKey => $rp,
+        _scope         => $scope,
+    };
+    my $user_id = $self->getUserIDForRP( $req, $rp, $data );
 
     $self->logger->debug("Found corresponding user: $user_id");
 
@@ -1361,13 +1367,13 @@ sub buildUserInfoResponse {
 
                 # Lookup attribute in macros first
                 if ( $self->spMacros->{$rp}->{$session_key} ) {
-                    $session_value = $self->spMacros->{$rp}->{$session_key}
-                      ->( $req, $session->data );
+                    $session_value =
+                      $self->spMacros->{$rp}->{$session_key}->( $req, $data );
 
                     # If not found, search in session
                 }
                 else {
-                    $session_value = $session->data->{$session_key};
+                    $session_value = $data->{$session_key};
                 }
 
                 # Handle empty values, arrays, type, etc.
