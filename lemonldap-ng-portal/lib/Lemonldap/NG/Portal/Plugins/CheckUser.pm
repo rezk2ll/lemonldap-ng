@@ -497,13 +497,13 @@ sub _headers {
     # Remove hidden headers relative to VHost if required
     unless ( $self->unrestrictedUsersRule->( $req, $savedUserData ) ) {
         my $keysToRemove = '';
-        $keysToRemove = '__all__'
+        $keysToRemove = '__ALL__'
           if exists $self->conf->{checkUserHiddenHeaders}->{$vhost};
         $keysToRemove = $self->conf->{checkUserHiddenHeaders}->{$vhost}
           if ( $keysToRemove
             && $self->conf->{checkUserHiddenHeaders}->{$vhost} =~ /\w+/ );
 
-        if ( $keysToRemove && $keysToRemove eq '__all__' ) {
+        if ( $keysToRemove && $keysToRemove eq '__ALL__' ) {
             $self->logger->debug(
                 "Overwrite for VirtualHost: $vhost ALL valued header(s)...");
             @$headers = map {
@@ -546,7 +546,6 @@ sub _headers {
 
     $self->logger->debug(
         "Return \"$attrs->{ $self->{conf}->{whatToTrace} }\" headers");
-
     return $headers;
 }
 
