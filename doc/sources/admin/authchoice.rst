@@ -49,9 +49,11 @@ Then, go in ``Choice Parameters``:
 
 -  **URL parameter**: parameter name used to set choice value (default:
    ``lmAuth``)
--  **AuthBasic handler parameter**: authentication module used by
-   AuthBasic handler
 -  **Allowed modules**: click on ``New chain`` to add a choice.
+-  **AuthBasic handler parameter**: authentication module called by
+   AuthBasic handler (:doc:`AuthBasic handler<handlerauthbasic>`)
+-  **FindUser plugin parameter**: authentication module called by
+   Find user plugin (:doc:`Find user plugin<finduser>`)
 
 |image0|
 
