@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.11';
 
 # TODO: Missing:
 #  * activeTimer
@@ -144,8 +144,8 @@ sub tree {
                             title => 'choiceParams',
                             help  => 'authchoice.html',
                             nodes => [
-                                'authChoiceParam', 'authChoiceModules',
-                                'authChoiceAuthBasic'
+                                'authChoiceParam',     'authChoiceModules',
+                                'authChoiceAuthBasic', 'authChoiceFindUser'
                             ]
                         },
                         {
@@ -393,9 +393,9 @@ sub tree {
                             help  => 'authrest.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'restAuthnLevel', 'restAuthUrl',
-                                'restUserDBUrl',  'restPwdConfirmUrl',
-                                'restPwdModifyUrl'
+                                'restAuthnLevel',   'restAuthUrl',
+                                'restUserDBUrl',    'restPwdConfirmUrl',
+                                'restPwdModifyUrl', 'restFindUserDBUrl'
                             ]
                         },
                         {
@@ -767,6 +767,7 @@ sub tree {
                                 'checkUserSearchAttributes',
                                 'checkUserDisplayComputedSession',
                                 'checkUserDisplayEmptyHeaders',
+                                'checkUserDisplayNormalizedHeaders',
                                 'checkUserDisplayEmptyValues',
                                 'checkUserDisplayPersistentInfo',
                                 'checkUserHiddenHeaders'
@@ -782,7 +783,18 @@ sub tree {
                                 'impersonationUnrestrictedUsersRule',
                                 'impersonationHiddenAttributes',
                                 'impersonationSkipEmptyValues',
-                                'impersonationMergeSSOgroups',
+                                'impersonationMergeSSOgroups'
+                            ]
+                        },
+                        {
+                            title => 'findUsers',
+                            help  => 'finduser.html',
+                            nodes => [
+                                'findUser',
+                                'findUserWildcard',
+                                'findUserControl',
+                                'findUserSearchingAttributes',
+                                'findUserExcludingAttributes'
                             ]
                         },
                         {
