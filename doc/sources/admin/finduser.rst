@@ -21,8 +21,7 @@ Just enable it in the Manager (section “plugins”). Then, set searching attri
    -  **Character used as wildcard**: Character that can be used by users as wildcard. An empty value disable wildcarded search requests.
    -  **Parameters control**: Regular expression used for checking searching values syntax.
    -  **Searching attributes**: For each attribute, you have to set a key (attribute as defined in UserBD) and a value that will be display in login form (placeholder). 
-   -  **Excluding attributes**: You can defined here attributes used for excluding accounts. Set keys corresponding to UserBD attributes
-   and values to exclude. A value can be a multivalued list separated by multiValueSeparator parameter (General Parameters > Advanced parameters > Separator)
+   -  **Excluding attributes**: You can defined here attributes used for excluding accounts. Set keys corresponding to UserBD attributes and values to exclude. A value can be a multivalued list separated by multiValueSeparator parameter (General Parameters > Advanced parameters > Separator)
 
 .. attention::
 
