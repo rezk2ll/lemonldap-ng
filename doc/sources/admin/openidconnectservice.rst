@@ -41,8 +41,8 @@ level.
 Security
 ~~~~~~~~
 
--  **Keys** : define public/private key pair to do asymmetric signature
--  **Signing Key ID**: ID of signing key
+-  **Keys** : define public/private key pair to do asymmetric signature. A JWKS
+  ``kid`` (Key ID) is automatically derived when generating new keys.
 -  **Dynamic Registration**: Set to 1 to allow clients to register
    themselves. This may be a security risk as this will create a new
    configuration in the backend per registration request. You can limit
