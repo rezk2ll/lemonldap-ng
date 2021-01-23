@@ -88,13 +88,15 @@ sub retreiveFindUserParams {
 
     $self->logger->debug("FindUser: reading parameters...");
     @$searching = map {
-        my $param = $req->params($_) // '';
-        if ( $param =~ /$self->{conf}->{findUserControl}/o ) {
-            $self->logger->debug("Push searching parameter: $_ =>  $param");
-            { key => $_, value => $param };
+        my $key   = ( split '#', $_ )[0];
+        my $value = $req->params($key) // '';
+        if ( $value =~ /$self->{conf}->{findUserControl}/o ) {
+            $self->logger->debug("Push searching parameter: $key =>  $value");
+            { key => $key, value => $value };
         }
         else {
-            $self->logger->warn("Parameter $_ has been reject by findUserControl");
+            $self->logger->warn(
+                "Parameter $key has been reject by findUserControl");
             ();
         }
     } sort keys %{ $self->conf->{findUserSearchingAttributes} };
@@ -117,6 +119,50 @@ sub retreiveFindUserParams {
     }
 
     return ( $searching, $excluding );
+}
+
+sub buildForm {
+    my $self   = shift;
+    my $fields = [];
+    $self->logger->debug('Building array ref with searching fields...');
+    @$fields =
+      sort { $a->{select} <=> $b->{select} || $a->{value} cmp $b->{value} }
+      map {
+        my ( $key, $value, $null ) = split '#', $_;
+        my @values = split $self->conf->{multiValuesSeparator},
+          $self->conf->{findUserSearchingAttributes}->{$_} || $_;
+        my $nbr = scalar @values;
+        if ( $nbr > 1 ) {
+            if ( $nbr % 2 ) { () }
+            else {
+                my %hash    = @values;
+                my $choices = [];
+                $nbr /= 2;
+                $self->logger->debug(
+                    "Building $key with type 'select' and $nbr entries...");
+                @$choices = map { { key => $_, value => $hash{$_} } }
+                  sort keys %hash;
+                {
+                    select  => 1,
+                    key     => $key,
+                    null    => $null,
+                    value   => $value ? $value : $key,
+                    choices => $choices
+                };
+            }
+        }
+        else {
+            {
+                select => 0,
+                key    => $key,
+                value  => $self->conf->{findUserSearchingAttributes}->{$_}
+                ? $self->conf->{findUserSearchingAttributes}->{$_}
+                : $_
+            };
+        }
+      } sort keys %{ $self->conf->{findUserSearchingAttributes} };
+
+    return $fields;
 }
 
 1;

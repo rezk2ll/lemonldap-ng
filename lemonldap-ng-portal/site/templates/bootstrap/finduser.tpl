@@ -8,12 +8,24 @@
       <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
     </TMPL_IF>
     <TMPL_LOOP NAME="FIELDS">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text"><label for="<TMPL_VAR NAME="key">" class="mb-0"><i class="fa fa-user"></i></label></span>
+      <TMPL_IF NAME="select">
+        <label for="<TMPL_VAR NAME="key">"><TMPL_VAR NAME="value"></label>
+        <select id="findUser_<TMPL_VAR NAME="key">" name="<TMPL_VAR NAME="key">">
+          <TMPL_IF NAME="null">
+            <option value=""></option>
+          </TMPL_IF>
+          <TMPL_LOOP NAME="choices">
+            <option value="<TMPL_VAR NAME="key">"><TMPL_VAR NAME="value"></option>
+          </TMPL_LOOP>
+        </select>
+      <TMPL_ELSE>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><label for="<TMPL_VAR NAME="key">" class="mb-0"><i class="fa fa-user"></i></label></span>
+          </div>
+          <input id="findUser_<TMPL_VAR NAME="key">" name="<TMPL_VAR NAME="key">" type="text" autocomplete="off" class="form-control" placeholder="<TMPL_VAR NAME="value">" />
         </div>
-        <input id="findUser_<TMPL_VAR NAME="key">" name="<TMPL_VAR NAME="key">" type="text" autocomplete="off" class="form-control" placeholder="<TMPL_VAR NAME="value">" />
-      </div>
+      </TMPL_IF>
     </TMPL_LOOP>
     <button type="submit" class="btn btn-info" >
       <span class="fa fa-eye"></span>

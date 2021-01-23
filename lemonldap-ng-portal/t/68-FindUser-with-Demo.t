@@ -22,7 +22,7 @@ my $client = LLNG::Manager::Test->new( {
             findUserControl   => '^[\w*\s]+$',
             findUserWildcard  => '*',
             findUserSearchingAttributes =>
-              { uid => 'Login', guy => 'Kind', cn => 'Name' },
+              { uid => undef, guy => 'Kind', cn => 'Name' },
             findUserExcludingAttributes =>
               { type => 'mutant', uid => 'rtyler' },
         }
@@ -78,7 +78,7 @@ m%<input id="findUser_guy" name="guy" type="text" autocomplete="off" class="form
 ) or explain( $res->[2]->[0], 'id="findUser_guy"' );
 ok(
     $res->[2]->[0] =~
-m%<input id="findUser_uid" name="uid" type="text" autocomplete="off" class="form-control" placeholder="Login" />%,
+m%<input id="findUser_uid" name="uid" type="text" autocomplete="off" class="form-control" placeholder="uid" />%,
     'id="findUser_uid"'
 ) or explain( $res->[2]->[0], 'id="findUser_uid"' );
 ok(

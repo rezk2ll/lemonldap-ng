@@ -479,20 +479,17 @@ sub display {
 
         # Display authentication form
         else {
+            my $plugin =
+              $self->loadedModules->{
+                "Lemonldap::NG::Portal::Plugins::FindUser"};
             my $fields = [];
-            if (   $self->conf->{findUser}
+            if (   $plugin
+                && $self->conf->{findUser}
                 && $self->conf->{impersonationRule}
                 && $self->conf->{findUserSearchingAttributes} )
             {
-                $login = $req->data->{findUser};
-                $self->logger->debug(
-                    'Building array ref with searching fields...');
-                @$fields = map { {
-                        key => $_,
-                        value =>
-                          $self->conf->{findUserSearchingAttributes}->{$_}
-                    };
-                } sort keys %{ $self->conf->{findUserSearchingAttributes} };
+                $login  = $req->data->{findUser};
+                $fields = $plugin->buildForm();
             }
 
             # Authentication loop
