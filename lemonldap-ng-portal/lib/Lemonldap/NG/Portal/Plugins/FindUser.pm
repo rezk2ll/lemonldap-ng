@@ -130,7 +130,7 @@ sub buildForm {
       map {
         my ( $key, $value, $null ) = split '#', $_;
         my @values = split $self->conf->{multiValuesSeparator},
-          $self->conf->{findUserSearchingAttributes}->{$_} || $_;
+          $self->conf->{findUserSearchingAttributes}->{$_} || $key;
         my $nbr = scalar @values;
         if ( $nbr > 1 ) {
             if ( $nbr % 2 ) { () }
@@ -155,9 +155,7 @@ sub buildForm {
             {
                 select => 0,
                 key    => $key,
-                value  => $self->conf->{findUserSearchingAttributes}->{$_}
-                ? $self->conf->{findUserSearchingAttributes}->{$_}
-                : $_
+                value  => $values[0]
             };
         }
       } sort keys %{ $self->conf->{findUserSearchingAttributes} };
