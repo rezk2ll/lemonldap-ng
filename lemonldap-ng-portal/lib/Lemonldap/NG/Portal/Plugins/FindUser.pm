@@ -93,7 +93,10 @@ sub retreiveFindUserParams {
             $self->logger->debug("Push searching parameter: $_ =>  $param");
             { key => $_, value => $param };
         }
-        else { () }
+        else {
+            $self->logger->warn("Parameter $_ has been reject by findUserControl");
+            ();
+        }
     } sort keys %{ $self->conf->{findUserSearchingAttributes} };
 
     if ( scalar @$searching

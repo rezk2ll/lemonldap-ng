@@ -505,6 +505,7 @@ t/26-AuthRemote.t
 t/27-AuthProxy.t
 t/28-AuthChoice-and-password.t
 t/28-AuthChoice-with-captcha.t
+t/28-AuthChoice-with-info.t
 t/28-AuthChoice-with-over.t
 t/28-AuthChoice-with-rules.t
 t/28-AuthChoice-with-token.t
@@ -559,6 +560,7 @@ t/32-CAS-10.t
 t/32-CAS-Macros.t
 t/32-CAS-Prefix.t
 t/32-OIDC-ClaimTypes.t
+t/32-OIDC-ClientCredentials-Grant.t
 t/32-OIDC-Code-Flow-with-2F-UpgradeOnly.t
 t/32-OIDC-Code-Flow-with-2F.t
 t/32-OIDC-Hooks.t
@@ -682,6 +684,7 @@ t/68-ContextSwitching-with-UnrestrictedUser.t
 t/68-ContextSwitching.t
 t/68-FindUser-with-BadChoice-and-token.t
 t/68-FindUser-with-Choice-and-token.t
+t/68-FindUser-with-Combination.t
 t/68-FindUser-with-DBI.t
 t/68-FindUser-with-Demo-and-token.t
 t/68-FindUser-with-Demo.t
