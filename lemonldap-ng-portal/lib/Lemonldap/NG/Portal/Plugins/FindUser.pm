@@ -140,8 +140,8 @@ sub buildForm {
                 $nbr /= 2;
                 $self->logger->debug(
                     "Building $key with type 'select' and $nbr entries...");
-                @$choices = map { { key => $_, value => $hash{$_} } }
-                  sort keys %hash;
+                @$choices = sort { $a->{value} cmp $b->{value} }
+                  map { { key => $_, value => $hash{$_} } } keys %hash;
                 {
                     select  => 1,
                     key     => $key,
@@ -158,7 +158,7 @@ sub buildForm {
                 value  => $values[0]
             };
         }
-      } sort keys %{ $self->conf->{findUserSearchingAttributes} };
+      } keys %{ $self->conf->{findUserSearchingAttributes} };
 
     return $fields;
 }
