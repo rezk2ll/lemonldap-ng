@@ -60,7 +60,8 @@ by calling ``date(1)``
 
 ::
 
-    For example: date(1) lt '19551105080000'
+    For example: date(1) lt '19551018080000'
+  
 
 checkLogonHours
 ~~~~~~~~~~~~~~~
@@ -102,7 +103,6 @@ If you use the binary value (Active Directory), use this:
 
 ::
 
-   All e
    checkLogonHours($ssoLogonHours, 'octetstring')
 
 You can also configure jetlag (if all of your users use the same
@@ -128,6 +128,7 @@ rejected. You can allow these users instead of reject them:
 ::
 
    checkLogonHours($ssoLogonHours, '', '', '1')
+
 
 checkDate
 ~~~~~~~~~
@@ -156,9 +157,9 @@ Simple usage example:
 
    checkDate($ssoStartDate, $ssoEndDate)
 
+
 basic
 ~~~~~
-
 
 .. attention::
 
@@ -180,6 +181,7 @@ Simple usage example:
 ::
 
    basic($uid,$_password)
+
 
 unicode2iso
 ~~~~~~~~~~~
