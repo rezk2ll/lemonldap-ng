@@ -18,11 +18,13 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use String::Random qw/random_string/;
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.11';
 
-extends 'Lemonldap::NG::Portal::Main::Issuer',
-  'Lemonldap::NG::Portal::Lib::OpenIDConnect',
-  'Lemonldap::NG::Common::Conf::AccessLib';
+extends qw(
+  Lemonldap::NG::Portal::Main::Issuer
+  Lemonldap::NG::Common::Conf::AccessLib
+  Lemonldap::NG::Portal::Lib::OpenIDConnect
+);
 
 # INTERFACE
 
@@ -1009,7 +1011,7 @@ sub token {
     my $rp = $self->checkEndPointAuthenticationCredentials($req);
     return $self->p->sendError( $req, 'invalid_request', 400 ) unless ($rp);
 
-    my $grant_type = $req->param('grant_type');
+    my $grant_type = $req->param('grant_type') || '';
 
     # Autorization Code grant
     if ( $grant_type eq 'authorization_code' ) {
