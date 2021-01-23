@@ -18,7 +18,7 @@ our $VERSION = '2.0.11';
 # -  (1,message) : OK with a warning
 # -  (0,message) : NOK
 # - (-1,message) : OK, but must be confirmed (ignored if confirm parameter is
-# set
+# set)
 #
 # Those subroutines can also modify configuration.
 #
@@ -434,9 +434,10 @@ sub tests {
         },
 
         samlSignatureUnsupportedAlg => sub {
+            return 1 unless $conf->{issuerDBSAMLActivation};
             return 1
               unless eval
-'use Lasso; Lasso::check_version( 2, 5, 1, Lasso::Constants::CHECK_VERSION_NUMERIC) ? 0:1';
+'use Lasso; Lasso::check_version( 2, 5, 1, Lasso::Constants::CHECK_VERSION_NUMERIC) ? 0 : 1';
 
             my $allsha1 = 1;
             undef $allsha1
