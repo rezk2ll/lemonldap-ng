@@ -83,31 +83,52 @@ sub provideUser {
 }
 
 sub retreiveFindUserParams {
-    my ( $self,      $req )       = @_;
-    my ( $searching, $excluding ) = ( [], [] );
+    my ( $self, $req ) = @_;
+    my ( $searching, $excluding, @required ) = ( [], [], () );
 
     $self->logger->debug("FindUser: reading parameters...");
     @$searching = map {
-        my $regex  = '\w+';
-        my $key    = ( split '#', $_ )[0];
-        my $value  = $req->params($key) // '';
+        my ( $key, $value, $null ) = split '#', $_;
+        my $param  = $req->params($key) // '';
         my @values = split $self->conf->{multiValuesSeparator},
           $self->conf->{findUserSearchingAttributes}->{$_} || '';
-        $regex = '^(?:' . join( '|', split( /\s+/, @values ) ) . ')$'
-          if scalar @values > 1;
+        my $select  = scalar @values > 1 && not scalar @values % 2;
+        my %values  = @values if $select;
+        my $defined = length $param;
+        my $regex   = '^(?:' . join( '|', keys %values ) . ')$';
+        my $checked =
+            $select
+          ? $param =~ /$regex/o
+          : $param =~ /$self->{conf}->{findUserControl}/o;
+        push @required, $key if $select && !$null;
 
-        if (   $value =~ /$regex/o
-            && $value =~ /$self->{conf}->{findUserControl}/o )
-        {
-            $self->logger->debug("Push searching parameter: $key =>  $value");
-            { key => $key, value => $value };
+        # For <select>, accept only set values or empty if allowed
+        if ( $defined && $checked ) {
+            $self->logger->debug("Append searching parameter: $key =>  $param");
+            { key => $key, value => $param };
         }
         else {
             $self->logger->warn(
-                "Parameter $key has been reject by findUserControl");
+                "Parameter $key has been reject by findUserControl")
+              if $defined;
             ();
         }
     } sort keys %{ $self->conf->{findUserSearchingAttributes} };
+
+    if ( scalar @required ) {
+        my $test = 0;
+        foreach my $ref (@$searching) {
+            foreach (@required) {
+                $test++ if $ref->{key} eq $_;
+            }
+        }
+        unless ( scalar @required == $test ) {
+            $self->logger->warn( 'A required parameter is missing ('
+                  . join( '|', @required )
+                  . ')' );
+            $searching = [];
+        }
+    }
 
     if ( scalar @$searching
         && keys %{ $self->conf->{findUserExcludingAttributes} } )

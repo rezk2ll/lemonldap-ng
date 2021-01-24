@@ -5,24 +5,27 @@ use IO::String;
 
 require 't/test-lib.pm';
 
-my $maintests = 46;
+my $maintests = 54;
 
 my $res;
 my $json;
 my $request;
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel          => 'error',
-            authentication    => 'Demo',
-            userDB            => 'Same',
-            useSafeJail       => 1,
-            requireToken      => 0,
-            findUser          => 1,
-            impersonationRule => 1,
-            findUserControl   => '^[\w*\s]+$',
-            findUserWildcard  => '*',
-            findUserSearchingAttributes =>
-              { uid => undef, guy => 'Kind', cn => 'Name' },
+            logLevel                    => 'error',
+            authentication              => 'Demo',
+            userDB                      => 'Same',
+            useSafeJail                 => 1,
+            requireToken                => 0,
+            findUser                    => 1,
+            impersonationRule           => 1,
+            findUserControl             => '^[\w*\s]+$',
+            findUserWildcard            => '*',
+            findUserSearchingAttributes => {
+                uid         => undef,
+                guy         => 'Kind',
+                'cn#Name#1' => 'Bad Guy; Not a good person; BB; Bad Boy'
+            },
             findUserExcludingAttributes =>
               { type => 'mutant', uid => 'rtyler' },
         }
@@ -46,7 +49,7 @@ ok(
 );
 ( $host, $url, $query ) =
   expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
-( $host, $url, $query ) = expectForm( $res, '#', undef, 'uid', 'guy', 'cn' );
+( $host, $url, $query ) = expectForm( $res, '#', undef, 'uid', 'guy' );
 ok(
     $res->[2]->[0] =~
 m%<input id="spoofIdfield" name="spoofId" type="text" class="form-control" value="" autocomplete="off"%,
@@ -83,9 +86,18 @@ m%<input id="findUser_uid" name="uid" type="text" autocomplete="off" class="form
 ) or explain( $res->[2]->[0], 'id="findUser_uid"' );
 ok(
     $res->[2]->[0] =~
-m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-control" placeholder="Name" />%,
+      m%<select class="form-control" id="findUser_cn" name="cn">%,
     'id="findUser_cn"'
 ) or explain( $res->[2]->[0], 'id="findUser_cn"' );
+ok( $res->[2]->[0] =~ m%<label for="cn">Name</label>%, 'label for="cn"' )
+  or explain( $res->[2]->[0], 'label for="cn"' );
+ok( $res->[2]->[0] =~ m%<option value=""></option>%, 'Empty option' )
+  or explain( $res->[2]->[0], 'Empty option' );
+ok( $res->[2]->[0] =~ m%<option value="BB">Bad Boy</option>%, 'BB option' )
+  or explain( $res->[2]->[0], 'BB option' );
+ok( $res->[2]->[0] =~ m%<option value="Bad Guy">Not a good person</option>%,
+    'Bad Guy option' )
+  or explain( $res->[2]->[0], 'Bad Guy' );
 
 $request = 'uid=dwho';
 ok(
@@ -130,6 +142,22 @@ ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
 ok( $json->{user} eq 'davros', ' Good user' )
   or explain( $json, "user => 'davros'" );
+
+$request = 'cn=Good Guy';
+ok(
+    $res = $client->_post(
+        '/finduser', IO::String->new($request),
+        accept => 'application/json',
+        length => length($request)
+    ),
+    'Post FindFuser request with a not allowed select value'
+);
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+  or print STDERR "$@\n" . Dumper($res);
+ok( $json->{result} == 1, ' Good result' )
+  or explain( $json, 'result => 1' );
+ok( $json->{user} eq '', ' No user' )
+  or explain( $json, 'user => ?' );
 
 $request = 'guy=good';
 ok(

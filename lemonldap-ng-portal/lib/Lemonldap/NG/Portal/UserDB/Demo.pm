@@ -94,7 +94,7 @@ sub findUser {
             $iswc = $_->{value} =~ s/\Q$wildcard\E+//g;
             $cond .=
               $iswc
-              ? '( $' . $_->{key} . " =~ /\Q$_->{value}\E/ ) && "
+              ? '($' . $_->{key} . " =~ /\Q$_->{value}\E/) && "
               : '$' . $_->{key} . " eq '$_->{value}' && ";
         }
         else {
