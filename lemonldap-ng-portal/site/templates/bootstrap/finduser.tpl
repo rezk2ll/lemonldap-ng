@@ -9,8 +9,9 @@
     </TMPL_IF>
     <TMPL_LOOP NAME="FIELDS">
       <TMPL_IF NAME="select">
+        <div class="form-group">
         <label for="<TMPL_VAR NAME="key">"><TMPL_VAR NAME="value"></label>
-        <select id="findUser_<TMPL_VAR NAME="key">" name="<TMPL_VAR NAME="key">">
+        <select class="form-control" id="findUser_<TMPL_VAR NAME="key">" name="<TMPL_VAR NAME="key">">
           <TMPL_IF NAME="null">
             <option value=""></option>
           </TMPL_IF>
@@ -18,6 +19,7 @@
             <option value="<TMPL_VAR NAME="key">"><TMPL_VAR NAME="value"></option>
           </TMPL_LOOP>
         </select>
+        </div>
       <TMPL_ELSE>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
