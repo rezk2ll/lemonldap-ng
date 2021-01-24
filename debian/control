@@ -57,7 +57,7 @@ Build-Depends-Indep: libapache-session-perl <!nocheck>,
                      python3-sphinx,
                      python3-sphinx-bootstrap-theme,
                      perl
-Standards-Version: 4.5.0
+Standards-Version: 4.5.1
 Vcs-Browser: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng
 Vcs-Git: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng.git
 Homepage: https://lemonldap-ng.org/
