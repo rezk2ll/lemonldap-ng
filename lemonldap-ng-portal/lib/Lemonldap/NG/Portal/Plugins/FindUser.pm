@@ -88,9 +88,17 @@ sub retreiveFindUserParams {
 
     $self->logger->debug("FindUser: reading parameters...");
     @$searching = map {
-        my $key   = ( split '#', $_ )[0];
-        my $value = $req->params($key) // '';
-        if ( $value =~ /$self->{conf}->{findUserControl}/o ) {
+        my $regex  = '\w+';
+        my $key    = ( split '#', $_ )[0];
+        my $value  = $req->params($key) // '';
+        my @values = split $self->conf->{multiValuesSeparator},
+          $self->conf->{findUserSearchingAttributes}->{$_} || '';
+        $regex = '^(?:' . join( '|', split( /\s+/, @values ) ) . ')$'
+          if scalar @values > 1;
+
+        if (   $value =~ /$regex/o
+            && $value =~ /$self->{conf}->{findUserControl}/o )
+        {
             $self->logger->debug("Push searching parameter: $key =>  $value");
             { key => $key, value => $value };
         }

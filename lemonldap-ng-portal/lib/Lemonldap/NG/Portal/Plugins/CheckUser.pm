@@ -631,7 +631,7 @@ sub _dispatchAttributes {
 
 sub _removeKeys {
     my ( $self, $attrs, $hidden, $msg, $mask ) = @_;
-    my $regex = join '|',      split /\s+/, $hidden;
+    my $regex = '^(?:' . join( '|', split( /\s+/, $hidden ) ) . ')';
     my @keys  = grep /$regex/, keys %$attrs;
 
     $self->logger->debug($msg);
