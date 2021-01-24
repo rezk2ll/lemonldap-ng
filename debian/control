@@ -220,7 +220,6 @@ Recommends: libapache-session-browseable-perl,
             libcookie-baker-xs-perl,
             libdbi-perl,
             libhttp-parser-xs-perl,
-            libjson-xs-perl,
             liblwp-protocol-https-perl,
             libstring-random-perl
 Suggests: libconvert-base32-perl,
