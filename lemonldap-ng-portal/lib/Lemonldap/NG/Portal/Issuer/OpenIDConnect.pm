@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
 use JSON qw(from_json to_json);
+use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
@@ -210,8 +211,7 @@ sub run {
             }
 
             if ( $oidc_request->{'request'} ) {
-                my $request =
-                  $self->getJWTJSONData( $oidc_request->{'request'} );
+                my $request = getJWTPayload( $oidc_request->{'request'} );
 
                 # Override OIDC parameters by request content
                 foreach ( keys %$request ) {
@@ -2243,7 +2243,7 @@ sub exportRequestParameters {
     }
 
     if ($request) {
-        my $request_data = $self->getJWTJSONData($request);
+        my $request_data = getJWTPayload($request);
         foreach ( keys %$request_data ) {
             $req->env->{ "llng_oidc_" . $_ } = $request_data->{$_};
         }
