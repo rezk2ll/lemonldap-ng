@@ -147,15 +147,15 @@ sub extractFormInfo {
             $auth_method );
         return PE_ERROR unless $content;
 
-        my $json = $self->decodeJSON($content);
+        my $token_response = $self->decodeTokenResponse($content);
 
-        if ( $json->{error} ) {
-            $self->logger->error( "Error in token response:" . $json->{error} );
+        unless ($token_response) {
+            $self->logger->error("Could not decode Token Response: $content");
             return PE_ERROR;
         }
 
         # Check validity of token response
-        unless ( $self->checkTokenResponseValidity($json) ) {
+        unless ( $self->checkTokenResponseValidity($token_response) ) {
             $self->logger->error("Token response is not valid");
             return PE_ERROR;
         }
@@ -163,8 +163,8 @@ sub extractFormInfo {
             $self->logger->debug("Token response is valid");
         }
 
-        my $access_token = $json->{access_token};
-        my $id_token     = $json->{id_token};
+        my $access_token = $token_response->{access_token};
+        my $id_token     = $token_response->{id_token};
 
         $self->logger->debug("Access token: $access_token");
         $self->logger->debug("ID token: $id_token");
