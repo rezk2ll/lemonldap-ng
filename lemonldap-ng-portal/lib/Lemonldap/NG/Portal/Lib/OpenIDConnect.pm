@@ -15,7 +15,7 @@ use JSON;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::JWT
-  qw(getAccessTokenSessionId getJWTPayload getJWTHeader getJWTSignature);
+  qw(getAccessTokenSessionId getJWTPayload getJWTHeader getJWTSignature getJWTSignedData);
 use MIME::Base64 qw/encode_base64 decode_base64/;
 use Mouse;
 
@@ -1034,6 +1034,7 @@ sub verifyJWTSignature {
 
     # Extract JWT parts
     my $jwt_parts = $self->extractJWT($jwt);
+    my $signed_data = getJWTSignedData($jwt);
 
     # Read header
     my $jwt_header_part = $jwt_parts->[0];
@@ -1076,19 +1077,19 @@ sub verifyJWTSignature {
 
         if ( $alg eq "HS256" ) {
             $digest =
-              hmac_sha256_base64( $jwt_parts->[0] . "." . $jwt_parts->[1],
+              hmac_sha256_base64( $signed_data,
                 $client_secret );
         }
 
         if ( $alg eq "HS384" ) {
             $digest =
-              hmac_sha384_base64( $jwt_parts->[0] . "." . $jwt_parts->[1],
+              hmac_sha384_base64( $signed_data,
                 $client_secret );
         }
 
         if ( $alg eq "HS512" ) {
             $digest =
-              hmac_sha512_base64( $jwt_parts->[0] . "." . $jwt_parts->[1],
+              hmac_sha512_base64( $signed_data,
                 $client_secret );
         }
 
@@ -1170,7 +1171,7 @@ sub verifyJWTSignature {
         }
 
         return $public_key->verify(
-            $jwt_parts->[0] . "." . $jwt_parts->[1],
+            $signed_data,
             decode_base64url( $jwt_parts->[2] )
         );
     }
