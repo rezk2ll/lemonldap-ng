@@ -1,20 +1,30 @@
 Upgrade from 2.0.x to 2.0.y
 ===========================
 
+
 Please apply general caution as you would with any software: have
 backups and a rollback plan ready!
 
+Known issues
+-------------
 
-.. danger::
+Upgrading from 2.0.0 or 2.0.1 to later versions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    If you have
-    :doc:`installed LemonLDAP::NG from official RPMs<installrpm>`, you may
-    run into bug
-    `#1757 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1757>`__
-    and lose your Apache configuration files while updating from
-    LemonLDAP::NG 2.0.0 or 2.0.1 to later versions. Please backup your
-    ``/etc/httpd/conf.d/z-lemonldap-ng-*.conf`` files before the
-    update.
+If you have :doc:`installed LemonLDAP::NG from official RPMs<installrpm>`, you
+may run into bug `#1757
+<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1757>`__ and lose your
+Apache configuration files while updating from LemonLDAP::NG 2.0.0 or 2.0.1 to
+later versions. Please backup your ``/etc/httpd/conf.d/z-lemonldap-ng-*.conf``
+files before the update.
+
+
+.. Adjust for every new version that has known, unreleased bugs
+
+Known regressions in the latest released version
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* In version 2.0.10, you will encounter portal display errors when using ``X-Content-Type-Options: nosniff``. See `Bug #2446 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2446>`__ for a patch.
 
 
 2.0.10
