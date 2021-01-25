@@ -18,19 +18,18 @@ my $debug = 'error';
 my $op = LLNG::Manager::Test->new( {
         ini => {
             logLevel                        => $debug,
-            domain                          => 'idp.com',
+            domain                          => 'op.com',
             portal                          => 'http://auth.op.com',
             authentication                  => 'Demo',
             userDB                          => 'Same',
             issuerDBOpenIDConnectActivation => 1,
-            issuerDBOpenIDConnectRule       => '$uid eq "french"',
             oidcRPMetaDataExportedVars      => {
                 rp => {
                     email       => "mail",
                     family_name => "cn",
                     name        => "cn"
                 },
-                rp2 => {
+                oauth => {
                     email       => "mail",
                     family_name => "cn",
                     name        => "cn"
@@ -44,24 +43,13 @@ my $op = LLNG::Manager::Test->new( {
                     "always" => '$uid eq "french"',
                 },
             },
-            oidcServiceMetaDataAuthorizeURI       => "authorize",
-            oidcServiceMetaDataCheckSessionURI    => "checksession.html",
-            oidcServiceMetaDataJWKSURI            => "jwks",
-            oidcServiceMetaDataEndSessionURI      => "logout",
-            oidcServiceMetaDataRegistrationURI    => "register",
-            oidcServiceMetaDataTokenURI           => "token",
-            oidcServiceMetaDataUserInfoURI        => "userinfo",
-            oidcServiceAllowHybridFlow            => 1,
-            oidcServiceAllowImplicitFlow          => 1,
-            oidcServiceAllowDynamicRegistration   => 1,
-            oidcServiceAllowAuthorizationCodeFlow => 1,
             oidcRPMetaDataOptions                 => {
                 rp => {
                     oidcRPMetaDataOptionsDisplayName           => "RP",
                     oidcRPMetaDataOptionsIDTokenExpiration     => 3600,
                     oidcRPMetaDataOptionsClientID              => "rpid",
                     oidcRPMetaDataOptionsIDTokenSignAlg        => "HS512",
-                    oidcRPMetaDataOptionsClientSecret          => "rpsecret",
+                    oidcRPMetaDataOptionsClientSecret          => "rpid",
                     oidcRPMetaDataOptionsUserIDAttr            => "",
                     oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                     oidcRPMetaDataOptionsBypassConsent         => 1,
@@ -73,77 +61,31 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsUserIDAttr   => "",
                 }
             },
-            oidcOPMetaDataOptions           => {},
-            oidcOPMetaDataJSON              => {},
-            oidcOPMetaDataJWKS              => {},
-            oidcServiceMetaDataAuthnContext => {
-                'loa-4' => 4,
-                'loa-1' => 1,
-                'loa-5' => 5,
-                'loa-2' => 2,
-                'loa-3' => 3
-            },
             oidcServicePrivateKeySig => oidc_key_op_private_sig,
             oidcServicePublicKeySig  => oidc_key_op_public_sig,
         }
     }
 );
-my $res;
 
-# Authenticate to LLNG
-my $url   = "/";
-my $query = "user=french&password=french";
-ok(
-    $res = $op->_post(
-        "/",
-        IO::String->new($query),
-        accept => 'text/html',
-        length => length($query),
-    ),
-    "Post authentication"
-);
-my $idpId = expectCookie($res);
+my $idpId = login( $op, "french" );
 
-# Get code for RP1
-$query = buildForm( {
+my $code = authorize(
+    $op, $idpId,
+    {
         response_type => "code",
         scope => "openid profile email read write",
-        client_id => "rpid",
-        state => "af0ifjsldkj",
-        redirect_uri => "http://rp2.com/",
-    });
-
-ok(
-    $res = $op->_get(
-        "/oauth2/authorize",
-        query  => "$query",
-        accept => 'text/html',
-        cookie => "lemonldap=$idpId",
-    ),
-    "Get authorization code"
+        client_id     => "rpid",
+        state         => "af0ifjsldkj",
+        redirect_uri  => "http://rp2.com/"
+    }
 );
 
-my ($code) = expectRedirection( $res, qr#http://rp2\.com/.*code=([^\&]*)# );
+my $json = expectJSON( codeGrant( $op, "rpid", $code, "http://rp2.com/" ) );
 
-# Exchange code for AT
-$query =
-"grant_type=authorization_code&code=$code&redirect_uri=http%3A%2F%2Frp2.com%2F";
-
-ok(
-    $res = $op->_post(
-        "/oauth2/token",
-        IO::String->new($query),
-        accept => 'text/html',
-        length => length($query),
-        custom => {
-            HTTP_AUTHORIZATION => "Basic " . encode_base64("rpid:rpsecret"),
-        },
-    ),
-    "Post token"
-);
-my $json  = from_json( $res->[2]->[0] );
 my $token = $json->{access_token};
 ok( $token, 'Access token present' );
+
+my ( $res, $query );
 
 $query = "token=$token";
 

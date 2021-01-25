@@ -44,4 +44,110 @@ sub id_token_payload {
     my $token = shift;
     JSON::from_json( decode_base64( [ split /\./, $token ]->[1] ) );
 }
+
+sub login {
+    my ( $op, $uid ) = @_;
+    my $res;
+    my $query = buildForm( {
+            user     => $uid,
+            password => $uid,
+        }
+    );
+    $res = $op->_post(
+        "/",
+        IO::String->new($query),
+        accept => 'text/html',
+        length => length($query),
+    );
+    return expectCookie($res);
+}
+
+sub authorize {
+    my ( $op, $id, $params ) = @_;
+    my $query = buildForm($params);
+    my $res   = $op->_get(
+        "/oauth2/authorize",
+        query  => "$query",
+        accept => 'text/html',
+        cookie => "lemonldap=$id",
+    );
+    my ($code) = expectRedirection( $res, qr#http://.*code=([^\&]*)# );
+    return $code;
+}
+
+sub codeGrant {
+    my ( $op, $clientid, $code, $redirect_uri ) = @_;
+    my $query = buildForm( {
+            grant_type   => "authorization_code",
+            code         => $code,
+            redirect_uri => $redirect_uri,
+        }
+    );
+
+    my $res = $op->_post(
+        "/oauth2/token",
+        IO::String->new($query),
+        accept => 'application/json',
+        length => length($query),
+        custom => {
+            HTTP_AUTHORIZATION => "Basic "
+              . encode_base64("$clientid:$clientid"),
+        },
+    );
+    return $res;
+}
+
+sub getUserinfo {
+    my ( $op, $access_token ) = @_;
+    my $res = $op->_post(
+        "/oauth2/userinfo",
+        IO::String->new(''),
+        accept => 'application/json',
+        length => 0,
+        custom => {
+            HTTP_AUTHORIZATION => "Bearer " . $access_token,
+        },
+    );
+    return $res;
+}
+
+sub refreshGrant {
+    my ( $op, $client_id, $refresh_token ) = @_;
+
+    $query = buildForm( {
+            grant_type    => 'refresh_token',
+            refresh_token => $refresh_token,
+        }
+    );
+
+    $res = $op->_post(
+        "/oauth2/token",
+        IO::String->new($query),
+        accept => 'application/json',
+        length => length($query),
+        custom => {
+            HTTP_AUTHORIZATION => "Basic "
+              . encode_base64("$client_id:$client_id"),
+        }
+    );
+    return $res;
+}
+
+sub introspect {
+    my ( $op, $client_id, $token ) = @_;
+    my $query = buildForm( {
+            client_id     => $client_id,
+            client_secret => $client_id,
+            token         => $token,
+        }
+    );
+    my $res = $op->_post(
+        "/oauth2/introspect",
+        IO::String->new($query),
+        accept => 'application/json',
+        length => length($query),
+    );
+    return $res;
+}
+
 1;
