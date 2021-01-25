@@ -1015,16 +1015,6 @@ sub extractState {
     return 1;
 }
 
-# Extract parts of a JWT
-# @return arrayref JWT parts
-sub extractJWT {
-    my ( $self, $jwt ) = @_;
-
-    my @jwt_parts = split( /\./, $jwt );
-
-    return \@jwt_parts;
-}
-
 # Check signature of a JWT
 # @return boolean 1 if signature is verified, 0 else
 sub verifyJWTSignature {
@@ -1033,25 +1023,21 @@ sub verifyJWTSignature {
     $self->logger->debug("Verification of JWT signature: $jwt");
 
     # Extract JWT parts
-    my $jwt_parts = $self->extractJWT($jwt);
+    my $jwt_header  = getJWTHeader($jwt);
     my $signed_data = getJWTSignedData($jwt);
-
-    # Read header
-    my $jwt_header_part = $jwt_parts->[0];
-    my $jwt_header_hash =
-      $self->decodeJSON( decode_base64url($jwt_header_part) );
+    my $signature   = getJWTSignature($jwt);
 
     # Get signature algorithm
-    my $alg = $jwt_header_hash->{alg};
+    my $alg = $jwt_header->{alg};
 
     $self->logger->debug("JWT signature algorithm: $alg");
 
     if ( $alg eq "none" ) {
 
         # If none alg, signature should be empty
-        if ( $jwt_parts->[2] ) {
+        if ($signature) {
             $self->logger->debug( "Signature "
-                  . $jwt_parts->[2]
+                  . $signature
                   . " is present but algorithm is 'none'" );
             return 0;
         }
@@ -1076,30 +1062,24 @@ sub verifyJWTSignature {
         my $digest;
 
         if ( $alg eq "HS256" ) {
-            $digest =
-              hmac_sha256_base64( $signed_data,
-                $client_secret );
+            $digest = hmac_sha256_base64( $signed_data, $client_secret );
         }
 
         if ( $alg eq "HS384" ) {
-            $digest =
-              hmac_sha384_base64( $signed_data,
-                $client_secret );
+            $digest = hmac_sha384_base64( $signed_data, $client_secret );
         }
 
         if ( $alg eq "HS512" ) {
-            $digest =
-              hmac_sha512_base64( $signed_data,
-                $client_secret );
+            $digest = hmac_sha512_base64( $signed_data, $client_secret );
         }
 
         # Convert + and / to get Base64 URL valid (RFC 4648)
         $digest =~ s/\+/-/g;
         $digest =~ s/\//_/g;
 
-        unless ( $digest eq $jwt_parts->[2] ) {
+        unless ( $digest eq $signature ) {
             $self->logger->debug(
-                "Digest $digest not equal to signature " . $jwt_parts->[2] );
+                "Digest $digest not equal to signature " . $signature );
             return 0;
         }
         return 1;
@@ -1123,7 +1103,7 @@ sub verifyJWTSignature {
         my $key_hash;
 
         # Find Key ID associated with signature
-        my $kid = $jwt_header_hash->{kid};
+        my $kid = $jwt_header->{kid};
 
         if ($kid) {
             $self->logger->debug("Search key with id $kid");
@@ -1170,10 +1150,8 @@ sub verifyJWTSignature {
             $public_key->use_sha512_hash;
         }
 
-        return $public_key->verify(
-            $signed_data,
-            decode_base64url( $jwt_parts->[2] )
-        );
+        return $public_key->verify( $signed_data,
+            decode_base64url($signature) );
     }
 
     # Other algorithms not managed
@@ -1194,16 +1172,10 @@ sub verifyHash {
 
     $self->logger->debug("Verification of value $value with hash $hash");
 
-    # Extract ID token parts
-    my $jwt_parts = $self->extractJWT($id_token);
-
-    # Read header
-    my $jwt_header_part = $jwt_parts->[0];
-    my $jwt_header_hash =
-      $self->decodeJSON( decode_base64url($jwt_header_part) );
+    my $jwt_header = getJWTHeader($id_token);
 
     # Get signature algorithm
-    my $alg = $jwt_header_hash->{alg};
+    my $alg = $jwt_header->{alg};
 
     $self->logger->debug("ID Token signature algorithm: $alg");
 
@@ -2125,10 +2097,6 @@ Store information in state database and return
 =head2 extractState
 
 Extract state information into $self
-
-=head2 extractJWT
-
-Extract parts of a JWT
 
 =head2 verifyJWTSignature
 
