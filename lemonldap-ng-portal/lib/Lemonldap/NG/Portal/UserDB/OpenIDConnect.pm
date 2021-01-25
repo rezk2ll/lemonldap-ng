@@ -42,10 +42,7 @@ sub getUser {
         return PE_OK;
     }
 
-    $self->logger->debug("UserInfo received: $userinfo_content");
-
-    $req->data->{OpenIDConnect_user_info} =
-      $self->decodeJSON($userinfo_content);
+    $req->data->{OpenIDConnect_user_info} = $userinfo_content;
 
     # Check that received sub is the same than current user
     unless ( $req->data->{OpenIDConnect_user_info}->{sub} eq $req->{user} ) {

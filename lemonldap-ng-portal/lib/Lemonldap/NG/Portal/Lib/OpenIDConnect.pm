@@ -14,7 +14,8 @@ use Digest::SHA
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::UserAgent;
-use Lemonldap::NG::Common::JWT qw(getAccessTokenSessionId);
+use Lemonldap::NG::Common::JWT
+  qw(getAccessTokenSessionId getJWTPayload getJWTHeader getJWTSignature);
 use MIME::Base64 qw/encode_base64 decode_base64/;
 use Mouse;
 
@@ -641,29 +642,42 @@ sub getUserInfo {
         return 0;
     }
 
+    my $userinfo_content = $response->decoded_content;
+
+    $self->logger->debug("UserInfo received: $userinfo_content");
+
     my $content_type = $response->header('Content-Type');
     if ( $content_type =~ /json/ ) {
-        return $response->decoded_content;
+        return $self->decodeUserInfo($userinfo_content);
     }
     elsif ( $content_type =~ /jwt/ ) {
-        my $jwt = $response->decoded_content;
-        return unless $self->verifyJWTSignature( $op, $jwt );
-        my $jwt_parts = $self->extractJWT($jwt);
-        return $jwt_parts->[1];
+        return unless $self->verifyJWTSignature( $op, $userinfo_content );
+        return getJWTPayload($userinfo_content);
     }
 }
 
 # Convert JSON to HashRef
 # @return HashRef JSON decoded content
-# TODO: remove this
 sub decodeJSON {
     my ( $self, $json ) = @_;
     my $json_hash;
 
     eval { $json_hash = from_json( $json, { allow_nonref => 1 } ); };
-    $json_hash->{error} = "parse_error" if ($@);
+    return undef if ($@);
 
     return $json_hash;
+}
+
+sub decodeTokenResponse {
+    return decodeJSON(@_);
+}
+
+sub decodeClientMetadata {
+    return decodeJSON(@_);
+}
+
+sub decodeUserInfo {
+    return decodeJSON(@_);
 }
 
 # Create a new Authorization Code
