@@ -1873,7 +1873,7 @@ sub registration {
 
     $self->logger->debug("Client metadata received: $client_metadata_json");
 
-    my $client_metadata       = $self->decodeJSON($client_metadata_json);
+    my $client_metadata = $self->decodeClientMetadata($client_metadata_json);
     my $registration_response = {};
 
     # Check redirect_uris
