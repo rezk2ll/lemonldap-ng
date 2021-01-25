@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Auth::OpenIDConnect;
 use strict;
 use Mouse;
 use MIME::Base64 qw/encode_base64 decode_base64/;
+use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
   PE_IDPCHOICE
@@ -183,10 +184,12 @@ sub extractFormInfo {
             $self->logger->debug("JWT signature check disabled");
         }
 
-        my $id_token_payload = $self->extractJWT($id_token)->[1];
-
-        my $id_token_payload_hash =
-          $self->decodeJSON( $self->decodeBase64url($id_token_payload) );
+        my $id_token_payload_hash = getJWTPayload($id_token);
+        unless ( defined $id_token_payload_hash ) {
+            $self->logger->error(
+                "Could not decode incoming ID token: $id_token");
+            return PE_ERROR;
+        }
 
         # Check validity of Access Token (optional)
         my $at_hash = $id_token_payload_hash->{at_hash};
