@@ -1529,9 +1529,9 @@ sub _handleRefreshTokenGrant {
         $session = $self->p->getApacheSession($user_session_id);
 
         unless ($session) {
-            $self->logger->error("Unable to find user session");
-            return $self->returnBearerError( 'invalid_request',
-                'Invalid request', 401 );
+            $self->logger->error(
+                "Unable to find user session tied to Refresh Token");
+            return $self->p->sendError( $req, 'invalid_grant', 400 );
         }
 
         $user_id = $self->getUserIDForRP( $req, $rp, $session->data );
