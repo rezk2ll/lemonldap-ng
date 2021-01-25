@@ -694,11 +694,15 @@ sub getAuthorizationCode {
 }
 
 # Create a new Access Token
-# @param info hashref of session info
+# @param req current request
+# @param scope access token scope
+# @param rp configuration key of the RP this token is being made for
+# @param sessionInfo. Hashref of session info OR session ID for lazy fetching
+# @param info hashref of access token session info (offline vs online)
 # @return new Lemonldap::NG::Common::Session object
 
 sub newAccessToken {
-    my ( $self, $req, $rp, $scope, $info ) = @_;
+    my ( $self, $req, $rp, $scope, $sessionInfo, $info ) = @_;
 
     my $session = $self->getOpenIDConnectSession(
         undef,
@@ -706,19 +710,80 @@ sub newAccessToken {
         $self->conf->{oidcRPMetaDataOptions}->{$rp}
           ->{oidcRPMetaDataOptionsAccessTokenExpiration}
           || $self->conf->{oidcServiceAccessTokenExpiration},
-          {
+        {
 
-              scope           => $scope,
-              rp              => $rp,
-              %{$info},
-          }
+            scope => $scope,
+            rp    => $rp,
+            %{$info},
+        }
     );
 
     if ($session) {
-        return $session->id;
+        return $self->maybeJWT( $req, $rp, $scope, $session->id, $sessionInfo );
     }
     else {
         return undef;
+    }
+}
+
+sub maybeJWT {
+    my ( $self, $req, $rp, $scope, $id, $sessionInfo ) = @_;
+
+    if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
+        ->{oidcRPMetaDataOptionsAccessTokenJWT} )
+    {
+
+        my $exp =
+          $self->conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsAccessTokenExpiration}
+          || $self->conf->{oidcServiceAccessTokenExpiration};
+        $exp += time;
+        my $client_id =
+          $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
+
+        my $access_token_payload = {
+            iss       => $self->iss,                  # Issuer Identifier
+            exp       => $exp,                        # expiration
+            aud       => $self->getAudiences($rp),    # Audience
+            client_id => $client_id,                  # Client ID
+            iat       => time,                        # Issued time
+            jti       => $id,                         # Access Token session ID
+            scope     => $scope,                      # Scope
+        };
+
+        my $claims;
+        if ( ref($sessionInfo) eq "HASH" ) {
+            $claims = $self->buildUserInfoResponseFromData( $req, $scope,
+                $rp, $sessionInfo );
+        }
+        else {
+            $claims = $self->buildUserInfoResponseFromId( $req, $scope,
+                $rp, $sessionInfo );
+        }
+
+        # Release claims, or only sub
+        if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
+            ->{oidcRPMetaDataOptionsAccessTokenClaims} )
+        {
+            foreach ( keys %$claims ) {
+                $access_token_payload->{$_} = $claims->{$_};
+            }
+        }
+        else {
+            $access_token_payload->{sub} = $claims->{sub};
+        }
+
+        # Get signature algorithm
+        my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsAccessTokenSignAlg} || "RS256";
+        $self->logger->debug("Access Token signature algorithm: $alg");
+
+        my $jwt = $self->createJWT( $access_token_payload, $alg, $rp );
+
+        return $jwt;
+    }
+    else {
+        return $id;
     }
 }
 
@@ -1433,7 +1498,7 @@ sub buildUserInfoResponseFromData {
     my $userinfo_response = {};
 
     my $data = {
-        %{ $session_data },
+        %{$session_data},
         _clientId => $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID},
         _clientConfKey => $rp,
         _scope         => $scope,

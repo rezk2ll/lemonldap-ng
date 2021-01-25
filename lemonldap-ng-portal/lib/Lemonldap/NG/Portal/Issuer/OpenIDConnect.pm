@@ -739,9 +739,9 @@ sub run {
                     # Store data in access token
                     # Generate access_token
                     $access_token = $self->newAccessToken(
-                        $req,
-                        $rp,
+                        $req, $rp,
                         $oidc_request->{'scope'},
+                        $req->sessionInfo,
                         {
                             scope           => $scope,
                             rp              => $rp,
@@ -836,9 +836,9 @@ sub run {
 
                     # Generate access_token
                     $access_token = $self->newAccessToken(
-                        $req,
-                        $rp,
+                        $req, $rp,
                         $oidc_request->{'scope'},
+                        $req->sessionInfo,
                         {
                             scope           => $scope,
                             rp              => $rp,
@@ -1096,20 +1096,19 @@ sub _handleClientCredentialsGrant {
         return $self->p->sendError( $req, 'server_error', 500 );
     }
 
-    my $accessTokenSession = $self->newAccessToken(
-        $rp,
+    my $access_token = $self->newAccessToken(
+        $req, $rp, $scope, $infos,
         {
             scope           => $scope,
             rp              => $rp,
             user_session_id => $session->id,
         }
     );
-    unless ($accessTokenSession) {
-        $self->logger->error("Unable to create Access Token session");
-        return $self->p->sendError( $req, 'server_error', 500 );
+    unless ($access_token) {
+        $self->userLogger->error("Unable to create Access Token");
+        return $self->p->sendError( $req,
+            'Unable to create Access Token', 500 );
     }
-
-    my $access_token = $accessTokenSession->id;
 
     my $expires_in =
       $self->conf->{oidcRPMetaDataOptions}->{$rp}
@@ -1193,9 +1192,8 @@ sub _handlePasswordGrant {
 
     # Generate access_token
     my $access_token = $self->newAccessToken(
-        $req,
-        $rp,
-        $scope,
+        $req, $rp, $scope,
+        $req->sessionInfo,
         {
             user_session_id => $req->id,
         }
@@ -1321,9 +1319,9 @@ sub _handleAuthorizationCodeGrant {
 
     # Generate access_token
     my $access_token = $self->newAccessToken(
-        $req,
-        $rp,
+        $req, $rp,
         $codeSession->data->{scope},
+        $codeSession->data->{user_session_id},
         {
             user_session_id => $apacheSession->id,
         }
@@ -1532,9 +1530,9 @@ sub _handleRefreshTokenGrant {
 
         # Generate access_token
         $access_token = $self->newAccessToken(
-            $req,
-            $rp,
+            $req, $rp,
             $refreshSession->data->{scope},
+            $user_session_id,
             {
                 user_session_id => $user_session_id,
             }
@@ -1596,9 +1594,9 @@ sub _handleRefreshTokenGrant {
 
         # Generate access_token
         $access_token = $self->newAccessToken(
-            $req,
-            $rp,
+            $req, $rp,
             $refreshSession->data->{scope},
+            $refreshSession->data,
             {
                 offline_session_id => $refreshSession->id,
             }
