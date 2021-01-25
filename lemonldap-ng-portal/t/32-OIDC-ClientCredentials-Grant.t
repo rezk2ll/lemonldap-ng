@@ -117,7 +117,7 @@ $res = $op->_post(
     "/oauth2/token",
     IO::String->new($badquery2),
     accept => 'application/json',
-    length => length($badquery),
+    length => length($badquery2),
 );
 expectBadRequest($res);
 
