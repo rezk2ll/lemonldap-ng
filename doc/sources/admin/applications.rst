@@ -9,6 +9,7 @@ Applications
    applications/aws
    applications/awx
    applications/bugzilla
+   applications/bigbluebutton
    applications/cornerstone
    applications/discourse
    applications/django
@@ -83,6 +84,7 @@ Application                                                       Configuration 
 .. image:: applications/alfresco_logo.png                         :doc:`Alfresco<applications/alfresco>`               ✔                                 ✔
 .. image:: applications/logo_amazon_web_services.jpg              :doc:`Amazon Web Services<applications/aws>`                                           ✔
 .. image:: applications/logo-awx.png                              :doc:`AWX (Ansible Tower)<applications/awx>`                                           ✔
+.. image:: applications/bigbluebutton-logo.png                    :doc:`BigBlueButton<applications/bigbluebutton>`                                            ✔
 .. image:: applications/bugzilla_logo.png                         :doc:`Bugzilla<applications/bugzilla>`               ✔
 .. image:: applications/csod_logo.png                             :doc:`Cornerstone<applications/cornerstone>`                                           ✔
 .. image:: applications/discourse.jpg                             :doc:`Discourse<applications/discourse>`                                               ✔    ✔
