@@ -321,21 +321,23 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
 -  **Use Safe jail**: set to 'Off' to disable Safe jail. Safe module is
    used to eval expressions in headers, rules, etc. Disabling it can
    lead to security issues.
+-  **Avoid assignment in expressions**: Set to 'Off' to disable syntax checking.
+   Equal sign can be replaced by \x3D i.e. "dc\x3Dorg"
 -  **Check XSS Attacks**: Set to 'Off' to disable XSS checks. XSS checks
    will still be done with warning in logs, but this will not prevent
    the process to continue.
--  **Brute-Force Attack protection**: set to 'On' to enable it. The aim
-   of a brute force attack is to gain access to user accounts by
-   repeatedly trying to guess the password of a user. If it is disabled,
-   automated tools may submit thousands of password attempts in a matter
-   of seconds, making it easy for an attacker to beat a password-based
-   authentication system.
 -  **Required token for forms**: To prevent CSRF attack, a token is
    build for each form. To disable it, set this parameter to 'Off' or
    set a special rule
 -  **Form timeout**: Form token timeout (default to 120 seconds)
 -  **Use global storage**: Local cache is used by default for one time
    tokens. To use global storage, set it to 'On'
+-  **Brute-Force Attack protection**: set to 'On' to enable it. The aim
+   of a brute force attack is to gain access to user accounts by
+   repeatedly trying to guess the password of a user. If it is disabled,
+   automated tools may submit thousands of password attempts in a matter
+   of seconds, making it easy for an attacker to beat a password-based
+   authentication system.
 -  **LWP::UserAgent and SSL options**: insert here options to pass to
    LWP::UserAgent object (used by SAML or OpenID-Connect to query
    partners and AuthSSL or AuthBasic handler to request Portal URL).

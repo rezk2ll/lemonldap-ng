@@ -497,24 +497,24 @@ Options
 
 Some options are available:
 
--  Port: used to build redirection URL *(when user is not logged, or for
+-  **Port**: used to build redirection URL *(when user is not logged, or for
    CDA requests)*
--  HTTPS: used to build redirection URL
--  Maintenance mode: reject all requests with a maintenance message
--  Aliases: list of aliases for this virtual host *(avoid to rewrite
+-  **HTTPS**: used to build redirection URL
+-  **Maintenance mode**: reject all requests with a maintenance message
+-  **Aliases**: list of aliases for this virtual host *(avoid to rewrite
    rules,...)*
--  Access to trace: can be used for overwriting REMOTE_CUSTOM with a custom function.
+-  **Access to trace**: can be used for overwriting REMOTE_CUSTOM with a custom function.
    Provide a comma separated parameters list with custom function path and args.
    By example: My::accessToTrace, Doctor, Who
--  Type: handler type (normal,
+-  **Type**: handler type (normal,
    :doc:`ServiceToken Handler<servertoserver>`,
    :doc:`DevOps Handler<devopshandler>`,...)
--  Required authentication level: this option avoids to reject user with
+-  **Required authentication level**: this option avoids to reject user with
    a rule based on ``$_authenticationLevel``. When user has not got the
    required level, he is redirected to an upgrade page in the portal.
    This default level is required for ALL locations relative to this virtual host.
    It can be overrided for each locations.
--  ServiceToken timeout: by default, ServiceToken is just valid during 30
+-  **ServiceToken timeout**: by default, ServiceToken is just valid during 30
    seconds. This TTL can be customized for each virtual host.
 
 
