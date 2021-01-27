@@ -210,6 +210,8 @@ sub reloadConf {
     foreach ( qw(_macros _groups), @entryPoints ) {
         $self->{$_} = [];
     }
+    $self->afterSub( {} );
+    $self->aroundSub( {} );
     $self->spRules( {} );
 
     # Load conf in portal object
