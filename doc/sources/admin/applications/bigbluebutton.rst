@@ -1,5 +1,5 @@
-Guacamole
-=========
+BigBlueButton
+=============
 
 |logo|
 
