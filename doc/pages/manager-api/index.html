@@ -890,6 +890,17 @@
     "allowOffline" : {
       "type" : "boolean"
     },
+    "accessTokenSignAlg" : {
+      "type" : "string",
+      "default" : "HS512",
+      "enum" : [ "none", "RS256", "RS384", "RS512" ]
+    },
+    "accessTokenJWT" : {
+      "type" : "bool"
+    },
+    "accessTokenClaims" : {
+      "type" : "bool"
+    },
     "authnLevel" : {
       "type" : "integer"
     },

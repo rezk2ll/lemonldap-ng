@@ -1205,6 +1205,18 @@ components:
           type: string
         allowOffline:
           type: boolean
+        accessTokenSignAlg:
+          type: string
+          enum:
+            - none
+            - RS256
+            - RS384
+            - RS512
+          default: HS512
+        accessTokenJWT:
+          type: bool
+        accessTokenClaims:
+          type: bool
         authnLevel:
           type: integer
         rule:
