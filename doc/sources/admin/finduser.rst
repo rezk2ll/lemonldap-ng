@@ -4,7 +4,7 @@ Find user plugin
 ================
 
 This plugin allows unauthenticated users to search for an user account to impersonate. This may be useful to randomly provide an
-identifier depending on allowed searching attributes.
+identifier depending on allowed searching attributes and excluded values.
 
 .. attention::
 
@@ -18,10 +18,22 @@ Just enable it in the Manager (section “plugins”). Then, set searching attri
 -  **Parameters**:
 
    -  **Activation**: Enable / Disable this plugin
-   -  **Character used as wildcard**: Character that can be used by users as wildcard. An empty value disable wildcarded search requests.
+   -  **Character used as wildcard**: Character that can be used by users as wildcard. An empty value disable wildcarded search requests
    -  **Parameters control**: Regular expression used for checking searching values syntax
-   -  **Searching attributes**: For each attribute, you have to set a key (attribute as defined in UserBD) and a value that will be display in login form (placeholder)
+   -  **Searching attributes**: For each attribute, you have to set a key (attribute as defined in UserBD) and a value that will be display in login form (placeholder). A value can be a multivalued list separated by multiValuesSeparator parameter (General Parameters > Advanced parameters > Separator). See note below.
    -  **Excluding attributes**: You can defined here attributes used for excluding accounts. Set keys corresponding to UserBD attributes and values to exclude. A value can be a multivalued list separated by multiValuesSeparator parameter (General Parameters > Advanced parameters > Separator)
+
+.. note::
+
+    You can provide a 'multiValuesSeparator' separated list of allowed searching values that will be displayed as an HTML <select> list.
+
+      uid#Identity   => dwho; Dr Who; rtyler; Rose Tyler; msmith; Mr Smith
+
+      uid#Identity#1 => dwho; Dr Who; rtyler; Rose Tyler (allow empty value)
+
+      attribute#placeholder[#empty] => value1; placeholder1; value2; placeholder2
+
+      Entries are sorted by alphabetical order.
 
 .. attention::
 

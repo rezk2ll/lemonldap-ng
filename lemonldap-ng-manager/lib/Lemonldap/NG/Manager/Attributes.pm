@@ -23,7 +23,7 @@ sub perlExpr {
             split( /\n/, $@, 0 ) )
     );
     return -1, "__badExpression__: $err" if $err and $conf->{'useSafeJail'};
-    return $val =~ qr/(?<=[^=<!>\|\?])=(?![=~])/
+    return $val =~ qr/(?<=[^=<!>\|\?])=(?![>=~])/
       && $conf->{'avoidAssignment'} ? ( 1, '__badExpressionAssignment__' ) : 1;
 }
 
