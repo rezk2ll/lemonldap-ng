@@ -212,6 +212,8 @@ sub cTrees {
                             'oidcRPMetaDataOptionsBypassConsent',
                             'oidcRPMetaDataOptionsUserIDAttr',
                             'oidcRPMetaDataOptionsIDTokenForceClaims',
+                            'oidcRPMetaDataOptionsAccessTokenJWT',
+                            'oidcRPMetaDataOptionsAccessTokenClaims',
                             'oidcRPMetaDataOptionsAdditionalAudiences',
                             'oidcRPMetaDataOptionsRefreshToken',
                         ]
@@ -221,6 +223,7 @@ sub cTrees {
                         form  => 'simpleInputContainer',
                         nodes => [
                             'oidcRPMetaDataOptionsIDTokenSignAlg',
+                            'oidcRPMetaDataOptionsAccessTokenSignAlg',
                             'oidcRPMetaDataOptionsRequirePKCE',
                             'oidcRPMetaDataOptionsAllowOffline',
                             'oidcRPMetaDataOptionsAllowPasswordGrant',

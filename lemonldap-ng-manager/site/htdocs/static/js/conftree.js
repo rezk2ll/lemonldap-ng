@@ -477,6 +477,20 @@ function templates(tpl,key) {
                   "type" : "bool"
                },
                {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenJWT",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenJWT",
+                  "title" : "oidcRPMetaDataOptionsAccessTokenJWT",
+                  "type" : "bool"
+               },
+               {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenClaims",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenClaims",
+                  "title" : "oidcRPMetaDataOptionsAccessTokenClaims",
+                  "type" : "bool"
+               },
+               {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAdditionalAudiences",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAdditionalAudiences",
                   "title" : "oidcRPMetaDataOptionsAdditionalAudiences"
@@ -530,6 +544,27 @@ function templates(tpl,key) {
                      }
                   ],
                   "title" : "oidcRPMetaDataOptionsIDTokenSignAlg",
+                  "type" : "select"
+               },
+               {
+                  "default" : "RS256",
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenSignAlg",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenSignAlg",
+                  "select" : [
+                     {
+                        "k" : "RS256",
+                        "v" : "RS256"
+                     },
+                     {
+                        "k" : "RS384",
+                        "v" : "RS384"
+                     },
+                     {
+                        "k" : "RS512",
+                        "v" : "RS512"
+                     }
+                  ],
+                  "title" : "oidcRPMetaDataOptionsAccessTokenSignAlg",
                   "type" : "select"
                },
                {

@@ -29,7 +29,8 @@ sub perlExpr {
           split( /\n/, $@ ) );
     return ( -1, "__badExpression__: $err" )
       if ( $err && $conf->{useSafeJail} );
-    return ( $val =~ qr/(?<=[^=<!>\|\?])=(?![>=~])/ && $conf->{avoidAssignment} )
+    return ( $val =~ qr/(?<=[^=<!>\|\?])=(?![>=~])/
+          && $conf->{avoidAssignment} )
       ? ( 1, "__badExpressionAssignment__" )
       : 1;
 }
@@ -4196,6 +4197,18 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         oidcRPMetaDataOptionsIDTokenExpiration => { type => 'int' },
         oidcRPMetaDataOptionsIDTokenForceClaims =>
+          { type => 'bool', default => 0 },
+        oidcRPMetaDataOptionsAccessTokenSignAlg => {
+            type   => 'select',
+            select => [
+                { k => 'RS256', v => 'RS256' },
+                { k => 'RS384', v => 'RS384' },
+                { k => 'RS512', v => 'RS512' },
+            ],
+            default => 'RS256',
+        },
+        oidcRPMetaDataOptionsAccessTokenJWT => { type => 'bool', default => 0 },
+        oidcRPMetaDataOptionsAccessTokenClaims =>
           { type => 'bool', default => 0 },
         oidcRPMetaDataOptionsAdditionalAudiences         => { type => 'text' },
         oidcRPMetaDataOptionsAccessTokenExpiration       => { type => 'int' },

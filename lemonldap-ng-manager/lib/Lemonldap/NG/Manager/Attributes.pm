@@ -2253,8 +2253,33 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcRPMetaDataOptions' => {
             'type' => 'subContainer'
         },
+        'oidcRPMetaDataOptionsAccessTokenClaims' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'oidcRPMetaDataOptionsAccessTokenExpiration' => {
             'type' => 'int'
+        },
+        'oidcRPMetaDataOptionsAccessTokenJWT' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcRPMetaDataOptionsAccessTokenSignAlg' => {
+            'default' => 'RS256',
+            'select'  => [ {
+                    'k' => 'RS256',
+                    'v' => 'RS256'
+                },
+                {
+                    'k' => 'RS384',
+                    'v' => 'RS384'
+                },
+                {
+                    'k' => 'RS512',
+                    'v' => 'RS512'
+                }
+            ],
+            'type' => 'select'
         },
         'oidcRPMetaDataOptionsAdditionalAudiences' => {
             'type' => 'text'
