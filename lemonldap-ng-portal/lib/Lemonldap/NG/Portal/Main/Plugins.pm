@@ -63,7 +63,15 @@ sub enabledPlugins {
 
     # Load static plugin list
     for ( my $i = 0 ; $i < @pList ; $i += 2 ) {
-        push @res, $pList[ $i + 1 ] if ( $conf->{ $pList[$i] } );
+        my $pluginConf = $conf->{ $pList[$i] };
+        if ( ref($pluginConf) eq "HASH" ) {
+
+            # Do not load plugin if config is an empty hash
+            push @res, $pList[ $i + 1 ] if %{$pluginConf};
+        }
+        else {
+            push @res, $pList[ $i + 1 ] if $pluginConf;
+        }
     }
 
     # Check if SOAP is enabled
