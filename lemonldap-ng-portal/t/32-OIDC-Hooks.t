@@ -36,15 +36,13 @@ my $op = LLNG::Manager::Test->new( {
                     name        => "cn"
                 }
             },
-            oidcServiceAllowHybridFlow            => 1,
-            oidcServiceAllowImplicitFlow          => 1,
-            oidcServiceAllowAuthorizationCodeFlow => 1,
-            oidcRPMetaDataOptions                 => {
+            oidcRPMetaDataOptions => {
                 rp => {
                     oidcRPMetaDataOptionsDisplayName           => "RP",
                     oidcRPMetaDataOptionsIDTokenExpiration     => 3600,
                     oidcRPMetaDataOptionsClientID              => "rpid",
                     oidcRPMetaDataOptionsIDTokenSignAlg        => "HS512",
+                    oidcRPMetaDataOptionsAccessTokenJWT        => 1,
                     oidcRPMetaDataOptionsClientSecret          => "rpsecret",
                     oidcRPMetaDataOptionsUserIDAttr            => "",
                     oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
@@ -56,16 +54,6 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsClientSecret => "service",
                     oidcRPMetaDataOptionsUserIDAttr   => "",
                 }
-            },
-            oidcOPMetaDataOptions           => {},
-            oidcOPMetaDataJSON              => {},
-            oidcOPMetaDataJWKS              => {},
-            oidcServiceMetaDataAuthnContext => {
-                'loa-4' => 4,
-                'loa-1' => 1,
-                'loa-5' => 5,
-                'loa-2' => 2,
-                'loa-3' => 3
             },
             oidcServicePrivateKeySig => oidc_key_op_private_sig,
             oidcServicePublicKeySig  => oidc_key_op_public_sig,
@@ -141,6 +129,8 @@ $res = $op->_post(
 
 $json = expectJSON($res);
 is( $json->{userinfo_hook}, 1, "Found hooked claim in Userinfo token" );
+
+expectJWT( $token, access_token_hook => 1 );
 
 # Introspect to find scopes
 $query = "token=$token";

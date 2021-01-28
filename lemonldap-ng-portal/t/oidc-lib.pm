@@ -1,3 +1,5 @@
+use Lemonldap::NG::Common::JWT qw/getJWTPayload/;
+
 sub oidc_key_op_private_sig {
     "-----BEGIN RSA PRIVATE KEY-----
 MIIEowIBAAKCAQEAs2jsmIoFuWzMkilJaA8//5/T30cnuzX9GImXUrFR2k9EKTMt
@@ -148,6 +150,16 @@ sub introspect {
         length => length($query),
     );
     return $res;
+}
+
+sub expectJWT {
+    my ( $token, %claims ) = @_;
+    my $payload = getJWTPayload($token);
+    ok( $payload, "Token is a JWT" );
+    for my $claim ( keys %claims ) {
+        is( $payload->{$claim}, $claims{$claim}, "Found claim in JWT" );
+    }
+    return $payload;
 }
 
 1;
