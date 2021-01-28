@@ -816,12 +816,20 @@ sub tests {
             return 1
               unless ( $conf->{oidcRPMetaDataOptions}
                 and %{ $conf->{oidcRPMetaDataOptions} } );
-            my @usingRSA = grep {
+            my @usingRSA =
+              grep {
                 $conf->{oidcRPMetaDataOptions}->{$_}
                   ->{oidcRPMetaDataOptionsIDTokenSignAlg}
                   and $conf->{oidcRPMetaDataOptions}->{$_}
                   ->{oidcRPMetaDataOptionsIDTokenSignAlg} =~ /^RS/
-            } keys %{ $conf->{oidcRPMetaDataOptions} };
+              } keys %{ $conf->{oidcRPMetaDataOptions} }, grep {
+                $conf->{oidcRPMetaDataOptions}->{$_}
+                  ->{oidcRPMetaDataOptionsAccessTokenSignAlg}
+                  and $conf->{oidcRPMetaDataOptions}->{$_}
+                  ->{oidcRPMetaDataOptionsAccessTokenSignAlg} =~ /^RS/
+                  and $conf->{oidcRPMetaDataOptions}->{$_}
+                  ->{oidcRPMetaDataOptionsAccessTokenJWT}
+              } keys %{ $conf->{oidcRPMetaDataOptions} };
 
             if ( @usingRSA and not $conf->{oidcServicePrivateKeySig} ) {
                 my $msg =
