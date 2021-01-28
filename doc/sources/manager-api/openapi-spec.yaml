@@ -1188,6 +1188,10 @@ components:
             myMacroName: "$macro(rule)"
         options:
           $ref: '#/components/schemas/OidcOptions'
+        scopeRules:
+          type: object
+          example:
+            write: "requested and inGroup('writers')"
     OidcOptions:
       type: object
       properties:
@@ -1277,6 +1281,10 @@ components:
             myMacroName: "$macro(rule)"
         options:
           $ref: '#/components/schemas/OidcOptions'
+        scopeRules:
+          type: object
+          example:
+            write: "requested and inGroup('writers')"
     OidcRpReplace:
       type: object
       required:
@@ -1301,6 +1309,10 @@ components:
             myMacroName: "$macro(rule)"
         options:
           $ref: '#/components/schemas/OidcOptions'
+        scopeRules:
+          type: object
+          example:
+            write: "requested and inGroup('writers')"
 
     CasApp:
       required:
