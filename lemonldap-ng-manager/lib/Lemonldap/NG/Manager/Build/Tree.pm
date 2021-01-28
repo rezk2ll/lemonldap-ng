@@ -763,14 +763,21 @@ sub tree {
                                 'checkUser',
                                 'checkUserIdRule',
                                 'checkUserUnrestrictedUsersRule',
-                                'checkUserHiddenAttributes',
                                 'checkUserSearchAttributes',
-                                'checkUserDisplayComputedSession',
-                                'checkUserDisplayEmptyHeaders',
-                                'checkUserDisplayNormalizedHeaders',
-                                'checkUserDisplayEmptyValues',
-                                'checkUserDisplayPersistentInfo',
-                                'checkUserHiddenHeaders'
+                                'checkUserHiddenAttributes',
+                                'checkUserHiddenHeaders',
+                                {
+                                    title => 'checkUserDisplay',
+                                    help  => 'checkuser.html#configuration',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'checkUserDisplayComputedSession',
+                                        'checkUserDisplayPersistentInfo',
+                                        'checkUserDisplayNormalizedHeaders',
+                                        'checkUserDisplayEmptyHeaders',
+                                        'checkUserDisplayEmptyValues',
+                                    ]
+                                },
                             ]
                         },
                         {
