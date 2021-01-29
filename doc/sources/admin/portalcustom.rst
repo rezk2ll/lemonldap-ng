@@ -170,9 +170,9 @@ We include some template files that can be customized:
 
 -  customhead.tpl : HTML header markups (like CSS, js inclusion)
 -  customheader.tpl : HTML code in the header
--  customfooter.tpm : HTML code in the footer
--  customLoginHeader.tpl : HTML code int the login header
--  customLoginFooter.tpl : HTML code int the login footer
+-  customfooter.tpl : HTML code in the footer
+-  customLoginHeader.tpl : HTML code in the login header
+-  customLoginFooter.tpl : HTML code in the login footer
 
 To use custom files, copy them into your skin folder:
 
