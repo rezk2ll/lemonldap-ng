@@ -24,8 +24,18 @@ files before the update.
 Known regressions in the latest released version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* In version 2.0.10, you will encounter portal display errors when using ``X-Content-Type-Options: nosniff``. See `Bug #2446 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2446>`__ for a patch.
+None
 
+2.0.11
+------
+
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you created your own skin and modified some template files, you may need to update them.
+No change is required if you are using the default ``bootstrap`` theme.
+
+A new plugin has been introduced, in beta version: :doc:`FindUser <finduser>`. It requires a modification of ``login.tpl`` to include ``finduser.tpl``.
 
 2.0.10
 ------
