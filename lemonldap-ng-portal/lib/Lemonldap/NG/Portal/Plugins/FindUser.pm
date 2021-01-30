@@ -186,15 +186,16 @@ sub buildForm {
 
 sub sendResult {
     my ( $self, $req, $error ) = @_;
-
+    eval { $self->p->_authentication->setSecurity($req) };
     if ($error) {
-        eval { $self->p->_authentication->setSecurity($req) };
         return $req->wantJSON
           ? $self->p->sendJSONresponse(
             $req,
             {
                 user  => '',
-                error => $error
+                error => $error,
+                ( $req->token   ? ( token   => $req->token )   : () ),
+                ( $req->captcha ? ( captcha => $req->captcha ) : () )
             }
           )
           : $self->p->do( $req, [ sub { $error } ] );
@@ -204,7 +205,9 @@ sub sendResult {
         $req,
         {
             user   => ( $req->data->{findUser} ? $req->data->{findUser} : '' ),
-            result => 1
+            result => 1,
+            ( $req->token   ? ( token   => $req->token )   : () ),
+            ( $req->captcha ? ( captcha => $req->captcha ) : () )
         }
       )
       : $self->p->do( $req, [ sub { PE_FIRSTACCESS } ] );

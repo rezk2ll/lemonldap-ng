@@ -216,7 +216,7 @@ setCookie = (name, value, exdays) ->
 # Function to change password using Ajax (instead of POST)
 # NOT USED FOR NOW
 #changePwd = (event) ->
-#	event.preventDefault();
+#	event.preventDefault()
 #	$.ajax
 #		type: 'POST'
 #		url: datas['scriptname']
@@ -544,6 +544,25 @@ $(window).on 'load', () ->
 
 	#$('#formpass').on 'submit', changePwd
 
-	if window.location.href.match /\/finduser/
-		console.log 'Set Portal URL: ' + portal
-		window.history.pushState({page: 'Portal'}, 'Portal', portal)
+	$('#finduserbutton').on 'click', (event) ->
+		event.preventDefault()
+		str = $("#finduserform").serialize()
+		console.log 'Send findUser request with', str
+		$.ajax
+			type: "POST"
+			url: "#{portal}finduser"
+			dataType: 'json'
+			data: str
+			# On success, value are set
+			success: (data) ->
+				user = data.user
+				console.log 'Suggested spoofId', user
+				$('#spoofIdfield').attr 'value', user
+				$('#captcha').attr 'src', data.captcha if data.captcha
+				if data.token
+					$('#findusertoken').attr 'value', data.token 
+					$('#token').attr 'value', data.token
+			error: (j) ->
+				res = JSON.parse j.responseText if j
+				if res and res.error
+					console.log 'Returned error', res

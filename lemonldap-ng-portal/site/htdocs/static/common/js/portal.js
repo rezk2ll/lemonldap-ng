@@ -587,12 +587,38 @@ LemonLDAP::NG Portal jQuery scripts
         return $("#show-hide-icon-button").addClass('fa-eye');
       }
     });
-    if (window.location.href.match(/\/finduser/)) {
-      console.log('Set Portal URL: ' + portal);
-      return window.history.pushState({
-        page: 'Portal'
-      }, 'Portal', portal);
-    }
+    return $('#finduserbutton').on('click', function(event) {
+      var str;
+      event.preventDefault();
+      str = $("#finduserform").serialize();
+      console.log('Send findUser request with', str);
+      return $.ajax({
+        type: "POST",
+        url: portal + "finduser",
+        dataType: 'json',
+        data: str,
+        success: function(data) {
+          var user;
+          user = data.user;
+          console.log('Suggested spoofId', user);
+          $('#spoofIdfield').attr('value', user);
+          if (data.captcha) {
+            $('#captcha').attr('src', data.captcha);
+          }
+          if (data.token) {
+            $('#findusertoken').attr('value', data.token);
+            return $('#token').attr('value', data.token);
+          }
+        },
+        error: function(j) {
+          var res;
+          res = JSON.parse(j.responseText);
+          if (res && res.error) {
+            return console.log('Returned error', res);
+          }
+        }
+      });
+    });
   });
 
 }).call(this);

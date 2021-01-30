@@ -47,7 +47,7 @@ ok(
         accept => 'application/json',
         length => length($query)
     ),
-    'Post FindFuser request'
+    'Post FindUser request'
 );
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
@@ -66,7 +66,7 @@ ok(
         accept => 'application/json',
         length => length($query)
     ),
-    'Post expired FindFuser request'
+    'Post expired FindUser request'
 );
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
@@ -86,7 +86,7 @@ ok(
         accept => 'application/json',
         length => length($query)
     ),
-    'Post FindFuser request without token'
+    'Post FindUser request without token'
 );
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
@@ -108,7 +108,7 @@ ok(
         accept => 'application/json',
         length => length($query)
     ),
-    'Post FindFuser request with token'
+    'Post FindUser request with token'
 );
 my $id = expectCookie($res);
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )

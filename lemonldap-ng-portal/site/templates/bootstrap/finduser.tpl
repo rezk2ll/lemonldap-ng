@@ -2,10 +2,10 @@
   <br>
   <div class="card">
   <br>
-  <form action="/finduser" id="searchAccount" method="post" role="form" class="login">
+  <form id="finduserform" role="form" class="login">
   <div class="form">
     <TMPL_IF NAME="TOKEN">
-      <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
+      <input id="findusertoken" type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
     </TMPL_IF>
     <TMPL_LOOP NAME="FIELDS">
       <TMPL_IF NAME="select">
@@ -29,7 +29,7 @@
         </div>
       </TMPL_IF>
     </TMPL_LOOP>
-    <button type="submit" class="btn btn-info" >
+    <button id="finduserbutton" class="btn btn-info" >
       <span class="fa fa-eye"></span>
       <span trspan="searchAccount">Search for an account</span>
     </button>

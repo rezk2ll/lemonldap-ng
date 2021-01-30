@@ -41,7 +41,7 @@ ok(
         accept => 'application/json',
         length => length($request)
     ),
-    'Post FindFuser request'
+    'Post FindUser request'
 );
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
