@@ -1,3 +1,21 @@
+lemonldap-ng (2.0.11) focal; urgency=medium
+
+  * Bugs:
+    * #2445: lmAuth param sent to protected application
+    * #2446: Incorrect MIME type on /psgi.js
+    * #2448: Adaptative Authentication rule triggered several times
+    * #2449: SAML SLO using Redirect/POST binding does not work with multiple SP
+
+  * New features:
+    * #1987: add grant_type=client_credentials in OIDC
+
+  * Improvements:
+    * #2397: OAuth2 handler should make client_id and scopes of the access token available to rules and headers
+    * #2436: CheckUser displays headers as they have been defined in conf intead of how they are sent
+    * #2444: set oidcServiceKeyIdSig by default
+
+ -- Clément <clem.oudot@gmail.com>  Sat, 30 Jan 2021 18:33:37 +0100
+
 lemonldap-ng (2.0.10) stable; urgency=medium
 
   * Bugs:
