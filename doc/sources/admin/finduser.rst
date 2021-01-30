@@ -43,7 +43,7 @@ Just enable it in the Manager (section “plugins”). Then, set searching attri
 
 .. danger::
 
-    This plusgin works only with a users backend and the searching or excluding attributes must exist.
+    This plugin works only with a users backend and the searching or excluding attributes must exist.
 
 .. danger::
 
