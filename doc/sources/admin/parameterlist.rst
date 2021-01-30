@@ -33,6 +33,7 @@ adaptativeAuthenticationLevelRules                      Adaptative authenticatio
 apacheAuthnLevel                                        Apache authentication level                                                          ✔
 applicationList                                         Applications list                                                                    ✔
 authChoiceAuthBasic                                     Auth module used by AuthBasic handler                                                ✔
+authChoiceFindUser                                      Auth module used by FindUser plugin                                                  ✔
 authChoiceModules                                       Hash list of Choice strings                                                          ✔
 authChoiceParam                                         Applications list                                                                    ✔
 authentication                                          Authentication module                                                                ✔
@@ -82,6 +83,7 @@ checkUser                                               Enable check user       
 checkUserDisplayComputedSession                         Display empty headers rule                                                           ✔
 checkUserDisplayEmptyHeaders                            Display empty headers rule                                                           ✔
 checkUserDisplayEmptyValues                             Display session empty values rule                                                    ✔
+checkUserDisplayNormalizedHeaders                       Display normalized headers rule                                                      ✔
 checkUserDisplayPersistentInfo                          Display persistent session info rule                                                 ✔
 checkUserHiddenAttributes                               Attributes to hide in CheckUser plugin                                               ✔
 checkUserHiddenHeaders                                  Header values to hide if not empty                                                   ✔
@@ -166,6 +168,11 @@ facebookAuthnLevel                                      Facebook authentication 
 facebookExportedVars                                    Facebook exported variables                                                          ✔
 facebookUserField                                                                                                                            ✔
 failedLoginNumber                                       Number of failures stored in login history                                           ✔
+findUser                                                Enable find user                                                                     ✔
+findUserControl                                         Regular expression to validate parameters                                            ✔
+findUserExcludingAttributes                             Attributes used for excluding accounts                                               ✔
+findUserSearchingAttributes                             Attributes used for searching accounts                                               ✔
+findUserWildcard                                        Character used as wildcard                                                           ✔
 forceGlobalStorageIssuerOTT                             Force Issuer tokens to be stored into Global Storage                                 ✔                      ✔
 forceGlobalStorageUpgradeOTT                            Force Upgrade tokens be stored into Global Storage                                   ✔                      ✔
 formTimeout                                             Token timeout for forms                                                              ✔
@@ -455,6 +462,7 @@ restAuthnLevel                                          REST authentication leve
 restClockTolerance                                      How tolerant the REST session server will be to clock dift                           ✔
 restConfigServer                                        Enable REST config server                                                            ✔
 restExportSecretKeys                                    Allow to export secret keys in REST session server                                   ✔
+restFindUserDBUrl                                                                                                                            ✔
 restPasswordServer                                      Enable REST password reset server                                                    ✔
 restPwdConfirmUrl                                                                                                                            ✔
 restPwdModifyUrl                                                                                                                             ✔
