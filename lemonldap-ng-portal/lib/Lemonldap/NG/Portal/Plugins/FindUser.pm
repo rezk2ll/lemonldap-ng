@@ -36,6 +36,10 @@ sub init {
     $self->logger->warn('FindUser plugin enabled without searching attribute')
       unless keys %{ $self->conf->{findUserSearchingAttributes} };
 
+    # Add warning in log
+    $self->logger->warn(
+        "FindUser plugin is enabled. You are using a beta version!");
+
     return 1;
 }
 
@@ -59,27 +63,15 @@ sub provideUser {
             }
         }
     }
-    if ($error) {
-        eval { $self->p->_authentication->setSecurity($req) };
-        return $self->p->do( $req, [ sub { $error } ] );
-    }
+    return $self->sendResult( $req, $error ) if $error;
 
     $req->steps( ['findUser'] );
     $req->data->{findUserChoice} = $self->conf->{authChoiceFindUser};
     if ( $error = $self->p->process($req) ) {
         $self->logger->debug("Process returned error: $error");
-        eval { $self->p->_authentication->setSecurity($req) };
-        return $self->p->do( $req, [ sub { $error } ] );
+        return $self->sendResult( $req, $error );
     }
-
-    return $self->sendJSONresponse(
-        $req,
-        {
-            user   => ( $req->data->{findUser} ? $req->data->{findUser} : '' ),
-            result => 1
-        }
-    ) if $req->wantJSON;
-    return $self->p->do( $req, [ sub { PE_FIRSTACCESS } ] );
+    return $self->sendResult($req);
 }
 
 sub retreiveFindUserParams {
@@ -190,6 +182,32 @@ sub buildForm {
       } keys %{ $self->conf->{findUserSearchingAttributes} };
 
     return $fields;
+}
+
+sub sendResult {
+    my ( $self, $req, $error ) = @_;
+
+    if ($error) {
+        eval { $self->p->_authentication->setSecurity($req) };
+        return $req->wantJSON
+          ? $self->p->sendJSONresponse(
+            $req,
+            {
+                user  => '',
+                error => $error
+            }
+          )
+          : $self->p->do( $req, [ sub { $error } ] );
+    }
+    return $req->wantJSON
+      ? $self->p->sendJSONresponse(
+        $req,
+        {
+            user   => ( $req->data->{findUser} ? $req->data->{findUser} : '' ),
+            result => 1
+        }
+      )
+      : $self->p->do( $req, [ sub { PE_FIRSTACCESS } ] );
 }
 
 1;

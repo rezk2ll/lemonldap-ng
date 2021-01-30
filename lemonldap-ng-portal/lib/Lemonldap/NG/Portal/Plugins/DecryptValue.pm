@@ -39,6 +39,10 @@ sub init {
     );
     return 0 unless $self->rule;
 
+    # Add warning in log
+    $self->logger->warn(
+        "DecryptValue plugin is enabled. You are using a beta version!");
+
     return 1;
 }
 
