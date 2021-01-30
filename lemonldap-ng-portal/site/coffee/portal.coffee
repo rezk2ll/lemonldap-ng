@@ -553,7 +553,7 @@ $(window).on 'load', () ->
 			url: "#{portal}finduser"
 			dataType: 'json'
 			data: str
-			# On success, value are set
+			# On success, values are set
 			success: (data) ->
 				user = data.user
 				console.log 'Suggested spoofId', user
