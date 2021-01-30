@@ -36,10 +36,6 @@ sub init {
     $self->logger->warn('FindUser plugin enabled without searching attribute')
       unless keys %{ $self->conf->{findUserSearchingAttributes} };
 
-    # Add warning in log
-    $self->logger->warn(
-        "FindUser plugin is enabled. You are using a beta version!");
-
     return 1;
 }
 
@@ -50,28 +46,27 @@ sub provideUser {
 
     # Check token
     if ( $self->ottRule->( $req, {} ) ) {
-        my $token = $req->param('token');
-        unless ($token) {
-            $self->userLogger->warn('FindUser called without token');
-            $error = PE_NOTOKEN;
-        }
-        else {
+        if ( my $token = $req->param('token') ) {
             unless ( $self->ott->getToken($token) ) {
                 $self->userLogger->warn(
                     'FindUser called with an expired/bad token');
                 $error = PE_TOKENEXPIRED;
             }
         }
+        else {
+            $self->userLogger->warn('FindUser called without token');
+            $error = PE_NOTOKEN;
+        }
     }
-    return $self->sendResult( $req, $error ) if $error;
+    return $self->_sendResult( $req, $error ) if $error;
 
     $req->steps( ['findUser'] );
     $req->data->{findUserChoice} = $self->conf->{authChoiceFindUser};
     if ( $error = $self->p->process($req) ) {
         $self->logger->debug("Process returned error: $error");
-        return $self->sendResult( $req, $error );
+        return $self->_sendResult( $req, $error );
     }
-    return $self->sendResult($req);
+    return $self->_sendResult($req);
 }
 
 sub retreiveFindUserParams {
@@ -145,6 +140,7 @@ sub retreiveFindUserParams {
 sub buildForm {
     my $self   = shift;
     my $fields = [];
+
     $self->logger->debug('Building array ref with searching fields...');
     @$fields =
       sort { $a->{select} <=> $b->{select} || $a->{value} cmp $b->{value} }
@@ -184,33 +180,30 @@ sub buildForm {
     return $fields;
 }
 
-sub sendResult {
+sub _sendResult {
     my ( $self, $req, $error ) = @_;
+
     eval { $self->p->_authentication->setSecurity($req) };
-    if ($error) {
-        return $req->wantJSON
-          ? $self->p->sendJSONresponse(
-            $req,
-            {
-                user  => '',
-                error => $error,
-                ( $req->token   ? ( token   => $req->token )   : () ),
-                ( $req->captcha ? ( captcha => $req->captcha ) : () )
-            }
-          )
-          : $self->p->do( $req, [ sub { $error } ] );
-    }
+    my $res =
+      $error
+      ? {
+        user  => '',
+        error => $error,
+      }
+      : {
+        result => 1,
+        user   => ( $req->data->{findUser} ? $req->data->{findUser} : '' )
+      };
+    $res = {
+        %$res,
+        ( $req->token   ? ( token   => $req->token )   : () ),
+        ( $req->captcha ? ( captcha => $req->captcha ) : () )
+    };
+    $error ||= PE_FIRSTACCESS;
+
     return $req->wantJSON
-      ? $self->p->sendJSONresponse(
-        $req,
-        {
-            user   => ( $req->data->{findUser} ? $req->data->{findUser} : '' ),
-            result => 1,
-            ( $req->token   ? ( token   => $req->token )   : () ),
-            ( $req->captcha ? ( captcha => $req->captcha ) : () )
-        }
-      )
-      : $self->p->do( $req, [ sub { PE_FIRSTACCESS } ] );
+      ? $self->p->sendJSONresponse( $req, $res )
+      : $self->p->do( $req, [ sub { $error } ] );
 }
 
 1;
