@@ -776,6 +776,13 @@ sub tree {
                             nodes => [ 'checkState', 'checkStateSecret', ],
                         },
                         {
+                            title => 'CrowdSecPlugin',
+                            nodes => [
+                                'crowdsec',    'crowdsecAction',
+                                'crowdsecUrl', 'crowdsecKey',
+                            ],
+                        },
+                        {
                             title => 'checkUsers',
                             help  => 'checkuser.html',
                             nodes => [

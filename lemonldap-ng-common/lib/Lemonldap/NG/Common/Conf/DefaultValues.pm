@@ -58,6 +58,7 @@ sub defaultValues {
         'corsEnabled'                    => 1,
         'corsExpose_Headers'             => '*',
         'corsMax_Age'                    => '86400',
+        'crowdsecAction'                 => 'reject',
         'cspConnect'                     => '\'self\'',
         'cspDefault'                     => '\'self\'',
         'cspFont'                        => '\'self\'',

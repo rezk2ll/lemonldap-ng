@@ -37,6 +37,7 @@ our @pList = (
       '::Plugins::AdaptativeAuthenticationLevel',
     globalLogoutRule => '::Plugins::GlobalLogout',
     refreshSessions  => '::Plugins::Refresh',
+    crowdsec         => '::Plugins::CrowdSec',
 );
 
 ##@method list enabledPlugins

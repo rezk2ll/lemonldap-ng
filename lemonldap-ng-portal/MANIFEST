@@ -111,6 +111,7 @@ lib/Lemonldap/NG/Portal/Plugins/CheckDevOps.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckState.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckUser.pm
 lib/Lemonldap/NG/Portal/Plugins/ContextSwitching.pm
+lib/Lemonldap/NG/Portal/Plugins/CrowdSec.pm
 lib/Lemonldap/NG/Portal/Plugins/DecryptValue.pm
 lib/Lemonldap/NG/Portal/Plugins/FindUser.pm
 lib/Lemonldap/NG/Portal/Plugins/ForceAuthn.pm
@@ -652,6 +653,8 @@ t/61-AdaptativeAuthenticationLevel.t
 t/61-BruteForceProtection-with-Incremental-lockTimes-and-TOTP.t
 t/61-BruteForceProtection-with-Incremental-lockTimes.t
 t/61-BruteForceProtection.t
+t/61-CrowdSec-warn.t
+t/61-CrowdSec.t
 t/61-ForceAuthn.t
 t/61-GrantSession.t
 t/61-Session-ActivityTimeout.t

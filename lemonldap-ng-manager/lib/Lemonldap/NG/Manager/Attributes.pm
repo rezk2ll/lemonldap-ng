@@ -1138,6 +1138,28 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => '86400',
             'type'    => 'text'
         },
+        'crowdsec' => {
+            'type' => 'bool'
+        },
+        'crowdsecAction' => {
+            'default' => 'reject',
+            'select'  => [ {
+                    'k' => 'reject',
+                    'v' => 'Reject'
+                },
+                {
+                    'k' => 'warn',
+                    'v' => 'Warn'
+                }
+            ],
+            'type' => 'select'
+        },
+        'crowdsecKey' => {
+            'type' => 'text'
+        },
+        'crowdsecUrl' => {
+            'type' => 'url'
+        },
         'cspConnect' => {
             'default' => '\'self\'',
             'type'    => 'text'

@@ -1131,6 +1131,29 @@ sub attributes {
             documentation => 'SSL options given to LWP::UserAgent',
         },
 
+        # CrowdSec plugin
+        crowdsec => {
+            type          => 'bool',
+            documentation => 'CrowdSec plugin activation',
+        },
+        crowdsecAction => {
+            type   => 'select',
+            select => [
+                { k => 'reject', v => 'Reject' },
+                { k => 'warn',   v => 'Warn' },
+            ],
+            default       => 'reject',
+            documentation => 'CrowdSec action',
+        },
+        crowdsecUrl => {
+            type          => 'url',
+            documentation => 'Base URL of CrowdSec local API',
+        },
+        crowdsecKey => {
+            type          => 'text',
+            documentation => 'CrowdSec API key',
+        },
+
         # History
         failedLoginNumber => {
             default       => 5,
