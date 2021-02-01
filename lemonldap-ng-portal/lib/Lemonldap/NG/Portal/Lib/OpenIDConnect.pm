@@ -1328,6 +1328,48 @@ sub getAttributesListFromClaim {
     return $self->rpAttributes->{$rp}->{$claim};
 }
 
+# Return granted scopes for this request
+# @param req current request
+# @param req selected RP
+# @param scope requested scope
+sub getScope {
+    my ( $self, $req, $rp, $scope ) = @_;
+
+    my @scope_values = split( /\s+/, $scope );
+
+    # If this RP has dynamic scopes
+    if ( $self->spScopeRules->{$rp} ) {
+
+        # Add dynamic scopes
+        for my $dynamicScope ( keys %{ $self->spScopeRules->{$rp} } ) {
+
+            # Set a magic "$requested" variable that contains true if the
+            # scope was requested by the application
+            my $requested = grep { $_ eq $dynamicScope } @scope_values;
+            my $attributes = { %{ $req->userData }, requested => $requested };
+
+            # If scope is granted by the rule
+            if ( $self->spScopeRules->{$rp}->{$dynamicScope}
+                ->( $req, $attributes ) )
+            {
+                # Add to list
+                unless ( grep { $_ eq $dynamicScope } @scope_values ) {
+                    push @scope_values, $dynamicScope;
+                }
+
+            }
+
+            # Else make sure it is not granted
+            else {
+                @scope_values = grep { $_ ne $dynamicScope } @scope_values;
+            }
+        }
+    }
+
+    $self->p->processHook( $req, 'oidcResolveScope', \@scope_values, $rp );
+    return join( ' ', @scope_values );
+}
+
 # Return Hash of UserInfo data
 # @param scope OIDC scope
 # @param rp Internal Relying Party identifier
