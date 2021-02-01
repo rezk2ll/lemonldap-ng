@@ -57,6 +57,9 @@ sub processHook {
             $self->logger->debug("Not a code ref: $sub");
         }
     }
+    if ($err != PE_OK) {
+        $self->logger->warn("Hook $hookName returned ".portalConsts->{$err});
+    }
     return $err;
 }
 
