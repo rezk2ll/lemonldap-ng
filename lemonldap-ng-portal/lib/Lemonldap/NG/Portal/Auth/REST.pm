@@ -3,15 +3,17 @@ package Lemonldap::NG::Portal::Auth::REST;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK
   PE_ERROR
   PE_BADCREDENTIALS
-  PE_OK
 );
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.12';
 
-extends 'Lemonldap::NG::Portal::Auth::_WebForm',
-  'Lemonldap::NG::Portal::Lib::REST';
+extends qw(
+  Lemonldap::NG::Portal::Auth::_WebForm
+  Lemonldap::NG::Portal::Lib::REST
+);
 
 # INITIALIZATION
 
@@ -66,7 +68,7 @@ sub setAuthSessionInfo {
 }
 
 sub authLogout {
-    PE_OK;
+    return PE_OK;
 }
 
 1;

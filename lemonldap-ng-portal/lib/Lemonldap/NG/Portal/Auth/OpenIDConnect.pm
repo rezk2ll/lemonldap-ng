@@ -5,15 +5,17 @@ use Mouse;
 use MIME::Base64 qw/encode_base64 decode_base64/;
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK
   PE_ERROR
   PE_IDPCHOICE
-  PE_OK
 );
 
-our $VERSION = '2.0.7';
+our $VERSION = '2.0.12';
 
-extends 'Lemonldap::NG::Portal::Main::Auth',
-  'Lemonldap::NG::Portal::Lib::OpenIDConnect';
+extends qw(
+  Lemonldap::NG::Portal::Main::Auth
+  Lemonldap::NG::Portal::Lib::OpenIDConnect
+);
 
 # INTERFACE
 
@@ -276,7 +278,7 @@ sub extractFormInfo {
 }
 
 sub authenticate {
-    PE_OK;
+    return PE_OK;
 }
 
 sub setAuthSessionInfo {
@@ -300,7 +302,7 @@ sub setAuthSessionInfo {
         $self->logger->debug("ID Token will not be stored in session");
     }
 
-    PE_OK;
+    return PE_OK;
 }
 
 sub authLogout {
@@ -327,7 +329,7 @@ sub authLogout {
     else {
         $self->logger->debug("No end session endpoint found for $op");
     }
-    PE_OK;
+    return PE_OK;
 }
 
 sub getDisplayType {
