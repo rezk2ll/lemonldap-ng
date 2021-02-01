@@ -275,6 +275,13 @@ Options
    -  **Force claims to be returned in ID Token**: This options will
       make user attributes from the requested scope appear as ID Token
       claims.
+   -  **Use JWT format for Access Token** (since version ``2.0.12``): When
+      using this option, Access Tokens will use the JWT format, which means they
+      can be verified by external OAuth2.0 resource servers without using the
+      introspection or userinfo endpoint.
+   -  **Release claims in Access Token** (since version ``2.0.12``): If Access
+      Tokens are in JWT format, this option lets you release the claims defined
+      in the *Extra Claims* section inside the Access Token itself.
    -  **Additional audiences** (since version ``2.0.8``): You can
       specify a space-separate list of audiences that will be added the
       audiences of the ID Token
@@ -290,8 +297,8 @@ Options
       default value is one minute.
    -  **ID Token expiration**: Expiration time of ID Tokens. The default
       value is one hour.
-   -  **Access token expiration**: Expiration time of Access Tokens. The
-      default value is one hour.
+   -  **Access token expiration** (since version ``2.0.12``): Expiration time
+      of Access Tokens. The default value is one hour.
    -  **Offline session expiration**: This sets the lifetime of the
       refresh token obtained with the **offline_access** scope. The
       default value is one month. This parameter only applies if offline
@@ -299,8 +306,10 @@ Options
 
 -  **Security**
 
-   -  **ID Token signature algorithm**: Select one of ``none``,
-      ``HS256``, ``HS384``, ``HS512``, ``RS256``, ``RS384``, ``RS512``
+   -  **ID Token signature algorithm**: Select one of the available public key
+      (RSXXX) or HMAC (HSXXX) based signature algorithms
+   -  **Access Token signature algorithm**: Select one of the available public
+      key signature algorithms
    -  **Require PKCE** (since version ``2.0.4``): a code challenge is
       required at token endpoint (see
       `RFC7636 <https://tools.ietf.org/html/rfc7636>`__)

@@ -72,6 +72,30 @@ Sample code::
        return PE_OK;
    }
 
+oidcGenerateAccessToken
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.12
+
+This hook is triggered when LemonLDAP::NG is generating an JWT-formatted Access Token
+
+The hook's parameters are:
+
+* A hash of the claims to be contained in the Access Token
+* the configuration key of the relying party which will receive the token
+
+Sample code::
+
+   use constant hook => {
+       oidcGenerateAccessToken          => 'addClaimToAccessToken',
+   };
+
+   sub addClaimToAccessToken {
+       my ( $self, $req, $payload, $rp ) = @_;
+       $payload->{"access_token_hook"} = 1;
+       return PE_OK;
+   }
+
 
 oidcResolveScope
 ~~~~~~~~~~~~~~~~
