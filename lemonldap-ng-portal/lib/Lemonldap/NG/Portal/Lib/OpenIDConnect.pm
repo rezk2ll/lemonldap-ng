@@ -798,7 +798,8 @@ sub maybeJWT {
           ->{oidcRPMetaDataOptionsAccessTokenSignAlg} || "RS256";
         $self->logger->debug("Access Token signature algorithm: $alg");
 
-        my $jwt = $self->createJWT( $access_token_payload, $alg, $rp );
+        my $jwt =
+          $self->createJWT( $access_token_payload, $alg, $rp, "at+JWT" );
 
         return $jwt;
     }
@@ -1632,13 +1633,14 @@ sub _forceType {
 # @param rp Internal Relying Party identifier
 # @return String jwt JWT
 sub createJWT {
-    my ( $self, $payload, $alg, $rp ) = @_;
+    my ( $self, $payload, $alg, $rp, $type ) = @_;
 
     # Payload encoding
     my $jwt_payload = encode_base64url( to_json($payload), "" );
 
     # JWT header
-    my $jwt_header_hash = { typ => "JWT", alg => $alg };
+    my $typ = $type || "JWT";
+    my $jwt_header_hash = { typ => $typ, alg => $alg };
     if ( $alg eq "RS256" or $alg eq "RS384" or $alg eq "RS512" ) {
         $jwt_header_hash->{kid} = $self->conf->{oidcServiceKeyIdSig}
           if $self->conf->{oidcServiceKeyIdSig};
