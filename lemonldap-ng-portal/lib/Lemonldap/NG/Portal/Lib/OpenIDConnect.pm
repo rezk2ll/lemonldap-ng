@@ -788,6 +788,11 @@ sub maybeJWT {
             $access_token_payload->{sub} = $claims->{sub};
         }
 
+        # Call hook to let the user modify payload
+        my $h = $self->p->processHook( $req, 'oidcGenerateAccessToken',
+            $access_token_payload, $rp );
+        return undef if ( $h != PE_OK );
+
         # Get signature algorithm
         my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
           ->{oidcRPMetaDataOptionsAccessTokenSignAlg} || "RS256";
