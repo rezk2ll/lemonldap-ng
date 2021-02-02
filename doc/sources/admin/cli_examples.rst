@@ -369,8 +369,7 @@ URL):
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
        set \
-           issuerDBOpenIDConnectActivation 1 \
-           oidcServiceMetaDataIssuer http://auth.example.com
+           issuerDBOpenIDConnectActivation 1
 
 Generate keys:
 
