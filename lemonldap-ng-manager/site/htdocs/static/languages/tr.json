@@ -205,7 +205,7 @@
 "checkUserIdRule":"Kimlik kullanım kuralı",
 "checkUserHiddenAttributes":"Gizli nitelikler",
 "checkUserUnrestrictedUsersRule":"Kısıtlamasız kullanıcı kuralı",
-"checkUserDisplayComputedSession":"Computed session",
+"checkUserDisplayComputedSession":"Computed sessions",
 "checkUserDisplayPersistentInfo":"Persistent session data",
 "checkUserDisplayEmptyHeaders":"Empty headers",
 "checkUserDisplayEmptyValues":"Empty values",

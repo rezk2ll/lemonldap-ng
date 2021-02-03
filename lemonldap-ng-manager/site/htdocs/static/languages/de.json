@@ -199,7 +199,7 @@
 "checkboxes":"Checkboxes",
 "checkState":"Activation",
 "checkStateSecret":"Shared secret",
-"checkUsers":"SSO profile Check",
+"checkUsers":"SSO profile check",
 "checkUser":"Activation",
 "checkUserDisplay":"Display",
 "checkUserIdRule":"Identities use rule",

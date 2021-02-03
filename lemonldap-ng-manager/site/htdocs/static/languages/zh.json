@@ -199,7 +199,7 @@
 "checkboxes":"Checkboxes",
 "checkState":"激活",
 "checkStateSecret":"Shared secret",
-"checkUsers":"SSO profile Check",
+"checkUsers":"SSO profile check",
 "checkUser":"激活",
 "checkUserDisplay":"Display",
 "checkUserIdRule":"Identities use rule",
