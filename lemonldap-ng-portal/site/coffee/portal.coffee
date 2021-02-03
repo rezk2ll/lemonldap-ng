@@ -546,6 +546,7 @@ $(window).on 'load', () ->
 
 	$('#finduserbutton').on 'click', (event) ->
 		event.preventDefault()
+		document.body.style.cursor = 'progress'
 		str = $("#finduserform").serialize()
 		console.log 'Send findUser request with', str
 		$.ajax
@@ -555,6 +556,7 @@ $(window).on 'load', () ->
 			data: str
 			# On success, values are set
 			success: (data) ->
+				document.body.style.cursor = 'default'
 				user = data.user
 				console.log 'Suggested spoofId', user
 				$('#spoofIdfield').attr 'value', user
@@ -562,7 +564,9 @@ $(window).on 'load', () ->
 				if data.token
 					$('#findusertoken').attr 'value', data.token 
 					$('#token').attr 'value', data.token
-			error: (j) ->
+			error: (j, status, err) ->
+				document.body.style.cursor = 'default'
+				console.log 'Error', err  if err
 				res = JSON.parse j.responseText if j
 				if res and res.error
 					console.log 'Returned error', res

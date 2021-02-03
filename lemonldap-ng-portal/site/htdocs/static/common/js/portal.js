@@ -590,6 +590,7 @@ LemonLDAP::NG Portal jQuery scripts
     return $('#finduserbutton').on('click', function(event) {
       var str;
       event.preventDefault();
+      document.body.style.cursor = 'progress';
       str = $("#finduserform").serialize();
       console.log('Send findUser request with', str);
       return $.ajax({
@@ -599,6 +600,7 @@ LemonLDAP::NG Portal jQuery scripts
         data: str,
         success: function(data) {
           var user;
+          document.body.style.cursor = 'default';
           user = data.user;
           console.log('Suggested spoofId', user);
           $('#spoofIdfield').attr('value', user);
@@ -610,9 +612,15 @@ LemonLDAP::NG Portal jQuery scripts
             return $('#token').attr('value', data.token);
           }
         },
-        error: function(j) {
+        error: function(j, status, err) {
           var res;
-          res = JSON.parse(j.responseText);
+          document.body.style.cursor = 'default';
+          if (err) {
+            console.log('Error', err);
+          }
+          if (j) {
+            res = JSON.parse(j.responseText);
+          }
           if (res && res.error) {
             return console.log('Returned error', res);
           }
