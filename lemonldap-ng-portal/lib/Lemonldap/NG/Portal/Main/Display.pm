@@ -483,11 +483,16 @@ sub display {
               $self->loadedModules->{
                 "Lemonldap::NG::Portal::Plugins::FindUser"};
             my $fields = [];
-            $fields = $plugin->buildForm()
-              if ( $plugin
+            if (
+                $plugin
                 && $self->conf->{findUser}
                 && $self->conf->{impersonationRule}
-                && $self->conf->{findUserSearchingAttributes} );
+                && $self->conf->{findUserSearchingAttributes}
+              )
+            {
+                $login  = $req->data->{findUser};
+                $fields = $plugin->buildForm();
+            }
 
             # Authentication loop
             if ( $self->conf->{authentication} eq 'Choice'
@@ -503,6 +508,7 @@ sub display {
                     DISPLAY_OPENID_FORM  => 0,
                     DISPLAY_YUBIKEY_FORM => 0,
                     FIELDS               => $fields,
+                    SPOOFID              => $login,
                     FINDUSER             => scalar @$fields
                 );
             }
@@ -536,6 +542,7 @@ sub display {
                       ( $displayType eq "logo" ? $self->conf->{portal} : 0 ),
                     MSG      => $req->info(),
                     FIELDS   => $fields,
+                    SPOOFID  => $login,
                     FINDUSER => scalar @$fields
                 );
             }

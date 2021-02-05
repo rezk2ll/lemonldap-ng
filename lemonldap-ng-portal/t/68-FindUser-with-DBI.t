@@ -5,7 +5,7 @@ use IO::String;
 
 require 't/test-lib.pm';
 
-my $maintests = 53;
+my $maintests = 54;
 my $userdb    = tempdb();
 
 SKIP: {
@@ -105,6 +105,8 @@ m%<input id="spoofIdfield" name="spoofId" type="text" class="form-control" value
         ),
         'Post FindUser request'
     );
+    ok( $res->[2]->[0] =~ m%value="dwho"%, 'value="dwho"' )
+      or explain( $res->[2]->[0], 'value="dwho"' );
     ok( $res->[2]->[0] =~ m%autocomplete="off"%, 'autocomplete="off"' )
       or explain( $res->[2]->[0], 'autocomplete="off"' );
     ok(

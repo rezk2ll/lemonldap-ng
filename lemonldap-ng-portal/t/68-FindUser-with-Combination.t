@@ -8,7 +8,7 @@ require 't/test-lib.pm';
 my $res;
 my $json;
 my $request;
-my $maintests = 23;
+my $maintests = 24;
 
 SKIP: {
     skip 'LLNGTESTLDAP is not set', $maintests unless ( $ENV{LLNGTESTLDAP} );
@@ -70,6 +70,8 @@ m%<input id="spoofIdfield" name="spoofId" type="text" class="form-control" value
         ),
         'Post FindUser request'
     );
+    ok( $res->[2]->[0] =~ m%value="dwho"%, 'value="dwho"' )
+      or explain( $res->[2]->[0], 'value="dwho"' );
     ok( $res->[2]->[0] =~ m%autocomplete="off"%, 'autocomplete="off"' )
       or explain( $res->[2]->[0], 'autocomplete="off"' );
     ok(
