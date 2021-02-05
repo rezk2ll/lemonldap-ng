@@ -1275,9 +1275,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             'type'       => 'keyTextContainer'
         },
-        'devOpsHandlerForbiddenAttibutes' => {
-            'type' => 'text'
-        },
         'disablePersistentStorage' => {
             'default' => 0,
             'type'    => 'bool'
