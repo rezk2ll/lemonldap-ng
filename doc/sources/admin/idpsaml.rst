@@ -154,11 +154,13 @@ Signature
 These options override service signature options (see
 :ref:`SAML service configuration<samlservice-general-options>`).
 
--  **Signature method**: signature method for messages sent to this service
--  **Sign SSO message**: sign SSO message
--  **Check SSO message signature**: check SSO message signature
--  **Sign SLO message**: sign SLO message
--  **Check SLO message signature**: check SLO message signature
+-  **Signature method**: the algorithm used to sign messages sent to this service
+-  **Sign SSO message**
+-  **Check SSO message signature**: "On" means that LemonLDAP::NG will verify
+   signatures if IDP and SP metadata require it. "Off" will disable signature
+   verification entirely.
+-  **Sign SLO message**
+-  **Check SLO message signature**
 
 Security
 ''''''''

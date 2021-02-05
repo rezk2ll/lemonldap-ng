@@ -334,13 +334,18 @@ Identity Provider
 General parameters
 ^^^^^^^^^^^^^^^^^^
 
-* **Want Authentication Request Signed**: set to On to require that received authentication request are signed.
-
+* **Want Authentication Request Signed**: By default, LemonLDAP::NG requires all SAML Requests to be signed. Set it to "Off" to let each Service Provider metadata decide if their requests should be verified by LemonLDAP::NG or not.
 
 .. tip::
 
-    This option can then be overridden for each Service
-    Provider.
+    The per-SP "Check SSO message signature" setting allows you to disable
+    signature verification even if this option is set to "On" globally
+
+This option will set the `WantAuthnRequestsSigned` attribute to `true` in LemonLDAP::NG's IDP Metadata.
+
+.. warning::
+
+   This setting requires Lasso 2.6.1 to be effective. Older versions behave as if this setting was set to "Off"
 
 Single Sign On
 ^^^^^^^^^^^^^^
