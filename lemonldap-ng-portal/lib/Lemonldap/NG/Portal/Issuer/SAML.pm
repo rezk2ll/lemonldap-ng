@@ -451,7 +451,7 @@ sub run {
                 }
 
                 unless ($result) {
-                    $self->logger->error("Signature is not valid");
+                    $self->logger->error("Could not verify signature of incoming SSO request from $spConfKey");
                     return PE_SAML_SIGNATURE_ERROR;
                 }
                 else {
@@ -1319,7 +1319,7 @@ sub soapSloServer {
 
         # Send logout response
         unless ( $self->buildLogoutResponseMsg($logout) ) {
-            $self->logger->error("Unable to build SLO response");
+            $self->logger->error("Unable to build SLO response for $spConfKey");
             return $self->p->sendError( $req, 'Unable to build SLO response',
                 400 );
         }
@@ -1969,7 +1969,7 @@ sub sloServer {
 
         if ($checkSLOMessageSignature) {
             unless ( $self->checkSignatureStatus($logout) ) {
-                $self->logger->error("Signature is not valid");
+                $self->logger->error("Could not verify signature of incoming SLO request from $spConfKey");
                 $self->imgnok($req);
             }
             else {
