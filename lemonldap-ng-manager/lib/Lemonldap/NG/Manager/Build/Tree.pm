@@ -1003,6 +1003,7 @@ sub tree {
                                 'requireToken',
                                 'formTimeout',
                                 'tokenUseGlobalStorage',
+                                'devOpsHandlerForbiddenAttibutes',
                                 {
                                     title => 'bruteForceAttackProtection',
                                     help  => 'bruteforceprotection.html',

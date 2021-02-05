@@ -1099,6 +1099,12 @@ sub attributes {
             documentation => 'Avoid assignment in expressions',
             flags         => 'hp',
         },
+        devOpsHandlerForbiddenAttibutes => {
+            type          => 'text',
+            help          => 'safejail.html',
+            documentation => 'List of attributes that applications can not retrieve',
+            flags         => 'h',
+        },
         whatToTrace => {
             type          => 'lmAttrOrMacro',
             default       => 'uid',
