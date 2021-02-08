@@ -163,6 +163,16 @@ This is the configuration of the IdP :
    inside AWX
 -  "url": "https://auth.example.com/saml/singleSignOn" SAML SSO Url
 
+SAML Security Config
+^^^^^^^^^^^^^^^^^^^^
+
+::
+
+   {
+      "requestedAuthnContext": false,
+      "authnRequestsSigned": true
+   }
+
 Save your configuration.
 
 LemonLDAP:NG
