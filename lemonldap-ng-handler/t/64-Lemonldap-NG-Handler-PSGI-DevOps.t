@@ -22,11 +22,13 @@ ok(
     'Authorized query'
 );
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
-my %headers = @{$res->[1]};
-ok( %headers{User} eq 'dwho', "'User' => 'dwho'" ) or explain( \%headers, 'dwho' );
-ok( %headers{Name} eq '', "'Name' => ''" ) or explain( \%headers, 'No Name' );
-ok( %headers{Mail} eq '', "'Mail' => ''" ) or explain( \%headers, 'No Mail' );
-ok( keys %headers == 7, "Seven headers sent" ) or explain( \%headers, 'Seven headers' );
+my %headers = @{ $res->[1] };
+ok( $headers{User} eq 'dwho', "'User' => 'dwho'" )
+  or explain( \%headers, 'dwho' );
+ok( $headers{Name} eq '', "'Name' => ''" ) or explain( \%headers, 'No Name' );
+ok( $headers{Mail} eq '', "'Mail' => ''" ) or explain( \%headers, 'No Mail' );
+ok( keys %headers == 7,   "Seven headers sent" )
+  or explain( \%headers, 'Seven headers' );
 count(6);
 
 ok(
