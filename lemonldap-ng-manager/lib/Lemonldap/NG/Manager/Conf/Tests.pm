@@ -7,7 +7,7 @@ use Lemonldap::NG::Common::Regexp;
 use Lemonldap::NG::Handler::Main;
 use Lemonldap::NG::Common::Util qw(getSameSite);
 
-our $VERSION = '2.0.11';
+our $VERSION = '2.0.12';
 
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
