@@ -944,6 +944,19 @@ sub tests {
             return ( -1, 'Password module is enabled without password backend' )
               if (  $conf->{portalDisplayChangePassword}
                 and $conf->{passwordDB} eq 'Null' );
+            if (    $conf->{portalDisplayChangePassword}
+                and $conf->{passwordDB} eq 'Choice'
+                and $conf->{authChoiceModules} )
+            {
+                my $hasPwdBE = 0;
+                foreach ( keys %{ $conf->{authChoiceModules} } ) {
+                    my @mods = split /[;\|]/, $conf->{authChoiceModules}->{$_};
+                    $hasPwdBE ||= 1 unless $mods[2] eq 'Null';
+                }
+                return ( -1,
+                    'Password module is enabled without AuthChoice password backend' )
+                  unless $hasPwdBE;
+            }
             return 1;
         },
 
