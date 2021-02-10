@@ -10,6 +10,7 @@
 "PE8":"Apache::Session 模块 错误",
 "PE9":"需要认证",
 "PE10":"无效的证书",
+"PE20":"No password backend defined",
 "PE21":"您的账号被锁定",
 "PE22":"您的密码已经过期",
 "PE23":"需要证书",

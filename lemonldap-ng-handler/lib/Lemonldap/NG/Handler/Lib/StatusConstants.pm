@@ -21,6 +21,7 @@ sub portalConsts {
         '102' => 'PE_UPGRADESESSION',
         '103' => 'PE_NO_SECOND_FACTORS',
         '2'   => 'PE_FORMEMPTY',
+        '20'  => 'PE_NO_PASSWORD_BE',
         '21'  => 'PE_PP_ACCOUNT_LOCKED',
         '22'  => 'PE_PP_PASSWORD_EXPIRED',
         '23'  => 'PE_CERTIFICATEREQUIRED',

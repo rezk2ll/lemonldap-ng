@@ -10,6 +10,7 @@
 "PE8":"Apache::Session moduulissa tapahtui virhe",
 "PE9":"Kirjautuminen vaaditaan",
 "PE10":"Virheellinen varmenne",
+"PE20":"No password backend defined",
 "PE21":"Tunnuksesi on lukittu",
 "PE22":"Salasanasi on vanhentunut",
 "PE23":"Varmenne vaaditaan",

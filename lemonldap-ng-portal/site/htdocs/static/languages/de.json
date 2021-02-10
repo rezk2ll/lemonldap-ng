@@ -10,6 +10,7 @@
 "PE8":"Fehler des gewählten Apache::Session Moduls",
 "PE9":"Authentifizieren Sie sich bitte",
 "PE10":"Zertifikat ungültig",
+"PE20":"No password backend defined",
 "PE21":"Ihr Konto ist blockiert",
 "PE22":"Ihr Passwort ist abgelaufen",
 "PE23":"Zertifikat erforderlich",

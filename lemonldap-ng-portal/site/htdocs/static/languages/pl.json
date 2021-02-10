@@ -10,6 +10,7 @@
 "PE8":"Błąd modułu Apache::Session",
 "PE9":"Wymagane uwierzytelnienie",
 "PE10":"Niepoprawny certyfikat",
+"PE20":"No password backend defined",
 "PE21":"Twoje konto jest zablokowane",
 "PE22":"Twoje hasło wygasło",
 "PE23":"Wymagany certyfikat",

@@ -10,6 +10,7 @@
 "PE8":"Mô-đun Apache::Session báo lỗi",
 "PE9":"Yêu cầu xác thực",
 "PE10":"Chứng chỉ không hợp lệ",
+"PE20":"No password backend defined",
 "PE21":"Tài khoản của bạn bị khóa",
 "PE22":"Mật khẩu của bạn đã hết hạn",
 "PE23":"Chứng chỉ bắt buộc",

@@ -10,6 +10,7 @@
 "PE8":"Erreur du module Apache::Session choisi",
 "PE9":"Veuillez vous authentifier",
 "PE10":"Certificat invalide",
+"PE20":"Base des mots de passe non définie",
 "PE21":"Votre compte est bloqué",
 "PE22":"Votre mot de passe a expiré",
 "PE23":"Certificat exigé",

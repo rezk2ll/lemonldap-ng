@@ -10,6 +10,7 @@
 "PE8":"Eroare a modulului Apache::Session aleasă",
 "PE9":"Autentificare cerută",
 "PE10":"Certificat invalid",
+"PE20":"No password backend defined",
 "PE21":"Contul dvs. este blocat",
 "PE22":"Parola dvs. a expirat",
 "PE23":"Certificat cerut",

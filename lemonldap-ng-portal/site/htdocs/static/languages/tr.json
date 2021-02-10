@@ -10,6 +10,7 @@
 "PE8":"Apache::Session modülü hata verdi",
 "PE9":"Kimlik doğrulama gerekli",
 "PE10":"Geçersiz sertifika",
+"PE20":"No password backend defined",
 "PE21":"Hesabınız kilitli",
 "PE22":"Parolanızın süresi doldu",
 "PE23":"Sertifika gerekli",

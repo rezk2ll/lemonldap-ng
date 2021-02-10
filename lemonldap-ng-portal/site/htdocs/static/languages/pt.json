@@ -10,6 +10,7 @@
 "PE8":"Erro do módulo Apache::Sessão escolhida",
 "PE9":"Queira autenticar-se",
 "PE10":"Certificado inválido",
+"PE20":"No password backend defined",
 "PE21":"A sua conta está bloqueada",
 "PE22":"A sua senha expirou",
 "PE23":"Certificado exigido",

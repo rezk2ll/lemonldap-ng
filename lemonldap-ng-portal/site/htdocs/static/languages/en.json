@@ -10,6 +10,7 @@
 "PE8":"Apache::Session module failed",
 "PE9":"Authentication required",
 "PE10":"Invalid certificate",
+"PE20":"No password backend defined",
 "PE21":"Your account is locked",
 "PE22":"Your password has expired",
 "PE23":"Certificate required",

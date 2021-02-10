@@ -10,6 +10,7 @@
 "PE8":"Errore del modulo Apache::Session",
 "PE9":"Autenticazione necessaria",
 "PE10":"Certificato non valido",
+"PE20":"No password backend defined",
 "PE21":"Account bloccato",
 "PE22":"Password scaduta",
 "PE23":"Certificato richiesto",

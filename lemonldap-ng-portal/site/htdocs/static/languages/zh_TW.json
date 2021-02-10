@@ -10,6 +10,7 @@
 "PE8":"Apache::Session 模組失效",
 "PE9":"需要驗證",
 "PE10":"無效的憑證",
+"PE20":"No password backend defined",
 "PE21":"您的帳號已鎖定",
 "PE22":"您的密碼已過期",
 "PE23":"需要驗證",
