@@ -621,13 +621,31 @@ sub tree {
                         {
                             title => 'portalServers',
                             help  => 'portalservers.html',
-                            form  => 'simpleInputContainer',
                             nodes => [
-                                'wsdlServer',         'restExportSecretKeys',
-                                'restClockTolerance', 'restSessionServer',
-                                'restConfigServer',   'restAuthServer',
-                                'restPasswordServer', 'soapSessionServer',
-                                'soapConfigServer',   'exportedAttr',
+                                'exportedAttr',
+                                {
+                                    title => 'restServices',
+                                    help  => 'portalservers.html#REST',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'restSessionServer',
+                                        'restConfigServer',
+                                        'restAuthServer',
+                                        'restPasswordServer',
+                                        'restExportSecretKeys',
+                                        'restClockTolerance',
+                                    ]
+                                },
+                                {
+                                    title => 'soapServices',
+                                    help  => 'portalservers.html#SOAP_(deprecated)',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'soapSessionServer',
+                                        'soapConfigServer',
+                                        'wsdlServer',
+                                    ]
+                                },
                             ]
                         },
                         {

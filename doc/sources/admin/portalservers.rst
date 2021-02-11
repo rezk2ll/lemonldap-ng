@@ -15,32 +15,33 @@ for several usage:
 Configuration
 -------------
 
+-  **SOAP/REST exported attributes**: list session attributes shared
+   trough SOAP/REST
+   
+   -  Use ``+`` to append to the default list of technical attributes,
+      example: ``+ uid mail``
+
 REST
 ~~~~
 
-Go in ``General Parameters`` > ``Plugins`` > ``Portal servers``:
+Go in ``General Parameters`` > ``Plugins`` > ``Portal servers`` > ``REST services``:
 
--  **REST session server**: Enable REST for sessions
--  **REST configuration server**: Enable REST for configuration
--  **SOAP/REST exported attributes**: list session attributes shared
-   trough REST
-
-   -  use ``+`` to append to the default list of technical attributes,
-      example: ``+ uid mail``
+-  **Session server**: Enable REST for sessions
+-  **Configuration server**: Enable REST for configuration
+-  **Authentication server**: Enable REST for authentication
+-  **Password reset server**: Enable REST for password reset
+-  **Server clock tolerance**: Allow a clock drift
+-  **Export secret attributes**: Secret attributes can be exported
 
 See also :doc:`REST Services<restservices>`.
 
 SOAP *(deprecated)*
 ~~~~~~~~~~~~~~~~~~~
 
-Go in ``General Parameters`` > ``Plugins`` > ``Portal servers``:
+Go in ``General Parameters`` > ``Plugins`` > ``Portal servers`` > ``SOAP services``:
 
--  **SOAP session server**: Enable SOAP for sessions
--  **SOAP configuration server**: Enable SOAP for configuration
--  **SOAP/REST exported attributes**: list session attributes shared
-   trough SOAP
-
-   -  use ``+`` to append to the default list of technical attributes,
-      example: ``+ uid mail``
+-  **Session server**: Enable SOAP for sessions
+-  **Configuration server**: Enable SOAP for configuration
+-  **WSDL server**: Enable WSDL server
 
 See also :doc:`SOAP Services<soapservices>`.
