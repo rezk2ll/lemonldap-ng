@@ -114,13 +114,17 @@ sub run {
         $self->userLogger->error("CheckDevOps: bad 'rules.json' file ($@)");
     }
     else {
-        my $vhost = $self->p->HANDLER->resolveAlias($req);
-        $self->p->HANDLER->headersInit( undef, { $vhost => $json->{headers} } );
-        $self->p->HANDLER->locationRulesInit( undef,
-            { $vhost => $json->{rules} } );
-        $headers = $self->p->HANDLER->checkHeaders( $req, $req->userData );
+        my $vhost   = $self->p->HANDLER->resolveAlias($req);
+        my $handler = $self->p->HANDLER;
+
+        # Compile headers & rules
+        $handler->headersInit( undef,       { $vhost => $json->{headers} } );
+        $handler->locationRulesInit( undef, { $vhost => $json->{rules} } );
+        $headers = $handler->checkHeaders( $req, $req->userData );
         my $list = join ', ', map { "$_->{key}:$_->{value}" } @$headers;
         $self->logger->debug("CheckDevOps compiled headers: $list");
+
+        # Prepare form
         $msg   = 'checkDevOps';
         $alert = 'alert-info';
         $json  = $req->param('checkDevOpsFile');
