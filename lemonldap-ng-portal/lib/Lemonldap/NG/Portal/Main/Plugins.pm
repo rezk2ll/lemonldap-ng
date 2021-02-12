@@ -28,6 +28,7 @@ our @pList = (
     checkState                          => '::Plugins::CheckState',
     portalForceAuthn                    => '::Plugins::ForceAuthn',
     checkUser                           => '::Plugins::CheckUser',
+    checkDevOps                         => '::Plugins::CheckDevOps',
     impersonationRule                   => '::Plugins::Impersonation',
     contextSwitchingRule                => '::Plugins::ContextSwitching',
     decryptValueRule                    => '::Plugins::DecryptValue',

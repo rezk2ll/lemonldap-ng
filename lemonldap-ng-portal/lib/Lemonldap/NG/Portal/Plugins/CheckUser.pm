@@ -133,7 +133,6 @@ sub display {
     $array_attrs = $self->_dispatchAttributes(
         $self->_createArray( $req, $attrs, $req->userData ) );
 
-    # Display form
     my $params = {
         PORTAL     => $self->conf->{portal},
         MAIN_LOGO  => $self->conf->{portalMainLogo},
@@ -191,7 +190,10 @@ sub check {
             LOGIN     => '',
             TOKEN     => $token,
         };
-        return $self->p->sendJSONresponse( $req, $params ) if $req->wantJSON;
+        return $self->p->sendJSONresponse( $req, $params )
+          if $req->wantJSON && $msg;
+          
+        # Display form
         return $self->p->sendHtml( $req, 'checkuser', params => $params )
           if $msg;
     }

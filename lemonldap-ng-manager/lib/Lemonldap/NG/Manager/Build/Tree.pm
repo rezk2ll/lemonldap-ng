@@ -638,7 +638,8 @@ sub tree {
                                 },
                                 {
                                     title => 'soapServices',
-                                    help  => 'portalservers.html#SOAP_(deprecated)',
+                                    help =>
+                                      'portalservers.html#SOAP_(deprecated)',
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'soapSessionServer',
@@ -773,6 +774,12 @@ sub tree {
                             help  => 'checkstate.html',
                             form  => 'simpleInputContainer',
                             nodes => [ 'checkState', 'checkStateSecret', ],
+                        },
+                        {
+                            title => 'devOpsCheck',
+                            help  => 'checkdevops.html',
+                            form  => 'simpleInputContainer',
+                            nodes => ['checkDevOps'],
                         },
                         {
                             title => 'checkUsers',

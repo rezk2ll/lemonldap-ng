@@ -464,6 +464,12 @@ sub attributes {
             type          => 'text',
             documentation => 'Secret token for CheckState plugin',
         },
+        checkDevOps => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable check DevOps',
+            flags         => 'p',
+        },
         checkUser => {
             default       => 0,
             type          => 'bool',

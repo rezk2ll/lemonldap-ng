@@ -862,6 +862,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'cfgVersion' => {
             'type' => 'text'
         },
+        'checkDevOps' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'checkState' => {
             'default' => 0,
             'type'    => 'bool'
