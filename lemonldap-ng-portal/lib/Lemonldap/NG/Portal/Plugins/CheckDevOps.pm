@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Plugins::CheckDevOps;
 
 use strict;
 use Mouse;
-use JSON qw(from_json to_json);
+use JSON qw(from_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
@@ -66,9 +66,9 @@ sub display {
 }
 
 sub run {
-    my ( $self, $req ) = @_;
-    my ( $msg, $alert );
-    my $headers = [];
+    my ( $self,    $req )   = @_;
+    my ( $headers, $rules ) = ( [], [] );
+    my ( $msg,     $alert );
 
     # Check token
     if ( $self->ottRule->( $req, {} ) ) {
@@ -88,6 +88,7 @@ sub run {
             $token = $self->ott->createToken();
         }
 
+        # Prepare form
         my $params = {
             PORTAL    => $self->conf->{portal},
             MAIN_LOGO => $self->conf->{portalMainLogo},
@@ -108,29 +109,56 @@ sub run {
 
     my $json = eval { from_json( $req->param('checkDevOpsFile') ) };
     if ($@) {
+
+        # Prepare form params
         $msg   = 'PE' . PE_BAD_DEVOPS_FILE;
         $alert = 'alert-danger';
         $json  = '';
         $self->userLogger->error("CheckDevOps: bad 'rules.json' file ($@)");
     }
     else {
-        my $vhost   = $self->p->HANDLER->resolveAlias($req);
         my $handler = $self->p->HANDLER;
+        my $vhost   = $handler->resolveAlias($req);
 
-        # Compile headers & rules
-        $handler->headersInit( undef,       { $vhost => $json->{headers} } );
-        $handler->locationRulesInit( undef, { $vhost => $json->{rules} } );
+        # Removed forbidden session attributes
+        foreach my $v ( split /\s+/, $self->conf->{hiddenAttributes} ) {
+            foreach ( keys %{ $json->{headers} } ) {
+                if ( $json->{headers}->{$_} eq '$' . $v ) {
+                    delete $json->{headers}->{$_};
+                    my $user = $req->userData->{ $self->conf->{whatToTrace} };
+                    $self->userLogger->warn(
+                        "CheckDevOps: $user try to retrieve hidden attribute $v"
+                    );
+                }
+            }
+        }
+
+        # Compile headers
+        $handler->headersInit( undef, { $vhost => $json->{headers} } );
         $headers = $handler->checkHeaders( $req, $req->userData );
-        my $list = join ', ', map { "$_->{key}:$_->{value}" } @$headers;
-        $self->logger->debug("CheckDevOps compiled headers: $list");
+        my $headers_list = join ', ', map { "$_->{key}:$_->{value}" } @$headers;
+        $self->logger->debug("CheckDevOps compiled headers: $headers_list");
 
-        # Prepare form
+        # Compile rules
+        @$rules = map {
+            my ( $sub, $flag ) = $handler->conditionSub( $json->{rules}->{$_} );
+            {
+                uri    => $_,
+                access => $sub->( $req, $req->userData )
+                ? 'allowed'
+                : 'forbidden'
+            }
+        } keys %{ $json->{rules} };
+        my $rules_list = join ', ', map { "$_->{uri}:$_->{access}" } @$rules;
+        $self->logger->debug("CheckDevOps compiled rules: $rules_list");
+
+        # Prepare form params
         $msg   = 'checkDevOps';
         $alert = 'alert-info';
-        $json  = $req->param('checkDevOpsFile');
-        $self->logger->debug("CheckDevOps provided file: $json");
+        $json  = JSON->new->ascii->pretty->encode($json);    # Pretty print
     }
 
+    # Prepare form
     my $params = {
         PORTAL    => $self->conf->{portal},
         MAIN_LOGO => $self->conf->{portalMainLogo},
@@ -140,6 +168,7 @@ sub run {
         ALERTE    => $alert,
         FILE      => $json,
         HEADERS   => $headers,
+        RULES     => $rules,
         TOKEN     => (
               $self->ottRule->( $req, {} )
             ? $self->ott->createToken()
