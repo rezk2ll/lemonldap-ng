@@ -68,6 +68,7 @@ sub display {
 sub run {
     my ( $self, $req ) = @_;
     my ( $msg, $alert );
+    my $headers = [];
 
     # Check token
     if ( $self->ottRule->( $req, {} ) ) {
@@ -107,15 +108,23 @@ sub run {
 
     my $json = eval { from_json( $req->param('checkDevOpsFile') ) };
     if ($@) {
-        $self->userLogger->error("CheckDevOps: bad 'rules.json' file ($@)");
         $msg   = 'PE' . PE_BAD_DEVOPS_FILE;
         $alert = 'alert-danger';
-        $json = '';
+        $json  = '';
+        $self->userLogger->error("CheckDevOps: bad 'rules.json' file ($@)");
     }
     else {
+        my $vhost = $self->p->HANDLER->resolveAlias($req);
+        $self->p->HANDLER->headersInit( undef, { $vhost => $json->{headers} } );
+        $self->p->HANDLER->locationRulesInit( undef,
+            { $vhost => $json->{rules} } );
+        $headers = $self->p->HANDLER->checkHeaders( $req, $req->userData );
+        my $list = join ', ', map { "$_->{key}:$_->{value}" } @$headers;
+        $self->logger->debug("CheckDevOps compiled headers: $list");
         $msg   = 'checkDevOps';
         $alert = 'alert-info';
         $json  = $req->param('checkDevOpsFile');
+        $self->logger->debug("CheckDevOps provided file: $json");
     }
 
     my $params = {
@@ -126,6 +135,7 @@ sub run {
         MSG       => $msg,
         ALERTE    => $alert,
         FILE      => $json,
+        HEADERS   => $headers,
         TOKEN     => (
               $self->ottRule->( $req, {} )
             ? $self->ott->createToken()

@@ -72,6 +72,7 @@ q"I refuse to compile rules.json when useSafeJail isn't activated! Yes I know, I
         }
     }
 
+    $class->logger->debug("DevOps handler called by $vhost");
     $class->locationRulesInit( undef, { $vhost => $json->{rules} } );
     $class->headersInit( undef,       { $vhost => $json->{headers} } );
     $class->tsv->{lastVhostUpdate}->{$vhost} = time;

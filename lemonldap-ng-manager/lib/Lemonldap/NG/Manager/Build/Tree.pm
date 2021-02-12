@@ -776,12 +776,6 @@ sub tree {
                             nodes => [ 'checkState', 'checkStateSecret', ],
                         },
                         {
-                            title => 'devOpsCheck',
-                            help  => 'checkdevops.html',
-                            form  => 'simpleInputContainer',
-                            nodes => ['checkDevOps'],
-                        },
-                        {
                             title => 'checkUsers',
                             help  => 'checkuser.html',
                             nodes => [
@@ -804,6 +798,12 @@ sub tree {
                                     ]
                                 },
                             ]
+                        },
+                        {
+                            title => 'devOpsCheck',
+                            help  => 'checkdevops.html',
+                            form  => 'simpleInputContainer',
+                            nodes => ['checkDevOps'],
                         },
                         {
                             title => 'impersonation',
