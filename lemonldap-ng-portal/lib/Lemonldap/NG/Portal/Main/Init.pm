@@ -125,8 +125,8 @@ sub init {
 
     # Purge loaded module list
     $self->loadedModules( {} );
-    $self->afterSub( {} );
-    $self->aroundSub( {} );
+    $self->afterSub(      {} );
+    $self->aroundSub(     {} );
 
     # Insert `reloadConf` in handler reload stack
     Lemonldap::NG::Handler::Main->onReload( $self, 'reloadConf' );
@@ -210,9 +210,9 @@ sub reloadConf {
     foreach ( qw(_macros _groups), @entryPoints ) {
         $self->{$_} = [];
     }
-    $self->afterSub( {} );
+    $self->afterSub(  {} );
     $self->aroundSub( {} );
-    $self->spRules( {} );
+    $self->spRules(   {} );
 
     # Load conf in portal object
     foreach my $key ( keys %$conf ) {
