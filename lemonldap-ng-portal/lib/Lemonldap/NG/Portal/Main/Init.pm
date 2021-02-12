@@ -250,8 +250,7 @@ sub reloadConf {
       $self->conf->{templateDir} . '/' . $self->conf->{portalSkin}
       if ( $self->conf->{templateDir} and $self->conf->{portalSkin} );
     unless ( -d $self->{templateDir} ) {
-        $self->error("Template dir $self->{templateDir} doesn't exist")
-          if ref( $self->{templateDir} ) eq 'SCALAR';
+        $self->error("Template dir $self->{templateDir} doesn't exist");
         return $self->fail;
     }
     $self->templateDir(
