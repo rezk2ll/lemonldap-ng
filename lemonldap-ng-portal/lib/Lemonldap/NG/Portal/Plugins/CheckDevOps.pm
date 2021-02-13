@@ -33,8 +33,8 @@ has ott => (
 
 sub init {
     my ($self) = @_;
-    $self->addAuthRoute( checkdevops => 'run',  ['POST'] )
-      ->addAuthRoute( checkdevops => 'display', ['GET'] );
+    $self->addAuthRoute( checkdevops => 'run', ['POST'] )
+      ->addAuthRouteWithRedirect( checkdevops => 'display', ['GET'] );
 
     return 1;
 }
@@ -148,7 +148,7 @@ sub run {
                 ? 'allowed'
                 : 'forbidden'
             }
-        } keys %{ $json->{rules} };
+        } sort keys %{ $json->{rules} };
         my $rules_list = join ', ', map { "$_->{uri}:$_->{access}" } @$rules;
         $self->logger->debug("CheckDevOps compiled rules: $rules_list");
 
