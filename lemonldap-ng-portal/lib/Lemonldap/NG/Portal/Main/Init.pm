@@ -127,6 +127,7 @@ sub init {
     $self->loadedModules( {} );
     $self->afterSub(      {} );
     $self->aroundSub(     {} );
+    $self->hook(          {} );
 
     # Insert `reloadConf` in handler reload stack
     Lemonldap::NG::Handler::Main->onReload( $self, 'reloadConf' );
@@ -213,6 +214,7 @@ sub reloadConf {
     $self->afterSub(  {} );
     $self->aroundSub( {} );
     $self->spRules(   {} );
+    $self->hook(      {} );
 
     # Load conf in portal object
     foreach my $key ( keys %$conf ) {
