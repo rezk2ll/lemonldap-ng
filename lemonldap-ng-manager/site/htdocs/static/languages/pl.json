@@ -198,6 +198,7 @@
 "claimName":"Nazwa roszczenia",
 "checkboxes":"Pola wyboru",
 "checkDevOps":"Activation",
+"checkDevOpsDownload":"Download file",
 "checkState":"Aktywacja",
 "checkStateSecret":"Współdzielony sekret",
 "checkUsers":"Sprawdź Profil SSO",

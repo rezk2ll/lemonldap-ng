@@ -198,6 +198,7 @@
 "claimName":"要求名稱",
 "checkboxes":"勾選框",
 "checkDevOps":"Activation",
+"checkDevOpsDownload":"Download file",
 "checkState":"啟用",
 "checkStateSecret":"已分享的祕密",
 "checkUsers":"SSO 設定檔檢查",

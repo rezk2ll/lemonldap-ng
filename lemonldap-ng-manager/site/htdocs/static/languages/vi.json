@@ -198,6 +198,7 @@
 "claimName":"Claim name",
 "checkboxes":"Checkboxes",
 "checkDevOps":"Activation",
+"checkDevOpsDownload":"Download file",
 "checkState":"Kích hoạt",
 "checkStateSecret":"Chia sẻ bí mật",
 "checkUsers":"SSO profile check",

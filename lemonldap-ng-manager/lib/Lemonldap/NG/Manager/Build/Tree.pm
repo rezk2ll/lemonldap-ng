@@ -803,7 +803,7 @@ sub tree {
                             title => 'devOpsCheck',
                             help  => 'checkdevops.html',
                             form  => 'simpleInputContainer',
-                            nodes => ['checkDevOps'],
+                            nodes => [ 'checkDevOps', 'checkDevOpsDownload' ],
                         },
                         {
                             title => 'impersonation',

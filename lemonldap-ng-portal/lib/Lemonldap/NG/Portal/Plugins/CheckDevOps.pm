@@ -3,9 +3,11 @@ package Lemonldap::NG::Portal::Plugins::CheckDevOps;
 use strict;
 use Mouse;
 use JSON qw(from_json);
+use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
+  PE_BADURL
   PE_NOTOKEN
   PE_TOKENEXPIRED
   PE_BAD_DEVOPS_FILE
@@ -31,6 +33,16 @@ has ott => (
     }
 );
 
+has ua => (
+    is      => 'rw',
+    lazy    => 1,
+    builder => sub {
+        my $ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
+        $ua->env_proxy();
+        return $ua;
+    }
+);
+
 sub init {
     my ($self) = @_;
     $self->addAuthRoute( checkdevops => 'run', ['POST'] )
@@ -50,6 +62,7 @@ sub display {
         MAIN_LOGO => $self->conf->{portalMainLogo},
         SKIN      => $self->p->getSkin($req),
         LANGS     => $self->conf->{showLanguages},
+        DOWNLOAD  => $self->conf->{checkDevOpsDownload},
         MSG       => 'checkDevOps',
         ALERTE    => 'alert-info',
         FILE      => '',
@@ -68,7 +81,7 @@ sub display {
 sub run {
     my ( $self,    $req )   = @_;
     my ( $headers, $rules ) = ( [], [] );
-    my ( $msg,     $alert );
+    my ( $msg, $json, $alert, $url );
 
     # Check token
     if ( $self->ottRule->( $req, {} ) ) {
@@ -94,6 +107,7 @@ sub run {
             MAIN_LOGO => $self->conf->{portalMainLogo},
             SKIN      => $self->p->getSkin($req),
             LANGS     => $self->conf->{showLanguages},
+            DOWNLOAD  => $self->conf->{checkDevOpsDownload},
             MSG       => "PE$msg",
             ALERTE    => 'alert-warning',
             FILE      => '',
@@ -107,16 +121,60 @@ sub run {
           if $msg;
     }
 
-    my $json = eval { from_json( $req->param('checkDevOpsFile') ) };
-    if ($@) {
+    # Check URL if allowed and exists
+    if ( $self->conf->{checkDevOpsDownload} and $url = $req->param('url') ) {
+        undef $url if $self->p->checkXSSAttack( 'CheckDevOps URL', $url );
+        if ( $url && $url =~ m#^(?:https?://)?([^/]*)(.*)#i ) {
 
-        # Prepare form params
-        $msg   = 'PE' . PE_BAD_DEVOPS_FILE;
-        $alert = 'alert-danger';
-        $json  = '';
-        $self->userLogger->error("CheckDevOps: bad 'rules.json' file ($@)");
+            # Reformat url
+            my ( $vhost, $appuri ) = $url =~ m#^(?:https?://)?([^/]*)(.*)#i;
+            my ($proto) = $url =~ m#^(https?://).*#i;
+            $proto ||= 'http://';
+            $url = "$proto$vhost/rules.json";
+            my $response =
+              $self->ua->get( $url, 'Accept' => 'application/json' );
+            $self->logger->debug( "Message/Code from $url: "
+                  . $response->{_msg} . '/'
+                  . $response->{_rc} );
+            $self->logger->debug(
+                "Content from $url/rules.json: " . $response->{_content} );
+            $json = eval { from_json( $response->{_content} ) };
+
+            if ($@) {
+
+                # Prepare form params
+                $msg   = 'PE' . PE_BAD_DEVOPS_FILE;
+                $alert = 'alert-danger';
+                $json  = '';
+                $self->userLogger->error(
+"CheckDevOps: bad 'rules.json' file retrieved from $url/rules.json ($@)"
+                );
+            }
+        }
+        else {
+
+            # Prepare form params
+            $msg   = 'PE' . PE_BADURL;
+            $alert = 'alert-danger';
+            $json  = '';
+            $self->userLogger->error('CheckDevOps: bad URL provided');
+        }
     }
-    else {
+    unless ( $json || $msg ) {
+        $json = eval { from_json( $req->param('checkDevOpsFile') ) };
+        if ($@) {
+
+            # Prepare form params
+            $msg   = 'PE' . PE_BAD_DEVOPS_FILE;
+            $alert = 'alert-danger';
+            $json  = '';
+            $self->userLogger->error(
+                "CheckDevOps: bad 'rules.json' file provided ($@)");
+        }
+    }
+
+    # Parse JSON
+    if ($json) {
         my $handler = $self->p->HANDLER;
         my $vhost   = $handler->resolveAlias($req);
 
@@ -164,11 +222,13 @@ sub run {
         MAIN_LOGO => $self->conf->{portalMainLogo},
         SKIN      => $self->p->getSkin($req),
         LANGS     => $self->conf->{showLanguages},
+        DOWNLOAD  => $self->conf->{checkDevOpsDownload},
         MSG       => $msg,
         ALERTE    => $alert,
         FILE      => $json,
         HEADERS   => $headers,
         RULES     => $rules,
+        URL       => $url,
         TOKEN     => (
               $self->ottRule->( $req, {} )
             ? $self->ott->createToken()

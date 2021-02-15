@@ -198,6 +198,7 @@
 "claimName":"Claim name",
 "checkboxes":"Checkboxes",
 "checkDevOps":"Activation",
+"checkDevOpsDownload":"Download file",
 "checkState":"تفعيل",
 "checkStateSecret":"سر مشترك",
 "checkUsers":"SSO profile check",

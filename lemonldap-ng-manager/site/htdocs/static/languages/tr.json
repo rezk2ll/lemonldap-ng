@@ -198,6 +198,7 @@
 "claimName":"İstek adı",
 "checkboxes":"Onay kutuları",
 "checkDevOps":"Activation",
+"checkDevOpsDownload":"Download file",
 "checkState":"Aktivasyon",
 "checkStateSecret":"Paylaşılan sır",
 "checkUsers":"TOA profil Kontrolü",

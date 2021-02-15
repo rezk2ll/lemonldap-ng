@@ -198,6 +198,7 @@
 "claimName":"Nom de la revendication",
 "checkboxes":"Cases à cocher",
 "checkDevOps":"Activation",
+"checkDevOpsDownload":"Télécharger un fichier",
 "checkState":"Activation",
 "checkStateSecret":"Secret partagé",
 "checkUsers":"Vérification des profils SSO",
