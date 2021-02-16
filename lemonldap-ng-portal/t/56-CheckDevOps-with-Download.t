@@ -114,7 +114,8 @@ ok( $res->[2]->[0] =~ m%\^/deny: <span trspan="forbidden">%, 'deny' )
   or explain( $res->[2]->[0], 'deny' );
 ok( $res->[2]->[0] =~ m%\$uid eq qq{dwho}"%, 'file' )
   or explain( $res->[2]->[0], 'file' );
-ok( $res->[2]->[0] !~ m%Mail: dwho\@badwolf.org<br/>%, 'Hearder Mail not found' )
+ok( $res->[2]->[0] !~ m%Mail: dwho\@badwolf.org<br/>%,
+    'Hearder Mail not found' )
   or explain( $res->[2]->[0], 'No hearder Mail' );
 ok( $res->[2]->[0] =~ m%UA: <br/>%, 'Hearder UA found' )
   or explain( $res->[2]->[0], 'Hearder UA' );
@@ -151,10 +152,8 @@ ok( $res->{MSG} eq 'checkDevOps', 'MSG found' )
 count(8);
 
 $client->logout($id);
-
 clean_sessions();
-
-done_testing( count() );
+done_testing();
 
 # Redefine LWP methods for tests
 no warnings 'redefine';

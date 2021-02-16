@@ -148,7 +148,8 @@ ok( $res->[2]->[0] =~ m%Name: Doctor Who<br/>%, 'Hearder Name found' )
   or explain( $res->[2]->[0], 'Hearder Name' );
 ok( $res->[2]->[0] =~ m%User: dwho<br/>%, 'Hearder User found' )
   or explain( $res->[2]->[0], 'Hearder User' );
-ok( $res->[2]->[0] !~ m%Mail: dwho\@badwolf.org<br/>%, 'Hearder Mail not found' )
+ok( $res->[2]->[0] !~ m%Mail: dwho\@badwolf.org<br/>%,
+    'Hearder Mail not found' )
   or explain( $res->[2]->[0], 'No hearder Mail' );
 ok( $res->[2]->[0] !~ m%UA: <br/>%, 'Hearder UA not found' )
   or explain( $res->[2]->[0], 'No hearder UA' );
@@ -274,7 +275,5 @@ ok( $res->{MSG} eq 'PE81', 'PE81 found' )
 count(5);
 
 $client->logout($id);
-
 clean_sessions();
-
-done_testing( count() );
+done_testing();
