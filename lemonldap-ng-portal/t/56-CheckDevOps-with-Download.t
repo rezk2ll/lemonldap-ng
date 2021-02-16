@@ -12,8 +12,8 @@ my $res;
 my $file = '{
   "rules": {
     "^/deny": "deny",
-    "^/testno": "$uid ne qq{dwho}",
-    "^/testyes": "$uid eq qq{dwho}",
+    "^/testno": "$uid ne qq#dwho#",
+    "^/testyes": "$uid eq qq#dwho#",
     "default": "accept"
   },
   "headers": {
@@ -164,8 +164,8 @@ sub LWP::UserAgent::request {
     my $s = '{
   "rules": {
     "^/deny": "deny",
-    "^/testno": "$uid ne qq{dwho}",
-    "^/testyes": "$uid eq qq{dwho}",
+    "^/testno": "$uid ne qq#dwho#",
+    "^/testyes": "$uid eq qq#dwho#",
     "default": "accept"
   },
   "headers": {
