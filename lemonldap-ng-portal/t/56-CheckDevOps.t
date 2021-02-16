@@ -24,7 +24,7 @@ my $file = '{
 }';
 my $bad_file = '{
   "rules": {
-    "^/testno": "$uid ne qq{dwho}"
+    "^/testno": "$uid ne qq#dwho#"
     "default": "accept"
   },
   "headers": {
@@ -165,7 +165,7 @@ ok( $res->[2]->[0] =~ m%\^/testyes: <span trspan="allowed">%, 'testyes' )
   or explain( $res->[2]->[0], 'testyes' );
 ok( $res->[2]->[0] =~ m%\^/deny: <span trspan="forbidden">%, 'deny' )
   or explain( $res->[2]->[0], 'deny' );
-ok( $res->[2]->[0] =~ m%\$uid eq qq{dwho}"%, 'file' )
+ok( $res->[2]->[0] =~ m%\$uid eq qq#dwho#"%, 'file' )
   or explain( $res->[2]->[0], 'file' );
 count(13);
 ( $host, $url, $query ) =
@@ -191,7 +191,7 @@ ok( $res->{FILE} =~ /headers/, 'headers found' )
   or print STDERR Dumper($res);
 ok( $res->{FILE} =~ /rules/, 'rules found' )
   or print STDERR Dumper($res);
-ok( $res->{FILE} =~ /"\$uid ne qq{dwho}"/, 'rule found' )
+ok( $res->{FILE} =~ /"\$uid ne qq#dwho#"/, 'rule found' )
   or print STDERR Dumper($res);
 count(6);
 
