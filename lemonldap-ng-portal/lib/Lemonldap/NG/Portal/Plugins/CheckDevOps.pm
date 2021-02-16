@@ -10,6 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADURL
   PE_NOTOKEN
   PE_TOKENEXPIRED
+  PE_FILENOTFOUND
   PE_BAD_DEVOPS_FILE
 );
 
@@ -133,21 +134,33 @@ sub run {
             $url = "$proto$vhost/rules.json";
             my $response =
               $self->ua->get( $url, 'Accept' => 'application/json' );
-            $self->logger->debug( "Message/Code from $url: "
-                  . $response->{_msg} . '/'
-                  . $response->{_rc} );
+            $self->logger->debug( "Code/Message from $url: "
+                  . $response->{_rc} . '/'
+                  . $response->{_msg} );
             $self->logger->debug(
-                "Content from $url: " . $response->{_content} );
-            $json = eval { from_json( $response->{_content} ) };
+                "Content from $url: " . $response->{_content} ) if $response->{_content};
 
-            if ($@) {
+            if ( $response->{_rc} == 200 ) {
+                $json = eval { from_json( $response->{_content} ) };
+                if ($@) {
+
+                    # Prepare form params
+                    $msg   = 'PE' . PE_BAD_DEVOPS_FILE;
+                    $alert = 'alert-danger';
+                    $json  = '';
+                    $self->userLogger->error(
+"CheckDevOps: bad 'rules.json' file retrieved from $url ($@)"
+                    );
+                }
+            }
+            else {
 
                 # Prepare form params
-                $msg   = 'PE' . PE_BAD_DEVOPS_FILE;
+                $msg   = 'PE' . PE_FILENOTFOUND;
                 $alert = 'alert-danger';
                 $json  = '';
                 $self->userLogger->error(
-"CheckDevOps: bad 'rules.json' file retrieved from $url ($@)"
+"CheckDevOps: Unable to download 'rules.json' file from $url"
                 );
             }
         }
@@ -157,7 +170,7 @@ sub run {
             $msg   = 'PE' . PE_BADURL;
             $alert = 'alert-danger';
             $json  = '';
-            $self->userLogger->error('CheckDevOps: bad URL provided');
+            $self->userLogger->error('CheckDevOps: bad provided URL');
         }
     }
     unless ( $json || $msg ) {
@@ -185,7 +198,7 @@ sub run {
                     delete $json->{headers}->{$_};
                     my $user = $req->userData->{ $self->conf->{whatToTrace} };
                     $self->userLogger->warn(
-                        "CheckDevOps: $user tried to retrieve hidden attribute $v"
+"CheckDevOps: $user tried to retrieve hidden attribute '$v'"
                     );
                 }
             }

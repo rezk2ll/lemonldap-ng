@@ -21,6 +21,7 @@ sub portalConsts {
         '102' => 'PE_UPGRADESESSION',
         '103' => 'PE_NO_SECOND_FACTORS',
         '104' => 'PE_BAD_DEVOPS_FILE',
+        '105' => 'PE_FILENOTFOUND',
         '2'   => 'PE_FORMEMPTY',
         '20'  => 'PE_NO_PASSWORD_BE',
         '21'  => 'PE_PP_ACCOUNT_LOCKED',

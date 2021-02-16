@@ -95,6 +95,7 @@
 "PE102":"Mise à niveau de la session",
 "PE103":"Aucun second facteur disponible pour votre compte",
 "PE104":"Fichier DevOps mal formaté",
+"PE105":"Fichier inexistant",
 "2FDeviceNotFound":"Second facteur non trouvé",
 "2fRegRequired":"Ce service requiert une authentification à deux facteurs. Enregistrez un équipement ici et retournez au portail.",
 "accept":"Accepter",

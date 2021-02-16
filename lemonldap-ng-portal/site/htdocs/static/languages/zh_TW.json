@@ -95,6 +95,7 @@
 "PE102":"工作階段必須升級",
 "PE103":"您的帳號沒有可用的第二因素",
 "PE104":"Bad DevOps handler file",
+"PE105":"File not found",
 "2FDeviceNotFound":"找不到雙因素驗證裝置",
 "2fRegRequired":"此服務需要雙因素驗證。請先註冊裝置，然後在回到首頁。",
 "accept":"接受",

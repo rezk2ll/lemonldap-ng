@@ -95,6 +95,7 @@
 "PE102":"Sesja musi zostać zaktualizowana",
 "PE103":"Na Twoim koncie nie ma dostępnych drugich czynników",
 "PE104":"Bad DevOps handler file",
+"PE105":"File not found",
 "2FDeviceNotFound":"Nie znaleziono urządzenia 2F",
 "2fRegRequired":"Ta usługa wymaga podwójnego uwierzytelnienia. Zarejestruj urządzenie 2ndFA teraz, a następnie wróć do portalu.",
 "accept":"Akceptuj",

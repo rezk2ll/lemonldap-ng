@@ -25,7 +25,7 @@ my $file = '{
 }';
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel            => 'error',
+            logLevel            => 'debug',
             authentication      => 'Demo',
             userDB              => 'Same',
             requireToken        => 0,
@@ -123,6 +123,26 @@ count(13);
 ( $host, $url, $query ) =
   expectForm( $res, undef, '/checkdevops', 'checkDevOpsFile' );
 
+# Fail to download file
+# ---------------------
+$query = 'url=http://testfail.example.com';
+ok(
+    $res = $client->_post(
+        '/checkdevops',
+        IO::String->new($query),
+        cookie => "lemonldap=$id",
+        length => length($query),
+    ),
+    'POST checkdevops with url'
+);
+ok( $res = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+  or print STDERR "$@\n" . Dumper($res);
+ok( $res->{ALERTE} eq 'alert-danger', 'alert-danger found' )
+  or print STDERR Dumper($res);
+ok( $res->{MSG} eq 'PE105', 'PE105' )
+  or print STDERR Dumper($res);
+count(4);
+
 # Download file
 # -------------
 $query = 'url=http://test3.example.com';
@@ -174,9 +194,16 @@ sub LWP::UserAgent::request {
     "Name": "$cn"
   }
 }';
-    $httpResp = HTTP::Response->new( 200, 'OK' );
-    $httpResp->header( 'Content-Type',   'application/json' );
-    $httpResp->header( 'Content-Length', length($s) );
-    $httpResp->content($s);
+
+    if ( $req->{_uri} =~ /testfail\.example\.com/ ) {
+        $httpResp = HTTP::Response->new( 404, 'NOT FOUND' );
+        $httpResp->header( 'Content-Length', 0 );
+    }
+    else {
+        $httpResp = HTTP::Response->new( 200, 'OK' );
+        $httpResp->header( 'Content-Length', length($s) );
+        $httpResp->header( 'Content-Type',   'application/json' );
+        $httpResp->content($s);
+    }
     return $httpResp;
 }

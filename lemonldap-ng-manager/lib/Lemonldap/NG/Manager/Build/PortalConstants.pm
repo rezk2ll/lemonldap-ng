@@ -112,7 +112,8 @@ sub portalConstants {
         PE_PP_NOT_ALLOWED_CHARACTERS         => 101,
         PE_UPGRADESESSION                    => 102,
         PE_NO_SECOND_FACTORS                 => 103,
-        PE_BAD_DEVOPS_FILE                   => 104
+        PE_BAD_DEVOPS_FILE                   => 104,
+        PE_FILENOTFOUND                      => 105
     };
 }
 

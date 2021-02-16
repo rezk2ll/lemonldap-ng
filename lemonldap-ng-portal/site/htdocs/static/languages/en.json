@@ -95,6 +95,7 @@
 "PE102":"Session must be upgraded",
 "PE103":"No second factors available for your account",
 "PE104":"Bad DevOps handler file",
+"PE105":"File not found",
 "2FDeviceNotFound":"2F device not found",
 "2fRegRequired":"This service requires a double factor authentication. Register a device now, then go back to the portal.",
 "accept":"Accept",
