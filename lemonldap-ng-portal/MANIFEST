@@ -634,6 +634,7 @@ t/43-MailPasswordReset.t
 t/44-CertificateResetByMail-Demo.t
 t/44-CertificateResetByMail-LDAP.t
 t/50-IssuerGet.t
+t/56-CheckDevOps-with-Download.t
 t/56-CheckDevOps.t
 t/57-GlobalLogout-with-Double-cookies-Single-session.t
 t/57-GlobalLogout-with-Double-cookies.t

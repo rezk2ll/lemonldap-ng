@@ -137,7 +137,7 @@ sub run {
                   . $response->{_msg} . '/'
                   . $response->{_rc} );
             $self->logger->debug(
-                "Content from $url/rules.json: " . $response->{_content} );
+                "Content from $url: " . $response->{_content} );
             $json = eval { from_json( $response->{_content} ) };
 
             if ($@) {
@@ -147,7 +147,7 @@ sub run {
                 $alert = 'alert-danger';
                 $json  = '';
                 $self->userLogger->error(
-"CheckDevOps: bad 'rules.json' file retrieved from $url/rules.json ($@)"
+"CheckDevOps: bad 'rules.json' file retrieved from $url ($@)"
                 );
             }
         }
@@ -185,7 +185,7 @@ sub run {
                     delete $json->{headers}->{$_};
                     my $user = $req->userData->{ $self->conf->{whatToTrace} };
                     $self->userLogger->warn(
-                        "CheckDevOps: $user try to retrieve hidden attribute $v"
+                        "CheckDevOps: $user tried to retrieve hidden attribute $v"
                     );
                 }
             }

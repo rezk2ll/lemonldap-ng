@@ -31,15 +31,15 @@ my $bad_file = '{
     "User": "$uid",
   }
 }';
-
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel         => 'error',
-            authentication   => 'Demo',
-            userDB           => 'Same',
-            requireToken     => 1,
-            checkDevOps      => 1,
-            hiddenAttributes => 'mail UA'
+            logLevel            => 'error',
+            authentication      => 'Demo',
+            userDB              => 'Same',
+            requireToken        => 1,
+            checkDevOps         => 1,
+            checkDevOpsDownload => 0,
+            hiddenAttributes    => 'mail UA'
         }
     }
 );
@@ -134,6 +134,11 @@ ok(
     ),
     'POST checkdevops with file'
 );
+ok(
+    $res->[2]->[0] =~
+m%<pre><textarea id="checkDevOpsFile" name="checkDevOpsFile" class="form-control rounded-1" rows="6" trplaceholder="pasteHere" required>%,
+    'PRE required'
+) or explain( $res->[2]->[0], 'PRE required' );
 
 # Headers
 ok( $res->[2]->[0] =~ m%<b><span trspan="headers">HEADERS</span></b>%,
@@ -143,6 +148,10 @@ ok( $res->[2]->[0] =~ m%Name: Doctor Who<br/>%, 'Hearder Name found' )
   or explain( $res->[2]->[0], 'Hearder Name' );
 ok( $res->[2]->[0] =~ m%User: dwho<br/>%, 'Hearder User found' )
   or explain( $res->[2]->[0], 'Hearder User' );
+ok( $res->[2]->[0] !~ m%Mail: dwho\@badwolf.org<br/>%, 'Hearder Mail not found' )
+  or explain( $res->[2]->[0], 'No hearder Mail' );
+ok( $res->[2]->[0] !~ m%UA: <br/>%, 'Hearder UA not found' )
+  or explain( $res->[2]->[0], 'No hearder UA' );
 
 # Rules
 ok( $res->[2]->[0] =~ m%<b><span trspan="rules">RULES</span></b>%, 'RULES' )
@@ -157,7 +166,7 @@ ok( $res->[2]->[0] =~ m%\^/deny: <span trspan="forbidden">%, 'deny' )
   or explain( $res->[2]->[0], 'deny' );
 ok( $res->[2]->[0] =~ m%\$uid eq qq{dwho}"%, 'file' )
   or explain( $res->[2]->[0], 'file' );
-count(10);
+count(13);
 ( $host, $url, $query ) =
   expectForm( $res, undef, '/checkdevops', 'checkDevOpsFile', 'token' );
 
