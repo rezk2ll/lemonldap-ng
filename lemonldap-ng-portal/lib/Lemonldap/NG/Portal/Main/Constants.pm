@@ -4,7 +4,7 @@ package Lemonldap::NG::Portal::Main::Constants;
 use strict;
 use Exporter 'import';
 
-our $VERSION = '2.0.11';
+our $VERSION = '2.0.12';
 
 use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::Main';
 use constant {
@@ -108,6 +108,7 @@ use constant {
     PE_PP_NOT_ALLOWED_CHARACTERS         => 101,
     PE_UPGRADESESSION                    => 102,
     PE_NO_SECOND_FACTORS                 => 103,
+    PE_BAD_DEVOPS_FILE                   => 104,
 };
 
 sub portalConsts {
@@ -124,6 +125,7 @@ sub portalConsts {
         '101' => 'PE_PP_NOT_ALLOWED_CHARACTERS',
         '102' => 'PE_UPGRADESESSION',
         '103' => 'PE_NO_SECOND_FACTORS',
+        '104' => 'PE_BAD_DEVOPS_FILE',
         '2'   => 'PE_FORMEMPTY',
         '20'  => 'PE_NO_PASSWORD_BE',
         '21'  => 'PE_PP_ACCOUNT_LOCKED',
@@ -319,7 +321,8 @@ our @EXPORT_OK = (
     'PE_PP_NOT_ALLOWED_CHARACTER',
     'PE_PP_NOT_ALLOWED_CHARACTERS',
     'PE_UPGRADESESSION',
-    'PE_NO_SECOND_FACTORS'
+    'PE_NO_SECOND_FACTORS',
+    'PE_BAD_DEVOPS_FILE'
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT_OK, 'import' ], );
 

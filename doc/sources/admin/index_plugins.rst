@@ -8,6 +8,7 @@ Plugins
    autosignin
    bruteforceprotection
    cda
+   checkdevops
    checkstate
    checkuser
    viewer

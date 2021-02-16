@@ -107,6 +107,7 @@ lib/Lemonldap/NG/Portal/Plugins/AutoSignin.pm
 lib/Lemonldap/NG/Portal/Plugins/BruteForceProtection.pm
 lib/Lemonldap/NG/Portal/Plugins/CDA.pm
 lib/Lemonldap/NG/Portal/Plugins/CertificateResetByMail.pm
+lib/Lemonldap/NG/Portal/Plugins/CheckDevOps.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckState.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckUser.pm
 lib/Lemonldap/NG/Portal/Plugins/ContextSwitching.pm
@@ -389,6 +390,7 @@ site/templates/bootstrap/2fregisters.tpl
 site/templates/bootstrap/captcha.tpl
 site/templates/bootstrap/casBack2Url.tpl
 site/templates/bootstrap/certificateReset.tpl
+site/templates/bootstrap/checkdevops.tpl
 site/templates/bootstrap/checklogins.tpl
 site/templates/bootstrap/checkuser.tpl
 site/templates/bootstrap/confirm.tpl
@@ -632,6 +634,8 @@ t/43-MailPasswordReset.t
 t/44-CertificateResetByMail-Demo.t
 t/44-CertificateResetByMail-LDAP.t
 t/50-IssuerGet.t
+t/56-CheckDevOps-with-Download.t
+t/56-CheckDevOps.t
 t/57-GlobalLogout-with-Double-cookies-Single-session.t
 t/57-GlobalLogout-with-Double-cookies.t
 t/57-GlobalLogout-without-Timer.t

@@ -271,24 +271,25 @@ Name                                                                 Description
 :doc:`Auto Signin<autosignin>` |new|                                 Auto Signin Addon
 :doc:`Brute Force protection<bruteforceprotection>` |new|            User must wait to log in after some failed login attempts
 :doc:`CDA<cda>`                                                      Cross Domain Authentication
+:doc:`Check DevOps<checkdevops>` [5]_ |new|                          Check DevOps handler file plugin
 :doc:`Check state<checkstate>` |new|                                 Check state plugin (test page)
-:doc:`Check user<checkuser>`  [5]_ |new|                             Check access rights, transmitted headers and session attibutes for a specific user and URL
+:doc:`Check user<checkuser>`  [6]_ |new|                             Check access rights, transmitted headers and session attibutes for a specific user and URL
 :doc:`Configuration viewer<viewer>` |new|                            Edit WebSSO configuration in Read Only mode
-:doc:`Context switching<contextswitching>`  [6]_\ |new|              Switch context other users
+:doc:`Context switching<contextswitching>`  [7]_\ |new|              Switch context other users
 :doc:`Custom<plugincustom>`                                          Write a custom plugin
-:doc:`Decrypt value<decryptvalue>`  [7]_\ |image35|                  Decrypt ciphered values
-:doc:`Display login history<loginhistory>`
+:doc:`Decrypt value<decryptvalue>`  [8]_\ |image35|                  Decrypt ciphered values
+:doc:`Display login history<loginhistory>`                           Display Success/Fails logins
 :doc:`Force Authentication<forcereauthn>`                            Force authentication to access to Portal
-:doc:`Global Logout<globallogout>`  [8]_                             Suggest to close all opened sessions at logout
+:doc:`Global Logout<globallogout>`  [9]_                             Suggest to close all opened sessions at logout
 :doc:`Grant Sessions<grantsession>`                                  Rules to apply before allowing a user to open a session
-:doc:`Impersonation<impersonation>`  [9]_\ |new|                     Allow users to use another identity
-:doc:`Find user<finduser>`  [10]_\ |new|                             Search for user account
-:doc:`Notifications system<notifications>`
+:doc:`Impersonation<impersonation>`  [10]_\ |new|                     Allow users to use another identity
+:doc:`Find user<finduser>`  [11]_\ |new|                             Search for user account
+:doc:`Notifications system<notifications>`                           DIsplay a message during log in process 
 :doc:`Portal Status<status>`                                         Experimental portal status page
 :doc:`Public pages<public_pages>`                                    Enable public pages system
-:doc:`Refresh session API<refreshsessionapi>`  [11]_                 Plugin that provides an API to refresh a user session
-:doc:`Reset password by mail<resetpassword>`
-:doc:`Reset certificate by mail<resetcertificate>`  [12]_\ |image37| Allow users to reset their certificate
+:doc:`Refresh session API<refreshsessionapi>`  [12]_                 Plugin that provides an API to refresh a user session
+:doc:`Reset password by mail<resetpassword>`                         Send a mail to reset its password
+:doc:`Reset certificate by mail<resetcertificate>`  [13]_\ |image37| Allow users to reset their certificate
 :doc:`REST services<restservices>` |new|                             REST server for :doc:`Proxy<authproxy>`
 :doc:`SOAP services<soapservices>` |deprecated|                      SOAP server for :doc:`Proxy<authproxy>`
 :doc:`Stay connected<stayconnected>` |new|                           Enable persistent connection on same browser
@@ -306,12 +307,12 @@ Handlers are software control agents to be installed on your web servers
 ==================================================================== ========== ============================================================= =========================================== ================================================================================== =============================================== ======================================================================================================================
 Handler type                                                         Apache     LLNG FastCGI/uWSGI server (Nginx, or :doc:`SSOaaS<ssoaas>`)   `Plack servers <https://plackperl.org>`__   Node.js  ( `express apps <http://expressjs.com/>`__\  or :doc:`SSOaaS<ssoaas>`)    :doc:`Self protected apps<selfmadeapplication>`   Comment
 ==================================================================== ========== ============================================================= =========================================== ================================================================================== =============================================== ======================================================================================================================
-Main *(default handler)*                                             ✔          ✔                                                             ✔                                           :doc:`Partial<nodehandler>` ** [13]_ **                                             ✔
+Main *(default handler)*                                             ✔          ✔                                                             ✔                                           :doc:`Partial<nodehandler>` ** [14]_ **                                             ✔
 :doc:`AuthBasic<handlerauthbasic>`                                   ✔          ✔                                                             ✔                                                                                                                              ✔                                               Designed for some server-to-server applications
 :doc:`CDA<cda>`                                                      ✔          ✔                                                             ✔                                                                                                                              ✔                                               For Cross Domain Authentication
 :doc:`DevOps<devopshandler>`  (:doc:`SSOaaS<ssoaas>`)  |new|         ✔          ✔                                                             ✔                                           ✔                                                                                                                                  Allows application developers to define their own rules and headers inside their applications
 :doc:`DevOpsST<devopssthandler>`  (:doc:`SSOaaS<ssoaas>`)  |new|     ✔          ✔                                                             ✔                                           ✔                                                                                                                                  Enables both :doc:`DevOps<devopshandler>` and :doc:`Service Token<servertoserver>`
-:doc:`OAuth2<oauth2handler>`  [14]_\ |new|                           ✔          ✔                                                             ✔                                                                                                                              ✔                                               Uses OpenID Connect/OAuth2 access token to check authentication and authorization, can be used to protect Web Services
+:doc:`OAuth2<oauth2handler>`  [15]_\ |new|                           ✔          ✔                                                             ✔                                                                                                                              ✔                                               Uses OpenID Connect/OAuth2 access token to check authentication and authorization, can be used to protect Web Services
 :doc:`Secure Token<securetoken>`                                     ✔          ✔                                                             ✔                                                                                                                                                                              Designed to secure exchanges between a LLNG reverse-proxy and a remote app
 :doc:`Service Token<servertoserver>` |new| *(Server-to-Server)*      ✔          ✔                                                             ✔                                           ✔                                                                                  ✔                                               Designed to permit underlying requests *(API-Based Infrastructure)*
 :doc:`Zimbra PreAuth<applications/zimbra>`                           ✔          ✔                                                             ✔
@@ -562,45 +563,49 @@ by your language code):
    :doc:`Radius second factor<radius2f>` is available with LLNG ≥ 2.0.6
 
 .. [4]
+   :doc:`Check DevOps file plugin<checkdevops>` are available with LLNG ≥
+   2.0.12
+
+.. [5]
    :doc:`Additional second factors<sfextra>` are available with LLNG ≥
    2.0.6
 
-.. [5]
+.. [6]
    :doc:`Check user plugin<checkuser>` is available with LLNG ≥ 2.0.3
 
-.. [6]
+.. [7]
    :doc:`Context switching plugin<contextswitching>` is available with
    LLNG ≥ 2.0.6
 
-.. [7]
+.. [8]
    :doc:`Decrypt value plugin<decryptvalue>` is available with LLNG ≥
    2.0.7
 
-.. [8]
+.. [9]
    :doc:`Global Logout plugin<globallogout>` is available with LLNG ≥
    2.0.7
 
-.. [9]
+.. [10]
    :doc:`Impersonation plugin<impersonation>` is available with LLNG ≥
    2.0.3
 
-.. [10]
+.. [11]
    :doc:`Find user plugin<finduser>` is available with LLNG ≥
    2.0.11
 
-.. [11]
+.. [12]
    :doc:`Refresh session API plugin<refreshsessionapi>` is available
    with LLNG ≥ 2.0.7
 
-.. [12]
+.. [13]
    :doc:`Reset certificate by mail plugin<resetcertificate>` is
    available with LLNG ≥ 2.0.7
 
-.. [13]
+.. [14]
    :doc:`Node.js handler<nodehandler>` has not yet reached the same
    level of functionalities
 
-.. [14]
+.. [15]
    :doc:`OAuth2 Handler<oauth2handler>` is available with LLNG ≥ 2.0.4
 
 .. |image0| image:: /icons/kthememgr.png

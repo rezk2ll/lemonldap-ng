@@ -309,6 +309,12 @@ m@<form.+?action="(?:(?:http://([^/]+))?(/.*?)?|(#))".+method="(post|get)"@is,
               m#<input.+?name="([^"]+)"[^>]+(?:value="([^"]*?)")?#gs,
             %fields
         );
+        # Add textarea
+        %fields = (
+            $res->[2]->[0] =~
+              m#<textarea.+?name="([^"]+)"[^>]+(?:value="([^"]*?)")?#gs,
+            %fields
+        );
         my $query = buildForm( \%fields );
         foreach my $f (@requiredFields) {
             ok( exists $fields{$f}, qq{ Field "$f" is defined} );
