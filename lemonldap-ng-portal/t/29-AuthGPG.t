@@ -60,6 +60,6 @@ SKIP: {
     expectOK($res);
     expectCookie($res);
 }
-count($mainTests)
+count($mainTests);
 clean_sessions();
 done_testing( count() );
