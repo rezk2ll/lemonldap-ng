@@ -1004,7 +1004,7 @@ sub token {
     $self->logger->debug("URL detected as an OpenID Connect TOKEN URL");
 
     my $rp = $self->checkEndPointAuthenticationCredentials($req);
-    return $self->p->sendError( $req, 'invalid_request', 400 ) unless ($rp);
+    return $self->sendOIDCError( $req, 'invalid_request', 400 ) unless ($rp);
 
     my $grant_type = $req->param('grant_type') || '';
 
@@ -1026,7 +1026,7 @@ sub token {
         {
             $self->logger->warn(
                 "Access to grant_type=password, is not allowed for RP $rp");
-            return $self->p->sendError( $req, 'unauthorized_client', 400 );
+            return $self->sendOIDCError( $req, 'unauthorized_client', 400 );
         }
         return $self->_handlePasswordGrant( $req, $rp );
     }
@@ -1038,7 +1038,7 @@ sub token {
         {
             $self->logger->warn(
                 "Access to Client Credentials grant is not allowed for RP $rp");
-            return $self->p->sendError( $req, 'unauthorized_client', 400 );
+            return $self->sendOIDCError( $req, 'unauthorized_client', 400 );
         }
         return $self->_handleClientCredentialsGrant( $req, $rp );
     }
@@ -1050,7 +1050,7 @@ sub token {
             ? "Unknown grant type: $grant_type"
             : "Missing grant_type parameter"
         );
-        return $self->p->sendError( $req, 'unsupported_grant_type', 400 );
+        return $self->sendOIDCError( $req, 'unsupported_grant_type', 400 );
     }
 
 }
@@ -1064,7 +1064,7 @@ sub _handleClientCredentialsGrant {
     if ( $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsPublic} ) {
         $self->logger->error(
             "Client Credentials grant cannot be used on public clients");
-        return $self->p->sendError( $req, 'invalid_client', 400 );
+        return $self->sendOIDCError( $req, 'invalid_client', 400 );
     }
     my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
 
@@ -1085,7 +1085,7 @@ sub _handleClientCredentialsGrant {
             $self->userLogger->warn(
                     "Relying party $rp did not validate the provided "
                   . "Access Rule during Client Credentials Grant" );
-            return $self->p->sendError( $req, 'invalid_grant', 400 );
+            return $self->sendOIDCError( $req, 'invalid_grant', 400 );
         }
     }
 
@@ -1093,7 +1093,7 @@ sub _handleClientCredentialsGrant {
     my $session = $self->p->getApacheSession( undef, info => $infos );
     unless ($session) {
         $self->logger->error("Unable to create session");
-        return $self->p->sendError( $req, 'server_error', 500 );
+        return $self->sendOIDCError( $req, 'server_error', 500 );
     }
 
     my $access_token = $self->newAccessToken(
@@ -1106,7 +1106,7 @@ sub _handleClientCredentialsGrant {
     );
     unless ($access_token) {
         $self->userLogger->error("Unable to create Access Token");
-        return $self->p->sendError( $req,
+        return $self->sendOIDCError( $req,
             'Unable to create Access Token', 500 );
     }
 
@@ -1136,9 +1136,7 @@ sub _handlePasswordGrant {
 
     unless ( $username and $password ) {
         $self->logger->error("Missing username or password");
-
-        # FIXME
-        return $self->p->sendError( $req, 'invalid_request', 400 );
+        return $self->sendOIDCError( $req, 'invalid_request', 400 );
     }
 
     ####
@@ -1165,7 +1163,7 @@ sub _handlePasswordGrant {
       if $result;
 
     ## Make sure we returned successfuly from the process AND we were able to create a session
-    return $self->p->sendError( $req, 'invalid_grant', 400 )
+    return $self->sendOIDCError( $req, 'invalid_grant', 400 )
       unless ( $result == PE_OK and $req->id and $req->user );
 
     ## Make sure the current user is allowed to use this RP
@@ -1175,7 +1173,7 @@ sub _handlePasswordGrant {
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} }
                   . " is not authorized to access to $rp" );
             $self->p->deleteSession($req);
-            return $self->p->sendError( $req, 'invalid_grant', 400 );
+            return $self->sendOIDCError( $req, 'invalid_grant', 400 );
         }
     }
 
@@ -1201,9 +1199,7 @@ sub _handlePasswordGrant {
 
     unless ($access_token) {
         $self->userLogger->error("Unable to create Access Token");
-
-        #FIXME: should be an error 500
-        return $self->p->sendError( $req, 'invalid_request', 400 );
+        return $self->sendOIDCError( $req, 'server_error', 500 );
     }
 
     $self->logger->debug("Generated access token: $access_token");
@@ -1227,7 +1223,7 @@ sub _handlePasswordGrant {
         unless ($refreshTokenSession) {
             $self->userLogger->error(
                 "Unable to create OIDC session for refresh_token");
-            return $self->p->sendError( $req,
+            return $self->sendOIDCError( $req,
                 'Could not create refresh token session', 500 );
         }
 
@@ -1261,13 +1257,13 @@ sub _handleAuthorizationCodeGrant {
 
     unless ($code) {
         $self->logger->error("No code found on token endpoint");
-        return $self->p->sendError( $req, 'invalid_request', 400 );
+        return $self->sendOIDCError( $req, 'invalid_request', 400 );
     }
 
     my $codeSession = $self->getAuthorizationCode($code);
     unless ($codeSession) {
         $self->logger->error("Unable to find OIDC session $code");
-        return $self->p->sendError( $req, 'invalid_request', 400 );
+        return $self->sendOIDCError( $req, 'invalid_request', 400 );
     }
 
     $codeSession->remove();
@@ -1284,7 +1280,7 @@ sub _handleAuthorizationCodeGrant {
             )
           )
         {
-            return $self->p->sendError( $req, 'invalid_grant', 400 );
+            return $self->sendOIDCError( $req, 'invalid_grant', 400 );
         }
     }
 
@@ -1292,7 +1288,7 @@ sub _handleAuthorizationCodeGrant {
     unless ( $client_id eq $codeSession->data->{client_id} ) {
         $self->userLogger->error( "Provided client_id does not match "
               . $codeSession->data->{client_id} );
-        return $self->p->sendError( $req, 'invalid_grant', 400 );
+        return $self->sendOIDCError( $req, 'invalid_grant', 400 );
     }
 
     # Check we have the same redirect_uri value
@@ -1300,7 +1296,7 @@ sub _handleAuthorizationCodeGrant {
     {
         $self->userLogger->error( "Provided redirect_uri does not match "
               . $codeSession->data->{redirect_uri} );
-        return $self->p->sendError( $req, 'invalid_grant', 400 );
+        return $self->sendOIDCError( $req, 'invalid_grant', 400 );
     }
 
     # Get user identifier
@@ -1310,7 +1306,7 @@ sub _handleAuthorizationCodeGrant {
 
     unless ($apacheSession) {
         $self->userLogger->error("Unable to find user session");
-        return $self->p->sendError( $req, 'invalid_grant', 400 );
+        return $self->sendOIDCError( $req, 'invalid_grant', 400 );
     }
 
     my $user_id = $self->getUserIDForRP( $req, $rp, $apacheSession->data );
@@ -1329,9 +1325,7 @@ sub _handleAuthorizationCodeGrant {
 
     unless ($access_token) {
         $self->userLogger->error("Unable to create Access Token");
-
-        #FIXME: should be an error 500
-        return $self->p->sendError( $req, 'invalid_request', 400 );
+        return $self->sendOIDCError( $req, 'server_error', 500 );
     }
 
     $self->logger->debug("Generated access token: $access_token");
@@ -1366,7 +1360,7 @@ sub _handleAuthorizationCodeGrant {
         unless ($refreshTokenSession) {
             $self->userLogger->error(
                 "Unable to create OIDC session for refresh_token");
-            return $self->p->sendError( $req, 'invalid_request', 400 );
+            return $self->sendOIDCError( $req, 'server_error', 500 );
         }
 
         $refresh_token = $refreshTokenSession->id;
@@ -1392,7 +1386,7 @@ sub _handleAuthorizationCodeGrant {
         unless ($refreshTokenSession) {
             $self->userLogger->error(
                 "Unable to create OIDC session for refresh_token");
-            return $self->p->sendError( $req, 'invalid_request', 400 );
+            return $self->sendOIDCError( $req, 'server_error', 500 );
         }
 
         $refresh_token = $refreshTokenSession->id;
@@ -1452,7 +1446,7 @@ sub _handleAuthorizationCodeGrant {
     unless ($id_token) {
         $self->logger->error(
             "Failed to generate ID Token for service: $client_id");
-        return $self->p->sendError( $req, 'server_error', 500 );
+        return $self->sendOIDCError( $req, 'server_error', 500 );
     }
 
     $self->logger->debug("Generated id token: $id_token");
@@ -1489,7 +1483,7 @@ sub _handleRefreshTokenGrant {
 
     unless ($refresh_token) {
         $self->logger->error("Missing refresh_token parameter");
-        return $self->p->sendError( $req, 'invalid_request', 400 );
+        return $self->sendOIDCError( $req, 'invalid_request', 400 );
     }
 
     $self->logger->debug("OpenID Refresh Token: $refresh_token");
@@ -1498,14 +1492,14 @@ sub _handleRefreshTokenGrant {
 
     unless ($refreshSession) {
         $self->logger->error("Unable to find OIDC session $refresh_token");
-        return $self->p->sendError( $req, 'invalid_request', 400 );
+        return $self->sendOIDCError( $req, 'invalid_request', 400 );
     }
 
     # Check we have the same client_id value
     unless ( $client_id eq $refreshSession->data->{client_id} ) {
         $self->userLogger->error( "Provided client_id does not match "
               . $refreshSession->data->{client_id} );
-        return $self->p->sendError( $req, 'invalid_grant', 400 );
+        return $self->sendOIDCError( $req, 'invalid_grant', 400 );
     }
 
     my $access_token;
@@ -1521,7 +1515,7 @@ sub _handleRefreshTokenGrant {
         unless ($session) {
             $self->logger->error(
                 "Unable to find user session tied to Refresh Token");
-            return $self->p->sendError( $req, 'invalid_grant', 400 );
+            return $self->sendOIDCError( $req, 'invalid_grant', 400 );
         }
 
         $user_id = $self->getUserIDForRP( $req, $rp, $session->data );
@@ -1540,8 +1534,7 @@ sub _handleRefreshTokenGrant {
 
         unless ($access_token) {
             $self->userLogger->error("Unable to create Access Token");
-            return $self->p->sendError( $req,
-                'Unable to create Access Token', 500 );
+            return $self->sendOIDCError( $req, 'server_error', 500 );
         }
 
         $self->logger->debug("Generated access token: $access_token");
@@ -1573,7 +1566,7 @@ sub _handleRefreshTokenGrant {
             else {
                 $self->logger->error( "Could not resolve user: " . $req->user );
             }
-            return $self->p->sendError( $req, 'invalid_grant', 400 );
+            return $self->sendOIDCError( $req, 'invalid_grant', 400 );
         }
 
         # Cleanup sessionInfo
@@ -1604,8 +1597,7 @@ sub _handleRefreshTokenGrant {
 
         unless ($access_token) {
             $self->userLogger->error("Unable to create Access Token");
-            return $self->p->sendError( $req,
-                'Unable to create Access Token', 500 );
+            return $self->sendOIDCError( $req, 'server_error', 500 );
         }
 
         $self->logger->debug("Generated access token: $access_token");
@@ -1664,7 +1656,7 @@ sub _handleRefreshTokenGrant {
     unless ($id_token) {
         $self->logger->error(
             "Failed to generate ID Token for service: $client_id");
-        return $self->p->sendError( $req, 'server_error', 500 );
+        return $self->sendOIDCError( $req, 'server_error', 500 );
     }
 
     $self->logger->debug("Generated id token: $id_token");
@@ -1784,7 +1776,7 @@ sub introspection {
     $self->logger->debug("URL detected as an OpenID Connect INTROSPECTION URL");
 
     my $rp = $self->checkEndPointAuthenticationCredentials($req);
-    return $self->p->sendError( $req, 'invalid_client', 401 ) unless ($rp);
+    return $self->sendOIDCError( $req, 'invalid_client', 401 ) unless ($rp);
 
     if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
         ->{oidcRPMetaDataOptionsPublic} )
@@ -1792,11 +1784,11 @@ sub introspection {
         $self->logger->error(
             "Public clients are not allowed to acces the introspection endpoint"
         );
-        return $self->p->sendError( $req, 'unauthorized_client', 401 );
+        return $self->sendOIDCError( $req, 'unauthorized_client', 401 );
     }
 
     my $token = $req->param('token');
-    return $self->p->sendError( $req, 'invalid_request', 400 ) unless ($token);
+    return $self->sendOIDCError( $req, 'invalid_request', 400 ) unless ($token);
 
     my $response    = { active => JSON::false };
     my $oidcSession = $self->getAccessToken($token);

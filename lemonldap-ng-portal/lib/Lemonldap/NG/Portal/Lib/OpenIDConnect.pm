@@ -1273,6 +1273,20 @@ sub returnRedirectError {
 #sub returnJSONError {
 #my ( $self, $error ) = @_;
 #replace this by $self->p->sendError($req, $error,400);
+sub sendOIDCError {
+    my ( $self, $req, $err, $code, $description ) = @_;
+    $code ||= 500;
+
+    return $self->sendJSONresponse(
+        $req,
+        {
+            error => $err,
+            ( $description ? ( error_description => $description ) : () ),
+        },
+
+        code => $code
+    );
+}
 
 #sub returnJSON {
 #my ( $self, $content ) = @_;
