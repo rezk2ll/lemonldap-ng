@@ -29,6 +29,7 @@ Inside this jail, you can access to:
   * checkDate_
   * checkLogonHours_
   * date_
+  * dateToTime_ (|new| in version 2.0.12)
   * encrypt_
   * groupMatch_
   * has2f_ (|new| in version 2.0.10)
@@ -62,6 +63,32 @@ by calling ``date(1)``
 
     For example: date(1) lt '19551018080000'
   
+dateToTime
+~~~~~~~~~~
+
+.. versionadded:: 2.0.12
+
+Converts a string date into epoch time.
+
+The date format is the LDAP date syntax, for example for the 1st March
+2009 (GMT):
+
+::
+
+    20090301000000Z
+
+The date may end with a differential timezone that is interpreted to 
+adjust the epoch time, for example for the 1st March 2009 (+0100):
+
+::
+
+    20090301000000+0100
+
+Simple usage example:
+
+::
+
+    dateToTime($ssoStartDate) lt dateToTime(date(1))
 
 checkLogonHours
 ~~~~~~~~~~~~~~~
@@ -137,17 +164,27 @@ This function will check the date of current request, and compare it to
 a start date and an end date. It returns 1 if this match, 0 else.
 
 
-The date format is the LDAP date syntax, for example for the 1st March
-2009:
+The date format is the LDAP date syntax, for example for the 1st of March
+2009 (GMT)
 
 ::
 
    20090301000000Z
 
+|new| Since version 2.0.12, the date may end with a differential timezone, 
+for example for the 1st of March 2009 (+0100):
+
+::
+
+    20090301000000+0100
+
+
 Functions parameters:
 
--  **start**: Start date (GMT)
--  **end**: End date (GMT)
+-  **start**: Start date (GMT unless, |new| since version 2.0.12, a
+   differential timezone is included)
+-  **end**: End date (GMT unless, |new| since version 2.0.12, a
+   differential timezone is included)
 -  **default_access** (optional): what result to return if **start** and
    **end** are empty
 
