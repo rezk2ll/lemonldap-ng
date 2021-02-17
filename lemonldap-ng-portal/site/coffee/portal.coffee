@@ -544,10 +544,18 @@ $(window).on 'load', () ->
 
 	#$('#formpass').on 'submit', changePwd
 
+	$('#resetfinduserform').on 'click', () ->
+		console.log 'Reset form'
+		$('#finduserForm').trigger('reset')
+
+	$('#finduserModal').on 'hidden.bs.modal', () ->
+		console.log 'Clear modal'
+		$('#finduserForm').trigger('reset')
+
 	$('#finduserbutton').on 'click', (event) ->
 		event.preventDefault()
 		document.body.style.cursor = 'progress'
-		str = $("#finduserform").serialize()
+		str = $("#finduserForm").serialize()
 		console.log 'Send findUser request with', str
 		$.ajax
 			type: "POST"
@@ -562,7 +570,7 @@ $(window).on 'load', () ->
 				$('#spoofIdfield').attr 'value', user
 				$('#captcha').attr 'src', data.captcha if data.captcha
 				if data.token
-					$('#findusertoken').attr 'value', data.token 
+					$('#finduserToken').attr 'value', data.token 
 					$('#token').attr 'value', data.token
 			error: (j, status, err) ->
 				document.body.style.cursor = 'default'

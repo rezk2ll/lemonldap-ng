@@ -587,11 +587,19 @@ LemonLDAP::NG Portal jQuery scripts
         return $("#show-hide-icon-button").addClass('fa-eye');
       }
     });
+    $('#resetfinduserform').on('click', function() {
+      console.log('Clear form');
+      return $('#finduserForm').trigger('reset');
+    });
+    $('#finduserModal').on('hidden.bs.modal', function() {
+      console.log('Reset modal');
+      return $('#finduserForm').trigger('reset');
+    });
     return $('#finduserbutton').on('click', function(event) {
       var str;
       event.preventDefault();
       document.body.style.cursor = 'progress';
-      str = $("#finduserform").serialize();
+      str = $("#finduserForm").serialize();
       console.log('Send findUser request with', str);
       return $.ajax({
         type: "POST",
@@ -608,7 +616,7 @@ LemonLDAP::NG Portal jQuery scripts
             $('#captcha').attr('src', data.captcha);
           }
           if (data.token) {
-            $('#findusertoken').attr('value', data.token);
+            $('#finduserToken').attr('value', data.token);
             return $('#token').attr('value', data.token);
           }
         },
