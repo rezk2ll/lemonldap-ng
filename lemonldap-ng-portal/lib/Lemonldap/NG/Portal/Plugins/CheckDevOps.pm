@@ -66,7 +66,6 @@ sub display {
         DOWNLOAD  => $self->conf->{checkDevOpsDownload},
         MSG       => 'checkDevOps',
         ALERTE    => 'alert-info',
-        FILE      => '',
         TOKEN     => (
               $self->ottRule->( $req, {} )
             ? $self->ott->createToken()
@@ -82,7 +81,8 @@ sub display {
 sub run {
     my ( $self,    $req )   = @_;
     my ( $headers, $rules ) = ( [], [] );
-    my ( $msg, $json, $alert, $url );
+    my ( $msg, $json, $url );
+    my $alert = 'alert-danger';
 
     # Check token
     if ( $self->ottRule->( $req, {} ) ) {
@@ -111,7 +111,6 @@ sub run {
             DOWNLOAD  => $self->conf->{checkDevOpsDownload},
             MSG       => "PE$msg",
             ALERTE    => 'alert-warning',
-            FILE      => '',
             TOKEN     => $token,
         };
         return $self->p->sendJSONresponse( $req, $params )
@@ -132,22 +131,20 @@ sub run {
             my ($proto) = $url =~ m#^(https?://).*#i;
             $proto ||= 'http://';
             $url = "$proto$vhost/rules.json";
-            my $response =
-              $self->ua->get( $url, 'Accept' => 'application/json' );
+            my $resp = $self->ua->get( $url, 'Accept' => 'application/json' );
             $self->logger->debug( "Code/Message from $url: "
-                  . $response->{_rc} . '/'
-                  . $response->{_msg} );
-            $self->logger->debug(
-                "Content from $url: " . $response->{_content} ) if $response->{_content};
+                  . $resp->code . '/'
+                  . $resp->message );
+            my $content = $resp->decoded_content;
+            $self->logger->debug("Content received from $url: $content") if $content;
 
-            if ( $response->{_rc} == 200 ) {
-                $json = eval { from_json( $response->{_content} ) };
+            if ( $resp->is_success ) {
+                $json = eval { from_json($content, { allow_nonref => 1 }) };
                 if ($@) {
 
                     # Prepare form params
+                    undef $json;
                     $msg   = 'PE' . PE_BAD_DEVOPS_FILE;
-                    $alert = 'alert-danger';
-                    $json  = '';
                     $self->userLogger->error(
 "CheckDevOps: bad 'rules.json' file retrieved from $url ($@)"
                     );
@@ -157,8 +154,6 @@ sub run {
 
                 # Prepare form params
                 $msg   = 'PE' . PE_FILENOTFOUND;
-                $alert = 'alert-danger';
-                $json  = '';
                 $self->userLogger->error(
 "CheckDevOps: Unable to download 'rules.json' file from $url"
                 );
@@ -168,21 +163,21 @@ sub run {
 
             # Prepare form params
             $msg   = 'PE' . PE_BADURL;
-            $alert = 'alert-danger';
-            $json  = '';
             $self->userLogger->error('CheckDevOps: bad provided URL');
         }
     }
     unless ( $json || $msg ) {
-        $json = eval { from_json( $req->param('checkDevOpsFile') ) };
+        $json = eval {
+            from_json( $req->param('checkDevOpsFile'), { allow_nonref => 1 } );
+        };
         if ($@) {
 
             # Prepare form params
+            undef $json;
             $msg   = 'PE' . PE_BAD_DEVOPS_FILE;
             $alert = 'alert-danger';
-            $json  = '';
             $self->userLogger->error(
-                "CheckDevOps: bad 'rules.json' file provided ($@)");
+                "CheckDevOps: bad provided 'rules.json' file ($@)");
         }
     }
 

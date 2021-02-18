@@ -25,7 +25,7 @@ my $file = '{
 }';
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel            => 'debug',
+            logLevel            => 'error',
             authentication      => 'Demo',
             userDB              => 'Same',
             requireToken        => 0,
