@@ -32,6 +32,7 @@ my $module          = __PACKAGE__;
 
 my @angularScopeVars;
 my @bool;
+my @arrayParam;
 my @cnodesKeys;
 my %cnodesRe;
 my @ignoreKeys;
@@ -295,6 +296,17 @@ $defaultAttr}
     my $confConstants =
       "our \$hashParameters = qr/^" . $ra->as_string . "\$/;\n";
     $ra = Regexp::Assemble->new;
+    foreach (@arrayParam) {
+        $ra->add($_);
+    }
+
+    # Not in Tree.pm
+    foreach (qw(mySessionAuthorizedRWKeys)) {
+        $ra->add($_);
+    }
+    $confConstants .=
+      "our \$arrayParameters = qr/^" . $ra->as_string . "\$/;\n";
+    $ra = Regexp::Assemble->new;
     foreach (@bool) {
         $ra->add($_);
     }
@@ -358,6 +370,7 @@ our %EXPORT_TAGS = (
           DEFAULTCONFBACKENDOPTIONS
           NO
           \$hashParameters
+          \$arrayParameters
           \@sessionTypes
           \$boolKeys
           )
@@ -624,11 +637,11 @@ sub scanTree {
         else {
             # Get data type and build tree
             #
-            # Types : PerlModule bool boolOrExpr catAndAppList file hostname int
-            # keyTextContainer lmAttrOrMacro longtext openidServerList
-            # oidcAttributeContainer pcre rulesContainer samlAssertion
-            # samlAttributeContainer samlService select text trool url
-            # virtualHostContainer word password
+            # Types : PerlModule array bool boolOrExpr catAndAppList file
+            # hostname int keyTextContainer lmAttrOrMacro longtext
+            # openidServerList oidcAttributeContainer pcre rulesContainer
+            # samlAssertion samlAttributeContainer samlService select text
+            # trool url virtualHostContainer word password
 
             if ( $leaf =~ s/^\*// ) {
                 push @angularScopeVars, [ $leaf, "$path._nodes[$ord]" ];
@@ -699,6 +712,10 @@ sub scanTree {
                 }
                 if ( $attr->{type} eq 'bool' ) {
                     push @bool, $leaf;
+                }
+                if ( $attr->{type} eq 'array' ) {
+                    die "$leaf";
+                    push @arrayParam, $leaf;
                 }
             }
             push @$json, $jleaf;
