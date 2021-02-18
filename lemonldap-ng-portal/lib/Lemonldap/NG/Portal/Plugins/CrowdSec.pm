@@ -5,12 +5,12 @@ use Mouse;
 use JSON qw(from_json);
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_ERROR
   PE_OK
+  PE_ERROR
   PE_SESSIONNOTGRANTED
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.12';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -28,18 +28,19 @@ has ua => (
         return $ua;
     }
 );
+has crowdsecUrl => ( is => 'rw' );
 
 sub init {
     my ($self) = @_;
     if ( $self->conf->{crowdsecUrl} ) {
-        $self->conf->{crowdsecUrl} =~ s#/+$##;
+        $self->crowdsecUrl( $self->conf->{crowdsecUrl} =~ s#/+$## );
     }
     else {
         $self->logger->warn(
             "crowdsecUrl isn't set, fallback to http://localhost:8080");
-        $self->conf->{crowdsecUrl} = 'http://localhost:8080';
+        $self->crowdsecUrl('http://localhost:8080');
     }
-    $self->logger->notice( "CrowdSec policy is: "
+    $self->logger->notice( 'CrowdSec policy is: '
           . ( $self->conf->{crowdsecAction} ? 'reject' : 'warn' ) );
     return 1;
 }
@@ -48,12 +49,12 @@ sub check {
     my ( $self, $req ) = @_;
     my $ip   = $req->address;
     my $resp = $self->ua->get(
-        $self->conf->{crowdsecUrl} . "/v1/decisions?ip=$ip",
+        $self->crowdsecUrl . "/v1/decisions?ip=$ip",
         'Accept'    => 'application/json',
         'X-Api-Key' => $self->conf->{crowdsecKey},
     );
     if ( $resp->is_error ) {
-        $self->logger->error( "Bad CrowdSec response: " . $resp->message );
+        $self->logger->error( 'Bad CrowdSec response: ' . $resp->message );
         $self->logger->debug( $resp->content );
         return PE_ERROR;
     }

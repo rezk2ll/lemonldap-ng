@@ -11,7 +11,7 @@ community-powered IP reputation system.
 LL::NG provides a **CrowdSec** bouncer that can reject Crowdsec banned-IP
 requests or just provide an environment variable that can be used in
 another plugin rule. For example, a second factor may be required if user's
-IP is CrowdSec bans it.
+IP is CrowdSec-banned.
 
 Configuration
 -------------

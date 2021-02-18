@@ -588,11 +588,11 @@ LemonLDAP::NG Portal jQuery scripts
       }
     });
     $('#resetfinduserform').on('click', function() {
-      console.log('Clear form');
+      console.log('Reset form');
       return $('#finduserForm').trigger('reset');
     });
     $('#finduserModal').on('hidden.bs.modal', function() {
-      console.log('Reset modal');
+      console.log('Clear modal');
       return $('#finduserForm').trigger('reset');
     });
     return $('#finduserbutton').on('click', function(event) {
