@@ -11,6 +11,7 @@ Plugins
    checkdevops
    checkstate
    checkuser
+   crowdsec
    viewer
    contextswitching
    decryptvalue

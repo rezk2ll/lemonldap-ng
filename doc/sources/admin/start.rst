@@ -276,6 +276,7 @@ Name                                                                 Description
 :doc:`Check user<checkuser>`  [6]_ |new|                             Check access rights, transmitted headers and session attibutes for a specific user and URL
 :doc:`Configuration viewer<viewer>` |new|                            Edit WebSSO configuration in Read Only mode
 :doc:`Context switching<contextswitching>`  [7]_\ |new|              Switch context other users
+:doc:`CrowdSec<crowdsec>`  [16]_\ |new|                              CrowdSec bouncer
 :doc:`Custom<plugincustom>`                                          Write a custom plugin
 :doc:`Decrypt value<decryptvalue>`  [8]_\ |image35|                  Decrypt ciphered values
 :doc:`Display login history<loginhistory>`                           Display Success/Fails logins
@@ -607,6 +608,9 @@ by your language code):
 
 .. [15]
    :doc:`OAuth2 Handler<oauth2handler>` is available with LLNG ≥ 2.0.4
+
+.. [16]
+   :doc:`CrowdSec bouncer <crowdsec>` is available with LLNG ≥ 2.0.12
 
 .. |image0| image:: /icons/kthememgr.png
 .. |image1| image:: /icons/warehause.png
