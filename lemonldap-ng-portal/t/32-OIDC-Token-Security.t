@@ -144,8 +144,7 @@ ok(
 count(1);
 
 # Expect an invalid request
-is( $res->[0], 400, "Got invalid request" );
-count(1);
+expectReject( $res, 400, "invalid_grant" );
 
 # Get new code for RP1
 $query =
