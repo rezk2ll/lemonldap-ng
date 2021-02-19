@@ -283,8 +283,8 @@ $defaultAttr}
         oidcOPMetaDataJWKS oidcOPMetaDataOptions
         oidcOPMetaDataExportedVars oidcRPMetaDataOptions
         oidcRPMetaDataExportedVars oidcRPMetaDataOptionsExtraClaims
-        oidcRPMetaDataMacros casAppMetaDataExportedVars
-        casAppMetaDataOptions casAppMetaDataMacros
+        oidcRPMetaDataMacros oidcRPMetaDataScopeRules
+        casAppMetaDataExportedVars casAppMetaDataOptions casAppMetaDataMacros
         casSrvMetaDataExportedVars casSrvMetaDataOptions
         )
       )
