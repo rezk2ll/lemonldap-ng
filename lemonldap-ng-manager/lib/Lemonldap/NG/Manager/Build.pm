@@ -714,7 +714,6 @@ sub scanTree {
                     push @bool, $leaf;
                 }
                 if ( $attr->{type} eq 'array' ) {
-                    die "$leaf";
                     push @arrayParam, $leaf;
                 }
             }
