@@ -278,19 +278,19 @@ Name                                                                 Description
 :doc:`Context switching<contextswitching>`  [7]_\ |new|              Switch context other users
 :doc:`CrowdSec<crowdsec>`  [8]_\ |new|                               CrowdSec bouncer
 :doc:`Custom<plugincustom>`                                          Write a custom plugin
-:doc:`Decrypt value<decryptvalue>`  [9]_\ |image35|                  Decrypt ciphered values
+:doc:`Decrypt value<decryptvalue>`  [9]_\ |beta|                     Decrypt ciphered values
 :doc:`Display login history<loginhistory>`                           Display Success/Fails logins
 :doc:`Force Authentication<forcereauthn>`                            Force authentication to access to Portal
 :doc:`Global Logout<globallogout>`  [10]_                            Suggest to close all opened sessions at logout
 :doc:`Grant Sessions<grantsession>`                                  Rules to apply before allowing a user to open a session
 :doc:`Impersonation<impersonation>`  [11]_\ |new|                    Allow users to use another identity
-:doc:`Find user<finduser>`  [12]_\ |new|                             Search for user account
+:doc:`Find user<finduser>`  [12]_\ |beta|                            Search for user account
 :doc:`Notifications system<notifications>`                           DIsplay a message during log in process 
 :doc:`Portal Status<status>`                                         Experimental portal status page
 :doc:`Public pages<public_pages>`                                    Enable public pages system
 :doc:`Refresh session API<refreshsessionapi>`  [13]_                 Plugin that provides an API to refresh a user session
 :doc:`Reset password by mail<resetpassword>`                         Send a mail to reset its password
-:doc:`Reset certificate by mail<resetcertificate>`  [14]_\ |image37| Allow users to reset their certificate
+:doc:`Reset certificate by mail<resetcertificate>`  [14]_\ |beta|    Allow users to reset their certificate
 :doc:`REST services<restservices>` |new|                             REST server for :doc:`Proxy<authproxy>`
 :doc:`SOAP services<soapservices>` |deprecated|                      SOAP server for :doc:`Proxy<authproxy>`
 :doc:`Stay connected<stayconnected>` |new|                           Enable persistent connection on same browser
@@ -621,10 +621,6 @@ by your language code):
 .. |image26| image:: /icons/personal.png
 .. |image27| image:: /icons/neotux.png
 .. |image28| image:: /icons/personal.png
-.. |image35| image:: /documentation/beta.png
-   :width: 35px
-.. |image37| image:: /documentation/beta.png
-   :width: 35px
 .. |image41| image:: /icons/gpg.png
 .. |image46| image:: /icons/utilities.png
 .. |image50| image:: /icons/kmultiple.png
@@ -632,6 +628,10 @@ by your language code):
 .. |image54| image:: /icons/neotux.png
 .. |image57| image:: /icons/jabber_protocol.png
 .. |image59| image:: /icons/xeyes.png
+
+.. |beta| image:: /documentation/beta.png
+   :width: 35px
+   :alt: beta
 
 .. |new| image:: /documentation/new.png
    :alt: new

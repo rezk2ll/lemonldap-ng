@@ -548,7 +548,7 @@ $(window).on 'load', () ->
 		console.log 'Reset form'
 		$('#finduserForm').trigger('reset')
 
-	$('#finduserModal').on 'hidden.bs.modal', () ->
+	$('#closefinduserform').on 'click', () ->
 		console.log 'Clear modal'
 		$('#finduserForm').trigger('reset')
 

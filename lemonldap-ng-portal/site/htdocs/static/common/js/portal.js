@@ -591,7 +591,7 @@ LemonLDAP::NG Portal jQuery scripts
       console.log('Reset form');
       return $('#finduserForm').trigger('reset');
     });
-    $('#finduserModal').on('hidden.bs.modal', function() {
+    $('#closefinduserform').on('click', function() {
       console.log('Clear modal');
       return $('#finduserForm').trigger('reset');
     });
