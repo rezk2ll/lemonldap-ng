@@ -240,7 +240,7 @@
 "crowdsec":"Activation",
 "crowdsecAction":"Action",
 "crowdsecKey":"API key",
-"CrowdSecPlugin":"CrowdSec",
+"CrowdSecPlugin":"CrowdSec Bouncer",
 "crowdsecUrl":"Base URL of local API",
 "currentConfiguration":"目前的設定",
 "customAddParams":"額外參數",

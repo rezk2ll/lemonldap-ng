@@ -240,7 +240,7 @@
 "crowdsec":"Activation",
 "crowdsecAction":"Action",
 "crowdsecKey":"API key",
-"CrowdSecPlugin":"CrowdSec",
+"CrowdSecPlugin":"CrowdSec Bouncer",
 "crowdsecUrl":"Base URL of local API",
 "currentConfiguration":"الإعدادات الحالية",
 "customAddParams":"معايير إضافية",

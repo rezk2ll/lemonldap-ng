@@ -240,7 +240,7 @@
 "crowdsec":"Activation",
 "crowdsecAction":"Action",
 "crowdsecKey":"Clef de l'API",
-"CrowdSecPlugin":"CrowdSec",
+"CrowdSecPlugin":"CrowdSec Bouncer",
 "crowdsecUrl":"URL de base de l'API locale",
 "currentConfiguration":"Configuration actuelle",
 "customAddParams":"Paramètres additionnels",

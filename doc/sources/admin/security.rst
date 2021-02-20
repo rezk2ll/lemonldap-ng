@@ -332,12 +332,8 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
 -  **Form timeout**: Form token timeout (default to 120 seconds)
 -  **Use global storage**: Local cache is used by default for one time
    tokens. To use global storage, set it to 'On'
--  **Brute-Force Attack protection**: set to 'On' to enable it. The aim
-   of a brute force attack is to gain access to user accounts by
-   repeatedly trying to guess the password of a user. If it is disabled,
-   automated tools may submit thousands of password attempts in a matter
-   of seconds, making it easy for an attacker to beat a password-based
-   authentication system.
+-  **CrowdSec Bouncer**: set to 'On' to enable :doc:`CrowdSec Bouncer plugin<crowdsec>`
+-  **Brute-Force Attack protection**: set to 'On' to enable :doc:`Brute-force protection plugin<bruteforceprotection>`
 -  **LWP::UserAgent and SSL options**: insert here options to pass to
    LWP::UserAgent object (used by SAML or OpenID-Connect to query
    partners and AuthSSL or AuthBasic handler to request Portal URL).

@@ -1124,11 +1124,11 @@ sub attributes {
         },
         lwpOpts => {
             type          => 'keyTextContainer',
-            documentation => 'Options given to LWP::UserAgent',
+            documentation => 'Options passed to LWP::UserAgent',
         },
         lwpSslOpts => {
             type          => 'keyTextContainer',
-            documentation => 'SSL options given to LWP::UserAgent',
+            documentation => 'SSL options passed to LWP::UserAgent',
         },
 
         # CrowdSec plugin

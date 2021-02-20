@@ -776,13 +776,6 @@ sub tree {
                             nodes => [ 'checkState', 'checkStateSecret', ],
                         },
                         {
-                            title => 'CrowdSecPlugin',
-                            nodes => [
-                                'crowdsec',    'crowdsecAction',
-                                'crowdsecUrl', 'crowdsecKey',
-                            ],
-                        },
-                        {
                             title => 'checkUsers',
                             help  => 'checkuser.html',
                             nodes => [
@@ -1036,6 +1029,14 @@ sub tree {
                                 'formTimeout',
                                 'tokenUseGlobalStorage',
                                 {
+                                    title => 'CrowdSecPlugin',
+                                    help  => 'crowdsec.html',
+                                    nodes => [
+                                        'crowdsec',    'crowdsecAction',
+                                        'crowdsecUrl', 'crowdsecKey',
+                                    ],
+                                },
+                                {
                                     title => 'bruteForceAttackProtection',
                                     help  => 'bruteforceprotection.html',
                                     form  => 'simpleInputContainer',
@@ -1049,7 +1050,6 @@ sub tree {
                                 },
                                 'lwpOpts',
                                 'lwpSslOpts',
-
                                 {
                                     title => 'contentSecurityPolicy',
                                     help  => 'security.html#portal',
