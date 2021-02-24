@@ -1263,7 +1263,7 @@ sub _handleAuthorizationCodeGrant {
     my $codeSession = $self->getAuthorizationCode($code);
     unless ($codeSession) {
         $self->logger->error("Unable to find OIDC session $code");
-        return $self->sendOIDCError( $req, 'invalid_request', 400 );
+        return $self->sendOIDCError( $req, 'invalid_grant', 400 );
     }
 
     $codeSession->remove();
