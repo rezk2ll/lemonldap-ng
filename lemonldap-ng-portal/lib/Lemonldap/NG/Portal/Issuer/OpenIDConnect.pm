@@ -2028,8 +2028,9 @@ sub checkSession {
 
 sub badAuthRequest {
     my ( $self, $req ) = @_;
-    return $self->p->sendError( $req,
-        $req->uri . ' may not be called by an authenticated user', 400 );
+    my $desc =
+      "This endpoint is not supposed to be called by authenticated users";
+    return $self->sendOIDCError( $req, 'invalid_request', 400, $desc );
 }
 
 # Nothing to do here
