@@ -17,3 +17,4 @@ Mini Howtos
    renater
    behindproxyminihowto
    useoutgoingproxy
+   testopenidconnect
