@@ -126,8 +126,12 @@ count(1);
 my ($code) = expectRedirection( $res, qr#http://rp2\.com/.*code=([^\&]*)# );
 
 # Play code on RP2
-$query =
-"grant_type=authorization_code&code=$code&redirect_uri=http%3A%2F%2Frp2.com%2F";
+$query = buildForm( {
+        grant_type   => 'authorization_code',
+        code         => $code,
+        redirect_uri => 'http://rp2.com/',
+    }
+);
 
 ok(
     $res = $op->_post(
@@ -163,9 +167,16 @@ count(1);
 ($code) = expectRedirection( $res, qr#http://rp\.com/.*code=([^\&]*)# );
 
 # Play code on RP1
-$query =
-"grant_type=authorization_code&code=$code&redirect_uri=http%3A%2F%2Frp.com%2F";
+$query = buildForm( {
+        grant_type    => 'authorization_code',
+        code          => $code,
+        redirect_uri  => 'http://rp.com/',
+        client_id     => 'rpid',
+        client_secret => 'rpsecret',
+    }
+);
 
+# Authenticated client with two methods at once (#2474)
 ok(
     $res = $op->_post(
         "/oauth2/token",
@@ -175,6 +186,18 @@ ok(
         custom => {
             HTTP_AUTHORIZATION => "Basic " . encode_base64("rpid:rpsecret"),
         },
+    ),
+    "Post auth code on correct RP"
+);
+count(1);
+expectReject( $res, 400, "invalid_request" );
+
+ok(
+    $res = $op->_post(
+        "/oauth2/token",
+        IO::String->new($query),
+        accept => 'text/html',
+        length => length($query),
     ),
     "Post auth code on correct RP"
 );
