@@ -439,7 +439,8 @@ sub run {
             }
 
             # Compute scopes
-            my $scope = $self->getScope( $req, $rp, $oidc_request->{'scope'} );
+            my $req_scope = $oidc_request->{'scope'};
+            my $scope     = $self->getScope( $req, $rp, $req_scope );
 
             # Obtain consent
             my $bypassConsent = $self->conf->{oidcRPMetaDataOptions}->{$rp}
@@ -708,6 +709,7 @@ sub run {
                         offline         => $offline,
                         redirect_uri    => $oidc_request->{'redirect_uri'},
                         scope           => $scope,
+                        req_scope       => $req_scope,
                         client_id       => $client_id,
                         user_session_id => $req->id,
                     }
@@ -788,9 +790,12 @@ sub run {
                 # Build Response
                 my $response_url = $self->buildImplicitAuthnResponse(
                     $oidc_request->{'redirect_uri'},
-                    $access_token, $id_token, $expires_in,
+                    $access_token,
+                    $id_token,
+                    $expires_in,
                     $oidc_request->{'state'},
-                    $session_state
+                    $session_state,
+                    ( ( $req_scope ne $scope ) ? $scope : undef )
                 );
 
                 return $self->_redirectToUrl( $req, $response_url );
@@ -887,10 +892,14 @@ sub run {
 
                 # Build Response
                 my $response_url = $self->buildHybridAuthnResponse(
-                    $oidc_request->{'redirect_uri'}, $code,
-                    $access_token,                   $id_token,
-                    $expires_in,                     $oidc_request->{'state'},
-                    $session_state
+                    $oidc_request->{'redirect_uri'},
+                    $code,
+                    $access_token,
+                    $id_token,
+                    $expires_in,
+                    $oidc_request->{'state'},
+                    $session_state,
+                    ( ( $req_scope ne $scope ) ? $scope : undef )
                 );
 
                 return $self->_redirectToUrl( $req, $response_url );
@@ -1067,8 +1076,8 @@ sub _handleClientCredentialsGrant {
     my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
 
     # Populate minimal session info
-    my $requested_scope = $req->param('scope') || '';
-    my $scope           = $self->getScope( $req, $rp, $requested_scope );
+    my $req_scope = $req->param('scope') || '';
+    my $scope     = $self->getScope( $req, $rp, $req_scope );
 
     my $infos = {
         $self->conf->{whatToTrace} => $client_id,
@@ -1117,6 +1126,7 @@ sub _handleClientCredentialsGrant {
         access_token => $access_token,
         token_type   => 'Bearer',
         expires_in   => $expires_in,
+        ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
     };
 
     $self->logger->debug("Send token response");
@@ -1126,11 +1136,9 @@ sub _handleClientCredentialsGrant {
 sub _handlePasswordGrant {
     my ( $self, $req, $rp ) = @_;
     my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
-    my $scope     = $req->param('scope') || 'openid';
+    my $req_scope = $req->param('scope') || 'openid';
     my $username  = $req->param('username');
     my $password  = $req->param('password');
-
-    $scope = $self->getScope( $req, $rp, $scope );
 
     unless ( $username and $password ) {
         $self->logger->error("Missing username or password");
@@ -1176,7 +1184,7 @@ sub _handlePasswordGrant {
     }
 
     # Resolve scopes
-    $scope = $self->getScope( $req, $rp, $scope );
+    my $scope = $self->getScope( $req, $rp, $req_scope );
 
     my $user_id = $self->getUserIDForRP( $req, $rp, $req->sessionInfo );
 
@@ -1240,6 +1248,7 @@ sub _handlePasswordGrant {
         access_token => $access_token,
         token_type   => 'Bearer',
         expires_in   => $expires_in,
+        ( ( $scope ne $req_scope ) ? ( scope => $scope ) : () ),
         ( $refresh_token ? ( refresh_token => $refresh_token ) : () ),
     };
 
@@ -1311,10 +1320,12 @@ sub _handleAuthorizationCodeGrant {
 
     $self->logger->debug("Found corresponding user: $user_id");
 
+    my $req_scope = $codeSession->{data}->{req_scope};
+    my $scope     = $codeSession->{data}->{scope};
+
     # Generate access_token
     my $access_token = $self->newAccessToken(
-        $req, $rp,
-        $codeSession->data->{scope},
+        $req, $rp, $scope,
         $codeSession->data->{user_session_id},
         {
             user_session_id => $apacheSession->id,
@@ -1347,7 +1358,7 @@ sub _handleAuthorizationCodeGrant {
             {
                 %userInfo,
                 redirect_uri => $codeSession->data->{redirect_uri},
-                scope        => $codeSession->data->{scope},
+                scope        => $scope,
                 client_id    => $client_id,
                 _session_uid => $apacheSession->data->{_user},
                 auth_time    => $apacheSession->data->{_lastAuthnUTime},
@@ -1374,7 +1385,7 @@ sub _handleAuthorizationCodeGrant {
             $rp,
             {
                 redirect_uri    => $codeSession->data->{redirect_uri},
-                scope           => $codeSession->data->{scope},
+                scope           => $scope,
                 client_id       => $client_id,
                 user_session_id => $codeSession->data->{user_session_id},
             },
@@ -1427,10 +1438,8 @@ sub _handleAuthorizationCodeGrant {
     $id_token_payload_hash->{'at_hash'} = $at_hash if $at_hash;
 
     if ( $self->force_id_claims($rp) ) {
-        my $claims = $self->buildUserInfoResponseFromId(
-            $req, $codeSession->data->{'scope'},
-            $rp,  $codeSession->data->{user_session_id}
-        );
+        my $claims = $self->buildUserInfoResponseFromId( $req, $scope,
+            $rp, $codeSession->data->{user_session_id} );
 
         foreach ( keys %$claims ) {
             $id_token_payload_hash->{$_} = $claims->{$_}
@@ -1461,6 +1470,7 @@ sub _handleAuthorizationCodeGrant {
         expires_in   => $expires_in,
         id_token     => $id_token,
         ( $refresh_token ? ( refresh_token => $refresh_token ) : () ),
+        ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
     };
 
     my $cRP = $apacheSession->data->{_oidcConnectedRP} || '';

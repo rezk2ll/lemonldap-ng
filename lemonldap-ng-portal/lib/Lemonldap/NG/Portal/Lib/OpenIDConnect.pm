@@ -361,7 +361,7 @@ sub buildAuthorizationCodeAuthnResponse {
 # return String Authentication Response URI
 sub buildImplicitAuthnResponse {
     my ( $self, $redirect_uri, $access_token, $id_token, $expires_in,
-        $state, $session_state )
+        $state, $session_state, $scope )
       = @_;
 
     my $response_url = "$redirect_uri#"
@@ -374,6 +374,7 @@ sub buildImplicitAuthnResponse {
         ),
         ( $expires_in    ? ( expires_in    => $expires_in )    : () ),
         ( $state         ? ( state         => $state )         : () ),
+        ( $scope         ? ( scope         => $scope )         : () ),
         ( $session_state ? ( session_state => $session_state ) : () )
       );
     return $response_url;
@@ -390,8 +391,8 @@ sub buildImplicitAuthnResponse {
 # return String Authentication Response URI
 sub buildHybridAuthnResponse {
     my (
-        $self,     $redirect_uri, $code,  $access_token,
-        $id_token, $expires_in,   $state, $session_state
+        $self,       $redirect_uri, $code,          $access_token, $id_token,
+        $expires_in, $state,        $session_state, $scope
     ) = @_;
 
     my $response_url = "$redirect_uri#"
@@ -408,6 +409,7 @@ sub buildHybridAuthnResponse {
         ),
         ( $expires_in    ? ( expires_in    => $expires_in )    : () ),
         ( $state         ? ( state         => $state )         : () ),
+        ( $scope         ? ( scope         => $scope )         : () ),
         ( $session_state ? ( session_state => $session_state ) : () )
       );
     return $response_url;
