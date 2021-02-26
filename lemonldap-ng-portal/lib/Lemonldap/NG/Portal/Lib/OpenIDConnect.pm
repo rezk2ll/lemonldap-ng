@@ -1378,9 +1378,9 @@ sub getEndPointAuthenticationCredentials {
         $self->logger->error("Bad authentication header: $@") if ($@);
 
         # Using multiple methods is an error
-        if ($req->param('client_id')) {
+        if ( $req->param('client_id') ) {
             $self->logger->error("Multiple client authentication methods used");
-            ( $client_id, $client_secret ) = (undef, undef);
+            ( $client_id, $client_secret ) = ( undef, undef );
         }
     }
     elsif ( $req->param('client_id') and $req->param('client_secret') ) {
