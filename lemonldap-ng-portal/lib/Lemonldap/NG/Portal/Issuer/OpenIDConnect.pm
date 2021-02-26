@@ -770,7 +770,7 @@ sub run {
 
                 my $id_token =
                   $self->_generateIDToken( $req, $oidc_request,
-                    $rp, { at_hash => $at_hash } );
+                    $rp, $scope, { at_hash => $at_hash } );
 
                 unless ($id_token) {
                     $self->logger->error("Could not generate ID token");
@@ -865,7 +865,7 @@ sub run {
                     $id_token = $self->_generateIDToken(
                         $req,
                         $oidc_request,
-                        $rp,
+                        $rp, $scope,
                         {
                             at_hash => $at_hash,
                             c_hash  => $c_hash,
@@ -2316,7 +2316,7 @@ sub _convertOldFormatConsents {
 }
 
 sub _generateIDToken {
-    my ( $self, $req, $oidc_request, $rp, $extra_claims ) = @_;
+    my ( $self, $req, $oidc_request, $rp, $scope, $extra_claims ) = @_;
 
     my $response_type = $oidc_request->{'response_type'};
     my $client_id     = $oidc_request->{'client_id'};
@@ -2367,8 +2367,7 @@ sub _generateIDToken {
         # No access_token
         # Claims must be set in id_token
         my $claims =
-          $self->buildUserInfoResponseFromId( $req, $oidc_request->{'scope'},
-            $rp, $req->id );
+          $self->buildUserInfoResponseFromId( $req, $scope, $rp, $req->id );
 
         foreach ( keys %$claims ) {
             $id_token_payload_hash->{$_} = $claims->{$_}
