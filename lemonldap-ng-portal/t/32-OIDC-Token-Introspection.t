@@ -84,6 +84,8 @@ my $json = expectJSON( codeGrant( $op, "rpid", $code, "http://rp2.com/" ) );
 
 my $token = $json->{access_token};
 ok( $token, 'Access token present' );
+my $token_resp_scope = $json->{scope};
+ok ($token_resp_scope, 'Token response returned granted scopes');
 
 my ( $res, $query );
 
@@ -128,6 +130,7 @@ unlike( $json->{scope}, qr/\bwrite\b/,   "Response omits a dynamic scope that ev
 unlike( $json->{scope}, qr/\bifrequested\b/,   "Response omits a dynamic scope that was not requested" );
 like( $json->{scope}, qr/\bread\b/,   "Response contains a dynamic scope that is sent only when requested" );
 like( $json->{scope}, qr/\balways\b/,   "Response contains a dynamic scope that is not requested but always sent" );
+is ($token_resp_scope, $json->{scope}, "Token response scope matches token scope");
 
 # Check status after expiration
 Time::Fake->offset("+2h");

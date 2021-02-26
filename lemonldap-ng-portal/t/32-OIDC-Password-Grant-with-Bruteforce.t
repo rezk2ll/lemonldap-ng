@@ -130,6 +130,9 @@ my $payload = expectJSON($res);
 my $access_token = $payload->{access_token};
 ok( $access_token, "Access Token found" );
 count(1);
+my $token_res_scope = $payload->{scope};
+ok( $token_res_scope, "Scope found in token response" );
+count(1);
 
 # Get userinfo
 $res = $op->_post(
@@ -169,6 +172,7 @@ unlike( $payload->{scope}, qr/\bread\b/,
     "Scope read not asked, and thus not found" );
 like( $payload->{scope}, qr/\bfrench\b/, "Attribute-based scope found" );
 like( $payload->{scope}, qr/\balways\b/, "Rule-enforced scope found" );
+is ($payload->{scope}, $token_res_scope, "Token response scope matches token scope");
 
 clean_sessions();
 done_testing();
