@@ -739,8 +739,7 @@ sub run {
                     # Store data in access token
                     # Generate access_token
                     $access_token = $self->newAccessToken(
-                        $req, $rp,
-                        $oidc_request->{'scope'},
+                        $req, $rp, $scope,
                         $req->sessionInfo,
                         {
                             scope           => $scope,
@@ -836,8 +835,7 @@ sub run {
 
                     # Generate access_token
                     $access_token = $self->newAccessToken(
-                        $req, $rp,
-                        $oidc_request->{'scope'},
+                        $req, $rp, $scope,
                         $req->sessionInfo,
                         {
                             scope           => $scope,
