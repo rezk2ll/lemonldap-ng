@@ -96,13 +96,16 @@ sub hash_password {
         $self->logger->debug( "Using " . uc($hash) . " to hash password" );
         return uc($hash) . "($password)";
     }
+    # If encrypt hash: We need to give a salt and algorithm as second parameter.
+    # A unix salted password string starts with algorithm,
+    # then salt and ends with the hash.
+    # $6$ telling encrypt that we want sha512...
     if ( $hash =~ /^(encrypt)$/i ) {
+        # Lets get salt
         $dbsalt = $self->gen_salt_text();
-        #$dbsalt = print map { (a..z,A..Z,0..9)[rand 62] } 0..pop' 8;
         $self->logger->debug( "Using " . uc($hash) . " to hash password" );
+        # Build the prefix of the unix password string.
         return uc($hash) . "($password,'\$6\$$dbsalt')";
-        #$self->logger->debug( "Using " . uc($hash) . " to hash password" );
-        #return uc($hash) . "($password)";
     }
     else {
         $self->logger->notice(
