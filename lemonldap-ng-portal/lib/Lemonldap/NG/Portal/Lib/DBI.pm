@@ -91,9 +91,18 @@ sub init {
 # @return SQL statement string
 sub hash_password {
     my ( $self, $password, $hash ) = @_;
-    if ( $hash =~ /^(md5|sha|sha1|encrypt)$/i ) {
+    my $dbsalt;
+    if ( $hash =~ /^(md5|sha|sha1)$/i ) {
         $self->logger->debug( "Using " . uc($hash) . " to hash password" );
         return uc($hash) . "($password)";
+    }
+    if ( $hash =~ /^(encrypt)$/i ) {
+        $dbsalt = $self->gen_salt_text();
+        #$dbsalt = print map { (a..z,A..Z,0..9)[rand 62] } 0..pop' 8;
+        $self->logger->debug( "Using " . uc($hash) . " to hash password" );
+        return uc($hash) . "($password,'\$6\$$dbsalt')";
+        #$self->logger->debug( "Using " . uc($hash) . " to hash password" );
+        #return uc($hash) . "($password)";
     }
     else {
         $self->logger->notice(
@@ -241,6 +250,19 @@ sub gen_salt {
     my $self = shift;
     my $dbsalt;
     my @set = ( '0' .. '9', 'A' .. 'F' );
+
+    $dbsalt = join '' => map $set[ rand @set ], 1 .. 16;
+
+    return $dbsalt;
+}
+
+## @method protected Lemonldap::NG::Portal::_DBI gen_salt()
+# Generate 16 bytes of text random salt
+# @return generated salt
+sub gen_salt_text {
+    my $self = shift;
+    my $dbsalt;
+    my @set = ( '0' .. '9', 'a' .. 'z', 'A' .. 'z' );
 
     $dbsalt = join '' => map $set[ rand @set ], 1 .. 16;
 
