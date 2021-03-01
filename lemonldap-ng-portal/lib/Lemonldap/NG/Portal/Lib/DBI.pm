@@ -265,7 +265,7 @@ sub gen_salt {
 sub gen_salt_text {
     my $self = shift;
     my $dbsalt;
-    my @set = ( '0' .. '9', 'a' .. 'z', 'A' .. 'z' );
+    my @set = ( '0' .. '9', 'a' .. 'z', 'A' .. 'Z' );
 
     $dbsalt = join '' => map $set[ rand @set ], 1 .. 16;
 
