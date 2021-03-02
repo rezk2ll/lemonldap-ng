@@ -8,7 +8,7 @@ require 't/test-lib.pm';
 my $res;
 
 my $client = LLNG::Manager::Test->new(
-    { ini => { logLevel => 'debug', useSafeJail => 1 } } );
+    { ini => { logLevel => 'error', useSafeJail => 1 } } );
 
 ok(
     $res = $client->_get(
