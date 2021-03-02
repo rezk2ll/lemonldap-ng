@@ -346,7 +346,6 @@ sub grant {
     return $cond->( $req, $session ) if ($cond);
 
     $vhost ||= $class->resolveAlias($req);
-
     my $level = $class->getLevel( $req, $uri );
 
     # Using VH authentification level if exists
@@ -356,9 +355,11 @@ sub grant {
                 "User authentication level = $session->{authenticationLevel}");
             $class->logger->debug("Required authentication level = $level");
             $class->logger->warn(
-"User rejected due to insufficient authentication level -> Session upgrade enabled"
-            );
-            $session->{_upgrade} = 1;
+                'User rejected due to insufficient authentication level');
+            if ( $class->tsv->{upgradeSession} ) {
+                $class->logger->warn(' -> Session upgrade enabled');
+                $session->{_upgrade} = 1;
+            }
             return 0;
         }
     }

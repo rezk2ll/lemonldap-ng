@@ -204,6 +204,7 @@ sub defaultValuesInit {
         useSafeJail             whatToTrace        handlerInternalCache
         handlerServiceTokenTTL  customToTrace      lwpOpts lwpSslOpts
         authChoiceAuthBasic     authChoiceParam    hiddenAttributes
+        upgradeSession
         )
     );
 

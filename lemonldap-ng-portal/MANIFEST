@@ -663,6 +663,7 @@ t/62-Refresh-plugin.t
 t/62-SingleSession-with-History.t
 t/62-SingleSession-with-Rules.t
 t/62-SingleSession.t
+t/62-UpgradeSession-disabled.t
 t/62-UpgradeSession.t
 t/63-History.t
 t/64-StayConnected-with-2F-and-History.t
@@ -748,6 +749,8 @@ t/gpghome/openpgp-revocs.d/9482CEFB055809CBAFE6D71AAB2D5542891D1677.rev
 t/gpghome/private-keys-v1.d/A076B0E7DB141A919271EE8B581CDFA8DA42F333.key
 t/gpghome/private-keys-v1.d/B7219440BCCD85200121CFB89F94C8D98C0397B3.key
 t/gpghome/pubring.kbx
+t/gpghome/pubring.kbx~
+t/gpghome/tofu.db
 t/gpghome/trustdb.gpg
 t/lib/Apache/Session/Timeout.pm
 t/lib/Lemonldap/NG/Common/Conf/Backends/Timeout.pm

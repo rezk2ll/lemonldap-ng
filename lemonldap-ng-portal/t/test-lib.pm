@@ -374,6 +374,18 @@ sub expectJSON {
     return $json;
 }
 
+=head4 expectForbidden($res)
+
+Verify that returned code is 403.
+
+=cut
+
+sub expectForbidden {
+    my ($res) = @_;
+    ok( $res->[0] == 403, ' HTTP code is 403' ) or explain( $res->[0], 403 );
+    count(1);
+}
+
 =head4 expectBadRequest($res)
 
 Verify that returned code is 400. Note that it works only for Ajax request
