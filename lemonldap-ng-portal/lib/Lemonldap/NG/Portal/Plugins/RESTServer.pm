@@ -62,6 +62,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   portalConsts
   PE_PASSWORD_OK
+  URIRE
 );
 
 our $VERSION = '2.0.12';
@@ -247,7 +248,7 @@ sub init {
         mysession => { ':sessionType' => 'updateMySession' },
         ['PUT']
       );
-    extends @parents if ($add);
+    extends @parents               if ($add);
     $self->setTypes( $self->conf ) if ( $self->conf->{restSessionServer} );
 
     return 1;
@@ -406,7 +407,8 @@ sub mysession {
           if ( $self->p->checkXSSAttack( 'authorizationfor', $req->urldc ) );
 
         # Split URL
-        my ( $host, $uri ) = ( $req->urldc =~ m#^https?://([^/]+)(/.*)?$# );
+        $req->urldc =~ URIRE;
+        my ( $host, $uri ) = ( $3 . ( $4 ? ":$4" : '' ), $5 );
         $uri ||= '/';
         return $self->p->sendError( $req, "Bad URL $req->{urldc}", 400 )
           unless ($host);

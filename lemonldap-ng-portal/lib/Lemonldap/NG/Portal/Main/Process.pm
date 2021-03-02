@@ -156,12 +156,16 @@ sub controlUrl {
         }
 
         # Unprotected hosts
-        my ( $proto, $vhost, $appuri ) = $tmp =~ m{^(https?://)([^/#?]*)(.*)};
-        $vhost =~ s/:\d+$//;
+        unless ( $tmp =~ URIRE ) {
+            $self->userLogger->error("Bad URL $tmp");
+            delete $req->{urldc};
+            return PE_BADURL;
+        }
+        my ( $proto, $vhost, $appuri ) = ( $2, $3, $5 );
 
         # Try to resolve alias
         my $originalVhost = $self->HANDLER->resolveAlias($vhost);
-        $vhost = $proto . $originalVhost;
+        $vhost = $proto . '://' . $originalVhost;
         $self->logger->debug( "Required URL (param: "
               . ( $req->param('logout') ? 'HTTP Referer' : 'urldc' )
               . " | value: $tmp | alias: $vhost)" );

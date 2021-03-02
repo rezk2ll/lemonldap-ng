@@ -7,6 +7,8 @@ use Exporter 'import';
 our $VERSION = '2.0.12';
 
 use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::Main';
+use constant URIRE =>
+qr{(((?^:https?))://((?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::((?:[0-9]*)))?(/(((?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?]((?:(?:[;/?:@&=+$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)};
 use constant {
     PE_IDPCHOICE                         => -5,
     PE_SENDRESPONSE                      => -4,
@@ -224,6 +226,7 @@ sub portalConsts {
 our @EXPORT_OK = (
     'portalConsts',
     'HANDLER',
+    'URIRE',
     'PE_IDPCHOICE',
     'PE_SENDRESPONSE',
     'PE_INFO',

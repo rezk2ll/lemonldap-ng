@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.12';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -886,14 +886,16 @@ sub sendHtml {
     my $csp = $self->csp . "form-action " . $self->conf->{cspFormAction};
     if ( my $url = $req->urldc ) {
         $self->logger->debug("Required urldc : $url");
-        $url =~ s#(https?://[^/]+).*#$1#;
+        $url =~ URIRE;
+        $url = $2 . '://' . $3 . ( $4 ? ":$4" : '' );
         $self->logger->debug("Set CSP form-action with urldc : $url");
         $csp .= " $url";
     }
     my $url = $args{params}->{URL};
     if ( defined $url ) {
         $self->logger->debug("Required Params URL : $url");
-        if ( $url =~ s#(https?://[^/]+).*#$1# ) {
+        if ( $url =~ URIRE ) {
+            $url = $2 . '://' . $3 . ( $4 ? ":$4" : '' );
             $self->logger->debug("Set CSP form-action with Params URL : $url");
             $csp .= " $url";
         }

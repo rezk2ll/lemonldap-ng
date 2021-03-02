@@ -12,9 +12,10 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_BADURL
   PE_SENDRESPONSE
+  URIRE
 );
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.12';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::CAS';
@@ -93,8 +94,7 @@ sub storeEnvAndCheckGateway {
         return PE_SENDRESPONSE;
     }
 
-    if ( $service and $service =~ m#^(https?://[^/]+)(/.*)?$# ) {
-        my ( $host, $uri ) = ( $1, $2 );
+    if ( $service and $service =~ URIRE ) {
         my $app = $self->getCasApp($service);
 
         if ($app) {

@@ -16,6 +16,7 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_FORMEMPTY
+  URIRE
 );
 
 our $VERSION = '2.0.12';
@@ -458,7 +459,7 @@ sub isAuthorizedURI {
     my ( $self, $req, $id, $url ) = @_;
     die 'id is required'  unless ($id);
     die 'uri is required' unless ($url);
-    die 'Bad uri'         unless ( $url =~ m#^https?://([^/]+)(/.*)?$# );
+    die 'Bad uri'         unless ( $url =~ URIRE );
     my ( $host, $uri ) = ( $1, $2 );
 
     # Get user session.
