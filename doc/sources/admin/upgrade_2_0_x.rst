@@ -26,6 +26,35 @@ Known regressions in the latest released version
 
 None
 
+
+2.0.12
+------
+
+Client Credential sessions missing expiration time
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you started using Client Credential grants in 2.0.11, you may have encountered
+`issue 2481 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2481>`__.
+
+Because of this bug, the created sessions may never be purged by the `purgeCentralCache` script.
+
+In order to detect these sessions, you can run the following command:
+
+::
+   lemonldap-ng-sessions  search --where _session_kind=SSO --select _session_id --select _utime | \
+   jq -r  '. | map(select(._utime == null)) | map(._session_id) | join ("\n")'
+
+This will output a list of SSO sessions with no expiration time.
+
+Review them manually using ::
+
+   lemonldap-ng-sessions get <session_id>
+
+You can then remove them with ::
+
+   lemonldap-ng-sessions delete <session_id> <session_id> <etc.>
+
+
 2.0.11
 ------
 
