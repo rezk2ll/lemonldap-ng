@@ -1084,6 +1084,7 @@ sub _handleClientCredentialsGrant {
         _clientId                  => $client_id,
         _clientConfKey             => $rp,
         _scope                     => $scope,
+        _utime                     => time,
     };
 
     # Run rule against session info
