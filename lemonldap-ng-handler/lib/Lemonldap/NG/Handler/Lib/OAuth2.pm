@@ -11,16 +11,16 @@ sub retrieveSession {
 
     # Retrieve regular session if this is not an offline access token
     unless ($offlineId) {
-        my $data = {
-            %{
-                $class->Lemonldap::NG::Handler::Main::retrieveSession( $req,
-                    $id )
-            },
-            $class->_getTokenAttributes($req)
-        };
+        my $data =
+          $class->Lemonldap::NG::Handler::Main::retrieveSession( $req, $id );
+        if ( ref($data) eq "HASH" ) {
+            $data = { %{$data}, $class->_getTokenAttributes($req) };
 
-        # Update cache
-        $class->data($data);
+            # Update cache
+            $class->data($data);
+        } else {
+            $req->data->{oauth2_error} = 'invalid_token';
+        }
         return $data;
     }
 
