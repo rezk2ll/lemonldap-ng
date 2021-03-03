@@ -16,7 +16,8 @@ use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::JWT
   qw(getAccessTokenSessionId getJWTPayload getJWTHeader getJWTSignature getJWTSignedData);
-use MIME::Base64 qw/encode_base64 decode_base64/;
+use MIME::Base64
+  qw/encode_base64 decode_base64 encode_base64url decode_base64url/;
 use Mouse;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT);
@@ -1878,31 +1879,6 @@ sub getRequestJWT {
     }
 
     return $response->decoded_content;
-}
-
-### Import encode_base64url and decode_base64url from recent MIME::Base64 module:
-sub encode_base64url {
-    my $e = encode_base64( shift, '' );
-    $e =~ s/=+\z//;
-    $e =~ tr[+/][-_];
-    return $e;
-}
-
-sub decode_base64url {
-    my $s = shift;
-    $s =~ tr[-_][+/];
-    $s .= '=' while length($s) % 4;
-    return decode_base64($s);
-}
-
-sub encodeBase64url {
-    my ( $self, $value ) = @_;
-    return encode_base64url($value);
-}
-
-sub decodeBase64url {
-    my ( $self, $value ) = @_;
-    return decode_base64url($value);
 }
 
 sub addRouteFromConf {
