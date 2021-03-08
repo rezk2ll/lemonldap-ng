@@ -309,6 +309,7 @@ m@<form.+?action="(?:(?:http://([^/]+))?(/.*?)?|(#))".+method="(post|get)"@is,
               m#<input.+?name="([^"]+)"[^>]+(?:value="([^"]*?)")?#gs,
             %fields
         );
+
         # Add textarea
         %fields = (
             $res->[2]->[0] =~
@@ -610,6 +611,20 @@ use Mouse;
 
 extends 'Lemonldap::NG::Common::PSGI::Cli::Lib';
 
+# try to find template dir in @INC
+my $templateDir = "site/templates";
+unless ( -d $templateDir ) {
+    for (@INC) {
+        if ( -d "$_/site/templates" ) {
+            $templateDir = "$_/site/templates";
+            last;
+        }
+    }
+    unless ( -d $templateDir ) {
+        die "Could not find template dir";
+    }
+}
+
 our $defaultIni = {
     configStorage => {
         type    => 'File',
@@ -624,7 +639,7 @@ our $defaultIni = {
     logLevel              => 'error',
     cookieName            => 'lemonldap',
     domain                => 'example.com',
-    templateDir           => 'site/templates',
+    templateDir           => $templateDir,
     staticPrefix          => '/static',
     tokenUseGlobalStorage => 0,
     securedCookie         => 0,
@@ -707,7 +722,7 @@ has ini => (
         main::ok( $self->{p} = $self->class->new(), 'Portal object' );
         main::count(1);
         unless ( $self->confFailure ) {
-            main::ok( $self->{p}->init($ini),           'Init' );
+            main::ok( $self->{p}->init($ini), 'Init' );
             main::ok( $self->{app} = $self->{p}->run(), 'Portal app' );
             main::count(2);
             no warnings 'redefine';
