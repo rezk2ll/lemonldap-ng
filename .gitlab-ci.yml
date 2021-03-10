@@ -1,5 +1,6 @@
 .build_job:
   stage: build
+  retry: 1
   artifacts:
     expire_in: 1 hour
     paths:
