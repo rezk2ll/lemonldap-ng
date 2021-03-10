@@ -12,8 +12,9 @@ Just enable it in the manager (section “plugins”).
 
    -  **Activation**: Enable / Disable this plugin
    -  **Download file**: Allow users to download DevOps file from a remote server by
-   ptroviding an URL (By example: http://myapp.example.com:8080). Plugin will try to
-   retrieve remote file by sending a request (i.e. http://myapp.example.com:8080/rules.json)
+      providing an URL (By example: http://myapp.example.com:8080). Plugin will
+      try to retrieve remote file by sending a request (i.e.
+      http://myapp.example.com:8080/rules.json)
 
 Usage
 -----

@@ -321,7 +321,7 @@ Options
       for details. These offline sessions can be administered through
       the Session Browser.
    - **Allow OAuth2.0 Password Grant** (since version ``2.0.8``): Allow the use of the :ref:`Resource Owner Password Credentials Grant <resource-owner-password-grant>` by this client. This feature only works if you have configured a form-based authentication module.
-   - **Allow OAuth2.0 Client Credentials Grant** (since version ``2.0.11``): Allow the use of the :ref:`Resource Owner Password Credentials Grant <client-credentials-grant>` by this client.
+   - **Allow OAuth2.0 Client Credentials Grant** (since version ``2.0.11``): Allow the use of the :ref:`Client Credentials Grant <client-credentials-grant>` by this client.
    - **Authentication Level**: required authentication level to access this application
    - **Access Rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
 

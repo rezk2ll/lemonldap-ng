@@ -25,16 +25,17 @@ Just enable it in the Manager (section “plugins”). Then, set searching attri
 
 .. note::
 
-    You can provide a 'multiValuesSeparator' separated list of allowed searching values that will be displayed as an HTML <select> list.
+   You can provide a 'multiValuesSeparator' separated list of allowed searching values that will be displayed as an HTML <select> list ::
 
-      attribute#placeholder[#empty] => value1; placeholder1; value2; placeholder2
+         attribute#placeholder[#empty] => value1; placeholder1; value2; placeholder2
 
-      -  By example:
-        uid#Identity   => dwho; Dr Who; rtyler; Rose Tyler; msmith; Mr Smith
+   For example ::
 
-        uid#Identity#1 => dwho; Dr Who; rtyler; Rose Tyler (allow empty value)
+         uid#Identity   => dwho; Dr Who; rtyler; Rose Tyler; msmith; Mr Smith
 
-      Entries are sorted by alphabetical order.
+         uid#Identity#1 => dwho; Dr Who; rtyler; Rose Tyler (allow empty value)
+
+   Entries are sorted by alphabetical order.
 
 .. attention::
 
