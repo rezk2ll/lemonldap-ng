@@ -22,10 +22,12 @@ my $op = LLNG::Manager::Test->new( {
             portal                          => 'http://auth.op.com',
             authentication                  => 'Demo',
             userDB                          => 'Same',
+            customPlugins                   => 't::OidcHookPlugin',
             issuerDBOpenIDConnectActivation => 1,
             oidcRPMetaDataExportedVars      => {
                 rp => {
-                    "name" => "mymacro",
+                    "name"               => "mymacro",
+                    "preferred_username" => "hooked_username",
                 }
             },
             oidcRPMetaDataMacros => {
@@ -140,7 +142,7 @@ my $access_token = $payload->{access_token};
 ok( $access_token, "Access Token found" );
 count(1);
 my $token_res_scope = $payload->{scope};
-ok ($token_res_scope, "Token response returned scope");
+ok( $token_res_scope, "Token response returned scope" );
 
 # Get userinfo
 $res = $op->_post(
@@ -155,8 +157,9 @@ $res = $op->_post(
 
 $payload = expectJSON($res);
 
-is( $payload->{sub},  'rpid' );
-is( $payload->{name}, 'foo' );
+is( $payload->{sub},                'rpid' );
+is( $payload->{name},               'foo' );
+is( $payload->{preferred_username}, 'hook' );
 
 my $query = "token=$access_token";
 ok(
@@ -174,7 +177,8 @@ ok(
 $payload = expectJSON($res);
 like( $payload->{scope}, qr/\bread\b/,   "Scope read found" );
 like( $payload->{scope}, qr/\balways\b/, "Rule-enforced scope found" );
-is ($token_res_scope, $payload->{scope}, "Token response scope match token scope");
+is( $token_res_scope, $payload->{scope},
+    "Token response scope match token scope" );
 
 clean_sessions();
 done_testing();

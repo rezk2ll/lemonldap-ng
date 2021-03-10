@@ -8,11 +8,12 @@ use Data::Dumper;
 use Test::More;
 
 use constant hook => {
-    oidcGenerateIDToken          => 'addClaimToIDToken',
-    oidcGenerateUserInfoResponse => 'addClaimToUserInfo',
-    oidcGotRequest               => 'addScopeToRequest',
-    oidcResolveScope             => 'addHardcodedScope',
-    oidcGenerateAccessToken      => 'addClaimToAccessToken',
+    oidcGenerateIDToken           => 'addClaimToIDToken',
+    oidcGenerateUserInfoResponse  => 'addClaimToUserInfo',
+    oidcGotRequest                => 'addScopeToRequest',
+    oidcResolveScope              => 'addHardcodedScope',
+    oidcGenerateAccessToken       => 'addClaimToAccessToken',
+    oidcGotClientCredentialsGrant => 'oidcGotClientCredentialsGrant',
 };
 
 sub init {
@@ -49,6 +50,12 @@ sub addHardcodedScope {
 sub addClaimToAccessToken {
     my ( $self, $req, $payload, $rp ) = @_;
     $payload->{"access_token_hook"} = 1;
+    return PE_OK;
+}
+
+sub oidcGotClientCredentialsGrant {
+    my ( $self, $req, $payload, $rp ) = @_;
+    $payload->{"hooked_username"} = "hook";
     return PE_OK;
 }
 
