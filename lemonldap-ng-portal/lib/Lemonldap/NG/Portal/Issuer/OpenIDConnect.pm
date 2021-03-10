@@ -1087,6 +1087,10 @@ sub _handleClientCredentialsGrant {
         _utime                     => time,
     };
 
+    my $h = $self->p->processHook( $req, 'oidcGotClientCredentialsGrant',
+        $infos, $rp );
+    return $self->sendOIDCError( $req, 'server_error', 500 ) if ( $h != PE_OK );
+
     # Run rule against session info
     if ( my $rule = $self->spRules->{$rp} ) {
         unless ( $rule->( $req, $infos ) ) {
