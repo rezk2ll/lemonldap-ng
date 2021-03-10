@@ -26,6 +26,31 @@ Sample code::
        return PE_OK;
    }
 
+oidcGotClientCredentialsGrant
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.12
+
+This hook is triggered when LemonLDAP::NG successfully authorized a :ref:`Client Credentials Grant <client-credentials-grant>`.
+
+The hook's parameters are:
+
+* A hash of the current session info
+* the configuration key of the relying party which is being identified
+
+Sample code::
+
+   use constant hook => {
+       oidcGotClientCredentialsGrant => 'addSessionVariable',
+   };
+
+   sub addSessionVariable {
+       my ( $self, $req, $info, $rp ) = @_;
+       $info->{is_client_credentials} = 1;
+
+       return PE_OK;
+   }
+
 
 oidcGenerateUserInfoResponse
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
