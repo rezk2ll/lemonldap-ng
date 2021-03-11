@@ -212,6 +212,8 @@ sub storeRequest {
     my $info = {};
     $info->{content} = $req->content;
     foreach ( keys %{ $req->env } ) {
+        next if $_ eq "psgi.errors";
+        next if $_ eq "psgi.input";
         $info->{$_} = $req->env->{$_} unless ( ref $req->env->{$_} );
     }
     return $self->_ott->createToken($info);
