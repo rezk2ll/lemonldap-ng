@@ -163,8 +163,8 @@ Recommends: lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uws
 Suggests: libcache-memcached-perl,
           libdigest-hmac-perl,
           libsoap-lite-perl
-Breaks: liblemonldap-ng-handler-perl (<< 1.9.1-2~)
-Replaces: liblemonldap-ng-handler-perl (<< 1.9.1-2~)
+Breaks: liblemonldap-ng-handler-perl (<< 1.9.1-2~), lemonldap-ng-fastcgi-server (<< 2.0.5~)
+Replaces: liblemonldap-ng-handler-perl (<< 1.9.1-2~), lemonldap-ng-fastcgi-server (<< 2.0.5~)
 Description: Lemonldap::NG handler part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
