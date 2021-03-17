@@ -35,13 +35,14 @@
 #==============================================================================
 Name:           lemonldap-ng
 Version:        2.0.11
-Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
+Release:        %{?pre_release:0.}2%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        LemonLDAP-NG WebSSO
 License:        GPLv2+
 URL:            http://lemonldap-ng.org
 Source0:        https://release.ow2.org/lemonldap/%{name}-%{version}%{?pre_release:~%{pre_release}}.tar.gz
 BuildArch:      noarch
 
+BuildRequires:  make
 BuildRequires:  gnupg
 BuildRequires:  which
 BuildRequires:  perl-generators
@@ -744,6 +745,9 @@ fi
 # Changelog
 #==============================================================================
 %changelog
+* Wed Mar 17 2021 Xavier Bachelot <xavier@bachelot.org> - 2.0.11-2
+- Add BR: make
+
 * Sat Jan 30 2021 Clement Oudot <clem.oudot@gmail.com> - 2.0.11-1
 - Update to 2.0.11
 
