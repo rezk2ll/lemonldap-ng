@@ -370,6 +370,9 @@ entityID="http://auth.$name.com/saml/metadata">
     <AssertionConsumerService isDefault="false" index="1"
      Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
      Location="http://auth.$name.com/saml/proxySingleSignOnArtifact" />
+    <AssertionConsumerService isDefault="true" index="2"
+     Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+     Location="http://auth.alternate.com/saml/proxySingleSignOnPost" />
   </SPSSODescriptor>
   <AttributeAuthorityDescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
 
