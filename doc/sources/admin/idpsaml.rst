@@ -190,14 +190,20 @@ IDP Initiated mode
 The IDP Initiated URL is the SSO SAML URL with GET
 parameters:
 
--  IDPInitiated: 1
--  One of:
+- ``IDPInitiated``: ``1``
+- One of:
 
-   -  sp: SP entity ID
-   -  spConfKey: SP configuration key
+  - ``sp``: Service Provider entity ID
+  - ``spConfKey``: Service Provider configuration key
 
 For example:
 http://auth.example.com/saml/singleSignOn?IDPInitiated=1&spConfKey=simplesamlphp
+
+- Optionally, if you may also specify, in addition to ``sp`` or ``spConfKey``:
+
+  - ``spDest``: URL of Service Provider's AssertionConsumerService
+
+The URL specified in ``spDest`` *must* be present in the Service Provider metadata registered in LemonLDAP::NG. This is only useful if your Service Provider is reachable over multiple URLs.
 
 Macros
 ^^^^^^
