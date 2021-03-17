@@ -247,6 +247,7 @@ sub run {
     my $idp_initiated           = $req->param('IDPInitiated');
     my $idp_initiated_sp        = $req->param('sp');
     my $idp_initiated_spConfKey = $req->param('spConfKey');
+    my $idp_initiated_spDest    = $req->param('spDest');
 
     # Normalize URL to be tolerant to SAML Path
     $url = $self->normalize_url( $url, $self->conf->{issuerDBSAMLPath},
@@ -373,6 +374,12 @@ sub run {
 
                 # Force AllowCreate to TRUE
                 eval { $login->request()->NameIDPolicy()->AllowCreate(1); };
+
+                # Allow selection the AssertionConsumerServiceURL by the user
+                if ($idp_initiated_spDest) {
+                    $login->request->AssertionConsumerServiceURL(
+                        $idp_initiated_spDest);
+                }
             }
 
             # Process authentication request
