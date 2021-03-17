@@ -1085,7 +1085,7 @@ manager_uninstall:	manager
 
 dist:	clean
 	@mkdir -p lemonldap-ng-$(VERSION)
-	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\|debian\|rpm\)") lemonldap-ng-$(VERSION)
+	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\|debian\)") lemonldap-ng-$(VERSION)
 	@find $$dir -name '*.bak' -delete
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)/node_modules
