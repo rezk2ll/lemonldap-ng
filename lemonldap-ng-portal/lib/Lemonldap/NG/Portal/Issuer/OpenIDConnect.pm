@@ -1141,7 +1141,7 @@ sub _handleClientCredentialsGrant {
 sub _handlePasswordGrant {
     my ( $self, $req, $rp ) = @_;
     my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
-    my $req_scope = $req->param('scope') || 'openid';
+    my $req_scope = $req->param('scope') || '';
     my $username  = $req->param('username');
     my $password  = $req->param('password');
 
