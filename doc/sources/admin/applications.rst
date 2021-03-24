@@ -24,6 +24,7 @@ Applications
    applications/grr
    applications/guacamole
    applications/humhub
+   applications/iparapheur
    applications/jitsimeet
    applications/liferay
    applications/limesurvey
@@ -100,6 +101,7 @@ Application                                                       Configuration 
 .. image:: applications/grr_logo.png                              :doc:`GRR<applications/grr>`                         ✔
 .. image:: applications/guacamole.png                             :doc:`Apache Guacamole<applications/guacamole>`      ✔                             ✔        ✔
 .. image:: applications/humhub_logo.png                           :doc:`HumHub<applications/humhub>`                                                          ✔
+.. image:: applications/iparapheur_logo.png                       :doc:`i-Parapheur<applications/iparapheur>`          ✔
 .. image:: applications/logo-jitsimeet.png                        :doc:`Jitsi Meet<applications/jitsimeet>`            ✔
 .. image:: applications/liferay_logo.png                          :doc:`Liferay<applications/liferay>`                 ✔
 .. image:: applications/limesurvey_logo.png                       :doc:`LimeSurvey<applications/limesurvey>`           ✔
