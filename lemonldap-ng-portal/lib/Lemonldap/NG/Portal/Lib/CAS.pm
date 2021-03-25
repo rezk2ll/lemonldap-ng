@@ -7,7 +7,7 @@ use XML::Simple;
 use Lemonldap::NG::Common::UserAgent;
 use URI;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.12';
 
 # PROPERTIES
 
@@ -397,7 +397,7 @@ sub validateST {
 
     if ( defined $xml->{'cas:authenticationFailure'} ) {
         $self->logger->error( "Failed to validate Service Ticket $ticket: "
-              . $xml->{'cas:authenticationFailure'} );
+              . $xml->{'cas:authenticationFailure'}->{content} );
         return 0;
     }
 
