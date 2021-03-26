@@ -143,9 +143,9 @@ ok( $res->{MSG} eq 'PE105', 'PE105' )
   or print STDERR Dumper($res);
 count(4);
 
-# Download file
-# -------------
-$query = 'url=http://test3.example.com';
+# Bad URLs
+# --------
+$query = 'url=test3.example.com';
 ok(
     $res = $client->_post(
         '/checkdevops',
@@ -157,19 +157,26 @@ ok(
 );
 ok( $res = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
-ok( $res->{ALERTE} eq 'alert-info', 'alert-info found' )
+ok( $res->{MSG} eq 'PE37', 'Bad URL' )
   or print STDERR Dumper($res);
-ok( $res->{FILE} =~ /headers/, 'headers found' )
+count(3);
+
+# --------
+$query = 'url=http://test3.example.com#test';
+ok(
+    $res = $client->_post(
+        '/checkdevops',
+        IO::String->new($query),
+        cookie => "lemonldap=$id",
+        length => length($query),
+    ),
+    'POST checkdevops with wrong url'
+);
+ok( $res = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+  or print STDERR "$@\n" . Dumper($res);
+ok( $res->{URL} eq 'http://test3.example.com/rules.json', 'Well formated URL' )
   or print STDERR Dumper($res);
-ok( $res->{FILE} =~ /rules/, 'rules found' )
-  or print STDERR Dumper($res);
-ok( $res->{FILE} =~ /"\$uid ne qq#dwho#"/, 'rule found' )
-  or print STDERR Dumper($res);
-ok( $res->{URL} eq 'http://test3.example.com/rules.json', 'URL found' )
-  or print STDERR Dumper($res);
-ok( $res->{MSG} eq 'checkDevOps', 'MSG found' )
-  or print STDERR Dumper($res);
-count(8);
+count(3);
 
 $client->logout($id);
 clean_sessions();

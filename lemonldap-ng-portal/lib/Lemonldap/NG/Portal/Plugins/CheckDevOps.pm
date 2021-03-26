@@ -5,6 +5,7 @@ use Mouse;
 use JSON qw(from_json);
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Portal::Main::Constants qw(
+  URIRE
   PE_OK
   PE_ERROR
   PE_BADURL
@@ -124,27 +125,26 @@ sub run {
     # Check URL if allowed and exists
     if ( $self->conf->{checkDevOpsDownload} and $url = $req->param('url') ) {
         undef $url if $self->p->checkXSSAttack( 'CheckDevOps URL', $url );
-        if ( $url && $url =~ m#^(?:https?://)?([^/]*)(.*)#i ) {
+        if ( $url && $url =~ URIRE ) {
 
             # Reformat url
-            my ( $vhost, $appuri ) = $url =~ m#^(?:https?://)?([^/]*)(.*)#i;
-            my ($proto) = $url =~ m#^(https?://).*#i;
-            $proto ||= 'http://';
-            $url = "$proto$vhost/rules.json";
+            my ( $proto, $vhost, $appuri ) = ( $2, $3, $5 );
+            $url = "$proto://$vhost/rules.json";
             my $resp = $self->ua->get( $url, 'Accept' => 'application/json' );
             $self->logger->debug( "Code/Message from $url: "
                   . $resp->code . '/'
                   . $resp->message );
             my $content = $resp->decoded_content;
-            $self->logger->debug("Content received from $url: $content") if $content;
+            $self->logger->debug("Content received from $url: $content")
+              if $content;
 
             if ( $resp->is_success ) {
-                $json = eval { from_json($content, { allow_nonref => 1 }) };
+                $json = eval { from_json( $content, { allow_nonref => 1 } ) };
                 if ($@) {
 
                     # Prepare form params
                     undef $json;
-                    $msg   = 'PE' . PE_BAD_DEVOPS_FILE;
+                    $msg = 'PE' . PE_BAD_DEVOPS_FILE;
                     $self->userLogger->error(
 "CheckDevOps: bad 'rules.json' file retrieved from $url ($@)"
                     );
@@ -153,7 +153,7 @@ sub run {
             else {
 
                 # Prepare form params
-                $msg   = 'PE' . PE_FILENOTFOUND;
+                $msg = 'PE' . PE_FILENOTFOUND;
                 $self->userLogger->error(
 "CheckDevOps: Unable to download 'rules.json' file from $url"
                 );
@@ -162,8 +162,8 @@ sub run {
         else {
 
             # Prepare form params
-            $msg   = 'PE' . PE_BADURL;
-            $self->userLogger->error('CheckDevOps: bad provided URL');
+            $msg = 'PE' . PE_BADURL;
+            $self->userLogger->error('CheckDevOps: bad URL provided');
         }
     }
     unless ( $json || $msg ) {
