@@ -505,7 +505,8 @@ Some options are available:
    rules,...)*
 -  **Access to trace**: can be used for overwriting REMOTE_CUSTOM with a custom function.
    Provide a comma separated parameters list with custom function path and args.
-   By example: My::accessToTrace, Doctor, Who
+   Args can be vars or session attributes, macros, ...
+   By example: My::accessToTrace, Doctor, Who, _whatToTrace
 -  **Type**: handler type (normal,
    :doc:`ServiceToken Handler<servertoserver>`,
    :doc:`DevOps Handler<devopshandler>`,...)
@@ -536,7 +537,7 @@ Some options are available:
           my $params  = $hash->{params};
           my $session = $hash->{session};
 
-          return "$custom alias $params->[0]_$params->[1]:$session->{groups}";
+          return "$custom alias $params->[0]_$params->[1]:$session->{groups}:$session->{$params->[2]}";
       }
 
       1;

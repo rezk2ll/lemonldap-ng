@@ -38,7 +38,7 @@ Categories and applications
 ---------------------------
 
 :doc:`Configuring the virtual hosts<configvhost>` is not sufficient to
-display an application in the menu. Indeed, a virtual host can contain
+display an application in the menu. Indeed, a virtual host can serve
 several applications (http://vhost.example.com/appli1,
 http://vhost.example.com/appli2).
 
