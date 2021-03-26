@@ -954,8 +954,8 @@ sub tests {
                     $hasPwdBE ||= 1 unless $mods[2] eq 'Null';
                 }
                 return ( -1,
-                    'Password module is enabled without AuthChoice password backend' )
-                  unless $hasPwdBE;
+'Password module is enabled without AuthChoice password backend'
+                ) unless $hasPwdBE;
             }
             return 1;
         },
@@ -990,7 +990,10 @@ sub tests {
 
         # AuthChoice parameters must exist
         AuthChoiceParams => sub {
-            return 1 unless %{ $conf->{authChoiceModules} };
+            return 1
+              unless ( $conf->{authChoiceModules}
+                and %{ $conf->{authChoiceModules} }
+                and $conf->{authentication} eq 'Choice' );
             foreach (qw(AuthBasic FindUser)) {
                 if ( $conf->{"authChoice$_"} ) {
                     my $test  = $conf->{"authChoice$_"};
