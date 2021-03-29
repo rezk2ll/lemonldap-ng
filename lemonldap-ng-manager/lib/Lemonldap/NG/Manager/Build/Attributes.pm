@@ -4338,7 +4338,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type => 'keyTextContainer',
             help => 'idpopenidconnect.html#scope-rules',
             test => {
-                keyTest    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                # RFC6749
+                keyTest    => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
                 keyMsgFail => '__badMacroName__',
                 test       => sub { return perlExpr(@_) },
             },

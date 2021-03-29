@@ -2443,7 +2443,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => {},
             'test'    => {
                 'keyMsgFail' => '__badMacroName__',
-                'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                'keyTest'    => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
                 'test'       => sub {
                     return perlExpr(@_);
                 }
