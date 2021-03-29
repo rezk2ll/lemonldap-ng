@@ -1719,7 +1719,7 @@ sub userInfo {
 
     unless ($accessTokenSession) {
         $self->userLogger->error(
-            "Unable to get access token session for id $access_token");
+            "Unable to validate access token $access_token");
         return $self->returnBearerError( 'invalid_request',
             'Invalid request', 401 );
     }

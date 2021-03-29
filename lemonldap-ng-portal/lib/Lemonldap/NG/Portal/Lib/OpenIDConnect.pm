@@ -722,93 +722,100 @@ sub getAuthorizationCode {
 sub newAccessToken {
     my ( $self, $req, $rp, $scope, $sessionInfo, $info ) = @_;
 
+    my $at_info = {
+
+        scope => $scope,
+        rp    => $rp,
+        %{$info},
+    };
+
     my $session = $self->getOpenIDConnectSession(
         undef,
         "access_token",
         $self->conf->{oidcRPMetaDataOptions}->{$rp}
           ->{oidcRPMetaDataOptionsAccessTokenExpiration}
           || $self->conf->{oidcServiceAccessTokenExpiration},
-        {
-
-            scope => $scope,
-            rp    => $rp,
-            %{$info},
-        }
+        $at_info,
     );
 
     if ($session) {
-        return $self->maybeJWT( $req, $rp, $scope, $session->id, $sessionInfo );
+        if ( $self->_wantJWT($rp) ) {
+            my $at_jwt =
+              $self->makeJWT( $req, $rp, $scope, $session->id, $sessionInfo );
+            $at_info->{sha256_hash} = $self->createHash( $at_jwt, 256 );
+            $self->updateToken( $session->id, $at_info );
+            return $at_jwt;
+        }
+        else {
+            return $session->id;
+        }
     }
     else {
         return undef;
     }
 }
 
-sub maybeJWT {
+sub _wantJWT {
+    my ( $self, $rp ) = @_;
+    return $self->conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsAccessTokenJWT};
+}
+
+sub makeJWT {
     my ( $self, $req, $rp, $scope, $id, $sessionInfo ) = @_;
 
-    if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
-        ->{oidcRPMetaDataOptionsAccessTokenJWT} )
-    {
+    my $exp =
+      $self->conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsAccessTokenExpiration}
+      || $self->conf->{oidcServiceAccessTokenExpiration};
+    $exp += time;
+    my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
 
-        my $exp =
-          $self->conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsAccessTokenExpiration}
-          || $self->conf->{oidcServiceAccessTokenExpiration};
-        $exp += time;
-        my $client_id =
-          $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
+    my $access_token_payload = {
+        iss       => $self->iss,                  # Issuer Identifier
+        exp       => $exp,                        # expiration
+        aud       => $self->getAudiences($rp),    # Audience
+        client_id => $client_id,                  # Client ID
+        iat       => time,                        # Issued time
+        jti       => $id,                         # Access Token session ID
+        scope     => $scope,                      # Scope
+    };
 
-        my $access_token_payload = {
-            iss       => $self->iss,                  # Issuer Identifier
-            exp       => $exp,                        # expiration
-            aud       => $self->getAudiences($rp),    # Audience
-            client_id => $client_id,                  # Client ID
-            iat       => time,                        # Issued time
-            jti       => $id,                         # Access Token session ID
-            scope     => $scope,                      # Scope
-        };
-
-        my $claims;
-        if ( ref($sessionInfo) eq "HASH" ) {
-            $claims = $self->buildUserInfoResponseFromData( $req, $scope,
-                $rp, $sessionInfo );
-        }
-        else {
-            $claims = $self->buildUserInfoResponseFromId( $req, $scope,
-                $rp, $sessionInfo );
-        }
-
-        # Release claims, or only sub
-        if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
-            ->{oidcRPMetaDataOptionsAccessTokenClaims} )
-        {
-            foreach ( keys %$claims ) {
-                $access_token_payload->{$_} = $claims->{$_};
-            }
-        }
-        else {
-            $access_token_payload->{sub} = $claims->{sub};
-        }
-
-        # Call hook to let the user modify payload
-        my $h = $self->p->processHook( $req, 'oidcGenerateAccessToken',
-            $access_token_payload, $rp );
-        return undef if ( $h != PE_OK );
-
-        # Get signature algorithm
-        my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsAccessTokenSignAlg} || "RS256";
-        $self->logger->debug("Access Token signature algorithm: $alg");
-
-        my $jwt =
-          $self->createJWT( $access_token_payload, $alg, $rp, "at+JWT" );
-
-        return $jwt;
+    my $claims;
+    if ( ref($sessionInfo) eq "HASH" ) {
+        $claims = $self->buildUserInfoResponseFromData( $req, $scope,
+            $rp, $sessionInfo );
     }
     else {
-        return $id;
+        $claims =
+          $self->buildUserInfoResponseFromId( $req, $scope, $rp, $sessionInfo );
     }
+
+    # Release claims, or only sub
+    if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
+        ->{oidcRPMetaDataOptionsAccessTokenClaims} )
+    {
+        foreach ( keys %$claims ) {
+            $access_token_payload->{$_} = $claims->{$_};
+        }
+    }
+    else {
+        $access_token_payload->{sub} = $claims->{sub};
+    }
+
+    # Call hook to let the user modify payload
+    my $h = $self->p->processHook( $req, 'oidcGenerateAccessToken',
+        $access_token_payload, $rp );
+    return undef if ( $h != PE_OK );
+
+    # Get signature algorithm
+    my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsAccessTokenSignAlg} || "RS256";
+    $self->logger->debug("Access Token signature algorithm: $alg");
+
+    my $jwt = $self->createJWT( $access_token_payload, $alg, $rp, "at+JWT" );
+
+    return $jwt;
 }
 
 # Get an session from the supplied Access Token
@@ -820,7 +827,26 @@ sub getAccessToken {
     my $id = getAccessTokenSessionId($access_token);
     return unless $id;
 
-    return $self->getOpenIDConnectSession( $id, "access_token" );
+    my $session = $self->getOpenIDConnectSession( $id, "access_token" );
+    return undef unless $session;
+
+    my $stored_hash = $session->{data}->{sha256_hash};
+    if ($stored_hash) {
+        my $incoming_hash = $self->createHash( $access_token, 256 );
+        if ( $stored_hash eq $incoming_hash ) {
+            return $session;
+        }
+        else {
+            $self->logger->error(
+                    "Incoming Access token hash $incoming_hash "
+                  . "does not match stored hash $stored_hash. "
+                  . "The access token might have been tampered with." );
+            return undef;
+        }
+    }
+    else {
+        return $session;
+    }
 }
 
 # Create a new Refresh Token
@@ -851,6 +877,11 @@ sub getRefreshToken {
 }
 
 sub updateRefreshToken {
+    my $self = shift;
+    return $self->updateToken($@);
+}
+
+sub updateToken {
     my ( $self, $id, $infos ) = @_;
 
     my %storage = (
