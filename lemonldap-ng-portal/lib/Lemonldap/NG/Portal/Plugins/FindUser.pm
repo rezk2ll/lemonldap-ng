@@ -5,8 +5,8 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_NOTOKEN
-  PE_TOKENEXPIRED
   PE_FIRSTACCESS
+  PE_TOKENEXPIRED
 );
 
 our $VERSION = '2.0.12';
@@ -96,7 +96,7 @@ sub retreiveFindUserParams {
         }
         else {
             $self->logger->warn(
-                "Parameter $key has been reject by findUserControl")
+                "Parameter $key has been rejected by findUserControl")
               if $defined;
             ();
         }
