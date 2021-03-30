@@ -113,22 +113,19 @@ Register LL::NG to an OpenID Connect Provider
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To register LL::NG, you will need to give some information like
-application name or logo. One of mandatory information is the redirect
-URL (one or many).
+application name or logo.
 
-To know this information, just take the portal URL and the Callback GET
-parameter, for example:
+You will be asked to provide a *Redirect URI* for LemonLDAP::NG, which is constructed by appending the ``openidcallback=1`` parameter to the Portal URL.
 
--  http://auth.example.com/?openidcallback=1
--  http://auth.example.com/index.pl?openidcallback=1
--  http://auth.example.com/?lmAuth=oidc&openidcallback=1
+For example:
+
+-  https://auth.example.com/?openidcallback=1
 
 
 .. attention::
 
-    If you use the :doc:`choice backend<authchoice>`, you
-    need to add the choice parameter in redirect URL or
-    set SameSite cookie value to "Lax" or "None".
+    If you use the :doc:`choice backend<authchoice>`,
+    you need to set SameSite cookie value to "Lax" or "None".
     See :doc:`SSO cookie parameters<ssocookie>`
 
 After registration, the OP must give you a client ID and a client
