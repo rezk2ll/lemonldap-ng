@@ -128,6 +128,17 @@ Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
         my $entry = shift;
         my $id    = shift;
 
+        # If filtering sessionKind
+        if (@sessionKindOnly) {
+
+            unless ( grep { $_ eq $entry->{_session_kind} } @sessionKindOnly ) {
+                print "Ignoring session $id with type "
+                  . $entry->{_session_kind} . "\n"
+                  if $debug;
+                return undef;
+            }
+        }
+
         print "Processing session $id\n" if $debug;
         my $s = Lemonldap::NG::Common::Session->new( {
                 storageModule        => $backendTo->{backend},
@@ -137,14 +148,6 @@ Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
                 force                => 1,
             }
         );
-
-        # If filtering sessionKind
-        if (@sessionKindOnly) {
-
-            unless ( grep { $_ eq $entry->{_session_kind} } @sessionKindOnly ) {
-                return undef;
-            }
-        }
 
         if ( $s->error ) {
             die "Error encountered on session $id" unless $ignore_errors;
