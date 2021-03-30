@@ -2148,9 +2148,15 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type' => 'keyTextContainer'
         },
         'oidcOPMetaDataJSON' => {
+            'keyTest' => sub {
+                1;
+            },
             'type' => 'file'
         },
         'oidcOPMetaDataJWKS' => {
+            'keyTest' => sub {
+                1;
+            },
             'type' => 'file'
         },
         'oidcOPMetaDataNodes' => {

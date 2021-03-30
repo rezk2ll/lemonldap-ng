@@ -694,9 +694,18 @@ sub scanTree {
                     }
                 }
             }
+
             if ($prefix) {
                 push @cnodesKeys, $leaf;
             }
+
+            # issue 2439
+            # FIXME: in future versions, oidcOPMetaDataJSON and samlIDPMetaDataXML shoud
+            # behave the same
+            if ( $leaf =~ /^oidcOPMetaData(?:JSON|JWKS)$/ ) {
+                push @simpleHashKeys, $leaf;
+            }
+
             if ( $attr->{type} =~ /^(?:catAndAppList|\w+Container)$/ ) {
                 $jleaf->{cnodes} = $prefix . $leaf;
                 unless ( $prefix or $leaf =~ $reIgnoreKeys ) {

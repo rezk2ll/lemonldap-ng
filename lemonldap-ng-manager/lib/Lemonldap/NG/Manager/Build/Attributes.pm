@@ -4152,8 +4152,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptions => { type => 'subContainer', },
 
         # OpenID Connect providers
-        oidcOPMetaDataJSON         => { type => 'file', },
-        oidcOPMetaDataJWKS         => { type => 'file', },
+        oidcOPMetaDataJSON         => { type => 'file', keyTest => sub { 1 } },
+        oidcOPMetaDataJWKS         => { type => 'file', keyTest => sub { 1 } },
         oidcOPMetaDataExportedVars => {
             type    => 'keyTextContainer',
             default => {
