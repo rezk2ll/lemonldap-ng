@@ -91,7 +91,7 @@ sub resetPwd {
 
 sub _reset {
     my ( $self, $req ) = @_;
-    my ( $mailToken, %tplPrms );
+    my ($mailToken);
 
     # PASSWORD CHANGE FORM => changePwd()
     if (
@@ -323,7 +323,6 @@ sub _reset {
           );
 
         # Build mail content
-        $tplPrms{MAIN_LOGO} = $self->conf->{portalMainLogo};
         my $tr      = $self->translate($req);
         my $subject = $self->conf->{mailConfirmSubject};
         unless ($subject) {
@@ -344,7 +343,7 @@ sub _reset {
                 $req,
                 'mail_confirm',
                 filter => $tr,
-                params => \%tplPrms
+                params => {},
             );
             $html = 1;
         }
@@ -496,7 +495,6 @@ sub changePwd {
         $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
 
     # Build mail content
-    $tplPrms{MAIN_LOGO} = $self->conf->{portalMainLogo};
     my $tr      = $self->translate($req);
     my $subject = $self->conf->{mailSubject};
     unless ($subject) {
@@ -517,7 +515,7 @@ sub changePwd {
             $req,
             'mail_password',
             filter => $tr,
-            params => \%tplPrms
+            params => {%tplPrms},
         );
         $html = 1;
     }

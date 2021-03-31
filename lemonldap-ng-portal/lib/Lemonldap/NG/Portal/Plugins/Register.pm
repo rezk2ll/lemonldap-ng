@@ -114,7 +114,6 @@ sub register {
 # Parameters check
 sub _register {
     my ( $self, $req ) = @_;
-    my %tplPrms;
 
     # Check if it's a first access
     unless ( ( $req->method =~ /^POST$/i and $req->param('mail') )
@@ -301,7 +300,6 @@ sub _register {
           );
 
         # Build mail content
-        $tplPrms{MAIN_LOGO} = $self->conf->{portalMainLogo};
         my $tr      = $self->translate($req);
         my $subject = $self->conf->{registerConfirmSubject};
         unless ($subject) {
@@ -316,7 +314,7 @@ sub _register {
             $req,
             'mail_register_confirm',
             filter => $tr,
-            params => \%tplPrms
+            params => {},
         );
 
         # Replace variables in body
@@ -361,7 +359,6 @@ sub _register {
     }
 
     # Build mail content
-    $tplPrms{MAIN_LOGO} = $self->conf->{portalMainLogo};
     my $tr      = $self->translate($req);
     my $subject = $self->conf->{registerDoneSubject};
     unless ($subject) {
@@ -376,7 +373,7 @@ sub _register {
         $req,
         'mail_register_done',
         filter => $tr,
-        params => \%tplPrms
+        params => {},
     );
 
     # Build portal url

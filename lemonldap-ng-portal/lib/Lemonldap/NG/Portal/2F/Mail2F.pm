@@ -82,8 +82,6 @@ sub run {
     }
 
     # Build mail content
-    my %tplPrms;
-    $tplPrms{MAIN_LOGO} = $self->conf->{portalMainLogo};
     my $tr      = $self->translate($req);
     my $subject = $self->conf->{mail2fSubject};
 
@@ -104,7 +102,8 @@ sub run {
             $req,
             'mail_2fcode',
             filter => $tr,
-            params => \%tplPrms
+            params => {
+            },
         );
         $html = 1;
     }

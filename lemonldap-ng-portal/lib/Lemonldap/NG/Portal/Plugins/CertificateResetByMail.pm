@@ -129,7 +129,7 @@ sub certificateReset {
 
 sub _certificateReset {
     my ( $self, $req ) = @_;
-    my ( $mailToken, %tplPrms );
+    my ($mailToken);
 
     # CertificatReset FORM => modifyCertificate()
     if ( $req->method =~ /^POST$/i
@@ -359,7 +359,6 @@ sub _certificateReset {
           );
 
         # Build mail content
-        $tplPrms{MAIN_LOGO} = $self->conf->{portalMainLogo};
         my $tr      = $self->translate($req);
         my $subject = $self->conf->{certificateResetByMailStep1Subject};
         unless ($subject) {
@@ -380,7 +379,7 @@ sub _certificateReset {
                 $req,
                 'mail_certificateConfirm',
                 filter => $tr,
-                params => \%tplPrms
+                params => {},
             );
             $html = 1;
         }
@@ -420,7 +419,6 @@ sub _certificateReset {
 
 sub modifyCertificate {
     my ( $self, $req ) = @_;
-    my %tplPrms;
     my $nbio;
     my $x509;
     my $notAfter;
@@ -539,7 +537,6 @@ sub modifyCertificate {
         $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
 
     # Build mail content
-    $tplPrms{MAIN_LOGO} = $self->conf->{portalMainLogo};
     my $tr      = $self->translate($req);
     my $subject = $self->conf->{certificateResetByMailStep2Subject};
     unless ($subject) {
@@ -560,7 +557,7 @@ sub modifyCertificate {
             $req,
             'mail_certificateReset',
             filter => $tr,
-            params => \%tplPrms
+            params => {},
         );
         $html = 1;
     }
