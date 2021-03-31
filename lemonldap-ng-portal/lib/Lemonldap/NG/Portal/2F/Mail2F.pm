@@ -103,12 +103,15 @@ sub run {
             'mail_2fcode',
             filter => $tr,
             params => {
+                code => $code,
             },
         );
         $html = 1;
     }
 
     # Replace variables in body
+    # FIXME: kept for compatibility with 2.0.0 mail templates
+    # in future versions this should only happen for plaintext emails
     $body =~ s/\$code/$code/g;
     $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
 

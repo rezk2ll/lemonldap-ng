@@ -314,10 +314,17 @@ sub _register {
             $req,
             'mail_register_confirm',
             filter => $tr,
-            params => {},
+            params => {
+                expMailDate => $req->data->{expMailDate},
+                expMailTime => $req->data->{expMailTime},
+                url         => $url,
+                %{ $req->data->{registerInfo} || {} },
+            },
         );
 
         # Replace variables in body
+        # FIXME: kept for compatibility with 2.0.0 mail templates
+        # in future versions this should only happen for plaintext emails
         $body =~ s/\$expMailDate/$req->data->{expMailDate}/g;
         $body =~ s/\$expMailTime/$req->data->{expMailTime}/g;
         $body =~ s/\$url/$url/g;
@@ -368,14 +375,6 @@ sub _register {
     my $body;
     my $html = 1;
 
-    # Use HTML template
-    $body = $self->loadMailTemplate(
-        $req,
-        'mail_register_done',
-        filter => $tr,
-        params => {},
-    );
-
     # Build portal url
     my $url = $self->conf->{portal};
     $url =~ s#/*$##;
@@ -387,7 +386,20 @@ sub _register {
         ( $req_url ? ( url => $req_url ) : () ),
       );
 
+    # Use HTML template
+    $body = $self->loadMailTemplate(
+        $req,
+        'mail_register_done',
+        filter => $tr,
+        params => {
+            url => $url,
+            %{ $req->data->{registerInfo} || {} },
+        },
+    );
+
     # Replace variables in body
+    # FIXME: kept for compatibility with 2.0.0 mail templates
+    # in future versions this should only happen for plaintext emails
     $body =~ s/\$url/$url/g;
     $body =~ s/\$(\w+)/$req->data->{registerInfo}->{$1}/ge;
 

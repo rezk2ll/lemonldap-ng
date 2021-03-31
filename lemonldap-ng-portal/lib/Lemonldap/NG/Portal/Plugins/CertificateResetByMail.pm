@@ -379,12 +379,18 @@ sub _certificateReset {
                 $req,
                 'mail_certificateConfirm',
                 filter => $tr,
-                params => {},
+                params => {
+                    expMailDate => $req->data->{expMailDate},
+                    expMailTime => $req->data->{expMailTime},
+                    url         => $url,
+                },
             );
             $html = 1;
         }
 
         # Replace variables in body
+        # FIXME: kept for compatibility with 2.0.0 mail templates
+        # in future versions this should only happen for plaintext emails
         $body =~ s/\$expMailDate/$req->data->{expMailDate}/ge;
         $body =~ s/\$expMailTime/$req->data->{expMailTime}/ge;
         $body =~ s/\$url/$url/g;
@@ -563,6 +569,8 @@ sub modifyCertificate {
     }
 
     # Replace variables in body
+    # FIXME: kept for compatibility with 2.0.0 mail templates
+    # in future versions this should only happen for plaintext emails
     $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
 
     # Send mail
