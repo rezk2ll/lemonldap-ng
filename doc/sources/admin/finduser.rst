@@ -40,13 +40,17 @@ Just enable it in the Manager (section “plugins”). Then, set searching attri
 
 .. attention::
 
+    LDAP filter works only if an objectClass is set.
+
+.. attention::
+
     Searching request is built based on provided parameters value depending on users backend like this:
 
     request => searchAttr1=value && searchAttr2=value && not excludeAttr1=value && not excludeAttr2=value
 
 .. danger::
 
-    This plugin works only with a users backend and the searching or excluding attributes must exist.
+    This plugin works only with a users backend and of course if the searching or excluding attributes are existing.
 
 .. danger::
 

@@ -76,7 +76,7 @@ my $json;
 my $request;
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel       => 'debug',
+            logLevel       => 'error',
             authentication => 'Null',
             userDB         => 'REST',
             passwordDB     => 'Null',
