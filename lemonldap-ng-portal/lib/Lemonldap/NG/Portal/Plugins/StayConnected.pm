@@ -35,7 +35,7 @@ has cookieName => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        $_[0]->{conf}->{stayConnectedCookieName} || 'llngconnection';
+        $_[0]->conf->{stayConnectedCookieName} || 'llngconnection';
     }
 );
 
@@ -44,7 +44,7 @@ has timeout => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        $_[0]->{conf}->{stayConnectedTimeout} || 2592000;
+        $_[0]->conf->{stayConnectedTimeout} || 2592000;
     }
 );
 

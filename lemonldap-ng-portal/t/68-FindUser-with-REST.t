@@ -76,12 +76,13 @@ my $json;
 my $request;
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel          => 'error',
-            authentication    => 'Null',
-            userDB            => 'REST',
-            passwordDB        => 'Null',
-            restUserDBUrl     => 'http://ws/user',
-            restFindUserDBUrl => 'http://ws/search',
+            logLevel       => 'debug',
+            authentication => 'Null',
+            userDB         => 'REST',
+            passwordDB     => 'Null',
+            restUserDBUrl  => 'http://ws/search',
+
+            #restFindUserDBUrl => 'http://ws/search',
             findUser          => 1,
             impersonationRule => 1,
             useSafeJail       => 1,
