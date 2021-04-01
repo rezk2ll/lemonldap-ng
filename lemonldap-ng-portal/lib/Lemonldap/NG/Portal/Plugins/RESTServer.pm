@@ -697,7 +697,8 @@ sub pwdConfirm {
     }
 
     $req->user($user);
-    $req->data->{password} = $password;
+    $req->data->{password}  = $password;
+    $req->data->{_pwdCheck} = 1;
 
     if ( $self->p->_userDB ) {
         $req->steps( [ 'getUser', 'authenticate' ] );
@@ -736,6 +737,7 @@ sub getUser {
     }
 
     $req->user( $user || $mail );
+    $req->data->{_pwdCheck} = 1;
 
     # Search user in database
     $req->steps( [

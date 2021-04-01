@@ -16,6 +16,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
   PE_UNAUTHORIZEDPARTNER
   PE_OIDC_SERVICE_NOT_ALLOWED
+  PE_FIRSTACCESS
 );
 use String::Random qw/random_string/;
 
@@ -1157,6 +1158,9 @@ sub _handlePasswordGrant {
     $req->parameters->{password} = $password;
     $req->data->{skipToken}      = 1;
 
+    # This makes Auth::Choice use authChoiceAuthBasic if defined
+    $req->data->{_pwdCheck} = 1;
+
     $req->steps( [
             @{ $self->p->beforeAuth },
             $self->p->authProcess,
@@ -1168,6 +1172,15 @@ sub _handlePasswordGrant {
         ]
     );
     my $result = $self->p->process($req);
+
+    if (    ( $result == PE_FIRSTACCESS )
+        and ( $self->conf->{authentication} eq "Choice" ) )
+    {
+        $self->logger->warn(
+                "Choice module did not know which module to choose. "
+              . "You should define authChoiceAuthBasic or specify desired module in the URL"
+        );
+    }
 
     $self->logger->debug( "Credentials check returned "
           . $self->p->_formatProcessResult($result) )

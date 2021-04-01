@@ -116,6 +116,13 @@ sub checkChoice {
     }
 
     unless ($name) {
+        # Set by OAuth Resource Owner grant // RESTServer pwdCheck
+        if ($req->data->{_pwdCheck} and $self->{conf}->{authChoiceAuthBasic}) {
+            $name = $self->{conf}->{authChoiceAuthBasic};
+        }
+    }
+
+    unless ($name) {
 
         # Check with other methods
         $name ||=
