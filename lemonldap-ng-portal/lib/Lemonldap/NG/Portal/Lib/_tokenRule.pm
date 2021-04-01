@@ -21,6 +21,8 @@ has ottRule => (
     }
 );
 
-sub init { 1 }
+sub init {
+    return 1;
+}
 
 1;
