@@ -11,14 +11,14 @@ Wiki.js is an open-source wiki.
 See `the official Wiki.js website <https://js.wiki/>`__ for a
 complete presentation.
 
-It feature an OpenID Connect login feature that work with LemonLDAP::NG
+It feature an OpenID Connect login that work with LemonLDAP::NG.
 
 Configuring Wiki.js
 -----------------
 
 Connect to your wiki.js instance with an Admin user, in the admin panel, go to "Authentication".
 
-Click on "Add Strategy" and Chose "Generic OpenID Connect / OAuth2".
+Click on "Add Strategy" and Choose "Generic OpenID Connect / OAuth2".
 
 Choose a Display Name.
 
@@ -35,16 +35,14 @@ Make a note of the "Callback URL" and the bottom of the screen and save the conf
 Configuring LemonLDAP
 ~~~~~~~~~~~~~~~~~~~~~
 
-We now have to configure LemonLDAP::NG to recognize Wekan as a valid
-OAuth2 relaying party and send it the information it needs to recognize
-a user.
+We now have to configure LemonLDAP::NG to recognize wiki.js as a valid OIDC relaying party.
 
 Add a :doc:`new OpenID Connect relaying party<..//idpopenidconnect>`
-with the following parameters:
+with the following parameters (Options -> Basic) :
 
 * **Client ID**: the same you set in Wiki.js configuration.
 * **Client Secret**: the same you set in Wiki.js configuration.
-* **Allowed redirection addresses for login**: The "Callback URL".
+* **Allowed redirection addresses for login**: The "Callback URL" defined in wiki.js.
 
 \_Portal with internal CA
 ^^^^^^^^^^^^^^^^^^
