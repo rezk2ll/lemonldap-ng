@@ -467,8 +467,8 @@ application by LL::NG.
     With **Nginx**-based ReverseProxy, header directives can
     be appended by a LUA script.
 
-    To send more than **TEN** headers to protected applications, you have to
-    edit and modify :
+    To send more than **15** headers to protected applications,
+    you have to edit and modify :
 
     ``/etc/nginx/nginx-lua-headers.conf``
 
