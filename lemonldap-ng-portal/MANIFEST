@@ -482,6 +482,7 @@ t/01-AuthDemo.t
 t/01-CSP-and-CORS-headers.t
 t/01-Handler-redirection-and-URL-check-by-portal.t
 t/01-pdata.t
+t/01-Reject-Hashes-in-URL.t
 t/01-Unauth-Logout.t
 t/02-Password-Demo-Local-noPpolicy.t
 t/02-Password-Demo-Local-Ppolicy.t
@@ -737,6 +738,7 @@ t/77-2F-Mail-with-global-storage.t
 t/77-2F-Mail.t
 t/78-2F-Upgrade-Many.t
 t/78-2F-Upgrade.t
+t/78-2F-UpgradeOnly-without-2F.t
 t/78-2F-UpgradeOnly.t
 t/79-2F-Yubikey-from-Session.t
 t/79-2F-Yubikey.t
