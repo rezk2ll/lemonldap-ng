@@ -43,6 +43,7 @@ Applications
    applications/sympa
    applications/tomcat
    applications/wekan
+   applications/wikijs
    applications/wordpress
    applications/xwiki
    applications/zimbra
@@ -120,6 +121,7 @@ Application                                                       Configuration 
 .. image:: applications/sympa_logo.png                            :doc:`Sympa<applications/sympa>`                     ✔
 .. image:: applications/tomcat_logo.png                           :doc:`Tomcat<applications/tomcat>`                   ✔
 .. image:: applications/wekan-logo.png                            :doc:`Wekan<applications/wekan>`                                           ✔
+.. image:: applications/wiki.js.svg                               :doc:`Wekan<applications/wikijs>`                                           ✔
 .. image:: applications/wordpress_logo.png                        :doc:`Wordpress<applications/wordpress>`                                           ✔
 .. image:: applications/xwiki.png                                 :doc:`XWiki<applications/xwiki>`                     ✔
 .. image:: applications/zimbra_logo.png                           :doc:`Zimbra<applications/zimbra>`                                ✔
