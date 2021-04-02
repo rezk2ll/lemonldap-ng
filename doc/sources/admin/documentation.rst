@@ -63,6 +63,7 @@ Debian dist                          LLNG version                             Se
 \           Stretch-backports-sloppy `2.0.11 </documentation/2.0/>`__         |clean|                                               `LLNG Team </team>`__, "best effort"  [3]_                   Until Debian 11 release  [4]_
 **10**      Buster                   `2.0.2 </documentation/2.0/>`__          |clean| CVE-2019-19791 tagged as minor                `Debian Security Team <https://security-team.debian.org/>`__ Probably July 2024             
 \           Buster-backports         `2.0.11 </documentation/2.0/>`__         |clean|                                               `LLNG Team </team>`__                                        Until Debian 11 release  [4]_
+\           Bullseye                 `2.0.11 </documentation/2.0/>`__         |clean|                                               `Debian Security Team <https://security-team.debian.org/>`__ Probably July 2026             
 **Next**    Testing                  Latest  [5]_                             |clean|                                               `LLNG Team </team>`__                                                                       
 =========== ======================== ======================================== ===================================================== ============================================================ =============================== =============================================================
 
