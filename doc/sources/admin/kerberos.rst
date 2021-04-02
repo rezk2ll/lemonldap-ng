@@ -194,7 +194,7 @@ You can close the Kerberos session:
 
    kdestroy
 
-Now you can compare the above result with the same request done trough
+Now you can compare the above result with the same request done through
 the keytab file:
 
 ::

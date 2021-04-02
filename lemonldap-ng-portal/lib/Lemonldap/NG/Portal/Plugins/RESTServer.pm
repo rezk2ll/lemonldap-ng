@@ -64,7 +64,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PASSWORD_OK
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.12';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -85,7 +85,7 @@ has exportedAttr => (
     default => sub {
         my $conf = $_[0]->{conf};
         if ( $conf->{exportedAttr} and $conf->{exportedAttr} !~ /^\s*\+/ ) {
-            return [ split /\s+/, $conf->{exportedAttr} ];
+            return '[' . join( ',', split /\s+/, $conf->{exportedAttr} ) . ']';
         }
         else {
             my @attributes = (
@@ -247,6 +247,7 @@ sub init {
       );
     extends @parents if ($add);
     $self->setTypes( $self->conf ) if ( $self->conf->{restSessionServer} );
+
     return 1;
 }
 
@@ -326,9 +327,8 @@ sub newAuthSession {
     $self->logger->debug(
         "REST authentication result for $req->{user}: code $req->{error}");
 
-    if ( $req->error > 0 ) {
-        return $self->p->sendError( $req, 'Bad credentials', 401 );
-    }
+    return $self->p->sendError( $req, 'Bad credentials', 401 )
+      if ( $req->error > 0 );
     return $self->session( $req, $id );
 }
 
@@ -368,11 +368,13 @@ sub delSession {
     $self->logger->debug("REST request to delete session $id");
     my $res = $self->p->_deleteSession( $req, $session );
     $self->logger->debug(" Result is $res");
+
     return $self->p->sendJSONresponse( $req, { result => $res } );
 }
 
 sub delMySession {
     my ( $self, $req, $id ) = @_;
+
     return $self->delSession( $req, $req->userData->{_session_id} );
 }
 
@@ -380,10 +382,9 @@ sub mysession {
     my ( $self, $req ) = @_;
 
     # 1. whoami
-    if ( defined $req->param('whoami') ) {
-        return $self->p->sendJSONresponse( $req,
-            { result => $req->userData->{ $self->conf->{whatToTrace} } } );
-    }
+    return $self->p->sendJSONresponse( $req,
+        { result => $req->userData->{ $self->conf->{whatToTrace} } } )
+      if defined $req->param('whoami');
 
     if ( defined $req->param('gettoken') ) {
         return $self->p->sendJSONresponse( $req,
@@ -416,6 +417,7 @@ sub mysession {
         $self->logger->debug(" Result is $res");
         return $self->p->sendJSONresponse( $req, { result => $res } );
     }
+
     return $self->p->sendError( $req,
         'whoami or authorizationfor is required', 400 );
 }
@@ -423,7 +425,18 @@ sub mysession {
 sub getMyKey {
     my ( $self, $req, $key ) = @_;
     $key ||= '';
-    $self->logger->debug("Request to get personal session info -> Key : $key");
+    if ($key) {
+        $self->logger->debug(
+            "Request to get personal session info -> Key: $key");
+    }
+    else {
+        my $keys = $self->exportedAttr;
+        $keys =~ s/(?:\[|\])//g;
+        $keys =~ s/,/, /g;
+        $self->logger->debug(
+            "Request to get exported attributes -> Keys: $keys");
+    }
+
     return $self->session(
         $req,
         $req->userData->{_session_id},
@@ -435,6 +448,7 @@ sub updateMySession {
     my ( $self, $req ) = @_;
     my $res   = 0;
     my $mKeys = [];
+
     if ( my $token = $req->param('token') ) {
         if ( $self->ott->getToken($token) ) {
             if ( $req->param('sessionType') eq 'persistent' ) {
@@ -469,9 +483,8 @@ sub updateMySession {
     else {
         $self->logger->error('Update session request without token');
     }
-    unless ($res) {
-        return $self->p->sendError( $req, 'Modification refused', 403 );
-    }
+
+    return $self->p->sendError( $req, 'Modification refused', 403 ) unless $res;
     return $self->p->sendJSONresponse( $req,
         { result => 1, count => $res, modifiedKeys => $mKeys } );
 }
@@ -482,6 +495,7 @@ sub delKeyInMySession {
     my $mKeys = [];
     my $dkey  = $req->param('key');
     my $sub   = $req->param('sub');
+
     if ( my $token = $req->param('token') ) {
         if ( $self->ott->getToken($token) ) {
             if ( $req->param('sessionType') eq 'persistent' ) {
@@ -554,9 +568,8 @@ sub delKeyInMySession {
     else {
         $self->logger->error('Update session request without token');
     }
-    unless ($res) {
-        return $self->p->sendError( $req, 'Modification refused', 403 );
-    }
+
+    return $self->p->sendError( $req, 'Modification refused', 403 ) unless $res;
     return $self->p->sendJSONresponse( $req,
         { result => 1, count => $res, modifiedKeys => $dkey } );
 }
@@ -765,8 +778,8 @@ sub _checkSecret {
             $self->logger->error('Bad key, force denied');
         }
     }
-    return $isValid;
 
+    return $isValid;
 }
 
 1;

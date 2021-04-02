@@ -55,7 +55,7 @@ To integrate a Web application in LL::NG, you have the following
 possibilities:
 
 -  Protect the application with the Handler, and push user identity
-   trough HTTP headers. This is how main Access Manager products, like
+   through HTTP headers. This is how main Access Manager products, like
    CA SiteMinder, are working. This also how Apache authentication
    modules are working, so if your application is compatible with Apache
    authentication (often called "external authentifcation"), then you

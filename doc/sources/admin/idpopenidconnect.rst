@@ -11,8 +11,8 @@ Presentation
     stacks. It is described here: http://openid.net/connect/.
 
 LL::NG can act as an OpenID Connect Provider (OP). It will answer to
-OpenID Connect requests to give user identity (trough ID Token) and
-information (trough User Info end point).
+OpenID Connect requests to give user identity (through ID Token) and
+information (through User Info end point).
 
 As an OP, LL::NG supports a lot of OpenID Connect features:
 

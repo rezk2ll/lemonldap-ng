@@ -80,7 +80,7 @@ We suppose you configured LemonLDAP::NG as
 as Service Provider.
 
 In LL::NG Manager, create an new SP and load simpleSAMLphp metadata
-trough URL (by default:
+through URL (by default:
 http://localhost/simplesamlphp/module.php/saml/sp/metadata.php/default-sp):
 
 |image1|

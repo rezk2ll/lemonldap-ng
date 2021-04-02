@@ -17,7 +17,7 @@ protected with a firewall that only accepts HTTP flows.
 Most of the time, SOAP session backend is used by Handlers installed on
 external servers.
 
-To configure it, SOAP session backend will be set trough Manager in
+To configure it, SOAP session backend will be set through Manager in
 global configuration (used by all Hanlders), and the real session
 backend will be configured for local components in lemonldap-ng.ini.
 

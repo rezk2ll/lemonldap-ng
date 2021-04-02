@@ -39,7 +39,7 @@ Handler use the default Apache error code for the following cases:
 -  An error occurs on server side: SERVER_ERROR (500)
 -  The application is in maintenance: HTTP_SERVICE_UNAVAILABLE (503)
 
-These errors can be catch trough Apache ``ErrorDocument`` directive or
+These errors can be catch through Apache ``ErrorDocument`` directive or
 Nginx ``error_page`` directive, to redirect user on a specific page:
 
 .. code-block:: apache

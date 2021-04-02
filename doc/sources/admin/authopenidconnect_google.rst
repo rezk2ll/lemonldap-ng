@@ -14,7 +14,7 @@ https://developers.google.com/identity/protocols/OpenIDConnect
 
 .. attention::
 
-    Google does not support logout trough OpenID Connect. If
+    Google does not support logout through OpenID Connect. If
     you close your session on LL::NG side, your Google session will still be
     open.
 

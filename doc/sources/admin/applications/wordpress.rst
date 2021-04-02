@@ -43,7 +43,7 @@ User Roles Settings
 You can assign WP Roles depending on values sent by CAS.
 
 The rules syntax is quite special, you can use it or you can just define
-macros on LL::NG side and send them trough CAS to keep simple rules on
+macros on LL::NG side and send them through CAS to keep simple rules on
 WP side.
 
 For example create a macro ``role_wordpress_admin`` which contains ``1``

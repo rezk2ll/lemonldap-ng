@@ -10,7 +10,7 @@ This Handler is able to check an OAuth2 access token to retrieve the
 user real session and protect a virtual host like a standard Handler
 (access control and HTTP headers transmission).
 
-This requires to get an OAuth2 access token trough LL::NG Portal (OpenID
+This requires to get an OAuth2 access token through LL::NG Portal (OpenID
 Connect server). This access token can then be used in the
 ``Authorization`` header to authenticate to the Web Service / API
 protected by the OAuth2 Handler.

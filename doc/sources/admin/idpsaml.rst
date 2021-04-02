@@ -95,7 +95,7 @@ For each attribute, you can set:
 -  **Mandatory**: if set to "On", then this attribute is required to
    build the SAML response, an error will displayed if there is no value
    for it. Optional attribute will be sent only if there is a value
-   associated. Else it just will be sent trough an attribute response,
+   associated. Else it just will be sent through an attribute response,
    if explicitly requested in an attribute request.
 -  **Format**: optional, SAML attribute format.
 

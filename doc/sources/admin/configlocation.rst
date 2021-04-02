@@ -19,7 +19,7 @@ modules to access it.
     :ref:`here<start-configuration-database>`.
 
 By default, configuration is stored in :doc:`files<fileconfbackend>`, so
-access trough network is not possible. To allow this, use
+access through network is not possible. To allow this, use
 :doc:`SOAP<soapconfbackend>` for configuration access, or use a network
 service like :doc:`SQL database<sqlconfbackend>` or
 :doc:`LDAP directory<ldapconfbackend>`.
@@ -46,7 +46,7 @@ For example, to configure the ``File`` configuration backend:
 Manager
 -------
 
-Most of configuration can be done trough LemonLDAP::NG Manager (by
+Most of configuration can be done through LemonLDAP::NG Manager (by
 default http://manager.example.com).
 
 By default, Manager is protected to allow only the demonstration user

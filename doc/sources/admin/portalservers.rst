@@ -16,7 +16,7 @@ Configuration
 -------------
 
 -  **SOAP/REST exported attributes**: list session attributes shared
-   trough SOAP/REST
+   through SOAP/REST
    
    -  Use ``+`` to append to the default list of technical attributes,
       example: ``+ uid mail``

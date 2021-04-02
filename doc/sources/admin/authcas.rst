@@ -25,7 +25,7 @@ session under the form:
 
 ``_casPT<serviceID>`` = **Proxy ticket value**
 
-They can then be forwarded to applications trough
+They can then be forwarded to applications through
 :ref:`HTTP headers<headers>`.
 
 .. tip::

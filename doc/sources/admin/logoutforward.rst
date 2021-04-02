@@ -4,7 +4,7 @@ Logout forward
 Presentation
 ------------
 
-Even if LL:NG can catch logout URL trough
+Even if LL:NG can catch logout URL through
 :ref:`virtual host rules<rules>`, you can have the
 need to forward a logout to other applications, to close their local
 sessions.

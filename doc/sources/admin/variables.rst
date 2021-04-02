@@ -141,7 +141,7 @@ OpenID
 ================ =============================================
 Key              Description
 ================ =============================================
-\_openid\_\ *id* Consent to share attribute *id* trough OpenID
+\_openid\_\ *id* Consent to share attribute *id* through OpenID
 ================ =============================================
 
 OpenID Connect

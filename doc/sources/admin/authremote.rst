@@ -23,7 +23,7 @@ Presentation
    be rejected).
 -  The portal of the secondary LL::NG structure is configured to
    delegate authentication to a remote portal. A request to the main
-   session database is done (trough
+   session database is done (through
    :doc:`SOAP session backend<soapsessionbackend>`) to be sure that the
    session exists.
 -  If ``exportedAttr`` is set, only those attributes are copied in the

@@ -274,7 +274,7 @@ log4perlConfFile                                        Log4Perl logger configur
 logLevel                                                Log level, must be set in .ini                                                       ✔      ✔       ✔       ✔
 logger                                                  technical logger                                                                     ✔      ✔       ✔       ✔
 loginHistoryEnabled                                     Enable login history                                                                 ✔
-logoutServices                                          Send logout trough GET request to these services                                     ✔
+logoutServices                                          Send logout through GET request to these services                                     ✔
 lwpOpts                                                 Options given to LWP::UserAgent                                                      ✔
 lwpSslOpts                                              SSL options given to LWP::UserAgent                                                  ✔
 macros                                                  Macros                                                                               ✔

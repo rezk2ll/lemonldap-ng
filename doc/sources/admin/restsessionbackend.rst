@@ -33,7 +33,7 @@ protected with a firewall that only accepts HTTP flows.
 Most of the time, REST session backend is used by Handlers installed on
 external servers.
 
-To configure it, REST session backend will be set trough Manager in
+To configure it, REST session backend will be set through Manager in
 global configuration (used by all Handlers), and the real session
 backend will be configured for local components in lemonldap-ng.ini.
 

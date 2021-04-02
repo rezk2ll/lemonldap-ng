@@ -17,8 +17,8 @@ Presentation
     stacks. It is described here: http://openid.net/connect/.
 
 LL::NG can act as an OpenID Connect Relying Party (RP) towards multiple
-OpenID Connect Providers (OP). It will get the user identity trough an
-ID Token, and grab user attributes trough UserInfo endpoint.
+OpenID Connect Providers (OP). It will get the user identity through an
+ID Token, and grab user attributes through UserInfo endpoint.
 
 As an RP, LL::NG supports a lot of OpenID Connect features:
 

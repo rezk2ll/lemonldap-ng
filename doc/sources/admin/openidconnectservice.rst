@@ -64,7 +64,7 @@ Dynamic Registration
 
 If dynamic registration is enabled, you can configure the following
 options to define attributes and extra claims when a new relying party
-is registered trough the ``/oauth2/register`` endpoint:
+is registered through the ``/oauth2/register`` endpoint:
 
 -  Exported vars for dynamic registration
 -  Extra claims for dynamic registration
