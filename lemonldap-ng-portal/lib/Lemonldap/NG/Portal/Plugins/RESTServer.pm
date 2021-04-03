@@ -78,7 +78,6 @@ has configStorage => (
         $_[0]->{p}->HANDLER->localConfig->{configStorage};
     }
 );
-
 has exportedAttr => (
     is      => 'rw',
     lazy    => 1,
@@ -97,14 +96,17 @@ has exportedAttr => (
             if ( my $exportedAttr = $conf->{exportedAttr} ) {
                 $exportedAttr =~ s/^\s*\+\s+//;
                 @attributes = ( @attributes, split( /\s+/, $exportedAttr ) );
+
+                # Convert @attributes into hash to remove duplicates
+                my %attributes = map( { $_ => 1 } @attributes );
+                return '[' . join( ',', keys %attributes ) . ']';
             }
 
-            # convert @attributes into hash to remove duplicates
+            # Convert @attributes into hash to remove duplicates
             my %attributes = map( { $_ => 1 } @attributes );
             %attributes =
               ( %attributes, %{ $conf->{exportedVars} }, %{ $conf->{macros} },
               );
-
             return '[' . join( ',', keys %attributes ) . ']';
         }
     }
