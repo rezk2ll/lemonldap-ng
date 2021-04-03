@@ -1,5 +1,5 @@
 Wiki.js
-=====
+=======
 
 |image0|
 
@@ -14,7 +14,7 @@ complete presentation.
 It feature an OpenID Connect login that work with LemonLDAP::NG.
 
 Configuring Wiki.js
------------------
+-------------------
 
 Connect to your wiki.js instance with an Admin user, in the admin panel, go to "Authentication".
 
@@ -45,7 +45,7 @@ with the following parameters (Options -> Basic) :
 * **Allowed redirection addresses for login**: The "Callback URL" defined in wiki.js.
 
 \_Portal with internal CA
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. danger::
 
