@@ -48,9 +48,9 @@ their policy.
 Debian
 ^^^^^^
 
-<note tip>Following Debian Policy, LLNG packages are never upgraded in
-published distributions. However, security patches are backported by
-maintenance teams *(except minor ones)*.</note>
+.. tip::
+
+   Following Debian Policy, LLNG packages are never upgraded in published distributions. However, security patches are backported by maintenance teams *(except some inor ones)*.
 
 =========== ======================== ======================================== ===================================================== ============================================================ =============================== =============================================================
 Debian dist                          LLNG version                             Secured                                               Maintenance                                                  LTS Limit                       `Extended LTS <https://wiki.debian.org/LTS/Extended>`__ Limit
@@ -75,9 +75,9 @@ Tracker <https://tracker.debian.org/pkg/lemonldap-ng>`__ for more.
 Ubuntu
 ^^^^^^
 
-<note warning>Ubuntu version are included in "universe" branch [8]_, so
-not really security maintained. Prefer to use our repositories or Debian
-ones</note>
+.. attention::
+
+   Ubuntu version are included in "universe" branch [8]_, so not really security maintained. Prefer to use our repositories or Debian ones
 
 =========== ============= ================================ ==================================================================== ===========
 Ubuntu dist               LLNG version                     Secured                                                              Maintenance
