@@ -17,12 +17,17 @@ my $debug = 'error';
 # Initialization
 my $op = LLNG::Manager::Test->new( {
         ini => {
-            logLevel       => $debug,
-            domain         => 'op.com',
-            portal         => 'http://auth.op.com',
-            authentication => 'Demo',
-            userDB         => 'Same',
-            macros         => {
+            logLevel            => $debug,
+            domain              => 'op.com',
+            portal              => 'http://auth.op.com',
+            authChoiceAuthBasic => "MyChoice",
+            authentication      => 'Choice',
+            userDB              => 'Same',
+            'authChoiceModules' => {
+                'MyChoice' => 'Demo;Demo;Null;;;{}'
+            },
+
+            macros => {
                 gender       => '"32"',
                 _whatToTrace => '$uid',
                 nickname     => '"froggie; frenchie"',
@@ -57,7 +62,7 @@ my $op = LLNG::Manager::Test->new( {
             oidcRPMetaDataScopeRules => {
                 rp => {
                     "read"   => '$requested',
-                    "french"   => '$uid eq "french"',
+                    "french" => '$uid eq "french"',
                     "always" => '1',
                 },
             },
@@ -172,7 +177,8 @@ unlike( $payload->{scope}, qr/\bread\b/,
     "Scope read not asked, and thus not found" );
 like( $payload->{scope}, qr/\bfrench\b/, "Attribute-based scope found" );
 like( $payload->{scope}, qr/\balways\b/, "Rule-enforced scope found" );
-is ($payload->{scope}, $token_res_scope, "Token response scope matches token scope");
+is( $payload->{scope}, $token_res_scope,
+    "Token response scope matches token scope" );
 
 clean_sessions();
 done_testing();
