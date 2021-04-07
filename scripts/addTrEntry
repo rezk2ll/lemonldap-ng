@@ -1,0 +1,72 @@
+#!/usr/bin/perl
+
+use strict;
+use JSON;
+use Getopt::Long;
+my ( $portal, $modify, $help, $delete );
+my $json =
+  JSON->new->utf8->pretty()->canonical()->space_before(0)->space_after(0);
+
+GetOptions(
+    "portal|p" => \$portal,
+    "modify|m" => \$modify,
+    "delete|d" => \$delete,
+    "help|h"   => \$help,
+);
+usage() if $help or !@ARGV;
+my $key    = shift @ARGV or usage();
+my $enText = shift @ARGV or $delete or usage();
+my $frText = shift(@ARGV) || $enText;
+
+# Main
+my $wdir =
+    'lemonldap-ng-'
+  . ( $portal ? "portal" : "manager" )
+  . '/site/htdocs/static/languages';
+opendir D, $wdir or die "unable to open $wdir";
+my @langs = grep { /\.json$/ } readdir D;
+closedir D;
+for my $lang (@langs) {
+    my ( $file, $content );
+    {
+        local $/ = undef;
+        open $file, "$wdir/$lang" or die $!;
+        binmode $file;
+        $content = <$file>;
+        close $file;
+    }
+    my $jsonObj = $json->decode($content);
+    if ( !$jsonObj->{$key} and $delete ) {
+        print STDERR "$key does not exist, aborting deletion\n";
+        usage();
+    }
+    elsif ( $jsonObj->{$key} and $modify ) {
+        print STDERR "$key already exists, aborting\n";
+        usage();
+    }
+    if ($delete) {
+        delete $jsonObj->{$key};
+    }
+    else {
+        $jsonObj->{$key} = ( $lang eq 'fr.json' ? $frText : $enText );
+    }
+    $content = $json->encode($jsonObj);
+    $content =~ s/\n\s+/\n/sg;
+    open $file, '>', "$wdir/$lang" or die $!;
+    binmode $file;
+    print $file $content;
+    close $file;
+}
+
+## usage
+sub usage {
+    print STDERR <<EOT;
+Usage:
+$0 <option> key enText <frText>
+
+Options:
+  --portal -p: add entry in portal translation instead of manager
+  --modify -m: modify an existing entry
+EOT
+    exit( $help ? 0 : 1 );
+}
