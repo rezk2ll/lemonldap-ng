@@ -76,7 +76,7 @@
 "authAndUserdb":"Yetkilendirme ve kullanıcı veri tabanı",
 "authChain":"Doğrulama zinciri",
 "authChoice":"Kimlik doğrulama tercihi",
-"authChoiceAuthBasic":"AuthBasic işleyici parametresi",
+"authChoiceAuthBasic":"Choice used for password authentication",
 "authChoiceFindUser":"FindUser eklenti parametresi",
 "authChoiceModules":"İzin verilen modüller",
 "authChoiceParam":"URL parametresi",

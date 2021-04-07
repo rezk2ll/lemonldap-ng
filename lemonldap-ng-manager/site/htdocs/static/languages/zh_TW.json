@@ -76,7 +76,7 @@
 "authAndUserdb":"驗證與使用者資料庫",
 "authChain":"驗證鏈",
 "authChoice":"驗證選擇",
-"authChoiceAuthBasic":"AuthBasic 處理程式參數",
+"authChoiceAuthBasic":"Choice used for password authentication",
 "authChoiceFindUser":"FindUser plugin parameter",
 "authChoiceModules":"已允許的模組",
 "authChoiceParam":"URL 參數",

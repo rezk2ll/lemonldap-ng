@@ -76,7 +76,7 @@
 "authAndUserdb":"Authz e utente DB",
 "authChain":"Catena di autenticazione",
 "authChoice":"Scelta di autenticazione",
-"authChoiceAuthBasic":"AuthBasic handler parameter",
+"authChoiceAuthBasic":"Choice used for password authentication",
 "authChoiceFindUser":"FindUser plugin parameter",
 "authChoiceModules":"Moduli consentiti",
 "authChoiceParam":"Parametri URL",

@@ -53,7 +53,7 @@ to access required locations in Portal Virtual Host.
 
     requireToken => $env->{REMOTE_ADDR} !~ /^127\.0\.[1-3]\.1$/
 
-    With AutChoice, you have to declare which authentication module is
+    With :doc:`authchoice`, you have to declare which authentication module is
     requested by handler to create global session.
 
     Go to:
@@ -61,7 +61,7 @@ to access required locations in Portal Virtual Host.
 
     and set authentication module's name :
 
-    **AuthBasic handler parameter** => 2_LDAP (by example)
+    **Choice used for password authentication** => 2_LDAP (by example)
 
 
 

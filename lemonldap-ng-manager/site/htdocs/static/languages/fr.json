@@ -76,7 +76,7 @@
 "authAndUserdb":"Authent. et BD utilisateurs",
 "authChain":"Chaîne d'authentification",
 "authChoice":"Choix d'authentification",
-"authChoiceAuthBasic":"Paramètre du handler AuthBasic",
+"authChoiceAuthBasic":"Choix à utiliser pour l'authentification par mot de passe",
 "authChoiceFindUser":"Paramètre de recherche de compte",
 "authChoiceModules":"Modules autorisés",
 "authChoiceParam":"Paramètre de l'URL",

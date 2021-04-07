@@ -339,6 +339,10 @@ Resource Owner Password Credentials Grant
 
 The Resource Owner Password Credentials Grant allows you to exchange a user's login and password for an access token. This must be considered a legacy form of authentication, since the Authorization Code web-based flow is prefered for all applications that support it. It can however be useful in some scenarios involving technical accounts that cannot implement a web-based authentication flow.
 
+.. versionchanged:: 2.0.12
+
+   when using the :doc:`Choice <authchoice>` authentication module, the *Choice used for password authentication* setting can be used to select which authentication choice is used by the Resource Owner Password Credentials Grant. Naturally, the selected choice must be a password-based authentication method (LDAP, DBI, REST, etc.)
+
 .. seealso::
 
    `Specification for the Resource Owner Password Credentials Grant <https://tools.ietf.org/html/rfc6749#section-4.3>`__

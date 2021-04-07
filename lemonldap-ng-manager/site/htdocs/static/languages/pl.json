@@ -76,7 +76,7 @@
 "authAndUserdb":"Authz i baza danych użytkownika",
 "authChain":"Łańcuch uwierzytelnienia",
 "authChoice":"Wybór uwierzytelnienia",
-"authChoiceAuthBasic":"Parametr handlera AuthBasic",
+"authChoiceAuthBasic":"Choice used for password authentication",
 "authChoiceFindUser":"Parametr wtyczki FindUser",
 "authChoiceModules":"Dozwolone moduły",
 "authChoiceParam":"Parametr adresu URL",

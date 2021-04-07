@@ -76,7 +76,7 @@
 "authAndUserdb":"الترخيص وقاعدة بيانات المستخدم",
 "authChain":"سلسلة إثبات الهوية",
 "authChoice":"اختيار إثبات الهوية",
-"authChoiceAuthBasic":"AuthBasic handler parameter",
+"authChoiceAuthBasic":"Choice used for password authentication",
 "authChoiceFindUser":"FindUser plugin parameter",
 "authChoiceModules":"الوحدات المسموح بها",
 "authChoiceParam":"معايير URL",
