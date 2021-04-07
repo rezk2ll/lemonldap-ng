@@ -3,20 +3,36 @@
 use strict;
 use JSON;
 use Getopt::Long;
-my ( $portal, $modify, $help, $delete );
+my ( $portal, $modify, $help, $delete, $reorder );
 my $json =
   JSON->new->utf8->pretty()->canonical()->space_before(0)->space_after(0);
 
 GetOptions(
-    "portal|p" => \$portal,
-    "modify|m" => \$modify,
-    "delete|d" => \$delete,
-    "help|h"   => \$help,
+    "portal|p"  => \$portal,
+    "modify|m"  => \$modify,
+    "delete|d"  => \$delete,
+    "reorder|r" => \$reorder,
+    "help|h"    => \$help,
 );
-usage() if $help or !@ARGV;
-my $key    = shift @ARGV or usage();
-my $enText = shift @ARGV or $delete or usage();
+usage() if $help or ( !@ARGV and !$reorder );
+my $key    = shift @ARGV;
+my $enText = shift @ARGV;
 my $frText = shift(@ARGV) || $enText;
+
+# Check args
+usage() if $delete and $modify;
+if ($key) {
+    usage() if $reorder;
+    if ($delete) {
+        usage() if $enText;
+    }
+    else {
+        usage() unless $enText;
+    }
+}
+else {
+    usage() unless $reorder;
+}
 
 # Main
 my $wdir =
@@ -36,19 +52,19 @@ for my $lang (@langs) {
         close $file;
     }
     my $jsonObj = $json->decode($content);
-    if ( !$jsonObj->{$key} and $delete ) {
-        print STDERR "$key does not exist, aborting deletion\n";
-        usage();
-    }
-    elsif ( $jsonObj->{$key} and $modify ) {
-        print STDERR "$key already exists, aborting\n";
-        usage();
-    }
-    if ($delete) {
-        delete $jsonObj->{$key};
-    }
-    else {
-        $jsonObj->{$key} = ( $lang eq 'fr.json' ? $frText : $enText );
+    if ($key) {
+        if ( $jsonObj->{$key} xor( $delete or $modify ) ) {
+            print STDERR ( $jsonObj->{$key}
+                ? "key already exists\n"
+                : "key doesn't exit\n" );
+            usage();
+        }
+        if ($delete) {
+            delete $jsonObj->{$key};
+        }
+        else {
+            $jsonObj->{$key} = ( $lang eq 'fr.json' ? $frText : $enText );
+        }
     }
     $content = $json->encode($jsonObj);
     $content =~ s/\n\s+/\n/sg;
@@ -65,9 +81,10 @@ Usage:
 $0 <option> key enText <frText>
 
 Options:
-  --portal -p: add entry in portal translation instead of manager
-  --modify -m: modify an existing entry
-  --delete -d: delete an existing key
+  --portal  -p: add entry in portal translation instead of manager
+  --modify  -m: modify an existing entry
+  --delete  -d: delete an existing key
+  --reorder -r: reorder files
   --help   -h: display this
 EOT
     exit( $help ? 0 : 1 );
