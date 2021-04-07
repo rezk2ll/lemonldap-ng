@@ -3,10 +3,12 @@
 use strict;
 use JSON;
 use Getopt::Long;
+use Encode::Locale qw/decode_argv/;
 my ( $portal, $modify, $help, $delete, $reorder );
 my $json =
   JSON->new->utf8->pretty()->canonical()->space_before(0)->space_after(0);
 
+decode_argv();
 GetOptions(
     "portal|p"  => \$portal,
     "modify|m"  => \$modify,
