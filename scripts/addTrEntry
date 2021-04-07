@@ -67,6 +67,8 @@ $0 <option> key enText <frText>
 Options:
   --portal -p: add entry in portal translation instead of manager
   --modify -m: modify an existing entry
+  --delete -d: delete an existing key
+  --help   -h: display this
 EOT
     exit( $help ? 0 : 1 );
 }
