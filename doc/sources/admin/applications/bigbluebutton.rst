@@ -56,7 +56,7 @@ Notes
 * Your ID Token Signature Algorithm has to be RSxxx, symmetric algorithms seem broken as of Greenlight 2.7.17
 * ``OAUTH2_REDIRECT`` must match the URL you use to access Greenlight. the
   ``auth/openid_connect/callback`` suffix must be omitted
-* Greenlight will not work if your LemonLDAP::NG server is not served over HTTPS using a publically recognized certificate authority (such as Let's Encrypt)
+* Greenlight requires your LemonLDAP::NG server to be served over HTTPS using a publically recognized certificate authority (such as Let's Encrypt)
 
 .. |logo| image:: /applications/bigbluebutton-logo.png
    :class: align-center
