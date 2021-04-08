@@ -53,7 +53,7 @@ build_centos_7:
   script:
      - rm -f /etc/yum.repos.d/CentOS-Sources.repo
      - yum -y install epel-release
-     - make rpm-dist
+     - make dist
      - ci-build-pkg
 
 build_centos_8:
@@ -63,7 +63,7 @@ build_centos_8:
      - yum-config-manager --enable PowerTools
      - yum-config-manager --enable AppStream
      - yum -y install epel-release
-     - make rpm-dist
+     - make dist
      - ci-build-pkg
 
 sign:
