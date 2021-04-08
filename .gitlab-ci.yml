@@ -81,7 +81,7 @@ sign:
 #    - build_xenial
     - build_bionic
     - build_centos_7
-#    - build_centos_8
+    - build_centos_8
   artifacts:
     expire_in: 1 day
     paths:
