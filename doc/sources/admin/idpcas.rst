@@ -49,9 +49,6 @@ Then go in ``CAS Service`` to define:
 -  **CAS login**: the session key transmitted to CAS client as the main
    identifier (CAS Principal). This setting can be overriden
    per-application.
--  **CAS attributes**: list of attributes that will be transmitted by
-   default in the validate response. Keys are the name of attribute in
-   the CAS response, values are the name of session key.
 -  **Access control policy**: define if access control should be done on
    CAS service. Three options:
 
@@ -67,6 +64,13 @@ Then go in ``CAS Service`` to define:
 -  **CAS session module name and options**: choose a specific module if
    you do not want to mix CAS sessions and normal sessions (see
    :ref:`why<samlservice-saml-sessions-module-name-and-options>`).
+-  **CAS attributes**: list of attributes that will be transmitted by
+   default in the validate response. Keys are the name of attribute in
+   the CAS response, values are the name of session key.
+-  **Use strict URL matching**: (since *2.0.12*) enforces a stricter URL
+   matching. By default, LemonLDAP::NG will try to find a declared CAS
+   Application matching the hostname of the requested application if it cannot
+   find a match using the full path. See :ref:`idpcas-url-matching` for details
 
 
 .. tip::
@@ -143,3 +147,13 @@ For example, if you declared two applications in LemonLDAP::NG with the followin
 * https://cas.example.com/applications/
 
 An application located at https://cas.example.com/applications/zone1/myapp will match the first CAS service definition
+
+An application located at https://cas.example.com/undeclared/ will also be accepted in order to preserve the previous behavior of matching on hostnames only.
+
+.. versionchanged:: 2.0.12
+
+   The *Strict URL matching* option now lets you decide if LemonLDAP::NG should
+   fall back to legacy host-based matching if it cannot find a declared service
+   matching an incoming service URL. In the previous example,
+   https://cas.example.com/undeclared/ will no longer match if strict URL
+   matching is enabled
