@@ -2419,6 +2419,11 @@ sub attributes {
             type          => 'keyTextContainer',
             documentation => 'Apache::Session module parameters',
         },
+        casStrictMatching => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Disable host-based matching of CAS services',
+        },
         issuerDBCASActivation => {
             default       => 0,
             type          => 'bool',

@@ -171,6 +171,7 @@
 "casSrvName":"CAS Sunucu Adı",
 "casStorage":"CAS oturumları modül adı",
 "casStorageOptions":"CAS oturumları modül seçenekleri",
+"casStrictMatching":"Use strict URL matching",
 "categoryName":"Kategori ismi",
 "cda":"Çoklu alan adları",
 "certificateMailContent":"E-posta içeriği",

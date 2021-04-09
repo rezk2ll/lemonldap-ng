@@ -171,6 +171,7 @@
 "casSrvName":"اسم خادم كاس",
 "casStorage":"اسم وحدة جلسات كاس",
 "casStorageOptions":" خيارات وحدة جلسات كاس",
+"casStrictMatching":"Use strict URL matching",
 "categoryName":"اسم الفئة",
 "cda":"نطاقات متعددة",
 "certificateMailContent":"محتوى البريد",

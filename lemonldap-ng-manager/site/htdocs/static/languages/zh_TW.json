@@ -171,6 +171,7 @@
 "casSrvName":"CAS 伺服器名稱",
 "casStorage":"CAS 工作階段模組名稱",
 "casStorageOptions":"CAS 工作階段模組選項",
+"casStrictMatching":"Use strict URL matching",
 "categoryName":"分類名稱",
 "cda":"多域名",
 "certificateMailContent":"郵件內容",

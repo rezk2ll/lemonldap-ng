@@ -811,6 +811,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'casStorageOptions' => {
             'type' => 'keyTextContainer'
         },
+        'casStrictMatching' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'cda' => {
             'default' => 0,
             'type'    => 'bool'

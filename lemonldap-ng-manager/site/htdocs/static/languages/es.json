@@ -171,6 +171,7 @@
 "casSrvName":"Nombre de servidor CAS",
 "casStorage":"CAS sessions module name",
 "casStorageOptions":"CAS sessions module options",
+"casStrictMatching":"Use strict URL matching",
 "categoryName":"Nombre de categoría",
 "cda":"Dominios múltiples",
 "certificateMailContent":"Contenido de correo",

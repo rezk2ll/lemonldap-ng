@@ -1354,6 +1354,7 @@ sub tree {
                 'casStorage',
                 'casStorageOptions',
                 'casAttributes',
+                'casStrictMatching',
 
             ]
         },

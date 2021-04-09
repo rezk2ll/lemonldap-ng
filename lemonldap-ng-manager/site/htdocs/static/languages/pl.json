@@ -171,6 +171,7 @@
 "casSrvName":"Nazwa serwera CAS",
 "casStorage":"Nazwa modułu sesji CAS",
 "casStorageOptions":"Opcje modułu sesji CAS",
+"casStrictMatching":"Use strict URL matching",
 "categoryName":"Nazwa Kategorii",
 "cda":"Wiele domen",
 "certificateMailContent":"Treść wiadomości",

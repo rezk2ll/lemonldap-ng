@@ -171,6 +171,7 @@
 "casSrvName":"Tên máy chủ CAS",
 "casStorage":"Tên mô-đun phiên CAS",
 "casStorageOptions":"Các tùy chọn mô-đun phiên CAS",
+"casStrictMatching":"Use strict URL matching",
 "categoryName":"Tên thể loại",
 "cda":"Nhiều tên miền",
 "certificateMailContent":"Nội dung thư",
