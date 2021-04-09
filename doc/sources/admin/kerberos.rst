@@ -38,15 +38,23 @@ It is recommended to use NTP to do this.
 DNS
 ~~~
 
-The auth.example.com must be registered in the DNS server (which is
-Active Directory). The reverse DNS of auth.example.com **must** return
-the portal IP.
+In our experience, we have observed the following limitations when using Kerberos for web applications in an Active Directory environment
 
+* ``auth.example.com`` must be registered in the DNS server as a ``A`` record. ``CNAME`` usually do not work
+* The reverse DNS (``PTR``) for ``auth.example.com``'s IP address MUST point back to ``auth.example.com``
 
 .. tip::
 
     If you have a SSO cluster, you must setup a Virtual IP in
     cluster and register this IP in DNS.
+
+.. tip::
+
+   If you cannot configure the PTR record to point to the portal's hostname, it
+   may help to run the following command. Assuming that ``proxy.example.com`` is
+   the PTR record of the portal's IP address ::
+
+      setspn -s HTTP/proxy.example.com keytab-account
 
 SSL
 ~~~
