@@ -527,8 +527,10 @@ sub getCasApp {
             }
         }
 
-        # Try to match host
-        $hostnameConfKey = $app if ( $hostname eq $candidateHost );
+        # Try to match host, only if strict matching is disabled
+        unless ( $self->conf->{casStrictMatching} ) {
+            $hostnameConfKey = $app if ( $hostname eq $candidateHost );
+        }
     }
 
     # Application found by prefix has priority
