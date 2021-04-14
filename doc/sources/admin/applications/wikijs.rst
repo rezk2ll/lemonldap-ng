@@ -35,17 +35,17 @@ Make a note of the "Callback URL" and the bottom of the screen and save the conf
 Configuring LemonLDAP
 ~~~~~~~~~~~~~~~~~~~~~
 
-We now have to configure LemonLDAP::NG to recognize wiki.js as a valid OIDC relaying party.
+We now have to configure LemonLDAP::NG to recognize wiki.js as a valid OIDC relying party.
 
-Add a :doc:`new OpenID Connect relaying party<..//idpopenidconnect>`
+Add a :doc:`new OpenID Connect relying party<..//idpopenidconnect>`
 with the following parameters (Options -> Basic) :
 
 * **Client ID**: the same you set in Wiki.js configuration.
 * **Client Secret**: the same you set in Wiki.js configuration.
 * **Allowed redirection addresses for login**: The "Callback URL" defined in wiki.js.
 
-\_Portal with internal CA
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Portal with internal CA
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. danger::
 
