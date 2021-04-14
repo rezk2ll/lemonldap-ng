@@ -17,7 +17,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.12';
 
 # INITIALIZATION
 
@@ -195,14 +195,16 @@ sub checkPasswordQuality {
     }
 
     ## Fobidden special characters
-    $password =~ s/[\Q$speChars\E\w]//g;
-    if ($password) {
-        $self->logger->error( 'Password contains '
-              . length($password)
-              . " forbidden character(s): $password" );
-        return length($password) > 1
-          ? PE_PP_NOT_ALLOWED_CHARACTERS
-          : PE_PP_NOT_ALLOWED_CHARACTER;
+    unless ( $speChars eq '__ALL__' ) {
+        $password =~ s/[\Q$speChars\E\w]//g;
+        if ($password) {
+            $self->logger->error( 'Password contains '
+                  . length($password)
+                  . " forbidden character(s): $password" );
+            return length($password) > 1
+              ? PE_PP_NOT_ALLOWED_CHARACTERS
+              : PE_PP_NOT_ALLOWED_CHARACTER;
+        }
     }
 
     return PE_OK;

@@ -2,7 +2,7 @@
 # Display functions for LemonLDAP::NG Portal
 package Lemonldap::NG::Portal::Main::Display;
 
-our $VERSION = '2.0.11';
+our $VERSION = '2.0.12';
 
 package Lemonldap::NG::Portal::Main;
 use strict;
@@ -53,6 +53,7 @@ sub displayInit {
       || $self->conf->{passwordPolicyMinLower}
       || $self->conf->{passwordPolicyMinUpper}
       || $self->conf->{passwordPolicyMinDigit}
+      || $self->conf->{passwordPolicyMinSpeChar}
       || $speChars;
     $self->isPP($isPP);
 }
@@ -252,7 +253,7 @@ sub display {
             PPOLICY_MINDIGIT   => $self->conf->{passwordPolicyMinDigit},
             PPOLICY_MINSPECHAR => $self->conf->{passwordPolicyMinSpeChar},
             (
-                $self->conf->{passwordPolicyMinSpeChar}
+                $self->conf->{passwordPolicyMinSpeChar} || $self->speChars()
                 ? ( PPOLICY_ALLOWEDSPECHAR => $self->speChars() )
                 : ()
             ),
@@ -449,7 +450,7 @@ sub display {
                 PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
                 PPOLICY_MINSPECHAR => $self->conf->{passwordPolicyMinSpeChar},
                 (
-                    $self->conf->{passwordPolicyMinSpeChar}
+                    $self->conf->{passwordPolicyMinSpeChar} || $self->speChars()
                     ? ( PPOLICY_ALLOWEDSPECHAR => $self->speChars() )
                     : ()
                 ),

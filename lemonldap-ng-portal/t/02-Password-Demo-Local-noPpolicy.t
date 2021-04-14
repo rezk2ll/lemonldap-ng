@@ -48,8 +48,8 @@ ok(
 ok( $res->[2]->[0] =~ m%<input id="oldpassword" name="oldpassword"%,
     ' Old password input' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyNone">%,
-    ' passwordPolicyNone' )
+ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinSpeChar">Minimal special characters:</span> 2%,
+    ' passwordPolicyMinSpeChar' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(3);
 
