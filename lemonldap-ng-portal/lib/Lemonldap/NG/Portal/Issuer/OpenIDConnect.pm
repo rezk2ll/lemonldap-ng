@@ -1129,10 +1129,10 @@ sub _handleClientCredentialsGrant {
       || $self->conf->{oidcServiceAccessTokenExpiration};
 
     my $token_response = {
-        access_token => $access_token,
+        access_token => "$access_token",
         token_type   => 'Bearer',
-        expires_in   => $expires_in,
-        ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
+        expires_in   => $expires_in + 0,
+        ( ( $req_scope ne $scope ) ? ( scope => "$scope" ) : () ),
     };
 
     $self->logger->debug("Send token response");
@@ -1263,11 +1263,11 @@ sub _handlePasswordGrant {
       || $self->conf->{oidcServiceAccessTokenExpiration};
 
     my $token_response = {
-        access_token => $access_token,
+        access_token => "$access_token",
         token_type   => 'Bearer',
-        expires_in   => $expires_in,
-        ( ( $scope ne $req_scope ) ? ( scope => $scope ) : () ),
-        ( $refresh_token ? ( refresh_token => $refresh_token ) : () ),
+        expires_in   => $expires_in + 0,
+        ( ( $scope ne $req_scope ) ? ( scope => "$scope" ) : () ),
+        ( $refresh_token ? ( refresh_token => "$refresh_token" ) : () ),
     };
 
     $self->logger->debug("Send token response");
@@ -1483,12 +1483,12 @@ sub _handleAuthorizationCodeGrant {
       || $self->conf->{oidcServiceAccessTokenExpiration};
 
     my $token_response = {
-        access_token => $access_token,
+        access_token => "$access_token",
         token_type   => 'Bearer',
-        expires_in   => $expires_in,
-        id_token     => $id_token,
-        ( $refresh_token ? ( refresh_token => $refresh_token ) : () ),
-        ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
+        expires_in   => $expires_in + 0,
+        id_token     => "$id_token",
+        ( $refresh_token ? ( refresh_token => "$refresh_token" ) : () ),
+        ( ( $req_scope ne $scope ) ? ( scope => "$scope" ) : () ),
     };
 
     my $cRP = $apacheSession->data->{_oidcConnectedRP} || '';
@@ -1694,10 +1694,10 @@ sub _handleRefreshTokenGrant {
       || $self->conf->{oidcServiceAccessTokenExpiration};
 
     my $token_response = {
-        access_token => $access_token,
+        access_token => "$access_token",
         token_type   => 'Bearer',
-        expires_in   => $expires_in,
-        id_token     => $id_token,
+        expires_in   => $expires_in + 0,
+        id_token     => "$id_token",
     };
 
     # TODO
