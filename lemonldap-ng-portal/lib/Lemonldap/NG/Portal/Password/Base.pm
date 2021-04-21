@@ -176,7 +176,7 @@ sub checkPasswordQuality {
     ## Min special characters
     # Just number of special characters must be checked
     if ( $self->conf->{passwordPolicyMinSpeChar} && $speChars eq '__ALL__' ) {
-        my $spe = $password =~ s/\w//g;
+        my $spe = $password =~ s/\W//g;
         if ( $spe < $self->conf->{passwordPolicyMinSpeChar} ) {
             $self->logger->error("Password has not enough special characters");
             return PE_PP_INSUFFICIENT_PASSWORD_QUALITY;

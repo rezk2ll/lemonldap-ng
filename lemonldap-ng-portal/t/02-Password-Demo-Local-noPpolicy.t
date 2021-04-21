@@ -19,8 +19,8 @@ my $client = LLNG::Manager::Test->new( {
             passwordPolicyMinLower      => 0,
             passwordPolicyMinUpper      => 0,
             passwordPolicyMinDigit      => 0,
-            passwordPolicyMinSpeChar    => 2,
-            passwordPolicySpecialChar   => '',
+            passwordPolicyMinSpeChar    => 0,
+            passwordPolicySpecialChar   => '__ALL__',
             portalDisplayPasswordPolicy => 1
         }
     }
@@ -48,8 +48,8 @@ ok(
 ok( $res->[2]->[0] =~ m%<input id="oldpassword" name="oldpassword"%,
     ' Old password input' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyMinSpeChar">Minimal special characters:</span> 2%,
-    ' passwordPolicyMinSpeChar' )
+ok( $res->[2]->[0] =~ m%<span trspan="passwordPolicyNone">%,
+    ' passwordPolicyNone' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(3);
 
