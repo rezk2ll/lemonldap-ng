@@ -936,6 +936,11 @@ sub sendHtml {
         @url = map { s#https?://([^/]+).*#$1#; $_ }
           ( $req->info =~ /<iframe.*?src="(.*?)"/sg );
     }
+
+    # Update child-src header from request data
+    if ( ref( $req->data->{cspChildSrc} ) eq "HASH" ) {
+        push @url, keys %{ $req->data->{cspChildSrc} };
+    }
     if (@url) {
         $csp .= join( ' ', 'child-src', @url, "'self'" ) . ';';
     }
