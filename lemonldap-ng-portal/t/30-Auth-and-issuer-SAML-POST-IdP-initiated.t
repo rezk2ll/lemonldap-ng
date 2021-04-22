@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 19;
+my $maintests = 18;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 
@@ -144,13 +144,7 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
         'Get iframe request'
     ) or explain( $res, '' );
     ( $url, $query ) = ( $1, $2 );
-    ok(
-        getHeader( $res, 'Content-Security-Policy' ) =~
-          /child-src auth.idp.com/,
-        ' Frame is authorized'
-      )
-      or explain( $res->[1],
-        'Content-Security-Policy => ...child-src auth.idp.com' );
+    expectCspChildOK($res, "auth.idp.com");
 
     ok(
         $res = $issuer->_get(

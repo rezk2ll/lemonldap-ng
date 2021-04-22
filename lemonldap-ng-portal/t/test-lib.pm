@@ -483,6 +483,16 @@ sub exceptCspFormOK {
     count(1);
 }
 
+sub expectCspChildOK {
+    my ( $res, $host ) = @_;
+    return 1 unless ($host);
+    my $csp = getHeader( $res, 'Content-Security-Policy' );
+    ok($csp, "Content-Security-Policy header found");
+    count(1);
+    like($csp, qr/child-src[^;]*\Q$host\E/, "Found $host in CSP child-src");
+    count(1);
+}
+
 =head4 getCookies($res)
 
 Returns an hash ref with names => values of cookies set by server.
