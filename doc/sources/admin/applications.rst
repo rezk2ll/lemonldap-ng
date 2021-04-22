@@ -30,6 +30,7 @@ Applications
    applications/limesurvey
    applications/mattermost
    applications/mediawiki
+   applications/mobilizon
    applications/nextcloud
    applications/obm
    applications/office365
@@ -108,6 +109,7 @@ Application                                                       Configuration 
 .. image:: applications/limesurvey_logo.png                       :doc:`LimeSurvey<applications/limesurvey>`           ✔
 .. image:: applications/mattermost_logo.png                       :doc:`Mattermost<applications/mattermost>`                                                  ✔
 .. image:: applications/mediawiki_logo.png                        :doc:`Mediawiki<applications/mediawiki>`             ✔
+.. image:: applications/mobilizon_logo.jpg                        :doc:`Mobilizon<applications/mobilizon>`             ✔
 .. image:: applications/nextcloud-logo.png                        :doc:`NextCloud<applications/nextcloud>`                                               ✔
 .. image:: applications/obm_logo.png                              :doc:`OBM<applications/obm>`                         ✔
 .. image:: applications/logo_office_365.png                       :doc:`Office 365<applications/office365>`                                              ✔
