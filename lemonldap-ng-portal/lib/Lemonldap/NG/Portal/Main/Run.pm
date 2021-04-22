@@ -931,6 +931,8 @@ sub sendHtml {
     }
 
     # Check if frames need to be embedded
+    # FIXME: we should use $req->data->{cspChildSrc} anywhere an iframe is
+    # created in the code, and remove this
     my @url;
     if ( $req->info ) {
         @url = map { s#https?://([^/]+).*#$1#; $_ }
