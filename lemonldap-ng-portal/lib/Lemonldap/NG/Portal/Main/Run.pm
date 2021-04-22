@@ -898,10 +898,14 @@ sub sendHtml {
             $csp .= " $url";
         }
     }
-    if ( defined $req->{cspFormAction} ) {
-        $self->logger->debug(
-            "Set CSP form-action with request URL: " . $req->{cspFormAction} );
-        $csp .= " " . $req->{cspFormAction};
+    if ( defined $req->data->{cspFormAction}
+        and ref( $req->data->{cspFormAction} ) eq "HASH" )
+    {
+        my $request_csp_form_action =
+          join( " ", keys %{ $req->data->{cspFormAction} } );
+        $self->logger->debug( "Set CSP form-action with request URL: "
+              . $request_csp_form_action );
+        $csp .= " " . $request_csp_form_action;
     }
 
     # Set SAML Discovery Protocol in form-action
@@ -1083,7 +1087,7 @@ sub registerLogin {
     }
 
     my $history = $req->sessionInfo->{_loginHistory} ||= {};
-    my $type    = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
+    my $type = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
     $history->{$type} ||= [];
     $self->logger->debug("Current login saved into $type");
 
