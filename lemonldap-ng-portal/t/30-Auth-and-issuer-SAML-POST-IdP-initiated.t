@@ -145,6 +145,7 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
     ) or explain( $res, '' );
     ( $url, $query ) = ( $1, $2 );
     expectCspChildOK($res, "auth.idp.com");
+    expectCspChildOK($res, "http://auth.sp.com");
 
     ok(
         $res = $issuer->_get(
