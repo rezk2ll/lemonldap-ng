@@ -15,6 +15,7 @@ package Lemonldap::NG::Portal::Main;
 
 use strict;
 use URI::Escape;
+use URI;
 use JSON;
 use Lemonldap::NG::Common::Util qw(getPSessionID);
 
@@ -1196,6 +1197,18 @@ sub loadTemplate {
         $tpl->param( %{ $prm{params} } );
     }
     return $tpl->output;
+}
+
+# This method extracts the scheme://host:port part of a URL for use in
+# Content-Security-Polity header
+sub cspGetHost {
+    my ( $self, $url ) = @_;
+    my $uri = $url // "";
+    unless ( $uri->isa("URI") ) {
+        $uri = URI->new($uri);
+    }
+    return (
+        $uri->scheme . "://" . ( $uri->_port ? $uri->host_port : $uri->host ) );
 }
 
 1;
