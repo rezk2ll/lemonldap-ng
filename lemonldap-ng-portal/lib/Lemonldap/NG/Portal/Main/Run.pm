@@ -1049,9 +1049,7 @@ sub tplParams {
 }
 
 sub registerLogin {
-
-    # $user passed by BruteForceProtection plugin
-    my ( $self, $req, $uid ) = @_;
+    my ( $self, $req ) = @_;
     return
       unless ( $self->conf->{loginHistoryEnabled}
         and defined $req->authResult );
@@ -1081,8 +1079,7 @@ sub registerLogin {
                 }
             }
         }
-        $self->updatePersistentSession( $req, { 'loginHistory' => undef },
-            $uid );
+        $self->updatePersistentSession( $req, { 'loginHistory' => undef } );
         delete $req->sessionInfo->{loginHistory};
     }
 
@@ -1107,7 +1104,7 @@ sub registerLogin {
       if ( scalar @{ $history->{$type} } > $self->conf->{ $type . "Number" } );
 
     # Save into persistent session
-    $self->updatePersistentSession( $req, { _loginHistory => $history }, $uid );
+    $self->updatePersistentSession( $req, { _loginHistory => $history, } );
 
     PE_OK;
 }

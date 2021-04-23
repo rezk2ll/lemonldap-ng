@@ -396,7 +396,7 @@ sub authenticate {
     $req->steps( [
             'setSessionInfo',           'setMacros',
             'setPersistentSessionInfo', 'storeHistory',
-            @{ $self->afterData },      sub { PE_BADCREDENTIALS }
+            @{ $self->afterData }, sub { PE_BADCREDENTIALS }
         ]
     );
 
@@ -475,13 +475,12 @@ sub setGroups {
 }
 
 sub setPersistentSessionInfo {
-
-    # $user passed by BruteForceProtection plugin
-    my ( $self, $req, $user ) = @_;
+    my ( $self, $req ) = @_;
 
     # Do not restore infos if session already opened
     unless ( $req->id ) {
-        my $key = $req->{sessionInfo}->{ $self->conf->{whatToTrace} } || $user;
+        my $key = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
+
         return PE_OK unless ( $key and length($key) );
 
         my $persistentSession = $self->getPersistentSession($key);
@@ -620,9 +619,9 @@ sub secondFactor {
 }
 
 sub storeHistory {
-    my ( $self, $req, $uid ) = @_;  # $uid passed by BruteForceProtection plugin
+    my ( $self, $req ) = @_;
     if ( $self->conf->{loginHistoryEnabled} ) {
-        $self->registerLogin( $req, $uid );
+        $self->registerLogin($req);
     }
     PE_OK;
 }
