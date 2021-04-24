@@ -80,7 +80,7 @@ sub checkConf {
             }
         }
     }
-    $class->tsv->{checkTime} = $conf->{checkTime} if ( $conf->{checkTime} );
+    $class->checkTime($conf->{checkTime}) if ( $conf->{checkTime} );
     $class->lastCheck( time() );
     $class->logger->debug("$class: configuration is up to date");
     return 1;

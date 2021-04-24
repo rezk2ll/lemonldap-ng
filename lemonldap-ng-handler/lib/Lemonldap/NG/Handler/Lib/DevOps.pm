@@ -22,7 +22,7 @@ sub checkMaintenanceMode {
         $class->tsv->{defaultCondition}->{$vhost}
         and (
             time() - $class->tsv->{lastVhostUpdate}->{$vhost} <
-            $class->tsv->{checkTime} )
+            $class->checkTime )
       );
 
     return $class->Lemonldap::NG::Handler::Main::checkMaintenanceMode($req);
