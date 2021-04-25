@@ -171,7 +171,7 @@
       "vhostHttps": -1,
       "vhostAliases": "",
       "vhostServiceTokenTTL": -1,
-      "vhostAccessToTrace": "My::accessToTrace, Doctor, Who","vhostType":"Main"
+      "vhostAccessToTrace": "My::accessToTrace, Doctor, Who, _whatToTrace","vhostType":"Main"
     }
   },
   "loginHistoryEnabled": 1,

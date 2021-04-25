@@ -4,7 +4,7 @@ use JSON;
 use strict;
 require 't/test-lib.pm';
 
-my $tests = 17;
+my $tests = 18;
 
 use_ok('Lemonldap::NG::Common::Cli');
 use_ok('Lemonldap::NG::Manager::Cli');
@@ -74,6 +74,14 @@ combined_like( sub { llclient->run(@cmd) },
 combined_like(
     sub { llclient->run(@cmd) },
     qr#cfgNum forced with 2#s,
+    '"Force cfgNum" OK'
+);
+
+# Test 'set' command with nohistory
+@cmd = qw(-yes 1 -force 1 -nohistory 1 set cookieName test);
+combined_like(
+    sub { llclient->run(@cmd) },
+    qr#cfgNum forced with 6#s,
     '"Force cfgNum" OK'
 );
 
