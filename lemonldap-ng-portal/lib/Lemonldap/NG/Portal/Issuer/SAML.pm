@@ -368,6 +368,7 @@ sub run {
                   ->{$idp_initiated_spConfKey}
                   ->{samlSPMetaDataOptionsNameIDFormat} || "email";
                 eval {
+
                     $login->request()->NameIDPolicy()
                       ->Format( $self->getNameIDFormat($nameIDFormatKey) );
                 };
@@ -471,11 +472,35 @@ sub run {
                 $self->logger->debug("Message signature will not be checked");
             }
 
+            my $nameIDFormat;
+
+            # Check NameID Policy in request
+            if ( $login->request()->NameIDPolicy ) {
+                $nameIDFormat = $login->request()->NameIDPolicy->Format();
+                $self->logger->debug(
+                    "Get NameID format $nameIDFormat from request");
+            }
+
+            # Get default NameID Format from configuration
+            # Set to "email" if no value in configuration
+            my $nameIDFormatKey =
+              $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
+              ->{samlSPMetaDataOptionsNameIDFormat} || "email";
+
+            # NameID unspecified is forced to default NameID format
+            if (  !$nameIDFormat
+                or $nameIDFormat eq $self->getNameIDFormat("unspecified") )
+            {
+                $nameIDFormat = $self->getNameIDFormat($nameIDFormatKey);
+                eval {
+                    $login->request()->NameIDPolicy()->Format($nameIDFormat);
+                };
+            }
+
             # Force AllowCreate to TRUE for transient/persistent NameIDPolicy
             if ( $login->request()->NameIDPolicy ) {
-                my $nif = $login->request()->NameIDPolicy->Format();
-                if (   $nif eq $self->getNameIDFormat("transient")
-                    or $nif eq $self->getNameIDFormat("persistent") )
+                if (   $nameIDFormat eq $self->getNameIDFormat("transient")
+                    or $nameIDFormat eq $self->getNameIDFormat("persistent") )
                 {
                     $self->logger->debug(
                         "Force AllowCreate flag in NameIDPolicy");
@@ -567,27 +592,6 @@ sub run {
             }
 
             $self->logger->debug("SSO: assertion is built");
-
-            # Get default NameID Format from configuration
-            # Set to "email" if no value in configuration
-            my $nameIDFormatKey =
-              $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
-              ->{samlSPMetaDataOptionsNameIDFormat} || "email";
-            my $nameIDFormat;
-
-            # Check NameID Policy in request
-            if ( $login->request()->NameIDPolicy ) {
-                $nameIDFormat = $login->request()->NameIDPolicy->Format();
-                $self->logger->debug(
-                    "Get NameID format $nameIDFormat from request");
-            }
-
-            # NameID unspecified is forced to default NameID format
-            if (  !$nameIDFormat
-                or $nameIDFormat eq $self->getNameIDFormat("unspecified") )
-            {
-                $nameIDFormat = $self->getNameIDFormat($nameIDFormatKey);
-            }
 
             # Get session key associated with NameIDFormat
             # Not for unspecified, transient, persistent, entity, encrypted
