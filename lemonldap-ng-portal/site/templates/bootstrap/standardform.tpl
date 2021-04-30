@@ -51,7 +51,7 @@
      </a>
    </TMPL_IF>
 
-  <TMPL_IF NAME="FINDUSER">
+  <TMPL_IF NAME="DISPLAY_FINDUSER">
     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#finduserModal">
       <span class="fa fa-search"></span>
       <span trspan="searchAccount">Search for an account</span>

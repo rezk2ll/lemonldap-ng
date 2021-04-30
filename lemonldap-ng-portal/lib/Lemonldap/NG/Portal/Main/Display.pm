@@ -484,12 +484,10 @@ sub display {
               $self->loadedModules->{
                 "Lemonldap::NG::Portal::Plugins::FindUser"};
             my $fields = [];
-            if (
-                $plugin
+            if (   $plugin
                 && $self->conf->{findUser}
                 && $self->conf->{impersonationRule}
-                && $self->conf->{findUserSearchingAttributes}
-              )
+                && $self->conf->{findUserSearchingAttributes} )
             {
                 $login  = $req->data->{findUser};
                 $fields = $plugin->buildForm();
@@ -508,9 +506,9 @@ sub display {
                     DISPLAY_FORM         => 0,
                     DISPLAY_OPENID_FORM  => 0,
                     DISPLAY_YUBIKEY_FORM => 0,
+                    DISPLAY_FINDUSER     => scalar @$fields,
                     FIELDS               => $fields,
-                    SPOOFID              => $login,
-                    FINDUSER             => scalar @$fields
+                    SPOOFID              => $login
                 );
             }
 
@@ -535,16 +533,16 @@ sub display {
                     DISPLAY_SSL_FORM  => $displayType =~ /sslform/ ? 1 : 0,
                     DISPLAY_GPG_FORM  => $displayType =~ /gpgform/ ? 1 : 0,
                     DISPLAY_LOGO_FORM => $displayType eq "logo"    ? 1 : 0,
+                    DISPLAY_FINDUSER  => scalar @$fields,
                     module            => $displayType eq "logo"
                     ? $self->getModule( $req, 'auth' )
                     : "",
                     AUTH_LOOP => [],
                     PORTAL_URL =>
                       ( $displayType eq "logo" ? $self->conf->{portal} : 0 ),
-                    MSG      => $req->info(),
-                    FIELDS   => $fields,
-                    SPOOFID  => $login,
-                    FINDUSER => scalar @$fields
+                    MSG     => $req->info(),
+                    FIELDS  => $fields,
+                    SPOOFID => $login
                 );
             }
         }

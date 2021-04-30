@@ -1,4 +1,4 @@
-<TMPL_IF NAME="FINDUSER">
+<TMPL_IF NAME="DISPLAY_FINDUSER">
 
 <div id="finduserModal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
