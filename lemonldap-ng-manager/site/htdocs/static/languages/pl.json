@@ -77,7 +77,7 @@
 "authChain":"Łańcuch uwierzytelnienia",
 "authChoice":"Wybór uwierzytelnienia",
 "authChoiceAuthBasic":"Choice used for password authentication",
-"authChoiceFindUser":"Parametr wtyczki FindUser",
+"authChoiceFindUser":"Choice used for searching user account",
 "authChoiceModules":"Dozwolone moduły",
 "authChoiceParam":"Parametr adresu URL",
 "authOnly":"Tylko uwierzytelnianie",

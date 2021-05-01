@@ -77,7 +77,7 @@
 "authChain":"سلسلة إثبات الهوية",
 "authChoice":"اختيار إثبات الهوية",
 "authChoiceAuthBasic":"Choice used for password authentication",
-"authChoiceFindUser":"FindUser plugin parameter",
+"authChoiceFindUser":"Choice used for searching user account",
 "authChoiceModules":"الوحدات المسموح بها",
 "authChoiceParam":"معايير URL",
 "authOnly":"إثبات الهوية فقط",

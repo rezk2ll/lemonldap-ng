@@ -57,6 +57,10 @@ div.actions a {
   margin-top: 10px;
 }
 
+div.actions button {
+  margin-top: 10px;
+}
+
 .buttons {
   text-align: center;
   margin: 10px 0 0 0;

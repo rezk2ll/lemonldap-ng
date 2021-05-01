@@ -77,7 +77,7 @@
 "authChain":"Doğrulama zinciri",
 "authChoice":"Kimlik doğrulama tercihi",
 "authChoiceAuthBasic":"Parola doğrulaması için kullanılan seçim",
-"authChoiceFindUser":"FindUser eklenti parametresi",
+"authChoiceFindUser":"Choice used for searching user account",
 "authChoiceModules":"İzin verilen modüller",
 "authChoiceParam":"URL parametresi",
 "authOnly":"Yalnızca kimlik doğrulama",

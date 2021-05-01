@@ -77,7 +77,7 @@
 "authChain":"Chaîne d'authentification",
 "authChoice":"Choix d'authentification",
 "authChoiceAuthBasic":"Choix à utiliser pour l'authentification par mot de passe",
-"authChoiceFindUser":"Paramètre de recherche de compte",
+"authChoiceFindUser":"Choix à utiliser pour la recherche de compte",
 "authChoiceModules":"Modules autorisés",
 "authChoiceParam":"Paramètre de l'URL",
 "authOnly":"Authentification seulement",

@@ -77,7 +77,7 @@
 "authChain":"认证chain",
 "authChoice":"认证方式选择",
 "authChoiceAuthBasic":"Choice used for password authentication",
-"authChoiceFindUser":"FindUser plugin parameter",
+"authChoiceFindUser":"Choice used for searching user account",
 "authChoiceModules":"允许的模块",
 "authChoiceParam":"URL 参数",
 "authOnly":"Authentication only",

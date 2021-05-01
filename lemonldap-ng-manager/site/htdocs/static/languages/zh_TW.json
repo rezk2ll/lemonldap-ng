@@ -77,7 +77,7 @@
 "authChain":"驗證鏈",
 "authChoice":"驗證選擇",
 "authChoiceAuthBasic":"Choice used for password authentication",
-"authChoiceFindUser":"FindUser plugin parameter",
+"authChoiceFindUser":"Choice used for searching user account",
 "authChoiceModules":"已允許的模組",
 "authChoiceParam":"URL 參數",
 "authOnly":"僅驗證",

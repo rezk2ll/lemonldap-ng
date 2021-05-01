@@ -484,12 +484,13 @@ sub display {
               $self->loadedModules->{
                 "Lemonldap::NG::Portal::Plugins::FindUser"};
             my $fields = [];
+            my $slogin;
             if (   $plugin
                 && $self->conf->{findUser}
                 && $self->conf->{impersonationRule}
                 && $self->conf->{findUserSearchingAttributes} )
             {
-                $login  = $req->data->{findUser};
+                $slogin  = $req->data->{findUser};
                 $fields = $plugin->buildForm();
             }
 
@@ -508,7 +509,7 @@ sub display {
                     DISPLAY_YUBIKEY_FORM => 0,
                     DISPLAY_FINDUSER     => scalar @$fields,
                     FIELDS               => $fields,
-                    SPOOFID              => $login
+                    SPOOFID              => $slogin
                 );
             }
 
@@ -542,7 +543,7 @@ sub display {
                       ( $displayType eq "logo" ? $self->conf->{portal} : 0 ),
                     MSG     => $req->info(),
                     FIELDS  => $fields,
-                    SPOOFID => $login
+                    SPOOFID => $slogin
                 );
             }
         }

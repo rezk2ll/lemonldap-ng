@@ -77,7 +77,7 @@
 "authChain":"Chuỗi xác thực",
 "authChoice":"Lựa chọn xác thực",
 "authChoiceAuthBasic":"Choice used for password authentication",
-"authChoiceFindUser":"FindUser plugin parameter",
+"authChoiceFindUser":"Choice used for searching user account",
 "authChoiceModules":"Các mô-đun được phép",
 "authChoiceParam":"Tham số URL",
 "authOnly":"Chỉ xác thực",
