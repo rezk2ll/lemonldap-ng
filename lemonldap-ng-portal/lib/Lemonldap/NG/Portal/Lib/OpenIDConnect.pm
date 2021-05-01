@@ -105,8 +105,11 @@ sub loadRPs {
             "No OpenID Connect Relying Party found in configuration");
         return 1;
     }
-    $self->oidcRPList( $self->conf->{oidcRPMetaDataOptions} );
-    foreach my $rp ( keys %{ $self->oidcRPList } ) {
+
+    foreach my $rp ( keys %{ $self->conf->{oidcRPMetaDataOptions} || {} } ) {
+        my $valid = 1;
+
+        # Handle attributes
         my $attributes = {
             profile => PROFILE,
             email   => EMAIL,
@@ -125,49 +128,69 @@ sub loadRPs {
                 $attributes->{$claim} = \@extraAttributes;
             }
         }
-        $self->rpAttributes->{$rp} = $attributes;
 
-        my $rule = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsRule};
+        # Access rule
+        my $rule = $self->conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsRule};
         if ( length $rule ) {
             $rule = $self->p->HANDLER->substitute($rule);
             unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-                $self->error( 'OIDC RP rule error: '
+                $self->logger->error( "Unable to build access rule for RP $rp: "
                       . $self->p->HANDLER->tsv->{jail}->error );
-                return 0;
+                $valid = 0;
             }
-            $self->spRules->{$rp} = $rule;
         }
 
         # Load per-RP macros
-        my $macros = $self->conf->{oidcRPMetaDataMacros}->{$rp};
+        my $macros         = $self->conf->{oidcRPMetaDataMacros}->{$rp};
+        my $compiledMacros = {};
         for my $macroAttr ( keys %{$macros} ) {
             my $macroRule = $macros->{$macroAttr};
             if ( length $macroRule ) {
                 $macroRule = $self->p->HANDLER->substitute($macroRule);
-                unless ( $macroRule = $self->p->HANDLER->buildSub($macroRule) )
-                {
-                    $self->error( 'OIDC RP macro error: '
-                          . $self->p->HANDLER->tsv->{jail}->error );
-                    return 0;
+                if ( $macroRule = $self->p->HANDLER->buildSub($macroRule) ) {
+                    $compiledMacros->{$macroAttr} = $macroRule;
                 }
-                $self->spMacros->{$rp}->{$macroAttr} = $macroRule;
+                else {
+                    $self->logger->error(
+                        "Unable to build macro $macroAttr for RP $rp:"
+                          . $self->p->HANDLER->tsv->{jail}->error );
+                    $valid = 0;
+                }
             }
         }
 
         # Load per-RP dynamic scopes
-        my $scopes = $self->conf->{oidcRPMetaDataScopeRules}->{$rp};
+        my $scopes         = $self->conf->{oidcRPMetaDataScopeRules}->{$rp};
+        my $compiledScopes = {};
         for my $scopeName ( keys %{$scopes} ) {
             my $scopeRule = $scopes->{$scopeName};
             if ( length $scopeRule ) {
                 $scopeRule = $self->p->HANDLER->substitute($scopeRule);
-                unless ( $scopeRule = $self->p->HANDLER->buildSub($scopeRule) )
-                {
-                    $self->error( 'OIDC RP dynamic scope rule error: '
-                          . $self->p->HANDLER->tsv->{jail}->error );
-                    return 0;
+                if ( $scopeRule = $self->p->HANDLER->buildSub($scopeRule) ) {
+                    $compiledScopes->{$scopeName} = $scopeRule;
                 }
-                $self->spScopeRules->{$rp}->{$scopeName} = $scopeRule;
+                else {
+                    $self->logger->error(
+                        "Unable to build scope $scopeName for RP $rp:"
+                          . $self->p->HANDLER->tsv->{jail}->error );
+                    $valid = 0;
+                }
             }
+        }
+        if ($valid) {
+
+            # Register RP
+            $self->oidcRPList->{$rp} =
+              $self->conf->{oidcRPMetaDataOptions}->{$rp};
+            $self->rpAttributes->{$rp} = $attributes;
+            $self->spMacros->{$rp}     = $compiledMacros;
+            $self->spScopeRules->{$rp} = $compiledScopes;
+            $self->spRules->{$rp}      = $rule;
+        }
+        else {
+            $self->logger->error(
+                "Relaying Party $rp has errors and will be ignored");
         }
     }
     return 1;
