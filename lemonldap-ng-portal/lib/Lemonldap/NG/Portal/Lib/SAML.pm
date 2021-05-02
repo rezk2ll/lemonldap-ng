@@ -386,6 +386,54 @@ sub loadSPs {
             $sp_metadata = encode( "utf8", $sp_metadata );
         }
 
+        # Get SP entityID
+        my ( $tmp, $entityID ) = ( $sp_metadata =~ /entityID=(['"])(.+?)\1/si );
+
+        # Decode HTML entities from entityID
+        # TODO: see Lasso comment below
+        decode_entities($entityID);
+
+        my $valid = 1;
+        my $rule  = $self->conf->{samlSPMetaDataOptions}->{$_}
+          ->{samlSPMetaDataOptionsRule};
+
+        if ( length $rule ) {
+            $rule = $self->p->HANDLER->substitute($rule);
+            unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
+                $self->logger->error( 'SAML SP rule error: '
+                      . $self->p->HANDLER->tsv->{jail}->error );
+                $valid = 0;
+            }
+        }
+
+        # Load per-SP macros
+        my $macros         = $self->conf->{samlSPMetaDataMacros}->{$_};
+        my $compiledMacros = {};
+        for my $macroAttr ( keys %{$macros} ) {
+            my $macroRule = $macros->{$macroAttr};
+            if ( length $macroRule ) {
+                $macroRule = $self->p->HANDLER->substitute($macroRule);
+                if ( $macroRule = $self->p->HANDLER->buildSub($macroRule) ) {
+                    $compiledMacros->{$macroAttr} = $macroRule;
+                }
+                else {
+                    $valid = 0;
+                    $self->logger->error(
+                        "Error processing macro $macroAttr for SAML SP $_"
+                          . $self->p->HANDLER->tsv->{jail}->error );
+                }
+            }
+        }
+
+        if ($valid) {
+            $self->spRules->{$_}         = $rule;
+            $self->spMacros->{$entityID} = $compiledMacros;
+        }
+        else {
+            $self->logger->error("SAML SP $_ has errors and will be ignored");
+            next;
+        }
+
         # Add this SP to Lasso::Server
         # TODO: when Lasso issue #35061 is fixed in all distros,
         # we could load the metadata into a new LassoProvider, extract the
@@ -399,13 +447,7 @@ sub loadSPs {
             next;
         }
 
-        # Store SP entityID and Organization Name
-        my ( $tmp, $entityID ) = ( $sp_metadata =~ /entityID=(['"])(.+?)\1/si );
-
-        # Decode HTML entities from entityID
-        # TODO: see Lasso comment above
-        decode_entities($entityID);
-
+        # Store Org name
         my $name = $self->getOrganizationName( $self->lassoServer, $entityID )
           || ucfirst($_);
         $self->spList->{$entityID}->{confKey} = $_;
@@ -450,34 +492,6 @@ sub loadSPs {
             }
             $self->logger->debug(
                 "Set signature method $signature_method on SP $_");
-        }
-
-        my $rule = $self->conf->{samlSPMetaDataOptions}->{$_}
-          ->{samlSPMetaDataOptionsRule};
-        if ( length $rule ) {
-            $rule = $self->p->HANDLER->substitute($rule);
-            unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-                $self->logger->error( 'SAML SP rule error: '
-                      . $self->p->HANDLER->tsv->{jail}->error );
-                next;
-            }
-            $self->spRules->{$_} = $rule;
-        }
-
-        # Load per-SP macros
-        my $macros = $self->conf->{samlSPMetaDataMacros}->{$_};
-        for my $macroAttr ( keys %{$macros} ) {
-            my $macroRule = $macros->{$macroAttr};
-            if ( length $macroRule ) {
-                $macroRule = $self->p->HANDLER->substitute($macroRule);
-                unless ( $macroRule = $self->p->HANDLER->buildSub($macroRule) )
-                {
-                    $self->error( 'SAML SP macro error: '
-                          . $self->p->HANDLER->tsv->{jail}->error );
-                    return 0;
-                }
-                $self->spMacros->{$entityID}->{$macroAttr} = $macroRule;
-            }
         }
 
         $self->logger->debug("SP $_ added");
