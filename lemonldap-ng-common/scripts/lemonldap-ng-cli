@@ -65,9 +65,8 @@ Options:
  - safe <0|1>                    : fail in case the requested configuration is invalid
  - force <0|1>                   : allow overwrite of existing config number
  - cfgNum <num>                  : set new configuration number (requires -force 1)
- - nohistory                     : do not increment configuration number (requires -force 1)
  - sep <char>                    : separator of hierarchical values (by default: /)
- - iniFile <file>                : path to an alternative lemonldap-ng.ini file
+ - iniFile <file>                : path to an alternate lemonldap-ng.ini file
 
 See Lemonldap::NG::Manager::Cli(3) for more
 };
@@ -178,10 +177,6 @@ Allows you to force overwriting an existing configuration (default: 0)
 =item -cfgNum
 
 Choose a particular configuration number (default: latest)
-
-=item -nohistory
-
-Allows you to keep current configuration number
 
 =item -sep 
 

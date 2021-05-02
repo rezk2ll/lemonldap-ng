@@ -29,7 +29,6 @@ has format => ( is => 'rw', isa => 'Str', default => "%-25s | %-25s | %-25s" );
 has yes    => ( is => 'rw', isa => 'Bool', default => 0 );
 has safe   => ( is => 'rw', isa => 'Bool', default => 0 );
 has force  => ( is => 'rw', isa => 'Bool', default => 0 );
-has nohistory => ( is => 'rw', isa => 'Bool', default => 0 );
 has logger => ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr->logger } );
 has userLogger =>
   ( is => 'ro', lazy => 1, builder => sub { $_[0]->mgr->userLogger } );
@@ -356,7 +355,7 @@ sub rollback {
       or die $Lemonldap::NG::Common::Conf::msg;
 
     $conf->{cfgNum}    = $lastCfg;
-    $conf->{cfgAuthor} = scalar( getpwuid $< ) . ' (command-line-interface)';
+    $conf->{cfgAuthor} = scalar( getpwuid $< ) . '(command-line-interface)';
     chomp $conf->{cfgAuthor};
     $conf->{cfgAuthorIP} = '127.0.0.1';
     $conf->{cfgDate}     = time;
@@ -433,7 +432,6 @@ sub _save {
             print STDERR "$msg\n";
         }
     }
-
     my $saveParams = { force => $self->force };
     if ( $self->force and $self->cfgNum ) {
         $self->logger->debug( "CLI: cfgNum forced with " . $self->cfgNum );
@@ -441,15 +439,6 @@ sub _save {
         $saveParams->{cfgNum}      = $self->cfgNum;
         $saveParams->{cfgNumFixed} = 1;
     }
-    if ( $self->force and $self->nohistory ) {
-        my $lastCfg = $self->mgr->confAcc->lastCfg;
-        $self->logger->debug(
-            "CLI: No history required. cfgNum forced with " . $lastCfg );
-        print STDERR "No history required. cfgNum forced with ", $lastCfg;
-        $saveParams->{cfgNum}      = $lastCfg;
-        $saveParams->{cfgNumFixed} = 1;
-    }
-
     $new->{cfgAuthor} = scalar( getpwuid $< ) . '(command-line-interface)';
     chomp $new->{cfgAuthor};
     $new->{cfgAuthorIP} = '127.0.0.1';
