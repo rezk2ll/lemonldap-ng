@@ -123,7 +123,7 @@ sub newRSAKey {
     my $keys  = {
         'private' => $rsa->get_private_key_string(),
         'public'  => $rsa->get_public_key_x509_string(),
-        'hash' => md5_base64($rsa->get_public_key_string()),
+        'hash'    => md5_base64( $rsa->get_public_key_string() ),
     };
     if ( $query->{password} ) {
         my $pem = Convert::PEM->new(
@@ -345,26 +345,25 @@ sub newConf {
 
     # Body must be json
     my $new = $req->jsonBodyToObj;
-    unless ( defined($new) ) {
-        return $self->sendError( $req, undef, 400 );
-    }
+    return $self->sendError( $req, undef, 400 ) unless ( defined $new );
 
-    # Verify that cfgNum has been asked
-    unless ( defined $req->params('cfgNum') ) {
-        return $self->sendError( $req, "Missing configuration number", 400 );
-    }
+    # Verify that cfgNum has been sent
+    return $self->sendError( $req, "Missing configuration number", 400 )
+      unless ( defined $req->params('cfgNum') );
+
+    # # Verify that cfgDate has been sent
+    # return $self->sendError( $req, "Missing configuration date", 400 )
+    #   unless ( defined $req->params('cfgDate') );
 
     # Set current conf to cfgNum
-    unless ( defined $self->getConfByNum( $req->params('cfgNum') ) ) {
-        return $self->sendError(
-            $req,
-            "Configuration "
-              . $req->params('cfgNum')
-              . " not available "
-              . $Lemonldap::NG::Common::Conf::msg,
-            400
-        );
-    }
+    return $self->sendError(
+        $req,
+        "Configuration "
+          . $req->params('cfgNum')
+          . " not available "
+          . $Lemonldap::NG::Common::Conf::msg,
+        400
+    ) unless ( defined $self->getConfByNum( $req->params('cfgNum') ) );
 
     # Parse new conf
     require Lemonldap::NG::Manager::Conf::Parser;
@@ -372,13 +371,20 @@ sub newConf {
         { tree => $new, refConf => $self->currentConf, req => $req } );
 
     # If ref conf isn't last conf, consider conf changed
-    my $cfgNum = $self->confAcc->lastCfg;
-    unless ( defined $cfgNum ) {
-        $req->error($Lemonldap::NG::Common::Conf::msg);
-    }
+    my $currentCfgNum = $self->confAcc->lastCfg;
+    $req->error($Lemonldap::NG::Common::Conf::msg)
+      unless ( defined $currentCfgNum );
     return $self->sendError( $req, undef, 400 ) if ( $req->error );
-
-    if ( $cfgNum ne $req->params('cfgNum') ) { $parser->confChanged(1); }
+    my $currentConf =
+      $self->confAcc->getConf(
+        { CfgNum => $currentCfgNum, raw => 1, noCache => 1 } );
+    my $currentCfgDate = $currentConf->{cfgDate};
+    $self->logger->debug(
+        "Current CfgNum/cfgDate: $currentCfgNum/$currentCfgDate");
+    $parser->confChanged(1)
+      if ( $currentCfgNum ne $req->params('cfgNum')
+        || $req->params('cfgDate')
+        && $req->params('cfgDate') ne $currentCfgDate );
 
     my $res = { result => $parser->check( $self->p ) };
 
@@ -402,6 +408,10 @@ sub newConf {
         else {
             my %args;
             $args{force} = 1 if ( $req->params('force') );
+            if ( $req->params('cfgDate') ) {
+                $args{cfgDate}        = $req->params('cfgDate');
+                $args{currentCfgDate} = $currentCfgDate;
+            }
             my $s = CONFIG_WAS_CHANGED;
             $s = $self->confAcc->saveConf( $parser->newConf, %args )
               unless ( @{ $parser->{needConfirmation} } && !$args{force} );

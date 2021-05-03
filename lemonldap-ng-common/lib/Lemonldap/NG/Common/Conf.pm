@@ -122,7 +122,9 @@ sub saveConf {
 
     # If configuration was modified, return an error
     if ( not $args{force} ) {
-        return CONFIG_WAS_CHANGED if ( $conf->{cfgNum} != $last );
+        return CONFIG_WAS_CHANGED
+          if ( $conf->{cfgNum} ne $last
+            || $args{cfgDate} && $args{cfgDate} ne $args{currentCfgDate} );
         return DATABASE_LOCKED if ( $self->isLocked() or not $self->lock() );
     }
     $conf->{cfgNum} = $last + 1 unless ( $args{cfgNumFixed} );
