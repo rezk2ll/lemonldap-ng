@@ -312,7 +312,6 @@
 "deleteTOTPKey":"Delete TOTP key",
 "deleteU2FKey":"Delete U2F key",
 "demoExportedVars":"Xuất khẩu biến",
-"demoModeOn":"Trình quản lý này chạy ở chế độ demo",
 "demoParams":"Tham số trình diễn",
 "description":"Mô tả",
 "dest":"Recipient",

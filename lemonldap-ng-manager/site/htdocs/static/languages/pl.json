@@ -312,7 +312,6 @@
 "deleteTOTPKey":"Usuń klucz TOTP",
 "deleteU2FKey":"Usuń klucz U2F",
 "demoExportedVars":"Wyeksportowane zmienne",
-"demoModeOn":"Ten menedżer działa w trybie demonstracyjnym",
 "demoParams":"Parametry demonstracyjne",
 "description":"Opis",
 "dest":"Odbiorca",

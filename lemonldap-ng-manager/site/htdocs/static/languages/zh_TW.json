@@ -312,7 +312,6 @@
 "deleteTOTPKey":"刪除 TOTP 金鑰",
 "deleteU2FKey":"刪除 U2F 金鑰",
 "demoExportedVars":"已匯出的變數",
-"demoModeOn":"此管理程式以示範模式運作",
 "demoParams":"示範參數",
 "description":"描述",
 "dest":"接收者",

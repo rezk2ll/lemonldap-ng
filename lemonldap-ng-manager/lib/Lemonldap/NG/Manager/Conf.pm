@@ -402,43 +402,38 @@ sub newConf {
         }
     }
     if ( $res->{result} ) {
-        if ( $self->p->{demoMode} ) {
-            $res->{message} = '__demoModeOn__';
+        my %args;
+        $args{force} = 1 if ( $req->params('force') );
+        if ( $req->params('cfgDate') ) {
+            $args{cfgDate}        = $req->params('cfgDate');
+            $args{currentCfgDate} = $currentCfgDate;
+        }
+        my $s = CONFIG_WAS_CHANGED;
+        $s = $self->confAcc->saveConf( $parser->newConf, %args )
+          unless ( @{ $parser->{needConfirmation} } && !$args{force} );
+        if ( $s > 0 ) {
+            $self->userLogger->notice(
+                'User ' . $self->p->userId($req) . " has stored conf $s" );
+            $res->{result} = 1;
+            $res->{cfgNum} = $s;
+            if ( my $status = $self->applyConf( $parser->newConf ) ) {
+                push @{ $res->{details}->{__applyResult__} },
+                  { message => "$_: $status->{$_}" }
+                  foreach ( keys %$status );
+            }
         }
         else {
-            my %args;
-            $args{force} = 1 if ( $req->params('force') );
-            if ( $req->params('cfgDate') ) {
-                $args{cfgDate}        = $req->params('cfgDate');
-                $args{currentCfgDate} = $currentCfgDate;
-            }
-            my $s = CONFIG_WAS_CHANGED;
-            $s = $self->confAcc->saveConf( $parser->newConf, %args )
-              unless ( @{ $parser->{needConfirmation} } && !$args{force} );
-            if ( $s > 0 ) {
-                $self->userLogger->notice(
-                    'User ' . $self->p->userId($req) . " has stored conf $s" );
-                $res->{result} = 1;
-                $res->{cfgNum} = $s;
-                if ( my $status = $self->applyConf( $parser->newConf ) ) {
-                    push @{ $res->{details}->{__applyResult__} },
-                      { message => "$_: $status->{$_}" }
-                      foreach ( keys %$status );
-                }
+            $self->userLogger->notice(
+                'Saving attempt rejected, asking for confirmation to '
+                  . $self->p->userId($req) );
+            $res->{result} = 0;
+            if ( $s == CONFIG_WAS_CHANGED ) {
+                $res->{needConfirm} = 1;
+                $res->{message} .= '__needConfirmation__'
+                  unless @{ $parser->{needConfirmation} };
             }
             else {
-                $self->userLogger->notice(
-                    'Saving attempt rejected, asking for confirmation to '
-                      . $self->p->userId($req) );
-                $res->{result} = 0;
-                if ( $s == CONFIG_WAS_CHANGED ) {
-                    $res->{needConfirm} = 1;
-                    $res->{message} .= '__needConfirmation__'
-                      unless @{ $parser->{needConfirmation} };
-                }
-                else {
-                    $res->{message} = $Lemonldap::NG::Common::Conf::msg;
-                }
+                $res->{message} = $Lemonldap::NG::Common::Conf::msg;
             }
         }
     }

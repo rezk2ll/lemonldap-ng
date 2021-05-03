@@ -312,7 +312,6 @@
 "deleteTOTPKey":"Elimina la chiave TOTP",
 "deleteU2FKey":"Elimina la chiave U2F",
 "demoExportedVars":"Variabili esportate",
-"demoModeOn":"Questo gestore viene eseguito in modalità demo",
 "demoParams":"Parametri di dimostrazione",
 "description":"Descrizione",
 "dest":"Recipient",

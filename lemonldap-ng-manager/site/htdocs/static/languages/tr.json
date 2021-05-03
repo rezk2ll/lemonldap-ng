@@ -312,7 +312,6 @@
 "deleteTOTPKey":"TOTP anahtarını sil",
 "deleteU2FKey":"U2F anahtarını sil",
 "demoExportedVars":"Dışa aktarılan değişkenler",
-"demoModeOn":"Bu yönetici demo modunda çalışıyor",
 "demoParams":"Gösterim parametreleri",
 "description":"Açıklama",
 "dest":"Alıcı",

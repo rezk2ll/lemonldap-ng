@@ -312,7 +312,6 @@
 "deleteTOTPKey":"Delete TOTP key",
 "deleteU2FKey":"Delete U2F key",
 "demoExportedVars":"Exported variables",
-"demoModeOn":"This manager runs in demo mode",
 "demoParams":"Demonstration parameters",
 "description":"Description",
 "dest":"Recipient",

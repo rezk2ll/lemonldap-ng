@@ -312,7 +312,6 @@
 "deleteTOTPKey":"Delete TOTP key",
 "deleteU2FKey":"Delete U2F key",
 "demoExportedVars":"المتغيرات المصدرة",
-"demoModeOn":"هذا المدير يعمل في طريقة العرض",
 "demoParams":"إثبات المعايير",
 "description":"التفاصيل",
 "dest":"Recipient",
