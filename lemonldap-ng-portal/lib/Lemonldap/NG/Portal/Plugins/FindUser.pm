@@ -32,6 +32,8 @@ sub init {
     my ($self) = @_;
     ( my $imp = grep /::Plugins::Impersonation$/, $self->p->enabledPlugins )
       ? $self->addUnauthRoute( finduser => 'provideUser', ['POST'] )
+      ->addAuthRoute( finduser => 'provideUser',
+        ['POST'] )    # Allow findUser with reAuth
       : $self->logger->warn('FindUser plugin enabled without Impersonation');
     $self->logger->warn('FindUser plugin enabled without searching attribute')
       unless keys %{ $self->conf->{findUserSearchingAttributes} };

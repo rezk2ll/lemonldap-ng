@@ -9,7 +9,6 @@ my $maintests = 6;
 
 my $res;
 my $json;
-my $request;
 my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel          => 'error',
@@ -35,7 +34,7 @@ ok(
       m%<span trspan="searchAccount">Search for an account</span>%,
     'Search an account not found'
 ) or explain( $res->[2]->[0], 'Found search for an account' );
-$request = 'uid=dwho';
+my $request = 'uid=dwho';
 ok(
     $res = $client->_post(
         '/finduser', IO::String->new($request),

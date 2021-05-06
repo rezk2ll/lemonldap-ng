@@ -7,7 +7,6 @@ require 't/test-lib.pm';
 
 my $res;
 my $json;
-my $request;
 my $maintests = 24;
 
 SKIP: {
@@ -43,7 +42,7 @@ SKIP: {
     my ( $host, $url, $query ) =
       expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
 
-    $request = '';
+    my $request = '';
     ok(
         $res = $client->_post(
             '/finduser', IO::String->new($request),

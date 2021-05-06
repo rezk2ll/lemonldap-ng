@@ -9,7 +9,6 @@ my $maintests = 25;
 
 my $res;
 my $json;
-my $request;
 my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel                    => 'error',
@@ -39,7 +38,7 @@ ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Portal', );
 my ( $host, $url, $query ) =
   expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
 
-$request = '';
+my $request = '';
 ok(
     $res = $client->_post(
         '/finduser', IO::String->new($request),

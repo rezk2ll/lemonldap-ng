@@ -15,7 +15,6 @@ SKIP: {
     }
     my $res;
     my $json;
-    my $request;
     my $dbh = DBI->connect("dbi:SQLite:dbname=$userdb");
     $dbh->do(
 'CREATE TABLE users (uid text,password text,cn text,type text,guy text, room text)'
@@ -77,7 +76,7 @@ SKIP: {
       expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
     ( $host, $url, $query ) =
       expectForm( $res, '#', undef, 'uid', 'guy', 'cn', 'room' );
-    $request = '';
+    my $request = '';
     ok(
         $res = $client->_post(
             '/finduser', IO::String->new($request),
