@@ -486,6 +486,7 @@ t/01-Reject-Hashes-in-URL.t
 t/01-Unauth-Logout.t
 t/02-Password-Demo-Local-noPpolicy.t
 t/02-Password-Demo-Local-Ppolicy.t
+t/02-Password-Demo-Local-SpeChars-Ppolicy.t
 t/02-Password-Demo.t
 t/03-ConfTimeout.t
 t/03-SessionTimeout.t
@@ -570,7 +571,7 @@ t/32-OIDC-Code-Flow-with-2F.t
 t/32-OIDC-Hooks.t
 t/32-OIDC-Macro.t
 t/32-OIDC-Offline-Session.t
-t/32-OIDC-Password-Grant-with-Bruteforce.t
+t/32-OIDC-Password-Grant-with-Bruteforce-and-Choice.t
 t/32-OIDC-Refresh-Token.t
 t/32-OIDC-Register.t
 t/32-OIDC-RP-rule.t
@@ -700,6 +701,7 @@ t/68-FindUser-with-Demo-and-token.t
 t/68-FindUser-with-Demo.t
 t/68-FindUser-with-LDAP.t
 t/68-FindUser-with-REST.t
+t/68-FindUser-with-UpgradeSession.t
 t/68-FindUser-without-attribute.t
 t/68-FindUser-without-Impersonation.t
 t/68-Impersonation-with-2F.t

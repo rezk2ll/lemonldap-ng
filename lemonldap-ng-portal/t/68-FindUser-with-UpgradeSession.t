@@ -174,7 +174,7 @@ ok(
         accept => 'text/html',
         cookie => "lemonldap=$id;lemonldappdata=$pdata",
     ),
-    'Post login'
+    'GET Portal'
 );
 expectOK($res);
 expectAuthenticatedAs( $res, 'rtyler' );
