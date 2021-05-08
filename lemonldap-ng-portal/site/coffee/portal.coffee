@@ -556,7 +556,7 @@ $(window).on 'load', () ->
 		event.preventDefault()
 		document.body.style.cursor = 'progress'
 		str = $("#finduserForm").serialize()
-		console.log 'Send findUser request with', str
+		console.log 'Send findUser request with parameters', str
 		$.ajax
 			type: "POST"
 			url: "#{portal}finduser"
@@ -566,7 +566,7 @@ $(window).on 'load', () ->
 			success: (data) ->
 				document.body.style.cursor = 'default'
 				user = data.user
-				console.log 'Suggested spoofId', user
+				console.log 'Suggested spoofId=', user
 				$('#spoofIdfield').attr 'value', user
 				$('#captcha').attr 'src', data.captcha if data.captcha
 				if data.token

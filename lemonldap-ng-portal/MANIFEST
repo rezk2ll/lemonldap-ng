@@ -696,6 +696,7 @@ t/68-FindUser-with-BadChoice-and-token.t
 t/68-FindUser-with-Choice-and-token.t
 t/68-FindUser-with-Combination.t
 t/68-FindUser-with-DBI.t
+t/68-FindUser-with-Demo-and-captcha.t
 t/68-FindUser-with-Demo-and-required-select.t
 t/68-FindUser-with-Demo-and-token.t
 t/68-FindUser-with-Demo.t
