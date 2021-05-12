@@ -131,7 +131,7 @@ sonar-upload:
   stage: deploy
   image: sonarsource/sonar-scanner-cli
   script:
-      - sonar-scanner
+      - /usr/bin/entrypoint.sh
   only:
     variables:
       - $SONARJOB == "1"

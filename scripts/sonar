@@ -1,5 +1,6 @@
 #!/bin/sh
 
+apt update
 mk-build-deps --install --remove \
     --tool "apt-get -o Debug::pkgProblemResolver=yes -q -y" \
     debian/control
