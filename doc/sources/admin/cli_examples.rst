@@ -386,7 +386,7 @@ Import them:
        set \
            oidcServicePrivateKeySig "`cat oidc.key`" \
            oidcServicePublicKeySig "`cat oidc_pub.key`" \
-           oidcServiceKeyIdSig "`genpasswd`"
+           oidcServiceKeyIdSig "randomstring"
 
 If needed you can allow implicit and hybrid flows:
 
