@@ -127,7 +127,7 @@
          "default" : "accept"
       },
       "manager.__DNSDOMAIN__" : {
-         "(?#Configuration)^/(.*?\\.(fcgi|psgi)/)?(manager\\.html|confs/|$)" : "inGroup(\"timelords\")",
+         "(?#Configuration)^/(.*?\\.(fcgi|psgi)/)?(manager\\.html|confs|prx/|$)" : "inGroup(\"timelords\")",
          "(?#Notifications)/(.*?\\.(fcgi|psgi)/)?notifications" : "inGroup(\"timelords\") or $uid eq \"rtyler\"",
          "(?#Sessions)/(.*?\\.(fcgi|psgi)/)?sessions" : "inGroup(\"timelords\") or $uid eq \"rtyler\"",
          "default" : "inGroup(\"timelords\") or $uid eq \"rtyler\""
