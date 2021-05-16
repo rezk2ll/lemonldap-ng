@@ -341,7 +341,7 @@ Backend                                     Shareable Comment
                                                       Selected by default during installation.
 :doc:`YAML<yamlconfbackend>` |new|                    Same as :doc:`File<fileconfbackend>` but in YAML format
                                                       instead of JSON
-:doc:`SQL (RDBI/CDBI)<sqlconfbackend>`      ✔         Recommended for large-scale systems. Prefer CDBI.
+:doc:`SQL (RDBI/CDBI)<sqlconfbackend>`      ✔         **Recommended for large-scale systems**. Prefer CDBI.
 :doc:`LDAP<ldapconfbackend>`                ✔
 :doc:`MongoDB<mongodbconfbackend>`          ✔
 :doc:`SOAP<soapconfbackend>` |deprecated|   ✔         Proxy backend to be used in conjunction with another
@@ -386,7 +386,7 @@ style modules are usable except for some features.
 Backend                                                          Shareable :ref:`Session explorer<session-explorer>`        :ref:`Session restrictions<session-restrictions>`    Session expiration Comment
 ================================================================ ========= ================================================ ==================================================== ================== =================================================================================================================================================================================================
 :doc:`File<filesessionbackend>`                                            ✔                                                ✔                                                    ✔                  Not shareable between servers except if used in conjunction with :doc:`REST session backend<restsessionbackend>` or with a shared file system (NFS,...). Selected by default during installation.
-:doc:`PgJSON<pgjsonsessionbackend>`                              ✔         ✔                                                ✔                                                    ✔                  Recommended backend for production installations
+:doc:**`PgJSON<pgjsonsessionbackend>`**                          ✔         ✔                                                ✔                                                    ✔                  **Recommended backend for production installations**
 :doc:`Browseable MySQL<browseablemysqlsessionbackend>`           ✔         ✔                                                ✔                                                    ✔                  Recommended for those who prefer MySQL
 :doc:`Browseable LDAP<browseableldapsessionbackend>`             ✔         ✔                                                ✔                                                    ✔
 :doc:`Redis<nosqlsessionbackend>`                                ✔         ✔                                                ✔                                                    ✔                  The fastest. Must be secured by network access control.
