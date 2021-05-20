@@ -23,21 +23,23 @@ Just enable it in the manager (section “plugins”).
       for searching sessions in backend if ``whatToTrace`` fails. Useful
       to look for sessions by mail or givenName. Let it blank to search
       by ``whatToTrace`` only
-   -  **Display computed sessions**: Rule to define which users can display a
-      computed session if no SSO session is found
-   -  **Display empty headers**: Rule to define which users can display ALL headers
-      appended by LemonLDAP::NG including empty ones
-   -  **Display normalized headers**: Rule to define which users see headers name sent by
-      the web server (see RFC3875)
-   -  **Display empty values**: Rule to define which users can display ALL attributes
-      even empty ones
-   -  **Display persistent session data**: Rule to define which users can display
-      persistent session data
    -  **Hidden headers**: Sent headers whose value is masked except for unrestricted users.
       Key is a Virtualhost name and value represents a space-separated headers list.
       A blank value obfuscates ALL relative Virtualhost sent headers.
       Note that just valued hearders are masked.
 
+-  **Display**:
+
+   -  **Computed sessions**: Rule to define which users can display a
+      computed session if no SSO session is found
+   -  **Empty headers**: Rule to define which users can display ALL headers
+      appended by LemonLDAP::NG including empty ones
+   -  **Normalized headers**: Rule to define which users can see headers name sent by
+      the web server (see RFC3875)
+   -  **Empty values**: Rule to define which users can display ALL attributes
+      even empty ones
+   -  **Persistent session data**: Rule to define which users can display
+      persistent session data
 
 .. note::
 

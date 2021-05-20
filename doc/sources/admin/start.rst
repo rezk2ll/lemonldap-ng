@@ -284,13 +284,13 @@ Name                                                                 Description
 :doc:`Global Logout<globallogout>`  [10]_                            Suggest to close all opened sessions at logout
 :doc:`Grant Sessions<grantsession>`                                  Rules to apply before allowing a user to open a session
 :doc:`Impersonation<impersonation>`  [11]_\ |new|                    Allow users to use another identity
-:doc:`Find user<finduser>`  [12]_\ |beta|                            Search for user account
+:doc:`Find user<finduser>`  [12]_\ |new|                             Search for user account
 :doc:`Notifications system<notifications>`                           DIsplay a message during log in process 
 :doc:`Portal Status<status>`                                         Experimental portal status page
 :doc:`Public pages<public_pages>`                                    Enable public pages system
 :doc:`Refresh session API<refreshsessionapi>`  [13]_                 Plugin that provides an API to refresh a user session
 :doc:`Reset password by mail<resetpassword>`                         Send a mail to reset its password
-:doc:`Reset certificate by mail<resetcertificate>`  [14]_\ |beta|    Allow users to reset their certificate
+:doc:`Reset certificate by mail<resetcertificate>`  [14]_\ |new|     Allow users to reset their certificate
 :doc:`REST services<restservices>` |new|                             REST server for :doc:`Proxy<authproxy>`
 :doc:`SOAP services<soapservices>` |deprecated|                      SOAP server for :doc:`Proxy<authproxy>`
 :doc:`Stay connected<stayconnected>` |new|                           Enable persistent connection on same browser

@@ -1,5 +1,3 @@
-|image0|
-
 Decrypt value plugin
 ====================
 
