@@ -105,6 +105,27 @@ p.notifCheck label {
   display: inline-block;
 }
 
+.notif div.form {
+  margin 0 auto;
+  max-width: 1024px;
+}
+
+.notif .h2, h2 {
+  font-size: 1.6rem;
+  font-weght: bold;
+  text-align: center;
+}
+
+.notif .h3, h3 {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-size: 1.2rem;
+}
+
+.notif .card-title {
+  font-size: 1.7rem;
+}
+
 img.langicon {
   cursor: pointer;
 }
