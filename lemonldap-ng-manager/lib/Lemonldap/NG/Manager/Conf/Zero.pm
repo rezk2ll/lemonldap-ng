@@ -167,7 +167,7 @@ sub zeroConf {
             },
             "manager.$domain" => {
                 'default' => 'inGroup("timelords") or $uid eq "rtyler"',
-'(?#Configuration)^/(.*?\.(fcgi|psgi)/)?(manager\.html|confs/|$)'
+'(?#Configuration)^/(.*?\.(fcgi|psgi)/)?(manager\.html|confs|prx/|$)'
                   => 'inGroup("timelords")',
                 '(?#Sessions)/(.*?\.(fcgi|psgi)/)?sessions' =>
                   'inGroup("timelords") or $uid eq "rtyler"',

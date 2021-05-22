@@ -114,7 +114,6 @@ categories =
     saml:               ['_idp', '_idpConfKey', '_samlToken', '_lassoSessionDump', '_lassoIdentityDump']
     groups:             ['groups', 'hGroups']
     ldap:               ['dn']
-    BrowserID:          ['_browserIdAnswer', '_browserIdAnswerRaw']
     OpenIDConnect:      ['_oidc_id_token', '_oidc_OP', '_oidc_access_token']
     sfaTitle:			['_2fDevices']
     oidcConsents:		['_oidcConsents']
