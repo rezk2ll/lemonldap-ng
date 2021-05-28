@@ -46,14 +46,13 @@ Make sure you have already
 :doc:`enabled OpenID Connect<../idpopenidconnect>` on your LemonLDAP::NG
 server
 
-Then, add a Relaying Party with the following configuration
+Then, add a Relaying Party with the following configuration:
 
 -  Options » Authentification » Client ID : same as ``client_id`` above
--  Options » Allowed redirection address : same as ''client_secret ''
-   above
+-  Options » Authentification » Client Secret : same as ``client_secret`` above
+-  Options » Allowed redirection address : ``https://<grafana domain>/login/generic_oauth``
 
-If you want to transmit user attributes to Grafana, you also need to
-configure
+If you want to transmit extra user attributes to Grafana, you also need to configure:
 
 -  Extra Claims »
 
@@ -71,6 +70,11 @@ configure
       -  ``email``
 
    -  map them to your corresponding LemonLDAP::NG session attribute
+
+.. tip::
+
+    To trigger OIDC authentication directly, you can register grafana in application menu and
+    set as URL: ``https://<grafana domain>/login/generic_oauth``
 
 .. |image0| image:: /applications/grafana_logo.png
    :class: align-center
