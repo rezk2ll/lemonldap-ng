@@ -156,8 +156,10 @@ sub expectJWT {
     my ( $token, %claims ) = @_;
     my $payload = getJWTPayload($token);
     ok( $payload, "Token is a JWT" );
+    count(1);
     for my $claim ( keys %claims ) {
         is( $payload->{$claim}, $claims{$claim}, "Found claim in JWT" );
+        count(1);
     }
     return $payload;
 }
