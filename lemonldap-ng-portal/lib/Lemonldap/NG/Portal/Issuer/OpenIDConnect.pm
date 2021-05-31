@@ -700,21 +700,25 @@ sub run {
             if ( $flow eq "authorizationcode" ) {
 
                 # Store data in session
-                my $codeSession = $self->newAuthorizationCode(
-                    $rp,
-                    {
-                        code_challenge => $oidc_request->{'code_challenge'},
-                        code_challenge_method =>
-                          $oidc_request->{'code_challenge_method'},
-                        nonce           => $oidc_request->{'nonce'},
-                        offline         => $offline,
-                        redirect_uri    => $oidc_request->{'redirect_uri'},
-                        scope           => $scope,
-                        req_scope       => $req_scope,
-                        client_id       => $client_id,
-                        user_session_id => $req->id,
-                    }
-                );
+                my $code_payload = {
+                    code_challenge => $oidc_request->{'code_challenge'},
+                    code_challenge_method =>
+                      $oidc_request->{'code_challenge_method'},
+                    nonce           => $oidc_request->{'nonce'},
+                    offline         => $offline,
+                    redirect_uri    => $oidc_request->{'redirect_uri'},
+                    scope           => $scope,
+                    req_scope       => $req_scope,
+                    client_id       => $client_id,
+                    user_session_id => $req->id,
+                };
+
+                my $h = $self->p->processHook( $req, 'oidcGenerateCode',
+                    $oidc_request, $rp, $code_payload );
+                return PE_ERROR if ( $h != PE_OK );
+
+                my $codeSession =
+                  $self->newAuthorizationCode( $rp, $code_payload );
 
                 # Generate code
                 my $code = $codeSession->id();
