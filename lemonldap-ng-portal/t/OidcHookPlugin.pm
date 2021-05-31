@@ -8,6 +8,7 @@ use Data::Dumper;
 use Test::More;
 
 use constant hook => {
+    oidcGenerateCode              => 'modifyRedirectUri',
     oidcGenerateIDToken           => 'addClaimToIDToken',
     oidcGenerateUserInfoResponse  => 'addClaimToUserInfo',
     oidcGotRequest                => 'addScopeToRequest',
@@ -44,6 +45,13 @@ sub addHardcodedScope {
     my ( $self, $req, $scopeList, $rp ) = @_;
     push @{$scopeList}, "myscope";
 
+    return PE_OK;
+}
+
+sub modifyRedirectUri {
+    my ( $self, $req, $oidc_request, $rp, $code_payload ) = @_;
+    my $original_uri = $oidc_request->{redirect_uri};
+    $oidc_request->{redirect_uri} = "$original_uri?hooked=1";
     return PE_OK;
 }
 

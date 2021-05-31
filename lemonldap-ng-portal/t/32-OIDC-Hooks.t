@@ -90,7 +90,8 @@ ok(
     "Get authorization code"
 );
 
-my ($code) = expectRedirection( $res, qr#http://rp2\.com/.*code=([^\&]*)# );
+my ($code) =
+  expectRedirection( $res, qr#http://rp2\.com/\?hooked=1.*code=([^\&]*)# );
 
 # Exchange code for AT
 $query =
