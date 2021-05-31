@@ -654,7 +654,7 @@ sub getUserInfo {
         return $self->decodeUserInfo($userinfo_content);
     }
     elsif ( $content_type =~ /jwt/ ) {
-        return unless $self->verifyJWTSignature( $op, $userinfo_content );
+        return unless $self->verifyJWTSignature( $userinfo_content, $op );
         return getJWTPayload($userinfo_content);
     }
 }
