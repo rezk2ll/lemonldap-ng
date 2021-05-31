@@ -52,6 +52,32 @@ Sample code::
    }
 
 
+oidcGenerateCode
+~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.12
+
+This hook is triggered when LemonLDAP::NG is about to generate an Authorization Code for a Relying Party.
+
+The hook's parameters are:
+
+* A hash of the parameters for the OIDC Authorize request, which you can modify
+* the configuration key of the relying party which will receive the token 
+* A hash of the session keys for the (internal) Authorization Code session
+
+Sample code::
+
+   use constant hook => {
+       oidcGenerateCode              => 'modifyRedirectUri',
+   };
+
+   sub modifyRedirectUri {
+       my ( $self, $req, $oidc_request, $rp, $code_payload ) = @_;
+       my $original_uri = $oidc_request->{redirect_uri};
+       $oidc_request->{redirect_uri} = "$original_uri?hooked=1";
+       return PE_OK;
+   }
+
 oidcGenerateUserInfoResponse
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
