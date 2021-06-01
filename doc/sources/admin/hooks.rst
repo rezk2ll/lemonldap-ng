@@ -280,3 +280,83 @@ Sample code::
 
        # Your code here
    }
+
+CAS Issuer hooks
+-----------------
+
+casGotRequest
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.12
+
+This hook is triggered when LemonLDAP::NG received an CAS authentication request on the `/cas/login` endpoint.
+
+The hook's parameter is a hash containing the CAS request parameters.
+
+Sample code::
+
+   use constant hook => {
+       casGotRequest                 => 'filterService'
+   };
+
+   sub filterService {
+       my ( $self, $req, $cas_request ) = @_;
+       if ( $cas_request->{service} eq "http://auth.sp.com/" ) {
+           return PE_OK;
+       }
+       else {
+           return 999;
+       }
+   }
+
+
+casGenerateServiceTicket
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.12
+
+This hook is triggered when LemonLDAP::NG is about to generate a Service Ticket for a CAS application
+
+The hook's parameters are:
+
+* A hash of the parameters for the CAS request, which you can modify
+* the configuration key of the cas application which will receive the ticket 
+* A hash of the session keys for the (internal) CAS session
+
+Sample code::
+
+   use constant hook => {
+       'casGenerateServiceTicket'    => 'changeRedirectUrl',
+   };
+
+   sub changeRedirectUrl {
+       my ( $self, $req, $cas_request, $app, $Sinfos ) = @_;
+       $cas_request->{service} .= "?hooked=1";
+       return PE_OK;
+   }
+
+
+casGenerateValidateResponse
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.12
+
+This hook is triggered when LemonLDAP::NG is about to send a CAS response to an application on the `/cas/serviceValidate` endpoint.
+
+The hook's parameters are:
+
+* The username (CAS principal)
+* A hash of modifiable attributes to be sent
+
+Sample code::
+
+   use constant hook => {
+       casGenerateValidateResponse    => 'addAttributes',
+   };
+
+   sub addAttributes {
+       my ( $self, $req, $username, $attributes ) = @_;
+       $attributes->{hooked} = 1;
+       return PE_OK;
+   }
+
