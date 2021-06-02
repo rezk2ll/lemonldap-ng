@@ -455,6 +455,23 @@ sub expectCookie {
     return $id;
 }
 
+=head4 expectPdata( $res );
+
+Check if the pdata cookie exists and returns its deserialized value.
+
+=cut
+
+sub expectPdata {
+    my ($res) = @_;
+    my $val = expectCookie( $res, "lemonldappdata" );
+    ok( $val, "Pdata is not empty" );
+    count(1);
+    my $pdata;
+    eval { $pdata = JSON::from_json( uri_unescape($val) ); };
+    diag($@) if $@;
+    return $pdata;
+}
+
 =head4 exceptCspFormOK( $res, $host )
 
 Verify that C<Content-Security-Policy> header allows one to connect to $host.
