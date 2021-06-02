@@ -660,7 +660,7 @@ sub pwdReset {
         return $self->p->sendError( $req, "User not found", 400 );
     }
     $result =
-      $self->p->_passwordDB->modifyPassword( $req, $password, $mail ? 1 : 0 );
+      $self->p->_passwordDB->setNewPassword( $req, $password, $mail ? 1 : 0 );
     $req->{user} = undef;
     $self->conf->{portalRequireOldPassword} = $tmp;
 

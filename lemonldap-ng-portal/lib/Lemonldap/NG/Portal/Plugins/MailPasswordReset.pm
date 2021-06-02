@@ -480,7 +480,7 @@ sub changePwd {
 
     $req->user( $req->{sessionInfo}->{_user} );
     my $result =
-      $self->p->_passwordDB->modifyPassword( $req,
+      $self->p->_passwordDB->setNewPassword( $req,
         $req->data->{newpassword}, 1 );
     $req->{user} = undef;
 
