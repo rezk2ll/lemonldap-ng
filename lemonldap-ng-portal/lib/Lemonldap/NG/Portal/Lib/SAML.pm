@@ -753,13 +753,23 @@ sub addProvider {
         and defined $role
         and defined $metadata );
 
+    # https://dev.entrouvert.org/issues/51415
+    my $save_env = $ENV{'SSL_CERT_FILE'};
+    $ENV{'SSL_CERT_FILE'} = "/dev/null";
+
     eval {
         Lasso::Server::add_provider_from_buffer( $server, $role, $metadata,
             $public_key, $ca_cert_chain );
     };
 
-    return $self->checkLassoError($@);
+    if ( defined $save_env ) {
+        $ENV{'SSL_CERT_FILE'} = $save_env;
+    }
+    else {
+        delete $ENV{'SSL_CERT_FILE'};
+    }
 
+    return $self->checkLassoError($@);
 }
 
 ## @method string getOrganizationName(Lasso::Server server, string idp)
