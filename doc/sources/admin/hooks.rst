@@ -62,7 +62,7 @@ This hook is triggered when LemonLDAP::NG is about to generate an Authorization 
 The hook's parameters are:
 
 * A hash of the parameters for the OIDC Authorize request, which you can modify
-* the configuration key of the relying party which will receive the token 
+* the configuration key of the relying party which will receive the token
 * A hash of the session keys for the (internal) Authorization Code session
 
 Sample code::
@@ -109,7 +109,7 @@ This hook is triggered when LemonLDAP::NG is generating an ID Token.
 The hook's parameters are:
 
 * A hash of the claims to be contained in the ID Token
-* the configuration key of the relying party which will receive the token 
+* the configuration key of the relying party which will receive the token
 
 Sample code::
 
@@ -187,7 +187,7 @@ The hook's parameter is the Lasso::Login object
 
 Sample code::
 
-   use constant hook => { 
+   use constant hook => {
       samlGotAuthnRequest => 'gotRequest',
    };
 
@@ -208,7 +208,7 @@ The hook's parameter is the Lasso::Login object
 
 Sample code::
 
-   use constant hook => { 
+   use constant hook => {
       samlBuildAuthnResponse => 'buildResponse',
    };
 
@@ -229,7 +229,7 @@ The hook's parameter is the Lasso::Logout object
 
 Sample code::
 
-   use constant hook => { 
+   use constant hook => {
       samlGotLogoutRequest => 'gotLogout',
    };
 
@@ -250,7 +250,7 @@ The hook's parameter is the Lasso::Logout object
 
 Sample code::
 
-   use constant hook => { 
+   use constant hook => {
       samlGotLogoutResponse => 'gotLogoutResponse',
    };
 
@@ -271,7 +271,7 @@ The hook's parameter is the Lasso::Logout object
 
 Sample code::
 
-   use constant hook => { 
+   use constant hook => {
       samlBuildLogoutResponse => 'buildLogoutResponse',
    };
 
@@ -320,7 +320,7 @@ This hook is triggered when LemonLDAP::NG is about to generate a Service Ticket 
 The hook's parameters are:
 
 * A hash of the parameters for the CAS request, which you can modify
-* the configuration key of the cas application which will receive the ticket 
+* the configuration key of the cas application which will receive the ticket
 * A hash of the session keys for the (internal) CAS session
 
 Sample code::
@@ -360,3 +360,62 @@ Sample code::
        return PE_OK;
    }
 
+
+Password change hooks
+---------------------
+
+
+passwordBeforeChange
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.12
+
+This hook is triggered when LemonLDAP::NG is about to change or reset a user's password. Returning an error will cancel the password change operation
+
+The hook's parameters are:
+
+* The main user identifier
+* The new password
+* The old password, if relevant
+
+Sample code::
+
+   use constant hook => {
+       passwordBeforeChange => 'blacklistPassword',
+   };
+
+   sub blacklistPassword {
+       my ( $self, $req, $user, $password, $old ) = @_;
+       if ( $password eq "12345" ) {
+           $self->logger->error("I've got the same combination on my luggage");
+           return PE_PP_INSUFFICIENT_PASSWORD_QUALITY;
+       }
+       return PE_OK;
+   }
+
+
+passwordAfterChange
+~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.12
+
+This hook is triggered after LemonLDAP::NG has changed the user's password successfully in the underlying password database
+
+The hook's parameters are:
+
+* The main user identifier
+* The new password
+* The old password, if relevant
+
+Sample code::
+
+   use constant hook => {
+       passwordAfterChange  => 'logPasswordChange',
+   };
+
+   sub logPasswordChange {
+       my ( $self, $req, $user, $password, $old ) = @_;
+       $old ||= "";
+       $self->userLogger->info("Password changed for $user: $old -> $password")
+       return PE_OK;
+   }
