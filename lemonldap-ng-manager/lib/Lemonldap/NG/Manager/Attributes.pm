@@ -2484,6 +2484,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 0,
             'type'    => 'bool'
         },
+        'oidcServiceAllowOnlyDeclaredScopes' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'oidcServiceAuthorizationCodeExpiration' => {
             'default' => 60,
             'type'    => 'int'

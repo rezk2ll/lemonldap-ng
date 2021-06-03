@@ -695,6 +695,7 @@
 "oidcServiceAllowHybridFlow":"混合流程",
 "oidcServiceAllowImplicitFlow":"內含流程",
 "oidcServiceAllowOffline":"允許離線存取",
+"oidcServiceAllowOnlyDeclaredScopes":"Only allow declared scopes",
 "oidcServiceAuthorizationCodeExpiration":"授權碼到期",
 "oidcServiceDynamicRegistrationExportedVars":"用於動態註冊的已匯出變數",
 "oidcServiceDynamicRegistrationExtraClaims":"動態註冊的額外聲明",

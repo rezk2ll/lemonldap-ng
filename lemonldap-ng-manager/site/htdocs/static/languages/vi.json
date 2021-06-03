@@ -695,6 +695,7 @@
 "oidcServiceAllowHybridFlow":"Dòng chảy hỗn hợp",
 "oidcServiceAllowImplicitFlow":"Dòng chảy ngầm",
 "oidcServiceAllowOffline":"Allow offline access",
+"oidcServiceAllowOnlyDeclaredScopes":"Only allow declared scopes",
 "oidcServiceAuthorizationCodeExpiration":"Authorization Code expiration",
 "oidcServiceDynamicRegistrationExportedVars":"Exported vars for dynamic registration",
 "oidcServiceDynamicRegistrationExtraClaims":"Extra claims for dynamic registration",

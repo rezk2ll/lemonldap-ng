@@ -695,6 +695,7 @@
 "oidcServiceAllowHybridFlow":"Hybrid Flow",
 "oidcServiceAllowImplicitFlow":"Implicit Flow",
 "oidcServiceAllowOffline":"Autoriser l'accès hors ligne",
+"oidcServiceAllowOnlyDeclaredScopes":"N'autoriser que les scopes déclarés",
 "oidcServiceAuthorizationCodeExpiration":"Expiration des codes d'autorisation",
 "oidcServiceDynamicRegistrationExportedVars":"Variables exportées pour l'enregistrement dynamique",
 "oidcServiceDynamicRegistrationExtraClaims":"Claims supplémentaires pour l'enregistrement dynamique",

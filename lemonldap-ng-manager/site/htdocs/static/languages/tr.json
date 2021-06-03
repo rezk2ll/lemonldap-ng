@@ -695,6 +695,7 @@
 "oidcServiceAllowHybridFlow":"Hibrit Akış",
 "oidcServiceAllowImplicitFlow":"Kapalı Akış",
 "oidcServiceAllowOffline":"Çevrimdışı erişime izin ver",
+"oidcServiceAllowOnlyDeclaredScopes":"Only allow declared scopes",
 "oidcServiceAuthorizationCodeExpiration":"Yetkilendirme Kodu sona erme",
 "oidcServiceDynamicRegistrationExportedVars":"Dinamik kayıtlanma için dışa aktarılan değişkenler",
 "oidcServiceDynamicRegistrationExtraClaims":"Dinamik kayıtlanma için ekstra talepler",

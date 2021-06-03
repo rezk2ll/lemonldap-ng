@@ -1326,6 +1326,7 @@ sub tree {
                             ],
                         },
                         'oidcServiceAllowDynamicRegistration',
+                        'oidcServiceAllowOnlyDeclaredScopes',
                         'oidcServiceAllowAuthorizationCodeFlow',
                         'oidcServiceAllowImplicitFlow',
                         'oidcServiceAllowHybridFlow',

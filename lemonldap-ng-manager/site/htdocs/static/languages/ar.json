@@ -695,6 +695,7 @@
 "oidcServiceAllowHybridFlow":"تدفق هجين",
 "oidcServiceAllowImplicitFlow":"التدفق الضمني",
 "oidcServiceAllowOffline":"Allow offline access",
+"oidcServiceAllowOnlyDeclaredScopes":"Only allow declared scopes",
 "oidcServiceAuthorizationCodeExpiration":"Authorization Code expiration",
 "oidcServiceDynamicRegistrationExportedVars":"Exported vars for dynamic registration",
 "oidcServiceDynamicRegistrationExtraClaims":"Extra claims for dynamic registration",

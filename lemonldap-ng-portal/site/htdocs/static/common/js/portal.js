@@ -600,7 +600,7 @@ LemonLDAP::NG Portal jQuery scripts
       event.preventDefault();
       document.body.style.cursor = 'progress';
       str = $("#finduserForm").serialize();
-      console.log('Send findUser request with', str);
+      console.log('Send findUser request with parameters', str);
       return $.ajax({
         type: "POST",
         url: portal + "finduser",
@@ -610,7 +610,7 @@ LemonLDAP::NG Portal jQuery scripts
           var user;
           document.body.style.cursor = 'default';
           user = data.user;
-          console.log('Suggested spoofId', user);
+          console.log('Suggested spoofId=', user);
           $('#spoofIdfield').attr('value', user);
           if (data.captcha) {
             $('#captcha').attr('src', data.captcha);

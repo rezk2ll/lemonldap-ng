@@ -4087,6 +4087,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 0,
             documentation => 'OpenID Connect allow dynamic client registration',
         },
+        oidcServiceAllowOnlyDeclaredScopes => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'OpenID Connect allow only declared scopes',
+        },
         oidcServiceAllowAuthorizationCodeFlow => {
             type          => 'bool',
             default       => 1,

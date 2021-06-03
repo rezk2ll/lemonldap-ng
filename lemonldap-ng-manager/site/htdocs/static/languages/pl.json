@@ -695,6 +695,7 @@
 "oidcServiceAllowHybridFlow":"Przepływ hybrydowy",
 "oidcServiceAllowImplicitFlow":"Implikowany przepływ",
 "oidcServiceAllowOffline":"Zezwalaj na dostęp offline",
+"oidcServiceAllowOnlyDeclaredScopes":"Only allow declared scopes",
 "oidcServiceAuthorizationCodeExpiration":"Wygaśnięcie kodu autoryzacji",
 "oidcServiceDynamicRegistrationExportedVars":"Zmienne wyeksportowane do dynamicznej rejestracji",
 "oidcServiceDynamicRegistrationExtraClaims":"Dodatkowe roszczenia dotyczące rejestracji dynamicznej",
