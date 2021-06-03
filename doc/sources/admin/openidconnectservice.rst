@@ -48,6 +48,12 @@ Security
    configuration in the backend per registration request. You can limit
    this by protecting in the WebServer the registration end point with
    an authentication module, and give the credentials to clients.
+-  **Only allow declared scopes**: By default, LemonLDAP::NG will grant all requested scopes. When this option is in use, LemonLDAP will only grant:
+
+   - Standard OIDC scopes (``openid`` ``profile`` ``email`` ``address`` ``phone``)
+   - Scopes declared in :ref:`Extra Claims <oidcextraclaims>`
+   - Scopes declared in :ref:`Scope Rules <oidcscoperules>` (if they match the rule)
+
 -  **Authorization Code flow**: Set to 1 to allow Authorization Code
    flow
 -  **Implicit flow**: Set to 1 to allow Implicit flow

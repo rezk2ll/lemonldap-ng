@@ -186,6 +186,8 @@ For each OpenID Connect claim you want to release to applications, you can defin
     in User attribute parameter (see below).
 
 
+.. _oidcextraclaims:
+
 Extra Claims
 ^^^^^^^^^^^^
 
@@ -215,6 +217,8 @@ Userinfo endpoint.
     Any Claim defined in this section must be mapped to a
     LemonLDAP::NG session attribute in the **Exported Attributes**
     section
+
+.. _oidcscoperules:
 
 Scope Rules
 ^^^^^^^^^^^
