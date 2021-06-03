@@ -34,6 +34,8 @@ use constant ADDRESS =>
   [qw/formatted street_address locality region postal_code country/];
 use constant PHONE => [qw/phone_number phone_number_verified/];
 
+use constant OIDC_SCOPES => [qw/openid profile email address phone/];
+
 # PROPERTIES
 
 has oidcOPList   => ( is => 'rw', default => sub { {} }, );
@@ -1486,6 +1488,30 @@ sub getScope {
     my ( $self, $req, $rp, $scope ) = @_;
 
     my @scope_values = split( /\s+/, $scope );
+
+    # Clean up unknown scopes
+    if ( $self->conf->{oidcServiceAllowOnlyDeclaredScopes} ) {
+        my @known_scopes = (
+            keys( %{ $self->spScopeRules->{$rp} || {} } ),
+            @{ OIDC_SCOPES() },
+            keys(
+                %{
+                    $self->conf->{oidcRPMetaDataOptionsExtraClaims}->{$rp} || {}
+                }
+            )
+        );
+        my @scope_values_tmp;
+        for my $scope_value (@scope_values) {
+            if ( grep { $_ eq $scope_value } @known_scopes ) {
+                push @scope_values_tmp, $scope_value;
+            }
+            else {
+                $self->logger->warn(
+                    "Unknown scope $scope_value requested for service $rp");
+            }
+        }
+        @scope_values = @scope_values_tmp;
+    }
 
     # If this RP has dynamic scopes
     if ( $self->spScopeRules->{$rp} ) {
