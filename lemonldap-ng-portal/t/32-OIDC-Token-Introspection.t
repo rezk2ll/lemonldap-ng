@@ -17,13 +17,14 @@ my $debug = 'error';
 # Initialization
 my $op = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                        => $debug,
-            domain                          => 'op.com',
-            portal                          => 'http://auth.op.com',
-            authentication                  => 'Demo',
-            userDB                          => 'Same',
-            issuerDBOpenIDConnectActivation => 1,
-            oidcRPMetaDataExportedVars      => {
+            logLevel                           => $debug,
+            domain                             => 'op.com',
+            portal                             => 'http://auth.op.com',
+            authentication                     => 'Demo',
+            userDB                             => 'Same',
+            issuerDBOpenIDConnectActivation    => 1,
+            oidcServiceAllowOnlyDeclaredScopes => 1,
+            oidcRPMetaDataExportedVars         => {
                 rp => {
                     email       => "mail",
                     family_name => "cn",
@@ -37,13 +38,18 @@ my $op = LLNG::Manager::Test->new( {
             },
             oidcRPMetaDataScopeRules => {
                 rp => {
-                    "read" => '$requested and $uid eq "french"',
-                    "write" => '$uid eq "russian"',
+                    "read"        => '$requested and $uid eq "french"',
+                    "write"       => '$uid eq "russian"',
                     "ifrequested" => '$requested and $uid eq "french"',
-                    "always" => '$uid eq "french"',
+                    "always"      => '$uid eq "french"',
                 },
             },
-            oidcRPMetaDataOptions                 => {
+            oidcRPMetaDataOptionsExtraClaims => {
+                rp => {
+                    extrascope => "dummy",
+                },
+            },
+            oidcRPMetaDataOptions => {
                 rp => {
                     oidcRPMetaDataOptionsDisplayName           => "RP",
                     oidcRPMetaDataOptionsIDTokenExpiration     => 3600,
@@ -73,7 +79,7 @@ my $code = authorize(
     $op, $idpId,
     {
         response_type => "code",
-        scope => "openid profile email read write",
+        scope         => "openid profile email read write extrascope unknown",
         client_id     => "rpid",
         state         => "af0ifjsldkj",
         redirect_uri  => "http://rp2.com/"
@@ -85,7 +91,7 @@ my $json = expectJSON( codeGrant( $op, "rpid", $code, "http://rp2.com/" ) );
 my $token = $json->{access_token};
 ok( $token, 'Access token present' );
 my $token_resp_scope = $json->{scope};
-ok ($token_resp_scope, 'Token response returned granted scopes');
+ok( $token_resp_scope, 'Token response returned granted scopes' );
 
 my ( $res, $query );
 
@@ -126,11 +132,20 @@ is( $json->{client_id}, "rpid", "Response contains the correct client id" );
 like( $json->{scope}, qr/\bopenid\b/,  "Response contains the default scopes" );
 like( $json->{scope}, qr/\bprofile\b/, "Response contains the default scopes" );
 like( $json->{scope}, qr/\bemail\b/,   "Response contains the default scopes" );
-unlike( $json->{scope}, qr/\bwrite\b/,   "Response omits a dynamic scope that evaluates to false" );
-unlike( $json->{scope}, qr/\bifrequested\b/,   "Response omits a dynamic scope that was not requested" );
-like( $json->{scope}, qr/\bread\b/,   "Response contains a dynamic scope that is sent only when requested" );
-like( $json->{scope}, qr/\balways\b/,   "Response contains a dynamic scope that is not requested but always sent" );
-is ($token_resp_scope, $json->{scope}, "Token response scope matches token scope");
+unlike( $json->{scope}, qr/\bwrite\b/,
+    "Response omits a dynamic scope that evaluates to false" );
+unlike( $json->{scope}, qr/\bifrequested\b/,
+    "Response omits a dynamic scope that was not requested" );
+like( $json->{scope}, qr/\bread\b/,
+    "Response contains a dynamic scope that is sent only when requested" );
+like( $json->{scope}, qr/\balways\b/,
+    "Response contains a dynamic scope that is not requested but always sent" );
+unlike( $json->{scope}, qr/\bunknown\b/,
+    "Response omits a scope that is not declared anywhere" );
+like( $json->{scope}, qr/\bextrascope\b/,
+    "Response contains scope coming from extra claims definition" );
+is( $token_resp_scope, $json->{scope},
+    "Token response scope matches token scope" );
 
 # Check status after expiration
 Time::Fake->offset("+2h");
