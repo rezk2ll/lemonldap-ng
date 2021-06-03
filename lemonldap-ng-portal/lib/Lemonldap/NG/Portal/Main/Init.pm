@@ -377,9 +377,17 @@ sub reloadConf {
             $p =~ s#https?://([^/]*).*$#$1#;
             $re->add( quotemeta($p) );
         }
+
         foreach my $vhost ( keys %{ $self->conf->{locationRules} } ) {
+            my $expr = quotemeta($vhost);
+
+            # Handle wildcards
+            if ( $vhost =~ /[\%\*]/ ) {
+                $expr =~ s/\\\*/\.*/;
+                $expr =~ s/\\\%/[\^\.]\*/;
+            }
+            $re->add($expr);
             $self->logger->debug("Vhost $vhost added in trusted domains");
-            $re->add( quotemeta($vhost) );
             $self->conf->{vhostOptions} ||= {};
             if ( my $tmp =
                 $self->conf->{vhostOptions}->{$vhost}->{vhostAliases} )
