@@ -11,8 +11,8 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 21;
-my $debug     = 'error';
+my $maintests = 22;
+my $debug     = 'debug';
 my ( $issuer, $sp, $res );
 
 # Redefine LWP methods for tests
@@ -35,8 +35,22 @@ SKIP: {
     $issuer = register( 'issuer', \&issuer );
     $sp     = register( 'sp',     \&sp );
 
-    # Simple SP access
+    # Try to authenticate
+    # -------------------
+    switch ('issuer');
     my $res;
+    ok(
+        $res = $issuer->_post(
+            '/', IO::String->new('user=french&password=french'),
+            length => 27
+        ),
+        'Auth query'
+    );
+    expectOK($res);
+    my $id = expectCookie($res);
+
+    # Simple SP access
+    switch ('sp');
     ok(
         $res = $sp->_get(
             '/', accept => 'text/html',
@@ -140,7 +154,7 @@ SKIP: {
 
     # Verify authentication on SP
     expectRedirection( $res, 'http://auth.sp.com' );
-    my $spId      = expectCookie($res);
+    my $spId = expectCookie($res);
     $rawCookie = getHeader( $res, 'Set-Cookie' );
     ok( $rawCookie =~ /;\s*SameSite=None/, 'Found SameSite=None' );
 
@@ -236,6 +250,8 @@ sub issuer {
                 portal                 => 'http://auth.idp.com',
                 authentication         => 'Demo',
                 userDB                 => 'Same',
+                globalLogoutRule       => 1,
+                globalLogoutTimer      => 0,
                 issuerDBSAMLActivation => 1,
                 issuerDBSAMLRule       => '$uid eq "french"',
                 samlSPMetaDataOptions  => {

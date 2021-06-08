@@ -21,7 +21,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_UNAUTHORIZEDPARTNER
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.12';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::SAML';
@@ -458,7 +458,9 @@ sub run {
                 }
 
                 unless ($result) {
-                    $self->logger->error("Could not verify signature of incoming SSO request from $spConfKey");
+                    $self->logger->error(
+"Could not verify signature of incoming SSO request from $spConfKey"
+                    );
                     return PE_SAML_SIGNATURE_ERROR;
                 }
                 else {
@@ -599,7 +601,9 @@ sub run {
             };
 
             my $nameIDSessionKey =
-              $self->conf->{ $nameIDFormatConfiguration->{$nameIDFormat} };
+                $nameIDFormatConfiguration->{$nameIDFormat}
+              ? $self->conf->{ $nameIDFormatConfiguration->{$nameIDFormat} }
+              : '';
 
             # Override default NameID Mapping
             if ( $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
@@ -700,7 +704,8 @@ sub run {
                 }
 
                 $self->logger->debug(
-                    "SAML2 attribute $name will be set with $_ session key ($sp)");
+"SAML2 attribute $name will be set with $_ session key ($sp)"
+                );
 
                 # SAML2 attribute
                 my $attribute =
@@ -1317,8 +1322,7 @@ sub soapSloServer {
                 "SLO response signature according to metadata");
         }
 
-        $h =
-          $self->p->processHook( $req, 'samlBuildLogoutResponse', $logout );
+        $h = $self->p->processHook( $req, 'samlBuildLogoutResponse', $logout );
         if ( $h != PE_OK ) {
             return $self->p->sendError( $req,
                 "SLO: samlBuildLogoutResponse hook returned error", 400 );
@@ -1976,7 +1980,9 @@ sub sloServer {
 
         if ($checkSLOMessageSignature) {
             unless ( $self->checkSignatureStatus($logout) ) {
-                $self->logger->error("Could not verify signature of incoming SLO request from $spConfKey");
+                $self->logger->error(
+"Could not verify signature of incoming SLO request from $spConfKey"
+                );
                 $self->imgnok($req);
             }
             else {
