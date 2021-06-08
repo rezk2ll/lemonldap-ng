@@ -60,10 +60,7 @@ $ make clean && make dist
 
 - RedHat packaging:
 
-Create the RPM specific tarball:
-$ make clean && make rpm-dist
-
-Next steps: see rpm/README
+See rpm/README
 
 - Debian packaging:
 
