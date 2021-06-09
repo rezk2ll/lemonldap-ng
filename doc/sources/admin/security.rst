@@ -354,7 +354,7 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
     to disable CSRF token by setting a special rule based on callers IP
     address like this :
 
-    requireToken => $env->{REMOTE_ADDR} !~ /^127\.0\.[1-3]\.1$/
+    requireToken => $env->{REMOTE_ADDR} && $env->{REMOTE_ADDR} !~ /^127\.0\.[1-3]\.1$/
 
 .. danger::
 
