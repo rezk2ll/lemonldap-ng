@@ -12,7 +12,7 @@ BEGIN {
 }
 
 my $maintests = 22;
-my $debug     = 'debug';
+my $debug     = 'error';
 my ( $issuer, $sp, $res );
 
 # Redefine LWP methods for tests
