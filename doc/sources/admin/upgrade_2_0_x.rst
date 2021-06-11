@@ -54,6 +54,15 @@ You can then remove them with ::
 
    lemonldap-ng-sessions delete <session_id> <session_id> <etc.>
 
+Brute-force protection plugin may cause duplicate persistent sessions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Because of `bug #2482 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2482>`__ , some users may notice that the persistent session database is filling with duplicate sessions. Some examples include:
+
+* An uppercase version of the regular persistent session (dwho vs DWHO)
+* An unqualified version (dwho vs dwho@idp.com)
+
+This bug was fixed in 2.0.12, but administrators are advised to clean up their persistent session database to remove any duplicate persistent sessions remaining after the upgrade.
 
 2.0.11
 ------
