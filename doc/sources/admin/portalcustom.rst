@@ -89,7 +89,7 @@ configuration.
 |image0|
 
 To set your own background, copy your file in
-``/usr/share/lemonldap-ng/portal/htdocs/skins/common/backgrounds/`` and
+``/usr/share/lemonldap-ng/portal/htdocs/static/common/backgrounds/`` and
 register it in ``/etc/lemonldap-ng/lemonldap-ng.ini``:
 
 .. code-block:: ini
