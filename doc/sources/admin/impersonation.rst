@@ -61,7 +61,7 @@ protected from being impersonated.
     Keep in mind that real session is computed first. Afterward, if access
     is granted, impersonated session is computed with real and spoofed
     session attributes if Impersonation is allowed.
-    So, 'real_' attributes are computed by second authentication process.
+    So, ``real_`` attributes are computed by second authentication process.
     To avoid Perl warnings, you have to prefix regex with ``$real_var &&``.
 
 
