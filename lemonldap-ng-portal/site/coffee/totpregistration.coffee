@@ -3,6 +3,7 @@ LemonLDAP::NG TOTP registration script
 ###
 
 setMsg = (msg, level) ->
+	$('#msg').attr 'trspan', msg
 	$('#msg').html window.translate msg
 	$('#color').removeClass 'message-positive message-warning message-danger alert-success alert-warning alert-danger'
 	$('#color').addClass "message-#{level}"
