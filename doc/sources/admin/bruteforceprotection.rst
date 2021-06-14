@@ -13,9 +13,9 @@ seconds.
 
 .. attention::
     This plugin relies on the Login History, stored in users' persistent sessions.
-    This means that the persistent session backend will be accessed for every
-    login attempt, even fraudulent ones. This plugin is not meant to protect
-    against denial of service attacks.
+    This means that the authentication and persistent session backends will be
+    accessed for every login attempt, even fraudulent ones. This plugin is not
+    meant to protect against denial of service attacks.
 
 
 Configuration
