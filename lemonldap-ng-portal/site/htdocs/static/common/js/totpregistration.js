@@ -31,15 +31,12 @@ LemonLDAP::NG TOTP registration script
 
   token = '';
 
-  getKey = function(reset) {
+  getKey = function() {
     setMsg('yourTotpKey', 'warning');
     return $.ajax({
       type: "POST",
       url: portal + "/2fregisters/totp/getkey",
       dataType: 'json',
-      data: {
-        newkey: reset
-      },
       error: displayError,
       success: function(data) {
         var qr, s;
@@ -108,10 +105,7 @@ LemonLDAP::NG TOTP registration script
   };
 
   $(document).ready(function() {
-    getKey(0);
-    $('#changekey').on('click', function() {
-      return getKey(1);
-    });
+    getKey();
     return $('#verify').on('click', function() {
       return verify();
     });

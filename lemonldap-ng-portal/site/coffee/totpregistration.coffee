@@ -20,14 +20,12 @@ displayError = (j, status, err) ->
 
 token=''
 
-getKey = (reset) ->
+getKey = () ->
 	setMsg 'yourTotpKey', 'warning'
 	$.ajax
 		type: "POST",
 		url: "#{portal}/2fregisters/totp/getkey"
 		dataType: 'json'
-		data:
-			newkey: reset
 		error: displayError
 		# Display key and QR code
 		success: (data) ->
@@ -83,6 +81,5 @@ verify = ->
 					setMsg 'yourKeyIsRegistered', 'success'					
 					
 $(document).ready ->
-	getKey(0)
-	$('#changekey').on 'click', () -> getKey(1)
+	getKey()
 	$('#verify').on 'click', () -> verify()

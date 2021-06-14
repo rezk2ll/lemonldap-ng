@@ -139,7 +139,7 @@ sub run {
         $self->logger->debug("Reading TOTP secret if exists...");
         $secret = $_->{_secret} foreach (@totp2f);
         return $self->p->sendError( $req, 'totpExistingKey', 200 )
-          if ( $token->{_totp2fSecret} eq $secret );
+          if $secret;
 
         ### USER CAN ONLY REGISTER ONE TOTP ###
         # Delete TOTP previously registered
