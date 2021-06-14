@@ -4,11 +4,11 @@
 
     <div id="color" class="message message-<TMPL_VAR NAME="ALERT"> alert"><span id="msg" trspan="<TMPL_VAR NAME="MSG">"></span></div>
 
-    <div class="card">
+    <div id="divToHide" class="card">
       <div class="card-body">
 
       <div class="row">
-        <div id="divToHide" class="col-md-6 text-center">
+        <div class="col-md-6 text-center">
           <div >
             <canvas id="qr"></canvas>
             <pre id="serialized"></pre>
@@ -28,10 +28,6 @@
       </div>
 
       <div class="buttons">
-        <span id="changekey" class="btn btn-info" role="button">
-          <span class="fa fa-refresh"></span>
-          <span trspan="changeKey">Change key</span>
-        </span>
         <span id="verify" class="btn btn-success" role="button">
           <span class="fa fa-floppy-o"></span>
           <span trspan="register">Register</span>
