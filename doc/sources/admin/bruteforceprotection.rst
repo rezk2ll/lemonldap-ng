@@ -11,6 +11,13 @@ repeatedly trying to guess the password of an user. If disabled,
 automated tools may submit thousands of password attempts in a matter of
 seconds.
 
+.. attention::
+    This plugin relies on the Login History, stored in users' persistent sessions.
+    This means that the persistent session backend will be accessed for every
+    login attempt, even fraudulent ones. This plugin is not meant to protect
+    against denial of service attacks.
+
+
 Configuration
 -------------
 
