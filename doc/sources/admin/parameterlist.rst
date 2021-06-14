@@ -574,7 +574,6 @@ tokenUseGlobalStorage                                   Enable global token stor
 totp2fActivation                                        TOTP activation                                                                      ✔
 totp2fAuthnLevel                                        Authentication level for users authentified by password+TOTP                         ✔
 totp2fDigits                                            Number of digits for TOTP code                                                       ✔
-totp2fDisplayExistingSecret                             Display existing TOTP secret in registration form                                    ✔
 totp2fInterval                                          TOTP interval                                                                        ✔
 totp2fIssuer                                            TOTP Issuer                                                                          ✔
 totp2fLabel                                             Portal label for TOTP 2F                                                             ✔
@@ -582,7 +581,6 @@ totp2fLogo                                              Custom logo for TOTP 2F 
 totp2fRange                                             TOTP range (number of interval to test)                                              ✔
 totp2fSelfRegistration                                  TOTP self registration activation                                                    ✔
 totp2fTTL                                               TOTP device time to live                                                             ✔
-totp2fUserCanChangeKey                                  Authorize users to change existing TOTP secret                                       ✔
 totp2fUserCanRemoveKey                                  Authorize users to remove existing TOTP secret                                       ✔
 trustedDomains                                          Trusted domains                                                                      ✔
 twitterAppName                                                                                                                               ✔

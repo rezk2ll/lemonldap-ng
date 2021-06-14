@@ -52,10 +52,6 @@ In the manager (advanced parameters), you just have to enable it:
 -  **Interval**: interval for TOTP algorithm (default: 30)
 -  **Range**: number of additional intervals to test (default: 1)
 -  **Digits**: number of digit by codes (default: 6)
--  **Display existing secret**: display an already registered secret
-   (default: disabled)
--  **Change existing secret**: authorize a user to change its previoulsy
-   registered TOTP secret
 -  **Allow users to remove TOTP**: If enabled, users can unregister
    TOTP.
 -  **Lifetime**: Unlimited by default. Set a Time To Live in seconds.
