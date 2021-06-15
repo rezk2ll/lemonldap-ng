@@ -11,6 +11,7 @@
         <div class="col-md-6 text-center">
           <div >
             <canvas id="qr"></canvas>
+            <p><span trspan="totpSecretKey"></span></p>
             <tt id="secret"></tt>
           </div>
         </div>
@@ -22,7 +23,7 @@
           </div>
           <div class="form-group">
             <label for="code"><span trspan="code">Code</span></label>
-            <input id="code" class="form-control" name="code" type="number" autocomplete="off" />
+            <input id="code" class="form-control" name="code" autocomplete="off" />
           </div>
         </div>
       </div>

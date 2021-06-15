@@ -61,7 +61,8 @@ getKey = () ->
 verify = ->
 	val = $('#code').val()
 	unless val
-		setMsg 'fillTheForm', 'warning'
+		setMsg 'totpMissingCode', 'warning'
+		$("#code").focus()
 	else
 		$.ajax
 			type: "POST",

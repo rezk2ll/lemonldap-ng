@@ -78,7 +78,8 @@ LemonLDAP::NG TOTP registration script
     var val;
     val = $('#code').val();
     if (!val) {
-      return setMsg('fillTheForm', 'warning');
+      setMsg('totpMissingCode', 'warning');
+      return $("#code").focus();
     } else {
       return $.ajax({
         type: "POST",
