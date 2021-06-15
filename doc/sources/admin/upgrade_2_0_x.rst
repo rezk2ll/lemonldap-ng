@@ -64,6 +64,27 @@ Because of `bug #2482 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues
 
 This bug was fixed in 2.0.12, but administrators are advised to clean up their persistent session database to remove any duplicate persistent sessions remaining after the upgrade.
 
+Simplification of TOTP options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following options have been removed from TOTP configuration:
+
+* Display existing secret (``totp2fDisplayExistingSecret``)
+* Change existing secret (``totp2fUserCanChangeKey``)
+
+As a consequence, users who are *not* using the default `bootstrap` skin may need to ajust their ``totp2fregister.tpl`` template:
+
+* Move ``#divToHide`` from the ``.col-md-6`` div to the ``.card`` div
+* Change::
+
+  <pre id="serialized"></pre>
+
+* to::
+
+  <br/><tt id="secret"></tt>
+
+* Remove the ``#changekey`` button
+
 2.0.11
 ------
 
