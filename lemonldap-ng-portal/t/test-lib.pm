@@ -337,9 +337,7 @@ Verify that result has a C<Lm-Remote-User> header and value is $user
 
 sub expectAuthenticatedAs {
     my ( $res, $user ) = @_;
-    ok( getHeader( $res, 'Lm-Remote-User' ) eq $user,
-        " Authenticated as $user" )
-      or explain( $res->[1], "Lm-Remote-User => $user" );
+    is( getHeader( $res, 'Lm-Remote-User' ), $user, "Authenticated as $user" );
     count(1);
 }
 
