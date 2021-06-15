@@ -11,7 +11,7 @@
         <div class="col-md-6 text-center">
           <div >
             <canvas id="qr"></canvas>
-            <pre id="serialized"></pre>
+            <tt id="secret"></tt>
           </div>
         </div>
 

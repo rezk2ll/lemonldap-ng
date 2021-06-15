@@ -39,7 +39,7 @@ LemonLDAP::NG TOTP registration script
       dataType: 'json',
       error: displayError,
       success: function(data) {
-        var qr, s;
+        var qr, s, secret;
         if (data.error) {
           if (data.error.match(/totpExistingKey/)) {
             $("#divToHide").hide();
@@ -62,7 +62,8 @@ LemonLDAP::NG TOTP registration script
           value: s,
           size: 150
         });
-        $('#serialized').text(s);
+        secret = data.secret || "";
+        $('#secret').text(secret.toUpperCase().replace(/(.{4})/g, '$1 ').trim());
         if (data.newkey) {
           setMsg('yourNewTotpKey', 'warning');
         } else {

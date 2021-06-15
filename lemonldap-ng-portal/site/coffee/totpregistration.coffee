@@ -49,7 +49,8 @@ getKey = () ->
 				value: s
 				size:150
 			# Display serialized key
-			$('#serialized').text(s)
+			secret = data.secret || ""
+			$('#secret').text(secret.toUpperCase().replace(/(.{4})/g, '$1 ').trim())
 			# Show message (warning level if key is new)
 			if data.newkey
 				setMsg 'yourNewTotpKey', 'warning'
