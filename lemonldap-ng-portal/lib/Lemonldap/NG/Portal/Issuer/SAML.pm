@@ -619,12 +619,16 @@ sub run {
             }
 
             my $nameIDContent;
-            if ( $self->spMacros->{$sp}->{$nameIDSessionKey} ) {
+            if (    $nameIDSessionKey
+                and $self->spMacros->{$sp}->{$nameIDSessionKey} )
+            {
                 $nameIDContent =
                   $self->spMacros->{$sp}->{$nameIDSessionKey}
                   ->( $req, $req->{sessionInfo} );
             }
-            elsif ( defined $req->{sessionInfo}->{$nameIDSessionKey} ) {
+            elsif ( $nameIDSessionKey
+                and ( defined $req->{sessionInfo}->{$nameIDSessionKey} ) )
+            {
                 $nameIDContent =
                   $self->p->getFirstValue(
                     $req->{sessionInfo}->{$nameIDSessionKey} );
@@ -658,8 +662,8 @@ sub run {
 
             $self->logger->debug(
                 "NameID Format is " . $login->nameIdentifier->Format );
-            $self->logger->debug(
-                "NameID Content is " . $login->nameIdentifier->content );
+            $self->logger->debug( "NameID Content is "
+                  . ( $login->nameIdentifier->content || "" ) );
 
             # Push attributes
             my @attributes;
