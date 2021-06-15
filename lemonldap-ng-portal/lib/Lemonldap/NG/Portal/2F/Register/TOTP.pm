@@ -36,8 +36,7 @@ sub init {
 sub run {
     my ( $self, $req, $action ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
-    return $self->p->sendError( $req,
-        'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 )
+    return $self->p->sendError( $req, 'PE82', 400 )
       unless $user;
 
     # Check if TOTP can be updated
@@ -118,7 +117,7 @@ sub run {
             };
             if ($@) {
                 $self->logger->error("Corrupted session (_2fDevices): $@");
-                return $self->p->sendError( $req, "Corrupted session", 500 );
+                return $self->p->sendError( $req, "serverError", 500 );
             }
         }
         else {
@@ -192,7 +191,7 @@ sub run {
             };
             if ($@) {
                 $self->logger->error("Corrupted session (_2fDevices): $@");
-                return $self->p->sendError( $req, "Corrupted session", 500 );
+                return $self->p->sendError( $req, "serverError", 500 );
             }
         }
 
@@ -216,7 +215,8 @@ sub run {
 
         if ($secret) {
             return $self->p->sendError( $req, 'totpExistingKey', 200 );
-        } else {
+        }
+        else {
             $secret = $self->newSecret;
             $self->logger->debug("Generating new secret = $secret");
             $nk = 1;
@@ -271,7 +271,7 @@ sub run {
             };
             if ($@) {
                 $self->logger->error("Corrupted session (_2fDevices): $@");
-                return $self->p->sendError( $req, "Corrupted session", 500 );
+                return $self->p->sendError( $req, "serverError", 500 );
             }
         }
         else {
