@@ -1,3 +1,7 @@
+use XML::LibXML;
+use URI::Escape;
+use MIME::Base64;
+
 sub saml_key_proxy_private_enc {
     "-----BEGIN RSA PRIVATE KEY-----
 MIIEpAIBAAKCAQEA2vzoUiQ4GsM5qLjoxslEDKj+RrPh/A743JCWe1Hbadjd5yD4
@@ -798,6 +802,62 @@ entityID="http://auth.$name.com/saml/metadata">
 </EntityDescriptor>
 EOF
       ;
+}
+
+=head4 expectXPath($xml_string, $xpath, $namespaces, $value, $message)
+
+Match a XPath expression against the provided string, and verify that the correct value is
+
+=cut
+
+sub expectXPath {
+    my ( $xml_string, $xpath, $value, $message ) = @_;
+    my $dom = XML::LibXML->load_xml( string => $xml_string );
+    return unless ok( $dom, 'XML successfully parsed' );
+
+    my $xpc        = XML::LibXML::XPathContext->new($dom);
+    my $namespaces = {
+        samlp => 'urn:oasis:names:tc:SAML:2.0:protocol',
+        saml  => 'urn:oasis:names:tc:SAML:2.0:assertion',
+    };
+    if ( ref($namespaces) eq "HASH" ) {
+        for my $key ( keys %{$namespaces} ) {
+            $xpc->registerNs( $key, $namespaces->{$key} );
+        }
+    }
+
+    my ($match1) = $xpc->findnodes($xpath);
+    return unless ok( $match1, 'Found a match for XPath Expression ' . $xpath );
+
+    if ( ref($match1) eq 'XML::LibXML::Attr' ) {
+        if ($value) {
+            is( $match1->value, $value, $message );
+        }
+        return $match1->value;
+    }
+    elsif ( ref($match1) eq 'XML::LibXML::Text' ) {
+        if ($value) {
+            is( $match1->data, $value, $message );
+        }
+        return $match1->data;
+    }
+    else {
+        fail( "Unexpected XPath result: " . ref($match1) );
+    }
+}
+
+sub expectSamlRequest {
+    my ($string) = @_;
+    my ($sr)     = $string =~ m/SAMLRequest=([^&]*)/;
+    ok( $sr, "Found SAMLRequest" );
+    return decode_base64( uri_unescape($sr) );
+}
+
+sub expectSamlResponse {
+    my ($string) = @_;
+    my ($sr)     = $string =~ m/SAMLResponse=([^&]*)/;
+    ok( $sr, "Found SAMLResponse" );
+    return decode_base64( uri_unescape($sr) );
 }
 
 1;
