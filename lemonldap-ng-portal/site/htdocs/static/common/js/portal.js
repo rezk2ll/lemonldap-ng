@@ -561,6 +561,16 @@ LemonLDAP::NG Portal jQuery scripts
     if ((window.datas.ppolicy != null) && $('#newpassword').length) {
       $('#reset').change(togglecheckpassword);
     }
+    if (datas['enablePasswordDisplay']) {
+      $(".toggle-password").mousedown(function(e) {
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        return $("input[name=password]").attr("type", "text");
+      });
+      $(".toggle-password").mouseup(function(e) {
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        return $("input[name=password]").attr("type", "password");
+      });
+    }
     if (datas['pingInterval'] && datas['pingInterval'] > 0) {
       window.setTimeout(ping, datas['pingInterval']);
     }

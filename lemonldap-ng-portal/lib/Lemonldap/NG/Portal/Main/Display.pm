@@ -396,6 +396,7 @@ sub display {
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
+            ENABLE_PASSWORD_DISPLAY => $self->conf->{portalEnablePasswordDisplay},
         );
 
         # Display captcha if it's enabled

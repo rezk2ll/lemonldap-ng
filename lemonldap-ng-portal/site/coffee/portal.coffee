@@ -515,6 +515,14 @@ $(window).on 'load', () ->
 	if window.datas.ppolicy? and $('#newpassword').length
 		$('#reset').change togglecheckpassword
 
+	if datas['enablePasswordDisplay']
+		$(".toggle-password").mousedown (e) ->
+			$(this).toggleClass("fa-eye fa-eye-slash");
+			$("input[name=password]").attr("type", "text");
+		$(".toggle-password").mouseup (e) ->
+			$(this).toggleClass("fa-eye fa-eye-slash");
+			$("input[name=password]").attr("type", "password");
+
 	# Ping if asked
 	if datas['pingInterval'] and datas['pingInterval'] > 0
 		window.setTimeout ping, datas['pingInterval']
