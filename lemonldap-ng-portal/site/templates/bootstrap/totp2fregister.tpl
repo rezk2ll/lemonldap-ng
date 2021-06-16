@@ -10,7 +10,9 @@
       <div class="row">
         <div class="col-md-6 text-center">
           <div >
+            <p>&#x2460; <span trspan="totpQrCode"></span></p>
             <canvas id="qr"></canvas>
+
             <p><span trspan="totpSecretKey"></span></p>
             <tt id="secret"></tt>
           </div>
@@ -18,11 +20,11 @@
 
         <div class="col-md-6">
           <div class="form-group">
-            <label for="TOTPName"><span trspan="name">Name</span></label>
+            <label for="TOTPName">&#x2461; <span trspan="totpRegisterName">Name</span></label>
             <input type="text" class="form-control" id="TOTPName" name="TOTPName" value="MyTOTP" trplaceholder="name" />
           </div>
           <div class="form-group">
-            <label for="code"><span trspan="code">Code</span></label>
+            <label for="code">&#x2462; <span trspan="totpRegisterCode">Code</span></label>
             <input id="code" class="form-control" name="code" autocomplete="off" />
           </div>
         </div>
