@@ -1213,6 +1213,18 @@ components:
             - RS384
             - RS512
           default: HS512
+        userInfoSignAlg:
+          type: string
+          enum:
+            - ""
+            - none
+            - HS256
+            - HS384
+            - HS512
+            - RS256
+            - RS384
+            - RS512
+          default: ""
         accessTokenJWT:
           type: bool
         accessTokenClaims:

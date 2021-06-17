@@ -314,6 +314,11 @@ Options
       (RSXXX) or HMAC (HSXXX) based signature algorithms
    -  **Access Token signature algorithm**: Select one of the available public
       key signature algorithms
+   -  **Userinfo signature algorithm** (since version ``2.0.12``): Select one
+      of the available signature algorithms to release user information as a JWT
+      on the ``/userinfo`` endpoint. If this option is left empty, user
+      information will be released as a plain JSON object. The ``None`` value
+      will release user information as an unsigned JWT.
    -  **Require PKCE** (since version ``2.0.4``): a code challenge is
       required at token endpoint (see
       `RFC7636 <https://tools.ietf.org/html/rfc7636>`__)
