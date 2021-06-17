@@ -686,6 +686,7 @@
 "oidcRPMetaDataOptionsRule":"Access rule",
 "oidcRPMetaDataOptionsTimeouts":"Timeouts",
 "oidcRPMetaDataOptionsUserIDAttr":"User attribute",
+"oidcRPMetaDataOptionsUserInfoSignAlg":"Userinfo signature algorithm",
 "oidcRPMetaDataScopeRules":"Scope rules",
 "oidcRPName":"OpenID Connect RP Name",
 "oidcRPStateTimeout":"State session timeout",

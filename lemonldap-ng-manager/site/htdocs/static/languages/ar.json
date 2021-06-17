@@ -686,6 +686,7 @@
 "oidcRPMetaDataOptionsRule":"قاعدة الدخول",
 "oidcRPMetaDataOptionsTimeouts":"Timeouts",
 "oidcRPMetaDataOptionsUserIDAttr":"خاصّيّة المستخدم",
+"oidcRPMetaDataOptionsUserInfoSignAlg":"Userinfo signature algorithm",
 "oidcRPMetaDataScopeRules":"Scope rules",
 "oidcRPName":"اسم أوبين أيدي كونيكت RP",
 "oidcRPStateTimeout":"حالة مهلة الجلسة",

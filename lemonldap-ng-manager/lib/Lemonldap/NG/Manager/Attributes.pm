@@ -2449,6 +2449,43 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcRPMetaDataOptionsUserIDAttr' => {
             'type' => 'text'
         },
+        'oidcRPMetaDataOptionsUserInfoSignAlg' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => 'none',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'HS256',
+                    'v' => 'HS256'
+                },
+                {
+                    'k' => 'HS384',
+                    'v' => 'HS384'
+                },
+                {
+                    'k' => 'HS512',
+                    'v' => 'HS512'
+                },
+                {
+                    'k' => 'RS256',
+                    'v' => 'RS256'
+                },
+                {
+                    'k' => 'RS384',
+                    'v' => 'RS384'
+                },
+                {
+                    'k' => 'RS512',
+                    'v' => 'RS512'
+                }
+            ],
+            'type' => 'select'
+        },
         'oidcRPMetaDataScopeRules' => {
             'default' => {},
             'test'    => {

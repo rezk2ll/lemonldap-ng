@@ -224,6 +224,7 @@ sub cTrees {
                         nodes => [
                             'oidcRPMetaDataOptionsIDTokenSignAlg',
                             'oidcRPMetaDataOptionsAccessTokenSignAlg',
+                            'oidcRPMetaDataOptionsUserInfoSignAlg',
                             'oidcRPMetaDataOptionsRequirePKCE',
                             'oidcRPMetaDataOptionsAllowOffline',
                             'oidcRPMetaDataOptionsAllowPasswordGrant',

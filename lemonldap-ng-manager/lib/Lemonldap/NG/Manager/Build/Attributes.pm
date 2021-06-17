@@ -4252,6 +4252,20 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             default => 'RS256',
         },
+        oidcRPMetaDataOptionsUserInfoSignAlg => {
+            type   => 'select',
+            select => [
+                { k => '',  v => '' },
+                { k => 'none',  v => 'None' },
+                { k => 'HS256', v => 'HS256' },
+                { k => 'HS384', v => 'HS384' },
+                { k => 'HS512', v => 'HS512' },
+                { k => 'RS256', v => 'RS256' },
+                { k => 'RS384', v => 'RS384' },
+                { k => 'RS512', v => 'RS512' },
+            ],
+            default => '',
+        },
         oidcRPMetaDataOptionsAccessTokenJWT => { type => 'bool', default => 0 },
         oidcRPMetaDataOptionsAccessTokenClaims =>
           { type => 'bool', default => 0 },

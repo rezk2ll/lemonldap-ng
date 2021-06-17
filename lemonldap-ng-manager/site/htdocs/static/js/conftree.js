@@ -568,6 +568,47 @@ function templates(tpl,key) {
                   "type" : "select"
                },
                {
+                  "default" : "",
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserInfoSignAlg",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserInfoSignAlg",
+                  "select" : [
+                     {
+                        "k" : "",
+                        "v" : ""
+                     },
+                     {
+                        "k" : "none",
+                        "v" : "None"
+                     },
+                     {
+                        "k" : "HS256",
+                        "v" : "HS256"
+                     },
+                     {
+                        "k" : "HS384",
+                        "v" : "HS384"
+                     },
+                     {
+                        "k" : "HS512",
+                        "v" : "HS512"
+                     },
+                     {
+                        "k" : "RS256",
+                        "v" : "RS256"
+                     },
+                     {
+                        "k" : "RS384",
+                        "v" : "RS384"
+                     },
+                     {
+                        "k" : "RS512",
+                        "v" : "RS512"
+                     }
+                  ],
+                  "title" : "oidcRPMetaDataOptionsUserInfoSignAlg",
+                  "type" : "select"
+               },
+               {
                   "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequirePKCE",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequirePKCE",
