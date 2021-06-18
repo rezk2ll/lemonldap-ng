@@ -4,7 +4,7 @@ BEGIN {
     require 't/test-psgi-lib.pm';
 }
 
-my $maintests = 21;
+my $maintests = 25;
 
 init(
     'Lemonldap::NG::Handler::Server',
@@ -57,7 +57,7 @@ Lemonldap::NG::Common::Session->new( {
         info  => {
             "user_session_id" => $sessionId,
             "_type"           => "access_token",
-            "_utime"          => time,
+            "_utime"          => ( time - 72000 + 300 ),
             "rp"              => "rp-example2",
             "scope"           => "openid email read"
         }
@@ -74,7 +74,7 @@ Lemonldap::NG::Common::Session->new( {
         info                 => {
             "offline_session_id" => '000999000',
             "_type"              => "refresh_token",
-            "_utime"             => time,
+            "_utime"             => ( time - 72000 + 300 ),
             "rp"                 => "rp-example",
             "scope"              => "openid email read"
         }
@@ -117,6 +117,7 @@ ok(
 
 # Check headers
 %h = @{ $res->[1] };
+is( $res->[0],              401,      "Got correct HTTP code" );
 is( $h{'WWW-Authenticate'}, 'Bearer', 'Got WWW-Authenticate: Bearer' );
 
 # Request with invalid Access Token
@@ -209,6 +210,24 @@ is( $h{'Auth-ClientID'}, 'example', 'Client ID correctly transmitted' );
 is( $h{'Auth-ClientConfKey'},
     'rp-example', 'Client confkey correctly transmitted' );
 like( $h{'Auth-Scope'}, qr/\bemail\b/, 'Scope correctly transmitted' );
+
+Time::Fake->offset("+600s");
+ok(
+    $res = $client->_get(
+        '/read',             undef,
+        'test1.example.com', '',
+        VHOSTTYPE          => 'OAuth2',
+        HTTP_AUTHORIZATION => 'Bearer 999888777',
+    ),
+    'Invalid access token'
+);
+%h = @{ $res->[1] };
+is( $res->[0], 401, "Access was rejected" );
+is(
+    $h{'WWW-Authenticate'},
+    'Bearer error="invalid_token"',
+    'Got correct error code'
+);
 
 count($maintests);
 done_testing( count() );
