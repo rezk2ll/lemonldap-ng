@@ -20,15 +20,15 @@ Connect to your publik instance authentic2 webui with an Admin user, in the admi
 
 Click on "Add Oidc Provider".
 
-* Nom : LemonLDAP SSO
-* Identifiant court : lemonldap
-* Émetteur : https://auth.example.com/
-* client id : clientid
-* client secret : secret
-* authorization endpoint : https://auth.example.com/oauth2/authorize
-* token endpoint : https://auth.example.com/oauth2/token
-* userinfo endpoint : https://auth.example.com/oauth2/userinfo
-* end session endpont : https://auth.example.com/oauth2/logout
+* Name : LemonLDAP SSO
+* Short id : lemonldap
+* Provider : https://auth.example.com/
+* Client id : clientid
+* Client secret : secret
+* Authorization endpoint : https://auth.example.com/oauth2/authorize
+* Token endpoint : https://auth.example.com/oauth2/token
+* Userinfo endpoint : https://auth.example.com/oauth2/userinfo
+* End session endpont : https://auth.example.com/oauth2/logout
 * WebKey JSON : Copy/Paste the content of https://auth.example.com/oauth2/jwks
 * Claims Enabled : yes
 * Show on connection page : yes
