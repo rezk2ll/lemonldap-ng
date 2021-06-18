@@ -34,6 +34,7 @@ Applications
    applications/nextcloud
    applications/obm
    applications/office365
+   applications/publik
    applications/phpldapadmin
    applications/roundcube
    applications/salesforce
@@ -113,6 +114,7 @@ Application                                                       Configuration 
 .. image:: applications/nextcloud-logo.png                        :doc:`NextCloud<applications/nextcloud>`                                               ✔
 .. image:: applications/obm_logo.png                              :doc:`OBM<applications/obm>`                         ✔
 .. image:: applications/logo_office_365.png                       :doc:`Office 365<applications/office365>`                                              ✔
+.. image:: applications/logo-publik.png                           :doc:`Publik<applications/publik>`                                                          ✔
 .. image:: applications/phpldapadmin_logo.png                     :doc:`phpLDAPAdmin<applications/phpldapadmin>`       ✔
 .. image:: applications/roundcube_logo.png                        :doc:`Roundcube<applications/roundcube>`             ✔
 .. image:: applications/salesforce-logo.jpg                       :doc:`SalesForce<applications/salesforce>`                                             ✔
