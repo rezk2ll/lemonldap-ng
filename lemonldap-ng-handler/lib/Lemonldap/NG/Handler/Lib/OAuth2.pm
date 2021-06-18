@@ -18,7 +18,8 @@ sub retrieveSession {
 
             # Update cache
             $class->data($data);
-        } else {
+        }
+        else {
             $req->data->{oauth2_error} = 'invalid_token';
         }
         return $data;
@@ -93,6 +94,10 @@ sub fetchId {
         return;
     }
     my $infos = $class->getOIDCInfos($access_token_sid);
+    unless ($infos) {
+        $req->data->{oauth2_error} = 'invalid_token';
+        return;
+    }
 
     # Store scope and rpid for future session attributes
     if ( $infos->{rp} ) {
@@ -146,6 +151,20 @@ sub getOIDCInfos {
 
     unless ( $oidcSession->error ) {
         $class->logger->debug("Get OIDC session $id");
+
+        # Verify that session is valid
+        unless ( $oidcSession->data->{_utime} ) {
+            $class->logger->error("_utime missing from Access Token session");
+            return;
+        }
+
+        my $ttl = $class->tsv->{timeout} - time + $oidcSession->data->{_utime};
+        $class->logger->debug( "Session TTL = " . $ttl );
+
+        if ( time - $oidcSession->data->{_utime} > $class->tsv->{timeout} ) {
+            $class->logger->info("Access Token session $id expired");
+            return;
+        }
 
         $infos = { %{ $oidcSession->data } };
     }
