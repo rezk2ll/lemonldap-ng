@@ -741,7 +741,10 @@ sub run {
                 my $access_token;
                 my $at_hash;
 
+                my $release_claims_in_id_token = 1;
                 if ( $response_type =~ /\btoken\b/ ) {
+
+                    $release_claims_in_id_token = 0;
 
                     # Store data in access token
                     # Generate access_token
@@ -775,9 +778,14 @@ sub run {
                       if $hash_level;
                 }
 
-                my $id_token =
-                  $self->_generateIDToken( $req, $oidc_request,
-                    $rp, $scope, { at_hash => $at_hash } );
+                my $id_token = $self->_generateIDToken(
+                    $req,
+                    $rp,
+                    $scope,
+                    $req->sessionInfo,
+                    $release_claims_in_id_token,
+                    { at_hash => $at_hash, nonce => $oidc_request->{nonce} }
+                );
 
                 unless ($id_token) {
                     $self->logger->error("Could not generate ID token");
@@ -841,7 +849,10 @@ sub run {
                 $c_hash = $self->createHash( $code, $hash_level )
                   if $hash_level;
 
+                my $release_claims_in_id_token = 1;
                 if ( $response_type =~ /\btoken\b/ ) {
+
+                    $release_claims_in_id_token = 0;
 
                     # Generate access_token
                     $access_token = $self->newAccessToken(
@@ -873,12 +884,13 @@ sub run {
                 if ( $response_type =~ /\bid_token\b/ ) {
 
                     $id_token = $self->_generateIDToken(
-                        $req,
-                        $oidc_request,
-                        $rp, $scope,
+                        $req, $rp, $scope,
+                        $req->sessionInfo,
+                        $release_claims_in_id_token,
                         {
                             at_hash => $at_hash,
                             c_hash  => $c_hash,
+                            nonce   => $oidc_request->{nonce},
                         }
                     );
 
@@ -1432,45 +1444,17 @@ sub _handleAuthorizationCodeGrant {
     my $at_hash = $self->createHash( $access_token, $hash_level )
       if $hash_level;
 
-    # ID token payload
-    # TODO: refactor to use _generateIDToken
-    my $id_token_exp =
-      $self->conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsIDTokenExpiration}
-      || $self->conf->{oidcServiceIDTokenExpiration};
-    $id_token_exp += time;
-
-    my $id_token_acr = "loa-" . $apacheSession->data->{authenticationLevel};
-
-    my $id_token_payload_hash = {
-        iss       => $self->iss,                            # Issuer Identifier
-        sub       => $user_id,                              # Subject Identifier
-        aud       => $self->getAudiences($rp),              # Audience
-        exp       => $id_token_exp,                         # expiration
-        iat       => time,                                  # Issued time
-        auth_time => $apacheSession->data->{_lastAuthnUTime}
-        ,    # Authentication time
-        acr => $id_token_acr,    # Authentication Context Class Reference
-        azp => $client_id,       # Authorized party
-                                 # TODO amr
-    };
-
-    my $nonce = $codeSession->data->{nonce};
-    $id_token_payload_hash->{nonce}     = $nonce   if defined $nonce;
-    $id_token_payload_hash->{'at_hash'} = $at_hash if $at_hash;
-
-    if ( $self->force_id_claims($rp) ) {
-        my $claims = $self->buildUserInfoResponseFromId( $req, $scope,
-            $rp, $codeSession->data->{user_session_id} );
-
-        foreach ( keys %$claims ) {
-            $id_token_payload_hash->{$_} = $claims->{$_}
-              unless ( $_ eq "sub" );
-        }
-    }
-
     # Create ID Token
-    my $id_token = $self->createIDToken( $req, $id_token_payload_hash, $rp );
+    my $nonce    = $codeSession->data->{nonce};
+    my $id_token = $self->_generateIDToken(
+        $req, $rp, $scope,
+        $apacheSession->data,
+        0,
+        {
+            ( $nonce   ? ( nonce   => $nonce )   : () ),
+            ( $at_hash ? ( at_hash => $at_hash ) : () ),
+        }
+    );
 
     unless ($id_token) {
         $self->logger->error(
@@ -2348,10 +2332,11 @@ sub _convertOldFormatConsents {
 }
 
 sub _generateIDToken {
-    my ( $self, $req, $oidc_request, $rp, $scope, $extra_claims ) = @_;
+    my ( $self, $req, $rp, $scope, $sessionInfo, $release_user_claims,
+        $extra_claims )
+      = @_;
 
-    my $response_type = $oidc_request->{'response_type'};
-    my $client_id     = $oidc_request->{'client_id'};
+    my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
 
     my $id_token_exp =
       $self->conf->{oidcRPMetaDataOptions}->{$rp}
@@ -2359,7 +2344,7 @@ sub _generateIDToken {
       || $self->conf->{oidcServiceIDTokenExpiration};
     $id_token_exp += time;
 
-    my $authenticationLevel = $req->{sessionInfo}->{authenticationLevel} || 0;
+    my $authenticationLevel = $sessionInfo->{authenticationLevel} || 0;
 
     my $id_token_acr = "loa-$authenticationLevel";
     foreach ( keys %{ $self->conf->{oidcServiceMetaDataAuthnContext} } ) {
@@ -2371,20 +2356,18 @@ sub _generateIDToken {
         }
     }
 
-    my $user_id = $self->getUserIDForRP( $req, $rp, $req->{sessionInfo} );
+    my $user_id = $self->getUserIDForRP( $req, $rp, $sessionInfo );
 
     my $id_token_payload_hash = {
-        iss       => $self->iss,                            # Issuer Identifier
-        sub       => $user_id,                              # Subject Identifier
-        aud       => $self->getAudiences($rp),              # Audience
-        exp       => $id_token_exp,                         # expiration
-        iat       => time,                                  # Issued time
-        auth_time => $req->{sessionInfo}->{_lastAuthnUTime}
-        ,    # Authentication time
+        iss       => $self->iss,                         # Issuer Identifier
+        sub       => $user_id,                           # Subject Identifier
+        aud       => $self->getAudiences($rp),           # Audience
+        exp       => $id_token_exp,                      # expiration
+        iat       => time,                               # Issued time
+        auth_time => $sessionInfo->{_lastAuthnUTime},    # Authentication time
         acr => $id_token_acr,    # Authentication Context Class Reference
         azp => $client_id,       # Authorized party
                                  # TODO amr
-        nonce => $oidc_request->{'nonce'}    # Nonce
     };
 
     for ( keys %{$extra_claims} ) {
@@ -2392,14 +2375,12 @@ sub _generateIDToken {
           if $extra_claims->{$_};
     }
 
-    if (   $response_type !~ /\btoken\b/
-        || $self->force_id_claims($rp) )
-    {
+    # Decided by response_type or forced in RP config
+    if ( $release_user_claims || $self->force_id_claims($rp) ) {
 
-        # No access_token
-        # Claims must be set in id_token
         my $claims =
-          $self->buildUserInfoResponseFromId( $req, $scope, $rp, $req->id );
+          $self->buildUserInfoResponseFromData( $req, $scope, $rp,
+            $sessionInfo );
 
         foreach ( keys %$claims ) {
             $id_token_payload_hash->{$_} = $claims->{$_}
