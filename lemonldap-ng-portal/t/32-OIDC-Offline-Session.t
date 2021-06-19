@@ -51,6 +51,8 @@ sub runTest {
     ok( $id_token,      "Got ID token" );
 
     my $id_token_payload = id_token_payload($id_token);
+    my $auth_time = $id_token_payload->{auth_time};
+    ok( $auth_time, "Authentication date found in token");
     is(
         $id_token_payload->{name},
         'Frédéric Accents',
@@ -117,6 +119,7 @@ sub runTest {
     ok( !defined $refresh_token2, "Refresh token not present" );
 
     $id_token_payload = id_token_payload($id_token);
+    is( $id_token_payload->{auth_time}, $auth_time, 'Original auth_time retained' );
     is(
         $id_token_payload->{name},
         'Frédéric Accents',

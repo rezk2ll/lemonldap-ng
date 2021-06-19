@@ -159,9 +159,10 @@ count(4);
 
 # Check attributes in ID Token
 my $id_token_decoded = id_token_payload( $prms{id_token} );
-ok( $id_token_decoded->{sub} eq "dwho", 'Check sub value' );
+is( $id_token_decoded->{sub}, "dwho", 'Check sub value' );
 ok( !$id_token_decoded->{name},         'Claim name must not be in ID token' );
-count(2);
+is( $id_token_decoded->{azp}, 'rpid',   ' azp found' );
+count(3);
 
 $op->logout($idpId);
 
