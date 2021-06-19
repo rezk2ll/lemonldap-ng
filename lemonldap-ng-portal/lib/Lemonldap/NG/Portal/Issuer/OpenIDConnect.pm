@@ -1517,8 +1517,6 @@ sub _handleRefreshTokenGrant {
     }
 
     my $access_token;
-    my $user_id;
-    my $auth_time;
     my $session;
 
     # If this refresh token is tied to a SSO session
@@ -1531,10 +1529,6 @@ sub _handleRefreshTokenGrant {
                 "Unable to find user session tied to Refresh Token");
             return $self->sendOIDCError( $req, 'invalid_grant', 400 );
         }
-
-        $user_id = $self->getUserIDForRP( $req, $rp, $session->data );
-
-        $auth_time = $session->data->{_lastAuthnUTime};
 
         # Generate access_token
         $access_token = $self->newAccessToken(
@@ -1594,11 +1588,6 @@ sub _handleRefreshTokenGrant {
             $refreshSession->data->{$_} = $req->sessionInfo->{$_};
         }
 
-        $user_id = $self->getUserIDForRP( $req, $rp, $req->sessionInfo );
-        $self->logger->debug("Found corresponding user: $user_id");
-
-        $auth_time = $refreshSession->data->{auth_time};
-
         # Generate access_token
         $access_token = $self->newAccessToken(
             $req, $rp,
@@ -1624,52 +1613,21 @@ sub _handleRefreshTokenGrant {
     my $at_hash = $self->createHash( $access_token, $hash_level )
       if $hash_level;
 
-    # ID token payload
-    # TODO: refactor to use _generateIDToken
-    my $id_token_exp =
-      $self->conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsIDTokenExpiration}
-      || $self->conf->{oidcServiceIDTokenExpiration};
-    $id_token_exp += time;
-
-    # Authentication level using refresh tokens should probably stay at 0
-    my $id_token_acr = "loa-0";
-
-    my $id_token_payload_hash = {
-        iss => $self->iss,                  # Issuer Identifier
-        sub => $user_id,                    # Subject Identifier
-        aud => $self->getAudiences($rp),    # Audience
-        exp => $id_token_exp,               # expiration
-        iat => time,                        # Issued time
-             # TODO: is this the right value when using refresh tokens??
-        auth_time => $auth_time,       # Authentication time
-        acr       => $id_token_acr,    # Authentication Context Class Reference
-        azp       => $client_id,       # Authorized party
-                                       # TODO amr
-    };
-
-    my $nonce = $refreshSession->data->{nonce};
-    $id_token_payload_hash->{nonce}     = $nonce   if defined $nonce;
-    $id_token_payload_hash->{'at_hash'} = $at_hash if $at_hash;
-
-    # If we forced sending claims in ID token
-    if ( $self->force_id_claims($rp) ) {
-        my $claims =
-          $self->buildUserInfoResponse( $req, $refreshSession->data->{scope},
-            $rp, $session );
-
-        foreach ( keys %$claims ) {
-            $id_token_payload_hash->{$_} = $claims->{$_}
-              unless ( $_ eq "sub" );
-        }
-    }
-
     # Create ID Token
-    my $id_token = $self->createIDToken( $req, $id_token_payload_hash, $rp );
+    my $nonce    = $refreshSession->data->{nonce};
+    my $id_token = $self->_generateIDToken(
+        $req, $rp,
+        $refreshSession->data->{scope},
+        $session->data,
+        0,
+        {
+            ( $nonce   ? ( nonce   => $nonce )   : () ),
+            ( $at_hash ? ( at_hash => $at_hash ) : () ),
+        }
+    );
 
     unless ($id_token) {
-        $self->logger->error(
-            "Failed to generate ID Token for service: $client_id");
+        $self->logger->error("Failed to generate ID Token for service: $rp");
         return $self->sendOIDCError( $req, 'server_error', 500 );
     }
 
