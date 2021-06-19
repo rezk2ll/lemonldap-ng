@@ -139,7 +139,9 @@ sub run {
     }
 
     # Try to recover cookie and user session
-    if (    $id = $class->fetchId($req)
+    $id = $class->fetchId($req);
+    $class->data( {} ) unless($id);
+    if (    $id
         and $session = $class->retrieveSession( $req, $id ) )
     {
 

@@ -484,6 +484,7 @@ t/01-Handler-redirection-and-URL-check-by-portal.t
 t/01-pdata.t
 t/01-Reject-Hashes-in-URL.t
 t/01-Unauth-Logout.t
+t/02-Password-Demo-Hook.t
 t/02-Password-Demo-Local-noPpolicy.t
 t/02-Password-Demo-Local-Ppolicy.t
 t/02-Password-Demo-Local-SpeChars-Ppolicy.t
@@ -551,6 +552,7 @@ t/31-Auth-and-issuer-CAS-proxied.t
 t/31-Auth-and-issuer-CAS-with-choice-and-cancel.t
 t/31-Auth-and-issuer-CAS-with-choice.t
 t/31-Auth-and-issuer-CAS-XSS-on-logout.t
+t/32-Auth-and-issuer-OIDC-authorization_code-jwt-userinfo.t
 t/32-Auth-and-issuer-OIDC-authorization_code-OP-logout.t
 t/32-Auth-and-issuer-OIDC-authorization_code-public_client.t
 t/32-Auth-and-issuer-OIDC-authorization_code-with-authchoice.t
@@ -562,6 +564,7 @@ t/32-Auth-and-issuer-OIDC-implicit-no-token.t
 t/32-Auth-and-issuer-OIDC-implicit.t
 t/32-Auth-and-issuer-OIDC-sorted.t
 t/32-CAS-10.t
+t/32-CAS-Hooks.t
 t/32-CAS-Macros.t
 t/32-CAS-Prefix.t
 t/32-OIDC-ClaimTypes.t
@@ -630,6 +633,7 @@ t/43-MailPasswordReset-Choice.t
 t/43-MailPasswordReset-Combination-LDAP.t
 t/43-MailPasswordReset-Combination.t
 t/43-MailPasswordReset-DBI.t
+t/43-MailPasswordReset-Hook.t
 t/43-MailPasswordReset-LDAP.t
 t/43-MailPasswordReset-with-captcha.t
 t/43-MailPasswordReset-with-token.t
@@ -746,9 +750,11 @@ t/78-2F-UpgradeOnly.t
 t/79-2F-Yubikey-from-Session.t
 t/79-2F-Yubikey.t
 t/90-Translations.t
+t/91-handler-cache-cleaned.t
 t/91-Memory-Leak.t
 t/99-Dont-load-Dumper.t
 t/99-pod.t
+t/CasHookPlugin.pm
 t/gpghome/key.asc
 t/gpghome/openpgp-revocs.d/9482CEFB055809CBAFE6D71AAB2D5542891D1677.rev
 t/gpghome/private-keys-v1.d/A076B0E7DB141A919271EE8B581CDFA8DA42F333.key
@@ -765,6 +771,7 @@ t/lib/Lemonldap/NG/Portal/Custom.pm
 t/lmConf-1.json
 t/oidc-lib.pm
 t/OidcHookPlugin.pm
+t/PasswordHookPlugin.pm
 t/pdata.pm
 t/README.md
 t/saml-lib.pm
