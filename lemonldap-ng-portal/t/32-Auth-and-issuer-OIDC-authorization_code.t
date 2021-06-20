@@ -181,6 +181,10 @@ ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'cn => Frédéric Accents' );
 count(2);
 
+my $id_token_decoded = id_token_payload( $res->{_oidc_id_token} );
+is( $id_token_decoded->{acr}, 'customacr-1', "Correct custom ACR" );
+count(1);
+
 # Logout initiated by RP
 ok(
     $res = $rp->_get(
@@ -193,7 +197,7 @@ ok(
 );
 count(1);
 ( $url, $query ) = expectRedirection( $res,
-    qr#http://auth.op.com(/oauth2/logout)\?(post_logout_redirect_uri=.+)$# );
+    qr#http://auth.op.com(/oauth2/logout)\?.*(post_logout_redirect_uri=.+)$# );
 
 # Push logout to OP
 switch ('op');
@@ -337,11 +341,11 @@ sub op {
                 oidcOPMetaDataJSON              => {},
                 oidcOPMetaDataJWKS              => {},
                 oidcServiceMetaDataAuthnContext => {
-                    'loa-4' => 4,
-                    'loa-1' => 1,
-                    'loa-5' => 5,
-                    'loa-2' => 2,
-                    'loa-3' => 3
+                    'loa-4'       => 4,
+                    'customacr-1' => 1,
+                    'loa-5'       => 5,
+                    'loa-2'       => 2,
+                    'loa-3'       => 3
                 },
                 oidcServicePrivateKeySig => oidc_key_op_private_sig,
                 oidcServicePublicKeySig  => oidc_key_op_public_sig,
@@ -378,6 +382,7 @@ sub rp {
                         oidcOPMetaDataOptionsMaxAge       => 30,
                         oidcOPMetaDataOptionsDisplay      => "",
                         oidcOPMetaDataOptionsClientID     => "rpid",
+                        oidcOPMetaDataOptionsStoreIDToken => 1,
                         oidcOPMetaDataOptionsConfigurationURI =>
                           "https://auth.op.com/.well-known/openid-configuration"
                     }
