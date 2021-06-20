@@ -52,7 +52,7 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsIDTokenSignAlg        => "HS512",
                     oidcRPMetaDataOptionsClientSecret          => "rpsecret",
                     oidcRPMetaDataOptionsUserIDAttr            => "",
-                    oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
+                    oidcRPMetaDataOptionsAccessTokenExpiration => 120,
                     oidcRPMetaDataOptionsBypassConsent         => 1,
                     oidcRPMetaDataOptionsRefreshToken          => 1,
                     oidcRPMetaDataOptionsIDTokenForceClaims    => 1,
@@ -97,7 +97,7 @@ my $goodquery = buildForm( {
         grant_type    => 'password',
         username      => 'french',
         password      => 'french',
-        scope         => 'openid profile email',
+        scope         => 'profile email openid',
     }
 );
 
@@ -136,8 +136,12 @@ my $access_token = $payload->{access_token};
 ok( $access_token, "Access Token found" );
 count(1);
 my $token_res_scope = $payload->{scope};
-ok( $token_res_scope, "Scope found in token response" );
-count(1);
+ok( $token_res_scope,     "Scope found in token response" );
+ok( $payload->{id_token}, "Found ID token in original grant" );
+
+my $refresh_token = $payload->{refresh_token};
+ok( $refresh_token, "Got refresh token" );
+count(3);
 
 # Get userinfo
 $res = $op->_post(
@@ -179,6 +183,46 @@ like( $payload->{scope}, qr/\bfrench\b/, "Attribute-based scope found" );
 like( $payload->{scope}, qr/\balways\b/, "Rule-enforced scope found" );
 is( $payload->{scope}, $token_res_scope,
     "Token response scope matches token scope" );
+
+# Expire token
+Time::Fake->offset("+305m");
+
+ok(
+    $res = $op->_post(
+        "/oauth2/introspect",
+        IO::String->new($query),
+        accept => 'text/html',
+        length => length $query,
+        custom => {
+            HTTP_AUTHORIZATION => "Basic " . encode_base64("rpid:rpsecret"),
+        },
+    ),
+    "Post introspection"
+);
+
+$res = expectJSON($res);
+is( $res->{active}, 0, "Token is no longer active" );
+
+$query = buildForm( {
+        grant_type    => 'refresh_token',
+        refresh_token => $refresh_token,
+    }
+);
+
+ok(
+    $res = $op->_post(
+        "/oauth2/token",
+        IO::String->new($query),
+        accept => 'text/json',
+        length => length $query,
+        custom => {
+            HTTP_AUTHORIZATION => "Basic " . encode_base64("rpid:rpsecret"),
+        },
+    ),
+    "Post introspection"
+);
+$res = expectJSON($res);
+ok( $res->{id_token}, "Found ID token in refresh grant" );
 
 clean_sessions();
 done_testing();
