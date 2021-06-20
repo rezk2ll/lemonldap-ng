@@ -1272,6 +1272,28 @@ sub _handlePasswordGrant {
         $self->logger->debug("Generated refresh token: $refresh_token");
     }
 
+    # Generate ID token
+    my $id_token = undef;
+    if ( $self->_hasScope( "openid", $scope ) ) {
+
+        # Compute hash to store in at_hash
+        my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsIDTokenSignAlg};
+        my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
+        my $at_hash = $self->createHash( $access_token, $hash_level )
+          if $hash_level;
+
+        $id_token =
+          $self->_generateIDToken( $req, $rp, $scope, $req->sessionInfo, 0,
+            { ( $at_hash ? ( at_hash => $at_hash ) : () ), } );
+
+        unless ($id_token) {
+            $self->logger->error(
+                "Failed to generate ID Token for service: $client_id");
+            return $self->sendOIDCError( $req, 'server_error', 500 );
+        }
+    }
+
     # Send token response
     my $expires_in =
       $self->conf->{oidcRPMetaDataOptions}->{$rp}
@@ -1284,6 +1306,7 @@ sub _handlePasswordGrant {
         expires_in   => $expires_in + 0,
         ( ( $scope ne $req_scope ) ? ( scope => "$scope" ) : () ),
         ( $refresh_token ? ( refresh_token => "$refresh_token" ) : () ),
+        ( $id_token      ? ( id_token      => "$id_token" )      : () ),
     };
 
     $self->logger->debug("Send token response");
@@ -1614,24 +1637,28 @@ sub _handleRefreshTokenGrant {
       if $hash_level;
 
     # Create ID Token
-    my $nonce    = $refreshSession->data->{nonce};
-    my $id_token = $self->_generateIDToken(
-        $req, $rp,
-        $refreshSession->data->{scope},
-        $session->data,
-        0,
-        {
-            ( $nonce   ? ( nonce   => $nonce )   : () ),
-            ( $at_hash ? ( at_hash => $at_hash ) : () ),
+    my $id_token = undef;
+    if ( $self->_hasScope( 'openid', $refreshSession->data->{scope} ) ) {
+        my $nonce = $refreshSession->data->{nonce};
+        $id_token = $self->_generateIDToken(
+            $req, $rp,
+            $refreshSession->data->{scope},
+            $session->data,
+            0,
+            {
+                ( $nonce   ? ( nonce   => $nonce )   : () ),
+                ( $at_hash ? ( at_hash => $at_hash ) : () ),
+            }
+        );
+
+        unless ($id_token) {
+            $self->logger->error(
+                "Failed to generate ID Token for service: $rp");
+            return $self->sendOIDCError( $req, 'server_error', 500 );
         }
-    );
 
-    unless ($id_token) {
-        $self->logger->error("Failed to generate ID Token for service: $rp");
-        return $self->sendOIDCError( $req, 'server_error', 500 );
+        $self->logger->debug("Generated id token: $id_token");
     }
-
-    $self->logger->debug("Generated id token: $id_token");
 
     # Send token response
     my $expires_in =
@@ -1643,7 +1670,7 @@ sub _handleRefreshTokenGrant {
         access_token => "$access_token",
         token_type   => 'Bearer',
         expires_in   => $expires_in + 0,
-        id_token     => "$id_token",
+        ( $id_token ? ( id_token => "$id_token" ) : () ),
     };
 
     # TODO
