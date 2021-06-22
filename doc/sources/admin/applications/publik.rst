@@ -49,5 +49,9 @@ with the following parameters (Options -> Basic) :
 * **Client Secret**: the same you set in Publik configuration.
 * **Allowed redirection addresses for login**: The "Callback URL" for authentic2 : https://authentic2-instance/accounts/oidc/callback/
 
+And in Options -> Logout
+
+* **Allowed redirection addresses for logout**: The "Logout URL" for authentic2 : https://authentic2-instance/logout/
+
 .. |image0| image:: /applications/logo-publik.png
    :class: align-center
