@@ -159,6 +159,7 @@ BuildRequires:  perl(SOAP::Transport::HTTP)
 BuildRequires:  perl(strict)
 BuildRequires:  perl(String::Random)
 BuildRequires:  perl(Sys::Syslog)
+BuildRequires:  perl(Test::LeakTrace)
 BuildRequires:  perl(Test::MockObject)
 BuildRequires:  perl(Test::Output)
 BuildRequires:  perl(Test::Pod) >= 1.00
