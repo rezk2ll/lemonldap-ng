@@ -686,7 +686,7 @@
 "oidcRPMetaDataOptionsRule":"Erişim kuralı",
 "oidcRPMetaDataOptionsTimeouts":"Zaman aşımları",
 "oidcRPMetaDataOptionsUserIDAttr":"Kullanıcı niteliği",
-"oidcRPMetaDataOptionsUserInfoSignAlg":"Userinfo signature algorithm",
+"oidcRPMetaDataOptionsUserInfoSignAlg":"UserInfo response format",
 "oidcRPMetaDataScopeRules":"Kapsam kuralları",
 "oidcRPName":"OpenID Connect RP Adı",
 "oidcRPStateTimeout":"Oturum zaman aşımını belirle",

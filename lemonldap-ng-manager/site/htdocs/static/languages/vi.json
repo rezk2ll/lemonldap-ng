@@ -686,7 +686,7 @@
 "oidcRPMetaDataOptionsRule":"Quy tắc truy cập",
 "oidcRPMetaDataOptionsTimeouts":"Timeouts",
 "oidcRPMetaDataOptionsUserIDAttr":"thuộc tính người dùng",
-"oidcRPMetaDataOptionsUserInfoSignAlg":"Userinfo signature algorithm",
+"oidcRPMetaDataOptionsUserInfoSignAlg":"UserInfo response format",
 "oidcRPMetaDataScopeRules":"Scope rules",
 "oidcRPName":"OpenID Connect RP Name",
 "oidcRPStateTimeout":"Thời gian chờ của trạng thái phiên làm việc",

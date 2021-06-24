@@ -574,35 +574,35 @@ function templates(tpl,key) {
                   "select" : [
                      {
                         "k" : "",
-                        "v" : ""
+                        "v" : "JSON"
                      },
                      {
                         "k" : "none",
-                        "v" : "None"
+                        "v" : "JWT/None"
                      },
                      {
                         "k" : "HS256",
-                        "v" : "HS256"
+                        "v" : "JWT/HS256"
                      },
                      {
                         "k" : "HS384",
-                        "v" : "HS384"
+                        "v" : "JWT/HS384"
                      },
                      {
                         "k" : "HS512",
-                        "v" : "HS512"
+                        "v" : "JWT/HS512"
                      },
                      {
                         "k" : "RS256",
-                        "v" : "RS256"
+                        "v" : "JWT/RS256"
                      },
                      {
                         "k" : "RS384",
-                        "v" : "RS384"
+                        "v" : "JWT/RS384"
                      },
                      {
                         "k" : "RS512",
-                        "v" : "RS512"
+                        "v" : "JWT/RS512"
                      }
                   ],
                   "title" : "oidcRPMetaDataOptionsUserInfoSignAlg",

@@ -686,7 +686,7 @@
 "oidcRPMetaDataOptionsRule":"存取規則",
 "oidcRPMetaDataOptionsTimeouts":"逾時",
 "oidcRPMetaDataOptionsUserIDAttr":"使用者屬性",
-"oidcRPMetaDataOptionsUserInfoSignAlg":"Userinfo signature algorithm",
+"oidcRPMetaDataOptionsUserInfoSignAlg":"UserInfo response format",
 "oidcRPMetaDataScopeRules":"Scope rules",
 "oidcRPName":"OpenID 連線 RP 名稱",
 "oidcRPStateTimeout":"狀態工作階段逾時",
