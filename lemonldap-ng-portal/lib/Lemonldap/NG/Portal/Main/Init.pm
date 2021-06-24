@@ -383,8 +383,8 @@ sub reloadConf {
 
             # Handle wildcards
             if ( $vhost =~ /[\%\*]/ ) {
-                $expr =~ s/\\\*/\.*/;
-                $expr =~ s/\\\%/[\^\.]\*/;
+                $expr =~ s/\\\*/[A-Za-z0-9\.]\*/;
+                $expr =~ s/\\\%/[A-Za-z0-9]\*/;
             }
             $re->add($expr);
             $self->logger->debug("Vhost $vhost added in trusted domains");
