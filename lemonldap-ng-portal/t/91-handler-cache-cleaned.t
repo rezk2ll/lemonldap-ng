@@ -11,7 +11,7 @@ count(1);
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel         => 'debug',
+            logLevel         => 'error',
             mail2fActivation => '$uid eq "msmith"',
             mail2fAuthnLevel => 3,
             mail2fCodeRegex  => '\d{4}',
@@ -98,7 +98,6 @@ ok(
     'Post code'
 );
 count(1);
-diag Dumper($res);
 
 # Reuse the corrupted cache
 ok(
