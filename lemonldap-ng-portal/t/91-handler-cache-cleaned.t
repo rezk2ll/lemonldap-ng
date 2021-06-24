@@ -40,14 +40,15 @@ ok(
     ),
     'Get portal'
 );
-expectAuthenticatedAs($res, 'dwho');
+expectAuthenticatedAs( $res, 'dwho' );
 count(1);
 
 # Start logging in as msmith
-my $s = buildForm({
-        user => 'msmith',
+my $s = buildForm( {
+        user     => 'msmith',
         password => 'msmith',
-    });
+    }
+);
 ok(
     $res = $client->_post(
         '/',
@@ -84,7 +85,7 @@ ok(
 );
 count(1);
 
-# Finish logging in as msmith, 
+# Finish logging in as msmith,
 # this corrupts the dwho cache with msmith macros
 $query =~ s/code=/code=${code}/;
 ok(
@@ -108,11 +109,7 @@ ok(
 );
 count(1);
 
-
-TODO: {
-    local $TODO = "Fix 2539";
-    expectAuthenticatedAs($res, 'dwho');
-}
+expectAuthenticatedAs( $res, 'dwho' );
 
 clean_sessions();
 
