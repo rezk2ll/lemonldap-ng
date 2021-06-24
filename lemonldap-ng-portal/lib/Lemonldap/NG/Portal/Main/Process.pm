@@ -336,7 +336,7 @@ sub checkXSSAttack {
 
     # Test value
     $value =~ s/\%25/\%/g;
-    if ( $value =~ m/(?:\0|<|'|"|`|\%(?:00|3C|22|27|2C))/ ) {
+    if ( $value =~ m/(?:\0|<|'|"|`|\%(?:00|3C|22|27))/ ) {
         $self->userLogger->error(
             "XSS attack detected (param: $name | value: $value)");
         return $self->conf->{checkXSS};
