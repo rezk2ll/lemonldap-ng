@@ -582,8 +582,10 @@ sub updateSession {
         foreach ( keys %$infos ) {
             $self->logger->debug("Update sessionInfo $_");
             $self->_dump( $infos->{$_} );
-            $req->{sessionInfo}->{$_} = $self->HANDLER->data->{$_} =
-              $infos->{$_};
+            $req->{sessionInfo}->{$_} = $infos->{$_};
+            if ( $id eq $self->HANDLER->data->{_session_id} ) {
+                $self->HANDLER->data->{$_} = $infos->{$_};
+            }
         }
 
         # Update session in global storage with _updateTime
@@ -1086,7 +1088,7 @@ sub registerLogin {
     }
 
     my $history = $req->sessionInfo->{_loginHistory} ||= {};
-    my $type = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
+    my $type    = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
     $history->{$type} ||= [];
     $self->logger->debug("Current login saved into $type");
 
