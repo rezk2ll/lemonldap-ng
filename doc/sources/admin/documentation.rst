@@ -60,7 +60,7 @@ Debian dist                          LLNG version                             Se
 **8**       Jessie                   `1.3.3 </documentation/1.3/>`__          |clean| CVE-2019-19791 tagged as minor                **None**  [1]_                                               June 2020                       Probably 2023
 **9**       Stretch                  `1.9.7 </documentation/1.9/>`__          |clean| CVE-2019-19791 tagged as minor                `Debian LTS Team <https://www.debian.org/lts/>`__            June 2022                      
 \           *Stretch-backports*      `2.0.2 </documentation/2.0/>`__          |bad| CVE-2019-12046, CVE-2019-13031, CVE-2019-15941  *None*                                                       *June 2019*                    
-\           Stretch-backports-sloppy `2.0.11 </documentation/2.0/>`__         |clean|                                               `LLNG Team </team>`__, "best effort"  [3]_                   Until Debian 11 release  [4]_
+\           Stretch-backports-sloppy `2.0.9 </documentation/2.0/>`__          |bad|                                                 *Maybe none*, "best effort"  [3]_                            Until Debian 11 release  [4]_
 **10**      Buster                   `2.0.2 </documentation/2.0/>`__          |clean| CVE-2019-19791 tagged as minor                `Debian Security Team <https://security-team.debian.org/>`__ Probably July 2024             
 \           Buster-backports         `2.0.11 </documentation/2.0/>`__         |clean|                                               `LLNG Team </team>`__                                        Until Debian 11 release  [4]_
 \           Bullseye                 `2.0.11 </documentation/2.0/>`__         |clean|                                               `Debian Security Team <https://security-team.debian.org/>`__ Probably July 2026             
@@ -139,10 +139,11 @@ Other
    Possible `Extended LTS <https://wiki.debian.org/LTS/Extended>`__
 
 .. [3]
-   updated by `LLNG Team </team>`__ until dependencies are compatible
+   updated by `LLNG Team </team>`__ until dependencies are compatible,
+   however this distribution seems unmaintained now
 
 .. [4]
-   around June 2021
+   around September 2021
 
 .. [5]
    few days after release
