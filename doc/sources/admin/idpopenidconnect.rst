@@ -136,7 +136,6 @@ An example of its content:
          "hybrid"
       ],
       "authorization_endpoint" : "http://auth.example.com/oauth2/authorize",
-      "check_session_iframe" : "http://auth.example.com/oauth2/checksession",
       "scopes_supported" : [
          "openid",
          "profile",

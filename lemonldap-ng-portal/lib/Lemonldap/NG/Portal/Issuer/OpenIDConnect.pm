@@ -2149,7 +2149,7 @@ sub metadata {
             jwks_uri               => $baseUrl . $jwks_uri,
             authorization_endpoint => $baseUrl . $authorize_uri,
             end_session_endpoint   => $baseUrl . $endsession_uri,
-            check_session_iframe   => $baseUrl . $checksession_uri,
+            #check_session_iframe   => $baseUrl . $checksession_uri,
             introspection_endpoint => $baseUrl . $introspection_uri,
 
             # Logout capabilities

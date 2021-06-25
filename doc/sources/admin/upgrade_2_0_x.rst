@@ -64,6 +64,11 @@ Because of `bug #2482 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues
 
 This bug was fixed in 2.0.12, but administrators are advised to clean up their persistent session database to remove any duplicate persistent sessions remaining after the upgrade.
 
+OpenID Connect check session iframe
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The OIDC check session iframe is not working, it has been removed from OIDC configuration metadata. It should not impact any installation as this feature was already broken.
+
 2.0.11
 ------
 
