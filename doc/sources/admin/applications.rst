@@ -36,6 +36,7 @@ Applications
    applications/office365
    applications/publik
    applications/phpldapadmin
+   applications/redmine
    applications/roundcube
    applications/salesforce
    applications/sap
@@ -116,6 +117,7 @@ Application                                                       Configuration 
 .. image:: applications/logo_office_365.png                       :doc:`Office 365<applications/office365>`                                              ✔
 .. image:: applications/logo-publik.png                           :doc:`Publik<applications/publik>`                                                          ✔
 .. image:: applications/phpldapadmin_logo.png                     :doc:`phpLDAPAdmin<applications/phpldapadmin>`       ✔
+.. image:: applications/redmine_logo.png                          :doc:`Redmine<applications/redmine>`                                                        ✔
 .. image:: applications/roundcube_logo.png                        :doc:`Roundcube<applications/roundcube>`             ✔
 .. image:: applications/salesforce-logo.jpg                       :doc:`SalesForce<applications/salesforce>`                                             ✔
 .. image:: applications/SAPLogo.gif                               :doc:`SAP<applications/sap>`                         ✔                                 ✔
