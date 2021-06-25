@@ -400,7 +400,7 @@ sub reloadConf {
             }
         }
 
-        my $tmp = 'https?://' . $re->as_string . '(?::\d+)?(?:/|$)';
+        my $tmp = '^https?://' . $re->as_string . '(?::\d+)?(?:/|$)';
         $self->trustedDomainsRe(qr/$tmp/);
 
     }
