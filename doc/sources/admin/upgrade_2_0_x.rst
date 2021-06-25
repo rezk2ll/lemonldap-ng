@@ -69,6 +69,27 @@ OpenID Connect check session iframe
 
 The OIDC check session iframe is not working, it has been removed from OIDC configuration metadata. It should not impact any installation as this feature was already broken.
 
+Simplification of TOTP options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following options have been removed from TOTP configuration:
+
+* Display existing secret (``totp2fDisplayExistingSecret``)
+* Change existing secret (``totp2fUserCanChangeKey``)
+
+As a consequence, users who are *not* using the default `bootstrap` skin may need to ajust their ``totp2fregister.tpl`` template:
+
+* Move ``#divToHide`` from the ``.col-md-6`` div to the ``.card`` div
+* Change::
+
+  <pre id="serialized"></pre>
+
+* to::
+
+  <br/><tt id="secret"></tt>
+
+* Remove the ``#changekey`` button
+
 2.0.11
 ------
 

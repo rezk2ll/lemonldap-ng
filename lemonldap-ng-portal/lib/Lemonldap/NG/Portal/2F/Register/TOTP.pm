@@ -36,8 +36,7 @@ sub init {
 sub run {
     my ( $self, $req, $action ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
-    return $self->p->sendError( $req,
-        'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 )
+    return $self->p->sendError( $req, 'PE82', 400 )
       unless $user;
 
     # Check if TOTP can be updated
@@ -118,7 +117,7 @@ sub run {
             };
             if ($@) {
                 $self->logger->error("Corrupted session (_2fDevices): $@");
-                return $self->p->sendError( $req, "Corrupted session", 500 );
+                return $self->p->sendError( $req, "serverError", 500 );
             }
         }
         else {
@@ -139,7 +138,7 @@ sub run {
         $self->logger->debug("Reading TOTP secret if exists...");
         $secret = $_->{_secret} foreach (@totp2f);
         return $self->p->sendError( $req, 'totpExistingKey', 200 )
-          if ( $token->{_totp2fSecret} eq $secret );
+          if $secret;
 
         ### USER CAN ONLY REGISTER ONE TOTP ###
         # Delete TOTP previously registered
@@ -192,7 +191,7 @@ sub run {
             };
             if ($@) {
                 $self->logger->error("Corrupted session (_2fDevices): $@");
-                return $self->p->sendError( $req, "Corrupted session", 500 );
+                return $self->p->sendError( $req, "serverError", 500 );
             }
         }
 
@@ -214,24 +213,13 @@ sub run {
         $self->logger->debug("Reading TOTP secret if exists...");
         $secret = $_->{_secret} foreach (@totp2f);
 
-        if ( ( $req->param('newkey') and $self->conf->{totp2fUserCanChangeKey} )
-            or not $secret )
-        {
+        if ($secret) {
+            return $self->p->sendError( $req, 'totpExistingKey', 200 );
+        }
+        else {
             $secret = $self->newSecret;
             $self->logger->debug("Generating new secret = $secret");
             $nk = 1;
-        }
-
-        elsif ( $req->param('newkey') ) {
-            return $self->p->sendError( $req, 'notAuthorized', 200 );
-        }
-
-        elsif ( $self->conf->{totp2fDisplayExistingSecret} ) {
-            $self->logger->debug("User secret = $secret");
-        }
-
-        else {
-            return $self->p->sendError( $req, 'totpExistingKey', 200 );
         }
 
         # Secret is stored in a token: we choose to not accept secret returned
@@ -283,7 +271,7 @@ sub run {
             };
             if ($@) {
                 $self->logger->error("Corrupted session (_2fDevices): $@");
-                return $self->p->sendError( $req, "Corrupted session", 500 );
+                return $self->p->sendError( $req, "serverError", 500 );
             }
         }
         else {

@@ -1873,17 +1873,6 @@ sub attributes {
             default       => 6,
             documentation => 'Number of digits for TOTP code',
         },
-        totp2fDisplayExistingSecret => {
-            type    => 'bool',
-            default => 0,
-            documentation =>
-              'Display existing TOTP secret in registration form',
-        },
-        totp2fUserCanChangeKey => {
-            type          => 'bool',
-            default       => 0,
-            documentation => 'Authorize users to change existing TOTP secret',
-        },
         totp2fUserCanRemoveKey => {
             type          => 'bool',
             default       => 1,
