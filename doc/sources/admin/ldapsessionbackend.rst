@@ -42,7 +42,7 @@ Name                     Comment                           Example
 ======================== ================================= ===============================
 **ldapServer**           URI of the server                 ldap://localhost
 **ldapConfBase**         DN of sessions branch             ou=sessions,dc=example,dc=com
-**ldapBindDN**           Connection login                  cn=admin,dc=example,dc=password
+**ldapBindDN**           Connection login                  cn=admin,dc=example,dc=dom
 **ldapBindPassword**     Connection password               secret
 ======================== ================================= ===============================
 
