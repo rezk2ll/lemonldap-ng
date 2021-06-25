@@ -91,7 +91,7 @@ Ubuntu dist               LLNG version                     Secured              
 19.10       Eoan          `2.0.5 </documentation/2.0/>`__  |bad| CVE-2019-15941, CVE-2020-24660                                 None
 20.04       Focal  [9]_   `2.0.7 </documentation/2.0/>`__  |bad| CVE-2020-24660                                                 None
 20.10       Groovy        `2.0.8 </documentation/2.0/>`__  |bad| CVE-2020-24660                                                 None
-20.10       Hirsute       `2.0.11 </documentation/2.0/>`__ |clean|                                                              None
+21.04       Hirsute       `2.0.11 </documentation/2.0/>`__ |clean|                                                              None
 =========== ============= ================================ ==================================================================== ===========
 
 Bug report
