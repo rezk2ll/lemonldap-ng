@@ -116,8 +116,7 @@ sub delete {
 sub logError {
     my $self = shift;
     $Lemonldap::NG::Common::Conf::msg .=
-      "Database error: " . $self->_dbh->errstr . "\n";
+      "Database error: " . $DBI::errstr . "\n";
 }
 
 1;
-__END__
