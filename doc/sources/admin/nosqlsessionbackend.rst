@@ -9,7 +9,7 @@ Setup
 
 Install and launch a `Redis server <https://redis.io/>`__.
 Install
-`Apache::Session::Browseable::Redis <https://metacpan.org/pod/Apache::Session::Redis>`__
+`Apache::Session::Browseable::Redis <https://metacpan.org/pod/Apache::Session::Browseable::Redis>`__
 Perl module.
 
 In the manager: set
