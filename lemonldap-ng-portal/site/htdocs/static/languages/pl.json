@@ -291,7 +291,7 @@
 "submit":"Zatwierdź",
 "switchContext":"Przełącz kontekst",
 "totp2f":"Aplikacja OTP",
-"totpExistingKey":"Sekret TOTP już istnieje",
+"totpExistingKey":"A TOTP device is already registered, you must remove it before adding a new TOTP device",
 "totpMissingCode":"Please enter the code supplied by your TOTP application",
 "totpQrCode":"Scan this QR code in your TOTP application",
 "totpRegisterCode":"Input the code provided by your application",
