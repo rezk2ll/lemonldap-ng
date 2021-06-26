@@ -336,7 +336,7 @@ sub defaultValues {
         'sfManagerRule'                           => 1,
         'sfRemovedMsgRule'                        => 0,
         'sfRemovedNotifMsg' =>
-          '_removedSF_ expired second factor(s) has/have been removed!',
+'_removedSF_ expired second factor(s) has/have been removed (_nameSF_)!',
         'sfRemovedNotifRef'       => 'RemoveSF',
         'sfRemovedNotifTitle'     => 'Second factor notification',
         'sfRequired'              => 0,

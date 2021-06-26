@@ -3226,7 +3226,7 @@ sub attributes {
         sfRemovedNotifMsg => {
             type => 'text',
             default =>
-              '_removedSF_ expired second factor(s) has/have been removed!',
+              '_removedSF_ expired second factor(s) has/have been removed (_nameSF_)!',
             help          => 'secondfactor.html',
             documentation => 'Notification message',
         },

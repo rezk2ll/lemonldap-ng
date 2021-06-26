@@ -3949,7 +3949,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'sfRemovedNotifMsg' => {
             'default' =>
-              '_removedSF_ expired second factor(s) has/have been removed!',
+'_removedSF_ expired second factor(s) has/have been removed (_nameSF_)!',
             'type' => 'text'
         },
         'sfRemovedNotifRef' => {
