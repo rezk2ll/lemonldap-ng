@@ -520,6 +520,7 @@ t/29-AuthSSL.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO.t
 t/30-Auth-and-issuer-SAML-Metadata.t
+t/30-Auth-and-issuer-SAML-NameID.t
 t/30-Auth-and-issuer-SAML-POST-Hook.t
 t/30-Auth-and-issuer-SAML-POST-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-POST-Missing-SLO.t
@@ -575,6 +576,7 @@ t/32-OIDC-Hooks.t
 t/32-OIDC-Macro.t
 t/32-OIDC-Offline-Session.t
 t/32-OIDC-Password-Grant-with-Bruteforce-and-Choice.t
+t/32-OIDC-Password-Grant.t
 t/32-OIDC-Refresh-Token.t
 t/32-OIDC-Register.t
 t/32-OIDC-RP-rule.t
@@ -678,6 +680,7 @@ t/65-AutoSignin.t
 t/65-CheckState.t
 t/66-CDA-already-auth.t
 t/66-CDA-PSGI-Try.t
+t/66-CDA-wildcard.t
 t/66-CDA-with-doubleCookies.t
 t/66-CDA-with-REST.t
 t/66-CDA-with-SOAP.t
