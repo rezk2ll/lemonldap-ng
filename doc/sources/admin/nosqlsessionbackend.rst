@@ -7,7 +7,7 @@ is the faster shareable session backend
 Setup
 -----
 
-Install and launch a `Redis server <http://code.google.com/p/redis/>`__.
+Install and launch a `Redis server <https://redis.io/>`__.
 Install
 `Apache::Session::Browseable::Redis <https://metacpan.org/pod/Apache::Session::Redis>`__
 Perl module.
