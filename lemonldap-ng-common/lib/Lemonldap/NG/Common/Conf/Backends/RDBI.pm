@@ -16,30 +16,23 @@ sub store {
 
     my $req;
     my $lastCfg = $self->lastCfg;
+    $req = $self->_dbh->prepare(
+        "INSERT INTO $self->{dbiTable} (cfgNum,field,value) VALUES (?,?,?)");
 
     if ( $lastCfg == $cfgNum ) {
-        $req = $self->_dbh->prepare(
-"UPDATE $self->{dbiTable} SET field=?, value=? WHERE cfgNum=? AND field=?"
-        );
-
-    }
-    else {
-        $req = $self->_dbh->prepare(
-            "INSERT INTO $self->{dbiTable} (cfgNum,field,value) VALUES (?,?,?)"
-        );
+        my $r =
+          $self->_dbh->prepare("DELETE FROM $self->{dbiTable} where cfgNum=?");
+        $r->execute($cfgNum);
     }
     unless ($req) {
         $self->logError;
         return UNKNOWN_ERROR;
     }
     while ( my ( $k, $v ) = each %$fields ) {
-        my @execValues;
-        if ( $lastCfg == $cfgNum ) {
-            @execValues = ( $k, $v, $cfgNum, $k );
-        }
-        else { @execValues = ( $cfgNum, $k, $v ); }
+        my @execValues = ( $cfgNum, $k, $v );
         my $execute;
         eval { $execute = $req->execute(@execValues); };
+        print STDERR $@ if $@;
         unless ($execute) {
             $self->logError;
             $self->_dbh->do("ROLLBACK");
@@ -55,7 +48,7 @@ sub load {
     my $sth =
       $self->_dbh->prepare(
         "SELECT field,value from " . $self->{dbiTable} . " WHERE cfgNum=?" )
-          or $self->logError;
+      or $self->logError;
     $sth->execute($cfgNum) or $self->logError;
     my ( $res, @row );
     while ( @row = $sth->fetchrow_array ) {
