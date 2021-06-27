@@ -1,4 +1,4 @@
-# Test notifications explorer API
+# Test for https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2493
 
 use strict;
 use Data::Dumper;
