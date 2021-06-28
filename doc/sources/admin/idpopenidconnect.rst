@@ -300,7 +300,7 @@ Options
       default value is one minute.
    -  **ID Token expiration**: Expiration time of ID Tokens. The default
       value is one hour.
-   -  **Access token expiration** (since version ``2.0.12``): Expiration time
+   -  **Access token expiration**: Expiration time
       of Access Tokens. The default value is one hour.
    -  **Offline session expiration**: This sets the lifetime of the
       refresh token obtained with the **offline_access** scope. The
@@ -311,8 +311,8 @@ Options
 
    -  **ID Token signature algorithm**: Select one of the available public key
       (RSXXX) or HMAC (HSXXX) based signature algorithms
-   -  **Access Token signature algorithm**: Select one of the available public
-      key signature algorithms
+   -  **Access Token signature algorithm** (since version ``2.0.12``): Select
+      one of the available public key signature algorithms
    -  **Userinfo response format** (since version ``2.0.12``): By default,
       UserInfo is returned as a simple JSON object. You can also choose to
       return it as a JWT, using one of the available signature algorithms.
