@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Lib::_tokenRule;
 use strict;
 use Mouse;
 
-our $VERSION = '2.0.3';
+our $VERSION = '2.0.12';
 
 has ottRule => (
     is      => 'rw',
