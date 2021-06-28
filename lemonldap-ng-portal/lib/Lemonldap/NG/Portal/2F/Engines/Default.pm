@@ -46,6 +46,19 @@ has ott => (
     }
 );
 
+has regOtt => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        my $ott =
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        my $timeout = $_[0]->{conf}->{sfRegisterTimeout}
+          // $_[0]->{conf}->{formTimeout};
+        $ott->timeout($timeout);
+        return $ott;
+    }
+);
+
 sub init {
     my ($self) = @_;
 
@@ -240,7 +253,7 @@ sub run {
 
         $self->logger->debug("Looking for expired 2F device(s)...");
         my $removed = 0;
-        my $name = '';
+        my $name    = '';
         my $now     = time();
         foreach my $device (@$_2fDevices) {
             my $type = lc( $device->{type} );
@@ -312,7 +325,7 @@ sub run {
             $self->logger->debug("2F is required...");
             $self->logger->debug(" -> Register 2F");
             $req->pdata->{sfRegToken} =
-              $self->ott->createToken( $req->sessionInfo );
+              $self->regOtt->createToken( $req->sessionInfo );
             $self->logger->debug("Just one 2F is enabled");
             $self->logger->debug(" -> Redirect to 2fregisters/");
             $req->response( [
@@ -602,7 +615,7 @@ sub restoreSession {
     my ( $self, $req, @path ) = @_;
     my $token = $req->pdata->{sfRegToken}
       or return [ 302, [ Location => $self->conf->{portal} ], [] ];
-    $req->userData( $self->ott->getToken( $token, 1 ) );
+    $req->userData( $self->regOtt->getToken( $token, 1 ) );
     $req->data->{sfRegRequired} = 1;
     return $req->method eq 'POST'
       ? $self->register( $req, @path )

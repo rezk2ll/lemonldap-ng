@@ -24,7 +24,9 @@ has ott      => (
     default => sub {
         my $ott =
           $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        $ott->timeout( $_[0]->conf->{formTimeout} );
+        my $timeout = $_[0]->{conf}->{sfRegisterTimeout}
+          // $_[0]->{conf}->{formTimeout};
+        $ott->timeout($timeout);
         return $ott;
     }
 );
