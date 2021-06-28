@@ -3230,6 +3230,10 @@ sub attributes {
             help          => 'secondfactor.html',
             documentation => 'Notification message',
         },
+        sfRegisterTimeout => {
+            type          => 'int',
+            documentation => 'Timeout for 2F registration process',
+        },
         available2F => {
             type          => 'text',
             default       => 'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,Yubikey,Radius',

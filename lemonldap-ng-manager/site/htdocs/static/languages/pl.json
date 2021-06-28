@@ -1049,6 +1049,7 @@
 "sfExtra":"Dodatkowe drugie czynniki",
 "sfManagerRule":"Link do Menedżera wyświetlania",
 "sfOnlyUpgrade":"Użyj 2FA do aktualizacji sesji",
+"sfRegisterTimeout":"Registration timeout",
 "sfRemovedMsg":"Wyświetl komunikat, gdy przeterminowany 2FA został usunięty",
 "sfRemovedMsgRule":"Aktywacja",
 "sfRemovedNotifMsg":"Powiadomienie",

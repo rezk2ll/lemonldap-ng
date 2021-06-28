@@ -3943,6 +3943,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'sfOnlyUpgrade' => {
             'type' => 'bool'
         },
+        'sfRegisterTimeout' => {
+            'type' => 'int'
+        },
         'sfRemovedMsgRule' => {
             'default' => 0,
             'type'    => 'boolOrExpr'

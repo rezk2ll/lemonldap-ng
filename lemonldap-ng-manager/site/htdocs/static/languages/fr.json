@@ -1049,6 +1049,7 @@
 "sfExtra":"Seconds facteurs additionnels",
 "sfManagerRule":"Afficher le lien du Gestionnaire",
 "sfOnlyUpgrade":"Utiliser le SF pour augmenter le niveau d'authentification",
+"sfRegisterTimeout":"Délai d'expiration de l'enregistrement",
 "sfRemovedMsg":"Afficher un message si un SF expiré est supprimé",
 "sfRemovedMsgRule":"Activation",
 "sfRemovedNotifMsg":"Message de la notification",

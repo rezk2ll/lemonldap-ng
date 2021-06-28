@@ -980,6 +980,7 @@ sub tree {
                                 'sfRemovedNotifMsg',
                             ],
                         },
+                        'sfRegisterTimeout',
                     ]
                 },
                 {

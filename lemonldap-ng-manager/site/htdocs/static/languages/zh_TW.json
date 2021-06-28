@@ -1049,6 +1049,7 @@
 "sfExtra":"額外的第二因素",
 "sfManagerRule":"顯示管理程式連結",
 "sfOnlyUpgrade":"使用 2FA 進行工作階段升級",
+"sfRegisterTimeout":"Registration timeout",
 "sfRemovedMsg":"如果過期的雙因素已被移除則顯示訊息",
 "sfRemovedMsgRule":"啟用",
 "sfRemovedNotifMsg":"通知訊息",
