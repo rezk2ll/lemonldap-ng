@@ -341,7 +341,7 @@ Backend                                     Shareable Comment
                                                       Selected by default during installation.
 :doc:`YAML<yamlconfbackend>` |new|                    Same as :doc:`File<fileconfbackend>` but in YAML format
                                                       instead of JSON
-:doc:`SQL (RDBI/CDBI)<sqlconfbackend>`      ✔         **Recommended for large-scale systems**. Prefer CDBI.
+:doc:`SQL (CDBI/RDBI)<sqlconfbackend>`      ✔         **Recommended for large-scale systems**. Prefer CDBI.
 :doc:`LDAP<ldapconfbackend>`                ✔
 :doc:`MongoDB<mongodbconfbackend>`          ✔
 :doc:`SOAP<soapconfbackend>` |deprecated|   ✔         Proxy backend to be used in conjunction with another
