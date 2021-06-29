@@ -19,11 +19,7 @@ sub store {
     $req = $self->_dbh->prepare(
         "INSERT INTO $self->{dbiTable} (cfgNum,field,value) VALUES (?,?,?)");
 
-    if ( $lastCfg == $cfgNum ) {
-        my $r =
-          $self->_dbh->prepare("DELETE FROM $self->{dbiTable} where cfgNum=?");
-        $r->execute($cfgNum);
-    }
+    _delete($self,$cfgNum) if $lastCfg == $cfgNum;
     unless ($req) {
         $self->logError;
         return UNKNOWN_ERROR;
@@ -35,6 +31,7 @@ sub store {
         print STDERR $@ if $@;
         unless ($execute) {
             $self->logError;
+            _delete( $self, $cfgNum ) if $lastCfg != $cfgNum;
             $self->_dbh->do("ROLLBACK");
             return UNKNOWN_ERROR;
         }
@@ -63,5 +60,11 @@ sub load {
     return $self->unserialize($res);
 }
 
+sub _delete {
+    my ( $self, $cfgNum ) = @_;
+    my $r =
+      $self->_dbh->prepare("DELETE FROM $self->{dbiTable} where cfgNum=?");
+    $r->execute($cfgNum);
+}
+
 1;
-__END__
