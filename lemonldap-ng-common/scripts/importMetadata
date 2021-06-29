@@ -49,10 +49,10 @@ if ( $opts{help} or !$opts{metadata} ) {
     print STDERR
 "\t--ignore-idp: ignore IdP matching this entityID (can be specified multiple times)\n";
     print STDERR "\t-a (--nagios) : output statistics in Nagios format\n";
-    print STDERR "\t-n (--dry-run): do nothing\n";
-    print STDERR "\t-v (--verbose): display all actions\n";
+    print STDERR "\t-n (--dry-run): print statistics but do not apply changes\n";
+    print STDERR "\t-v (--verbose): increase verbosity of output\n";
     print STDERR
-"\t-r (--remove): remove entityID inside LemonLDAP if was remove inside remote metadata\n";
+"\t-r (--remove): remove provider from LemonLDAP::NG if it does not appear in metadata\n";
     exit 1;
 }
 

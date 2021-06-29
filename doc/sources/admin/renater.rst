@@ -94,18 +94,16 @@ Then run the script:
 
 The script provide the following options 
 
- * -c (--certificate) : URL of certificate, to check metadata document signature
- * -i (--idpconfprefix) : Prefix used to set IDP configuration key
- * -h (--help) : print this message
- * -m (--metadata : URL of metadata document
+ * -i (--idpconfprefix): Prefix used to set IDP configuration key
+ * -h (--help): print this message
+ * -m (--metadata): URL of metadata document
  * -s (--spconfprefix): Prefix used to set SP configuration key
- * -w (--warning): print debug messages
- * -bs (--blocklistsp): list of SP entityID to avoid to modify/import
- * -bi (--blocklistip): list of IdP entityID to avoid to modify/import
- * -n (--nagios) : output only metrics nagios compatible
- * -d (--dryrun): do nothing
- * -v (--verbose) : display all actions
- * -r (--remove) : remove entityID inside LemonLDAP if was remove inside remote metadata
+ * --ignore-sp: ignore SP maching this entityID (can be specified multiple times)
+ * --ignore-idp: ignore IdP matching this entityID (can be specified multiple times)
+ * -a (--nagios): output statistics in Nagios format
+ * -n (--dry-run): print statistics but do not apply changes
+ * -v (--verbose): increase verbosity of output
+ * -r (--remove): remove provider from LemonLDAP::NG if it does not appear in metadata
 
 
 Example :
