@@ -24,12 +24,12 @@ sub toEntityIDkey {
 #==============================================================================
 my %opts;
 my $result = GetOptions(
-    \%opts,              'metadata|m=s',
-    'certificate|c=s',   'verbose|v',
-    'help|h',            'spconfprefix|s=s',
-    'idpconfprefix|i=s', 'warning|w',
-    'remove|r', 'nagios|n',
-    'blocklistsp|bs=s', 'blocklistidp|bi=s', 'dryrun|d'
+    \%opts,             'metadata|m=s',
+    'verbose|v',        'help|h',
+    'spconfprefix|s=s', 'idpconfprefix|i=s',
+    'remove|r',         'nagios|a',
+    'ignore-sp=s@',     'ignore-idp=s@',
+    'dry-run|n'
 );
 
 #==============================================================================
@@ -40,16 +40,18 @@ if ( $opts{help} or !$opts{metadata} ) {
 "\nScript to import SAML metadata bundle file into LL::NG configuration\n\n";
     print STDERR "Usage: $0 -m <metadata file URL>\n\n";
     print STDERR "Options:\n";
-    print STDERR "\t-c (--certificate): URL of certificate, to check metadata document signature\n";
-    print STDERR "\t-i (--idpconfprefix): Prefix used to set IDP configuration key\n";
+    print STDERR
+      "\t-i (--idpconfprefix): Prefix used to set IDP configuration key\n";
     print STDERR "\t-h (--help): print this message\n";
     print STDERR "\t-m (--metadata): URL of metadata document\n";
-    print STDERR "\t-s (--spconfprefix): Prefix used to set SP configuration key\n";
-    print STDERR "\t-w (--warning): print debug messages\n";
-    print STDERR "\t-bs (--blocklistsp): list of SP entityID to avoid to modify/import\n";
-    print STDERR "\t-bi (--blocklistip): list of IdP entityID to avoid to modify/import\n";
-    print STDERR "\t-n (--nagios) : output only metrics nagios compatible\n";
-    print STDERR "\t-d (--dryrun): do nothing\n";
+    print STDERR
+      "\t-s (--spconfprefix): Prefix used to set SP configuration key\n";
+    print STDERR
+"\t--ignore-sp: ignore SP maching this entityID (can be specified multiple times)\n";
+    print STDERR
+"\t--ignore-idp: ignore IdP matching this entityID (can be specified multiple times)\n";
+    print STDERR "\t-a (--nagios) : output statistics in Nagios format\n";
+    print STDERR "\t-n (--dry-run): do nothing\n";
     print STDERR "\t-v (--verbose): display all actions\n";
     print STDERR "\t-r (--remove): remove entityID inside LemonLDAP if was remove inside remote metadata\n";
     exit 1;
@@ -133,33 +135,9 @@ my $spCounter = {
     'ignored'  => 0,
 };
 
-
-
-#############  Block List manipulation
-
-my $blocklistsp  = $opts{blocklistsp} || "";
-my $blocklistidp = $opts{blocklistidp} || "";
-
 # BlockList initialisation
-my @spBlocklist = ();
-my @spBlocklistKey = ();
-if ( $blocklistsp ) {
-  @spBlocklist = split(/,/,$opts{blocklistsp});
-}
-
-my @idpBlocklist = ();
-my @idpBlocklistKey = ();
-if ( $blocklistidp ) {
-  @idpBlocklist = split(/,/,$opts{blocklistidp})
-}
-
-foreach my $s (@spBlocklist) {
-  push(@spBlocklistKey,toEntityIDkey($spConfKeyPrefix, $s));
-}
-
-foreach my $s (@idpBlocklist) {
-  push(@idpBlocklistKey,toEntityIDkey($idpConfKeyPrefix, $s));
-}
+my @spIgnorelist  = @{ $opts{'ignore-sp'}  || [] };
+my @idpIgnorelist = @{ $opts{'ignore-idp'} || [] };
 
 #==============================================================================
 # Main
@@ -223,33 +201,6 @@ else {
 
 my $dom = XML::LibXML->load_xml( string => $response->decoded_content );
 
-# Check file signature
-if ( $opts{certificate} ) {
-    my $certificate_file = $opts{certificate};
-    if ( $opts{verbose} ) {
-        print "Try to download certificate file at $certificate_file\n";
-    }
-    my $cert_response = $ua->get($certificate_file);
-
-    if ( $cert_response->is_success ) {
-        if ( $opts{verbose} ) {
-            print "Certificate file found:\n"
-              . $cert_response->decoded_content . "\n";
-        }
-    }
-    else {
-        die $cert_response->status_line;
-    }
-
-    if ( $opts{verbose} ) {
-        print "Check metadata signature with certificate";
-    }
-
-    # TODO
-    print STDERR "[WARN] Signature verification not yet implemented\n"
-      if $opts{warning};
-}
-
 # Remove extensions
 foreach ( $dom->findnodes('//md:Extensions') ) { $_->unbindNode; }
 
@@ -284,10 +235,10 @@ foreach
 
             # test if IDP entityID is inside the block list
 
-            if ( $entityID ~~ @idpBlocklist){  
-		if ( $opts{verbose} ) {
-                      print "IDP $entityID won't be update/added \n";
-                  }
+            if ( $entityID ~~ @idpIgnorelist ) {
+                if ( $opts{verbose} ) {
+                    print "IDP $entityID won't be update/added \n";
+                }
                 $idpCounter->{ignored}++;
             }else{
               # Check if entityID already in configuration
@@ -337,7 +288,7 @@ foreach
         else {
             print STDERR
 "[WARN] IDP $entityID is not compatible with SAML 2.0, it will not be imported.\n"
-              if $opts{warning};
+              if $opts{verbose};
             $idpCounter->{rejected}++;
         }
     }
@@ -404,7 +355,7 @@ foreach
 
             # test if IDP entityID is inside the block list
 
-            if ( $entityID ~~ @spBlocklist){  
+            if ( $entityID ~~ @spIgnorelist ) {
                 if ( $opts{verbose} ) {
                       print "SP $entityID won't be update/added \n";
                   }
@@ -468,7 +419,7 @@ foreach
         else {
             print STDERR
 "[WARN] SP $entityID is not compatible with SAML 2.0, it will not be imported.\n"
-              if $opts{warning};
+              if $opts{verbose};
             $spCounter->{rejected}++;
         }
 
@@ -480,12 +431,14 @@ foreach
 if ( $opts{remove} ) {
     foreach ( keys %$idpList ) {
         my $idpConfKey = $idpList->{$_};
-        if ( $idpConfKey ~~ @idpBlocklistKey){
-            if ( $opts{verbose} ) {
-                 print "IDP $idpConfKey won't be deleted \n";
+        unless ( defined $mdIdpList->{$_} ) {
+            if ( $_ ~~ @idpIgnorelist ) {
+                $idpCounter->{ignored}++;
+                if ( $opts{verbose} ) {
+                    print "IDP $idpConfKey won't be deleted \n";
+                }
             }
-	}else{
-            unless ( defined $mdIdpList->{$_} ) {
+            else {
                 delete $lastConf->{samlIDPMetaDataXML}->{$idpConfKey};
                 delete $lastConf->{samlIDPMetaDataExportedAttributes}
                   ->{$idpConfKey};
@@ -500,12 +453,14 @@ if ( $opts{remove} ) {
 
     foreach ( keys %$spList ) {
         my $spConfKey = $spList->{$_};
-        if ( $spConfKey ~~ @spBlocklistKey){
-            if ( $opts{verbose} ) {
-                 print "SP $spConfKey won't be deleted \n";
+        unless ( defined $mdSpList->{$_} ) {
+            if ( $_ ~~ @spIgnorelist ) {
+                $spCounter->{ignored}++;
+                if ( $opts{verbose} ) {
+                    print "SP $spConfKey won't be deleted \n";
+                }
             }
-        }else{
-            unless ( defined $mdSpList->{$_} ) {
+            else {
                 delete $lastConf->{samlSPMetaDataXML}->{$spConfKey};
                 delete $lastConf->{samlSPMetaDataExportedAttributes}->{$spConfKey};
                 delete $lastConf->{samlSPMetaDataOptions}->{$spConfKey};
@@ -521,24 +476,26 @@ if ( $opts{remove} ) {
 my $numConf = "DRY-RUN";
 my $exitCode = 0;
 
-if ( ! $opts{dryrun} ) {
-  # Register configuration
-  if ( $opts{verbose} ) {
-    print "[INFO] run mod EntityID will be inserted\n";
-  }
-  $numConf = $conf->saveConf( $lastConf, ( cfgNumFixed => 1 ) );
-  if ( $opts{verbose} ) {
-    print "[OK] Configuration $numConf saved\n";
-    $exitCode = 0;
-  }
-  unless ($numConf) {
-      print "[ERROR] Unable to save configuration\n";
-      $exitCode = 1;
-  }
-}else{
-  if ( $opts{verbose} ) {
-    print "[INFO] Dry-run mod no EntityID inserted\n";
-  }
+if ( !$opts{'dry-run'} ) {
+
+    # Register configuration
+    if ( $opts{verbose} ) {
+        print "[INFO] run mod EntityID will be inserted\n";
+    }
+    $numConf = $conf->saveConf( $lastConf, ( cfgNumFixed => 1 ) );
+    if ( $opts{verbose} ) {
+        print "[OK] Configuration $numConf saved\n";
+        $exitCode = 0;
+    }
+    unless ($numConf) {
+        print "[ERROR] Unable to save configuration\n";
+        $exitCode = 1;
+    }
+}
+else {
+    if ( $opts{verbose} ) {
+        print "[INFO] Dry-run mod no EntityID inserted\n";
+    }
 }
 
 
