@@ -92,6 +92,57 @@ Then run the script:
 
    /usr/share/lemonldap-ng/bin/importMetadataRenater -m https://metadata.federation.renater.fr/renater/main/main-idps-renater-metadata.xml -r -i "idp-renater-" -s "sp-renater-"
 
+The script provide the following options 
+
+ * -c (--certificate) : URL of certificate, to check metadata document signature
+ * -i (--idpconfprefix) : Prefix used to set IDP configuration key
+ * -h (--help) : print this message
+ * -m (--metadata : URL of metadata document
+ * -s (--spconfprefix): Prefix used to set SP configuration key
+ * -w (--warning): print debug messages
+ * -bs (--blocklistsp): list of SP entityID to avoid to modify/import
+ * -bi (--blocklistip): list of IdP entityID to avoid to modify/import
+ * -n (--nagios) : output only metrics nagios compatible
+ * -d (--dryrun): do nothing
+ * -v (--verbose) : display all actions
+ * -r (--remove) : remove entityID inside LemonLDAP if was remove inside remote metadata
+
+
+Example :
+::
+
+    /usr/libexec/lemonldap-ng/bin/importMetadata -m https://pub.federation.renater.fr/metadata/renater/main/main-sps-renater-metadata.xml -s "sp-fed-prd" -c https://pub.federation.renater.fr/metadata/certs/renater-metadata-signing-cert-2016.pem -bs https://test-sp.federation.renater.fr -r -v -d
+    
+This command will 
+  * fetch all SPs metadata from renater
+  * set a prefix to entity stored inside LemonLdap::NG
+  * disable local modification of SP https://test-sp.federation.renater.fr
+  * remove local SPs wich didn't exist anymore in Federation metadata
+  * show only all modifications to apply
+
+The output is the following :
+
+ .. code-block::
+
+  ...
+  Update SP https://www-iuem.univ-brest.fr/sp in configuration
+  Attribute mail (urn:oid:0.9.2342.19200300.100.1.3) requested by SP https://gesper.ad.bnu.fr/shibboleth
+  Attribute eduPersonPrimaryAffiliation (urn:oid:1.3.6.1.4.1.5923.1.1.1.5) requested by SP https://gesper.ad.bnu.fr/shibboleth
+  Attribute eduPersonPrincipalName (urn:oid:1.3.6.1.4.1.5923.1.1.1.6) requested by SP https://gesper.ad.bnu.fr/shibboleth
+  Attribute displayName (urn:oid:2.16.840.1.113730.3.1.241) requested by SP https://gesper.ad.bnu.fr/shibboleth
+  Update SP https://gesper.ad.bnu.fr/shibboleth in configuration
+  [INFO] Dry-run mod no EntityID inserted
+  [IDP]	Found: 0	Updated: 0	Created: 0	Removed: 0	Rejected: 0	Ignored: 0
+  [SP]	Found: 1248	Updated: 1240	Created: 0	Removed: 0	Rejected: 7	Ignored: 1
+
+
+With "-n" options you could get a "nagios like" output with metrics :
+
+ .. code-block::
+ 
+  /usr/libexec/lemonldap-ng/bin/importMetadataFedRenater -m https://pub.federation.renater.fr/metadata/renater/main/main-sps-renater-metadata.xml -s "sp-fed-prd" -c https://pub.federation.renater.fr/metadata/certs/renater-metadata-signing-cert-2016.pem -bs https://test-sp.federation.renater.fr -r -d -n
+  Metadata loaded inside Conf: [DRY-RUN]|idp_found=0, idp_updated=0, idp_created=0, idp_removed=0, idp_rejected=0, idp_ignored=0, sp_found=1248, sp_updated=1240, sp_created=0, sp_removed=0, sp_rejected=7, sp_ignored=1
+
 
 .. attention::
 
