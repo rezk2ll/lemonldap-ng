@@ -41,6 +41,7 @@ Because of this bug, the created sessions may never be purged by the `purgeCentr
 In order to detect these sessions, you can run the following command:
 
 ::
+
    lemonldap-ng-sessions  search --where _session_kind=SSO --select _session_id --select _utime | \
    jq -r  '. | map(select(._utime == null)) | map(._session_id) | join ("\n")'
 
