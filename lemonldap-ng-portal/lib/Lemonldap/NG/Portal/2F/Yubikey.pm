@@ -86,7 +86,7 @@ sub init {
 
 sub _findYubikey {
     my ( $self, $req, $sessionInfo ) = @_;
-    my ( $yubikey, $_2fDevices );
+    my ( $yubikey, $_2fDevices, $code );
 
     # First, lookup from session attribute
     if ( $self->conf->{yubikey2fFromSessionAttribute} ) {
@@ -109,8 +109,14 @@ sub _findYubikey {
         $self->logger->debug("2F Device(s) found");
         $self->logger->debug("Reading Yubikey ...");
 
-        $yubikey = $_->{_yubikey}
-          foreach grep { $_->{type} eq 'UBK' } @$_2fDevices;
+        if ( $code = $req->param('code') ) {
+            $yubikey = $_->{_yubikey}
+              foreach grep { ($_->{type} eq 'UBK') and ( $_->{_yubikey} eq
+                substr( $code, 0, $self->conf->{yubikey2fPublicIDSize} ) ) } @$_2fDevices;
+        } else {
+            $yubikey = $_->{_yubikey}
+              foreach grep { $_->{type} eq 'UBK' } @$_2fDevices;
+        }
     }
 
     return $yubikey;
@@ -168,11 +174,7 @@ sub verify {
     # Verify OTP
     my $yubikey = $self->_findYubikey( $req, $session );
 
-    if (
-        index( $yubikey,
-            substr( $code, 0, $self->conf->{yubikey2fPublicIDSize} ) ) == -1
-      )
-    {
+    unless ( $yubikey ) {
         $self->userLogger->warn('Yubikey not registered');
         return PE_BADOTP;
     }
