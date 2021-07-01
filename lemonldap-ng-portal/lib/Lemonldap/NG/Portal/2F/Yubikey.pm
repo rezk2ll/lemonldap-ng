@@ -174,7 +174,11 @@ sub verify {
     # Verify OTP
     my $yubikey = $self->_findYubikey( $req, $session );
 
-    unless ( $yubikey ) {
+    if (
+        index( $yubikey,
+            substr( $code, 0, $self->conf->{yubikey2fPublicIDSize} ) ) == -1
+       )    
+    {
         $self->userLogger->warn('Yubikey not registered');
         return PE_BADOTP;
     }
