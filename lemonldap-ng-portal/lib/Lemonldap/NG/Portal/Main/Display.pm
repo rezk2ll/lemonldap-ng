@@ -244,6 +244,7 @@ sub display {
             PING           => $self->conf->{portalPingInterval},
             REQUIRE_OLDPASSWORD =>
               $self->requireOldPwd->( $req, $req->userData ),
+            DONT_STORE_PASSWORD   => $self->conf->{browsersDontStorePassword},
             HIDE_OLDPASSWORD   => 0,
             PPOLICY_NOPOLICY   => !$self->isPP(),
             DISPLAY_PPOLICY    => $self->conf->{portalDisplayPasswordPolicy},
@@ -443,6 +444,7 @@ sub display {
                     $req->data->{oldpassword} ) ? ""
                 : $req->data->{oldpassword},
                 HIDE_OLDPASSWORD => $self->conf->{hideOldPassword},
+                DONT_STORE_PASSWORD   => $self->conf->{browsersDontStorePassword},
                 PPOLICY_NOPOLICY => !$self->isPP(),
                 DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy},
                 PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},

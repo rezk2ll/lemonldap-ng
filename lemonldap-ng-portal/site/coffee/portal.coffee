@@ -537,25 +537,50 @@ $(window).on 'load', () ->
 
 	# Functions to show/hide change password inputs
 	$('#show-hide-button').on 'click', () ->
-		if  $("#newpassword").attr('type') == 'password'
-			console.log 'Show passwords'
-			$("#newpassword").attr('type', 'input')
-			$("#confirmpassword").attr('type', 'input')
-			$("#show-hide-icon-button").toggleClass("fa-eye fa-eye-slash")
+		if $("#newpassword").attr('autocomplete') == 'off'
+			if  $("#newpassword").attr('class') == 'form-control key' || $("#confirmpassword").attr('class') == 'form-control key'
+				console.log 'Show passwords'
+				$("#newpassword").attr('class', 'form-control')
+				$("#confirmpassword").attr('class', 'form-control')
+				$("#show-hide-icon-button").attr('class', 'fa fa-eye-slash')
+			else
+				console.log 'Hide passwords'
+				$("#newpassword").attr('class', 'form-control key') if $("#newpassword").get(0).value
+				$("#confirmpassword").attr('class', 'form-control key') if $("#confirmpassword").get(0).value
+				$("#show-hide-icon-button").attr('class', 'fa fa-eye') if ($("#newpassword").get(0).value || $("#confirmpassword").get(0).value)
 		else
-			console.log 'Hide passwords'
-			$("#newpassword").attr('type', 'password')
-			$("#confirmpassword").attr('type', 'password')
-			$("#show-hide-icon-button").toggleClass("fa-eye fa-eye-slash")
+			if  $("#newpassword").attr('type') == 'password'
+				console.log 'Show passwords'
+				$("#newpassword").attr('type', 'text')
+				$("#confirmpassword").attr('type', 'text')
+				$("#show-hide-icon-button").attr('class', 'fa fa-eye-slash')
+			else
+				console.log 'Hide passwords'
+				$("#newpassword").attr('type', 'password')
+				$("#confirmpassword").attr('type', 'password')
+				$("#show-hide-icon-button").attr('class', 'fa fa-eye')
 
 	# Functions to show/hide placeholder password inputs
 	$('#passwordfield').on 'input', () ->
-		if $('#passwordfield').get(0).value && $('#passwordfield').attr('type') == 'text'
-			$("#passwordfield").removeClass 'form-control'
-			$("#passwordfield").addClass 'form-control key'
+		if $('#passwordfield').get(0).value && $("#passwordfield").attr('autocomplete') == 'off'
+			$("#passwordfield").attr('class', 'form-control key')
 		else
-			$("#passwordfield").removeClass 'form-control key'
-			$("#passwordfield").addClass 'form-control'
+			$("#passwordfield").attr('class', 'form-control')
+	$('#oldpassword').on 'input', () ->
+		if $('#oldpassword').get(0).value && $('#oldpassword').attr('autocomplete') == 'off'
+			$("#oldpassword").attr('class', 'form-control key')
+		else
+			$("#oldpassword").attr('class', 'form-control')
+	$('#newpassword').on 'input', () ->
+		if $('#newpassword').get(0).value && $('#newpassword').attr('autocomplete') == 'off'
+			$("#newpassword").attr('class', 'form-control key') if $("#show-hide-icon-button").attr('class') == 'fa fa-eye'
+		else
+			$("#newpassword").attr('class', 'form-control')
+	$('#confirmpassword').on 'input', () ->
+		if $('#confirmpassword').get(0).value && $('#confirmpassword').attr('autocomplete') == 'off'
+			$("#confirmpassword").attr('class', 'form-control key') if $("#show-hide-icon-button").attr('class') == 'fa fa-eye'
+		else
+			$("#confirmpassword").attr('class', 'form-control')
 
 	#$('#formpass').on 'submit', changePwd
 
