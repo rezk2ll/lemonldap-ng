@@ -587,18 +587,16 @@ LemonLDAP::NG Portal jQuery scripts
         console.log('Show passwords');
         $("#newpassword").attr('type', 'input');
         $("#confirmpassword").attr('type', 'input');
-        $("#show-hide-icon-button").removeClass('fa-eye');
-        return $("#show-hide-icon-button").addClass('fa-eye-slash');
+        return $("#show-hide-icon-button").toggleClass("fa-eye fa-eye-slash");
       } else {
         console.log('Hide passwords');
         $("#newpassword").attr('type', 'password');
         $("#confirmpassword").attr('type', 'password');
-        $("#show-hide-icon-button").removeClass('fa-eye-slash');
-        return $("#show-hide-icon-button").addClass('fa-eye');
+        return $("#show-hide-icon-button").toggleClass("fa-eye fa-eye-slash");
       }
     });
     $('#passwordfield').on('input', function() {
-      if ($('#passwordfield').get(0).value && $('#passwordfield').get(0).type === 'text') {
+      if ($('#passwordfield').get(0).value && $('#passwordfield').attr('type') === 'text') {
         $("#passwordfield").removeClass('form-control');
         return $("#passwordfield").addClass('form-control key');
       } else {

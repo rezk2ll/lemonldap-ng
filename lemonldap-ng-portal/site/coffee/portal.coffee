@@ -517,11 +517,11 @@ $(window).on 'load', () ->
 
 	if datas['enablePasswordDisplay']
 		$(".toggle-password").mousedown (e) ->
-			$(this).toggleClass("fa-eye fa-eye-slash");
-			$("input[name=password]").attr("type", "text");
+			$(this).toggleClass("fa-eye fa-eye-slash")
+			$("input[name=password]").attr("type", "text")
 		$(".toggle-password").mouseup (e) ->
-			$(this).toggleClass("fa-eye fa-eye-slash");
-			$("input[name=password]").attr("type", "password");
+			$(this).toggleClass("fa-eye fa-eye-slash")
+			$("input[name=password]").attr("type", "password")
 
 	# Ping if asked
 	if datas['pingInterval'] and datas['pingInterval'] > 0
@@ -541,18 +541,16 @@ $(window).on 'load', () ->
 			console.log 'Show passwords'
 			$("#newpassword").attr('type', 'input')
 			$("#confirmpassword").attr('type', 'input')
-			$("#show-hide-icon-button").removeClass 'fa-eye'
-			$("#show-hide-icon-button").addClass 'fa-eye-slash'
+			$("#show-hide-icon-button").toggleClass("fa-eye fa-eye-slash")
 		else
 			console.log 'Hide passwords'
 			$("#newpassword").attr('type', 'password')
 			$("#confirmpassword").attr('type', 'password')
-			$("#show-hide-icon-button").removeClass 'fa-eye-slash'
-			$("#show-hide-icon-button").addClass 'fa-eye'
+			$("#show-hide-icon-button").toggleClass("fa-eye fa-eye-slash")
 
 	# Functions to show/hide placeholder password inputs
 	$('#passwordfield').on 'input', () ->
-		if $('#passwordfield').get(0).value && $('#passwordfield').get(0).type == 'text'
+		if $('#passwordfield').get(0).value && $('#passwordfield').attr('type') == 'text'
 			$("#passwordfield").removeClass 'form-control'
 			$("#passwordfield").addClass 'form-control key'
 		else
