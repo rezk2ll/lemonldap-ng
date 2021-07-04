@@ -244,15 +244,15 @@ sub display {
             PING           => $self->conf->{portalPingInterval},
             REQUIRE_OLDPASSWORD =>
               $self->requireOldPwd->( $req, $req->userData ),
-            DONT_STORE_PASSWORD   => $self->conf->{browsersDontStorePassword},
-            HIDE_OLDPASSWORD   => 0,
-            PPOLICY_NOPOLICY   => !$self->isPP(),
-            DISPLAY_PPOLICY    => $self->conf->{portalDisplayPasswordPolicy},
-            PPOLICY_MINSIZE    => $self->conf->{passwordPolicyMinSize},
-            PPOLICY_MINLOWER   => $self->conf->{passwordPolicyMinLower},
-            PPOLICY_MINUPPER   => $self->conf->{passwordPolicyMinUpper},
-            PPOLICY_MINDIGIT   => $self->conf->{passwordPolicyMinDigit},
-            PPOLICY_MINSPECHAR => $self->conf->{passwordPolicyMinSpeChar},
+            DONT_STORE_PASSWORD => $self->conf->{browsersDontStorePassword},
+            HIDE_OLDPASSWORD    => 0,
+            PPOLICY_NOPOLICY    => !$self->isPP(),
+            DISPLAY_PPOLICY     => $self->conf->{portalDisplayPasswordPolicy},
+            PPOLICY_MINSIZE     => $self->conf->{passwordPolicyMinSize},
+            PPOLICY_MINLOWER    => $self->conf->{passwordPolicyMinLower},
+            PPOLICY_MINUPPER    => $self->conf->{passwordPolicyMinUpper},
+            PPOLICY_MINDIGIT    => $self->conf->{passwordPolicyMinDigit},
+            PPOLICY_MINSPECHAR  => $self->conf->{passwordPolicyMinSpeChar},
             (
                 $self->conf->{passwordPolicyMinSpeChar} || $self->speChars()
                 ? ( PPOLICY_ALLOWEDSPECHAR => $self->speChars() )
@@ -397,7 +397,8 @@ sub display {
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
-            ENABLE_PASSWORD_DISPLAY => $self->conf->{portalEnablePasswordDisplay},
+            ENABLE_PASSWORD_DISPLAY =>
+              $self->conf->{portalEnablePasswordDisplay},
         );
 
         # Display captcha if it's enabled
@@ -443,9 +444,9 @@ sub display {
                 OLDPASSWORD           => $self->checkXSSAttack( 'oldpassword',
                     $req->data->{oldpassword} ) ? ""
                 : $req->data->{oldpassword},
-                HIDE_OLDPASSWORD => $self->conf->{hideOldPassword},
-                DONT_STORE_PASSWORD   => $self->conf->{browsersDontStorePassword},
-                PPOLICY_NOPOLICY => !$self->isPP(),
+                HIDE_OLDPASSWORD    => $self->conf->{hideOldPassword},
+                DONT_STORE_PASSWORD => $self->conf->{browsersDontStorePassword},
+                PPOLICY_NOPOLICY    => !$self->isPP(),
                 DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy},
                 PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
                 PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
@@ -493,7 +494,7 @@ sub display {
                 && $self->conf->{impersonationRule}
                 && $self->conf->{findUserSearchingAttributes} )
             {
-                $slogin  = $req->data->{findUser};
+                $slogin = $req->data->{findUser};
                 $fields = $plugin->buildForm();
             }
 
