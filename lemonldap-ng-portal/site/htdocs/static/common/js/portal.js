@@ -597,6 +597,15 @@ LemonLDAP::NG Portal jQuery scripts
         return $("#show-hide-icon-button").addClass('fa-eye');
       }
     });
+    $('#passwordfield').on('input', function() {
+      if ($('#passwordfield').get(0).value && $('#passwordfield').get(0).type === 'text') {
+        $("#passwordfield").removeClass('form-control');
+        return $("#passwordfield").addClass('form-control key');
+      } else {
+        $("#passwordfield").removeClass('form-control key');
+        return $("#passwordfield").addClass('form-control');
+      }
+    });
     $('#resetfinduserform').on('click', function() {
       console.log('Reset form');
       return $('#finduserForm').trigger('reset');

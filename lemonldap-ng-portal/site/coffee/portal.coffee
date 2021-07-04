@@ -550,6 +550,15 @@ $(window).on 'load', () ->
 			$("#show-hide-icon-button").removeClass 'fa-eye-slash'
 			$("#show-hide-icon-button").addClass 'fa-eye'
 
+	# Functions to show/hide placeholder password inputs
+	$('#passwordfield').on 'input', () ->
+		if $('#passwordfield').get(0).value && $('#passwordfield').get(0).type == 'text'
+			$("#passwordfield").removeClass 'form-control'
+			$("#passwordfield").addClass 'form-control key'
+		else
+			$("#passwordfield").removeClass 'form-control key'
+			$("#passwordfield").addClass 'form-control'
+
 	#$('#formpass').on 'submit', changePwd
 
 	$('#resetfinduserform').on 'click', () ->
