@@ -12,6 +12,8 @@ Install
 `Apache::Session::Browseable::Redis <https://metacpan.org/pod/Apache::Session::Browseable::Redis>`__
 Perl module.
 
+With Sentinel, make sure you are using at least version 1.3.8 of ``Apache::Session::Browseable``, this might require installing it from Debian Backports or CPAN.
+
 In the manager: set
 `Apache::Session::Browseable::Redis <https://metacpan.org/pod/Apache::Session::Browseable::Redis>`__
 in ``General parameters`` » ``Sessions`` » ``Session storage`` »
@@ -28,6 +30,7 @@ Name          Comment                     Example
 **server**    Redis server @ IP:PORT      127.0.0.1:6379
 **sock**      Redis server @ unix socket  unix:/path/to/redis.sock
 **sentinels** Redis sentinels list        127.0.0.1:26379,127.0.0.2:26379,127.0.0.3:26379
+**service**   Sentinel service name       mymaster
 **password**  password (== requirepass)   ChangeMe
 **select**    Redis DB                    1
 **Index**     Fields to index             refer to :ref:`fieldstoindex`
