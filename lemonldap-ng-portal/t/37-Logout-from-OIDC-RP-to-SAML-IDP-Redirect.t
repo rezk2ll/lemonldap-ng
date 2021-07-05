@@ -22,7 +22,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 18;
+my $maintests = 17;
 my $debug     = 'error';
 #my $debug     = 'error';
 my ( $op, $rp, $idp, $res );
@@ -168,12 +168,6 @@ SKIP: {
         'SAMLResponse', 'RelayState' );
 
     my ($resp) = $query =~ qr/SAMLResponse=([^&]*)/;
-    my $message = decode_base64( URI::Escape::uri_unescape $resp);
-    like(
-        $message,
-qr@SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"@,
-        "Signed using SHA-256"
-    );
 
     # Post SAML response to SP
     switch ('op');
