@@ -786,6 +786,7 @@
 "portalDisplayRefreshMyRights":"Display rights refresh link",
 "portalDisplayRegister":"Đăng ký tài khoản mới",
 "portalDisplayResetPassword":"Đặt lại mật khẩu",
+"portalEnablePasswordDisplay":"Allow to display password",
 "portalErrorOnExpiredSession":"Show error on expired session",
 "portalErrorOnMailNotFound":"Show error on mail not found",
 "portalForceAuthn":"Bắt buộc xác thực",

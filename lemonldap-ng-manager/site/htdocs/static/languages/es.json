@@ -786,6 +786,7 @@
 "portalDisplayRefreshMyRights":"Display rights refresh link",
 "portalDisplayRegister":"Registrar nueva cuenta",
 "portalDisplayResetPassword":"Reiniciar contraseña",
+"portalEnablePasswordDisplay":"Allow to display password",
 "portalErrorOnExpiredSession":"Mostrar error en sesión caducada",
 "portalErrorOnMailNotFound":"Mostrar error cuando no se encuentra el email",
 "portalForceAuthn":"Forzar autentificación",

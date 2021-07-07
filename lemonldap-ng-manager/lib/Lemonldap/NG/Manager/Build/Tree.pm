@@ -79,6 +79,7 @@ sub tree {
                                         'portalRequireOldPassword',
                                         'hideOldPassword',
                                         'mailOnPasswordChange',
+                                        'portalEnablePasswordDisplay',
                                     ]
                                 },
                                 {

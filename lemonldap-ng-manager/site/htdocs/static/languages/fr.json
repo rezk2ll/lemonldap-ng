@@ -786,6 +786,7 @@
 "portalDisplayRefreshMyRights":"Afficher le lien de rafraichissement des droits",
 "portalDisplayRegister":"Création d'un nouveau compte",
 "portalDisplayResetPassword":"Réinitialisation de mot de passe",
+"portalEnablePasswordDisplay":"Permettre d'afficher le mot de passe",
 "portalErrorOnExpiredSession":"Affiche une erreur si la session est expirée",
 "portalErrorOnMailNotFound":"Affiche une erreur si le mail n'est pas trouvé",
 "portalForceAuthn":"Authentification forcée",

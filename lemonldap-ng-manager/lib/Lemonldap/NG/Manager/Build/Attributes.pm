@@ -1229,6 +1229,11 @@ sub attributes {
             type          => 'bool',
             documentation => 'Display link to refresh the user session',
         },
+        portalEnablePasswordDisplay => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Allow to display password in login form',
+        },
 
         # Cookies
         cookieExpiration => {
@@ -3226,7 +3231,7 @@ sub attributes {
         sfRemovedNotifMsg => {
             type => 'text',
             default =>
-              '_removedSF_ expired second factor(s) has/have been removed (_nameSF_)!',
+'_removedSF_ expired second factor(s) has/have been removed (_nameSF_)!',
             help          => 'secondfactor.html',
             documentation => 'Notification message',
         },
@@ -4155,8 +4160,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptions => { type => 'subContainer', },
 
         # OpenID Connect providers
-        oidcOPMetaDataJSON         => { type => 'file', keyTest => sub { 1 } },
-        oidcOPMetaDataJWKS         => { type => 'file', keyTest => sub { 1 } },
+        oidcOPMetaDataJSON => {
+            type    => 'file',
+            keyTest => sub { 1 }
+        },
+        oidcOPMetaDataJWKS => {
+            type    => 'file',
+            keyTest => sub { 1 }
+        },
         oidcOPMetaDataExportedVars => {
             type    => 'keyTextContainer',
             default => {
@@ -4248,7 +4259,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsUserInfoSignAlg => {
             type   => 'select',
             select => [
-                { k => '',  v => 'JSON' },
+                { k => '',      v => 'JSON' },
                 { k => 'none',  v => 'JWT/None' },
                 { k => 'HS256', v => 'JWT/HS256' },
                 { k => 'HS384', v => 'JWT/HS384' },
@@ -4355,6 +4366,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type => 'keyTextContainer',
             help => 'idpopenidconnect.html#scope-rules',
             test => {
+
                 # RFC6749
                 keyTest    => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
                 keyMsgFail => '__badMacroName__',

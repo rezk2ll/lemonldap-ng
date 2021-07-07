@@ -786,6 +786,7 @@
 "portalDisplayRefreshMyRights":"Display rights refresh link",
 "portalDisplayRegister":"تسجيل حساب جديد",
 "portalDisplayResetPassword":"إعادة تعيين كلمة المرور",
+"portalEnablePasswordDisplay":"Allow to display password",
 "portalErrorOnExpiredSession":"عرض الخطأ في الجلسة المنتهية صلحيتها",
 "portalErrorOnMailNotFound":"إظهار الخطأ في البريد الغيرالموجود",
 "portalForceAuthn":"فرض إثبات الهوية",

@@ -786,6 +786,7 @@
 "portalDisplayRefreshMyRights":"Görüntüleme hakları yenileme bağlantısı",
 "portalDisplayRegister":"Yeni hesap kaydet",
 "portalDisplayResetPassword":"Parolayı sıfırla",
+"portalEnablePasswordDisplay":"Allow to display password",
 "portalErrorOnExpiredSession":"Süresi dolmuş oturumda hatayı göster",
 "portalErrorOnMailNotFound":"E-posta bulunamadığında hatayı göster",
 "portalForceAuthn":"Kimlik doğrulamaya zorla",
