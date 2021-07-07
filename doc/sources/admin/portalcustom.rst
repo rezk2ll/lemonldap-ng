@@ -332,6 +332,9 @@ General
 -  **Send mail on password change**: send a mail if the password is
    changed from the Menu, or from forced password reset (LDAP password
    policy)
+-  **Allow to display password**: if enabled, a small icon in the password
+   field is added and when users click on it, the password value is
+   revealed. Disabled by default.
 
 Password Policy
 ~~~~~~~~~~~~~~~
