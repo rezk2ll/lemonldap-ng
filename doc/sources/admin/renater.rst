@@ -119,8 +119,7 @@ This command will
   * show only all modifications to apply
 
 The output is the following :
-
- .. code-block::
+::
 
   ...
   Update SP https://www-iuem.univ-brest.fr/sp in configuration
@@ -135,8 +134,7 @@ The output is the following :
 
 
 With "-n" options you could get a "nagios like" output with metrics :
-
- .. code-block::
+::
  
   /usr/libexec/lemonldap-ng/bin/importMetadataFedRenater -m https://pub.federation.renater.fr/metadata/renater/main/main-sps-renater-metadata.xml -s "sp-fed-prd" -c https://pub.federation.renater.fr/metadata/certs/renater-metadata-signing-cert-2016.pem -bs https://test-sp.federation.renater.fr -r -d -n
   Metadata loaded inside Conf: [DRY-RUN]|idp_found=0, idp_updated=0, idp_created=0, idp_removed=0, idp_rejected=0, idp_ignored=0, sp_found=1248, sp_updated=1240, sp_created=0, sp_removed=0, sp_rejected=7, sp_ignored=1
