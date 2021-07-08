@@ -37,7 +37,8 @@
             "allowedspechar": "<TMPL_VAR NAME="PPOLICY_ALLOWEDSPECHAR" ESCAPE="js" DEFAULT="">",
             "minspechar": "<TMPL_VAR NAME="PPOLICY_MINSPECHAR" DEFAULT="0">"
             },</TMPL_IF>
- "enablePasswordDisplay":<TMPL_VAR NAME="ENABLE_PASSWORD_DISPLAY" DEFAULT="0">
+ "enablePasswordDisplay":<TMPL_VAR NAME="ENABLE_PASSWORD_DISPLAY" DEFAULT="0">,
+ "dontStorePassword":<TMPL_VAR NAME="DONT_STORE_PASSWORD" DEFAULT="0">
  }
  </script>
 

@@ -562,14 +562,27 @@ LemonLDAP::NG Portal jQuery scripts
       $('#reset').change(togglecheckpassword);
     }
     if (datas['enablePasswordDisplay']) {
-      $(".toggle-password").mousedown(function(e) {
-        $(this).toggleClass("fa-eye fa-eye-slash");
-        return $("input[name=password]").attr("type", "text");
-      });
-      $(".toggle-password").mouseup(function(e) {
-        $(this).toggleClass("fa-eye fa-eye-slash");
-        return $("input[name=password]").attr("type", "password");
-      });
+      if (datas['dontStorePassword']) {
+        $(".toggle-password").mousedown(function() {
+          $(this).toggleClass("fa-eye fa-eye-slash");
+          return $("input[name=password]").attr('class', 'form-control');
+        });
+        $(".toggle-password").mouseup(function() {
+          $(this).toggleClass("fa-eye fa-eye-slash");
+          if ($("input[name=password]").get(0).value) {
+            return $("input[name=password]").attr('class', 'form-control key');
+          }
+        });
+      } else {
+        $(".toggle-password").mousedown(function() {
+          $(this).toggleClass("fa-eye fa-eye-slash");
+          return $("input[name=password]").attr("type", "text");
+        });
+        $(".toggle-password").mouseup(function() {
+          $(this).toggleClass("fa-eye fa-eye-slash");
+          return $("input[name=password]").attr("type", "password");
+        });
+      }
     }
     if (datas['pingInterval'] && datas['pingInterval'] > 0) {
       window.setTimeout(ping, datas['pingInterval']);
@@ -583,7 +596,7 @@ LemonLDAP::NG Portal jQuery scripts
       return removeOidcConsent($(this).attr('partner'));
     });
     $('#show-hide-button').on('click', function() {
-      if ($("#newpassword").attr('autocomplete') === 'off') {
+      if (datas['dontStorePassword']) {
         if ($("#newpassword").attr('class') === 'form-control key' || $("#confirmpassword").attr('class') === 'form-control key') {
           console.log('Show passwords');
           $("#newpassword").attr('class', 'form-control');
@@ -616,21 +629,21 @@ LemonLDAP::NG Portal jQuery scripts
       }
     });
     $('#passwordfield').on('input', function() {
-      if ($('#passwordfield').get(0).value && $("#passwordfield").attr('autocomplete') === 'off') {
+      if ($('#passwordfield').get(0).value && datas['dontStorePassword']) {
         return $("#passwordfield").attr('class', 'form-control key');
       } else {
         return $("#passwordfield").attr('class', 'form-control');
       }
     });
     $('#oldpassword').on('input', function() {
-      if ($('#oldpassword').get(0).value && $('#oldpassword').attr('autocomplete') === 'off') {
+      if ($('#oldpassword').get(0).value && datas['dontStorePassword']) {
         return $("#oldpassword").attr('class', 'form-control key');
       } else {
         return $("#oldpassword").attr('class', 'form-control');
       }
     });
     $('#newpassword').on('input', function() {
-      if ($('#newpassword').get(0).value && $('#newpassword').attr('autocomplete') === 'off') {
+      if ($('#newpassword').get(0).value && datas['dontStorePassword']) {
         if ($("#show-hide-icon-button").attr('class') === 'fa fa-eye') {
           return $("#newpassword").attr('class', 'form-control key');
         }
@@ -639,7 +652,7 @@ LemonLDAP::NG Portal jQuery scripts
       }
     });
     $('#confirmpassword').on('input', function() {
-      if ($('#confirmpassword').get(0).value && $('#confirmpassword').attr('autocomplete') === 'off') {
+      if ($('#confirmpassword').get(0).value && datas['dontStorePassword']) {
         if ($("#show-hide-icon-button").attr('class') === 'fa fa-eye') {
           return $("#confirmpassword").attr('class', 'form-control key');
         }
