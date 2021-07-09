@@ -807,6 +807,192 @@ EOF
       ;
 }
 
+sub samlProxyComplexMetaDataXML {
+    my ( $name, $typeSSO, $typeSLO ) = @_;
+    my $org = uc($name);
+    return <<"EOF"
+<?xml version="1.0"?>
+<EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
+xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
+xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+entityID="http://auth.$name.com/saml/metadata">
+  <IDPSSODescriptor WantAuthnRequestsSigned="true"
+  protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+          <ds:KeyValue>
+	<RSAKeyValue xmlns="http://www.w3.org/2000/09/xmldsig#">
+		<Modulus>ztmb1JZk/agkYYm23D4dqaLS4EKHKrjO4eBvwtWZLexAGR1KDpcrHqLyqJoal+q4A8drI7lxElSt
+6xRKJ4DIxQM1jqRcmE6EzdL6BfTaRace3zIuhjDSQUZJdtFtlJynQT1cJbx5ZYhqZbYANm9NZRcY
+Z5gWeyF9nl41xA79AMuYlpt7eWDR8cnQJXwV790991FQ9yA2BBgTdSKkFqZ72P4lWu4shz3JCGf5
+hyq03hCHQ7bsfpgAdCrbQPTuJNFtS599ClMu+AcRcwJcS233pHd306PRHCXn3Eapq6gEoHxgLVNp
++luAIhRA9EaOnZ0nVkFwFKn3vLXzV01iTliMeQ==
+</Modulus>
+		<Exponent>AQAB
+</Exponent>
+	</RSAKeyValue>
+</ds:KeyValue>
+      </ds:KeyInfo>
+    </KeyDescriptor>
+    <KeyDescriptor use="encryption">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+          <ds:KeyValue>
+	<RSAKeyValue xmlns="http://www.w3.org/2000/09/xmldsig#">
+		<Modulus>2vzoUiQ4GsM5qLjoxslEDKj+RrPh/A743JCWe1Hbadjd5yD4gPwmJUxMF+MJcQlo/TkmKbTonPdI
+oAqDknbUxfFTntp0VkdKrB64xr0Stpy7123hPszat3SbU3RYypdobEcuSAS77w9X1KnkRL1+CIe5
+9qSsghO3l3b2IJ6qPFXdx/cro7+K3O7w8wAEJ9KmxA0KdiZpSFgTAqfNDSKx8NLwZOeDpsHouAxy
+1E2kine+9ESBTRAM2PgiGZvU5JA1SZscdEg3wTftJxxPFnAJMwtqM3IVC6B+TqsIP5Wlk1PQQqH7
+5gjtBYDVduynBwU+l/UUmp1aDRZupuH8PF51pw==
+</Modulus>
+		<Exponent>AQAB
+</Exponent>
+	</RSAKeyValue>
+</ds:KeyValue>
+      </ds:KeyInfo>
+    </KeyDescriptor>
+    <ArtifactResolutionService isDefault="true" index="0"
+     Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
+     Location="http://auth.$name.com/saml/artifact" />
+    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:$typeSLO"
+     Location="http://auth.$name.com/saml/singleLogout"
+    ResponseLocation="http://auth.$name.com/saml/singleLogoutReturn" />
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:$typeSSO"
+     Location="http://auth.$name.com/saml/singleSignOn" />
+  </IDPSSODescriptor>
+  <SPSSODescriptor AuthnRequestsSigned="true"
+  WantAssertionsSigned="true"
+  protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+
+    <KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+          <ds:KeyValue>
+	<RSAKeyValue xmlns="http://www.w3.org/2000/09/xmldsig#">
+		<Modulus>ztmb1JZk/agkYYm23D4dqaLS4EKHKrjO4eBvwtWZLexAGR1KDpcrHqLyqJoal+q4A8drI7lxElSt
+6xRKJ4DIxQM1jqRcmE6EzdL6BfTaRace3zIuhjDSQUZJdtFtlJynQT1cJbx5ZYhqZbYANm9NZRcY
+Z5gWeyF9nl41xA79AMuYlpt7eWDR8cnQJXwV790991FQ9yA2BBgTdSKkFqZ72P4lWu4shz3JCGf5
+hyq03hCHQ7bsfpgAdCrbQPTuJNFtS599ClMu+AcRcwJcS233pHd306PRHCXn3Eapq6gEoHxgLVNp
++luAIhRA9EaOnZ0nVkFwFKn3vLXzV01iTliMeQ==
+</Modulus>
+		<Exponent>AQAB
+</Exponent>
+	</RSAKeyValue>
+</ds:KeyValue>
+      </ds:KeyInfo>
+    </KeyDescriptor>
+    <KeyDescriptor use="encryption">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+          <ds:KeyValue>
+	<RSAKeyValue xmlns="http://www.w3.org/2000/09/xmldsig#">
+		<Modulus>2vzoUiQ4GsM5qLjoxslEDKj+RrPh/A743JCWe1Hbadjd5yD4gPwmJUxMF+MJcQlo/TkmKbTonPdI
+oAqDknbUxfFTntp0VkdKrB64xr0Stpy7123hPszat3SbU3RYypdobEcuSAS77w9X1KnkRL1+CIe5
+9qSsghO3l3b2IJ6qPFXdx/cro7+K3O7w8wAEJ9KmxA0KdiZpSFgTAqfNDSKx8NLwZOeDpsHouAxy
+1E2kine+9ESBTRAM2PgiGZvU5JA1SZscdEg3wTftJxxPFnAJMwtqM3IVC6B+TqsIP5Wlk1PQQqH7
+5gjtBYDVduynBwU+l/UUmp1aDRZupuH8PF51pw==
+</Modulus>
+		<Exponent>AQAB
+</Exponent>
+	</RSAKeyValue>
+</ds:KeyValue>
+      </ds:KeyInfo>
+    </KeyDescriptor>
+    <ArtifactResolutionService isDefault="true" index="0"
+     Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
+     Location="http://auth.$name.com/saml/artifact" />
+    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:$typeSLO"
+     Location="http://auth.$name.com/saml/proxySingleLogout"
+    ResponseLocation="http://auth.$name.com/saml/proxySingleLogoutReturn" />
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+    <AssertionConsumerService isDefault="true" index="0"
+     Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+     Location="http://auth.$name.com/saml/proxySingleSignOnPost" />
+    <AssertionConsumerService isDefault="false" index="1"
+     Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
+     Location="http://auth.$name.com/saml/proxySingleSignOnArtifact" />
+  </SPSSODescriptor>
+  <AttributeAuthorityDescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+
+    <KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+          <ds:KeyValue>
+	<RSAKeyValue xmlns="http://www.w3.org/2000/09/xmldsig#">
+		<Modulus>ztmb1JZk/agkYYm23D4dqaLS4EKHKrjO4eBvwtWZLexAGR1KDpcrHqLyqJoal+q4A8drI7lxElSt
+6xRKJ4DIxQM1jqRcmE6EzdL6BfTaRace3zIuhjDSQUZJdtFtlJynQT1cJbx5ZYhqZbYANm9NZRcY
+Z5gWeyF9nl41xA79AMuYlpt7eWDR8cnQJXwV790991FQ9yA2BBgTdSKkFqZ72P4lWu4shz3JCGf5
+hyq03hCHQ7bsfpgAdCrbQPTuJNFtS599ClMu+AcRcwJcS233pHd306PRHCXn3Eapq6gEoHxgLVNp
++luAIhRA9EaOnZ0nVkFwFKn3vLXzV01iTliMeQ==
+</Modulus>
+		<Exponent>AQAB
+</Exponent>
+	</RSAKeyValue>
+</ds:KeyValue>
+      </ds:KeyInfo>
+    </KeyDescriptor>
+    <KeyDescriptor use="encryption">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+          <ds:KeyValue>
+	<RSAKeyValue xmlns="http://www.w3.org/2000/09/xmldsig#">
+		<Modulus>2vzoUiQ4GsM5qLjoxslEDKj+RrPh/A743JCWe1Hbadjd5yD4gPwmJUxMF+MJcQlo/TkmKbTonPdI
+oAqDknbUxfFTntp0VkdKrB64xr0Stpy7123hPszat3SbU3RYypdobEcuSAS77w9X1KnkRL1+CIe5
+9qSsghO3l3b2IJ6qPFXdx/cro7+K3O7w8wAEJ9KmxA0KdiZpSFgTAqfNDSKx8NLwZOeDpsHouAxy
+1E2kine+9ESBTRAM2PgiGZvU5JA1SZscdEg3wTftJxxPFnAJMwtqM3IVC6B+TqsIP5Wlk1PQQqH7
+5gjtBYDVduynBwU+l/UUmp1aDRZupuH8PF51pw==
+</Modulus>
+		<Exponent>AQAB
+</Exponent>
+	</RSAKeyValue>
+</ds:KeyValue>
+      </ds:KeyInfo>
+    </KeyDescriptor>
+    <AttributeService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
+     Location="http://auth.$name.com/saml/AA/SOAP" />
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
+    <NameIDFormat>
+    urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+  </AttributeAuthorityDescriptor>
+  <Organization>
+    <OrganizationName xml:lang="en">$org</OrganizationName>
+    <OrganizationDisplayName xml:lang="en">
+    $org</OrganizationDisplayName>
+    <OrganizationURL xml:lang="en">
+    http://www.$name.com</OrganizationURL>
+  </Organization>
+</EntityDescriptor>
+EOF
+      ;
+}
+
 sub samlIDPMetaDataXML {
     my ( $name, $type ) = @_;
     my $org = uc($name);
