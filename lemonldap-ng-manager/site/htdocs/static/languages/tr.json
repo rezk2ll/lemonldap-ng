@@ -1050,7 +1050,7 @@
 "sfExtra":"Ek ikinci faktörler",
 "sfManagerRule":"Yönetici bağlantısını görüntüle",
 "sfOnlyUpgrade":"Oturum yükseltme için 2FA kullan",
-"sfRegisterTimeout":"Registration timeout",
+"sfRegisterTimeout":"Kayıtlanma zaman aşımı",
 "sfRemovedMsg":"Süresi dolan bir 2FA kaldırıldığında bir mesaj göster",
 "sfRemovedMsgRule":"Aktivasyon",
 "sfRemovedNotifMsg":"Bildirim mesajı",
