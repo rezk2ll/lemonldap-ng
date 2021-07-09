@@ -156,7 +156,7 @@ sub controlUrl {
         }
 
         # Unprotected hosts
-        unless ( $tmp =~ URIRE ) {
+        if ( $tmp and ( $tmp !~ URIRE ) ) {
             $self->userLogger->error("Bad URL $tmp");
             delete $req->{urldc};
             return PE_BADURL;
