@@ -480,6 +480,7 @@ site/templates/common/registerBrowser.tpl
 site/templates/common/script.tpl
 t/01-AuthDemo.t
 t/01-CSP-and-CORS-headers.t
+t/01-EnablePasswordDisplay.t
 t/01-Handler-redirection-and-URL-check-by-portal.t
 t/01-pdata.t
 t/01-Reject-Hashes-in-URL.t
@@ -603,6 +604,9 @@ t/36-Combination.t
 t/37-CAS-App-to-SAML-IdP-POST-with-WAYF.t
 t/37-CAS-App-to-SAML-IdP-POST.t
 t/37-Issuer-Timeout.t
+t/37-Logout-from-2-chained-SAML-SP-SOAP.t
+t/37-Logout-from-OIDC-RP-to-SAML-IDP-Redirect.t
+t/37-Logout-from-OIDC-RP-to-SAML-IDP-SOAP.t
 t/37-Logout-from-OIDC-RP-to-SAML-SP.t
 t/37-OIDC-RP-to-SAML-IdP-GET-with-WAYF.t
 t/37-OIDC-RP-to-SAML-IdP-GET.t
@@ -650,6 +654,7 @@ t/57-GlobalLogout-with-Double-cookies.t
 t/57-GlobalLogout-without-Timer.t
 t/57-GlobalLogout.t
 t/57-LogoutForward.t
+t/57-LogoutForward2153.t
 t/58-DecryptValue-with-custom-function.t
 t/58-DecryptValue-with-internal-function.t
 t/59-Double-cookies-for-a-Single-session.t
@@ -736,6 +741,7 @@ t/73-2F-UTOTP-TOTP-and-U2F-with-History.t
 t/73-2F-UTOTP-TOTP-and-U2F.t
 t/73-2F-UTOTP-TOTP-only-with-History.t
 t/73-2F-UTOTP-TOTP-only.t
+t/74-2F-Required-Issuer-Timeouts.t
 t/74-2F-Required.t
 t/75-2F-Registers.t
 t/76-2F-Ext-with-BruteForce.t
