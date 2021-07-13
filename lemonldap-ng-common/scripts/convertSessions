@@ -16,12 +16,12 @@ use strict;
 use Getopt::Long;
 use Pod::Usage;
 
-our $VERSION = "2.0.6";
+our $VERSION = "2.0.12";
 
 # Options
 # -d: debug mode
 # -c: configuration file
-# -r: configuration file
+# -r: rename attributes
 # -i: ignore errors
 
 my $debug;
