@@ -3,6 +3,15 @@
 use warnings;
 use strict;
 use POSIX;
+use Getopt::Long;
+
+our $opt_user = 'apache';
+our $opt_group = 'apache';
+GetOptions (
+        "user=s" => \$opt_user,
+        "group=s"   => \$opt_group
+)
+or die("Error in command line arguments\n");
 
 my $action;
 
