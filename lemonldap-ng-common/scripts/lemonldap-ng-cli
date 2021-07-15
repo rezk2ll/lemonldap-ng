@@ -5,8 +5,8 @@ use strict;
 use POSIX;
 use Getopt::Long;
 
-our $opt_user = 'apache';
-our $opt_group = 'apache';
+our $opt_user = '__APACHEUSER__';
+our $opt_group = '__APACHEGROUP';
 GetOptions (
         "user=s" => \$opt_user,
         "group=s"   => \$opt_group
@@ -16,8 +16,8 @@ or die("Error in command line arguments\n");
 my $action;
 
 eval {
-    POSIX::setgid( scalar( getgrnam('__APACHEGROUP__') ) );
-    POSIX::setuid( scalar( getpwnam('__APACHEUSER__') ) );
+    POSIX::setgid( scalar( getgrnam($opt_group) ) );
+    POSIX::setuid( scalar( getpwnam($opt_user) ) );
 };
 
 for ( my $i = 0 ; $i < @ARGV ; $i++ ) {
