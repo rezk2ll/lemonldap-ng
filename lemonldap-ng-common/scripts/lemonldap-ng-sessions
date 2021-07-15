@@ -167,8 +167,11 @@ Examples
 	lemonldap-ng-sessions search --where uid=dwho \
 		--id-only
 
+	lemonldap-ng-sessions search --backend persistent \
+		--where _session_uid=dwho
+
 	lemonldap-ng-sessions search --where uid=dwho \
-		 --select authenticationLevel
+		--select authenticationLevel
 
 =head2 Delete
 
@@ -190,6 +193,8 @@ Or you can give it a search expression.
 Examples:
 
 	lemonldap-ng-sessions delete --where uid=dwho
+
+	lemonldap-ng-sessions delete --persistent --where _session_uid=dwho
 
 =head2 Set Key
 
