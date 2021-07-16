@@ -6,7 +6,7 @@ use POSIX;
 use Getopt::Long;
 
 our $opt_user = '__APACHEUSER__';
-our $opt_group = '__APACHEGROUP';
+our $opt_group = '__APACHEGROUP__';
 GetOptions (
         "user=s" => \$opt_user,
         "group=s"   => \$opt_group
