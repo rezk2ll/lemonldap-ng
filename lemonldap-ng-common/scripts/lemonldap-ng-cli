@@ -5,13 +5,12 @@ use strict;
 use POSIX;
 use Getopt::Long;
 
-our $opt_user = '__APACHEUSER__';
+our $opt_user  = '__APACHEUSER__';
 our $opt_group = '__APACHEGROUP__';
-GetOptions (
-        "user=s" => \$opt_user,
-        "group=s"   => \$opt_group
-)
-or die("Error in command line arguments\n");
+GetOptions(
+    "user=s"  => \$opt_user,
+    "group=s" => \$opt_group
+) or die("Error in command line arguments\n");
 
 my $action;
 
