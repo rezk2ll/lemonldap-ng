@@ -76,6 +76,10 @@ Options:
  - sep <char>                    : separator of hierarchical values (by default: /)
  - iniFile <file>                : path to an alternate lemonldap-ng.ini file
 
+Additional options:
+ - --user=<user>    : change user running the script
+ - --group=<group>  : change group running the script
+
 See Lemonldap::NG::Manager::Cli(3) for more
 };
 }
