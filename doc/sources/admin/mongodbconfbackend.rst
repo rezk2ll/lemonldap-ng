@@ -6,6 +6,18 @@ used both for storing configuration and
 :doc:`sessions<mongodbsessionbackend>`. You need to install Perl MongoDB
 module to be able to use this backend.
 
+For Debian, you can install mongodb module with:
+
+::
+
+   apt install libmongodb-perl
+
+For CentOS:
+
+::
+
+   yum install perl-MongoDB
+
 See :doc:`how to change configuration backend<changeconfbackend>` to
 change your configuration database.
 
