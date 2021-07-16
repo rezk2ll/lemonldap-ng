@@ -174,6 +174,11 @@ and is stored in the LemonLDAP::NG bin/ directory, for example
     This script must be run as root, it will then use the Apache
     user and group to access configuration.
 
+.. tip::
+
+    You can change the user and group by setting ``--user`` and
+    ``--group`` options in the command line.
+
 The script uses the ``editor`` system command, that links to your
 favorite editor. To change it:
 
@@ -276,6 +281,11 @@ You can use accessors (options) to change the behavior:
    configuration.
 -  -force: set it to 1 to save a configuration earlier than latest.
 
+Additional options:
+
+- --user=<user>: change user running the script
+- --group=<group>: change group running the script
+
 Some examples:
 
 ::
@@ -283,6 +293,7 @@ Some examples:
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -cfgNum 10 get exportedHeaders/test1.example.com
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set notification 1
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -sep ',' get macros,_whatToTrace
+   /usr/share/lemonldap-ng/bin/lemonldap-ng-cli get portal --user=nginx --group=nginx
 
 
 .. tip::
