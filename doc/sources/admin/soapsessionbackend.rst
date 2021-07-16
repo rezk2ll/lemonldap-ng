@@ -78,12 +78,12 @@ configuration (for example, access by IP range):
 
    # SOAP functions for sessions management (disabled by default)
    <Location /index.fcgi/adminSessions>
-       Require 192.168.2.0/24
+       Require ip 192.168.2.0/24
    </Location>
 
    # SOAP functions for sessions access (disabled by default)
    <Location /index.fcgi/sessions>
-       Require 192.168.2.0/24
+       Require ip 192.168.2.0/24
    </Location>
 
 Real session backend
