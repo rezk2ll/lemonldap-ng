@@ -68,6 +68,10 @@ Name                Comment                                  Example
 **password**        Password to use for auth basic mechanism
 =================== ======================================== ==================================================
 
+`user` and `password` parameters are only used if the entry point `index.fcgi/sessions/global`
+is protected by a basic authentication. Thus, handlers will make requests to the portal
+using these parameters.
+
 
 .. attention::
 
