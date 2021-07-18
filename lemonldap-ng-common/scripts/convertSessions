@@ -16,18 +16,20 @@ use strict;
 use Getopt::Long;
 use Pod::Usage;
 
-our $VERSION = "2.0.6";
+our $VERSION = "2.0.12";
 
 # Options
 # -d: debug mode
 # -c: configuration file
-# -r: configuration file
+# -r: rename attributes
 # -i: ignore errors
+# -x: exclude attributes
 
 my $debug;
 my $config_file;
 my $ignore_errors;
 my %rename;
+my @exclude;
 my $help;
 my $nb_converted = 0;
 my $nb_error     = 0;
@@ -38,6 +40,7 @@ GetOptions(
     'config|c=s'      => \$config_file,
     'ignore-errors|i' => \$ignore_errors,
     'rename|r=s'      => \%rename,
+    'exclude|x=s'     => \@exclude,
 ) or pod2usage(2);
 pod2usage(
     -exitval  => 1,
@@ -129,6 +132,16 @@ Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
                     print "Renaming $oldkey to $newkey in session $id\n"
                       if $debug;
                     $entry->{$newkey} = delete $entry->{$oldkey};
+                }
+            }
+        }
+
+        if (@exclude) {
+            for my $excludekey (@exclude) {
+                if ( $entry->{$excludekey} ) {
+                    print "Exclude $excludekey in session $id\n"
+                      if $debug;
+                    delete $entry->{$excludekey};
                 }
             }
         }
