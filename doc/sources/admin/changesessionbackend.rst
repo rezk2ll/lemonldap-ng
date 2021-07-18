@@ -46,6 +46,7 @@ Options:
 
 -  ``-c``: job configuration file (mandatory)
 -  ``-r oldkey=newkey``: rename session keys during conversion (optional, can be given multiple times)
+-  ``-x key``: remove session keys during conversion (optional, can be given multiple times)
 -  ``-i``: ignore errors. By default errors will stop the script
    execution
 -  ``-d``: print debugging output
