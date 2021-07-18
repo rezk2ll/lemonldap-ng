@@ -30,6 +30,13 @@ None
 2.0.12
 ------
 
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you customized the HTML mail content, you must update them to use HTML::Template variables (this was changed to fix XSS injections).
+
+For session variables, replace for example ``$cn`` by ``<TMPL_VAR NAME="session_cn" ESCAPE=HTML>``, and for other variables, replace for example ``$url`` by ``<TMPL_VAR NAME="url" ESCAPE=HTML>``.
+
 Client Credential sessions missing expiration time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
