@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 use POSIX;
-use Getopt::Long;
+use Getopt::Long qw(:config pass_through);
 
 our $opt_user  = '__APACHEUSER__';
 our $opt_group = '__APACHEGROUP__';
