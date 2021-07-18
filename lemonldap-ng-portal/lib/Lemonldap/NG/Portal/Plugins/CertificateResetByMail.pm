@@ -371,6 +371,13 @@ sub _certificateReset {
 
             # We use a specific text message, no html
             $body = $self->conf->{certificateResetByMailStep1Body};
+
+            # Replace variables in body
+            $body =~ s/\$expMailDate/$req->data->{expMailDate}/ge;
+            $body =~ s/\$expMailTime/$req->data->{expMailTime}/ge;
+            $body =~ s/\$url/$url/g;
+            $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
+
         }
         else {
 
@@ -387,14 +394,6 @@ sub _certificateReset {
             );
             $html = 1;
         }
-
-        # Replace variables in body
-        # FIXME: kept for compatibility with 2.0.0 mail templates
-        # in future versions this should only happen for plaintext emails
-        $body =~ s/\$expMailDate/$req->data->{expMailDate}/ge;
-        $body =~ s/\$expMailTime/$req->data->{expMailTime}/ge;
-        $body =~ s/\$url/$url/g;
-        $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
 
         # Send mail
         unless (
@@ -555,6 +554,10 @@ sub modifyCertificate {
 
         # We use a specific text message, no html
         $body = $self->conf->{certificateResetByMailStep2Body};
+
+        # Replace variables in body
+        $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
+
     }
     else {
 
@@ -567,11 +570,6 @@ sub modifyCertificate {
         );
         $html = 1;
     }
-
-    # Replace variables in body
-    # FIXME: kept for compatibility with 2.0.0 mail templates
-    # in future versions this should only happen for plaintext emails
-    $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
 
     # Send mail
     return PE_MAILERROR

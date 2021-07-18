@@ -335,6 +335,13 @@ sub _reset {
 
             # We use a specific text message, no html
             $body = $self->conf->{mailConfirmBody};
+
+            # Replace variables in body
+            $body =~ s/\$expMailDate/$req->data->{expMailDate}/ge;
+            $body =~ s/\$expMailTime/$req->data->{expMailTime}/ge;
+            $body =~ s/\$url/$url/g;
+            $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
+
         }
         else {
 
@@ -351,14 +358,6 @@ sub _reset {
             );
             $html = 1;
         }
-
-        # Replace variables in body
-        # FIXME: kept for compatibility with 2.0.0 mail templates
-        # in future versions this should only happen for plaintext emails
-        $body =~ s/\$expMailDate/$req->data->{expMailDate}/ge;
-        $body =~ s/\$expMailTime/$req->data->{expMailTime}/ge;
-        $body =~ s/\$url/$url/g;
-        $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
 
         $self->logger->info( "User "
               . $req->data->{mailAddress}
@@ -515,6 +514,11 @@ sub changePwd {
 
         # We use a specific text message, no html
         $body = $self->conf->{mailBody};
+
+        # Replace variables in body
+        $body =~ s/\$password/$password/g;
+        $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
+
     }
     else {
 
@@ -529,12 +533,6 @@ sub changePwd {
         );
         $html = 1;
     }
-
-    # Replace variables in body
-    # FIXME: kept for compatibility with 2.0.0 mail templates
-    # in future versions this should only happen for plaintext emails
-    $body =~ s/\$password/$password/g;
-    $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
 
     # Send mail
     return PE_MAILERROR

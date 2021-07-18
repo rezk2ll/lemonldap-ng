@@ -94,6 +94,11 @@ sub run {
 
         # We use a specific text message, no html
         $body = $self->conf->{mail2fBody};
+
+        # Replace variables in body
+        $body =~ s/\$code/$code/g;
+        $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
+
     }
     else {
 
@@ -108,12 +113,6 @@ sub run {
         );
         $html = 1;
     }
-
-    # Replace variables in body
-    # FIXME: kept for compatibility with 2.0.0 mail templates
-    # in future versions this should only happen for plaintext emails
-    $body =~ s/\$code/$code/g;
-    $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
 
     # Send mail
     unless ( $self->send_mail( $dest, $subject, $body, $html ) ) {

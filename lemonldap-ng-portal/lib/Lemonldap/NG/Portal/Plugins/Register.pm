@@ -322,14 +322,6 @@ sub _register {
             },
         );
 
-        # Replace variables in body
-        # FIXME: kept for compatibility with 2.0.0 mail templates
-        # in future versions this should only happen for plaintext emails
-        $body =~ s/\$expMailDate/$req->data->{expMailDate}/g;
-        $body =~ s/\$expMailTime/$req->data->{expMailTime}/g;
-        $body =~ s/\$url/$url/g;
-        $body =~ s/\$(\w+)/$req->data->{registerInfo}->{$1}/eg;
-
         # Send mail
         return PE_MAILERROR
           unless $self->send_mail( $req->data->{registerInfo}->{mail},
@@ -396,12 +388,6 @@ sub _register {
             %{ $req->data->{registerInfo} || {} },
         },
     );
-
-    # Replace variables in body
-    # FIXME: kept for compatibility with 2.0.0 mail templates
-    # in future versions this should only happen for plaintext emails
-    $body =~ s/\$url/$url/g;
-    $body =~ s/\$(\w+)/$req->data->{registerInfo}->{$1}/ge;
 
     # Send mail
     return PE_MAILERROR
