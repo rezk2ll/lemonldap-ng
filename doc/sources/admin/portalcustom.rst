@@ -46,7 +46,7 @@ Custom CSS file
 You can define a custom CSS file, for example ``custom.css``, which will
 be loaded after default CSS files. This file needs to be created in the
 static repository
-(``/usr/share/lemonldap-ng/portal/htdocs/static/boostrap/css``).
+(``/usr/share/lemonldap-ng/portal/htdocs/static/bootstrap/css``).
 
 Then set this value in Custom CSS parameter :
 ``bootstrap/css/custom.css``.
