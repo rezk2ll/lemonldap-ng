@@ -1,3 +1,86 @@
+lemonldap-ng (2.0.12) focal; urgency=medium
+
+  * Bugs:
+    * #2153: logout forward url pointing to a protected application cause infinite redirection (pdata)
+    * #2439: Unable to configure oidcOPMetaDataJSON and oidcOPMetaDataJWKS trough lemonldap-ng-cli
+    * #2453: Manager API: missing doc and array handling of additional audiences
+    * #2455: llng-fastcgi-server exited with signal 13
+    * #2459: Debian packages: missing dependency to gsfonts may break Captcha
+    * #2460: "Underlying object can't load conf" in v2.0.11
+    * #2463: Portal plugin hooks triggered multiple times after reload
+    * #2469: mySessionAuthorizedRWKeys causes internal server error when removing OIDC consent
+    * #2474: OAuth2 endpoints should return an error when multiple client authentication methods are used
+    * #2475: OIDC: Invalid error code returned in badAuthRequest
+    * #2477: [security:low] Wildcard in virtualhost allows being redirected to untrusted domains
+    * #2480: Set an authLevel and disable ReAuthentication plugin leads to an endless loop
+    * #2481: missing _utime in OIDC Client Credential sessions
+    * #2482: unexpected persistent sessions appear since 2.0.10
+    * #2483: Second factor removal does not work when hiding session ids from manager
+    * #2487: Incorrect error reporting in convertSessions
+    * #2489: Do not grant the openid scope during Resource Owner Password Grant
+    * #2493: Unable to register a new configuration attribute with CLI when option force is enabled and backend is RDBI
+    * #2495: [security:medium] XSS on register form
+    * #2498: convertSessions does not filter sessionKind correctly
+    * #2503: REST/SOAP exported attributes are not sent by REST server
+    * #2509: Local password policy: Allowing ALL special characters does not work
+    * #2511: expires_in in token response has the wrong JSON type in some cases
+    * #2513: LLNG 2.0.11 : SAML SLO from IDP to SP with POST Binding blocked by browser
+    * #2518: SAML: persistent NameID is empty when using "unspecified" format on SP side
+    * #2520: Missing translations for DBI configuration
+    * #2525: Gracefully handle invalid perl expression in CAS/SAML/OIDC
+    * #2529: [bug] OIDC userinfo as jwt not readable
+    * #2531: calling to_json with hash containing file handle fails
+    * #2534: CDA does not work with wildcard vhosts
+    * #2535: [security:low] Incorrect regexp construction in isTrustedUrl lets attacker steal session on CDA application
+    * #2539: [security:high, CVE-2021-35472] session cache corruption can lead to authorization bypass or spoofing
+    * #2541: Misleading TOTP options
+    * #2543: [security:low] 2FA bypass with sfOnlyUpgrade and totp2fDisplayExistingSecret
+    * #2547: Parameter oidcRPMetaDataOptionsUserInfoSignAlg is missing in Manager
+    * #2548: OpenID Connect ACR value can't be configured with something else than 'loa-...'
+    * #2549: [security:low, CVE-2021-35473] OAuth2 handler does not verify access token validity
+    * #2550: Token endpoint should only emit ID token when scope contains "openid"
+
+  * New features:
+    * #1976: FindUser plugin
+    * #2451: CrowdSec plugin to query Crowdsec server
+    * #2458: CheckDevOps plugin
+    * #2510: Hook on password change
+    * #2532: add oidcGenerateCode hook
+    * #2554: Remove OIDC checksession iframe from metadata
+
+  * Improvements:
+    * #2260: Missing elements in sphinx documentation (mongodb)
+    * #2419: Support JWT as OAuth 2.0 Bearer Access Tokens
+    * #2424: Feature: Scope Rules
+    * #2454: Append a Show/Hide password button into login form
+    * #2456: Prevent DevOps handler to send hidden session attributes
+    * #2462: Use timezone provided in input dates in extended function "checkDate"
+    * #2465: Force OIDC error messages to use JSON
+    * #2472: Loading metadata can be slow due to parsing of default certificate bundle
+    * #2484: Hook for populating client credential session
+    * #2488: Allow selection of AssertionConsumerServiceURL in IDP-Initiated SAML login
+    * #2496: Add new option to ignore undeclared OIDC scopes
+    * #2499: add key mapper for convertSession
+    * #2502: Resource Owner Password fails with PE_FIRSTACCESS when using Auth::Choice
+    * #2506: CAS: add an option to forbid host-based matching
+    * #2521: Avoid browsers parameter hide placeholder
+    * #2533: add hooks for CAS issuer
+    * #2536: optimize SingleSession to avoid unneeded session fetches
+    * #2544: Default 2FA register timeout is too low
+    * #2557: Avoid browsers to store new, old and confirmed password during update process
+    * #2562: Add --user/--group options to lmConfigEditor and lemonldap-ng-cli (user:group hardcoded to apache may not work correctly)
+
+  * Templates:
+    * #1976: FindUser plugin
+    * #2454: Append a Show/Hide password button into login form
+    * #2458: CheckDevOps plugin
+    * #2495: [security:medium] XSS on register form
+    * #2521: Avoid browsers parameter hide placeholder
+    * #2541: Misleading TOTP options
+    * #2557: Avoid browsers to store new, old and confirmed password during update process
+
+ -- Clément <clem.oudot@gmail.com>  Thu, 22 Jul 2021 17:41:44 +0200
+
 lemonldap-ng (2.0.11) focal; urgency=medium
 
   * Bugs:
