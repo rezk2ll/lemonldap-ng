@@ -61,6 +61,7 @@ casAuthnLevel                                           CAS authentication level
 casSrvMetaDataOptions                                   Root of CAS server options                                                           ✔                      [1]
 casStorage                                              Apache::Session module to store CAS user data                                        ✔
 casStorageOptions                                       Apache::Session module parameters                                                    ✔
+casStrictMatching                                       Disable host-based matching of CAS services                                          ✔
 cda                                                     Enable Cross Domain Authentication                                                   ✔      ✔
 certificateResetByMailCeaAttribute                                                                                                           ✔
 certificateResetByMailCertificateAttribute                                                                                                   ✔
@@ -76,6 +77,8 @@ cfgDate                                                 Timestamp of the current
 cfgLog                                                  Configuration update log                                                             ✔                      ✔
 cfgNum                                                  Enable Cross Domain Authentication                                                   ✔                      ✔
 cfgVersion                                              Version of LLNG which build configuration                                            ✔                      ✔
+checkDevOps                                             Enable check DevOps                                                                  ✔
+checkDevOpsDownload                                     Enable check DevOps download field                                                   ✔
 checkState                                              Enable CheckState plugin                                                             ✔
 checkStateSecret                                        Secret token for CheckState plugin                                                   ✔
 checkTime                                               Timeout to check new configuration in local cache                                    ✔      ✔               ✔
@@ -111,6 +114,10 @@ corsAllow_Origin                                        Allowed origine for Cros
 corsEnabled                                             Enable Cross-Origin Resource Sharing                                                 ✔
 corsExpose_Headers                                      Exposed headers for Cross-Origin Resource Sharing                                    ✔
 corsMax_Age                                             MAx-age for Cross-Origin Resource Sharing                                            ✔
+crowdsec                                                CrowdSec plugin activation                                                           ✔
+crowdsecAction                                          CrowdSec action                                                                      ✔
+crowdsecKey                                             CrowdSec API key                                                                     ✔
+crowdsecUrl                                             Base URL of CrowdSec local API                                                       ✔
 cspConnect                                              Authorized Ajax destination for Content-Security-Policy                              ✔
 cspDefault                                              Default value for Content-Security-Policy                                            ✔
 cspFont                                                 Font source for Content-Security-Policy                                              ✔
@@ -274,9 +281,9 @@ log4perlConfFile                                        Log4Perl logger configur
 logLevel                                                Log level, must be set in .ini                                                       ✔      ✔       ✔       ✔
 logger                                                  technical logger                                                                     ✔      ✔       ✔       ✔
 loginHistoryEnabled                                     Enable login history                                                                 ✔
-logoutServices                                          Send logout through GET request to these services                                     ✔
-lwpOpts                                                 Options given to LWP::UserAgent                                                      ✔
-lwpSslOpts                                              SSL options given to LWP::UserAgent                                                  ✔
+logoutServices                                          Send logout trough GET request to these services                                     ✔
+lwpOpts                                                 Options passed to LWP::UserAgent                                                     ✔
+lwpSslOpts                                              SSL options passed to LWP::UserAgent                                                 ✔
 macros                                                  Macros                                                                               ✔
 mail2fActivation                                        Mail second factor activation                                                        ✔
 mail2fAuthnLevel                                        Authentication level for users authenticated by Mail second factor                   ✔
@@ -334,6 +341,7 @@ oidcServiceAllowAuthorizationCodeFlow                   OpenID Connect allow aut
 oidcServiceAllowDynamicRegistration                     OpenID Connect allow dynamic client registration                                     ✔
 oidcServiceAllowHybridFlow                              OpenID Connect allow hybrid flow                                                     ✔
 oidcServiceAllowImplicitFlow                            OpenID Connect allow implicit flow                                                   ✔
+oidcServiceAllowOnlyDeclaredScopes                      OpenID Connect allow only declared scopes                                            ✔
 oidcServiceAuthorizationCodeExpiration                  OpenID Connect global code TTL                                                       ✔
 oidcServiceDynamicRegistrationExportedVars              OpenID Connect exported variables for dynamic registration                           ✔
 oidcServiceDynamicRegistrationExtraClaims               OpenID Connect extra claims for dynamic registration                                 ✔
@@ -404,6 +412,7 @@ portalDisplayPasswordPolicy                             Display policy in passwo
 portalDisplayRefreshMyRights                            Display link to refresh the user session                                             ✔
 portalDisplayRegister                                   Display register button in portal                                                    ✔
 portalDisplayResetPassword                              Display reset password button in portal                                              ✔
+portalEnablePasswordDisplay                             Allow to display password in login form                                              ✔
 portalErrorOnExpiredSession                             Show error if session is expired                                                     ✔
 portalErrorOnMailNotFound                               Show error if mail is not found in password reset process                            ✔
 portalForceAuthn                                        Enable force to authenticate when displaying portal                                  ✔
@@ -535,6 +544,7 @@ sfEngine                                                Second factor engine    
 sfExtra                                                 Extra second factors                                                                 ✔
 sfManagerRule                                           Rule to display second factor Manager link                                           ✔
 sfOnlyUpgrade                                           Only trigger second factor on session upgrade                                        ✔
+sfRegisterTimeout                                       Timeout for 2F registration process                                                  ✔
 sfRemovedMsgRule                                        Display a message if at leat one expired SF has been removed                         ✔
 sfRemovedNotifMsg                                       Notification message                                                                 ✔
 sfRemovedNotifRef                                       Notification reference                                                               ✔
