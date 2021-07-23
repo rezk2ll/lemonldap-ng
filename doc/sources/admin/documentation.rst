@@ -51,6 +51,7 @@ Debian
 .. tip::
 
    Following Debian Policy, LLNG packages are never upgraded in published distributions. However, security patches are backported by maintenance teams *(except some inor ones)*.
+   See `Security tracker <https://security-tracker.debian.org/tracker/source-package/lemonldap-ng>`__
 
 =========== ======================== ======================================== ===================================================== ============================================================ =============================== =============================================================
 Debian dist                          LLNG version                             Secured                                               Maintenance                                                  LTS Limit                       `Extended LTS <https://wiki.debian.org/LTS/Extended>`__ Limit
