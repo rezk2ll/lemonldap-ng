@@ -86,9 +86,9 @@ Ubuntu dist               LLNG version                     Secured              
 14.04       Trusty        `1.2.5 </documentation/1.2/>`__  |maybe| No known vulnerability                                       None
 16.04       Xenial  [9]_  `1.4.6 </documentation/1.4/>`__  |bad| CVE-2019-12046, CVE-2019-13031                                 None
 18.04       Bionic  [9]_  `1.9.16 </documentation/1.9/>`__ |bad| CVE-2019-12046, CVE-2019-13031, CVE-2020-24660                 None
-20.04       Focal  [9]_   `2.0.7 </documentation/2.0/>`__  |bad| CVE-2020-24660                                                 None
-20.10       Groovy        `2.0.8 </documentation/2.0/>`__  |bad| CVE-2020-24660                                                 None
-21.04       Hirsute       `2.0.11 </documentation/2.0/>`__ |clean|                                                              None
+20.04       Focal  [9]_   `2.0.7 </documentation/2.0/>`__  |bad| CVE-2020-24660, CVE-2021-35472, CVE-2021-35473                 None
+20.10       Groovy        `2.0.8 </documentation/2.0/>`__  |bad| CVE-2020-24660, CVE-2021-35472, CVE-2021-35473                 None
+21.04       Hirsute       `2.0.11 </documentation/2.0/>`__ |bad| CVE-2021-35472, CVE-2021-35473                                 None
 =========== ============= ================================ ==================================================================== ===========
 
 Bug report
