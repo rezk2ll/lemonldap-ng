@@ -22,7 +22,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_MAILCONFIRMATION_ALREADY_SENT
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.13';
 
 extends qw(
   Lemonldap::NG::Portal::Lib::SMTP
@@ -306,21 +306,34 @@ sub _register {
             $subject = 'registerConfirmSubject';
             $tr->( \$subject );
         }
-        my $body;
-        my $html = 1;
+        my ( $body, $html );
+        if ( $self->conf->{registerConfirmBody} ) {
 
-        # Use HTML template
-        $body = $self->loadMailTemplate(
-            $req,
-            'mail_register_confirm',
-            filter => $tr,
-            params => {
-                expMailDate => $req->data->{expMailDate},
-                expMailTime => $req->data->{expMailTime},
-                url         => $url,
-                %{ $req->data->{registerInfo} || {} },
-            },
-        );
+            # We use a specific text message, no html
+            $body = $self->conf->{registerConfirmBody};
+
+            # Replace variables in body
+            $body =~ s/\$url/$url/g;
+            $body =~ s/\$expMailDate/$req->{data}->{expMailDate}/g;
+            $body =~ s/\$expMailTime/$req->{data}->{expMailTime}/g;
+            $body =~ s/\$(\w+)/$req->{data}->{registerInfo}->{$1} || ''/ge;
+        }
+        else {
+
+            # Use HTML template
+            $body = $self->loadMailTemplate(
+                $req,
+                'mail_register_confirm',
+                filter => $tr,
+                params => {
+                    expMailDate => $req->data->{expMailDate},
+                    expMailTime => $req->data->{expMailTime},
+                    url         => $url,
+                    %{ $req->data->{registerInfo} || {} },
+                },
+            );
+            $html = 1;
+        }
 
         # Send mail
         return PE_MAILERROR
@@ -357,16 +370,6 @@ sub _register {
         return $result;
     }
 
-    # Build mail content
-    my $tr      = $self->translate($req);
-    my $subject = $self->conf->{registerDoneSubject};
-    unless ($subject) {
-        $subject = 'registerDoneSubject';
-        $tr->( \$subject );
-    }
-    my $body;
-    my $html = 1;
-
     # Build portal url
     my $url = $self->conf->{portal};
     $url =~ s#/*$##;
@@ -378,16 +381,37 @@ sub _register {
         ( $req_url ? ( url => $req_url ) : () ),
       );
 
-    # Use HTML template
-    $body = $self->loadMailTemplate(
-        $req,
-        'mail_register_done',
-        filter => $tr,
-        params => {
-            url => $url,
-            %{ $req->data->{registerInfo} || {} },
-        },
-    );
+    # Build mail content
+    my $tr      = $self->translate($req);
+    my $subject = $self->conf->{registerDoneSubject};
+    unless ($subject) {
+        $subject = 'registerDoneSubject';
+        $tr->( \$subject );
+    }
+    my ( $body, $html );
+    if ( $self->conf->{registerDoneBody} ) {
+
+        # We use a specific text message, no html
+        $body = $self->conf->{registerDoneBody};
+
+        # Replace variables in body
+        $body =~ s/\$url/$url/g;
+        $body =~ s/\$(\w+)/$req->{data}->{registerInfo}->{$1} || ''/ge;
+    }
+    else {
+
+        # Use HTML template
+        $body = $self->loadMailTemplate(
+            $req,
+            'mail_register_done',
+            filter => $tr,
+            params => {
+                url => $url,
+                %{ $req->data->{registerInfo} || {} },
+            },
+        );
+        $html = 1;
+    }
 
     # Send mail
     return PE_MAILERROR
