@@ -2,7 +2,7 @@ package Lemonldap::NG::Manager::Conf::Zero;
 
 use strict;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.13';
 
 sub zeroConf {
     my ( $domain, $sessionDir, $persistentSessionDir, $notificationDir,
