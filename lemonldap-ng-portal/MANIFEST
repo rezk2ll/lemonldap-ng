@@ -631,6 +631,7 @@ t/41-Captcha.t
 t/41-Token-with-global-storage.t
 t/41-Token.t
 t/42-Register-Demo-with-captcha.t
+t/42-Register-Demo-with-CustomBody.t
 t/42-Register-Demo-with-token.t
 t/42-Register-Demo.t
 t/42-Register-LDAP.t

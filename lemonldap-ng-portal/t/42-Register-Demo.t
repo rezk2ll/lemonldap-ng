@@ -9,7 +9,7 @@ BEGIN {
     };
 }
 
-my $maintests = 9;
+my $maintests = 10;
 my ( $res, $user, $pwd );
 
 SKIP: {
@@ -26,6 +26,7 @@ SKIP: {
                 authentication           => 'Demo',
                 userDB                   => 'Same',
                 registerDB               => 'Demo',
+                registerConfirmSubject   => 'Demonstration',
                 captcha_register_enabled => 0,
             }
         }
@@ -53,7 +54,10 @@ SKIP: {
     expectOK($res);
 
     my $mail = mail();
-    ok( $mail =~ m#a href="http://auth.example.com/register\?(.*?)"#,
+    my $subject = subject();
+    ok( $subject eq 'Demonstration', 'Found subject' )
+      or explain( $subject, 'Custom subject' );
+    ok( $mail =~ m#a href="http://auth.example.com/register\?(.+?)"#,
         'Found register token' );
     $query = $1;
     ok( $query =~ /register_token=/, 'Found register_token' );
@@ -90,4 +94,3 @@ count($maintests);
 clean_sessions();
 
 done_testing( count() );
-

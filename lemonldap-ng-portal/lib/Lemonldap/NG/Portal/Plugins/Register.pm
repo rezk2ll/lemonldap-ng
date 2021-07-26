@@ -303,6 +303,7 @@ sub _register {
         my $tr      = $self->translate($req);
         my $subject = $self->conf->{registerConfirmSubject};
         unless ($subject) {
+            $self->logger->debug('Use default confirm subject');
             $subject = 'registerConfirmSubject';
             $tr->( \$subject );
         }
@@ -310,6 +311,7 @@ sub _register {
         if ( $self->conf->{registerConfirmBody} ) {
 
             # We use a specific text message, no html
+            $self->logger->debug('Use specific confirm body message');
             $body = $self->conf->{registerConfirmBody};
 
             # Replace variables in body
@@ -321,6 +323,7 @@ sub _register {
         else {
 
             # Use HTML template
+            $self->logger->debug('Use default confirm HTML template body');
             $body = $self->loadMailTemplate(
                 $req,
                 'mail_register_confirm',
@@ -385,6 +388,7 @@ sub _register {
     my $tr      = $self->translate($req);
     my $subject = $self->conf->{registerDoneSubject};
     unless ($subject) {
+        $self->logger->debug('Use default done subject');
         $subject = 'registerDoneSubject';
         $tr->( \$subject );
     }
@@ -392,6 +396,7 @@ sub _register {
     if ( $self->conf->{registerDoneBody} ) {
 
         # We use a specific text message, no html
+        $self->logger->debug('Use specific done body message');
         $body = $self->conf->{registerDoneBody};
 
         # Replace variables in body
@@ -401,6 +406,7 @@ sub _register {
     else {
 
         # Use HTML template
+        $self->logger->debug('Use default done HTML template body');
         $body = $self->loadMailTemplate(
             $req,
             'mail_register_done',
