@@ -37,6 +37,8 @@ Before release
 - Check Debian packages quality
   $ cme check dpkg
 
+- Update doc/admin/documentation.rst to display vulnerable packaged versions
+
 For minor release
 -----------------
 
