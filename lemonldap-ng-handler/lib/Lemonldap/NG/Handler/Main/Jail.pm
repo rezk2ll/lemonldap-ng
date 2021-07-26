@@ -129,13 +129,7 @@ sub token {
 # Fake reval method if useSafeJail is off
 sub reval {
     my ( $self, $e ) = @_;
-
-    my $res = eval $e;
-    if ($@) {
-        $self->error($@);
-        return undef;
-    }
-    return $res;
+    return eval $e;
 }
 
 ## @method wrap_code_ref
@@ -183,8 +177,7 @@ sub jail_reval {
     # if nothing is returned by reval, add the return statement to
     # the "no safe wrap" reval
 
-    my $res;
-    eval { $res = ( $self->jail->reval($reval) ) };
+    my $res = $self->jail->reval($reval);
     if ($@) {
         $self->error($@);
         return undef;
