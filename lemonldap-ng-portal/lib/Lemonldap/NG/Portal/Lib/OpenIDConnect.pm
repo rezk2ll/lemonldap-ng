@@ -1358,8 +1358,7 @@ sub sendOIDCError {
 sub returnBearerError {
     my ( $self, $error_code, $error_message ) = @_;
 
-    # TODO: verify this
-    return [
+    my $res = [
         401,
         [
             'WWW-Authenticate' =>
@@ -1367,6 +1366,10 @@ sub returnBearerError {
         ],
         []
     ];
+
+    $self->p->setCorsHeaderFromConfig($res);
+
+    return $res;
 }
 
 sub checkEndPointAuthenticationCredentials {
