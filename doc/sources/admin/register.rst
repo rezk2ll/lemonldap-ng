@@ -4,30 +4,43 @@ Register a new account
 Presentation
 ------------
 
-This feature is a page that allows a user to create an account. The
-steps are the following:
+This feature is a page that allows a user to create an account.
+The following steps are performed:
 
 #. User click on the button "Create a new account"
 #. He enters first name, last name and email
-#. He gets a mail with a confirmation link
-#. After clicking, his entry is added
-#. He gets a mail with his login and his password
+#. He receives an email with a confirmation link
+#. After clicking, his entry is appended
+#. An email with his login and password is sent back
 
 Configuration
 -------------
 
-You can enable the "Create your account" button in
-:doc:`portal customization parameters<portalcustom>`.
+The "Create your account" button can be enabled in
+:doc:`Portal customization parameters<portalcustom>`.
 
-Then, go in ``Portal`` > ``Advanced parameters`` >
-``Register new account``:
+Then, go in ``General Parameters`` > ``Plugins`` > ``Register new account``:
 
--  **Module**: Choose the backend to use to create the new account.
+-  **Module**: Backend used for creating new account.
 -  **Page URL**: URL of register page
--  **Validity time of a register request**: duration in seconds of a new
+-  **Validity time of a register request**: Duration in seconds of a new
    account request. The request will be deleted after this time if user
    do not click on the link.
--  **Subject for confirmation mail**: Subject of the mail containing the
+-  **Subject for confirmation mail**: Subject of the email containing the
    confirmation link
--  **Subject for done mail**: Subject of the mail giving login and
-   password
+-  **Body for confirmation mail**: The plain text content of the confirmation email the user will
+   receive. If you leave it blank, the ``mail_register_confirm`` HTML template will be used.
+   Confirmation link is stored in the ``$url`` variable
+-  **Subject for done mail**: Subject of the email providing login and password.
+-  **Body for done mail**: The plain text content of the done email the user will
+   receive. If you leave it blank, the ``mail_register_done`` HTML template will be used.
+   Login and generated password are stored in the corresponding ``$login`` and ``$password`` variables
+
+
+.. note::
+
+   Following variables are available in:
+
+   \* Register email body => ``$expMailDate``, ``$expMailTime``, ``$url``, ``$mail``, ``$firstname``, ``$lastname`` and ``$ipAddr``
+
+   \* Done email body     => ``$login``, ``$password`` and ``$url``

@@ -11,9 +11,9 @@ Main Logo
 ~~~~~~~~~
 
 You can change the default Main Logo in Manager: General Parameters >
-Portal > Customization > Main Logo.
+Portal > Customization > Main logo.
 
-A blank value disables Main Logo display.
+A blank value disables Main logo display.
 
 
 .. tip::
@@ -43,15 +43,15 @@ Option enabled by default.
 Custom CSS file
 ~~~~~~~~~~~~~~~
 
-You can define a custom CSS file, for example ``custom.css``, which will
-be loaded after default CSS files. This file needs to be created in the
+You can define a custom CSS file, by example ``custom.css``, which will
+be loaded after default CSS files. This file must be created in the
 static repository
 (``/usr/share/lemonldap-ng/portal/htdocs/static/bootstrap/css``).
 
-Then set this value in Custom CSS parameter :
+Then set this value in Custom CSS parameter:
 ``bootstrap/css/custom.css``.
 
-Sample CSS file, to remove white background of main logo:
+CSS file sample to remove white background of main logo:
 
 .. code-block:: css
 
@@ -65,9 +65,9 @@ Sample CSS file, to remove white background of main logo:
 Skin
 ----
 
-LemonLDAP::NG is shipped with bootstrap skin.
+LemonLDAP::NG is shipped with a bootstrap skin.
 
-But you can make your own. See Skin customization below.
+But you can provide your own. See Skin customization below.
 
 Default skin
 ~~~~~~~~~~~~
@@ -83,8 +83,7 @@ Skin background
 
 Go in ``General Parameters`` > ``Portal`` > ``Customization`` >
 ``Skin background``. You can define a background by selecting one of the
-available image. Use ``None`` to use the default skin background
-configuration.
+available image. Select ``None`` to use the default skin background configuration.
 
 |image0|
 
@@ -112,13 +111,13 @@ user.
 
 To achieve this, you can create a rule in the Manager: select
 ``General Parameters`` > ``Portal`` > ``Customization`` >
-``Skin display rules`` on click on "New key". Then fill the two fields;
+``Skin display rules`` and click on "New entry". Then fill the two fields;
 
 -  **Rule**: a Perl expression (you can use %ENV hash to get environment
    variables, or $_url to get URL called before redirection, or $ipAddr
-   to use user IP address). If the rule evaluation is true, the
+   to test user IP address). If the rule evaluation is true, the
    corresponding skin is applied.
--  **Skin**: the name of the skin to use.
+-  **Skin**: name of the skin to use.
 
 Skin files
 ~~~~~~~~~~
@@ -210,9 +209,9 @@ lemonldap-ng-cli:
 Messages
 ~~~~~~~~
 
-Messages are defined in source code. If they really do not please you,
+Messages are defined in source code. If they really do not suit you,
 override them! You just need to know the ID of the message (look at
-Portal/Simple.pm).
+Portal/Main/Constants.pm).
 
 There are two methods to do this:
 
@@ -234,7 +233,7 @@ boxes by using the bareword ``_hide_`` :
 .. code-block:: ini
 
    error_en_0        = Big brother is watching you, authenticated user
-   error_fr_0        = Souriez vous êtes surveillés !
+   error_fr_0        = Souriez, vous êtes surveillés !
    msg_fr_lastLogins = Dernières connexions
    error_9           = _hide_
 
@@ -303,8 +302,8 @@ You can also display environment variables, with the prefix ``env_``:
 
    Your IP is <TMPL_VAR NAME="env_REMOTE_ADDR">
 
-Buttons
--------
+Buttons on login page
+---------------------
 
 This node allows one to enable/disable buttons on the login page:
 
@@ -314,16 +313,14 @@ This node allows one to enable/disable buttons on the login page:
    :doc:`reset your password page<resetpassword>` (for password based
    authentication backends). Number of allowed retries can be set (3
    times by default)
--  **Register**: display a link to :doc:`register page<register>` (for
+-  **Max reset password retries**: 
+-  **Register new account**: display a link to :doc:`register page<register>` (for
    password based authentication backends)
--  **Reset certificate**: display a link to :doc:`reset certificate page<resetcertificate>` (for
+-  **Reset your certificate**: display a link to :doc:`reset certificate page<resetcertificate>` (for
    password based authentication backends)
 
 Password management
 -------------------
-
-General
-~~~~~~~
 
 -  **Require old password**: used only in the password changing module
    of the menu, will check the old password before updating it
@@ -337,26 +334,27 @@ General
    revealed. Disabled by default.
 
 Password Policy
-~~~~~~~~~~~~~~~
-
+---------------
 
 .. tip::
 
     Available since version 2.0.6
 
+-  **Activation**: enable/disable password policy. You can set a rule
+   to enable policy for specific users only
+-  **Display policy in password form**: enable this option to display an
+   information message about password policy constraints
 -  **Minimal size**: leave 0 to bypass the check
 -  **Minimal lower characters**: leave 0 to bypass the check
 -  **Minimal upper characters**: leave 0 to bypass the check
 -  **Minimal digit characters**: leave 0 to bypass the check
 -  **Minimal special characters**: leave 0 to bypass the check
 -  **Allowed special characters**: set '__ALL__' value to allow ALL special characters. A blanck value forbids ALL special characters (Note that ``_`` is not a special character)
--  **Display policy in password form**: enable this to display an
-   information message about password policy constraints
 
 .. _portalcustom-other-parameters:
 
-Other parameters
-----------------
+Other
+-----
 
 -  **User attribute**: which session attribute will be used to display
    ``Connected as`` in the menu
@@ -373,6 +371,7 @@ Other parameters
 -  **Show error on mail not found**: Display error if provided mail is
    not found in password reset by mail process. Disabled by default to
    prevent mail enumeration from this page.
+-  **Display rights refresh link**: Enable/disable link in Portal menu to allow users to refresh their rights
 
 .. |image0| image:: /documentation/manager-skin-background.png
    :class: align-center
