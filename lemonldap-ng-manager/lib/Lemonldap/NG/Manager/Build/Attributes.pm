@@ -1751,7 +1751,7 @@ sub attributes {
             documentation => 'Mail subject for register confirmation',
         },
         registerConfirmBody => {
-            type          => 'text',
+            type          => 'longtext',
             documentation => 'Mail body for register confirmation',
         },
         registerDoneSubject => {
@@ -1759,7 +1759,7 @@ sub attributes {
             documentation => 'Mail subject when register is done',
         },
         registerDoneBody => {
-            type          => 'text',
+            type          => 'longtext',
             documentation => 'Mail body when register is done',
         },
         registerTimeout => {

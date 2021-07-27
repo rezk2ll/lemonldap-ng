@@ -20,7 +20,7 @@ SKIP: {
 
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel               => 'debug',
+                logLevel               => 'error',
                 useSafeJail            => 1,
                 portalDisplayRegister  => 1,
                 authentication         => 'Demo',
@@ -32,7 +32,7 @@ SKIP: {
                 registerDoneSubject => 'Registration successful',
                 registerDoneBody =>
 'Congratulations! Your account has been succesfully created with $mail from [$ipAddr]...
-Login=$login & Password=$password - Thanks to LL::NG Team.',
+Login=$login & Password=$password - Thanks to LemonLDAP::NG team.',
                 captcha_register_enabled => 0,
             }
         }
@@ -96,7 +96,7 @@ m#Congratulations! Your account has been succesfully created with (.+?) from \[(
       or explain( $email, 'email' );
     ok( $ipAddr eq '127.0.0.1', 'Get good ipAddr' )
       or explain( $ipAddr, 'ipAddr' );
-    ok( $mail =~ m#Login=(\w+?) & Password=(.+?)- Thanks to LL::NG Team#s,
+    ok( $mail =~ m#Login=(\w+?) & Password=(.+?)- Thanks to LemonLDAP::NG team\.#s,
         'Found user and password' )
       or explain( $mail, 'Custom done body' );
     $user = $1;
