@@ -10,6 +10,7 @@
 "PE103":"您的帳號沒有可用的第二因素",
 "PE104":"Bad DevOps handler file",
 "PE105":"File not found",
+"PE106":"Error during authentication with OpenID Provider",
 "PE2":"必須填寫使用者與密碼欄位",
 "PE20":"No password backend defined",
 "PE21":"您的帳號已鎖定",

@@ -10,6 +10,7 @@
 "PE103":"No second factors available for your account",
 "PE104":"Bad DevOps handler file",
 "PE105":"File not found",
+"PE106":"Error during authentication with OpenID Provider",
 "PE2":"Identificante ou senha não informados",
 "PE20":"No password backend defined",
 "PE21":"A sua conta está bloqueada",

@@ -10,6 +10,7 @@
 "PE103":"No second factors available for your account",
 "PE104":"Bad DevOps handler file",
 "PE105":"File not found",
+"PE106":"Error during authentication with OpenID Provider",
 "PE2":"حقول المستخدم وكلمة المرور يجب ملؤهم",
 "PE20":"No password backend defined",
 "PE21":"حسابك مقفل",
