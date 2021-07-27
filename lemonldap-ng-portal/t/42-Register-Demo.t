@@ -9,8 +9,8 @@ BEGIN {
     };
 }
 
-my $maintests = 10;
-my ( $res, $user, $pwd );
+my $maintests = 11;
+my ( $res, $user, $pwd, $mail, $subject );
 
 SKIP: {
     eval 'require Email::Sender::Simple; use Text::Unidecode';
@@ -53,12 +53,12 @@ SKIP: {
     );
     expectOK($res);
 
-    my $mail = mail();
-    my $subject = subject();
+    $mail = mail();
+    $subject = subject();
     ok( $subject eq 'Demonstration', 'Found subject' )
       or explain( $subject, 'Custom subject' );
     ok( $mail =~ m#a href="http://auth.example.com/register\?(.+?)"#,
-        'Found register token' );
+        'Found register token' ) or explain( $mail, 'Confirm body' );
     $query = $1;
     ok( $query =~ /register_token=/, 'Found register_token' );
     ok( $mail =~ /Fôo/, 'UTF-8 works' ) or explain( $mail, 'Fôo' );
@@ -70,11 +70,15 @@ SKIP: {
     );
     expectOK($res);
 
+    $mail = mail();
+    $subject = subject();
+    ok( $subject eq '[LemonLDAP::NG] Your new account', 'Found subject' )
+      or explain( $subject, 'Default subject' );
     ok(
-        mail() =~
+        $mail =~
           m#Your login is.+?<b>(\w+)</b>.*?Your password is.+?<b>(.*?)</b>#s,
         'Found user and password'
-    );
+    ) or explain( $mail, 'Done body' );
     $user = $1;
     $pwd  = $2;
     ok( $user eq 'fbabar', 'Get good login' );
