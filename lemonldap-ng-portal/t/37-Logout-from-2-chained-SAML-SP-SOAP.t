@@ -220,7 +220,7 @@ SKIP: {
                         ),
         'Test if still logged on PROXY' );
 
-    my ( $urlidp, $queryidp ) =
+    ( $urlidp, $queryidp ) =
       expectRedirection( $res,
         qr#http://auth.idp.com(/saml/singleSignOn)\?(.*)$# );
 

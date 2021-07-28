@@ -45,7 +45,7 @@ ok( &$checkDate == "1",
 
 my $sub4 =
   "sub { return(checkDate('20000101000000+0100','21000101000000+0100')) }";
-my $checkDate = $jail->jail_reval($sub4);
+$checkDate = $jail->jail_reval($sub4);
 ok( &$checkDate == "1",
     'checkDate extended function working without Safe Jail' );
 

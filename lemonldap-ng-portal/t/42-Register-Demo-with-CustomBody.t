@@ -9,7 +9,7 @@ BEGIN {
     };
 }
 
-my $maintests = 14;
+my $maintests = 16;
 my ( $res, $user, $pwd, $mail, $subject, $email, $ipAddr );
 
 SKIP: {
@@ -26,13 +26,16 @@ SKIP: {
                 authentication         => 'Demo',
                 userDB                 => 'Same',
                 registerDB             => 'Demo',
+                registerTimeout        => '600',
                 registerConfirmSubject => 'Registration demonstration',
                 registerConfirmBody =>
-'Hello $firstname $lastname, follows this link to register your account $url',
+'Hello $firstname $lastname, follows this link to register your account $url
+Expired time: $expMailDate $expMailTime',
                 registerDoneSubject => 'Registration successful',
                 registerDoneBody =>
 'Congratulations! Your account has been succesfully created with $mail from [$ipAddr]...
-Login=$login & Password=$password - Thanks to LemonLDAP::NG team.',
+Login=$login & Password=$password - Thanks to LemonLDAP::NG team.
+Go to Portal $url',
                 captcha_register_enabled => 0,
             }
         }
@@ -67,12 +70,14 @@ Login=$login & Password=$password - Thanks to LemonLDAP::NG team.',
     ) or explain( $subject, 'Custom registration subject' );
     ok(
         $mail =~
-m#Hello Fôo Bà Bar, follows this link to register your account http://auth.example.com/register\?(.+?)&skin=bootstrap#,
-        'Found register token'
-    ) or explain( $mail, 'Custom body' );
+m#Hello Fôo Bà Bar, follows this link to register your account http://auth\.example\.com/register#s,
+        'Found custom body'
+    ) or explain( $mail, 'Custom body (link)' );
+    ok( $mail =~ /[?&](register_token=.+)[$&]/, 'Found register_token' );
     $query = $1;
-    ok( $query =~ /register_token=/, 'Found register_token' );
     ok( $mail =~ /Fôo/, 'UTF-8 works' ) or explain( $mail, 'Fôo' );
+    ok( $mail =~ m#Expired time: \d{2}/\d{2}/\d{4} \d{2}:\d{2}#s, 'Found time' )
+      or explain( $mail, 'Custom body (expired time)' );
 
     ok(
         $res =
@@ -96,12 +101,17 @@ m#Congratulations! Your account has been succesfully created with (.+?) from \[(
       or explain( $email, 'email' );
     ok( $ipAddr eq '127.0.0.1', 'Get good ipAddr' )
       or explain( $ipAddr, 'ipAddr' );
-    ok( $mail =~ m#Login=(\w+?) & Password=(.+?)- Thanks to LemonLDAP::NG team\.#s,
-        'Found user and password' )
-      or explain( $mail, 'Custom done body' );
+    ok(
+        $mail =~
+          m#Login=(\w+?) & Password=(.+?)- Thanks to LemonLDAP::NG team\.#s,
+        'Found user and password'
+    ) or explain( $mail, 'Custom done body ($login & $password)' );
     $user = $1;
     $pwd  = $2;
     ok( $user eq 'fbabar', 'Get good login' );
+    ok( $mail =~ m#Go to Portal http://auth.example.com/\?skin=bootstrap#s,
+        'Custom done body (Portal $url)' )
+      or explain( $mail, 'Custom done body' );
 
     ok(
         $res = $client->_post(

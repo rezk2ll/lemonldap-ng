@@ -262,7 +262,7 @@ sub _register {
 
         # Mail session expiration date
         my $expTimestamp =
-          ( $self->{conf}->{registerTimeout} || $self->conf->{timeout} ) + time;
+          ( $self->conf->{registerTimeout} || $self->conf->{timeout} ) + time;
 
         $self->logger->debug("Register expiration timestamp: $expTimestamp");
 
