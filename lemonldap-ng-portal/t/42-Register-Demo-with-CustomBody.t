@@ -26,7 +26,7 @@ SKIP: {
                 authentication         => 'Demo',
                 userDB                 => 'Same',
                 registerDB             => 'Demo',
-                registerTimeout        => '600',
+                registerTimeout        => '3600',
                 registerConfirmSubject => 'Registration demonstration',
                 registerConfirmBody =>
 'Hello $firstname $lastname, follows this link to register your account $url
