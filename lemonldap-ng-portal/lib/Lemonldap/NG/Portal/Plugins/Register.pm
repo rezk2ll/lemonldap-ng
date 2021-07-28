@@ -134,7 +134,7 @@ sub _register {
     if ( $req->data->{register_token} ) {
 
         $self->logger->debug(
-            "Token given for register: " . $req->data->{register_token} );
+            "Token provided for register: " . $req->data->{register_token} );
 
         # Get the corresponding session
         if ( my $data =
