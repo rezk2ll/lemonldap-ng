@@ -20,7 +20,7 @@ SKIP: {
 
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel               => 'error',
+                logLevel               => 'debug',
                 useSafeJail            => 1,
                 portalDisplayRegister  => 1,
                 authentication         => 'Demo',
@@ -73,7 +73,7 @@ Go to Portal $url',
 m#Hello Fôo Bà Bar, follows this link to register your account http://auth\.example\.com/register#s,
         'Found custom body'
     ) or explain( $mail, 'Custom body (link)' );
-    ok( $mail =~ /[?&](register_token=.+)[$&]/, 'Found register_token' );
+    ok( $mail =~ /[?&](register_token=.+)[$&]/s, 'Found register_token' );
     $query = $1;
     ok( $mail =~ /Fôo/, 'UTF-8 works' ) or explain( $mail, 'Fôo' );
     ok( $mail =~ m#Expired time: \d{2}/\d{2}/\d{4} \d{2}:\d{2}#s, 'Found time' )
