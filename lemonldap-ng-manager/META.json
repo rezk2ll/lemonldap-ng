@@ -4,7 +4,7 @@
       "Xavier Guimard <x.guimard@free.fr>, ClÃ©ment Oudot <clement@oodo.net>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "ExtUtils::MakeMaker version 7.34, CPAN::Meta::Converter version 2.150010",
+   "generated_by" : "ExtUtils::MakeMaker version 7.44, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "open_source"
    ],
@@ -22,6 +22,7 @@
    "prereqs" : {
       "build" : {
          "requires" : {
+            "Email::Sender" : "0",
             "IO::String" : "0",
             "Regexp::Common" : "0",
             "Test::Pod" : "1"

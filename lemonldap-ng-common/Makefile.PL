@@ -47,6 +47,7 @@ WriteMakefile(
             'Convert::Base32'             => 0,
             'Cookie::Baker::XS'           => 0,
             'Crypt::URandom'              => 0,
+            'Date::Parse'                 => 0,
             'String::Random'              => 0,
             'DBI'                         => 0,
             'Net::LDAP'                   => 0,
