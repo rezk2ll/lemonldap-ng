@@ -8,7 +8,7 @@
 #                  of lemonldap-ng.ini) and underlying handler configuration
 package Lemonldap::NG::Portal::Main::Init;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.13';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -531,13 +531,13 @@ sub findEP {
             }
         }
     }
-    $self->logger->debug("Plugin $plugin initializated");
+    $self->logger->debug("Plugin $plugin initialized");
 
     # Rules for menu
     if ( $obj->can('spRules') ) {
         foreach my $k ( keys %{ $obj->{spRules} } ) {
             $self->logger->info(
-"$k is defined more than one time, it can have some bad effect on Menu display"
+"$k is defined more than one time, it can have some bad effects on Menu display"
             ) if ( $self->spRules->{$k} );
             $self->spRules->{$k} = $obj->{spRules}->{$k};
         }

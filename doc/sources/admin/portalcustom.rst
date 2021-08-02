@@ -113,11 +113,17 @@ To achieve this, you can create a rule in the Manager: select
 ``General Parameters`` > ``Portal`` > ``Customization`` >
 ``Skin display rules`` and click on "New entry". Then fill the two fields;
 
--  **Rule**: a Perl expression (you can use %ENV hash to get environment
-   variables, or $_url to get URL called before redirection, or $ipAddr
-   to test user IP address). If the rule evaluation is true, the
-   corresponding skin is applied.
--  **Skin**: name of the skin to use.
+-  **Key**: a Perl expression (you can use ``%ENV`` hash to get environment
+   variables, or ``$_url`` to get URL called before redirection, or ``$ipAddr``
+   to use user IP address). If the rule evaluation is true, the corresponding
+   skin is applied.
+-  **Value**: the name of the skin to use.
+
+Example:
+
+```
+$_url =~ m#^http://test1.example.com#
+```
 
 Skin files
 ~~~~~~~~~~
