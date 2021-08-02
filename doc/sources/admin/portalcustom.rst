@@ -43,7 +43,7 @@ Option enabled by default.
 Custom CSS file
 ~~~~~~~~~~~~~~~
 
-You can define a custom CSS file, by example ``custom.css``, which will
+You can define a custom CSS file, for example ``custom.css``, which will
 be loaded after default CSS files. This file must be created in the
 static repository
 (``/usr/share/lemonldap-ng/portal/htdocs/static/bootstrap/css``).
@@ -51,7 +51,7 @@ static repository
 Then set this value in Custom CSS parameter:
 ``bootstrap/css/custom.css``.
 
-CSS file sample to remove white background of main logo:
+CSS file example to remove white background of main logo:
 
 .. code-block:: css
 
@@ -319,7 +319,7 @@ This node allows one to enable/disable buttons on the login page:
    :doc:`reset your password page<resetpassword>` (for password based
    authentication backends). Number of allowed retries can be set (3
    times by default)
--  **Max reset password retries**: 
+-  **Max reset password retries**: number of retries allowed for resetting password
 -  **Register new account**: display a link to :doc:`register page<register>` (for
    password based authentication backends)
 -  **Reset your certificate**: display a link to :doc:`reset certificate page<resetcertificate>` (for

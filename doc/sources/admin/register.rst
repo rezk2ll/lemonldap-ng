@@ -5,13 +5,13 @@ Presentation
 ------------
 
 This feature is a page that allows a user to create an account.
-The following steps are performed:
+Following steps are performed:
 
 #. User click on the button "Create a new account"
-#. He enters first name, last name and email
-#. He receives an email with a confirmation link
-#. After clicking, his entry is appended
-#. An email with his login and password is sent back
+#. They enter first name, last name and email
+#. They receive an email with a confirmation link
+#. After clicking, their account is created
+#. An email with his login and password is sent
 
 Configuration
 -------------
