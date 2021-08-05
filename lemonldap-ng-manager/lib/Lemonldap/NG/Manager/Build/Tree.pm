@@ -64,10 +64,10 @@ sub tree {
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'portalCheckLogins',
-                                        'portalDisplayResetPassword',
-                                        'passwordResetAllowedRetries',
                                         'portalDisplayRegister',
-                                        'portalDisplayCertificateResetByMail'
+                                        'portalDisplayCertificateResetByMail',
+                                        'portalDisplayResetPassword',
+                                        'passwordResetAllowedRetries'
                                     ]
                                 },
                                 {

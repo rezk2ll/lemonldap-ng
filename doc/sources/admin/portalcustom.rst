@@ -315,15 +315,15 @@ This node allows one to enable/disable buttons on the login page:
 
 -  **Check last logins**: display a checkbox on login form, allowing
    user to check his login history right after opening session
+-  **Register new account**: display a link to :doc:`register page<register>` (for
+   password based authentication backends)
+-  **Reset your certificate**: display a link to :doc:`reset certificate page<resetcertificate>` (for
+   password based authentication backends)
 -  **Reset password**: display a link to
    :doc:`reset your password page<resetpassword>` (for password based
    authentication backends). Number of allowed retries can be set (3
    times by default)
 -  **Max reset password retries**: number of retries allowed for resetting password
--  **Register new account**: display a link to :doc:`register page<register>` (for
-   password based authentication backends)
--  **Reset your certificate**: display a link to :doc:`reset certificate page<resetcertificate>` (for
-   password based authentication backends)
 
 Password management
 -------------------
