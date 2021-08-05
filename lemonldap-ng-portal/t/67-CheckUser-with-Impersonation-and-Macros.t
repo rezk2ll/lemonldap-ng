@@ -124,7 +124,7 @@ count(1);
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok(
     $res->[2]->[0] =~
-m%<input id="urlfield" name="url" type="text" class="form-control" value="http://test1.example.com" trplaceholder="URL / DNS"%,
+m%<input id="urlfield" name="url" type="text" class="form-control" value="http://test1.example.com" autocomplete="url" trplaceholder="URL / DNS"%,
     'Found HTTP url'
 ) or explain( $res->[2]->[0], 'HTTP url' );
 ok(
@@ -224,7 +224,7 @@ ok(
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok(
     $res->[2]->[0] =~
-m%<input id="urlfield" name="url" type="text" class="form-control" value="https://test2.example.com" trplaceholder="URL / DNS"%,
+m%<input id="urlfield" name="url" type="text" class="form-control" value="https://test2.example.com" autocomplete="url" trplaceholder="URL / DNS"%,
     'Found HTTPS url'
 ) or explain( $res->[2]->[0], 'HTTP url' );
 count(2);

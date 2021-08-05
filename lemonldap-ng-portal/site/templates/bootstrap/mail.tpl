@@ -25,7 +25,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text"><label for="mail" class="mb-0"><i class="fa fa-envelope"></i></label></span>
         </div>
-        <input id="mail" name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" trplaceholder="mail" required />
+        <input id="mail" name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" autocomplete="email" trplaceholder="mail" required />
       </div>
 
       <TMPL_IF NAME=CAPTCHA_SRC>
