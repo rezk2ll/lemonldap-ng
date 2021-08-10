@@ -876,7 +876,7 @@
 "restPasswordServer":"Password reset server",
 "restPwdConfirmUrl":"URL di conferma password",
 "restPwdModifyUrl":"URL di modifica password",
-"restServices":"REST services",
+"restServices":"Servizio REST",
 "restSessionServer":"Session server",
 "restUserDBUrl":"URL dei dati utente",
 "restore":"Ristabilire",
