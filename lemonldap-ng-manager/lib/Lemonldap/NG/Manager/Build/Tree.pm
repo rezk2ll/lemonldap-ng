@@ -1038,6 +1038,14 @@ sub tree {
                                     ],
                                 },
                                 {
+                                    title => 'newLocationWarnings',
+                                    help  => 'newLocationWarning.html',
+                                    nodes => [
+                                        'newLocationWarning',
+                                        'newLocationWarningMailAttribute'
+                                    ]
+                                },
+                                {
                                     title => 'bruteForceAttackProtection',
                                     help  => 'bruteforceprotection.html',
                                     form  => 'simpleInputContainer',
