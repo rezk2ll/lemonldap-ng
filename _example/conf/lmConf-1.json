@@ -85,9 +85,9 @@
    },
    "authentication" : "Demo",
    "cfgAuthor" : "The LemonLDAP::NG team",
-   "cfgNum" : 1,
    "cfgDate" : "1627287638",
-   "cfgVersion" : "2.0.12",
+   "cfgNum" : 1,
+   "cfgVersion" : "2.0.13",
    "cookieName" : "lemonldap",
    "demoExportedVars" : {
       "cn" : "cn",

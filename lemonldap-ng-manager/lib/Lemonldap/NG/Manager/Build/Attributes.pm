@@ -573,6 +573,18 @@ sub attributes {
             default       => '^[*\w]+$',
             documentation => 'Regular expression to validate parameters',
         },
+        newLocationWarning => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable New Location Warning', 
+            flags         => 'p',
+        },
+        newLocationWarningMailAttribute => {
+            type          => 'text',
+            default       => 'mail',
+            documentation => 'New location warning mail session attribute',
+            flags         => 'p',
+        },
         globalLogoutRule => {
             type          => 'boolOrExpr',
             default       => 0,

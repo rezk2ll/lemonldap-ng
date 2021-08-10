@@ -185,8 +185,9 @@ sub defaultValues {
         'multiValuesSeparator'   => '; ',
         'mySessionAuthorizedRWKeys' =>
           [ '_appsListOrder', '_oidcConnectedRP', '_oidcConsents' ],
-        'notificationDefaultCond' => '',
-        'notificationServerPOST'  => 1,
+        'newLocationWarningMailAttribute' => 'mail',
+        'notificationDefaultCond'         => '',
+        'notificationServerPOST'          => 1,
         'notificationServerSentAttributes' =>
           'uid reference date title subtitle text check',
         'notificationsMaxRetrieve'   => 3,

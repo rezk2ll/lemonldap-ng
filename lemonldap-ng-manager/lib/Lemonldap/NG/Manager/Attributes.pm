@@ -2063,6 +2063,14 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
               [ '_appsListOrder', '_oidcConnectedRP', '_oidcConsents' ],
             'type' => 'array'
         },
+        'newLocationWarning' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'newLocationWarningMailAttribute' => {
+            'default' => 'mail',
+            'type'    => 'text'
+        },
         'nginxCustomHandlers' => {
             'keyTest' => qr/^\w+$/,
             'msgFail' => '__badPerlPackageName__',
