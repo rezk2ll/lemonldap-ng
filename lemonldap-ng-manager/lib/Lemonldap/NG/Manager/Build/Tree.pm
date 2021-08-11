@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.13';
 
 # TODO: Missing:
 #  * activeTimer
@@ -1042,7 +1042,9 @@ sub tree {
                                     help  => 'newLocationWarning.html',
                                     nodes => [
                                         'newLocationWarning',
-                                        'newLocationWarningMailAttribute'
+                                        'newLocationWarningMailAttribute',
+                                        'newLocationWarningMailSubject',
+                                        'newLocationWarningMailBody'
                                     ]
                                 },
                                 {
