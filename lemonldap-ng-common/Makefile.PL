@@ -43,7 +43,7 @@ WriteMakefile(
     },
     META_MERGE => {
         'recommends' => {
-            'Apache::Session::Browseable' => 0,
+            'Apache::Session::Browseable' => '1.3.9',
             'Convert::Base32'             => 0,
             'Cookie::Baker::XS'           => 0,
             'Crypt::URandom'              => 0,
