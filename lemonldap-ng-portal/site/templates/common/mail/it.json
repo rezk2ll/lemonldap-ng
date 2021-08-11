@@ -6,6 +6,7 @@
 "click2Reset":"Clicca qui per reimpostare la password",
 "goToPortal":"Vai al portale",
 "hello":"Salve",
+"host":"Host",
 "mail2fSubject":"[LemonLDAP :: NG] Il tuo codice di accesso",
 "mailConfirmSubject":"Conferma reimpostazione password [LemonLDAP::NG] ",
 "mailSubject":"[LemonLDAP::NG] La tua nuova password",
@@ -15,6 +16,7 @@
 "registerConfirmSubject":"[LemonLDAP :: NG] Conferma registro account",
 "registerDoneSubject":"[LemonLDAP::NG] Il tuo nuovo account",
 "requestIssuedFromIP":"La richiesta è stata emessa da IP",
+"date":"Date",
 "yourLoginCodeIs":"Il tuo codice di accesso è",
 "yourLoginIs":"Il tuo login é"
 }

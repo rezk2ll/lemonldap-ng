@@ -6,6 +6,7 @@
 "click2Reset":"Nhấn ở đây để thiết lập lại mật khẩu của bạn",
 "goToPortal":"Đi tới cổng thông tin",
 "hello":"Xin chào",
+"host":"Host",
 "mail2fSubject":"[LemonLDAP::NG] Your login code",
 "mailConfirmSubject":"[LemonLDAP::NG] Xác nhận thiết lập lại mật khẩu",
 "mailSubject":"[LemonLDAP::NG] Mật khẩu mới của bạn",
@@ -15,6 +16,7 @@
 "registerConfirmSubject":"[LemonLDAP::NG] Xác nhận đăng ký tài khoản",
 "registerDoneSubject":"[LemonLDAP::NG] Tài khoản mới của bạn",
 "requestIssuedFromIP":"Yêu cầu được gửi đi từ địa chỉ IP",
+"date":"Date",
 "yourLoginCodeIs":"Your login code is",
 "yourLoginIs":"Đăng nhập của bạn là"
 }
