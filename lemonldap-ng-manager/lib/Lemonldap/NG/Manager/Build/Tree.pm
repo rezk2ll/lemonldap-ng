@@ -1032,6 +1032,7 @@ sub tree {
                                 {
                                     title => 'CrowdSecPlugin',
                                     help  => 'crowdsec.html',
+                                    form  => 'simpleInputContainer',
                                     nodes => [
                                         'crowdsec',    'crowdsecAction',
                                         'crowdsecUrl', 'crowdsecKey',
@@ -1040,6 +1041,7 @@ sub tree {
                                 {
                                     title => 'newLocationWarnings',
                                     help  => 'newLocationWarning.html',
+                                    form  => 'simpleInputContainer',
                                     nodes => [
                                         'newLocationWarning',
                                         'newLocationWarningMailAttribute',

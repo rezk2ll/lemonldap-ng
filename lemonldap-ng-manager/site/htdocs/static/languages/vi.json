@@ -568,6 +568,7 @@
 "newGrantRule":"Quy tắc cấp mới",
 "newHost":"Máy chủ mới",
 "newLocationWarning":"Activation",
+"newLocationWarnings":"New location warning",
 "newLocationWarningMailAttribute":"Session mail attribute",
 "newLocationWarningMailBody":"Warning mail content",
 "newLocationWarningMailSubject":"Warning mail subject",

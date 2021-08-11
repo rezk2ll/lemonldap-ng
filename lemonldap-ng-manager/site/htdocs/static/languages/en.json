@@ -568,6 +568,7 @@
 "newGrantRule":"New grant rule",
 "newHost":"New host",
 "newLocationWarning":"Activation",
+"newLocationWarnings":"New location warning",
 "newLocationWarningMailAttribute":"Session mail attribute",
 "newLocationWarningMailBody":"Warning mail content",
 "newLocationWarningMailSubject":"Warning mail subject",

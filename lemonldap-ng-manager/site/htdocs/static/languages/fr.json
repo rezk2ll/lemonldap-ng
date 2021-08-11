@@ -568,6 +568,7 @@
 "newGrantRule":"Nouvelle règle d'accès",
 "newHost":"Nouvel hôte",
 "newLocationWarning":"Activation",
+"newLocationWarnings":"Avertissement de nouvelle connexion",
 "newLocationWarningMailAttribute":"Attribut utilisateur contenant le mail ",
 "newLocationWarningMailBody":"Contenu du mail d'avertissement",
 "newLocationWarningMailSubject":"Sujet du mail d'avertissement",
