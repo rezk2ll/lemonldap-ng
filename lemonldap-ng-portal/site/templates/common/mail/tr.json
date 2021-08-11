@@ -6,6 +6,7 @@
 "click2Reset":"Parolanızı sıfırlamak için buraya tıklayın",
 "goToPortal":"Portala git",
 "hello":"Merhaba",
+"host":"Host",
 "mail2fSubject":"[LemonLDAP::NG] Giriş kodunuz",
 "mailConfirmSubject":"[LemonLDAP::NG] Parola sıfırlama onayı",
 "mailSubject":"[LemonLDAP::NG] Yeni parolanız",
@@ -15,6 +16,7 @@
 "registerConfirmSubject":"[LemonLDAP::NG] Hesap açma onayı",
 "registerDoneSubject":"[LemonLDAP::NG] Yeni hesabınız",
 "requestIssuedFromIP":"İstek IP'den gönderildi",
+"date":"Date",
 "yourLoginCodeIs":"Giriş kodunuz",
 "yourLoginIs":"Giriş bilgileriniz"
 }

@@ -6,6 +6,7 @@
 "click2Reset":"Klikkaa tästä nollataksesi salasanasi",
 "goToPortal":"Siirry portaaliin",
 "hello":"Hei",
+"host":"Host",
 "mail2fSubject":"[LemonLDAP::NG] Your login code",
 "mailConfirmSubject":"[LemonLDAP::NG] Salasanan nollauksen vahvistus",
 "mailSubject":"[LemonLDAP::NG] Uusi salasanasi",
@@ -15,6 +16,7 @@
 "registerConfirmSubject":"[LemonLDAP::NG] Tunnuksen rekisteröinnin vahvistus",
 "registerDoneSubject":"[LemonLDAP::NG] Uusi käyttäjätunnuksesi",
 "requestIssuedFromIP":"The request was issued from IP",
+"date":"Date",
 "yourLoginCodeIs":"Your login code is",
 "yourLoginIs":"Your login is"
 }

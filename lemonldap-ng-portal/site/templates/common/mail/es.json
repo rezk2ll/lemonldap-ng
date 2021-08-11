@@ -6,6 +6,7 @@
 "click2Reset":"Haga clic para reiniciar su contraseña",
 "goToPortal":"Ir al portal",
 "hello":"Hola",
+"host":"Host",
 "mail2fSubject":"[LemonLDAP::NG] Su código de acceso",
 "mailConfirmSubject":"[LemonLDAP::NG] Confirmación de reinicio de contraseña",
 "mailSubject":"[LemonLDAP::NG] Su nueva contraseña",
@@ -15,6 +16,7 @@
 "registerConfirmSubject":"[LemonLDAP::NG] Confirmación de creación de cuenta",
 "registerDoneSubject":"[LemonLDAP::NG] Su nueva cuenta",
 "requestIssuedFromIP":"El pedido fue emitido desde la IP",
+"date":"Date",
 "yourLoginCodeIs":"Su código de acceso es ",
 "yourLoginIs":"Su nombre de usuario es"
 }

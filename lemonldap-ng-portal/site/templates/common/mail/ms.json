@@ -6,6 +6,7 @@
 "click2Reset":"Kilik disini untuk menetapkan semula kata laluan anda",
 "goToPortal":"Go to portal",
 "hello":"Hello",
+"host":"Host",
 "mail2fSubject":"[LemonLDAP::NG] Kod login anda",
 "mailConfirmSubject":"[LemonLDAP::NG] Pengesahan penetapan semula kata laluan",
 "mailSubject":"[LemonLDAP::NG] Kata laluan baru anda",
@@ -15,6 +16,7 @@
 "registerConfirmSubject":"[LemonLDAP::NG]  Pengesahan pendaftaran akaun",
 "registerDoneSubject":"[LemonLDAP::NG] Akaun baru anda",
 "requestIssuedFromIP":"Permintaan itu dari alamat IP",
+"date":"Date",
 "yourLoginCodeIs":"Kod login anda ialah",
 "yourLoginIs":"Login anda ialah"
 }

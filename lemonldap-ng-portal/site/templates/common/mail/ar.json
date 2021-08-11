@@ -6,6 +6,7 @@
 "click2Reset":"انقر هنا لإعادة تعيين كلمة المرور",
 "goToPortal":"انتقل إلى البوابة",
 "hello":"مرحبا ",
+"host":"Host",
 "mail2fSubject":"[LemonLDAP::NG] تسجيل الدخول الخاص بك هو ",
 "mailConfirmSubject":"تأكيد إعادة تعيين كلمة المرور[LemonLDAP::NG]",
 "mailSubject":"كلمة المرور الجديدة [LemonLDAP::NG]",
@@ -15,6 +16,7 @@
 "registerConfirmSubject":"تأكيد تسجيل الحساب[LemonLDAP::NG] ",
 "registerDoneSubject":"حسابك الجديد[LemonLDAP::NG]",
 "requestIssuedFromIP":"الطلب قد أرسل من عنوان الآي بي",
+"date":"Date",
 "yourLoginCodeIs":"Your login code is",
 "yourLoginIs":"تسجيل الدخول الخاص بك هو"
 }
