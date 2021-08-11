@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.13';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -584,6 +584,14 @@ sub attributes {
             default       => 'mail',
             documentation => 'New location warning mail session attribute',
             flags         => 'p',
+        },
+        newLocationWarningMailBody => {
+            type          => 'longtext',
+            documentation => 'Mail body for new location warning',
+        },
+        newLocationWarningMailSubject=> {
+            type          => 'text',
+            documentation => 'Mail subject for new location warning',
         },
         globalLogoutRule => {
             type          => 'boolOrExpr',
