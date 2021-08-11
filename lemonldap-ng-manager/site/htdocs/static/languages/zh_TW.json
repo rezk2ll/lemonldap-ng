@@ -568,6 +568,7 @@
 "newGrantRule":"新授權規則",
 "newHost":"新主機",
 "newLocationWarning":"Activation",
+"newLocationWarnings":"New location warning",
 "newLocationWarningMailAttribute":"Session mail attribute",
 "newLocationWarningMailBody":"Warning mail content",
 "newLocationWarningMailSubject":"Warning mail subject",
