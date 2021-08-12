@@ -34,17 +34,20 @@
                   <span class="input-group-text"><label for="<TMPL_VAR NAME="key">" class="mb-0"><i class="fa fa-binoculars"></i></label></span>
                 </div>
                 <input id="findUser_<TMPL_VAR NAME="key">" name="<TMPL_VAR NAME="key">" type="text" autocomplete="off" class="form-control" placeholder="<TMPL_VAR NAME="value">" />
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-search"></i></span>
+                </div>
               </div>
             </TMPL_IF>
           </TMPL_LOOP>
         </div>
-        <div class="modal-footer">
-          <button id="closefinduserform" type="button" class="btn btn-secondary" data-dismiss="modal"><span trspan="close">Close</span></button>
+        <div class="modal-footer justify-content-between">
+          
+          <button id="closefinduserform" type="button" class="btn btn-secondary mr-auto" data-dismiss="modal"><span trspan="close">Close</span></button>
           <button id="finduserbutton" type="submit" class="btn btn-info" data-dismiss="modal">
             <span class="fa fa-search"></span>
             <span trspan="searchAccount">Search for an account</span>
           </button>
-          <button id="resetfinduserform" type="button" class="btn btn-primary"><span trspan="cancel">Cancel</span></button>
         </div>
       </form>
       </div>
