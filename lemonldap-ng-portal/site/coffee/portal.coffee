@@ -593,9 +593,10 @@ $(window).on 'load', () ->
 
 	#$('#formpass').on 'submit', changePwd
 
-	$('#resetfinduserform').on 'click', () ->
-		console.log 'Reset form'
-		$(this).trigger('reset')
+	$('.clear-finduser-field').on 'click', () ->
+		$(this).parent().find(':input').each ->
+			console.log 'Clear search field ->', $(this).attr 'name'
+			$(this).val ''
 
 	$('#closefinduserform').on 'click', () ->
 		console.log 'Clear modal'

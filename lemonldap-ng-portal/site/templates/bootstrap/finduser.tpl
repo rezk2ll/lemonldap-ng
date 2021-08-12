@@ -17,25 +17,25 @@
           </TMPL_IF>
           <TMPL_LOOP NAME="FIELDS">
             <TMPL_IF NAME="select">
-              <div class="form-group">
-              <label for="<TMPL_VAR NAME="key">"><TMPL_VAR NAME="value"></label>
-              <select class="form-control" id="findUser_<TMPL_VAR NAME="key">" name="<TMPL_VAR NAME="key">">
-                <TMPL_IF NAME="null">
-                  <option value=""></option>
-                </TMPL_IF>
-                <TMPL_LOOP NAME="choices">
-                  <option value="<TMPL_VAR NAME="key">"><TMPL_VAR NAME="value"></option>
-                </TMPL_LOOP>
-              </select>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="<TMPL_VAR NAME="key">"><TMPL_VAR NAME="value"></label>
+                </div>
+                <select class="custom-select" id="findUser_<TMPL_VAR NAME="key">" name="<TMPL_VAR NAME="key">">
+                  <TMPL_IF NAME="null">
+                    <option value=""></option>
+                  </TMPL_IF>
+                  <TMPL_LOOP NAME="choices">
+                    <option value="<TMPL_VAR NAME="key">"><TMPL_VAR NAME="value"></option>
+                  </TMPL_LOOP>
+                </select>
               </div>
             <TMPL_ELSE>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><label for="<TMPL_VAR NAME="key">" class="mb-0"><i class="fa fa-binoculars"></i></label></span>
-                </div>
-                <input id="findUser_<TMPL_VAR NAME="key">" name="<TMPL_VAR NAME="key">" type="text" autocomplete="off" class="form-control" placeholder="<TMPL_VAR NAME="value">" />
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-search"></i></span>
+                  <input id="findUser_<TMPL_VAR NAME="key">" name="<TMPL_VAR NAME="key">" type="text" autocomplete="off" class="form-control" placeholder="<TMPL_VAR NAME="value">" />
+                  <span class="input-group-text clear-finduser-field"><i class="fa fa-eraser"></i></span>
                 </div>
               </div>
             </TMPL_IF>

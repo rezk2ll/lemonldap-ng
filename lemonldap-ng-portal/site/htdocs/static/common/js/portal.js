@@ -660,9 +660,11 @@ LemonLDAP::NG Portal jQuery scripts
         return $("#confirmpassword").attr('class', 'form-control');
       }
     });
-    $('#resetfinduserform').on('click', function() {
-      console.log('Reset form');
-      return $('#finduserForm').trigger('reset');
+    $('.clear-finduser-field').on('click', function() {
+      return $(this).parent().find(':input').each(function() {
+        console.log('Clear search field ->', $(this).attr('name'));
+        return $(this).val('');
+      });
     });
     $('#closefinduserform').on('click', function() {
       console.log('Clear modal');
