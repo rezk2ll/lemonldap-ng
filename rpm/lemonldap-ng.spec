@@ -676,6 +676,7 @@ fi
 %{lm_bindir}/lemonldap-ng-cli
 %{lm_bindir}/llngDeleteSession
 %{_mandir}/man1/lemonldap-ng-cli*
+%{_mandir}/man1/importMetadata*
 
 %files portal
 %{lm_sharedir}/portal

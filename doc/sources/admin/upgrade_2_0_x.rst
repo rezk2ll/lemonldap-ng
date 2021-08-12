@@ -43,19 +43,52 @@ Security
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you customized the HTML mail content, you must update them to use HTML::Template variables (this was changed to fix XSS injections).
+Email templates
+^^^^^^^^^^^^^^^
 
-For session variables, replace for example ``$cn`` by ``<TMPL_VAR NAME="session_cn" ESCAPE=HTML>``, and for other variables, replace for example ``$url`` by ``<TMPL_VAR NAME="url" ESCAPE=HTML>``.
+If you customized the HTML email templates, you must update them to use HTML::Template variables (this was changed to fix XSS injections).
 
-Some changes have been made to include new plugins (FindUser and CheckDevOps), you need to report them only if you have a custom theme and you want to use these plugins
+In the following files: ``mail_2fcode.tpl`` ``mail_certificateReset.tpl`` ``mail_footer.tpl`` ``mail_password.tpl`` ``mail_register_done.tpl`` ``mail_certificateConfirm.tpl`` ``mail_confirm.tpl`` ``mail_header.tpl`` ``mail_register_confirm.tpl``
 
+Replace the following variables:
+
+
+.. list-table::
+   :header-rows: 1
+
+   * - Old syntax
+     - New syntax
+   * - ``$code``
+     - ``<TMPL_VAR NAME="code" ESCAPE=HTML>``
+   * - ``$url``
+     - ``<TMPL_VAR NAME="url" ESCAPE=HTML>``
+   * - ``$login``
+     - ``<TMPL_VAR NAME="login" ESCAPE=HTML>``
+   * - ``$password``
+     - ``<TMPL_VAR NAME="password" ESCAPE=HTML>``
+   * - ``$firstname``
+     - ``<TMPL_VAR NAME="firstname" ESCAPE=HTML>``
+   * - ``$lastname``
+     - ``<TMPL_VAR NAME="lastname" ESCAPE=HTML>``
+
+Replace all other variables such as ``$cn`` by ``<TMPL_VAR NAME="session_cn" ESCAPE=HTML>``.
+
+Login form
+^^^^^^^^^^
 To benefit from the new feature allowing to show password on login form, adapt ``standardform.tpl`` (see `changes <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/commit/bdeb1e70d98ddc89316b0912d9d5ee6d11d0bee5#fbbcec1fdc36cc042eeaa83274a32ef2231fe977_23_23>`__)
 
 To disable password store in browser when changing password (this was already possible for login form), adapt ``password.tpl`` (see `changes <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/commit/466b6a3241fff5013d27b3dd22982e5e26ed7dfb#0ae060b3d1e289f08f510c268ed72de5dcafe425_36_35>`__)
 
 To fix placeholder display in password field when password store is disabled in browser, adapt ``password.tpl`` (see `changes <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/commit/547d80985290495d33ed72a388e9ddf482980354#fbbcec1fdc36cc042eeaa83274a32ef2231fe977_21_20>`__)
 
-See also "Simplification of TOTP options" below.
+TOTP
+^^^^
+See also `Simplification of TOTP options`_ below.
+
+FindUser, CheckDevOps templates
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Some changes have been made to include new plugins (FindUser and CheckDevOps), you need to report them only if you have a custom theme and you want to use these plugins
 
 Client Credential sessions missing expiration time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
