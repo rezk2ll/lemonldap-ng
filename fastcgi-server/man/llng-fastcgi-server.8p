@@ -231,7 +231,7 @@ Use \s-1OW2\s0 system to report bug or ask for features:
 .SH "DOWNLOAD"
 .IX Header "DOWNLOAD"
 Lemonldap::NG is available at
-<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+<https://lemonldap-ng.org/download>
 .SH "COPYRIGHT AND LICENSE"
 .IX Header "COPYRIGHT AND LICENSE"
 .IP "Copyright (C) 2008\-2016 by Xavier Guimard, <x.guimard@free.fr>" 4
