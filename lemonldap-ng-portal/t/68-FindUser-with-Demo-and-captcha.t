@@ -17,15 +17,18 @@ SKIP: {
     }
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel              => 'error',
-                authentication        => 'Demo',
-                userDB                => 'Same',
-                useSafeJail           => 1,
-                captcha_login_enabled => 1,
-                findUser              => 1,
-                impersonationRule     => 1,
-                findUserSearchingAttributes =>
-                  { uid => 'Login', guy => 'Kind', cn => 'Name' }
+                logLevel                    => 'error',
+                authentication              => 'Demo',
+                userDB                      => 'Same',
+                useSafeJail                 => 1,
+                captcha_login_enabled       => 1,
+                findUser                    => 1,
+                impersonationRule           => 1,
+                findUserSearchingAttributes => {
+                    'uid##1' => 'Login',
+                    'guy##1' => 'Kind',
+                    'cn##1'  => 'Name'
+                }
             }
         }
     );

@@ -22,8 +22,8 @@ my $client = LLNG::Manager::Test->new( {
             findUserControl             => '^[\w*\s]+$',
             findUserWildcard            => '*',
             findUserSearchingAttributes => {
-                uid         => undef,
-                guy         => 'Kind',
+                'uid#fdgd#1'    => undef,
+                'guy##1'    => 'Kind',
                 'cn#Name#1' => 'Bad Guy; Not a good person; BB; Bad Boy'
             },
             findUserExcludingAttributes =>
@@ -52,7 +52,7 @@ ok(
 ( $host, $url, $query ) = expectForm( $res, '#', undef, 'uid', 'guy' );
 ok(
     $res->[2]->[0] =~
-m%<input id="spoofIdfield" name="spoofId" type="text" class="form-control" value="" autocomplete="off"%,
+m%<input name="spoofId" type="text" class="form-control" value="" autocomplete="off"%,
     'value=""'
 ) or explain( $res->[2]->[0], 'value=""' );
 
