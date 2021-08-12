@@ -684,7 +684,9 @@ LemonLDAP::NG Portal jQuery scripts
           document.body.style.cursor = 'default';
           user = data.user;
           console.log('Suggested spoofId=', user);
-          $('#spoofIdfield').attr('value', user);
+          $("input[name=spoofId]").each(function() {
+            return $(this).attr('value', user);
+          });
           if (data.captcha) {
             $('#captcha').attr('src', data.captcha);
           }
