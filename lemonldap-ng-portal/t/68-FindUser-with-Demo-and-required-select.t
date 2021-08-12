@@ -84,12 +84,12 @@ m%<input id="findUser_uid" name="uid" type="text" autocomplete="off" class="form
 ) or explain( $res->[2]->[0], 'id="findUser_uid"' );
 ok(
     $res->[2]->[0] =~
-      m%<select class="form-control" id="findUser_cn" name="cn">%,
+      m%<select class="custom-select" id="findUser_cn" name="cn">%,
     'id="findUser_cn"'
 ) or explain( $res->[2]->[0], 'id="findUser_cn"' );
 ok( $res->[2]->[0] !~ m%id="findUser_type"%, 'id="findUser_type" not found' )
   or explain( $res->[2]->[0], 'id="findUser_cn" not found' );
-ok( $res->[2]->[0] =~ m%<label for="cn">Name</label>%, 'label for="cn"' )
+ok( $res->[2]->[0] =~ m%<label class="input-group-text" for="cn">Name</label>%, 'label for="cn"' )
   or explain( $res->[2]->[0], 'label for="cn"' );
 ok( $res->[2]->[0] !~ m%<option value=""></option>%, 'Empty option not found' )
   or explain( $res->[2]->[0], 'Empty option not found' );

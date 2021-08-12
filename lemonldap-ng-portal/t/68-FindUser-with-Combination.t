@@ -57,7 +57,7 @@ SKIP: {
     ( $host, $url, $query ) = expectForm( $res, '#', undef, 'uid', 'cn' );
     ok(
         $res->[2]->[0] =~
-m%<input id="spoofIdfield" name="spoofId" type="text" class="form-control" value="" autocomplete="off"%,
+m%<input name="spoofId" type="text" class="form-control" value="" autocomplete="off" trplaceholder="spoofId" aria-required="false"%,
         'value=""'
     ) or explain( $res->[2]->[0], 'value=""' );
 
