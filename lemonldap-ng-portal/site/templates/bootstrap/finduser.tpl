@@ -17,11 +17,9 @@
           </TMPL_IF>
           <TMPL_LOOP NAME="FIELDS">
             <TMPL_IF NAME="select">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <label class="input-group-text" for="<TMPL_VAR NAME="key">"><TMPL_VAR NAME="value"></label>
-                </div>
+              <div class="input-group">
                 <select class="custom-select" id="findUser_<TMPL_VAR NAME="key">" name="<TMPL_VAR NAME="key">">
+                  <option selected><TMPL_VAR NAME="value">...</option>
                   <TMPL_IF NAME="null">
                     <option value=""></option>
                   </TMPL_IF>
