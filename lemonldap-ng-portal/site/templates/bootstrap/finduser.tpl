@@ -40,7 +40,6 @@
           </TMPL_LOOP>
         </div>
         <div class="modal-footer justify-content-between">
-          
           <button id="closefinduserform" type="button" class="btn btn-secondary mr-auto" data-dismiss="modal"><span trspan="close">Close</span></button>
           <button id="finduserbutton" type="submit" class="btn btn-info" data-dismiss="modal">
             <span class="fa fa-search"></span>

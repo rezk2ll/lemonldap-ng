@@ -88,9 +88,9 @@ ok(
     'id="findUser_cn"'
 ) or explain( $res->[2]->[0], 'id="findUser_cn"' );
 ok( $res->[2]->[0] !~ m%id="findUser_type"%, 'id="findUser_type" not found' )
-  or explain( $res->[2]->[0], 'id="findUser_cn" not found' );
-ok( $res->[2]->[0] =~ m%<label class="input-group-text" for="cn">Name</label>%, 'label for="cn"' )
-  or explain( $res->[2]->[0], 'label for="cn"' );
+  or explain( $res->[2]->[0], 'id="findUser_type" not found' );
+ok( $res->[2]->[0] =~ m%<option selected>Name...</option>%, 'Name...' )
+  or explain( $res->[2]->[0], 'Name...' );
 ok( $res->[2]->[0] !~ m%<option value=""></option>%, 'Empty option not found' )
   or explain( $res->[2]->[0], 'Empty option not found' );
 ok( $res->[2]->[0] =~ m%<option value="The Daleks">daleks</option>%,
