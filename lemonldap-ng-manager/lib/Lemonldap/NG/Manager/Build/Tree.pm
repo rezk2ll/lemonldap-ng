@@ -1040,7 +1040,7 @@ sub tree {
                                 },
                                 {
                                     title => 'newLocationWarnings',
-                                    help  => 'newLocationWarning.html',
+                                    help  => 'newlocationwarning.html',
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'newLocationWarning',
