@@ -22,9 +22,9 @@ my $client = LLNG::Manager::Test->new( {
             findUserWildcard            => '*',
             findUserSearchingAttributes => {
                 'uid##1'      => 'Name',
-                'guy##1'      => 'Kind',
+                'guy'      => 'Kind',
                 'type#Type#1' => 'mutant; mutant; character',
-                'cn#Name#0' => 'Bad Guy; Not a good person; The Daleks; daleks'
+                'cn#Name' => 'Bad Guy; Not a good person; The Daleks; daleks'
             },
             findUserExcludingAttributes =>
               { type => 'mutant', uid => 'rtyler' },
@@ -100,7 +100,7 @@ ok( $res->[2]->[0] =~ m%<option value="Bad Guy">Not a good person</option>%,
     'Bad Guy option' )
   or explain( $res->[2]->[0], 'Bad Guy' );
 
-$request = 'cn=Bad Guy';
+$request = 'cn=Bad Guy&guy=bad';
 ok(
     $res = $client->_post(
         '/finduser', IO::String->new($request),
@@ -114,7 +114,7 @@ ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
 ok( $json->{user} eq 'davros', ' Good user' )
   or explain( $json, 'user => davros' );
 
-$request = 'cn=The Daleks';
+$request = 'cn=The Daleks&guy=bad';
 ok(
     $res = $client->_post(
         '/finduser', IO::String->new($request),
@@ -130,7 +130,7 @@ ok( $json->{result} == 0, ' Good result' )
 ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
   or explain( $json, 'error => 4' );
 
-$request = 'uid=davros';
+$request = 'uid=davros&guy=bad';
 ok(
     $res = $client->_post(
         '/finduser', IO::String->new($request),
