@@ -881,7 +881,7 @@
 "restPasswordServer":"Password reset server",
 "restPwdConfirmUrl":"URL xác nhận mật khẩu",
 "restPwdModifyUrl":"URL thay đổi mật khẩu",
-"restServices":"REST services",
+"restServices":"Dịch vụ REST",
 "restSessionServer":"Session server",
 "restUserDBUrl":"URL dữ liệu người dùng",
 "restore":"Khôi phục",

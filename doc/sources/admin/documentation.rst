@@ -31,7 +31,7 @@ Installation and configuration
    -  `Version 2.0 </documentation/2.0/>`__ (stable)
    -  `Version 1.9 </documentation/1.9/>`__ (oldstable)
 
--  Archived versions (unmaintained by `LLNG Team </team>`__ )
+-  Archived versions (unmaintained by LLNG Team )
 
    -  `Version 1.4 </documentation/1.4/>`__
    -  `Version 1.3 </documentation/1.3/>`__
@@ -53,20 +53,22 @@ Debian
    Following Debian Policy, LLNG packages are never upgraded in published distributions. However, security patches are backported by maintenance teams *(except some inor ones)*.
    See `Security tracker <https://security-tracker.debian.org/tracker/source-package/lemonldap-ng>`__
 
-=========== ======================== ======================================== ===================================================== ============================================================ =============================== =============================================================
-Debian dist                          LLNG version                             Secured                                               Maintenance                                                  LTS Limit                       `Extended LTS <https://wiki.debian.org/LTS/Extended>`__ Limit
-=========== ======================== ======================================== ===================================================== ============================================================ =============================== =============================================================
-*6*         *Squeeze*                *0.9.4.1*                                |maybe| No known vulnerability                        *None*                                                       *February 2016*                 *April 2019*
-**7**       Wheezy                   `1.1.2 </documentation/1.1/>`__          |maybe| No known vulnerability                        **None**  [1]_                                               May 2018                        Probably 2021
-**8**       Jessie                   `1.3.3 </documentation/1.3/>`__          |clean| CVE-2019-19791 tagged as minor                **None**  [1]_                                               June 2020                       Probably 2023
-**9**       Stretch                  `1.9.7 </documentation/1.9/>`__          |clean| CVE-2019-19791 tagged as minor                `Debian LTS Team <https://www.debian.org/lts/>`__            June 2022                      
-\           *Stretch-backports*      `2.0.2 </documentation/2.0/>`__          |bad| CVE-2019-12046, CVE-2019-13031, CVE-2019-15941  *None*                                                       *June 2019*                    
-\           Stretch-backports-sloppy `2.0.11 </documentation/2.0/>`__         |maybe|                                               *Maybe none*, "best effort"  [3]_                            Until Debian 11 release  [4]_
-**10**      Buster                   `2.0.2 </documentation/2.0/>`__          |clean| CVE-2019-19791 tagged as minor                `Debian Security Team <https://security-team.debian.org/>`__ Probably July 2024             
-\           Buster-backports         `2.0.11 </documentation/2.0/>`__         |clean|                                               `LLNG Team </team>`, "best effort" [3]_                      Until Debian 11 release  [4]_
-\           Bullseye                 `2.0.11 </documentation/2.0/>`__         |clean|                                               `Debian Security Team <https://security-team.debian.org/>`__ Probably July 2026             
-**Next**    Testing                  Latest  [5]_                             |clean|                                               `LLNG Team </team>`__                                                                       
-=========== ======================== ======================================== ===================================================== ============================================================ =============================== =============================================================
+=========== ========================== ======================================== ===================================================== ============================================================ =============================== =============================================================
+Debian dist                            LLNG version                             Secured                                               Maintenance                                                  LTS Limit                       `Extended LTS <https://wiki.debian.org/LTS/Extended>`__ Limit
+=========== ========================== ======================================== ===================================================== ============================================================ =============================== =============================================================
+*6*         *Squeeze*                  *0.9.4.1*                                |maybe| No known vulnerability                        *None*                                                       *February 2016*                 *April 2019*
+*7*         *Wheezy*                   `1.1.2 </documentation/1.1/>`__          |maybe| No known vulnerability                        *None*                                                       *May 2018*                      *June 2020*
+**8**       Jessie                     `1.3.3 </documentation/1.3/>`__          |clean| CVE-2019-19791 tagged as minor                **None**  [1]_                                               June 2020                       June 2022
+**9**       Stretch                    `1.9.7 </documentation/1.9/>`__          |clean| CVE-2019-19791 tagged as minor                `Debian LTS Team <https://www.debian.org/lts/>`__            June 2022                       Probably 2024
+\           *Stretch-backports*        `2.0.2 </documentation/2.0/>`__          |bad| CVE-2019-12046, CVE-2019-13031, CVE-2019-15941  *None*                                                       *June 2019*
+\           *Stretch-backports-sloppy* `2.0.11 </documentation/2.0/>`__         |maybe|                                               *None*                                                       *August 2021*
+**10**      Buster                     `2.0.2 </documentation/2.0/>`__          |clean| CVE-2019-19791 tagged as minor                `Debian Security Team <https://security-team.debian.org/>`__ June 2024                       Probably 2026
+\           *Buster-backports*         `2.0.11 </documentation/2.0/>`__         |clean|                                               *None*                                                       *August 2021*
+\           Buster-backports-sloppy    `2.0.11 </documentation/2.0/>`__         |clean|                                               LLNG Team, "best effort" [3]_                                Until Debian 12 release [4]_
+**11**      Bullseye                   `2.0.11 </documentation/2.0/>`__         |clean|                                               `Debian Security Team <https://security-team.debian.org/>`__ July 2026                       Probably 2028
+\           Bullseye-backports         `2.0.11 </documentation/2.0/>`__         |clean|                                               LLNG Team, "best effort" [3]_                                Until Debian 12 release [4]_
+**Next**    Testing/Unstable           Latest  [5]_                             |clean|                                               LLNG Team
+=========== ========================== ======================================== ===================================================== ============================================================ =============================== =============================================================
 
 See `Debian Security
 Tracker <https://security-tracker.debian.org/tracker/source-package/lemonldap-ng>`__
@@ -142,7 +144,7 @@ Other
    backports are not covered by Debian Security Policy
 
 .. [4]
-   around September 2021
+   around July 2023
 
 .. [5]
    few days after release
