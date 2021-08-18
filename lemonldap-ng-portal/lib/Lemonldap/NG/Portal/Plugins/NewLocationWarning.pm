@@ -13,7 +13,7 @@ extends qw(
 );
 
 # Entrypoint
-use constant endAuth => 'check';
+use constant afterData => 'check';
 
 sub init {
     my ($self) = @_;
@@ -29,7 +29,6 @@ sub init {
             '"NewLocationWarning" plugin enabled WITHOUT "History" plugin');
         return 0;
     }
-
     return 1;
 }
 
@@ -38,14 +37,21 @@ sub check {
     my $successLogin = $req->sessionInfo->{_loginHistory}->{successLogin};
     my $failedLogin  = $req->sessionInfo->{_loginHistory}->{failedLogin};
     my $ipSource     = $req->env->{ipAddr};
+    $self->logger->debug("Source IP: $ipSource");
 
     my @successIPs =
-      map { $_->{ipAddr} eq $ipSource ? $_->{ipAddr} : () } @$successLogin;
+      map { $_->{ipAddr} ne $ipSource ? $_->{ipAddr} : () } @$successLogin;
     my @failedIPs =
-      map { $_->{ipAddr} eq $ipSource ? $_->{ipAddr} : () } @$failedLogin;
+      map { $_->{ipAddr} ne $ipSource ? $_->{ipAddr} : () } @$failedLogin;
     my @IPs = ( @successIPs, @failedIPs );
-
-    return scalar @IPs ? $self->_sendMail($req) : PE_OK;
+    if ( scalar @IPs ) {
+        $self->logger->warn("New location found: $ipSource");
+        return $self->_sendMail($req);
+    }
+    else {
+        $self->logger->debug('Known location or first connection');
+        return PE_OK;
+    }
 }
 
 sub _sendMail {
