@@ -24,8 +24,20 @@ files before the update.
 Known regressions in the latest released version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-None
+When starting with a fresh installation, you will have this error:
 
+::
+
+   [error] No configuration available
+
+Here is a quick fix:
+
+::
+
+   sed -i -e '/cfgNum/a    "cfgDate": 1625821798, ' /var/lib/lemonldap-ng/conf/lmConf-1.json
+   rm -fr /var/cache/lemonldap-ng/lemonldap-ng-config/*
+
+Then restart httpd or lemonldap-ng-fastcgi-server or llng-fastcgi-server
 
 2.0.12
 ------
