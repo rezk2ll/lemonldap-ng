@@ -59,6 +59,7 @@ sub _sendMail {
     my $date     = strftime( '%F %X', localtime );
     my $ipSource = $req->env->{ipAddr};
     my $host     = $req->env->{HTTP_HOST};
+    my $url      = $self->conf->{portal};
     my $mail =
       $req->sessionInfo->{ $self->conf->{newLocationWarningMailAttribute}
           || 'mail' };
@@ -81,6 +82,7 @@ sub _sendMail {
         # Replace variables in body
         $body =~ s/\$newLocationIP/$ipSource/ge;
         $body =~ s/\$newLocationDate/$date/ge;
+        $body =~ s/\$newLocationUrl/$url/ge;
     }
     else {
 
@@ -97,13 +99,16 @@ sub _sendMail {
         );
         $html = 1;
     }
+    if ( $mail && $subject && $body ) {
+        $self->logger->warn("User $mail is signing in from a new location");
 
-    $self->logger->warn("User $mail is signing in from a new location");
-
-    # Send mail
-    $self->logger->debug('Unable to send new location warning mail')
-      unless ( $self->send_mail( $mail, $subject, $body, $html ) );
-
+        # Send mail
+        $self->logger->debug('Unable to send new location warning mail')
+          unless ( $self->send_mail( $mail, $subject, $body, $html ) );
+    }
+    else{
+        $self->logger->error('Unable to send new location warning mail: missing parameter(s)');
+    }
     return PE_OK;
 }
 

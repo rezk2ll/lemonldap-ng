@@ -672,6 +672,7 @@ t/61-CrowdSec-warn.t
 t/61-CrowdSec.t
 t/61-ForceAuthn.t
 t/61-GrantSession.t
+t/61-NewLocationWarning-Custom.t
 t/61-NewLocationWarning.t
 t/61-Session-ActivityTimeout.t
 t/61-Session-Timeout.t
