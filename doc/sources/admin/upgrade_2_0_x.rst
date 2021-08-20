@@ -29,6 +29,12 @@ None
 2.0.13
 ------
 
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some ``autocomplete`` attributes have been added to improve accessibility in the following files: ``checkdevops.tpl``, ``checkuser.tpl``, ``register.tpl``.
+
+
 2.0.12
 ------
 
