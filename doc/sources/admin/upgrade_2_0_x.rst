@@ -32,7 +32,7 @@ None
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some ``autocomplete`` attributes have been added to improve accessibility in the following files: ``checkdevops.tpl``, ``checkuser.tpl``, ``register.tpl``.
+Some ``autocomplete`` attributes have been added to improve accessibility in the following files: ``checkdevops.tpl``, ``checkuser.tpl``, ``register.tpl``, ``ext2fcheck.tpl``, ``totp2fcheck.tpl``, ``utotp2fcheck.tpl``.
 
 
 2.0.12
