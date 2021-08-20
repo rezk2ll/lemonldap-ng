@@ -99,13 +99,12 @@ has cookieSameSite => ( is => 'rw' );
 sub init {
     my ( $self, $args ) = @_;
     $args ||= {};
-    $self->localConfig( {
-            %{ Lemonldap::NG::Common::Conf->new( $args->{configStorage} )
-                  ->getLocalConf('portal')
-            },
-            %$args
-        }
-    );
+    my $confAcc = Lemonldap::NG::Common::Conf->new( $args->{configStorage} );
+    unless ($confAcc) {
+        die( 'Could not read configuration: '
+              . $Lemonldap::NG::Common::Conf::msg );
+    }
+    $self->localConfig( { %{ $confAcc->getLocalConf('portal') }, %$args } );
 
     # Load override messages from lemonldap-ng.ini
     foreach my $k ( keys %{ $self->localConfig } ) {
