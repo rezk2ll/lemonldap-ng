@@ -21,10 +21,10 @@ my $client = LLNG::Manager::Test->new( {
             findUserControl             => '^[\w*\s]+$',
             findUserWildcard            => '*',
             findUserSearchingAttributes => {
-                uid           => 'Name',
-                guy           => 'Kind',
+                'uid##1'      => 'Name',
+                'guy'      => 'Kind',
                 'type#Type#1' => 'mutant; mutant; character',
-                'cn#Name#0' => 'Bad Guy; Not a good person; The Daleks; daleks'
+                'cn#Name' => 'Bad Guy; Not a good person; The Daleks; daleks'
             },
             findUserExcludingAttributes =>
               { type => 'mutant', uid => 'rtyler' },
@@ -52,7 +52,7 @@ ok(
 ( $host, $url, $query ) = expectForm( $res, '#', undef, 'uid', 'guy' );
 ok(
     $res->[2]->[0] =~
-m%<input id="spoofIdfield" name="spoofId" type="text" class="form-control" value="" autocomplete="off"%,
+m%<input name="spoofId" type="text" class="form-control" value="" autocomplete="off"%,
     'value=""'
 ) or explain( $res->[2]->[0], 'value=""' );
 
@@ -84,13 +84,13 @@ m%<input id="findUser_uid" name="uid" type="text" autocomplete="off" class="form
 ) or explain( $res->[2]->[0], 'id="findUser_uid"' );
 ok(
     $res->[2]->[0] =~
-      m%<select class="form-control" id="findUser_cn" name="cn">%,
+      m%<select class="custom-select" id="findUser_cn" name="cn">%,
     'id="findUser_cn"'
 ) or explain( $res->[2]->[0], 'id="findUser_cn"' );
 ok( $res->[2]->[0] !~ m%id="findUser_type"%, 'id="findUser_type" not found' )
-  or explain( $res->[2]->[0], 'id="findUser_cn" not found' );
-ok( $res->[2]->[0] =~ m%<label for="cn">Name</label>%, 'label for="cn"' )
-  or explain( $res->[2]->[0], 'label for="cn"' );
+  or explain( $res->[2]->[0], 'id="findUser_type" not found' );
+ok( $res->[2]->[0] =~ m%<option selected>Name...</option>%, 'Name...' )
+  or explain( $res->[2]->[0], 'Name...' );
 ok( $res->[2]->[0] !~ m%<option value=""></option>%, 'Empty option not found' )
   or explain( $res->[2]->[0], 'Empty option not found' );
 ok( $res->[2]->[0] =~ m%<option value="The Daleks">daleks</option>%,
@@ -100,7 +100,7 @@ ok( $res->[2]->[0] =~ m%<option value="Bad Guy">Not a good person</option>%,
     'Bad Guy option' )
   or explain( $res->[2]->[0], 'Bad Guy' );
 
-$request = 'cn=Bad Guy';
+$request = 'cn=Bad Guy&guy=bad';
 ok(
     $res = $client->_post(
         '/finduser', IO::String->new($request),
@@ -114,7 +114,7 @@ ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
 ok( $json->{user} eq 'davros', ' Good user' )
   or explain( $json, 'user => davros' );
 
-$request = 'cn=The Daleks';
+$request = 'cn=The Daleks&guy=bad';
 ok(
     $res = $client->_post(
         '/finduser', IO::String->new($request),
@@ -130,7 +130,7 @@ ok( $json->{result} == 0, ' Good result' )
 ok( $json->{error} == PE_USERNOTFOUND, ' No user found' )
   or explain( $json, 'error => 4' );
 
-$request = 'uid=davros';
+$request = 'uid=davros&guy=bad';
 ok(
     $res = $client->_post(
         '/finduser', IO::String->new($request),

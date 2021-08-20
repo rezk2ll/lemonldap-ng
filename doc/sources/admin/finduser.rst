@@ -24,6 +24,13 @@ Just enable it in the Manager (section “plugins”). Then, set searching attri
 
 .. note::
 
+   By default, simple searching attributes are mandatory to restrict the number of entries to return. To set an attribute as optional,
+   you can use the following syntax ::
+
+         uid##1  =>  UID
+
+.. note::
+
    You can provide a 'multiValuesSeparator' separated list of allowed searching values that will be displayed as an HTML <select> list ::
 
          attribute#placeholder[#empty] => value1; placeholder1; value2; placeholder2
@@ -38,10 +45,6 @@ Just enable it in the Manager (section “plugins”). Then, set searching attri
 
 .. attention::
 
-    LDAP filter works only if an objectClass is set.
-
-.. attention::
-
     Searching request is built based on provided parameters value depending on users backend like this:
 
     request => searchAttr1=value && searchAttr2=value && not excludeAttr1=value && not excludeAttr2=value
@@ -53,8 +56,3 @@ Just enable it in the Manager (section “plugins”). Then, set searching attri
 .. danger::
 
     With AuthChoice, you must set which module will be called by this plugin (:doc:`Backend choice by users<authchoice>`).
-
-
-
-.. |image0| image:: /documentation/beta.png
-   :width: 100px
