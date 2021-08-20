@@ -1,3 +1,26 @@
+lemonldap-ng (2.0.13) focal; urgency=medium
+
+  * Bugs:
+    * #2428: Correctly report the number of purged sessions when using deleteIfLowerThan
+    * #2566: No configuration available in fresh LemonLDAP 2.0.12
+    * #2567: CORS headers not sent in userinfo endpoint error response
+    * #2568: SafeJail does not report errors correctly
+    * #2573: convertConfig does not work when target backend is empty
+    * #2589: FindUser plugin: minor improvements and several issues
+
+  * Improvements:
+    * #2558: Add a new portal error code for Auth::OIDC issues
+    * #2564: Missing options to use text emails for some features
+    * #2585: RGAA: to use autocomplete when possible
+    * #2589: FindUser plugin: minor improvements and several issues
+    * #2592: Bad error reporting during portal init
+
+  * Templates:
+    * #2585: RGAA: to use autocomplete when possible
+    * #2589: FindUser plugin: minor improvements and several issues
+
+ -- Clément <clem.oudot@gmail.com>  Fri, 20 Aug 2021 18:30:23 +0200
+
 lemonldap-ng (2.0.12) focal; urgency=medium
 
   * Bugs:
