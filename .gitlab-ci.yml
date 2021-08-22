@@ -30,10 +30,6 @@ stages:
 before_script:
   - env | grep ^CI_
 
-build_stretch:
-  extends: .debian_build_job
-  image: buildpkg/debian:stretch
-
 build_buster:
   extends: .debian_build_job
   image: buildpkg/debian:buster
@@ -71,7 +67,7 @@ build_centos_8:
      - ci-build-pkg
 
 sign:
-  image: buildpkg/debian:stretch
+  image: buildpkg/debian:bullseye
   stage: sign
 #  variables:
 #    SIGN_USER: firstname.lastname@orange.com
@@ -80,7 +76,6 @@ sign:
     - cd $CI_PROJECT_DIR
     - ci-sign-pkg
   dependencies:
-    - build_stretch
     - build_buster
     - build_bullseye
 #    - build_xenial
@@ -95,7 +90,7 @@ sign:
     - master
 
 pages:
-  image: buildpkg/debian:stretch
+  image: buildpkg/debian:bullseye
   stage: deploy
   variables:
     # Default page dir
