@@ -1,3 +1,0 @@
-# Conf files have moved to lemonldap-ng-handler package
-rm_conffile /etc/lemonldap-ng/handler-nginx.conf 1.9.1-2~
-rm_conffile /etc/lemonldap-ng/handler-apache2.X.conf 1.9.1-2~
