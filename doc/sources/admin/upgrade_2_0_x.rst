@@ -24,20 +24,16 @@ files before the update.
 Known regressions in the latest released version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When starting with a fresh installation, you will have this error:
+None
 
-::
+2.0.13
+------
 
-   [error] No configuration available
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-Here is a quick fix:
+Some ``autocomplete`` attributes have been added to improve accessibility in the following files: ``checkdevops.tpl``, ``checkuser.tpl``, ``register.tpl``, ``ext2fcheck.tpl``, ``totp2fcheck.tpl``, ``utotp2fcheck.tpl``.
 
-::
-
-   sed -i -e '/cfgNum/a    "cfgDate": 1625821798, ' /var/lib/lemonldap-ng/conf/lmConf-1.json
-   rm -fr /var/cache/lemonldap-ng/lemonldap-ng-config/*
-
-Then restart httpd or lemonldap-ng-fastcgi-server or llng-fastcgi-server
 
 2.0.12
 ------

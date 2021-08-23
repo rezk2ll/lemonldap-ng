@@ -1768,6 +1768,28 @@ sub attributes {
             type          => 'text',
             documentation => 'Mail subject for register confirmation',
         },
+        registerConfirmBody => {
+            type          => 'longtext',
+            documentation => 'Mail body for register confirmation',
+        },
+        registerDoneSubject => {
+            type          => 'text',
+            documentation => 'Mail subject when register is done',
+        },
+        registerDoneBody => {
+            type          => 'longtext',
+            documentation => 'Mail body when register is done',
+        },
+        registerTimeout => {
+            default       => 0,
+            type          => 'int',
+            documentation => 'Register session timeout',
+        },
+        registerUrl => {
+            type          => 'text',
+            default       => 'http://auth.example.com/register',
+            documentation => 'URL of register page',
+        },
         registerDB => {
             type   => 'select',
             select => [
@@ -1779,20 +1801,6 @@ sub attributes {
             ],
             default       => 'Null',
             documentation => 'Register module',
-        },
-        registerDoneSubject => {
-            type          => 'text',
-            documentation => 'Mail subject when register is done',
-        },
-        registerTimeout => {
-            default       => 0,
-            type          => 'int',
-            documentation => 'Register session timeout',
-        },
-        registerUrl => {
-            type          => 'text',
-            default       => 'http://auth.example.com/register',
-            documentation => 'URL of register page',
         },
 
         # Upgrade session

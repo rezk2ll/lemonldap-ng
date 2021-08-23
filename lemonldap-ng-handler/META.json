@@ -4,7 +4,7 @@
       "Xavier Guimard <x.guimard@free.fr>, ClÃ©ment Oudot <clement@oodo.net>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "ExtUtils::MakeMaker version 7.44, CPAN::Meta::Converter version 2.150010",
+   "generated_by" : "ExtUtils::MakeMaker version 7.34, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "open_source"
    ],
@@ -45,7 +45,7 @@
          },
          "requires" : {
             "LWP::UserAgent" : "0",
-            "Lemonldap::NG::Common" : "v2.0.12",
+            "Lemonldap::NG::Common" : "v2.0.13",
             "Mouse" : "0",
             "URI" : "0"
          }
@@ -63,6 +63,6 @@
       ],
       "x_MailingList" : "mailto:lemonldap-ng-dev@ow2.org"
    },
-   "version" : "v2.0.12",
+   "version" : "v2.0.13",
    "x_serialization_backend" : "JSON::PP version 4.04"
 }

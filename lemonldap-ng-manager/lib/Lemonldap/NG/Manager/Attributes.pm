@@ -3035,6 +3035,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'refreshSessions' => {
             'type' => 'bool'
         },
+        'registerConfirmBody' => {
+            'type' => 'longtext'
+        },
         'registerConfirmSubject' => {
             'type' => 'text'
         },
@@ -3062,6 +3065,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 }
             ],
             'type' => 'select'
+        },
+        'registerDoneBody' => {
+            'type' => 'longtext'
         },
         'registerDoneSubject' => {
             'type' => 'text'

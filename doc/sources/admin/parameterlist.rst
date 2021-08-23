@@ -445,8 +445,10 @@ radiusServer                                                                    
 randomPasswordRegexp                                    Regular expression to create a random password                                       ✔
 redirectFormMethod                                      HTTP method for redirect page form                                                   ✔
 refreshSessions                                         Refresh sessions plugin                                                              ✔
+registerConfirmBody                                     Mail body for register confirmation                                                  ✔
 registerConfirmSubject                                  Mail subject for register confirmation                                               ✔
 registerDB                                              Register module                                                                      ✔
+registerDoneBody                                        Mail body when register is done                                                      ✔
 registerDoneSubject                                     Mail subject when register is done                                                   ✔
 registerTimeout                                         Register session timeout                                                             ✔
 registerUrl                                             URL of register page                                                                 ✔

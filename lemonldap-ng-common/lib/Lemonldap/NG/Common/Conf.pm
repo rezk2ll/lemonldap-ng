@@ -119,7 +119,6 @@ sub saveConf {
     my ( $self, $conf, %args ) = @_;
 
     my $last = $self->lastCfg;
-    return UNKNOWN_ERROR if $last < 1;
 
     # If configuration was modified, return an error
     if ( not $args{force} ) {
