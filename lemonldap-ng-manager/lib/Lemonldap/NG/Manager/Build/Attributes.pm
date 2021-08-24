@@ -2236,6 +2236,7 @@ sub attributes {
                 return $@ ? 0 : 1;
             },
             keyMsgFail    => '__badRegexp__',
+            help          => "adaptativeauthenticationlevel.html",
             documentation => 'Adaptative authentication level rules',
             flags         => 'p',
         },
