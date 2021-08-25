@@ -13,7 +13,7 @@ extends qw(
 );
 
 # Entrypoint
-use constant afterData => 'check';
+use constant aroundSub => { storeHistory => 'check' };
 
 sub init {
     my ($self) = @_;
@@ -33,33 +33,31 @@ sub init {
 }
 
 sub check {
-    my ( $self, $req ) = @_;
+    my ( $self, $sub, $req ) = @_;
     my $successLogin = $req->sessionInfo->{_loginHistory}->{successLogin};
     my $failedLogin  = $req->sessionInfo->{_loginHistory}->{failedLogin};
-    my $ipSource     = $req->env->{ipAddr};
-    $self->logger->debug("Source IP: $ipSource");
+    my $sourceIP     = $req->env->{ipAddr};
+    $self->logger->debug("Source IP: $sourceIP");
 
-    my @successIPs =
-      map { $_->{ipAddr} ne $ipSource ? $_->{ipAddr} : () } @$successLogin;
-    my @failedIPs =
-      map { $_->{ipAddr} ne $ipSource ? $_->{ipAddr} : () } @$failedLogin;
-    my @IPs = ( @successIPs, @failedIPs );
-    if ( scalar @IPs ) {
-        $self->logger->warn("New location found: $ipSource");
-        return $self->_sendMail($req);
+    my %knownIPs = map { $_->{ipAddr} => 1 } ( @$successLogin, @$failedLogin );
+
+    if ( $knownIPs{$sourceIP} ) {
+        $self->logger->debug('Known location');
+        return $sub->($req);
     }
     else {
-        $self->logger->debug('Known location or first connection');
-        return PE_OK;
+        $self->logger->warn("New location found: $sourceIP");
+        $self->_sendMail($req);
+        return $sub->($req);
     }
 }
 
 sub _sendMail {
     my ( $self, $req ) = @_;
     my $date     = strftime( '%F %X', localtime );
-    my $ipSource = $req->env->{ipAddr};
+    my $sourceIP = $req->env->{ipAddr};
     my $host     = $req->env->{HTTP_HOST};
-    my $url      = $self->conf->{portal};
+    my $ua       = $req->env->{HTTP_USER_AGENT};
     my $mail =
       $req->sessionInfo->{ $self->conf->{newLocationWarningMailAttribute}
           || 'mail' };
@@ -80,9 +78,10 @@ sub _sendMail {
         $body = $self->conf->{newLocationWarningMailBody};
 
         # Replace variables in body
-        $body =~ s/\$newLocationIP/$ipSource/ge;
+        $body =~ s/\$newLocationUserAgent/$ua/ge;
+        $body =~ s/\$newLocationIP/$sourceIP/ge;
         $body =~ s/\$newLocationDate/$date/ge;
-        $body =~ s/\$newLocationUrl/$url/ge;
+        $body =~ s/\$newLocationHost/$host/ge;
     }
     else {
 
@@ -92,9 +91,10 @@ sub _sendMail {
             'mail_new_location_warning',
             filter => $tr,
             params => {
-                session_ipAddr => $ipSource,
+                session_ipAddr => $sourceIP,
                 date           => $date,
                 host           => $host,
+                ua             => $ua
             },
         );
         $html = 1;
@@ -106,8 +106,9 @@ sub _sendMail {
         $self->logger->debug('Unable to send new location warning mail')
           unless ( $self->send_mail( $mail, $subject, $body, $html ) );
     }
-    else{
-        $self->logger->error('Unable to send new location warning mail: missing parameter(s)');
+    else {
+        $self->logger->error(
+            'Unable to send new location warning mail: missing parameter(s)');
     }
     return PE_OK;
 }

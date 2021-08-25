@@ -10,6 +10,8 @@
 "mail2fSubject":"[LemonLDAP::NG] تسجيل الدخول الخاص بك هو ",
 "mailConfirmSubject":"تأكيد إعادة تعيين كلمة المرور[LemonLDAP::NG]",
 "mailSubject":"كلمة المرور الجديدة [LemonLDAP::NG]",
+"newLocationWarningMailBody":"Your account was signed in to from a new location.",
+"newLocationWarningMailSubject":"[LemonLDAP::NG] Sign-in from a new location",
 "newPwdIs":"كلمة المرور الجديدة هي",
 "pwdChanged":"تم تغيير كلمة المرور الخاصة بك",
 "pwdIs":"كلمة المرور الخاصة بك هي",

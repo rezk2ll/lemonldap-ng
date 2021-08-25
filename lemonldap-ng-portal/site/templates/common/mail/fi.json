@@ -10,6 +10,8 @@
 "mail2fSubject":"[LemonLDAP::NG] Your login code",
 "mailConfirmSubject":"[LemonLDAP::NG] Salasanan nollauksen vahvistus",
 "mailSubject":"[LemonLDAP::NG] Uusi salasanasi",
+"newLocationWarningMailBody":"Your account was signed in to from a new location.",
+"newLocationWarningMailSubject":"[LemonLDAP::NG] Sign-in from a new location",
 "newPwdIs":"Uusi salasanasi on",
 "pwdChanged":"Salasanasi on vaihdettu.",
 "pwdIs":"Sinun salasanasi on",

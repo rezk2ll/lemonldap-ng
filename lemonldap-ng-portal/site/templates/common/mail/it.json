@@ -10,6 +10,8 @@
 "mail2fSubject":"[LemonLDAP :: NG] Il tuo codice di accesso",
 "mailConfirmSubject":"Conferma reimpostazione password [LemonLDAP::NG] ",
 "mailSubject":"[LemonLDAP::NG] La tua nuova password",
+"newLocationWarningMailBody":"Your account was signed in to from a new location.",
+"newLocationWarningMailSubject":"[LemonLDAP::NG] Sign-in from a new location",
 "newPwdIs":"La tua nuova password é",
 "pwdChanged":"La tua password é stata cambiata",
 "pwdIs":"La tua password é",

@@ -10,6 +10,8 @@
 "mail2fSubject":"[LemonLDAP::NG] Su código de acceso",
 "mailConfirmSubject":"[LemonLDAP::NG] Confirmación de reinicio de contraseña",
 "mailSubject":"[LemonLDAP::NG] Su nueva contraseña",
+"newLocationWarningMailBody":"Your account was signed in to from a new location.",
+"newLocationWarningMailSubject":"[LemonLDAP::NG] Sign-in from a new location",
 "newPwdIs":"Su nueva contraseña es",
 "pwdChanged":"Su contraseña ha sido cambiada.",
 "pwdIs":"Su contraseña es",

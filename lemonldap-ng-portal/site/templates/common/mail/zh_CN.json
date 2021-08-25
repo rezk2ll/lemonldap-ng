@@ -10,6 +10,8 @@
 "mail2fSubject":"[LemonLDAP::NG] Your login code",
 "mailConfirmSubject":"[LemonLDAP::NG] 密码重置确认",
 "mailSubject":"[LemonLDAP::NG] 您的新密码",
+"newLocationWarningMailBody":"Your account was signed in to from a new location.",
+"newLocationWarningMailSubject":"[LemonLDAP::NG] Sign-in from a new location",
 "newPwdIs":"您的新密码是",
 "pwdChanged":"您的密码已经修改",
 "pwdIs":"您的密码是",

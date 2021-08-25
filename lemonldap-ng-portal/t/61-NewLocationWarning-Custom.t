@@ -10,7 +10,7 @@ BEGIN {
 }
 
 my $res;
-my $maintests = 4;
+my $maintests = 5;
 
 SKIP: {
     eval 'require Email::Sender::Simple;';
@@ -31,7 +31,8 @@ SKIP: {
                 loginHistoryEnabled  => 1,
                 newLocationWarningMailSubject => 'Test new location mail',
                 newLocationWarningMailBody =>
-                  'Test $newLocationIP $newLocationDate $newLocationUrl',
+'Test $newLocationIP $newLocationDate $newLocationHost $newLocationUserAgent',
+
                 #newLocationWarningMailAttribute => 'email'
             }
         }
@@ -64,10 +65,11 @@ SKIP: {
         ),
         'Second auth query'
     );
+    like( subject(), qr#Test new location mail#, ' Subject found' );
     like(
         mail(),
-qr#^Test 127\.0\.0\.2 \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} http://auth.example.com/$#,
-        ' Mail sent (IP, Date & URL found)'
+qr#^Test 127\.0\.0\.2 \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} auth\.example\.com Mozilla/5\.0 \(VAX-4000; rv:36\.0\) Gecko/20350101 Firefox$#,
+        ' Mail sent (IP, Date, Host and UA found)'
     );
 }
 

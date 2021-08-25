@@ -10,6 +10,8 @@
 "mail2fSubject":"[LemonLDAP::NG] Kod login anda",
 "mailConfirmSubject":"[LemonLDAP::NG] Pengesahan penetapan semula kata laluan",
 "mailSubject":"[LemonLDAP::NG] Kata laluan baru anda",
+"newLocationWarningMailBody":"Your account was signed in to from a new location.",
+"newLocationWarningMailSubject":"[LemonLDAP::NG] Sign-in from a new location",
 "newPwdIs":"Kata laluan baru anda ialah",
 "pwdChanged":"Kata laluan anda telah ditukar",
 "pwdIs":"Kata laluan anda ialah",

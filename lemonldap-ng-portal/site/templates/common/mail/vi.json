@@ -10,6 +10,8 @@
 "mail2fSubject":"[LemonLDAP::NG] Your login code",
 "mailConfirmSubject":"[LemonLDAP::NG] Xác nhận thiết lập lại mật khẩu",
 "mailSubject":"[LemonLDAP::NG] Mật khẩu mới của bạn",
+"newLocationWarningMailBody":"Your account was signed in to from a new location.",
+"newLocationWarningMailSubject":"[LemonLDAP::NG] Sign-in from a new location",
 "newPwdIs":"Mật khẩu mới của bạn là",
 "pwdChanged":"Mật khẩu của bạn đã được thay đổi.",
 "pwdIs":"Mật khẩu của bạn là",
