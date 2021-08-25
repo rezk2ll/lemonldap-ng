@@ -5,7 +5,7 @@ use Mouse;
 use POSIX qw(strftime);
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
 
-our $VERSION = '2.0.13';
+our $VERSION = '2.0.14';
 
 extends qw(
   Lemonldap::NG::Portal::Lib::SMTP
