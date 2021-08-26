@@ -83,15 +83,22 @@ sub storeEnvAndCheckGateway {
       || $req->param('gateway');
 
     if ( $gateway and $gateway eq "true" ) {
-        $self->logger->debug(
-            "Gateway mode requested, redirect without authentication");
-        $req->response( [ 302, [ Location => $service ], [] ] );
-        for my $s ( $self->ipath, $self->ipath . 'Path' ) {
-            $self->logger->debug("Removing $s from pdata")
-              if delete $req->pdata->{$s};
-        }
+        if ( $self->_gatewayAllowedRedirect( $req, $service ) ) {
+            $self->logger->debug(
+                "Gateway mode requested, redirect without authentication");
+            $req->response( [ 302, [ Location => $service ], [] ] );
+            for my $s ( $self->ipath, $self->ipath . 'Path' ) {
+                $self->logger->debug("Removing $s from pdata")
+                  if delete $req->pdata->{$s};
+            }
 
-        return PE_SENDRESPONSE;
+            return PE_SENDRESPONSE;
+        }
+        else {
+            $self->logger->error(
+                "Disallowing redirection to unknown service $service");
+            return PE_CAS_SERVICE_NOT_ALLOWED;
+        }
     }
 
     if ( $service and $service =~ URIRE ) {
@@ -110,6 +117,24 @@ sub storeEnvAndCheckGateway {
     }
 
     return PE_OK;
+}
+
+sub _gatewayAllowedRedirect {
+    my ( $self, $req, $service ) = @_;
+
+    my $app                    = $self->getCasApp($service);
+    my $casAccessControlPolicy = $self->conf->{casAccessControlPolicy};
+
+    # Redirect is allowed if there is no access control or if
+    # the service is declared in CAS apps
+    if ( $casAccessControlPolicy !~ /^(error|faketicket)$/i ) {
+        return 1;
+    }
+    if ($app) {
+        return 1;
+    }
+
+    return 0;
 }
 
 # Main method (launched only for authenticated users, see Main/Issuer)
