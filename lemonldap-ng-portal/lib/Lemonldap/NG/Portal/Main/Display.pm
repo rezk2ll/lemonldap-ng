@@ -401,6 +401,20 @@ sub display {
               $self->conf->{portalEnablePasswordDisplay},
         );
 
+        # External links
+        if ( $self->conf->{portalDisplayResetPassword} ) {
+            $templateParams{"MAIL_URL_EXTERNAL"} =
+              $self->_isExternalUrl( $self->conf->{mailUrl} );
+        }
+        if ( $self->conf->{portalDisplayRegister} ) {
+            $templateParams{"REGISTER_URL_EXTERNAL"} =
+              $self->_isExternalUrl( $self->conf->{registerUrl} );
+        }
+        if ( $self->conf->{portalDisplayCertificateResetByMail} ) {
+            $templateParams{MAILCERTIF_URL_EXTERNAL} =
+              $self->_isExternalUrl( $self->conf->{certificateResetByMailURL} );
+        }
+
         # Display captcha if it's enabled
         if ( $req->captcha ) {
             %templateParams = (
@@ -533,9 +547,9 @@ sub display {
                     DISPLAY_YUBIKEY_FORM => $displayType =~ /\byubikeyform\b/
                     ? 1
                     : 0,
-                    DISPLAY_SSL_FORM  => $displayType =~ /sslform/ ? 1 : 0,
-                    DISPLAY_GPG_FORM  => $displayType =~ /gpgform/ ? 1 : 0,
-                    DISPLAY_LOGO_FORM => $displayType eq "logo"    ? 1 : 0,
+                    DISPLAY_SSL_FORM => $displayType =~ /sslform/ ? 1 : 0,
+                    DISPLAY_GPG_FORM => $displayType =~ /gpgform/ ? 1 : 0,
+                    DISPLAY_LOGO_FORM => $displayType eq "logo" ? 1 : 0,
                     DISPLAY_FINDUSER  => scalar @$fields,
                     module            => $displayType eq "logo"
                     ? $self->getModule( $req, 'auth' )
@@ -774,6 +788,11 @@ sub mkOidcConsent {
             consents => join( ",", keys %$consents ),
         }
     );
+}
+
+sub _isExternalUrl {
+    my ( $self, $url ) = @_;
+    return ( index( $url, $self->conf->{portal} ) < 0 );
 }
 
 1;
