@@ -583,7 +583,9 @@ sub updateSession {
             $self->logger->debug("Update sessionInfo $_");
             $self->_dump( $infos->{$_} );
             $req->{sessionInfo}->{$_} = $infos->{$_};
-            if ( $self->HANDLER->data->{_session_id} && $id eq $self->HANDLER->data->{_session_id} ) {
+            if (   $self->HANDLER->data->{_session_id}
+                && $id eq $self->HANDLER->data->{_session_id} )
+            {
                 $self->HANDLER->data->{$_} = $infos->{$_};
             }
         }
@@ -1083,7 +1085,7 @@ sub registerLogin {
     }
 
     my $history = $req->sessionInfo->{_loginHistory} ||= {};
-    my $type = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
+    my $type    = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
     $history->{$type} ||= [];
     $self->logger->debug("Current login saved into $type");
 
@@ -1219,6 +1221,31 @@ sub cspGetHost {
     }
     return (
         $uri->scheme . "://" . ( $uri->_port ? $uri->host_port : $uri->host ) );
+}
+
+sub buildUrl {
+    my $self = shift;
+    return $self->portal unless @_;
+
+    # URL base is $self->portal unless first arg is an URL
+    my $uri =
+      URI->new( ( $_[0] =~ m#^https?://# ) ? shift(@_) : $self->portal );
+    my @pathSg = grep { $_ ne '' } $uri->path_segments;
+    while (@_) {
+        my $s = shift;
+        if ( ref $s ) {
+            $uri->query_form($s);
+            if (@_) {
+                require Carp;
+                Carp::confess('Query must be the last arg of buildUrl');
+            }
+        }
+        else {
+            push @pathSg, $s;
+        }
+    }
+    $uri->path_segments(@pathSg);
+    return $uri;
 }
 
 1;
