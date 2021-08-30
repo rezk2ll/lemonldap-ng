@@ -639,7 +639,7 @@ sub oauth2Init {
 
 sub substitute {
     my ( $class, $expr ) = @_;
-    $expr ||= '';
+    $expr //= '';
 
     # substitute special vars, just for retro-compatibility
     $expr =~ s/\$date\b/&date/sg;
