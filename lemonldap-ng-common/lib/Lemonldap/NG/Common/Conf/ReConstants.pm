@@ -16,7 +16,7 @@ our $specialNodeHash = {
     samlIDPMetaDataNodes => [qw(samlIDPMetaDataXML samlIDPMetaDataExportedAttributes samlIDPMetaDataOptions)],
     samlSPMetaDataNodes  => [qw(samlSPMetaDataXML samlSPMetaDataExportedAttributes samlSPMetaDataOptions samlSPMetaDataMacros)],
     oidcOPMetaDataNodes  => [qw(oidcOPMetaDataJSON oidcOPMetaDataJWKS oidcOPMetaDataOptions oidcOPMetaDataExportedVars)],
-    oidcRPMetaDataNodes  => [qw(oidcRPMetaDataOptions oidcRPMetaDataExportedVars oidcRPMetaDataOptionsExtraClaims oidcRPMetaDataMacros)],
+    oidcRPMetaDataNodes  => [qw(oidcRPMetaDataOptions oidcRPMetaDataExportedVars oidcRPMetaDataOptionsExtraClaims oidcRPMetaDataMacros oidcRPMetaDataScopeRules)],
     casSrvMetaDataNodes  => [qw(casSrvMetaDataOptions casSrvMetaDataExportedVars)],
     casAppMetaDataNodes  => [qw(casAppMetaDataOptions casAppMetaDataExportedVars casAppMetaDataMacros)],
 };
