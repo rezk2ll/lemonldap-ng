@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.0.13';
+our $VERSION = '2.0.14';
 
 # TODO: Missing:
 #  * activeTimer
@@ -806,7 +806,11 @@ sub tree {
                             title => 'devOpsCheck',
                             help  => 'checkdevops.html',
                             form  => 'simpleInputContainer',
-                            nodes => [ 'checkDevOps', 'checkDevOpsDownload' ],
+                            nodes => [
+                                'checkDevOps',
+                                'checkDevOpsDownload',
+                                'checkDevOpsDisplayNormalizedHeaders'
+                            ],
                         },
                         {
                             title => 'impersonation',

@@ -181,6 +181,7 @@
 "cfgVersion":"Yapılandırma sürümü",
 "checkDevOps":"Aktivasyon",
 "checkDevOpsDownload":"Dosyayı indir",
+"checkDevOpsDisplayNormalizedHeaders":"Display normalized headers",
 "checkState":"Aktivasyon",
 "checkStateSecret":"Paylaşılan sır",
 "checkUser":"Aktivasyon",

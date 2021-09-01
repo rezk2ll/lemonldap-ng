@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.0.13';
+our $VERSION = '2.0.14';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -474,6 +474,12 @@ sub attributes {
             default       => 1,
             type          => 'bool',
             documentation => 'Enable check DevOps download field',
+            flags         => 'p',
+        },
+        checkDevOpsDisplayNormalizedHeaders => {
+            default       => 1,
+            type          => 'bool',
+            documentation => 'Display normalized headers',
             flags         => 'p',
         },
         checkUser => {

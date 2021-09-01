@@ -33,13 +33,14 @@ my $bad_file = '{
 }';
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel            => 'error',
-            authentication      => 'Demo',
-            userDB              => 'Same',
-            requireToken        => 1,
-            checkDevOps         => 1,
-            checkDevOpsDownload => 0,
-            hiddenAttributes    => 'mail UA'
+            logLevel                            => 'error',
+            authentication                      => 'Demo',
+            userDB                              => 'Same',
+            requireToken                        => 1,
+            checkDevOps                         => 1,
+            checkDevOpsDownload                 => 0,
+            checkDevOpsDisplayNormalizedHeaders => 0,
+            hiddenAttributes                    => 'mail UA'
         }
     }
 );

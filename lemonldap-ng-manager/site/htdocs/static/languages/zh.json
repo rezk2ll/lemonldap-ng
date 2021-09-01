@@ -181,6 +181,7 @@
 "cfgVersion":"配置信息",
 "checkDevOps":"Activation",
 "checkDevOpsDownload":"Download file",
+"checkDevOpsDisplayNormalizedHeaders":"Display normalized headers",
 "checkState":"激活",
 "checkStateSecret":"Shared secret",
 "checkUser":"激活",

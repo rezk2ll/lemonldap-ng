@@ -181,6 +181,7 @@
 "cfgVersion":"Phiên bản cấu hình",
 "checkDevOps":"Activation",
 "checkDevOpsDownload":"Download file",
+"checkDevOpsDisplayNormalizedHeaders":"Display normalized headers",
 "checkState":"Kích hoạt",
 "checkStateSecret":"Chia sẻ bí mật",
 "checkUser":"Kích hoạt",
