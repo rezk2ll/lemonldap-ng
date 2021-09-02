@@ -476,6 +476,12 @@ sub attributes {
             documentation => 'Enable check DevOps download field',
             flags         => 'p',
         },
+        checkDevOpsDisplayNormalizedHeaders => {
+            default       => 1,
+            type          => 'bool',
+            documentation => 'Display normalized headers',
+            flags         => 'p',
+        },
         checkUser => {
             default       => 0,
             type          => 'bool',

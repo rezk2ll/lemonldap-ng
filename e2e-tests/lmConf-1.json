@@ -143,6 +143,7 @@
   "locationRules": {
     "auth.example.com" : {
       "(?#checkUser)^/checkuser": "$uid eq \"dwho\"",
+      "(?#checkDevOps)^/checkdevops": "$uid eq \"dwho\"",
       "(?#errors)^/lmerror/": "accept",
       "default" : "accept"
     },

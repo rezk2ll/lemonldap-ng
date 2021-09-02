@@ -181,6 +181,7 @@
 "cfgVersion":"عملية ضبط الإصدارات",
 "checkDevOps":"تفعيل",
 "checkDevOpsDownload":"Download file",
+"checkDevOpsDisplayNormalizedHeaders":"Display normalized headers",
 "checkState":"تفعيل",
 "checkStateSecret":"سر مشترك",
 "checkUser":"تفعيل",

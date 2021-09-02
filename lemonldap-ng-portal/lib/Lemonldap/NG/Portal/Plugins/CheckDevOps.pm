@@ -13,9 +13,10 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_TOKENEXPIRED
   PE_FILENOTFOUND
   PE_BAD_DEVOPS_FILE
+  PE_REGISTERFORMEMPTY
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -122,6 +123,9 @@ sub run {
           if $msg;
     }
 
+    $msg = 'PE' . PE_REGISTERFORMEMPTY
+      unless ( $req->param('url') || $req->param('checkDevOpsFile') );
+
     # Check URL if allowed and exists
     if ( $self->conf->{checkDevOpsDownload} and $url = $req->param('url') ) {
         undef $url if $self->p->checkXSSAttack( 'CheckDevOps URL', $url );
@@ -169,7 +173,7 @@ sub run {
     unless ( $json || $msg ) {
         $json = eval {
             from_json( $req->param('checkDevOpsFile'), { allow_nonref => 1 } );
-        };
+        } if $req->param('checkDevOpsFile');
         if ($@) {
 
             # Prepare form params
@@ -202,6 +206,20 @@ sub run {
         # Compile headers
         $handler->headersInit( undef, { $vhost => $json->{headers} } );
         $headers = $handler->checkHeaders( $req, $req->userData );
+
+        # Normalize headers name if required
+        if ( $self->conf->{checkDevOpsDisplayNormalizedHeaders} ) {
+            $self->logger->debug("Normalize headers...");
+            @$headers = map {
+                ;    # Prevent compilation error with old Perl versions
+                no strict 'refs';
+                {
+                    key   => &{ $handler . '::cgiName' }( $_->{key} ),
+                    value => $_->{value}
+                }
+            } @$headers;
+        }
+
         my $headers_list = join ', ', map { "$_->{key}:$_->{value}" } @$headers;
         $self->logger->debug("CheckDevOps compiled headers: $headers_list");
 

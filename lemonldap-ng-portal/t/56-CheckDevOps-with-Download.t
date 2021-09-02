@@ -17,7 +17,7 @@ my $file = '{
     "default": "accept"
   },
   "headers": {
-    "User": "$uid",
+    "Auth-User": "$uid",
     "Mail": "$mail",
     "Name": "$cn",
     "UA": "$UA"
@@ -96,10 +96,10 @@ m%<pre><textarea id="checkDevOpsFile" name="checkDevOpsFile" class="form-control
 ok( $res->[2]->[0] =~ m%<b><span trspan="headers">HEADERS</span></b>%,
     'HEADERS' )
   or explain( $res->[2]->[0], 'HEADERS' );
-ok( $res->[2]->[0] =~ m%Name: Doctor Who<br/>%, 'Hearder Name found' )
+ok( $res->[2]->[0] =~ m%HTTP_NAME: Doctor Who<br/>%, 'Normalized hearder Name found' )
   or explain( $res->[2]->[0], 'Hearder Name' );
-ok( $res->[2]->[0] =~ m%User: dwho<br/>%, 'Hearder User found' )
-  or explain( $res->[2]->[0], 'Hearder User' );
+ok( $res->[2]->[0] =~ m%HTTP_AUTH_USER: dwho<br/>%, 'Normalized hearder Auth-User found' )
+  or explain( $res->[2]->[0], 'Hearder Auth-User' );
 
 # Rules
 ok( $res->[2]->[0] =~ m%<b><span trspan="rules">RULES</span></b>%, 'RULES' )
@@ -122,6 +122,25 @@ ok( $res->[2]->[0] =~ m%UA: <br/>%, 'Hearder UA found' )
 count(13);
 ( $host, $url, $query ) =
   expectForm( $res, undef, '/checkdevops', 'checkDevOpsFile' );
+
+# Empty form
+# ----------
+ok(
+    $res = $client->_post(
+        '/checkdevops',
+        IO::String->new($query),
+        cookie => "lemonldap=$id",
+        length => length($query),
+    ),
+    'POST empty checkdevops form'
+);
+ok( $res = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+  or print STDERR "$@\n" . Dumper($res);
+ok( $res->{ALERTE} eq 'alert-danger', 'alert-danger found' )
+  or print STDERR Dumper($res);
+ok( $res->{MSG} eq 'PE79', 'PE79' )
+  or print STDERR Dumper($res);
+count(4);
 
 # Fail to download file
 # ---------------------

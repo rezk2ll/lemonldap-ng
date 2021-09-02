@@ -263,7 +263,9 @@ sub run {
 
             # Check if this RP is authorized
             if ( my $rule = $self->spRules->{$rp} ) {
-                unless ( $rule->( $req, $req->sessionInfo ) ) {
+                my $ruleVariables =
+                  { %{ $req->sessionInfo || {} }, _oidc_grant_type => $flow };
+                unless ( $rule->( $req, $ruleVariables ) ) {
                     $self->userLogger->warn( 'User '
                           . $req->sessionInfo->{ $self->conf->{whatToTrace} }
                           . " is not authorized to access to $rp" );
@@ -755,6 +757,7 @@ sub run {
                             scope           => $scope,
                             rp              => $rp,
                             user_session_id => $req->id,
+                            grant_type      => $flow,
                         }
                     );
 
@@ -862,6 +865,7 @@ sub run {
                             scope           => $scope,
                             rp              => $rp,
                             user_session_id => $req->id,
+                            grant_type      => $flow,
                         }
                     );
 
@@ -1110,7 +1114,9 @@ sub _handleClientCredentialsGrant {
 
     # Run rule against session info
     if ( my $rule = $self->spRules->{$rp} ) {
-        unless ( $rule->( $req, $infos ) ) {
+        my $ruleVariables =
+          { %{ $infos || {} }, _oidc_grant_type => "clientcredentials", };
+        unless ( $rule->( $req, $ruleVariables ) ) {
             $self->userLogger->warn(
                     "Relying party $rp did not validate the provided "
                   . "Access Rule during Client Credentials Grant" );
@@ -1131,6 +1137,7 @@ sub _handleClientCredentialsGrant {
             scope           => $scope,
             rp              => $rp,
             user_session_id => $session->id,
+            grant_type      => "clientcredentials",
         }
     );
     unless ($access_token) {
@@ -1208,7 +1215,9 @@ sub _handlePasswordGrant {
 
     ## Make sure the current user is allowed to use this RP
     if ( my $rule = $self->spRules->{$rp} ) {
-        unless ( $rule->( $req, $req->sessionInfo ) ) {
+        my $ruleVariables =
+          { %{ $req->sessionInfo || {} }, _oidc_grant_type => "password", };
+        unless ( $rule->( $req, $ruleVariables ) ) {
             $self->userLogger->warn( 'User '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} }
                   . " is not authorized to access to $rp" );
@@ -1233,6 +1242,7 @@ sub _handlePasswordGrant {
         $req, $rp, $scope,
         $req->sessionInfo,
         {
+            grant_type      => "password",
             user_session_id => $req->id,
         }
     );
@@ -1256,6 +1266,7 @@ sub _handlePasswordGrant {
                 scope           => $scope,
                 client_id       => $client_id,
                 user_session_id => $req->id,
+                grant_type      => "password",
             },
             0,
         );
@@ -1385,6 +1396,7 @@ sub _handleAuthorizationCodeGrant {
         $req, $rp, $scope,
         $codeSession->data->{user_session_id},
         {
+            grant_type      => "authorizationcode",
             user_session_id => $apacheSession->id,
         }
     );
@@ -1419,6 +1431,7 @@ sub _handleAuthorizationCodeGrant {
                 client_id    => $client_id,
                 _session_uid => $apacheSession->data->{_user},
                 auth_time    => $apacheSession->data->{_lastAuthnUTime},
+                grant_type   => "authorizationcode",
             },
             1,
         );
@@ -1445,6 +1458,7 @@ sub _handleAuthorizationCodeGrant {
                 scope           => $scope,
                 client_id       => $client_id,
                 user_session_id => $codeSession->data->{user_session_id},
+                grant_type      => "authorizationcode",
             },
             0,
         );
@@ -1560,6 +1574,7 @@ sub _handleRefreshTokenGrant {
             $user_session_id,
             {
                 user_session_id => $user_session_id,
+                grant_type      => $refreshSession->data->{grant_type},
             }
         );
 
@@ -1618,6 +1633,7 @@ sub _handleRefreshTokenGrant {
             $refreshSession->data,
             {
                 offline_session_id => $refreshSession->id,
+                grant_type         => $refreshSession->data->{grant_type},
             }
         );
 
@@ -2149,6 +2165,7 @@ sub metadata {
             jwks_uri               => $baseUrl . $jwks_uri,
             authorization_endpoint => $baseUrl . $authorize_uri,
             end_session_endpoint   => $baseUrl . $endsession_uri,
+
             #check_session_iframe   => $baseUrl . $checksession_uri,
             introspection_endpoint => $baseUrl . $introspection_uri,
 

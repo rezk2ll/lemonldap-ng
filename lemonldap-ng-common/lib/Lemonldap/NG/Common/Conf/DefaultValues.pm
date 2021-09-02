@@ -35,6 +35,7 @@ sub defaultValues {
         'certificateResetByMailURL' =>
           'http://auth.example.com/certificateReset',
         'certificateResetByMailValidityDelay' => 0,
+        'checkDevOpsDisplayNormalizedHeaders' => 1,
         'checkDevOpsDownload'                 => 1,
         'checkTime'                           => 600,
         'checkUserDisplayComputedSession'     => 1,

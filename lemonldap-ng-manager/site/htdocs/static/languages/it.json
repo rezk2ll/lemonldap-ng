@@ -181,6 +181,7 @@
 "cfgVersion":"Versione configurazione",
 "checkDevOps":"Activation",
 "checkDevOpsDownload":"Download file",
+"checkDevOpsDisplayNormalizedHeaders":"Display normalized headers",
 "checkState":"Attivazione",
 "checkStateSecret":"Segreto condiviso",
 "checkUser":"Attivazione",

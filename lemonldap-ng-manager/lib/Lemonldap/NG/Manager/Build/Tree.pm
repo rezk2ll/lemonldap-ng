@@ -806,7 +806,11 @@ sub tree {
                             title => 'devOpsCheck',
                             help  => 'checkdevops.html',
                             form  => 'simpleInputContainer',
-                            nodes => [ 'checkDevOps', 'checkDevOpsDownload' ],
+                            nodes => [
+                                'checkDevOps',
+                                'checkDevOpsDownload',
+                                'checkDevOpsDisplayNormalizedHeaders'
+                            ],
                         },
                         {
                             title => 'impersonation',

@@ -333,10 +333,21 @@ Options
 
 - **Logout**
 
-   - **Allowed redirection addresses for logout**: A space separated list of URLs that this client can redirect the user to once the logout is done (through ``post_logout_redirect_uri``)
-   - **URL**: Specify the relying party's logout URL
-   - **Type**: Type of Logout to perform (only Front-Channel is implemented for now)
-   - **Session required**: Whether to send the Session ID in the logout request
+  - **Allowed redirection addresses for logout**: A space separated list of
+    URLs that this client can redirect the user to once the logout is done
+    (through ``post_logout_redirect_uri``)
+  - **URL**: Specify the relying party's logout URL
+  - **Type**: Type of Logout to perform (only Front-Channel is implemented for now)
+  - **Session required**: Whether to send the Session ID in the logout request
+
+Access Rule extra variables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When writing your access rules, you can additionally use the following variables:
+
+* ``$_oidc_grant_type`` (since version ``2.0.14``): the grant type being used to
+  access this service. Possible values: ``authorizationcode``,
+  ``implicit``, ``hybrid``, ``clientcredentials``, ``password``
 
 .. _resource-owner-password-grant:
 

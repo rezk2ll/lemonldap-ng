@@ -11,15 +11,18 @@ Just enable it in the manager (section “plugins”).
 -  **Parameters**:
 
    -  **Activation**: Enable / Disable this plugin
-   -  **Download file**: Allow users to download DevOps file from a remote server by
-      providing an URL (By example: http://myapp.example.com:8080). Plugin will
-      try to retrieve remote file by sending a request (i.e.
-      http://myapp.example.com:8080/rules.json)
+   -  **Download file**: Allow users to download DevOps file from a
+      remote server by providing an URL
+      (By example: http://myapp.example.com:8080). Plugin will
+      try to retrieve remote file by sending a request
+      (i.e. http://myapp.example.com:8080/rules.json)
+   -  **Display normalized headers**: Display headers as they are sent
 
 Usage
 -----
 When enabled, ``/checkdevops`` URL path is handled by this plugin.
-Then, you can paste a file to test your rules and headers.
+Then, you can paste a file to test your rules and headers or
+provide an URL to download the ``rules.json`` file.
 
 Example
 ~~~~~~~
@@ -48,7 +51,7 @@ access rules and headers:
 
     By example: ``$groups =~ /\bdevops\b/``
 
-.. attention::
+.. danger::
 
     Be careful to not display secret attributes.
 
