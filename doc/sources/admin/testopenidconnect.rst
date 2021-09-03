@@ -157,6 +157,31 @@ JSON response:
     "sub" : "dwho"
    }
 
+Refresh an access token
+-----------------------
+
+If the access token has expired, you can get a new one with the refresh token.
+
+Parameters needed:
+ * Grant type: we use here `refresh_token`, sent as POST data
+ * Refresh token, sent as POST data
+ * Client ID and Client Secret, used as basic authorization
+
+.. code-block:: shell
+
+   curl -X POST -d grant_type=refresh_token -d refresh_token=19434440ed4da2803e8ba9d91cb2eabd5b8bd12af2609429bda03ed487e6ef57 -u 'private:tardis' 'https://oidctest.wsweet.org/oauth2/token' | json_pp
+
+JSON response:
+
+.. code-block:: javascript
+
+   {
+   "access_token" : "78929118546b1a11a2e3b607f607d0ccb73d72bbd95c59d0b03ae69ffa17f41a",
+   "expires_in" : 3600,
+    "id_token" : "eyJhbGciOiJSUzI1NiIsImtpZCI6Im9pZGN0ZXN0IiwidHlwIjoiSldUIn0.eyJhdXRoX3RpbWUiOjE2MTQxNjAwMDYsImlhdCI6MTYxNDE2MzIxOCwiaXNzIjoiaHR0cHM6Ly9vaWRjdGVzdC53c3dlZXQub3JnLyIsImF0X2hhc2giOiJIVGswOVNjSjRObEFua3k5SGFFX2VRIiwiYWNyIjoibG9hLTIiLCJleHAiOjE2MTQxNjY4MTgsInN1YiI6ImR3aG8iLCJhenAiOiJwcml2YXRlIiwiYXVkIjpbInByaXZhdGUiXX0.N3TNufjKLzKM3qiIitA7JHUei4L572XjF6AcVl7UAFB6efdGUCiAL7amlUl0FgjZfzW9bzvulBVDidoYSicIaysIdI4KkjmjpVN0Z3gOSu0ecuk5p8fD1KbX6-tmA3txeR18nzfhdckq-S-6Lx7wrWpPNyrzGx-FImbOaUPN2yeVhKPXhdyHJbzI0RqJETxnBkyW-CLEzAJyq3rCUVX-D8kHADvg6a42QQyPdxvBuGrdBfyDDDb_Py13H1qhn40NnuFknR1wSahsY6U97uUooyk-0_U4J3XJAHySjCtivtSeP0fM_5eblMuh6WdVjrfnUF0xnCTbCa2gYRlTS38BkqcsWY26PXoRAOo31a1cmB5sMSZyPtRF9UZcmGiNBIymMMdFgVAJONb6uliiTS5j9-nkmHOqVC-XJ6tuiU3ZSBQ8nCRyNW2LaCzpJ5c3ytP9yYQtyT8HmhN0VnXob3K1uJEA_Xcu4sADjtrm-LbrGiwaVMkfu-C6YIrbuC9riOW6TneV2gAzAjXPOW_UZeXrCrx66GHIJPsJIq29UfbTN5Pxo9SH2yKw6PSfxevkZhBIhEXCOMaIUHrlWz2jDBBzPIWeiSRbK_MRtejQmdRUs8nqdq-McVwnFiUMDt1KZXxqScTtMDF_Lo9oK2RaCijEJ7MSPEscr_YOyp3KIq2FLVg",
+   "token_type" : "Bearer"
+   }
+
 Logout
 ------
 
