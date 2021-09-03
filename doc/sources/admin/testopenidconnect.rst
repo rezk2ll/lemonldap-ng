@@ -138,11 +138,11 @@ You can the validity of the access token with the introspection endpoint.
 
 Parameters needed:
  * Client ID and Client Secret, used as basic authorization
- * Access token
+ * Access token, sent as POST data
 
 .. code-block:: shell
 
-   curl -u private:tardis -X POST -d  'token=a88b8dde538719e55c3cb8fbd14d06ed77853c685a62abf6ecb88d86228a9c64' 'https://oidctest.wsweet.org/oauth2/introspect' | json_pp
+   curl -u private:tardis -X POST -d 'token=a88b8dde538719e55c3cb8fbd14d06ed77853c685a62abf6ecb88d86228a9c64' 'https://oidctest.wsweet.org/oauth2/introspect' | json_pp
 
 JSON response:
 
@@ -156,3 +156,17 @@ JSON response:
     "scope" : "openid profile email",
     "sub" : "dwho"
    }
+
+Logout
+------
+
+To kill SSO session, call the OIDC logout endpoint. By default a confirmation is requested, but you can bypass it by adding `confirm=1` to URL.
+
+Parameters needed:
+ * SSO session id (will be passed in `lemonldap` cookie)
+
+.. code-block:: shell
+
+   curl -s -D - -o /dev/null -b lemonldap=0640f95827111f00ba7ad5863ba819fe46cfbcecdb18ce525836369fb4c8350b 'https://oidctest.wsweet.org/oauth2/logout?confirm=1'
+
+The session is deleted on server side and the cookie is destroyed in the browser. You can use the introspection endpoint to verify that the access token is no longer valid.
