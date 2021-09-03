@@ -8,9 +8,9 @@ We use in this example a public OIDC provider based on LL::NG: `<https://oidctes
 Authentication
 --------------
 
-The first step is to obtain a valid SSO session on the portal. Several solutions:
- * Use a web browser and log into the portal, then get the value of the SSO cookie
- * Use portal REST API, and adapt the `requireToken` configuration to get cookie value in JSON response (see :doc:`REST services<restservices>`)
+The first step is to obtain a valid SSO session on the portal. The standard solution  is to use a web browser and log into the portal, then get the value of the SSO cookie.
+
+In our case, to be able to use only command lines, we will use portal REST API (which requires to adapt the `requireToken` configuration to get cookie value in JSON response (see :doc:`REST services<restservices>`). This should not be what you will on a production service.
 
 Example of REST service usage, with credentials `dwho`/`dwho`:
 
