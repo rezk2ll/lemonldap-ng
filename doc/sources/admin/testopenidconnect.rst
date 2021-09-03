@@ -130,3 +130,29 @@ JSON response:
     "preferred_username" : "dwho",
     "sub" : "dwho"
    }
+
+Introspection
+-------------
+
+You can the validity of the access token with the introspection endpoint.
+
+Parameters needed:
+ * Client ID and Client Secret, used as basic authorization
+ * Access token
+
+.. code-block:: shell
+
+   curl -u private:tardis -X POST -d  'token=a88b8dde538719e55c3cb8fbd14d06ed77853c685a62abf6ecb88d86228a9c64' 'https://oidctest.wsweet.org/oauth2/introspect' | json_pp
+
+JSON response:
+
+.. code-block:: javascript
+
+   {
+    "active" : true,
+    "client_id" : "private",
+    "exp" : 1630684115,
+    "iss" : "https://oidctest.wsweet.org/",
+    "scope" : "openid profile email",
+    "sub" : "dwho"
+   }
