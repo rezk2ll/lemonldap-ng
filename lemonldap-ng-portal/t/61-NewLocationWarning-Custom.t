@@ -2,6 +2,10 @@ use Test::More;
 use strict;
 use IO::String;
 
+use POSIX qw(locale_h);
+use locale;
+setlocale(LC_TIME, "C");
+
 BEGIN {
     eval {
         require 't/test-lib.pm';
