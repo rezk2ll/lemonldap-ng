@@ -17,6 +17,7 @@ Applications
    applications/drupal
    applications/fusiondirectory
    applications/gerrit
+   applications/gitea
    applications/gitlab
    applications/glpi
    applications/googleapps
@@ -99,6 +100,7 @@ Application                                                       Configuration 
 .. image:: applications/fusiondirectory-logo.jpg                  :doc:`FusionDirectory<applications/fusiondirectory>` ✔
 .. image:: applications/gerrit_logo.png                           :doc:`Gerrit<applications/gerrit>`                                                          ✔
 .. image:: applications/gitlab_logo.png                           :doc:`Gitlab<applications/gitlab>`                                                     ✔    ✔
+.. image:: applications/gitea_logo.png                            :doc:`Gitea<applications/gitea>`                                                            ✔
 .. image:: applications/glpi_logo.png                             :doc:`GLPI<applications/glpi>`                       ✔
 .. image:: applications/googleapps_logo.png                       :doc:`Google Apps<applications/googleapps>`                                            ✔
 .. image:: applications/grafana_logo.png                          :doc:`Grafana<applications/grafana>`                                                        ✔
