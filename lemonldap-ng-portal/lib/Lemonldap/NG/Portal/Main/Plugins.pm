@@ -33,7 +33,8 @@ our @pList = (
     contextSwitchingRule                => '::Plugins::ContextSwitching',
     decryptValueRule                    => '::Plugins::DecryptValue',
     findUser                            => '::Plugins::FindUser',
-    adaptativeAuthenticationLevelRules =>
+    newLocationWarning                  => '::Plugins::NewLocationWarning',
+    adaptativeAuthenticationLevelRules  =>
       '::Plugins::AdaptativeAuthenticationLevel',
     globalLogoutRule => '::Plugins::GlobalLogout',
     refreshSessions  => '::Plugins::Refresh',

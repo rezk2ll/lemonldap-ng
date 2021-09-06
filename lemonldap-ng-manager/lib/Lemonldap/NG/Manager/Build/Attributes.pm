@@ -579,6 +579,38 @@ sub attributes {
             default       => '^[*\w]+$',
             documentation => 'Regular expression to validate parameters',
         },
+        newLocationWarning => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable New Location Warning', 
+        },
+        newLocationWarningLocationAttribute => {
+            type          => 'text',
+            default       => 'ipAddr',
+            documentation => 'New location session attribute',
+        },
+        newLocationWarningLocationDisplayAttribute => {
+            type          => 'text',
+            default       => '',
+            documentation => 'New location session attribute for user display',
+        },
+        newLocationWarningMaxValues => {
+            type          => 'int',
+            default       => '0',
+            documentation => 'How many previous locations should be compared',
+        },
+        newLocationWarningMailAttribute => {
+            type          => 'text',
+            documentation => 'New location warning mail session attribute',
+        },
+        newLocationWarningMailBody => {
+            type          => 'longtext',
+            documentation => 'Mail body for new location warning',
+        },
+        newLocationWarningMailSubject=> {
+            type          => 'text',
+            documentation => 'Mail subject for new location warning',
+        },
         globalLogoutRule => {
             type          => 'boolOrExpr',
             default       => 0,

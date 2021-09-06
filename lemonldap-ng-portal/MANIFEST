@@ -120,6 +120,7 @@ lib/Lemonldap/NG/Portal/Plugins/GrantSession.pm
 lib/Lemonldap/NG/Portal/Plugins/History.pm
 lib/Lemonldap/NG/Portal/Plugins/Impersonation.pm
 lib/Lemonldap/NG/Portal/Plugins/MailPasswordReset.pm
+lib/Lemonldap/NG/Portal/Plugins/NewLocationWarning.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
 lib/Lemonldap/NG/Portal/Plugins/Refresh.pm
@@ -470,6 +471,7 @@ site/templates/common/mail_certificateReset.tpl
 site/templates/common/mail_confirm.tpl
 site/templates/common/mail_footer.tpl
 site/templates/common/mail_header.tpl
+site/templates/common/mail_new_location_warning.tpl
 site/templates/common/mail_password.tpl
 site/templates/common/mail_register_confirm.tpl
 site/templates/common/mail_register_done.tpl
@@ -672,6 +674,8 @@ t/61-CrowdSec-warn.t
 t/61-CrowdSec.t
 t/61-ForceAuthn.t
 t/61-GrantSession.t
+t/61-NewLocationWarning-Custom.t
+t/61-NewLocationWarning.t
 t/61-Session-ActivityTimeout.t
 t/61-Session-Timeout.t
 t/62-Refresh-plugin.t

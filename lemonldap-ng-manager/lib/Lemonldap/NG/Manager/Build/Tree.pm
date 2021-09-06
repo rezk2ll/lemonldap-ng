@@ -1038,10 +1038,25 @@ sub tree {
                                 {
                                     title => 'CrowdSecPlugin',
                                     help  => 'crowdsec.html',
+                                    form  => 'simpleInputContainer',
                                     nodes => [
                                         'crowdsec',    'crowdsecAction',
                                         'crowdsecUrl', 'crowdsecKey',
                                     ],
+                                },
+                                {
+                                    title => 'newLocationWarnings',
+                                    help  => 'newlocationwarning.html',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'newLocationWarning',
+                                        'newLocationWarningLocationAttribute',
+                                        'newLocationWarningLocationDisplayAttribute',
+                                        'newLocationWarningMaxValues',
+                                        'newLocationWarningMailAttribute',
+                                        'newLocationWarningMailSubject',
+                                        'newLocationWarningMailBody'
+                                    ]
                                 },
                                 {
                                     title => 'bruteForceAttackProtection',
