@@ -2071,15 +2071,26 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 0,
             'type'    => 'bool'
         },
-        'newLocationWarningMailAttribute' => {
-            'default' => 'mail',
+        'newLocationWarningLocationAttribute' => {
+            'default' => 'ipAddr',
             'type'    => 'text'
+        },
+        'newLocationWarningLocationDisplayAttribute' => {
+            'default' => '',
+            'type'    => 'text'
+        },
+        'newLocationWarningMailAttribute' => {
+            'type' => 'text'
         },
         'newLocationWarningMailBody' => {
             'type' => 'longtext'
         },
         'newLocationWarningMailSubject' => {
             'type' => 'text'
+        },
+        'newLocationWarningMaxValues' => {
+            'default' => '0',
+            'type'    => 'int'
         },
         'nginxCustomHandlers' => {
             'keyTest' => qr/^\w+$/,

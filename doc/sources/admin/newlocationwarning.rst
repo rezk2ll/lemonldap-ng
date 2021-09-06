@@ -31,7 +31,7 @@ Just enable it in the Manager (section ``General Parameters`` > ``Advanced param
 
    Following variables are available in:
 
-   \* Warning email body => ``$newLocationIP``, ``$newLocationDate``, ``$newLocationHost``, ``$newLocationUserAgent``
+   \* Warning email body => ``$newLocation``, ``$newLocationDate``, ``$newLocationUserAgent``
 
 .. |image0| image:: /documentation/beta.png
    :width: 100px

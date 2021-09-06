@@ -1050,6 +1050,9 @@ sub tree {
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'newLocationWarning',
+                                        'newLocationWarningLocationAttribute',
+                                        'newLocationWarningLocationDisplayAttribute',
+                                        'newLocationWarningMaxValues',
                                         'newLocationWarningMailAttribute',
                                         'newLocationWarningMailSubject',
                                         'newLocationWarningMailBody'

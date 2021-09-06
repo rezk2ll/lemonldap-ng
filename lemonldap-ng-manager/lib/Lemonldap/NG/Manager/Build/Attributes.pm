@@ -584,9 +584,23 @@ sub attributes {
             type          => 'bool',
             documentation => 'Enable New Location Warning', 
         },
+        newLocationWarningLocationAttribute => {
+            type          => 'text',
+            default       => 'ipAddr',
+            documentation => 'New location session attribute',
+        },
+        newLocationWarningLocationDisplayAttribute => {
+            type          => 'text',
+            default       => '',
+            documentation => 'New location session attribute for user display',
+        },
+        newLocationWarningMaxValues => {
+            type          => 'int',
+            default       => '0',
+            documentation => 'How many previous locations should be compared',
+        },
         newLocationWarningMailAttribute => {
             type          => 'text',
-            default       => 'mail',
             documentation => 'New location warning mail session attribute',
         },
         newLocationWarningMailBody => {
