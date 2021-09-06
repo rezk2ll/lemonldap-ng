@@ -814,6 +814,8 @@
 "previous":"Poprzedni",
 "privateKey":"Prywatny klucz",
 "proxyAuthService":"Wewnętrzny adres URL portalu",
+"proxyAuthServiceChoiceParam":"Internal portal choice parameter",
+"proxyAuthServiceChoiceValue":"Internal portal choice value",
 "proxyAuthnLevel":"Poziom uwierzytelnienia",
 "proxyParams":"Parametry proxy",
 "proxySessionService":"Adres URL usługi sesji",

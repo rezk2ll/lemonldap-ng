@@ -37,8 +37,20 @@ sub getUser {
     return PE_OK if ( $req->data->{_proxyQueryDone} );
     $self->logger->debug(
         'Proxy push auth to ' . $self->conf->{proxyAuthService} );
-    my $resp = $self->ua->post( $self->conf->{proxyAuthService},
-        { user => $req->{user}, password => $req->data->{password} } );
+    my $resp = $self->ua->post(
+        $self->conf->{proxyAuthService},
+        {
+            user     => $req->{user},
+            password => $req->data->{password},
+            (
+                $self->conf->{proxyAuthServiceChoiceParam}
+                  && $self->conf->{proxyAuthServiceChoiceValue}
+                ? ( $self->conf->{proxyAuthServiceChoiceParam} =>
+                      $self->conf->{proxyAuthServiceChoiceValue} )
+                : ()
+            ),
+        }
+    );
     unless ( $resp->is_success ) {
         $self->logger->error(
             'Unable to query authentication service: ' . $resp->status_line );
@@ -97,7 +109,7 @@ sub setSessionInfo {
         $req->{sessionInfo}->{$_} ||= $res->{$_} unless (/^_/);
     }
     $req->data->{_setSessionInfoDone}++;
-    
+
     return PE_OK;
 }
 
@@ -113,7 +125,7 @@ sub authLogout {
         ]
     );
     my $resp = $self->ua->request($q);
-    
+
     return PE_OK;
 }
 

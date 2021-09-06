@@ -814,6 +814,8 @@
 "previous":"السابق",
 "privateKey":"مفتاح الخاصة",
 "proxyAuthService":"يو آر إل البوابة الداخلي",
+"proxyAuthServiceChoiceParam":"Internal portal choice parameter",
+"proxyAuthServiceChoiceValue":"Internal portal choice value",
 "proxyAuthnLevel":"مستوى إثبات الهوية",
 "proxyParams":"معايير البروكسي",
 "proxySessionService":"رابط اليورال لخدمة الجلسة",

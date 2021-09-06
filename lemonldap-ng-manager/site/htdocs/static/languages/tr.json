@@ -814,6 +814,8 @@
 "previous":"Önceki",
 "privateKey":"Özel anahtar",
 "proxyAuthService":"Dahili portal URL'si",
+"proxyAuthServiceChoiceParam":"Internal portal choice parameter",
+"proxyAuthServiceChoiceValue":"Internal portal choice value",
 "proxyAuthnLevel":"Doğrulama seviyesi",
 "proxyParams":"Proxy parametreleri",
 "proxySessionService":"Oturum servis URL'si",

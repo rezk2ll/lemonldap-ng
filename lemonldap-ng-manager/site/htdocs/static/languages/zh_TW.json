@@ -814,6 +814,8 @@
 "previous":"前一個",
 "privateKey":"私鑰",
 "proxyAuthService":"內部首頁 URL",
+"proxyAuthServiceChoiceParam":"Internal portal choice parameter",
+"proxyAuthServiceChoiceValue":"Internal portal choice value",
 "proxyAuthnLevel":"驗證等級",
 "proxyParams":"代理伺服器參數",
 "proxySessionService":"工作階段服務 URL",

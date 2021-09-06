@@ -814,6 +814,8 @@
 "previous":"Trước",
 "privateKey":"Khóa cá nhân",
 "proxyAuthService":"URL cổng nội bộ",
+"proxyAuthServiceChoiceParam":"Internal portal choice parameter",
+"proxyAuthServiceChoiceValue":"Internal portal choice value",
 "proxyAuthnLevel":"Mức xác thực",
 "proxyParams":"Các tham số proxy",
 "proxySessionService":"URL dịch vụ phiên",

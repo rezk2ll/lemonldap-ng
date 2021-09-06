@@ -29,17 +29,19 @@ and choose Proxy for authentication and users.
 
 Then, go in ``Proxy parameters``:
 
--  **Internal portal URL**: URL of internal portal
--  **Session service URL** (optional): Session service URL (default:
-   same as previous for SOAP, same with "/session/my" for REST)
--  **Cookie name** (optional): name of the cookie of internal portal, if
-   different from external portal
 -  **Authentication level**: authentication level for Proxy module
 -  **Use SOAP instead of REST**: use a deprecated SOAP server instead of
    a REST one (you must set it if internal portal version is < 2.0). In
    this case, "Portal URL" parameter must contain SOAP endpoint
    (generally http://auth.example.com/index.pl/sessions for 1.9 and
    earlier, http://auth.example.com/sessions for 2.0)
+-  **Internal portal URL**: URL of internal portal
+-  **Internal portal choice parameter** (optional): Choice parameter of the internal portal if applicable
+-  **Internal portal choice value** (optional): Value of the choice parameter of the internal portal
+-  **Session service URL** (optional): Session service URL (default:
+   same as previous for SOAP, same with "/session/my" for REST)
+-  **Cookie name** (optional): name of the cookie of internal portal, if
+   different from external portal
 
 Internal portal
 ~~~~~~~~~~~~~~~
@@ -59,6 +61,10 @@ in your lemonldap-ng.ini:
 
    soapProxyUrn = urn:Lemonldap/NG/Common/CGI/SOAPService
 
+.. note::
+
+    If the internal portal uses :doc:`Choice Authentication<authchoice>`, you must specify 'Internal portal choice parameter' and 'Internal portal choice value' depending on its configuration. 
+    This feature needs at least LLNG version 2.0.14
 
 .. attention::
 

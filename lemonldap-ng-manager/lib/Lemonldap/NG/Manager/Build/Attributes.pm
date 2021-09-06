@@ -3623,6 +3623,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         # Proxy
         proxyAuthService    => { type => 'text', },
         proxySessionService => { type => 'text', },
+        proxyAuthServiceChoiceParam => { type => 'text', },
+        proxyAuthServiceChoiceValue => { type => 'text', },
         remoteCookieName    => { type => 'text', },
         proxyUseSoap        => {
             type          => 'bool',
