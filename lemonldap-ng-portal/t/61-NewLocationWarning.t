@@ -4,7 +4,7 @@ use IO::String;
 
 use POSIX qw(locale_h);
 use locale;
-setlocale(LC_TIME, "C");
+setlocale( LC_TIME, "C" );
 
 BEGIN {
     eval {
@@ -14,7 +14,7 @@ BEGIN {
 }
 
 my $res;
-my $maintests = 16;
+my $maintests = 20;
 
 SKIP: {
     eval 'require Email::Sender::Simple;';
@@ -42,7 +42,8 @@ SKIP: {
     my ( $host, $url, $query ) =
       expectForm( $res, '#', undef, 'user', 'password' );
 
-    ## Authentication #1 with IP #1 (Test 1)
+    ## Authentication #1 with IP #1
+    clear_mail();
     ok(
         $res = $client->_post(
             '/',
@@ -54,8 +55,10 @@ SKIP: {
     );
     my $id = expectCookie($res);
     $client->logout($id);
+    ok( !mail(), "First time seeing a new IP, no mail sent" );
 
-    ## Authentication #2 with IP #1 (Test 2)
+    ## Authentication #2 with IP #1
+    clear_mail();
     ok(
         $res = $client->_post(
             '/',
@@ -68,8 +71,10 @@ SKIP: {
     $id = expectCookie($res);
     expectRedirection( $res, 'http://auth.example.com/' );
     $client->logout($id);
+    ok( !mail(), "Second time seeing a new IP, no mail sent" );
 
-    ## Authentication #3 with IP #2 (Test 3)
+    ## Authentication #3 with IP #2
+    clear_mail();
     ok(
         $res = $client->_post(
             '/',
@@ -86,35 +91,39 @@ SKIP: {
     like(
         mail(),
 qr#<h3><span>Your account was signed in to from a new location\.</span></h3></br>
-#, ' Mail sent (Good password)'
+#, 'First login on a new IP, email sent'
     );
 
-    ## Authentication #4 with IP #1 wrong password (Test 4)
+    ## Authentication #1 with IP #3 wrong password
+    clear_mail();
     ok(
         $res = $client->_post(
             '/',
             IO::String->new('user=dwho&password=ohwd'),
             length => 23,
             accept => 'text/html',
+            ip     => "127.0.0.3",
         ),
         'Fourth auth query'
     );
     ok( $res->[2]->[0] =~ /<span trmsg="5"><\/span>/, ' Bad credential' )
       or print STDERR Dumper( $res->[2]->[0] );
+    ok( !mail(), "Failed login with a new IP, no email sent" );
 
-    ## Authentication #5 with IP #2 (Test 5)
+    ## Authentication #2 with IP #3
+    clear_mail();
     ok(
         $res = $client->_post(
             '/',
-            IO::String->new('user=dwho&password=ohwd'),
+            IO::String->new('user=dwho&password=dwho'),
             length => 23,
             accept => 'text/html',
             ip     => '127.0.0.3',
         ),
         'Fifth auth query'
     );
-    ok( $res->[2]->[0] =~ /<span trmsg="5"><\/span>/, ' Bad credential' )
-      or print STDERR Dumper( $res->[2]->[0] );
+    $id = expectCookie($res);
+    expectRedirection( $res, 'http://auth.example.com/' );
     like(
         subject(),
         qr#\[LemonLDAP::NG\] Sign-in from a new location#,
@@ -127,8 +136,8 @@ qr#<h3><span>Your account was signed in to from a new location\.</span></h3></br
     );
     like(
         mail(),
-        qr#<span>Host</span> <b>auth.example.com</b>#,
-        ' Host found in mail body'
+        qr#<span>Location</span> <b>127.0.0.3</b>#,
+        ' Location found in mail body'
     );
     like(
         mail(),
@@ -141,19 +150,36 @@ qr#<span>UA</span> <b>Mozilla/5\.0 \(VAX-4000; rv:36\.0\) Gecko/20350101 Firefox
         ' UserAgent found in mail body'
     );
 
-    ## Authentication #5 with IP #2 (Test 5)
+    ## Authentication #3 with IP #3
+    clear_mail();
     ok(
         $res = $client->_post(
             '/',
-            IO::String->new('user=dwho&password=ohwd'),
+            IO::String->new('user=dwho&password=dwho'),
             length => 23,
             accept => 'text/html',
-            ip     => '127.0.0.1',
+            ip     => '127.0.0.3',
         ),
         'Fifth auth query'
     );
-    ok( $res->[2]->[0] =~ /<span trmsg="5"><\/span>/, ' Bad credential' )
-      or print STDERR Dumper( $res->[2]->[0] );
+    $id = expectCookie($res);
+    expectRedirection( $res, 'http://auth.example.com/' );
+    ok( !mail(), "Login on newly learned address, no email" );
+
+    ## Authentication #3 with IP #1
+    clear_mail();
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=dwho&password=dwho'),
+            length => 23,
+            accept => 'text/html',
+        ),
+        'Fifth auth query'
+    );
+    $id = expectCookie($res);
+    expectRedirection( $res, 'http://auth.example.com/' );
+    ok( !mail(), "Login on previously learned address, no email" );
 }
 
 count($maintests);

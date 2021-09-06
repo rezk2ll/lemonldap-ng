@@ -4,7 +4,7 @@ use IO::String;
 
 use POSIX qw(locale_h);
 use locale;
-setlocale(LC_TIME, "C");
+setlocale( LC_TIME, "C" );
 
 BEGIN {
     eval {
@@ -34,10 +34,7 @@ SKIP: {
                 newLocationWarning   => 1,
                 loginHistoryEnabled  => 1,
                 newLocationWarningMailSubject => 'Test new location mail',
-                newLocationWarningMailBody =>
-'Test $newLocationIP $newLocationDate $newLocationHost $newLocationUserAgent',
-
-                #newLocationWarningMailAttribute => 'email'
+                newLocationWarningMailBody    => 'Test $location $date $ua',
             }
         }
     );
@@ -72,8 +69,8 @@ SKIP: {
     like( subject(), qr#Test new location mail#, ' Subject found' );
     like(
         mail(),
-qr#^Test 127\.0\.0\.2 \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} auth\.example\.com Mozilla/5\.0 \(VAX-4000; rv:36\.0\) Gecko/20350101 Firefox$#,
-        ' Mail sent (IP, Date, Host and UA found)'
+qr#^Test 127\.0\.0\.2 \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} Mozilla/5\.0 \(VAX-4000; rv:36\.0\) Gecko/20350101 Firefox$#,
+        ' Mail sent (IP, Date and UA found)'
     );
 }
 
