@@ -282,6 +282,7 @@ Depends: ${misc:Depends},
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          libtext-unidecode-perl,
          libregexp-assemble-perl,
+         liblist-moreutils-perl,
          libemail-date-format-perl
 Recommends: gsfonts,
             libcrypt-openssl-bignum-perl,
