@@ -1120,9 +1120,11 @@ sub _sumUpSession {
       $withoutUser
       ? {}
       : { user => $session->{ $self->conf->{whatToTrace} } };
-    $res->{$_} = $session->{$_}
-      foreach ( "_utime", "ipAddr",
-        keys %{ $self->conf->{sessionDataToRemember} } );
+    $res->{$_} = $session->{$_} foreach (
+        "_utime", "ipAddr",
+        keys %{ $self->conf->{sessionDataToRemember} },
+        keys %{ $self->pluginSessionDataToRemember }
+    );
     return $res;
 }
 

@@ -704,7 +704,13 @@ sub mkSessionArray {
 
     return "" unless ( ref $sessions eq "ARRAY" and @$sessions );
 
-    my @fields = sort keys %{ $self->conf->{sessionDataToRemember} };
+    # Merge user configuration with plugin self-configuration
+    my %rememberedData = %{ $self->pluginSessionDataToRemember };
+    @rememberedData{ keys %{ $self->conf->{sessionDataToRemember} } } =
+      values %{ $self->conf->{sessionDataToRemember} };
+
+    my @fields = sort( keys %rememberedData );
+
     return $self->loadTemplate(
         $req,
         'sessionArray',
@@ -712,11 +718,8 @@ sub mkSessionArray {
             title        => $title,
             displayUser  => $displayUser,
             displayError => $displayError,
-            fields       => [
-                map { { name => $self->conf->{sessionDataToRemember}->{$_} } }
-                  @fields
-            ],
-            sessions => [
+            fields       => [ map { { name => $rememberedData{$_} } } @fields ],
+            sessions     => [
                 map {
                     my $session = $_;
                     {

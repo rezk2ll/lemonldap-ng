@@ -161,6 +161,15 @@ sub canUpdateSfa {
     return $msg;
 }
 
+sub addSessionDataToRemember {
+    my ( $self, $newData ) = @_;
+    for my $sessionAttr ( keys %{ $newData || {} } ) {
+        $self->p->pluginSessionDataToRemember->{$sessionAttr} =
+          $newData->{$sessionAttr};
+    }
+    return;
+}
+
 1;
 __END__
 

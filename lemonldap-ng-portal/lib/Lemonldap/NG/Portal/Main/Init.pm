@@ -94,6 +94,10 @@ has cors => ( is => 'rw' );
 # Cookie SameSite value
 has cookieSameSite => ( is => 'rw' );
 
+# Plugins may declare the session data they want to store in login history here
+has pluginSessionDataToRemember =>
+  ( is => 'rw', isa => "HashRef", default => sub { {} } );
+
 # INITIALIZATION
 
 sub init {
@@ -228,6 +232,9 @@ sub reloadConf {
     $self->aroundSub( {} );
     $self->spRules(   {} );
     $self->hook(      {} );
+
+    # Plugin history fields
+    $self->pluginSessionDataToRemember( {} );
 
     # Load conf in portal object
     foreach my $key ( keys %$conf ) {
