@@ -7,6 +7,7 @@
 "goToPortal":"Siirry portaaliin",
 "hello":"Hei",
 "host":"Host",
+"location":"Location",
 "mail2fSubject":"[LemonLDAP::NG] Your login code",
 "mailConfirmSubject":"[LemonLDAP::NG] Salasanan nollauksen vahvistus",
 "mailSubject":"[LemonLDAP::NG] Uusi salasanasi",

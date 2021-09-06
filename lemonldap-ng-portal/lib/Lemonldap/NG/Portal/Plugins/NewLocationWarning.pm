@@ -4,8 +4,24 @@ use strict;
 use Mouse;
 use POSIX qw(strftime);
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
+use List::MoreUtils qw/uniq/;
 
 our $VERSION = '2.0.14';
+
+has locationAttribute        => ( is => 'rw' );
+has locationDisplayAttribute => ( is => 'rw' );
+has locationMaxValues        => ( is => 'rw' );
+
+has mailSessionKey => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        return
+             $_[0]->{conf}->{newLocationWarningMailAttribute}
+          || $_[0]->{conf}->{mailSessionKey}
+          || 'mail';
+    }
+);
 
 extends qw(
   Lemonldap::NG::Portal::Lib::SMTP
@@ -13,7 +29,8 @@ extends qw(
 );
 
 # Entrypoint
-use constant aroundSub => { storeHistory => 'check' };
+use constant afterSub => { setLocalGroups => 'checkNewLocation' };
+use constant endAuth  => 'sendWarningEmail';
 
 sub init {
     my ($self) = @_;
@@ -29,38 +46,76 @@ sub init {
             '"NewLocationWarning" plugin enabled WITHOUT "History" plugin');
         return 0;
     }
+
+    $self->locationAttribute( $self->conf->{newLocationWarningLocationAttribute}
+          || 'ipAddr' );
+    $self->locationDisplayAttribute(
+             $self->conf->{newLocationWarningLocationDisplayAttribute}
+          || $self->locationAttribute );
+    $self->locationMaxValues( $self->conf->{newLocationWarningMaxValues} || 0 );
     return 1;
 }
 
-sub check {
-    my ( $self, $sub, $req ) = @_;
-    my $successLogin = $req->sessionInfo->{_loginHistory}->{successLogin};
-    my $failedLogin  = $req->sessionInfo->{_loginHistory}->{failedLogin};
-    my $sourceIP     = $req->env->{ipAddr};
-    $self->logger->debug("Source IP: $sourceIP");
+sub checkNewLocation {
+    my ( $self, $req ) = @_;
 
-    my %knownIPs = map { $_->{ipAddr} => 1 } ( @$successLogin, @$failedLogin );
+    my $successLogin = $req->sessionInfo->{_loginHistory}->{successLogin} || [];
 
-    if ( $knownIPs{$sourceIP} ) {
-        $self->logger->debug('Known location');
-        return $sub->($req);
+    my $location = $req->sessionInfo->{ $self->locationAttribute };
+
+    unless ($location) {
+        $self->logger->debug( "Could not find location of user " . $req->user );
+    }
+
+    # Get all non-empty, unique values of location attribute through list of
+    # successful logins
+    my @envHistory =
+      grep { $_ // "" }
+      uniq( map { $_->{ $self->locationAttribute } // "" } @{$successLogin} );
+
+    # Only consider some of the past unique locations
+    my $maxLocations = $self->locationMaxValues;
+    splice @envHistory, $maxLocations
+      if ( $maxLocations and ( scalar @envHistory > $maxLocations ) );
+
+    if ( grep { $_ eq $location } @envHistory ) {
+        $self->userLogger->debug(
+            "User " . $req->user . " logged in from known location $location" );
     }
     else {
-        $self->logger->warn("New location found: $sourceIP");
-        $self->_sendMail($req);
-        return $sub->($req);
+        # Not the first location in history, warn if new location
+        if (@envHistory) {
+            $self->userLogger->info( "User "
+                  . $req->user
+                  . " logged in from unknown location $location" );
+            my $riskLevel = ( $req->sessionInfo->{_riskLevel} || 0 ) + 1;
+            $req->sessionInfo->{_riskDetails}->{newLocation} =
+              $req->sessionInfo->{ $self->locationDisplayAttribute };
+        }
+        else {
+            $self->userLogger->info( "User "
+                  . $req->user
+                  . " logged with empty location history from location $location"
+            );
+        }
     }
+    return PE_OK;
+}
+
+sub sendWarningEmail {
+    my ( $self, $req ) = @_;
+    if ( $req->sessionInfo->{_riskDetails}->{newLocation} ) {
+        return $self->_sendMail($req);
+    }
+    return PE_OK;
 }
 
 sub _sendMail {
     my ( $self, $req ) = @_;
     my $date     = strftime( '%F %X', localtime );
-    my $sourceIP = $req->env->{ipAddr};
-    my $host     = $req->env->{HTTP_HOST};
+    my $location = $req->sessionInfo->{_riskDetails}->{newLocation};
     my $ua       = $req->env->{HTTP_USER_AGENT};
-    my $mail =
-      $req->sessionInfo->{ $self->conf->{newLocationWarningMailAttribute}
-          || 'mail' };
+    my $mail     = $req->sessionInfo->{ $self->mailSessionKey };
 
     # Build mail content
     my $tr      = $self->translate($req);
@@ -78,10 +133,10 @@ sub _sendMail {
         $body = $self->conf->{newLocationWarningMailBody};
 
         # Replace variables in body
-        $body =~ s/\$newLocationUserAgent/$ua/ge;
-        $body =~ s/\$newLocationIP/$sourceIP/ge;
-        $body =~ s/\$newLocationDate/$date/ge;
-        $body =~ s/\$newLocationHost/$host/ge;
+        $body =~ s/\$ua\b/$ua/ge;
+        $body =~ s/\$location\b/$location/ge;
+        $body =~ s/\$date\b/$date/ge;
+        $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
     }
     else {
 
@@ -91,10 +146,9 @@ sub _sendMail {
             'mail_new_location_warning',
             filter => $tr,
             params => {
-                session_ipAddr => $sourceIP,
-                date           => $date,
-                host           => $host,
-                ua             => $ua
+                location => $location,
+                date     => $date,
+                ua       => $ua
             },
         );
         $html = 1;

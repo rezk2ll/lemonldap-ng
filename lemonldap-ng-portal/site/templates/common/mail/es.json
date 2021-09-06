@@ -7,6 +7,7 @@
 "goToPortal":"Ir al portal",
 "hello":"Hola",
 "host":"Host",
+"location": "Location",
 "mail2fSubject":"[LemonLDAP::NG] Su código de acceso",
 "mailConfirmSubject":"[LemonLDAP::NG] Confirmación de reinicio de contraseña",
 "mailSubject":"[LemonLDAP::NG] Su nueva contraseña",

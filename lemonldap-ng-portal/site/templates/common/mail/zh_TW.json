@@ -7,6 +7,7 @@
 "goToPortal":"回到首頁",
 "hello":"您好",
 "host":"Host",
+"location":"Location",
 "mail2fSubject":"[LemonLDAP::NG] 您的登入代碼",
 "mailConfirmSubject":"[LemonLDAP::NG] 確認重設密碼",
 "mailSubject":"[LemonLDAP::NG] 您的新密碼",

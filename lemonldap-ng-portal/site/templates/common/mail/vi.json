@@ -7,6 +7,7 @@
 "goToPortal":"Đi tới cổng thông tin",
 "hello":"Xin chào",
 "host":"Host",
+"location":"Location",
 "mail2fSubject":"[LemonLDAP::NG] Your login code",
 "mailConfirmSubject":"[LemonLDAP::NG] Xác nhận thiết lập lại mật khẩu",
 "mailSubject":"[LemonLDAP::NG] Mật khẩu mới của bạn",

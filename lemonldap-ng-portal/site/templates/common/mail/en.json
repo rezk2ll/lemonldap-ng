@@ -7,6 +7,7 @@
 "goToPortal":"Go to portal",
 "hello":"Hello",
 "host":"Host",
+"location": "Location",
 "mail2fSubject":"[LemonLDAP::NG] Your login code",
 "mailConfirmSubject": "[LemonLDAP::NG] Password reset confirmation",
 "mailSubject": "[LemonLDAP::NG] Your new password",

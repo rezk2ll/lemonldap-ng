@@ -7,6 +7,7 @@
 "goToPortal":"Vai al portale",
 "hello":"Salve",
 "host":"Host",
+"location":"Location",
 "mail2fSubject":"[LemonLDAP :: NG] Il tuo codice di accesso",
 "mailConfirmSubject":"Conferma reimpostazione password [LemonLDAP::NG] ",
 "mailSubject":"[LemonLDAP::NG] La tua nuova password",
