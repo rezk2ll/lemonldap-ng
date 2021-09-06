@@ -89,6 +89,7 @@ sub checkNewLocation {
                   . $req->user
                   . " logged in from unknown location $location" );
             my $riskLevel = ( $req->sessionInfo->{_riskLevel} || 0 ) + 1;
+            $req->sessionInfo->{_riskLevel} = $riskLevel;
             $req->sessionInfo->{_riskDetails}->{newLocation} =
               $req->sessionInfo->{ $self->locationDisplayAttribute };
         }
