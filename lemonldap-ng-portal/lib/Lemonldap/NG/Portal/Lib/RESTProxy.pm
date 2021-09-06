@@ -49,6 +49,11 @@ sub getUser {
                       $self->conf->{proxyAuthServiceChoiceValue} )
                 : ()
             ),
+            (
+                $self->conf->{impersonationRule} && $req->param('spoofId')
+                ? ( spoofId => $req->param('spoofId') )
+                : ()
+            )
         }
     );
     unless ( $resp->is_success ) {
