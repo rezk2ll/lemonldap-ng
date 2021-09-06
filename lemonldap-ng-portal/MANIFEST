@@ -510,6 +510,7 @@ t/24-AuthKerberos.t
 t/25-AuthSlave-with-Choice.t
 t/25-AuthSlave-with-Credentials.t
 t/26-AuthRemote.t
+t/27-AuthProxy-choice.t
 t/27-AuthProxy.t
 t/28-AuthChoice-and-password.t
 t/28-AuthChoice-with-captcha.t
@@ -574,6 +575,8 @@ t/32-OIDC-ClaimTypes.t
 t/32-OIDC-ClientCredentials-Grant.t
 t/32-OIDC-Code-Flow-with-2F-UpgradeOnly.t
 t/32-OIDC-Code-Flow-with-2F.t
+t/32-OIDC-Grant-Type-OAuth2-Handler-Rules.t
+t/32-OIDC-Grant-Type-Rules.t
 t/32-OIDC-Hooks.t
 t/32-OIDC-Macro.t
 t/32-OIDC-Offline-Session.t

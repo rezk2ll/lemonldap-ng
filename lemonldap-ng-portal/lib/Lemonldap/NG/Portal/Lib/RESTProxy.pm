@@ -4,28 +4,35 @@ use strict;
 use JSON;
 use Mouse;
 use Lemonldap::NG::Common::UserAgent;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_BADCREDENTIALS);
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK
+  PE_ERROR
+  PE_BADCREDENTIALS
+);
 use Lemonldap::NG::Common::FormEncode;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
-has ua => ( is => 'rw' );
+has ua             => ( is => 'rw' );
+has sessionService => ( is => 'rw' );
 
 # INITIALIZATION
 
 sub init {
     my ($self) = @_;
-    $self->conf->{remoteCookieName} ||= $self->conf->{cookieName};
-    $self->conf->{proxySessionService} ||=
-      $self->conf->{proxyAuthService} . '/session/my';
-    $self->conf->{proxySessionService} =~ s#/*$##;
-    $self->ua( Lemonldap::NG::Common::UserAgent->new( $self->conf ) );
-    $self->ua->default_header( Accept => 'application/json' );
 
     unless ( defined $self->conf->{proxyAuthService} ) {
         $self->error("Missing proxyAuthService parameter");
         return 0;
     }
+
+    my $sessionService = $self->conf->{proxySessionService}
+      || $self->conf->{proxyAuthService} . '/session/my';
+    $sessionService =~ s#/*$##;
+    $self->sessionService($sessionService);
+    $self->ua( Lemonldap::NG::Common::UserAgent->new( $self->conf ) );
+    $self->ua->default_header( Accept => 'application/json' );
+
     return 1;
 }
 
@@ -92,7 +99,7 @@ sub setSessionInfo {
     my ( $self, $req ) = @_;
     return PE_OK if ( $req->data->{_setSessionInfoDone} );
     my $q = HTTP::Request->new(
-        GET => $self->conf->{proxySessionService} . '/global',
+        GET => $self->sessionService() . '/global',
         [
             Cookie => $req->sessionInfo->{_proxyCookies},
             Accept => 'application/json'
