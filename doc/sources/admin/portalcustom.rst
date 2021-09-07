@@ -212,10 +212,11 @@ lemonldap-ng-cli:
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set portalSkin 'myskin' portalSkinBackground ''
 
-
 You can find additional documentation on the syntax of template files in the
 `official documentation of the HTML::Template module
 <https://metacpan.org/pod/HTML::Template>`__
+
+.. _intlmessages:
 
 Messages
 ~~~~~~~~

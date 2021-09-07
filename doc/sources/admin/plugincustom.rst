@@ -152,11 +152,13 @@ Plugins may declare additional session fields to be stored in the :doc:`loginhis
             _language => '__hidden__',
 
             # This field will be displayed on the portal. The column name
-            # can be internationalized
+            # is treated like a message and can be internationalized
             authenticationLevel => "Human friendly column name",
         });
         return 1;
     }
+
+Column names can be translated by :ref:`overriding the corresponding message <intlmessages>`
 
 Example
 -------
