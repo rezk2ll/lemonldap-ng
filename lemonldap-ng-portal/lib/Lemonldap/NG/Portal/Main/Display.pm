@@ -709,6 +709,15 @@ sub mkSessionArray {
     @rememberedData{ keys %{ $self->conf->{sessionDataToRemember} } } =
       values %{ $self->conf->{sessionDataToRemember} };
 
+    # Delete fields with an empty/undef/__hidden__ column name
+    delete @rememberedData{
+        grep {
+                 ( not $rememberedData{$_} )
+              or
+              ( $rememberedData{$_} eq "__hidden__" )
+        } keys %rememberedData
+    };
+
     my @fields = sort( keys %rememberedData );
 
     return $self->loadTemplate(
