@@ -26,12 +26,14 @@ not allowed to open a session. In other cases which result on
 impossibility to authenticate user, to retrieve data or to create a
 session, nothing is stored.
 
-By default, login time and IP address are stored in history, and the
-error message prompted to the user for failed logins. It is possible to
-store any additional session data. For example to store authentication
-mode, you can set in ``Session data to store`` a new key ``_auth`` with
-value ``Authentication mode``. The value will be used to display the
-data.
+* **Max successful logins count**: How many successful logins should be remembered in the history
+* **Max failed logins count**: How many failed logins should be remembered in the history
+* **Session data to store**: additional session variables to store in the history. *Key* is the variable (or macro) name, *Value* is the title of the column used when displaying the field. Use ``__hidden__`` to store a variables without displaying it to the user.
+
+By default, login time and IP address are stored in history, and the error
+message prompted to the user for failed logins. It is possible to store any
+additional session data. For example to store authentication, add a new key
+``_auth`` with value ``Authentication mode``.
 
 To allow the Login History tab in Menu, configure it in
 ``General Parameters`` > ``Portal`` > ``Menu`` > ``Modules`` (see
