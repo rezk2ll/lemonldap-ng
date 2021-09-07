@@ -137,6 +137,27 @@ In order to remember data between different steps, you can use the ``$req->data`
 
 Data will not be remembered in between requests, only in between methods that process the same HTTP request.
 
+History management
+~~~~~~~~~~~~~~~~~~
+
+Plugins may declare additional session fields to be stored in the :doc:`loginhistory`.
+
+.. code:: perl
+
+    sub init {
+        my ($self) = @_;
+
+        $self->addSessionDataToRemember({
+            # This field will be hidden from the user
+            _language => '__hidden__',
+
+            # This field will be displayed on the portal. The column name
+            # can be internationalized
+            authenticationLevel => "Human friendly column name",
+        });
+        return 1;
+    }
+
 Example
 -------
 
