@@ -124,7 +124,7 @@ ok( $res->[2]->[0] =~ /trspan="lastFailedLoginsCaptionLabel"/,
   or explain( $res->[2]->[0] );
 count(3);
 
-like( $res->[2]->[0], qr,<th>Language</th>,, "Found plugin-set label" );
+like( $res->[2]->[0], qr,<th trspan="Language">Language</th>,, "Found plugin-set label" );
 count(1);
 
 @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );
