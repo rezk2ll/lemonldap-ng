@@ -2,7 +2,7 @@
 # Display functions for LemonLDAP::NG Portal
 package Lemonldap::NG::Portal::Main::Display;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 package Lemonldap::NG::Portal::Main;
 use strict;
@@ -391,7 +391,8 @@ sub display {
             REGISTER_URL   => $self->conf->{registerUrl},
             HIDDEN_INPUTS  => $self->buildHiddenForm($req),
             STAYCONNECTED  => $self->conf->{stayConnected},
-            IMPERSONATION  => $self->conf->{impersonationRule},
+            IMPERSONATION  => $self->conf->{impersonationRule}
+              || $self->conf->{proxyAuthServiceImpersonation},
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )

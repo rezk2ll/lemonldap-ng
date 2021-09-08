@@ -4,28 +4,35 @@ use strict;
 use JSON;
 use Mouse;
 use Lemonldap::NG::Common::UserAgent;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_BADCREDENTIALS);
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK
+  PE_ERROR
+  PE_BADCREDENTIALS
+);
 use Lemonldap::NG::Common::FormEncode;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
-has ua => ( is => 'rw' );
+has ua             => ( is => 'rw' );
+has sessionService => ( is => 'rw' );
 
 # INITIALIZATION
 
 sub init {
     my ($self) = @_;
-    $self->conf->{remoteCookieName} ||= $self->conf->{cookieName};
-    $self->conf->{proxySessionService} ||=
-      $self->conf->{proxyAuthService} . '/session/my';
-    $self->conf->{proxySessionService} =~ s#/*$##;
-    $self->ua( Lemonldap::NG::Common::UserAgent->new( $self->conf ) );
-    $self->ua->default_header( Accept => 'application/json' );
 
     unless ( defined $self->conf->{proxyAuthService} ) {
         $self->error("Missing proxyAuthService parameter");
         return 0;
     }
+
+    my $sessionService = $self->conf->{proxySessionService}
+      || $self->conf->{proxyAuthService} . '/session/my';
+    $sessionService =~ s#/*$##;
+    $self->sessionService($sessionService);
+    $self->ua( Lemonldap::NG::Common::UserAgent->new( $self->conf ) );
+    $self->ua->default_header( Accept => 'application/json' );
+
     return 1;
 }
 
@@ -37,8 +44,25 @@ sub getUser {
     return PE_OK if ( $req->data->{_proxyQueryDone} );
     $self->logger->debug(
         'Proxy push auth to ' . $self->conf->{proxyAuthService} );
-    my $resp = $self->ua->post( $self->conf->{proxyAuthService},
-        { user => $req->{user}, password => $req->data->{password} } );
+    my $resp = $self->ua->post(
+        $self->conf->{proxyAuthService},
+        {
+            user     => $req->{user},
+            password => $req->data->{password},
+            (
+                $self->conf->{proxyAuthServiceChoiceParam}
+                  && $self->conf->{proxyAuthServiceChoiceValue}
+                ? ( $self->conf->{proxyAuthServiceChoiceParam} =>
+                      $self->conf->{proxyAuthServiceChoiceValue} )
+                : ()
+            ),
+            (
+                $self->conf->{proxyAuthServiceImpersonation} && $req->param('spoofId')
+                ? ( spoofId => $req->param('spoofId') )
+                : ()
+            )
+        }
+    );
     unless ( $resp->is_success ) {
         $self->logger->error(
             'Unable to query authentication service: ' . $resp->status_line );
@@ -75,7 +99,7 @@ sub setSessionInfo {
     my ( $self, $req ) = @_;
     return PE_OK if ( $req->data->{_setSessionInfoDone} );
     my $q = HTTP::Request->new(
-        GET => $self->conf->{proxySessionService} . '/global',
+        GET => $self->sessionService() . '/global',
         [
             Cookie => $req->sessionInfo->{_proxyCookies},
             Accept => 'application/json'
@@ -97,7 +121,7 @@ sub setSessionInfo {
         $req->{sessionInfo}->{$_} ||= $res->{$_} unless (/^_/);
     }
     $req->data->{_setSessionInfoDone}++;
-    
+
     return PE_OK;
 }
 
@@ -113,7 +137,7 @@ sub authLogout {
         ]
     );
     my $resp = $self->ua->request($q);
-    
+
     return PE_OK;
 }
 

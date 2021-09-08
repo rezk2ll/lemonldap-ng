@@ -367,11 +367,21 @@ sub tree {
                         {
                             title => 'proxyParams',
                             help  => 'authproxy.html',
-                            form  => 'simpleInputContainer',
                             nodes => [
-                                'proxyAuthnLevel',     'proxyAuthService',
-                                'proxySessionService', 'remoteCookieName',
-                                'proxyUseSoap'
+                                'proxyAuthnLevel',
+                                'proxyUseSoap',
+                                {
+                                    title => 'proxyInternalPortal',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'proxyAuthService',
+                                        'proxySessionService',
+                                        'proxyAuthServiceChoiceParam',
+                                        'proxyAuthServiceChoiceValue',
+                                        'remoteCookieName',
+                                        'proxyAuthServiceImpersonation',
+                                    ]
+                                }
                             ]
                         },
                         {

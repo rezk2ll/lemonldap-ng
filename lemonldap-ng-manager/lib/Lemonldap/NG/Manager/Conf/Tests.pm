@@ -7,7 +7,7 @@ use Lemonldap::NG::Common::Regexp;
 use Lemonldap::NG::Handler::Main;
 use Lemonldap::NG::Common::Util qw(getSameSite);
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
@@ -738,8 +738,8 @@ sub tests {
             return ( 1,
                 "Impersonation and ContextSwitching are simultaneously enabled"
               )
-              if ( $conf->{impersonationRule}
-                && $conf->{contextSwitchingRule} );
+              if (  $conf->{impersonationRule}
+                and $conf->{contextSwitchingRule} );
             return 1;
         },
 
@@ -1023,6 +1023,25 @@ sub tests {
             return ( -1, 'Authentication choice enabled without chain' )
               if ( $conf->{authentication} eq 'Choice'
                 and scalar keys %{ $conf->{authChoiceModules} } == 0 );
+            return 1;
+        },
+
+        # Internal portal URL must be defined with Proxy authentication
+        authProxy => sub {
+            return ( 0,
+                'Proxy authentication enabled without internal portal URL' )
+              if ( $conf->{authentication} eq 'Proxy'
+                and !$conf->{proxyAuthService} );
+            return 1;
+        },
+
+# Warn if Impersonation and proxyAuthServiceImpersonation are simultaneously enabled
+        impersonationProxy => sub {
+            return ( -1,
+                'Impersonation and internal portal Impersonation are simultaneously enabled'
+              )
+              if (  $conf->{impersonationRule}
+                and $conf->{proxyAuthServiceImpersonation} );
             return 1;
         }
     };

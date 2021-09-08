@@ -2987,6 +2987,16 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'proxyAuthService' => {
             'type' => 'text'
         },
+        'proxyAuthServiceChoiceParam' => {
+            'type' => 'text'
+        },
+        'proxyAuthServiceChoiceValue' => {
+            'type' => 'text'
+        },
+        'proxyAuthServiceImpersonation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'proxySessionService' => {
             'type' => 'text'
         },
