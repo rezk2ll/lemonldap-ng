@@ -8,22 +8,21 @@ require 't/test-lib.pm';
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                    => 'error',
-            useSafeJail                 => 1,
-            authentication              => 'Proxy',
-            userDB                      => 'Same',
-            proxyAuthService            => 'http://auth.example.com',
-            proxyAuthServiceChoiceParam => 'lmAuth',
-            proxyAuthServiceChoiceValue => '2_Password',
-            proxyAuthServiceImpersonation           => 1
+            logLevel                      => 'error',
+            useSafeJail                   => 1,
+            authentication                => 'Proxy',
+            userDB                        => 'Same',
+            proxyAuthService              => 'http://auth.example.com',
+            proxyAuthServiceChoiceParam   => 'lmAuth',
+            proxyAuthServiceChoiceValue   => '2_Password',
+            proxyAuthServiceImpersonation => 1
         }
     }
 );
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get menu' );
 ok( $res->[2]->[0] =~ m#<input name="spoofId" type="text"#,
-    'SpoofId input found' 
-) or explain( $res->[2]->[0], 'SpoofId' );
-
+    'spoofId input found' )
+  or explain( $res->[2]->[0], 'spoofId' );
 ok(
     $res = $client->_post(
         '/',
@@ -34,11 +33,11 @@ ok(
 );
 expectOK($res);
 my $id = expectCookie($res);
+count(11);
 
 $client->logout($id);
 clean_sessions();
 
-count(11);
 done_testing( count() );
 
 # Redefine LWP methods for tests

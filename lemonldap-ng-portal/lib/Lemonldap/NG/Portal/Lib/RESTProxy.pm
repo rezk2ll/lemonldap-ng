@@ -5,6 +5,7 @@ use JSON;
 use Mouse;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Portal::Main::Constants qw(
+  URIRE
   PE_OK
   PE_ERROR
   PE_BADCREDENTIALS
@@ -21,15 +22,22 @@ has sessionService => ( is => 'rw' );
 sub init {
     my ($self) = @_;
 
-    unless ( defined $self->conf->{proxyAuthService} ) {
-        $self->error("Missing proxyAuthService parameter");
+    unless ( defined $self->conf->{proxyAuthService}
+        && $self->conf->{proxyAuthService} =~ URIRE )
+    {
+        $self->error("Bad or missing proxyAuthService parameter");
         return 0;
     }
 
     my $sessionService = $self->conf->{proxySessionService}
       || $self->conf->{proxyAuthService} . '/session/my';
     $sessionService =~ s#/*$##;
+    unless ( $sessionService =~ URIRE ) {
+        $self->error("Malformed proxySessionService parameter");
+        return 0;
+    }
     $self->sessionService($sessionService);
+
     $self->ua( Lemonldap::NG::Common::UserAgent->new( $self->conf ) );
     $self->ua->default_header( Accept => 'application/json' );
 
@@ -57,7 +65,8 @@ sub getUser {
                 : ()
             ),
             (
-                $self->conf->{proxyAuthServiceImpersonation} && $req->param('spoofId')
+                $self->conf->{proxyAuthServiceImpersonation}
+                  && $req->param('spoofId')
                 ? ( spoofId => $req->param('spoofId') )
                 : ()
             )
