@@ -618,11 +618,11 @@ $(window).on 'load', () ->
 				user = data.user
 				console.log 'Suggested spoofId=', user
 				$("input[name=spoofId]").each ->
-					$(this).attr 'value', user
+					$(this).val user
 				$('#captcha').attr 'src', data.captcha if data.captcha
 				if data.token
-					$('#finduserToken').attr 'value', data.token 
-					$('#token').attr 'value', data.token
+					$('#finduserToken').val data.token 
+					$('#token').val data.token
 			error: (j, status, err) ->
 				document.body.style.cursor = 'default'
 				console.log 'Error', err  if err

@@ -31,7 +31,7 @@ As an RP, LL::NG supports a lot of OpenID Connect features:
 -  Logout on EndSession end point
 
 You can use this authentication module to link your LL::NG server to any
-OpenID Connect Provider. Here are some examples, witch their specific
+OpenID Connect Provider. Here are some examples, with their specific
 documentation:
 
 
@@ -40,13 +40,14 @@ documentation:
 
    authopenidconnect_google
    authopenidconnect_franceconnect
+   authopenidconnect_prosanteconnect
 
 
-=============== ==================
-Google          France Connect
-=============== ==================
-|google|        |franceconnect|
-=============== ==================
+=============== ================== ==================
+Google          France Connect     Pro Santé Connect
+=============== ================== ==================
+|google|        |franceconnect|    |prosanteconnect|
+=============== ================== ==================
 
 .. |google| image:: applications/google_logo.png
    :target: authopenidconnect_google.html
@@ -54,11 +55,14 @@ Google          France Connect
 .. |franceconnect| image:: applications/franceconnect_logo.png
    :target: authopenidconnect_franceconnect.html
 
+.. |prosanteconnect| image:: applications/prosanteconnect_logo.png
+   :target: authopenidconnect_prosanteconnect.html
+
 .. attention::
 
-    OpenID-Connect specification is not finished for logout
+    OpenID Connect specification is not finished for logout
     propagation. So logout initiated by relaying-party will be forward to
-    OpenID-Connect provider but logout initiated by the provider (or another
+    OpenID Connect provider but logout initiated by the provider (or another
     RP) will not be propagated. LLNG will implement this when spec will be
     published.
 
@@ -68,7 +72,7 @@ Configuration
 OpenID Connect Service
 ~~~~~~~~~~~~~~~~~~~~~~
 
-See :doc:`OpenIDConnect service<openidconnectservice>` configuration
+See :doc:`OpenID Connect service<openidconnectservice>` configuration
 chapter.
 
 Authentication and UserDB

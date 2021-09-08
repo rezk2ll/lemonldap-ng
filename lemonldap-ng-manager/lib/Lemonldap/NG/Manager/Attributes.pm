@@ -2067,6 +2067,31 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
               [ '_appsListOrder', '_oidcConnectedRP', '_oidcConsents' ],
             'type' => 'array'
         },
+        'newLocationWarning' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'newLocationWarningLocationAttribute' => {
+            'default' => 'ipAddr',
+            'type'    => 'text'
+        },
+        'newLocationWarningLocationDisplayAttribute' => {
+            'default' => '',
+            'type'    => 'text'
+        },
+        'newLocationWarningMailAttribute' => {
+            'type' => 'text'
+        },
+        'newLocationWarningMailBody' => {
+            'type' => 'longtext'
+        },
+        'newLocationWarningMailSubject' => {
+            'type' => 'text'
+        },
+        'newLocationWarningMaxValues' => {
+            'default' => '0',
+            'type'    => 'int'
+        },
         'nginxCustomHandlers' => {
             'keyTest' => qr/^\w+$/,
             'msgFail' => '__badPerlPackageName__',

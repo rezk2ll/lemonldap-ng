@@ -687,14 +687,14 @@ LemonLDAP::NG Portal jQuery scripts
           user = data.user;
           console.log('Suggested spoofId=', user);
           $("input[name=spoofId]").each(function() {
-            return $(this).attr('value', user);
+            return $(this).val(user);
           });
           if (data.captcha) {
             $('#captcha').attr('src', data.captcha);
           }
           if (data.token) {
-            $('#finduserToken').attr('value', data.token);
-            return $('#token').attr('value', data.token);
+            $('#finduserToken').val(data.token);
+            return $('#token').val(data.token);
           }
         },
         error: function(j, status, err) {

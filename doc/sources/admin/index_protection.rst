@@ -5,4 +5,5 @@ Attacks and Protection
    :maxdepth: 1
 
    bruteforceprotection
+   newlocationwarning
    safejail
