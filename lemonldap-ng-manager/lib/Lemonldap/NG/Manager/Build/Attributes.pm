@@ -3621,12 +3621,17 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
 
         # Proxy
-        proxyAuthService    => { type => 'text', },
-        proxySessionService => { type => 'text', },
-        proxyAuthServiceChoiceParam => { type => 'text', },
-        proxyAuthServiceChoiceValue => { type => 'text', },
-        remoteCookieName    => { type => 'text', },
-        proxyUseSoap        => {
+        proxyAuthService              => { type => 'text', },
+        proxySessionService           => { type => 'text', },
+        proxyAuthServiceChoiceParam   => { type => 'text', },
+        proxyAuthServiceChoiceValue   => { type => 'text', },
+        proxyAuthServiceImpersonation => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Enable internal portal Impersonation',
+        },
+        remoteCookieName => { type => 'text', },
+        proxyUseSoap     => {
             type          => 'bool',
             default       => 0,
             documentation => 'Use SOAP instead of REST',

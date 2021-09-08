@@ -35,13 +35,14 @@ Then, go in ``Proxy parameters``:
    this case, "Portal URL" parameter must contain SOAP endpoint
    (generally http://auth.example.com/index.pl/sessions for 1.9 and
    earlier, http://auth.example.com/sessions for 2.0)
--  **Internal portal URL**: URL of internal portal
--  **Internal portal choice parameter** (optional): Choice parameter of the internal portal if applicable
--  **Internal portal choice value** (optional): Value of the choice parameter of the internal portal
--  **Session service URL** (optional): Session service URL (default:
+-  **URL**: URL of internal portal
+-  **Session service URL** (optional): session service URL (default:
    same as previous for SOAP, same with "/session/my" for REST)
--  **Cookie name** (optional): name of the cookie of internal portal, if
+-  **Choice parameter** (optional): choice parameter of the internal portal if applicable
+-  **Choice value** (optional): value of the choice parameter of the internal portal
+-  **Cookie name** (optional): internal portal cookie name, if
    different from external portal
+-  **Impersonation** (optional) : can be enabled if the internal portal provides impersonation
 
 Internal portal
 ~~~~~~~~~~~~~~~

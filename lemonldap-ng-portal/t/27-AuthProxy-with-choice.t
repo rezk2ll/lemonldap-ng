@@ -15,10 +15,15 @@ my $client = LLNG::Manager::Test->new( {
             proxyAuthService            => 'http://auth.example.com',
             proxyAuthServiceChoiceParam => 'lmAuth',
             proxyAuthServiceChoiceValue => '2_Password',
-            impersonationRule           => 1
+            proxyAuthServiceImpersonation           => 1
         }
     }
 );
+ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get menu' );
+ok( $res->[2]->[0] =~ m#<input name="spoofId" type="text"#,
+    'SpoofId input found' 
+) or explain( $res->[2]->[0], 'SpoofId' );
+
 ok(
     $res = $client->_post(
         '/',
@@ -33,7 +38,7 @@ my $id = expectCookie($res);
 $client->logout($id);
 clean_sessions();
 
-count(13);
+count(11);
 done_testing( count() );
 
 # Redefine LWP methods for tests
@@ -45,7 +50,7 @@ sub LWP::UserAgent::request {
     unless ( $req->uri->as_string =~
         m%http://auth.example.com(?:/session/my/global|\?logout=1)% )
     {
-        ok( $req->content() =~ m%user=(?:dwho|rtyler)%, 'User found' )
+        ok( $req->content() =~ m%user=dwho%, 'User found' )
           or print STDERR Dumper( $req->content() );
         ok( $req->content() =~ m%password=dwho%, 'Password found' )
           or print STDERR Dumper( $req->content() );
