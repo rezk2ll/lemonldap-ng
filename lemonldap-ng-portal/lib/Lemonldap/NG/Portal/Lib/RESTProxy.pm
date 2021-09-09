@@ -91,8 +91,7 @@ sub getUser {
         return PE_BADCREDENTIALS;
     }
     my $name = $self->cookieName;
-    unless ( grep /\b$name=/, $resp->header('Set-Cookie') )
-    {
+    unless ( grep /\b$name=/, $resp->header('Set-Cookie') ) {
         $self->logger->error("No cookie named '$name'");
         return PE_ERROR;
     }
@@ -157,7 +156,27 @@ sub authLogout {
         ]
     );
     my $resp = $self->ua->request($q);
-
+    unless ( $resp->is_success ) {
+        $self->logger->error(
+            'Unable to query authentication service: ' . $resp->status_line );
+        return PE_OK;
+    }
+    $self->logger->debug('Proxy gets a response');
+    my $res = eval { JSON::from_json( $resp->content, { allow_nonref => 1 } ) };
+    if ($@) {
+        $self->logger->error("Bad content: $@");
+        return PE_OK;
+    }
+    my $user = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
+    unless ( $res->{result} ) {
+        $self->userLogger->warn("Internal Portal logout failed for $user")
+          if $user;
+        return PE_OK;
+    }
+    $self->userLogger->notice(
+        "User $user has been disconnected from internal Portal")
+      if $user;
+      
     return PE_OK;
 }
 
