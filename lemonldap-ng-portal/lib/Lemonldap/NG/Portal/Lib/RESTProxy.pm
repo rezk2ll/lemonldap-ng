@@ -15,6 +15,7 @@ use Lemonldap::NG::Common::FormEncode;
 our $VERSION = '2.0.14';
 
 has ua             => ( is => 'rw' );
+has cookieName     => ( is => 'rw' );
 has sessionService => ( is => 'rw' );
 
 # INITIALIZATION
@@ -37,9 +38,10 @@ sub init {
         return 0;
     }
     $self->sessionService($sessionService);
-
     $self->ua( Lemonldap::NG::Common::UserAgent->new( $self->conf ) );
     $self->ua->default_header( Accept => 'application/json' );
+    $self->cookieName( $self->conf->{remoteCookieName}
+          || $self->conf->{cookieName} );
 
     return 1;
 }
@@ -83,17 +85,24 @@ sub getUser {
         $self->logger->error("Bad content: $@");
         return PE_ERROR;
     }
-    $req->sessionInfo->{_proxyQueryDone}++;
     unless ( $res->{result} ) {
-        $self->userLogger->notice("Authentication refused for $req->{user}");
+        $self->userLogger->warn("Authentication failed for $req->{user}");
         $self->setSecurity($req);
         return PE_BADCREDENTIALS;
     }
+    my $name = $self->cookieName;
+    unless ( grep /\b$name=/, $resp->header('Set-Cookie') )
+    {
+        $self->logger->error("No cookie named '$name'");
+        return PE_ERROR;
+    }
+
     $req->sessionInfo->{_proxyCookies} = join '; ',
       map { s/;.*$//; $_ } $resp->header('Set-Cookie');
     $self->logger->debug( 'Store remote cookies in session ('
           . $req->sessionInfo->{_proxyCookies}
           . ')' );
+    $req->data->{_proxyQueryDone}++;
 
     return PE_OK;
 }
@@ -107,8 +116,10 @@ sub findUser {
 sub setSessionInfo {
     my ( $self, $req ) = @_;
     return PE_OK if ( $req->data->{_setSessionInfoDone} );
+    $self->logger->debug(
+        'Proxy requests sessionInfo to ' . $self->sessionService . '/global' );
     my $q = HTTP::Request->new(
-        GET => $self->sessionService() . '/global',
+        GET => $self->sessionService . '/global',
         [
             Cookie => $req->sessionInfo->{_proxyCookies},
             Accept => 'application/json'

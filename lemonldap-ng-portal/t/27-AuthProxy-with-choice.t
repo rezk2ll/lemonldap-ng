@@ -10,11 +10,13 @@ my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel                      => 'error',
             useSafeJail                   => 1,
+            cookieName                    => 'external',
             authentication                => 'Proxy',
             userDB                        => 'Same',
             proxyAuthService              => 'http://auth.example.com',
             proxyAuthServiceChoiceParam   => 'lmAuth',
             proxyAuthServiceChoiceValue   => '2_Password',
+            remoteCookieName              => 'lemonldap',
             proxyAuthServiceImpersonation => 1
         }
     }
@@ -32,10 +34,10 @@ ok(
     'Auth query'
 );
 expectOK($res);
-my $id = expectCookie($res);
-count(11);
+my $id = expectCookie( $res, 'external' );
+count(7);
 
-$client->logout($id);
+$client->logout( $id, 'external' );
 clean_sessions();
 
 done_testing( count() );
@@ -65,6 +67,9 @@ sub LWP::UserAgent::request {
     $httpResp = HTTP::Response->new( 200, 'OK' );
     $httpResp->header( 'Content-Type',   'application/json' );
     $httpResp->header( 'Content-Length', length($s) );
+    $httpResp->header( 'Set-Cookie',
+'lemonldap=6e30af4ffa5689b3e49a104d1b160d316db2b2161a0f45776994eed19dbdc101'
+    );
     $httpResp->content($s);
     return $httpResp;
 }

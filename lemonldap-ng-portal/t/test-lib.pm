@@ -747,7 +747,7 @@ has ini => (
         main::ok( $self->{p} = $self->class->new(), 'Portal object' );
         main::count(1);
         unless ( $self->confFailure ) {
-            main::ok( $self->{p}->init($ini), 'Init' );
+            main::ok( $self->{p}->init($ini),           'Init' );
             main::ok( $self->{app} = $self->{p}->run(), 'Portal app' );
             main::count(2);
             no warnings 'redefine';
@@ -803,7 +803,7 @@ Launch a C</?logout=1> request an test:
 
 =item if response is 200
 
-=item if cookie 'lemonldap' and 'lemonldappdata' have no value
+=item if cookie $cookieName and "${cookieName}pdata" have no value
 
 =item if a GET request with previous cookie value I<($i)> is rejected
 
@@ -812,13 +812,15 @@ Launch a C</?logout=1> request an test:
 =cut
 
 sub logout {
-    my ( $self, $id ) = @_;
+    my ( $self, $id, $cookieName ) = @_;
     my $res;
+    $cookieName ||= 'lemonldap';
+
     main::ok(
         $res = $self->_get(
             '/',
             query  => 'logout',
-            cookie => "lemonldap=$id",
+            cookie => "$cookieName=$id",
             accept => 'text/html'
         ),
         'Logout request'
@@ -827,11 +829,12 @@ sub logout {
       or main::explain( $res->[0], 200 );
     my $c;
     main::ok(
-        ( defined( $c = main::getCookies($res)->{lemonldap} ) and not $c ),
+        ( defined( $c = main::getCookies($res)->{$cookieName} ) and not $c ),
         ' Cookie is deleted' )
       or main::explain( $res->[1], "Set-Cookie => 'lemonldap='" );
-    main::ok( not( main::getCookies($res)->{lemonldappdata} ), ' No pdata' );
-    main::ok( $res = $self->_get( '/', cookie => "lemonldap=$id" ),
+    main::ok( not( main::getCookies($res)->{"${cookieName}pdata"} ),
+        ' No pdata' );
+    main::ok( $res = $self->_get( '/', cookie => "$cookieName=$id" ),
         'Disconnect request' )
       or explain( $res, '[<code>,<hdrs>,<content>]' );
     main::ok( $res->[0] == 401, ' Response is 401' )
