@@ -582,7 +582,7 @@ sub attributes {
         newLocationWarning => {
             default       => 0,
             type          => 'bool',
-            documentation => 'Enable New Location Warning', 
+            documentation => 'Enable New Location Warning',
         },
         newLocationWarningLocationAttribute => {
             type          => 'text',
@@ -607,7 +607,7 @@ sub attributes {
             type          => 'longtext',
             documentation => 'Mail body for new location warning',
         },
-        newLocationWarningMailSubject=> {
+        newLocationWarningMailSubject => {
             type          => 'text',
             documentation => 'Mail subject for new location warning',
         },
@@ -3636,6 +3636,13 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         restPwdModifyUrl  => { type => 'url' },
 
         # Remote
+        remoteCookieName => {
+            type          => 'text',
+            test          => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
+            msgFail       => '__badCookieName__',
+            documentation => 'Name of the remote portal cookie',
+            flags         => 'p',
+        },
         remotePortal        => { type => 'text', },
         remoteGlobalStorage => {
             type          => 'PerlModule',
@@ -3662,8 +3669,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 0,
             documentation => 'Enable internal portal Impersonation',
         },
-        remoteCookieName => { type => 'text', },
-        proxyUseSoap     => {
+        proxyCookieName => {
+            type          => 'text',
+            test          => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
+            msgFail       => '__badCookieName__',
+            documentation => 'Name of the internal portal cookie',
+            flags         => 'p',
+        },
+        proxyUseSoap => {
             type          => 'bool',
             default       => 0,
             documentation => 'Use SOAP instead of REST',

@@ -826,6 +826,7 @@
 "proxyAuthServiceChoiceValue":"Choice value",
 "proxyAuthServiceImpersonation":"Impersonation",
 "proxyAuthnLevel":"驗證等級",
+"proxyCookieName":"Cookie 名稱",
 "proxyInternalPortal":"Internal Portal",
 "proxyParams":"代理伺服器參數",
 "proxySessionService":"工作階段服務 URL",

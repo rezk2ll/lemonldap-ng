@@ -40,7 +40,7 @@ sub init {
     $self->sessionService($sessionService);
     $self->ua( Lemonldap::NG::Common::UserAgent->new( $self->conf ) );
     $self->ua->default_header( Accept => 'application/json' );
-    $self->cookieName( $self->conf->{remoteCookieName}
+    $self->cookieName( $self->conf->{proxyCookieName}
           || $self->conf->{cookieName} );
 
     return 1;
@@ -176,7 +176,7 @@ sub authLogout {
     $self->userLogger->notice(
         "User $user has been disconnected from internal Portal")
       if $user;
-      
+
     return PE_OK;
 }
 

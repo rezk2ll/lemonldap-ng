@@ -378,7 +378,7 @@ sub tree {
                                         'proxySessionService',
                                         'proxyAuthServiceChoiceParam',
                                         'proxyAuthServiceChoiceValue',
-                                        'remoteCookieName',
+                                        'proxyCookieName',
                                         'proxyAuthServiceImpersonation',
                                     ]
                                 }
@@ -1061,7 +1061,7 @@ sub tree {
                                     nodes => [
                                         'newLocationWarning',
                                         'newLocationWarningLocationAttribute',
-                                        'newLocationWarningLocationDisplayAttribute',
+'newLocationWarningLocationDisplayAttribute',
                                         'newLocationWarningMaxValues',
                                         'newLocationWarningMailAttribute',
                                         'newLocationWarningMailSubject',

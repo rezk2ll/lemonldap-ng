@@ -16,7 +16,7 @@ my $client = LLNG::Manager::Test->new( {
             proxyAuthService              => 'http://auth.example.com',
             proxyAuthServiceChoiceParam   => 'lmAuth',
             proxyAuthServiceChoiceValue   => '2_Password',
-            remoteCookieName              => 'lemonldap',
+            proxyCookieName               => 'lemonldap',
             proxyAuthServiceImpersonation => 1
         }
     }

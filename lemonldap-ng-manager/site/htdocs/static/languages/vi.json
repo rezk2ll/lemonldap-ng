@@ -826,6 +826,7 @@
 "proxyAuthServiceChoiceValue":"Choice value",
 "proxyAuthServiceImpersonation":"Impersonation",
 "proxyAuthnLevel":"Mức xác thực",
+"proxyCookieName":"Tên cookie",
 "proxyInternalPortal":"Internal Portal",
 "proxyParams":"Các tham số proxy",
 "proxySessionService":"URL dịch vụ phiên",

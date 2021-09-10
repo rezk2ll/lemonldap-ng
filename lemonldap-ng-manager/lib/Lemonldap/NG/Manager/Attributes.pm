@@ -2997,6 +2997,11 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'proxyCookieName' => {
+            'msgFail' => '__badCookieName__',
+            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'type'    => 'text'
+        },
         'proxySessionService' => {
             'type' => 'text'
         },
@@ -3118,7 +3123,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'keyTextContainer'
         },
         'remoteCookieName' => {
-            'type' => 'text'
+            'msgFail' => '__badCookieName__',
+            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'type'    => 'text'
         },
         'remoteGlobalStorage' => {
             'default' => 'Lemonldap::NG::Common::Apache::Session::SOAP',

@@ -826,6 +826,7 @@
 "proxyAuthServiceChoiceValue":"Valeur du choix d'authentification",
 "proxyAuthServiceImpersonation":"Simulation d'identité",
 "proxyAuthnLevel":"Niveau d'authentification",
+"proxyCookieName":"Nom du cookie",
 "proxyInternalPortal":"Portail interne",
 "proxyParams":"Paramètres Proxy",
 "proxySessionService":"URL du service de session",

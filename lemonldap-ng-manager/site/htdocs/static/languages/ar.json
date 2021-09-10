@@ -826,6 +826,7 @@
 "proxyAuthServiceChoiceValue":"Choice value",
 "proxyAuthServiceImpersonation":"Impersonation",
 "proxyAuthnLevel":"مستوى إثبات الهوية",
+"proxyCookieName":"اسم ملف تعريف الارتباط",
 "proxyInternalPortal":"Internal Portal",
 "proxyParams":"معايير البروكسي",
 "proxySessionService":"رابط اليورال لخدمة الجلسة",

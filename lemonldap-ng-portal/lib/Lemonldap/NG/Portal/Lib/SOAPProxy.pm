@@ -41,7 +41,7 @@ sub init {
         return 0;
     }
     $self->sessionService($sessionService);
-    $self->cookieName( $self->conf->{remoteCookieName}
+    $self->cookieName( $self->conf->{proxyCookieName}
           || $self->conf->{cookieName} );
 
     return 1;
