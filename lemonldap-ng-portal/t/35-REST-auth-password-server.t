@@ -7,7 +7,6 @@ use JSON;
 require 't/test-lib.pm';
 
 my $res;
-
 my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel           => 'error',
@@ -36,8 +35,7 @@ my $client = LLNG::Manager::Test->new( {
 );
 
 # Test pwdConfirm endpoint
-
-my $res = expectJSON(
+$res = expectJSON(
     postJSON(
         $client,
         "/proxy/pwdConfirm",
@@ -51,7 +49,7 @@ my $res = expectJSON(
 is( $res->{result}, 1, "Correct password is accepted" );
 count(1);
 
-my $res = expectJSON(
+$res = expectJSON(
     postJSON(
         $client,
         "/proxy/pwdConfirm",
@@ -65,7 +63,7 @@ my $res = expectJSON(
 is( $res->{result}, 0, "Incorrect user is rejected" );
 count(1);
 
-my $res = expectJSON(
+$res = expectJSON(
     postJSON(
         $client,
         "/proxy/pwdConfirm",
@@ -81,7 +79,7 @@ count(1);
 
 # Test getUser endpoint
 # Existing user
-my $res = expectJSON(
+$res = expectJSON(
     postJSON(
         $client,
         "/proxy/getUser",
@@ -96,7 +94,7 @@ is( $res->{info}->{_whatToTrace}, "dwho",       "Correct macro" );
 count(3);
 
 # Missing user
-my $res = expectJSON(
+$res = expectJSON(
     postJSON(
         $client,
         "/proxy/getUser",
@@ -110,7 +108,6 @@ is( $res->{info},   undef, "No attributes" );
 count(2);
 
 clean_sessions();
-
 done_testing( count() );
 
 sub postJSON {
