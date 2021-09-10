@@ -73,7 +73,10 @@ sub extractFormInfo {
     my $res            = PE_OK;
 
     # 1. No user defined at all -> first access
-    unless ( $defUser and $req->method =~ /^POST$/i ) {
+    # _pwdCheck is a workaround to make CheckUser work while using a GET
+    unless ( $defUser
+        and ( uc( $req->method ) eq "POST" or $req->data->{_pwdCheck} ) )
+    {
         $res = PE_FIRSTACCESS;
     }
 

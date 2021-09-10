@@ -698,12 +698,13 @@ sub pwdConfirm {
             400 );
     }
 
-    $req->user($user);
-    $req->data->{password}  = $password;
-    $req->data->{_pwdCheck} = 1;
+    $req->parameters->{user}     = $user;
+    $req->parameters->{password} = $password;
+    $req->data->{_pwdCheck}      = 1;
+    $req->data->{skipToken}      = 1;
 
     if ( $self->p->_userDB ) {
-        $req->steps( [ 'getUser', 'authenticate' ] );
+        $req->steps( [ $self->p->authProcess ] );
         my $result = $self->p->process($req);
         if ( $result == PE_PASSWORD_OK or $result == PE_OK ) {
             return $self->p->sendJSONresponse( $req,
