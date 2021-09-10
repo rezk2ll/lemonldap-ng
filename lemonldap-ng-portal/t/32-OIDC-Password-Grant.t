@@ -17,11 +17,11 @@ my $debug = 'error';
 # Initialization
 my $op = LLNG::Manager::Test->new( {
         ini => {
-            logLevel => $debug,
-            domain   => 'op.com',
-            portal   => 'http://auth.op.com',
-
-            macros => {
+            logLevel     => $debug,
+            domain       => 'op.com',
+            portal       => 'http://auth.op.com',
+            requireToken => 1,
+            macros       => {
                 gender       => '"32"',
                 _whatToTrace => '$uid',
                 nickname     => '"froggie; frenchie"',

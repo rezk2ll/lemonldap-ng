@@ -8,10 +8,25 @@ my $res;
 my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel         => 'error',
-            authentication   => 'Demo',
+            requireToken     => 1,
             checkStateSecret => 'x',
             checkState       => 1,
+            authentication   => 'Combination',
             userDB           => 'Same',
+
+            combination => '[K,Dm] or [Dm]',
+            combModules => {
+                K => {
+                    for  => 1,
+                    type => 'Kerberos',
+                },
+                Dm => {
+                    for  => 0,
+                    type => 'Demo',
+                },
+            },
+            krbKeytab => '/etc/keytab',
+            krbByJs   => 1,
         }
     }
 );

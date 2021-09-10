@@ -170,6 +170,7 @@ sub getDisplayType {
 
 sub setSecurity {
     my ( $self, $req ) = @_;
+    return if $req->data->{skipToken};
 
     # If captcha is enable, prepare it
     if ( $self->captcha ) {
