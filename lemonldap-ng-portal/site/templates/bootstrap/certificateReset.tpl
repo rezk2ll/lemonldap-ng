@@ -164,7 +164,7 @@
     <div class="card">
     <form action="#" method="post" class="login" role="form">
       <div class="form">
-        <h3 trspan="resetCertificateOK">A confirmation has been sent to your mail address.</h3>
+        <h3 trspan="newPwdSentTo">A confirmation has been sent to your mail address.</h3>
       </div>
     </form>
     </div>

@@ -45,10 +45,6 @@ use DateTime::Format::RFC3339;';
                 certificateResetByMailCeaAttribute  => 'description',
                 certificateResetByMailCertificateAttribute =>
                   'userCertificate;binary',
-                certificateResetByMailStep1Body =>
-'Click here <a href="$url">  to confirm your mail. It will expire $expMailDate',
-                certificateResetByMailStep2Body =>
-                  'Certificate successfully reset!',
                 certificateValidityDelay => 30
 
             }
@@ -211,7 +207,7 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
         }
     );
 
-    ok( mail() =~ /Certificate successfully reset/,
+    ok( mail() =~ /Votre certificat a bien été réinitialisé!/,
         'Certificate has been reset' );
 
     # Test invalid certificate

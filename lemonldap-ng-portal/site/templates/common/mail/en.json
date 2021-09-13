@@ -4,6 +4,7 @@
 "autoMail":"This mail was sent automatically",
 "click2Register":"Click here to confirm your account registration",
 "click2Reset":"Click here to reset your password",
+"click2ResetCertificate":"Click here to reset your certificate",
 "goToPortal":"Go to portal",
 "hello":"Hello",
 "host":"Host",
@@ -19,6 +20,7 @@
 "registerConfirmSubject": "[LemonLDAP::NG] Account register confirmation",
 "registerDoneSubject": "[LemonLDAP::NG] Your new account",
 "requestIssuedFromIP":"The request was issued from IP",
+"resetCertificateOK":"Your certificate has been successfully reset!",
 "date":"Date",
 "yourLoginCodeIs":"Your login code is",
 "yourLoginIs":"Your login is"
