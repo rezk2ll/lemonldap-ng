@@ -4,6 +4,7 @@
 "autoMail":"تم إرسال هذا البريد تلقائيا ",
 "click2Register":"انقر هنا لتأكيد تسجيل حسابك",
 "click2Reset":"انقر هنا لإعادة تعيين كلمة المرور",
+"click2ResetCertificate":"Click here to reset your certificate",
 "goToPortal":"انتقل إلى البوابة",
 "hello":"مرحبا ",
 "host":"Host",
@@ -19,6 +20,7 @@
 "registerConfirmSubject":"تأكيد تسجيل الحساب[LemonLDAP::NG] ",
 "registerDoneSubject":"حسابك الجديد[LemonLDAP::NG]",
 "requestIssuedFromIP":"الطلب قد أرسل من عنوان الآي بي",
+"resetCertificateOK":"Your certificate has been successfully reset!",
 "date":"Date",
 "yourLoginCodeIs":"Your login code is",
 "yourLoginIs":"تسجيل الدخول الخاص بك هو"

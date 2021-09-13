@@ -4,6 +4,7 @@
 "autoMail":"Ceci est un message automatique",
 "click2Register":"Cliquez ici pour confirmer l'enregistrement de votre compte",
 "click2Reset":"Cliquez ici pour réinitialiser votre mot de passe",
+"click2ResetCertificate":"Cliquez ici pour réinitialiser votre certificat",
 "goToPortal":"Aller au portail",
 "hello":"Bonjour",
 "host":"Hôte",
@@ -19,6 +20,7 @@
 "registerConfirmSubject": "[LemonLDAP::NG] Confirmation d'enregistrement de compte",
 "registerDoneSubject": "[LemonLDAP::NG] Votre nouveau compte",
 "requestIssuedFromIP":"La demande provient de l'IP",
+"resetCertificateOK":"Votre certificat a bien été réinitialisé!",
 "date":"Date",
 "yourLoginCodeIs":"Votre code de connexion est",
 "yourLoginIs":"Votre identifiant est"

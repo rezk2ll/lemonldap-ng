@@ -4,6 +4,7 @@
 "autoMail":"該郵件已自動寄送",
 "click2Register":"點擊此處以確認您的帳號註冊",
 "click2Reset":"點擊此處以重設您的密碼",
+"click2ResetCertificate":"點擊此處以重設您的憑證",
 "goToPortal":"回到首頁",
 "hello":"您好",
 "host":"Host",
@@ -19,6 +20,7 @@
 "registerConfirmSubject":"[LemonLDAP::NG] 確認帳號註冊",
 "registerDoneSubject":"[LemonLDAP::NG] 您的新帳號",
 "requestIssuedFromIP":"請求發出從 IP",
+"resetCertificateOK":"您的憑證已成功重設！",
 "date":"Date",
 "yourLoginCodeIs":"您的登入代碼為",
 "yourLoginIs":"您的登入為"

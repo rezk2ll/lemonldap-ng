@@ -4,6 +4,7 @@
 "autoMail":"Este e-mail ha sido enviado automáticamente",
 "click2Register":"Haga clic para confirmar el registro de su cuenta",
 "click2Reset":"Haga clic para reiniciar su contraseña",
+"click2ResetCertificate":"Pulse aquí para reiniciar su certificado",
 "goToPortal":"Ir al portal",
 "hello":"Hola",
 "host":"Host",
@@ -19,6 +20,7 @@
 "registerConfirmSubject":"[LemonLDAP::NG] Confirmación de creación de cuenta",
 "registerDoneSubject":"[LemonLDAP::NG] Su nueva cuenta",
 "requestIssuedFromIP":"El pedido fue emitido desde la IP",
+"resetCertificateOK":"Su certificado ha sido reiniciado con éxito",
 "date":"Date",
 "yourLoginCodeIs":"Su código de acceso es ",
 "yourLoginIs":"Su nombre de usuario es"

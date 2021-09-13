@@ -4,6 +4,7 @@
 "autoMail":"Tämä sähköpostiviesti lähetetään automaattisesti",
 "click2Register":"Klikkaa tästä vahvistaaksesi käyttäjätunnuksesi rekisteröinnin",
 "click2Reset":"Klikkaa tästä nollataksesi salasanasi",
+"click2ResetCertificate":"Click here to reset your certificate",
 "goToPortal":"Siirry portaaliin",
 "hello":"Hei",
 "host":"Host",
@@ -19,6 +20,7 @@
 "registerConfirmSubject":"[LemonLDAP::NG] Tunnuksen rekisteröinnin vahvistus",
 "registerDoneSubject":"[LemonLDAP::NG] Uusi käyttäjätunnuksesi",
 "requestIssuedFromIP":"The request was issued from IP",
+"resetCertificateOK":"Your certificate has been successfully reset!",
 "date":"Date",
 "yourLoginCodeIs":"Your login code is",
 "yourLoginIs":"Your login is"

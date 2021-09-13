@@ -4,6 +4,7 @@
 "autoMail":"Thư này đã được gửi tự động",
 "click2Register":"Nhấn ở đây để xác nhận việc đăng ký tài khoản của bạn",
 "click2Reset":"Nhấn ở đây để thiết lập lại mật khẩu của bạn",
+"click2ResetCertificate":"Click here to reset your certificate",
 "goToPortal":"Đi tới cổng thông tin",
 "hello":"Xin chào",
 "host":"Host",
@@ -19,6 +20,7 @@
 "registerConfirmSubject":"[LemonLDAP::NG] Xác nhận đăng ký tài khoản",
 "registerDoneSubject":"[LemonLDAP::NG] Tài khoản mới của bạn",
 "requestIssuedFromIP":"Yêu cầu được gửi đi từ địa chỉ IP",
+"resetCertificateOK":"Your certificate has been successfully reset!",
 "date":"Date",
 "yourLoginCodeIs":"Your login code is",
 "yourLoginIs":"Đăng nhập của bạn là"
