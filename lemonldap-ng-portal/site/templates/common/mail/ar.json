@@ -7,7 +7,7 @@
 "goToPortal":"انتقل إلى البوابة",
 "hello":"مرحبا ",
 "host":"Host",
-"location": "Location",
+"location":"Location",
 "mail2fSubject":"[LemonLDAP::NG] تسجيل الدخول الخاص بك هو ",
 "mailConfirmSubject":"تأكيد إعادة تعيين كلمة المرور[LemonLDAP::NG]",
 "mailSubject":"كلمة المرور الجديدة [LemonLDAP::NG]",
