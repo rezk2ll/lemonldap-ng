@@ -21,7 +21,7 @@
 "registerDoneSubject":"[LemonLDAP::NG] Su nueva cuenta",
 "requestIssuedFromIP":"El pedido fue emitido desde la IP",
 "resetCertificateOK":"Su certificado ha sido reiniciado con éxito",
-"date":"Date",
+"date":"Fecha",
 "yourLoginCodeIs":"Su código de acceso es ",
 "yourLoginIs":"Su nombre de usuario es"
 }

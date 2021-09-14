@@ -21,7 +21,7 @@
 "registerDoneSubject":"[LemonLDAP::NG] Uusi käyttäjätunnuksesi",
 "requestIssuedFromIP":"The request was issued from IP",
 "resetCertificateOK":"Your certificate has been successfully reset!",
-"date":"Date",
+"date":"Päivämäärä",
 "yourLoginCodeIs":"Your login code is",
 "yourLoginIs":"Your login is"
 }

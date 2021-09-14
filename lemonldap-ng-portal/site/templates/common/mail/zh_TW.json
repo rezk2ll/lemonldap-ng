@@ -21,7 +21,7 @@
 "registerDoneSubject":"[LemonLDAP::NG] 您的新帳號",
 "requestIssuedFromIP":"請求發出從 IP",
 "resetCertificateOK":"您的憑證已成功重設！",
-"date":"Date",
+"date":"日期",
 "yourLoginCodeIs":"您的登入代碼為",
 "yourLoginIs":"您的登入為"
 }

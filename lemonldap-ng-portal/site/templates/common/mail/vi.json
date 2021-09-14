@@ -21,7 +21,7 @@
 "registerDoneSubject":"[LemonLDAP::NG] Tài khoản mới của bạn",
 "requestIssuedFromIP":"Yêu cầu được gửi đi từ địa chỉ IP",
 "resetCertificateOK":"Your certificate has been successfully reset!",
-"date":"Date",
+"date":"Ngày",
 "yourLoginCodeIs":"Your login code is",
 "yourLoginIs":"Đăng nhập của bạn là"
 }
