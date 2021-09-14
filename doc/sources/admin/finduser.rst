@@ -49,6 +49,14 @@ Just enable it in the Manager (section “plugins”). Then, set searching attri
 
     request => searchAttr1=value && searchAttr2=value && not excludeAttr1=value && not excludeAttr2=value
 
+
+.. attention::
+
+    In some cases (like Choice authentication with SSL and Ajax), FindUser Ajax request can be blocked by Content Security Policy.
+    
+    You may have to allow <Portal>/finduser in CSP ``General Parameters > Advanced Parameters > Security > Content security policy``
+
+
 .. danger::
 
     This plugin works only with a users backend and of course if the searching or excluding attributes are existing.
