@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.0.13';
+our $VERSION = '2.0.14';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -17,7 +17,10 @@ use strict;
 use URI::Escape;
 use URI;
 use JSON;
-use Lemonldap::NG::Common::Util qw(getPSessionID);
+use Lemonldap::NG::Common::Util qw(
+  getPSessionID
+  getSameSite
+);
 
 has trOverCache => ( is => 'rw', default => sub { {} } );
 
@@ -1039,6 +1042,9 @@ sub tplParams {
     }
 
     return (
+        MAIN_LOGO  => $self->conf->{portalMainLogo},
+        LANGS      => $self->conf->{showLanguages},
+        SAMESITE   => getSameSite(),
         SKIN       => $self->getSkin($req),
         PORTAL_URL => $self->conf->{portal},
         SKIN_PATH  => $portalPath . "skins",
