@@ -594,6 +594,7 @@ t/34-Auth-Proxy-and-REST-Server.t
 t/34-Auth-Proxy-and-REST-sessions.t
 t/34-Auth-Proxy-and-SOAP-Server.t
 t/35-My-session.t
+t/35-REST-auth-password-server.t
 t/35-REST-config-backend.t
 t/35-REST-export-password.t
 t/35-REST-sessions-with-AuthBasic-handler.t
