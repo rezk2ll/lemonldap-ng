@@ -824,7 +824,7 @@
 "proxyAuthService":"URL",
 "proxyAuthServiceChoiceParam":"Choice parameter",
 "proxyAuthServiceChoiceValue":"Choice value",
-"proxyAuthServiceImpersonation":"Impersonation",
+"proxyAuthServiceImpersonation":"Suplantación",
 "proxyAuthnLevel":"Nivel de autentificación",
 "proxyCookieName":"Nombre de la cookie",
 "proxyInternalPortal":"Internal Portal",
