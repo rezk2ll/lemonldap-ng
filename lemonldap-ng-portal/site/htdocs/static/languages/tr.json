@@ -10,7 +10,7 @@
 "PE103":"Hesabınız için ikinci faktör kullanılabilir değil",
 "PE104":"Kötü DevOps eğitici dosyası",
 "PE105":"Dosya bulunamadı",
-"PE106":"Error during authentication with OpenID Provider",
+"PE106":"OpenID Sağlayıcı ile kimlik doğrulama sırasında hata",
 "PE2":"Kullanıcı adı ve parola alanları doldurulmalı",
 "PE20":"Parola back-end'i tanımlanmadı",
 "PE21":"Hesabınız kilitli",
