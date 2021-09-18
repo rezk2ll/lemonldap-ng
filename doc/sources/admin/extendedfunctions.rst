@@ -267,7 +267,7 @@ Simple usage example:
 groupMatch
 ~~~~~~~~~~
 
-this function allows one to parse the ``$hGroups`` variable to check if
+This function allows one to parse the ``$hGroups`` variable to check if
 a value is present inside a group attribute.
 
 Function parameter:
