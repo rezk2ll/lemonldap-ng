@@ -51,6 +51,12 @@ sub init {
     $self->addAuthRoute( checkdevops => 'run', ['POST'] )
       ->addAuthRouteWithRedirect( checkdevops => 'display', ['GET'] );
 
+    unless ( $self->conf->{useSafeJail} ) {
+        $self->logger->warn(
+            '"CheckDevOps" plugin enabled WITHOUT SafeJail');
+        return 0;
+    }
+
     return 1;
 }
 

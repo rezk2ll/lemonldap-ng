@@ -1038,10 +1038,18 @@ sub tests {
 # Warn if Impersonation and proxyAuthServiceImpersonation are simultaneously enabled
         impersonationProxy => sub {
             return ( -1,
-                'Impersonation and internal portal Impersonation are simultaneously enabled'
+'Impersonation and internal portal Impersonation are simultaneously enabled'
               )
               if (  $conf->{impersonationRule}
                 and $conf->{proxyAuthServiceImpersonation} );
+            return 1;
+        },
+
+        # CheckDevOps requires Safe jail
+        checkDevOpsWithSafeJail => sub {
+            return ( 0, 'Safe jail must be enabled with CheckDevOps plugin' )
+              if ( $conf->{checkDevOps}
+                and !$conf->{useSafeJail} );
             return 1;
         }
     };
