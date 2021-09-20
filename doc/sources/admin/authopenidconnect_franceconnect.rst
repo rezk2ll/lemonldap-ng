@@ -26,7 +26,7 @@ Use the following form:
 https://doc.integ01.dev-franceconnect.fr/inscription.
 
 You need to provide the callback URLs, for example
-https://auth.domain.com/?openidcallback=1.
+https://auth.domain.com/?openidconnectcallback=1.
 
 You will then get a ``client_id`` and a ``client_secret``.
 

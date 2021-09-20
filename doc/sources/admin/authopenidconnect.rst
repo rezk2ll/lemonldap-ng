@@ -119,11 +119,11 @@ Register LL::NG to an OpenID Connect Provider
 To register LL::NG, you will need to give some information like
 application name or logo.
 
-You will be asked to provide a *Redirect URI* for LemonLDAP::NG, which is constructed by appending the ``openidcallback=1`` parameter to the Portal URL.
+You will be asked to provide a *Redirect URI* for LemonLDAP::NG, which is constructed by appending the ``openidconnectcallback=1`` parameter to the Portal URL.
 
 For example:
 
--  https://auth.example.com/?openidcallback=1
+-  https://auth.example.com/?openidconnectcallback=1
 
 
 .. attention::

@@ -18,7 +18,7 @@ you need to register to Pro Santé Connect.
 Go on https://integrateurs-cps.asipsante.fr.
 
 You need to provide the callback URLs, for example
-https://auth.domain.com/?openidcallback=1.
+https://auth.domain.com/?openidconnectcallback=1.
 
 And also a logout URL, for example
 https://auth.domain.com/?logout=1.
