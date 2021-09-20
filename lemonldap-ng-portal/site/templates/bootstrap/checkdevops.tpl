@@ -2,19 +2,6 @@
 
 <div id="errorcontent" class="container">
   <div class="alert <TMPL_VAR NAME="ALERTE"> alert"><div class="text-center"><span trspan="<TMPL_VAR NAME="MSG">"></span></div></div>
-  <TMPL_IF NAME="HEADERS">
-    <div class="row">
-      <div class="card col border-secondary">
-        <div class="text-center bg-light text-dark"><b><span trspan="headers">HEADERS</span></b></div>
-        <br>
-        <div class="font-weight-bold">
-          <TMPL_LOOP NAME="HEADERS">
-            <TMPL_VAR NAME="key">: <TMPL_VAR NAME="value"><br/>
-          </TMPL_LOOP>
-        </div>
-      </div>
-    </div>
-  </TMPL_IF>
   <TMPL_IF NAME="RULES">
     <div class="row">
       <div class="card col border-secondary">
@@ -23,6 +10,19 @@
         <div class="font-weight-bold">
           <TMPL_LOOP NAME="RULES">
             <TMPL_VAR NAME="uri">: <span trspan="<TMPL_VAR NAME="access">"><TMPL_VAR NAME="access"></span><br/>
+          </TMPL_LOOP>
+        </div>
+      </div>
+    </div>
+  </TMPL_IF>
+  <TMPL_IF NAME="HEADERS">
+    <div class="row">
+      <div class="card col border-secondary">
+        <div class="text-center bg-light text-dark"><b><span trspan="headers">HEADERS</span></b></div>
+        <br>
+        <div class="font-weight-bold">
+          <TMPL_LOOP NAME="HEADERS">
+            <TMPL_VAR NAME="key">: <TMPL_VAR NAME="value"><br/>
           </TMPL_LOOP>
         </div>
       </div>
