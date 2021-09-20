@@ -4,9 +4,8 @@ use strict;
 use Lemonldap::NG::Common::UserAgent;
 use JSON qw(from_json);
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 our $_ua;
-
 
 sub ua {
     return $_ua if ($_ua);
@@ -30,27 +29,34 @@ sub checkMaintenanceMode {
 
 sub _loadVhostConfig {
     my ( $class, $req, $vhost ) = @_;
-    my $json;
+    my ( $json, $rUrl, $proto, $rVhost, $appuri );
     if ( $class->tsv->{useSafeJail} ) {
-        my $rUrl = $req->{env}->{RULES_URL}
-          || ( (
-                $class->localConfig->{loopBackUrl}
-                || "http://127.0.0.1:" . $req->{env}->{SERVER_PORT}
-            )
-            . '/rules.json'
-          );
+        if ( $req->env->{RULES_URL} ) {
+            $rUrl   = $req->{env}->{RULES_URL};
+            $rVhost = ( $req->env->{RULES_URL} =~ m#^https?://([^/]*).*# )[0];
+            $rVhost =~ s/:\d+$//;
+        }
+        else {
+            $rUrl =
+              ( $class->localConfig->{loopBackUrl}
+                  || "http://127.0.0.1:" . $req->{env}->{SERVER_PORT} )
+              . '/rules.json';
+            $rVhost = $vhost;
+        }
+        $class->logger->debug("Try to retrieve 'rules.json' from $rUrl");
         my $get = HTTP::Request->new( GET => $rUrl );
-        $get->header( Host => $vhost );
+        $class->logger->debug("Set Host header: $rVhost");
+        $get->header( Host => $rVhost );
         my $resp = $class->ua->request($get);
         if ( $resp->is_success ) {
             eval {
                 $json = from_json( $resp->content, { allow_nonref => 1 } ); };
             if ($@) {
                 $class->logger->error(
-                    "Bad rules.json for $vhost, skipping ($@)");
+                    "Bad rules.json for $rVhost, skipping ($@)");
             }
             else {
-                $class->logger->info("Compiling rules.json for $vhost");
+                $class->logger->info("Compiling rules.json for $rVhost");
             }
         }
     }
@@ -63,9 +69,7 @@ q"I refuse to compile rules.json when useSafeJail isn't activated! Yes I know, I
     $json->{headers} //= { 'Auth-User' => '$uid' };
 
     # Removed forbidden session attributes
-    foreach
-      my $v ( split /\s+/, $class->tsv->{hiddenAttributes} )
-    {
+    foreach my $v ( split /\s+/, $class->tsv->{hiddenAttributes} ) {
         foreach ( keys %{ $json->{headers} } ) {
             delete $json->{headers}->{$_}
               if $json->{headers}->{$_} eq '$' . $v;
