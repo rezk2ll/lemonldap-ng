@@ -78,6 +78,10 @@ no warnings 'redefine';
 
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
+    ok( $req->header('host') eq 'devops.example.com',
+        'Host header found' )
+      or explain( $req->headers(), 'Header' );
+    count(1);
     my $httpResp;
     my $s = '{
   "rules": {
