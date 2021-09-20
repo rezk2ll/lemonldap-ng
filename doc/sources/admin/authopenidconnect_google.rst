@@ -28,7 +28,7 @@ Here you can go in API Manager and get new credentials (``client_id``
 and ``client_secret``).
 
 You need to provide the callback URLs, for example
-https://auth.domain.com/?openidcallback=1.
+https://auth.domain.com/?openidconnectcallback=1.
 
 Declare Google in your LL::NG server
 ------------------------------------
