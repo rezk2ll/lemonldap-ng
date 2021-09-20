@@ -29,7 +29,7 @@ sub checkMaintenanceMode {
 
 sub _loadVhostConfig {
     my ( $class, $req, $vhost ) = @_;
-    my ( $json, $rUrl, $proto, $rVhost, $appuri );
+    my ( $json, $rUrl, $rVhost );
     if ( $class->tsv->{useSafeJail} ) {
         if ( $req->env->{RULES_URL} ) {
             $rUrl   = $req->{env}->{RULES_URL};
@@ -43,9 +43,10 @@ sub _loadVhostConfig {
               . '/rules.json';
             $rVhost = $vhost;
         }
+
         $class->logger->debug("Try to retrieve 'rules.json' from $rUrl");
         my $get = HTTP::Request->new( GET => $rUrl );
-        $class->logger->debug("Set Host header: $rVhost");
+        $class->logger->debug("Set Host header with $rVhost");
         $get->header( Host => $rVhost );
         my $resp = $class->ua->request($get);
         if ( $resp->is_success ) {
@@ -53,16 +54,16 @@ sub _loadVhostConfig {
                 $json = from_json( $resp->content, { allow_nonref => 1 } ); };
             if ($@) {
                 $class->logger->error(
-                    "Bad rules.json for $rVhost, skipping ($@)");
+                    "Bad 'rules.json' for $rVhost, skipping ($@)");
             }
             else {
-                $class->logger->info("Compiling rules.json for $rVhost");
+                $class->logger->info("Compiling 'rules.json' for $rVhost");
             }
         }
     }
     else {
         $class->logger->error(
-q"I refuse to compile rules.json when useSafeJail isn't activated! Yes I know, I'm a coward..."
+q"I refuse to compile 'rules.json' when useSafeJail isn't activated! Yes I know, I'm a coward..."
         );
     }
     $json->{rules} ||= { default => 1 };
