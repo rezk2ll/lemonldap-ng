@@ -53,11 +53,13 @@ sub _loadVhostConfig {
             eval {
                 $json = from_json( $resp->content, { allow_nonref => 1 } ); };
             if ($@) {
-                $class->logger->error(
-                    "Bad 'rules.json' for $rVhost, skipping ($@)");
+                $class->logger->error( 
+"Bad 'rules.json' retrieved from $rVhost for $vhost, skipping ($@)"
+                );
             }
             else {
-                $class->logger->info("Compiling 'rules.json' for $rVhost");
+                $class->logger->info(
+                    "Compiling 'rules.json' retrieved from $rVhost for $vhost");
             }
         }
     }
