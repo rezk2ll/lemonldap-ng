@@ -3876,12 +3876,12 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact' => {
             'default' =>
-'1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/proxySingleSignOnArtifact',
+'0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/proxySingleSignOnArtifact',
             'type' => 'samlAssertion'
         },
         'samlSPSSODescriptorAssertionConsumerServiceHTTPPost' => {
             'default' =>
-'0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleSignOnPost',
+'1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleSignOnPost',
             'type' => 'samlAssertion'
         },
         'samlSPSSODescriptorAuthnRequestsSigned' => {
