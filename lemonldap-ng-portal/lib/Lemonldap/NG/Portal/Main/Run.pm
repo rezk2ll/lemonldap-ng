@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.13';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -17,10 +17,7 @@ use strict;
 use URI::Escape;
 use URI;
 use JSON;
-use Lemonldap::NG::Common::Util qw(
-  getPSessionID
-  getSameSite
-);
+use Lemonldap::NG::Common::Util qw(getPSessionID getSameSite);
 
 has trOverCache => ( is => 'rw', default => sub { {} } );
 
@@ -137,7 +134,7 @@ sub login {
     return $self->do(
         $req,
         [
-            'checkUnauthLogout', 'controlUrl',    # Fix 2342
+            'checkUnauthLogout',            'controlUrl',          # Fix 2342
             @{ $self->beforeAuth },         $self->authProcess,
             @{ $self->betweenAuthAndData }, $self->sessionData,
             @{ $self->afterData },          $self->validSession,
@@ -151,7 +148,7 @@ sub postLogin {
     return $self->do(
         $req,
         [
-            'checkUnauthLogout', 'restoreArgs',            # Fix 2342
+            'checkUnauthLogout', 'restoreArgs',                    # Fix 2342
             'controlUrl',        @{ $self->beforeAuth },
             $self->authProcess,  @{ $self->betweenAuthAndData },
             $self->sessionData,  @{ $self->afterData },
@@ -1042,12 +1039,10 @@ sub tplParams {
     }
 
     return (
-        MAIN_LOGO  => $self->conf->{portalMainLogo},
-        LANGS      => $self->conf->{showLanguages},
-        SAMESITE   => getSameSite(),
         SKIN       => $self->getSkin($req),
         PORTAL_URL => $self->conf->{portal},
         SKIN_PATH  => $portalPath . "skins",
+        SAMESITE   => getSameSite( $self->conf ),
         SKIN_BG    => $self->conf->{portalSkinBackground},
         CUSTOM_CSS => $self->conf->{portalCustomCss},
         ( $self->customParameters ? ( %{ $self->customParameters } ) : () ),
