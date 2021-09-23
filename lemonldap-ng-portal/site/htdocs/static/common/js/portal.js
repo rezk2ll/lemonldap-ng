@@ -223,11 +223,11 @@ LemonLDAP::NG Portal jQuery scripts
     return '';
   };
 
-  setCookie = function(name, value, exdays) {
+  setCookie = function(name, value, samesite, exdays) {
     var d;
     d = new Date();
     d.setTime(d.getTime() + exdays * 86400000);
-    return document.cookie = name + "=" + value + "; expires=" + (d.toUTCString()) + "; path=/";
+    return document.cookie = name + "=" + value + "; expires=" + (d.toUTCString()) + "; path=/; SameSite=" + samesite;
   };
 
   datas = {};
@@ -379,12 +379,12 @@ LemonLDAP::NG Portal jQuery scripts
       console.log('Selected lang ->', queryLang);
       if (setCookieLang) {
         console.log('Set cookie lang ->', queryLang);
-        setCookie('llnglanguage', queryLang);
+        setCookie('llnglanguage', queryLang, datas['sameSite']);
       }
       translatePage(queryLang);
     } else {
       console.log('Selected lang ->', lang);
-      setCookie('llnglanguage', lang);
+      setCookie('llnglanguage', lang, datas['sameSite']);
       translatePage(lang);
     }
     langdiv = '';
@@ -396,7 +396,7 @@ LemonLDAP::NG Portal jQuery scripts
     $('#languages').html(langdiv);
     $('.langicon').on('click', function() {
       lang = $(this).attr('title');
-      setCookie('llnglanguage', lang);
+      setCookie('llnglanguage', lang, datas['sameSite']);
       return translatePage(lang);
     });
     isAlphaNumeric = function(chr) {

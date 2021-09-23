@@ -208,10 +208,10 @@ getCookie = (cname) ->
 			return c
 	return ''
 
-setCookie = (name, value, exdays) ->
+setCookie = (name, value, samesite, exdays) ->
 	d = new Date()
 	d.setTime d.getTime() + exdays*86400000
-	document.cookie = "#{name}=#{value}; expires=#{d.toUTCString()}; path=/"
+	document.cookie = "#{name}=#{value}; expires=#{d.toUTCString()}; path=/; SameSite=#{samesite}"
 
 # Function to change password using Ajax (instead of POST)
 # NOT USED FOR NOW
@@ -364,11 +364,11 @@ $(window).on 'load', () ->
 		console.log 'Selected lang ->', queryLang
 		if setCookieLang
 			console.log 'Set cookie lang ->', queryLang
-			setCookie 'llnglanguage', queryLang
+			setCookie 'llnglanguage', queryLang, datas['sameSite']
 		translatePage(queryLang)
 	else
 		console.log 'Selected lang ->', lang
-		setCookie 'llnglanguage', lang
+		setCookie 'llnglanguage', lang, datas['sameSite']
 		translatePage(lang)
 
 	# Build language icons
@@ -378,7 +378,7 @@ $(window).on 'load', () ->
 	$('#languages').html langdiv
 	$('.langicon').on 'click', () ->
 		lang = $(this).attr 'title'
-		setCookie 'llnglanguage', lang
+		setCookie 'llnglanguage', lang, datas['sameSite']
 		translatePage lang
 
 	isAlphaNumeric = (chr) ->

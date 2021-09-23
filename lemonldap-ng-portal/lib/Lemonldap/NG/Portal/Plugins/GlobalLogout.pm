@@ -217,7 +217,7 @@ sub activeSessions {
             };
           } keys %$sessions;
     }
-    
+
     return $activeSessions;
 }
 
