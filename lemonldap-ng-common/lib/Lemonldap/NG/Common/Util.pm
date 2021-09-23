@@ -3,9 +3,9 @@ require Exporter;
 
 use strict;
 use Digest::MD5;
-use MIME::Base64 qw/encode_base64/;
+use MIME::Base64 qw(encode_base64);
 
-our $VERSION   = '2.0.10';
+our $VERSION   = '2.0.14';
 our @ISA       = qw(Exporter);
 our @EXPORT_OK = qw(getSameSite getPSessionID genId2F);
 
@@ -15,36 +15,27 @@ sub getPSessionID {
 }
 
 sub genId2F {
-    my ( $device ) = @_;
+    my ($device) = @_;
     return encode_base64( "$device->{epoch}::$device->{type}::$device->{name}",
         "" );
 }
-
 
 sub getSameSite {
     my ($conf) = @_;
 
     # Initialize cookie SameSite value
-    unless ( $conf->{sameSite} ) {
+    return $conf->{sameSite} if $conf->{sameSite};
 
-        # SAML requires SameSite=None for POST bindings
-        if ( $conf->{issuerDBSAMLActivation}
-            or keys %{ $conf->{samlIDPMetaDataXML} } )
-        {
-            return "None";
-        }
-        else {
-            return "Lax";
-        }
+    # SAML requires SameSite=None for POST bindings
+    return (
+        $conf->{issuerDBSAMLActivation}
+          or keys %{ $conf->{samlIDPMetaDataXML} }
+    ) ? 'None' : 'Lax';
 
-        # if CDA, OIDC, CAS: Lax
-        # TODO: try to detect when we can use 'Strict'?
-        # Any scenario that uses pdata to save state during login,
-        # Issuers, and CDA all require at least Lax
-    }
-    else {
-        return $conf->{sameSite};
-    }
+    # if CDA, OIDC, CAS: Lax
+    # TODO: try to detect when we can use 'Strict'?
+    # Any scenario that uses pdata to save state during login,
+    # Issuers, and CDA all require at least Lax
 }
 
 1;
