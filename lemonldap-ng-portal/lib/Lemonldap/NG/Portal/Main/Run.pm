@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.0.13';
+our $VERSION = '2.0.14';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -134,7 +134,7 @@ sub login {
     return $self->do(
         $req,
         [
-            'checkUnauthLogout',            'controlUrl',          # Fix 2342
+            'checkUnauthLogout', 'controlUrl',    # Fix 2342
             @{ $self->beforeAuth },         $self->authProcess,
             @{ $self->betweenAuthAndData }, $self->sessionData,
             @{ $self->afterData },          $self->validSession,
@@ -148,7 +148,7 @@ sub postLogin {
     return $self->do(
         $req,
         [
-            'checkUnauthLogout', 'restoreArgs',                    # Fix 2342
+            'checkUnauthLogout', 'restoreArgs',            # Fix 2342
             'controlUrl',        @{ $self->beforeAuth },
             $self->authProcess,  @{ $self->betweenAuthAndData },
             $self->sessionData,  @{ $self->afterData },
