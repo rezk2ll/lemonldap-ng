@@ -4,6 +4,7 @@ apt update --allow-releaseinfo-change
 mk-build-deps --install --remove \
     --tool "apt-get -o Debug::pkgProblemResolver=yes -q -y" \
     debian/control
+export DEBIAN_FRONTEND=noninteractive
 apt -y install libperl-critic-perl libdevel-cover-perl cpanminus slapd
 cpanm install Devel::Cover::Report::SonarGeneric
 export LLNGTESTLDAP=1
