@@ -39,7 +39,7 @@ SKIP: {
     );
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel                    => 'debug',
+                logLevel                    => 'error',
                 authentication              => 'DBI',
                 userDB                      => 'Same',
                 dbiAuthChain                => "dbi:SQLite:dbname=$userdb",
