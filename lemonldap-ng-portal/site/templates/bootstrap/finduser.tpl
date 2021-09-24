@@ -31,12 +31,12 @@
             <TMPL_ELSE>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><label for="<TMPL_VAR NAME="key">" class="mb-0"><i class="fa fa-binoculars"></i></label></span>
                   <input id="findUser_<TMPL_VAR NAME="key">" name="<TMPL_VAR NAME="key">" type="text" autocomplete="off" class="form-control" placeholder="<TMPL_VAR NAME="value">" />
                   <span class="input-group-text clear-finduser-field"><i class="fa fa-eraser"></i></span>
                 </div>
               </div>
             </TMPL_IF>
+            </br>
           </TMPL_LOOP>
         </div>
         <div class="modal-footer justify-content-between">
