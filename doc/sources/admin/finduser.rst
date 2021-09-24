@@ -19,7 +19,7 @@ Just enable it in the Manager (section “plugins”). Then, set searching attri
    -  **Character used as wildcard**: Character that can be used by users as wildcard. An empty value disable wildcarded search requests
    -  **Parameters control**: Regular expression used for checking searching values syntax
    -  **User accounts URL**: User database URL to search on if REST backend is used. Let it blank to use default user data URL.
-   -  **Searching attributes**: For each attribute, you have to set a key (attribute as defined in UserBD) and a value that will be display in login form (placeholder). A value can be a multivalued list separated by multiValuesSeparator parameter (General Parameters > Advanced parameters > Separator). See note below.
+   -  **Searching attributes**: For each attribute, you have to set a key (attribute as defined in UserBD) and a value that will be display in login form (placeholder). A value can be a multivalued list separated by multiValuesSeparator parameter (General Parameters > Advanced parameters > Separator). Attibutes can be sorted by adding ``#_`` before their name (where ``#`` is a number). See note below. 
    -  **Excluding attributes**: You can defined here attributes used for excluding accounts. Set keys corresponding to UserBD attributes and values to exclude. A value can be a multivalued list separated by multiValuesSeparator parameter (General Parameters > Advanced parameters > Separator)
 
 .. note::
@@ -41,7 +41,9 @@ Just enable it in the Manager (section “plugins”). Then, set searching attri
 
          uid#Identity#1 => dwho; Dr Who; rtyler; Rose Tyler (allow empty value)
 
-   Entries are sorted by alphabetical order.
+         1_uid#Identity#1 => 2_dwho; Dr Who; 1_rtyler; Rose Tyler; dalek; Dalek 
+         (The attributes will be sorted by number, those without a number will appear at the end of the list)
+
 
 .. attention::
 
