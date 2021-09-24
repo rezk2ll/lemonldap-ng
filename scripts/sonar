@@ -1,11 +1,13 @@
 #!/bin/sh
 
-apt update
+apt update --allow-releaseinfo-change
 mk-build-deps --install --remove \
     --tool "apt-get -o Debug::pkgProblemResolver=yes -q -y" \
     debian/control
-apt -y install libperl-critic-perl libdevel-cover-perl cpanminus
+export DEBIAN_FRONTEND=noninteractive
+apt -y install libperl-critic-perl libdevel-cover-perl cpanminus slapd
 cpanm install Devel::Cover::Report::SonarGeneric
+export LLNGTESTLDAP=1
 make SKIP_DOCUMENTATION=1
 
 for module in common handler portal manager; do
