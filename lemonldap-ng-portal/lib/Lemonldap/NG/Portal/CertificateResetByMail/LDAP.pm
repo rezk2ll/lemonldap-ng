@@ -50,8 +50,6 @@ sub modifCertificate {
     unless ( $result->code == 0 ) {
         $self->logger->debug( "LDAP modify Error: " . $result->code );
         $self->ldap->unbind;
-        $self->{flags}->{ldapActive} = 0;
-        $self->ldap->unbind;
         return PE_LDAPERROR;
     }
 

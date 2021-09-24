@@ -44,8 +44,6 @@ sub createUser {
             "LDAP error " . $mesg->code . ": " . $mesg->error );
 
         $self->ldap->unbind();
-        $self->{flags}->{ldapActive} = 0;
-
         return PE_LDAPERROR;
     }
     return PE_OK;

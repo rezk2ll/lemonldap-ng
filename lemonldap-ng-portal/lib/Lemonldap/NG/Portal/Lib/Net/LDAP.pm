@@ -626,31 +626,6 @@ sub userModifyPassword {
     }
 }
 
-## @method protected Lemonldap::NG::Portal::_LDAP ldap()
-# @return Lemonldap::NG::Portal::_LDAP object
-sub ldap {
-    my $self = shift;
-    return $self->{ldap}
-      if ( ref( $self->{ldap} )
-        and $self->{flags}->{ldapActive} );
-    if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self)
-        and my $mesg = $self->{ldap}->bind )
-    {
-        if ( $mesg->code != 0 ) {
-            $self->logger->error( "LDAP error: " . $mesg->error );
-            $self->{ldap}->unbind;
-        }
-        else {
-            $self->{flags}->{ldapActive} = 1;
-            return $self->{ldap};
-        }
-    }
-    else {
-        $self->logger->error("LDAP error: $@");
-    }
-    return 0;
-}
-
 ## @method string searchGroups(string base, string key, string value, string attributes, hashref dupcheck)
 # Get groups from LDAP directory
 # @param base LDAP search base
