@@ -1100,6 +1100,13 @@ sub _handleClientCredentialsGrant {
     my $req_scope = $req->param('scope') || '';
     my $scope     = $self->getScope( $req, $rp, $req_scope );
 
+    unless ($scope) {
+        $self->userLogger->warn( 'Client '
+              . $client_id
+              . " was not granted any requested scopes ($req_scope) for $rp" );
+        return $self->sendOIDCError( $req, 'invalid_scope', 403 );
+    }
+
     my $infos = {
         $self->conf->{whatToTrace} => $client_id,
         _clientId                  => $client_id,
@@ -1228,6 +1235,12 @@ sub _handlePasswordGrant {
 
     # Resolve scopes
     my $scope = $self->getScope( $req, $rp, $req_scope );
+    unless ($scope) {
+        $self->userLogger->warn( 'User '
+              . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+              . " was not granted any requested scopes ($req_scope) for $rp" );
+        return $self->sendOIDCError( $req, 'invalid_scope', 403 );
+    }
 
     my $user_id = $self->getUserIDForRP( $req, $rp, $req->sessionInfo );
 

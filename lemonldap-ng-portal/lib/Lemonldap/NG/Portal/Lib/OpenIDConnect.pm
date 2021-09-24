@@ -1546,7 +1546,10 @@ sub getScope {
     }
 
     $self->p->processHook( $req, 'oidcResolveScope', \@scope_values, $rp );
-    return join( ' ', @scope_values );
+
+    my $scope_str = join( ' ', @scope_values );
+    $self->logger->debug("Resolved scopes: $scope_str");
+    return $scope_str;
 }
 
 # Return Hash of UserInfo data
