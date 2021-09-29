@@ -153,9 +153,9 @@ sub init {
 sub setPortalRoutes {
     my ($self) = @_;
     $self->authRoutes(
-        { GET => {}, POST => {}, PUT => {}, DELETE => {}, OPTIONS => {} } );
+        { GET => {}, POST => {}, PUT => {}, PATCH => {}, DELETE => {}, OPTIONS => {} } );
     $self->unAuthRoutes(
-        { GET => {}, POST => {}, PUT => {}, DELETE => {}, OPTIONS => {} } );
+        { GET => {}, POST => {}, PUT => {}, PATCH => {}, DELETE => {}, OPTIONS => {} } );
     $self
 
       # "/" or undeclared paths

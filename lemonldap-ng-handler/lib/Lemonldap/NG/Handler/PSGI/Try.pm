@@ -11,14 +11,14 @@ has 'authRoutes' => (
     is  => 'rw',
     isa => 'HashRef',
     default =>
-      sub { { GET => {}, POST => {}, PUT => {}, DELETE => {}, OPTIONS => {} } }
+      sub { { GET => {}, POST => {}, PUT => {}, PATCH => {}, DELETE => {}, OPTIONS => {} } }
 );
 
 has 'unAuthRoutes' => (
     is  => 'rw',
     isa => 'HashRef',
     default =>
-      sub { { GET => {}, POST => {}, PUT => {}, DELETE => {}, OPTIONS => {} } }
+      sub { { GET => {}, POST => {}, PUT => {}, PATCH => {}, DELETE => {}, OPTIONS => {} } }
 );
 
 sub addRoute {
