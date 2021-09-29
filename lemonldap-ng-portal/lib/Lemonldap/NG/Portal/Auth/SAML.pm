@@ -342,9 +342,13 @@ sub extractFormInfo {
                         $self->logger->debug(
                             "Found value $value for attribute $userAttribute");
                     }
+                    else {
+                        $self->logger->warn( "No value for $userAttribute"
+                              . " found in SAML assertion" );
+                    }
                 }
                 else {
-                    $self->logger->debug(
+                    $self->logger->warn(
                         "No attributes found in SAML assertion");
                 }
             }
