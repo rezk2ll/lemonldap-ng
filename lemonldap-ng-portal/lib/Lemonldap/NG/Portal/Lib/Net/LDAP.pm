@@ -7,21 +7,14 @@ use Net::LDAP;    #inherits
 use Net::LDAP::Util qw(escape_filter_value);
 use base qw(Net::LDAP);
 use Lemonldap::NG::Portal::Main::Constants ':all';
+use Net::LDAP::Control::PasswordPolicy;
 use Encode;
 use Unicode::String qw(utf8);
 use Scalar::Util 'weaken';
 use IO::Socket::Timeout;
 use utf8;
 
-our $VERSION  = '2.0.10';
-our $ppLoaded = 0;
-
-BEGIN {
-    eval {
-        require threads::shared;
-        threads::shared::share($ppLoaded);
-    };
-}
+our $VERSION  = '2.0.14';
 
 # INITIALIZATION
 
@@ -135,13 +128,47 @@ sub bind {
             };
             print STDERR "$@\n" if ($@);
         }
+
+        if ( $self->{conf}->{ldapPpolicyControl} ) {
+            my $pp = Net::LDAP::Control::PasswordPolicy->new();
+            $args{control} = [$pp];
+        }
+
         $mesg = $self->SUPER::bind( $dn, %args );
+
+        if ( $mesg->code ) {
+            my ($resp) = $mesg->control("1.3.6.1.4.1.42.2.27.8.5.1");
+            # Check for ppolicy error
+            my $pp_error = $resp->pp_error if (defined($resp));
+            if ( defined $pp_error ) {
+                my $ppolicy_error = [
+                    "password expired",
+                    "account locked",
+                    "change after reset",
+                    "password mod not allowed",
+                    "supply old password",
+                    "insufficient password quality",
+                    "password too short",
+                    "password too young",
+                    "password in history",
+                ]->[$pp_error];
+
+                $self->{portal}->logger->error( "Error when binding to LDAP server: ". $mesg->error.
+                   " | extended ppolicy control response error: ".$ppolicy_error );
+            }
+            else
+            {
+                $self->{portal}->logger->error( "Error when binding to LDAP server: ". $mesg->error );
+            }
+        }
+
     }
     else {
         $mesg = $self->SUPER::bind();
     }
     return $mesg;
 }
+
 
 ## @method Net::LDAP::Message unbind()
 # Reimplementation of Net::LDAP::unbind() to force call to disconnect()
@@ -156,30 +183,6 @@ sub unbind {
     $self->SUPER::disconnect();
 
     return $mesg;
-}
-
-## @method private boolean loadPP ()
-# Load Net::LDAP::Control::PasswordPolicy
-# @return true if succeed.
-sub loadPP {
-    my $self = shift;
-    return 1 if ($ppLoaded);
-
-    # Minimal version of Net::LDAP required
-    if ( $Net::LDAP::VERSION < 0.38 ) {
-        die(
-"Module Net::LDAP is too old for password policy, please install version 0.38 or higher"
-        );
-    }
-
-    # Require Perl module
-    eval { require Net::LDAP::Control::PasswordPolicy };
-    if ($@) {
-        $self->{portal}->logger->error(
-            "Module Net::LDAP::Control::PasswordPolicy not found in @INC");
-        return 0;
-    }
-    $ppLoaded = 1;
 }
 
 ## @method protected int userBind(string dn, hash args)
@@ -202,7 +205,7 @@ sub userBind {
         # Get server control response
         my ($resp) = $mesg->control("1.3.6.1.4.1.42.2.27.8.5.1");
 
-        # Return direct unless control resonse
+        # Return direct unless control response
         unless ( defined $resp ) {
             if ( $mesg->code == 49 ) {
                 $self->{portal}->userLogger->warn(
@@ -638,16 +641,8 @@ sub ldap {
             $self->{ldap}->unbind;
         }
         else {
-            if ( $self->{ldapPpolicyControl}
-                and not $self->{ldap}->loadPP() )
-            {
-                $self->logger->error("LDAP password policy error");
-                $self->{ldap}->unbind;
-            }
-            else {
-                $self->{flags}->{ldapActive} = 1;
-                return $self->{ldap};
-            }
+            $self->{flags}->{ldapActive} = 1;
+            return $self->{ldap};
         }
     }
     else {

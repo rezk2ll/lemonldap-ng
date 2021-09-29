@@ -13,7 +13,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Common::Module';
 
-our $VERSION = '2.0.13';
+our $VERSION = '2.0.14';
 
 # PROPERTIES
 
@@ -53,9 +53,6 @@ sub newLdap {
     my $msg = $ldap->bind;
     if ( $msg->code ) {
         $self->logger->error( 'LDAP test has failed: ' . $msg->error );
-    }
-    elsif ( $self->{conf}->{ldapPpolicyControl} and not $ldap->loadPP() ) {
-        $self->logger->error("LDAP password policy error");
     }
     return $ldap;
 }
@@ -132,7 +129,7 @@ sub getUser {
     $self->validateLdap;
     return PE_LDAPCONNECTFAILED unless $self->ldap;
 
-    $self->bind();
+    return PE_LDAPERROR unless $self->bind();
 
     my $mesg = $self->ldap->search(
         base   => $self->conf->{ldapBase},
