@@ -14,7 +14,7 @@ use Scalar::Util 'weaken';
 use IO::Socket::Timeout;
 use utf8;
 
-our $VERSION  = '2.0.14';
+our $VERSION = '2.0.14';
 
 # INITIALIZATION
 
@@ -138,8 +138,9 @@ sub bind {
 
         if ( $mesg->code ) {
             my ($resp) = $mesg->control("1.3.6.1.4.1.42.2.27.8.5.1");
+
             # Check for ppolicy error
-            my $pp_error = $resp->pp_error if (defined($resp));
+            my $pp_error = $resp->pp_error if ( defined($resp) );
             if ( defined $pp_error ) {
                 my $ppolicy_error = [
                     "password expired",
@@ -150,25 +151,26 @@ sub bind {
                     "insufficient password quality",
                     "password too short",
                     "password too young",
-                    "password in history",
+                    "password in history"
                 ]->[$pp_error];
 
-                $self->{portal}->logger->error( "Error when binding to LDAP server: ". $mesg->error.
-                   " | extended ppolicy control response error: ".$ppolicy_error );
+                $self->{portal}
+                  ->logger->error( "Error when binding to LDAP server: "
+                      . $mesg->error
+                      . " | extended ppolicy control response error: $ppolicy_error"
+                  );
             }
-            else
-            {
-                $self->{portal}->logger->error( "Error when binding to LDAP server: ". $mesg->error );
+            else {
+                $self->{portal}->logger->error(
+                    "Error when binding to LDAP server: " . $mesg->error );
             }
         }
-
     }
     else {
         $mesg = $self->SUPER::bind();
     }
     return $mesg;
 }
-
 
 ## @method Net::LDAP::Message unbind()
 # Reimplementation of Net::LDAP::unbind() to force call to disconnect()
