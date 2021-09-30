@@ -17,7 +17,8 @@ ok(
     $res = $client->_get(
         '/',                 undef,
         'test3.example.com', "lemonldap=$sessionId",
-        VHOSTTYPE => 'DevOps'
+        VHOSTTYPE => 'DevOps',
+        RULES_URL => 'http://devops.example.com'
     ),
     'Authorized query'
 );
@@ -35,7 +36,8 @@ ok(
     $res = $client->_get(
         '/testyes',          undef,
         'test3.example.com', "lemonldap=$sessionId",
-        VHOSTTYPE => 'DevOps'
+        VHOSTTYPE => 'DevOps',
+        RULES_URL => 'http://devops.example.com'
     ),
     'Authorized query'
 );
@@ -47,7 +49,8 @@ ok(
     $res = $client->_get(
         '/deny',             undef,
         'test3.example.com', "lemonldap=$sessionId",
-        VHOSTTYPE => 'DevOps'
+        VHOSTTYPE => 'DevOps',
+        RULES_URL => 'http://devops.example.com'
     ),
     'Denied query'
 );
@@ -58,7 +61,8 @@ ok(
     $res = $client->_get(
         '/testno',           undef,
         'test3.example.com', "lemonldap=$sessionId",
-        VHOSTTYPE => 'DevOps'
+        VHOSTTYPE => 'DevOps',
+        RULES_URL => 'http://devops.example.com'
     ),
     'Denied query'
 );
@@ -74,6 +78,10 @@ no warnings 'redefine';
 
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
+    ok( $req->header('host') eq 'devops.example.com',
+        'Host header found' )
+      or explain( $req->headers(), 'Header' );
+    count(1);
     my $httpResp;
     my $s = '{
   "rules": {
