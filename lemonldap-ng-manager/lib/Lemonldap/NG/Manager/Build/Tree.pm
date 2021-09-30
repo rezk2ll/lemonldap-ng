@@ -906,6 +906,7 @@ sub tree {
                                 'totp2fInterval',
                                 'totp2fRange',
                                 'totp2fDigits',
+                                'totp2fEncryptSecret',
                                 'totp2fAuthnLevel',
                                 'totp2fLabel',
                                 'totp2fLogo',
