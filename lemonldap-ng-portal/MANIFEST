@@ -367,6 +367,7 @@ site/htdocs/static/common/modules/WebID.png
 site/htdocs/static/common/nl.png
 site/htdocs/static/common/pl.png
 site/htdocs/static/common/pt.png
+site/htdocs/static/common/pt_BR.png
 site/htdocs/static/common/ro.png
 site/htdocs/static/common/tr.png
 site/htdocs/static/common/vi.png
@@ -382,6 +383,7 @@ site/htdocs/static/languages/it.json
 site/htdocs/static/languages/nl.json
 site/htdocs/static/languages/pl.json
 site/htdocs/static/languages/pt.json
+site/htdocs/static/languages/pt_BR.json
 site/htdocs/static/languages/ro.json
 site/htdocs/static/languages/tr.json
 site/htdocs/static/languages/vi.json
@@ -461,6 +463,7 @@ site/templates/common/mail/fi.json
 site/templates/common/mail/fr.json
 site/templates/common/mail/it.json
 site/templates/common/mail/ms.json
+site/templates/common/mail/pt_BR.json
 site/templates/common/mail/tr.json
 site/templates/common/mail/vi.json
 site/templates/common/mail/zh_CN.json

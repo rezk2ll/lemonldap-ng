@@ -1186,6 +1186,7 @@
 "vhostAccessToTrace":"Access to trace",
 "vhostAliases":"Bí danh",
 "vhostAuthnLevel":"Mức xác thực bắt buộc",
+"vhostDevOpsRulesUrl": "DevOps rules file URL",
 "vhostHttps":"HTTPS",
 "vhostMaintenance":"Chế độ bảo trì",
 "vhostOptions":"Tùy chọn",

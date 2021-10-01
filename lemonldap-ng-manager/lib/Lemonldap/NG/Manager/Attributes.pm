@@ -4375,6 +4375,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'vhostAuthnLevel' => {
             'type' => 'int'
         },
+        'vhostDevOpsRulesUrl' => {
+            'type' => 'url'
+        },
         'vhostHttps' => {
             'default' => -1,
             'type'    => 'trool'

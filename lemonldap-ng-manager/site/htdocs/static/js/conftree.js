@@ -1476,6 +1476,11 @@ function templates(tpl,key) {
             "type" : "int"
          },
          {
+            "get" : tpl+"s/"+key+"/"+"vhostDevOpsRulesUrl",
+            "id" : tpl+"s/"+key+"/"+"vhostDevOpsRulesUrl",
+            "title" : "vhostDevOpsRulesUrl"
+         },
+         {
             "default" : -1,
             "get" : tpl+"s/"+key+"/"+"vhostServiceTokenTTL",
             "id" : tpl+"s/"+key+"/"+"vhostServiceTokenTTL",

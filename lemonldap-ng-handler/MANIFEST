@@ -74,12 +74,14 @@ t/60-Lemonldap-NG-Handler-PSGI.t
 t/61-Lemonldap-NG-Handler-PSGI-Server.t
 t/62-Lemonldap-NG-Handler-Nginx.t
 t/63-Lemonldap-NG-Handler-PSGI-Try.t
+t/64-Lemonldap-NG-Handler-PSGI-DevOps-vhostOptions.t
+t/64-Lemonldap-NG-Handler-PSGI-DevOps-with-param.t
 t/64-Lemonldap-NG-Handler-PSGI-DevOps.t
 t/65-Lemonldap-NG-Handler-Nginx-ServiceToken.t
 t/65-Lemonldap-NG-Handler-PSGI-ServiceToken.t
 t/66-Lemonldap-NG-Handler-PSGI-wildcard.t
-t/67-Lemonldap-NG-Handler-PSGI-vhostoptions-with-reload.t
-t/67-Lemonldap-NG-Handler-PSGI-vhostoptions.t
+t/67-Lemonldap-NG-Handler-PSGI-vhostOptions-with-reload.t
+t/67-Lemonldap-NG-Handler-PSGI-vhostOptions.t
 t/68-Lemonldap-NG-Handler-PSGI-Zimbra.t
 t/69-Lemonldap-NG-Handler-PSGI-SecureToken.t
 t/70-Lemonldap-NG-Handler-PSGI-AuthBasic.t
