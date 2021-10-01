@@ -269,7 +269,8 @@ constants set with method name to run. Following entry points are available.
 setting C<sessionInfo> provisionning
 
 =item C<afterData>: method called after C<sessionInfo> provisionning
-I<(macros, groups,...)>
+I<(macros, groups,...)>. This entry point is called after 'storeHistory'
+if login process fails and before 'validSession' if success.
 
 =item C<endAuth>: method called when session is validated (after cookie build)
 
