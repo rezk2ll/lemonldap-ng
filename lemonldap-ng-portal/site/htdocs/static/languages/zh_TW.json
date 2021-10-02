@@ -203,6 +203,7 @@
 "mail2f":"電子郵件代碼",
 "mailSent2":"訊息已傳送到您的電子郵件地址。",
 "maintenanceMode":"此應用程式正在維護中，請稍後再嘗試連線",
+"mandatoryField":"* Mandatory field",
 "maxNumberof2FDevicesReached":"已達到雙因素驗證裝置的最大數量了！",
 "missingCode":"代碼遺失",
 "myNotification":"我已接受的通知",

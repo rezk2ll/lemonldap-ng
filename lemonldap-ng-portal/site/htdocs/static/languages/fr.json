@@ -203,6 +203,7 @@
 "mail2f":"Code par mail",
 "mailSent2":"Un message a été envoyé à votre adresse mail.",
 "maintenanceMode":"Cette application est en maintenance, merci de réessayer plus tard",
+"mandatoryField":"* Champ obligatoire",
 "maxNumberof2FDevicesReached":"Nombre maximum de seconds facteurs atteint !",
 "missingCode":"Code manquant",
 "myNotification":"Ma notification acceptée",

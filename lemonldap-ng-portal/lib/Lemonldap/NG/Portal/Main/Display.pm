@@ -501,15 +501,15 @@ sub display {
             my $plugin =
               $self->loadedModules->{
                 "Lemonldap::NG::Portal::Plugins::FindUser"};
-            my $fields = [];
-            my $slogin;
+            my ( $fields, $slogin, $mandatory ) = ( [], '', 0 );
+
             if (   $plugin
                 && $self->conf->{findUser}
                 && $self->conf->{impersonationRule}
                 && $self->conf->{findUserSearchingAttributes} )
             {
                 $slogin = $req->data->{findUser};
-                $fields = $plugin->buildForm();
+                ( $fields, $mandatory ) = $plugin->buildForm();
             }
 
             # Authentication loop
@@ -526,6 +526,7 @@ sub display {
                     DISPLAY_OPENID_FORM  => 0,
                     DISPLAY_YUBIKEY_FORM => 0,
                     DISPLAY_FINDUSER     => scalar @$fields,
+                    MANDATORY            => $mandatory,
                     FIELDS               => $fields,
                     SPOOFID              => $slogin
                 );
@@ -548,9 +549,9 @@ sub display {
                     DISPLAY_YUBIKEY_FORM => $displayType =~ /\byubikeyform\b/
                     ? 1
                     : 0,
-                    DISPLAY_SSL_FORM => $displayType =~ /sslform/ ? 1 : 0,
-                    DISPLAY_GPG_FORM => $displayType =~ /gpgform/ ? 1 : 0,
-                    DISPLAY_LOGO_FORM => $displayType eq "logo" ? 1 : 0,
+                    DISPLAY_SSL_FORM  => $displayType =~ /sslform/ ? 1 : 0,
+                    DISPLAY_GPG_FORM  => $displayType =~ /gpgform/ ? 1 : 0,
+                    DISPLAY_LOGO_FORM => $displayType eq "logo"    ? 1 : 0,
                     DISPLAY_FINDUSER  => scalar @$fields,
                     module            => $displayType eq "logo"
                     ? $self->getModule( $req, 'auth' )
@@ -558,9 +559,10 @@ sub display {
                     AUTH_LOOP => [],
                     PORTAL_URL =>
                       ( $displayType eq "logo" ? $self->conf->{portal} : 0 ),
-                    MSG     => $req->info(),
-                    FIELDS  => $fields,
-                    SPOOFID => $slogin
+                    MSG       => $req->info(),
+                    MANDATORY => $mandatory,
+                    FIELDS    => $fields,
+                    SPOOFID   => $slogin
                 );
             }
         }

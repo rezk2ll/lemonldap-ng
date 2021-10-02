@@ -203,6 +203,7 @@
 "mail2f":"Email code",
 "mailSent2":"Viesti on lähetetty sähköpostiisi.",
 "maintenanceMode":"This application is in maintenance, please try to connect later",
+"mandatoryField":"* Mandatory field",
 "maxNumberof2FDevicesReached":"Maximum number of 2F devices reached!",
 "missingCode":"Code is missing",
 "myNotification":"My accepted notification",

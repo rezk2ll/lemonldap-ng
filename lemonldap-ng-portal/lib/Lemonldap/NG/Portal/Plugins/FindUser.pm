@@ -17,7 +17,7 @@ extends qw(
 );
 
 # INITIALIZATION
-has ott => (
+has ott       => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
@@ -82,8 +82,9 @@ sub retreiveFindUserParams {
         my ( $key, $value, $null ) = split '#', $_;
         $key =~ s/^(?:\d+_)?//;
         my $param  = $req->params($key) // '';
-        my @values = grep s/^(?:\d+_)?//, split ($self->conf->{multiValuesSeparator},
-          $self->conf->{findUserSearchingAttributes}->{$_} || '');
+        my @values = grep s/^(?:\d+_)?//,
+          split( $self->conf->{multiValuesSeparator},
+            $self->conf->{findUserSearchingAttributes}->{$_} || '' );
         my $select  = scalar @values > 1 && not scalar @values % 2;
         my %values  = @values if $select;
         my $defined = length $param;
@@ -147,7 +148,7 @@ sub retreiveFindUserParams {
 
 sub buildForm {
     my $self   = shift;
-    my $fields = [];
+    my ( $fields, @required ) = ( [], () );
 
     $self->logger->debug('Building array ref with searching fields...');
     @$fields =
@@ -156,6 +157,7 @@ sub buildForm {
         my @values = split $self->conf->{multiValuesSeparator},
           $self->conf->{findUserSearchingAttributes}->{$_} || $key;
         $key =~ s/^(?:\d+_)?//;
+        push @required, $key unless $null;
         my $nbr = scalar @values;
         if ( $nbr > 1 ) {
             if ( $nbr % 2 ) { () }
@@ -173,9 +175,9 @@ sub buildForm {
                 {
                     select  => 1,
                     key     => $key,
-                    null    => $null,
                     value   => $value ? $value : $key,
-                    choices => $choices
+                    choices => $choices,
+                    null    => $null
                 };
             }
         }
@@ -183,12 +185,14 @@ sub buildForm {
             {
                 select => 0,
                 key    => $key,
-                value  => $values[0]
+                value  => $values[0],
+                null   => $null
             };
         }
       } sort keys %{ $self->conf->{findUserSearchingAttributes} };
+    $self->logger->debug('Mandatory field(s) required') if scalar @required;
 
-    return $fields;
+    return ( $fields, scalar @required );
 }
 
 sub _sendResult {

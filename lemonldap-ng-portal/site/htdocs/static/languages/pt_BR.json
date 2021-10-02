@@ -203,6 +203,7 @@
 "mail2f":"Código do email",
 "mailSent2":"Uma mensagem foi enviada para o seu endereço de e-mail.",
 "maintenanceMode":"Este aplicativo está em manutenção. Por favor, tente conectar mais tarde",
+"mandatoryField":"* Mandatory field",
 "maxNumberof2FDevicesReached":"Número máximo de dispositivos 2F atingido!",
 "missingCode":"Falta o código",
 "myNotification":"Minha notificação aceita",

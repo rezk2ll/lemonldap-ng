@@ -203,6 +203,7 @@
 "mail2f":"Email code",
 "mailSent2":"已经发送一封邮件到您的邮箱",
 "maintenanceMode":"程序维护中，请稍后再尝试连接。",
+"mandatoryField":"* Mandatory field",
 "maxNumberof2FDevicesReached":"Maximum number of 2F devices reached!",
 "missingCode":"Code is missing",
 "myNotification":"My accepted notification",
