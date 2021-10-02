@@ -8,7 +8,17 @@ BEGIN {
     require 't/test-psgi-lib.pm';
 }
 
-init('Lemonldap::NG::Handler::Server');
+### vhostOptions are overridden by fastcgi_param
+init(
+    'Lemonldap::NG::Handler::Server',
+    {
+        vhostOptions => {
+            'test3.example.com' => {
+                vhostDevOpsRulesUrl => 'http://donotuse.example.com/myfile.json',
+            },
+        },
+    }
+);
 
 my $res;
 
