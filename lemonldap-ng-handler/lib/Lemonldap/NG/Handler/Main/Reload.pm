@@ -248,6 +248,8 @@ sub defaultValuesInit {
               $conf->{vhostOptions}->{$vhost}->{vhostServiceTokenTTL};
             $class->tsv->{accessToTrace}->{$vhost} =
               $conf->{vhostOptions}->{$vhost}->{vhostAccessToTrace};
+            $class->tsv->{devOpsRulesUrl}->{$vhost} =
+              $conf->{vhostOptions}->{$vhost}->{vhostDevOpsRulesUrl};
         }
     }
     return 1;

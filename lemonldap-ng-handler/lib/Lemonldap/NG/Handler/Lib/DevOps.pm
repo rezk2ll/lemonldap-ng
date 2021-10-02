@@ -31,9 +31,11 @@ sub _loadVhostConfig {
     my ( $class, $req, $vhost ) = @_;
     my ( $json, $rUrl, $rVhost );
     if ( $class->tsv->{useSafeJail} ) {
-        if ( $req->env->{RULES_URL} ) {
-            $rUrl   = $req->{env}->{RULES_URL};
-            $rVhost = ( $req->env->{RULES_URL} =~ m#^https?://([^/]*).*# )[0];
+        if ( $req->env->{RULES_URL} || $class->tsv->{devOpsRulesUrl}->{$vhost} )
+        {
+            $rUrl = $req->{env}->{RULES_URL}
+              || $class->tsv->{devOpsRulesUrl}->{$vhost};
+            $rVhost = ( $rUrl =~ m#^https?://([^/]*).*# )[0];
             $rVhost =~ s/:\d+$//;
         }
         else {
@@ -44,22 +46,25 @@ sub _loadVhostConfig {
             $rVhost = $vhost;
         }
 
-        $class->logger->debug("Try to retrieve 'rules.json' from $rUrl");
+        $class->logger->debug("Try to retrieve rules file from $rUrl");
         my $get = HTTP::Request->new( GET => $rUrl );
         $class->logger->debug("Set Host header with $rVhost");
         $get->header( Host => $rVhost );
         my $resp = $class->ua->request($get);
         if ( $resp->is_success ) {
+            $class->logger->debug('Response is success');
             eval {
                 $json = from_json( $resp->content, { allow_nonref => 1 } ); };
             if ($@) {
-                $class->logger->error( 
-"Bad 'rules.json' retrieved from $rVhost for $vhost, skipping ($@)"
+                $class->logger->debug('Bad json file received');
+                $class->logger->error(
+"Bad rules file retrieved from $rUrl for $vhost, skipping ($@)"
                 );
             }
             else {
+                $class->logger->debug('Good json file received');
                 $class->logger->info(
-                    "Compiling 'rules.json' retrieved from $rVhost for $vhost");
+                    "Compiling rules retrieved from $rUrl for $vhost");
             }
         }
     }

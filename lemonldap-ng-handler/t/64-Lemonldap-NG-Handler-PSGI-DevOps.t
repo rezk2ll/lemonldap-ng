@@ -18,7 +18,6 @@ ok(
         '/',                 undef,
         'test3.example.com', "lemonldap=$sessionId",
         VHOSTTYPE => 'DevOps',
-        RULES_URL => 'http://devops.example.com'
     ),
     'Authorized query'
 );
@@ -37,7 +36,6 @@ ok(
         '/testyes',          undef,
         'test3.example.com', "lemonldap=$sessionId",
         VHOSTTYPE => 'DevOps',
-        RULES_URL => 'http://devops.example.com'
     ),
     'Authorized query'
 );
@@ -50,7 +48,6 @@ ok(
         '/deny',             undef,
         'test3.example.com', "lemonldap=$sessionId",
         VHOSTTYPE => 'DevOps',
-        RULES_URL => 'http://devops.example.com'
     ),
     'Denied query'
 );
@@ -62,7 +59,6 @@ ok(
         '/testno',           undef,
         'test3.example.com', "lemonldap=$sessionId",
         VHOSTTYPE => 'DevOps',
-        RULES_URL => 'http://devops.example.com'
     ),
     'Denied query'
 );
@@ -78,10 +74,13 @@ no warnings 'redefine';
 
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
-    ok( $req->header('host') eq 'devops.example.com',
+    ok( $req->header('host') eq 'test3.example.com',
         'Host header found' )
-      or explain( $req->headers(), 'Header' );
-    count(1);
+      or explain( $req->headers(), 'test3.example.com' );
+    ok( $req->as_string() =~ m#http://127.0.0.1:80/rules.json#,
+        'Rules file URL found' )
+      or explain( $req->as_string(), 'GET http://127.0.0.1:80/rules.json' );
+    count(2);
     my $httpResp;
     my $s = '{
   "rules": {

@@ -2374,7 +2374,8 @@ sub attributes {
             default       => 'Main',
             documentation => 'Handler type',
         },
-        vhostAuthnLevel => { type => 'int' },
+        vhostAuthnLevel     => { type => 'int' },
+        vhostDevOpsRulesUrl => { type => 'url' },
 
         # SecureToken parameters
         secureTokenAllowOnError => {
