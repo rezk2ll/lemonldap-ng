@@ -137,10 +137,10 @@ m%<input id="findUser_room" name="room" type="text" autocomplete="off" class="fo
     my @c = ( $res->[2]->[0] =~ m%<input id="findUser_(\w+)"%gs );
     ok( @c == 4, ' -> Four entries found' )
       or explain( $res->[2]->[0], '4, found ' . scalar @c );
-    ok( $c[0] eq 'guy',  '1st -> guy' );
-    ok( $c[1] eq 'cn',   '2nd -> cn' );
-    ok( $c[2] eq 'room', '3rd -> room' );
-    ok( $c[3] eq 'uid',  '4th -> uid' );
+    ok( $c[0] eq 'guy',  '  1st -> guy' );
+    ok( $c[1] eq 'cn',   '  2nd -> cn' );
+    ok( $c[2] eq 'room', '  3rd -> room' );
+    ok( $c[3] eq 'uid',  '  4th -> uid' );
     count(5);
 
     $request = 'uid=dwho';

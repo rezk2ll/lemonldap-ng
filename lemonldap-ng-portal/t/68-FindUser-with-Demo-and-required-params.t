@@ -5,7 +5,7 @@ use IO::String;
 
 require 't/test-lib.pm';
 
-my $maintests = 29;
+my $maintests = 30;
 
 my $res;
 my $json;
@@ -44,8 +44,11 @@ ok( $res->[2]->[0] =~ m%mandatoryField%, 'Mandatory field' )
 my @c = ( $res->[2]->[0] =~ m%<option value="(.+?)">%gs );
 ok( @c == 2, ' -> Two entries found' )
   or explain( $res->[2]->[0], '2, found ' . scalar @c );
-ok( $c[0] eq 'The Daleks', '1st -> ' . $c[0] );
-ok( $c[1] eq 'Bad Guy',    '2nd -> ' . $c[1] );
+ok( $c[0] eq 'The Daleks', '  1st -> ' . $c[0] );
+ok( $c[1] eq 'Bad Guy',    '  2nd -> ' . $c[1] );
+@c = ( $res->[2]->[0] =~ m%\*%gs );
+ok( @c == 3, ' -> Three stars found' )
+  or explain( $res->[2]->[0], '3, found ' . scalar @c );
 
 my $request = '';
 ok(
