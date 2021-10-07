@@ -201,7 +201,7 @@ sub userId {
     my $userId =
       $req->userData->{ $Lemonldap::NG::Handler::Main::tsv->{whatToTrace}
           || '_whatToTrace' }
-      || $req->userData->{'_user'} # Fix 2377
+      || $req->userData->{'_user'}    # Fix 2377
       || 'anonymous';
 
     $self->logger->debug("Returned userId: $userId");

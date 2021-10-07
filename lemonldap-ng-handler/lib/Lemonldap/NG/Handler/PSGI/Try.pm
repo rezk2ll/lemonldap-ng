@@ -8,17 +8,33 @@ our $VERSION = '2.0.6';
 extends 'Lemonldap::NG::Handler::PSGI::Router';
 
 has 'authRoutes' => (
-    is  => 'rw',
-    isa => 'HashRef',
-    default =>
-      sub { { GET => {}, POST => {}, PUT => {}, PATCH => {}, DELETE => {}, OPTIONS => {} } }
+    is      => 'rw',
+    isa     => 'HashRef',
+    default => sub {
+        {
+            GET     => {},
+            POST    => {},
+            PUT     => {},
+            PATCH   => {},
+            DELETE  => {},
+            OPTIONS => {}
+        }
+    }
 );
 
 has 'unAuthRoutes' => (
-    is  => 'rw',
-    isa => 'HashRef',
-    default =>
-      sub { { GET => {}, POST => {}, PUT => {}, PATCH => {}, DELETE => {}, OPTIONS => {} } }
+    is      => 'rw',
+    isa     => 'HashRef',
+    default => sub {
+        {
+            GET     => {},
+            POST    => {},
+            PUT     => {},
+            PATCH   => {},
+            DELETE  => {},
+            OPTIONS => {}
+        }
+    }
 );
 
 sub addRoute {
