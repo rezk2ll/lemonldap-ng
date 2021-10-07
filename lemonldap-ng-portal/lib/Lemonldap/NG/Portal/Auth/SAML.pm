@@ -24,7 +24,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth
@@ -343,8 +343,9 @@ sub extractFormInfo {
                             "Found value $value for attribute $userAttribute");
                     }
                     else {
-                        $self->logger->warn( "No value for $userAttribute"
-                              . " found in SAML assertion" );
+                        $self->logger->warn(
+"No value for $userAttribute found in SAML assertion"
+                        );
                     }
                 }
                 else {
