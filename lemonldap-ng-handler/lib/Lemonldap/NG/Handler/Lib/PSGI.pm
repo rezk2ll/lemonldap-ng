@@ -38,7 +38,7 @@ sub init {
 
 ## @methodi void _run()
 # Check if protecton is activated then return a code ref that will launch
-# _authAndTrace() if protection in on or handler() else
+# _logAuthTrace() if protection in on or handler() else
 #@return code-ref
 sub _run {
     my $self = shift;
@@ -50,7 +50,7 @@ sub _run {
         # Handle requests
         # Developers, be careful: Only this part is executed at each request
         return sub {
-            return $self->_authAndTrace(
+            return $self->_logAuthTrace(
                 Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
         };
     }
@@ -68,7 +68,7 @@ sub _run {
         # Handle unprotected requests
         return sub {
             my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
-            my $res = $self->handler($req);
+            my $res = $self->_logAndHandle($req);
             push @{ $res->[1] }, $req->spliceHdrs;
             return $res;
         };
@@ -111,6 +111,31 @@ sub reload {
     };
 }
 
+sub _logAuthTrace {
+    my ( $self, $req, $noCall ) = @_;
+
+    # register the request object to the logging system
+    if ( ref( $self->logger ) and $self->logger->can('setRequestObj') ) {
+        $self->logger->setRequestObj($req);
+    }
+    if ( ref( $self->userLogger ) and $self->userLogger->can('setRequestObj') ) {
+        $self->userLogger->setRequestObj($req);
+    }
+
+    # Call the handler
+    my $res = $self->_authAndTrace( $req, $noCall );
+
+    # Clear the logging system before the next request
+    if ( ref( $self->logger ) and $self->logger->can('clearRequestObj') ) {
+        $self->logger->clearRequestObj($req);
+    }
+    if ( ref( $self->userLogger ) and $self->userLogger->can('clearRequestObj') ) {
+        $self->userLogger->clearRequestObj($req);
+    }
+
+    return $res;
+}
+
 ## @method private PSGI-Response _authAndTrace($req)
 # Launch $self->api::run() and then handler() if
 # response is 200.
@@ -138,7 +163,7 @@ sub _authAndTrace {
         }
         else {
             $self->logger->debug('User authenticated, calling handler()');
-            $res = $self->handler($req);
+            $res = $self->_logAndHandle($req);
             push @{ $res->[1] }, $req->spliceHdrs;
             return $res;
         }
