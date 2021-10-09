@@ -300,7 +300,7 @@ sub loadIDPs {
         }
         $self->logger->debug("Set encryption mode $encryption_mode on IDP $_");
 
-        # Set signature method if overriden
+        # Set signature method if overridden
         my $signature_method = $self->conf->{samlIDPMetaDataOptions}->{$_}
           ->{samlIDPMetaDataOptionsSignatureMethod};
         if ($signature_method) {
@@ -471,7 +471,7 @@ sub loadSPs {
         }
         $self->logger->debug("Set encryption mode $encryption_mode on SP $_");
 
-        # Set signature method if overriden
+        # Set signature method if overridden
         my $signature_method = $self->conf->{samlSPMetaDataOptions}->{$_}
           ->{samlSPMetaDataOptionsSignatureMethod};
         if ($signature_method) {

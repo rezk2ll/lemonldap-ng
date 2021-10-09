@@ -45,7 +45,7 @@ has authnLevel => (
 sub init {
     my ($self) = @_;
 
-    # Set logo if overriden
+    # Set logo if overridden
     $self->logo( $self->conf->{ $self->prefix . "2fLogo" } )
       if ( $self->conf->{ $self->prefix . "2fLogo" } );
 

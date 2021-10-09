@@ -144,7 +144,7 @@ To define keys, you can:
 
 .. versionchanged:: 2.0.10
 
-   The signature method can now be overriden for a SP or IDP. This will only work
+   The signature method can now be overridden for a SP or IDP. This will only work
    if you are using a certificate for signature instead of a public key.
 
 

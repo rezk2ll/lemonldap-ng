@@ -556,7 +556,7 @@ Options:
     -m, --metadata          URL of metadata document
     -i, --idpconfprefix     Prefix used to set IDP configuration key
     -s, --spconfprefix      Prefix used to set SP configuration key
-    --ignore-sp             ignore SP maching this entityID (can be specified multiple times)
+    --ignore-sp             ignore SP matching this entityID (can be specified multiple times)
     --ignore-idp            ignore IdP matching this entityID (can be specified multiple times)
     -a, --nagios            output statistics in Nagios format
     -r, --remove            remove provider from LemonLDAP::NG if it does not appear in metadata

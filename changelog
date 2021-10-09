@@ -2041,7 +2041,7 @@ lemonldap-ng (1.0.6) stable; urgency=low
     * [LEMONLDAP-304] - Cannot use spaces between values of Multi
       authentication
       parameter
-    * [LEMONLDAP-305] - Parameters are not overriden in the first Multi module
+    * [LEMONLDAP-305] - Parameters are not overridden in the first Multi module
     * [LEMONLDAP-307] - Base64 encoded IDs can contain more than one "/", but
       only the first is escaped
 
@@ -2049,7 +2049,7 @@ lemonldap-ng (1.0.5) stable; urgency=low
 
     * [LEMONLDAP-292] - Application menu is not well displayed with multiple
       users having differents rights
-    * [LEMONLDAP-294] - Subroutines can not be overriden in lemonldap-ng.ini
+    * [LEMONLDAP-294] - Subroutines can not be overridden in lemonldap-ng.ini
     * [LEMONLDAP-293] - Password Manager - Sending Mail
 
 lemonldap-ng (1.0.4) stable; urgency=low

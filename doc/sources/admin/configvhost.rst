@@ -516,7 +516,7 @@ Some options are available:
    This default level is required for ALL locations relative to this virtual host.
    It can be overrided for each locations.
 -  **DevOps rules file URL**: option to define URL to retreive DevOps rules file.
-   This option can be overriden with ``uwsgi_param/fastcgi_param RULES_URL`` parameter.
+   This option can be overridden with ``uwsgi_param/fastcgi_param RULES_URL`` parameter.
 -  **ServiceToken timeout**: by default, ServiceToken is just valid during 30
    seconds. This TTL can be customized for each virtual host.
 

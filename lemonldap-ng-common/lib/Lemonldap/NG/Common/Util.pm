@@ -65,7 +65,7 @@ This method computes the unique ID of each 2F device, for use with the API and C
 =head3 getSameSite($conf)
 
 Try to find a sensible value for the SameSite cookie attribute.
-If the user has overriden it, return the forced value
+If the user has overridden it, return the forced value
 
 =head1 AUTHORS
 

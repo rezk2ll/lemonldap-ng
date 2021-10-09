@@ -47,7 +47,7 @@ Configuring the CAS Service
 Then go in ``CAS Service`` to define:
 
 -  **CAS login**: the session key transmitted to CAS client as the main
-   identifier (CAS Principal). This setting can be overriden
+   identifier (CAS Principal). This setting can be overridden
    per-application.
 -  **Access control policy**: define if access control should be done on
    CAS service. Three options:

@@ -98,7 +98,7 @@ The script provide the following options
  * -h (--help): print this message
  * -m (--metadata): URL of metadata document
  * -s (--spconfprefix): Prefix used to set SP configuration key
- * --ignore-sp: ignore SP maching this entityID (can be specified multiple times)
+ * --ignore-sp: ignore SP matching this entityID (can be specified multiple times)
  * --ignore-idp: ignore IdP matching this entityID (can be specified multiple times)
  * -a (--nagios): output statistics in Nagios format
  * -n (--dry-run): print statistics but do not apply changes
