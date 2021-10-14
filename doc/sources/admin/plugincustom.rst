@@ -4,8 +4,19 @@ Write a custom plugin
 Presentation
 ------------
 
-Standard entry points
-~~~~~~~~~~~~~~~~~~~~~
+Portal plugins let you customize LemonLDAP::NG's behavior.
+
+Common use cases for plugins are:
+
+* Looking up session information in an additional backend
+* Implementing additional controls or steps during login
+* Adjusting the behavior of SAML, OIDC or CAS protocols to work around application bugs
+
+Plugin API
+----------
+
+Authentication entry points
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can now write a custom portal plugin that will hook in the
 authentication process:
@@ -21,8 +32,8 @@ authentication process:
 -  ``forAuthUser``: method called for already authenticated users
 -  ``beforeLogout``: method called before logout
 
-Extended entry points
-~~~~~~~~~~~~~~~~~~~~~
+Generic entry points
+~~~~~~~~~~~~~~~~~~~~
 
 If you need to call a method just after any standard method in
 authentication process, then use ``afterSub``, for example:
@@ -75,6 +86,54 @@ The plugin can also define new routes and call actions on them.
 
 See also ``Lemonldap::NG::Portal::Main::Plugin`` man page.
 
+Configuration
+~~~~~~~~~~~~~
+
+The current LemonLDAP::NG configuration can be accessed in the ``$self->conf`` hash. This variable is only meant to be read. Don't try changing its content, or *Bad Things* may happen.
+
+You can set your own parameters in ``General Parameters`` » ``Plugins`` » ``Custom plugins`` » ``Additional parameters``
+and reach them through ``customPluginsParams``
+
+.. code-block:: perl
+
+    sub my_function {
+        my ($self, $req) = @_;
+
+        # Get a standard LLNG option
+        my $llng_logo = $self->conf->{portalMainLogo};
+
+        # Get your custom LLNG option
+        my $myvar = $self->conf->{customPluginsParams}->{myvar};
+        }
+
+Logs
+~~~~
+
+You can use the ``$self->logger`` and ``$self->userLogger`` objects to log information during your plugin execution. Use ``logger`` for technical logs and ``userLogger`` for accounting and tracability events.
+
+.. code-block:: perl
+
+    sub my_function {
+        my ($self, $req) = @_;
+
+        $self->logger->debug("Debug message");
+        if (my_custom_test($req->user)) {
+            $self->userLogger->debug("User ". $req->user .
+                " is not allowed because XXX");
+
+            return PE_ERROR;
+        }
+        return PE_OK;
+    }
+
+
+Remembering data
+~~~~~~~~~~~~~~~~
+
+In order to remember data between different steps, you can use the ``$req->data`` hash.
+
+Data will not be remembered in between requests, only in between methods that process the same HTTP request.
+
 Example
 -------
 
@@ -96,6 +155,8 @@ Create for example the MyPlugin module:
 
 .. code-block:: perl
 
+   # The package name must match the file path
+   # This file must be in Lemonldap/NG/Portal/MyPlugin.pm
    package Lemonldap::NG::Portal::MyPlugin;
 
    use Mouse;
@@ -105,11 +166,14 @@ Create for example the MyPlugin module:
    use constant beforeAuth => 'verifyIP';
 
    sub init {
+             # Every plugin must have an init function that returns 1
+             # You can your custom initialization here
              my ($self) = @_;
              $self->addUnauthRoute( mypath => 'hello', [ 'GET', 'PUT' ] );
              $self->addAuthRoute( mypath => 'welcome', [ 'GET', 'PUT' ] );
              return 1;
    }
+
    sub verifyIP {
              my ($self, $req) = @_;
              return PE_ERROR if($req->address !~ /^10/);
@@ -129,10 +193,12 @@ Create for example the MyPlugin module:
              ...
              return $self->p->sendHtml($req, 'template', params => { WELCOME => 1 });
    }
+   # Your file must return 1, or Perl will complain.
    1;
 
-Configuration
-~~~~~~~~~~~~~
+
+Enabling your plugin
+~~~~~~~~~~~~~~~~~~~~
 
 Declare the plugin in lemonldap-ng.ini:
 
