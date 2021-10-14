@@ -167,7 +167,7 @@ Create for example the MyPlugin module:
 
    sub init {
              # Every plugin must have an init function that returns 1
-             # You can your custom initialization here
+             # You can define your custom initialization here
              my ($self) = @_;
              $self->addUnauthRoute( mypath => 'hello', [ 'GET', 'PUT' ] );
              $self->addAuthRoute( mypath => 'welcome', [ 'GET', 'PUT' ] );
