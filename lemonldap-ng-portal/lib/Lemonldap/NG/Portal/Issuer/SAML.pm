@@ -17,7 +17,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_SLO_ERROR
   PE_SAML_SSO_ERROR
   PE_ISSUERMISSINGREQATTR
-  PE_SAML_UNKNOWN_ENTITY
+  PE_UNKNOWNPARTNER
   PE_SAML_SERVICE_NOT_ALLOWED
   PE_UNAUTHORIZEDPARTNER
 );
@@ -188,7 +188,7 @@ sub storeEnv {
     return PE_OK if ( $artifact or !$request );
     my $login = $self->createLogin( $self->lassoServer );
     $self->disableSignatureVerification($login);
-    $self->processAuthnRequestMsg( $login, $request, 'debug' );
+    $self->processAuthnRequestMsgWithError( $login, $request, 'debug' );
     if ( my $sp = $login->remote_providerID() ) {
         $req->env->{llng_saml_sp} = $sp;
         if ( my $spConfKey = $self->spList->{$sp}->{confKey} ) {
@@ -336,7 +336,7 @@ sub run {
                     unless ( defined $self->spList->{$idp_initiated_sp} ) {
                         $self->userLogger->error(
                             "SP $idp_initiated_sp not known");
-                        return PE_SAML_UNKNOWN_ENTITY;
+                        return PE_UNKNOWNPARTNER;
                     }
                     $idp_initiated_spConfKey =
                       $self->spList->{$idp_initiated_sp}->{confKey};
@@ -384,18 +384,33 @@ sub run {
                 }
             }
 
+            my $lasso_error;
+
             # Process authentication request
             if ($artifact) {
                 $result = $self->processArtResponseMsg( $login, $request );
             }
             else {
-                $result = $self->processAuthnRequestMsg( $login, $request );
+                ( $result, $lasso_error ) =
+                  $self->processAuthnRequestMsgWithError( $login, $request );
             }
 
             unless ($result) {
-                $self->logger->error(
-                    "SSO: Fail to process authentication request");
-                return PE_SAML_SSO_ERROR;
+                if ( $lasso_error ==
+                    Lasso::Constants::SERVER_ERROR_PROVIDER_NOT_FOUND )
+                {
+                    my $sp = eval { $login->remote_providerID() };
+                    $self->logger->error(
+                            "SSO: Incoming entity ID $sp was not found"
+                          . " in registered Service Providers metadata." );
+
+                    return PE_UNKNOWNPARTNER;
+                }
+                else {
+                    $self->logger->error(
+                        "SSO: Fail to process authentication request");
+                    return PE_SAML_SSO_ERROR;
+                }
             }
 
             # Get SP entityID
@@ -407,7 +422,7 @@ sub run {
             unless ($spConfKey) {
                 $self->userLogger->error(
                     "$sp do not match any SP in configuration");
-                return PE_SAML_UNKNOWN_ENTITY;
+                return PE_UNKNOWNPARTNER;
             }
             $self->logger->debug("$sp match $spConfKey SP in configuration");
 
@@ -420,11 +435,14 @@ sub run {
 
                 $self->forceSignatureVerification($login);
 
+                my $lasso_error;
                 if ($artifact) {
                     $result = $self->processArtResponseMsg( $login, $request );
                 }
                 else {
-                    $result = $self->processAuthnRequestMsg( $login, $request );
+                    ( $result, $lasso_error ) =
+                      $self->processAuthnRequestMsgWithError( $login,
+                        $request );
                 }
 
                 unless ($result) {

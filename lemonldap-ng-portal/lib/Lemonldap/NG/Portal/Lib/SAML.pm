@@ -657,13 +657,25 @@ sub _isArtifactSamlResponse {
 # @return 1 if no error
 sub checkLassoError {
     my ( $self, $error, $level ) = @_;
+    my ( $lasso_result, $lasso_error_code ) =
+      $self->getLassoError( $error, $level );
+    return $lasso_result;
+}
+
+## @method boolean getLassoError(Lasso::Error error, string level)
+# Log Lasso error code and message if this is actually a Lasso::Error with code > 0
+# @param error Lasso error object
+# @param level optional log level (debug by default)
+# @return (success status, lasso error code)
+sub getLassoError {
+    my ( $self, $error, $level ) = @_;
     $level ||= 'error';
 
     # If $error is not a Lasso::Error object, display error string
     unless ( ref($error) and $error->isa("Lasso::Error") ) {
-        return 1 unless $error;
+        return ( 1, undef ) unless $error;
         $self->p->lmLog( "Lasso error: $error", $level );
-        return 0;
+        return ( 0, undef );
     }
 
     # Else check error code and error message
@@ -671,10 +683,10 @@ sub checkLassoError {
         $self->p->lmLog(
             "Lasso error code " . $error->{code} . ": " . $error->{message},
             $level );
-        return 0;
+        return ( 0, $error->{code} );
     }
 
-    return 1;
+    return ( 1, undef );
 }
 
 ## @method Lasso::Server createServer(string metadata, string private_key, string private_key_password, string private_key_enc, string private_key_enc_password, string certificate)
@@ -1103,6 +1115,8 @@ sub buildAuthnRequestMsg {
 
 ## @method boolean processAuthnRequestMsg(Lasso::Login login, string request)
 # Process authentication request message
+# processAuthnRequestMsgWithError is preferred, but this function is kept for
+# API compatibility in 2.0
 # @param login Lasso::Login object
 # @param request SAML request
 # @return result
@@ -1112,6 +1126,19 @@ sub processAuthnRequestMsg {
     eval { Lasso::Login::process_authn_request_msg( $login, $request ); };
 
     return $self->checkLassoError( $@, $level );
+}
+
+## @method boolean processAuthnRequestMsgWithError(Lasso::Login login, string request)
+# Process authentication request message
+# @param login Lasso::Login object
+# @param request SAML request
+# @return result, Lasso error code
+sub processAuthnRequestMsgWithError {
+    my ( $self, $login, $request, $level ) = @_;
+
+    eval { Lasso::Login::process_authn_request_msg( $login, $request ); };
+
+    return $self->getLassoError( $@, $level );
 }
 
 ## @method boolean validateRequestMsg(Lasso::Login login, boolean auth, boolean consent)
@@ -3383,6 +3410,10 @@ Build authentication request message
 =head2 processAuthnRequestMsg
 
 Process authentication request message
+
+=head2 processAuthnRequestMsgWithError
+
+Process authentication request message and return Lasso error
 
 =head2 validateRequestMsg
 
