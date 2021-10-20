@@ -32,7 +32,8 @@ my $result = GetOptions(
 );
 
 pod2usage(1) if $opts{help};
-pod2usage( -message => "Missing metadata URL (-m)", -exitval => 2) if !$opts{metadata};
+pod2usage( -message => "Missing metadata URL (-m)", -exitval => 2 )
+  if !$opts{metadata};
 
 #==============================================================================
 # Default values
@@ -348,10 +349,6 @@ foreach
                     $lastConf->{samlSPMetaDataExportedAttributes}
                       ->{ $spList->{$entityID} } = $requestedAttributes;
 
-# Update options
-#                  $lastConf->{samlSPMetaDataOptions}->{ $spList->{$entityID} } =
-#                    $spOptions;
-# FIX AGA
                     $lastConf->{samlSPMetaDataOptions}->{ $spList->{$entityID} }
                       = { %{$spOptions} };
 
@@ -372,10 +369,6 @@ foreach
                     $lastConf->{samlSPMetaDataExportedAttributes}->{$confKey} =
                       $requestedAttributes;
 
-                  # Options
-                  # $lastConf->{samlSPMetaDataOptions}->{$confKey} = $spOptions;
-
-                    # FIX AGA
                     $lastConf->{samlSPMetaDataOptions}->{$confKey} =
                       { %{$spOptions} };
 
