@@ -67,6 +67,11 @@ sub _loadVhostConfig {
                     "Compiling rules retrieved from $rUrl for $vhost");
             }
         }
+        else {
+            $class->logger->error( "Unable to retrieve rules file from $rUrl -> "
+                  . $resp->status_line );
+            $class->logger->info("Default rule and header are employed");
+        }
     }
     else {
         $class->logger->error(
