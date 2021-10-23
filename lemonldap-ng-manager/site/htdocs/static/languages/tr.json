@@ -1186,7 +1186,7 @@
 "vhostAccessToTrace":"İzlemeye erişim",
 "vhostAliases":"Takma adlar",
 "vhostAuthnLevel":"Gereken doğrulama seviyesi",
-"vhostDevOpsRulesUrl": "DevOps rules file URL",
+"vhostDevOpsRulesUrl":"DevOps rules file URL",
 "vhostHttps":"HTTPS",
 "vhostMaintenance":"Bakım modu",
 "vhostOptions":"Seçenekler",
