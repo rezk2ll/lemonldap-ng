@@ -34,6 +34,8 @@ set to ``On``.
    -  **Allowed failed login**: Number of failed login attempts allowed before account is locked
    -  **Incremental lock**: Enable/disable incremental lock times
    -  **Incremental lock times**: List of comma separated lock time values in seconds
+   -  **Maximum lock time**: Lock time values can not be higher than max lock time
+   -  **Maximum age**: Delta between current and last stored failed login 
 
 
 Incremental lock time enabled
@@ -70,17 +72,8 @@ Lock time increases between each failed login attempt after allowed failed login
 Incremental lock time disabled
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-After allowed failed login attempts, user must
-wait the lock time before trying to log in again.
-To modify delta (MaxAge) between current and last stored
-failed login (300 seconds by default) edit ``lemonldap-ng.ini`` in [portal] section:
-
-.. code-block:: ini
-
-   [portal]
-   bruteForceProtectionTempo = 30
-   bruteForceProtectionMaxAge = 300
-   bruteForceProtectionMaxFailed = 3
+After allowed failed login attempts, user must wait
+the lock time before trying to log in again.
 
 
 .. attention::

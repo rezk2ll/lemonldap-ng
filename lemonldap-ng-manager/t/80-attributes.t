@@ -39,7 +39,6 @@ my @notManagedAttributes = (
 
     # Plugins parameters
     'notificationsMaxRetrieve',   'persistentSessionAttributes',
-    'bruteForceProtectionMaxAge', 'bruteForceProtectionMaxLockTime',
 
     # PSGI/CGI protection (must be set in lemonldap-ng.ini)
     'protection',

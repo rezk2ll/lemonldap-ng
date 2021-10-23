@@ -1078,6 +1078,8 @@ sub tree {
                                         'bruteForceProtectionMaxFailed',
                                         'bruteForceProtectionIncrementalTempo',
                                         'bruteForceProtectionLockTimes',
+                                        'bruteForceProtectionMaxLockTime',
+                                        'bruteForceProtectionMaxAge'
                                     ]
                                 },
                                 'lwpOpts',
