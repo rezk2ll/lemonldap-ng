@@ -191,6 +191,7 @@
 "checkUserDisplayComputedSession":"Sessions évaluées",
 "checkUserDisplayEmptyHeaders":"Entêtes nuls",
 "checkUserDisplayEmptyValues":"Valeurs nulles",
+"checkUserDisplayHistory":"Historique",
 "checkUserDisplayNormalizedHeaders":"Entêtes normalisés",
 "checkUserDisplayPersistentInfo":"Données de session persistante",
 "checkUserHiddenAttributes":"Attributs masqués",

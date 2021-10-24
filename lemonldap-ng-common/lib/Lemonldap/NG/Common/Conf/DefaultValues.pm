@@ -41,6 +41,7 @@ sub defaultValues {
         'checkUserDisplayComputedSession'     => 1,
         'checkUserDisplayEmptyHeaders'        => 0,
         'checkUserDisplayEmptyValues'         => 0,
+        'checkUserDisplayHistory'             => 0,
         'checkUserDisplayNormalizedHeaders'   => 0,
         'checkUserDisplayPersistentInfo'      => 0,
         'checkUserHiddenAttributes'      => '_loginHistory _session_id hGroups',

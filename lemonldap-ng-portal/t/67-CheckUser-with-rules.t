@@ -10,7 +10,7 @@ BEGIN {
 my $res;
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                        => 'error',
+            logLevel                        => 'debug',
             authentication                  => 'Demo',
             userDB                          => 'Same',
             loginHistoryEnabled             => 1,
