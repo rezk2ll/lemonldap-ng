@@ -577,7 +577,11 @@ sub loadModule {
         $self->error("Unable to build $module object: $@");
         return 0;
     }
-    unless ( $obj and $obj->init ) {
+    unless ($obj) {
+        $self->error("$module instanciation failed");
+        return 0;
+    }
+    if ( $obj->can("init") and ( !$obj->init ) ) {
         $self->error("$module init failed");
         return 0;
     }
