@@ -416,6 +416,6 @@ Sample code::
    sub logPasswordChange {
        my ( $self, $req, $user, $password, $old ) = @_;
        $old ||= "";
-       $self->userLogger->info("Password changed for $user: $old -> $password")
+       $self->userLogger->info("Password changed for $user: $old -> $password");
        return PE_OK;
    }
