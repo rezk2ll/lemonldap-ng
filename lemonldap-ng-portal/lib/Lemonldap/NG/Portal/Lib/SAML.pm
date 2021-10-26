@@ -550,7 +550,7 @@ sub checkMessage {
             $message = $self->resolveArtifact( $profile, $artifact, $method );
 
             # Request or response ?
-            if ( $message =~ /samlp:response/i ) {
+            if ( $self->_isArtifactSamlResponse($message) ) {
                 $response = $message;
             }
             else {
@@ -598,7 +598,7 @@ sub checkMessage {
                   $self->resolveArtifact( $profile, $artifact, $method );
 
                 # Request or response ?
-                if ( $message =~ /samlp:response/i ) {
+                if ( $self->_isArtifactSamlResponse($message) ) {
                     $response = $message;
                 }
                 else {
@@ -625,6 +625,29 @@ sub checkMessage {
 
     # 4. Return values
     return ( $request, $response, $method, $relaystate, $artifact ? 1 : 0 );
+}
+
+sub _isArtifactSamlResponse {
+    my ( $self, $message ) = @_;
+
+    my $type = eval {
+        my $resp = Lasso::Samlp2ArtifactResponse->new;
+        $resp->init_from_message($message);
+        $resp->any->get_name;
+    };
+
+    if ($@) {
+        $self->logger->warn("Could not detect type of Artifact response");
+        return;
+    }
+
+    $self->logger->debug("Artifact response type is $type");
+    if ( $type eq "Response" ) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 ## @method boolean checkLassoError(Lasso::Error error, string level)
