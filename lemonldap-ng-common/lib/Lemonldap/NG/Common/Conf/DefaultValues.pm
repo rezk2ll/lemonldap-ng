@@ -325,9 +325,9 @@ sub defaultValues {
         'samlSPSSODescriptorArtifactResolutionServiceArtifact' =>
 '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact',
         'samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact' =>
-'1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/proxySingleSignOnArtifact',
+'0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/proxySingleSignOnArtifact',
         'samlSPSSODescriptorAssertionConsumerServiceHTTPPost' =>
-'0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleSignOnPost',
+'1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleSignOnPost',
         'samlSPSSODescriptorAuthnRequestsSigned' => 1,
         'samlSPSSODescriptorSingleLogoutServiceHTTPPost' =>
 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleLogout;#PORTAL#/saml/proxySingleLogoutReturn',

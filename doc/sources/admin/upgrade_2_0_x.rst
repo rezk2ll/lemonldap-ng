@@ -29,6 +29,19 @@ None
 2.0.14
 ------
 
+Empty scopes now rejected in OAuth2.0 grants
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Previously, it was possible to be granted an empty scope, or an automatic
+``openid`` scope when doing :ref:`OAuth2.0 Password Grant
+<resource-owner-password-grant>` or :ref:`Client Credentials Grant
+<client-credentials-grant>`.
+
+Starting with *2.0.14*, empty scopes are no longer allowed (:rfc:`6749#section-3.3`).
+You need to either add a `scope` parameter to your request, or define a default
+scope in your Relying Party's :ref:`Scope Rules <oidcscoperules>`.
+
+
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -407,7 +420,7 @@ Please note that it is HIGHLY recommended to set certificate validation to `requ
 -  OAuth2.0 Handler: a VHost protected by the OAuth2.0 handler will now
    return a 401 when called without an Access Token, instead of
    redirecting to the portal, as specified by
-   `RFC6750 <https://tools.ietf.org/html/rfc6750>`__
+   :rfc:`6750#section-3`.
 
 -  If you encounter the following issue:
 

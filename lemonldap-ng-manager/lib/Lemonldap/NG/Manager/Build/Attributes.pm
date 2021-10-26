@@ -3057,13 +3057,13 @@ sub attributes {
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact => {
             type => 'samlAssertion',
             default =>
-              '1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;'
+              '0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;'
               . '#PORTAL#/saml/proxySingleSignOnArtifact',
             documentation => 'SAML SP ACS HTTP artifact',
         },
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost => {
             type    => 'samlAssertion',
-            default => '0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;'
+            default => '1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;'
               . '#PORTAL#/saml/proxySingleSignOnPost',
             documentation => 'SAML SP ACS HTTP POST',
         },

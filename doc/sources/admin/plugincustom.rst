@@ -146,7 +146,6 @@ Create for example the MyPlugin module:
 
    vi /usr/share/perl5/Lemonldap/NG/Portal/MyPlugin.pm
 
-
 .. tip::
 
     If you do not want to mix files from the distribution with
@@ -179,6 +178,7 @@ Create for example the MyPlugin module:
              return PE_ERROR if($req->address !~ /^10/);
              return PE_OK;
    }
+
    sub hello {
              my ($self, $req) = @_;
              ...
