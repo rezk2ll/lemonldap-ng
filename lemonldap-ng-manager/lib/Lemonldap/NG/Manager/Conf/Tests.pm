@@ -44,10 +44,14 @@ sub tests {
 
         # Check if portal URL is well formated
         portalURL => sub {
-
-            # Append or remove trailing ending slashes
-            $conf->{portal} =~ s%/*$%/%;
-            return 1;
+            return (
+                1,
+                (
+                    ( $conf->{portal} =~ m%/$% )
+                    ? ''
+                    : "Portal URL should end with a /"
+                )
+            );
         },
 
         # Check if virtual hosts are in the domain
