@@ -1,6 +1,8 @@
 Available plugin hooks
 ======================
 
+This page shows the list of hooks that you can use in your :doc:`custom plugins <plugincustom>`. Read the :doc:`plugincustom` page for full details on how to create and enable custom plugins.
+
 OpenID Connect Issuer hooks
 ---------------------------
 
