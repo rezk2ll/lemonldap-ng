@@ -420,7 +420,7 @@ Please note that it is HIGHLY recommended to set certificate validation to `requ
 -  OAuth2.0 Handler: a VHost protected by the OAuth2.0 handler will now
    return a 401 when called without an Access Token, instead of
    redirecting to the portal, as specified by
-   `RFC6750 <https://tools.ietf.org/html/rfc6750>`__
+   :rfc:`6750#section-3`.
 
 -  If you encounter the following issue:
 

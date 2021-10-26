@@ -58,10 +58,9 @@ For example:
 Introspection
 ~~~~~~~~~~~~~
 
-Introspection endpoint is defined in `RFC
-7662 <https://tools.ietf.org/html/rfc7662>`__. It requires an
-authentication (same as the authentication for the token endpoint) and
-takes to access token as parameter.
+Introspection endpoint is defined in :rfc:`7662`. It requires an authentication
+(same as the authentication for the token endpoint) and takes to access token
+as parameter.
 
 For example:
 

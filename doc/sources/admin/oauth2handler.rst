@@ -72,7 +72,7 @@ Define access rules and headers. Then in ``Options`` > ``Type``, choose
 Reference
 ---------
 
-`RFC6750 <https://tools.ietf.org/html/rfc6750>`__
+:rfc:`6750`
 
 .. |image0| image:: /documentation/oauth-retina-preview.jpg
    :class: align-center

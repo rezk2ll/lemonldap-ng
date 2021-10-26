@@ -30,10 +30,8 @@ As an OP, LL::NG supports a lot of OpenID Connect features:
 -  Session management
 -  FrontChannel Logout
 -  BackChannel Logout
--  PKCE (Since ``2.0.4``) - See `RFC
-   7636 <https://tools.ietf.org/html/rfc7636>`__
--  Introspection endpoint (Since ``2.0.6``) - See `RFC
-   7662 <https://tools.ietf.org/html/rfc7662>`__
+-  PKCE (Since ``2.0.4``) - See :rfc:`7636`
+-  Introspection endpoint (Since ``2.0.6``) - See :rfc:`7662`
 -  Offline access (Since ``2.0.7``)
 -  Refresh Tokens (Since ``2.0.7``)
 
@@ -318,7 +316,7 @@ Options
       return it as a JWT, using one of the available signature algorithms.
    -  **Require PKCE** (since version ``2.0.4``): a code challenge is
       required at token endpoint (see
-      `RFC7636 <https://tools.ietf.org/html/rfc7636>`__)
+      :rfc:`7636`)
    -  **Allow offline access** (since version ``2.0.7``): After enabling
       this feature, an application may request the **offline_access**
       scope, and will obtain a Refresh Token that persists even after
@@ -362,7 +360,7 @@ The Resource Owner Password Credentials Grant allows you to exchange a user's lo
 
 .. seealso::
 
-   `Specification for the Resource Owner Password Credentials Grant <https://tools.ietf.org/html/rfc6749#section-4.3>`__
+   Specification for the Resource Owner Password Credentials Grant: :rfc:`6749#section-4.3`
 
 .. _client-credentials-grant:
 
@@ -390,7 +388,7 @@ mapped to Exported Attributes and Extra Claims
 
 .. seealso::
 
-   `Specification for the Client Credentials Grant <https://tools.ietf.org/html/rfc6749#section-4.4>`__
+   Specification for the Client Credentials Grant: :rfc:`6749#section-4.4`
 
 Macros
 ^^^^^^
