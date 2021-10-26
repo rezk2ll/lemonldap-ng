@@ -687,7 +687,7 @@ sub _concatHistory {
         {
             utime  => $utime,
             values => join $self->{conf}->{multiValuesSeparator},
-            map { "$_=$element->{$_}" } sort keys %$element
+            map "$_=$element->{$_}", sort keys %$element
         }
     } @{ $history->{successLogin} };
 
@@ -697,7 +697,7 @@ sub _concatHistory {
         {
             utime  => $utime,
             values => join $self->{conf}->{multiValuesSeparator},
-            map { "$_=$element->{$_}" } sort keys %$element
+            map "$_=$element->{$_}", sort keys %$element
         }
     } @{ $history->{failedLogin} };
 
