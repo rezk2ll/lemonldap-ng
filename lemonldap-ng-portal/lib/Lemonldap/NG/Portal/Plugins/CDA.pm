@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   URIRE
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 extends 'Lemonldap::NG::Common::Module';
 
@@ -17,8 +17,6 @@ extends 'Lemonldap::NG::Common::Module';
 
 use constant endAuth     => 'changeUrldc';
 use constant forAuthUser => 'changeUrldc';
-
-sub init { 1 }
 
 # RUNNING METHOD
 
