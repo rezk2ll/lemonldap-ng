@@ -37,6 +37,21 @@ my $op = LLNG::Manager::Test->new( {
                 }
             },
             oidcRPMetaDataOptions => {
+                scopelessrp => {
+                    oidcRPMetaDataOptionsDisplayName           => "RP",
+                    oidcRPMetaDataOptionsIDTokenExpiration     => 3600,
+                    oidcRPMetaDataOptionsClientID              => "scopelessrp",
+                    oidcRPMetaDataOptionsAllowOffline          => 1,
+                    oidcRPMetaDataOptionsAllowPasswordGrant    => 1,
+                    oidcRPMetaDataOptionsIDTokenSignAlg        => "HS512",
+                    oidcRPMetaDataOptionsClientSecret          => "rpsecret",
+                    oidcRPMetaDataOptionsUserIDAttr            => "",
+                    oidcRPMetaDataOptionsAccessTokenExpiration => 120,
+                    oidcRPMetaDataOptionsBypassConsent         => 1,
+                    oidcRPMetaDataOptionsRefreshToken          => 1,
+                    oidcRPMetaDataOptionsIDTokenForceClaims    => 1,
+                    oidcRPMetaDataOptionsRule => '$uid eq "french"',
+                },
                 rp => {
                     oidcRPMetaDataOptionsDisplayName           => "RP",
                     oidcRPMetaDataOptionsIDTokenExpiration     => 3600,
@@ -91,6 +106,24 @@ $res = $op->_post(
 );
 
 expectReject( $res, 400, "invalid_grant" );
+
+# Empty scope should fail
+my $query = buildForm( {
+        client_id     => 'scopelessrp',
+        client_secret => 'rpsecret',
+        grant_type    => 'password',
+        username      => 'french',
+        password      => 'french',
+    }
+);
+$res = $op->_post(
+    "/oauth2/token",
+    IO::String->new($query),
+    accept => 'application/json',
+    length => length($query),
+);
+
+expectReject( $res, 400, "invalid_scope" );
 
 $query = buildForm( {
         client_id     => 'rpid',

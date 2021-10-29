@@ -12,6 +12,9 @@ Common use cases for plugins are:
 * Implementing additional controls or steps during login
 * Adjusting the behavior of SAML, OIDC or CAS protocols to work around application bugs
 
+Creating a plugin can be as simple as writing a short Perl module file and
+declaring it in your configuration. See below for an example.
+
 Plugin API
 ----------
 
@@ -140,9 +143,10 @@ Example
 Plugin Perl module
 ~~~~~~~~~~~~~~~~~~
 
-Create for example the MyPlugin module:
+This example creates a ``Lemonldap::NG::Portal::MyPlugin`` plugin that
+showcases some features of the plugin system.
 
-::
+First, create a file to contain the plugin code ::
 
    vi /usr/share/perl5/Lemonldap/NG/Portal/MyPlugin.pm
 
@@ -150,7 +154,8 @@ Create for example the MyPlugin module:
 
     If you do not want to mix files from the distribution with
     your own work, put your own code in
-    ``/usr/local/lib/site_perl/Lemonldap/NG/Portal/MyPlugin.pm``\
+    ``/usr/local/lib/site_perl/Lemonldap/NG/Portal/MyPlugin.pm``.
+    Or you can use your own namespace such as ``ACME::Corp::MyPlugin``.
 
 .. code-block:: perl
 
@@ -162,28 +167,46 @@ Create for example the MyPlugin module:
    use Lemonldap::NG::Portal::Main::Constants;
    extends 'Lemonldap::NG::Portal::Main::Plugin';
 
+   # Declare when LemonLDAP::NG must call your functions
    use constant beforeAuth => 'verifyIP';
+   use constant hook => { passwordAfterChange  => 'logPasswordChange' };
 
-   sub init {
-             # Every plugin must have an init function that returns 1
-             # You can define your custom initialization here
-             my ($self) = @_;
-             $self->addUnauthRoute( mypath => 'hello', [ 'GET', 'PUT' ] );
-             $self->addAuthRoute( mypath => 'welcome', [ 'GET', 'PUT' ] );
-             return 1;
-   }
-
+   # This function will be called at the "beforeAuth" login step
    sub verifyIP {
              my ($self, $req) = @_;
              return PE_ERROR if($req->address !~ /^10/);
              return PE_OK;
    }
 
+   # This function will be called when changing passwords
+   sub logPasswordChange {
+       my ( $self, $req, $user, $password, $old ) = @_;
+       $self->userLogger->info("Password changed for $user");
+       return PE_OK;
+   }
+
+   # You can define your custom initialization in the
+   # init method.
+   # Before LemonLDAP::NG 2.0.14, this function was mandatory
+   sub init {
+             my ($self) = @_;
+
+             # This is how you declare HTTP routes
+             $self->addUnauthRoute( mypath => 'hello', [ 'GET', 'PUT' ] );
+             $self->addAuthRoute( mypath => 'welcome', [ 'GET', 'PUT' ] );
+
+             # The function can return 0 to indicate failure
+             return 1;
+   }
+
+   # This method will be called to handle unauthenticated requests to /mypath
    sub hello {
              my ($self, $req) = @_;
              ...
              return $self->p->sendJSONresponse($req, { hello => 1 });
    }
+
+   # This method will be called to handle authenticated requests to /mypath
    sub welcome {
              my ($self, $req) = @_;
 
@@ -193,6 +216,7 @@ Create for example the MyPlugin module:
              ...
              return $self->p->sendHtml($req, 'template', params => { WELCOME => 1 });
    }
+
    # Your file must return 1, or Perl will complain.
    1;
 
