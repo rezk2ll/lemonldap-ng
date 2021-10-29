@@ -3,9 +3,7 @@ use strict;
 use IO::String;
 use JSON;
 
-BEGIN {
-    require 't/test-lib.pm';
-}
+require 't/test-lib.pm';
 
 my $res;
 

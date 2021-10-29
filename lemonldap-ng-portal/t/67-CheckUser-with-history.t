@@ -2,9 +2,7 @@ use Test::More;
 use strict;
 use IO::String;
 
-BEGIN {
-    require 't/test-lib.pm';
-}
+require 't/test-lib.pm';
 
 my $res;
 my $client = LLNG::Manager::Test->new( {

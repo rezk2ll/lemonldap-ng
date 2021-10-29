@@ -3,14 +3,13 @@ use IO::String;
 use strict;
 use JSON qw(to_json from_json);
 
-BEGIN {
-    require 't/test-lib.pm';
-}
+require 't/test-lib.pm';
+
 
 my $res;
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                        => 'debug',
+            logLevel                        => 'error',
             authentication                  => 'Demo',
             userDB                          => 'Same',
             loginHistoryEnabled             => 1,
