@@ -108,7 +108,7 @@ sub storeBrowser {
                           $self->conf->{globalStorageOptions},
                         kind => "SSO",
                         info => {
-                            _utime          => time + $self->timeout(),
+                            _utime          => time + $self->timeout,
                             _session_uid    => $uid,
                             _connectedSince => time,
                             dataKeep        => $req->data->{dataToKeep},
@@ -119,9 +119,9 @@ sub storeBrowser {
                     # Cookie available 30 days
                     $req->addCookie(
                         $self->p->cookie(
-                            name    => $self->cookieName(),
+                            name    => $self->cookieName,
                             value   => $ps->id,
-                            max_age => $self->timeout(),
+                            max_age => $self->timeout,
                             secure  => $self->conf->{securedCookie},
                         )
                     );
@@ -175,7 +175,7 @@ sub check {
                 if ( my $prm = $self->ott->getToken($token) ) {
                     $req->data->{dataKeep} = $ps->data->{dataKeep};
                     $self->logger->debug('Persistent connection found');
-                    if ( $fg eq $ps->data->{fingerprint} ) {
+                    if ( $self->conf->{stayConnectedBypassFG} ) {
                         $req->user($uid);
                         my @steps =
                           grep {
@@ -184,13 +184,29 @@ sub check {
                           } @{ $req->steps };
                         $req->steps( \@steps );
                         $self->userLogger->notice(
-                            "$uid connected by StayConnected cookie");
+"$uid connected by StayConnected cookie without fingerprint checking"
+                        );
                         return PE_OK;
                     }
                     else {
-                        $self->userLogger->warn("Fingerprint changed for $uid");
-                        $ps->remove;
-                        $self->logout($req);
+                        if ( $fg eq $ps->data->{fingerprint} ) {
+                            $req->user($uid);
+                            my @steps =
+                              grep {
+                                !ref $_
+                                  and $_ !~ /^(?:extractFormInfo|authenticate)$/
+                              } @{ $req->steps };
+                            $req->steps( \@steps );
+                            $self->userLogger->notice(
+                                "$uid connected by StayConnected cookie");
+                            return PE_OK;
+                        }
+                        else {
+                            $self->userLogger->warn(
+                                "Fingerprint changed for $uid");
+                            $ps->remove;
+                            $self->logout($req);
+                        }
                     }
                 }
                 else {
