@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -157,7 +157,7 @@ sub storeBrowser {
 # Then delete authentication methods from "steps" array.
 sub check {
     my ( $self, $req ) = @_;
-    if ( my $cid = $req->cookies->{ $self->cookieName() } ) {
+    if ( my $cid = $req->cookies->{ $self->cookieName } ) {
         my $ps = Lemonldap::NG::Common::Session->new(
             storageModule        => $self->conf->{globalStorage},
             storageModuleOptions => $self->conf->{globalStorageOptions},
@@ -231,7 +231,7 @@ sub logout {
     my ( $self, $req ) = @_;
     $req->addCookie(
         $self->p->cookie(
-            name    => $self->cookieName(),
+            name    => $self->cookieName,
             value   => 0,
             expires => 'Wed, 21 Oct 2015 00:00:00 GMT',
             secure  => $self->conf->{securedCookie},
