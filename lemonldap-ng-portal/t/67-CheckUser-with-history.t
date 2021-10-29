@@ -85,7 +85,6 @@ ok(
     ),
     'CheckUser form',
 );
-count(1);
 ( $host, $url, $query ) =
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok( $res->[2]->[0] =~ m%<span trspan="checkUser">%, 'Found trspan="checkUser"' )
@@ -102,7 +101,7 @@ ok( $res->[2]->[0] =~ m%<td scope="row">ipAddr=127.0.0.1</td>%,
 ok( $res->[2]->[0] =~ m%<td scope="row">error=5; ipAddr=127.0.0.1</td>%,
     'Failed entry found' )
   or explain( $res->[2]->[0], 'Failed entry' );
-count(5);
+count(6);
 
 $client->logout($id);
 clean_sessions();

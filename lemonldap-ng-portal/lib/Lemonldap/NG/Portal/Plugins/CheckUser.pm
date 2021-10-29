@@ -99,6 +99,7 @@ sub init {
         )
     );
     return 0 unless $self->displayComputedSessionRule;
+
     $self->displayNormalizedHeadersRule(
         $self->p->buildRule(
             $self->conf->{checkUserDisplayNormalizedHeaders},
@@ -106,6 +107,7 @@ sub init {
         )
     );
     return 0 unless $self->displayNormalizedHeadersRule;
+    
     $self->displayHistoryRule(
         $self->p->buildRule(
             $self->conf->{checkUserDisplayHistory},
@@ -686,7 +688,7 @@ sub _concatHistory {
         my $utime   = delete $element->{_utime};
         {
             utime  => $utime,
-            values => join $self->{conf}->{multiValuesSeparator},
+            values => join $self->conf->{multiValuesSeparator},
             map "$_=$element->{$_}", sort keys %$element
         }
     } @{ $history->{successLogin} };
@@ -696,7 +698,7 @@ sub _concatHistory {
         my $utime   = delete $element->{_utime};
         {
             utime  => $utime,
-            values => join $self->{conf}->{multiValuesSeparator},
+            values => join $self->conf->{multiValuesSeparator},
             map "$_=$element->{$_}", sort keys %$element
         }
     } @{ $history->{failedLogin} };

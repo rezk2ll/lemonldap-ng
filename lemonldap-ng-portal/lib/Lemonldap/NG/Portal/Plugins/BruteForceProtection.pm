@@ -19,12 +19,10 @@ has lockTimes => (
     isa     => 'ArrayRef',
     default => sub { [] }
 );
-
 has maxAge => (
     is  => 'rw',
     isa => 'Int'
 );
-
 has maxFailed => (
     is  => 'rw',
     isa => 'Int'
@@ -66,7 +64,7 @@ sub init {
               ? abs $_
               : ()
           }
-          grep { /\d+/ }
+          grep /\d+/,
           split /\s*,\s*/, $self->conf->{bruteForceProtectionLockTimes};
 
         unless ($lockTimes) {
