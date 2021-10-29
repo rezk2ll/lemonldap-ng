@@ -191,6 +191,7 @@
 "checkUserDisplayComputedSession":"Sesje obliczane",
 "checkUserDisplayEmptyHeaders":"Puste nagłówki",
 "checkUserDisplayEmptyValues":"Puste wartości",
+"checkUserDisplayHistory":"History",
 "checkUserDisplayNormalizedHeaders":"Znormalizowane nagłówki",
 "checkUserDisplayPersistentInfo":"Trwałe dane sesji",
 "checkUserHiddenAttributes":"Ukryte atrybuty",

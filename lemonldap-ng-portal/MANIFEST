@@ -228,6 +228,7 @@ site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.woff
 site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.woff2
 site/htdocs/static/bwr/jquery-ui/jquery-ui.js
 site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js
+site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js.map
 site/htdocs/static/bwr/jquery.cookie/jquery.cookie.js
 site/htdocs/static/bwr/jquery.cookie/jquery.cookie.min.js
 site/htdocs/static/bwr/jquery.cookie/jquery.cookie.min.js.map
@@ -461,6 +462,7 @@ site/templates/common/mail/en.json
 site/templates/common/mail/es.json
 site/templates/common/mail/fi.json
 site/templates/common/mail/fr.json
+site/templates/common/mail/he.json
 site/templates/common/mail/it.json
 site/templates/common/mail/ms.json
 site/templates/common/mail/pt_BR.json
@@ -704,6 +706,7 @@ t/66-CDA-with-REST.t
 t/66-CDA-with-SOAP.t
 t/66-CDA.t
 t/67-CheckUser-with-Global-token.t
+t/67-CheckUser-with-history.t
 t/67-CheckUser-with-Impersonation-and-Macros.t
 t/67-CheckUser-with-issuer-SAML-POST.t
 t/67-CheckUser-with-rules.t

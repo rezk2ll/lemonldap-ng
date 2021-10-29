@@ -542,6 +542,12 @@ sub attributes {
             documentation => 'Display empty headers rule',
             flags         => 'p',
         },
+        checkUserDisplayHistory => {
+            default       => 0,
+            type          => 'boolOrExpr',
+            documentation => 'Display history rule',
+            flags         => 'p',
+        },
         checkUserHiddenHeaders => {
             type       => 'keyTextContainer',
             keyTest    => qr/^\S+$/,

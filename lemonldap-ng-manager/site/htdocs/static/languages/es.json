@@ -191,6 +191,7 @@
 "checkUserDisplayComputedSession":"Computed sessions",
 "checkUserDisplayEmptyHeaders":"Empty headers",
 "checkUserDisplayEmptyValues":"Empty values",
+"checkUserDisplayHistory":"History",
 "checkUserDisplayNormalizedHeaders":"Normalized headers",
 "checkUserDisplayPersistentInfo":"Persistent session data",
 "checkUserHiddenAttributes":"Atributos ocultos",
