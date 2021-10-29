@@ -17,15 +17,15 @@ Just enable it in the manager (section “plugins”).
    -  **Identities use rule**: Rule to define which profiles can be
       displayed (by example: ``!$anonymous``)
    -  **Unrestricted users rule**: Rule to define which users can check
-      ALL users. ``Identities use rule`` is bypassed.
-   -  **Hidden attributes**: Session attributes not displayed
+      ALL users and attributes.
+   -  **Hidden attributes**: Session attributes not displayed except for unrestricted users
    -  **Attributes used for searching sessions**: User's attributes used
       for searching sessions in backend if ``whatToTrace`` fails. Useful
       to look for sessions by mail or givenName. Let it blank to search
       by ``whatToTrace`` only
    -  **Hidden headers**: Sent headers whose value is masked except for unrestricted users.
-      Key is a Virtualhost name and value represents a space-separated headers list.
-      A blank value obfuscates ALL relative Virtualhost sent headers.
+      Key is a VirtualHost name and value represents a space-separated headers list.
+      A blank value obfuscates ALL relative VirtualHost sent headers.
       Note that just valued hearders are masked.
 
 -  **Display**:
@@ -40,6 +40,7 @@ Just enable it in the manager (section “plugins”).
       even empty ones
    -  **Persistent session data**: Rule to define which users can display
       persistent session data
+   -  **History**: Rule to define which users can display logins history
 
 .. note::
 
