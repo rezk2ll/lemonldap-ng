@@ -7,7 +7,6 @@ Handlers
    handlerauthbasic
    cda
    ssoaas
-   servertoserver
    oauth2handler
    securetoken
    servertoserver
