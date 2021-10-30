@@ -1106,6 +1106,7 @@
 "stateCheck":"State Check",
 "stayConnect":"Duy trì kết nối",
 "stayConnected":"Activation",
+"stayConnectedBypassFG":"Do not check fingerprint",
 "stayConnectedCookieName":"Tên cookie",
 "stayConnectedTimeout":"Expiration time",
 "storePassword":"Lưu trữ mật khẩu người dùng trong các dữ liệu phiên",

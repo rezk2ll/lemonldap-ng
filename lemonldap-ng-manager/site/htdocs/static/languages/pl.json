@@ -1106,6 +1106,7 @@
 "stateCheck":"Kontrola stanu",
 "stayConnect":"Trwałe połączenia",
 "stayConnected":"Aktywacja",
+"stayConnectedBypassFG":"Do not check fingerprint",
 "stayConnectedCookieName":"Nazwa ciasteczka",
 "stayConnectedTimeout":"Data ważności",
 "storePassword":"Przechowuj hasło użytkownika w sesji",

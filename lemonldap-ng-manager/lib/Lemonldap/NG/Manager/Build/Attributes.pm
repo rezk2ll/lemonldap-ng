@@ -440,6 +440,11 @@ sub attributes {
             default       => 0,
             documentation => 'Enable StayConnected plugin',
         },
+        stayConnectedBypassFG => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Disable fingerprint checkng',
+        },
         stayConnectedTimeout => {
             type    => 'int',
             default => 2592000,

@@ -1106,6 +1106,7 @@
 "stateCheck":"Durum Kontrolü",
 "stayConnect":"Kalıcı bağlantılar",
 "stayConnected":"Aktivasyon",
+"stayConnectedBypassFG":"Do not check fingerprint",
 "stayConnectedCookieName":"Çerez adı",
 "stayConnectedTimeout":"Son kullanma süresi",
 "storePassword":"Kullanıcı parolasını oturumda sakla",

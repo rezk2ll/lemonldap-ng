@@ -4164,6 +4164,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 0,
             'type'    => 'bool'
         },
+        'stayConnectedBypassFG' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'stayConnectedCookieName' => {
             'default' => 'llngconnection',
             'msgFail' => '__badCookieName__',

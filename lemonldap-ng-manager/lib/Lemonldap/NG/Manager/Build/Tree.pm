@@ -625,6 +625,7 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'stayConnected',
+                                'stayConnectedBypassFG',
                                 'stayConnectedTimeout',
                                 'stayConnectedCookieName'
                             ],

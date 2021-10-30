@@ -1106,6 +1106,7 @@
 "stateCheck":"狀態檢查",
 "stayConnect":"持久連線",
 "stayConnected":"啟用",
+"stayConnectedBypassFG":"Do not check fingerprint",
 "stayConnectedCookieName":"Cookie 名稱",
 "stayConnectedTimeout":"過期名稱",
 "storePassword":"在工作階段中儲存使用者密碼",

@@ -1107,6 +1107,7 @@
 "stateCheck":"State Check",
 "stayConnect":"الاتصالات المستمرة",
 "stayConnected":"تفعيل",
+"stayConnectedBypassFG":"Do not check fingerprint",
 "stayConnectedCookieName":"اسم ملف تعريف الارتباط",
 "stayConnectedTimeout":"Expiration time",
 "storePassword":"تخزين كلمة مرور المستخدم في بيانات الجلسة",
