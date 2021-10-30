@@ -61,7 +61,6 @@ sub init {
 # Then ask for browser fingerprint
 sub newDevice {
     my ( $self, $req ) = @_;
-
     my $checkLogins = $req->param('checkLogins');
     $self->logger->debug("StayConnected: checkLogins set") if $checkLogins;
 
@@ -116,7 +115,7 @@ sub storeBrowser {
                         },
                     );
 
-                    # Cookie available 30 days
+                    # Cookie available 30 days by default
                     $req->addCookie(
                         $self->p->cookie(
                             name    => $self->cookieName,
@@ -129,12 +128,12 @@ sub storeBrowser {
                       if exists $tmp->{history};
                 }
                 else {
-                    $self->logger->warn("Browser hasn't return fingerprint");
+                    $self->logger->warn("Browser did not return fingerprint");
                 }
             }
             else {
                 $self->userLogger->error(
-                    "StayConnected: mismatch UID: $tmp->{name} / $uid");
+                    "StayConnected: mismatch UID ($tmp->{name} / $uid)");
             }
         }
         else {
