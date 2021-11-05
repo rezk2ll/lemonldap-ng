@@ -29,6 +29,7 @@ Applications
    applications/jitsimeet
    applications/liferay
    applications/limesurvey
+   applications/matrix
    applications/mattermost
    applications/mediawiki
    applications/mobilizon
@@ -111,6 +112,7 @@ Application                                                       Configuration 
 .. image:: applications/logo-jitsimeet.png                        :doc:`Jitsi Meet<applications/jitsimeet>`            ✔
 .. image:: applications/liferay_logo.png                          :doc:`Liferay<applications/liferay>`                 ✔
 .. image:: applications/limesurvey_logo.png                       :doc:`LimeSurvey<applications/limesurvey>`           ✔
+.. image:: applications/matrix_logo.png                           :doc:`Matrix<applications/matrix>`                                                          ✔
 .. image:: applications/mattermost_logo.png                       :doc:`Mattermost<applications/mattermost>`                                                  ✔
 .. image:: applications/mediawiki_logo.png                        :doc:`Mediawiki<applications/mediawiki>`             ✔
 .. image:: applications/mobilizon_logo.jpg                        :doc:`Mobilizon<applications/mobilizon>`             ✔
