@@ -637,11 +637,12 @@ sub attributes {
             'type' => 'keyTextContainer'
         },
         'available2F' => {
-            'default' => 'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,Yubikey,Radius',
-            'type'    => 'text'
+            'default' =>
+              'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius',
+            'type' => 'text'
         },
         'available2FSelfRegistration' => {
-            'default' => 'TOTP,U2F,Yubikey',
+            'default' => 'TOTP,U2F,WebAuthn,Yubikey',
             'type'    => 'text'
         },
         'avoidAssignment' => {

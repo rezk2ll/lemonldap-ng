@@ -3322,12 +3322,12 @@ sub attributes {
         },
         available2F => {
             type          => 'text',
-            default       => 'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,Yubikey,Radius',
+            default       => 'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius',
             documentation => 'Available second factor modules',
         },
         available2FSelfRegistration => {
             type    => 'text',
-            default => 'TOTP,U2F,Yubikey',
+            default => 'TOTP,U2F,WebAuthn,Yubikey',
             documentation =>
               'Available self-registration modules for second factor',
         },

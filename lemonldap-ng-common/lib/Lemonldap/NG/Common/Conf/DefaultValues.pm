@@ -17,8 +17,9 @@ sub defaultValues {
         },
         'authChoiceParam' => 'lmAuth',
         'authentication'  => 'Demo',
-        'available2F'     => 'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,Yubikey,Radius',
-        'available2FSelfRegistration'        => 'TOTP,U2F,Yubikey',
+        'available2F' =>
+          'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius',
+        'available2FSelfRegistration'        => 'TOTP,U2F,WebAuthn,Yubikey',
         'bruteForceProtectionLockTimes'      => '15, 30, 60, 300, 600',
         'bruteForceProtectionMaxAge'         => 300,
         'bruteForceProtectionMaxFailed'      => 3,
