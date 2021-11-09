@@ -40,6 +40,8 @@ LemonLDAP::NG 2F registration script
       device = 'yubikey';
     } else if (device === 'TOTP') {
       device = 'totp';
+    } else if (device === 'WebAuthn') {
+      device = 'webauthn';
     } else {
       setMsg('u2fFailed', 'warning');
     }
