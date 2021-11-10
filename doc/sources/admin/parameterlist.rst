@@ -62,6 +62,7 @@ casSrvMetaDataOptions                                   Root of CAS server optio
 casStorage                                              Apache::Session module to store CAS user data                                        ✔
 casStorageOptions                                       Apache::Session module parameters                                                    ✔
 casStrictMatching                                       Disable host-based matching of CAS services                                          ✔
+casTicketExpiration                                     CAS Service and Proxy tickets TTL                                                    ✔
 cda                                                     Enable Cross Domain Authentication                                                   ✔      ✔
 certificateResetByMailCeaAttribute                                                                                                           ✔
 certificateResetByMailCertificateAttribute                                                                                                   ✔

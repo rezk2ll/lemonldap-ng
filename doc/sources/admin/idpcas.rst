@@ -71,6 +71,10 @@ Then go in ``CAS Service`` to define:
    matching. By default, LemonLDAP::NG will try to find a declared CAS
    Application matching the hostname of the requested application if it cannot
    find a match using the full path. See :ref:`idpcas-url-matching` for details
+-  **Temporary ticket lifetime**: (since *2.0.14*): restricts how long Service
+   and Proxy tickets are valid after being generated. For compatibility, the
+   default value of ``0`` means they are valid for the entire session duration.
+   But the CAS spefications recommends ``300`` (5 minutes).
 
 
 .. tip::
