@@ -274,6 +274,7 @@ site/htdocs/static/common/favicon.ico
 site/htdocs/static/common/fi.png
 site/htdocs/static/common/fonts/password.ttf
 site/htdocs/static/common/fr.png
+site/htdocs/static/common/he.png
 site/htdocs/static/common/icons/application_cascade.png
 site/htdocs/static/common/icons/arrow_refresh.png
 site/htdocs/static/common/icons/calendar.png
@@ -380,6 +381,7 @@ site/htdocs/static/languages/en.json
 site/htdocs/static/languages/es.json
 site/htdocs/static/languages/fi.json
 site/htdocs/static/languages/fr.json
+site/htdocs/static/languages/he.json
 site/htdocs/static/languages/it.json
 site/htdocs/static/languages/nl.json
 site/htdocs/static/languages/pl.json
@@ -735,6 +737,7 @@ t/68-FindUser-with-UpgradeSession.t
 t/68-FindUser-without-attribute.t
 t/68-FindUser-without-Impersonation.t
 t/68-Impersonation-with-2F.t
+t/68-Impersonation-with-Custom-Plugin.t
 t/68-Impersonation-with-doubleCookies.t
 t/68-Impersonation-with-filtered-merge.t
 t/68-Impersonation-with-History.t
@@ -780,6 +783,7 @@ t/91-Handler-cache-cleaned.t
 t/91-Memory-Leak.t
 t/99-Dont-load-Dumper.t
 t/99-pod.t
+t/AfterDataCustomPlugin.pm
 t/CasHookPlugin.pm
 t/gpghome/key.asc
 t/gpghome/openpgp-revocs.d/9482CEFB055809CBAFE6D71AAB2D5542891D1677.rev
