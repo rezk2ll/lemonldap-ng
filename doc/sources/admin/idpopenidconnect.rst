@@ -34,6 +34,7 @@ As an OP, LL::NG supports a lot of OpenID Connect features:
 -  Introspection endpoint (Since ``2.0.6``) - See :rfc:`7662`
 -  Offline access (Since ``2.0.7``)
 -  Refresh Tokens (Since ``2.0.7``)
+-  Optional JWT Access Tokens (Since ``2.0.12``) - See :rfc:`9068`
 
 Configuration
 -------------
