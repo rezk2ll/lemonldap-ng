@@ -167,6 +167,7 @@
 "casStorage":"CAS 会话模块名称",
 "casStorageOptions":"CAS 会话模块选项",
 "casStrictMatching":"Use strict URL matching",
+"casTicketExpiration":"Temporary ticket lifetime",
 "categoryName":"分类名称",
 "cda":"Multiple domains",
 "certificateMailContent":"Mail content",

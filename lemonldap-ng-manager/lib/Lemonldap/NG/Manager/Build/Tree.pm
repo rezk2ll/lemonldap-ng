@@ -1393,6 +1393,7 @@ sub tree {
                 'casStorageOptions',
                 'casAttributes',
                 'casStrictMatching',
+                'casTicketExpiration',
 
             ]
         },

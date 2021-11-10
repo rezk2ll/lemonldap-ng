@@ -167,6 +167,7 @@
 "casStorage":"CAS sessions module name",
 "casStorageOptions":"CAS sessions module options",
 "casStrictMatching":"Use strict URL matching",
+"casTicketExpiration":"Temporary ticket lifetime",
 "categoryName":"Category name",
 "cda":"Mehrere Domains",
 "certificateMailContent":"Mail content",
