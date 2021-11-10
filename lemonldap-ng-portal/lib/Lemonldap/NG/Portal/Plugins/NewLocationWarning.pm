@@ -11,8 +11,7 @@ our $VERSION = '2.0.14';
 has locationAttribute        => ( is => 'rw' );
 has locationDisplayAttribute => ( is => 'rw' );
 has locationMaxValues        => ( is => 'rw' );
-
-has mailSessionKey => (
+has mailSessionKey           => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
@@ -53,19 +52,17 @@ sub init {
              $self->conf->{newLocationWarningLocationDisplayAttribute}
           || $self->locationAttribute );
     $self->locationMaxValues( $self->conf->{newLocationWarningMaxValues} || 0 );
+
     return 1;
 }
 
 sub checkNewLocation {
     my ( $self, $req ) = @_;
-
     my $successLogin = $req->sessionInfo->{_loginHistory}->{successLogin} || [];
+    my $location     = $req->sessionInfo->{ $self->locationAttribute };
 
-    my $location = $req->sessionInfo->{ $self->locationAttribute };
-
-    unless ($location) {
-        $self->logger->debug( "Could not find location of user " . $req->user );
-    }
+    $self->logger->debug( "Could not find location of user " . $req->user )
+      unless $location;
 
     # Get all non-empty, unique values of location attribute through list of
     # successful logins
@@ -105,9 +102,9 @@ sub checkNewLocation {
 
 sub sendWarningEmail {
     my ( $self, $req ) = @_;
-    if ( $req->sessionInfo->{_riskDetails}->{newLocation} ) {
-        return $self->_sendMail($req);
-    }
+    return $self->_sendMail($req)
+      if $req->sessionInfo->{_riskDetails}->{newLocation};
+      
     return PE_OK;
 }
 

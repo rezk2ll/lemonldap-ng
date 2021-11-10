@@ -52,8 +52,7 @@ sub init {
       ->addAuthRouteWithRedirect( checkdevops => 'display', ['GET'] );
 
     unless ( $self->conf->{useSafeJail} ) {
-        $self->logger->warn(
-            '"CheckDevOps" plugin enabled WITHOUT SafeJail');
+        $self->logger->warn('"CheckDevOps" plugin enabled WITHOUT SafeJail');
         return 0;
     }
 
@@ -122,7 +121,7 @@ sub run {
             TOKEN     => $token,
         };
         return $self->p->sendJSONresponse( $req, $params )
-          if $req->wantJSON && $msg;
+          if ( $req->wantJSON && $msg );
 
         # Display form
         return $self->p->sendHtml( $req, 'checkdevops', params => $params )
@@ -270,7 +269,7 @@ sub run {
     return $self->p->sendJSONresponse( $req, $params ) if $req->wantJSON;
 
     # Display form
-    return $self->p->sendHtml( $req, 'checkdevops', params => $params, );
+    return $self->p->sendHtml( $req, 'checkdevops', params => $params );
 }
 
 1;
