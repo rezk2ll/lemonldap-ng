@@ -163,9 +163,6 @@ sub run {
     # Session ID
     my $session_id = $req->{sessionInfo}->{_session_id} || $req->id;
 
-    # Session creation timestamp
-    my $time = $req->{sessionInfo}->{_utime} || time();
-
     # 1. LOGIN
     if ( $target eq $cas_login ) {
 
@@ -306,12 +303,20 @@ sub run {
             $self->logger->debug(
                 "Create a CAS service ticket for service $service");
 
+            my $_utime =
+              $self->conf->{casTicketExpiration}
+              ? (
+                time +
+                  $self->conf->{casTicketExpiration} -
+                  $self->conf->{timeout} )
+              : ( $req->{sessionInfo}->{_utime} || time() );
+
             my $Sinfos;
             $Sinfos->{type}    = 'casService';
             $Sinfos->{service} = $service;
             $Sinfos->{renew}   = $casRenewFlag;
             $Sinfos->{_cas_id} = $session_id;
-            $Sinfos->{_utime}  = $time;
+            $Sinfos->{_utime}  = $_utime;
             $Sinfos->{_casApp} = $app;
 
             my $h = $self->p->processHook( $req, 'casGenerateServiceTicket',
@@ -516,6 +521,18 @@ sub validate {
         return $self->returnCasValidateError();
     }
 
+    # Make sure the token is still valid, we already compensated for
+    # different TTLs when storing _utime
+    if ( $casServiceSession->{data}->{_utime} ) {
+        if (
+            time >
+            ( $casServiceSession->{data}->{_utime} + $self->conf->{timeout} ) )
+        {
+            $self->logger->error("Session $ticket has expired");
+            return $self->returnCasValidateError();
+        }
+    }
+
     $self->logger->debug("Service ticket session $ticket found");
 
     my $service1_uri = URI->new($service);
@@ -637,11 +654,16 @@ sub proxy {
             'Error in proxy session management' );
     }
 
+    my $_utime =
+      $self->conf->{casTicketExpiration}
+      ? ( time + $self->conf->{casTicketExpiration} - $self->conf->{timeout} )
+      : $casProxyGrantingSession->data->{_utime};
+
     my $Pinfos;
     $Pinfos->{type}    = 'casProxy';
     $Pinfos->{service} = $targetService;
     $Pinfos->{_cas_id} = $casProxyGrantingSession->data->{_cas_id};
-    $Pinfos->{_utime}  = $casProxyGrantingSession->data->{_utime};
+    $Pinfos->{_utime}  = $_utime;
     $Pinfos->{proxies} = $casProxyGrantingSession->data->{proxies};
 
     $casProxySession->update($Pinfos);
@@ -711,6 +733,20 @@ sub _validate2 {
         return $self->returnCasServiceValidateError( $req, 'INVALID_TICKET',
             'Ticket not found' );
     }
+
+    # Make sure the token is still valid, we already compensated for
+    # different TTLs when storing _utime
+    if ( $casServiceSession->{data}->{_utime} ) {
+        if (
+            time >
+            ( $casServiceSession->{data}->{_utime} + $self->conf->{timeout} ) )
+        {
+            $self->logger->error("$urlType ticket session $ticket has expired");
+            return $self->returnCasServiceValidateError( $req, 'INVALID_TICKET',
+                'Ticket expired' );
+        }
+    }
+
     my $app = $casServiceSession->data->{_casApp};
 
     $self->logger->debug("$urlType ticket session $ticket found");
@@ -777,7 +813,7 @@ sub _validate2 {
         $PGinfos->{type}    = 'casProxyGranting';
         $PGinfos->{service} = $service;
         $PGinfos->{_cas_id} = $casServiceSession->data->{_cas_id};
-        $PGinfos->{_utime}  = $casServiceSession->data->{_utime};
+        $PGinfos->{_utime}  = time;
         $PGinfos->{_casApp} = $app;
 
         # Trace proxies
