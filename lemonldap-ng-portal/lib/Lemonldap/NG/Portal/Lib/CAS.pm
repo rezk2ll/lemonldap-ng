@@ -226,8 +226,10 @@ sub returnCasServiceValidateSuccess {
     }
     if ($proxies) {
         $self->logger->debug("Add proxies $proxies in response");
-        $s .= "\t\t<cas:proxies>\n\t\t\t<cas:proxy>$_</cas:proxy>\n"
-          foreach ( split( /$self->conf->{multiValuesSeparator}/, $proxies ) );
+        $s .= "\t\t<cas:proxies>\n";
+        $s .= "\t\t\t<cas:proxy>$_</cas:proxy>\n"
+          foreach (
+            reverse( split( $self->conf->{multiValuesSeparator}, $proxies ) ) );
         $s .= "\t\t</cas:proxies>\n";
     }
     $s .= "\t</cas:authenticationSuccess>\n</cas:serviceResponse>\n";
