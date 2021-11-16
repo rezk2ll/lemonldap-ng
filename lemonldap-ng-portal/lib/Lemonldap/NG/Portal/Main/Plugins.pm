@@ -96,7 +96,7 @@ sub enabledPlugins {
     # Check if custom plugins are required
     if ( $conf->{customPlugins} ) {
         $self->logger->debug( 'Custom plugins: ' . $conf->{customPlugins} );
-        push @res, grep ( /\w+/, split( /,\s*/, $conf->{customPlugins} ) );
+        push @res, grep ( /\w+/, split( /[,\s]+/, $conf->{customPlugins} ) );
     }
 
     # Impersonation overwrites req->step and pops 'afterData' EP.

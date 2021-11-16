@@ -45,7 +45,7 @@ sub build_jail {
     $self->useSafeJail(1) unless defined $self->useSafeJail;
 
     if ($require) {
-        foreach my $f ( split /[, ]+/, $require ) {
+        foreach my $f ( split /[,\s]+/, $require ) {
             if ( $f =~ /^[\w\:]+$/ ) {
                 eval "require $f";
             }
@@ -63,7 +63,7 @@ sub build_jail {
 
     if ($build) {
         @builtCustomFunctions =
-          $self->customFunctions ? split( /\s+/, $self->customFunctions ) : ();
+          $self->customFunctions ? split( /[,\s]+/, $self->customFunctions ) : ();
         foreach (@builtCustomFunctions) {
             no warnings 'redefine';
             $api->logger->debug("Custom function: $_");
