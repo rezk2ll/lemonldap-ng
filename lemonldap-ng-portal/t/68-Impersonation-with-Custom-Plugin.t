@@ -9,10 +9,12 @@ require 't/test-lib.pm';
 my $res;
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel            => 'error',
-            passwordDB          => 'Demo',
-            impersonationRule   => 1,
-            customPlugins       => 't::AfterDataCustomPlugin',
+            logLevel          => 'debug',
+            passwordDB        => 'Demo',
+            impersonationRule => 1,
+            customFunctions => 'My::accesToTrace   My::return0,,  My::return1  ',
+            customPlugins =>
+'t::AfterDataCustomPlugin    t::CasHookPlugin,, t::OidcHookPlugin ',
             customPluginsParams => { uid => 'rtyler' }
         }
     }
