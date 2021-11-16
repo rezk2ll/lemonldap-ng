@@ -26,7 +26,7 @@ has multiValuesSeparator => ( is => 'rw', isa => 'Maybe[Str]' );
 has jail                 => ( is => 'rw' );
 has error                => ( is => 'rw' );
 
-our $VERSION = '2.0.13';
+our $VERSION = '2.0.14';
 our @builtCustomFunctions;
 
 ## @imethod protected build_jail()

@@ -785,6 +785,7 @@ t/99-Dont-load-Dumper.t
 t/99-pod.t
 t/AfterDataCustomPlugin.pm
 t/CasHookPlugin.pm
+t/Custom.pm
 t/gpghome/key.asc
 t/gpghome/openpgp-revocs.d/9482CEFB055809CBAFE6D71AAB2D5542891D1677.rev
 t/gpghome/private-keys-v1.d/A076B0E7DB141A919271EE8B581CDFA8DA42F333.key

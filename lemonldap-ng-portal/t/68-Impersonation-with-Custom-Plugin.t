@@ -9,7 +9,7 @@ require 't/test-lib.pm';
 my $res;
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel          => 'debug',
+            logLevel          => 'error',
             passwordDB        => 'Demo',
             impersonationRule => 1,
             customFunctions => 'My::accesToTrace   My::return0,,  My::return1  ',
