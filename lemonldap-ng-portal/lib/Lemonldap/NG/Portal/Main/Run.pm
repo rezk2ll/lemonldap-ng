@@ -198,13 +198,13 @@ sub refresh {
             'getUser',
             @{ $self->betweenAuthAndData },
             'setSessionInfo',
-            $self->groupsAndMacros,
-            'setLocalGroups',
             sub {
                 $_[0]->sessionInfo->{$_} = $data{$_} foreach ( keys %data );
                 $_[0]->refresh(1);
                 return PE_OK;
             },
+            $self->groupsAndMacros,
+            'setLocalGroups',
             'store',
         ]
     );
