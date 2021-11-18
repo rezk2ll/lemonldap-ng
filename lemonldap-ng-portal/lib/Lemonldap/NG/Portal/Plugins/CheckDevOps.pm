@@ -48,7 +48,7 @@ has ua => (
 
 sub init {
     my ($self) = @_;
-    $self->addAuthRoute( checkdevops => 'run', ['POST'] )
+    $self->addAuthRoute( checkdevops => 'parse', ['POST'] )
       ->addAuthRouteWithRedirect( checkdevops => 'display', ['GET'] );
 
     unless ( $self->conf->{useSafeJail} ) {
@@ -85,7 +85,7 @@ sub display {
     return $self->p->sendHtml( $req, 'checkdevops', params => $params, );
 }
 
-sub run {
+sub parse {
     my ( $self,    $req )   = @_;
     my ( $headers, $rules ) = ( [], [] );
     my ( $msg, $json, $url );
@@ -118,7 +118,7 @@ sub run {
             DOWNLOAD  => $self->conf->{checkDevOpsDownload},
             MSG       => "PE$msg",
             ALERTE    => 'alert-warning',
-            TOKEN     => $token,
+            TOKEN     => $token
         };
         return $self->p->sendJSONresponse( $req, $params )
           if ( $req->wantJSON && $msg );
@@ -195,8 +195,8 @@ sub run {
         my $handler = $self->p->HANDLER;
         my $vhost   = $handler->resolveAlias($req);
 
-        # Removed forbidden session attributes
-        foreach my $v ( split /\s+/, $self->conf->{hiddenAttributes} ) {
+        # Removed hidden session attributes
+        foreach my $v ( split /[,\s]+/, $self->conf->{hiddenAttributes} ) {
             foreach ( keys %{ $json->{headers} } ) {
                 if ( $json->{headers}->{$_} eq '$' . $v ) {
                     delete $json->{headers}->{$_};
@@ -225,7 +225,7 @@ sub run {
             } @$headers;
         }
 
-        my $headers_list = join ', ', map { "$_->{key}:$_->{value}" } @$headers;
+        my $headers_list = join ', ', map "$_->{key}:$_->{value}", @$headers;
         $self->logger->debug("CheckDevOps compiled headers: $headers_list");
 
         # Compile rules
@@ -238,7 +238,7 @@ sub run {
                 : 'forbidden'
             }
         } sort keys %{ $json->{rules} };
-        my $rules_list = join ', ', map { "$_->{uri}:$_->{access}" } @$rules;
+        my $rules_list = join ', ', map "$_->{uri}:$_->{access}", @$rules;
         $self->logger->debug("CheckDevOps compiled rules: $rules_list");
 
         # Prepare form params

@@ -125,7 +125,7 @@ Go in Manager, ``General Parameters`` » ``Advanced Parameters`` »
 
 ::
 
-   SSOExtensions::function1 SSOExtensions::function2
+   SSOExtensions::function1, SSOExtensions::function2
 
 
 .. attention::

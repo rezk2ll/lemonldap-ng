@@ -40,7 +40,7 @@ my $client = LLNG::Manager::Test->new( {
             checkDevOps                         => 1,
             checkDevOpsDownload                 => 0,
             checkDevOpsDisplayNormalizedHeaders => 0,
-            hiddenAttributes                    => 'mail UA'
+            hiddenAttributes                    => 'mail,   UA'
         }
     }
 );

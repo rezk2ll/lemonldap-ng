@@ -270,7 +270,7 @@ sub check {
           . $self->conf->{checkUserSearchAttributes}
           : $self->conf->{whatToTrace};
 
-        foreach ( split /\s+/, $searchAttrs ) {
+        foreach ( split /[,\s]+/, $searchAttrs ) {
             $self->logger->debug("Searching with: $_ = $user");
             $sessions = $self->module->searchOn( $moduleOptions, $_, $user );
             last if ( keys %$sessions );

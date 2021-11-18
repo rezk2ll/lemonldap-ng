@@ -58,7 +58,7 @@ Just enable it in the manager (section “plugins”).
 
     By example:
 
-    \* Search attributes => ``mail uid givenName``
+    \* Search attributes => ``mail, uid, givenName``
 
     If ``whatToTrace`` fails, sessions are searched by ``mail``, next
     ``uid`` if none session is found and so on...
