@@ -507,7 +507,7 @@ sub attributes {
         },
         checkUserHiddenAttributes => {
             type          => 'text',
-            default       => '_loginHistory _session_id hGroups',
+            default       => '_loginHistory, _session_id, hGroups',
             documentation => 'Attributes to hide in CheckUser plugin',
             flags         => 'p',
         },
@@ -672,7 +672,7 @@ sub attributes {
         },
         impersonationHiddenAttributes => {
             type          => 'text',
-            default       => '_2fDevices _loginHistory',
+            default       => '_2fDevices, _loginHistory',
             documentation => 'Attributes to skip',
             flags         => 'p',
         },
@@ -986,7 +986,7 @@ sub attributes {
         },
         hiddenAttributes => {
             type          => 'text',
-            default       => '_password _2fDevices',
+            default       => '_password, _2fDevices',
             documentation => 'Name of attributes to hide in logs',
         },
         displaySessionId => {
@@ -1348,7 +1348,7 @@ sub attributes {
         # Viewer
         viewerHiddenKeys => {
             type          => 'text',
-            default       => 'samlIDPMetaDataNodes samlSPMetaDataNodes',
+            default       => 'samlIDPMetaDataNodes, samlSPMetaDataNodes',
             documentation => 'Hidden Conf keys',
             flags         => 'm',
         },

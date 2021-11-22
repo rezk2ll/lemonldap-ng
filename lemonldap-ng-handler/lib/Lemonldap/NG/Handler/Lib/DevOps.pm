@@ -68,7 +68,8 @@ sub _loadVhostConfig {
             }
         }
         else {
-            $class->logger->error( "Unable to retrieve rules file from $rUrl -> "
+            $class->logger->error(
+                "Unable to retrieve rules file from $rUrl -> "
                   . $resp->status_line );
             $class->logger->info("Default rule and header are employed");
         }
@@ -81,8 +82,8 @@ q"I refuse to compile 'rules.json' when useSafeJail isn't activated! Yes I know,
     $json->{rules} ||= { default => 1 };
     $json->{headers} //= { 'Auth-User' => '$uid' };
 
-    # Removed forbidden session attributes
-    foreach my $v ( split /\s+/, $class->tsv->{hiddenAttributes} ) {
+    # Removed hidden session attributes
+    foreach my $v ( split /[,\s]+/, $class->tsv->{hiddenAttributes} ) {
         foreach ( keys %{ $json->{headers} } ) {
             delete $json->{headers}->{$_}
               if $json->{headers}->{$_} eq '$' . $v;
