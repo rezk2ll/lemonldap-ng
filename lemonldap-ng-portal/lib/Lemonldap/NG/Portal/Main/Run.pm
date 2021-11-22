@@ -189,7 +189,7 @@ sub refresh {
     $req->user( $data{_user} || $data{ $self->conf->{whatToTrace} } );
     $req->id( $data{_session_id} );
     foreach ( keys %data ) {
-        delete $data{$_} unless ( /^_/ or /^(?:startTime)$/ );
+        delete $data{$_} unless ( /^_/ or /^(?:startTime|authenticationLevel)$/ );
     }
     $data{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
     $self->logger->debug(
@@ -205,7 +205,7 @@ sub refresh {
             },
             $self->groupsAndMacros,
             'setLocalGroups',
-            'store',
+            'store'
         ]
     );
     my $res = $req->error( $self->process($req) );
