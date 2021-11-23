@@ -7,6 +7,7 @@ package Lemonldap::NG::Portal::Plugins::CheckState;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Portal;
 
 our $VERSION = '2.0.10';
 
@@ -67,7 +68,8 @@ sub check {
     }
 
     return $self->p->sendError( $req, join( ",\n", @rep ), 500 ) if (@rep);
-    return $self->p->sendJSONresponse( $req, { result => 1 } );
+    return $self->p->sendJSONresponse( $req,
+        { result => 1, version => $Lemonldap::NG::Portal::VERSION } );
 }
 
 1;
