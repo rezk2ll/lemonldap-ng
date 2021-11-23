@@ -1,4 +1,5 @@
 use Test::More;
+use Lemonldap::NG::Portal;
 use strict;
 
 require 't/test-lib.pm';
@@ -55,6 +56,11 @@ ok(
 );
 my $j = expectJSON($res);
 is( $j->{result}, 1, "response has a result key with value 1" );
+is(
+    $j->{version},
+    $Lemonldap::NG::Portal::VERSION,
+    "response version is correct"
+);
 
 ok(
     $res = $client->_get(
