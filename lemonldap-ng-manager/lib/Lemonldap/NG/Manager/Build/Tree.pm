@@ -809,7 +809,8 @@ sub tree {
                                         'checkUserDisplayNormalizedHeaders',
                                         'checkUserDisplayEmptyHeaders',
                                         'checkUserDisplayEmptyValues',
-                                        'checkUserDisplayHistory',
+                                        'checkUserDisplayHiddenAttributes',
+                                        'checkUserDisplayHistory'
                                     ]
                                 },
                             ]

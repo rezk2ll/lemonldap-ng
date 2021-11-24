@@ -191,6 +191,7 @@
 "checkUserDisplayComputedSession":"Hesaplanan oturumlar",
 "checkUserDisplayEmptyHeaders":"Boş başlıklar",
 "checkUserDisplayEmptyValues":"Boş değerler",
+"checkUserDisplayHiddenAttributes":"Hidden attributes",
 "checkUserDisplayHistory":"Geçmiş",
 "checkUserDisplayNormalizedHeaders":"Normalleştirilmiş başlıklar",
 "checkUserDisplayPersistentInfo":"Kalıcı oturum verisi",

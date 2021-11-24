@@ -32,14 +32,14 @@ Just enable it in the manager (section “plugins”).
 
    -  **Computed sessions**: Rule to define which users can display a
       computed session if no SSO session is found
-   -  **Empty headers**: Rule to define which users can display ALL headers
-      appended by LemonLDAP::NG including empty ones
-   -  **Normalized headers**: Rule to define which users can see headers name sent by
-      the web server (see RFC3875)
-   -  **Empty values**: Rule to define which users can display ALL attributes
-      even empty ones
    -  **Persistent session data**: Rule to define which users can display
       persistent session data
+   -  **Normalized headers**: Rule to define which users can see headers name sent by
+      the web server (see RFC3875)
+   -  **Empty headers**: Rule to define which users can display ALL headers
+      sent by LemonLDAP::NG including empty ones
+   -  **Empty values**: Rule to define which users can display empty values
+   -  **Hidden attributes**: Rule to define which users can display hidden attributes
    -  **History**: Rule to define which users can display logins history
 
 .. note::

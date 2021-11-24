@@ -553,6 +553,12 @@ sub attributes {
             documentation => 'Display history rule',
             flags         => 'p',
         },
+        checkUserDisplayHiddenAttributes => {
+            default       => 0,
+            type          => 'boolOrExpr',
+            documentation => 'Display hidden attributes rule',
+            flags         => 'p',
+        },
         checkUserHiddenHeaders => {
             type       => 'keyTextContainer',
             keyTest    => qr/^\S+$/,

@@ -35,6 +35,7 @@ has displayEmptyValuesRule       => ( is => 'rw', default => sub { 0 } );
 has displayEmptyHeadersRule      => ( is => 'rw', default => sub { 0 } );
 has displayPersistentInfoRule    => ( is => 'rw', default => sub { 0 } );
 has displayComputedSessionRule   => ( is => 'rw', default => sub { 0 } );
+has displayHiddenAttributesRule  => ( is => 'rw', default => sub { 0 } );
 has displayNormalizedHeadersRule => ( is => 'rw', default => sub { 0 } );
 has idRule                       => ( is => 'rw', default => sub { 1 } );
 has sorted                       => ( is => 'rw', default => sub { 0 } );
@@ -107,11 +108,19 @@ sub init {
         )
     );
     return 0 unless $self->displayNormalizedHeadersRule;
-    
+
     $self->displayHistoryRule(
         $self->p->buildRule(
             $self->conf->{checkUserDisplayHistory},
             'checkUserDisplayHistory'
+        )
+    );
+    return 0 unless $self->displayHistoryRule;
+
+    $self->displayHiddenAttributesRule(
+        $self->p->buildRule(
+            $self->conf->{checkUserDisplayHiddenAttributes},
+            'checkUserDisplayHiddenAttributes'
         )
     );
     return 0 unless $self->displayHistoryRule;
@@ -582,23 +591,16 @@ sub _createArray {
     my ( $self, $req, $attrs, $userData ) = @_;
     my $array_attrs = [];
 
-    if ( $self->displayEmptyValuesRule->( $req, $userData ) ) {
-        $self->logger->debug("Delete hidden attributes...");
-        foreach my $k ( sort keys %$attrs ) {
-
-            # Ignore hidden attributes
-            push @$array_attrs, { key => $k, value => $attrs->{$k} }
-              unless ( $self->hAttr =~ /\b$k\b/ );
-        }
-    }
-    else {
-        $self->logger->debug("Delete hidden and empty attributes...");
-        foreach my $k ( sort keys %$attrs ) {
-
-            # Ignore hidden attributes and empty values
-            push @$array_attrs, { key => $k, value => $attrs->{$k} }
-              unless ( $self->hAttr =~ /\b$k\b/ or !$attrs->{$k} );
-        }
+    foreach my $k ( sort keys %$attrs ) {
+        push @$array_attrs,
+          { key => $k, value => $attrs->{$k} }
+          unless ( (
+                $self->hAttr =~ /\b$k\b/
+                && !$self->displayHiddenAttributesRule->( $req, $userData )
+            )
+            || (   !$attrs->{$k}
+                && !$self->displayEmptyValuesRule->( $req, $userData ) )
+          );
     }
 
     return $array_attrs;

@@ -905,6 +905,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'boolOrExpr'
         },
+        'checkUserDisplayHiddenAttributes' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
         'checkUserDisplayHistory' => {
             'default' => 0,
             'type'    => 'boolOrExpr'
@@ -918,7 +922,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'boolOrExpr'
         },
         'checkUserHiddenAttributes' => {
-            'default' => '_loginHistory _session_id hGroups',
+            'default' => '_loginHistory, _session_id, hGroups',
             'type'    => 'text'
         },
         'checkUserHiddenHeaders' => {
@@ -1516,7 +1520,7 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
             'type'    => 'int'
         },
         'hiddenAttributes' => {
-            'default' => '_password _2fDevices',
+            'default' => '_password, _2fDevices',
             'type'    => 'text'
         },
         'hideOldPassword' => {
@@ -1532,7 +1536,7 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
             'type'    => 'trool'
         },
         'impersonationHiddenAttributes' => {
-            'default' => '_2fDevices _loginHistory',
+            'default' => '_2fDevices, _loginHistory',
             'type'    => 'text'
         },
         'impersonationIdRule' => {
@@ -4455,7 +4459,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'bool'
         },
         'viewerHiddenKeys' => {
-            'default' => 'samlIDPMetaDataNodes samlSPMetaDataNodes',
+            'default' => 'samlIDPMetaDataNodes, samlSPMetaDataNodes',
             'type'    => 'text'
         },
         'virtualHosts' => {
