@@ -709,6 +709,7 @@ t/66-CDA-with-REST.t
 t/66-CDA-with-SOAP.t
 t/66-CDA.t
 t/67-CheckUser-with-Global-token.t
+t/67-CheckUser-with-hidden-attributes.t
 t/67-CheckUser-with-history.t
 t/67-CheckUser-with-Impersonation-and-Macros.t
 t/67-CheckUser-with-issuer-SAML-POST.t
