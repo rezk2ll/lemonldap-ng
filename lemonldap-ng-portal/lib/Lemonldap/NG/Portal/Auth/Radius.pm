@@ -4,14 +4,14 @@ use strict;
 use Mouse;
 use Authen::Radius;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_BADCREDENTIALS
   PE_OK
+  PE_BADCREDENTIALS
   PE_RADIUSCONNECTFAILED
 );
 
 extends qw(Lemonldap::NG::Portal::Auth::_WebForm);
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 # PROPERTIES
 
@@ -41,7 +41,8 @@ sub init {
     unless ( $self->initRadius ) {
         $self->error('Radius connect failed');
     }
-    return 1;
+
+    return $self->Lemonldap::NG::Portal::Auth::_WebForm::init();
 }
 
 # RUNNING METHODS
