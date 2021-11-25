@@ -130,7 +130,7 @@ Skin files
 
 A skin is composed of different files:
 
--  **.tpl**: Perl HTML::Template files, for HTML content
+-  **.tpl**: Perl `HTML::Template <https://metacpan.org/pod/HTML::Template>`__ files, for HTML content
 -  **.css**: CSS (styles)
 -  **.js**: Javascript
 -  images and other media files
@@ -211,6 +211,11 @@ lemonldap-ng-cli:
 ::
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set portalSkin 'myskin' portalSkinBackground ''
+
+
+You can find additional documentation on the syntax of template files in the
+`official documentation of the HTML::Template module
+<https://metacpan.org/pod/HTML::Template>`__
 
 Messages
 ~~~~~~~~
