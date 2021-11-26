@@ -21,9 +21,9 @@ In the manager (second factors), you just have to enable it:
    authentication module (By default: 2 for user/password based
    modules). It is recommended to set an higher value here if you want
    to give access to apps just for enrolled users.
--  **Logo** (Optional): logo file *(in static/<skin> directory)*
 -  **Label** (Optional): label that should be displayed to the user on
    the choice screen
+-  **Logo** (Optional): logo file *(in static/<skin> directory)*
 
 
 .. tip::

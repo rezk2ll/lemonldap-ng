@@ -883,6 +883,7 @@ sub tree {
                         'sfManagerRule',
                         'sfRequired',
                         'sfOnlyUpgrade',
+                        'sfRegisterTimeout',
                         {
                             title => 'utotp2f',
                             help  => 'utotp2f.html',
@@ -904,10 +905,10 @@ sub tree {
                                 'totp2fInterval',
                                 'totp2fRange',
                                 'totp2fDigits',
-                                'totp2fTTL',
                                 'totp2fAuthnLevel',
                                 'totp2fLabel',
                                 'totp2fLogo',
+                                'totp2fTTL'
                             ]
                         },
                         {
@@ -916,9 +917,9 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'u2fActivation',       'u2fSelfRegistration',
-                                'u2fUserCanRemoveKey', 'u2fTTL',
-                                'u2fAuthnLevel',       'u2fLabel',
-                                'u2fLogo',
+                                'u2fUserCanRemoveKey', 'u2fAuthnLevel',
+                                'u2fLabel',            'u2fLogo',
+                                'u2fTTL'
                             ]
                         },
                         {
@@ -935,10 +936,10 @@ sub tree {
                                 'yubikey2fUrl',
                                 'yubikey2fPublicIDSize',
                                 'yubikey2fFromSessionAttribute',
-                                'yubikey2fTTL',
                                 'yubikey2fAuthnLevel',
                                 'yubikey2fLabel',
                                 'yubikey2fLogo',
+                                'yubikey2fTTL'
                             ],
                         },
                         {
@@ -948,9 +949,9 @@ sub tree {
                             nodes => [
                                 'mail2fActivation', 'mail2fCodeRegex',
                                 'mail2fTimeout',    'mail2fSubject',
-                                'mail2fBody',       'mail2fAuthnLevel',
-                                'mail2fLabel',      'mail2fLogo',
-                                'mail2fSessionKey',
+                                'mail2fBody',       'mail2fSessionKey',
+                                'mail2fAuthnLevel', 'mail2fLabel',
+                                'mail2fLogo'
                             ]
                         },
                         {
@@ -961,7 +962,7 @@ sub tree {
                                 'ext2fActivation',  'ext2fCodeActivation',
                                 'ext2FSendCommand', 'ext2FValidateCommand',
                                 'ext2fAuthnLevel',  'ext2fLabel',
-                                'ext2fLogo',
+                                'ext2fLogo'
                             ]
                         },
                         {
@@ -975,8 +976,8 @@ sub tree {
                                 'radius2fUsernameSessionKey',
                                 'radius2fTimeout',
                                 'radius2fAuthnLevel',
-                                'radius2fLogo',
                                 'radius2fLabel',
+                                'radius2fLogo'
                             ]
                         },
                         {
@@ -986,7 +987,7 @@ sub tree {
                                 'rest2fActivation', 'rest2fInitUrl',
                                 'rest2fInitArgs',   'rest2fVerifyUrl',
                                 'rest2fVerifyArgs', 'rest2fAuthnLevel',
-                                'rest2fLabel',      'rest2fLogo',
+                                'rest2fLabel',      'rest2fLogo'
                             ]
                         },
                         'sfExtra',
@@ -997,10 +998,9 @@ sub tree {
                             nodes => [
                                 'sfRemovedMsgRule',  'sfRemovedUseNotif',
                                 'sfRemovedNotifRef', 'sfRemovedNotifTitle',
-                                'sfRemovedNotifMsg',
+                                'sfRemovedNotifMsg'
                             ],
-                        },
-                        'sfRegisterTimeout',
+                        }
                     ]
                 },
                 {

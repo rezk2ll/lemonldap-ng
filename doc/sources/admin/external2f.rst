@@ -19,7 +19,7 @@ All parameters are configured in "General Parameters » Portal Parameters
 » Extensions » External 2nd Factor".
 
 -  **Activation**
--  **Code RegEx**: regular expression to create an OTP code. Let this
+-  **Code regex**: regular expression to create an OTP code. Let this
    option blank to delegate code Generation / Verification to an
    external provider
 -  **Send command**: define your command using *$attribute* like in
@@ -33,9 +33,9 @@ All parameters are configured in "General Parameters » Portal Parameters
 -  **Authentication level** (Optional): if you want to overwrite the
    value sent by your authentication module, you can define here the new
    authentication level. Example: 5
--  **Logo** (Optional): logo file (in static/<skin> directory)
 -  **Label** (Optional): label that should be displayed to the user on
    the choice screen
+-  **Logo** (Optional): logo file (in static/<skin> directory)
 
 
 .. attention::

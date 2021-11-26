@@ -29,6 +29,14 @@ The E-Mail, External and REST 2F modules
 parameters.
 
 
+Self-care on Portal
+-------------------
+
+User may register second factors themselves on the Portal by using the 2FA Manager.
+
+The link will be displayed if at least one SFA module is enabled. You can set a
+rule to display or not the link.
+
 Registration on first use
 -------------------------
 
@@ -37,23 +45,6 @@ If you want to force a 2F registration on first login, you can use the *Force
 
 You can use a `rule<writingrulesand_headers>` to enable this behavior only for
 some users.
-
-Second factor expiration
-------------------------
-
-You can display a message if an expired second factor has been removed by
-enabling *Display a message if an expired SF is removed* option or setting a
-rule.
-SF name(s) or number of removed SF can be displayed in message BODY by using
-`_nameSF_` or `_removedSF_` respectively.
-
-Self-care on Portal
--------------------
-
-User may register second factors themselves on the Portal by using the 2FA Manager.
-
-The link will be displayed if at least one SFA module is enabled. You can set a
-rule to display or not the link.
 
 Session upgrade through 2FA
 ---------------------------
@@ -69,6 +60,20 @@ The session upgrade mechanism will only require the second factor step, instead
 of doing a complete reauthentication.
 
 .. |beta| image:: /documentation/beta.png
+
+Registration timeout
+--------------------
+
+Allowed time to register a TOTP.
+
+Second factor expiration
+------------------------
+
+You can display a message if an expired second factor has been removed by
+enabling *Display a message if an expired SF is removed* option or setting a
+rule.
+SF name(s) or number of removed SF can be displayed in message BODY by using
+`_nameSF_` or `_removedSF_` respectively.
 
 Providing tokens from an external source
 ----------------------------------------

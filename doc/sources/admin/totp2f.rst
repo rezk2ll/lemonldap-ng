@@ -43,24 +43,23 @@ In the manager (advanced parameters), you just have to enable it:
 -  **Activation**: set it to "on"
 -  **Self registration**: set it to "on" if users are authorized to
    generate themselves a TOTP secret
+-  **Allow users to remove TOTP**: If enabled, users can unregister
+   TOTP
+-  **Issuer name** (Optional): default to portal hostname
+-  **Interval**: interval for TOTP algorithm (default: 30)
+-  **Range of attempts**: number of additional intervals to test (default: 1)
+-  **Number of digits**: number of digit by codes (default: 6)
 -  **Authentication level**: you can overwrite here auth level for TOTP
    registered users. Leave it blank keeps auth level provided by first
    authentication module *(default: 2 for user/password based modules)*.
    **It is recommended to set an higher value here if you want to give
-   access to some apps only to users enrolled**
--  **Issuer**: default to portal hostname
--  **Interval**: interval for TOTP algorithm (default: 30)
--  **Range**: number of additional intervals to test (default: 1)
--  **Digits**: number of digit by codes (default: 6)
--  **Allow users to remove TOTP**: If enabled, users can unregister
-   TOTP.
--  **Lifetime**: Unlimited by default. Set a Time To Live in seconds.
-   TTL is checked at each login process if set. If TTL is expired,
-   relative TOTP is removed.
--  **Logo** (Optional): logo file *(in static/<skin> directory)*
+   access to some apps only for enrolled users**
 -  **Label** (Optional): label that should be displayed to the user on
    the choice screen
-
+-  **Logo** (Optional): logo file *(in static/<skin> directory)*
+-  **Lifetime** (Optional): Unlimited by default. Set a Time To Live in seconds.
+   TTL is checked at each login process if set. If TTL is expired,
+   relative TOTP is removed.
 
 .. attention::
 
