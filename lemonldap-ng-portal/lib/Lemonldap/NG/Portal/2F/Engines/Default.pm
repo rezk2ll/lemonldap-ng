@@ -293,8 +293,8 @@ sub run {
                   || 'Second factor notification';
                 my $msg = $self->conf->{sfRemovedNotifMsg}
                   || "$removed expired second factor(s) has/have been removed ($name)!";
-                $msg =~ s/_removedSF_/$removed/;
-                $msg =~ s/_nameSF_/$name/;
+                $msg =~ s/\b_removedSF_\b/$removed/;
+                $msg =~ s/\b_nameSF_\b/$name/;
                 my $params =
                   $removed > 1
                   ? { trspan => "expired2Fremoved, $removed, $name" }

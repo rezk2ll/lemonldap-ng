@@ -44,6 +44,8 @@ Second factor expiration
 You can display a message if an expired second factor has been removed by
 enabling *Display a message if an expired SF is removed* option or setting a
 rule.
+SF name(s) or number of removed SF can be displayed in message BODY by using
+`_nameSF_` or `_removedSF_` respectively.
 
 Self-care on Portal
 -------------------
