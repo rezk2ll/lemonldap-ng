@@ -12,14 +12,14 @@ Custom functions allow one to extend LL::NG, they can be used in
 Implementation
 --------------
 
-Your perl custom function must be declared on appropriate server when
-separating :
+Your perl custom functions must be declared on appropriate server when
+separating:
 
-portal type : declare custom function here when using it in rules,
-macros, menu
+**Portal type**: declare custom functions here when using it in rules,
+macros or menu.
 
-reverse-proxy type : declare custom function here when using it in
-headers
+**Reverse-proxy type**: declare custom functions here when using it in
+headers.
 
 Write custom functions library
 ------------------------------

@@ -373,16 +373,16 @@ Other
 -  **Anti iframe protection**: Set ``X-Frame-Options`` and CSP
    ``frame-ancestors`` headers (see `Browser
    compatibility <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options#Browser_compatibility>`__)
--  **Ping interval**: Number of milliseconds between each ping (Ajax
+-  **Ping interval**: number of milliseconds between each ping (Ajax
    request) on the portal menu. Set to 0 to dismiss checks.
--  **Show error on expired session**: Display the error "Session
+-  **Show error on expired session**: display the error "Session
    expired", which stops the authentication process. This is enabled by
    default but can be disabled to prevent transparent authentication
    (like SSL or Kerberos) to be stopped.
--  **Show error on mail not found**: Display error if provided mail is
+-  **Show error on mail not found**: display error if provided mail is
    not found in password reset by mail process. Disabled by default to
    prevent mail enumeration from this page.
--  **Display rights refresh link**: Enable/disable link in Portal menu to allow users to refresh their rights
+-  **Display rights refresh link**: enable/disable link in Portal menu to allow users to refresh their rights
 
 .. |image0| image:: /documentation/manager-skin-background.png
    :class: align-center

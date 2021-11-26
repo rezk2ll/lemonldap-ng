@@ -6,10 +6,10 @@ Presentation
 
 Main settings:
 
--  **REMOTE_USER** : session attribute used for logging user access
--  **REMOTE_CUSTOM** : can be used for logging an another user attribute or a macro
+-  **REMOTE_USER**: session attribute used for logging user access
+-  **REMOTE_CUSTOM**: can be used for logging an another user attribute or a macro
    (optional)
--  **Hidden attributes** : session attributes never displayed or sent
+-  **Hidden attributes**: session attributes never displayed or sent
 
 LemonLDAP::NG provides 5 levels of error and has two kind of logs:
 
