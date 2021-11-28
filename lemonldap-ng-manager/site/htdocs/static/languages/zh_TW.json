@@ -1132,7 +1132,7 @@
 "totp2fAuthnLevel":"驗證等級",
 "totp2fDigits":"位數",
 "totp2fInterval":"間隔",
-"totp2fIssuer":"發行者名稱",
+"totp2fIssuer":"Issuer name",
 "totp2fLabel":"標籤",
 "totp2fLogo":"圖示",
 "totp2fRange":"嘗試範圍",

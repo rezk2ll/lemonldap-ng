@@ -1129,7 +1129,7 @@
 "tooltip":"Tooltip",
 "totp2f":"TOTP",
 "totp2fActivation":"تفعيل",
-"totp2fAuthnLevel":"Authentication level",
+"totp2fAuthnLevel":"مستوى إثبات الهوية",
 "totp2fDigits":"Number of digits",
 "totp2fInterval":"Interval",
 "totp2fIssuer":"Issuer name",
