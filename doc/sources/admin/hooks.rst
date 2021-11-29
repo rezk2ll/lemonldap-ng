@@ -194,7 +194,7 @@ Sample code::
    };
 
    sub gotRequest {
-       my ( $self, $res, $login ) = @_;
+       my ( $self, $req, $login ) = @_;
 
        # Your code here
    }
@@ -215,7 +215,7 @@ Sample code::
    };
 
    sub buildResponse {
-       my ( $self, $res, $login ) = @_;
+       my ( $self, $req, $login ) = @_;
 
        # Your code here
    }
@@ -236,7 +236,7 @@ Sample code::
    };
 
    sub gotLogout {
-       my ( $self, $res, $logout ) = @_;
+       my ( $self, $req, $logout ) = @_;
 
        # Your code here
    }
@@ -257,7 +257,7 @@ Sample code::
    };
 
    sub gotLogoutResponse {
-       my ( $self, $res, $logout ) = @_;
+       my ( $self, $req, $logout ) = @_;
 
        # Your code here
    }
@@ -278,7 +278,7 @@ Sample code::
    };
 
    sub buildLogoutResponse {
-       my ( $self, $res, $logout ) = @_;
+       my ( $self, $req, $logout ) = @_;
 
        # Your code here
    }
