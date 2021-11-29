@@ -1650,7 +1650,7 @@ sub buildUserInfoResponseFromData {
     }
 
     my $h = $self->p->processHook( $req, 'oidcGenerateUserInfoResponse',
-        $userinfo_response );
+        $userinfo_response, $rp);
     return {} if ( $h != PE_OK );
 
     return $userinfo_response;
