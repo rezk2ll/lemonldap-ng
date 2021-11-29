@@ -96,7 +96,7 @@ Sample code::
    };
 
    sub addClaimToUserInfo {
-       my ( $self, $req, $userinfo ) = @_;
+       my ( $self, $req, $userinfo, $rp) = @_;
        $userinfo->{"userinfo_hook"} = 1;
        return PE_OK;
    }
