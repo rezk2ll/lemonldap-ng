@@ -198,7 +198,7 @@ sub parse {
         # Removed hidden session attributes
         foreach my $v ( split /[,\s]+/, $self->conf->{hiddenAttributes} ) {
             foreach ( keys %{ $json->{headers} } ) {
-                if ( $json->{headers}->{$_} eq '$' . $v ) {
+                if ( $json->{headers}->{$_} =~ /\$$v/ ) {
                     delete $json->{headers}->{$_};
                     my $user = $req->userData->{ $self->conf->{whatToTrace} };
                     $self->userLogger->warn(
@@ -212,39 +212,55 @@ sub parse {
         $handler->headersInit( undef, { $vhost => $json->{headers} } );
         $headers = $handler->checkHeaders( $req, $req->userData );
 
-        # Normalize headers name if required
-        if ( $self->conf->{checkDevOpsDisplayNormalizedHeaders} ) {
-            $self->logger->debug("Normalize headers...");
-            @$headers = map {
-                ;    # Prevent compilation error with old Perl versions
-                no strict 'refs';
-                {
-                    key   => &{ $handler . '::cgiName' }( $_->{key} ),
-                    value => $_->{value}
-                }
-            } @$headers;
+        if ( $handler->tsv->{maintenance}->{$vhost} ) {
+
+            # Prepare form params
+            undef $json;
+            $headers = [];
+            $alert   = 'alert-danger';
+            $msg     = 'PE' . PE_BAD_DEVOPS_FILE;
+            $self->userLogger->error(
+                "CheckDevOps: bad 'rules.json' file (headers)");
+            $handler->tsv->{maintenance}->{$vhost} = 0;
         }
+        else {
 
-        my $headers_list = join ', ', map "$_->{key}:$_->{value}", @$headers;
-        $self->logger->debug("CheckDevOps compiled headers: $headers_list");
-
-        # Compile rules
-        @$rules = map {
-            my ( $sub, $flag ) = $handler->conditionSub( $json->{rules}->{$_} );
-            {
-                uri    => $_,
-                access => $sub->( $req, $req->userData )
-                ? 'allowed'
-                : 'forbidden'
+            # Normalize headers name if required
+            if ( $self->conf->{checkDevOpsDisplayNormalizedHeaders} ) {
+                $self->logger->debug("Normalize headers...");
+                @$headers = map {
+                    ;    # Prevent compilation error with old Perl versions
+                    no strict 'refs';
+                    {
+                        key   => &{ $handler . '::cgiName' }( $_->{key} ),
+                        value => $_->{value}
+                    }
+                } @$headers;
             }
-        } sort keys %{ $json->{rules} };
-        my $rules_list = join ', ', map "$_->{uri}:$_->{access}", @$rules;
-        $self->logger->debug("CheckDevOps compiled rules: $rules_list");
 
-        # Prepare form params
-        $msg   = 'checkDevOps';
-        $alert = 'alert-info';
-        $json  = JSON->new->ascii->pretty->encode($json);    # Pretty print
+            my $headers_list = join ', ', map "$_->{key}:$_->{value}",
+              @$headers;
+            $self->logger->debug("CheckDevOps compiled headers: $headers_list");
+
+            # Compile rules
+            @$rules = map {
+                my ( $sub, $flag ) =
+                  $handler->conditionSub( $json->{rules}->{$_} );
+                {
+                    uri    => $_,
+                    access => $sub->( $req, $req->userData )
+                    ? 'allowed'
+                    : 'forbidden'
+                }
+            } sort keys %{ $json->{rules} };
+            my $rules_list = join ', ', map "$_->{uri}:$_->{access}", @$rules;
+            $self->logger->debug("CheckDevOps compiled rules: $rules_list");
+
+            # Prepare form params
+            $msg   = 'checkDevOps';
+            $alert = 'alert-info';
+            $json  = JSON->new->ascii->pretty->encode($json);    # Pretty print
+        }
     }
 
     # Prepare form

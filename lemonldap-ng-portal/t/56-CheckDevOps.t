@@ -19,7 +19,7 @@ my $file = '{
     "User": "$uid",
     "Mail": "$mail",
     "Name": "$cn",
-    "UA": "$UA"
+    "UA": "$UA ? $UA : qq#FF#"
   }
 }';
 my $bad_file = '{
@@ -31,6 +31,15 @@ my $bad_file = '{
     "User": "$uid",
   }
 }';
+my $bad_file2 = qq%{
+  "rules": {
+    "default": "accept"
+  },
+  "headers": {
+    "User": "'user",
+    "Mail": "'mail'"
+  }
+}%;
 my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel                            => 'error',
@@ -114,6 +123,26 @@ ok(
         accept => 'text/html'
     ),
     'POST checkdevops with bad file'
+);
+ok( $res->[2]->[0] =~ m%<span trspan="PE104"></span>%,
+    'Found PE_BAD_DEVOPS_FILE' )
+  or explain( $res->[2]->[0], 'trspan="PE104"' );
+count(2);
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/checkdevops', 'checkDevOpsFile', 'token' );
+
+# POST bad file2
+# --------------
+$query .= "&checkDevOpsFile=$bad_file2";
+ok(
+    $res = $client->_post(
+        '/checkdevops',
+        IO::String->new($query),
+        cookie => "lemonldap=$id",
+        length => length($query),
+        accept => 'text/html'
+    ),
+    'POST checkdevops with bad file2'
 );
 ok( $res->[2]->[0] =~ m%<span trspan="PE104"></span>%,
     'Found PE_BAD_DEVOPS_FILE' )
