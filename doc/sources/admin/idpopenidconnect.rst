@@ -192,10 +192,10 @@ Extra Claims
 
 .. attention::
 
-    By default, only claims that are part of standard OpenID
-    Connect scopes will be sent to a client. If you want to send a claim
-    that is not in the OpenID Connect specification, you need to declare it
-    in the Extra Claims section
+    By default, only claims that are part of standard OpenID Connect scopes
+    (``profile``, ``email``, ``phone``, ``address``) will be sent to a client.
+    If you want to send a claim that is not in the OpenID Connect
+    specification, you need to declare it in the Extra Claims section
 
 If you want to make custom claims visible to OpenID Connect clients, you
 need to declare them in a scope.
@@ -210,7 +210,7 @@ be able to read the ``rebirth_count`` and ``bloodline`` claims from the
 Userinfo endpoint.
 
 
-.. danger::
+.. important::
 
     Any Claim defined in this section must be mapped to a
     LemonLDAP::NG session attribute in the **Exported Attributes**

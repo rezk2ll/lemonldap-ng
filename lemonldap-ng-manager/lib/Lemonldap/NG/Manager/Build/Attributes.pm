@@ -4302,6 +4302,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
 
         # OpenID Connect relying parties
         oidcRPMetaDataExportedVars => {
+            help    => 'idpopenidconnect.html#oidcexportedattr',
             type    => 'oidcAttributeContainer',
             keyTest => qr/\w/,
             test    => qr/\w/,
@@ -4366,7 +4367,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsExtraClaims                 => {
             type    => 'keyTextContainer',
             keyTest => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
-            default => {}
+            default => {},
+            help    => 'idpopenidconnect.html#oidcextraclaims'
         },
         oidcRPMetaDataOptionsBypassConsent => {
             type    => 'bool',

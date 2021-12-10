@@ -411,6 +411,7 @@ function templates(tpl,key) {
             "type" : "oidcAttribute"
          }
       ],
+      "help" : "idpopenidconnect.html#oidcexportedattr",
       "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars",
       "title" : "oidcRPMetaDataExportedVars",
       "type" : "oidcAttributeContainer"
@@ -418,6 +419,7 @@ function templates(tpl,key) {
    {
       "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
       "default" : [],
+      "help" : "idpopenidconnect.html#oidcextraclaims",
       "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
       "title" : "oidcRPMetaDataOptionsExtraClaims",
       "type" : "keyTextContainer"
