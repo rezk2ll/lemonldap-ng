@@ -4,6 +4,7 @@ use strict;
 use Mouse;
 use URI;
 use URI::QueryParam;
+use HTML::Entities qw(encode_entities);
 use Lemonldap::NG::Portal::Lib::SAML;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
@@ -1048,8 +1049,11 @@ sub run {
                 }
 
                 # RelayState
-                $req->{postFields}->{'RelayState'} = $relaystate
-                  if ($relaystate);
+                if ($relaystate) {
+                    $req->{postFields}->{'RelayState'} =
+                      encode_entities($relaystate);
+                    $req->data->{safeHiddenFormValues}->{RelayState} = 1;
+                }
 
                 $req->steps( ['autoPost'] );
                 return PE_OK;
@@ -1515,9 +1519,15 @@ sub sloRelayPost {
     $self->logger->debug("Found relay session $relayID");
 
     # Get data to build POST form
-    $req->{postUrl}                     = $relayInfos->data->{url};
+    $req->{postUrl} = $relayInfos->data->{url};
     $req->{postFields}->{'SAMLRequest'} = $relayInfos->data->{body};
-    $req->{postFields}->{'RelayState'}  = $relayInfos->data->{relayState};
+
+    # RelayState
+    if ( $relayInfos->data->{relayState} ) {
+        $req->{postFields}->{'RelayState'} =
+          encode_entities( $relayInfos->data->{relayState} );
+        $req->data->{safeHiddenFormValues}->{RelayState} = 1;
+    }
 
     # Delete relay session
     $relayInfos->remove();

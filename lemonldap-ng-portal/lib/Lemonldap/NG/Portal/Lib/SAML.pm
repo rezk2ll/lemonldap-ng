@@ -7,7 +7,7 @@ use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::FormEncode;
 use XML::Simple;
-use HTML::Entities qw(decode_entities);
+use HTML::Entities qw(decode_entities encode_entities);
 use MIME::Base64;
 use HTTP::Request;         # SOAP call
 use POSIX qw(strftime);    # Convert SAML2 date into timestamp
@@ -2556,8 +2556,10 @@ sub sendLogoutResponseToServiceProvider {
         $req->{postFields} = { 'SAMLResponse' => $slo_body };
 
         # RelayState
-        $req->{postFields}->{'RelayState'} = $relaystate
-          if ($relaystate);
+        if ($relaystate) {
+            $req->{postFields}->{'RelayState'} = encode_entities($relaystate);
+            $req->data->{safeHiddenFormValues}->{RelayState} = 1;
+        }
 
         return $self->p->do( $req, ['autoPost'] );
     }

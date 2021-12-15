@@ -142,7 +142,7 @@ sub display {
             ASK_LOGINS        => $req->param('checkLogins')   || 0,
             ASK_STAYCONNECTED => $req->param('stayconnected') || 0,
             CONFIRMKEY        => $self->stamp(),
-            LIST => $req->data->{list} || [],
+            LIST              => $req->data->{list}           || [],
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -635,7 +635,9 @@ sub buildHiddenForm {
 
         # Check XSS attacks
         next
-          if $self->checkXSSAttack( $_, $req->{portalHiddenFormValues}->{$_} );
+          if (!$req->data->{safeHiddenFormValues}->{$_}
+            && $self->checkXSSAttack( $_, $req->{portalHiddenFormValues}->{$_} )
+          );
 
         # Build hidden input HTML code
         # 'id' is removed to avoid warning with Choice
