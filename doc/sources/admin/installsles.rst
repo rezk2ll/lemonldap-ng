@@ -94,12 +94,11 @@ RPMs are available on the :doc:`Download page<download>`.
 Package GPG signature
 ---------------------
 
-The GPG key can be downloaded here: |image0|
-
-Install it to trust RPMs:
+Install the `RPM signing key <https://lemonldap-ng.org/_media/rpm-gpg-key-ow2>`__ to trust RPMs:
 
 ::
 
+   wget https://lemonldap-ng.org/_media/rpm-gpg-key-ow2
    rpm --import rpm-gpg-key-ow2
 
 Install packages
@@ -243,6 +242,3 @@ Alternatively, you can use the automatic script
 :ref:`lemonldap svn repository<download-getting-sources-from-svn-repository>`.
 The automatic script can also generate intermediate dependencies. See
 README file in the same directory for more information.
-
-.. |image0| image:: /rpm-gpg-key-ow2
-

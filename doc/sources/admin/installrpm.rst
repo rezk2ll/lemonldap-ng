@@ -105,9 +105,8 @@ RPMs are available on the :doc:`Download page</download>`.
 Package GPG signature
 ---------------------
 
-The GPG key can be downloaded here: |image0|
 
-Install it to trust RPMs:
+Get the `RPM signing key <https://lemonldap-ng.org/_media/rpm-gpg-key-ow2>`__ onto your LemonLDAP::NG server:
 
 ::
 
@@ -219,5 +218,4 @@ If you need it, you can rebuild RPMs:
 
    rpmbuild -ta SOURCES/lemonldap-ng-VERSION.tar.gz
 
-.. |image0| image:: /rpm-gpg-key-ow2
 

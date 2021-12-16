@@ -68,7 +68,7 @@ repositories:
 
    apt install apt-transport-https
 
-You will need to trust the following GPG key : |image0|
+You will need to trust the `DEB signing key <https://lemonldap-ng.org/_media/rpm-gpg-key-ow2>`__ :
 
 ::
 
@@ -197,6 +197,3 @@ the package yourself:
    tar xzf lemonldap-ng-*.tar.gz
    cd lemonldap-ng-*
    make debian-packages
-
-.. |image0| image:: /rpm-gpg-key-ow2
-
