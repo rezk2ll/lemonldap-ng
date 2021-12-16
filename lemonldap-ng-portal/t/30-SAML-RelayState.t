@@ -1,4 +1,3 @@
-use Lemonldap::NG::Portal::Lib::SAML;
 use lib 'inc';
 use Test::More;
 use strict;
@@ -8,8 +7,6 @@ use LWP::Protocol::PSGI;
 use MIME::Base64;
 use URI;
 use URI::QueryParam;
-
-my $saml = Lemonldap::NG::Portal::Lib::SAML->new();
 
 BEGIN {
     require 't/test-lib.pm';
@@ -29,12 +26,14 @@ LWP::Protocol::PSGI->register(
         return [ 500, [], [] ];
     }
 );
+our $saml;
 
 SKIP: {
-    eval "use Lasso";
+    eval "use Lasso; use Lemonldap::NG::Portal::Lib::SAML;";
     if ($@) {
-        skip 'Lasso not found', $maintests;
+        skip 'Lasso not found';
     }
+    $saml = Lemonldap::NG::Portal::Lib::SAML->new();
 
     # Initialization
     my $issuer = register( 'issuer', \&issuer );
@@ -71,30 +70,29 @@ SKIP: {
         '{&quot;url&quot;: &quot;http://test/%22&quot;}',
         "Correct html encoding of special characters in RelayState"
     );
+
+    sub getAuthnRequest {
+        my ($method) = @_;
+
+        my $server = Lasso::Server::new_from_buffers(
+            samlProxyMetaDataXML( "proxy", $method ),
+            saml_key_proxy_private_sig(),
+            undef, undef
+        );
+        $server->add_provider_from_buffer( 2,
+            samlIDPMetaDataXML( "idp", $method ) );
+
+        my $login  = Lasso::Login->new($server);
+        my $method = $saml->getHttpMethod($method);
+        $login->init_authn_request("http://auth.idp.com/saml/metadata");
+        $login->msg_relayState('{"url": "http://test/%22"}');
+        $login->build_authn_request_msg();
+        return $login;
+    }
 }
 
 clean_sessions();
 done_testing();
-
-sub getAuthnRequest {
-    my ($method) = @_;
-
-    my $server = Lasso::Server::new_from_buffers(
-        samlProxyMetaDataXML( "proxy", $method ),
-        saml_key_proxy_private_sig(),
-        undef, undef
-    );
-    $server->add_provider_from_buffer( Lasso::Constants::PROVIDER_ROLE_IDP,
-        samlIDPMetaDataXML( "idp", $method )
-    );
-
-    my $login  = Lasso::Login->new($server);
-    my $method = $saml->getHttpMethod($method);
-    $login->init_authn_request("http://auth.idp.com/saml/metadata");
-    $login->msg_relayState('{"url": "http://test/%22"}');
-    $login->build_authn_request_msg();
-    return $login;
-}
 
 sub issuer {
     return LLNG::Manager::Test->new( {
