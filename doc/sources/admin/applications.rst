@@ -35,6 +35,7 @@ Applications
    applications/mobilizon
    applications/nextcloud
    applications/obm
+   applications/odoo
    applications/office365
    applications/publik
    applications/phpldapadmin
@@ -118,6 +119,7 @@ Application                                                       Configuration 
 .. image:: applications/mobilizon_logo.jpg                        :doc:`Mobilizon<applications/mobilizon>`             ✔
 .. image:: applications/nextcloud-logo.png                        :doc:`NextCloud<applications/nextcloud>`                                               ✔
 .. image:: applications/obm_logo.png                              :doc:`OBM<applications/obm>`                         ✔
+.. image:: applications/odoo_logo.png                             :doc:`Odoo<applications/odoo>`                                                         ✔
 .. image:: applications/logo_office_365.png                       :doc:`Office 365<applications/office365>`                                              ✔
 .. image:: applications/logo-publik.png                           :doc:`Publik<applications/publik>`                                                          ✔
 .. image:: applications/phpldapadmin_logo.png                     :doc:`phpLDAPAdmin<applications/phpldapadmin>`       ✔

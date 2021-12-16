@@ -153,6 +153,9 @@ To define keys, you can:
    If you are running a version under 2.0.10, the choice of a signature
    algorithm will affect all SP and IDP.
 
+
+.. _samlservice-convert-certificate:
+
 Converting a RSA public key to a certificate
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

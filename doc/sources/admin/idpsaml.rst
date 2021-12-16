@@ -58,6 +58,8 @@ IDP related metadata.
 In both cases, the entityID of the LemonLDAP::NG server is
 http://auth.example.com/saml/metadata
 
+.. _samlidp-register-sp:
+
 Register partner Service Provider on LemonLDAP::NG
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
