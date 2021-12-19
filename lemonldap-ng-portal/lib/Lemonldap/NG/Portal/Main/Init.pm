@@ -574,15 +574,15 @@ sub loadModule {
         $self->logger->debug("Module $module loaded");
     };
     if ($@) {
-        $self->error("Unable to build $module object: $@");
+        $self->logger->error("Unable to build $module object: $@");
         return 0;
     }
     unless ($obj) {
-        $self->error("$module instanciation failed");
+        $self->logger->error("$module new() method returned undef");
         return 0;
     }
     if ( $obj->can("init") and ( !$obj->init ) ) {
-        $self->error("$module init failed");
+        $self->logger->error("$module init failed");
         return 0;
     }
 
