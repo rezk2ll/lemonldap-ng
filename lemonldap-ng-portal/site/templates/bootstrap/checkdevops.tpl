@@ -34,9 +34,9 @@
     </TMPL_IF>
     <TMPL_IF NAME="DOWNLOAD">
       <input id="urlfield" name="url" type="text" class="form-control" value="<TMPL_VAR NAME="URL">" trplaceholder="URL / DNS" aria-required="true" autocomplete="url" />
-      <pre><textarea id="checkDevOpsFile" name="checkDevOpsFile" class="form-control rounded-1" rows="6" trplaceholder="pasteHere"><TMPL_VAR NAME="FILE"></textarea></pre>
+      <pre><textarea id="checkDevOpsFile" name="checkDevOpsFile" class="form-control rounded-1" rows="10" trplaceholder="pasteHere"><TMPL_VAR NAME="FILE"></textarea></pre>
     <TMPL_ELSE>
-      <pre><textarea id="checkDevOpsFile" name="checkDevOpsFile" class="form-control rounded-1" rows="6" trplaceholder="pasteHere" required><TMPL_VAR NAME="FILE"></textarea></pre>
+      <pre><textarea id="checkDevOpsFile" name="checkDevOpsFile" class="form-control rounded-1" rows="10" trplaceholder="pasteHere" required><TMPL_VAR NAME="FILE"></textarea></pre>
     </TMPL_IF>
 
     <div class="buttons">

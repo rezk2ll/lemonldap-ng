@@ -208,11 +208,43 @@ sub parse {
             }
         }
 
+        # Parse rules
+        my $cpt = new Safe;
+        $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
+        $cpt->share_from(
+            'Lemonldap::NG::Handler::Main::Jail',
+            [
+                '&encrypt', '&token',
+                @Lemonldap::NG::Handler::Main::Jail::builtCustomFunctions
+            ]
+        );
+        $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
+            $Lemonldap::NG::Common::Safelib::functions );
+
+        my $bad_rule = 0;
+        foreach ( keys %{ $json->{rules} } ) {
+            $cpt->reval("BEGIN { 'warnings'->unimport; } $json->{rules}->{$_}");
+            my $err = join(
+                '',
+                grep(
+                    { $_ =~
+/(?:Undefined subroutine|Devel::StackTrace|trapped by operation mask)/
+                          ? ()
+                          : $_; }
+                    split( /\n/, $@, 0 ) )
+            );
+            if ($err) {
+                $self->userLogger->error(
+                    "Bad rule: $json->{rules}->{$_} ($err)");
+                $bad_rule = 1;
+            }
+        }
+
         # Compile headers
         $handler->headersInit( undef, { $vhost => $json->{headers} } );
         $headers = $handler->checkHeaders( $req, $req->userData );
 
-        if ( $handler->tsv->{maintenance}->{$vhost} ) {
+        if ( $handler->tsv->{maintenance}->{$vhost} || $bad_rule ) {
 
             # Prepare form params
             undef $json;
