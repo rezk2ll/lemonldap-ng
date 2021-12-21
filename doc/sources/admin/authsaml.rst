@@ -18,8 +18,8 @@ Several IDPs are allowed, in this case the user will choose the IDP he
 wants. You can preselect IDP with an IDP resolution rule.
 
 For each IDP, you can configure attributes that are collected. Some can
-be mandatory, so if they are not returned by IDP, the session will not
-open.
+be mandatory, so if they are not returned by IDP, the session will not be
+opened.
 
 
 .. tip::
@@ -91,7 +91,7 @@ between your server and the IDP):
 
 .. tip::
 
-    You can also edit the metadata directly in the textarea
+    You can also edit the metadata directly in the textarea.
 
 Exported attributes
 ^^^^^^^^^^^^^^^^^^^
@@ -102,8 +102,8 @@ For each attribute, you can set:
    "uid" will then be used as $uid in access rules
 -  **Attribute name**: name of the SAML attribute coming from the remote IDP
 -  **Friendly Name**: optional, SAML attribute friendly name.
--  **Mandatory**: if set to On, then session will not open if this
-   attribute is not given by IDP.
+-  **Mandatory**: if set to On, session will not be created if this
+   attribute is not sent by IDP.
 -  **Format** (optional): SAML attribute format.
 
 |image1|
@@ -192,8 +192,8 @@ Binding
 
 .. note::
 
-    If no binding defined, the default binding in IDP metadata will be
-    used.
+    If no binding is defined, the default binding in IDP metadata
+    will be used.
 
 Security
 ''''''''
@@ -208,11 +208,11 @@ Security
 Display
 '''''''
 
-Used only if you have more than 1 SAML Identity Provider declared
+Used only if at least 2 SAML Identity Providers are declared
 
 -  **Display name**: Name of the IDP
 -  **Logo**: Logo of the IDP
--  **Order**: Number to sort IDP display
+-  **Order**: Number used for sorting IDP display
 
 
 .. tip::

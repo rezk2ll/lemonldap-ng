@@ -44,6 +44,11 @@ Then, go in ``Proxy parameters``:
    different from external portal
 -  **Impersonation** (optional) : can be enabled if the internal portal provides impersonation
 
+.. note::
+
+    If the internal portal uses :doc:`Choice Authentication<authchoice>`, you must specify 'Internal portal choice parameter' and 'Internal portal choice value' depending on its configuration. 
+    This feature needs at least LL::NG version 2.0.14
+
 Internal portal
 ~~~~~~~~~~~~~~~
 
@@ -62,11 +67,6 @@ in your lemonldap-ng.ini:
 
    soapProxyUrn = urn:Lemonldap/NG/Common/CGI/SOAPService
 
-.. note::
-
-    If the internal portal uses :doc:`Choice Authentication<authchoice>`, you must specify 'Internal portal choice parameter' and 'Internal portal choice value' depending on its configuration. 
-    This feature needs at least LLNG version 2.0.14
-
 .. attention::
 
-    This feature needs at least LLNG version 2.0.8
+    This feature needs at least LL::NG version 2.0.8
