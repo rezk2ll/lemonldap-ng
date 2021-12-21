@@ -86,9 +86,9 @@ sub display {
 }
 
 sub parse {
-    my ( $self,    $req )   = @_;
-    my ( $headers, $rules ) = ( [], [] );
-    my ( $msg, $json, $url );
+    my ( $self, $req ) = @_;
+    my ( $headers, $rules, $unknown ) = ( [], [], [] );
+    my ( $msg, $json, $url, $bad_json );
     my $alert = 'alert-danger';
 
     # Check token
@@ -179,7 +179,7 @@ sub parse {
         $json = eval {
             from_json( $req->param('checkDevOpsFile'), { allow_nonref => 1 } );
         } if $req->param('checkDevOpsFile');
-        if ($@) {
+        if ( $@ || !$json->{rules} ) {
 
             # Prepare form params
             undef $json;
@@ -194,7 +194,6 @@ sub parse {
     if ($json) {
         my $handler = $self->p->HANDLER;
         my $vhost   = $handler->resolveAlias($req);
-        my ( $bad_json, $unknown );
 
         # Removed hidden session attributes
         foreach my $v ( split /[,\s]+/, $self->conf->{hiddenAttributes} ) {
@@ -296,7 +295,11 @@ sub parse {
             # Prepare form params
             $msg   = 'checkDevOps';
             $alert = 'alert-info';
-            $json  = JSON->new->ascii->pretty->encode($json);    # Pretty print
+            foreach ( keys %$json ) {
+                delete $json->{$_} unless $_ =~ /\b(?:rules|headers)\b/;
+                delete $json->{$_} unless keys %{ $json->{$_} };
+            }
+            $json = JSON->new->ascii->pretty->encode($json);    # Pretty print
         }
     }
 
@@ -308,6 +311,7 @@ sub parse {
         LANGS     => $self->conf->{showLanguages},
         DOWNLOAD  => $self->conf->{checkDevOpsDownload},
         MSG       => $msg,
+        UNKNOWN   => join( $self->conf->{multiValuesSeparator}, @$unknown ),
         ALERTE    => $alert,
         FILE      => $json,
         HEADERS   => $headers,
@@ -334,8 +338,10 @@ sub _checkSessionAttrs {
         keys %{ $self->{conf}->{macros} }
     );
     $self->logger->debug(
-        "Existing session attributes: " . join $self->conf->{multiValuesSeparator},
-        keys %sessionAttrs );
+        "Existing session attributes: "
+          . join $self->conf->{multiValuesSeparator},
+        keys %sessionAttrs
+    );
 
     my @varh = map { ( $json->{headers}->{$_} =~ /\$(\w+)\b/g ) }
       keys %{ $json->{headers} };
@@ -346,7 +352,7 @@ sub _checkSessionAttrs {
         "Used attributs: " . join $self->conf->{multiValuesSeparator},
         keys %usedAttrs );
 
-    @$unknown = map { $sessionAttrs{$_} ? () : $_ } keys %usedAttrs;
+    @$unknown = map { $sessionAttrs{$_} ? () : $_ } sort keys %usedAttrs;
     $self->logger->debug(
         "Unknown attributes: " . join $self->conf->{multiValuesSeparator},
         @$unknown )
