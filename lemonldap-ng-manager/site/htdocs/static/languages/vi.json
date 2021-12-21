@@ -182,6 +182,7 @@
 "cfgLog":"Summary",
 "cfgVersion":"Phiên bản cấu hình",
 "checkDevOps":"Activation",
+"checkDevOpsCheckSessionAttributes":"Check session attributes",
 "checkDevOpsDisplayNormalizedHeaders":"Display normalized headers",
 "checkDevOpsDownload":"Download file",
 "checkState":"Kích hoạt",

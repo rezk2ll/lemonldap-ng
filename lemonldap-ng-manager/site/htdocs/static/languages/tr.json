@@ -182,6 +182,7 @@
 "cfgLog":"Özet",
 "cfgVersion":"Yapılandırma sürümü",
 "checkDevOps":"Aktivasyon",
+"checkDevOpsCheckSessionAttributes":"Check session attributes",
 "checkDevOpsDisplayNormalizedHeaders":"Normalleştirilmiş başlıkları görüntüle",
 "checkDevOpsDownload":"Dosyayı indir",
 "checkState":"Aktivasyon",

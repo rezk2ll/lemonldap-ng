@@ -182,6 +182,7 @@
 "cfgLog":"Sumario",
 "cfgVersion":"Configuration version",
 "checkDevOps":"Activación",
+"checkDevOpsCheckSessionAttributes":"Check session attributes",
 "checkDevOpsDisplayNormalizedHeaders":"Display normalized headers",
 "checkDevOpsDownload":"Download file",
 "checkState":"Activación",

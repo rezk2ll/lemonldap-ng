@@ -17,6 +17,7 @@ Just enable it in the manager (section “plugins”).
       try to retrieve remote file by sending a request
       (i.e. http://myapp.example.com:8080/rules.json)
    -  **Display normalized headers**: Display headers as they are sent
+   -  **Check session attributes**: Check if used attributes are existing
 
 Usage
 -----
