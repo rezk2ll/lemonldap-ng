@@ -166,7 +166,7 @@ ok(
 );
 ok(
     $res->[2]->[0] =~
-m%<pre><textarea id="checkDevOpsFile" name="checkDevOpsFile" class="form-control rounded-1" rows="6" trplaceholder="pasteHere" required>%,
+m%<pre><textarea id="checkDevOpsFile" name="checkDevOpsFile" class="form-control rounded-1" rows="10" trplaceholder="pasteHere" required>%,
     'PRE required'
 ) or explain( $res->[2]->[0], 'PRE required' );
 

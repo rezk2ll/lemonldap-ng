@@ -25,13 +25,14 @@ my $file = '{
 }';
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel            => 'error',
-            authentication      => 'Demo',
-            userDB              => 'Same',
-            requireToken        => 0,
-            checkDevOps         => 1,
-            checkDevOpsDownload => 1,
-            hiddenAttributes    => 'mail'
+            logLevel                          => 'error',
+            authentication                    => 'Demo',
+            userDB                            => 'Same',
+            requireToken                      => 0,
+            checkDevOps                       => 1,
+            checkDevOpsDownload               => 1,
+            checkDevOpsCheckSessionAttributes => 0,
+            hiddenAttributes                  => 'mail'
         }
     }
 );
@@ -88,7 +89,7 @@ ok(
 );
 ok(
     $res->[2]->[0] =~
-m%<pre><textarea id="checkDevOpsFile" name="checkDevOpsFile" class="form-control rounded-1" rows="6" trplaceholder="pasteHere">%,
+m%<pre><textarea id="checkDevOpsFile" name="checkDevOpsFile" class="form-control rounded-1" rows="10" trplaceholder="pasteHere">%,
     'PRE not required'
 ) or explain( $res->[2]->[0], 'PRE not required' );
 
@@ -96,10 +97,13 @@ m%<pre><textarea id="checkDevOpsFile" name="checkDevOpsFile" class="form-control
 ok( $res->[2]->[0] =~ m%<b><span trspan="headers">HEADERS</span></b>%,
     'HEADERS' )
   or explain( $res->[2]->[0], 'HEADERS' );
-ok( $res->[2]->[0] =~ m%HTTP_NAME: Doctor Who<br/>%, 'Normalized hearder Name found' )
+ok( $res->[2]->[0] =~ m%HTTP_NAME: Doctor Who<br/>%,
+    'Normalized hearder Name found' )
   or explain( $res->[2]->[0], 'Hearder Name' );
-ok( $res->[2]->[0] =~ m%HTTP_AUTH_USER: dwho<br/>%, 'Normalized hearder Auth-User found' )
-  or explain( $res->[2]->[0], 'Hearder Auth-User' );
+ok(
+    $res->[2]->[0] =~ m%HTTP_AUTH_USER: dwho<br/>%,
+    'Normalized hearder Auth-User found'
+) or explain( $res->[2]->[0], 'Hearder Auth-User' );
 
 # Rules
 ok( $res->[2]->[0] =~ m%<b><span trspan="rules">RULES</span></b>%, 'RULES' )
