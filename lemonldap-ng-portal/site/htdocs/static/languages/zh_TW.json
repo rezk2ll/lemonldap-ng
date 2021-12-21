@@ -306,6 +306,7 @@
 "u2fWelcome":"U2F 裝置管理",
 "unableToGetKey":"無法存取您的金鑰。重試或聯絡您的管理員",
 "unknownAction":"未知的動作",
+"unknownAttributes":"Unknown attributes",
 "unregister":"取消註冊",
 "updateCdc":"更新通用網域 Cookie",
 "updateTime":"更新日期",

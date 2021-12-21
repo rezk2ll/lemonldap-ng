@@ -306,6 +306,7 @@
 "u2fWelcome":"ניהול התקני U2F",
 "unableToGetKey":"לא ניתן לגשת למפתח שלך. יש לנסות שוב או ליצור קשר עם ההנהלה שלך",
 "unknownAction":"פעולה לא ידועה",
+"unknownAttributes":"Unknown attributes",
 "unregister":"ביטול רישום",
 "updateCdc":"עדכון עוגיית שם תחום שיתופי",
 "updateTime":"תאריך שדרוג",

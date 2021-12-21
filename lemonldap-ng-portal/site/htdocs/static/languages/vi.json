@@ -306,6 +306,7 @@
 "u2fWelcome":"U2F device management",
 "unableToGetKey":"Không thể truy cập khóa của bạn. Thử lại hoặc liên hệ với quản trị viên của bạn",
 "unknownAction":"Unknown action",
+"unknownAttributes":"Unknown attributes",
 "unregister":"Hủy đăng ký",
 "updateCdc":"Cập nhật Cookie miền thông thường",
 "updateTime":"Ngày cập nhật",

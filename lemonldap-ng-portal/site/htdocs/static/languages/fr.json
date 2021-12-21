@@ -306,6 +306,7 @@
 "u2fWelcome":"Gestion du périphérique U2F",
 "unableToGetKey":"Impossible d'accéder à la clef. Réessayez ou contactez votre administrateur",
 "unknownAction":"Action inconnue",
+"unknownAttributes":"Attributs inconnus",
 "unregister":"Supprimer",
 "updateCdc":"Mise à jour du cookie de domaine commun",
 "updateTime":"Date de mise à jour",
