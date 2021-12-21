@@ -822,7 +822,8 @@ sub tree {
                             nodes => [
                                 'checkDevOps',
                                 'checkDevOpsDownload',
-                                'checkDevOpsDisplayNormalizedHeaders'
+                                'checkDevOpsDisplayNormalizedHeaders',
+                                'checkDevOpsCheckSessionAttributes'
                             ],
                         },
                         {
