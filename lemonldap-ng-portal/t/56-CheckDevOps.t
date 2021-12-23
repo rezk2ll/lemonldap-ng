@@ -40,6 +40,25 @@ my $bad_file2 = qq%{
     "Mail": "'mail'"
   }
 }%;
+my $bad_file3 = q%{
+  "rule": {
+    "default": "accept"
+  },
+  "headers": {
+    "User": "'user",
+    "Mail": "'mail'"
+  }
+}%;
+my $bad_file4 = q%{
+  "rules": {
+    "default": "accept"
+  },
+  "headers": {
+    "test": "$none",
+    "bad": "$test ? $other : $dalek"
+  }
+}%;
+
 my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel                            => 'error',
@@ -148,6 +167,52 @@ ok( $res->[2]->[0] =~ m%<span trspan="PE104"></span>%,
     'Found PE_BAD_DEVOPS_FILE' )
   or explain( $res->[2]->[0], 'trspan="PE104"' );
 count(2);
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/checkdevops', 'checkDevOpsFile', 'token' );
+
+# POST bad file3
+# --------------
+$query .= "&checkDevOpsFile=$bad_file3";
+ok(
+    $res = $client->_post(
+        '/checkdevops',
+        IO::String->new($query),
+        cookie => "lemonldap=$id",
+        length => length($query),
+        accept => 'text/html'
+    ),
+    'POST checkdevops with bad file3'
+);
+ok( $res->[2]->[0] =~ m%<span trspan="PE104"></span>%,
+    'Found PE_BAD_DEVOPS_FILE' )
+  or explain( $res->[2]->[0], 'trspan="PE104"' );
+count(2);
+( $host, $url, $query ) =
+  expectForm( $res, undef, '/checkdevops', 'checkDevOpsFile', 'token' );
+
+# POST bad file4
+# --------------
+$query .= "&checkDevOpsFile=$bad_file4";
+ok(
+    $res = $client->_post(
+        '/checkdevops',
+        IO::String->new($query),
+        cookie => "lemonldap=$id",
+        length => length($query),
+        accept => 'text/html'
+    ),
+    'POST checkdevops with bad file4'
+);
+ok( $res->[2]->[0] =~ m%<span trspan="PE104"></span>%,
+    'Found PE_BAD_DEVOPS_FILE' )
+  or explain( $res->[2]->[0], 'trspan="PE104"' );
+ok( $res->[2]->[0] =~ m%<span trspan="unknownAttributes">%,
+    'Found unknownAttributes' )
+  or explain( $res->[2]->[0], 'trspan="unknownAttributes"' );
+ok( $res->[2]->[0] =~ m%dalek; none; other; test%, 'Found unknown attributes' )
+  or explain( $res->[2]->[0], 'Unknown attributes' );
+count(4);
+
 ( $host, $url, $query ) =
   expectForm( $res, undef, '/checkdevops', 'checkDevOpsFile', 'token' );
 
