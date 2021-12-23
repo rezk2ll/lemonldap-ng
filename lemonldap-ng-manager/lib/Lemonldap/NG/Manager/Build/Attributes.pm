@@ -2191,6 +2191,55 @@ sub attributes {
             documentation => 'Yubikey device time to live',
         },
 
+        # WebAuthn 2FA
+        webauthn2fActivation => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'WebAuthn second factor activation',
+        },
+        webauthn2fSelfRegistration => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'WebAuthn self registration activation',
+        },
+        webauthn2fAuthnLevel => {
+            type => 'int',
+            documentation =>
+            'Authentication level for users authentified by WebAuthn second factor'
+        },
+        webauthn2fLabel => {
+            type          => 'text',
+            documentation => 'Portal label for WebAuthn second factor'
+        },
+        webauthn2fLogo => {
+            type          => 'text',
+            documentation => 'Custom logo for WebAuthn 2F',
+        },
+        webauthn2fUserVerification => {
+            type   => 'select',
+            select => [
+                { k => 'discouraged',  v => 'Discouraged' },
+                { k => 'preferred',   v => 'Preferred' },
+                { k => 'required',   v => 'Required' },
+            ],
+            default => 'preferred',
+            documentation => 'Verify user during registration and login',
+        },
+        webauthn2fUserCanRemoveKey => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Authorize users to remove existing WebAuthn',
+        },
+        webauthnDisplayNameAttr => {
+            type          => 'text',
+            documentation => 'Session attribute containing user display name',
+        },
+        webauthnRpName => {
+            type          => 'text',
+            documentation => 'WebAuthn Relying Party display name',
+        },
+
+
         # Single session
         notifyDeleted => {
             default       => 1,

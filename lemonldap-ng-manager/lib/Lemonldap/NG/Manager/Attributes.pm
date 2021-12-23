@@ -4479,6 +4479,50 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'virtualHosts' => {
             'type' => 'virtualHostContainer'
         },
+        'webauthn2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'webauthn2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'webauthn2fLabel' => {
+            'type' => 'text'
+        },
+        'webauthn2fLogo' => {
+            'type' => 'text'
+        },
+        'webauthn2fSelfRegistration' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'webauthn2fUserCanRemoveKey' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'webauthn2fUserVerification' => {
+            'default' => 'preferred',
+            'select'  => [ {
+                    'k' => 'discouraged',
+                    'v' => 'Discouraged'
+                },
+                {
+                    'k' => 'preferred',
+                    'v' => 'Preferred'
+                },
+                {
+                    'k' => 'required',
+                    'v' => 'Required'
+                }
+            ],
+            'type' => 'select'
+        },
+        'webauthnDisplayNameAttr' => {
+            'type' => 'text'
+        },
+        'webauthnRpName' => {
+            'type' => 'text'
+        },
         'webIDAuthnLevel' => {
             'default' => 1,
             'type'    => 'int'

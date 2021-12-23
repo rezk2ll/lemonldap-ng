@@ -385,14 +385,18 @@ sub defaultValues {
         'useRedirectOnError'      => 1,
         'useSafeJail'             => 1,
         'utotp2fActivation'       => 0,
-        'viewerHiddenKeys'      => 'samlIDPMetaDataNodes, samlSPMetaDataNodes',
-        'webIDAuthnLevel'       => 1,
-        'webIDExportedVars'     => {},
-        'whatToTrace'           => 'uid',
-        'yubikey2fActivation'   => 0,
-        'yubikey2fPublicIDSize' => 12,
-        'yubikey2fSelfRegistration' => 0,
-        'yubikey2fUserCanRemoveKey' => 1
+        'viewerHiddenKeys'     => 'samlIDPMetaDataNodes, samlSPMetaDataNodes',
+        'webauthn2fActivation' => 0,
+        'webauthn2fSelfRegistration' => 0,
+        'webauthn2fUserCanRemoveKey' => 1,
+        'webauthn2fUserVerification' => 'preferred',
+        'webIDAuthnLevel'            => 1,
+        'webIDExportedVars'          => {},
+        'whatToTrace'                => 'uid',
+        'yubikey2fActivation'        => 0,
+        'yubikey2fPublicIDSize'      => 12,
+        'yubikey2fSelfRegistration'  => 0,
+        'yubikey2fUserCanRemoveKey'  => 1
     };
 }
 
