@@ -35,6 +35,7 @@ sub defaultValues {
         'certificateResetByMailURL' =>
           'http://auth.example.com/certificateReset',
         'certificateResetByMailValidityDelay' => 0,
+        'checkDevOpsCheckSessionAttributes'   => 1,
         'checkDevOpsDisplayNormalizedHeaders' => 1,
         'checkDevOpsDownload'                 => 1,
         'checkTime'                           => 600,
@@ -270,6 +271,7 @@ sub defaultValues {
         'portalSkin'                   => 'bootstrap',
         'portalUserAttr'               => '_user',
         'proxyAuthnLevel'              => 2,
+        'proxyAuthServiceChoiceParam'  => 'lmAuth',
         'radius2fActivation'           => 0,
         'radius2fTimeout'              => 20,
         'radiusAuthnLevel'             => 3,

@@ -553,6 +553,7 @@ t/30-SAML-POST-with-2F-UpgradeOnly.t
 t/30-SAML-POST-with-Notification.t
 t/30-SAML-ReAuth-with-choice.t
 t/30-SAML-ReAuth.t
+t/30-SAML-RelayState.t
 t/30-SAML-SP-rule.t
 t/31-Auth-and-issuer-CAS-declared-app-userattr.t
 t/31-Auth-and-issuer-CAS-declared-app.t

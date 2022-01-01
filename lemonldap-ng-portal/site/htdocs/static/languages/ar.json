@@ -306,6 +306,7 @@
 "u2fWelcome":"U2F device management",
 "unableToGetKey":"تعذر الوصول إلى المفتاح. أعد محاولة الاتصال بالمشرف أو اتصل به",
 "unknownAction":"Unknown action",
+"unknownAttributes":"Unknown attributes",
 "unregister":"Unregister",
 "updateCdc":"تحديث ملف تعريف ارتباط المجال المشترك",
 "updateTime":"تاريخ التحديث",

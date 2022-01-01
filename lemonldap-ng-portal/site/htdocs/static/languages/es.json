@@ -306,6 +306,7 @@
 "u2fWelcome":"Administración de dispositivos U2F",
 "unableToGetKey":"Imposible acceder a su llave. Reintente o póngase en contacto con su administrador",
 "unknownAction":"Acción desconocida",
+"unknownAttributes":"Unknown attributes",
 "unregister":"Suprimir",
 "updateCdc":"Actualizar el cookie de dominio común",
 "updateTime":"Fecha de actualización",

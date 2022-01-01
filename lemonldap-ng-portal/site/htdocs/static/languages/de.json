@@ -306,6 +306,7 @@
 "u2fWelcome":"U2F - Geräteverwaltung",
 "unableToGetKey":"Unable to access to your key. Retry or contact your administrator",
 "unknownAction":"Unknown action",
+"unknownAttributes":"Unknown attributes",
 "unregister":"Abmelden",
 "updateCdc":"Update Common Domain Cookie",
 "updateTime":"Update date",

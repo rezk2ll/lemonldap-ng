@@ -86,9 +86,9 @@ sub display {
 }
 
 sub parse {
-    my ( $self,    $req )   = @_;
-    my ( $headers, $rules ) = ( [], [] );
-    my ( $msg, $json, $url );
+    my ( $self, $req ) = @_;
+    my ( $headers, $rules, $unknown ) = ( [], [], [] );
+    my ( $msg, $json, $url, $bad_json );
     my $alert = 'alert-danger';
 
     # Check token
@@ -179,7 +179,7 @@ sub parse {
         $json = eval {
             from_json( $req->param('checkDevOpsFile'), { allow_nonref => 1 } );
         } if $req->param('checkDevOpsFile');
-        if ($@) {
+        if ( $@ || !$json->{rules} ) {
 
             # Prepare form params
             undef $json;
@@ -208,19 +208,55 @@ sub parse {
             }
         }
 
+        # Parse rules
+        my $cpt = new Safe;
+        $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
+        $cpt->share_from(
+            'Lemonldap::NG::Handler::Main::Jail',
+            [
+                '&encrypt', '&token',
+                @Lemonldap::NG::Handler::Main::Jail::builtCustomFunctions
+            ]
+        );
+        $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
+            $Lemonldap::NG::Common::Safelib::functions );
+
+        foreach ( keys %{ $json->{rules} } ) {
+            $cpt->reval("BEGIN { 'warnings'->unimport; } $json->{rules}->{$_}");
+            my $err = join(
+                '',
+                grep(
+                    { $_ =~
+/(?:Undefined subroutine|Devel::StackTrace|trapped by operation mask)/
+                          ? ()
+                          : $_; }
+                    split( /\n/, $@, 0 ) )
+            );
+            if ($err) {
+                $self->userLogger->error(
+                    "Bad rule: $json->{rules}->{$_} ($err)");
+                $bad_json = 1;
+            }
+        }
+
         # Compile headers
         $handler->headersInit( undef, { $vhost => $json->{headers} } );
         $headers = $handler->checkHeaders( $req, $req->userData );
 
-        if ( $handler->tsv->{maintenance}->{$vhost} ) {
+        # Check attributes if required
+        if ( $self->conf->{checkDevOpsCheckSessionAttributes} ) {
+            $unknown  = $self->_checkSessionAttrs($json);
+            $bad_json = 1 if scalar @$unknown;
+        }
+
+        if ( $handler->tsv->{maintenance}->{$vhost} || $bad_json ) {
 
             # Prepare form params
             undef $json;
             $headers = [];
             $alert   = 'alert-danger';
             $msg     = 'PE' . PE_BAD_DEVOPS_FILE;
-            $self->userLogger->error(
-                "CheckDevOps: bad 'rules.json' file (headers)");
+            $self->userLogger->error("CheckDevOps: bad 'rules.json' file");
             $handler->tsv->{maintenance}->{$vhost} = 0;
         }
         else {
@@ -259,7 +295,11 @@ sub parse {
             # Prepare form params
             $msg   = 'checkDevOps';
             $alert = 'alert-info';
-            $json  = JSON->new->ascii->pretty->encode($json);    # Pretty print
+            foreach ( keys %$json ) {
+                delete $json->{$_} unless $_ =~ /\b(?:rules|headers)\b/;
+                delete $json->{$_} unless keys %{ $json->{$_} };
+            }
+            $json = JSON->new->ascii->pretty->encode($json);    # Pretty print
         }
     }
 
@@ -271,6 +311,7 @@ sub parse {
         LANGS     => $self->conf->{showLanguages},
         DOWNLOAD  => $self->conf->{checkDevOpsDownload},
         MSG       => $msg,
+        UNKNOWN   => join( $self->conf->{multiValuesSeparator}, @$unknown ),
         ALERTE    => $alert,
         FILE      => $json,
         HEADERS   => $headers,
@@ -286,6 +327,38 @@ sub parse {
 
     # Display form
     return $self->p->sendHtml( $req, 'checkdevops', params => $params );
+}
+
+sub _checkSessionAttrs {
+    my ( $self, $json ) = @_;
+    my $unknown;
+    my %sessionAttrs = map { $_ => 1 } (
+        keys %{ $self->{conf}->{exportedVars} },
+        keys %{ $self->{conf}->{groups} },
+        keys %{ $self->{conf}->{macros} }
+    );
+    $self->logger->debug(
+        "Existing session attributes: "
+          . join $self->conf->{multiValuesSeparator},
+        keys %sessionAttrs
+    );
+
+    my @varh = map { ( $json->{headers}->{$_} =~ /\$(\w+)\b/g ) }
+      keys %{ $json->{headers} };
+    my @varr = map { ( $json->{rules}->{$_} =~ /\$(\w+)\b/g ) }
+      keys %{ $json->{rules} };
+    my %usedAttrs = map { $_ => 1 } ( @varh, @varr );
+    $self->logger->debug(
+        "Used attributs: " . join $self->conf->{multiValuesSeparator},
+        keys %usedAttrs );
+
+    @$unknown = map { $sessionAttrs{$_} ? () : $_ } sort keys %usedAttrs;
+    $self->logger->debug(
+        "Unknown attributes: " . join $self->conf->{multiValuesSeparator},
+        @$unknown )
+      if scalar @$unknown;
+
+    return $unknown;
 }
 
 1;

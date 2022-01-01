@@ -487,6 +487,12 @@ sub attributes {
             documentation => 'Display normalized headers',
             flags         => 'p',
         },
+        checkDevOpsCheckSessionAttributes => {
+            default       => 1,
+            type          => 'bool',
+            documentation => 'Check if session attributes exist',
+            flags         => 'p',
+        },
         checkUser => {
             default       => 0,
             type          => 'bool',
@@ -3642,8 +3648,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 3,
             documentation => 'Radius authentication level',
         },
-        radiusSecret => { type => 'text', },
-        radiusServer => { type => 'text', },
+        radiusSecret => { type => 'text' },
+        radiusServer => { type => 'text' },
 
         # REST
         restAuthUrl       => { type => 'url' },
@@ -3661,7 +3667,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Name of the remote portal cookie',
             flags         => 'p',
         },
-        remotePortal        => { type => 'text', },
+        remotePortal        => { type => 'text' },
         remoteGlobalStorage => {
             type          => 'PerlModule',
             default       => 'Lemonldap::NG::Common::Apache::Session::SOAP',
@@ -3678,10 +3684,13 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
 
         # Proxy
-        proxyAuthService              => { type => 'text', },
-        proxySessionService           => { type => 'text', },
-        proxyAuthServiceChoiceParam   => { type => 'text', },
-        proxyAuthServiceChoiceValue   => { type => 'text', },
+        proxyAuthService            => { type => 'text' },
+        proxySessionService         => { type => 'text' },
+        proxyAuthServiceChoiceValue => { type => 'text' },
+        proxyAuthServiceChoiceParam => {
+            type    => 'text',
+            default => 'lmAuth'
+        },
         proxyAuthServiceImpersonation => {
             type          => 'bool',
             default       => 0,

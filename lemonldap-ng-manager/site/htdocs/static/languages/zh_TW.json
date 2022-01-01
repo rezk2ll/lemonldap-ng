@@ -182,6 +182,7 @@
 "cfgLog":"概要",
 "cfgVersion":"設定版本",
 "checkDevOps":"啟用",
+"checkDevOpsCheckSessionAttributes":"Check session attributes",
 "checkDevOpsDisplayNormalizedHeaders":"Display normalized headers",
 "checkDevOpsDownload":"Download file",
 "checkState":"啟用",

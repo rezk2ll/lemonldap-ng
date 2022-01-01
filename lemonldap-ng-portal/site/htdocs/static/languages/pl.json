@@ -306,6 +306,7 @@
 "u2fWelcome":"Zarządzanie urządzeniami U2F",
 "unableToGetKey":"Nie można uzyskać dostępu do Twojego klucza. Spróbuj ponownie lub skontaktuj się z administratorem",
 "unknownAction":"Nieznana akcja",
+"unknownAttributes":"Unknown attributes",
 "unregister":"Wyrejestruj",
 "updateCdc":"Zaktualizuj wspólny plik cookie domeny",
 "updateTime":"Data aktualizacji",

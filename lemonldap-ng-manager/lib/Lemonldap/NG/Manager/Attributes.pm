@@ -870,6 +870,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'checkDevOpsCheckSessionAttributes' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'checkDevOpsDisplayNormalizedHeaders' => {
             'default' => 1,
             'type'    => 'bool'
@@ -2996,7 +3000,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'text'
         },
         'proxyAuthServiceChoiceParam' => {
-            'type' => 'text'
+            'default' => 'lmAuth',
+            'type'    => 'text'
         },
         'proxyAuthServiceChoiceValue' => {
             'type' => 'text'
