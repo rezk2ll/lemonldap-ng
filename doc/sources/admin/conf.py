@@ -174,6 +174,9 @@ html_css_files = [
     'css/custom.css',
 ]
 
+html_favicon = 'logos/favicon.ico'
+html_logo = 'logos/lemonldap-ng-logo.png'
+
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
 # directly to the root of the documentation.
