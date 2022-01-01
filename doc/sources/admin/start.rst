@@ -1,6 +1,11 @@
 Documentation for LemonLDAP::NG 2.0
 ===================================
 
+.. image:: logos/logo_llng_600px.png
+   :alt: LL::NG logo
+   :align: center
+   :target: https://www.lemonldap-ng.org
+
 .. toctree::
    
    Documentation index<documentation>
