@@ -1,8 +1,8 @@
 DevOps Handler
 ==============
 
-This handler is designed to read vhost configuration from the website
-itself not from LL:NG configuration. Rules and headers are set in a
+This Handler is designed to retrieve vhost configuration from the website
+itself, not from LL:NG configuration. Rules and headers are set in a
 **rules.json** file stored at the website root directory (ie
 ``http://website/rules.json``). This file looks like:
 
@@ -24,7 +24,7 @@ If this file is not found, the default rule "accept" is applied and just
 No specific configuration is required except that:
 
 -  you have to choose this specific handler (directly by using
-   ``VHOSTTYPE`` environment variable)
+   ``VHOSTTYPE`` environment variable or in VHost options)
 -  you can set the loopback URL needed by the DevOps handler to get
    ``/rules.json`` or use ``RULES_URL`` parameter to set JSON file path
    (see :doc:`SSO as a Service<ssoaas>`). Default to
@@ -33,7 +33,7 @@ No specific configuration is required except that:
 
 .. attention::
 
-    Note that DevOps handler will refuse to compile
-    rules.json if :doc:`Safe Jail<safejail>` isn't enabled.
+    Note that DevOps handler will not compile
+    rules.json if :doc:`Safe Jail<safejail>` is not enabled.
 
-See :doc:`SSO as a Service<ssoaas>` for more
+See :doc:`SSO as a Service<ssoaas>` for more.

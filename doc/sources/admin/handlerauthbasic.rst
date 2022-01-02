@@ -48,13 +48,13 @@ to access required locations in Portal Virtual Host.
 
 .. danger::
 
-    With AuthBasic handler, you have to disable CSRF token by
+    With AuthBasic Handler, you have to disable CSRF token by
     setting a special rule based on source IP addresses like this :
 
     requireToken => $env->{REMOTE_ADDR} !~ /^127\.0\.[1-3]\.1$/
 
     With :doc:`authchoice`, you have to declare which authentication module is
-    requested by handler to create global session.
+    requested by the AuthBasic Handler to create global session.
 
     Go to:
     ``General Parameters > Authentication parameters > Choice parameters``
