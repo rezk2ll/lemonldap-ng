@@ -7,7 +7,6 @@ use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Portal::Main::Constants qw(
   URIRE
   PE_OK
-  PE_ERROR
   PE_BADURL
   PE_NOTOKEN
   PE_TOKENEXPIRED
