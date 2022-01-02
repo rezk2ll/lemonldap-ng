@@ -39,7 +39,7 @@ sub initRadius {
 sub init {
     my $self = shift;
     unless ( $self->initRadius ) {
-        $self->error('Radius connect failed');
+        $self->error('Radius initialisation failed');
     }
 
     return $self->Lemonldap::NG::Portal::Auth::_WebForm::init();
@@ -49,15 +49,18 @@ sub init {
 
 sub authenticate {
     my ( $self, $req ) = @_;
-    $self->initRadius unless ( $self->radius );
+    $self->initRadius unless $self->radius;
     unless ( $self->radius ) {
         $self->setSecurity($req);
         return PE_RADIUSCONNECTFAILED;
     }
 
+    $self->logger->debug(
+"Send authentication request ($req->{user}) to Radius server ($self->{conf}->{radiusServer})"
+    );
     my $res = $self->radius->check_pwd( $req->user, $req->data->{password} );
     unless ( $res == 1 ) {
-        $self->userLogger->warn("Unable to authenticate $req->{user} !");
+        $self->userLogger->warn("Unable to authenticate $req->{user}!");
         $self->setSecurity($req);
         return PE_BADCREDENTIALS;
     }

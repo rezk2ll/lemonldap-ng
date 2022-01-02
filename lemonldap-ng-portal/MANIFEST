@@ -518,6 +518,7 @@ t/24-AuthApache.t
 t/24-AuthKerberos.t
 t/25-AuthSlave-with-Choice.t
 t/25-AuthSlave-with-Credentials.t
+t/26-AuthRadius.t
 t/26-AuthRemote.t
 t/27-AuthProxy-with-choice.t
 t/27-AuthProxy.t
