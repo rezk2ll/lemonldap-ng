@@ -309,6 +309,7 @@ Suggests: gpg,
           libnet-oauth-perl,
           libsoap-lite-perl,
           libweb-id-perl,
+          libauthen-radius-perl,
           slapd
 Pre-Depends: debconf
 Description: Lemonldap::NG authentication portal part
