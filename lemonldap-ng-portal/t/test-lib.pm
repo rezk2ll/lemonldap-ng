@@ -61,6 +61,7 @@ use Time::Fake;
 use URI::Escape;
 use MIME::Base64;
 use Lemonldap::NG::Common::FormEncode;
+use Lemonldap::NG::Common::Util qw/getPSessionID/;
 
 #use 5.10.0;
 
@@ -180,6 +181,40 @@ sub getCache {
             namespace   => 'lemonldap-ng-session',
             cache_root  => $tmpDir,
             cache_depth => 0,
+        }
+    );
+}
+
+sub getSession {
+    my $id           = shift;
+    my @sessionsOpts = (
+        storageModule        => "Apache::Session::File",
+        storageModuleOptions => {
+            Directory     => "$tmpDir",
+            LockDirectory => "$tmpDir/lock",
+        },
+        kind => 'SSO'
+    );
+
+    return Lemonldap::NG::Common::Session->new( {
+            @sessionsOpts, id => $id,
+        }
+    );
+}
+
+sub getPSession {
+    my $uid          = shift;
+    my @sessionsOpts = (
+        storageModule        => "Apache::Session::File",
+        storageModuleOptions => {
+            Directory     => "$tmpDir",
+            LockDirectory => "$tmpDir/lock",
+        },
+        kind => 'Persistent'
+    );
+
+    return Lemonldap::NG::Common::Session->new( {
+            @sessionsOpts, id => getPSessionID($uid),
         }
     );
 }
