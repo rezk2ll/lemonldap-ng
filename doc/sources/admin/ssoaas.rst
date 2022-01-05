@@ -62,6 +62,7 @@ request authorization from a central FastCGI server:
 .. code::
 
    server {
+     listen <port>;
      server_name myapp.domain.com;
      location = /lmauth {
        internal;
@@ -78,7 +79,7 @@ request authorization from a central FastCGI server:
        fastcgi_param X_ORIGINAL_URI  $original_uri;
 
        # Set dynamically rules (LLNG will poll it every 10 mn)
-       fastcgi_param RULES_URL http://rulesserver/my.json
+       fastcgi_param RULES_URL http://rulesserver/my.json;
      }
      location /rules.json {
        auth_request off;
@@ -91,7 +92,7 @@ request authorization from a central FastCGI server:
        auth_request_set $lmremote_user $upstream_http_lm_remote_user;
        auth_request_set $lmlocation $upstream_http_location;
        error_page 401 $lmlocation;
-       include /etc/lemonldap-ng/nginx-lua-headers.conf;
+       include /etc/nginx/nginx-lua-headers.conf;
        # ...
        # Example with php-fpm:
        include snippets/fastcgi-php.conf;
@@ -105,7 +106,7 @@ request authorization from a central FastCGI server:
 Apache
 ^^^^^^
 
-There is an experimental FactCGI client in LLNG. You just have to
+There is an experimental FastCGI client in LL::NG. You just have to
 install FCGI::Client and add this in the apache2.conf or your web
 applications or proxies.
 
@@ -232,7 +233,7 @@ directory.
        fastcgi_param CONTENT_LENGTH "";
        # Keep original hostname
        fastcgi_param HOST $http_host;
-       # Keep original request (LLNG server will received /lmauth)
+       # Keep original request (LL::NG server will received /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
      }
      location /rules.json {
@@ -246,7 +247,7 @@ directory.
        auth_request_set $lmremote_user $upstream_http_lm_remote_user;
        auth_request_set $lmlocation $upstream_http_location;
        error_page 401 $lmlocation;
-       include /etc/lemonldap-ng/nginx-lua-headers.conf;
+       include /etc/nginx/nginx-lua-headers.conf;
        proxy_pass https://$vhost.internal.domain;
      }
    }
