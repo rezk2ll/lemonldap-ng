@@ -54,9 +54,9 @@ Then, add a Relaying Party with the following configuration:
 
 If you want to transmit extra user attributes to Grafana, you also need to configure:
 
--  Extra Claims »
+-  Scope values content »
 
-   -  add a key named ``profile``
+   -  add a key named ``profile`` to override the default claim list
    -  set a value of ``name username display_name upn``
 
 -  Exported Attributes (not all of them are mandatory)

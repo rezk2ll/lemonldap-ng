@@ -155,22 +155,20 @@ spaces, no special characters), like “sample-rp”;
 
 You can then access to the configuration of this RP.
 
+.. _oidcexportedattr:
+
 Exported attributes
 ^^^^^^^^^^^^^^^^^^^
 
-You can map here the attribute names from the LL::NG session to an
-`OpenID Connect
-claim <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__.
+.. warning::
 
-.. include:: openidconnectclaims.rst
+   By default, only `standard OpenID Connect claims <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__ are visible to applications. If you want to add non-standard attributes, you must create a new scope in the *Scope values content* section and make your application request it
 
-.. _oidcexportedattr:
+For each OpenID Connect attribute you want to release to applications, you can define:
 
-For each OpenID Connect claim you want to release to applications, you can define:
-
-* **Claim name**: the name of the claim as it will appear in Userinfo responses
-* **Variable name**: the name of the LemonLDAP::NG session variable containing the claim value
-* **Type**: the data type of the attribute. By default, a string. Choosing integer or boolean will make the claim appear as the corresponding JSON type.
+* **Claim name**: the name of the attribute as it will appear in Userinfo responses
+* **Variable name**: the name of the LemonLDAP::NG session variable containing the attribute value
+* **Type**: the data type of the attribute. By default, a string. Choosing integer or boolean will make the attribute appear as the corresponding JSON type.
 * **Array**: choose how to process multi-valued attributes
 
   * **Auto**: If the session key contains a single value, it will be released as a JSON number, string or boolean, depending on the previously specified type. If the session key contains multiple values, it will be released as an array of numbers, strings or booleans.
@@ -186,35 +184,46 @@ For each OpenID Connect claim you want to release to applications, you can defin
 
 .. _oidcextraclaims:
 
-Extra Claims
-^^^^^^^^^^^^
+Scope values content
+^^^^^^^^^^^^^^^^^^^^
 
+By default, LemonLDAP::NG already defines the following scope-to-attribute map:
 
-.. attention::
+.. csv-table::
+   :header: "Scope value", "Attribute list"
+   :delim: ;
+   :widths: auto
 
-    By default, only claims that are part of standard OpenID Connect scopes
-    (``profile``, ``email``, ``phone``, ``address``) will be sent to a client.
-    If you want to send a claim that is not in the OpenID Connect
-    specification, you need to declare it in the Extra Claims section
+   profile; name family_name given_name middle_name nickname preferred_username profile picture website gender birthdate zoneinfo locale updated_at
+   email; email email_verified
+   address; street_address locality region postal_code country
+   phone; phone_number phone_number_verified
 
-If you want to make custom claims visible to OpenID Connect clients, you
-need to declare them in a scope.
+If you want to make custom attribute visible to OpenID Connect clients, you
+need to declare them in a new scope in this section.
 
 Add your additional scope as the **Key**, and a space-separated list of
-claims as the **Value**:
+attribute as the **Value**:
 
--  timelord => rebirth_count bloodline
+-  `employment_info` => `position company`
 
-In this example, an OpenID Client asking for the ``timelord`` scope will
-be able to read the ``rebirth_count`` and ``bloodline`` claims from the
+In this example, an OpenID Client asking for the ``employment_info`` scope will
+be able to read the ``company`` and ``position`` attribute from the
 Userinfo endpoint.
-
 
 .. important::
 
-    Any Claim defined in this section must be mapped to a
-    LemonLDAP::NG session attribute in the **Exported Attributes**
+    Any attribute defined in this section must be mapped to a
+    LemonLDAP::NG session variable in the **Exported Attributes**
     section
+
+.. important::
+
+    Your custom attributes will only be visible if the application requests the
+    corresponding scope value
+
+
+
 
 .. _oidcscoperules:
 

@@ -51,7 +51,7 @@ Security
 -  **Only allow declared scopes**: By default, LemonLDAP::NG will grant all requested scopes. When this option is in use, LemonLDAP will only grant:
 
    - Standard OIDC scopes (``openid`` ``profile`` ``email`` ``address`` ``phone``)
-   - Scopes declared in :ref:`Extra Claims <oidcextraclaims>`
+   - Scopes declared in :ref:`Scope values content <oidcextraclaims>`
    - Scopes declared in :ref:`Scope Rules <oidcscoperules>` (if they match the rule)
 
 -  **Authorization Code flow**: Set to 1 to allow Authorization Code

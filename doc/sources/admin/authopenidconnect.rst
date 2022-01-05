@@ -202,8 +202,6 @@ standard <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`_
 and depends on the scope requested by LL::NG (see options in next
 chapter).
 
-.. include:: openidconnectclaims.rst
-
 So you can define for example:
 
 -  cn => name
