@@ -19,6 +19,8 @@ my $file = '{
     "User": "$uid",
     "Mail": "$mail",
     "Name": "$cn",
+    "LDAP_Var": "$ldapExpVar",
+    "Groups_SSO": "$groups",
     "UA": "$UA ? $UA : qq#FF#"
   }
 }';
@@ -68,7 +70,8 @@ my $client = LLNG::Manager::Test->new( {
             checkDevOps                         => 1,
             checkDevOpsDownload                 => 0,
             checkDevOpsDisplayNormalizedHeaders => 0,
-            hiddenAttributes                    => 'mail,   UA'
+            hiddenAttributes                    => 'mail,   UA',
+            ldapExportedVars => { ldapExpVar => ''}
         }
     }
 );
@@ -209,7 +212,7 @@ ok( $res->[2]->[0] =~ m%<span trspan="PE104"></span>%,
 ok( $res->[2]->[0] =~ m%<span trspan="unknownAttributes">%,
     'Found unknownAttributes' )
   or explain( $res->[2]->[0], 'trspan="unknownAttributes"' );
-ok( $res->[2]->[0] =~ m%dalek; none; other; test%, 'Found unknown attributes' )
+ok( $res->[2]->[0] =~ m%dalek; none; other; test%, 'Found 4 unknown attributes' )
   or explain( $res->[2]->[0], 'Unknown attributes' );
 count(4);
 
@@ -243,6 +246,13 @@ ok( $res->[2]->[0] =~ m%Name: Doctor Who<br/>%, 'Hearder Name found' )
   or explain( $res->[2]->[0], 'Hearder Name' );
 ok( $res->[2]->[0] =~ m%User: dwho<br/>%, 'Hearder User found' )
   or explain( $res->[2]->[0], 'Hearder User' );
+ok( $res->[2]->[0] =~ m%LDAP_Var: <br/>%, 'Hearder LDAP_Var found' )
+  or explain( $res->[2]->[0], 'Hearder LDAP_Var' );
+ok( $res->[2]->[0] =~ m%Groups_SSO: (.+?)<br/>%, 'Hearder Groups_SSO found' )
+  or explain( $res->[2]->[0], 'Hearder Groups_SSO' );
+my @groups = split '; ', $1;
+ok( scalar @groups == 3, '3 SSO groups found' )
+  or explain( $res->[2]->[0], 'SSO groups' );
 ok( $res->[2]->[0] !~ m%Mail: dwho\@badwolf.org<br/>%,
     'Hearder Mail not found' )
   or explain( $res->[2]->[0], 'No hearder Mail' );

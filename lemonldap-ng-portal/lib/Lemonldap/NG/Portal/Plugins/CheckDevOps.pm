@@ -332,10 +332,11 @@ sub _checkSessionAttrs {
     my ( $self, $json ) = @_;
     my $unknown;
     my %sessionAttrs = map { $_ => 1 } (
-        keys %{ $self->{conf}->{exportedVars} },
-        keys %{ $self->{conf}->{groups} },
-        keys %{ $self->{conf}->{macros} }
+        keys %{ $self->conf->{ldapExportedVars} },
+        keys %{ $self->conf->{exportedVars} },
+        keys %{ $self->conf->{macros} }
     );
+    $sessionAttrs{groups} = 1 if $self->conf->{groups};
     $self->logger->debug(
         "Existing session attributes: "
           . join $self->conf->{multiValuesSeparator},
