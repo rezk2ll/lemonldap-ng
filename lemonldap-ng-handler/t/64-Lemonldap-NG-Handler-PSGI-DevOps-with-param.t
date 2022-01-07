@@ -2,7 +2,6 @@ use Test::More;
 use JSON;
 use MIME::Base64;
 use LWP::UserAgent;
-use Data::Dumper;
 
 BEGIN {
     require 't/test-psgi-lib.pm';
@@ -12,9 +11,11 @@ BEGIN {
 init(
     'Lemonldap::NG::Handler::Server',
     {
+        #logLevel            => 'debug',
         vhostOptions => {
             'test3.example.com' => {
-                vhostDevOpsRulesUrl => 'http://donotuse.example.com/myfile.json',
+                vhostDevOpsRulesUrl =>
+                  'http://donotuse.example.com/myfile.json',
             },
         },
     }
@@ -54,6 +55,8 @@ ok(
 ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
 count(2);
 
+Time::Fake->offset("+100s");
+
 # Denied queries
 ok(
     $res = $client->_get(
@@ -66,6 +69,8 @@ ok(
 );
 ok( $res->[0] == 403, 'Code is 403' ) or explain( $res->[0], 403 );
 count(2);
+
+Time::Fake->offset("+600s");
 
 ok(
     $res = $client->_get(
@@ -88,12 +93,12 @@ no warnings 'redefine';
 
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
-    ok( $req->header('host') eq 'devops.example.com',
-        'Host header found' )
+    ok( $req->header('host') eq 'devops.example.com', 'Host header found' )
       or explain( $req->headers(), 'devops.example.com' );
     ok( $req->as_string() =~ m#http://devops.example.com/file.json#,
         'Rules file URL found' )
-      or explain( $req->as_string(), 'GET http://devops.example.com/file.json' );
+      or
+      explain( $req->as_string(), 'GET http://devops.example.com/file.json' );
     count(2);
     my $httpResp;
     my $s = '{
