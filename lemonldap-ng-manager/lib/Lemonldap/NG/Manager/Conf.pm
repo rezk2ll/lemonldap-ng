@@ -212,7 +212,10 @@ sub _generateX509 {
     my $strCert = Net::SSLeay::PEM_get_string_X509($cert);
     my $strPrivate;
     if ($password) {
-        $strPrivate = Net::SSLeay::PEM_get_string_PrivateKey( $key, $password );
+        my $alg = Net::SSLeay::EVP_get_cipherbyname("AES-256-CBC")
+          || Net::SSLeay::EVP_get_cipherbyname("DES-EDE3-CBC");
+        $strPrivate =
+          Net::SSLeay::PEM_get_string_PrivateKey( $key, $password, $alg );
     }
     else {
         $strPrivate = Net::SSLeay::PEM_get_string_PrivateKey($key);
