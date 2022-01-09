@@ -23,6 +23,7 @@ complete authentication module with 2FA :
 -  :doc:`External 2F<external2f>` *(to call an external command)*
 -  :doc:`REST<rest2f>` *(Remote REST app)*
 -  :doc:`RADIUS<radius2f>` *(Remote RADIUS server)*
+-  :doc:`WebAuthn<webauthn2f>` *(Web Authentication API)*
 
 The E-Mail, External and REST 2F modules
 :doc:`may be declared multiple times<sfextra>` with different sets of
