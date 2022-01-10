@@ -32,7 +32,7 @@ Configuration
 FastCGI server has few parameters. They can be set by environment
 variables (read by startup script) or by command line options. A default
 configuration file can be found in
-``/usr/local/lemonlda-ng/etc/default/llng-fastcgi-server`` (or
+``/usr/local/lemonldap-ng/etc/default/llng-fastcgi-server`` (or
 ``/etc/default/lemonldap-ng-fastcgi-server`` in Debian package).
 
 The FastCGI server reads also ``LLTYPE`` parameter in FastCGI requests
