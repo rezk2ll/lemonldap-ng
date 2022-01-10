@@ -29,6 +29,52 @@ None
 2.0.14
 ------
 
+Weak encryption used for password-protected SAML keys
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Previous versions of LemonLDAP::NG used a weak encryption algorithm to protect
+SAML keys when a password was set during certificate generation.
+
+Run the following command to check if this is your case::
+
+    lemonldap-ng-cli get samlServicePrivateKeySig
+    lemonldap-ng-cli get samlServicePrivateKeyEnc
+
+If the output of either command starts with ``BEGIN ENCRYPTED PRIVATE KEY``,
+then it probably means you generated your keys using the vulnerable manager
+code.
+
+In this case, you can convert your existing keys to a stronger encryption using
+the following command ::
+
+    # Extract your existing keys. If samlServicePrivateKeyEnc is empty, you can
+    # skip it entirely
+    lemonldap-ng-cli get samlServicePrivateKeySig | \
+        sed 's/samlServicePrivateKeySig = //' > saml-sig.pem
+    lemonldap-ng-cli get samlServicePrivateKeyEnc | \
+        sed 's/samlServicePrivateKeyEnc = //' > saml-enc.pem
+
+    # Re-encrypt the private key, using the same passphrase
+    openssl pkey -in saml-sig.pem -aes256 -out saml-sig-aes.pem
+    openssl pkey -in saml-enc.pem -aes256 -out saml-enc-aes.pem
+
+    #Or, if you are using OpenSSL 3+
+    openssl pkey -provider legacy -provider default -in saml-sig.pem \
+        -aes256 -out saml-sig-aes.pem
+    openssl pkey -provider legacy -provider default -in saml-enc.pem \
+        -aes256 -out saml-enc-aes.pem
+
+Then, simply reimport your keys ::
+
+    lemonldap-ng-cli set samlServicePrivateKeySig "$(cat saml-sig-aes.pem)"
+    lemonldap-ng-cli set samlServicePrivateKeyEnc "$(cat saml-enc-aes.pem)"
+
+If is recommended to keep the same password as before, if not, adjust the
+``samlServicePrivateKeySigPwd`` and ``samlServicePrivateKeyEncPwd`` variables as well.
+
+This operation is transparent and does not require any change to your existing
+SAML configuration or SAML applications
+
 LemonLDAP::NG version is returned by the CheckState plugin
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
