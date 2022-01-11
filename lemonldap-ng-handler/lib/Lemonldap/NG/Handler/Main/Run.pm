@@ -1,7 +1,7 @@
 # Main running methods file
 package Lemonldap::NG::Handler::Main::Run;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -734,10 +734,10 @@ sub sendHeaders {
           $class->tsv->{forgeHeaders}->{$vhost}->( $req, $session );
         foreach my $h ( sort keys %headers ) {
             if ( defined( my $v = $headers{$h} ) ) {
-                $class->logger->debug("Send header $h with value $v");
+                $class->logger->debug("Send header '$h' with value '$v'");
             }
             else {
-                $class->logger->debug("Send header $h with empty value");
+                $class->logger->debug("Send header '$h' with an empty value");
             }
         }
         $class->set_header_in( $req, %headers );
