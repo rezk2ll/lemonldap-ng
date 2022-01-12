@@ -121,7 +121,7 @@ Apache
 
 There is an experimental FastCGI client in LL::NG. You just have to
 install LemonLDAP::NG handler and FCGI::Client. Then, add this in
-your apache2.conf, web applications or proxies.
+your apache2.conf, web applications or reverse-proxies.
 
 The following configuration example assumes that you are in a "central
 FastCGI" configuration.
