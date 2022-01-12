@@ -39,7 +39,7 @@ You can then create rules with these fields:
 
 .. tip::
 
-    By example, to add 3 to authentication level for users from 192.168.0.0/24 network:
+    By example, to add 3 to authentication level for users from 192.168.0.0/16 network:
     
     - Rule: ``$env->{REMOTE_ADDR} =~ /^192\.168\./``
     - Value: ``+3``

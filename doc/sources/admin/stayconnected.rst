@@ -11,7 +11,13 @@ Just enable it in the manager (section “plugins”).
 
 -  **Parameters**:
 
-   -  **Activation**: Enable / Disable this plugin
-   -  **Do not check fingerprint**: Enable / Disable browser fingerprint checking 
+   -  **Activation**: Rule to enable/disable this plugin
+   -  **Do not check fingerprint**: Enable/Disable browser fingerprint checking 
    -  **Expiration time**: Persistent session connection and cookie timeout
    -  **Cookie name**: Persistent connection cookie name
+
+.. tip::
+
+    By example, you can allow users from 192.168.0.0/16 private network to register a fingerprinting:
+    
+    - Rule: ``$env->{REMOTE_ADDR} =~ /^192\.168\./``
