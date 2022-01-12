@@ -7,7 +7,7 @@ Our concept of SSOaaS
 Access management provides 3 services:
 
 -  Global Authentication: Single Sign-On
--  Authorization: to grant authentication is not enough. User rights
+-  Authorization: Grant authentication is not enough. User rights
    must be checked
 -  Accounting: SSO logs (access) + application logs *(transactions and
    results)*
@@ -25,13 +25,13 @@ the ability for an app to manage authorizations and choose user
 attributes to set. Authentication can not be really ``*aaS``: app must
 just use it, not manage it.
 
-LL::NG affords some features that can be used to provide SSO as a
-service: a web application can manage its rules and headers. Docker or
+LL::NG affords some features that can be used for providing SSO as a
+Service: a web application can manage its rules and headers. Docker or
 VM images (Nginx only) includes LL::NG Nginx configuration that aims to
 a global
 :ref:`LL::NG authorization server<platformsoverview-external-servers-for-nginx>`.
 By default, all authenticated users can access and one header is set:
-``Auth-User``. If application gives a RULES_URL parameter that refers to
+``Auth-User``. If application defines a RULES_URL parameter that refers to
 a JSON file, authorization server will read it, apply specified rules
 and set required headers (see :doc:`DevOps Handler<devopshandler>`).
 
@@ -128,14 +128,14 @@ FastCGI" configuration.
 
 .. code-block:: apache
 
-   <VirtualHost ...>
+   <VirtualHost port>
        ServerName app.tls
        PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2::FCGIClient
 
        # This must point to the central FastCGI server
        PerlSetVar LLNG_SERVER 192.0.2.1:9090
 
-       # Declare this vhost as a DevOps vhost, so that we do not have
+       # Declare this vhost as a DevOps protected vhost. So you do not have
        # to declare it in the LemonLDAP::NG Manager
        PerlSetVar VHOSTTYPE DevOps
 
@@ -276,4 +276,3 @@ directory.
    }
 
 .. |image0| image:: /documentation/devops.png
-
