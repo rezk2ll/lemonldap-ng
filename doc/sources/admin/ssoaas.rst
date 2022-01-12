@@ -64,8 +64,9 @@ Using a global FastCGI (or uWSGI) server
 Nginx
 ^^^^^
 
-In this example, web server templates (Nginx only) are configured to
-request authorization from a central FastCGI server:
+Examples below are web server templates (Nginx only) configured to
+request authorization from a central FastCGI server.
+With an uWSGI central server, use 'uwsgi_param' directive (Nginx only):
 
 .. code::
 
@@ -119,8 +120,8 @@ Apache
 ^^^^^^
 
 There is an experimental FastCGI client in LL::NG. You just have to
-install FCGI::Client and add this in the apache2.conf or your web
-applications or proxies.
+install LemonLDAP::NG handler and FCGI::Client. Then, add this in
+your apache2.conf, web applications or proxies.
 
 The following configuration example assumes that you are in a "central
 FastCGI" configuration.
