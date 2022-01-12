@@ -797,6 +797,7 @@ t/gpghome/pubring.kbx
 t/gpghome/pubring.kbx~
 t/gpghome/tofu.db
 t/gpghome/trustdb.gpg
+t/HistoryPlugin.pm
 t/lib/Apache/Session/Timeout.pm
 t/lib/Lemonldap/NG/Common/Conf/Backends/Timeout.pm
 t/lib/Lemonldap/NG/Handler/Test.pm
