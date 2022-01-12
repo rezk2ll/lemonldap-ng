@@ -86,7 +86,11 @@ request authorization from a central FastCGI server:
        # Keep original request (LLNG server will received /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
 
-       # Set dynamically rules (LLNG will poll it every 10 mn)
+       # Set redirection params
+       fastcgi_param HTTPS_REDIRECT "$https";
+       fastcgi_param PORT_REDIRECT $server_port;
+
+       # Set dynamically rules (LL::NG will poll it every 10 mn)
        fastcgi_param RULES_URL http://rulesserver/my.json;
      }
      location /rules.json {
@@ -138,6 +142,8 @@ FastCGI" configuration.
        # used to make the authentication decision about this virtualhost
        # Make sure the central FastCGI server can reach it
        PerlSetVar RULES_URL http://app.tld/rules.json
+       PerlSetVar HTTPS_REDIRECT HTTPS
+       PerlSetVar PORT_REDIRECT SERVER_PORT
        ...
    </VirtualHost>
 
@@ -158,6 +164,8 @@ you can protect also an Express server. Example:
      port: 9090,
      PARAMS: {
        RULES_URL: 'http://my-server/rules.json'
+       HTTPS_REDIRECT: 'ON',
+       PORT_REDIRECT: '443'
      }
    });
 
@@ -204,6 +212,8 @@ Simple example:
        port => '9090',
        fcgi_auth_params => {
          RULES_URL => 'https://my-server/my.json',
+         HTTPS_REDIRECT => 'ON',
+         PORT_REDIRECT  => 443
        },
        # Optional rejection subroutine
        #on_reject => \&on_reject;
@@ -229,6 +239,7 @@ directory.
 .. code-block:: nginx
 
    server {
+     listen <port>;
      server_name "~^(?<vhost>.+?)\.dev\.sso\.my\.domain$";
      location = /lmauth {
        internal;
@@ -243,6 +254,9 @@ directory.
        fastcgi_param HOST $http_host;
        # Keep original request (LL::NG server will received /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
+       # Set redirection params
+       fastcgi_param HTTPS_REDIRECT "$https";
+       fastcgi_param PORT_REDIRECT $server_port;
      }
      location /rules.json {
        auth_request off;

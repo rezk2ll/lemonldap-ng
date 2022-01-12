@@ -11,9 +11,11 @@ BEGIN {
 init(
     'Lemonldap::NG::Handler::Server',
     {
-        #logLevel            => 'debug',
+        logLevel     => 'debug',
         vhostOptions => {
             'test3.example.com' => {
+                vhostHttps => 0,
+                vhostPort => 80,
                 vhostDevOpsRulesUrl =>
                   'http://donotuse.example.com/myfile.json',
             },
@@ -22,6 +24,42 @@ init(
 );
 
 my $res;
+
+# Unauthorized queries
+ok(
+    $res = $client->_get(
+        '/',                 undef,
+        'test3.example.com', undef,
+        VHOSTTYPE => 'DevOps',
+        RULES_URL => 'http://devops.example.com/file.json'
+    ),
+    'Unauthorized query'
+);
+ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
+${ $res->[1] }[1] =~ m#http://auth\.example\.com/\?url=(.+?)%#;
+ok( decode_base64 $1 eq 'http://test3.example.com/', 'Redirect URL found' )
+  or explain( decode_base64 $1, 'http://test3.example.com/' );
+count(3);
+
+Time::Fake->offset("+700s");
+
+ok(
+    $res = $client->_get(
+        '/',                 undef,
+        'test3.example.com', undef,
+        HTTPS_REDIRECT => 'on',
+        PORT_REDIRECT  => 8443,
+        VHOSTTYPE      => 'DevOps',
+        RULES_URL      => 'http://devops.example.com/file.json'
+    ),
+    'Unauthorized query 2'
+);
+ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
+${ $res->[1] }[1] =~ m#http://auth\.example\.com/\?url=(.+?)%#;
+ok( decode_base64 $1 eq 'https://test3.example.com:8443/',
+    'Redirect URL found' )
+  or explain( decode_base64 $1, 'https://test3.example.com:8443/' );
+count(3);
 
 # Authorized queries
 ok(
