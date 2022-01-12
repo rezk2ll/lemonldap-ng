@@ -11,7 +11,7 @@ BEGIN {
 init(
     'Lemonldap::NG::Handler::Server',
     {
-        logLevel     => 'debug',
+        #logLevel     => 'debug',
         vhostOptions => {
             'test3.example.com' => {
                 vhostHttps => 0,
