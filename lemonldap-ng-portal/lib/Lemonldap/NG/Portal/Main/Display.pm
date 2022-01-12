@@ -13,6 +13,7 @@ use URI;
 has isPP          => ( is => 'rw' );
 has speChars      => ( is => 'rw' );
 has skinRules     => ( is => 'rw' );
+has stayConnected => ( is => 'rw', default => sub { 0 } );
 has requireOldPwd => ( is => 'rw', default => sub { 1 } );
 
 sub displayInit {
@@ -28,7 +29,7 @@ sub displayInit {
             else {
                 $self->logger->error(
                     qq(Skin rule "$skinRule" returns an error: )
-                      . HANDLER->tsv->{jail}->error );
+                      . HANDLER->tsv->{jail}->error || '???' );
             }
         }
     }
@@ -39,6 +40,13 @@ sub displayInit {
         $self->logger->error( "Bad requireOldPwd rule: " . $error );
     }
     $self->requireOldPwd($rule);
+    $rule =
+      HANDLER->buildSub( HANDLER->substitute( $self->conf->{stayConnected} ) );
+    unless ($rule) {
+        my $error = HANDLER->tsv->{jail}->error || '???';
+        $self->logger->error( "Bad stayConnected rule: " . $error );
+    }
+    $self->stayConnected($rule);
 
     my $speChars =
       $self->conf->{passwordPolicySpecialChar} eq '__ALL__'
@@ -142,7 +150,7 @@ sub display {
             ASK_LOGINS        => $req->param('checkLogins')   || 0,
             ASK_STAYCONNECTED => $req->param('stayconnected') || 0,
             CONFIRMKEY        => $self->stamp(),
-            LIST              => $req->data->{list}           || [],
+            LIST => $req->data->{list} || [],
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -390,7 +398,7 @@ sub display {
             MAIL_URL       => $self->conf->{mailUrl},
             REGISTER_URL   => $self->conf->{registerUrl},
             HIDDEN_INPUTS  => $self->buildHiddenForm($req),
-            STAYCONNECTED  => $self->conf->{stayConnected},
+            STAYCONNECTED  => $self->stayConnected->( $req, $req->sessionInfo ),
             IMPERSONATION  => $self->conf->{impersonationRule}
               || $self->conf->{proxyAuthServiceImpersonation},
             (

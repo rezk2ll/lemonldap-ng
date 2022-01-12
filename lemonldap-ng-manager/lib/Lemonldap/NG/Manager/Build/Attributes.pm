@@ -436,9 +436,9 @@ sub attributes {
             flags         => 'hmp',
         },
         stayConnected => {
-            type          => 'bool',
+            type          => 'boolOrExpr',
             default       => 0,
-            documentation => 'Enable StayConnected plugin',
+            documentation => 'Stay connected activation rule',
         },
         stayConnectedBypassFG => {
             type          => 'bool',

@@ -20,7 +20,7 @@ use constant beforeAuth   => 'check';
 use constant beforeLogout => 'logout';
 
 # INITIALIZATION
-
+has rule => ( is => 'rw', default => sub { 0 } );
 has ott => (
     is      => 'rw',
     lazy    => 1,
@@ -52,6 +52,12 @@ sub init {
     my ($self) = @_;
     $self->addAuthRoute( registerbrowser => 'storeBrowser', ['POST'] );
 
+    # Parse activation rule
+    $self->rule(
+        $self->p->buildRule( $self->conf->{stayConnected}, 'stayConnected' )
+    );
+    return 0 unless $self->rule;
+
     return 1;
 }
 
@@ -64,7 +70,7 @@ sub newDevice {
     my $checkLogins = $req->param('checkLogins');
     $self->logger->debug("StayConnected: checkLogins set") if $checkLogins;
 
-    if ( $req->param('stayconnected') ) {
+    if ( $req->param('stayconnected') && $self->rule->( $req, $req->sessionInfo ) ) {
         my $token = $self->ott->createToken( {
                 name => $req->sessionInfo->{ $self->conf->{whatToTrace} },
                 (
