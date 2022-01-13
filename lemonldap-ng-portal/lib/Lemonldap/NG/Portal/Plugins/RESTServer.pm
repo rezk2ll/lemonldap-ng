@@ -247,8 +247,11 @@ sub init {
       ->addAuthRoute(
         mysession => { ':sessionType' => 'updateMySession' },
         ['PUT']
-      );
-    extends @parents               if ($add);
+      )
+
+      ->addAuthRoute( myapplications => 'myApplications', ['GET'] );
+
+    extends @parents if ($add);
     $self->setTypes( $self->conf ) if ( $self->conf->{restSessionServer} );
 
     return 1;
@@ -762,6 +765,26 @@ sub getUser {
     else {
         return $self->p->sendJSONresponse( $req, { 'result' => JSON::false } );
     }
+}
+
+sub myApplications {
+    my ( $self, $req ) = @_;
+    $req->sessionInfo( $req->userData );
+
+    my @appslist = map {
+        my $category = $_;
+        my @apps = map {
+            {
+                $_->{appname} => {
+                    AppUri  => $_->{appuri},
+                    AppDesc => $_->{appdesc}
+                }
+            }
+        } @{ $category->{applications} };
+        { Category => $category->{catname}, Applications => \@apps },
+    } @{ $self->p->menu->appslist($req) };
+
+    return $self->p->sendJSONresponse( $req, { result => \@appslist } );
 }
 
 sub _checkSecret {
