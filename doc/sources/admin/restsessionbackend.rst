@@ -4,12 +4,11 @@ REST session backend
 Session <type> can be 'global' for SSO sessions or 'persistent' for
 persistent sessions.
 
-LL::NG portal provides REST end points for sessions management:
+LL::NG Portal provides REST end points for sessions management:
 
 -  GET /sessions/<type>/<session-id> : get session datas
 -  GET /sessions/<type>/<session-id>/<key> : get a session key value
--  GET /sessions/<type>/<session-id>/[k1,k2] : get some session key
-   value
+-  GET /sessions/<type>/<session-id>/[k1,k2] : get some keys value
 -  POST /sessions/<type> : create a session
 -  PUT /sessions/<type>/<session-id> : update some keys
 -  DELETE /sessions/<type>/<session-id> : delete a session
@@ -20,17 +19,21 @@ Sessions for connected users (used by :doc:`LLNG Proxy<authproxy>`):
 -  GET /session/my/<type>/key : get session key
 -  DELETE /session/my : ask for logout
 
-Authorizations for connected users (always enabled):
+Services for connected users (always enabled):
 
--  GET /mysession/?authorizationfor=<base64-encoded-url>: ask if url is
-   authorizated
+-  GET /mysession/?authorizationfor=<base64-encoded-url> : ask if an url
+   is authorized
+-  GET /mysession/?whoami       : get "my" uid
+-  PUT /mysession/<type>        : update some persistent data (restricted)
+-  DELETE /mysession/<type>/key : delete key in data (restricted)
+-  GET    /myapplications       : get "my" appplications list
 
 This session backend can be used to share sessions stored in a
 non-network backend (like
 :doc:`file session backend<filesessionbackend>`) or in a network backend
 protected with a firewall that only accepts HTTP flows.
 
-Most of the time, REST session backend is used by Handlers installed on
+Most of the time, REST session backend is used by Handlers deployed on
 external servers.
 
 To configure it, REST session backend will be set through Manager in
@@ -69,16 +72,16 @@ Name                Comment                                  Example
 =================== ======================================== ==================================================
 
 `user` and `password` parameters are only used if the entry point `index.fcgi/sessions/global`
-is protected by a basic authentication. Thus, handlers will make requests to the portal
+is protected by a basic authentication. Thus, handlers will make requests to the Portal
 using these parameters.
 
 
 .. attention::
 
     By default, user password and other secret keys are
-    hidden by LLNG REST server. You can force REST server to export their
+    hidden by LL::NG REST server. You can force REST server to export their
     real values by selecting "Export secret attributes in REST" in the
-    manager. This less secure option is disabled by default.
+    Manager. This less secure option is disabled by default.
 
 Apache
 ~~~~~~
