@@ -769,7 +769,10 @@ sub getUser {
 
 sub myApplications {
     my ( $self, $req ) = @_;
-    $req->sessionInfo( $req->userData );
+    #$req->sessionInfo( $req->userData );
+
+    #use Lemonldap::NG::Portal::Main::Menu;
+    #my $appslist = Lemonldap::NG::Portal::Main::Menu->appslist($req);
 
     my @appslist = map {
         my $category = $_;

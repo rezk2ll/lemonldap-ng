@@ -169,7 +169,7 @@ sub displayModules {
     foreach my $module ( @{ $self->menuModules } ) {
         $self->logger->debug("Check if $module->[0] has to be displayed");
 
-        if ( $module->[1]->( $req, $req->sessionInfo ) ) {
+        if ( $module->[1]->( $req, $req->userData ) ) {
             my $moduleHash = { $module->[0] => 1 };
             if ( $module->[0] eq 'Appslist' ) {
                 $moduleHash->{'APPSLIST_LOOP'} = $self->appslist($req);
@@ -177,16 +177,16 @@ sub displayModules {
             elsif ( $module->[0] eq 'LoginHistory' ) {
                 $moduleHash->{'SUCCESS_LOGIN'} =
                   $self->p->mkSessionArray( $req,
-                    $req->{sessionInfo}->{_loginHistory}->{successLogin},
+                    $req->{userData}->{_loginHistory}->{successLogin},
                     "", 0, 0 );
                 $moduleHash->{'FAILED_LOGIN'} =
                   $self->p->mkSessionArray( $req,
-                    $req->{sessionInfo}->{_loginHistory}->{failedLogin},
+                    $req->{userData}->{_loginHistory}->{failedLogin},
                     "", 0, 1 );
             }
             elsif ( $module->[0] eq 'OidcConsents' ) {
                 $moduleHash->{'OIDC_CONSENTS'} =
-                  $self->p->mkOidcConsent( $req, $req->sessionInfo );
+                  $self->p->mkOidcConsent( $req, $req->userData );
             }
             push @$displayModules, $moduleHash;
         }
@@ -413,7 +413,7 @@ sub _filterHash {
                 if ( my $sub = $self->p->spRules->{$p} ) {
                     eval {
                         delete $apphash->{$key}
-                          unless ( $sub->( $req, $req->sessionInfo ) );
+                          unless ( $sub->( $req, $req->userData ) );
                     };
                     if ($@) {
                         $self->logger->error("Partner rule $p returns: $@");
@@ -438,7 +438,7 @@ sub _filterHash {
             delete $apphash->{$key}
               unless (
                 $self->p->HANDLER->grant(
-                    $req, $req->sessionInfo, $appuri, $cond, $vhost
+                    $req, $req->userData, $appuri, $cond, $vhost
                 )
               );
             next;
