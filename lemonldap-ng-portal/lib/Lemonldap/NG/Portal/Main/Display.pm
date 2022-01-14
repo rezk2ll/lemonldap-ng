@@ -247,11 +247,9 @@ sub display {
             LANGS     => $self->conf->{showLanguages},
             AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
             NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},
-            LOGOUT_URL     => $self->conf->{portal} . "?logout=1",
-            APPSLIST_ORDER => $req->{sessionInfo}->{'_appsListOrder'},
-            PING           => $self->conf->{portalPingInterval},
-            REQUIRE_OLDPASSWORD =>
-              $self->requireOldPwd->( $req, $req->userData ),
+            LOGOUT_URL          => $self->conf->{portal} . "?logout=1",
+            APPSLIST_ORDER      => $req->{sessionInfo}->{'_appsListOrder'},
+            PING                => $self->conf->{portalPingInterval},
             DONT_STORE_PASSWORD => $self->conf->{browsersDontStorePassword},
             HIDE_OLDPASSWORD    => 0,
             PPOLICY_NOPOLICY    => !$self->isPP(),
@@ -261,6 +259,11 @@ sub display {
             PPOLICY_MINUPPER    => $self->conf->{passwordPolicyMinUpper},
             PPOLICY_MINDIGIT    => $self->conf->{passwordPolicyMinDigit},
             PPOLICY_MINSPECHAR  => $self->conf->{passwordPolicyMinSpeChar},
+            (
+                $self->requireOldPwd->( $req, $req->userData )
+                ? ( REQUIRE_OLDPASSWORD => 1 )
+                : ()
+            ),
             (
                 $self->conf->{passwordPolicyMinSpeChar} || $self->speChars()
                 ? ( PPOLICY_ALLOWEDSPECHAR => $self->speChars() )
@@ -398,16 +401,20 @@ sub display {
             MAIL_URL       => $self->conf->{mailUrl},
             REGISTER_URL   => $self->conf->{registerUrl},
             HIDDEN_INPUTS  => $self->buildHiddenForm($req),
-            STAYCONNECTED  => $self->stayConnected->( $req, $req->sessionInfo ),
             IMPERSONATION  => $self->conf->{impersonationRule}
               || $self->conf->{proxyAuthServiceImpersonation},
+            ENABLE_PASSWORD_DISPLAY =>
+              $self->conf->{portalEnablePasswordDisplay},
+            (
+                $self->stayConnected->( $req, $req->sessionInfo )
+                ? ( STAYCONNECTED => 1 )
+                : ()
+            ),
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
-            ENABLE_PASSWORD_DISPLAY =>
-              $self->conf->{portalEnablePasswordDisplay},
         );
 
         # External links
