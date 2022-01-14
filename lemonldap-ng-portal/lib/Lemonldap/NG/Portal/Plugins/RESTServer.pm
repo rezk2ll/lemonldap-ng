@@ -781,7 +781,7 @@ sub myApplications {
         { Category => $_->{catname}, Applications => \@apps },
     } @{ $self->p->menu->appslist($req) };
 
-    return $self->p->sendJSONresponse( $req, { result => \@appslist } );
+    return $self->p->sendJSONresponse( $req, { result => 1, myapplications => \@appslist } );
 }
 
 sub _checkSecret {
