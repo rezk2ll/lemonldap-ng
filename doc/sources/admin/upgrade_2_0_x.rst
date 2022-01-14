@@ -29,6 +29,11 @@ None
 2.0.14
 ------
 
+Security
+~~~~~~~~
+
+* **CVE-2021-40874**: RESTServer pwdConfirm always returns true with Combination + Kerberos (see `issue 2612 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2612>`__)
+
 Weak encryption used for password-protected SAML keys
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
