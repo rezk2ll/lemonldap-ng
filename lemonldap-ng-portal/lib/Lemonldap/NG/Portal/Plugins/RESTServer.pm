@@ -49,6 +49,8 @@
 #                                                            (restricted)
 #   * DELETE /mysession/<type>/key                         : delete key in data
 #                                                            (restricted)
+#   * GET    /myapplications                               : get my appplications
+#                                                            list
 #
 # There is no conflict with SOAP server, they can be used together
 
