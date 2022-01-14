@@ -769,13 +769,7 @@ sub getUser {
 
 sub myApplications {
     my ( $self, $req ) = @_;
-    #$req->sessionInfo( $req->userData );
-
-    #use Lemonldap::NG::Portal::Main::Menu;
-    #my $appslist = Lemonldap::NG::Portal::Main::Menu->appslist($req);
-
     my @appslist = map {
-        my $category = $_;
         my @apps = map {
             {
                 $_->{appname} => {
@@ -783,8 +777,8 @@ sub myApplications {
                     AppDesc => $_->{appdesc}
                 }
             }
-        } @{ $category->{applications} };
-        { Category => $category->{catname}, Applications => \@apps },
+        } @{ $_->{applications} };
+        { Category => $_->{catname}, Applications => \@apps },
     } @{ $self->p->menu->appslist($req) };
 
     return $self->p->sendJSONresponse( $req, { result => \@appslist } );
