@@ -375,13 +375,7 @@ sub display {
     # 3 Authentication has been refused OR first access
     else {
         $skinfile = 'login';
-        my $login = $self->userId($req);
-        if ( $login eq 'anonymous' ) {
-            $login = '';
-        }
-        elsif ( $req->user ) {
-            $login = $req->{user};
-        }
+        my $login = $req->user;
         %templateParams = (
             MAIN_LOGO             => $self->conf->{portalMainLogo},
             LANGS                 => $self->conf->{showLanguages},

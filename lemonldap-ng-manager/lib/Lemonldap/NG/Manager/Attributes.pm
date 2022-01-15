@@ -815,6 +815,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'casTicketExpiration' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
         'cda' => {
             'default' => 0,
             'type'    => 'bool'

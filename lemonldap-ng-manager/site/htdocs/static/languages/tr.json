@@ -167,6 +167,7 @@
 "casStorage":"CAS oturumları modül adı",
 "casStorageOptions":"CAS oturumları modül seçenekleri",
 "casStrictMatching":"Katı URL eşleşmesi kullan",
+"casTicketExpiration":"Temporary ticket lifetime",
 "categoryName":"Kategori ismi",
 "cda":"Çoklu alan adları",
 "certificateMailContent":"E-posta içeriği",

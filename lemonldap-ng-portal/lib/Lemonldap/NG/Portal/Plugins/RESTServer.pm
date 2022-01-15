@@ -49,6 +49,8 @@
 #                                                            (restricted)
 #   * DELETE /mysession/<type>/key                         : delete key in data
 #                                                            (restricted)
+#   * GET    /myapplications                               : get my appplications
+#                                                            list
 #
 # There is no conflict with SOAP server, they can be used together
 
@@ -65,7 +67,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   URIRE
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -247,8 +249,11 @@ sub init {
       ->addAuthRoute(
         mysession => { ':sessionType' => 'updateMySession' },
         ['PUT']
-      );
-    extends @parents               if ($add);
+      )
+
+      ->addAuthRoute( myapplications => 'myApplications', ['GET'] );
+
+    extends @parents if ($add);
     $self->setTypes( $self->conf ) if ( $self->conf->{restSessionServer} );
 
     return 1;
@@ -762,6 +767,23 @@ sub getUser {
     else {
         return $self->p->sendJSONresponse( $req, { 'result' => JSON::false } );
     }
+}
+
+sub myApplications {
+    my ( $self, $req ) = @_;
+    my @appslist = map {
+        my @apps = map {
+            {
+                $_->{appname} => {
+                    AppUri  => $_->{appuri},
+                    AppDesc => $_->{appdesc}
+                }
+            }
+        } @{ $_->{applications} };
+        { Category => $_->{catname}, Applications => \@apps },
+    } @{ $self->p->menu->appslist($req) };
+
+    return $self->p->sendJSONresponse( $req, { result => 1, myapplications => \@appslist } );
 }
 
 sub _checkSecret {

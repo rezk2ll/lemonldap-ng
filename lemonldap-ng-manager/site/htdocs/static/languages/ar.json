@@ -167,6 +167,7 @@
 "casStorage":"اسم وحدة جلسات كاس",
 "casStorageOptions":" خيارات وحدة جلسات كاس",
 "casStrictMatching":"Use strict URL matching",
+"casTicketExpiration":"Temporary ticket lifetime",
 "categoryName":"اسم الفئة",
 "cda":"نطاقات متعددة",
 "certificateMailContent":"محتوى البريد",

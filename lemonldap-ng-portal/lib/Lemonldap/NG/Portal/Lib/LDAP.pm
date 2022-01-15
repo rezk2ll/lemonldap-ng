@@ -231,6 +231,10 @@ sub findUser {
 # Validate LDAP connection before use
 sub validateLdap {
     my ($self) = @_;
+    local $SIG{'PIPE'} = sub {
+        $self->logger->info("Reconnecting to LDAP server due to broken socket");
+    };
+
     unless ($self->ldap
         and $self->ldap->root_dse( attrs => ['supportedLDAPVersion'] ) )
     {

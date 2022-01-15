@@ -1887,6 +1887,9 @@ sub resolveArtifact {
             $message = $soap_answer->content();
             $self->logger->debug("Get message $message");
         }
+        else {
+            $self->logger->error("Error while sending message: ".$soap_answer->status_line);
+        }
     }
 
     return $message;

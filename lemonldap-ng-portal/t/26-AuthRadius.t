@@ -29,7 +29,7 @@ my ( $host, $url, $query ) =
 $mock->fake_module( 'Authen::Radius', check_pwd => sub { 0 } );
 
 # Try to authenticate with bad password
-$query =~ s/user=/user=dwho/;
+$query =~ s/user=[^&]*/user=dwho/;
 $query =~ s/password=/password=jdoe/;
 ok(
     $res = $client->_post(
@@ -48,7 +48,7 @@ count(1);
 $mock->fake_module( 'Authen::Radius', check_pwd => sub { 1 } );
 
 # Try to authenticate
-$query =~ s/user=/user=dwho/;
+$query =~ s/user=[^&]*/user=dwho/;
 $query =~ s/password=/password=dwho/;
 ok(
     $res = $client->_post(

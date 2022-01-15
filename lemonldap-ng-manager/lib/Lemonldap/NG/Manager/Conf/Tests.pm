@@ -44,10 +44,14 @@ sub tests {
 
         # Check if portal URL is well formated
         portalURL => sub {
+            my $url = $conf->{portal};
+
+            # Append or remove trailing slashes
+            $conf->{portal} =~ s%/*$%/%;
             return (
                 1,
                 (
-                    ( $conf->{portal} =~ m%/$% )
+                    ( $url =~ m%/$% )
                     ? ''
                     : "Portal URL should end with a /"
                 )

@@ -2489,6 +2489,11 @@ sub attributes {
             type          => 'bool',
             documentation => 'Disable host-based matching of CAS services',
         },
+        casTicketExpiration => {
+            default       => 0,
+            type          => 'int',
+            documentation => 'Expiration time of Service and Proxy tickets',
+        },
         issuerDBCASActivation => {
             default       => 0,
             type          => 'bool',

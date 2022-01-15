@@ -30,7 +30,7 @@ count(1);
 my ( $host, $url, $query ) =
   expectForm( $res, '#', undef, 'user', 'password', 'spoofId', 'token' );
 
-$query =~ s/user=/user=rtyler/;
+$query =~ s/user=[^&]*/user=rtyler/;
 $query =~ s/password=/password=rtyler/;
 $query =~ s/spoofId=/spoofId=dwho/;
 
@@ -62,7 +62,7 @@ count(1);
 ( $host, $url, $query ) =
   expectForm( $res, '#', undef, 'user', 'password', 'spoofId', 'token' );
 
-$query =~ s/user=/user=rtyler/;
+$query =~ s/user=[^&]*/user=rtyler/;
 $query =~ s/password=/password=rtyler/;
 $query =~ s/spoofId=/spoofId=msmith/;
 
@@ -86,7 +86,7 @@ count(2);
 ( $host, $url, $query ) =
   expectForm( $res, '#', undef, 'user', 'password', 'spoofId', 'token' );
 
-$query =~ s/user=/user=dwho/;
+$query =~ s/user=[^&]*/user=dwho/;
 $query =~ s/password=/password=dwho/;
 $query =~ s/spoofId=/spoofId=msmith/;
 

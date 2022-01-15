@@ -582,6 +582,8 @@ t/32-CAS-Gateway.t
 t/32-CAS-Hooks.t
 t/32-CAS-Macros.t
 t/32-CAS-Prefix.t
+t/32-CAS-Proxy.t
+t/32-CAS-Security.t
 t/32-OIDC-ClaimTypes.t
 t/32-OIDC-ClientCredentials-Grant.t
 t/32-OIDC-Code-Flow-with-2F-UpgradeOnly.t
