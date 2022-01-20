@@ -16,12 +16,12 @@ has api        => ( is => 'rw', isa => 'Str' );
 sub init {
     my ( $self, $args ) = @_;
     eval { $self->api->init($args) };
-    if ( $@ and not( $self->{protection} and $self->{protection} eq 'none' ) ) {
+    if ( $@ and not( $args->{protection} and $args->{protection} eq 'none' ) ) {
         $self->error($@);
         return 0;
     }
     unless ( $self->api->checkConf($self)
-        or ( $self->{protection} and $self->{protection} eq 'none' ) )
+        or ( $args->{protection} and $args->{protection} eq 'none' ) )
     {
         $self->error(
             "Unable to protect this server ($Lemonldap::NG::Common::Conf::msg)"
@@ -30,7 +30,7 @@ sub init {
     }
     eval { $self->portal( $self->api->tsv->{portal}->() ) };
     my $rule =
-      $self->{protection} || $self->api->localConfig->{protection} || '';
+      $args->{protection} || $self->api->localConfig->{protection} || '';
     $self->rule(
         $rule eq 'authenticate' ? 1 : $rule eq 'manager' ? '' : $rule );
     return 1;
