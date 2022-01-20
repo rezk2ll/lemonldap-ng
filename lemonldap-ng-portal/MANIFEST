@@ -61,6 +61,7 @@ lib/Lemonldap/NG/Portal/Lib/CAS.pm
 lib/Lemonldap/NG/Portal/Lib/Choice.pm
 lib/Lemonldap/NG/Portal/Lib/DBI.pm
 lib/Lemonldap/NG/Portal/Lib/LDAP.pm
+lib/Lemonldap/NG/Portal/Lib/CustomModule.pm
 lib/Lemonldap/NG/Portal/Lib/Net/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Notifications/JSON.pm
 lib/Lemonldap/NG/Portal/Lib/Notifications/XML.pm
