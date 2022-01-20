@@ -102,6 +102,16 @@ If you defined the "Register page URL" or the password "Reset page URL" to an ex
          </a>
 
 
+
+Changes impacting plugin developpers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* If you are using Custom authentication modules, userDB modules or password
+  modules, ``$portal->loadedPlugins`` no longer contains a key with the name of
+  your module. You should use ``$portal->_authentication``, ``$portal->_userDB``,
+  or ``$portal->_passwordDB`` instead to get your module instance.
+
+
 2.0.13
 ------
 
