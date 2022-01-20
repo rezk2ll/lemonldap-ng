@@ -60,6 +60,12 @@ In the manager (advanced parameters), you just have to enable it:
 -  **Lifetime** (Optional): Unlimited by default. Set a Time To Live in seconds.
    TTL is checked at each login process if set. If TTL is expired,
    relative TOTP is removed.
+-  **Encrypt TOTP secrets**: By default, the TOTP secret key is stored in the
+   persistent session database in cleartext. Set this option to encrypt all
+   newly-generated secrets. More details :ref:`below<totp-encryption>`
+-  **Logo** (Optional): logo file *(in static/<skin> directory)*
+-  **Label** (Optional): label that should be displayed to the user on
+   the choice screen
 
 .. attention::
 
@@ -92,6 +98,45 @@ module.// // To enable manager Second Factor Administration Module, set
 
    [portal]
    enabledModules = conf, sessions, notifications, 2ndFA
+
+.. _totp-encryption:
+
+Encryption of TOTP secrets
+--------------------------
+
+During registration of a TOTP device, a secret key is exchanged between the
+mobile device and the server, generally through the use of a QR-Code. Once the
+exchange is done, secret keys must never leave the device or the server.
+
+Administrators may want to protect TOTP secrets by encrypting them in the
+persistent session database, in order to prevent them from leaking through
+backups or unauthorized database access.
+
+Setting the *Encrypt TOTP secrets* option will automatically encrypt newly
+generated secrets.
+
+The *Encrypt TOTP secrets* options only affects *NEW* secrets, meaning that:
+
+* A cleartext TOTP secret will be accepted even if the option is on
+* An already encrypted TOTP secret will be accepted even if the option if off
+
+The ``encryptTotpSecrets`` script can be used to encrypt previously registered TOTP
+secrets so that they can be protected as well.
+
+Encryption key
+~~~~~~~~~~~~~~
+
+By default, the key used for encryption is the global one, set in
+
+*General Parameters* » *Advanced Parameters* » *Security* » *Key*
+
+However, if you store your configuration and persistent sessions in the same
+database, this defeats the point of encryption entirely.
+
+It is recommended to set the TOTP encryption key in ``/etc/lemonldap-ng/lemonldap-ng.ini`` instead::
+
+    [all]
+    totp2fKey=changeme
 
 Developer corner
 ----------------
