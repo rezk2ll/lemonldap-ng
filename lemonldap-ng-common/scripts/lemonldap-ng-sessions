@@ -22,6 +22,7 @@ GetOptions(
     'help|h'       => \$help,
     'select|s=s@'  => \$opts->{select},
     'where|w=s'    => \$opts->{where},
+    'all|a'        => \$opts->{all},
     'backend|b=s'  => \$opts->{backend},
     'persistent|p' => \$opts->{persistent},
     'id-only|i'    => \$opts->{idonly},
@@ -80,7 +81,7 @@ if ( $action eq "setKey" ) {
 }
 
 if ( $action eq "secondfactors" ) {
-    unless ( @ARGV >= 2 ) {
+    unless ( @ARGV >= 1 ) {
         pod2usage(
             -exitval  => 1,
             -verbose  => 99,
@@ -238,8 +239,10 @@ Commands:
     delete <user> <id> [<id> ...]
         delete second factors for a user. The ID must match one of the
         IDs returned by the "show" command.
-    delType <user> <type> [<type> ...]
+    delType [<user>|--all] <type> [<type> ...]
         delete all second factors of a given type for a user
+    migrateu2f [<user>|--all]
+        migrate U2F device registrations to WebAuthn device registrations
 
 =head2 Consents
 
