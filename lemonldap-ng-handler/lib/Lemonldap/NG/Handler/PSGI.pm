@@ -14,9 +14,9 @@ our $VERSION = '2.0.10';
 sub init {
     my ( $self, $args ) = @_;
     $self->api('Lemonldap::NG::Handler::PSGI::Main') unless ( $self->api );
-    my $tmp = ( $self->Lemonldap::NG::Common::PSGI::init($args)
-          and $self->Lemonldap::NG::Handler::Lib::PSGI::init($args) );
-    return $tmp;
+    return 0 unless $self->Lemonldap::NG::Handler::Lib::PSGI::init($args);
+
+    return $self->Lemonldap::NG::Common::PSGI::init( $self->api->localConfig );
 }
 
 1;

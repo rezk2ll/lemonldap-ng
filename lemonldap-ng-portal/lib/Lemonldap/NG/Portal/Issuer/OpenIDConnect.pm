@@ -388,10 +388,10 @@ sub run {
 
             # Check openid scope
             unless ( $self->_hasScope( 'openid', $oidc_request->{'scope'} ) ) {
-                $self->logger->debug("No openid scope found");
+                $self->logger->error("No openid scope found");
 
                 #TODO manage standard OAuth request
-                return PE_OK;
+                return PE_ERROR;
             }
 
             # Check Request JWT signature

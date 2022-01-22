@@ -2,6 +2,7 @@ etc/lemonldap-ng/lemonldap-ng.ini
 etc/lemonldap-ng/for_etc_hosts
 usr/share/man/man1/convertConfig.1p
 usr/share/man/man1/convertSessions.1p
+usr/share/man/man1/encryptTotpSecrets.1p
 usr/share/man/man1/importMetadata.1p
 usr/share/man/man1/lemonldap-ng-cli.1p
 usr/share/man/man1/lemonldap-ng-sessions.1p
@@ -11,6 +12,7 @@ usr/share/perl5/Lemonldap/NG/Common*
 usr/share/lemonldap-ng/ressources
 usr/share/lemonldap-ng/bin/convertConfig
 usr/share/lemonldap-ng/bin/convertSessions
+usr/share/lemonldap-ng/bin/encryptTotpSecrets
 usr/share/lemonldap-ng/bin/importMetadata
 usr/share/lemonldap-ng/bin/lemonldap-ng-sessions
 usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini

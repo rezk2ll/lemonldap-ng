@@ -1133,6 +1133,7 @@
 "totp2fActivation":"Aktywacja",
 "totp2fAuthnLevel":"Poziom uwierzytelnienia",
 "totp2fDigits":"Ilość cyfr",
+"totp2fEncryptSecret":"Encrypt TOTP secrets",
 "totp2fInterval":"Interwał",
 "totp2fIssuer":"Issuer name",
 "totp2fLabel":"Etykieta",

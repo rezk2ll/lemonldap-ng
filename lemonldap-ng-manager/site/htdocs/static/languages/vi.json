@@ -1133,6 +1133,7 @@
 "totp2fActivation":"Kích hoạt",
 "totp2fAuthnLevel":"Mức xác thực",
 "totp2fDigits":"Number of digits",
+"totp2fEncryptSecret":"Encrypt TOTP secrets",
 "totp2fInterval":"Interval",
 "totp2fIssuer":"Issuer name",
 "totp2fLabel":"Label",

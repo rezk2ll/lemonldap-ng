@@ -4238,6 +4238,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 6,
             'type'    => 'int'
         },
+        'totp2fEncryptSecret' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'totp2fInterval' => {
             'default' => 30,
             'type'    => 'int'

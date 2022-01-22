@@ -633,12 +633,14 @@ fi
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
 %{_mandir}/man1/convertConfig*
 %{_mandir}/man1/convertSessions*
+%{_mandir}/man1/encryptTotpSecrets*
 %{_mandir}/man1/lemonldap-ng-sessions*
 %dir %{_libexecdir}/%{name}
 %dir %{lm_sbindir}
 %dir %{lm_bindir}
 %{lm_bindir}/convertConfig
 %{lm_bindir}/convertSessions
+%{lm_bindir}/encryptTotpSecrets
 %{lm_bindir}/lemonldap-ng-sessions
 %{lm_bindir}/importMetadata
 %{lm_bindir}/lmMigrateConfFiles2ini

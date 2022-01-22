@@ -1956,6 +1956,11 @@ sub attributes {
             type          => 'int',
             documentation => 'TOTP device time to live ',
         },
+        totp2fEncryptSecret => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Encrypt TOTP secrets in database',
+        },
 
         # UTOTP 2F
         utotp2fActivation => {

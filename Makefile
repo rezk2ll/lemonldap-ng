@@ -645,6 +645,7 @@ install_bin:	install_conf_dir
 		${SRCPORTALDIR}/scripts/llngDeleteSession \
 		${SRCCOMMONDIR}/scripts/convertConfig \
 		${SRCCOMMONDIR}/scripts/convertSessions \
+		${SRCCOMMONDIR}/scripts/encryptTotpSecrets \
 		${SRCCOMMONDIR}/scripts/lmMigrateConfFiles2ini \
 		${SRCCOMMONDIR}/scripts/rotateOidcKeys \
 		${SRCMANAGERDIR}/scripts/lmConfigEditor \
