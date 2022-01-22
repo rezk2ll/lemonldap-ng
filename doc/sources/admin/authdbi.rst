@@ -38,12 +38,8 @@ LL::NG can use two tables:
 
     Authentication table and user table can be the same.
 
-The password can be in plain text, or encoded with a standard SQL
-method:
-
--  SHA
--  SHA1
--  MD5
+The password can be in plain text, or encoded with a SQL method (for example
+``SHA``, ``SHA1``, ``MD5`` or any method valid on database side).
 
 Example 1: two tables
 ^^^^^^^^^^^^^^^^^^^^^
@@ -159,7 +155,8 @@ Password
 ~~~~~~~~
 
 -  **Hash schema**: SQL method for hashing password. Can be left blank
-   for plain text passwords.
+   for plain text passwords. The method will be forced to uppercase in
+   SQL statement.
 -  **Dynamic hash activation**: Activate dynamic hashing. With dynamic
    hashing, the hash scheme is recovered from the user password in the
    database during authentication.
