@@ -154,6 +154,11 @@ If you defined the "Register page URL" or the password "Reset page URL" to an ex
 
 
 
+Manager API
+~~~~~~~~~~~
+
+The service parameter set in a request to create or update a CAS application must now be an array, and no more a string.
+
 Changes impacting plugin developpers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
