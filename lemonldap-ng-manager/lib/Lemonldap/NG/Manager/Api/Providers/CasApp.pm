@@ -128,10 +128,9 @@ sub addCasApp {
     for my $serviceUrl ( @{ $add->{options}->{service} } ) {
         my $res = $self->_getCasAppByServiceUrl( $conf, $serviceUrl );
         if ( defined $res ) {
-            my $conflict = $res->{options}->{service};
             return $self->sendError(
                 $req,
-"Invalid input: A CAS application with service URL $conflict already exists",
+"Invalid input: A CAS application with service URL $serviceUrl already exists",
                 409
             );
         }
