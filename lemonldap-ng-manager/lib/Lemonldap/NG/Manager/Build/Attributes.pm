@@ -2526,7 +2526,7 @@ sub attributes {
             documentation => 'CAS exported variables',
         },
         casAppMetaDataOptionsService => {
-            type          => 'url',
+            type          => 'text',
             documentation => 'CAS App service',
         },
         casAppMetaDataOptionsUserAttribute => {

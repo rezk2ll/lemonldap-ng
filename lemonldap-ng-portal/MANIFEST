@@ -59,9 +59,9 @@ lib/Lemonldap/NG/Portal/Lib/_tokenRule.pm
 lib/Lemonldap/NG/Portal/Lib/Captcha.pm
 lib/Lemonldap/NG/Portal/Lib/CAS.pm
 lib/Lemonldap/NG/Portal/Lib/Choice.pm
+lib/Lemonldap/NG/Portal/Lib/CustomModule.pm
 lib/Lemonldap/NG/Portal/Lib/DBI.pm
 lib/Lemonldap/NG/Portal/Lib/LDAP.pm
-lib/Lemonldap/NG/Portal/Lib/CustomModule.pm
 lib/Lemonldap/NG/Portal/Lib/Net/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Notifications/JSON.pm
 lib/Lemonldap/NG/Portal/Lib/Notifications/XML.pm
@@ -505,6 +505,7 @@ t/03-ConfTimeout.t
 t/03-SessionTimeout.t
 t/03-XSS-protection.t
 t/04-language-selection.t
+t/10-AuthCustom.t
 t/19-Auth-Null.t
 t/20-Auth-and-password-DBI-dynamic-hash.t
 t/20-Auth-and-password-DBI.t
@@ -524,6 +525,7 @@ t/26-AuthRemote.t
 t/27-AuthProxy-with-choice.t
 t/27-AuthProxy.t
 t/28-AuthChoice-and-password.t
+t/28-AuthChoice-Custom.t
 t/28-AuthChoice-with-captcha.t
 t/28-AuthChoice-with-info.t
 t/28-AuthChoice-with-over.t
@@ -557,6 +559,7 @@ t/30-SAML-ReAuth-with-choice.t
 t/30-SAML-ReAuth.t
 t/30-SAML-RelayState.t
 t/30-SAML-SP-rule.t
+t/31-Auth-and-issuer-CAS-declared-app-multiple-urls.t
 t/31-Auth-and-issuer-CAS-declared-app-userattr.t
 t/31-Auth-and-issuer-CAS-declared-app.t
 t/31-Auth-and-issuer-CAS-declared-apps.t
@@ -613,6 +616,7 @@ t/35-REST-sessions-with-AuthBasic-handler.t
 t/35-REST-sessions-with-REST-server.t
 t/35-SOAP-config-backend.t
 t/35-SOAP-sessions-with-SOAP-server.t
+t/36-Combination-Custom.t
 t/36-Combination-Kerberos-or-Demo.t
 t/36-Combination-Password.t
 t/36-Combination-with-Choice.t
@@ -649,6 +653,7 @@ t/40-Notifications-XML-Server.t
 t/41-Captcha.t
 t/41-Token-with-global-storage.t
 t/41-Token.t
+t/42-Register-Custom.t
 t/42-Register-Demo-with-captcha.t
 t/42-Register-Demo-with-CustomBody.t
 t/42-Register-Demo-with-token.t
@@ -753,6 +758,7 @@ t/68-Impersonation-with-UnrestrictedUser.t
 t/68-Impersonation.t
 t/70-2F-TOTP-8-with-global-storage.t
 t/70-2F-TOTP-and-U2F-with-TTL-and-JSON.t
+t/70-2F-TOTP-encryption.t
 t/70-2F-TOTP-with-History-and-Refresh.t
 t/70-2F-TOTP-with-Range.t
 t/70-2F-TOTP-with-TTL-and-JSON.t

@@ -891,25 +891,32 @@ sub tests {
             my %casUrl;
             foreach my $casConfKey ( keys %{ $conf->{casAppMetaDataOptions} } )
             {
-                my $appUrl =
-                  $conf->{casAppMetaDataOptions}->{$casConfKey}
-                  ->{casAppMetaDataOptionsService}
-                  || "";
-                $appUrl =~ m#^(https?://[^/]+)(/.*)?$#;
-                my $appHost = $1;
-                unless ($appHost) {
-                    push @msg, "$casConfKey CAS Application has no Service URL";
-                    $res = 0;
-                    next;
-                }
+                for my $appUrl (
+                    split(
+                        /\s+/,
+                        $conf->{casAppMetaDataOptions}->{$casConfKey}
+                          ->{casAppMetaDataOptionsService}
+                    )
+                  )
+                {
+                    $appUrl ||= "";
+                    $appUrl =~ m#^(https?://[^/]+)(/.*)?$#;
+                    my $appHost = $1;
+                    unless ($appHost) {
+                        push @msg,
+                          "$casConfKey CAS Application has no Service URL";
+                        $res = 0;
+                        next;
+                    }
 
-                if ( defined $casUrl{$appUrl} ) {
-                    push @msg,
+                    if ( defined $casUrl{$appUrl} ) {
+                        push @msg,
 "$casConfKey and $casUrl{$appUrl} have the same Service URL";
-                    $res = 0;
-                    next;
+                        $res = 0;
+                        next;
+                    }
+                    $casUrl{$appUrl} = $casConfKey;
                 }
-                $casUrl{$appUrl} = $casConfKey;
             }
             return ( $res, join( ', ', @msg ) );
         },
@@ -919,7 +926,9 @@ sub tests {
             return 1 unless ( $conf->{sfRemovedMsgRule} );
             return ( 1,
 'Notification system must be enabled to display a notification if a SF is removed'
-            ) if ( $conf->{sfRemovedUseNotif} and not $conf->{notification} );
+              )
+              if ( $conf->{sfRemovedUseNotif}
+                and not $conf->{notification} );
             return 1;
         },
 
@@ -936,7 +945,8 @@ sub tests {
         # Same with SameSite=(auto) and SAML issuer in use
         SameSiteNoneWithSecure => sub {
             return ( -1, 'SameSite value = None requires the secured flag' )
-              if ( getSameSite($conf) eq 'None' and !$conf->{securedCookie} );
+              if ( getSameSite($conf) eq 'None'
+                and !$conf->{securedCookie} );
             return 1;
         },
 
