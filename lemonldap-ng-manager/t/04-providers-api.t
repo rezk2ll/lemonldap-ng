@@ -717,6 +717,10 @@ delete $casApp->{options}->{playingPossum};
 $casApp->{options}->{service} = [ "XXX" ];
 checkReplaceWithInvalidAttribute( $test, 'cas/app', 'myCasApp2', $casApp );
 
+$test = "CasApp - Replace should fail if service is not an array";
+$casApp->{options}->{service} = "http://cas.url.string";
+check409( $test, update( $test, 'cas/app', 'myCasApp2', $casApp ) );
+
 $test = "CasApp - Replace should fail if confKey not found";
 $casApp->{confKey} = 'myCasApp3';
 checkReplaceNotFound( $test, 'cas/app', 'myCasApp3', $casApp );

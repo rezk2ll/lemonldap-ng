@@ -313,7 +313,6 @@ sub _isNewCasAppServiceUrlUnique {
     unless ( ref $casApp->{options}->{service} eq "ARRAY" ) {
         return {
             res  => 'ko',
-            code => 400,
             msg  => "The parameter 'service' must be an array",
         };
     }
