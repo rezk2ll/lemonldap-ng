@@ -309,6 +309,16 @@ sub _isNewCasAppServiceUrlUnique {
     my ( $self, $conf, $confKey, $casApp ) = @_;
     my $curServiceUrl =
       $self->_getCasAppByConfKey( $conf, $confKey )->{options}->{service};
+
+    # Check service paramater
+    unless ( ref $casApp->{options}->{service} eq "ARRAY" ) {
+        return {
+            res  => 'ko',
+            code => 400,
+            msg  => "The parameter 'service' must be an array",
+        };
+    }
+
     my $newService = $casApp->{options}->{service} || [];
     for my $newServiceUrl (@$newService) {
         if ( $newServiceUrl ne ''
