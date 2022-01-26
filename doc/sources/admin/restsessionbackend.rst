@@ -18,6 +18,7 @@ Sessions for connected users (used by :doc:`LLNG Proxy<authproxy>`):
 -  GET /session/my/<type> : get session datas
 -  GET /session/my/<type>/key : get session key
 -  DELETE /session/my : ask for logout
+-  DELETE /sessions/my : ask for global logout (if GlobalLogout plugin is on)
 
 Services for connected users (always enabled):
 
