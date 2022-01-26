@@ -15,7 +15,7 @@
 #   * GET /session/my/<type>                     : get session data
 #   * GET /session/my/<type>/key                 : get session key
 #   * DELETE /session/my                         : ask for logout
-#   * DELETE /sessions/my                        : ask for global logout
+#   * DELETE /sessions/my                        : ask for global logout (if GlobalLogout plugin is on)
 #
 # - Authentication
 #   * GET /renewcaptcha                          : get token and captcha image
@@ -200,9 +200,16 @@ sub init {
           )
 
           ->addAuthRoute(
-            sessions => { my => { ':sessionType' => 'removeSessions' } },
+            session => { my => 'removeSession' },
             ['DELETE']
           );
+
+          if ( $self->conf->{globalLogoutRule} ) {
+            $self->addAuthRoute(
+                sessions => { my => 'removeSessions' },
+                ['DELETE']
+            );
+        }
     }
 
     if ( $self->conf->{restPasswordServer} ) {
@@ -603,6 +610,25 @@ sub getError {
     );
 }
 
+sub removeSession {
+    my ( $self, $req ) = @_;
+    my $id = $req->userData->{_session_id};
+    return $self->p->sendError( $req, 'ID is required', 400 ) unless ($id);
+    my $mod = $self->getGlobal()
+      or return $self->p->sendError( $req, undef, 400 );
+
+    # Get session
+    my $session = $self->getApacheSession( $mod, $id )
+      or return $self->p->sendError( $req, 'Session id does not exists', 400 );
+
+    # Delete it
+    $self->logger->debug("REST request to delete global session $id");
+    my $res = $self->p->_deleteSession( $req, $session );
+    $self->logger->debug(" Result is $res");
+
+    return $self->p->sendJSONresponse( $req, { result => $res } );
+}
+
 sub removeSessions {
     my ( $self, $req ) = @_;
     my $glPlugin =
@@ -783,7 +809,8 @@ sub myApplications {
         { Category => $_->{catname}, Applications => \@apps },
     } @{ $self->p->menu->appslist($req) };
 
-    return $self->p->sendJSONresponse( $req, { result => 1, myapplications => \@appslist } );
+    return $self->p->sendJSONresponse( $req,
+        { result => 1, myapplications => \@appslist } );
 }
 
 sub _checkSecret {

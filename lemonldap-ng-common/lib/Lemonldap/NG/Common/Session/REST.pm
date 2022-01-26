@@ -293,4 +293,9 @@ sub getMod {
     return $m;
 }
 
+sub getGlobal {
+    my ( $self ) = @_;
+    return $self->sessionTypes->{global};
+}
+
 1;
