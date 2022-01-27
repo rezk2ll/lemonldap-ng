@@ -52,7 +52,7 @@ sub new {
         ( $conf->{ldapVerify}  ? ( verify  => $conf->{ldapVerify} )  : () ),
     );
     unless ($self) {
-        $portal->logger->error($@);
+        $portal->logger->error("LDAP initialization error: ". $@);
         return 0;
     }
     elsif ( $Net::LDAP::VERSION < '0.64' ) {
@@ -65,7 +65,7 @@ sub new {
             and $self->socket->errstr < 0 )
         {
             $portal->logger->error(
-                "SSL connection error: " . $self->socket->errstr );
+                "LDAP SSL connection failed: " . $self->socket->errstr );
             return 0;
         }
     }
@@ -84,7 +84,7 @@ sub new {
         $h{verify} ||= $conf->{ldapVerify} if ( $conf->{ldapVerify} );
         my $mesg = $self->start_tls(%h);
         if ( $mesg->code ) {
-            $portal->logger->error( 'StartTLS failed: ' . $mesg->error );
+            $portal->logger->error( 'LDAP StartTLS failed: ' . $mesg->error );
             return 0;
         }
     }
