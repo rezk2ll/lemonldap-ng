@@ -65,7 +65,7 @@ sub checkConf {
         or $class->cfgNum != $conf->{cfgNum}
         or $class->cfgDate != $conf->{cfgDate} )
     {
-        $class->logger->debug("Get configuration $conf->{cfgNum}");
+        $class->logger->debug("Get configuration $conf->{cfgNum} aged $conf->{cfgDate}");
         unless ( $class->cfgNum( $conf->{cfgNum} )
             && $class->cfgDate( $conf->{cfgDate} ) )
         {
