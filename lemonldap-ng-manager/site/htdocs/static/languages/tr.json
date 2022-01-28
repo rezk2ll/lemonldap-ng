@@ -1133,7 +1133,7 @@
 "totp2fActivation":"Aktivasyon",
 "totp2fAuthnLevel":"Doğrulama seviyesi",
 "totp2fDigits":"Rakam sayısı",
-"totp2fEncryptSecret":"Encrypt TOTP secrets",
+"totp2fEncryptSecret":"TOTP sırlarını şifreleyin",
 "totp2fInterval":"Süre aralığı",
 "totp2fIssuer":"Düzenleyici adı",
 "totp2fLabel":"Etiket",
