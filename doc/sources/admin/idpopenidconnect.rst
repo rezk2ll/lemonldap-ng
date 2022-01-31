@@ -339,14 +339,14 @@ Options
    - **Authentication Level**: required authentication level to access this application
    - **Access Rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
 
-- **Logout**
+-  **Logout**
 
-  - **Allowed redirection addresses for logout**: A space separated list of
-    URLs that this client can redirect the user to once the logout is done
-    (through ``post_logout_redirect_uri``)
-  - **URL**: Specify the relying party's logout URL
-  - **Type**: Type of Logout to perform (only Front-Channel is implemented for now)
-  - **Session required**: Whether to send the Session ID in the logout request
+   -  **Allowed redirection addresses for logout**: A space separated list of
+      URLs that this client can redirect the user to once the logout is done
+      (through ``post_logout_redirect_uri``)
+   -  **URL**: Specify the relying party's logout URL
+   -  **Type**: Type of Logout to perform (only Front-Channel is implemented for now)
+   -  **Session required**: Whether to send the Session ID in the logout request
 
 Access Rule extra variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^

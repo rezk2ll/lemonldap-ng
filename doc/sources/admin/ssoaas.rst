@@ -41,6 +41,14 @@ There are two different architectures to do this:
 -  Using front reverse-proxies *(some cloud installations use
    reverse-proxies in front-end)*
 
+
+.. note::
+
+    Some requests can be droped by the fastCGI/uWSGI server.
+    Example below with uWSGI server to avoid Load Balancer health check requests:
+
+    ```route-remote-addr = ^127\.0\.0\.25[34]$ break: 403 Forbidden for IP ${REMOTE_ADDR}```
+
 Example of a global FastCGI architecture:
 
 |image0|
