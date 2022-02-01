@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Portal::Register::LDAP';
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.14';
 
 sub createUser {
     my ( $self, $req ) = @_;

@@ -21,7 +21,7 @@ use constant REDIRECT          => Apache2::Const::REDIRECT;
 use constant DECLINED          => Apache2::Const::DECLINED;
 use constant SERVER_ERROR      => Apache2::Const::SERVER_ERROR;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.14';
 
 sub handler {
     my ( $class, $r ) = @_;

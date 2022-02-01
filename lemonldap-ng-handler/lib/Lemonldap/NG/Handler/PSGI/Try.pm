@@ -3,7 +3,7 @@ package Lemonldap::NG::Handler::PSGI::Try;
 use strict;
 use Mouse;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.14';
 
 extends 'Lemonldap::NG::Handler::PSGI::Router';
 

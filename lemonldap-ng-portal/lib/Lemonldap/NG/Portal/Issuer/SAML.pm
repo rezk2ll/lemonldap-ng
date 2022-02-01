@@ -22,7 +22,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_UNAUTHORIZEDPARTNER
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::SAML';

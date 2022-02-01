@@ -23,7 +23,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NO_SECOND_FACTORS
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 with 'Lemonldap::NG::Portal::Lib::OverConf';

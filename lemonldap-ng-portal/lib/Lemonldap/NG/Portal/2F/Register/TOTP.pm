@@ -5,7 +5,7 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin

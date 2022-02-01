@@ -5,7 +5,7 @@ use Mouse;
 
 #use Lemonldap::NG::Handler::Main qw(:jailSharedVars);
 
-our $VERSION = '2.0.11';
+our $VERSION = '2.0.14';
 
 has protection => ( is => 'rw', isa => 'Str' );
 has rule       => ( is => 'rw', isa => 'Str' );

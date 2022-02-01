@@ -9,7 +9,7 @@ use Lemonldap::NG::Handler::PSGI::Main;
 
 extends 'Lemonldap::NG::Handler::Lib::PSGI', 'Lemonldap::NG::Common::PSGI';
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.14';
 
 sub init {
     my ( $self, $args ) = @_;
