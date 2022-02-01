@@ -43,7 +43,7 @@ sub handler {
         SERVER_PORT    => $r->get_server_port,
         REQUEST_METHOD => $r->method,
     };
-    foreach (qw(VHOSTTYPE RULES_URL)) {
+    foreach (qw(VHOSTTYPE RULES_URL HTTPS_REDIRECT PORT_REDIRECT)) {
         if ( my $t = $r->dir_config($_) ) {
             $env->{$_} = $t;
         }
