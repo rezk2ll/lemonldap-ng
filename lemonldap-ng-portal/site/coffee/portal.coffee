@@ -47,7 +47,9 @@ translatePage = (lang) ->
 			if msg.match /_hide_/
 				$(this).parent().hide()
 		$("[trplaceholder]").each ->
-			$(this).attr 'placeholder', translate($(this).attr('trplaceholder'))
+			tmp = translate($(this).attr('trplaceholder'))
+			$(this).attr 'placeholder', tmp
+			$(this).attr 'aria-label', tmp
 		$("[localtime]").each ->
 			d = new Date $(this).attr('localtime') * 1000
 			$(this).text d.toLocaleString()

@@ -61,7 +61,10 @@ LemonLDAP::NG Portal jQuery scripts
         }
       });
       $("[trplaceholder]").each(function() {
-        return $(this).attr('placeholder', translate($(this).attr('trplaceholder')));
+        var tmp;
+        tmp = translate($(this).attr('trplaceholder'));
+        $(this).attr('placeholder', tmp);
+        return $(this).attr('aria-label', tmp);
       });
       return $("[localtime]").each(function() {
         var d;
