@@ -116,6 +116,7 @@ sub params {
     $res{DISPLAY_MODULES} = $self->displayModules($req);
     $res{AUTH_ERROR_TYPE} =
       $req->error_type( $res{AUTH_ERROR} = $req->menuError );
+    $res{AUTH_ERROR_ROLE} = $req->error_role;
 
 # Display menu 2fRegisters link only if at least a 2F device is registered and rule
     $res{sfaManager} =
@@ -298,7 +299,7 @@ sub _buildApplicationHash {
     my $appuri  = $apphash->{options}->{uri}  || "";
     my $appdesc = $apphash->{options}->{description};
     my $applogo = $apphash->{options}->{logo};
-    my $apptip = $apphash->{options}->{tooltip} || $appname;
+    my $apptip  = $apphash->{options}->{tooltip} || $appname;
 
     # Detect sub applications
     my $subapphash;
