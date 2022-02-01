@@ -115,12 +115,12 @@ ok(
 count(1);
 
 # We now should be logged in, but lost the original URL
-expectRedirection( $res, "http://auth.op.com//oauth2" );
+expectRedirection( $res, "http://auth.op.com/oauth2" );
 my $id = expectCookie($res);
 
 ok(
     $res = $op->_get(
-        '//oauth2',
+        '/oauth2',
         accept => 'text/html',
         cookie => "lemonldap=$id; lemonldappdata=$pdata",
     ),
