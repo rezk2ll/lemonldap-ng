@@ -204,7 +204,7 @@ sub init {
             ['DELETE']
           );
 
-          if ( $self->conf->{globalLogoutRule} ) {
+        if ( $self->conf->{globalLogoutRule} ) {
             $self->addAuthRoute(
                 sessions => { my => 'removeSessions' },
                 ['DELETE']
@@ -364,7 +364,7 @@ sub updateSession {
 
     # Get session and store info
     my $session = $self->getApacheSession( $mod, $id, $infos, $force )
-      or return $self->p->sendError( $req, 'Session id does not exists', 400 );
+      or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     return $self->p->sendJSONresponse( $req, { result => 1 } );
 }
@@ -377,7 +377,7 @@ sub delSession {
 
     # Get session
     my $session = $self->getApacheSession( $mod, $id )
-      or return $self->p->sendError( $req, 'Session id does not exists', 400 );
+      or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     # Delete it
     $self->logger->debug("REST request to delete session $id");
@@ -605,7 +605,7 @@ sub getError {
             errorNum => $errNum ? $errNum : 'all',
             errorsFileURL =>
               "$self->{conf}->{staticPrefix}/languages/$lang.json",
-            ( $errNum ? ( errorMsgRef => "PE$errNum" ) : () ),
+            ( $errNum ? ( errorMsgRef => "PE$errNum" ) : () )
         }
     );
 }
@@ -619,7 +619,7 @@ sub removeSession {
 
     # Get session
     my $session = $self->getApacheSession( $mod, $id )
-      or return $self->p->sendError( $req, 'Session id does not exists', 400 );
+      or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     # Delete it
     $self->logger->debug("REST request to delete global session $id");
@@ -775,9 +775,8 @@ sub getUser {
 
     # Search user in database
     $req->steps( [
-            'getUser',   'setSessionInfo',
-            'setMacros', 'setGroups',
-            'setLocalGroups'
+            'getUser',                 'setSessionInfo',
+            $self->p->groupsAndMacros, 'setLocalGroups'
         ]
     );
     my $error = $self->p->process( $req, ( $mail ? ( useMail => 1 ) : () ) );
