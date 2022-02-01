@@ -32,7 +32,7 @@
             <TMPL_ELSE>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <input id="findUser_<TMPL_VAR NAME="key">" name="<TMPL_VAR NAME="key">" type="text" autocomplete="off" class="form-control" placeholder="<TMPL_VAR NAME="value">" />
+                  <input id="findUser_<TMPL_VAR NAME="key">" name="<TMPL_VAR NAME="key">" type="text" autocomplete="off" class="form-control" aria-label="<TMPL_VAR NAME="value">" placeholder="<TMPL_VAR NAME="value">" />
                   <span class="input-group-text clear-finduser-field"><i class="fa fa-eraser"></i></span>
                   <TMPL_IF NAME="null"><TMPL_ELSE>*</TMPL_IF>
                 </div>
