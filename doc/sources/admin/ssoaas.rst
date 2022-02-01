@@ -44,10 +44,12 @@ There are two different architectures to do this:
 
 .. note::
 
-    Some requests can be droped by the fastCGI/uWSGI server.
-    Example below with uWSGI server to avoid Load Balancer health check requests:
+    Some requests can be dropped by the FastCGI/uWSGI server.
+    Example below with uWSGI server to avoid Load Balancer health check requests
+    being forwarded to DevOps Handler:
 
     ```route-remote-addr = ^127\.0\.0\.25[34]$ break: 403 Forbidden for IP ${REMOTE_ADDR}```
+
 
 Example of a global FastCGI architecture:
 
