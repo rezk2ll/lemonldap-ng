@@ -8,6 +8,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
   PE_FIRSTACCESS
   PE_FORMEMPTY
+  PE_PASSWORD_OK
   PE_OK
 );
 use Scalar::Util 'weaken';
@@ -287,6 +288,7 @@ sub stop {
       if (
         $res <= 0    # PE_OK
         or $res == PE_CONFIRM
+        or $res == PE_PASSWORD_OK
 
         # TODO: adding this may generate behavior change
         #or $res == PE_FIRSTACCESS
