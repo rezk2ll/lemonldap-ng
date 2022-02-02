@@ -293,10 +293,12 @@ sub stop {
         #or $res == PE_FORMEMPTY
       );
     my $ret;
-    eval { $ret = $mod->( 'stop', $res ) };
-    if ($@) {
-        $self->logger->debug( 'Trying to call optional stop: ' . $@ );
-        return 0;
+    if ( $mod->( 'can', 'stop' ) ) {
+        eval { $ret = $mod->( 'stop', $res ) };
+        if ($@) {
+            $self->logger->error( 'Optional stop() method failed: ' . $@ );
+            return 0;
+        }
     }
     return $ret;
 }
