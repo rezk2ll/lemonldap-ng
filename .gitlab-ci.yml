@@ -61,8 +61,8 @@ build_centos_8:
   extends: .build_job
   image: buildpkg/centos:8
   script:
-     - sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-*
-     - sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-*
+     - sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+     - sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
      - yum-config-manager --enable PowerTools
      - yum-config-manager --enable AppStream
      - yum -y install epel-release
