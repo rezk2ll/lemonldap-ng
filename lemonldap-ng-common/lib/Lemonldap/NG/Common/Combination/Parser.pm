@@ -92,10 +92,12 @@ sub parseAnd {
                         $str{$r}++;
                     }
                     else {
-                        return ( $r, $name ) unless ( $r == PE_OK );
+                        return ( wantarray ? ( $r, $name ) : $r )
+                          unless ( $r == PE_OK );
                     }
                 }
-                return ( ( %str ? join( ',', keys %str ) : PE_OK ), $expr );
+                my $res = %str ? join( ',', keys %str ) : PE_OK;
+                return wantarray ? ( $res, $expr ) : $res;
             };
         }
         return \@res;
@@ -135,7 +137,8 @@ sub parseMod {
         my ($m) = @mods;
         return sub {
             my $sub = shift;
-            return ( $m->$sub(@_), $expr );
+            my $res = $m->$sub(@_);
+            return wantarray ? ( $res, $expr ) : $res;
         };
     }
     return sub {
@@ -149,10 +152,12 @@ sub parseMod {
                 $str{$res}++;
             }
             else {
-                return ( $res, $list[$i] ) unless ( $res == PE_OK );
+                return ( wantarray ? ( $res, $list[$i] ) : $res )
+                  unless ( $res == PE_OK );
             }
         }
-        return ( ( %str ? join( ',', keys %str ) : PE_OK ), $expr );
+        my $res = %str ? join( ',', keys %str ) : PE_OK;
+        return wantarray ? ( $res, $expr ) : $res;
     };
 }
 

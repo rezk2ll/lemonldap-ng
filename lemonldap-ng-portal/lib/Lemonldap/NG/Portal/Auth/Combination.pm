@@ -131,7 +131,7 @@ sub getDisplayType {
         $req->data->{dataKeep}->{combinationTry},
         $req->data->{combinationStack}
     );
-    my ( $res, $name ) = $stack->[$nb]->[0]->( 'getDisplayType', @_ );
+    my $res = $stack->[$nb]->[0]->( 'getDisplayType', @_ );
     return $res;
 }
 
@@ -293,7 +293,7 @@ sub stop {
         #or $res == PE_FORMEMPTY
       );
     my ( $ret, $name );
-    ( $ret, $name ) = $mod->( 'can', 'stop' );
+    $ret = $mod->( 'can', 'stop' );
     if ($ret) {
         eval { ( $ret, $name ) = $mod->( 'stop', $res ) };
         if ($@) {
