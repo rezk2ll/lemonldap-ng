@@ -7,7 +7,7 @@ use XML::Simple;
 use Lemonldap::NG::Common::UserAgent;
 use URI;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 # PROPERTIES
 
@@ -531,22 +531,28 @@ sub getCasApp {
 
     for my $app ( keys %{ $self->casAppList } ) {
 
-        my $candidateUri =
-          URI->new( $self->casAppList->{$app}->{casAppMetaDataOptionsService} );
-        my $candidateHost  = $candidateUri->authority;
-        my $candidateCanon = $candidateUri->canonical;
+        for my $appservice (
+            split(
+                /\s+/, $self->casAppList->{$app}->{casAppMetaDataOptionsService}
+            )
+          )
+        {
+            my $candidateUri   = URI->new($appservice);
+            my $candidateHost  = $candidateUri->authority;
+            my $candidateCanon = $candidateUri->canonical;
 
-        # Try to match prefix, remembering the longest match found
-        if ( index( $uriCanon, $candidateCanon ) == 0 ) {
-            if ( length($longestCandidate) < length($candidateCanon) ) {
-                $longestCandidate = $candidateCanon;
-                $prefixConfKey    = $app;
+            # Try to match prefix, remembering the longest match found
+            if ( index( $uriCanon, $candidateCanon ) == 0 ) {
+                if ( length($longestCandidate) < length($candidateCanon) ) {
+                    $longestCandidate = $candidateCanon;
+                    $prefixConfKey    = $app;
+                }
             }
-        }
 
-        # Try to match host, only if strict matching is disabled
-        unless ( $self->conf->{casStrictMatching} ) {
-            $hostnameConfKey = $app if ( $hostname eq $candidateHost );
+            # Try to match host, only if strict matching is disabled
+            unless ( $self->conf->{casStrictMatching} ) {
+                $hostnameConfKey = $app if ( $hostname eq $candidateHost );
+            }
         }
     }
 

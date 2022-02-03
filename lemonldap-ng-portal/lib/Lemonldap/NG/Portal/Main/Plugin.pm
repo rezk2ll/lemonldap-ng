@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 extends 'Lemonldap::NG::Common::Module';
 

@@ -5,7 +5,7 @@ use Mouse;
 
 #use Lemonldap::NG::Handler::Main qw(:jailSharedVars);
 
-our $VERSION = '2.0.11';
+our $VERSION = '2.0.14';
 
 has protection => ( is => 'rw', isa => 'Str' );
 has rule       => ( is => 'rw', isa => 'Str' );
@@ -128,7 +128,7 @@ sub _authAndTrace {
     eval "require $type";
     die $@ if ($@);
     my ( $res, $session ) = $type->run( $req, $self->{rule} );
-    eval { $self->portal( $type->tsv->{portal}->() ) };
+    eval { $self->portal( $type->tsv->{portal}->() ) } unless $self->portal;
     $self->logger->warn($@)  if $@;
     $req->userData($session) if ($session);
 
@@ -201,7 +201,7 @@ sub userId {
     my $userId =
       $req->userData->{ $Lemonldap::NG::Handler::Main::tsv->{whatToTrace}
           || '_whatToTrace' }
-      || $req->userData->{'_user'} # Fix 2377
+      || $req->userData->{'_user'}    # Fix 2377
       || 'anonymous';
 
     $self->logger->debug("Returned userId: $userId");

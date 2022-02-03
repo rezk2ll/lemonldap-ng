@@ -44,7 +44,7 @@ The JSON response fields are:
 -  ``result``: authentication result, ``0`` if it fails, ``1`` if it
    succeed
 -  ``error``: error code, the corresponding error can be found in
-   ``Lemonldap::NG::Portal::Main::Constants``
+   :doc:`Portal error codes<error_codes>`
 -  ``id``: if authentication succeed, the session id is returned in this
    field
 

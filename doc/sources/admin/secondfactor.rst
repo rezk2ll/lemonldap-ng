@@ -43,7 +43,7 @@ Registration on first use
 If you want to force a 2F registration on first login, you can use the *Force
 2FA registration at login* option.
 
-You can use a `rule<writingrulesand_headers>` to enable this behavior only for
+You can use a :doc:`rule <writingrulesand_headers>` to enable this behavior only for
 some users.
 
 Session upgrade through 2FA

@@ -18,7 +18,7 @@ our $VERSION = '2.0.12';
 # Not that only functions, not methods, can be written here
 our $functions =
   [
-    qw(&checkLogonHours &date &dateToTime &checkDate &basic &unicode2iso &iso2unicode &groupMatch &isInNet6 &varIsInUri &has2f)
+    qw(&checkLogonHours &date &dateToTime &checkDate &basic &unicode2iso &iso2unicode &groupMatch &isInNet6 &varIsInUri &has2f_internal)
   ];
 
 ## @function boolean checkLogonHours(string logon_hours, string syntax, string time_correction, boolean default_access)
@@ -244,7 +244,7 @@ sub varIsInUri {
 
 my $json = JSON::XS->new;
 
-sub has2f {
+sub has2f_internal {
     my ( $session, $type ) = @_;
     return 0 unless $session->{_2fDevices};
 

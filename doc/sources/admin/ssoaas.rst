@@ -7,7 +7,7 @@ Our concept of SSOaaS
 Access management provides 3 services:
 
 -  Global Authentication: Single Sign-On
--  Authorization: to grant authentication is not enough. User rights
+-  Authorization: Grant authentication is not enough. User rights
    must be checked
 -  Accounting: SSO logs (access) + application logs *(transactions and
    results)*
@@ -25,13 +25,13 @@ the ability for an app to manage authorizations and choose user
 attributes to set. Authentication can not be really ``*aaS``: app must
 just use it, not manage it.
 
-LL::NG affords some features that can be used to provide SSO as a
-service: a web application can manage its rules and headers. Docker or
+LL::NG affords some features that can be used for providing SSO as a
+Service: a web application can manage its rules and headers. Docker or
 VM images (Nginx only) includes LL::NG Nginx configuration that aims to
 a global
 :ref:`LL::NG authorization server<platformsoverview-external-servers-for-nginx>`.
 By default, all authenticated users can access and one header is set:
-``Auth-User``. If application gives a RULES_URL parameter that refers to
+``Auth-User``. If application defines a RULES_URL parameter that refers to
 a JSON file, authorization server will read it, apply specified rules
 and set required headers (see :doc:`DevOps Handler<devopshandler>`).
 
@@ -40,6 +40,16 @@ There are two different architectures to do this:
 -  Using a :doc:`global FastCGI (or uWSGI) server<psgi>`
 -  Using front reverse-proxies *(some cloud installations use
    reverse-proxies in front-end)*
+
+
+.. note::
+
+    Some requests can be dropped by the FastCGI/uWSGI server.
+    Example below with uWSGI server to avoid Load Balancer health check requests
+    being forwarded to DevOps Handler:
+
+    ```route-remote-addr = ^127\.0\.0\.25[34]$ break: 403 Forbidden for IP ${REMOTE_ADDR}```
+
 
 Example of a global FastCGI architecture:
 
@@ -56,8 +66,9 @@ Using a global FastCGI (or uWSGI) server
 Nginx
 ^^^^^
 
-In this example, web server templates (Nginx only) are configured to
-request authorization from a central FastCGI server:
+Examples below are web server templates (Nginx only) configured to
+request authorization from a central FastCGI server.
+With an uWSGI central server, use 'uwsgi_param' directive (Nginx only):
 
 .. code::
 
@@ -78,7 +89,11 @@ request authorization from a central FastCGI server:
        # Keep original request (LLNG server will received /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
 
-       # Set dynamically rules (LLNG will poll it every 10 mn)
+       # Set redirection params
+       fastcgi_param HTTPS_REDIRECT "$https";
+       fastcgi_param PORT_REDIRECT $server_port;
+
+       # Set dynamically rules (LL::NG will poll it every 10 mn)
        fastcgi_param RULES_URL http://rulesserver/my.json;
      }
      location /rules.json {
@@ -107,22 +122,22 @@ Apache
 ^^^^^^
 
 There is an experimental FastCGI client in LL::NG. You just have to
-install FCGI::Client and add this in the apache2.conf or your web
-applications or proxies.
+install LemonLDAP::NG handler and FCGI::Client. Then, add this in
+your apache2.conf, web applications or reverse-proxies.
 
 The following configuration example assumes that you are in a "central
 FastCGI" configuration.
 
 .. code-block:: apache
 
-   <VirtualHost ...>
+   <VirtualHost port>
        ServerName app.tls
        PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2::FCGIClient
 
        # This must point to the central FastCGI server
        PerlSetVar LLNG_SERVER 192.0.2.1:9090
 
-       # Declare this vhost as a DevOps vhost, so that we do not have
+       # Declare this vhost as a DevOps protected vhost. So you do not have
        # to declare it in the LemonLDAP::NG Manager
        PerlSetVar VHOSTTYPE DevOps
 
@@ -130,6 +145,8 @@ FastCGI" configuration.
        # used to make the authentication decision about this virtualhost
        # Make sure the central FastCGI server can reach it
        PerlSetVar RULES_URL http://app.tld/rules.json
+       PerlSetVar HTTPS_REDIRECT HTTPS
+       PerlSetVar PORT_REDIRECT SERVER_PORT
        ...
    </VirtualHost>
 
@@ -150,6 +167,8 @@ you can protect also an Express server. Example:
      port: 9090,
      PARAMS: {
        RULES_URL: 'http://my-server/rules.json'
+       HTTPS_REDIRECT: 'ON',
+       PORT_REDIRECT: '443'
      }
    });
 
@@ -196,6 +215,8 @@ Simple example:
        port => '9090',
        fcgi_auth_params => {
          RULES_URL => 'https://my-server/my.json',
+         HTTPS_REDIRECT => 'ON',
+         PORT_REDIRECT  => 443
        },
        # Optional rejection subroutine
        #on_reject => \&on_reject;
@@ -221,6 +242,7 @@ directory.
 .. code-block:: nginx
 
    server {
+     listen <port>;
      server_name "~^(?<vhost>.+?)\.dev\.sso\.my\.domain$";
      location = /lmauth {
        internal;
@@ -235,6 +257,9 @@ directory.
        fastcgi_param HOST $http_host;
        # Keep original request (LL::NG server will received /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
+       # Set redirection params
+       fastcgi_param HTTPS_REDIRECT "$https";
+       fastcgi_param PORT_REDIRECT $server_port;
      }
      location /rules.json {
        auth_request off;
@@ -253,4 +278,3 @@ directory.
    }
 
 .. |image0| image:: /documentation/devops.png
-

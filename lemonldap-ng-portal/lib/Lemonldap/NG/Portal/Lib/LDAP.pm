@@ -45,7 +45,6 @@ sub newLdap {
         )
       )
     {
-        $self->logger->error("LDAP initialization error: $@");
         return undef;
     }
 

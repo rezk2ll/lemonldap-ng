@@ -28,7 +28,7 @@
 		      <div class="col-lg-6 col-md-6 col-sm-8 col-xs-14" >
 		        <form class="navbar-form" role="search">
               <div class="input-group add-on">
-                <input class="form-control" placeholder="{{translate('search')}}" type="text" ng-model="searchString" ng-init="" ng-keyup="search2FA()"/>
+                <input class="form-control" trplaceholder="search" type="text" ng-model="searchString" ng-init="" ng-keyup="search2FA()"/>
                 <div class="input-group-btn">
                 <button class="btn btn-default" ng-click="search2FA(1)"><i class="glyphicon glyphicon-search"></i></button>
                 </div>

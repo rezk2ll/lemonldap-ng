@@ -15,7 +15,7 @@
 #   * GET /session/my/<type>                     : get session data
 #   * GET /session/my/<type>/key                 : get session key
 #   * DELETE /session/my                         : ask for logout
-#   * DELETE /sessions/my                        : ask for global logout
+#   * DELETE /sessions/my                        : ask for global logout (if GlobalLogout plugin is on)
 #
 # - Authentication
 #   * GET /renewcaptcha                          : get token and captcha image
@@ -200,9 +200,16 @@ sub init {
           )
 
           ->addAuthRoute(
-            sessions => { my => { ':sessionType' => 'removeSessions' } },
+            session => { my => 'removeSession' },
             ['DELETE']
           );
+
+        if ( $self->conf->{globalLogoutRule} ) {
+            $self->addAuthRoute(
+                sessions => { my => 'removeSessions' },
+                ['DELETE']
+            );
+        }
     }
 
     if ( $self->conf->{restPasswordServer} ) {
@@ -357,7 +364,7 @@ sub updateSession {
 
     # Get session and store info
     my $session = $self->getApacheSession( $mod, $id, $infos, $force )
-      or return $self->p->sendError( $req, 'Session id does not exists', 400 );
+      or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     return $self->p->sendJSONresponse( $req, { result => 1 } );
 }
@@ -370,7 +377,7 @@ sub delSession {
 
     # Get session
     my $session = $self->getApacheSession( $mod, $id )
-      or return $self->p->sendError( $req, 'Session id does not exists', 400 );
+      or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     # Delete it
     $self->logger->debug("REST request to delete session $id");
@@ -598,9 +605,28 @@ sub getError {
             errorNum => $errNum ? $errNum : 'all',
             errorsFileURL =>
               "$self->{conf}->{staticPrefix}/languages/$lang.json",
-            ( $errNum ? ( errorMsgRef => "PE$errNum" ) : () ),
+            ( $errNum ? ( errorMsgRef => "PE$errNum" ) : () )
         }
     );
+}
+
+sub removeSession {
+    my ( $self, $req ) = @_;
+    my $id = $req->userData->{_session_id};
+    return $self->p->sendError( $req, 'ID is required', 400 ) unless ($id);
+    my $mod = $self->getGlobal()
+      or return $self->p->sendError( $req, undef, 400 );
+
+    # Get session
+    my $session = $self->getApacheSession( $mod, $id )
+      or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
+
+    # Delete it
+    $self->logger->debug("REST request to delete global session $id");
+    my $res = $self->p->_deleteSession( $req, $session );
+    $self->logger->debug(" Result is $res");
+
+    return $self->p->sendJSONresponse( $req, { result => $res } );
 }
 
 sub removeSessions {
@@ -749,9 +775,8 @@ sub getUser {
 
     # Search user in database
     $req->steps( [
-            'getUser',   'setSessionInfo',
-            'setMacros', 'setGroups',
-            'setLocalGroups'
+            'getUser',                 'setSessionInfo',
+            $self->p->groupsAndMacros, 'setLocalGroups'
         ]
     );
     my $error = $self->p->process( $req, ( $mail ? ( useMail => 1 ) : () ) );
@@ -783,7 +808,8 @@ sub myApplications {
         { Category => $_->{catname}, Applications => \@apps },
     } @{ $self->p->menu->appslist($req) };
 
-    return $self->p->sendJSONresponse( $req, { result => 1, myapplications => \@appslist } );
+    return $self->p->sendJSONresponse( $req,
+        { result => 1, myapplications => \@appslist } );
 }
 
 sub _checkSecret {

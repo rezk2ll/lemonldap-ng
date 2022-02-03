@@ -69,7 +69,7 @@ ok(
 ok( $res = &$code, "Function works" );
 ok( $res == 1, 'Get good result' );
 
-$sub  = "sub { return(has2f(\$_[0],\$_[1])) }";
+$sub  = "sub { return(has2f_internal(\$_[0],\$_[1])) }";
 $code = $jail->jail_reval($sub);
 ok(
     ( defined($code) and ref($code) eq 'CODE' ),

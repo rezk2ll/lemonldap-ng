@@ -14,7 +14,7 @@ extends qw(
   Lemonldap::NG::Portal::Register::Base
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.14';
 
 # RUNNING METHODS
 

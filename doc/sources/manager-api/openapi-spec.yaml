@@ -1397,7 +1397,7 @@ components:
       type: object
       properties:
         service:
-          type: string
+          type: array
         userAttribute:
           type: string
           default: none

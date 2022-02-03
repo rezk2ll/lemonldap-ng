@@ -83,20 +83,19 @@ Then, add the official LL::NG repository
 ::
 
    # LemonLDAP::NG repository
-   deb     https://lemonldap-ng.org/deb stable main
-   deb-src https://lemonldap-ng.org/deb stable main
+   deb     https://lemonldap-ng.org/deb 2.0 main
 
 
 .. tip::
 
-
-
+    -  Use the ``stable`` repository to get packages from current major
+       version
     -  Use the ``oldstable`` repository to get packages from previous major
        version
     -  Use the ``testing`` repository to get packages from next major
        version
-    -  Use the ``2.0`` repository to avoid upgrade to next major version
-
+    -  Use the ``2.0`` repository to stay on this major version and avoid
+       upgrade to next major version
 
 
 Finally update your APT cache:

@@ -9,7 +9,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal;
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.14';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 

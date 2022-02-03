@@ -15,7 +15,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   URIRE
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::CAS';
@@ -61,8 +61,12 @@ sub init {
 
     # Add CAS Services, so we can check service= parameter on logout
     foreach my $casSrv ( keys %{ $self->casAppList } ) {
-        if ( my $serviceUrl =
-            $self->casAppList->{$casSrv}->{casAppMetaDataOptionsService} )
+        for my $serviceUrl (
+            split(
+                /\s+/,
+                $self->casAppList->{$casSrv}->{casAppMetaDataOptionsService}
+            )
+          )
         {
             push @{ $self->p->{additionalTrustedDomains} }, $serviceUrl;
             $self->logger->debug(
