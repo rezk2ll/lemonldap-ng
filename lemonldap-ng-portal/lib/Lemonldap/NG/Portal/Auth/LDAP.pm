@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PP_CHANGE_AFTER_RESET
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.14';
 
 # Inheritance: UserDB::LDAP provides all needed ldap functions
 extends qw(

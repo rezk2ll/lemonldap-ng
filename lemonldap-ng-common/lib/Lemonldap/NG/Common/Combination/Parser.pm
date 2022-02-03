@@ -5,7 +5,7 @@ use Mouse;
 use Safe;
 use constant PE_OK => 0;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.14';
 
 # Handle "if then else" (used during init)
 # return a sub that can be called with ($req) to get a [array] of combination
