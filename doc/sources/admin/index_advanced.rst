@@ -4,11 +4,14 @@ Advanced features
 .. toctree::
    :maxdepth: 1
 
+   rbac
+   ssoaas
+   servertoserver
+   riskbased
    smtp
    notifications
    passwordstore
    cda
-   rbac
    customfunctions
    extendedfunctions
    resetpassword
@@ -16,8 +19,6 @@ Advanced features
    logoutforward
    securetoken
    handlerauthbasic
-   ssoaas
-   servertoserver
    safejail
    loginhistory
    fastcgi
