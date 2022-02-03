@@ -108,7 +108,7 @@ ok(
 );
 ok(
     $res->[2]->[0] =~
-      m%<div class="message message-negative alert"><span trmsg="82"></span>%,
+      m%<span trmsg="82"></span>%,
     'Found "<span trmsg="82">"'
 ) or explain( $res->[2]->[0], '<span trmsg="82">' );
 count(3);
