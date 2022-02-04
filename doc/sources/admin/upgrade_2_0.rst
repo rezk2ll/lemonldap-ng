@@ -170,7 +170,7 @@ Handlers
 -  :doc:`CDA<cda>`,
    :doc:`ZimbraPreAuth<applications/zimbra>`,
    :doc:`SecureToken<securetoken>` and
-   :doc:`AuthBasic<handlerauthbasic>` are now
+   :doc:`AuthBasic<authbasichandler>` are now
    :doc:`Handler Types<handlerarch>`. So there is no
    more special file to load: you just have to choose "VirtualHost type"
    in the manager/VirtualHosts.
@@ -222,7 +222,7 @@ SOAP/REST services
 
 .. attention::
 
-    \ :doc:`AuthBasic Handler<handlerauthbasic>` uses now
+    \ :doc:`AuthBasic Handler<authbasichandler>` uses now
     REST services instead of SOAP.
 
 CAS

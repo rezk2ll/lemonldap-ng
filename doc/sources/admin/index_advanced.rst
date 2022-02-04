@@ -18,7 +18,7 @@ Advanced features
    register
    logoutforward
    securetoken
-   handlerauthbasic
+   authbasichandler
    safejail
    loginhistory
    fastcgi

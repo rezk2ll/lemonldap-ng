@@ -1,7 +1,7 @@
 Advanced PSGI usage
 ===================
 
-LLNG is build on `Plack <http://plackperl.org/>`__, so it can be used
+LL::NG is built on `Plack <http://plackperl.org/>`__, so it can be used
 with any compatible server:
 
 -  `Starman <https://metacpan.org/pod/starman>`__
@@ -46,19 +46,18 @@ to replace exactly FastCGI server. You can use it :
 
 .. attention::
 
-    Starman, Twiggy,... are HTTP servers, not FastCGI ones
-    !
+    Starman, Twiggy,... are HTTP servers, not FastCGI ones!
 
 You can also replace only a part of it to create a specialized FastCGI
 server (portal,...). Look at ``llng-server.psgi`` example and take the
 part you want to use.
 
-There are also some other psgi files in examples directory.
+There are also some other PSGI files in examples directory.
 
-LLNG FastCGI Server
-~~~~~~~~~~~~~~~~~~~
+LL::NG FastCGI Server
+~~~~~~~~~~~~~~~~~~~~~
 
-``llng-fastcgi-server`` can be launched with the following options:
+``llng-fastcgi-server`` can be started with the following options:
 
 ==================== ===================== ===================== ==========================================================================================
 Command-line options                       Environment variable  Explanation
@@ -98,16 +97,15 @@ FCGI::Engine::ProcManager
 Using uWSGI
 ~~~~~~~~~~~
 
-You must install uWSGI PSGI plugin. Then for example, launch
+You have to install uWSGI PSGI plugin. Then for example, start
 llng-server.psgi *(simple example)*:
 
-::
+.. code-block:: shell
 
    /usr/bin/uwsgi --plugins psgi --socket :5000 --uid www-data --gid www-data --psgi /usr/share/lemonldap-ng/llng-server/llng-server.psgi
 
-You will find in LLNG Nginx configuration files some comments that
-explain how to configure Nginx to use uWSGI instead of LLNG FastCGI
-server.
+You will find in LL::NG Nginx configuration files some comments that
+explain how to configure Nginx to use uWSGI instead of LL::NG FastCGI server.
 
 Using Debian lemonldap-ng-uwsgi-app package
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -148,7 +146,7 @@ and/or Nginx init files several options. Example:
 
 .. note::
     Nginx natively includes support for upstream servers speaking the uwsgi protocol since version 0.8.40.
-    To improve performances, you can switch from a TCP socket to an Unix Domain Socket by editing
+    To improve performances, you can switch from a TCP socket to an UDS socket by editing
     ``llng-server.yaml``:
 
     .. code-block:: ini
@@ -161,7 +159,7 @@ and/or Nginx init files several options. Example:
 
     .. code-block:: nginx
 
-      # OR TO USE uWSGI
+      # With uWSGI
       include /etc/nginx/uwsgi_params;
       uwsgi_pass unix:///tmp/uwsgi.sock;
       uwsgi_param LLTYPE psgi;
@@ -174,8 +172,8 @@ and/or Nginx init files several options. Example:
 Protect a PSGI application
 --------------------------
 
-LLNG provides ``Plack::Middleware::Auth::LemonldapNG`` that can be used
-to protect any PSGI application: it acts exactly like a LLNG handler.
+LL::NG provides ``Plack::Middleware::Auth::LemonldapNG`` that can be used
+to protect any PSGI application: it works exactly like a LL::NG handler.
 Simple example:
 
 .. code-block:: perl
