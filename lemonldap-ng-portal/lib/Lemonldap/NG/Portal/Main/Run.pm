@@ -134,7 +134,7 @@ sub login {
     return $self->do(
         $req,
         [
-            'checkUnauthLogout', 'controlUrl',    # Fix 2342
+            'checkUnauthLogout',            'controlUrl',          # Fix 2342
             @{ $self->beforeAuth },         $self->authProcess,
             @{ $self->betweenAuthAndData }, $self->sessionData,
             @{ $self->afterData },          $self->validSession,
@@ -148,7 +148,7 @@ sub postLogin {
     return $self->do(
         $req,
         [
-            'checkUnauthLogout', 'restoreArgs',            # Fix 2342
+            'checkUnauthLogout', 'restoreArgs',                    # Fix 2342
             'controlUrl',        @{ $self->beforeAuth },
             $self->authProcess,  @{ $self->betweenAuthAndData },
             $self->sessionData,  @{ $self->afterData },
@@ -189,7 +189,8 @@ sub refresh {
     $req->user( $data{_user} || $data{ $self->conf->{whatToTrace} } );
     $req->id( $data{_session_id} );
     foreach ( keys %data ) {
-        delete $data{$_} unless ( /^_/ or /^(?:startTime|authenticationLevel)$/ );
+        delete $data{$_}
+          unless ( /^_/ or /^(?:startTime|authenticationLevel)$/ );
     }
     $data{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
     $self->logger->debug(
@@ -356,6 +357,11 @@ sub do {
 
 sub getModule {
     my ( $self, $req, $type ) = @_;
+    if ( my $val =
+        $req->userData->{ { auth => '_auth', user => '_userDB' }->{$type} } )
+    {
+        return $val;
+    }
     if (
         my $mod = {
             auth     => '_authentication',
