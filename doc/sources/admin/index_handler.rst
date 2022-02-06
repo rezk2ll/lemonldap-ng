@@ -4,7 +4,7 @@ Handlers
 .. toctree::
    :maxdepth: 1
 
-   handlerauthbasic
+   authbasichandler
    cda
    ssoaas
    oauth2handler

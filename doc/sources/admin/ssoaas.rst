@@ -1,4 +1,4 @@
-SSO as a service (SSOaaS)
+SSO as a Service (SSOaaS)
 =========================
 
 Our concept of SSOaaS
@@ -13,45 +13,46 @@ Access management provides 3 services:
    results)*
 
 LL::NG affords all these services (except application logs of course,
-but headers are provided to permit this).
+but headers are provided to allow this).
 
 Headers setting is an another LL::NG service. LL::NG can provide any
-user attributes to an application (see
-:doc:`Rules and headers<writingrulesand_headers>`)
+user attributes to an application
+(see :doc:`Rules and headers<writingrulesand_headers>`)
 
 ``*aaS`` means that application can drive underlying layer (IaaS for
 infrastructure, PaaS for platform,…). So for us, ``SSOaaS`` must provide
-the ability for an app to manage authorizations and choose user
-attributes to set. Authentication can not be really ``*aaS``: app must
-just use it, not manage it.
+the ability for an application to manage authorizations and choose user
+attributes to set. Authentication can not be really ``*aaS``: application
+must just use it but not manage it.
 
 LL::NG affords some features that can be used for providing SSO as a
-Service: a web application can manage its rules and headers. Docker or
-VM images (Nginx only) includes LL::NG Nginx configuration that aims to
-a global
-:ref:`LL::NG authorization server<platformsoverview-external-servers-for-nginx>`.
-By default, all authenticated users can access and one header is set:
-``Auth-User``. If application defines a RULES_URL parameter that refers to
+service. So a web application can manage its rules and headers.
+Docker or VM images (Nginx only) includes LL::NG Nginx configuration that
+aims to a 
+:ref:`central LL::NG authorization server<platformsoverview-external-servers-for-nginx>`.
+By default, all authenticated users can access and just one header is set:
+``Auth-User``. If application defines a ``RULES_URL`` parameter that refers to
 a JSON file, authorization server will read it, apply specified rules
 and set required headers (see :doc:`DevOps Handler<devopshandler>`).
 
-There are two different architectures to do this:
+Two different kind of architecture are existing to do this:
 
--  Using a :doc:`global FastCGI (or uWSGI) server<psgi>`
--  Using front reverse-proxies *(some cloud installations use
+-  Using a :doc:`central FastCGI (or uWSGI) server<psgi>`
+-  Using front Reverse-Proxies *(some cloud or HA installations use
    reverse-proxies in front-end)*
 
 
 .. note::
 
-    Some requests can be dropped by the FastCGI/uWSGI server.
-    Example below with uWSGI server to avoid Load Balancer health check requests
-    being forwarded to DevOps Handler:
+    Some requests can be dropped by the central FastCGI/uWSGI server.
+
+    Example below with an uWSGI server to prevent Load Balancer health check requests
+    being forwarded to the central DevOps Handler:
 
     ```route-remote-addr = ^127\.0\.0\.25[34]$ break: 403 Forbidden for IP ${REMOTE_ADDR}```
 
 
-Example of a global FastCGI architecture:
+Example of a central FastCGI architecture:
 
 |image0|
 
@@ -60,17 +61,17 @@ In both case, Handler type must be set to :doc:`DevOps<devopshandler>`.
 Examples of webserver configuration for Docker/VM images
 --------------------------------------------------------
 
-Using a global FastCGI (or uWSGI) server
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using a Central FastCGI (or uWSGI) Server
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Nginx
 ^^^^^
 
-Examples below are web server templates (Nginx only) configured to
-request authorization from a central FastCGI server.
-With an uWSGI central server, use 'uwsgi_param' directive (Nginx only):
+Examples below are web server templates customized for
+requesting authorization from a central FastCGI server.
+With a central uWSGI server (Nginx only), use 'uwsgi_param' directive:
 
-.. code::
+.. code-block:: nginx
 
    server {
      listen <port>;
@@ -78,7 +79,7 @@ With an uWSGI central server, use 'uwsgi_param' directive (Nginx only):
      location = /lmauth {
        internal;
        include /etc/nginx/fastcgi_params;
-       # Pass authorization requests to Central FastCGI server:
+       # Pass authorization requests to central FastCGI server
        fastcgi_pass 10.1.2.3:9090;
        fastcgi_param VHOSTTYPE DevOps;
        # Drop post datas
@@ -89,11 +90,11 @@ With an uWSGI central server, use 'uwsgi_param' directive (Nginx only):
        # Keep original request (LLNG server will received /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
 
-       # Set redirection params
+       # Set redirection parameters
        fastcgi_param HTTPS_REDIRECT "$https";
        fastcgi_param PORT_REDIRECT $server_port;
 
-       # Set dynamically rules (LL::NG will poll it every 10 mn)
+       # Set rules dynamically (LL::NG will poll it every 10 mn)
        fastcgi_param RULES_URL http://rulesserver/my.json;
      }
      location /rules.json {
@@ -109,7 +110,7 @@ With an uWSGI central server, use 'uwsgi_param' directive (Nginx only):
        error_page 401 $lmlocation;
        include /etc/nginx/nginx-lua-headers.conf;
        # ...
-       # Example with php-fpm:
+       # Example with php-fpm
        include snippets/fastcgi-php.conf;
        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
      }
@@ -121,12 +122,12 @@ With an uWSGI central server, use 'uwsgi_param' directive (Nginx only):
 Apache
 ^^^^^^
 
-There is an experimental FastCGI client in LL::NG. You just have to
-install LemonLDAP::NG handler and FCGI::Client. Then, add this in
-your apache2.conf, web applications or reverse-proxies.
+LL::NG provides an experimental FastCGI client. You have to
+install LemonLDAP::NG handler (LL::NG FastCGI client),
+FCGI::Client (Perl dependency) and Mod_Perl2 (Apache module)
+used for parsing HTTP headers.
+Then, add this in your apache2.conf web applications or reverse-proxies.
 
-The following configuration example assumes that you are in a "central
-FastCGI" configuration.
 
 .. code-block:: apache
 
@@ -134,7 +135,7 @@ FastCGI" configuration.
        ServerName app.tls
        PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2::FCGIClient
 
-       # This must point to the central FastCGI server
+       # The central FastCGI server socket
        PerlSetVar LLNG_SERVER 192.0.2.1:9090
 
        # Declare this vhost as a DevOps protected vhost. So you do not have
@@ -224,15 +225,15 @@ Simple example:
      $app;
    };
 
-Using front reverse-proxies
+Using front Reverse-Proxies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This is a simple Nginx configuration file. It looks like a standard
-LL::NG nginx configuration file except for:
+LL::NG Nginx configuration file except for:
 
 -  VHOSTTYPE parameter forced to use DevOps handler
--  /rules.json must not be protected by LL::NG but by the web server
-   itself
+-  /rules.json do not have to be protected by LL::NG
+   but by the web server itself.
 
 This configuration handles ``*.dev.sso.my.domain`` URL and forwards
 authenticated requests to ``<vhost>.internal.domain``. Rules can be

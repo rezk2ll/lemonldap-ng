@@ -315,7 +315,7 @@ Handlers are software control agents to be installed on your web servers
 Handler type                                                         Apache     LLNG FastCGI/uWSGI server (Nginx, or :doc:`SSOaaS<ssoaas>`)   `Plack servers <https://plackperl.org>`__   Node.js  ( `express apps <http://expressjs.com/>`__\  or :doc:`SSOaaS<ssoaas>`)    :doc:`Self protected apps<selfmadeapplication>`   Comment
 ==================================================================== ========== ============================================================= =========================================== ================================================================================== =============================================== ======================================================================================================================
 Main *(default handler)*                                             ✔          ✔                                                             ✔                                           :doc:`Partial<nodehandler>` ** [16]_ **                                            ✔
-:doc:`AuthBasic<handlerauthbasic>`                                   ✔          ✔                                                             ✔                                                                                                                              ✔                                               Designed for some server-to-server applications
+:doc:`AuthBasic<authbasichandler>`                                   ✔          ✔                                                             ✔                                                                                                                              ✔                                               Designed for some server-to-server applications
 :doc:`CDA<cda>`                                                      ✔          ✔                                                             ✔                                                                                                                              ✔                                               For Cross Domain Authentication
 :doc:`DevOps<devopshandler>`  (:doc:`SSOaaS<ssoaas>`)  |new|         ✔          ✔                                                             ✔                                           ✔                                                                                                                                  Allows application developers to define their own rules and headers inside their applications
 :doc:`DevOpsST<devopssthandler>`  (:doc:`SSOaaS<ssoaas>`)  |new|     ✔          ✔                                                             ✔                                           ✔                                                                                                                                  Enables both :doc:`DevOps<devopshandler>` and :doc:`Service Token<servertoserver>`
@@ -464,7 +464,7 @@ Advanced features
 -  :doc:`Create an account (self service)<register>`
 -  :doc:`Forward logout to applications<logoutforward>`
 -  :doc:`Secure Token Handler<securetoken>`
--  :doc:`AuthBasic Handler<handlerauthbasic>`
+-  :doc:`AuthBasic Handler<authbasichandler>`
 -  :doc:`SSO as a Service<ssoaas>` *(SSOaaS)* |new|
 -  :doc:`Handling server webservice calls<servertoserver>` |new|
 -  `LemonLDAP::NG kubernetes

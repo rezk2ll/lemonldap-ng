@@ -1,7 +1,7 @@
 DevOps Handler
 ==============
 
-This Handler is designed to retrieve vhost configuration from the website
+This Handler is designed to retrieve VHost configuration from the website
 itself, not from LL:NG configuration. Rules and headers are set in a
 **rules.json** file stored at the website root directory (ie
 ``http://website/rules.json``). This file looks like:
@@ -23,12 +23,14 @@ If this file is not found, the default rule "accept" is applied and just
 
 No specific configuration is required except that:
 
--  you have to choose this specific handler (directly by using
-   ``VHOSTTYPE`` environment variable or in VHost options)
--  you can set the loopback URL needed by the DevOps handler to get
-   ``/rules.json`` or use ``RULES_URL`` parameter to set JSON file path
-   (see :doc:`SSO as a Service<ssoaas>`). Default to
-   ``http://127.0.0.1:<server-port>``
+-  you have to select ``DevOps`` handler type either with
+   ``VHOSTTYPE`` environment variable or in VHost options
+-  you can set in VHost options the loopback URL requested by 
+   the DevOps handler to retrieve ``/rules.json`` or use
+   ``RULES_URL`` environment variable to set JSON file location.
+   Default to ``http://127.0.0.1:<server-port>``
+-  HTTPS or redirection port can be set by using
+   ``HTTP_REDIRECT`` or ``PORT_REDIRECT`` environment variables.
 
 
 .. attention::

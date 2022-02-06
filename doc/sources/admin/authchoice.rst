@@ -51,7 +51,7 @@ Then, go in ``Choice Parameters``:
    ``lmAuth``)
 -  **Allowed modules**: click on ``New chain`` to add a choice.
 -  **Choice used for password authentication**: authentication module used by
-   :doc:`AuthBasic handler<handlerauthbasic>` and :ref:`OAuth2.0 Password Grant <resource-owner-password-grant>`
+   :doc:`AuthBasic handler<authbasichandler>` and :ref:`OAuth2.0 Password Grant <resource-owner-password-grant>`
 -  **FindUser plugin parameter**: authentication module called by
    Find user plugin (:doc:`Find user plugin<finduser>`)
 

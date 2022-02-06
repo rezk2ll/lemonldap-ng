@@ -38,7 +38,7 @@ Example of a protected virtual host for a local application:
 
    </VirtualHost>
 
-Reverse proxy
+Reverse-Proxy
 ~~~~~~~~~~~~~
 
 Example of a protected virtual host with LemonLDAP::NG as reverse proxy:
@@ -258,7 +258,7 @@ Example of a protected virtual host for a local application:
 
 .. _reverse-proxy-1:
 
-Reverse proxy
+Reverse-Proxy
 ~~~~~~~~~~~~~
 
 - Example of a protected reverse-proxy:
@@ -452,7 +452,7 @@ A virtual host contains:
 -  Access rules: check user's right on URL patterns
 -  HTTP headers: forge information sent to protected applications
 -  POST data: use form replay
--  Options: redirection port and protocol
+-  Options: redirection port, protocol, Handler type, aliases,required authentication level,...
 
 Access rules and HTTP headers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -464,7 +464,7 @@ application by LL::NG.
 
 .. attention::
 
-    With **Nginx**-based ReverseProxy, header directives can
+    With **Nginx**-based Reverse-Proxy, header directives can
     be appended by a LUA script.
 
     To send more than **15** headers to protected applications,
@@ -507,9 +507,12 @@ Some options are available:
    Provide a comma separated parameters list with custom function path and args.
    Args can be vars or session attributes, macros, ...
    By example: My::accessToTrace, Doctor, Who, _whatToTrace
--  **Type**: handler type (normal,
-   :doc:`ServiceToken Handler<servertoserver>`,
-   :doc:`DevOps Handler<devopshandler>`,...)
+-  **Type**: handler type (:ref:`Main<presentation-kinematics>`,
+   :doc:`AuthBasic<authbasichandler>`,
+   :doc:`ServiceToken<servertoserver>`,
+   :doc:`DevOps<devopshandler>`,
+   :doc:`DevOpsST<devopssthandler>`,
+   :doc:`OAuth2<oauth2handler>`,...)
 -  **Required authentication level**: this option avoids to reject user with
    a rule based on ``$_authenticationLevel``. When user has not got the
    required level, he is redirected to an upgrade page in the portal.

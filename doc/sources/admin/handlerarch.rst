@@ -25,7 +25,7 @@ Plack servers protection or Nginx/\ :doc:`SSOaaS<ssoaas>` FastCGI/uWSGI server S
 Types are:
 
 -  *(Main)*: link between Main and platform
--  :doc:`AuthBasic<handlerauthbasic>`
+-  :doc:`AuthBasic<authbasichandler>`
 -  :doc:`CDA<cda>`
 -  :doc:`DevOps<devopshandler>`
 -  :doc:`DevOps+ServiceToken<devopssthandler>`
