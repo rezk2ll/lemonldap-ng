@@ -81,12 +81,12 @@ m%<input name="spoofId" type="text" class="form-control" value="" autocomplete="
     ) or explain( $res->[2]->[0], 'Search for an account' );
     ok(
         $res->[2]->[0] =~
-m%<input id="findUser_uid" name="uid" type="text" autocomplete="off" class="form-control" placeholder="Login" />%,
+m%<input id="findUser_uid" name="uid" type="text" autocomplete="off" class="form-control" aria-label="Login" placeholder="Login" />%,
         'id="findUser_uid"'
     ) or explain( $res->[2]->[0], 'id="findUser_uid"' );
     ok(
         $res->[2]->[0] =~
-m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-control" placeholder="Name" />%,
+m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-control" aria-label="Name" placeholder="Name" />%,
         'id="findUser_cn"'
     ) or explain( $res->[2]->[0], 'id="findUser_cn"' );
 
