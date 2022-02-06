@@ -361,6 +361,7 @@ sub defaultValues {
         'SSLAuthnLevel'           => 5,
         'SSLVar'                  => 'SSL_CLIENT_S_DN_Email',
         'SSLVarIf'                => {},
+        'stayConnected'           => 0,
         'stayConnectedCookieName' => 'llngconnection',
         'stayConnectedTimeout'    => 2592000,
         'successLoginNumber'      => 5,

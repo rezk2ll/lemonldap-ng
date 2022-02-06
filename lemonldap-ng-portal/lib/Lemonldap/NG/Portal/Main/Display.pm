@@ -13,6 +13,7 @@ use URI;
 has isPP          => ( is => 'rw' );
 has speChars      => ( is => 'rw' );
 has skinRules     => ( is => 'rw' );
+has stayConnected => ( is => 'rw', default => sub { 0 } );
 has requireOldPwd => ( is => 'rw', default => sub { 1 } );
 
 sub displayInit {
@@ -28,17 +29,24 @@ sub displayInit {
             else {
                 $self->logger->error(
                     qq(Skin rule "$skinRule" returns an error: )
-                      . HANDLER->tsv->{jail}->error );
+                      . HANDLER->tsv->{jail}->error || 'Unable to compile rule' );
             }
         }
     }
     my $rule = HANDLER->buildSub(
         HANDLER->substitute( $self->conf->{portalRequireOldPassword} ) );
     unless ($rule) {
-        my $error = HANDLER->tsv->{jail}->error || '???';
-        $self->logger->error( "Bad requireOldPwd rule: " . $error );
+        my $error = HANDLER->tsv->{jail}->error || 'Unable to compile rule';
+        $self->logger->error( "Bad requireOldPwd rule: $error" );
     }
     $self->requireOldPwd($rule);
+    $rule =
+      HANDLER->buildSub( HANDLER->substitute( $self->conf->{stayConnected} ) );
+    unless ($rule) {
+        my $error = HANDLER->tsv->{jail}->error || 'Unable to compile rule';
+        $self->logger->error( "Bad stayConnected rule: $error" );
+    }
+    $self->stayConnected($rule);
 
     my $speChars =
       $self->conf->{passwordPolicySpecialChar} eq '__ALL__'
@@ -247,8 +255,6 @@ sub display {
             LOGOUT_URL          => $self->conf->{portal} . "?logout=1",
             APPSLIST_ORDER      => $req->{sessionInfo}->{'_appsListOrder'},
             PING                => $self->conf->{portalPingInterval},
-            REQUIRE_OLDPASSWORD =>
-              $self->requireOldPwd->( $req, $req->userData ),
             DONT_STORE_PASSWORD => $self->conf->{browsersDontStorePassword},
             HIDE_OLDPASSWORD    => 0,
             PPOLICY_NOPOLICY    => !$self->isPP(),
@@ -258,6 +264,11 @@ sub display {
             PPOLICY_MINUPPER    => $self->conf->{passwordPolicyMinUpper},
             PPOLICY_MINDIGIT    => $self->conf->{passwordPolicyMinDigit},
             PPOLICY_MINSPECHAR  => $self->conf->{passwordPolicyMinSpeChar},
+            (
+                $self->requireOldPwd->( $req, $req->userData )
+                ? ( REQUIRE_OLDPASSWORD => 1 )
+                : ()
+            ),
             (
                 $self->conf->{passwordPolicyMinSpeChar} || $self->speChars()
                 ? ( PPOLICY_ALLOWEDSPECHAR => $self->speChars() )
@@ -391,16 +402,20 @@ sub display {
             MAIL_URL       => $self->conf->{mailUrl},
             REGISTER_URL   => $self->conf->{registerUrl},
             HIDDEN_INPUTS  => $self->buildHiddenForm($req),
-            STAYCONNECTED  => $self->conf->{stayConnected},
             IMPERSONATION  => $self->conf->{impersonationRule}
               || $self->conf->{proxyAuthServiceImpersonation},
+            ENABLE_PASSWORD_DISPLAY =>
+              $self->conf->{portalEnablePasswordDisplay},
+            (
+                $self->stayConnected->( $req, $req->sessionInfo )
+                ? ( STAYCONNECTED => 1 )
+                : ()
+            ),
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
             ),
-            ENABLE_PASSWORD_DISPLAY =>
-              $self->conf->{portalEnablePasswordDisplay},
         );
 
         # External links
