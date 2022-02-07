@@ -898,7 +898,8 @@ sub postJavascript {
     my $filler;
     foreach my $name ( keys %$data ) {
         use bytes;
-        my $value = "x" x bytes::length( $data->{$name} );
+        my @characterSet = ( '0' ..'9', 'A' .. 'Z', 'a' .. 'z' );
+        my $value = join '' => map $characterSet[ rand @characterSet ], 1 .. bytes::length( $data->{$name} );
         $filler .=
 "form.find('input[name=\"$name\"], select[name=\"$name\"], textarea[name=\"$name\"]').val('$value')\n";
     }
