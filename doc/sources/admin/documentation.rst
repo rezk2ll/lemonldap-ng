@@ -126,16 +126,6 @@ Development
    -  `LemonLDAP::NG
       Manager <http://www.cpantesters.org/distro/L/Lemonldap-NG-Manager.html>`__
 
-Team
-----
-
-See :doc:`The Team <team>`.
-
-Contact
--------
-
-See :doc:`Contact <contact>`.
-
 Other
 -----
 

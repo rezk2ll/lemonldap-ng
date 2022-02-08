@@ -518,14 +518,9 @@ See :doc:`How to report a bug</bugreport>`.
 Developer corner
 ----------------
 
-To contribute, see:
+To contribute, see :
 
 -  :doc:`Contribute to project<contribute>`
-
-To contact us, see:
-
--  :doc:`The Team<team>`
--  :doc:`Contact<contact>`
 
 To develop an handler, see:
 
