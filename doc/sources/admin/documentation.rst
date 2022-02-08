@@ -31,7 +31,7 @@ Installation and configuration
    -  `Version 2.0 </documentation/2.0/>`__ (stable)
    -  `Version 1.9 </documentation/1.9/>`__ (oldstable)
 
--  Archived versions (unmaintained by LLNG Team )
+-  Archived versions (unmaintained by LL::NG Team )
 
    -  `Version 1.4 </documentation/1.4/>`__
    -  `Version 1.3 </documentation/1.3/>`__
@@ -42,19 +42,18 @@ Installation and configuration
 Packaged versions
 ~~~~~~~~~~~~~~~~~
 
-These versions are maintained under distribution umbrella following
-their policy.
+These versions are maintained under distribution umbrella following their policy.
 
 Debian
 ^^^^^^
 
 .. tip::
 
-   Following Debian Policy, LLNG packages are never upgraded in published distributions. However, security patches are backported by maintenance teams *(except some inor ones)*.
+   Following Debian Policy, LL::NG packages are never upgraded in published distributions. However, security patches are backported by maintenance teams *(except some minor ones)*.
    See `Security tracker <https://security-tracker.debian.org/tracker/source-package/lemonldap-ng>`__
 
 =========== ========================== ======================================== ===================================================== ============================================================ =============================== =============================================================
-Debian dist                            LLNG version                             Secured                                               Maintenance                                                  LTS Limit                       `Extended LTS <https://wiki.debian.org/LTS/Extended>`__ Limit
+Debian dist                            LL::NG version                             Secured                                               Maintenance                                                  LTS Limit                       `Extended LTS <https://wiki.debian.org/LTS/Extended>`__ Limit
 =========== ========================== ======================================== ===================================================== ============================================================ =============================== =============================================================
 *6*         *Squeeze*                  *0.9.4.1*                                |maybe| No known vulnerability                        *None*                                                       *February 2016*                 *April 2019*
 *7*         *Wheezy*                   `1.1.2 </documentation/1.1/>`__          |maybe| No known vulnerability                        *None*                                                       *May 2018*                      *June 2020*
@@ -64,10 +63,10 @@ Debian dist                            LLNG version                             
 \           *Stretch-backports-sloppy* `2.0.11 </documentation/2.0/>`__         |maybe|                                               *None*                                                       *August 2021*
 **10**      Buster                     `2.0.2 </documentation/2.0/>`__          |clean| CVE-2019-19791 tagged as minor                `Debian Security Team <https://security-team.debian.org/>`__ June 2024                       Probably 2026
 \           *Buster-backports*         `2.0.11 </documentation/2.0/>`__         |clean|                                               *None*                                                       *August 2021*
-\           Buster-backports-sloppy    `2.0.11 </documentation/2.0/>`__         |clean|                                               LLNG Team, "best effort" [3]_                                Until Debian 12 release [4]_
+\           Buster-backports-sloppy    `2.0.11 </documentation/2.0/>`__         |clean|                                               LL::NG Team, "best effort" [3]_                                Until Debian 12 release [4]_
 **11**      Bullseye                   `2.0.11 </documentation/2.0/>`__         |clean|                                               `Debian Security Team <https://security-team.debian.org/>`__ July 2026                       Probably 2028
-\           Bullseye-backports         `2.0.11 </documentation/2.0/>`__         |clean|                                               LLNG Team, "best effort" [3]_                                Until Debian 12 release [4]_
-**Next**    Testing/Unstable           Latest  [5]_                             |clean|                                               LLNG Team
+\           Bullseye-backports         `2.0.11 </documentation/2.0/>`__         |clean|                                               LL::NG Team, "best effort" [3]_                                Until Debian 12 release [4]_
+**Next**    Testing/Unstable           Latest  [5]_                             |clean|                                               LL::NG Team
 =========== ========================== ======================================== ===================================================== ============================================================ =============================== =============================================================
 
 See `Debian Security
@@ -83,7 +82,7 @@ Ubuntu
    Ubuntu version are included in "universe" branch [8]_, so not really security maintained. Prefer to use our repositories or Debian ones
 
 =========== ============= ================================ ==================================================================== ===========
-Ubuntu dist               LLNG version                     Secured                                                              Maintenance
+Ubuntu dist               LL::NG version                     Secured                                                              Maintenance
 =========== ============= ================================ ==================================================================== ===========
 12.04       Precise       `1.1.2 </documentation/1.1/>`__  |maybe| No known vulnerability                                       None
 14.04       Trusty        `1.2.5 </documentation/1.2/>`__  |maybe| No known vulnerability                                       None
@@ -108,7 +107,7 @@ Development
 -  `Source
    code <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/tree/master>`__
 -  `Nightly trunk builds <http://lemonldap-ng.ow2.io/lemonldap-ng/>`__
-   *(for Debian or Ubuntu,*\ **really unstable**\ *)*
+   *(for Debian or Ubuntu, *\ **really unstable**\ *)*
 -  Git access:
 
 ::
@@ -139,7 +138,7 @@ Other
    Possible `Extended LTS <https://wiki.debian.org/LTS/Extended>`__
 
 .. [3]
-   updated by `LLNG Team </team>`__ until dependencies are compatible.
+   updated by `LL::NG Team </team>`__ until dependencies are compatible.
    Don't use backports unless you plan to update your system because
    backports are not covered by Debian Security Policy
 
@@ -151,7 +150,7 @@ Other
 
 .. [8]
    Ubuntu universe/multiverse branches are community maintained *(so not
-   maintained by Canonical)*, but in fact nobody considers LLNG security
+   maintained by Canonical)*, but in fact nobody considers LL::NG security
    issues. See `this
    issue <https://bugs.launchpad.net/ubuntu/+source/lemonldap-ng/+bug/1829016>`__
    for example

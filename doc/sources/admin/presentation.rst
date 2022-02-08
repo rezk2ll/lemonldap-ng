@@ -36,7 +36,7 @@ Databases
 .. attention::
 
     We call "database" a backend where we can read or write a data.
-    This can be a file, an LDAP directory, etc.
+    This can be a file, an LDAP directory, etc...
 
 We split databases in two categories:
 
@@ -123,8 +123,7 @@ on protected applications, with different behavior:
 -  **SSO and Application logout**: the request is forwarded to
    application and SSO session is closed
 
-After logout process, the user is redirected on portal, or on a
-configured URL.
+After logout process, the user is redirected on portal, or on a configured URL.
 
 Session expiration
 ~~~~~~~~~~~~~~~~~~
@@ -136,10 +135,8 @@ This duration can be set in the manager's Configuration tab (General Parameters 
 
     -  Handlers have a session cache, with a default lifetime of 10 minutes.
        So for Handlers located on different physical servers than the Portal, a user
-       with an expired session can still be authorized until the cache
-       expires.
-    -  Sessions are deleted by a scheduled task. Don't forget to install
-       cron files !
+       with an expired session can still be authorized until the cache expires.
+    -  Sessions are deleted by a scheduled task. Don't forget to install cron files!
 
 
 
