@@ -39,6 +39,8 @@ Before release
 
 - Update doc/admin/documentation.rst to display vulnerable packaged versions
 
+- Close the milestone on Gitlab and create a new one
+
 For minor release
 -----------------
 
@@ -113,9 +115,7 @@ Upload on Docker hub
 Site
 ----
 
-- Update links on the download page
-- Close the milestone on Gitlab and create a new one
-- Update admin documentation and API documentation
+- Update version in the download page (see website-landing-page repository)
 
 Spread the word
 ---------------
