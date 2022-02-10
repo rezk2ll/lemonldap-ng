@@ -54,7 +54,7 @@ sub logLevelInit {
     eval "require $logger";
     die $@ if ($@);
     unless (
-        $class->localConfig->{logLevel} =~ /^(debug|info|notice|warn|error)$/ )
+        $class->localConfig->{logLevel} =~ /^(?:debug|info|notice|warn|error)$/ )
     {
         print STDERR 'Bad logLevel value \''
           . $class->localConfig->{logLevel}
