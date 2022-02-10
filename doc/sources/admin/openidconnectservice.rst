@@ -58,6 +58,10 @@ Security
    flow
 -  **Implicit flow**: Set to 1 to allow Implicit flow
 -  **Hybrid flow**: Set to 1 to allow Hybrid flow
+-  **Authorization Code expiration**: Authorization Code TTL (default: 60s)
+-  **Access Token expiration**: Access Token TTL (default: 1 hour)
+-  **ID Token expiration**: ID Token TTL (default: 1 hour)
+-  **Offline session expiration**: Offline session TTL (default: 1 month)
 
 Sessions
 ~~~~~~~~
