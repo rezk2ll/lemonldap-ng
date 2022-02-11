@@ -58,10 +58,19 @@ Security
    flow
 -  **Implicit flow**: Set to 1 to allow Implicit flow
 -  **Hybrid flow**: Set to 1 to allow Hybrid flow
--  **Authorization Code expiration**: Authorization Code TTL (default: 60s)
--  **Access Token expiration**: Access Token TTL (default: 1 hour)
--  **ID Token expiration**: ID Token TTL (default: 1 hour)
--  **Offline session expiration**: Offline session TTL (default: 1 month)
+
+Timeout
+~~~~~~~
+
+-  **Authorization Code expiration**: Expiration time of
+      authorization code. The default value is one minute.
+-  **ID Token expiration**: Expiration time of ID Tokens. The default
+      value is one hour.
+-  **Access Token expiration**: Expiration time
+      of Access Tokens. The default value is one hour.
+-  **Offline session expiration**: This sets the lifetime of the
+      refresh token obtained with the **offline_access** scope. The
+      default value is one month.
 
 Sessions
 ~~~~~~~~

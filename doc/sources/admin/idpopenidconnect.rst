@@ -301,20 +301,6 @@ Options
       to obtain new access tokens as long as the user session is still
       valid.
 
--  **Timeouts**
-
-   -  **Authorization Code expiration**: Expiration time of
-      authorization code, when using the Authorization Code flow. The
-      default value is one minute.
-   -  **ID Token expiration**: Expiration time of ID Tokens. The default
-      value is one hour.
-   -  **Access token expiration**: Expiration time
-      of Access Tokens. The default value is one hour.
-   -  **Offline session expiration**: This sets the lifetime of the
-      refresh token obtained with the **offline_access** scope. The
-      default value is one month. This parameter only applies if offline
-      sessions are enabled.
-
 -  **Security**
 
    -  **ID Token signature algorithm**: Select one of the available public key
@@ -338,6 +324,20 @@ Options
    - **Allow OAuth2.0 Client Credentials Grant** (since version ``2.0.11``): Allow the use of the :ref:`Client Credentials Grant <client-credentials-grant>` by this client.
    - **Authentication Level**: required authentication level to access this application
    - **Access Rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
+
+-  **Timeouts**
+
+   -  **Authorization Code expiration**: Expiration time of
+      authorization code, when using the Authorization Code flow. The
+      default value is one minute.
+   -  **ID Token expiration**: Expiration time of ID Tokens. The default
+      value is one hour.
+   -  **Access token expiration**: Expiration time
+      of Access Tokens. The default value is one hour.
+   -  **Offline session expiration**: This sets the lifetime of the
+      refresh token obtained with the **offline_access** scope. The
+      default value is one month. This parameter only applies if offline
+      sessions are enabled.
 
 -  **Logout**
 

@@ -1368,11 +1368,16 @@ sub tree {
                         'oidcServiceAllowAuthorizationCodeFlow',
                         'oidcServiceAllowImplicitFlow',
                         'oidcServiceAllowHybridFlow',
-                        'oidcServiceAuthorizationCodeExpiration',
-                        'oidcServiceAccessTokenExpiration',
-                        'oidcServiceIDTokenExpiration',
-                        'oidcServiceOfflineSessionExpiration',
                     ],
+                },
+                {
+                    title => 'oidcServiceMetaDataTimeouts',
+                    nodes => [
+                        'oidcServiceAuthorizationCodeExpiration',
+                        'oidcServiceIDTokenExpiration',
+                        'oidcServiceAccessTokenExpiration',
+                        'oidcServiceOfflineSessionExpiration',
+                    ]
                 },
                 {
                     title => "oidcServiceMetaDataSessions",
