@@ -1064,7 +1064,9 @@ sub extractState {
 
     # Push values in $self
     foreach ( keys %{$stateSession} ) {
-        next if $_ =~ /(type|_session_id|_session_kind|_utime)/;
+        next
+          if $_ =~
+/^(?:type|_session_id|_session_kind|_utime|tokenTimeoutTimestamp|tokenSessionStartTimestamp)$/;
         my $tmp = $stateSession->{$_};
         if (s/^data_//) {
             $req->data->{$_} = $tmp;
@@ -1524,7 +1526,7 @@ sub getScope {
 
             # Set a magic "$requested" variable that contains true if the
             # scope was requested by the application
-            my $requested = grep { $_ eq $dynamicScope } @scope_values;
+            my $requested  = grep { $_ eq $dynamicScope } @scope_values;
             my $attributes = { %{ $req->userData }, requested => $requested };
 
             # If scope is granted by the rule
@@ -1650,7 +1652,7 @@ sub buildUserInfoResponseFromData {
     }
 
     my $h = $self->p->processHook( $req, 'oidcGenerateUserInfoResponse',
-        $userinfo_response, $rp);
+        $userinfo_response, $rp );
     return {} if ( $h != PE_OK );
 
     return $userinfo_response;
@@ -1748,7 +1750,7 @@ sub createJWT {
     my $jwt_payload = encode_base64url( to_json($payload), "" );
 
     # JWT header
-    my $typ = $type || "JWT";
+    my $typ             = $type || "JWT";
     my $jwt_header_hash = { typ => $typ, alg => $alg };
     if ( $alg eq "RS256" or $alg eq "RS384" or $alg eq "RS512" ) {
         $jwt_header_hash->{kid} = $self->conf->{oidcServiceKeyIdSig}
