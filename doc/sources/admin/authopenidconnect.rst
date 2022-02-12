@@ -248,3 +248,13 @@ Options
    -  **Display name**: Name of the application
    -  **Logo**: Logo of the application
    -  **Order**: Number to sort buttons
+
+
+.. attention::
+
+    With HTTPS, you may have to set **LWP::UserAgent object**
+    with ``verify_hostname => 0`` and ``SSL_verify_mode => 0``.
+
+    Go to:
+
+    ``General Parameters > Advanced Parameters > Security > SSL options for server requests``

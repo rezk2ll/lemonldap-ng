@@ -64,12 +64,10 @@ to access required locations in Portal Virtual Host.
     **Choice used for password authentication** => 2_LDAP (by example)
 
 
-
-
 .. attention::
 
-    With HTTPS, you may have to set **LWP::UserAgent
-    object** with ``verify_hostname => 0`` and ``SSL_verify_mode => 0``.
+    With HTTPS, you may have to set **LWP::UserAgent object**
+    with ``verify_hostname => 0`` and ``SSL_verify_mode => 0``.
 
     Go to:
 

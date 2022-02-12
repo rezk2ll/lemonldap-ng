@@ -118,11 +118,11 @@ sub extractFormInfo {
         my $op = $req->data->{_oidcOPCurrent};
 
         unless ($op) {
-            $self->userLogger->error("OpenID Provider not found");
+            $self->userLogger->error("OpenIDConnect Provider not found");
             return PE_OIDC_AUTH_ERROR;
         }
 
-        $self->logger->debug("Using OpenID Provider $op");
+        $self->logger->debug("Using OpenIDConnect Provider $op");
 
         # Check error
         my $error = $req->param("error");

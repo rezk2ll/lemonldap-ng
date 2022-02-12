@@ -59,18 +59,20 @@ Security
 -  **Implicit flow**: Set to 1 to allow Implicit flow
 -  **Hybrid flow**: Set to 1 to allow Hybrid flow
 
+
 Timeout
 ~~~~~~~
 
 -  **Authorization Code expiration**: Expiration time of
-      authorization code. The default value is one minute.
+   authorization code. The default value is one minute.
 -  **ID Token expiration**: Expiration time of ID Tokens. The default
-      value is one hour.
+   value is one hour.
 -  **Access Token expiration**: Expiration time
-      of Access Tokens. The default value is one hour.
+   of Access Tokens. The default value is one hour.
 -  **Offline session expiration**: This sets the lifetime of the
-      refresh token obtained with the **offline_access** scope. The
-      default value is one month.
+   refresh token obtained with the ``offline_access`` scope. The
+   default value is one month.
+
 
 Sessions
 ~~~~~~~~
@@ -114,11 +116,11 @@ Session management
 LL::NG implements the `OpenID Connect Change Notification specification <http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification>`__
 
 A ``changed`` state will be sent if the user is disconnected from LL::NG
-portal (or has destroyed its SSO cookie). Else the ``unchanged`` state
+portal (or has removed its SSO cookie). Else the ``unchanged`` state
 will be returned.
 
 
 .. tip::
 
-    To work, the LL::NG cookie must not be protected against
-    javascript (``httpOnly`` option should be set to ``0``).
+    This feature requires that the LL::NG cookie is exposed to 
+    javascript (``httpOnly`` option must be set to ``0``).
