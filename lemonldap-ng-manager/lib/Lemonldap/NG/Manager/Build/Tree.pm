@@ -1395,12 +1395,11 @@ sub tree {
             nodes => [
                 'casAttr',
                 'casAccessControlPolicy',
+                'casStrictMatching',
+                'casTicketExpiration',
                 'casStorage',
                 'casStorageOptions',
                 'casAttributes',
-                'casStrictMatching',
-                'casTicketExpiration',
-
             ]
         },
         'casSrvMetaDataNodes',

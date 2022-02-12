@@ -15,7 +15,7 @@ for several usage:
 Configuration
 -------------
 
--  **SOAP/REST exported attributes**: list session attributes shared
+-  **REST/SOAP exported attributes**: list session attributes shared
    through SOAP/REST
    
    -  Use ``+`` to append the default list of technical attributes,

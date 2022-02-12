@@ -61,12 +61,6 @@ Then go in ``CAS Service`` to define:
       and the user is redirected to CAS service. Then CAS service has to
       show a correct error when service ticket validation will fail.
 
--  **CAS session module name and options**: choose a specific module if
-   you do not want to mix CAS sessions and normal sessions (see
-   :ref:`why<samlservice-saml-sessions-module-name-and-options>`).
--  **CAS attributes**: list of attributes that will be transmitted by
-   default in the validate response. Keys are the name of attribute in
-   the CAS response, values are the name of session key.
 -  **Use strict URL matching**: (since *2.0.12*) enforces a stricter URL
    matching. By default, LemonLDAP::NG will try to find a declared CAS
    Application matching the hostname of the requested application if it cannot
@@ -75,6 +69,12 @@ Then go in ``CAS Service`` to define:
    and Proxy tickets are valid after being generated. For compatibility, the
    default value of ``0`` means they are valid for the entire session duration.
    But the CAS spefications recommends ``300`` (5 minutes).
+-  **CAS session module name and options**: choose a specific module if
+   you do not want to mix CAS sessions and normal sessions (see
+   :ref:`why<samlservice-saml-sessions-module-name-and-options>`).
+-  **CAS attributes**: list of attributes that will be transmitted by
+   default in the validate response. Keys are the name of attribute in
+   the CAS response, values are the name of session key.
 
 
 .. tip::
