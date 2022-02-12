@@ -15,7 +15,7 @@ credentials to another LL::NG portal, like a proxy.
 
 The difference with :doc:`remote authentication<authremote>` is that the
 client will never be redirect to the main LL::NG portal. This
-configuration is usable if you want to expose your internal SSO portal
+configuration is useful if you want to expose your internal SSO portal
 to another network (DMZ).
 
 Configuration
@@ -40,20 +40,22 @@ Then, go in ``Proxy parameters``:
    same as previous for SOAP, same with "/session/my" for REST)
 -  **Choice parameter** (optional): choice parameter of the internal portal if applicable
 -  **Choice value** (optional): value of the choice parameter of the internal portal
--  **Cookie name** (optional): internal portal cookie name, if
-   different from external portal
+-  **Cookie name** (optional): internal portal cookie name,
+   if different from external portal
 -  **Impersonation** (optional) : can be enabled if the internal portal provides impersonation
 
 .. note::
 
-    If the internal portal uses :doc:`Choice Authentication<authchoice>`, you must specify 'Internal portal choice parameter' and 'Internal portal choice value' depending on its configuration. 
-    This feature needs at least LL::NG version 2.0.14
+    If the internal portal uses :doc:`Choice Authentication<authchoice>`,
+    you have to specify 'Internal portal choice parameter' and
+    'Internal portal choice value' depending on its configuration. 
+    This feature needs at least LL::NG version 2.0.14.
 
 Internal portal
 ~~~~~~~~~~~~~~~
 
 The portal must be configured to accept REST or SOAP authentication
-requests if you chose to use SOAP. See:
+requests. See:
 :doc:`REST server plugin<restservices>` or
 :doc:`SOAP session backend<soapsessionbackend>` *(deprecated)*.
 

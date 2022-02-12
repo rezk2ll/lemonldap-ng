@@ -11,14 +11,14 @@ Presentation
 ------------
 
 `Kerberos <https://en.wikipedia.org/wiki/Kerberos_(protocol)>`__ is a
-network authentication protocol used to authenticate users based on
+network authentication protocol used for authenticating users based on
 their desktop session.
 
 LL::NG uses GSSAPI module to validate Kerberos ticket against a local
 keytab.
 
-LLNG Configuration
-------------------
+LL::NG Configuration
+--------------------
 
 In Manager, go in ``General Parameters`` > ``Authentication modules``
 and choose Kerberos for authentication. Then go to "Kerberos parameters"
@@ -34,11 +34,13 @@ and configure the following parameters:
    Kerberos code to validate Kerberos ticket
 -  **Remove domain in username**: set to "enabled" to strip username
    value and remove the '@domain'.
--  **Allowed domains**: if set, tickets will only be accepted if they come from one of the domains listed here. This is a space-separated list. This feature can be useful when using :doc:`combination<authcombination>` and cross-realm Kerberos trusts.
+-  **Allowed domains**: if set, tickets will only be accepted if they come
+   from one of the domains listed here. This is a space-separated list.
+   This feature can be useful when using :doc:`combination<authcombination>`
+   and cross-realm Kerberos trusts.
 
 
 .. attention::
-
 
 
     -  Due to a perl GSSAPI issue, you may need to copy the keytab in

@@ -27,7 +27,7 @@ least version 1.0.
     LL::NG can also act as :doc:`OpenID server<idpopenid>`, that
     allows one to interconnect two LL::NG systems.
 
-LL::NG will then display a form with an OpenID input, wher users will
+LL::NG will then display a form with an OpenID input, where users will
 type their OpenID login.
 
 
@@ -81,12 +81,12 @@ See also :doc:`exported variables configuration<exportedvars>`.
 
 .. attention::
 
-    Browser implementations of formAction directive are
-    inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome
+    Browser implementations of formAction directive are inconsistent
+    (e.g. Firefox doesn't block the redirects whereas Chrome
     does). Administrators may have to modify formAction value with wildcard
     likes \*.
 
-    In Manager, go in :
+    In Manager, go in:
 
     ``General Parameters`` > ``Advanced Parameters`` > ``Security`` >
     ``Content Security Policy`` > ``Form destination``

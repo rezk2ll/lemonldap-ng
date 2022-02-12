@@ -109,7 +109,7 @@ Connection
 
 .. attention::
 
-    LemonLDAP::NG need anonymous access to LDAP Directory
+    LL::NG needs anonymous access to LDAP Directory
     RootDSE in order to check LDAP connection.
 
 Filters
