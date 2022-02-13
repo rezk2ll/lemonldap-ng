@@ -795,6 +795,7 @@ t/79-2F-Yubikey.t
 t/90-Translations.t
 t/91-Handler-cache-cleaned.t
 t/91-Memory-Leak.t
+t/99-Bad-logLevel.t
 t/99-Dont-load-Dumper.t
 t/99-pod.t
 t/AfterDataCustomPlugin.pm
@@ -805,7 +806,6 @@ t/gpghome/openpgp-revocs.d/9482CEFB055809CBAFE6D71AAB2D5542891D1677.rev
 t/gpghome/private-keys-v1.d/A076B0E7DB141A919271EE8B581CDFA8DA42F333.key
 t/gpghome/private-keys-v1.d/B7219440BCCD85200121CFB89F94C8D98C0397B3.key
 t/gpghome/pubring.kbx
-t/gpghome/pubring.kbx~
 t/gpghome/tofu.db
 t/gpghome/trustdb.gpg
 t/HistoryPlugin.pm
