@@ -21,8 +21,8 @@ has instanceName => ( is => 'rw', isa     => 'Str', default => '' );
 has templateDir  => ( is => 'rw', isa     => 'Str|ArrayRef' );
 has links        => ( is => 'rw', isa     => 'ArrayRef' );
 has menuLinks    => ( is => 'rw', isa     => 'ArrayRef' );
-has logger     => ( is => 'rw' );
-has userLogger => ( is => 'rw' );
+has logger       => ( is => 'rw' );
+has userLogger   => ( is => 'rw' );
 
 # INITIALIZATION
 
@@ -43,7 +43,17 @@ sub init {
         unless ( ref $self->logger ) {
             eval "require $logger";
             die $@ if ($@);
+            my $err;
+            unless ( $self->{logLevel} =~ /^(?:debug|info|notice|warn|error)$/ )
+            {
+                $err =
+                    'Bad logLevel value \''
+                  . $self->{logLevel}
+                  . "', switching to 'info'";
+                $self->{logLevel} = 'info';
+            }
             $self->logger( $logger->new($self) );
+            $self->logger->error($err) if $err;
         }
         unless ( ref $self->userLogger ) {
             $logger = $ENV{LLNG_USERLOGGER} || $args->{userLogger} || $logger;
