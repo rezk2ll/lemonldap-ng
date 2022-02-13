@@ -16,6 +16,16 @@ Currently, we implement:
 * Device registration without attestation validation (attestation type: *None*)
 * Authentication as a second factor with the registered device
 
+Requirements
+~~~~~~~~~~~~
+
+You need to install the `Authen::WebAuthn` CPAN module for WebAuthn to work on
+your LemonLDAP::NG installation. If there is no package for it in your
+distribution, you can install it with:
+
+```
+cpanm Authen::WebAuthn
+```
 
 Configuration
 ~~~~~~~~~~~~~
@@ -37,6 +47,9 @@ Configuration
 - **Label** (Optional): label that should be displayed to the user on
   the choice screen
 - **Logo** (Optional): logo file *(in static/<skin> directory)*
+
+
+.. _migrateu2ftowebauthn:
 
 Migrating existing U2F devices
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
