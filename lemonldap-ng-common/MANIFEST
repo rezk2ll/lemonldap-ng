@@ -94,6 +94,7 @@ t/37-Common-TOTP.pm
 t/40-Common-Session.t
 t/50-Combination-Parser.t
 t/60-Session-Cli.t
+t/60-U2F-Migrate.t
 t/99-pod.t
 tools/apache-session-mysql.sql
 tools/lmConfig.CDBI.mysql
