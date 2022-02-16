@@ -344,8 +344,34 @@ sub run {
 sub _run {
     my $self = shift;
     return sub {
-        $self->handler( Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
+        $self->_logAndHandle(
+            Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
     };
+}
+
+sub _logAndHandle {
+    my ( $self, $req ) = @_;
+
+    # register the request object to the logging system
+    if ( ref( $self->logger ) and $self->logger->can('setRequestObj') ) {
+        $self->logger->setRequestObj($req);
+    }
+    if ( ref( $self->userLogger ) and $self->userLogger->can('setRequestObj') ) {
+        $self->userLogger->setRequestObj($req);
+    }
+
+    # Call the handler
+    my $res = $self->handler($req);
+
+    # Clear the logging system before the next request
+    if ( ref( $self->logger ) and $self->logger->can('clearRequestObj') ) {
+        $self->logger->clearRequestObj($req);
+    }
+    if ( ref( $self->userLogger ) and $self->userLogger->can('clearRequestObj') ) {
+        $self->userLogger->clearRequestObj($req);
+    }
+
+    return $res;
 }
 
 1;

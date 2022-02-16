@@ -210,7 +210,30 @@ Default values:
 
    log4perlConfFile   = /etc/log4perl.conf
    log4perlLogger     = LLNG
-   log4perlUserLogger = LLNG.user
+   log4perlUserLogger = LLNGuser
+
+
+Sample ``log4perl.conf`` file
+
+.. code::
+
+    log4perl.logger.LLNG = DEBUG, Syslog
+    log4perl.logger.LLNGuser = INFO, Syslog
+    log4perl.appender.Syslog = Log::Dispatch::Syslog
+    log4perl.appender.Syslog.ident = LLNG
+    log4perl.appender.Syslog.layout = PatternLayout
+    log4perl.appender.Syslog.layout.ConversionPattern = [%p] %m
+
+For additional information, please read the `Log4Perl documentation <https://metacpan.org/pod/Log::Log4perl>`__
+
+.. versionadded:: 2.0.14
+
+    The following special formatters have been added to standard `PatternLayout placeholders <https://metacpan.org/pod/Log::Log4perl::Layout::PatternLayout>`__
+
+* ``%Q{address}``: IP address of the request
+* ``%Q{user}``: Username of the current user
+* ``%Q{id}``: Session ID of the current user
+* ``%E{ENV_VAR}``: content of the ``ENV_VAR`` variable
 
 Sentry
 ~~~~~~
