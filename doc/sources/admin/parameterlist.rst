@@ -45,9 +45,9 @@ browsersDontStorePassword                               Avoid browsers to store 
 bruteForceProtection                                    Enable brute force attack protection                                                 ✔
 bruteForceProtectionIncrementalTempo                    Enable incremental lock time for brute force attack protection                       ✔
 bruteForceProtectionLockTimes                           Incremental lock time values for brute force attack protection                       ✔
-bruteForceProtectionMaxAge                              Max age between current and first failed login                                       ✔                      ✔
+bruteForceProtectionMaxAge                              Max age between current and first failed login                                       ✔
 bruteForceProtectionMaxFailed                           Max allowed failed login                                                             ✔
-bruteForceProtectionMaxLockTime                         Max lock time                                                                        ✔                      ✔
+bruteForceProtectionMaxLockTime                         Max lock time                                                                        ✔
 bruteForceProtectionTempo                               Lock time                                                                            ✔
 captcha_login_enabled                                   Captcha on login page                                                                ✔
 captcha_mail_enabled                                    Captcha on password reset page                                                       ✔
@@ -62,7 +62,7 @@ casSrvMetaDataOptions                                   Root of CAS server optio
 casStorage                                              Apache::Session module to store CAS user data                                        ✔
 casStorageOptions                                       Apache::Session module parameters                                                    ✔
 casStrictMatching                                       Disable host-based matching of CAS services                                          ✔
-casTicketExpiration                                     CAS Service and Proxy tickets TTL                                                    ✔
+casTicketExpiration                                     Expiration time of Service and Proxy tickets                                         ✔
 cda                                                     Enable Cross Domain Authentication                                                   ✔      ✔
 certificateResetByMailCeaAttribute                                                                                                           ✔
 certificateResetByMailCertificateAttribute                                                                                                   ✔
@@ -79,6 +79,8 @@ cfgLog                                                  Configuration update log
 cfgNum                                                  Enable Cross Domain Authentication                                                   ✔                      ✔
 cfgVersion                                              Version of LLNG which build configuration                                            ✔                      ✔
 checkDevOps                                             Enable check DevOps                                                                  ✔
+checkDevOpsCheckSessionAttributes                       Check if session attributes exist                                                    ✔
+checkDevOpsDisplayNormalizedHeaders                     Display normalized headers                                                           ✔
 checkDevOpsDownload                                     Enable check DevOps download field                                                   ✔
 checkState                                              Enable CheckState plugin                                                             ✔
 checkStateSecret                                        Secret token for CheckState plugin                                                   ✔
@@ -87,6 +89,8 @@ checkUser                                               Enable check user       
 checkUserDisplayComputedSession                         Display empty headers rule                                                           ✔
 checkUserDisplayEmptyHeaders                            Display empty headers rule                                                           ✔
 checkUserDisplayEmptyValues                             Display session empty values rule                                                    ✔
+checkUserDisplayHiddenAttributes                        Display hidden attributes rule                                                       ✔
+checkUserDisplayHistory                                 Display history rule                                                                 ✔
 checkUserDisplayNormalizedHeaders                       Display normalized headers rule                                                      ✔
 checkUserDisplayPersistentInfo                          Display persistent session info rule                                                 ✔
 checkUserHiddenAttributes                               Attributes to hide in CheckUser plugin                                               ✔
@@ -314,6 +318,13 @@ max2FDevices                                            Maximum registered 2F de
 max2FDevicesNameLength                                  Maximum 2F devices name length                                                       ✔                      ✔
 multiValuesSeparator                                    Separator for multiple values                                                        ✔      ✔       ✔
 mySessionAuthorizedRWKeys                               Alterable session keys by user itself                                                ✔                      ✔
+newLocationWarning                                      Enable New Location Warning                                                          ✔
+newLocationWarningLocationAttribute                     New location session attribute                                                       ✔
+newLocationWarningLocationDisplayAttribute              New location session attribute for user display                                      ✔
+newLocationWarningMailAttribute                         New location warning mail session attribute                                          ✔
+newLocationWarningMailBody                              Mail body for new location warning                                                   ✔
+newLocationWarningMailSubject                           Mail subject for new location warning                                                ✔
+newLocationWarningMaxValues                             How many previous locations should be compared                                       ✔
 nginxCustomHandlers                                     Custom Nginx handler (deprecated)                                                    ✔
 noAjaxHook                                              Avoid replacing 302 by 401 for Ajax responses                                        ✔
 notification                                            Notification activation                                                              ✔
@@ -429,7 +440,11 @@ portalStatus                                            Enable portal status    
 portalUserAttr                                          Session parameter to display connected user in portal                                ✔
 protection                                              Manager protection method                                                                   ✔       ✔       ✔
 proxyAuthService                                                                                                                             ✔
+proxyAuthServiceChoiceParam                                                                                                                  ✔
+proxyAuthServiceChoiceValue                                                                                                                  ✔
+proxyAuthServiceImpersonation                           Enable internal portal Impersonation                                                 ✔
 proxyAuthnLevel                                         Proxy authentication level                                                           ✔
+proxyCookieName                                         Name of the internal portal cookie                                                   ✔
 proxySessionService                                                                                                                          ✔
 proxyUseSoap                                            Use SOAP instead of REST                                                             ✔
 radius2fActivation                                      Radius second factor activation                                                      ✔
@@ -455,7 +470,7 @@ registerTimeout                                         Register session timeout
 registerUrl                                             URL of register page                                                                 ✔
 reloadTimeout                                           Configuration reload timeout                                                                        ✔
 reloadUrls                                              URL to call on reload                                                                ✔
-remoteCookieName                                                                                                                             ✔
+remoteCookieName                                        Name of the remote portal cookie                                                     ✔
 remoteGlobalStorage                                     Remote session backend                                                               ✔
 remoteGlobalStorageOptions                              Apache::Session module parameters                                                    ✔
 remotePortal                                                                                                                                 ✔
@@ -574,7 +589,8 @@ sslByAjax                                               Use Ajax request for SSL
 sslHost                                                 URL for SSL Ajax request                                                             ✔
 staticPrefix                                            Prefix of static files for HTML templates                                            ✔                      ✔
 status                                                  Status daemon activation                                                                    ✔               ✔
-stayConnected                                           Enable StayConnected plugin                                                          ✔
+stayConnected                                           Stay connected activation rule                                                       ✔
+stayConnectedBypassFG                                   Disable fingerprint checkng                                                          ✔
 stayConnectedCookieName                                 Name of the stayConnected plugin cookie                                              ✔
 stayConnectedTimeout                                    StayConnected persistent connexion session timeout                                                  ✔
 storePassword                                           Store password in session                                                            ✔
@@ -587,6 +603,7 @@ tokenUseGlobalStorage                                   Enable global token stor
 totp2fActivation                                        TOTP activation                                                                      ✔
 totp2fAuthnLevel                                        Authentication level for users authentified by password+TOTP                         ✔
 totp2fDigits                                            Number of digits for TOTP code                                                       ✔
+totp2fEncryptSecret                                     Encrypt TOTP secrets in database                                                     ✔
 totp2fInterval                                          TOTP interval                                                                        ✔
 totp2fIssuer                                            TOTP Issuer                                                                          ✔
 totp2fLabel                                             Portal label for TOTP 2F                                                             ✔
@@ -628,6 +645,15 @@ viewerHiddenKeys                                        Hidden Conf keys        
 webIDAuthnLevel                                         WebID authentication level                                                           ✔
 webIDExportedVars                                       WebID exported variables                                                             ✔
 webIDWhitelist                                                                                                                               ✔
+webauthn2fActivation                                    WebAuthn second factor activation                                                    ✔
+webauthn2fAuthnLevel                                    Authentication level for users authentified by WebAuthn second factor                ✔
+webauthn2fLabel                                         Portal label for WebAuthn second factor                                              ✔
+webauthn2fLogo                                          Custom logo for WebAuthn 2F                                                          ✔
+webauthn2fSelfRegistration                              WebAuthn self registration activation                                                ✔
+webauthn2fUserCanRemoveKey                              Authorize users to remove existing WebAuthn                                          ✔
+webauthn2fUserVerification                              Verify user during registration and login                                            ✔
+webauthnDisplayNameAttr                                 Session attribute containing user display name                                       ✔
+webauthnRpName                                          WebAuthn Relying Party display name                                                  ✔
 whatToTrace                                             Session parameter used to fill REMOTE_USER                                           ✔      ✔
 wsdlServer                                              Enable /portal.wsdl server                                                           ✔
 yubikey2fActivation                                     Yubikey second factor activation                                                     ✔
