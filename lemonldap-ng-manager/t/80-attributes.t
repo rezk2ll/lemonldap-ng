@@ -38,14 +38,14 @@ my @notManagedAttributes = (
     'syslogFacility',   'userLogger',         'logLevel',
 
     # Plugins parameters
-    'notificationsMaxRetrieve',   'persistentSessionAttributes',
+    'notificationsMaxRetrieve', 'persistentSessionAttributes',
 
     # PSGI/CGI protection (must be set in lemonldap-ng.ini)
     'protection',
 
     # SecureToken handler
     'secureTokenAllowOnError', 'secureTokenAttribute', 'secureTokenExpiration',
-    'secureTokenHeader', 'secureTokenMemcachedServers', 'secureTokenUrls',
+    'secureTokenHeader',       'secureTokenMemcachedServers', 'secureTokenUrls',
 
     # Sessions and OTT storage
     'configStorage', 'localStorageOptions', 'localStorage',
@@ -157,7 +157,7 @@ sub scanTree {
 
             # Nodes must have a title
             ok( $name = $leaf->{title}, "Node has a name" );
-            ok( $name =~ /^\w+$/, "Name is a string" );
+            ok( $name =~ /^\w+$/,       "Name is a string" );
 
             # Nodes must have leafs or subnodes
             ok( (

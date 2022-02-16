@@ -75,11 +75,8 @@ ok(
     ),
     'Auth query'
 );
-ok(
-    $res->[2]->[0] =~
-      m%<span trmsg="5">%,
-    ' PE5 found'
-) or explain( $res->[2]->[0], "PE5 - Forbidden identity" );
+ok( $res->[2]->[0] =~ m%<span trmsg="5">%, ' PE5 found' )
+  or explain( $res->[2]->[0], "PE5 - Forbidden identity" );
 count(2);
 
 ## Try to Impersonate a forbidden identity with an Unrestricted user

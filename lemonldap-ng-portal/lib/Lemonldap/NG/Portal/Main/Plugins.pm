@@ -33,7 +33,7 @@ our @pList = (
     decryptValueRule                    => '::Plugins::DecryptValue',
     findUser                            => '::Plugins::FindUser',
     newLocationWarning                  => '::Plugins::NewLocationWarning',
-    adaptativeAuthenticationLevelRules =>
+    adaptativeAuthenticationLevelRules  =>
       '::Plugins::AdaptativeAuthenticationLevel',
     refreshSessions  => '::Plugins::Refresh',
     crowdsec         => '::Plugins::CrowdSec',

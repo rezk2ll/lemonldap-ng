@@ -71,7 +71,7 @@ my $client = LLNG::Manager::Test->new( {
             checkDevOpsDownload                 => 0,
             checkDevOpsDisplayNormalizedHeaders => 0,
             hiddenAttributes                    => 'mail,   UA',
-            ldapExportedVars => { ldapExpVar => ''}
+            ldapExportedVars                    => { ldapExpVar => '' }
         }
     }
 );
@@ -212,7 +212,8 @@ ok( $res->[2]->[0] =~ m%<span trspan="PE104"></span>%,
 ok( $res->[2]->[0] =~ m%<span trspan="unknownAttributes">%,
     'Found unknownAttributes' )
   or explain( $res->[2]->[0], 'trspan="unknownAttributes"' );
-ok( $res->[2]->[0] =~ m%dalek; none; other; test%, 'Found 4 unknown attributes' )
+ok( $res->[2]->[0] =~ m%dalek; none; other; test%,
+    'Found 4 unknown attributes' )
   or explain( $res->[2]->[0], 'Unknown attributes' );
 count(4);
 

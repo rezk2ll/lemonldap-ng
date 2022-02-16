@@ -713,26 +713,26 @@ our $defaultIni = {
     ),
     https                => 0,
     globalStorageOptions => {
-        Directory     => $tmpDir,
-        LockDirectory => "$tmpDir/lock",
+        Directory      => $tmpDir,
+        LockDirectory  => "$tmpDir/lock",
         generateModule =>
           'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
     },
     casStorageOptions => {
-        Directory     => "$tmpDir/saml",
-        LockDirectory => "$tmpDir/saml/lock",
+        Directory      => "$tmpDir/saml",
+        LockDirectory  => "$tmpDir/saml/lock",
         generateModule =>
           'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
     },
     samlStorageOptions => {
-        Directory     => "$tmpDir/saml",
-        LockDirectory => "$tmpDir/saml/lock",
+        Directory      => "$tmpDir/saml",
+        LockDirectory  => "$tmpDir/saml/lock",
         generateModule =>
           'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
     },
     oidcStorageOptions => {
-        Directory     => "$tmpDir/saml",
-        LockDirectory => "$tmpDir/saml/lock",
+        Directory      => "$tmpDir/saml",
+        LockDirectory  => "$tmpDir/saml/lock",
         generateModule =>
           'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
     },

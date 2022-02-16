@@ -171,8 +171,8 @@ sub op {
                         oidcRPMetaDataOptionsBypassConsent     => 0,
                         oidcRPMetaDataOptionsClientSecret      => "rpsecret",
                         oidcRPMetaDataOptionsUserIDAttr        => "",
-                        oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
-                        oidcRPMetaDataOptionsBypassConsent         => 1,
+                        oidcRPMetaDataOptionsAccessTokenExpiration  => 3600,
+                        oidcRPMetaDataOptionsBypassConsent          => 1,
                         oidcRPMetaDataOptionsPostLogoutRedirectUris =>
                           "http://auth.rp.com/?logout=1"
                     },
@@ -184,8 +184,8 @@ sub op {
                         oidcRPMetaDataOptionsBypassConsent     => 0,
                         oidcRPMetaDataOptionsClientSecret      => "rp2secret",
                         oidcRPMetaDataOptionsUserIDAttr        => "",
-                        oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
-                        oidcRPMetaDataOptionsBypassConsent         => 1,
+                        oidcRPMetaDataOptionsAccessTokenExpiration  => 3600,
+                        oidcRPMetaDataOptionsBypassConsent          => 1,
                         oidcRPMetaDataOptionsPostLogoutRedirectUris =>
                           "http://auth.rp2.com/?logout=1"
                     }

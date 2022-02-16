@@ -281,7 +281,7 @@ sub run {
             $req->data->{_proxiedRequest}     = $request;
             $req->data->{_proxiedMethod}      = $method;
             $req->data->{_proxiedRelayState}  = $relaystate,
-              $req->data->{_proxiedArtifact}  = $artifact;
+              $req->data->{_proxiedArtifact} = $artifact;
         }
 
         # Process the request or use IDP initiated mode
@@ -597,8 +597,8 @@ sub run {
             # Get session key associated with NameIDFormat
             # Not for unspecified, transient, persistent, entity, encrypted
             my $nameIDFormatConfiguration = {
-                $self->getNameIDFormat("email") => 'samlNameIDFormatMapEmail',
-                $self->getNameIDFormat("x509")  => 'samlNameIDFormatMapX509',
+                $self->getNameIDFormat("email")   => 'samlNameIDFormatMapEmail',
+                $self->getNameIDFormat("x509")    => 'samlNameIDFormatMapX509',
                 $self->getNameIDFormat("windows") =>
                   'samlNameIDFormatMapWindows',
                 $self->getNameIDFormat("kerberos") =>

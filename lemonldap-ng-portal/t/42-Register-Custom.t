@@ -63,7 +63,7 @@ SKIP: {
       or explain( $mail, 'Confirm body' );
     $query = $1;
     ok( $query =~ /register_token=/, 'Found register_token' );
-    ok( $mail =~ /Fôo/, 'UTF-8 works' ) or explain( $mail, 'Fôo' );
+    ok( $mail  =~ /Fôo/,             'UTF-8 works' ) or explain( $mail, 'Fôo' );
 
     ok(
         $res =

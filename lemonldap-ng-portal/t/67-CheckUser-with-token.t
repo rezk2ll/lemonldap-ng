@@ -4,7 +4,6 @@ use IO::String;
 
 require 't/test-lib.pm';
 
-
 my $res;
 
 my $client = LLNG::Manager::Test->new( {

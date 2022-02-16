@@ -14,8 +14,8 @@ init(
         #logLevel     => 'debug',
         vhostOptions => {
             'test3.example.com' => {
-                vhostHttps => 0,
-                vhostPort => 80,
+                vhostHttps          => 0,
+                vhostPort           => 80,
                 vhostDevOpsRulesUrl =>
                   'http://donotuse.example.com/myfile.json',
             },

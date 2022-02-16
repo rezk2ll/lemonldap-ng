@@ -127,7 +127,7 @@ sub portal {
                         oidcRPMetaDataOptionsAllowClientCredentialsGrant => 1,
                         oidcRPMetaDataOptionsAllowPasswordGrant          => 1,
                         oidcRPMetaDataOptionsRedirectUris => "http://test",
-                        oidcRPMetaDataOptionsRule =>
+                        oidcRPMetaDataOptionsRule         =>
                           '$_oidc_grant_type eq "authorizationcode"',
                     },
                     rppassword => {
@@ -142,7 +142,7 @@ sub portal {
                         oidcRPMetaDataOptionsAllowClientCredentialsGrant => 1,
                         oidcRPMetaDataOptionsAllowPasswordGrant          => 1,
                         oidcRPMetaDataOptionsRedirectUris => "http://test",
-                        oidcRPMetaDataOptionsRule =>
+                        oidcRPMetaDataOptionsRule         =>
                           '$_oidc_grant_type eq "password"',
                     },
                     rpclient => {
@@ -157,7 +157,7 @@ sub portal {
                         oidcRPMetaDataOptionsAllowClientCredentialsGrant => 1,
                         oidcRPMetaDataOptionsAllowPasswordGrant          => 1,
                         oidcRPMetaDataOptionsRedirectUris => "http://test",
-                        oidcRPMetaDataOptionsRule =>
+                        oidcRPMetaDataOptionsRule         =>
                           '$_oidc_grant_type eq "clientcredentials"',
                     },
                 },

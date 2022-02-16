@@ -190,7 +190,7 @@ sub getConf {
             eval { $r = $self->{refLocalStorage}->get('conf') }
               if ( $> and not $args->{noCache} );
             $msg .= "Warn: $@" if ($@);
-            
+
             if (    ref($r)
                 and $r->{cfgNum}
                 and $args->{cfgNum}

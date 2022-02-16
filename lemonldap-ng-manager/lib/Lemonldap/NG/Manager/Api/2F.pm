@@ -337,7 +337,7 @@ sub _checkType {
     return {
         res  => "ko",
         code => 400,
-        msg =>
+        msg  =>
 "Invalid input: Type \"$type\" does not exist. Allowed values for type are: \"U2F\", \"TOTP\", \"WebAuthn\" or \"UBK\""
       }
       unless ( $type =~ /\b(?:U2F|TOTP|UBK|WebAuthn)\b/i );

@@ -17,7 +17,7 @@ extends qw(
 );
 
 # INITIALIZATION
-has ott       => (
+has ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
@@ -147,7 +147,7 @@ sub retreiveFindUserParams {
 }
 
 sub buildForm {
-    my $self   = shift;
+    my $self = shift;
     my ( $fields, @required ) = ( [], () );
 
     $self->logger->debug('Building array ref with searching fields...');

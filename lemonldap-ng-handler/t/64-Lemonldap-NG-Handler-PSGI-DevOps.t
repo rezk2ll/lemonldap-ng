@@ -73,8 +73,7 @@ no warnings 'redefine';
 
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
-    ok( $req->header('host') eq 'test3.example.com',
-        'Host header found' )
+    ok( $req->header('host') eq 'test3.example.com', 'Host header found' )
       or explain( $req->headers(), 'test3.example.com' );
     ok( $req->as_string() =~ m#http://127.0.0.1:80/rules.json#,
         'Rules file URL found' )

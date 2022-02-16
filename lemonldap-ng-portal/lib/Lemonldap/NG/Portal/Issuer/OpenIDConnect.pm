@@ -703,7 +703,7 @@ sub run {
 
                 # Store data in session
                 my $code_payload = {
-                    code_challenge => $oidc_request->{'code_challenge'},
+                    code_challenge        => $oidc_request->{'code_challenge'},
                     code_challenge_method =>
                       $oidc_request->{'code_challenge_method'},
                     nonce           => $oidc_request->{'nonce'},
@@ -765,7 +765,7 @@ sub run {
                         $self->logger->error("Unable to create Access Token");
                         $self->returnRedirectError( $req,
                             $oidc_request->{'redirect_uri'},
-                            "server_error", undef, undef,
+                            "server_error",           undef, undef,
                             $oidc_request->{'state'}, 1 );
                     }
 
@@ -873,7 +873,7 @@ sub run {
                         $self->logger->error("Unable to create Access Token");
                         return $self->returnRedirectError( $req,
                             $oidc_request->{'redirect_uri'},
-                            "server_error", undef, undef,
+                            "server_error",           undef, undef,
                             $oidc_request->{'state'}, 1 );
                     }
 
@@ -1328,7 +1328,7 @@ sub _handlePasswordGrant {
         access_token => "$access_token",
         token_type   => 'Bearer',
         expires_in   => $expires_in + 0,
-        ( ( $scope ne $req_scope ) ? ( scope => "$scope" ) : () ),
+        ( ( $scope ne $req_scope ) ? ( scope => "$scope" )       : () ),
         ( $refresh_token ? ( refresh_token => "$refresh_token" ) : () ),
         ( $id_token      ? ( id_token      => "$id_token" )      : () ),
     };
@@ -1526,7 +1526,7 @@ sub _handleAuthorizationCodeGrant {
         expires_in   => $expires_in + 0,
         id_token     => "$id_token",
         ( $refresh_token ? ( refresh_token => "$refresh_token" ) : () ),
-        ( ( $req_scope ne $scope ) ? ( scope => "$scope" ) : () ),
+        ( ( $req_scope ne $scope ) ? ( scope => "$scope" )       : () ),
     };
 
     my $cRP = $apacheSession->data->{_oidcConnectedRP} || '';
@@ -2195,10 +2195,10 @@ sub metadata {
 
             # Scopes
             scopes_supported => [qw/openid profile email address phone/],
-            response_types_supported => $response_types,
-            grant_types_supported    => $grant_types,
-            acr_values_supported     => \@acr,
-            subject_types_supported  => ["public"],
+            response_types_supported              => $response_types,
+            grant_types_supported                 => $grant_types,
+            acr_values_supported                  => \@acr,
+            subject_types_supported               => ["public"],
             token_endpoint_auth_methods_supported =>
               [qw/client_secret_post client_secret_basic/],
             introspection_endpoint_auth_methods_supported =>
@@ -2380,9 +2380,9 @@ sub _generateIDToken {
         exp       => $id_token_exp,                      # expiration
         iat       => time,                               # Issued time
         auth_time => $sessionInfo->{_lastAuthnUTime},    # Authentication time
-        acr => $id_token_acr,    # Authentication Context Class Reference
-        azp => $client_id,       # Authorized party
-                                 # TODO amr
+        acr       => $id_token_acr,    # Authentication Context Class Reference
+        azp       => $client_id,       # Authorized party
+                                       # TODO amr
     };
 
     for ( keys %{$extra_claims} ) {

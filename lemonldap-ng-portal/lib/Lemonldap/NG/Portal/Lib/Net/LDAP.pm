@@ -52,7 +52,7 @@ sub new {
         ( $conf->{ldapVerify}  ? ( verify  => $conf->{ldapVerify} )  : () ),
     );
     unless ($self) {
-        $portal->logger->error("LDAP initialization error: ". $@);
+        $portal->logger->error( "LDAP initialization error: " . $@ );
         return 0;
     }
     elsif ( $Net::LDAP::VERSION < '0.64' ) {

@@ -26,8 +26,7 @@ count(3);
 # Test unauthenticated logout request access with route
 ok(
     $res = $client->_get(
-        '/logout',
-        accept => 'text/html'
+        '/logout', accept => 'text/html'
     ),
     'Get logout page'
 );

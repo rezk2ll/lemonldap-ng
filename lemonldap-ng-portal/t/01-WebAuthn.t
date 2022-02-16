@@ -52,7 +52,7 @@ ENDKEY
         "dwho",
         {
             _2fDevices => to_json [ {
-                    "_credentialId" => "bFpZbHRQOU10b1JOdVhLOGY4dFdm",
+                    "_credentialId"        => "bFpZbHRQOU10b1JOdVhLOGY4dFdm",
                     "_credentialPublicKey" =>
                       encode_base64url( $webauthn_tester->encode_cosekey ),
                     "_signCount" => "1",

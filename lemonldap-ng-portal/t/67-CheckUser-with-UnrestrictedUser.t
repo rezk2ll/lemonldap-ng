@@ -294,7 +294,7 @@ ok( $res = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
 
 @auth_user = map { $_->{key} eq 'Auth-User'   ? $_ : () } @{ $res->{HEADERS} };
 @empty     = map { $_->{key} eq 'emptyHeader' ? $_ : () } @{ $res->{HEADERS} };
-my @test      = map { $_->{key} eq 'testHeader1' ? $_ : () } @{ $res->{HEADERS} };
+my @test = map { $_->{key} eq 'testHeader1' ? $_ : () } @{ $res->{HEADERS} };
 ok( $auth_user[0]->{value} eq '******', 'Auth-User is masked' )
   or explain( $res->{HEADERS}, 'Auth-User header value' );
 ok( $empty[0]->{value} eq '', 'emptyHeader is not masked' )

@@ -6,7 +6,7 @@ use Test::MockObject;
 require 't/test-lib.pm';
 
 my $res;
-my $mock = Test::MockObject->new();
+my $mock   = Test::MockObject->new();
 my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel       => 'error',
@@ -52,9 +52,7 @@ $query =~ s/user=[^&]*/user=dwho/;
 $query =~ s/password=/password=dwho/;
 ok(
     $res = $client->_post(
-        '/',
-        IO::String->new($query),
-        length => length($query)
+        '/', IO::String->new($query), length => length($query)
     ),
     'Auth query'
 );

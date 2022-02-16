@@ -1888,7 +1888,8 @@ sub resolveArtifact {
             $self->logger->debug("Get message $message");
         }
         else {
-            $self->logger->error("Error while sending message: ".$soap_answer->status_line);
+            $self->logger->error(
+                "Error while sending message: " . $soap_answer->status_line );
         }
     }
 
@@ -3039,7 +3040,7 @@ sub createAttributeValue {
 
     # Decode UTF-8
     $self->logger->debug("Decode UTF8 value $value") if $force_utf8;
-    $value = decode( "utf8", $value ) if $force_utf8;
+    $value = decode( "utf8", $value )                if $force_utf8;
     $self->logger->debug("Create attribute value $value");
 
     # SAML2 attribute value

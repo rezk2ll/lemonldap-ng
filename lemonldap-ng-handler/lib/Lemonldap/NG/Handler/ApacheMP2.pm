@@ -48,7 +48,9 @@ sub launch {
     if ( ref( $class->logger ) and $class->logger->can('setRequestObj') ) {
         $class->logger->setRequestObj($req);
     }
-    if ( ref( $class->userLogger ) and $class->userLogger->can('setRequestObj') ) {
+    if ( ref( $class->userLogger )
+        and $class->userLogger->can('setRequestObj') )
+    {
         $class->userLogger->setRequestObj($req);
     }
 
@@ -58,7 +60,9 @@ sub launch {
     if ( ref( $class->logger ) and $class->logger->can('clearRequestObj') ) {
         $class->logger->clearRequestObj($req);
     }
-    if ( ref( $class->userLogger ) and $class->userLogger->can('clearRequestObj') ) {
+    if ( ref( $class->userLogger )
+        and $class->userLogger->can('clearRequestObj') )
+    {
         $class->userLogger->clearRequestObj($req);
     }
     return $res;

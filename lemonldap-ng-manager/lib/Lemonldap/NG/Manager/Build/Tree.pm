@@ -72,7 +72,7 @@ sub tree {
                                 },
                                 {
                                     title => 'passwordManagement',
-                                    help =>
+                                    help  =>
                                       'portalcustom.html#password-management',
                                     form  => 'simpleInputContainer',
                                     nodes => [
@@ -99,7 +99,7 @@ sub tree {
                                 },
                                 {
                                     title => 'portalOther',
-                                    help =>
+                                    help  =>
                                       'portalcustom.html#other-parameters',
                                     form  => 'simpleInputContainer',
                                     nodes => [
@@ -129,7 +129,7 @@ sub tree {
                 },
                 {
                     title => 'authParams',
-                    help =>
+                    help  =>
                       'start.html#authentication-users-and-password-databases',
                     form  => 'authParams',
                     nodes => [
@@ -650,7 +650,7 @@ sub tree {
                                 },
                                 {
                                     title => 'soapServices',
-                                    help =>
+                                    help  =>
                                       'portalservers.html#SOAP_(deprecated)',
                                     form  => 'simpleInputContainer',
                                     nodes => [
@@ -684,7 +684,7 @@ sub tree {
                                 'notificationStorageOptions',
                                 {
                                     title => 'serverNotification',
-                                    help =>
+                                    help  =>
                                       'notifications.html#notification-server',
                                     nodes => [
                                         'notificationServer',

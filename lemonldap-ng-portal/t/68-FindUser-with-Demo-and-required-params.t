@@ -24,7 +24,7 @@ my $client = LLNG::Manager::Test->new( {
                 'uid##1'      => 'Name',
                 'guy'         => 'Kind',
                 'type#Type#1' => 'mutant; mutant; character',
-                'cn#Name' =>
+                'cn#Name'     =>
                   '2_Bad Guy; Not a good person; 1_The Daleks; daleks'
             },
             findUserExcludingAttributes =>

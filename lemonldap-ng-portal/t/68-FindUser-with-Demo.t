@@ -23,7 +23,7 @@ my $client = LLNG::Manager::Test->new( {
             findUserWildcard            => '*',
             findUserSearchingAttributes => {
                 'uid#fdgd#1' => undef,
-                '1_guy##1'     => 'Kind',
+                '1_guy##1'   => 'Kind',
                 'cn#Name#1'  => 'Bad Guy; Not a good person; 2_BB; Bad Boy'
             },
             findUserExcludingAttributes =>

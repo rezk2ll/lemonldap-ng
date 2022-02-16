@@ -82,12 +82,12 @@ no warnings 'redefine';
 
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
-    ok( $req->header('host') eq 'devops.example.com',
-        'Host header found' )
+    ok( $req->header('host') eq 'devops.example.com', 'Host header found' )
       or explain( $req->headers(), 'devops.example.com' );
     ok( $req->as_string() =~ m#http://devops.example.com/myfile.json#,
         'Rules file URL found' )
-      or explain( $req->as_string(), 'GET http://devops.example.com/myfile.json' );
+      or
+      explain( $req->as_string(), 'GET http://devops.example.com/myfile.json' );
     count(2);
     my $httpResp;
     my $s = '{

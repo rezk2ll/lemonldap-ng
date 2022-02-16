@@ -27,9 +27,9 @@ SKIP: {
                     'LDAP' => { 'for' => 0, 'type' => 'LDAP' },
                     'Demo' => { 'for' => 0, 'type' => 'Demo' }
                 },
-                combination       => '[Demo, Demo] or [LDAP, LDAP]',
-                findUser          => 1,
-                impersonationRule => 1,
+                combination                 => '[Demo, Demo] or [LDAP, LDAP]',
+                findUser                    => 1,
+                impersonationRule           => 1,
                 findUserSearchingAttributes =>
                   { 'uid##1' => 'Login', 'cn##1' => 'Name' },
                 findUserExcludingAttributes => { uid => 'rtyler' },

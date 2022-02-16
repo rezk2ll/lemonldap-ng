@@ -104,7 +104,7 @@ sub sendWarningEmail {
     my ( $self, $req ) = @_;
     return $self->_sendMail($req)
       if $req->sessionInfo->{_riskDetails}->{newLocation};
-      
+
     return PE_OK;
 }
 

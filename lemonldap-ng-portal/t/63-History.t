@@ -10,13 +10,13 @@ my $res;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel            => 'error',
-            authentication      => 'Demo',
-            userDB              => 'Same',
-            loginHistoryEnabled => 1,
-            brutForceProtection => 0,
-            portalMainLogo      => 'common/logos/logo_llng_old.png',
-            customPlugins       => "t::HistoryPlugin",
+            logLevel              => 'error',
+            authentication        => 'Demo',
+            userDB                => 'Same',
+            loginHistoryEnabled   => 1,
+            brutForceProtection   => 0,
+            portalMainLogo        => 'common/logos/logo_llng_old.png',
+            customPlugins         => "t::HistoryPlugin",
             sessionDataToRemember =>
               { uid => 'identity', _auth => 'AuthModule' },
         }
@@ -124,7 +124,11 @@ ok( $res->[2]->[0] =~ /trspan="lastFailedLoginsCaptionLabel"/,
   or explain( $res->[2]->[0] );
 count(3);
 
-like( $res->[2]->[0], qr,<th trspan="Language">Language</th>,, "Found plugin-set label" );
+like(
+    $res->[2]->[0],
+    qr,<th trspan="Language">Language</th>,,
+    "Found plugin-set label"
+);
 count(1);
 
 @c = ( $res->[2]->[0] =~ /<td>127.0.0.1/gs );

@@ -10,8 +10,8 @@ use Carp;
 
 our $VERSION = '2.0.12';
 
-has rp_id  => ( is => 'rw', lazy => 1, builder => "_build_rp_id" );
-has origin => ( is => 'rw', lazy => 1, builder => "_build_origin" );
+has rp_id    => ( is => 'rw', lazy    => 1, builder => "_build_rp_id" );
+has origin   => ( is => 'rw', lazy    => 1, builder => "_build_origin" );
 has type     => ( is => 'ro', default => 'WebAuthn' );
 has verifier => ( is => 'rw', lazy    => 1, builder => "_build_verifier" );
 

@@ -7,10 +7,10 @@ require 't/test-lib.pm';
 my $res;
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                => 'error',
-            useSafeJail             => 1,
-            stayConnected           => 1,
-            stayConnectedBypassFG   => 1,
+            logLevel              => 'error',
+            useSafeJail           => 1,
+            stayConnected         => 1,
+            stayConnectedBypassFG => 1,
         }
     }
 );
@@ -60,7 +60,7 @@ ok(
 expectRedirection( $res, 'http://auth.example.com/' );
 my $cid = expectCookie( $res, 'llngconnection' );
 ok( $res->[1]->[5] =~ /\bHttpOnly=1\b/, ' HTTP cookie found' )
-  or explain($res->[1]->[5], 'HTTP cookie found' );
+  or explain( $res->[1]->[5], 'HTTP cookie found' );
 count(2);
 $client->logout($id);
 

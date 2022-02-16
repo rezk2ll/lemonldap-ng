@@ -258,13 +258,13 @@ sub getApacheSession {
     my $apacheSession = Lemonldap::NG::Common::Session->new( {
             storageModule        => $mod->{module},
             storageModuleOptions => $mod->{options},
-            cacheModule =>
+            cacheModule          =>
               Lemonldap::NG::Handler::PSGI::Main->tsv->{sessionCacheModule},
             cacheModuleOptions =>
               Lemonldap::NG::Handler::PSGI::Main->tsv->{sessionCacheOptions},
             id    => $id,
             force => $force,
-            ( $id ? () : ( kind => $mod->{kind} ) ),
+            ( $id   ? ()                : ( kind => $mod->{kind} ) ),
             ( $info ? ( info => $info ) : () ),
         }
     );
@@ -294,7 +294,7 @@ sub getMod {
 }
 
 sub getGlobal {
-    my ( $self ) = @_;
+    my ($self) = @_;
     return $self->sessionTypes->{global};
 }
 

@@ -58,12 +58,12 @@ sub new {
 }
 
 sub setRequestObj {
-    my ($self, $req) = @_;
+    my ( $self, $req ) = @_;
     Log::Log4perl::MDC->put( "req", $req );
 }
 
 sub clearRequestObj {
-    my ($self, $req) = @_;
+    my ( $self, $req ) = @_;
     my $text = Log::Log4perl::MDC->remove();
 }
 

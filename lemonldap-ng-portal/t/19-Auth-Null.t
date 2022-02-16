@@ -32,8 +32,7 @@ ok( $res->[2]->[0] =~ m%<span id="languages"></span>%, 'Language icons found' )
 count(3);
 ok(
     $res = $client->_get(
-        '/logout',
-        accept => 'text/html'
+        '/logout', accept => 'text/html'
     ),
     'Get logout page'
 );

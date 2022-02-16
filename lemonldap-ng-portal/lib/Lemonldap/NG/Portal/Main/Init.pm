@@ -128,9 +128,9 @@ sub init {
 
     # Purge loaded module list
     $self->loadedModules( {} );
-    $self->afterSub(      {} );
-    $self->aroundSub(     {} );
-    $self->hook(          {} );
+    $self->afterSub( {} );
+    $self->aroundSub( {} );
+    $self->hook( {} );
 
     # Insert `reloadConf` in handler reload stack
     Lemonldap::NG::Handler::Main->onReload( $self, 'reloadConf' );
@@ -228,10 +228,10 @@ sub reloadConf {
     foreach ( qw(_macros _groups), @entryPoints ) {
         $self->{$_} = [];
     }
-    $self->afterSub(  {} );
+    $self->afterSub( {} );
     $self->aroundSub( {} );
-    $self->spRules(   {} );
-    $self->hook(      {} );
+    $self->spRules( {} );
+    $self->hook( {} );
 
     # Plugin history fields
     $self->pluginSessionDataToRemember( {} );

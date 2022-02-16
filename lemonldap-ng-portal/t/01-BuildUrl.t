@@ -11,14 +11,14 @@ my $app = LLNG::Manager::Test->new( {
 )->p;
 
 my @tests = (
-    []               => 'http://auth.example.com/',
-    ['foo']          => 'http://auth.example.com/foo',
-    [ 'foo', 'bar' ] => 'http://auth.example.com/foo/bar',
-    [ { p => 1 } ]   => 'http://auth.example.com/?p=1',
-    ['https://foo']  => 'https://foo',
-    [ 'https://foo', 'bar' ] => 'https://foo/bar',
-    [ 'https://foo', 'bar', 'baz' ] => 'https://foo/bar/baz',
-    [ 'https://foo', { p => 1 } ] => 'https://foo?p=1',
+    []                                   => 'http://auth.example.com/',
+    ['foo']                              => 'http://auth.example.com/foo',
+    [ 'foo', 'bar' ]                     => 'http://auth.example.com/foo/bar',
+    [ { p => 1 } ]                       => 'http://auth.example.com/?p=1',
+    ['https://foo']                      => 'https://foo',
+    [ 'https://foo', 'bar' ]             => 'https://foo/bar',
+    [ 'https://foo', 'bar', 'baz' ]      => 'https://foo/bar/baz',
+    [ 'https://foo', { p => 1 } ]        => 'https://foo?p=1',
     [ 'https://foo', 'bar', { p => 1 } ] => 'https://foo/bar?p=1',
 );
 

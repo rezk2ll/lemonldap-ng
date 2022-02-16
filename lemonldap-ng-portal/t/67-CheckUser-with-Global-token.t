@@ -4,7 +4,6 @@ use IO::String;
 
 require 't/test-lib.pm';
 
-
 my $res;
 
 my $client = LLNG::Manager::Test->new( {
@@ -89,7 +88,8 @@ count(2);
   expectForm( $res, undef, '/checkuser', 'user', 'url', 'token' );
 
 # Bad VHost (checkXSS)
-$query =~ s/url=http%3A%2F%2Fappli.example.llng/url=http%3A%2F%2Fappli'.example.llng/;
+$query =~
+  s/url=http%3A%2F%2Fappli.example.llng/url=http%3A%2F%2Fappli'.example.llng/;
 
 ok(
     $res = $client->_post(

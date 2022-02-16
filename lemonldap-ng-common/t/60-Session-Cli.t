@@ -240,7 +240,7 @@ is( @{$res}, 2, "Found 2 psessions" );
 
 # Test search with where
 $res = getJson( "search", { where => "uid=dwho" } );
-is( @{$res}, 2, "Found 2 sessions" );
+is( @{$res},                                  2, "Found 2 sessions" );
 is( ( grep { $_->{uid} eq "dwho" } @{$res} ), 2, "Both sessions are dwho" );
 
 # Test search with where and field selection
@@ -259,7 +259,7 @@ is(
 );
 
 # Delete session
-$cli->run( 'delete', {}, "9684dd2a6489bf2be2fbdd799a8028e3" );
+$cli->run( 'delete', {},                  "9684dd2a6489bf2be2fbdd799a8028e3" );
 $cli->run( 'delete', { persistent => 1 }, "rtyler" );
 
 $res = getJson( "get", {}, "9684dd2a6489bf2be2fbdd799a8028e3" );
@@ -348,7 +348,7 @@ is( ( keys %{$res} ), 2, "Found two consents" );
 
 $cli->run( "consents", {}, "delete", "dwho", "rp-example" );
 $res = getJson( "consents", {}, "get", "dwho" );
-is( ( keys %{$res} ), 1, "Found one consent" );
+is( ( keys %{$res} ),     1,     "Found one consent" );
 is( $res->{'rp-example'}, undef, "Consent for test-rp removed" );
 ok( $res->{'rp-example2'}, "Consent for test-rp2 still present" );
 

@@ -198,7 +198,8 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok(
         $res = $client->_post(
             '/',
-            IO::String->new('user=dwho&password=dwho&stayconnected=1&checkLogins=1'),
+            IO::String->new(
+                'user=dwho&password=dwho&stayconnected=1&checkLogins=1'),
             length => 53
         ),
         'Auth query'

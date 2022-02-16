@@ -207,7 +207,8 @@ sub activeSessions {
             }
             $_;
           }
-          sort { $b->{startTime} cmp $a->{startTime} } map { {
+          sort { $b->{startTime} cmp $a->{startTime} } map {
+            {
                 id          => $_,
                 customParam => $sessions->{$_}->{$customParam},
                 ipAddr      => $sessions->{$_}->{ipAddr},

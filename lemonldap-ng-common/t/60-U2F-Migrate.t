@@ -72,18 +72,18 @@ SKIP: {
                                 'name'     => 'Imported automatically'
                             },
                             {
-                                'name'  => 'U2F-1',
-                                'type'  => 'U2F',
-                                'epoch' => 1588691728,
+                                'name'       => 'U2F-1',
+                                'type'       => 'U2F',
+                                'epoch'      => 1588691728,
                                 '_keyHandle' =>
 '4aS6vXlFQpG5XZSoad6auM9fFu7Q1wazQYwfPtPKN_Hll6Up_ceeWkOgqxm49swWq4Vvcg5UlX0sQQhuRe8heA',
                                 '_userKey' =>
 'BMgMqKPL2PhsjCNW78UEQyNF8zlJtrAAPtWMUDBp9VfDRF5oL2xkwFuyXRMPtRZ7lNfGijDrMc06bDNfp478sQQ',
                             },
                             {
-                                'name'  => 'U2F-2',
-                                'type'  => 'U2F',
-                                'epoch' => 1588691730,
+                                'name'       => 'U2F-2',
+                                'type'       => 'U2F',
+                                'epoch'      => 1588691730,
                                 '_keyHandle' =>
 'F1Kk9V_O7KDPIx-mqp6CIjbz7ljA-ihWVWyoP1xYBe_HPLHR74aTLanmn0b4vI8DumiBWO1DAle3k6N55cXreg',
                                 '_userKey' =>
@@ -128,9 +128,9 @@ SKIP: {
                                 'name'     => 'Imported automatically'
                             },
                             {
-                                'name'  => 'U2F-3',
-                                'type'  => 'U2F',
-                                'epoch' => 1588691734,
+                                'name'       => 'U2F-3',
+                                'type'       => 'U2F',
+                                'epoch'      => 1588691734,
                                 '_keyHandle' =>
 '4suXv5Cf10vbJEP72mVkLpBjhSqy5niOgfc0X_MjdxZ_g2e-V8biC6WyCTpF_kGV1FCa06YlcryPCtWUuUST_g',
                                 '_userKey' =>

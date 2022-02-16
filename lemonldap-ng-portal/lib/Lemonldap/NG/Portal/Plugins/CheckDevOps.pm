@@ -85,9 +85,9 @@ sub display {
 }
 
 sub parse {
-    my ( $self, $req ) = @_;
+    my ( $self,    $req ) = @_;
     my ( $headers, $rules, $unknown ) = ( [], [], [] );
-    my ( $msg, $json, $url, $bad_json );
+    my ( $msg,     $json,  $url, $bad_json );
     my $alert = 'alert-danger';
 
     # Check token

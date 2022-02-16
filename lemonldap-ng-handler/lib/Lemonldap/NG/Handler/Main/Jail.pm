@@ -63,7 +63,9 @@ sub build_jail {
 
     if ($build) {
         @builtCustomFunctions =
-          $self->customFunctions ? split( /[,\s]+/, $self->customFunctions ) : ();
+          $self->customFunctions
+          ? split( /[,\s]+/, $self->customFunctions )
+          : ();
         foreach (@builtCustomFunctions) {
             no warnings 'redefine';
             $api->logger->debug("Custom function: $_");

@@ -24,7 +24,7 @@ extends qw(
   Lemonldap::NG::Common::Conf::AccessLib
 );
 
-has csp => ( is => 'rw' );
+has csp            => ( is => 'rw' );
 has loadedPlugins  => ( is => 'rw', default => sub { [] } );
 has hLoadedPlugins => ( is => 'rw', default => sub { {} } );
 

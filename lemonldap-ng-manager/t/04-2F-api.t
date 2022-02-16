@@ -20,9 +20,9 @@ sub newSession {
         $tmp = Lemonldap::NG::Common::Session->new( {
                 storageModule        => 'Apache::Session::File',
                 storageModuleOptions => {
-                    Directory     => 't/sessions',
-                    LockDirectory => 't/sessions',
-                    backend       => 'Apache::Session::File',
+                    Directory      => 't/sessions',
+                    LockDirectory  => 't/sessions',
+                    backend        => 'Apache::Session::File',
                     generateModule =>
 'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
                 },

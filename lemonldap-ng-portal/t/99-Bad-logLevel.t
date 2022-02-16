@@ -22,8 +22,7 @@ expectOK($res);
 my $id = expectCookie($res);
 ok(
     $res = $client->_get(
-        '/logout',
-        accept => 'text/html'
+        '/logout', accept => 'text/html'
     ),
     'Get logout page'
 );

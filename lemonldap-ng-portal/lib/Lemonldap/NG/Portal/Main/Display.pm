@@ -29,7 +29,8 @@ sub displayInit {
             else {
                 $self->logger->error(
                     qq(Skin rule "$skinRule" returns an error: )
-                      . HANDLER->tsv->{jail}->error || 'Unable to compile rule' );
+                      . HANDLER->tsv->{jail}->error
+                      || 'Unable to compile rule' );
             }
         }
     }
@@ -37,14 +38,14 @@ sub displayInit {
         HANDLER->substitute( $self->conf->{portalRequireOldPassword} ) );
     unless ($rule) {
         my $error = HANDLER->tsv->{jail}->error || 'Unable to compile rule';
-        $self->logger->error( "Bad requireOldPwd rule: $error" );
+        $self->logger->error("Bad requireOldPwd rule: $error");
     }
     $self->requireOldPwd($rule);
     $rule =
       HANDLER->buildSub( HANDLER->substitute( $self->conf->{stayConnected} ) );
     unless ($rule) {
         my $error = HANDLER->tsv->{jail}->error || 'Unable to compile rule';
-        $self->logger->error( "Bad stayConnected rule: $error" );
+        $self->logger->error("Bad stayConnected rule: $error");
     }
     $self->stayConnected($rule);
 

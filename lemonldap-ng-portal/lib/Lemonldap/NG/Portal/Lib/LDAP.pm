@@ -72,8 +72,8 @@ has findUserFilter => (
     is      => 'ro',
     lazy    => 1,
     builder => sub {
-        $_[0]->conf->{AuthLDAPFilter} ||
-        $_[0]->conf->{LDAPFilter}
+        $_[0]->conf->{AuthLDAPFilter}
+          || $_[0]->conf->{LDAPFilter}
           || '(&(uid=$user)(objectClass=inetOrgPerson))';
     }
 );

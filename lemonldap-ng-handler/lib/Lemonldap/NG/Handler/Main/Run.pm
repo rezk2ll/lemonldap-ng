@@ -504,7 +504,7 @@ sub fetchId {
       if $class->_isHttps( $req, $vhost );
     my $lookForHttpCookie = ( $class->tsv->{securedCookie} =~ /^(2|3)$/
           and not $class->_isHttps( $req, $vhost ) );
-    my $cn = $class->tsv->{cookieName};
+    my $cn    = $class->tsv->{cookieName};
     my $value = $lookForHttpCookie    # Avoid prefix and bad cookie name (#2417)
       ? ( $t =~ /(?<![-.~])\b${cn}http=([^,; ]+)/o ? $1 : 0 )
       : ( $t =~ /(?<![-.~])\b$cn=([^,; ]+)/o       ? $1 : 0 );
@@ -536,8 +536,8 @@ sub retrieveSession {
     #     (15 seconds)
     if (    defined $class->data->{_session_id}
         and $id eq $class->data->{_session_id}
-        and
-        ( $now - $class->dataUpdate < $class->tsv->{handlerInternalCache} ) )
+        and ( $now - $class->dataUpdate < $class->tsv->{handlerInternalCache} )
+      )
     {
         $class->logger->debug("Get session $id from Handler internal cache");
         return $class->data;
@@ -898,8 +898,9 @@ sub postJavascript {
     my $filler;
     foreach my $name ( keys %$data ) {
         use bytes;
-        my @characterSet = ( '0' ..'9', 'A' .. 'Z', 'a' .. 'z' );
-        my $value = join '' => map $characterSet[ rand @characterSet ], 1 .. bytes::length( $data->{$name} );
+        my @characterSet = ( '0' .. '9', 'A' .. 'Z', 'a' .. 'z' );
+        my $value        = join '' => map $characterSet[ rand @characterSet ],
+          1 .. bytes::length( $data->{$name} );
         $filler .=
 "form.find('input[name=\"$name\"], select[name=\"$name\"], textarea[name=\"$name\"]').val('$value')\n";
     }

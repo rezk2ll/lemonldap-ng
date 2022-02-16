@@ -35,7 +35,7 @@ sub load {
         cfgNum    => 1,
         cfgDate   => time,
         cfgAuthor => 'LLNG Team',
-        cfgLog =>
+        cfgLog    =>
 q"Do not edit this configuration, Null backend uses lemonldap-ng.ini values only",
     };
 }

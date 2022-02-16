@@ -12,7 +12,8 @@ my $client = LLNG::Manager::Test->new( {
             logLevel          => 'error',
             passwordDB        => 'Demo',
             impersonationRule => 1,
-            customFunctions => 'My::accesToTrace   My::return0,,  My::return1  ',
+            customFunctions   =>
+              'My::accesToTrace   My::return0,,  My::return1  ',
             customPlugins =>
 't::AfterDataCustomPlugin    t::CasHookPlugin,, t::OidcHookPlugin ',
             customPluginsParams => { uid => 'rtyler' }

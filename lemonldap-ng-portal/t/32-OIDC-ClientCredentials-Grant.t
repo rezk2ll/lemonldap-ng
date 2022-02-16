@@ -52,10 +52,10 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsRule => '$_scope =~ /\bread\b/',
                 },
                 scopelessrp => {
-                    oidcRPMetaDataOptionsDisplayName                 => "RP",
-                    oidcRPMetaDataOptionsIDTokenExpiration           => 3600,
-                    oidcRPMetaDataOptionsClientID                    => "scopelessrp",
-                    oidcRPMetaDataOptionsAllowOffline                => 1,
+                    oidcRPMetaDataOptionsDisplayName       => "RP",
+                    oidcRPMetaDataOptionsIDTokenExpiration => 3600,
+                    oidcRPMetaDataOptionsClientID          => "scopelessrp",
+                    oidcRPMetaDataOptionsAllowOffline      => 1,
                     oidcRPMetaDataOptionsAllowClientCredentialsGrant => 1,
                     oidcRPMetaDataOptionsIDTokenSignAlg              => "HS512",
                     oidcRPMetaDataOptionsClientSecret          => "rpsecret",
@@ -64,7 +64,7 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsBypassConsent         => 1,
                     oidcRPMetaDataOptionsRefreshToken          => 1,
                     oidcRPMetaDataOptionsIDTokenForceClaims    => 1,
-                    oidcRPMetaDataOptionsRule => '',
+                    oidcRPMetaDataOptionsRule                  => '',
                 },
                 pubrp => {
                     oidcRPMetaDataOptionsAccessTokenExpiration       => 3600,
@@ -158,7 +158,7 @@ $res = $op->_post(
     accept => 'application/json',
     length => length($badquery3),
 );
-expectReject($res, 400, "invalid_scope");
+expectReject( $res, 400, "invalid_scope" );
 
 ## Test a confidential RP
 $res = $op->_post(

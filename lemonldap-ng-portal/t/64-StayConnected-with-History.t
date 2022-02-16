@@ -83,7 +83,7 @@ ok(
 expectRedirection( $res, 'http://auth.example.com/' );
 my $cid = expectCookie( $res, 'llngpersistent' );
 ok( $res->[1]->[5] =~ /\bsecure\b/, ' Secure cookie found' )
-  or explain($res->[1]->[5], 'Secure cookie found' );
+  or explain( $res->[1]->[5], 'Secure cookie found' );
 count(2);
 $client->logout($id);
 

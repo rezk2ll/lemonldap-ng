@@ -13,9 +13,9 @@ use Sentry::Raven;
 our $VERSION = '2.0.14';
 
 sub new {
-    my $self = bless {}, shift;
+    my $self   = bless {}, shift;
     my ($conf) = @_;
-    my $show = 1;
+    my $show   = 1;
     $self->{raven} = Sentry::Raven->new( sentry_dsn => $conf->{sentryDsn} );
     foreach (qw(error warn notice info debug)) {
         my $rl = $_;

@@ -53,8 +53,7 @@ sub _loadVhostConfig {
         my $resp = $class->ua->request($get);
         if ( $resp->is_success ) {
             $class->logger->debug('Response is success');
-            eval {
-                $json = from_json( $resp->content, { allow_nonref => 1 } ); };
+            eval { $json = from_json( $resp->content, { allow_nonref => 1 } ); };
             if ($@) {
                 $class->logger->debug('Bad json file received');
                 $class->logger->error(
@@ -92,7 +91,7 @@ q"I refuse to compile 'rules.json' when useSafeJail isn't activated! Yes I know,
 
     $class->logger->debug("DevOps handler called by $vhost");
     $class->locationRulesInit( undef, { $vhost => $json->{rules} } );
-    $class->headersInit( undef,       { $vhost => $json->{headers} } );
+    $class->headersInit( undef, { $vhost => $json->{headers} } );
     $class->tsv->{lastVhostUpdate}->{$vhost} = time;
     $class->tsv->{https}->{$vhost} = uc $req->env->{HTTPS_REDIRECT} eq 'ON'
       if exists $req->env->{HTTPS_REDIRECT};

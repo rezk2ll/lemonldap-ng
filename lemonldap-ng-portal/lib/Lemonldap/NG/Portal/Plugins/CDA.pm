@@ -25,7 +25,7 @@ sub changeUrldc {
     my $urldc = $req->{urldc} || '';
     if (    $req->id
         and $urldc =~ URIRE
-        and $3 !~ m@\Q$self->{conf}->{domain}\E$@oi
+        and $3     !~ m@\Q$self->{conf}->{domain}\E$@oi
         and $self->p->isTrustedUrl($urldc) )
     {
         my $ssl = $urldc =~ /^https/;

@@ -9,10 +9,10 @@ with 'Lemonldap::NG::Portal::Lib::OverConf';
 
 our $VERSION = '2.0.14';
 
-has modules => ( is => 'rw', default => sub { {} } );
-has rules   => ( is => 'rw', default => sub { {} } );
-has type    => ( is => 'rw' );
-has catch   => ( is => 'rw', default => sub { {} } );
+has modules    => ( is => 'rw', default => sub { {} } );
+has rules      => ( is => 'rw', default => sub { {} } );
+has type       => ( is => 'rw' );
+has catch      => ( is => 'rw', default => sub { {} } );
 has sessionKey => ( is => 'ro', default => '_choice' );
 
 my $_choiceRules;

@@ -1176,15 +1176,14 @@ test-diff:
 	done
 
 tidy: clean
-	@if perltidy -v|grep v20181120 >/dev/null; then \
-		find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \) -print -exec perltidy -se -b {} \; ; \
-		else echo "Wrong perltidy version, please install Perl::Tidy@20181120" ; exit 1 ;\
+	@if perltidy -v|grep v20210717 >/dev/null; then \
+		for f in `find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \)`; do \
+			echo -n $$f; \
+			perltidy -se -b $$f; \
+			echo; \
+		done; \
+	else echo "Wrong perltidy version, please install Perl::Tidy@20210717" ; exit 1 ;\
 	fi
-	for f in `find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \)`; do \
-		echo -n $$f; \
-		perltidy -se -b $$f; \
-		echo; \
-	done
 	find lemon*/ -name '*.bak' -delete
 	$(MAKE) json
 

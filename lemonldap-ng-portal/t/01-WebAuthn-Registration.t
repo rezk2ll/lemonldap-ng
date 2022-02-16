@@ -215,7 +215,7 @@ ENDKEY
         my $credential_response =
           $webauthn_tester->get_assertion_response($verif_challenge);
         my $verification_response = buildForm( {
-                state_id => $state_id,
+                state_id   => $state_id,
                 credential =>
                   $webauthn_tester->encode_credential($credential_response),
             }
@@ -257,7 +257,7 @@ ENDKEY
         is_deeply(
             $device1,
             {
-                '_credentialId' => encode_base64url($credential_id_1),
+                '_credentialId'        => encode_base64url($credential_id_1),
                 '_credentialPublicKey' =>
 'pQECAyYgASFYIM_oQXEUzjPwEhM4gWmIbCuOXc4Ja8jPDKxbQaZckal7Ilgg_9a693_nkf7flk1S9AV2tjrtJPF6kg8TCGbFKoeD9Wc',
                 '_signCount' => 5,
@@ -269,7 +269,7 @@ ENDKEY
         is_deeply(
             $device2,
             {
-                '_credentialId' => encode_base64url($credential_id_2),
+                '_credentialId'        => encode_base64url($credential_id_2),
                 '_credentialPublicKey' =>
 'pQECAyYgASFYIM_oQXEUzjPwEhM4gWmIbCuOXc4Ja8jPDKxbQaZckal7Ilgg_9a693_nkf7flk1S9AV2tjrtJPF6kg8TCGbFKoeD9Wc',
                 '_signCount' => 18,

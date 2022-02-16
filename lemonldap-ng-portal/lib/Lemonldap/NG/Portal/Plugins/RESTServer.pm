@@ -107,9 +107,11 @@ has exportedAttr => (
 
             # Convert @attributes into hash to remove duplicates
             my %attributes = map( { $_ => 1 } @attributes );
-            %attributes =
-              ( %attributes, %{ $conf->{exportedVars} }, %{ $conf->{macros} },
-              );
+            %attributes = (
+                %attributes,
+                %{ $conf->{exportedVars} },
+                %{ $conf->{macros} },
+            );
             return '[' . join( ',', keys %attributes ) . ']';
         }
     }
@@ -260,7 +262,7 @@ sub init {
 
       ->addAuthRoute( myapplications => 'myApplications', ['GET'] );
 
-    extends @parents if ($add);
+    extends @parents               if ($add);
     $self->setTypes( $self->conf ) if ( $self->conf->{restSessionServer} );
 
     return 1;
@@ -600,9 +602,9 @@ sub getError {
     return $self->p->sendJSONresponse(
         $req,
         {
-            result   => 1,
-            lang     => $lang,
-            errorNum => $errNum ? $errNum : 'all',
+            result        => 1,
+            lang          => $lang,
+            errorNum      => $errNum ? $errNum : 'all',
             errorsFileURL =>
               "$self->{conf}->{staticPrefix}/languages/$lang.json",
             ( $errNum ? ( errorMsgRef => "PE$errNum" ) : () )
