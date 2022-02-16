@@ -219,7 +219,7 @@ Options
       to get a fresh version of JWKS data. Set to 0 to disable it.
    -  **Client ID**: Client ID given by OP
    -  **Client secret**: Client secret given by OP
-   -  **Store ID token**: Allows one to store the ID token (JWT) inside
+   -  **Store ID token**: Allows one to store the ID Token (JWT) inside
       user session. Do not enable it unless you need to replay this token
       on an application, or if you need the id_token_hint parameter when
       using logout.
@@ -238,8 +238,8 @@ Options
       ``client_secret_post`` and ``client_secret_basic``
    -  **Check JWT signature**: Set to 0 to disable JWT signature
       checking
-   -  **ID Token max age**: If defined, LL::NG will check the date of ID
-      token and refuse it if it is too old
+   -  **ID Token max age**: If defined, LL::NG will check the ID Token
+      date and reject it if too old
    -  **Use Nonce**: If enabled, a nonce will be sent, and verified from
       the ID Token
 
@@ -252,8 +252,9 @@ Options
 
 .. attention::
 
-    With HTTPS, you may have to set **LWP::UserAgent object**
+    With HTTPS authorization endpoint, you may have to set **LWP::UserAgent object**
     with ``verify_hostname => 0`` and ``SSL_verify_mode => 0``.
+
 
     Go to:
 
