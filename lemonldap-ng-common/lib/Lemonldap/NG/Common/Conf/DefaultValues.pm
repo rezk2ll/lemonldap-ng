@@ -17,8 +17,9 @@ sub defaultValues {
         },
         'authChoiceParam' => 'lmAuth',
         'authentication'  => 'Demo',
-        'available2F'     => 'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,Yubikey,Radius',
-        'available2FSelfRegistration'        => 'TOTP,U2F,Yubikey',
+        'available2F' =>
+          'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius',
+        'available2FSelfRegistration'        => 'TOTP,U2F,WebAuthn,Yubikey',
         'bruteForceProtectionLockTimes'      => '15, 30, 60, 300, 600',
         'bruteForceProtectionMaxAge'         => 300,
         'bruteForceProtectionMaxFailed'      => 3,
@@ -385,14 +386,18 @@ sub defaultValues {
         'useRedirectOnError'      => 1,
         'useSafeJail'             => 1,
         'utotp2fActivation'       => 0,
-        'viewerHiddenKeys'      => 'samlIDPMetaDataNodes, samlSPMetaDataNodes',
-        'webIDAuthnLevel'       => 1,
-        'webIDExportedVars'     => {},
-        'whatToTrace'           => 'uid',
-        'yubikey2fActivation'   => 0,
-        'yubikey2fPublicIDSize' => 12,
-        'yubikey2fSelfRegistration' => 0,
-        'yubikey2fUserCanRemoveKey' => 1
+        'viewerHiddenKeys'     => 'samlIDPMetaDataNodes, samlSPMetaDataNodes',
+        'webauthn2fActivation' => 0,
+        'webauthn2fSelfRegistration' => 0,
+        'webauthn2fUserCanRemoveKey' => 1,
+        'webauthn2fUserVerification' => 'preferred',
+        'webIDAuthnLevel'            => 1,
+        'webIDExportedVars'          => {},
+        'whatToTrace'                => 'uid',
+        'yubikey2fActivation'        => 0,
+        'yubikey2fPublicIDSize'      => 12,
+        'yubikey2fSelfRegistration'  => 0,
+        'yubikey2fUserCanRemoveKey'  => 1
     };
 }
 

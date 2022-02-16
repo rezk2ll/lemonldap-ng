@@ -187,6 +187,7 @@ Second factor (:doc:`documentation<secondfactor>`)                   Authenticat
 :doc:`Radius Second Factor<radius2f>` |new|  [3]_                    ✔
 :doc:`REST Second Factor<rest2f>` |new|                              ✔
 :doc:`Yubikey<yubikey2f>` |new|                                      ✔
+:doc:`WebAuthn<webauthn2f>` |new|                                    ✔
 :doc:`Additional second factors<sfextra>` |new|  [4]_                ✔
 ==================================================================== ==============
 

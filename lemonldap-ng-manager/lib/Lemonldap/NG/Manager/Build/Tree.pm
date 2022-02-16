@@ -992,6 +992,21 @@ sub tree {
                                 'rest2fLabel',      'rest2fLogo'
                             ]
                         },
+                        {
+                            title => 'webauthn2f',
+                            help  => 'webauthn2f.html',
+                            nodes => [
+                                'webauthn2fActivation',
+                                'webauthn2fUserVerification',
+                                'webauthn2fSelfRegistration',
+                                'webauthn2fUserCanRemoveKey',
+                                'webauthnRpName',
+                                'webauthnDisplayNameAttr',
+                                'webauthn2fAuthnLevel',
+                                'webauthn2fLabel',
+                                'webauthn2fLogo',
+                            ]
+                        },
                         'sfExtra',
                         {
                             title => 'sfRemovedNotification',

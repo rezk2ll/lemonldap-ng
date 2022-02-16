@@ -39,6 +39,10 @@ Copyright: 2005-2019, Xavier Guimard <yadd@debian.org>
  2018-2019, Christophe Maudoux <chrmdx@gmail.com>
 License: GPL-2+
 
+Files: lemonldap-ng-portal/site/htdocs/static/bootstrap/webauthn.png
+Copyright: James Cullum <https://github.com/JamesCullum>
+License: WebAuthnLogoLicense
+
 Files: lemonldap-ng-portal/site/htdocs/static/common/js/portal.js
 Copyright: 2005-2019, Xavier Guimard <yadd@debian.org>
  2006-2019, Clement Oudot <clem.oudot@gmail.com>
@@ -1268,3 +1272,26 @@ License: BSD-3-clause
  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+License: WebAuthnLogoLicense
+ How to Use These Logos
+ .
+ Do these awesome things:
+ .
+  * Use the WebAuthn logo to link to WebAuthn specs or webauthn.org
+  * Use the WebAuthn logo to show that your product or project has built-in WebAuthn integration
+  * Use the WebAuthn logo in a blog post or news article about WebAuthn
+ .
+ Please don't do these things:
+ .
+  x Use the WebAuthn logo for your application’s icon
+  x Create a modified version of the WebAuthn logo
+  x Integrate the WebAuthn logo into your logo
+  x Use any WebAuthn artwork without permission
+  x Sell any WebAuthn artwork without permission
+  x Change the colors, dimensions or add your own text/images
+ .
+ Please contact me
+ .
+  * If you want to use artwork not included in this repository
+  * If you want to use these images in a video/mainstream media

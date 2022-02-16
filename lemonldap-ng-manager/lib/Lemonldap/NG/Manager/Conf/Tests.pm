@@ -630,7 +630,7 @@ sub tests {
 
             my $msg = '';
             my $ok  = 0;
-            foreach (qw(u totp yubikey)) {
+            foreach (qw(u totp yubikey webauthn)) {
                 $ok ||= $conf->{ $_ . '2fActivation' }
                   && $conf->{ $_ . '2fSelfRegistration' };
                 last if ($ok);

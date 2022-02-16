@@ -34,6 +34,16 @@ Security
 
 * **CVE-2021-40874**: RESTServer pwdConfirm always returns true with Combination + Kerberos (see `issue 2612 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2612>`__)
 
+
+U2F deprecation in Chrome 98
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Chrome 98 `removed U2F support by default <https://developer.chrome.com/blog/deps-rems-95/#deprecate-u2f-api-cryptotoken>`__. You can enable them back temporarily in ``chrome://flags`` by setting *Enable the U2F Security Key API* to *Enabled* and *Enable a permission prompt for the U2F Security Key API* to *Disabled*
+
+LemonLDAP::NG provides a newer alternative: :doc:`webauthn2f`, which is compatible with U2F security keys. Please read :ref:`migrateu2ftowebauthn` for instructions on how to convert U2F secrets to WebAuthn.
+
+After migration, you will need to disable U2F from the configuration and enable WebAuthn instead, in *General Parameters* » *Second Factors* » *WebAuthn*
+
 Weak encryption used for password-protected SAML keys
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
