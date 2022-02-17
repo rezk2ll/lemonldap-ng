@@ -1114,7 +1114,7 @@ manifest:   configure
 	@for i in ${SRCCOMMONDIR} ${SRCHANDLERDIR} ${SRCPORTALDIR} ${SRCMANAGERDIR}; do \
 		cd $$i; \
 		rm -vf MANIFEST MANIFEST*bak; \
-		make manifest; \
+		$(MAKE) manifest; \
 		cd -; \
 	done
 	perl -i -ne 'print unless/proverc/' */MANIFEST
