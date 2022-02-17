@@ -35,13 +35,12 @@ values unless you have a specific need to change them.
 Authentication context
 ~~~~~~~~~~~~~~~~~~~~~~
 
-You can associate here an authentication context to an authentication
-level.
+You can associate here an authentication context to an authentication level.
 
 Security
 ~~~~~~~~
 
--  **Keys** : define public/private key pair to do asymmetric signature. A JWKS
+-  **Keys**: Define public/private key pair to do asymmetric signature. A JWKS
    ``kid`` (Key ID) is automatically derived when generating new keys.
 -  **Dynamic Registration**: Set to 1 to allow clients to register
    themselves. This may be a security risk as this will create a new
@@ -93,9 +92,8 @@ is registered through the ``/oauth2/register`` endpoint:
 Key rotation script
 -------------------
 
-OpenID Connect specification let the possibility to rotate keys to
-improve security. LL::NG provide a script to do this, that should be put
-in a cronjob.
+OpenID Connect specifications allow to rotate keys to improve security.
+LL::NG provides a script to do this, that should be used in a cronjob.
 
 The script is ``/usr/share/lemonldap-ng/bin/rotateOidcKeys``. It can be
 run for example each week:
@@ -107,7 +105,7 @@ run for example each week:
 
 .. tip::
 
-    Set the correct Apache user, else generated configuration will
+    Set the correct Web server user, else generated configuration will
     not be readable by LL::NG.
 
 Session management

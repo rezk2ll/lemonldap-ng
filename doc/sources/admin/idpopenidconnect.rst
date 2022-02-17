@@ -162,7 +162,7 @@ Exported attributes
 
 .. warning::
 
-   By default, only `standard OpenID Connect claims <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__ are visible to applications. If you want to add non-standard attributes, you must create a new scope in the *Scope values content* section and make your application request it
+   By default, only `standard OpenID Connect claims <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__ are exposed to applications. If you want to add non-standard attributes, you must create a new scope in the *Scope values content* section and make your application request it.
 
 For each OpenID Connect attribute you want to release to applications, you can define:
 
@@ -281,8 +281,8 @@ Options
       sharing consent screen (consent will be accepted by default).
       Bypassing the consent is **not** compliant with OpenID Connect
       standard.
-   -  **User attribute**: session field that will be used as main
-      identifier (``sub``)
+   -  **User attribute**: Session field that will be used as main
+      identifier (``sub``). Default value is ``whatToTrace``.
    -  **Force claims to be returned in ID Token**: This options will
       make user attributes from the requested scope appear as ID Token
       claims.

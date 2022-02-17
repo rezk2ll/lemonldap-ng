@@ -256,6 +256,4 @@ Options
     with ``verify_hostname => 0`` and ``SSL_verify_mode => 0``.
 
 
-    Go to:
-
-    ``General Parameters > Advanced Parameters > Security > SSL options for server requests``
+    Go to: ``General Parameters > Advanced Parameters > Security > SSL options for server requests``
