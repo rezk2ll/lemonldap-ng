@@ -665,6 +665,7 @@ llapp.controller 'TreeCtrl', [
 			#  menuApp
 			#  menuCat
 			#  rule
+			#  oidcAttribute
 			#  samlAttribute
 			#  samlIDPMetaDataNode
 			#  samlSPMetaDataNode
