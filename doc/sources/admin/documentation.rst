@@ -62,10 +62,9 @@ Debian dist                            LL::NG version                           
 \           *Stretch-backports*        `2.0.2 </documentation/2.0/>`__          |bad| CVE-2019-12046, CVE-2019-13031, CVE-2019-15941  *None*                                                       *June 2019*
 \           *Stretch-backports-sloppy* `2.0.11 </documentation/2.0/>`__         |maybe|                                               *None*                                                       *August 2021*
 **10**      Buster                     `2.0.2 </documentation/2.0/>`__          |clean| CVE-2019-19791 tagged as minor                `Debian Security Team <https://security-team.debian.org/>`__ June 2024                       Probably 2026
-\           *Buster-backports*         `2.0.11 </documentation/2.0/>`__         |clean|                                               *None*                                                       *August 2021*
-\           Buster-backports-sloppy    `2.0.11 </documentation/2.0/>`__         |clean|                                               LL::NG Team, "best effort" [3]_                                Until Debian 12 release [4]_
+\           Buster-backports           `2.0.13 </documentation/2.0/>`__         |clean|                                               LL::NG Team, "best effort" [3]_                              Maybe until Debian 12 release [4]_
 **11**      Bullseye                   `2.0.11 </documentation/2.0/>`__         |clean|                                               `Debian Security Team <https://security-team.debian.org/>`__ July 2026                       Probably 2028
-\           Bullseye-backports         `2.0.11 </documentation/2.0/>`__         |clean|                                               LL::NG Team, "best effort" [3]_                                Until Debian 12 release [4]_
+\           Bullseye-backports         `2.0.13 </documentation/2.0/>`__         |clean|                                               LL::NG Team, "best effort" [3]_                              Maybe until Debian 13 release [4]_
 **Next**    Testing/Unstable           Latest  [5]_                             |clean|                                               LL::NG Team
 =========== ========================== ======================================== ===================================================== ============================================================ =============================== =============================================================
 
