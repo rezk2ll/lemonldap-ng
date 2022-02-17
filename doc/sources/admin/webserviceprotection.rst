@@ -35,8 +35,8 @@ OAuth2 endpoints.
 UserInfo
 ~~~~~~~~
 
-You can use the UserInfo endpoint, which requires the access token to
-deliver user attributes.
+You can use the UserInfo endpoint, which requires the Access Token to
+provide user attributes.
 
 For example:
 
@@ -49,17 +49,17 @@ For example:
 .. code-block:: javascript
 
    {
-     "family_name" : "OUDOT",
-     "name" : "Clément OUDOT",
-     "email" : "clement@example.com",
-     "sub" : "coudot"
+      "family_name" : "OUDOT",
+      "name" : "Clément OUDOT",
+      "email" : "clement@example.com",
+      "sub" : "coudot"
    }
 
 Introspection
 ~~~~~~~~~~~~~
 
 Introspection endpoint is defined in :rfc:`7662`. It requires an authentication
-(same as the authentication for the token endpoint) and takes to access token
+(same as the authentication for the tokens endpoint) and consumes an Access Token
 as parameter.
 
 For example:
