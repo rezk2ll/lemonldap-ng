@@ -31,6 +31,7 @@ override_dh_auto_build:
 
 override_dh_auto_install:
 	$(MAKE) install \
+			CHOWN=true \
 			DESTDIR=$(CURDIR)/debian/tmp \
 			PREFIX=/usr \
 			LMPREFIX=/usr/share/lemonldap-ng \

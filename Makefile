@@ -36,6 +36,8 @@ LISTCOMPRESSED=tar tzf
 COMPRESSSUFFIX=tar.gz
 NGINX=/usr/sbin/nginx
 UGLIFYJSVERSION:=$(shell uglifyjs --version|perl -pe 's/^[^\d]*(\d).*$$/$$1/')
+CHOWN=chown
+CHMOD=chmod
 
 # Default directories install
 # ---------------------------
@@ -675,12 +677,12 @@ install_bin:	install_conf_dir
 			$(RBINDIR)/lemonldap-ng-cli \
 			$(RBINDIR)/lemonldap-ng-sessions; \
 	fi
-	@chmod +x $(RBINDIR)/*
+	@$(CHMOD) +x $(RBINDIR)/*
 
 install_fastcgi_server:
 	@install -v -d $(RSBINDIR) $(RINITDIR) $(RETCDEFAULTDIR) $(RFASTCGISOCKDIR)
 	@cp -f fastcgi-server/sbin/llng-fastcgi-server $(RSBINDIR)
-	@chmod +x $(RSBINDIR)/llng-fastcgi-server
+	@$(CHMOD) +x $(RSBINDIR)/llng-fastcgi-server
 	@cp -f fastcgi-server/rc/llng-fastcgi-server $(RINITDIR)
 	@cp -f fastcgi-server/default/llng-fastcgi-server $(RETCDEFAULTDIR)
 	@$(PERL) -pi -e 's#__SBINDIR__#$(SBINDIR)#;s#__DEFAULTDIR__#$(ETCDEFAULTDIR)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g;' \
@@ -698,13 +700,13 @@ install_fastcgi_server:
 		$(PERL) -pi -e 's#__GROUP__#$(FASTCGIGROUP)#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	fi
 	@if [ "$(FASTCGIUSER)" != "" ]; then \
-		chown $(FASTCGIUSER) $(RFASTCGISOCKDIR) || exit 1; \
+		$(CHOWN) $(FASTCGIUSER) $(RFASTCGISOCKDIR) || exit 1; \
 		if [ "$(FASTCGIGROUP)" != "" ]; then \
 			chgrp $(FASTCGIGROUP) $(RFASTCGISOCKDIR) || exit 1; \
 		fi; \
-		chmod 770 $(RFASTCGISOCKDIR); \
+		$(CHMOD) 770 $(RFASTCGISOCKDIR); \
 	else \
-		chmod 777 $(RFASTCGISOCKDIR); \
+		$(CHMOD) 777 $(RFASTCGISOCKDIR); \
 	fi
 
 install_uwsgi_server:
@@ -724,7 +726,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	fi
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts
 	# Fix a lost of rights on the main directory
-	@chmod 755 $(RBINDIR) $(RDOCUMENTROOT) $(REXAMPLESDIR) $(RHANDLERDIR) $(RPORTALSTATICDIR) $(RMANAGERSITEDIR) $(RMANAGERAPIDIR) $(RTOOLSDIR) $(RCONFDIR) $(RDATADIR)
+	@$(CHMOD) 755 $(RBINDIR) $(RDOCUMENTROOT) $(REXAMPLESDIR) $(RHANDLERDIR) $(RPORTALSTATICDIR) $(RMANAGERSITEDIR) $(RMANAGERAPIDIR) $(RTOOLSDIR) $(RCONFDIR) $(RDATADIR)
 	@echo
 	@echo "LemonLDAP::NG v${VERSION} is installed with these parameters:"
 	@echo "  - System configuration: ${CONFDIR}"
@@ -923,13 +925,13 @@ install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir ins
 		s#__NOTIFICATIONDIR__#$(APACHEFILENOTIFDIR)#g;\
 		s#__CACHEDIR__#$(CACHEDIR)#g;' $(RFILECONFIGDIR)/lmConf-1.json
 	@if [ "$(APACHEUSER)" != "" ]; then \
-		chown $(APACHEUSER) $(RFILECONFIGDIR) || exit 1; \
+		$(CHOWN) $(APACHEUSER) $(RFILECONFIGDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
 			chgrp $(APACHEGROUP) $(RFILECONFIGDIR) || exit 1; \
 		fi; \
-		chmod 770 $(RFILECONFIGDIR); \
+		$(CHMOD) 770 $(RFILECONFIGDIR); \
 	else \
-		chmod 777 $(RFILECONFIGDIR); \
+		$(CHMOD) 777 $(RFILECONFIGDIR); \
 	fi
 	@cp $(SRCCOMMONDIR)/tools/lmConfig.* $(SRCCOMMONDIR)/tools/apache-session-mysql.sql $(RTOOLSDIR)
 	@cp $(SRCCOMMONDIR)/tools/sso.schema $(RTOOLSDIR)
@@ -941,52 +943,52 @@ install_sessions_dir:
 	@install -m 777 -v -d $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR)
 	# Fix Apache::Session directories permissions
 	@if [ "$(APACHEUSER)" != "" ]; then \
-		chown $(APACHEUSER) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR) || exit 1; \
+		$(CHOWN) $(APACHEUSER) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
 			chgrp $(APACHEGROUP) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR) || exit 1; \
 		fi; \
-		chmod 770 $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR); \
+		$(CHMOD) 770 $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR); \
 	else \
-		chmod 777 $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR); \
+		$(CHMOD) 777 $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR); \
 	fi
 
 install_notif_dir:
 	@install -m 777 -v -d $(RFILENOTIFDIR)
 	# Fix notifications directory permissions
 	@if [ "$(APACHEUSER)" != "" ]; then \
-		chown $(APACHEUSER) $(RFILENOTIFDIR) || exit 1; \
+		$(CHOWN) $(APACHEUSER) $(RFILENOTIFDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
 			chgrp $(APACHEGROUP) $(RFILENOTIFDIR) || exit 1; \
 		fi; \
-		chmod 770 $(RFILENOTIFDIR); \
+		$(CHMOD) 770 $(RFILENOTIFDIR); \
 	else \
-		chmod 777 $(RFILENOTIFDIR); \
+		$(CHMOD) 777 $(RFILENOTIFDIR); \
 	fi
 
 install_captcha_dir:
 	@install -m 777 -v -d $(RCAPTCHADIR)
 	# Fix captcha directory permissions
 	@if [ "$(APACHEUSER)" != "" ]; then \
-		chown $(APACHEUSER) $(RCAPTCHADIR) || exit 1; \
+		$(CHOWN) $(APACHEUSER) $(RCAPTCHADIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
 			chgrp $(APACHEGROUP) $(RCAPTCHADIR) || exit 1; \
 		fi; \
-		chmod 770 $(RCAPTCHADIR); \
+		$(CHMOD) 770 $(RCAPTCHADIR); \
 	else \
-		chmod 777 $(RCAPTCHADIR); \
+		$(CHMOD) 777 $(RCAPTCHADIR); \
 	fi
 
 install_cache_dir:
 	@install -m 777 -v -d $(RCACHEDIR)
 	# Fix captcha directory permissions
 	@if [ "$(APACHEUSER)" != "" ]; then \
-		chown $(APACHEUSER) $(RCACHEDIR) || exit 1; \
+		$(CHOWN) $(APACHEUSER) $(RCACHEDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
 			chgrp $(APACHEGROUP) $(RCACHEDIR) || exit 1; \
 		fi; \
-		chmod 770 $(RCACHEDIR); \
+		$(CHMOD) 770 $(RCACHEDIR); \
 	else \
-		chmod 777 $(RCACHEDIR); \
+		$(CHMOD) 777 $(RCACHEDIR); \
 	fi
 
 postconf_hosts:
@@ -1089,7 +1091,7 @@ dist:	clean
 	@cp -pRH $$(find * -maxdepth 0|grep -v -e "lemonldap-ng-$(VERSION)") lemonldap-ng-$(VERSION)
 	@find $$dir -name '*.bak' -delete
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
-	@rm -rf lemonldap-ng-$(VERSION)/node_modules
+	@rm -rf `find lemonldap-ng-$(VERSION)/ -name node_modules`
 	@$(COMPRESS) lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
 
@@ -1103,7 +1105,7 @@ debian-dist:	clean
 	@cp lemonldap-ng-$(VERSION)/_example/etc/api-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/api-apache2.conf
 	@cp lemonldap-ng-$(VERSION)/_example/etc/test-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/test-apache2.conf
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
-	@rm -rf lemonldap-ng-$(VERSION)/node_modules
+	@rm -rf `find lemonldap-ng-$(VERSION)/ -name node_modules`
 	@$(COMPRESS) lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
 
