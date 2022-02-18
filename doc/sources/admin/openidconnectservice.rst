@@ -13,14 +13,14 @@ Set the issuer identifier, which should be the portal URL.
 
 For example: http://auth.example.com
 
-End points
+Endpoints
 ~~~~~~~~~~
 
 Name of different OpenID Connect endpoints. You can keep the default
 values unless you have a specific need to change them.
 
 -  **Authorization**
--  **Token**
+-  **Tokens**
 -  **User Info**
 -  **JWKS**
 -  **Registration**
@@ -42,11 +42,9 @@ Security
 
 -  **Keys**: Define public/private key pair for asymmetric signature. A JWKS
    ``kid`` (Key ID) is automatically derived when new keys are generated.
--  **Dynamic Registration**: Set to 1 to allow clients to register
-   themselves. This may be a security risk as this will create a new
-   configuration in the backend per registration request. You can limit
-   this by protecting in the WebServer the registration endpoint with
-   an authentication module, and give the credentials to clients.
+-  **Authorization Code flow**: Set to 1 to allow Authorization Code flow
+-  **Implicit flow**: Set to 1 to allow Implicit flow
+-  **Hybrid flow**: Set to 1 to allow Hybrid flow
 -  **Only allow declared scopes**: By default, LL::NG will grant all requested scopes.
    When this option is enabled, LL::NG will only grant:
 
@@ -54,43 +52,43 @@ Security
    - Scopes declared in :ref:`Scope values content <oidcextraclaims>`
    - Scopes declared in :ref:`Scope Rules <oidcscoperules>` (if they match the rule)
 
--  **Authorization Code flow**: Set to 1 to allow Authorization Code flow
--  **Implicit flow**: Set to 1 to allow Implicit flow
--  **Hybrid flow**: Set to 1 to allow Hybrid flow
+Timeouts
+~~~~~~~~
 
-
-Timeout
-~~~~~~~
-
--  **Authorization Code expiration**: Expiration time of
-   authorization code. The default value is one minute.
--  **ID Token expiration**: Expiration time of ID Tokens. The default
-   value is one hour.
--  **Access Token expiration**: Expiration time of Access Tokens.
-   The default value is one hour.
--  **Offline session expiration**: This sets the lifetime of the
-   refresh token obtained with the ``offline_access`` scope. The
-   default value is one month.
+-  **Authorization Codes**: Expiration time of
+   authorization code. Default value is one minute.
+-  **ID Tokens**: Expiration time of ID Tokens.
+   Default value is one hour.
+-  **Access Tokens**: Expiration time of Access Tokens.
+   Default value is one hour.
+-  **Offline sessions**: This option sets Refresh Tokens lifetime
+   retrieved with ``offline_access`` scope. Default value is one month.
 
 
 Sessions
 ~~~~~~~~
 
 Best pratice is to use a separate sessions storage for OpenID Connect
-sessions, else they will stored in the main sessions storage.
+sessions, else they will be stored in main sessions storage.
 
 Dynamic Registration
 ~~~~~~~~~~~~~~~~~~~~
 
+-  **Dynamic Registration**: Set to 1 to allow clients to register
+   themselves. This may be a security risk as this will create a new
+   configuration in the backend per registration request. You can restrict
+   this by protecting the WebServer registration endpoint with
+   an authentication module, and give the credentials to clients.
+
 If dynamic registration is enabled, you can configure the following
-options to define attributes and extra claims when a new relying party
-is registered through the ``/oauth2/register`` endpoint:
+options to define attributes and extra claims released when a new relying
+party is registered through ``/oauth2/register`` endpoint:
 
--  Exported vars for dynamic registration
--  Extra claims for dynamic registration
+-  **Exported vars**
+-  **Extra claims**
 
-Key rotation script
--------------------
+Keys rotation script
+--------------------
 
 OpenID Connect specifications allow to rotate keys to improve security.
 LL::NG provides a script to do this, that should be used in a cronjob.
