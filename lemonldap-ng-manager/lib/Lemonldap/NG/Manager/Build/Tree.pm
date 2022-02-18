@@ -985,6 +985,7 @@ sub tree {
                         {
                             title => 'rest2f',
                             help  => 'rest2f.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'rest2fActivation', 'rest2fInitUrl',
                                 'rest2fInitArgs',   'rest2fVerifyUrl',
@@ -995,10 +996,11 @@ sub tree {
                         {
                             title => 'webauthn2f',
                             help  => 'webauthn2f.html',
+                            form  => 'simpleInputContainer',
                             nodes => [
                                 'webauthn2fActivation',
-                                'webauthn2fUserVerification',
                                 'webauthn2fSelfRegistration',
+                                'webauthn2fUserVerification',
                                 'webauthn2fUserCanRemoveKey',
                                 'webauthnRpName',
                                 'webauthnDisplayNameAttr',
