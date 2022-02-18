@@ -21,11 +21,9 @@ Requirements
 
 You need to install the `Authen::WebAuthn` CPAN module for WebAuthn to work on
 your LemonLDAP::NG installation. If there is no package for it in your
-distribution, you can install it with:
+distribution, you can install it with::
 
-```
-cpanm Authen::WebAuthn
-```
+    cpanm Authen::WebAuthn
 
 Configuration
 ~~~~~~~~~~~~~
