@@ -9,6 +9,8 @@ WriteMakefile(
     LICENSE      => 'gpl',
     META_MERGE   => {
         'recommends' => {
+            'Authen::Radius'        => 0,
+            'Authen::WebAuthn'      => 0,
             'Convert::Base32'       => 0,
             'DBI'                   => 0,
             'Email::Sender'         => 1.300027,
@@ -16,8 +18,10 @@ WriteMakefile(
             'Glib'                  => 0,
             'HTTP::Message'         => 0,
             'Image::Magick'         => 0,
+            'IO::Socket::Timeout'   => 0,
             'IPC::Run'              => 0,
             'Lasso'                 => '2.3.0',
+            'List::MoreUtils'       => 0,
             'LWP::UserAgent'        => 0,
             'LWP::Protocol::https'  => 0,
             'MIME::Entity'          => 0,
@@ -40,7 +44,7 @@ WriteMakefile(
             MailingList => 'mailto:lemonldap-ng-dev@ow2.org',
             license     => 'http://opensource.org/licenses/GPL-2.0',
             homepage    => 'http://lemonldap-ng.org/',
-            bugtracker =>
+            bugtracker  =>
               'https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues',
             x_twitter => 'https://twitter.com/lemonldapng',
         },
