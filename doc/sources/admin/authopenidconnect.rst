@@ -105,11 +105,10 @@ In ``General Parameters`` > ``Authentication modules``, set:
 Then in ``General Parameters`` > ``Authentication modules`` >
 ``OpenID Connect parameters``, you can set:
 
--  **Authentication level**: level of authentication to associate to
-   this module
--  **Callback GET parameter**: name of GET parameter used to intercept
+-  **Authentication level**: Authentication level associated to this module
+-  **Callback GET parameter**: Name of the GET parameter used for intercepting
    callback (default: openidconnectcallback)
--  **State session timeout**: duration of a state session (used to keep
+-  **State session timeout**: Duration of a state session (used for keeping
    state information between authentication request and authentication
    response) in seconds (default: 600)
 
@@ -119,7 +118,8 @@ Register LL::NG to an OpenID Connect Provider
 To register LL::NG, you will need to give some information like
 application name or logo.
 
-You will be asked to provide a *Redirect URI* for LemonLDAP::NG, which is constructed by appending the ``openidconnectcallback=1`` parameter to the Portal URL.
+You will be asked to provide a *Redirect URI* for LL::NG, which is constructed 
+by appending the ``openidconnectcallback=1`` parameter to the Portal URL.
 
 For example:
 
@@ -139,8 +139,8 @@ Declare the OpenID Connect Provider in LL::NG
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the Manager, select node ``OpenID Connect Providers`` and click on
-``Add OpenID Connect Provider``. Give a technical name (no spaces, no
-special characters), like "sample-op";
+``Add OpenID Connect Provider``. Set a technical name (without space or
+special character) like "sample-op".
 
 You can then access to the configuration of this OP.
 
@@ -195,12 +195,10 @@ content of the JSON file in the textarea.
 Exported attributes
 ^^^^^^^^^^^^^^^^^^^
 
-Define here the mapping between the LL::NG session content and the
-fields provided in UserInfo response. The fields are defined in `OpenID
-Connect
-standard <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__,
-and depends on the scope requested by LL::NG (see options in next
-chapter).
+Define here mapping between LL::NG session content and fields
+provided in UserInfo endpoint response. The fields are defined in
+`OpenID Connect standard <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__,
+and depends on the scope requested by LL::NG (see options in next chapter).
 
 So you can define for example:
 

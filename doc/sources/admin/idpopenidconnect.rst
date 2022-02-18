@@ -12,9 +12,9 @@ Presentation
 
 LL::NG can act as an OpenID Connect Provider (OP). It will answer to
 OpenID Connect requests to give user identity (through ID Token) and
-information (through User Info end point).
+information (through UserInfo endpoint).
 
-As an OP, LL::NG supports a lot of OpenID Connect features:
+As an OP, LL::NG supports many OpenID Connect features:
 
 -  Authorization Code, Implicit and Hybrid flows
 -  Publication of JSON metadata and JWKS data (Discovery)
@@ -51,10 +51,10 @@ IssuerDB
 Go in ``General Parameters`` » ``Issuer modules`` » ``OpenID Connect``
 and configure:
 
--  **Activation**: set to ``On``.
--  **Path**: keep ``^/oauth2/`` unless you need to use another path
--  **Use rule**: a rule to allow user to use this module, set to ``1``
-   to always allow.
+-  **Activation**: set to ``On``
+-  **Path**: Keep ``^/oauth2/`` unless you need to use another path
+-  **Use rule**: Rule to allow user to use this module, set to ``1``
+   to always allow
 
 
 .. tip::
@@ -71,13 +71,13 @@ and configure:
 Configuration of LL::NG in Relying Party
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Each Relying Party has its own configuration way. LL::NG publish its
-OpenID Connect metadata to ease the configuration of client.
+Each Relying Party has its own configuration way. LL::NG exposes
+its OpenID Connect metadata to help clients configuration.
 
-The metadata can be found at the standard "Well Known" URL:
+Metadata can be downloaded at the standard "Well Known" URL:
 http://auth.example.com/.well-known/openid-configuration
 
-An example of its content:
+OIDC metadata example:
 
 .. code-block:: javascript
 
@@ -162,14 +162,15 @@ Exported attributes
 
 .. warning::
 
-   By default, only `standard OpenID Connect claims <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__ are exposed to applications. If you want to add non-standard attributes, you must create a new scope in the *Scope values content* section and make your application request it.
+   By default, only `standard OpenID Connect claims <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__
+   are exposed to applications. If you want to add non-standard attributes, you have to create a new scope in the *Scope values content* section and your application must request it.
 
 For each OpenID Connect attribute you want to release to applications, you can define:
 
-* **Claim name**: the name of the attribute as it will appear in Userinfo responses
-* **Variable name**: the name of the LemonLDAP::NG session variable containing the attribute value
-* **Type**: the data type of the attribute. By default, a string. Choosing integer or boolean will make the attribute appear as the corresponding JSON type.
-* **Array**: choose how to process multi-valued attributes
+* **Claim name**: Name of the attribute as it will appear in Userinfo responses
+* **Variable name**: Name of the LemonLDAP::NG session variable containing the attribute value
+* **Type**: Attribute data type. By default, it is a string. Choosing integer or boolean will make the attribute appear as the corresponding JSON type.
+* **Array**: Select how multi-valued attributes are processed
 
   * **Auto**: If the session key contains a single value, it will be released as a JSON number, string or boolean, depending on the previously specified type. If the session key contains multiple values, it will be released as an array of numbers, strings or booleans.
   * **Always**: Return an array even if the attribute only contains one value
@@ -178,8 +179,7 @@ For each OpenID Connect attribute you want to release to applications, you can d
 
 .. attention::
 
-    The specific ``sub`` attribute is not defined here, but
-    in User attribute parameter (see below).
+    The specific ``sub`` attribute is not defined here, but in User attribute parameter (see below).
 
 
 .. _oidcextraclaims:
@@ -187,7 +187,7 @@ For each OpenID Connect attribute you want to release to applications, you can d
 Scope values content
 ^^^^^^^^^^^^^^^^^^^^
 
-By default, LemonLDAP::NG already defines the following scope-to-attribute map:
+By default, the following scope-to-attributes are mapped by LL::NG:
 
 .. csv-table::
    :header: "Scope value", "Attribute list"
@@ -199,23 +199,21 @@ By default, LemonLDAP::NG already defines the following scope-to-attribute map:
    address; street_address locality region postal_code country
    phone; phone_number phone_number_verified
 
-If you want to make custom attribute visible to OpenID Connect clients, you
-need to declare them in a new scope in this section.
+If you want to expose custom attributes to OpenID Connect clients,
+you have to declare them in a new scope in this section.
 
-Add your additional scope as the **Key**, and a space-separated list of
-attribute as the **Value**:
+Add your additional scope as **Key**, and a space-separated list of
+attribute as **Value**:
 
 -  `employment_info` => `position company`
 
-In this example, an OpenID Client asking for the ``employment_info`` scope will
-be able to read the ``company`` and ``position`` attribute from the
-Userinfo endpoint.
+In this example, an OpenID Client requesting for the ``employment_info`` scope will
+be able to read the ``company`` and ``position`` attribute from the UserInfo endpoint.
 
 .. important::
 
     Any attribute defined in this section must be mapped to a
-    LemonLDAP::NG session variable in the **Exported Attributes**
-    section
+    LL::NG session variable in the **Exported Attributes** section
 
 .. important::
 
@@ -233,9 +231,9 @@ Scope Rules
 .. versionadded:: 2.0.12
 
 |beta| This feature may change in a future version in a way that breaks
-compatibility with existing configuration
+compatibility with existing configuration.
 
-By default, LemonLDAP::NG grants all scopes requested by the application, as
+By default, LL::NG grants all scopes requested by the application, as
 long as the user consents to them.
 
 This configuration screen allows you to change that behavior by attaching
@@ -268,11 +266,11 @@ Options
 -  **Basic**
 
    -  **Client ID**: Client ID for this RP
-   -  **Client secret**: Client secret for this RP (can be use for
+   -  **Client secret**: Client secret for this RP (can be used for
       symmetric signature)
-   -  **Public client** (since version ``2.0.4``): set this RP as public
-      client, so authentication is not needed on token endpoint
-   -  **Redirection addresses**: Space separated list of redirect
+   -  **Public client** (since version ``2.0.4``): Set this RP as public
+      client, so authentication is not needed on tokens endpoint
+   -  **Redirection addresses**: Space-separated list of redirect
       addresses allowed for this RP
 
 -  **Advanced**
@@ -284,22 +282,21 @@ Options
    -  **User attribute**: Session field that will be used as main
       identifier (``sub``). Default value is ``whatToTrace``.
    -  **Force claims to be returned in ID Token**: This options will
-      make user attributes from the requested scope appear as ID Token
-      claims.
+      make user attributes from the requested scope appear as ID Token claims
    -  **Use JWT format for Access Token** (since version ``2.0.12``): When
       using this option, Access Tokens will use the JWT format, which means they
       can be verified by external OAuth2.0 resource servers without using the
-      introspection or userinfo endpoint.
+      Introspection or UserInfo endpoint.
    -  **Release claims in Access Token** (since version ``2.0.12``): If Access
       Tokens are in JWT format, this option lets you release the claims defined
-      in the *Extra Claims* section inside the Access Token itself.
+      in the *Extra Claims* section inside the Access Token itself
    -  **Additional audiences** (since version ``2.0.8``): You can
-      specify a space-separate list of audiences that will be added the
-      audiences of the ID Token
+      specify a space-separated list of audiences that will be added to the
+      ID Token audiences
    -  **Use refresh tokens** (since version ``2.0.7``): If this option
-      is set, LemonLDAP::NG will issue a Refresh Token that can be used
+      is enabled, LL::NG will issue a Refresh Token that can be used
       to obtain new access tokens as long as the user session is still
-      valid.
+      valid
 
 -  **Security**
 
@@ -310,9 +307,8 @@ Options
    -  **Userinfo response format** (since version ``2.0.12``): By default,
       UserInfo is returned as a simple JSON object. You can also choose to
       return it as a JWT, using one of the available signature algorithms.
-   -  **Require PKCE** (since version ``2.0.4``): a code challenge is
-      required at token endpoint (see
-      :rfc:`7636`)
+   -  **Require PKCE** (since version ``2.0.4``): A code challenge is
+      required at Tokens endpoint (see :rfc:`7636`)
    -  **Allow offline access** (since version ``2.0.7``): After enabling
       this feature, an application may request the **offline_access**
       scope, and will obtain a Refresh Token that persists even after
@@ -320,10 +316,13 @@ Options
       https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
       for details. These offline sessions can be administered through
       the Session Browser.
-   - **Allow OAuth2.0 Password Grant** (since version ``2.0.8``): Allow the use of the :ref:`Resource Owner Password Credentials Grant <resource-owner-password-grant>` by this client. This feature only works if you have configured a form-based authentication module.
-   - **Allow OAuth2.0 Client Credentials Grant** (since version ``2.0.11``): Allow the use of the :ref:`Client Credentials Grant <client-credentials-grant>` by this client.
-   - **Authentication Level**: required authentication level to access this application
-   - **Access Rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
+   -  **Allow OAuth2.0 Password Grant** (since version ``2.0.8``): Allow the use of
+      the :ref:`Resource Owner Password Credentials Grant <resource-owner-password-grant>` by this client.
+      This feature only works if you have configured a form-based authentication module.
+   -  **Allow OAuth2.0 Client Credentials Grant** (since version ``2.0.11``): Allow the use of the
+      :ref:`Client Credentials Grant <client-credentials-grant>` by this client.
+   -  **Authentication Level**: Required authentication level to access this application
+   -  **Access Rule**: Lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
 
 -  **Timeouts**
 
@@ -341,11 +340,11 @@ Options
 
 -  **Logout**
 
-   -  **Allowed redirection addresses for logout**: A space separated list of
+   -  **Allowed redirection addresses for logout**: A space-separated list of
       URLs that this client can redirect the user to once the logout is done
       (through ``post_logout_redirect_uri``)
    -  **URL**: Specify the relying party's logout URL
-   -  **Type**: Type of Logout to perform (only Front-Channel is implemented for now)
+   -  **Type**: Type of logout to perform (only Front-Channel is implemented for now)
    -  **Session required**: Whether to send the Session ID in the logout request
 
 Access Rule extra variables

@@ -40,21 +40,21 @@ You can associate here an authentication context to an authentication level.
 Security
 ~~~~~~~~
 
--  **Keys**: Define public/private key pair to do asymmetric signature. A JWKS
-   ``kid`` (Key ID) is automatically derived when generating new keys.
+-  **Keys**: Define public/private key pair for asymmetric signature. A JWKS
+   ``kid`` (Key ID) is automatically derived when new keys are generated.
 -  **Dynamic Registration**: Set to 1 to allow clients to register
    themselves. This may be a security risk as this will create a new
    configuration in the backend per registration request. You can limit
-   this by protecting in the WebServer the registration end point with
+   this by protecting in the WebServer the registration endpoint with
    an authentication module, and give the credentials to clients.
--  **Only allow declared scopes**: By default, LemonLDAP::NG will grant all requested scopes. When this option is in use, LemonLDAP will only grant:
+-  **Only allow declared scopes**: By default, LL::NG will grant all requested scopes.
+   When this option is enabled, LL::NG will only grant:
 
    - Standard OIDC scopes (``openid`` ``profile`` ``email`` ``address`` ``phone``)
    - Scopes declared in :ref:`Scope values content <oidcextraclaims>`
    - Scopes declared in :ref:`Scope Rules <oidcscoperules>` (if they match the rule)
 
--  **Authorization Code flow**: Set to 1 to allow Authorization Code
-   flow
+-  **Authorization Code flow**: Set to 1 to allow Authorization Code flow
 -  **Implicit flow**: Set to 1 to allow Implicit flow
 -  **Hybrid flow**: Set to 1 to allow Hybrid flow
 
@@ -66,8 +66,8 @@ Timeout
    authorization code. The default value is one minute.
 -  **ID Token expiration**: Expiration time of ID Tokens. The default
    value is one hour.
--  **Access Token expiration**: Expiration time
-   of Access Tokens. The default value is one hour.
+-  **Access Token expiration**: Expiration time of Access Tokens.
+   The default value is one hour.
 -  **Offline session expiration**: This sets the lifetime of the
    refresh token obtained with the ``offline_access`` scope. The
    default value is one month.
@@ -76,7 +76,7 @@ Timeout
 Sessions
 ~~~~~~~~
 
-It is recommended to use a separate sessions storage for OpenID Connect
+Best pratice is to use a separate sessions storage for OpenID Connect
 sessions, else they will stored in the main sessions storage.
 
 Dynamic Registration
@@ -105,7 +105,7 @@ run for example each week:
 
 .. tip::
 
-    Set the correct Web server user, else generated configuration will
+    Set the correct WebServer user, else generated configuration will
     not be readable by LL::NG.
 
 Session management
