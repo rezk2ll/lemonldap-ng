@@ -203,17 +203,17 @@ If you want to expose custom attributes to OpenID Connect clients,
 you have to declare them in a new scope in this section.
 
 Add your additional scope as **Key**, and a space-separated list of
-attribute as **Value**:
+attributes as **Value**:
 
 -  `employment_info` => `position company`
 
 In this example, an OpenID Client requesting for the ``employment_info`` scope will
-be able to read the ``company`` and ``position`` attribute from the UserInfo endpoint.
+be able to read the ``company`` and ``position`` attributes from the UserInfo endpoint.
 
 .. important::
 
     Any attribute defined in this section must be mapped to a
-    LL::NG session variable in the **Exported Attributes** section
+    LL::NG session variable in **Exported Attributes** section
 
 .. important::
 
