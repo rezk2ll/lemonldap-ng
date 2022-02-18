@@ -107,7 +107,7 @@ Finally update your APT cache:
 Manual download
 ~~~~~~~~~~~~~~~
 
-Packages are available on the :doc:`Download page</download>`.
+Packages are available on the `Download page <https://lemonldap-ng.org/download.html>`__.
 
 Install packages
 ----------------
@@ -188,7 +188,7 @@ File location
 Build your packages
 -------------------
 
-You can also get the :doc:`LemonLDAP::NG archive</download>` and make
+You can also get the `LemonLDAP::NG source <https://lemonldap-ng.org/download.html>`__ and make
 the package yourself:
 
 ::

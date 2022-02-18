@@ -100,7 +100,7 @@ Run this to update packages cache:
 Manual download
 ~~~~~~~~~~~~~~~
 
-RPMs are available on the :doc:`Download page</download>`.
+RPMs are available on the `Download page <https://lemonldap-ng.org/download.html>`__.
 
 Package GPG signature
 ---------------------

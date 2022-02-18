@@ -89,7 +89,7 @@ or
 Manual download
 ~~~~~~~~~~~~~~~
 
-RPMs are available on the :doc:`Download page<download>`.
+RPMs are available on the `Download page <https://lemonldap-ng.org/download.html>`__.
 
 Package GPG signature
 ---------------------
@@ -236,9 +236,3 @@ If you need it, you can rebuild RPMs:
 ::
 
    rpmbuild -ba SPECS/lemonldap-ng.spec
-
-Alternatively, you can use the automatic script
-"create-lemonldap-packages.sh", available in rpm-sles directory in the
-:ref:`lemonldap svn repository<download-getting-sources-from-svn-repository>`.
-The automatic script can also generate intermediate dependencies. See
-README file in the same directory for more information.
