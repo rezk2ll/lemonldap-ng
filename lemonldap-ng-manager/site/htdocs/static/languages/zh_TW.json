@@ -677,7 +677,7 @@
 "oidcRPMetaDataOptionsAllowOffline":"允許離線存取",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"允許 OAuth2.0 密碼授權",
 "oidcRPMetaDataOptionsAuthnLevel":"驗證等級",
-"oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Authorization Code",
+"oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Authorization Codes",
 "oidcRPMetaDataOptionsBasic":"基本",
 "oidcRPMetaDataOptionsBypassConsent":"繞過同意",
 "oidcRPMetaDataOptionsClientID":"客戶端 ID",

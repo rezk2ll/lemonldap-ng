@@ -1,7 +1,7 @@
-The portal
+The Portal
 ==========
 
-The portal is the main component of LL::NG. It provides many features:
+The Portal is the main component of LL::NG. It provides many features:
 
 -  **Authentication service** of course
 
@@ -79,16 +79,16 @@ Kinematics
 #. Check if URL asked is valid
 #. Check if user is already authenticated
 
-   -  If not authenticated (or authentication is forced) try to find it
-      (userDB module) and to authenticate it (auth module), create
-      session, ask for second factor if required, calculate groups and
-      macros and store them. In 1.3, LL::NG has got a captcha feature
-      which is used in this case.
+   -  If not authenticated (or authentication is forced), try to find
+      (userDB module) and authenticate him (auth module), collect user data,
+      compute groups and macros, ask for second factor if required,
+      create a session and store it. LL::NG affords a captcha feature
+      which can be enabled.
 
 #. Modify password if asked (password module)
-#. Provides identity if asked (IdP module)
+#. Provide identity if asked (IdP module)
 #. Build :doc:`cookie(s)<ssocookie>`
-#. Redirect user to the asked URL or display menu
+#. Redirect user to the asked URL or display dynamic menu
 
 
 .. note::

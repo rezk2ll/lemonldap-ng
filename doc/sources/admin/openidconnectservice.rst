@@ -61,7 +61,7 @@ Timeouts
    Default value is one hour.
 -  **Access Tokens**: Expiration time of Access Tokens.
    Default value is one hour.
--  **Offline sessions**: This option sets Refresh Tokens lifetime
+-  **Offline sessions**: This option sets lifetime of Refresh Tokens
    retrieved with ``offline_access`` scope. Default value is one month.
 
 
@@ -74,7 +74,7 @@ sessions, else they will be stored in main sessions storage.
 Dynamic Registration
 ~~~~~~~~~~~~~~~~~~~~
 
--  **Dynamic Registration**: Set to 1 to allow clients to register
+-  **Activation**: Set to 1 to allow clients to register
    themselves. This may be a security risk as this will create a new
    configuration in the backend per registration request. You can restrict
    this by protecting the WebServer registration endpoint with
