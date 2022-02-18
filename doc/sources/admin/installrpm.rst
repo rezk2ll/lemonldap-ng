@@ -4,32 +4,32 @@ Installation on Red Hat/CentOS
 
 .. attention::
 
-    LL::NG requires at least Red Hat/CentOS 7
+    LemonLDAP::NG requires at least Red Hat/CentOS 7
 
-Organization
-------------
+List of pacakges
+----------------
 
 LemonLDAP::NG provides packages for Red Hat/Centos 7:
 
--  lemonldap-ng: metapackage, contains no file but dependencies on other
-   packages
--  lemonldap-ng-doc: contains HTML documentation and project docs
-   (README, etc.)
--  lemonldap-ng-conf: contains default configuration (DNS domain:
-   example.com)
--  lemonldap-ng-test: contains sample CGI test page
--  lemonldap-ng-handler: contains Apache Handler implementation (agent)
--  lemonldap-ng-manager: contains administration interface and session
-   explorer
--  lemonldap-ng-portal: contains authentication portal and menu
--  lemonldap-ng-fastcgi-server: FastCGI server needed to use Nginx
--  lemonldap-ng-nginx: contains Nginx configuration and dependencies
--  lemonldap-ng-uwsgi-app: contains Uwsgi application
--  lemonldap-ng-selinux: contains the SELinux policy for httpd
--  perl-Lemonldap-NG-Common: CPAN - Shared modules
--  perl-Lemonldap-NG-Handler: CPAN - Handler modules
--  perl-Lemonldap-NG-Manager: CPAN - Manager modules
--  perl-Lemonldap-NG-Portal: CPAN - Portal modules
+- ``lemonldap-ng``: metapackage, contains no file but dependencies on other
+  packages
+- ``lemonldap-ng-doc``: contains HTML documentation and project docs
+  (README, etc.)
+- ``lemonldap-ng-conf``: contains default configuration (DNS domain:
+  example.com)
+- ``lemonldap-ng-test``: contains sample CGI test page
+- ``lemonldap-ng-handler``: contains Apache Handler implementation (agent)
+- ``lemonldap-ng-manager``: contains administration interface and session
+  explorer
+- ``lemonldap-ng-portal``: contains authentication portal and menu
+- ``lemonldap-ng-fastcgi-server``: FastCGI server needed to use Nginx
+- ``lemonldap-ng-nginx``: contains Nginx configuration and dependencies
+- ``lemonldap-ng-uwsgi-app``: contains Uwsgi application
+- ``lemonldap-ng-selinux``: contains the SELinux policy for httpd
+- ``perl-Lemonldap-NG-Common``: CPAN - Shared modules
+- ``perl-Lemonldap-NG-Handler``: CPAN - Handler modules
+- ``perl-Lemonldap-NG-Manager``: CPAN - Manager modules
+- ``perl-Lemonldap-NG-Portal``: CPAN - Portal modules
 
 
 .. danger::
@@ -43,6 +43,14 @@ LemonLDAP::NG provides packages for Red Hat/Centos 7:
        rpm --nodeps -i lemonldap-ng-nginx*.rpm
 
 
+Prerequisites
+-------------
+
+LemonLDAP::NG has dependencies which are not in base RHEL repositories
+
+You need to enable `EPEL repositories <https://docs.fedoraproject.org/en-US/epel/#Quickstart>`__ before installing.
+
+On RHEL8 and derivatives, you also also need to enable the PowerTools repository in ``/etc/yum.repos.d``.
 
 Get the packages
 ----------------
@@ -91,12 +99,6 @@ Run this to update packages cache:
    yum update
 
 
-.. danger::
-
-    You must also install the EPEL repository for non-core
-    dependencies. See :ref:`prerequisites and dependencies<prereq-yum>`
-    chapter for more. 
-
 Manual download
 ~~~~~~~~~~~~~~~
 
@@ -136,13 +138,11 @@ You can also use yum on local RPMs file:
 With RPM
 ~~~~~~~~
 
-Before installing the packages, install all :doc:`dependencies<prereq>`.
-
 You have then to install all the downloaded packages:
 
 ::
 
-   rpm -Uvh lemonldap-ng-* perl-Lemonldap-NG-*
+   yum install lemonldap-ng-* perl-Lemonldap-NG-*
 
 
 .. tip::
@@ -170,29 +170,30 @@ a sed command. For example, we change it to ``ow2.org``:
 Upgrade
 ~~~~~~~
 
-If you upgraded LL::NG, check all :doc:`upgrade notes<upgrade>`.
+If you upgraded LemonLDAP::NG, check all :doc:`upgrade notes<upgrade>`.
 
 DNS
 ~~~
 
 Configure your DNS server to resolve names with your server IP:
 
--  auth.<your domain>: main portal, must be public
--  manager.<your domain>: manager, only for adminsitrators
--  test1.<your domain>, test2.<your domain>: sample applications
+-  ``auth.<your domain>``: main portal, must be public
+-  ``manager.<your domain>``: manager, only for adminsitrators
+-  ``test1.<your domain>``, ``test2.<your domain>``: sample applications
 
 Follow the :ref:`next steps<start-configuration>`
 
 File location
 -------------
 
--  Configuration is in /etc/lemonldap-ng
+-  Configuration is in ``/etc/lemonldap-ng``
 -  LemonLDAP::NG configuration (edited by the Manager) is in
-   /var/lib/lemonldap-ng/conf/
--  All Perl modules are in the VENDOR perl directory
--  All Perl scripts/pages are in /var/lib/lemonldap-ng/
+   ``/var/lib/lemonldap-ng/conf/``
+-  All Perl modules are in the ``/usr/share/perl5/vendor_perl`` directory
+-  All Perl scripts/pages are in ``/var/lib/lemonldap-ng/``
 -  All static content (examples, CSS, images, etc.) is in
-   /usr/share/lemonldap-ng/
+   ``/usr/share/lemonldap-ng/``
+- Administration scripts are in ``/usr/libexec/lemonldap-ng/bin``
 
 Build your packages
 -------------------
@@ -201,9 +202,9 @@ If you need it, you can rebuild RPMs:
 
 -  Install rpm-build package
 -  Install all build dependencies (see BuildRequires in
-   lemonldap-ng.spec)
--  Put LemonLDAP::NG tarball in %_topdir/SOURCES
--  Edit ~/.rpmmacros and set your build parameters:
+   ``lemonldap-ng.spec`` )
+-  Put LemonLDAP::NG tarball in ``%_topdir/SOURCES``
+-  Edit ``~/.rpmmacros`` and set your build parameters:
 
 ::
 
@@ -211,7 +212,7 @@ If you need it, you can rebuild RPMs:
    %dist .el7
    %rhel 7
 
--  Go to %_topdir
+-  Go to ``%_topdir``
 -  Build:
 
 ::
