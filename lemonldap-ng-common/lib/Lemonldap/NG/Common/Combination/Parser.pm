@@ -88,12 +88,12 @@ sub parseAnd {
                     my ( $r, $name ) = $obj->(@_);
 
                     # Case "string" (form type)
-                    if ( $r & ~$r ) {
+                    if ( $r && $r & ~$r ) {
                         $str{$r}++;
                     }
                     else {
                         return ( wantarray ? ( $r, $name ) : $r )
-                          unless ( $r == PE_OK );
+                          unless ( !$r || $r == PE_OK );
                     }
                 }
                 my $res = %str ? join( ',', keys %str ) : PE_OK;
