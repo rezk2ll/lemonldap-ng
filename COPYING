@@ -4,22 +4,22 @@ Upstream-Contact: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues
 Source: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/tags?sort=updated_desc
 
 Files: *
-Copyright: 2005-2020, Xavier Guimard <yadd@debian.org>
- 2006-2020, Clement Oudot <clem.oudot@gmail.com>
+Copyright: 2005-2022, Xavier Guimard <yadd@debian.org>
+ 2006-2022, Clement Oudot <clem.oudot@gmail.com>
+ 2018-2022, Christophe Maudoux <chrmdx@gmail.com>
+ 2019-2022, Maxime Besson <maxime.besson@worteks.com>
  2008, Mikael Ates <mikael.ates@univ-st-etienne.fr>
  2008-2011, Thomas Chemineau <thomas.chemineau@gmail.com>
  2012-2013, Sandro Cazzaniga <cazzaniga.sandro@gmail.com>
  2012-2015, François-Xavier Deltombe <fxdeltombe@gmail.com>
  2012-2019, David Coutadeur <david.coutadeur@gmail.com>
- 2018-2020, Christophe Maudoux <chrmdx@gmail.com>
- 2019-2020, Maxime Besson <maxime.besson@worteks.com>
  2019, Soisik Frogier <soisik.froger@worteks.com>
  2019, Mame Dieynaba Sene <msene@linagora.com>
- 2019, Antoine Rosier <lemonldap@mon-refuge.fr>
- 2005-2020, Gendarmerie nationale <https://www.gendarmerie.interieur.gouv.fr>
+ 2019-2021, Antoine Rosier <lemonldap@mon-refuge.fr>
+ 2005-2022, Gendarmerie nationale <https://www.gendarmerie.interieur.gouv.fr>
  2006-2019, LINAGORA <info@linagora.com>
  2015-2018, Savoir-faire Linux <contact@savoirfairelinux.com>
- 2018-2020, Worteks <info@worteks.com>
+ 2018-2022, Worteks <info@worteks.com>
 License: GPL-2+
 
 Files: lemonldap-ng-portal/lib/Lemonldap/NG/Portal/Auth/PAM.pm
