@@ -12,7 +12,7 @@ Copyright: 2005-2022, Xavier Guimard <yadd@debian.org>
  2008-2011, Thomas Chemineau <thomas.chemineau@gmail.com>
  2012-2013, Sandro Cazzaniga <cazzaniga.sandro@gmail.com>
  2012-2015, François-Xavier Deltombe <fxdeltombe@gmail.com>
- 2012-2019, David Coutadeur <david.coutadeur@gmail.com>
+ 2012-2021, David Coutadeur <david.coutadeur@gmail.com>
  2019, Soisik Frogier <soisik.froger@worteks.com>
  2019, Mame Dieynaba Sene <msene@linagora.com>
  2019-2021, Antoine Rosier <lemonldap@mon-refuge.fr>
@@ -33,10 +33,11 @@ Copyright: 2011, Tatsuhiko Miyagawa <miyagawa@bulknews.net>
 License: Artistic or GPL-1+
 
 Files: *.js
-Copyright: 2005-2019, Xavier Guimard <yadd@debian.org>
- 2006-2019, Clement Oudot <clem.oudot@gmail.com>
+Copyright: 2005-2022, Xavier Guimard <yadd@debian.org>
+ 2006-2022, Clement Oudot <clem.oudot@gmail.com>
  2008-2012, Thomas Chemineau <thomas.chemineau@gmail.com>
- 2018-2019, Christophe Maudoux <chrmdx@gmail.com>
+ 2018-2022, Christophe Maudoux <chrmdx@gmail.com>
+ 2019-2022, Maxime Besson <maxime.besson@worteks.com>
 License: GPL-2+
 
 Files: lemonldap-ng-portal/site/htdocs/static/bootstrap/webauthn.png
@@ -44,10 +45,11 @@ Copyright: James Cullum <https://github.com/JamesCullum>
 License: WebAuthnLogoLicense
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/js/portal.js
-Copyright: 2005-2019, Xavier Guimard <yadd@debian.org>
- 2006-2019, Clement Oudot <clem.oudot@gmail.com>
+Copyright: 2005-2022, Xavier Guimard <yadd@debian.org>
+ 2006-2022, Clement Oudot <clem.oudot@gmail.com>
  2008-2012, Thomas Chemineau <thomas.chemineau@gmail.com>
- 2018-2019, Christophe Maudoux <chrmdx@gmail.com>
+ 2018-2022, Christophe Maudoux <chrmdx@gmail.com>
+ 2019-2022, Maxime Besson <maxime.besson@worteks.com>
 License: GPL-2+
 Comment: a little part of it comes from JQuery-UI examples
  (https://snipplr.com/view/29434/)
