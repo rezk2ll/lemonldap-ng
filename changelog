@@ -1,3 +1,100 @@
+lemonldap-ng (2.0.14) focal; urgency=medium
+
+  * Bugs:
+    * #2519: first authentication returns 500 code after inactivity period
+    * #2566: No configuration available in fresh LemonLDAP 2.0.12
+    * #2594: Double slashes in _pdata->{_url} when LLNG is OIDC RP
+    * #2595: Portal does not run correctly with portalRequireOldPassword=0
+    * #2596: [security:low] open redirect in CAS gateway mode
+    * #2597: External password reset URL is called with skin= and url= parameters
+    * #2600: RESTProxy authentication does not work with AuthChoice-enabled internal Portal
+    * #2603: Saving configuration drops OIDC scope rules
+    * #2606: FindUser plugin: SpoofId field is not updated if a value has been already set before the Ajax request
+    * #2612: [Security: low, CVE-2021-40874] RESTServer pwdConfirm always returns true with Combination + Kerberos
+    * #2613: ProxyAuth cookie name can not be modified
+    * #2616: Login is not remembered when password is incorrect
+    * #2618: DevOps handler does not work if RULES_URL uWSGI/FastCGI parameter is set
+    * #2620: Net::LDAP::Control::PasswordPolicy is not always loaded
+    * #2622: Fail oauth2 grants when resulting scope is empty
+    * #2626: Portal fatal errors cause "Conflict detected between 2 extensions, aborting 1 route" message to appear in logs
+    * #2632: Handler::Server::Nginx does not use logger config from lemonldap-ng.ini
+    * #2637: Error with default locationRules
+    * #2645: importMetadata does not set NameIDFormat to "persistent" for new providers
+    * #2648: "Authentication module succeed but has not set $req->user" when using SAML Artifact mode with some, but not all IDPs
+    * #2655: 'afterData' plugins loaded after Impersonation will be never executed
+    * #2656: CAS: multiple proxies is not correctly implemented
+    * #2658: Macros based on '_XXX' and authenticationLevel attributes are not computed by refresh function
+    * #2660: Combination is not compatible with LDAP password policies
+    * #2663: Radius authentication fails when radius used as authentication module
+    * #2671: xss attack detected on a relayState parameter
+    * #2675: Auth::Custom calls module init twice
+    * #2676: UserDB::Custom and Password::Custom loads module twice and calls init three times
+    * #2677: *::Custom do not allow config overrides
+    * #2678: Auth::Custom getDisplayType is broken with choice
+    * #2682: Fails to create password-protected X509 certificates with OpenSSL 3.0
+    * #2689: REST server: 400 bad request with DELETE /session/my
+    * #2691: Error when using has2f in a manager rule
+    * #2693: "Status: Unknown command line -> " log line for each SKIP and EXPIRED accesses
+    * #2703: OIDC RP menu attributes name do not refresh live
+
+  * New features:
+    * #1411: Web Authentication API (webauthn)
+    * #2325: "Warn on new network location" plugin
+    * #2679: CheckDevOps: Append an option to check if used attributes are existing
+    * #2686: Web service for application list
+
+  * Improvements:
+    * #1714: Check logLevel value
+    * #2277: pdata cookie is not removed if SAML flow fails
+    * #2457: Do not translate OIDC RP exported attributes
+    * #2476: $groups is not initialize  for  at least LDAP authentication
+    * #2508: Look configuration timestamp to dismiss cache
+    * #2558: Add a new portal error code for Auth::OIDC issues
+    * #2565: Adding per-request information in logs
+    * #2570: RGAA: Adding a role attribute into messages
+    * #2577: RGAA: placeholder only should not be used as label
+    * #2591: stayconnected plugin: allow to disable browser fingerprint check and update documentation
+    * #2593: Contextual / Adaptive authentication / Risk-based authentication
+    * #2599: Certificate reset templates are not translated
+    * #2601: RESTProxy authentication does not support Impersonation
+    * #2602: Export OIDC grant type in rules
+    * #2604: Append an option to normalize HTTP headers with CheckDevOps plugin
+    * #2605: llnglanguage cookie will be rejected if sameSite attribute is not set
+    * #2609: Better history management for plugins
+    * #2614: display precise error while sending direct SOAP SAML message
+    * #2617: SafeJail must be enabled with CheckDevOps plugin
+    * #2619: Brazilian translation
+    * #2621: SAML: HTTP-Artifact mode should be discouraged
+    * #2625: Add an option to encrypt TOTP secrets
+    * #2627: Append an option in Manager to be able to set RULES_URL param
+    * #2638: Redirect to 2fregisters is missing a slash
+    * #2644: No error displayed in logs in DevOps Handler when rules file can't be downloaded
+    * #2646: bruteForceProtectionMaxAge and bruteForceProtectionMaxLockTime missing from manager
+    * #2647: Display logins history with CheckUser plugin
+    * #2649: Portal plugins should not require an "init" method
+    * #2651: Hebrew Translation
+    * #2654: CAS temporary tickets should have a short expiration time
+    * #2657: Hidden attributes, custom functions and plugins declarations are inconsistent
+    * #2662: CheckUser plugin: Append a rule to allow some users to display hidden attributes
+    * #2664: impossible to use getModule in the Password modules
+    * #2667: Add RP confkey to oidcGenerateUserInfoResponse plugin hook
+    * #2668: CheckDevOps: prevent portal crash/loop if a bad rules.json file is provided
+    * #2672: DBI password hash list is too restrictive
+    * #2673: Allow to configure multiple service URL per CAS application
+    * #2679: CheckDevOps: Append an option to check if used attributes are existing
+    * #2683: Possibility to set an activation rule for "remember me" option
+    * #2685: DevOps handler uses default HTTPS redirection if no VH is defined
+    * #2694: Chrome warns about compromised data when using form replay
+    * #2698: Avoid useless warning messages in log
+
+  * Templates:
+    * #2325: "Warn on new network location" plugin
+    * #2570: RGAA: Adding a role attribute into messages
+    * #2577: RGAA: placeholder only should not be used as label
+    * #2597: External password reset URL is called with skin= and url= parameters
+
+ -- Clément <clem.oudot@gmail.com>  Sat, 19 Feb 2022 17:49:18 +0100
+
 lemonldap-ng (2.0.13) focal; urgency=medium
 
   * Bugs:
