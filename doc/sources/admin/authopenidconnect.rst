@@ -132,13 +132,13 @@ For example:
     you need to set SameSite cookie value to "Lax" or "None".
     See :doc:`SSO cookie parameters<ssocookie>`
 
-After registration, the OP must give you a client ID and a client
-secret, that will be used to configure the OP in LL::NG.
+After registration, the OP must give you a *Client ID* and a *Client
+secret* required to configure the OP in LL::NG.
 
 Declare the OpenID Connect Provider in LL::NG
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In the Manager, select node ``OpenID Connect Providers`` and click on
+In Manager, select node ``OpenID Connect Providers`` and click on
 ``Add OpenID Connect Provider``. Set a technical name (without space or
 special character) like "sample-op".
 
@@ -183,24 +183,24 @@ JWKS data
 ^^^^^^^^^
 
 JWKS is a JSON file containing public keys. LL::NG can grab them
-automatically if jwks_uri is defined in metadata. Else you can paste the
-content of the JSON file in the textarea.
+automatically if jwks_uri is defined in metadata. Else you can paste
+the JSON file content in the textarea.
 
 
 .. tip::
 
     If the OpenID Connect provider only uses symmetric encryption,
-    JWKS data is not useful.
+    JWKS data are useless.
 
 Exported attributes
 ^^^^^^^^^^^^^^^^^^^
 
 Define here mapping between LL::NG session content and fields
-provided in UserInfo endpoint response. The fields are defined in
+provided in UserInfo endpoint response. These fields are defined in
 `OpenID Connect standard <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__,
-and depends on the scope requested by LL::NG (see options in next chapter).
+and depends on the scope requested by LL::NG (see options below).
 
-So you can define for example:
+So you can define by example:
 
 -  cn => name
 -  sn => family_name

@@ -10,7 +10,7 @@ Presentation
     OpenID Connect is a protocol based on REST, OAuth 2.0 and JOSE
     stacks. It is described here: http://openid.net/connect/.
 
-LL::NG can act as an OpenID Connect Provider (OP). It will answer to
+LL::NG can act as an OpenID Connect Provider (OP). It will reply to
 OpenID Connect requests to give user identity (through ID Token) and
 information (through UserInfo endpoint).
 
@@ -179,7 +179,7 @@ For each OpenID Connect attribute you want to release to applications, you can d
 
 .. attention::
 
-    The specific ``sub`` attribute is not defined here, but in User attribute parameter (see below).
+    The specific ``sub`` attribute is not defined here, but in ``User attribute`` parameter (see below).
 
 
 .. _oidcextraclaims:
@@ -365,7 +365,7 @@ The Resource Owner Password Credentials Grant allows you to exchange a user's lo
 
 .. versionchanged:: 2.0.12
 
-   when using the :doc:`Choice <authchoice>` authentication module, the *Choice used for password authentication* setting can be used to select which authentication choice is used by the Resource Owner Password Credentials Grant. Naturally, the selected choice must be a password-based authentication method (LDAP, DBI, REST, etc.)
+   When using the :doc:`Choice <authchoice>` authentication module, the *Choice used for password authentication* setting can be used for selecting which authentication choice is used by the Resource Owner Password Credentials Grant. Naturally, the selected choice must be a password-based authentication method (LDAP, DBI, REST, etc.).
 
 .. seealso::
 
@@ -388,12 +388,12 @@ The following attributes are made available in the created session:
 * The ``_clientConfKey`` attribute is set to the LemonLDAP::NG configuration
   key for the client that obtained the access token.
 
-The Access Rule, if defined, will have access to those variables, as well as
+The **Access Rule**, if defined, will have access to those variables, as well as
 the `@ENV` array. You can use it to restrict the use of this grant to
 pre-determined scopes, a particular IP address, etc.
 
-These session attribute will be released on the UserInfo endpoint if they are
-mapped to Exported Attributes and Extra Claims
+These session attributes will be released on the UserInfo endpoint if they are
+mapped to **Exported Attributes** and **Extra Claims**.
 
 .. seealso::
 

@@ -30,7 +30,7 @@ values unless you have a specific need to change them.
 
 .. tip::
 
-    The end points are published inside JSON metadata.
+    These endpoints are published inside JSON metadata.
 
 Authentication context
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -74,18 +74,20 @@ sessions, else they will be stored in main sessions storage.
 Dynamic Registration
 ~~~~~~~~~~~~~~~~~~~~
 
--  **Activation**: Set to 1 to allow clients to register
-   themselves. This may be a security risk as this will create a new
-   configuration in the backend per registration request. You can restrict
-   this by protecting the WebServer registration endpoint with
-   an authentication module, and give the credentials to clients.
+-  **Activation**: Set to 1 to allow clients to register themselves
 
-If dynamic registration is enabled, you can configure the following
+If **Dynamic Registration** is enabled, you can configure the following
 options to define attributes and extra claims released when a new relying
 party is registered through ``/oauth2/register`` endpoint:
 
 -  **Exported vars**
 -  **Extra claims**
+
+.. warning::
+    Dynamic Registration can be a security risk because a new configuration
+    will be created in the backend for each registration request.
+    You can restrict this by protecting the WebServer registration endpoint
+    with an authentication module, and give credentials to clients.
 
 Keys rotation script
 --------------------
