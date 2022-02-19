@@ -80,7 +80,7 @@ ENDKEY
       expectForm( $res, "", '/webauthn2fcheck', 'token', 'credential' );
 
     my ($json) = $res->[2]->[0] =~
-      m#<script type="application/init">\s*({"request"[^<]*})\s*</script>#ms;
+      m#<script type="application/init">\s*(\{"request"[^<]*\})\s*</script>#ms;
     ok( $json, "Found request object in JS data" );
     $json = from_json($json);
     my $request   = $json->{request};
