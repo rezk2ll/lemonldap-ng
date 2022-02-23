@@ -30,6 +30,7 @@ Applications
    applications/jitsimeet
    applications/liferay
    applications/limesurvey
+   applications/mailman
    applications/matrix
    applications/mattermost
    applications/mediawiki
@@ -115,6 +116,7 @@ Application                                                       Configuration 
 .. image:: applications/logo-jitsimeet.png                        :doc:`Jitsi Meet<applications/jitsimeet>`            ✔
 .. image:: applications/liferay_logo.png                          :doc:`Liferay<applications/liferay>`                 ✔
 .. image:: applications/limesurvey_logo.png                       :doc:`LimeSurvey<applications/limesurvey>`           ✔
+.. image:: applications/mailman.jpg                               :doc:`Mailman<applications/mailman>`                                                        ✔
 .. image:: applications/matrix_logo.png                           :doc:`Matrix<applications/matrix>`                                                          ✔
 .. image:: applications/mattermost_logo.png                       :doc:`Mattermost<applications/mattermost>`                                                  ✔
 .. image:: applications/mediawiki_logo.png                        :doc:`Mediawiki<applications/mediawiki>`             ✔
