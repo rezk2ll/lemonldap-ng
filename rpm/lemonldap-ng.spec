@@ -31,7 +31,10 @@ Name:           lemonldap-ng
 Version:        2.16.2
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        Web Single Sign On (SSO) and Access Management
-License:        GPLv2+
+# Lemonldap-ng itself is GPLv2+
+# Qrious bundled javascript library is GPLv3+
+# All other bundled javascript libraries are MIT
+License:        GPLv2+ and MIT and GPLv3+
 URL:            https://lemonldap-ng.org
 Source0:        https://release.ow2.org/lemonldap/%{name}-%{version}%{?pre_release:~%{pre_release}}.tar.gz
 BuildArch:      noarch
@@ -259,6 +262,11 @@ This package deploys the Apache Handler.
 Summary:        LemonLDAP-NG administration interface
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Manager) = %{version}-%{release}
+Provides:       bundled(js-angular) = 1.7.9
+Provides:       bundled(js-angular-bootstrap) = 2.5.0
+Provides:       bundled(js-angular-ui-tree) = 2.22.6
+Provides:       bundled(js-es5-shim)
+Provides:       bundled(js-filesaver)
 
 %description manager
 This package deploys the administration interface and sessions explorer.
@@ -271,6 +279,11 @@ Requires:       perl(Lemonldap::NG::Portal) = %{version}-%{release}
 Requires:       perl(Net::Facebook::Oauth2)
 Requires:       perl(Net::OAuth)
 Requires:       perl(Net::OpenID::Consumer)
+Provides:       bundled(js-bootstrap) = 4.5.2
+Provides:       bundled(js-fingerprint2) = 2.1.4
+Provides:       bundled(js-jquery) = 3.5.1
+Provides:       bundled(js-jquery-ui) = 1.13.2
+Provides:       bundled(js-qrious)
 
 %description portal
 This package deploys the authentication portal.
