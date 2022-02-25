@@ -121,7 +121,19 @@ sub handler {
 
 sub authenticated {
     my ( $self, $req ) = @_;
-    return $self->sendJSONresponse( $req, { status => 1 } );
+
+    return $self->do(
+        $req,
+        [
+            'importHandlerData',
+            'controlUrl',
+            @{ $self->forAuthUser },
+            sub {
+                $req->response($self->sendJSONresponse( $req, { status => 1 } ));
+                return PE_SENDRESPONSE;
+            }
+        ]
+    );
 }
 
 sub pleaseAuth {
