@@ -180,7 +180,7 @@ Obsolete Backends                                                    Authenticat
 Second factor (:doc:`documentation<secondfactor>`)                   Authentication
 ==================================================================== ==============
 :doc:`TOTP-or-U2F<utotp2f>` |new|                                    ✔
-:doc:`U2F<u2f>` |new|                                                ✔
+:doc:`U2F<u2f>` |deprecated|                                         ✔
 :doc:`TOTP<totp2f>` *(Google Authenticator,...)* |new|               ✔
 :doc:`E-mail Second Factor<mail2f>` |new|                            ✔
 :doc:`External Second Factor<external2f>` *(OTP, SMS,...)* |new|     ✔

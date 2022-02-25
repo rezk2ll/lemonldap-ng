@@ -9,11 +9,13 @@ two-factor authentication using specialized USB or NFC devices.
 LLNG can propose to users to register their keys. When done, 2F
 registered users can not login without using their key.
 
+.. warning::
 
-.. tip::
-
-    Note that it's a second factor, not an authentication module.
-    Users are authenticated by both login form and U2F form.
+    Since February 2022, U2F is considered to be deprecated in Chrome and its
+    derivatives. Administrators must migrate to :doc:`WebAuthn <webauthn2f>`
+    instead. U2F security keys are compatible with WebAuthn but require a
+    :ref:`migration step <migrateu2ftowebauthn>` to be performed in
+    LemonLDAP::NG.
 
 Prerequisites and dependencies
 ------------------------------
