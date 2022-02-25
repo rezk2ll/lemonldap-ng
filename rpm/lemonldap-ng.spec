@@ -34,7 +34,8 @@ Summary:        Web Single Sign On (SSO) and Access Management
 # Lemonldap-ng itself is GPLv2+
 # Qrious bundled javascript library is GPLv3+
 # All other bundled javascript libraries are MIT
-License:        GPLv2+ and MIT and GPLv3+
+# Fontawesome bundled font is OFL
+License:        GPLv2+ and MIT and GPLv3+ and OFL
 URL:            https://lemonldap-ng.org
 Source0:        https://release.ow2.org/lemonldap/%{name}-%{version}%{?pre_release:~%{pre_release}}.tar.gz
 BuildArch:      noarch
@@ -279,6 +280,7 @@ Requires:       perl(Lemonldap::NG::Portal) = %{version}-%{release}
 Requires:       perl(Net::Facebook::Oauth2)
 Requires:       perl(Net::OAuth)
 Requires:       perl(Net::OpenID::Consumer)
+Provides:       bundled(fontawesome-fonts) = 4.7.0
 Provides:       bundled(js-bootstrap) = 4.5.2
 Provides:       bundled(js-fingerprint2) = 2.1.4
 Provides:       bundled(js-jquery) = 3.5.1
