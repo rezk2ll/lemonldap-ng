@@ -552,7 +552,7 @@ sub tests {
             }
 
             # Use WebAuthn
-            if (   $conf->{webauthn2fActivation}
+            if (   $conf->{webauthn2fActivation} )
             {
                 eval "use Authen::WebAuthn";
                 return ( 1,
@@ -561,12 +561,10 @@ sub tests {
             }
 
             # WebAuthn requires https://
-            if (   $conf->{webauthn2fActivation}
+            if (   $conf->{webauthn2fActivation} )
             {
                 my $portal_uri = URI->new($conf->{portal});
-                if ($portal_uri->scheme eq "https") {
-                    return 1;
-                } else {
+                unless ($portal_uri->scheme eq "https") {
                     return ( 1,
                         "WebAuthn requires HTTPS"
                     );
