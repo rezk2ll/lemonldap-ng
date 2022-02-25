@@ -6,6 +6,7 @@ use strict;
 use Lemonldap::NG::Common::Regexp;
 use Lemonldap::NG::Handler::Main;
 use Lemonldap::NG::Common::Util qw(getSameSite);
+use URI;
 
 our $VERSION = '2.0.14';
 
@@ -548,6 +549,28 @@ sub tests {
                 return ( 1,
 "Crypt::U2F::Server::Simple module is required to enable U2F"
                 ) if ($@);
+            }
+
+            # Use WebAuthn
+            if (   $conf->{webauthn2fActivation}
+            {
+                eval "use Authen::WebAuthn";
+                return ( 1,
+"Authen::WebAuthn module is required to enable WebAuthn"
+                ) if ($@);
+            }
+
+            # WebAuthn requires https://
+            if (   $conf->{webauthn2fActivation}
+            {
+                my $portal_uri = URI->new($conf->{portal});
+                if ($portal_uri->scheme eq "https") {
+                    return 1;
+                } else {
+                    return ( 1,
+                        "WebAuthn requires HTTPS"
+                    );
+                }
             }
 
             # Use Yubikey
