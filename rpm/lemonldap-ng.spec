@@ -35,10 +35,10 @@
 #==============================================================================
 Name:           lemonldap-ng
 Version:        2.0.14
-Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
+Release:        %{?pre_release:0.}2%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        LemonLDAP-NG WebSSO
 License:        GPLv2+
-URL:            http://lemonldap-ng.org
+URL:            https://lemonldap-ng.org
 Source0:        https://release.ow2.org/lemonldap/%{name}-%{version}%{?pre_release:~%{pre_release}}.tar.gz
 BuildArch:      noarch
 
@@ -151,7 +151,7 @@ BuildRequires:  perl(Regexp::Assemble)
 BuildRequires:  perl(Regexp::Common)
 BuildRequires:  perl(Safe)
 BuildRequires:  perl(Scalar::Util)
-%if 0%{?fedora}%{?el8}
+%if ! 0%{?el7}
 BuildRequires:  perl(Sentry::Raven)
 %endif
 BuildRequires:  perl(SOAP::Lite)
@@ -172,26 +172,26 @@ BuildRequires:  perl(URI::Escape)
 BuildRequires:  perl(URI::URL)
 BuildRequires:  perl(utf8)
 BuildRequires:  perl(warnings)
-%if 0%{?fedora}%{?el8}
+%if ! 0%{?el7}
 BuildRequires:  perl(Web::ID)
 %endif
 BuildRequires:  perl(XML::LibXML)
 BuildRequires:  perl(XML::LibXSLT)
 BuildRequires:  perl(XML::Simple)
 BuildRequires:  perl(YAML)
-%if 0%{?fedora}
+%if 0%{?fedora}%{?el9}
 BuildRequires:  systemd-rpm-macros
 %else
 BuildRequires:  systemd
 %endif
 
 # Doc
-%if 0%{?fedora}%{?el8}
-BuildRequires:  python3-sphinx-bootstrap-theme
-BuildRequires:  python3-sphinx
-%else
+%if 0%{?el7}
 BuildRequires:  python-sphinx
 BuildRequires:  python2-sphinx-bootstrap-theme
+%else
+BuildRequires:  python3-sphinx-bootstrap-theme
+BuildRequires:  python3-sphinx
 %endif
 
 Requires: lemonldap-ng-conf = %{version}-%{release}
@@ -201,7 +201,7 @@ Requires: lemonldap-ng-manager = %{version}-%{release}
 Requires: lemonldap-ng-portal = %{version}-%{release}
 Requires: lemonldap-ng-test = %{version}-%{release}
 
-%if 0%{?with_selinux} && 0%{?fedora}%{?el8}
+%if 0%{?with_selinux} && ! 0%{?el7}
 # ! Not available in Centos7, you need to install lemonldap-ng-selinux manually
 # This ensures that the *-selinux package and all it’s dependencies are not pulled
 # into containers and other systems that do not use SELinux
@@ -213,6 +213,7 @@ Requires:        (%{name}-selinux if selinux-policy-%{selinuxtype})
 %{?perl_default_filter}
 %{?el7:%global __requires_exclude perl\\(Lasso|perl\\(Web::ID|perl\\(Sentry::Raven}
 %{?el8:%global __requires_exclude perl\\(Lasso}
+%{?el9:%global __requires_exclude perl\\(Lasso}
 
 
 %description
@@ -749,6 +750,9 @@ fi
 # Changelog
 #==============================================================================
 %changelog
+* Thu Feb 24 2022 Xavier Bachelot <xavier@bachelot.org> - 2.0.14-2
+- Prepare for EL9 support
+
 * Sat Feb 19 2022 Clement Oudot <clem.oudot@gmail.com> - 2.0.14-1
 - Update to 2.0.14
 
