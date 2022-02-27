@@ -479,13 +479,10 @@ sub buildHybridAuthnResponse {
     return $response_url;
 }
 
-# Get Token response with authorization code
-# @param op OpenIP Provider configuration key
-# @param code Code
-# @param auth_method Authentication Method
-# return String Token response decoded content
-sub getAuthorizationCodeAccessToken {
-    my ( $self, $req, $op, $code, $auth_method ) = @_;
+sub getAccessTokenFromTokenEndpoint {
+    my ( $self, $req, $op, $grant_type, $grant_options ) = @_;
+
+    $grant_options ||= {};
 
     my $client_id =
       $self->conf->{oidcOPMetaDataOptions}->{$op}
@@ -493,9 +490,9 @@ sub getAuthorizationCodeAccessToken {
     my $client_secret =
       $self->conf->{oidcOPMetaDataOptions}->{$op}
       ->{oidcOPMetaDataOptionsClientSecret};
-    my $redirect_uri = $self->getCallbackUri($req);
     my $access_token_uri =
       $self->oidcOPList->{$op}->{conf}->{token_endpoint};
+
     unless ($access_token_uri) {
         $self->logger->error(
             "Could not build Token request: no
@@ -504,10 +501,14 @@ sub getAuthorizationCodeAccessToken {
         return 0;
     }
 
-    my $grant_type = "authorization_code";
+    my $auth_method =
+      $self->conf->{oidcOPMetaDataOptions}->{$op}
+      ->{oidcOPMetaDataOptionsTokenEndpointAuthMethod}
+      || 'client_secret_post';
 
     unless ( $auth_method =~ /^client_secret_(basic|post)$/o ) {
-        $self->logger->error("Bad authentication method on token endpoint");
+        $self->logger->error(
+            "Bad authentication method on token endpoint for OP $op");
         return 0;
     }
 
@@ -516,9 +517,8 @@ sub getAuthorizationCodeAccessToken {
 
     my $response;
     my $token_request_params = {
-        code         => $code,
-        redirect_uri => $redirect_uri,
-        grant_type   => $grant_type
+        grant_type => $grant_type,
+        %{$grant_options}
     };
 
     # Call oidcGenerateTokenRequest
@@ -534,7 +534,6 @@ sub getAuthorizationCodeAccessToken {
             "Content-Type" => 'application/x-www-form-urlencoded',
         );
     }
-
     elsif ( $auth_method eq "client_secret_post" ) {
         $token_request_params->{client_id}     = $client_id;
         $token_request_params->{client_secret} = $client_secret;
@@ -547,12 +546,26 @@ sub getAuthorizationCodeAccessToken {
     }
 
     if ( $response->is_error ) {
-        $self->logger->error(
-            "Bad authorization response: " . $response->message );
+        $self->logger->error( "Bad token response: " . $response->message );
         $self->logger->debug( $response->content );
         return 0;
     }
     return $response->decoded_content;
+}
+
+# Get Token response with authorization code
+# @param op OpenIP Provider configuration key
+# @param code Code
+# @param auth_method Authentication Method (optional)
+# return String Token response decoded content
+sub getAuthorizationCodeAccessToken {
+    my ( $self, $req, $op, $code ) = @_;
+
+    my $redirect_uri = $self->getCallbackUri($req);
+
+    return $self->getAccessTokenFromTokenEndpoint( $req, $op,
+        "authorization_code",
+        { code => $code, redirect_uri => $redirect_uri } );
 }
 
 # Check validity of Token Response

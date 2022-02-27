@@ -138,14 +138,9 @@ sub extractFormInfo {
 
         # Get access_token and id_token
         my $code = $req->param("code");
-        my $auth_method =
-          $self->conf->{oidcOPMetaDataOptions}->{$op}
-          ->{oidcOPMetaDataOptionsTokenEndpointAuthMethod}
-          || 'client_secret_post';
 
         my $content =
-          $self->getAuthorizationCodeAccessToken( $req, $op, $code,
-            $auth_method );
+          $self->getAuthorizationCodeAccessToken( $req, $op, $code );
         return PE_OIDC_AUTH_ERROR unless $content;
 
         my $token_response = $self->decodeTokenResponse($content);
