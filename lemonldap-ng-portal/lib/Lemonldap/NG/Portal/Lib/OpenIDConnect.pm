@@ -18,6 +18,7 @@ use Lemonldap::NG::Common::JWT
   qw(getAccessTokenSessionId getJWTPayload getJWTHeader getJWTSignature getJWTSignedData);
 use MIME::Base64
   qw/encode_base64 decode_base64 encode_base64url decode_base64url/;
+use Scalar::Util qw/looks_like_number/;
 use Mouse;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT);
@@ -701,6 +702,134 @@ sub checkIDTokenValidity {
     }
 
     return 1;
+}
+
+# Returns the current OP and a valid Access token
+sub getUserInfoParams {
+    my ( $self, $req ) = @_;
+
+    my $op = $req->data->{_oidcOPCurrent};
+
+    if ($op) {
+
+        # We are in the middle of an auth process,
+        # access token has just been fetched already
+        my $access_token = $req->data->{access_token};
+        return ( $op, $access_token );
+    }
+    else {
+        # Get OP and access token from existing session (refresh)
+        return $self->getUserInfoParamsFromSession($req);
+    }
+}
+
+sub getUserInfoParamsFromSession {
+    my ( $self, $req ) = @_;
+    my $op = $req->userData->{_oidc_OP};
+
+    # Save current OP, we will need it for setSessionInfo & friends
+    $req->data->{_oidcOPCurrent} = $op;
+
+    if ($op) {
+        my $access_token     = $req->userData->{_oidc_access_token};
+        my $access_token_eol = $req->userData->{_oidc_access_token_eol};
+        if ($access_token_eol) {
+            return $self->refreshAccessTokenIfExpired( $req, $op );
+        }
+        else {
+            # We don't know the TTL for this access token,
+            # so we can only hope that it works
+            return ( $op, $access_token );
+        }
+    }
+    else {
+        $self->logger->warn("No OP found in session");
+        return ( $op, undef );
+    }
+}
+
+sub refreshAccessTokenIfExpired {
+    my ( $self, $req, $op, $session ) = @_;
+
+    # Handle unauthenticated OIDC calls
+    my $data = $session ? $session->data : $req->userData;
+
+    my $access_token     = $data->{_oidc_access_token};
+    my $access_token_eol = $data->{_oidc_access_token_eol};
+    if ( time < $access_token_eol ) {
+
+        # Access Token is still valid, return it
+        return ( $op, $access_token );
+    }
+    else {
+        # Refresh Access Token
+        return ( $op, $self->refreshAccessToken( $req, $op, $session ) );
+    }
+}
+
+sub refreshAccessToken {
+    my ( $self, $req, $op, $session ) = @_;
+
+    # Handle unauthenticated OIDC calls
+    my $data       = $session ? $session->data : $req->userData;
+    my $session_id = $session ? $session->id   : $req->id;
+
+    my $refresh_token = $data->{_oidc_refresh_token};
+
+    if ($refresh_token) {
+
+        my $content =
+          $self->getAccessTokenFromTokenEndpoint( $req, $op, 'refresh_token',
+            { refresh_token => $refresh_token } );
+
+        if ($content) {
+            my $token_response = $self->decodeTokenResponse($content);
+            if ($token_response) {
+
+                my $access_token  = $token_response->{access_token};
+                my $expires_in    = $token_response->{expires_in};
+                my $refresh_token = $token_response->{refresh_token};
+
+                undef $expires_in unless looks_like_number($expires_in);
+
+                $self->logger->debug("Access token: $access_token");
+                $self->logger->debug( "Access token expires in: "
+                      . ( $expires_in || "<unknown>" ) );
+                $self->logger->debug(
+                    "Refresh token: " . ( $refresh_token || "<none>" ) );
+
+                my $updateSession;
+
+                # Remember tokens
+                $updateSession->{_oidc_access_token}  = $access_token;
+                $updateSession->{_oidc_refresh_token} = $refresh_token
+                  if $refresh_token;
+
+                # If access token TTL is given save expiration date
+                # (with security margin)
+                if ($expires_in) {
+                    $updateSession->{_oidc_access_token_eol} =
+                      time + ( $expires_in * 0.9 );
+                }
+
+                $self->p->updateSession( $req, $updateSession, $session_id );
+
+                return ($access_token);
+            }
+            else {
+                $self->logger->warn("Could not decode Token Response for $op");
+                return undef;
+            }
+        }
+        else {
+            $self->logger->warn("Could not fetch new Access Token for $op");
+            return undef;
+        }
+    }
+    else {
+        $self->logger->warn("No Refresh Token was found for $op");
+        return undef;
+    }
 }
 
 # Get UserInfo response
