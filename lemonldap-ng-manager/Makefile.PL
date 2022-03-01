@@ -12,6 +12,7 @@ WriteMakefile(
         'IO::String'     => 0,
         'Regexp::Common' => 0,
         'Test::Pod'      => 1.00,
+        'Test::Output'   => 0,
     },
     META_MERGE => {
         recommends => {
@@ -26,7 +27,7 @@ WriteMakefile(
             MailingList => 'mailto:lemonldap-ng-dev@ow2.org',
             license     => 'http://opensource.org/licenses/GPL-2.0',
             homepage    => 'https://lemonldap-ng.org/',
-            bugtracker =>
+            bugtracker  =>
               'https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues',
             x_twitter => 'https://twitter.com/lemonldapng',
         },
