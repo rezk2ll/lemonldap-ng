@@ -1580,6 +1580,12 @@ sub _handleRefreshTokenGrant {
             return $self->sendOIDCError( $req, 'invalid_grant', 400 );
         }
 
+        my $h = $self->p->processHook( $req, 'oidcGotOnlineRefresh', $rp,
+            $refreshSession->data, $session->data );
+        if ( $h != PE_OK ) {
+            return $self->sendOIDCError( $req, 'server_error', 500 );
+        }
+
         # Generate access_token
         $access_token = $self->newAccessToken(
             $req, $rp,
@@ -1637,6 +1643,12 @@ sub _handleRefreshTokenGrant {
         $session = $refreshSession;
         for ( keys %{ $req->sessionInfo } ) {
             $refreshSession->data->{$_} = $req->sessionInfo->{$_};
+        }
+
+        my $h = $self->p->processHook( $req, 'oidcGotOfflineRefresh', $rp,
+            $refreshSession->data );
+        if ( $h != PE_OK ) {
+            return $self->sendOIDCError( $req, 'server_error', 500 );
         }
 
         # Generate access_token
