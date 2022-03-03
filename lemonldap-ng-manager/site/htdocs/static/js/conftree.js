@@ -425,6 +425,14 @@ function templates(tpl,key) {
       "type" : "keyTextContainer"
    },
    {
+      "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataScopeRules",
+      "default" : [],
+      "help" : "idpopenidconnect.html#scope-rules",
+      "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataScopeRules",
+      "title" : "oidcRPMetaDataScopeRules",
+      "type" : "keyTextContainer"
+   },
+   {
       "_nodes" : [
          {
             "_nodes" : [
@@ -733,14 +741,6 @@ function templates(tpl,key) {
       "help" : "exportedvars.html#extend-variables-using-macros-and-groups",
       "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
       "title" : "oidcRPMetaDataMacros",
-      "type" : "keyTextContainer"
-   },
-   {
-      "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataScopeRules",
-      "default" : [],
-      "help" : "idpopenidconnect.html#scope-rules",
-      "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataScopeRules",
-      "title" : "oidcRPMetaDataScopeRules",
       "type" : "keyTextContainer"
    },
    {
