@@ -20,15 +20,15 @@ LL::NG can act as an OpenID Connect Relying Party (RP) towards multiple
 OpenID Connect Providers (OP). It will get the user identity through an
 ID Token, and grab user attributes through UserInfo endpoint.
 
-As an RP, LL::NG supports a lot of OpenID Connect features:
+As an RP, LL::NG supports many OpenID Connect features:
 
--  Authorization Code flow
+-  Authorization Code, Implicit and Hybrid flows
 -  Automatic download of JWKS
 -  JWT signature verification
 -  Access Token Hash verification
 -  ID Token validation
 -  Get UserInfo as JSON or as JWT
--  Logout on EndSession end point
+-  Logout on EndSession endpoint
 
 You can use this authentication module to link your LL::NG server to any
 OpenID Connect Provider. Here are some examples, with their specific
@@ -60,11 +60,11 @@ Google          France Connect     Pro Santé Connect
 
 .. attention::
 
-    OpenID Connect specification is not finished for logout
-    propagation. So logout initiated by relaying-party will be forward to
+    OpenID Connect specification is not achieved for logout propagation.
+    So logout initiated by relaying-party will be forwarded to
     OpenID Connect provider but logout initiated by the provider (or another
-    RP) will not be propagated. LLNG will implement this when spec will be
-    published.
+    RP) will not be propagated. LL::NG will implement this when specification
+    is published.
 
 Configuration
 -------------
@@ -93,11 +93,11 @@ In ``General Parameters`` > ``Authentication modules``, set:
 .. attention::
 
     Browser implementations of formAction directive are
-    inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome
+    inconsistent (e.g. Firefox does not block the redirects whereas Chrome
     does). Administrators may have to modify formAction value with wildcard
     likes \*.
 
-    In Manager, go in :
+    In Manager, go in:
 
     ``General Parameters`` > ``Advanced Parameters`` > ``Security`` >
     ``Content Security Policy`` > ``Form destination``
@@ -118,7 +118,7 @@ Register LL::NG to an OpenID Connect Provider
 To register LL::NG, you will need to give some information like
 application name or logo.
 
-You will be asked to provide a *Redirect URI* for LL::NG, which is constructed 
+You will be prompted to provide a *Redirect URI* for LL::NG, which is built 
 by appending the ``openidconnectcallback=1`` parameter to the Portal URL.
 
 For example:

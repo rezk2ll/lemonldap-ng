@@ -1,10 +1,10 @@
 Writing rules and headers
 =========================
 
-Lemonldap::NG manages applications by their hostname (Apache's
-virtualHosts). Rules are used to protect applications, headers are HTTP
-headers added to the request to give datas to the application (for logs,
-profiles,...).
+LL::NG manages applications by their hostname (Apache's
+Virtual Hosts or Nginx Block Servers). Rules are used for protecting applications,
+and HTTP headers are appended to each request for sending datas to protected
+applications (for logs, profiles,...).
 
 
 .. attention::
@@ -12,12 +12,12 @@ profiles,...).
     Note that variables designed by $xx correspond to the
     name of the :doc:`exported variables<exportedvars>` or
     :ref:`macro names<macros_and_groups>` except for ``$ENV{<cgi-header>}`` which
-    correspond to CGI header (``$ENV{REMOTE_ADDR}`` for example).
+    correspond to CGI headers (``$ENV{REMOTE_ADDR}`` for example).
 
 Available $ENV variables
 ------------------------
 
-The %ENV table provides:
+The %ENV hash provides:
 
 -  all headers in CGI format (``User-Agent`` becomes
    ``HTTP_USER_AGENT``)
@@ -30,7 +30,7 @@ The %ENV table provides:
    -  For Nginx handler: all variables given by ``fastcgi_param``
       commands.
 
--  For portal:
+-  For Portal:
 
    -  $ENV{urldc} : Origin URL before Handler redirection, in cleartext
    -  $ENV{_url} : Origin URL before Handler redirection, base64 encoded
@@ -62,29 +62,28 @@ Makes authentication optional, but authenticated users are seen as such (that is
 Restrict access to the whole site to users that have the LDAP description field set to "LDAP administrator" (must be set in exported variables) default
 =============================================================================================================================================== ================== ======================================
 
-The "**default**" access rule is used if no other access rule match the
+The "**default**" access rule is used if none rule matches the
 current URL.
 
 
 .. tip::
 
-    See :doc:`the rules examples page<rules_examples>` for a few
+    See :doc:`the rule examples page<rules_examples>` for few
     common use cases
 
 
 .. tip::
 
 
-
-    -  Comments can be used to order your rules: rules are applied in the
-       alphabetical order of comment (or regexp in there is no comment). See
+    -  Comments can be employed for ordering your rules: rules are applied depending on
+       comment alphabetical order (or regexp if no comment is defined). See
        :ref:`security chapter<security-write-good-rules>` to learn more
-       about writing good rules.
-    -  See :ref:`performances<performances-handler-performance>` to know how
-       to use macros and groups in rules.
+       about rules best practice.
+    -  See :ref:`performances<performances-handler-performance>` to learn how
+       using macros and groups in rules.
 
 
-Rules can also be used to intercept logout URL:
+Rules can also be used for intercepting logout URL:
 
 ================================================================================================================= =================== =====================================
 Goal                                                                                                              Regular expression  Rule
@@ -98,24 +97,24 @@ Logout user from current application and from Lemonldap::NG and redirect it to h
 .. danger::
 
     \ ``logout_app`` and ``logout_app_sso`` rules are not
-    available on Nginx, only on Apache.
+    available with Nginx, Apache ONLY.
 
-By default, user will be redirected on portal if no URL defined, or on
-the specified URL if any.
+By default, users will be redirected to the Portal if no URL is defined,
+or to the specified URL if exists.
 
 
 .. attention::
 
     Only current application is concerned by logout_app\*
-    targets. Be careful with some applications which doesn't verify
-    Lemonldap::NG headers after having created their own cookies. If so, you
-    can redirect users to a HTML page that explain that it is safe to close
-    browser after disconnect.
+    targets. Be careful with some applications which does not check
+    headers sent by LL::NG after having created their own application cookies.
+    If so, you can redirect users to a HTML page that explain that it is better
+    to close browser after logout.
 
 Rules based on authentication level
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-LLNG set an "authentication level" during authentication process. This
+LL::NG set an "authentication level" during authentication process. This
 level depends on authentication backend used by this user. Default
 values are:
 
@@ -142,8 +141,8 @@ There are three ways to impose users a higher authentication level:
 
 .. tip::
 
-    Instead of returning a 403 code, "minimum level" returns user
-    to a form that explain that a higher level is required and propose to
+    Instead of returning a 403 code, "minimum level" returns users
+    to a form that explains that a higher level is required and propose to
     reauthenticate himself.
 
 .. _headers:
@@ -152,8 +151,8 @@ Headers
 -------
 
 Headers are associations between an header name and a perl expression
-that returns a string. Headers are used to give user data to the
-application.
+that returns a value. Headers are used for sending user data to protected
+applications.
 
 Examples:
 
@@ -175,7 +174,7 @@ use macros, local macros,...
 
     -  Since many HTTP servers refuse non ascii headers, it is recommended
        to use encode_base64() function to transmit those headers
-    -  Don't forget to add an empty string as second argument to
+    -  Do not forget to add an empty string as second argument to
        encode_base64 function to avoid a "newline" characters insertion in
        result
     -  Header names must contain only letters and "-" character.
@@ -189,7 +188,7 @@ use macros, local macros,...
 
     By default, SSO cookie is hidden. So protected applications
     cannot retrieve SSO session key. But you can forward this key if
-    absolutely needed:
+    absolutely needed (NOT recommanded because can be a security issue):
 
     ::
 
@@ -203,7 +202,7 @@ Available functions
 In addition to macros and name, you can use some functions in rules and
 headers:
 
--  :doc:`LLNG extended functions<extendedfunctions>`
+-  :doc:`LL::NG extended functions<extendedfunctions>`
 -  :doc:`Your custom functions<customfunctions>`
 
 Wildcards in hostnames
@@ -215,8 +214,8 @@ aliases !): ``*.example.com`` matches all hostnames that belong to
 wildcards such as ``test-*.example.com`` or ``test-%.example.com``. The
 ``%`` wilcard doesn't match subdomains.
 
-Even if a wildcard exists, if a virtualhost is explicitly declared, this
-rule is applied. Example with precedence order for test.sub.example.com:
+Even if a wildcard exists, if a VirtualHost is explicitly declared, this
+rule will be applied. Example with precedence order for test.sub.example.com:
 
 #. test.sub.example.com
 #. test%.sub.example.com

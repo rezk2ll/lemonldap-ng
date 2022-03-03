@@ -51,7 +51,7 @@ IssuerDB
 Go in ``General Parameters`` » ``Issuer modules`` » ``OpenID Connect``
 and configure:
 
--  **Activation**: set to ``On``
+-  **Activation**: Set to ``On``
 -  **Path**: Keep ``^/oauth2/`` unless you need to use another path
 -  **Use rule**: Rule to allow user to use this module, set to ``1``
    to always allow
@@ -150,10 +150,10 @@ Configuration of Relying Party in LL::NG
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Go in Manager and click on ``OpenID Connect Relying Parties``, then
-click on ``Add OpenID Relying Party``. Give a technical label (no
-spaces, no special characters), like “sample-rp”;
+click on ``Add OpenID Relying Party``. Set a technical name
+(without space or special character), like “sample-rp”;
 
-You can then access to the configuration of this RP.
+You can then set this RP configuration.
 
 .. _oidcexportedattr:
 
@@ -165,7 +165,7 @@ Exported attributes
    By default, only `standard OpenID Connect claims <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__
    are exposed to applications. If you want to add non-standard attributes, you have to create a new scope in the *Scope values content* section and your application must request it.
 
-For each OpenID Connect attribute you want to release to applications, you can define:
+For each OpenID Connect attribute you want to expose to applications, you can define:
 
 * **Claim name**: Name of the attribute as it will appear in Userinfo responses
 * **Variable name**: Name of the LemonLDAP::NG session variable containing the attribute value
@@ -225,7 +225,7 @@ be able to read the ``company`` and ``position`` attributes from the UserInfo en
 
 .. _oidcscoperules:
 
-Scope Rules
+Scope rules
 ^^^^^^^^^^^
 
 .. versionadded:: 2.0.12
@@ -347,6 +347,22 @@ Options
    -  **Type**: Type of logout to perform (only Front-Channel is implemented for now)
    -  **Session required**: Whether to send the Session ID in the logout request
 
+
+Macros
+^^^^^^
+
+You can define here macros that will be only evaluated for this service,
+and not registered in the session of the user.
+
+Display
+^^^^^^^
+
+-  **Display name**: Name of the RP application
+-  **Logo**: Logo of the RP application
+
+.. |beta| image:: /documentation/beta.png
+
+
 Access Rule extra variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -398,17 +414,3 @@ mapped to **Exported Attributes** and **Extra Claims**.
 .. seealso::
 
    Specification for the Client Credentials Grant: :rfc:`6749#section-4.4`
-
-Macros
-^^^^^^
-
-You can define here macros that will be only evaluated for this service,
-and not registered in the session of the user.
-
-Display
-^^^^^^^
-
--  **Display name**: Name of the RP application
--  **Logo**: Logo of the RP application
-
-.. |beta| image:: /documentation/beta.png
