@@ -1606,7 +1606,7 @@ sub buildLogoutRequestMsg {
 sub setSessionFromDump {
     my ( $self, $profile, $dump ) = @_;
 
-    $self->logger->debug("Loading Session dump: $dump");
+    $self->logger->debug("Loading Session dump: $dump") if $dump;
 
     eval { Lasso::Profile::set_session_from_dump( $profile, $dump ); };
 

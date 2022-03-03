@@ -159,6 +159,7 @@ sub postLogin {
 
 sub authenticatedRequest {
     my ( $self, $req ) = @_;
+    $req->data->{alreadyAuthenticated} = 1;
     return $self->do(
         $req,
         [
@@ -311,19 +312,13 @@ sub do {
             );
         }
         else {
-            return $self->sendJSONresponse(
-                $req,
-                {
-                    result => 1,
-                    error  => $err,
-                    id     => $req->id,
-                    (
-                        $req->sessionInfo->{_httpSession}
-                        ? ( id_http => $req->sessionInfo->{_httpSession} )
-                        : ()
-                    )
-                }
-            );
+            my $res = { result => 1, error => $err };
+            unless ( $req->data->{alreadyAuthenticated} ) {
+                $res->{id}      = $req->id;
+                $res->{id_http} = $req->sessionInfo->{_httpSession}
+                  if $req->sessionInfo->{_httpSession};
+            }
+            return $self->sendJSONresponse( $req, $res );
         }
     }
     else {
@@ -458,7 +453,8 @@ sub getApacheSession {
         $self->logger->debug("Session $args{kind} $id not found");
         return;
     }
-    $self->logger->debug("Get session $id from Portal::Main::Run") if ($id);
+    $self->logger->debug("Get session $id from Portal::Main::Run")
+      if ($id);
     $self->logger->debug(
         "Check session validity  -> " . $self->conf->{timeoutActivity} . "s" )
       if ( $self->conf->{timeoutActivity} );
@@ -490,7 +486,9 @@ sub getApacheSession {
 sub getPersistentSession {
     my ( $self, $uid, $info ) = @_;
 
-    return unless ( defined $uid and !$self->conf->{disablePersistentStorage} );
+    return
+      unless ( defined $uid
+        and !$self->conf->{disablePersistentStorage} );
 
     # Compute persistent identifier
     my $pid = getPSessionID($uid);
@@ -1052,7 +1050,11 @@ sub tplParams {
         SAMESITE   => getSameSite( $self->conf ),
         SKIN_BG    => $self->conf->{portalSkinBackground},
         CUSTOM_CSS => $self->conf->{portalCustomCss},
-        ( $self->customParameters ? ( %{ $self->customParameters } ) : () ),
+        (
+            $self->customParameters
+            ? ( %{ $self->customParameters } )
+            : ()
+        ),
         %templateParams
     );
 }
@@ -1163,7 +1165,9 @@ sub sendJSONresponse {
     # If this is a cross-domain request from the portal itself
     # (Ajax SSL to a different VHost)
     # we allow CORS
-    if ( $req->origin and index( $self->conf->{portal}, $req->origin ) == 0 ) {
+    if ( $req->origin
+        and index( $self->conf->{portal}, $req->origin ) == 0 )
+    {
         $self->logger->debug('AJAX request from portal, allowing CORS');
         push @{ $res->[1] },
           "Access-Control-Allow-Origin"      => $req->origin,
