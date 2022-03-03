@@ -515,12 +515,12 @@ sub _displayRegister {
           }
           : undef;
         unless ($_2fDevices) {
-            $self->logger->debug("No 2F Device found");
+            $self->logger->debug("None 2F device found");
             $_2fDevices = [];
         }
     }
     else {
-        $self->userLogger->warn("Do not diplay 2F Devices!");
+        $self->userLogger->warn("Do not display 2F devices!");
     }
 
    # Parse second factors to display delete button if allowed and upgrade button

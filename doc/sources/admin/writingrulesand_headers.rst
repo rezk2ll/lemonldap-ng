@@ -1,8 +1,8 @@
 Writing rules and headers
 =========================
 
-LL::NG manages applications by their hostname (Apache's
-Virtual Hosts or Nginx Block Servers). Rules are used for protecting applications,
+LL::NG manages applications by their hostname (Apache Virtual Hosts or
+Nginx Block Servers). Rules are used for protecting applications,
 and HTTP headers are appended to each request for sending datas to protected
 applications (for logs, profiles,...).
 
