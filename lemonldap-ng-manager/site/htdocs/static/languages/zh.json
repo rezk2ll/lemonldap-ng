@@ -734,7 +734,7 @@
 "oidcServiceMetaDataSecurity":"Security",
 "oidcServiceMetaDataSessions":"Sessions",
 "oidcServiceMetaDataTimeouts":"Timeouts",
-"oidcServiceMetaDataTokenURI":"令牌",
+"oidcServiceMetaDataTokenURI":"Tokens",
 "oidcServiceMetaDataUserInfoURI":"用户信息",
 "oidcServiceOfflineSessionExpiration":"Offline session",
 "oidcServicePrivateKeySig":"Signing private key",

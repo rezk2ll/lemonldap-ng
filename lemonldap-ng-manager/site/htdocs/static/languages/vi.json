@@ -723,7 +723,7 @@
 "oidcServiceMetaDataAuthorizeURI":"Uỷ quyền",
 "oidcServiceMetaDataBackChannelURI":"URI kênh sau",
 "oidcServiceMetaDataCheckSessionURI":"Kiểm tra phiên",
-"oidcServiceMetaDataEndPoints":"Điểm cuối",
+"oidcServiceMetaDataEndPoints":"Endpoints",
 "oidcServiceMetaDataEndSessionURI":"Kết thúc phiên",
 "oidcServiceMetaDataFrontChannelURI":"URI Kênh Trước",
 "oidcServiceMetaDataIntrospectionURI":"Introspection",

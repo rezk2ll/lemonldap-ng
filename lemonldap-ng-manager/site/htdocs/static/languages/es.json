@@ -714,7 +714,7 @@
 "oidcServiceAllowOnlyDeclaredScopes":"Only allow declared scopes",
 "oidcServiceAuthorizationCodeExpiration":"Authorization Code",
 "oidcServiceDynamicRegistration":"Dynamic registration",
-"oidcServiceDynamicRegistrationExportedVars":"Variables exportadas",
+"oidcServiceDynamicRegistrationExportedVars":"Exported vars",
 "oidcServiceDynamicRegistrationExtraClaims":"Extra claims",
 "oidcServiceIDTokenExpiration":"ID Token",
 "oidcServiceKeyIdSig":"ID de la clave firmante",

@@ -723,7 +723,7 @@
 "oidcServiceMetaDataAuthorizeURI":"Autoryzacja",
 "oidcServiceMetaDataBackChannelURI":"Identyfikator URI kanału zwrotnego",
 "oidcServiceMetaDataCheckSessionURI":"Sprawdź sesję",
-"oidcServiceMetaDataEndPoints":"Punkty końcowe",
+"oidcServiceMetaDataEndPoints":"Endpoints",
 "oidcServiceMetaDataEndSessionURI":"Koniec sesji",
 "oidcServiceMetaDataFrontChannelURI":"Identyfikator URI kanału przedniego",
 "oidcServiceMetaDataIntrospectionURI":"Introspekcja",
