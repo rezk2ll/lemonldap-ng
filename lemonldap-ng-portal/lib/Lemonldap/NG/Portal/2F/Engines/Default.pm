@@ -385,8 +385,7 @@ sub run {
             MSG           => $self->canUpdateSfa($req) || 'choose2f',
             ALERT   => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
             MODULES => [
-                map {
-                    {
+                map { {
                         CODE  => $_->prefix,
                         LOGO  => $_->logo,
                         LABEL => $_->label
@@ -441,7 +440,7 @@ sub _choice {
             return $self->p->do(
                 $req,
                 [
-                    sub { $res },  'controlUrl',
+                    sub { $res }, 'controlUrl',
                     'buildCookie', @{ $self->p->endAuth },
                 ]
             );
@@ -503,7 +502,7 @@ sub _displayRegister {
     return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ], [] ]
       if (
         @am == 1
-        and not( $req->userData->{_2fDevices}
+        and not( $req->userData->{_2fDevices} =~ /\w+/
             or $req->data->{sfRegRequired} )
       );
 
