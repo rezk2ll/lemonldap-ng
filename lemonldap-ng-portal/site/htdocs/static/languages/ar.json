@@ -186,7 +186,7 @@
 "ipAddr":"عنوان الأي بي",
 "key":"المفتاح",
 "lastFailedLogins":"عمليات تسجيل الدخول الأخيرة الغير الناجحة",
-"lastFailedLoginsCaptionLabel":"Last failed logins",
+"lastFailedLoginsCaptionLabel":"عمليات تسجيل الدخول الأخيرة الغير الناجحة",
 "lastLogins":"آخر تسجيلات دخول",
 "lastLoginsCaptionLabel":"آخر تسجيلات دخول",
 "lastName":"اسم العائلة",
