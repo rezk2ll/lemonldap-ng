@@ -11,8 +11,8 @@ combination of two different factors between:
 #. something they have *(U2F Key, smartphone, …)*
 #. something they are *(biometrics like fingerprints, ...)*
 
-Since 2.0, LLNG provides some second factor plugins that can be used to
-complete authentication module with 2FA :
+Since 2.0, LL::NG provides some second factor plugins that can be used for
+completing authentication module with 2FA:
 
 Second factors that can be registered by the user:
 
@@ -86,7 +86,7 @@ SF name(s) or number of removed SF can be displayed in message BODY by using
 Providing tokens from an external source
 ----------------------------------------
 
-If you don't want to use self-registration features for U2F, TOTP and so
+If you do not want to use self-registration features for U2F, TOTP and so
 on, you can set tokens by yourself *(in your LDAP server for example)*
 and map it to ``_2fDevices`` attribute. ``_2fDevices`` is a JSON array
 that contains token descriptions :
