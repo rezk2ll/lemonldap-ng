@@ -207,9 +207,11 @@ sub init {
 sub run {
     my ( $self, $req ) = @_;
     my $checkLogins   = $req->param('checkLogins');
+    my $forceUpgrade  = $req->param('forceUpgrade');
     my $stayconnected = $req->param('stayconnected');
     my $spoofId       = $req->param('spoofId') || '';
-    $self->logger->debug("2F checkLogins set") if ($checkLogins);
+    $self->logger->debug("2F checkLogins set") if $checkLogins;
+    $self->logger->debug("2F forceUgrade set") if $forceUpgrade;
 
     # Skip 2F unless a module has been registered
     unless ( @{ $self->sfModules } ) {
@@ -226,7 +228,7 @@ sub run {
 
     # Skip 2F if authnLevel is already high enough
     if (
-        $self->conf->{sfOnlyUpgrade}
+        $self->conf->{sfOnlyUpgrade} && !$forceUpgrade
         and ( ( $req->pdata->{targetAuthnLevel} || 0 ) <=
             ( $req->sessionInfo->{authenticationLevel} || 0 ) )
       )
@@ -502,7 +504,8 @@ sub _displayRegister {
     return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ], [] ]
       if (
         @am == 1
-        and not( $req->userData->{_2fDevices} && $req->userData->{_2fDevices} =~ /\w+/
+        and not( $req->userData->{_2fDevices}
+            && $req->userData->{_2fDevices} =~ /\w+/
             or $req->data->{sfRegRequired} )
       );
 

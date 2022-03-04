@@ -90,7 +90,7 @@
 
 <div class="buttons">
   <TMPL_IF NAME="DISPLAY_UPG">
-    <a href="<TMPL_VAR NAME="PORTAL_URL">upgradesession?url=<TMPL_VAR NAME="SFREGISTERS_URL">" class="btn btn-success" role="button">
+    <a href="<TMPL_VAR NAME="PORTAL_URL">upgradesession?forceUpgrade=1&url=<TMPL_VAR NAME="SFREGISTERS_URL">" class="btn btn-success" role="button">
       <span class="fa fa-sign-in"></span>
       <span trspan="upgradeSession">Upgrade session</span>
     </a>

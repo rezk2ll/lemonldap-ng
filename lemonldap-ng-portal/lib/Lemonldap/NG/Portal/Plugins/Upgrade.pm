@@ -73,6 +73,7 @@ sub ask {
       if ( $req->param('upgrading') or $req->param('kerberos') );
 
     my $url    = $req->param('url') || '';
+    my $forceUpgrade  = $req->param('forceUpgrade') || '';
     my $action = ( $message =~ /^askTo(\w+)$/ )[0];
     $self->logger->debug(" -> $action required");
     $self->logger->debug(" -> Skip confirmation is enabled")
@@ -91,6 +92,7 @@ sub ask {
             BUTTON       => $buttonlabel,
             CONFIRMKEY   => $self->p->stamp,
             PORTAL       => $self->conf->{portal},
+            FORCEUPGRADE => $forceUpgrade,
             URL          => $url,
             (
                 $self->conf->{"skip${action}Confirmation"}
