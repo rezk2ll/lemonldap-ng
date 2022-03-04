@@ -125,18 +125,20 @@ if ( $opts{verbose} ) {
 }
 
 # IDP and SP lists
-my ( $idpList, $spList, $mdIdpList, $mdSpList );
+my ( $allIdpList, $allSpList, $mdIdpList, $mdSpList, $matchingIdpList,
+    $matchingSpList );
 
 # List current SAML partners
 foreach my $spConfKey ( keys %{ $lastConf->{samlSPMetaDataXML} } ) {
     my ( $tmp, $entityID ) =
       ( $lastConf->{samlSPMetaDataXML}->{$spConfKey}->{samlSPMetaDataXML} =~
           /entityID=(['"])(.+?)\1/si );
+    $allSpList->{$entityID} = $spConfKey;
     if ( $spConfKey =~ /^$spConfKeyPrefix/ ) {
-        $spList->{$entityID} = $spConfKey;
-        if ( $opts{verbose} ) {
-            print "Existing SAML partner found: [SP] $entityID ($spConfKey)\n";
-        }
+        $matchingSpList->{$entityID} = $spConfKey;
+    }
+    if ( $opts{verbose} ) {
+        print "Existing SAML partner found: [SP] $entityID ($spConfKey)\n";
     }
 }
 
@@ -144,12 +146,12 @@ foreach my $idpConfKey ( keys %{ $lastConf->{samlIDPMetaDataXML} } ) {
     my ( $tmp, $entityID ) =
       ( $lastConf->{samlIDPMetaDataXML}->{$idpConfKey}->{samlIDPMetaDataXML} =~
           /entityID=(['"])(.+?)\1/si );
+    $allIdpList->{$entityID} = $idpConfKey;
     if ( $idpConfKey =~ /^$idpConfKeyPrefix/ ) {
-        $idpList->{$entityID} = $idpConfKey;
-        if ( $opts{verbose} ) {
-            print
-              "Existing SAML partner found: [IDP] $entityID ($idpConfKey)\n";
-        }
+        $matchingIdpList->{$entityID} = $idpConfKey;
+    }
+    if ( $opts{verbose} ) {
+        print "Existing SAML partner found: [IDP] $entityID ($idpConfKey)\n";
     }
 }
 
@@ -218,26 +220,28 @@ foreach
             }
             else {
                 # Check if entityID already in configuration
-                if ( defined $idpList->{$entityID} ) {
+                if ( defined $matchingIdpList->{$entityID} ) {
 
                     # Update metadata
-                    $lastConf->{samlIDPMetaDataXML}->{ $idpList->{$entityID} }
-                      ->{samlIDPMetaDataXML} = $partner_metadata;
+                    $lastConf->{samlIDPMetaDataXML}
+                      ->{ $matchingIdpList->{$entityID} }->{samlIDPMetaDataXML}
+                      = $partner_metadata;
 
                     # Update attributes
                     $lastConf->{samlIDPMetaDataExportedAttributes}
-                      ->{ $idpList->{$entityID} } = $exportedAttributes;
+                      ->{ $matchingIdpList->{$entityID} } = $exportedAttributes;
 
                     # Update options
                     $lastConf->{samlIDPMetaDataOptions}
-                      ->{ $idpList->{$entityID} } = $idpOptions;
+                      ->{ $matchingIdpList->{$entityID} } = $idpOptions;
 
                     if ( $opts{verbose} ) {
                         print "Update IDP $entityID in configuration\n";
                     }
                     $idpCounter->{updated}++;
                 }
-                else {
+                elsif ( not defined $allIdpList->{$entityID} ) {
+
                     # Create a new partner
                     my $confKey = toEntityIDkey( $idpConfKeyPrefix, $entityID );
 
@@ -258,6 +262,14 @@ foreach
 "Declare new IDP $entityID (configuration key $confKey)\n";
                     }
                     $idpCounter->{created}++;
+                }
+                else {
+                    my $confKey = $allIdpList->{$entityID};
+                    if ( $opts{verbose} ) {
+                        print "Skipping existing IDP $entityID"
+                          . " (configuration key $confKey)\n";
+                    }
+                    $idpCounter->{ignored}++;
                 }
             }
 
@@ -340,8 +352,8 @@ foreach
             else {
                 # Check if entityID already in configuration
                 my $confKey;
-                if ( defined $spList->{$entityID} ) {
-                    $confKey = $spList->{$entityID};
+                if ( defined $matchingSpList->{$entityID} ) {
+                    $confKey = $matchingSpList->{$entityID};
 
                     # Update metadata
                     $lastConf->{samlSPMetaDataXML}->{$confKey}
@@ -349,7 +361,7 @@ foreach
 
                     # Update attributes
                     $lastConf->{samlSPMetaDataExportedAttributes}
-                      ->{ $spList->{$entityID} } = $requestedAttributes;
+                      ->{ $matchingSpList->{$entityID} } = $requestedAttributes;
 
                     $lastConf->{samlSPMetaDataOptions}->{$confKey} =
                       { %{$spOptions} };
@@ -359,7 +371,8 @@ foreach
                     }
                     $spCounter->{updated}++;
                 }
-                else {
+                elsif ( not defined $allSpList->{$entityID} ) {
+
                     # Create a new partner
                     $confKey = toEntityIDkey( $spConfKeyPrefix, $entityID );
 
@@ -379,6 +392,14 @@ foreach
 "Declare new SP $entityID (configuration key $confKey)\n";
                     }
                     $spCounter->{created}++;
+                }
+                else {
+                    my $entityID = $allSpList->{$entityID};
+                    if ( $opts{verbose} ) {
+                        print "Skipping existing SP $entityID "
+                          . "(configuration key $confKey)\n";
+                    }
+                    $spCounter->{ignored}++;
                 }
 
                 # handle eduPersonTargetedID
@@ -407,8 +428,8 @@ foreach
 
 # Remove partners
 if ( $opts{remove} ) {
-    foreach my $entityID ( keys %$idpList ) {
-        my $idpConfKey = $idpList->{$entityID};
+    foreach my $entityID ( keys %$matchingIdpList ) {
+        my $idpConfKey = $matchingIdpList->{$entityID};
         unless ( defined $mdIdpList->{$entityID} ) {
             if ( grep { $entityID eq $_ } @idpIgnorelist ) {
                 $idpCounter->{ignored}++;
@@ -429,8 +450,8 @@ if ( $opts{remove} ) {
         }
     }
 
-    foreach my $entityID ( keys %$spList ) {
-        my $spConfKey = $spList->{$entityID};
+    foreach my $entityID ( keys %$matchingSpList ) {
+        my $spConfKey = $matchingSpList->{$entityID};
         unless ( defined $mdSpList->{$entityID} ) {
             if ( grep { $entityID eq $_ } @spIgnorelist ) {
                 $spCounter->{ignored}++;
