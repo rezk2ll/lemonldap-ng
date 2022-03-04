@@ -6,6 +6,7 @@ use Pod::Usage;
 use Lemonldap::NG::Common::Conf;
 use LWP::UserAgent;
 use MIME::Base64;
+use Config::IniFiles;
 use XML::LibXML;
 
 sub toEntityIDkey {
@@ -18,6 +19,39 @@ sub toEntityIDkey {
     return ( $prefix . $entityIDKey );
 }
 
+# Read the configuration file and enrich $opts
+# CLI arguments take priority
+# Multi value arguments are extended instead of replaced
+sub read_config_file {
+    my ( $configfile, $opts ) = @_;
+    my %ini;
+    tie %ini, 'Config::IniFiles', ( -file => $configfile, -allowempty => 1 );
+
+    # Handle scalar options
+    for my $option (
+        qw/verbose spconfprefix remove dry-run metadata idpconfprefix nagios/)
+    {
+        if ( defined $ini{main}{$option} and !defined $opts->{$option} ) {
+            $opts->{$option} = $ini{main}{$option};
+        }
+
+    }
+
+    # Handle arrayref options by appending values from file to values from CLI
+    for my $option (qw/ignore-sp ignore-idp/) {
+        my $value_from_cmdline = $opts->{$option} || [];
+        my $value_from_conf    = $ini{main}{$option};
+        if ( defined $value_from_conf ) {
+            unless ( ref($value_from_conf) eq "ARRAY" ) {
+                $value_from_conf = [$value_from_conf];
+            }
+            $opts->{$option} = [ @$value_from_cmdline, @$value_from_conf ];
+        }
+    }
+
+    return \%ini;
+}
+
 #==============================================================================
 # Get command line options
 #==============================================================================
@@ -28,10 +62,16 @@ my $result = GetOptions(
     'spconfprefix|s=s', 'idpconfprefix|i=s',
     'remove|r',         'nagios|a',
     'ignore-sp=s@',     'ignore-idp=s@',
-    'dry-run|n'
+    'dry-run|n',        'configfile|c=s',
 );
 
 pod2usage(1) if $opts{help};
+
+my $config = {};
+if ( my $configfile = $opts{configfile} ) {
+    $config = read_config_file( $configfile, \%opts );
+}
+
 pod2usage( -message => "Missing metadata URL (-m)", -exitval => 2 )
   if !$opts{metadata};
 
