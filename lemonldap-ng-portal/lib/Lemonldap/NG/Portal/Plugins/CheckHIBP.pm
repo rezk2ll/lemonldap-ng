@@ -17,7 +17,6 @@ has ua => (
     lazy    => 1,
     builder => sub {
         my $ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
-        $ua->env_proxy();
         return $ua;
     }
 );

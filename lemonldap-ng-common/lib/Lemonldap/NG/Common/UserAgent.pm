@@ -7,11 +7,12 @@ use Lemonldap::NG::Common;
 our $VERSION = '2.18.0';
 
 sub new {
-    my ( $class, $conf ) = @_;
+    my ( $class, $conf, $noproxy ) = @_;
     my $opts  = $conf->{lwpOpts} || {};
     my $agent = "LemonLDAP-NG/" . $Lemonldap::NG::Common::VERSION . " ";
     $opts->{agent} ||= $agent;
-    $opts->{ssl_opts} = $conf->{lwpSslOpts} if ( $conf->{lwpSslOpts} );
+    $opts->{ssl_opts}  = $conf->{lwpSslOpts} if ( $conf->{lwpSslOpts} );
+    $opts->{env_proxy} = !$noproxy;
     my $ua = LWP::UserAgent->new(%$opts);
     push @{ $ua->requests_redirectable }, 'POST';
     return $ua;
