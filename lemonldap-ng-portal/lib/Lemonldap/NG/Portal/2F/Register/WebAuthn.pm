@@ -179,7 +179,7 @@ sub _registration {
           . "\n" );
 
     if (
-        $self->find2fByKey(
+        $self->find2fDevicesByKey(
             $req, $req->userData, $self->type,
             "_credentialId", $credential_id
         )

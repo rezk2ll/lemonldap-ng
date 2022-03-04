@@ -58,6 +58,7 @@ lib/Lemonldap/NG/Portal/Issuer/OpenID.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Issuer/SAML.pm
 lib/Lemonldap/NG/Portal/Lib/_tokenRule.pm
+lib/Lemonldap/NG/Portal/Lib/2fDevices.pm
 lib/Lemonldap/NG/Portal/Lib/Captcha.pm
 lib/Lemonldap/NG/Portal/Lib/CAS.pm
 lib/Lemonldap/NG/Portal/Lib/Choice.pm
