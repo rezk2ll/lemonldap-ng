@@ -176,20 +176,24 @@ Obsolete Backends                                                    Authenticat
 :doc:`Remote LL::NG<authremote>`                                     ✔                                               ✔
 ==================================================================== =============================================== ======== ========
 
-==================================================================== ==============
-Second factor (:doc:`documentation<secondfactor>`)                   Authentication
-==================================================================== ==============
-:doc:`TOTP-or-U2F<utotp2f>` |new|                                    ✔
-:doc:`U2F<u2f>` |deprecated|                                         ✔
-:doc:`TOTP<totp2f>` *(Google Authenticator,...)* |new|               ✔
+==================================================================== ============== =================
+Second factor (:doc:`documentation<secondfactor>`)                   Authentication Self-registration
+==================================================================== ============== =================
+:doc:`TOTP<totp2f>` *(Google Authenticator,...)* |new|               ✔              ✔
+:doc:`WebAuthn<webauthn2f>` |new|                                    ✔              ✔
 :doc:`E-mail Second Factor<mail2f>` |new|                            ✔
+:doc:`Yubikey<yubikey2f>` |new|                                      ✔              ✔
 :doc:`External Second Factor<external2f>` *(OTP, SMS,...)* |new|     ✔
-:doc:`Radius Second Factor<radius2f>` |new|  [3]_                    ✔
 :doc:`REST Second Factor<rest2f>` |new|                              ✔
-:doc:`Yubikey<yubikey2f>` |new|                                      ✔
-:doc:`WebAuthn<webauthn2f>` |new|                                    ✔
-:doc:`Additional second factors<sfextra>` |new|  [4]_                ✔
-==================================================================== ==============
+:doc:`Radius Second Factor<radius2f>` |new|  [3]_                    ✔
+:doc:`TOTP-or-U2F<utotp2f>` |deprecated|                             ✔              ✔
+:doc:`U2F<u2f>` |deprecated|                                         ✔              ✔
+==================================================================== ============== =================
+
+.. versionadded:: 2.0.6
+    See :doc:`Additional second factors<sfextra>` for configuring several multiple
+    REST, external or e-mail based second factors with different parameters
+
 
 ==================================================================== ==============
 Auth addons                                                          Authentication
@@ -570,13 +574,9 @@ by your language code):
 .. [3]
    :doc:`Radius second factor<radius2f>` is available with LLNG ≥ 2.0.6
 
-.. [4]
+.. [5]
    :doc:`Check DevOps file plugin<checkdevops>` are available with LLNG ≥
    2.0.12
-
-.. [5]
-   :doc:`Additional second factors<sfextra>` are available with LLNG ≥
-   2.0.6
 
 .. [6]
    :doc:`Check user plugin<checkuser>` is available with LLNG ≥ 2.0.3

@@ -14,16 +14,23 @@ combination of two different factors between:
 Since 2.0, LLNG provides some second factor plugins that can be used to
 complete authentication module with 2FA :
 
--  :doc:`U2F-or-TOTP<utotp2f>` *(enable both U2F and TOTP)*
--  :doc:`TOTP<totp2f>` *(to use
-   with* `FreeOTP <https://freeotp.github.io/>`__\ *,*\ `Google-Authenticator <https://en.wikipedia.org/wiki/Google_Authenticator>`__\ *,…)*
--  :doc:`U2F tokens<u2f>`
--  :doc:`Yubikey tokens<yubikey2f>` *(provided by Yubico)*
+Second factors that can be registered by the user:
+
+-  :doc:`TOTP<totp2f>` *(to use with* `FreeOTP <https://freeotp.github.io/>`__\ *,*\ `Google-Authenticator <https://en.wikipedia.org/wiki/Google_Authenticator>`__\ *,…)*
+-  :doc:`WebAuthn<webauthn2f>` *(Web Authentication API)*
+-  :doc:`Yubico OTP<yubikey2f>` *(Legacy OTP method from Yubico)*
+-  :doc:`U2F tokens<u2f>` |deprecated|
+-  :doc:`U2F-or-TOTP<utotp2f>` *(enable both U2F and TOTP)* |deprecated|
+
+Second factors that rely on external systems:
+
 -  :doc:`E-Mail 2F<mail2f>` *(Send a code to an email address)*
 -  :doc:`External 2F<external2f>` *(to call an external command)*
 -  :doc:`REST<rest2f>` *(Remote REST app)*
 -  :doc:`RADIUS<radius2f>` *(Remote RADIUS server)*
--  :doc:`WebAuthn<webauthn2f>` *(Web Authentication API)*
+
+.. |deprecated| image:: /documentation/deprecated.png
+   :alt: deprecated
 
 The E-Mail, External and REST 2F modules
 :doc:`may be declared multiple times<sfextra>` with different sets of
