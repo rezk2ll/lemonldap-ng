@@ -240,7 +240,7 @@ sub run {
     # Remove expired 2F devices
     my $session = $req->sessionInfo;
     if ( $session->{_2fDevices} ) {
-        $self->logger->debug("Loading 2F Devices ...");
+        $self->logger->debug("Loading 2F devices ...");
 
         # Read existing 2FDevices
         my $_2fDevices =
@@ -502,7 +502,7 @@ sub _displayRegister {
     return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ], [] ]
       if (
         @am == 1
-        and not( $req->userData->{_2fDevices} =~ /\w+/
+        and not( $req->userData->{_2fDevices} && $req->userData->{_2fDevices} =~ /\w+/
             or $req->data->{sfRegRequired} )
       );
 
