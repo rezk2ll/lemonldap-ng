@@ -67,6 +67,13 @@ that is strictly higher than the one obtained by the Authentication backend
 The session upgrade mechanism will only require the second factor step, instead
 of doing a complete reauthentication.
 
+.. tip::
+
+    You can disable the upgrade confirmation by setting on the *Skip upgrade confirmation*
+    option.
+
+    Go in Manager, ``General Parameters`` » ``Advanced parameters`` » ``Portal redirections``.
+
 .. |beta| image:: /documentation/beta.png
 
 Registration timeout

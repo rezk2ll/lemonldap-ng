@@ -76,8 +76,8 @@ For example:
    -  postmail: $mail
    -  poststatic: 'static'
 
-Go in Manager, "Virtual Hosts" » *virtualhost* » "Form replay" and click
-on "New form replay".
+Go in Manager, ``Virtual Hosts`` » ``virtualhost`` » ``Form replay`` and click
+on ``New form replay``.
 
 |image0|
 

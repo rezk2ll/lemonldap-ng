@@ -95,3 +95,7 @@ Portal Redirections
    needed, a confirmation screen is displayed to let user accept the
    re-authentication. If you enable this option, user will be directly
    redirected to login page.
+-  **Skip upgrade confirmation**: by default, when upgrade is needed,
+   a confirmation screen is displayed to let user accept the authentication
+   level upgrade. If you enable this option, user will be directly
+   redirected to 2FA page.
