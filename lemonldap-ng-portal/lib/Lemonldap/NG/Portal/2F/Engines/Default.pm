@@ -23,7 +23,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NO_SECOND_FACTORS
 );
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 with 'Lemonldap::NG::Portal::Lib::OverConf';
@@ -210,8 +210,8 @@ sub run {
     my $forceUpgrade  = $req->param('forceUpgrade');
     my $stayconnected = $req->param('stayconnected');
     my $spoofId       = $req->param('spoofId') || '';
-    $self->logger->debug("2F checkLogins set") if $checkLogins;
-    $self->logger->debug("2F forceUgrade set") if $forceUpgrade;
+    $self->logger->debug("2F checkLogins set")  if $checkLogins;
+    $self->logger->debug("2F forceUpgrade set") if $forceUpgrade;
 
     # Skip 2F unless a module has been registered
     unless ( @{ $self->sfModules } ) {
@@ -228,7 +228,7 @@ sub run {
 
     # Skip 2F if authnLevel is already high enough
     if (
-        $self->conf->{sfOnlyUpgrade} && !$forceUpgrade
+        $self->conf->{sfOnlyUpgrade} and !$forceUpgrade
         and ( ( $req->pdata->{targetAuthnLevel} || 0 ) <=
             ( $req->sessionInfo->{authenticationLevel} || 0 ) )
       )
@@ -242,7 +242,7 @@ sub run {
     # Remove expired 2F devices
     my $session = $req->sessionInfo;
     if ( $session->{_2fDevices} ) {
-        $self->logger->debug("Loading 2F devices ...");
+        $self->logger->debug("Loading 2F devices...");
 
         # Read existing 2FDevices
         my $_2fDevices =

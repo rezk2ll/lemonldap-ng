@@ -8,7 +8,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_TOKENEXPIRED
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -72,9 +72,9 @@ sub ask {
     return $self->confirm($req)
       if ( $req->param('upgrading') or $req->param('kerberos') );
 
-    my $url    = $req->param('url') || '';
-    my $forceUpgrade  = $req->param('forceUpgrade') || '';
-    my $action = ( $message =~ /^askTo(\w+)$/ )[0];
+    my $url          = $req->param('url')          || '';
+    my $forceUpgrade = $req->param('forceUpgrade') || '';
+    my $action       = ( $message =~ /^askTo(\w+)$/ )[0];
     $self->logger->debug(" -> $action required");
     $self->logger->debug(" -> Skip confirmation is enabled")
       if $self->conf->{"skip${action}Confirmation"};
@@ -156,7 +156,7 @@ sub confirm {
     else {
 
         # Go to portal
-        $self->logger->debug("Upgrade session failed -> Go to portal");
+        $self->logger->debug("Upgrade session failed -> Go to Portal");
         $req->mustRedirect(1);
         return $self->p->do( $req, [ sub { PE_OK } ] );
     }
