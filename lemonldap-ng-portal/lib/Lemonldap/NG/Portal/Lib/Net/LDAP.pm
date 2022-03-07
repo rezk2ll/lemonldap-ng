@@ -24,32 +24,38 @@ sub new {
     my $portal = $args->{p}    or die "$class : p argument required !";
     my $conf   = $args->{conf} or die "$class : conf argument required !";
     my $self;
-    my $useTls = 0;
-    my $tlsParam;
+    my $useStartTls = 0;
+    my %tlsParams;
     my @servers = ();
     foreach my $server ( split /[\s,]+/, $conf->{ldapServer} ) {
 
         if ( $server =~ m{^ldap\+tls://([^/]+)/?\??(.*)$} ) {
-            $useTls   = 1;
-            $server   = $1;
-            $tlsParam = $2 || "";
+            $useStartTls = 1;
+            $server      = $1;
+            %tlsParams   = split( /[&=]/, $2 || "" );
+        }
+        elsif ( $server =~ m{^(ldaps://[^/]+)/?\??(.*)$} ) {
+            $useStartTls = 0;
+            $server      = $1;
+            %tlsParams   = split( /[&=]/, $2 || "" );
         }
         else {
-            $useTls = 0;
+            $useStartTls = 0;
         }
         push @servers, $server;
     }
+    $tlsParams{cafile} ||= $conf->{ldapCAFile} if ( $conf->{ldapCAFile} );
+    $tlsParams{capath} ||= $conf->{ldapCAPath} if ( $conf->{ldapCAPath} );
+    $tlsParams{verify} ||= $conf->{ldapVerify} if ( $conf->{ldapVerify} );
     $self = Net::LDAP->new(
         \@servers,
         onerror   => undef,
         keepalive => 1,
+        %tlsParams,
         ( $conf->{ldapPort}    ? ( port    => $conf->{ldapPort} )    : () ),
         ( $conf->{ldapTimeout} ? ( timeout => $conf->{ldapTimeout} ) : () ),
         ( $conf->{ldapVersion} ? ( version => $conf->{ldapVersion} ) : () ),
         ( $conf->{ldapRaw}     ? ( raw     => $conf->{ldapRaw} )     : () ),
-        ( $conf->{ldapCAFile}  ? ( cafile  => $conf->{ldapCAFile} )  : () ),
-        ( $conf->{ldapCAPath}  ? ( capath  => $conf->{ldapCAPath} )  : () ),
-        ( $conf->{ldapVerify}  ? ( verify  => $conf->{ldapVerify} )  : () ),
     );
     unless ($self) {
         $portal->logger->error( "LDAP initialization error: " . $@ );
@@ -77,12 +83,8 @@ sub new {
     $socket->read_timeout( $conf->{ldapIOTimeout} );
     $socket->write_timeout( $conf->{ldapIOTimeout} );
 
-    if ($useTls) {
-        my %h = split( /[&=]/, $tlsParam );
-        $h{cafile} ||= $conf->{ldapCAFile} if ( $conf->{ldapCAFile} );
-        $h{capath} ||= $conf->{ldapCAPath} if ( $conf->{ldapCAPath} );
-        $h{verify} ||= $conf->{ldapVerify} if ( $conf->{ldapVerify} );
-        my $mesg = $self->start_tls(%h);
+    if ($useStartTls) {
+        my $mesg = $self->start_tls(%tlsParams);
         if ( $mesg->code ) {
             $portal->logger->error( 'LDAP StartTLS failed: ' . $mesg->error );
             return 0;

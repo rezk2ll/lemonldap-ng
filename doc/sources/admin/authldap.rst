@@ -74,12 +74,12 @@ Connection
 
    -  More than one server can be set here separated by spaces or
       commas. They will be tested in the specified order.
-   -  To use TLS, set ``ldap+tls://server`` and to use LDAPS, set
+   -  To use StartTLS, set ``ldap+tls://server`` and to use LDAPS, set
       ``ldaps://server`` instead of server name.
-   -  If you use TLS, you can set any of the
+   -  If you use StartTLS or LDAPS, you can set any of the
       `Net::LDAP <http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod>`__
-      start_tls() sub like
-      ``ldap+tls://server/verify=none&capath=/etc/ssl``. You can
+      start_tls() options in the URL, such as ``ldap+tls://server/verify=none``
+      or ``ldaps://server/cafile=/etc/ssl/ca.pem&sslversion=tlsv1_2``. You can
       also use cafile and capath parameters.
 
 -  **Server port**: TCP port used by LDAP server if different from the standard
