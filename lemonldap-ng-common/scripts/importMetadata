@@ -47,7 +47,7 @@ my $idpConfKeyPrefix = $opts{idpconfprefix} || "idp-";
 #
 my $exportedAttributes = {
     'cn'                          => '0;cn',
-    'eduPersonPrincipalName'      => '0;eduPersonAffiliation',
+    'eduPersonPrincipalName'      => '0;eduPersonPrincipalName',
     'givenName'                   => '0;givenName',
     'surname'                     => '0;surname',
     'displayName'                 => '0;displayName',
