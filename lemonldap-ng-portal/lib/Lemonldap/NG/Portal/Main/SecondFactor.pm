@@ -165,9 +165,16 @@ sub _verify {
                 authenticationLevel => $l,
                 groups              => $req->sessionInfo->{groups},
                 hGroups             => $req->sessionInfo->{hGroups},
+                _2f     => $self->prefix,
                 %macros
             }
         );
+    } else {
+        # Only update _2f session key
+        $self->p->updateSession($req,
+            {
+                _2f     => $self->prefix,
+                });
     }
 
     $req->authResult(PE_SENDRESPONSE);
