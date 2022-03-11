@@ -130,6 +130,7 @@ $res = $op->_post(
 
 $json = expectJSON($res);
 is( $json->{userinfo_hook}, 1, "Found hooked claim in Userinfo token" );
+is( $json->{_auth}, "Demo", "Found session variable in Userinfo token" );
 
 expectJWT( $token, access_token_hook => 1 );
 

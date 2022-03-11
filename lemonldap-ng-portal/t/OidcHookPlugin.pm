@@ -24,8 +24,9 @@ sub addClaimToIDToken {
 }
 
 sub addClaimToUserInfo {
-    my ( $self, $req, $userinfo ) = @_;
+    my ( $self, $req, $userinfo, $rp, $session_data ) = @_;
     $userinfo->{"userinfo_hook"} = 1;
+    $userinfo->{"_auth"} = $session_data->{_auth};
     return PE_OK;
 }
 

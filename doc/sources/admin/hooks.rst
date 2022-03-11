@@ -89,6 +89,9 @@ This hook is triggered when LemonLDAP::NG is about to send a UserInfo response t
 
 The hook's parameter is a hash containing all the claims that are about to be released.
 
+.. versionchanged:: 2.0.15
+   Added the hash of current session data
+
 Sample code::
 
    use constant hook => {
@@ -96,7 +99,7 @@ Sample code::
    };
 
    sub addClaimToUserInfo {
-       my ( $self, $req, $userinfo, $rp) = @_;
+       my ( $self, $req, $userinfo, $rp, $session_data) = @_;
        $userinfo->{"userinfo_hook"} = 1;
        return PE_OK;
    }
