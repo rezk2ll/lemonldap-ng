@@ -398,11 +398,9 @@ site/htdocs/static/languages/fi.json
 site/htdocs/static/languages/fr.json
 site/htdocs/static/languages/he.json
 site/htdocs/static/languages/it.json
-site/htdocs/static/languages/nl.json
 site/htdocs/static/languages/pl.json
 site/htdocs/static/languages/pt.json
 site/htdocs/static/languages/pt_BR.json
-site/htdocs/static/languages/ro.json
 site/htdocs/static/languages/tr.json
 site/htdocs/static/languages/vi.json
 site/htdocs/static/languages/zh.json
@@ -477,6 +475,7 @@ site/templates/bootstrap/yubikeyform.tpl
 site/templates/common/bullet_go.png
 site/templates/common/key.png
 site/templates/common/mail/ar.json
+site/templates/common/mail/de.json
 site/templates/common/mail/en.json
 site/templates/common/mail/es.json
 site/templates/common/mail/fi.json

@@ -189,7 +189,6 @@ site/htdocs/static/js/viewer.js
 site/htdocs/static/js/viewer.min.js
 site/htdocs/static/js/viewer.min.js.map
 site/htdocs/static/languages/ar.json
-site/htdocs/static/languages/de.json
 site/htdocs/static/languages/en.json
 site/htdocs/static/languages/es.json
 site/htdocs/static/languages/fr.json
