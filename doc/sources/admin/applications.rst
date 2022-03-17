@@ -39,6 +39,7 @@ Applications
    applications/obm
    applications/odoo
    applications/office365
+   applications/opencti
    applications/publik
    applications/phpldapadmin
    applications/redmine
@@ -125,6 +126,7 @@ Application                                                       Configuration 
 .. image:: applications/obm_logo.png                              :doc:`OBM<applications/obm>`                         ✔
 .. image:: applications/odoo_logo.png                             :doc:`Odoo<applications/odoo>`                                                         ✔
 .. image:: applications/logo_office_365.png                       :doc:`Office 365<applications/office365>`                                              ✔
+.. image:: applications/opencti.png                               :doc:`OpenCTI<applications/opencti>`                                                   ✔    ✔
 .. image:: applications/logo-publik.png                           :doc:`Publik<applications/publik>`                                                          ✔
 .. image:: applications/phpldapadmin_logo.png                     :doc:`phpLDAPAdmin<applications/phpldapadmin>`       ✔
 .. image:: applications/redmine_logo.png                          :doc:`Redmine<applications/redmine>`                                                        ✔
