@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 22;
+my $maintests = 25;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 
@@ -61,6 +61,9 @@ SKIP: {
     my ( $host, $url, $s ) =
       expectAutoPost( $res, 'auth.idp.com', '/saml/singleSignOn',
         'SAMLRequest' );
+    my $pdata_hash = expectPdata($res);
+    is( $pdata_hash->{genRequestHookCalled},
+        1, 'samlGenerateRequestHook called' );
 
     # Push SAML request to IdP
     switch ('issuer');
@@ -141,6 +144,10 @@ SKIP: {
       expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleSignOnPost',
         'SAMLResponse' );
 
+    $pdata_hash = expectPdata($res);
+    is( $pdata_hash->{gotRequestHookCalled},
+        1, 'samlGotRequestHookCalled called' );
+
     # Post SAML response to SP
     switch ('sp');
     ok(
@@ -167,6 +174,7 @@ SKIP: {
     expectOK($res);
     ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
       or print STDERR $@;
+    is( $res->{gotResponseHookCalled}, 1, 'samlGotResponseHook called' );
     ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
       or explain( $res, 'cn => Frédéric Accents' );
 
@@ -284,6 +292,7 @@ sub issuer {
                           samlSPMetaDataXML( 'sp', 'HTTP-POST' )
                     },
                 },
+                customPlugins => 't::SamlHookPlugin',
             }
         }
     );
@@ -338,6 +347,8 @@ sub sp {
                 samlServicePrivateKeySig    => saml_key_sp_private_sig,
                 samlServicePublicKeyEnc     => saml_key_sp_public_enc,
                 samlSPSSODescriptorAuthnRequestsSigned => 1,
+                customPlugins                          => 't::SamlHookPlugin',
+
             },
         }
     );
