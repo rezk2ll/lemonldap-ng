@@ -38,6 +38,11 @@ LWP::Protocol::PSGI->register(
         }
         if ( $req->method =~ /^post$/i ) {
             my $s = $req->content;
+            if ( $req->uri eq '/token/oauth2' ) {
+                is( $req->param("my_param"),
+                    "my value", "oidcGenerateTokenRequest called" );
+                count(1);
+            }
             ok(
                 $res = $client->_post(
                     $url, IO::String->new($s),
@@ -198,6 +203,10 @@ ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'cn => Frédéric Accents' );
 count(2);
 
+is( $res->{userinfo_hook}, "op/french", "oidcGotUserInfo called" );
+is( $res->{id_token_hook}, "op/french", "oidcGotIDToken called" );
+count(2);
+
 my $id_token_decoded = id_token_payload( $res->{_oidc_id_token} );
 is( $id_token_decoded->{acr}, 'customacr-1', "Correct custom ACR" );
 count(1);
@@ -289,6 +298,10 @@ count(1);
 ( $url, $query ) =
   expectRedirection( $res, qr#^http://auth.op.com(/oauth2/authorize)\?(.*)$# );
 
+like( $query, qr/my_param=my\+value/,
+    "oidcGenerateAuthenticationRequest called" );
+count(1);
+
 # Test if consent was saved
 # -------------------------
 
@@ -349,7 +362,7 @@ sub op {
                         oidcRPMetaDataOptionsBypassConsent     => 0,
                         oidcRPMetaDataOptionsClientSecret      => "rpsecret",
                         oidcRPMetaDataOptionsUserIDAttr        => "",
-                        oidcRPMetaDataOptionsAccessTokenExpiration  => 3600,
+                        oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                         oidcRPMetaDataOptionsPostLogoutRedirectUris =>
                           "http://auth.rp.com/?logout=1",
                         oidcRPMetaDataOptionsRule => '$uid eq "french"',
@@ -410,7 +423,8 @@ sub rp {
                 },
                 oidcOPMetaDataJSON => {
                     op => $metadata,
-                }
+                },
+                customPlugins => 't::OidcHookPlugin',
             }
         }
     );
