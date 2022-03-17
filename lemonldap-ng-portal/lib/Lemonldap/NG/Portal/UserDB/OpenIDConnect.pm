@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::UserDB::OpenIDConnect;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OIDC_AUTH_ERROR
   PE_BADCREDENTIALS
   PE_ERROR
   PE_OK
@@ -43,6 +44,11 @@ sub getUser {
         $self->logger->warn("No User Info content");
         return PE_OK;
     }
+
+    # call oidcGotUserInfo hook
+    my $h =
+      $self->p->processHook( $req, 'oidcGotUserInfo', $op, $userinfo_content, );
+    return PE_OIDC_AUTH_ERROR if ( $h != PE_OK );
 
     $req->data->{OpenIDConnect_user_info} = $userinfo_content;
 

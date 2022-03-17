@@ -333,10 +333,7 @@ sub buildAuthorizationCodeAuthnRequest {
     my $nonce;
     $nonce = $self->ott->createToken if ($use_nonce);
 
-    my $authn_uri =
-        $authorize_uri
-      . ( $authorize_uri =~ /\?/ ? '&' : '?' )
-      . build_urlencoded(
+    my $authorize_request_params = {
         response_type => $response_type,
         client_id     => $client_id,
         scope         => $scope,
@@ -348,7 +345,19 @@ sub buildAuthorizationCodeAuthnRequest {
         ( $max_age            ? ( max_age    => $max_age )    : () ),
         ( defined $ui_locales ? ( ui_locales => $ui_locales ) : () ),
         ( defined $acr_values ? ( acr_values => $acr_values ) : () )
-      );
+    };
+
+    # Call oidcGenerateAuthenticationRequest
+    my $h = $self->p->processHook(
+        $req, 'oidcGenerateAuthenticationRequest',
+        $op,  $authorize_request_params
+    );
+    return if ( $h != PE_OK );
+
+    my $authn_uri =
+        $authorize_uri
+      . ( $authorize_uri =~ /\?/ ? '&' : '?' )
+      . build_urlencoded(%$authorize_request_params);
 
     $self->logger->debug(
         "OpenIDConnect Authorization Code Flow Authn Request: $authn_uri");
@@ -469,16 +478,20 @@ sub getAuthorizationCodeAccessToken {
         "Using auth method $auth_method to token endpoint $access_token_uri");
 
     my $response;
+    my $token_request_params = {
+        code         => $code,
+        redirect_uri => $redirect_uri,
+        grant_type   => $grant_type
+    };
+
+    # Call oidcGenerateTokenRequest
+    my $h = $self->p->processHook( $req, 'oidcGenerateTokenRequest',
+        $op, $token_request_params );
+    return 0 if ( $h != PE_OK );
 
     if ( $auth_method eq "client_secret_basic" ) {
-        my $form = {
-            code         => $code,
-            redirect_uri => $redirect_uri,
-            grant_type   => $grant_type
-        };
-
         $response = $self->ua->post(
-            $access_token_uri, $form,
+            $access_token_uri, $token_request_params,
             "Authorization" => "Basic "
               . encode_base64( "$client_id:$client_secret", '' ),
             "Content-Type" => 'application/x-www-form-urlencoded',
@@ -486,15 +499,10 @@ sub getAuthorizationCodeAccessToken {
     }
 
     elsif ( $auth_method eq "client_secret_post" ) {
-        my $form = {
-            code          => $code,
-            client_id     => $client_id,
-            client_secret => $client_secret,
-            redirect_uri  => $redirect_uri,
-            grant_type    => $grant_type
-        };
+        $token_request_params->{client_id}     = $client_id;
+        $token_request_params->{client_secret} = $client_secret;
 
-        $response = $self->ua->post( $access_token_uri, $form,
+        $response = $self->ua->post( $access_token_uri, $token_request_params,
             "Content-Type" => 'application/x-www-form-urlencoded' );
     }
     else {

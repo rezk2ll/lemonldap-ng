@@ -193,6 +193,11 @@ sub extractFormInfo {
             return PE_OIDC_AUTH_ERROR;
         }
 
+        # Call oidcGotIDToken hook
+        my $h = $self->p->processHook( $req, 'oidcGotIDToken',
+            $op, $id_token_payload_hash, );
+        return PE_OIDC_AUTH_ERROR if ( $h != PE_OK );
+
         # Check validity of Access Token (optional)
         my $at_hash = $id_token_payload_hash->{at_hash};
         if ($at_hash) {
@@ -267,8 +272,13 @@ sub extractFormInfo {
     my $state = $self->storeState( $req, qw/urldc checkLogins _oidcOPCurrent/ );
 
     # Authorization Code Flow
-    $req->urldc(
-        $self->buildAuthorizationCodeAuthnRequest( $req, $op, $state ) );
+    my $authorization_request_uri =
+      $self->buildAuthorizationCodeAuthnRequest( $req, $op, $state );
+    unless ($authorization_request_uri) {
+        return PE_OIDC_AUTH_ERROR;
+    }
+
+    $req->urldc($authorization_request_uri);
 
     $self->logger->debug( "Redirect user to " . $req->{urldc} );
     $req->continue(1);
