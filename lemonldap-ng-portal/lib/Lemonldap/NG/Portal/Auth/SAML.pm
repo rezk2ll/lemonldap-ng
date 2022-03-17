@@ -185,6 +185,12 @@ sub extractFormInfo {
                 return PE_SAML_SSO_ERROR;
             }
 
+            # Call samlGotAuthnResponse
+            my $h =
+              $self->p->processHook( $req, 'samlGotAuthnResponse', $idp,
+                $login );
+            return PE_SAML_SSO_ERROR if ( $h != PE_OK );
+
             # Check Destination
             return PE_SAML_DESTINATION_ERROR
               unless ( $self->checkDestination( $saml_response, $url ) );

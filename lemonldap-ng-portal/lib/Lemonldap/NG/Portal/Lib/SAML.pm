@@ -1024,6 +1024,11 @@ sub createAuthnRequest {
         }
     }
 
+    # Call samlGenerateAuthnRequest hook
+    my $h =
+      $self->p->processHook( $req, 'samlGenerateAuthnRequest', $idp, $login );
+    return if ( $h != PE_OK );
+
     # Build authentication request
     unless ( $self->buildAuthnRequestMsg($login) ) {
         $self->logger->error("Could not build authentication request on $idp");
