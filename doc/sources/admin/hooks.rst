@@ -418,6 +418,114 @@ Sample code::
    }
 
 
+OpenID Connect Authentication Hooks
+-----------------------------------
+
+oidcGenerateAuthenticationRequest
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.15
+
+This hook is triggered when LemonLDAP::NG is building the Authentication Request that will be sent to an OpenID Provider
+
+The hook's parameters are:
+
+* The configuration key of the OP
+* A hash reference of request parameters that will be added to the OP's ``authorization_endpoint``.
+
+Sample code::
+
+   use constant hook => {
+       oidcGenerateAuthenticationRequest  => 'genAuthRequest',
+   };
+
+   sub genAuthRequest {
+       my ( $self, $req, $op, $authorize_request_params ) = @_;
+
+       $authorize_request_params->{my_param} = "my value";
+       return PE_OK;
+   }
+
+
+
+oidcGenerateTokenRequest
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.15
+
+This hook is triggered when LemonLDAP::NG is building the Token Request from that will be sent to an OpenID Provider
+
+The hook's parameters are:
+
+* The configuration key of the OP
+* A hash reference of request parameters that will be sent in the body of the request to the ``token_endpoint``.
+
+Sample code::
+
+   use constant hook => {
+       oidcGenerateTokenRequest => 'genTokenRequest',
+   };
+
+   sub genTokenRequest {
+       my ( $self, $req, $op, $token_request_params) = @_;
+
+       $token_request_params->{my_param} = "my value";
+       return PE_OK;
+   }
+
+oidcGotIDToken
+~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.15
+
+This hook is triggered after LemonLDAP::NG successfully received and decoded the ID Token from an external OpenID Provider
+
+The hook's parameters are:
+
+* The configuration key of the OP
+* A hash reference of the decoded ID Token payload
+
+Sample code::
+
+   use constant hook => {
+       oidcGotIDToken  => 'modifyIDToken',
+   };
+
+   sub modifyIDToken {
+       my ( $self, $req, $op, $id_token_payload_hash ) = @_;
+
+       # do some post-processing on the `sub` claim
+       $id_token_payload_hash->{sub} = lc($id_token_payload_hash->{sub});
+       return PE_OK;
+   }
+
+oidcGotUserInfo
+~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.15
+
+This hook is triggered after LemonLDAP::NG successfully received the UserInfo response from an external OpenID Provider
+
+The hook's parameters are:
+
+* The configuration key of the OP
+* A hash reference of decoded UserInfo payload
+
+Sample code::
+
+   use constant hook => {
+       oidcGotUserInfo  => 'modifyUserInfo',
+   };
+
+   sub modifyUserInfo {
+       my ( $self, $req, $op, $userinfo_content ) = @_;
+
+       # Custom attribute processing
+       $userinfo_content->{my_attribute} = 1;
+       return PE_OK;
+   }
+
+
 Password change hooks
 ---------------------
 
