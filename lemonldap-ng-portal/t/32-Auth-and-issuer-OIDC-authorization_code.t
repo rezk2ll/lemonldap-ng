@@ -5,6 +5,7 @@ use IO::String;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;
 use MIME::Base64;
+use URI::QueryParam;
 
 BEGIN {
     require 't/test-lib.pm';
@@ -298,7 +299,9 @@ count(1);
 ( $url, $query ) =
   expectRedirection( $res, qr#^http://auth.op.com(/oauth2/authorize)\?(.*)$# );
 
-like( $query, qr/my_param=my\+value/,
+my $u = URI->new;
+$u->query($query);
+is( $u->query_param('my_param'), "my value",
     "oidcGenerateAuthenticationRequest called" );
 count(1);
 
