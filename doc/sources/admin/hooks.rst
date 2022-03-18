@@ -366,6 +366,58 @@ Sample code::
    }
 
 
+SAML Authentication hooks
+-------------------------
+
+samlGenerateAuthnRequest
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.15
+
+This hook is triggered when LemonLDAP::NG is building a SAML authentication request for an external IDP
+
+The hook's parameters are:
+
+* The configuration key of the IDP
+* The ``Lasso::Login`` object
+
+Sample code::
+
+   use constant hook => {
+       samlGenerateAuthnRequest    => 'genRequest',
+   };
+
+   sub genRequest {
+       my ( $self, $req, $idp, $login ) = @_;
+
+       # Your code here
+   }
+
+samlGotAuthnResponse
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.15
+
+This hook is triggered after LemonLDAP::NG successfully validated a SAML authentication response from an IDP
+
+The hook's parameters are:
+
+* The configuration key of the IDP
+* The ``Lasso::Login`` object
+
+Sample code::
+
+   use constant hook => {
+       samlGotAuthnResponse    => 'gotResponse',
+   };
+
+   sub gotResponse {
+       my ( $self, $req, $idp, $login ) = @_;
+
+       # Your code here
+   }
+
+
 Password change hooks
 ---------------------
 
