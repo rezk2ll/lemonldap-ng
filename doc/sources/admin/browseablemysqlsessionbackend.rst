@@ -89,7 +89,7 @@ Create the following tables. You may skip the session types you are not going to
        _utime bigint,
        _cas_id varchar(128),
        pgtIou varchar(128)
-   ) DEFAULT CHARSET utf8
+   ) DEFAULT CHARSET utf8;
    CREATE INDEX i_c__session_kind ON cassessions (_session_kind);
    CREATE INDEX i_c__utime        ON cassessions (_utime);
    CREATE INDEX i_c__cas_id       ON cassessions (_cas_id);
