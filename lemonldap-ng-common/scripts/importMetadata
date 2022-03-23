@@ -766,6 +766,7 @@ Options:
     -a, --nagios            output statistics in Nagios format
     -r, --remove            remove provider from LemonLDAP::NG if it does not appear in metadata
     -n, --dry-run           print statistics but do not apply changes
+    -c, --config-file       use provided configuration file
     -v, --verbose           increase verbosity of output
     -h, --help              print full documentation
 
@@ -811,6 +812,48 @@ present in the imported metadata
 =item B<-n>, B<--dry-run>
 
 This option prevents the modified configuration from being saved. It can be used for testing.
+
+=item B<-c>, B<--config-file>
+
+Using a configuration file lets you do advanced configuration on a global per-provider basis.
+The configuration file is stored in .ini format. Here is an example file
+
+    # main script options, these will be overriden by the CLI options
+    [main]
+    dry-run=1
+    verbose=1
+    metadata=http://url/to/metadata.xml
+    ; Multi-value options
+    ignore-idp=entity-id-to-ignore-1
+    ignore-idp=entity-id-to-ignore-2
+
+    # Default exported attributes for IDPs
+    [exportedAttributes]
+    cn=0;cn
+    eduPersonPrincipalName=0;eduPersonPrincipalName
+    ...
+
+    # options that apply to all providers
+    [ALL]
+    ; Disable signature requirement on requests
+    samlSPMetaDataOptionsCheckSSOMessageSignature=0
+    samlSPMetaDataOptionsCheckSLOMessageSignature=0
+    ; Store SAML assertions in session
+    samlIDPMetaDataOptionsStoreSAMLToken=1
+    ; Mark ePPN as always required
+    attribute_required_eduPersonPrincipalName=1
+    ...
+
+    # Specific provider configurations
+    [https://test-sp.federation.renater.fr]
+    ; All attributes are optional for this provider
+    attribute_required=0
+    ; Override some options
+    samlSPMetaDataOptionsNameIDFormat=persistent
+
+    [https://idp.renater.fr/idp/shibboleth]
+    ; declare an extra attribute from this provider
+    exported_attribute_eduPersonAffiliation=1;uid
 
 =item B<-v>, B<--verbose>
 
