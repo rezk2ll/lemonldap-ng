@@ -98,7 +98,7 @@ Create the following tables. You may skip the session types you are not going to
 LemonLDAP::NG configuration
 ---------------------------
 
-Go in the Manager and set the session module to ``Apache::Session::Browseable::PgJSON`` for each session type you intend to use:
+Go in the Manager and set the session module to ``Apache::Session::Browseable::MySQL`` for each session type you intend to use:
 
 * ``General parameters`` » ``Sessions`` » ``Session storage`` » ``Apache::Session module``
 * ``General parameters`` » ``Sessions`` » ``Persistent sessions`` » ``Apache::Session module``
