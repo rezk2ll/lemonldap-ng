@@ -509,14 +509,6 @@ sub _displayRegister {
         }
     }
 
-    return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ], [] ]
-      if (
-        @am == 1
-        and not( $req->userData->{_2fDevices}
-            && $req->userData->{_2fDevices} =~ /\w+/
-            or $req->data->{sfRegRequired} )
-      );
-
     # Retrieve user all second factors
     my $_2fDevices = [];
     unless ( $self->canUpdateSfa($req) ) {
@@ -533,6 +525,13 @@ sub _displayRegister {
     else {
         $self->userLogger->warn("Do not display 2F devices!");
     }
+
+    return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ], [] ]
+      if (
+        @am == 1
+        and not( @$_2fDevices
+            or $req->data->{sfRegRequired} )
+      );
 
    # Parse second factors to display delete button if allowed and upgrade button
     my $displayUpgBtn = 0;
