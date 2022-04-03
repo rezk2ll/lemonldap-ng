@@ -4,17 +4,25 @@ use strict;
 use Lemonldap::NG::Common::UserAgent;
 use JSON qw(from_json);
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 our $_ua;
 
 sub ua {
-    return $_ua if ($_ua);
-    return $_ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->localConfig );
+    return $_ua
+      ? $_ua
+      : Lemonldap::NG::Common::UserAgent->new( $_[0]->localConfig );
 }
 
 sub checkMaintenanceMode {
     my ( $class, $req ) = @_;
     my $vhost = $class->resolveAlias($req);
+
+    unless ($vhost) {
+        $class->logger->error('No VHost provided');
+        return $class->Lemonldap::NG::Handler::Main::checkMaintenanceMode($req);
+    }
+
+    $class->logger->info("DevOps request from $vhost");
     $class->tsv->{lastVhostUpdate} //= {};
     $class->_loadVhostConfig( $req, $vhost )
       unless (
@@ -91,7 +99,7 @@ q"I refuse to compile 'rules.json' when useSafeJail isn't activated! Yes I know,
 
     $class->logger->debug("DevOps handler called by $vhost");
     $class->locationRulesInit( undef, { $vhost => $json->{rules} } );
-    $class->headersInit( undef, { $vhost => $json->{headers} } );
+    $class->headersInit( undef,       { $vhost => $json->{headers} } );
     $class->tsv->{lastVhostUpdate}->{$vhost} = time;
     $class->tsv->{https}->{$vhost} = uc $req->env->{HTTPS_REDIRECT} eq 'ON'
       if exists $req->env->{HTTPS_REDIRECT};
