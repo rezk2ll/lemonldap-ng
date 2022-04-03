@@ -2,7 +2,7 @@
 #=============================================================================
 # Rotation of OpenID Connect keys
 #
-# This module is written to be used by cron to rotate keys.
+# This script is written to be used by cron to rotate keys.
 #
 # This is part of LemonLDAP::NG product, released under GPL
 #=============================================================================

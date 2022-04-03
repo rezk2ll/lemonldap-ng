@@ -1,19 +1,19 @@
 LemonLDAP::NG FastCGI server
 ============================
 
-Since 1.9, Lemonldap::NG provides a FastCGI server usable to protect
+Since 1.9, LL::NG provides a FastCGI server that can be used for protecting
 applications with Nginx (See
-:doc:`Manage virtual hosts<configvhost>` page to
-configure virtual hosts).
+:doc:`Manage virtual hosts<configvhost>` page to configure virtual hosts)
+or the DevOps Handler (See :doc:`SSO as a Service<ssoaas>`).
 
-This FastCGI server can be used for all LLNG components. It compiles
-enabled components on-the-fly.
+This FastCGI server can be implemented for all LL::NG components.
+It compiles enabled components just-in-time.
 
 Start
 -----
 
-Using packages
-~~~~~~~~~~~~~~
+Using package
+~~~~~~~~~~~~~
 
 You just have to install lemonldap-ng-fastcgi-server package, it will be
 started automatically.

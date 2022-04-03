@@ -14,7 +14,7 @@ with a quick sed command. For example, we change it to ow2.org:
 
 2.1 - Apache
 
-Enable the components you've installed:
+Enable installed components:
 
   # Portal
   a2ensite portal-apache2.conf
@@ -37,7 +37,7 @@ Then restart Apache:
 
 2.2 - Nginx
 
-Enable the components you've installed:
+Enable installed components:
 
   cd /etc/nginx/sites-enabled
 
@@ -57,16 +57,16 @@ Enable the components you've installed:
   # Test site
   ln -s ../site-available/test-nginx.conf
 
-Customize then, then reload nginx
+Customize them, then reload nginx
 
-  service nginx reload
+  nginx -s reload
 
 3 - Check your DNS
 ------------------
 
-Be sure that your browser can join (adapt it with your domain):
-- auth.example.com   : the authentication portal
-- manager.example.com: the configuration interface
+Be sure that your browser can reach (adapt it with your domain):
+- auth.example.com    : Authentication portal
+- manager.example.com : Configuration interface
 
 4 - Connect to the manager
 --------------------------
@@ -88,9 +88,9 @@ following accounts:
 6 - Base configuration file
 ---------------------------
 
-The configuration is managed by the manager with the exception of some basic
-parameters such as the storage type configuration. These parameters are defined
-in the file /etc/lemonldap-ng/lemonldap-ng.ini.
+Configuration is managed by the Manager except some basic parameters
+such as storage type configuration. These parameters are defined
+in /etc/lemonldap-ng/lemonldap-ng.ini file.
 
 This file can also be used to override the global configuration locally
 

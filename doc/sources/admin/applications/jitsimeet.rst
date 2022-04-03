@@ -17,8 +17,7 @@ conference rooms.
 The official documentation provides instructions on `how to configure
 Jitsi Meet to use
 Shibboleth <https://github.com/jitsi/jicofo/blob/master/doc/shibboleth.md>`__,
-but with a little adaptation, it can work just as fine with
-LemonLDAP::NG.
+but with a little adaptation, it can work just as fine with LemonLDAP::NG.
 
 Configuration
 -------------
@@ -60,7 +59,7 @@ configuration file:
 ::
 
 
-   # This block lets Nginx know how to contact the local LLNG handler
+   # This block lets Nginx know how to contact the local LL::NG handler
    # for authentication
    location = /lmauth {
       internal;
@@ -76,7 +75,7 @@ configuration file:
    # You may want to change this is your goal is to make the whole Jitsi Meet instance private
    location /login/ {
 
-       # Protect the current path with LLNG
+       # Protect the current path with LL::NG
        auth_request /lmauth;
        set $original_uri $uri$is_args$args;
        auth_request_set $lmremote_user $upstream_http_lm_remote_user;

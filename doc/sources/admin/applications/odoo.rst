@@ -21,7 +21,7 @@ Make sure you have :doc:`set up LemonLDAP::NG a SAML IDP <../samlservice>`
    a certificate<samlservice-convert-certificate>`)
 
 .. warning::
-   Odoo requires LemonLDAP::NG 2.0.14 in order to handle RelayState correctly
+   Odoo requires LL::NG 2.0.14 in order to handle RelayState correctly
 
 Configuring Odoo
 ----------------
@@ -60,7 +60,7 @@ To generate a key/certificate pair, you can run the following command::
     openssl req -x509 -newkey rsa:4096 -keyout odoo-key.pem -out odoo-cert.pem -sha256 -days 3650 -nodes
 
 * Select a signature method in the *Signature Algorithm*, such as *SIG_RSA_SHA256*
-* If you do not want to use the email address to match between LLNG and Odoo accounts, set the *Identity Provider matching attribute* to a different value
+* If you do not want to use the email address to match between LL::NG and Odoo accounts, set the *Identity Provider matching attribute* to a different value
 * All other fields may be left to default values
 
 Configuring users

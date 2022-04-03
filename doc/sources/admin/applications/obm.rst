@@ -151,7 +151,7 @@ Edit also OBM configuration to enable LL::NG Handler:
        fastcgi_param CONTENT_LENGTH "";
        # Keep original hostname
        fastcgi_param HOST $http_host;
-       # Keep original request (LLNG server will received /llauth)
+       # Keep original request (LL::NG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
      }
 

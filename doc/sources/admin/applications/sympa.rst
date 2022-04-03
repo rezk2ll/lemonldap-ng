@@ -15,7 +15,7 @@ wants to use this feature.
 
 .. tip::
 
-    Since version 1.9 of LLNG, old Auto-Login feature has been
+    Since LL::NG 1.9, old Auto-Login feature has been
     removed since it works only with Sympa-5 which has been deprecated
 
 
@@ -101,7 +101,7 @@ authentication URL.
        fastcgi_param CONTENT_LENGTH "";
        # Keep original hostname
        fastcgi_param HOST $http_host;
-       # Keep original request (LLNG server will received /llauth)
+       # Keep original request (LL::NG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
      }
 

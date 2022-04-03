@@ -14,7 +14,7 @@ using SAML 2.0 protocol.
 
 You can find the Official AWX documentation about this topic here :
 https://docs.ansible.com/ansible-tower/latest/html/administration/ent_auth.html#saml-authentication-settings
-Please read it before the LLNG doc.
+Please read it before the LL::NG doc.
 
 Configuration
 -------------
@@ -34,8 +34,8 @@ saml in AWX, you can do it with your pki or with openssl on your machine
 
    openssl req -x509 -newkey rsa:4096 -keyout saml-awx.key -out saml-awx.crt -days 3650 -nodes
 
-LLNG SAML Certificate
-~~~~~~~~~~~~~~~~~~~~~
+LL::NG SAML Certificate
+~~~~~~~~~~~~~~~~~~~~~~~
 
 AWX need a certificate for the IDP signature, a public key won't work.
 You can either just generate a certificate from the private key and put
@@ -55,7 +55,7 @@ certificate with this command :
    openssl req -new -x509 -days 3650 -key lemonldap.key > lemonldap.crt
 
 After that, if you want, you can replace your SAML public key with this
-certificate in LLNG configuration, this is not mandatory.
+certificate in LL::NG configuration, this is not mandatory.
 
 AWX
 ~~~
@@ -153,7 +153,7 @@ This is the configuration of the IdP :
 
 -  "attr_last_name": "sn" SAML Attribute for the user last name
 -  "x509cert": "SOXGp....." the content of ``lemonldap.crt`` generated
-   in the "LLNG SAML Certificate" section
+   in the "LL::NG SAML Certificate" section
 -  "attr_username": "uid" SAML Attribute for the user username
 -  "entity_id": "https://auth.example.com/saml/metadata" entityID of the
    IdP

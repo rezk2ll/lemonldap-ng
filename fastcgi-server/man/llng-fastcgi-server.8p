@@ -133,29 +133,29 @@
 .\" ========================================================================
 .\"
 .IX Title "llng-fastcgi-server 8"
-.TH llng-fastcgi-server 8 "2021-08-10" "perl v5.32.1" "User Contributed Perl Documentation"
+.TH llng-fastcgi-server 8 "2022-04-01" "perl v5.32.1" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
 .nh
 .SH "NAME"
-llng\-fastcgi\-server \- FastCGI server used to provide Lemonldap::NG services to
-Nginx
+llng\-fastcgi\-server \- FastCGI server used for providing LemonLDAP::NG services.
 .SH "SYNOPSIS"
 .IX Header "SYNOPSIS"
 .Vb 2
-\&  # Start server listening to /run/llng.sock with 10 process
+\&  # Start server listening to /run/llng.sock with 10 workers
 \&  llng\-fastcgi\-server \-u nobody \-g nobody \-s /run/llng.sock \-n 10
 .Ve
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
-llng-fastcgi-server has been designed provides Lemonldap::NG services to Nginx.
-Portal, manager and handler will be compiled only is used. So this FastCGI
-server can be used on every Lemonldap::NG server even if it needs only some
+llng-fastcgi-server has been designed to provide LemonLDAP::NG services to Nginx
+or DevOps Handler.
+Portal, Manager and Handler will be compiled just-in-time. So this FastCGI
+server can be used on every LemonLDAP::NG server even if it needs only some
 parts (isolated handlers, portal,...).
 .SH "PARAMETERS"
 .IX Header "PARAMETERS"
-Each parameter can be set by an option or a environment variable.
+Each parameter can be set by using options or environment variables.
 .IP "\-\-pid    \-p ($ENV{\s-1PID\s0}):" 4
 .IX Item "--pid -p ($ENV{PID}):"
 pid file
@@ -182,14 +182,14 @@ file to load for custom functions
 Plack::Handler engine, default to \s-1FCGI\s0 (see below)
 .IP "\-\-plackOptions:" 4
 .IX Item "--plackOptions:"
-other options to pass to the Plack handler. This multi-valued parameter must
+To pass other options to the Plack handler. This multi-valued parameter must
 have \*(L"key=value\*(R" values.
 .Sp
-See Plack::Handler::FCGI for a list of options for the default \s-1FCGI\s0 engine
+See Plack::Handler::FCGI to find out list of available options for default \s-1FCGI\s0 engine
 .SH "ENGINES"
 .IX Header "ENGINES"
-By default, llng-fastcgi-server uses \s-1FCGI\s0 (= Plack::Handler::FCGI). Some
-other engines can be used:
+By default, llng-fastcgi-server uses \s-1FCGI\s0 (= Plack::Handler::FCGI).
+Some other engines can be used:
 .SS "\s-1FCGI\s0 (default)"
 .IX Subsection "FCGI (default)"
 It uses FCGI::ProcManager as manager. Other managers:
@@ -231,7 +231,7 @@ Use \s-1OW2\s0 system to report bug or ask for features:
 .SH "DOWNLOAD"
 .IX Header "DOWNLOAD"
 Lemonldap::NG is available at
-<https://lemonldap-ng.org/download>
+<https://lemonldap\-ng.org/download>
 .SH "COPYRIGHT AND LICENSE"
 .IX Header "COPYRIGHT AND LICENSE"
 .IP "Copyright (C) 2008\-2016 by Xavier Guimard, <x.guimard@free.fr>" 4
