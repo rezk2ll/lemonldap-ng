@@ -397,7 +397,7 @@ The Client Credentials Grant allows you to obtain an Access Token using only a R
 The following attributes are made available in the created session:
 
 * The ``_whatToTrace`` attribute (main session identifier), is set to the
-  relying party's configuration key
+  relying party's Client ID
 * The ``_scope`` attribute is set to the requested scopes
 * The ``_clientId`` attribute is set to the Client ID that obtained the access
   token.
