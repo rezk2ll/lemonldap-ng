@@ -1,6 +1,3 @@
-#==============================================================================
-# Variables
-#==============================================================================
 %global lm_prefix %{_prefix}
 %global lm_sharedir %{_datadir}/lemonldap-ng
 %global lm_examplesdir %{lm_sharedir}/examples
@@ -30,9 +27,6 @@
 
 #global pre_release beta1
 
-#==============================================================================
-# Main package
-#==============================================================================
 Name:           lemonldap-ng
 Version:        2.16.2
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
@@ -232,9 +226,6 @@ application. It manages both authentication and authorization and provides
 headers for accounting.
 So you can have a full AAA protection for your web space as described below.
 
-#==============================================================================
-# Conf
-#==============================================================================
 %package conf
 Summary:        LemonLDAP-NG configuration
 Requires:       perl(Apache::Session)
@@ -248,9 +239,6 @@ Requires:       mod_fcgid
 %description conf
 This package contains the main storage configuration.
 
-#==============================================================================
-# Documentation
-#==============================================================================
 %package doc
 Summary:        LemonLDAP-NG documentation
 Requires:       lemonldap-ng-conf = %{version}-%{release}
@@ -258,9 +246,6 @@ Requires:       lemonldap-ng-conf = %{version}-%{release}
 %description doc
 This package contains HTML documentation.
 
-#==============================================================================
-# Handler
-#==============================================================================
 %package handler
 Summary:        LemonLDAP-NG handler
 Requires:       crontabs
@@ -270,9 +255,6 @@ Requires:       perl(Lemonldap::NG::Handler) = %{version}-%{release}
 %description handler
 This package deploys the Apache Handler.
 
-#==============================================================================
-# Manager
-#==============================================================================
 %package manager
 Summary:        LemonLDAP-NG administration interface
 Requires:       lemonldap-ng-conf = %{version}-%{release}
@@ -281,9 +263,6 @@ Requires:       perl(Lemonldap::NG::Manager) = %{version}-%{release}
 %description manager
 This package deploys the administration interface and sessions explorer.
 
-#==============================================================================
-# Portal
-#==============================================================================
 %package portal
 Summary:        LemonLDAP-NG authentication portal
 Requires:       crontabs
@@ -296,9 +275,6 @@ Requires:       perl(Net::OpenID::Consumer)
 %description portal
 This package deploys the authentication portal.
 
-#==============================================================================
-# Test
-#==============================================================================
 %package test
 Summary:        LemonLDAP-NG test applications
 Requires:       lemonldap-ng-conf = %{version}-%{release}
@@ -306,9 +282,6 @@ Requires:       lemonldap-ng-conf = %{version}-%{release}
 %description test
 This package deploys small test applications.
 
-#==============================================================================
-# FastCGI Server
-#==============================================================================
 %package fastcgi-server
 Summary:        LemonLDAP-NG FastCGI Server
 Requires:       lemonldap-ng-conf = %{version}-%{release}
@@ -318,9 +291,6 @@ Requires:       perl(FCGI::ProcManager)
 %description fastcgi-server
 This package deploys files needed to start a FastCGI server.
 
-#==============================================================================
-# UWSGI Application
-#==============================================================================
 %package uwsgi-app
 Summary:        LemonLDAP-NG UWSGI Application
 Requires:       uwsgi-plugin-psgi
@@ -329,9 +299,6 @@ Requires:       uwsgi-plugin-psgi
 LemonLDAP::NG uWSGI server provides a replacement to LemonLDAP::NG FastCGI
 server, using uWSGI instead of Plack FCGI.
 
-#==============================================================================
-# Nginx server
-#==============================================================================
 %package nginx
 Summary:        LemonLDAP-NG Nginx support
 Requires:       nginx
@@ -339,9 +306,6 @@ Requires:       nginx
 %description nginx
 Nginx support for LemonLDAP::NG.
 
-#==============================================================================
-# CPAN modules - Common
-#==============================================================================
 %package -n perl-Lemonldap-NG-Common
 Summary:        LemonLDAP-NG Common Modules
 Requires:       perl(JSON::XS)
@@ -352,9 +316,6 @@ Requires:       perl(Cache::Cache)
 This package installs the configuration libraries used by other LemonLDAP::NG
 modules.
 
-#==============================================================================
-# CPAN modules - Handler
-#==============================================================================
 %package -n perl-Lemonldap-NG-Handler
 Summary:        LemonLDAP-NG Handler Modules
 
@@ -362,27 +323,18 @@ Summary:        LemonLDAP-NG Handler Modules
 This package installs the Apache module part (handler) used to protect web
 areas.
 
-#==============================================================================
-# CPAN modules -  Manager
-#==============================================================================
 %package -n perl-Lemonldap-NG-Manager
 Summary:        LemonLDAP-NG Manager Modules
 
 %description -n perl-Lemonldap-NG-Manager
 This package installs the administration interface (manager).
 
-#==============================================================================
-# CPAN modules - Portal
-#==============================================================================
 %package -n perl-Lemonldap-NG-Portal
 Summary:        LemonLDAP-NG Portal Modules
 
 %description -n perl-Lemonldap-NG-Portal
 This package installs the authentication portal.
 
-#==============================================================================
-# SELinux policy package
-#==============================================================================
 %if 0%{?with_selinux}
 %package selinux
 Summary:             LemonLDAP-NG SELinux policy
@@ -396,9 +348,6 @@ BuildRequires:       selinux-policy-devel
 Custom SELinux policy module
 %endif
 
-#==============================================================================
-# SSOaaS client for Apache
-#==============================================================================
 %package -n perl-Lemonldap-NG-SSOaaS-Apache-Client
 Summary:        Lemonldap-NG SSOaaS client for Apache
 
@@ -406,16 +355,11 @@ Summary:        Lemonldap-NG SSOaaS client for Apache
 This package permits one to enroll an Apache server
 into Lemonldap::NG's SSOaaS service.
 
-#==============================================================================
-# Source preparation
-#==============================================================================
+
 %prep
 %setup -q -n %{name}-%{version}%{?pre_release:~%{pre_release}}
 
 
-#==============================================================================
-# Building
-#==============================================================================
 %build
 make %{?_smp_mflags} configure \
     STORAGECONFFILE=%{lm_storagefile} \
@@ -435,9 +379,7 @@ make -f %{_datadir}/selinux/devel/Makefile %{modulename}.pp
 bzip2 -9 %{modulename}.pp
 %endif
 
-#==============================================================================
-# Installation
-#============================================================================
+
 %install
 make %{?_smp_mflags} install \
     DESTDIR=%{buildroot} \
@@ -568,9 +510,6 @@ install -D -m 0644 %{modulename}.pp.bz2 \
     %{buildroot}%{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
 %endif
 
-#==============================================================================
-# Run test
-#==============================================================================
 %check
 sed -i 's:^dirName.*:dirName = %{buildroot}%{lm_vardir}/conf:' \
     %{buildroot}%{lm_storagefile}
@@ -579,9 +518,7 @@ make %{?_smp_mflags} test \
 sed -i 's:^dirName.*:dirName = %{lm_vardir}/conf:' \
     %{buildroot}%{lm_storagefile}
 
-#==============================================================================
-# Post Installation
-#==============================================================================
+
 %post conf
 # Upgrade from previous version
 # See http://lemonldap-ng.org/documentation/1.0/upgrade
@@ -596,9 +533,6 @@ if [ $1 -gt 1 ] ; then
     fi
 fi
 
-#==============================================================================
-# Pre uninstallation
-#==============================================================================
 %preun conf
 # Upgrade from previous version
 if [ $1 -eq 1 ] ; then
@@ -634,6 +568,7 @@ fi
 %selinux_relabel_post -s %{selinuxtype}
 # if with_selinux
 %endif
+
 
 %files
 
@@ -765,9 +700,7 @@ fi
 %{_mandir}/man3/Lemonldap::NG::SSOaaS::Apache*.3pm.*
 %{perl_vendorlib}/Lemonldap/NG/SSOaaS/Apache/
 
-#==============================================================================
-# Changelog
-#==============================================================================
+
 %changelog
 * Fri May 12 2023 Clement Oudot <clem.oudot@gmail.com> - 2.16.2-1
 - Update to 2.16.2
