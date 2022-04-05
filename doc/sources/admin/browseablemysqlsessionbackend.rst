@@ -59,7 +59,7 @@ Create the following tables. You may skip the session types you are not going to
        _session_kind varchar(15),
        _utime bigint,
        ProxyID varchar(64),
-       _nameID varchar(128),
+       _nameID varchar(255),
        _assert_id varchar(64),
        _art_id varchar(64),
        _saml_id varchar(64)
