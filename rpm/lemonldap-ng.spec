@@ -564,7 +564,8 @@ chmod 644 %{buildroot}/usr/share/lemonldap-ng/test/cas.php
 
 # Install SELinux policy
 %if 0%{?with_selinux}
-install -D -m 0644 %{modulename}.pp.bz2 %{buildroot}%{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
+install -D -m 0644 %{modulename}.pp.bz2 \
+    %{buildroot}%{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
 %endif
 
 #==============================================================================
