@@ -67,41 +67,54 @@ Using a Central FastCGI (or uWSGI) Server
 Nginx
 ^^^^^
 
-Examples below are web server templates customized for
-requesting authorization from a central FastCGI server.
-With a central uWSGI server (Nginx only), use 'uwsgi_param' directive:
-
+Examples below are customized web server templates for
+requesting authorization from a Central FastCGI server.
+You can use 'uwsgi_param' directive for requesting a Central uWSGI server (Nginx only):
 .. code-block:: nginx
 
    server {
      listen <port>;
      server_name myapp.domain.com;
+     root /var/www/myapp;
+     index index.php;
+
      location = /lmauth {
        internal;
        include /etc/nginx/fastcgi_params;
+
+       # Handler directive to declare this VHost as DevOps and
        # Pass authorization requests to central FastCGI server
        fastcgi_pass 10.1.2.3:9090;
        fastcgi_param VHOSTTYPE DevOps;
+
        # Drop post datas
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
+
        # Keep original hostname
        fastcgi_param HOST $http_host;
-       # Keep original request (LLNG server will received /lmauth)
+
+       # Keep original request (LL::NG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
 
        # Set redirection parameters
        fastcgi_param HTTPS_REDIRECT "$https";
        fastcgi_param PORT_REDIRECT $server_port;
 
-       # Set rules dynamically (LL::NG will poll it every 10 mn)
-       fastcgi_param RULES_URL http://rulesserver/my.json;
+       # This URL will be fetched by the Central FastCGI server every 10 mn and
+       # then used for compliling access rules and headers relative to this VirtualHost
+       # CHECK THAT IT CAN BE REACHED BY THE CENTRAL FASTCGI SERVER
+       # fastcgi_param RULES_URL http://rulesserver/my.json;
+       fastcgi_param RULES_URL http://myapp.domain.com/rules.json;
      }
+
      location /rules.json {
        auth_request off;
        allow 10.1.2.3;
        deny all;
      }
+
+     # Example with php-fpm:
      location ~ ^(.*\.php)$ {
        auth_request /lmauth;
        set $original_uri $uri$is_args$args;
@@ -114,6 +127,19 @@ With a central uWSGI server (Nginx only), use 'uwsgi_param' directive:
        include snippets/fastcgi-php.conf;
        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
      }
+
+     # Example as ReverseProxy:
+     location /api/ {
+       auth_request /lmauth;
+       set $original_uri $uri$is_args$args;
+       auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+       auth_request_set $lmlocation $upstream_http_location;
+       error_page 401 $lmlocation;
+       include /etc/nginx/nginx-lua-headers.conf;
+       # ...
+       proxy_pass http://myapp.dev.com:8081/;
+     }
+
      location / {
        try_files $uri $uri/ =404;
      }
@@ -124,7 +150,7 @@ Apache
 
 LL::NG provides an experimental FastCGI client. You have to
 install LemonLDAP::NG handler (LL::NG FastCGI client),
-FCGI::Client (Perl dependency) and Mod_Perl2 (Apache module)
+FCGI::Client (Perl FastCGI dependency) and Mod_Perl2 (Apache module)
 used for parsing HTTP headers.
 Then, add this in your apache2.conf web applications or reverse-proxies.
 
@@ -132,23 +158,39 @@ Then, add this in your apache2.conf web applications or reverse-proxies.
 .. code-block:: apache
 
    <VirtualHost port>
-       ServerName app.tls
-       PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2::FCGIClient
+       ServerName myapp.domain.com
+       DocumentRoot "/var/www/myapp"
+       ErrorLog /var/log/apache2/localsite_error.log
+       CustomLog /var/log/apache2/localsite_access.log combine
 
-       # The central FastCGI server socket
-       PerlSetVar LLNG_SERVER 192.0.2.1:9090
+       <Location /rules.json>
+         Order deny,allow
+         Deny from all
+         Allow from 10.1.2.3
+       </Location>
+       
+       <LocationMatch "^/(?!rules.json)">
+         PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2::FCGIClient
 
-       # Declare this vhost as a DevOps protected vhost. So you do not have
-       # to declare it in the LemonLDAP::NG Manager
-       PerlSetVar VHOSTTYPE DevOps
+         # Handler directive to declare this VHost as DevOps and
+         # Pass authorization requests to Central FastCGI server
+         PerlSetVar VHOSTTYPE DevOps
+         PerlSetVar LLNG_SERVER 10.1.2.3:9090
 
-       # This URL will be fetched by the central FastCGI server and
-       # used to make the authentication decision about this virtualhost
-       # Make sure the central FastCGI server can reach it
-       PerlSetVar RULES_URL http://app.tld/rules.json
-       PerlSetVar HTTPS_REDIRECT HTTPS
-       PerlSetVar PORT_REDIRECT SERVER_PORT
-       ...
+         # Keep original hostname
+         PerlSetVar HOST HTTP_HOST
+
+         # This URL will be fetched by the Central FastCGI server then
+         # used for compliling access rules and headers about this VirtualHost
+         # CHECK THAT IT CAN BE REACHED BY THE CENTRAL FASTCGI SERVER
+         # PerlSetVar RULES_URL http://rulesserver/my.json
+         PerlSetVar RULES_URL http://myapp.domain.com/rules.json
+
+         # Set redirection parameters
+         PerlSetVar PORT_REDIRECT SERVER_PORT
+         PerlSetVar HTTPS_REDIRECT HTTPS
+       </LocationMatch>
+
    </VirtualHost>
 
 Node.js
