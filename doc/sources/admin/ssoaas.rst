@@ -70,6 +70,8 @@ Nginx
 Examples below are customized web server templates for
 requesting authorization from a Central FastCGI server.
 You can use 'uwsgi_param' directive for requesting a Central uWSGI server (Nginx only):
+
+
 .. code-block:: nginx
 
    server {
