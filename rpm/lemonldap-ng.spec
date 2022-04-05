@@ -594,11 +594,6 @@ if [ $1 -gt 1 ] ; then
         chgrp %{lm_apachegroup} %{lm_storagefile} || :
     fi
 fi
-# Set editor alternatives if it does not exist
-update-alternatives --display editor > /dev/null 2>&1
-if [ $? -ne 0 ] ; then
-        update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1
-fi
 
 #==============================================================================
 # Pre uninstallation
