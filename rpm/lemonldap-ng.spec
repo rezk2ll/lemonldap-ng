@@ -36,7 +36,7 @@
 Name:           lemonldap-ng
 Version:        2.16.2
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
-Summary:        LemonLDAP-NG WebSSO
+Summary:        Web Single Sign On (SSO) and Access Management
 License:        GPLv2+
 URL:            https://lemonldap-ng.org
 Source0:        https://release.ow2.org/lemonldap/%{name}-%{version}%{?pre_release:~%{pre_release}}.tar.gz
