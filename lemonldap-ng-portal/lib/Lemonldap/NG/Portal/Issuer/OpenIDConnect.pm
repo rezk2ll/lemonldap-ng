@@ -1713,13 +1713,6 @@ sub _handleRefreshTokenGrant {
         ( $id_token ? ( id_token => "$id_token" ) : () ),
     };
 
-    # TODO
-    #my $cRP = $apacheSession->data->{_oidcConnectedRP} || '';
-    #unless ( $cRP =~ /\b$rp\b/ ) {
-    #    $self->p->updateSession( $req, { _oidcConnectedRP => "$rp,$cRP" },
-    #        $apacheSession->id );
-    #}
-
     $self->logger->debug("Send token response");
 
     return $self->p->sendJSONresponse( $req, $token_response );
