@@ -263,6 +263,7 @@
 "register":"הרשמה",
 "registerRequestAlreadyIssued":"כבר הוגשה בקשה לרישום החשבון הזה ב־",
 "rememberChoice":"שמירת הבחירה שלי",
+"rememberTimerLabel":"s before automatic authentication",
 "remove2fWarning":"פעולה זו אינה הפיכה",
 "removeOtherSessions":"הסרת הפעלות אחרות",
 "renewSession":"חידוש הפעלה",

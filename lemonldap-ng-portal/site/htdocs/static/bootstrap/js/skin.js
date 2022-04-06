@@ -47,5 +47,78 @@ $(window).on("load", function() {
     $('.nav-item').attr( "tabIndex", 0 );
   });
 
+  // tick all checkboxes remembering the authentication choice
+  // when global checkbox is clicked
+  $("#globalrememberauthchoice").change(function() {
+      var checked = this.checked;
+      $( 'input[name="rememberauthchoice"]' ).each(function() {
+          $( this ).val(checked);
+      });
+  });
+
+  // if rememberStopped button has been clicked, stop the timer
+  // from lauching the previously remembered authentication
+  $("#buttonRememberStopped").click(function() {
+      var curval = $( "input#rememberStopped" ).val();
+      var newval;
+      if( curval != "stopped" )
+      {
+          newval = "stopped";
+      }
+      else
+      {
+          newval = "running";
+          window.setTimeout( launchAuthenticationChoice, 1000 );
+      }
+      // store the new value
+      $( "input#rememberStopped" ).val(newval);
+  });
+
+  // function running the previously remembered authentication choice
+  // when the timer is over
+  function launchAuthenticationChoice()
+  {
+
+      var timer = $( "div#remembertimer p span" ).text();
+      var isStopped = $( "input#rememberStopped" ).val();
+
+      if ( isStopped != "stopped" )
+      {
+          if ( timer > 0 )
+          {
+              timer--;
+              // display decremented timer in the appropriate html element
+              $( "div#remembertimer p span" ).text(timer);
+              // wait for another 1s
+              window.setTimeout( launchAuthenticationChoice, 1000 );
+          }
+          else
+          {
+              // launch authentication choice defined in cookie
+              var choiceform = "#" + $.cookie(rememberCookieName) + " form";
+              $( choiceform ).submit();
+          }
+      }
+
+  };
+
+
+  // Check rememberauthchoice cookie
+  var rememberCookieName = $( "#rememberCookieName" ).val();
+  var errorCode = $( "#errormsg div span" ).attr("trmsg");
+  // if this is first access
+  if( errorCode == 9 )
+  {
+      // if there is a rememberauthchoice cookie
+      if (  ! ( typeof rememberCookieName === 'undefined' ) &&
+            ! ( typeof $.cookie(rememberCookieName) === 'undefined' )
+         )
+      {
+          // show timer
+          $( "div#remembertimer" ).show();
+          // launch remembered authentication choice when timer reaches 0
+          window.setTimeout( launchAuthenticationChoice, 1000 );
+      }
+  }
 
 });

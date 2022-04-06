@@ -216,3 +216,9 @@ div.input-group > p.form-control > label {
   user-select: none;
   cursor: pointer;
 }
+
+/* Hide "remember my authentication choice" timer */
+div#remembertimer {
+  display: none;
+}
+

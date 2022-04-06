@@ -435,6 +435,36 @@ sub attributes {
             documentation => 'Separator for multiple values',
             flags         => 'hmp',
         },
+        rememberAuthChoiceRule => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'remember auth choice activation rule',
+        },
+        rememberCookieName => {
+            type          => 'text',
+            test          => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
+            msgFail       => '__badCookieName__',
+            default       => 'llngrememberauthchoice',
+            documentation => 'Name of the remember auth choice cookie',
+            flags         => 'p',
+        },
+        rememberCookieTimeout => {
+            type          => 'int',
+            default       => 31536000,
+            documentation => 'lifetime of the remember auth choice cookie',
+            flags => 'm',
+        },
+        rememberDefaultChecked => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Is remember auth choice checkbox enabled by default?',
+        },
+        rememberTimer => {
+            type          => 'int',
+            default       => 5,
+            documentation => 'timer before automatic authentication with the previous remembered authentication choice',
+            flags => 'm',
+        },
         stayConnected => {
             type          => 'boolOrExpr',
             default       => 0,

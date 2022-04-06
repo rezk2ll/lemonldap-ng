@@ -30,3 +30,4 @@ Plugins
    restservices
    soapservices
    stayconnected
+   rememberauthchoice
