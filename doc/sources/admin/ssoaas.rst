@@ -22,22 +22,22 @@ user attributes to an application
 ``*aaS`` means that application can drive underlying layer (IaaS for
 infrastructure, PaaS for platform,…). So for us, ``SSOaaS`` must provide
 the ability for an application to manage authorizations and choose user
-attributes to set. Authentication can not be really ``*aaS``: application
-must just use it but not manage it.
+attributes to receive. Authentication can not be really ``*aaS``: application
+can just use it but not manage it.
 
 LL::NG affords some features that can be used for providing SSO as a
 service. So a web application can manage its rules and headers.
 Docker or VM images (Nginx only) includes LL::NG Nginx configuration that
 aims to a 
-:ref:`central LL::NG authorization server<platformsoverview-external-servers-for-nginx>`.
+:ref:`Central LL::NG authorization server<platformsoverview-external-servers-for-nginx>`.
 By default, all authenticated users can access and just one header is set:
 ``Auth-User``. If application defines a ``RULES_URL`` parameter that refers to
 a JSON file, authorization server will read it, apply specified rules
 and set required headers (see :doc:`DevOps Handler<devopshandler>`).
 
-Two different kind of architecture are existing to do this:
+Two different kinds of architecture are existing to do this:
 
--  Using a :doc:`central FastCGI (or uWSGI) server<psgi>`
+-  Using a :doc:`Central FastCGI (or uWSGI) server<psgi>`
 -  Using front Reverse-Proxies *(some cloud or HA installations use
    reverse-proxies in front-end)*
 
@@ -52,7 +52,7 @@ Two different kind of architecture are existing to do this:
     ```route-remote-addr = ^127\.0\.0\.25[34]$ break: 403 Forbidden for IP ${REMOTE_ADDR}```
 
 
-Example of a central FastCGI architecture:
+Example of a Central FastCGI architecture:
 
 |image0|
 
@@ -69,7 +69,8 @@ Nginx
 
 Examples below are customized web server templates for
 requesting authorization from a Central FastCGI server.
-You can use 'uwsgi_param' directive for requesting a Central uWSGI server (Nginx only):
+You can replace 'fastcgi_*' directives by 'uwsgi_*' for
+requesting a Central uWSGI server (Nginx only):
 
 
 .. code-block:: nginx
@@ -130,7 +131,7 @@ You can use 'uwsgi_param' directive for requesting a Central uWSGI server (Nginx
        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
      }
 
-     # Example as ReverseProxy:
+     # Example as Reverse-Proxy:
      location /api/ {
        auth_request /lmauth;
        set $original_uri $uri$is_args$args;
@@ -147,14 +148,15 @@ You can use 'uwsgi_param' directive for requesting a Central uWSGI server (Nginx
      }
    }
 
+
 Apache
 ^^^^^^
 
 LL::NG provides a dedicated FastCGI client. You have to
 install LemonLDAP::NG handler (LL::NG FastCGI client),
-FCGI::Client (Perl FastCGI dependency) and Mod_Perl2 (Apache module)
-used for parsing HTTP headers.
-Then, add this in your apache2.conf web applications or ReverseProxies.
+FCGI::Client (Perl FastCGI dependency) and Mod_Perl2 (Apache module
+used for parsing HTTP headers).
+Then, add this in your apache2.conf web applications or Reverse-Proxies.
 
 
 .. code-block:: apache
@@ -194,6 +196,7 @@ Then, add this in your apache2.conf web applications or ReverseProxies.
        </LocationMatch>
    </VirtualHost>
 
+
 Node.js
 ^^^^^^^
 
@@ -227,6 +230,7 @@ you can also protect an Express server. Example:
    app.listen(3000, function() {
      return console.log('Example app listening on port 3000!');
    });
+
 
 Plack application
 ^^^^^^^^^^^^^^^^^
@@ -325,7 +329,7 @@ directory.
        error_page 401 $lmlocation;
 
        include /etc/nginx/nginx-lua-headers.conf;
-       
+
        proxy_pass https://$vhost.internal.domain;
      }
    }
