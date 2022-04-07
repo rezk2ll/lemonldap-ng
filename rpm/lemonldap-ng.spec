@@ -191,6 +191,7 @@ BuildRequires:  systemd-rpm-macros
 %else
 BuildRequires:  systemd
 %endif
+BuildRequires:  uglify-js
 
 # Doc
 %if 0%{?el7}
