@@ -8,9 +8,14 @@ our $VERSION = '2.0.15';
 our $_ua;
 
 sub ua {
-    return $_ua
-      ? $_ua
-      : Lemonldap::NG::Common::UserAgent->new( $_[0]->localConfig );
+    my ($class) = @_;
+    return $_ua if $_ua;
+    $_ua = Lemonldap::NG::Common::UserAgent->new( {
+            lwpOpts    => $class->tsv->{lwpOpts},
+            lwpSslOpts => $class->tsv->{lwpSslOpts}
+        }
+    );
+    return $_ua;
 }
 
 sub checkMaintenanceMode {
