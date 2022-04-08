@@ -1105,7 +1105,7 @@ debian-dist:	clean
 	@cp lemonldap-ng-$(VERSION)/_example/etc/api-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/api-apache2.conf
 	@cp lemonldap-ng-$(VERSION)/_example/etc/test-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/test-apache2.conf
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
-	@find lemonldap-ng-$(VERSION)/ -name node_modules -exec rm -rf '{}' \;
+	-@find lemonldap-ng-$(VERSION)/ -name node_modules -exec rm -rf '{}' \;
 	@$(COMPRESS) lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
 
