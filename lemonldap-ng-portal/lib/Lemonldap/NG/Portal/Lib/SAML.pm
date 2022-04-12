@@ -229,136 +229,143 @@ sub loadService {
 sub loadIDPs {
     my ($self) = @_;
 
-    # Check presence of at least one identity provider in configuration
-    unless ( $self->conf->{samlIDPMetaDataXML}
-        and keys %{ $self->conf->{samlIDPMetaDataXML} } )
-    {
-        $self->logger->debug("No IDP found in configuration");
-    }
-
     # Load identity provider metadata
     # IDP metadata are listed in $self->{samlIDPMetaDataXML}
     # Each key is the IDP name
     # Build IDP list for later use in extractFormInfo
-    $self->idpList( {} );
-
     foreach ( keys %{ $self->conf->{samlIDPMetaDataXML} } ) {
-        $self->logger->debug("Get Metadata for IDP $_");
+        $self->loadIDP($_);
+    }
+    return 1;
+}
 
-        my $idp_metadata =
-          $self->conf->{samlIDPMetaDataXML}->{$_}->{samlIDPMetaDataXML};
+sub loadIDP {
+    my ( $self, $idpConfKey ) = @_;
 
-        # Check metadata format
-        if ( ref $idp_metadata eq "HASH" ) {
-            $self->logger->error(
-"Metadata for IDP $_ is in old format. Please reload them from Manager"
-            );
-            next;
-        }
+    $self->logger->debug("Get Metadata for IDP $idpConfKey");
 
-        if ( $self->conf->{samlMetadataForceUTF8} ) {
-            $idp_metadata = encode( "utf8", $idp_metadata );
-        }
+    # If XML metadata has been set in conf, load this provider from conf
+    my $idp_metadata =
+      $self->conf->{samlIDPMetaDataXML}->{$idpConfKey}->{samlIDPMetaDataXML};
+    if ($idp_metadata) {
+        $self->load_idp_from_conf( $idpConfKey, $idp_metadata );
+        $self->logger->debug("IDP $idpConfKey added");
+    }
+}
 
-        # Add this IDP to Lasso::Server
-        # TODO: when Lasso issue #35061 is fixed in all distros,
-        # we could load the metadata into a new LassoProvider, extract the
-        # parsed-and-decoded entityID from this Provider, and then add the
-        # Provider into the server with $server->add_provider2, instead of
-        # decoding HTML entities ourselves below
-        my $result = $self->addIDP( $self->lassoServer, $idp_metadata );
+sub load_idp_from_conf {
+    my ( $self, $idpConfKey, $idp_metadata ) = @_;
 
-        unless ($result) {
-            $self->logger->error("Fail to use IDP $_ Metadata");
-            next;
-        }
+    # Check metadata format
+    if ( ref $idp_metadata eq "HASH" ) {
+        $self->logger->error(
+"Metadata for IDP $idpConfKey is in old format. Please reload them from Manager"
+        );
+        return;
+    }
 
-        # Store IDP entityID and Organization Name
-        my ( $tmp, $entityID ) =
-          ( $idp_metadata =~ /entityID=(['"])(.+?)\1/si );
+    if ( $self->conf->{samlMetadataForceUTF8} ) {
+        $idp_metadata = encode( "utf8", $idp_metadata );
+    }
 
-        # Decode HTML entities from entityID
-        # TODO: see Lasso comment above
-        decode_entities($entityID);
+    # Store IDP entityID and Organization Name
+    my ( $tmp, $entityID ) = ( $idp_metadata =~ /entityID=(['"])(.+?)\1/si );
 
-        my $name = $self->getOrganizationName( $self->lassoServer, $entityID )
-          || ucfirst($_);
-        $self->idpList->{$entityID}->{confKey} = $_;
-        $self->idpList->{$entityID}->{name}    = $name;
+    # Decode HTML entities from entityID
+    # TODO: see Lasso comment above
+    decode_entities($entityID);
 
-        # Set encryption mode
-        my $encryption_mode = $self->conf->{samlIDPMetaDataOptions}->{$_}
-          ->{samlIDPMetaDataOptionsEncryptionMode} || "none";
-        my $lasso_encryption_mode = $self->getEncryptionMode($encryption_mode);
+    return $self->load_idp_metadata(
+        $idpConfKey,
+        $idp_metadata,
+        $entityID,
+        $self->conf->{samlIDPMetaDataExportedAttributes}->{$idpConfKey},
+        $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey},
+    );
+}
+
+sub load_idp_metadata {
+    my ( $self, $idpConfKey, $idp_metadata, $entityID, $attributes, $options )
+      = @_;
+
+    # Add this IDP to Lasso::Server
+    my $result = $self->addIDP( $self->lassoServer, $idp_metadata );
+
+    unless ($result) {
+        $self->logger->error("Fail to use IDP $idpConfKey Metadata");
+        return;
+    }
+
+    my $name = $self->getOrganizationName( $self->lassoServer, $entityID )
+      || ucfirst($idpConfKey);
+    $self->idpList->{$entityID}->{confKey} = $idpConfKey;
+    $self->idpList->{$entityID}->{name}    = $name;
+
+    # Set encryption mode
+    my $encryption_mode = $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
+      ->{samlIDPMetaDataOptionsEncryptionMode} || "none";
+    my $lasso_encryption_mode = $self->getEncryptionMode($encryption_mode);
+
+    unless (
+        $self->setProviderEncryptionMode(
+            $self->lassoServer->get_provider($entityID),
+            $lasso_encryption_mode
+        )
+      )
+    {
+        $self->logger->error(
+            "Unable to set encryption mode $encryption_mode on IDP $idpConfKey"
+        );
+        return;
+    }
+    $self->logger->debug(
+        "Set encryption mode $encryption_mode on IDP $idpConfKey");
+
+    # Set signature method if overridden
+    my $signature_method = $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
+      ->{samlIDPMetaDataOptionsSignatureMethod};
+    if ($signature_method) {
+        my $lasso_signature_method =
+          $self->getSignatureMethod($signature_method);
 
         unless (
-            $self->setProviderEncryptionMode(
+            $self->setProviderSignatureMethod(
                 $self->lassoServer->get_provider($entityID),
-                $lasso_encryption_mode
+                $lasso_signature_method
             )
           )
         {
             $self->logger->error(
-                "Unable to set encryption mode $encryption_mode on IDP $_");
-            next;
+"Unable to set signature method $signature_method on IDP $idpConfKey"
+            );
+            return;
         }
-        $self->logger->debug("Set encryption mode $encryption_mode on IDP $_");
-
-        # Set signature method if overridden
-        my $signature_method = $self->conf->{samlIDPMetaDataOptions}->{$_}
-          ->{samlIDPMetaDataOptionsSignatureMethod};
-        if ($signature_method) {
-            my $lasso_signature_method =
-              $self->getSignatureMethod($signature_method);
-
-            unless (
-                $self->setProviderSignatureMethod(
-                    $self->lassoServer->get_provider($entityID),
-                    $lasso_signature_method
-                )
-              )
-            {
-                $self->logger->error(
-                    "Unable to set signature method $signature_method on IDP $_"
-                );
-                next;
-            }
-            $self->logger->debug(
-                "Set signature method $signature_method on IDP $_");
-        }
-
-        # Set display options
-        $self->idpList->{$entityID}->{displayName} =
-          $self->conf->{samlIDPMetaDataOptions}->{$_}
-          ->{samlIDPMetaDataOptionsDisplayName};
-        $self->idpList->{$entityID}->{icon} =
-          $self->conf->{samlIDPMetaDataOptions}->{$_}
-          ->{samlIDPMetaDataOptionsIcon};
-        $self->idpList->{$entityID}->{order} =
-          $self->conf->{samlIDPMetaDataOptions}->{$_}
-          ->{samlIDPMetaDataOptionsSortNumber};
-
-        # Set rule
-        my $cond = $self->conf->{samlIDPMetaDataOptions}->{$_}
-          ->{samlIDPMetaDataOptionsResolutionRule};
-        if ( length $cond ) {
-            $cond = $self->p->HANDLER->substitute($cond);
-            unless ( $cond = $self->p->HANDLER->buildSub($cond) ) {
-                $self->logger->error( 'SAML IdP rule error: '
-                      . $self->p->HANDLER->tsv->{jail}->error );
-                next;
-            }
-            $self->idpRules->{$entityID} = $cond;
-        }
-
-        $self->idpAttributes->{$entityID} =
-          { %{ $self->conf->{samlIDPMetaDataExportedAttributes}->{$_} || {} } };
-        $self->idpOptions->{$entityID} =
-          { %{ $self->conf->{samlIDPMetaDataOptions}->{$_} || {} } };
-
-        $self->logger->debug("IDP $_ added");
+        $self->logger->debug(
+            "Set signature method $signature_method on IDP $idpConfKey");
     }
-    return 1;
+
+    # Set display options
+    $self->idpList->{$entityID}->{displayName} =
+      $options->{samlIDPMetaDataOptionsDisplayName};
+    $self->idpList->{$entityID}->{icon} =
+      $options->{samlIDPMetaDataOptionsIcon};
+    $self->idpList->{$entityID}->{order} =
+      $options->{samlIDPMetaDataOptionsSortNumber};
+
+    # Set rule
+    my $cond = $options->{samlIDPMetaDataOptionsResolutionRule};
+    if ( length $cond ) {
+        $cond = $self->p->HANDLER->substitute($cond);
+        unless ( $cond = $self->p->HANDLER->buildSub($cond) ) {
+            $self->logger->error( 'SAML IdP rule error: '
+                  . $self->p->HANDLER->tsv->{jail}->error );
+            return;
+        }
+        $self->idpRules->{$entityID} = $cond;
+    }
+
+    $self->idpAttributes->{$entityID} = { %{ $attributes || {} } };
+    $self->idpOptions->{$entityID}    = { %{ $options    || {} } };
 }
 
 sub loadSPs {
