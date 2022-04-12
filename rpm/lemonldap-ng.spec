@@ -1,6 +1,6 @@
 %global lm_prefix %{_prefix}
 %global lm_sharedir %{_datadir}/lemonldap-ng
-%global lm_examplesdir %{lm_sharedir}/examples
+%global lm_examplesdir %{_docdir}/lemonldap-ng/examples
 %global lm_vardir %{_localstatedir}/lib/lemonldap-ng
 %global lm_cachedir %{_localstatedir}/cache/lemonldap-ng
 %global lm_confdir %{_sysconfdir}/lemonldap-ng
@@ -514,10 +514,10 @@ sed -i -e 's,#!/usr/bin/env plackup,#!/usr/bin/plackup,' \
     %{buildroot}%{lm_sharedir}/manager/htdocs/manager.psgi
 chmod 755 %{buildroot}%{lm_sharedir}/manager/htdocs/manager.psgi
 sed -i -e 's,#!/usr/bin/env plackup,#!/usr/bin/plackup,' \
-    %{buildroot}%{lm_sharedir}/examples/manager/manager.psgi
-chmod 755 %{buildroot}%{lm_sharedir}/examples/manager/manager.psgi
+    %{buildroot}%{lm_examplesdir}/manager/manager.psgi
+chmod 755 %{buildroot}%{lm_examplesdir}/manager/manager.psgi
 sed -i -e '1i#!/usr/bin/plackup' \
-    %{buildroot}%{lm_sharedir}/examples/llngapp.psgi
+    %{buildroot}%{lm_examplesdir}/llngapp.psgi
 chmod 644 %{buildroot}%{lm_sharedir}/test/cas.php
 
 # Install SELinux policy
@@ -666,7 +666,7 @@ fi
 %{_tmpfilesdir}/llng-fastcgi-server.conf
 %defattr(755,%{lm_apacheuser},%{lm_apachegroup},-)
 %dir %{_rundir}/llng-fastcgi-server
-%{lm_sharedir}/examples/llngapp.psgi
+%{lm_examplesdir}/llngapp.psgi
 
 %files uwsgi-app
 %config(noreplace) %{_sysconfdir}/uwsgi/apps-available/llng-server.yaml
