@@ -25,12 +25,16 @@ our $VERSION = '2.0.15';
 
 # PROPERTIES
 
-has lassoServer => ( is => 'rw' );
-has spList      => ( is => 'rw', default => sub { {} } );
-has idpList     => ( is => 'rw', default => sub { {} } );
-has idpRules    => ( is => 'rw', default => sub { {} } );
-has spRules     => ( is => 'rw', default => sub { {} } );
-has spMacros    => ( is => 'rw', default => sub { {} } );
+has lassoServer   => ( is => 'rw' );
+has idpList       => ( is => 'rw', default => sub { {} } );
+has idpRules      => ( is => 'rw', default => sub { {} } );
+has idpAttributes => ( is => 'rw', default => sub { {} } );
+has idpOptions    => ( is => 'rw', default => sub { {} } );
+has spList        => ( is => 'rw', default => sub { {} } );
+has spRules       => ( is => 'rw', default => sub { {} } );
+has spMacros      => ( is => 'rw', default => sub { {} } );
+has spAttributes  => ( is => 'rw', default => sub { {} } );
+has spOptions     => ( is => 'rw', default => sub { {} } );
 
 # return LWP::UserAgent object
 has ua => (
@@ -347,6 +351,11 @@ sub loadIDPs {
             $self->idpRules->{$entityID} = $cond;
         }
 
+        $self->idpAttributes->{$entityID} =
+          { %{ $self->conf->{samlIDPMetaDataExportedAttributes}->{$_} || {} } };
+        $self->idpOptions->{$entityID} =
+          { %{ $self->conf->{samlIDPMetaDataOptions}->{$_} || {} } };
+
         $self->logger->debug("IDP $_ added");
     }
     return 1;
@@ -426,13 +435,23 @@ sub loadSPs {
         }
 
         if ($valid) {
-            $self->spRules->{$_}         = $rule;
-            $self->spMacros->{$entityID} = $compiledMacros;
+            $self->spRules->{$_}  = $rule;
+            $self->spMacros->{$_} = $compiledMacros;
         }
         else {
             $self->logger->error("SAML SP $_ has errors and will be ignored");
             next;
         }
+
+        $self->spAttributes->{$entityID} =
+          { %{ $self->conf->{samlSPMetaDataExportedAttributes}->{$_} || {} } };
+        $self->spOptions->{$entityID} =
+          { %{ $self->conf->{samlSPMetaDataOptions}->{$_} || {} } };
+
+        $self->spAttributes->{$entityID} =
+          { %{ $self->conf->{samlSPMetaDataExportedAttributes}->{$_} || {} } };
+        $self->spOptions->{$entityID} =
+          { %{ $self->conf->{samlSPMetaDataOptions}->{$_} || {} } };
 
         # Add this SP to Lasso::Server
         # TODO: when Lasso issue #35061 is fixed in all distros,
