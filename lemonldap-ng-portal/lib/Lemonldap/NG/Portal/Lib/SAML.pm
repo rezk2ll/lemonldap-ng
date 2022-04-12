@@ -364,159 +364,169 @@ sub loadIDPs {
 sub loadSPs {
     my ($self) = @_;
 
-    # Check presence of at least one service provider in configuration
-    unless ( $self->conf->{samlSPMetaDataXML}
-        and keys %{ $self->conf->{samlSPMetaDataXML} } )
-    {
-        $self->logger->debug("No SP found in configuration");
-    }
-
     # Load service provider metadata
     # SP metadata are listed in $self->{samlSPMetaDataXML}
     # Each key is the SP name
     # Build SP list for later use in extractFormInfo
-    $self->spList( {} );
     foreach ( keys %{ $self->conf->{samlSPMetaDataXML} } ) {
+        $self->loadSP($_);
+    }
+    return 1;
+}
 
-        $self->logger->debug("Get Metadata for SP $_");
+# This loads either a single SP or a federation
+sub loadSP {
+    my ( $self, $spConfKey ) = @_;
 
-        my $sp_metadata =
-          $self->conf->{samlSPMetaDataXML}->{$_}->{samlSPMetaDataXML};
+    my $valid = 1;
+    my $rule  = $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
+      ->{samlSPMetaDataOptionsRule};
 
-        # Check metadata format
-        if ( ref $sp_metadata eq "HASH" ) {
-            $self->logger->error(
-"Metadata for SP $_ is in old format. Please reload them from Manager"
-            );
-            next;
+    if ( length $rule ) {
+        $rule = $self->p->HANDLER->substitute($rule);
+        unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
+            $self->logger->error( 'SAML SP rule error: '
+                  . $self->p->HANDLER->tsv->{jail}->error );
+            $valid = 0;
         }
+    }
 
-        if ( $self->conf->{samlMetadataForceUTF8} ) {
-            $sp_metadata = encode( "utf8", $sp_metadata );
-        }
-
-        # Get SP entityID
-        my ( $tmp, $entityID ) = ( $sp_metadata =~ /entityID=(['"])(.+?)\1/si );
-
-        # Decode HTML entities from entityID
-        # TODO: see Lasso comment below
-        decode_entities($entityID);
-
-        my $valid = 1;
-        my $rule  = $self->conf->{samlSPMetaDataOptions}->{$_}
-          ->{samlSPMetaDataOptionsRule};
-
-        if ( length $rule ) {
-            $rule = $self->p->HANDLER->substitute($rule);
-            unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-                $self->logger->error( 'SAML SP rule error: '
-                      . $self->p->HANDLER->tsv->{jail}->error );
+    # Load per-SP macros
+    my $macros         = $self->conf->{samlSPMetaDataMacros}->{$spConfKey};
+    my $compiledMacros = {};
+    for my $macroAttr ( keys %{$macros} ) {
+        my $macroRule = $macros->{$macroAttr};
+        if ( length $macroRule ) {
+            $macroRule = $self->p->HANDLER->substitute($macroRule);
+            if ( $macroRule = $self->p->HANDLER->buildSub($macroRule) ) {
+                $compiledMacros->{$macroAttr} = $macroRule;
+            }
+            else {
                 $valid = 0;
+                $self->logger->error(
+                    "Error processing macro $macroAttr for SAML SP $spConfKey"
+                      . $self->p->HANDLER->tsv->{jail}->error );
             }
         }
+    }
 
-        # Load per-SP macros
-        my $macros         = $self->conf->{samlSPMetaDataMacros}->{$_};
-        my $compiledMacros = {};
-        for my $macroAttr ( keys %{$macros} ) {
-            my $macroRule = $macros->{$macroAttr};
-            if ( length $macroRule ) {
-                $macroRule = $self->p->HANDLER->substitute($macroRule);
-                if ( $macroRule = $self->p->HANDLER->buildSub($macroRule) ) {
-                    $compiledMacros->{$macroAttr} = $macroRule;
-                }
-                else {
-                    $valid = 0;
-                    $self->logger->error(
-                        "Error processing macro $macroAttr for SAML SP $_"
-                          . $self->p->HANDLER->tsv->{jail}->error );
-                }
-            }
-        }
+    if ($valid) {
+        $self->spRules->{$spConfKey}  = $rule;
+        $self->spMacros->{$spConfKey} = $compiledMacros;
+    }
+    else {
+        $self->logger->error(
+            "SAML SP $spConfKey has errors and will be ignored");
+        return;
+    }
 
-        if ($valid) {
-            $self->spRules->{$_}  = $rule;
-            $self->spMacros->{$_} = $compiledMacros;
-        }
-        else {
-            $self->logger->error("SAML SP $_ has errors and will be ignored");
-            next;
-        }
+    $self->logger->debug("Get Metadata for SP $spConfKey");
 
-        $self->spAttributes->{$entityID} =
-          { %{ $self->conf->{samlSPMetaDataExportedAttributes}->{$_} || {} } };
-        $self->spOptions->{$entityID} =
-          { %{ $self->conf->{samlSPMetaDataOptions}->{$_} || {} } };
+    # If XML metadata has been set in conf, load this provider from conf
+    my $sp_metadata =
+      $self->conf->{samlSPMetaDataXML}->{$spConfKey}->{samlSPMetaDataXML};
+    if ($sp_metadata) {
+        $self->load_sp_from_conf( $spConfKey, $sp_metadata );
+        $self->logger->debug("SP $spConfKey added");
+    }
+}
 
-        $self->spAttributes->{$entityID} =
-          { %{ $self->conf->{samlSPMetaDataExportedAttributes}->{$_} || {} } };
-        $self->spOptions->{$entityID} =
-          { %{ $self->conf->{samlSPMetaDataOptions}->{$_} || {} } };
+sub load_sp_from_conf {
+    my ( $self, $spConfKey, $sp_metadata ) = @_;
 
-        # Add this SP to Lasso::Server
-        # TODO: when Lasso issue #35061 is fixed in all distros,
-        # we could load the metadata into a new LassoProvider, extract the
-        # parsed-and-decoded entityID from this Provider, and then add the
-        # Provider into the server with $server->add_provider2, instead of
-        # decoding HTML entities ourselves below
-        my $result = $self->addSP( $self->lassoServer, $sp_metadata );
+    # Check metadata format
+    if ( ref $sp_metadata eq "HASH" ) {
+        $self->logger->error(
+"Metadata for SP $spConfKey is in old format. Please reload them from Manager"
+        );
+        return;
+    }
 
-        unless ($result) {
-            $self->logger->error("Fail to use SP $_ Metadata");
-            next;
-        }
+    if ( $self->conf->{samlMetadataForceUTF8} ) {
+        $sp_metadata = encode( "utf8", $sp_metadata );
+    }
 
-        # Store Org name
-        my $name = $self->getOrganizationName( $self->lassoServer, $entityID )
-          || ucfirst($_);
-        $self->spList->{$entityID}->{confKey} = $_;
-        $self->spList->{$entityID}->{name}    = $name;
+    # Get SP entityID
+    # TODO: when Lasso issue #35061 is fixed in all distros,
+    # we could load the metadata into a new LassoProvider, extract the
+    # parsed-and-decoded entityID from this Provider, and then add the
+    # Provider into the server with $server->add_provider2, instead of
+    # extracting and decoding HTML entities ourselves here
+    my ( $tmp, $entityID ) = ( $sp_metadata =~ /entityID=(['"])(.+?)\1/si );
+    decode_entities($entityID);
 
-        # Set encryption mode
-        my $encryption_mode = $self->conf->{samlSPMetaDataOptions}->{$_}
-          ->{samlSPMetaDataOptionsEncryptionMode} || "none";
-        my $lasso_encryption_mode = $self->getEncryptionMode($encryption_mode);
+    return $self->load_sp_metadata(
+        $spConfKey,
+        $sp_metadata,
+        $entityID,
+        $self->conf->{samlSPMetaDataExportedAttributes}->{$spConfKey},
+        $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
+    );
+}
+
+sub load_sp_metadata {
+    my ( $self, $spConfKey, $sp_metadata, $entityID, $attributes, $options ) =
+      @_;
+
+    $self->spAttributes->{$entityID} = { %{ $attributes || {} } };
+
+    $self->spOptions->{$entityID} = { %{ $options || {} } };
+
+    # Add this SP to Lasso::Server
+    my $result = $self->addSP( $self->lassoServer, $sp_metadata );
+
+    unless ($result) {
+        $self->logger->error("Fail to use SP $spConfKey Metadata");
+        return;
+    }
+
+    # Store Org name
+    my $name = $self->getOrganizationName( $self->lassoServer, $entityID )
+      || ucfirst($spConfKey);
+    $self->spList->{$entityID}->{confKey} = $spConfKey;
+    $self->spList->{$entityID}->{name}    = $name;
+
+    # Set encryption mode
+    my $encryption_mode = $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
+      ->{samlSPMetaDataOptionsEncryptionMode} || "none";
+    my $lasso_encryption_mode = $self->getEncryptionMode($encryption_mode);
+
+    unless (
+        $self->setProviderEncryptionMode(
+            $self->lassoServer->get_provider($entityID),
+            $lasso_encryption_mode
+        )
+      )
+    {
+        $self->logger->error(
+            "Unable to set encryption mode $encryption_mode on SP $spConfKey");
+        return;
+    }
+    $self->logger->debug(
+        "Set encryption mode $encryption_mode on SP $spConfKey");
+
+    # Set signature method if overridden
+    my $signature_method = $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
+      ->{samlSPMetaDataOptionsSignatureMethod};
+    if ($signature_method) {
+        my $lasso_signature_method =
+          $self->getSignatureMethod($signature_method);
 
         unless (
-            $self->setProviderEncryptionMode(
+            $self->setProviderSignatureMethod(
                 $self->lassoServer->get_provider($entityID),
-                $lasso_encryption_mode
+                $lasso_signature_method
             )
           )
         {
             $self->logger->error(
-                "Unable to set encryption mode $encryption_mode on SP $_");
-            next;
+"Unable to set signature method $signature_method on SP $spConfKey"
+            );
+            return;
         }
-        $self->logger->debug("Set encryption mode $encryption_mode on SP $_");
-
-        # Set signature method if overridden
-        my $signature_method = $self->conf->{samlSPMetaDataOptions}->{$_}
-          ->{samlSPMetaDataOptionsSignatureMethod};
-        if ($signature_method) {
-            my $lasso_signature_method =
-              $self->getSignatureMethod($signature_method);
-
-            unless (
-                $self->setProviderSignatureMethod(
-                    $self->lassoServer->get_provider($entityID),
-                    $lasso_signature_method
-                )
-              )
-            {
-                $self->logger->error(
-                    "Unable to set signature method $signature_method on SP $_"
-                );
-                next;
-            }
-            $self->logger->debug(
-                "Set signature method $signature_method on SP $_");
-        }
-
-        $self->logger->debug("SP $_ added");
+        $self->logger->debug(
+            "Set signature method $signature_method on SP $spConfKey");
     }
-
-    return 1;
 }
 
 # Check SAML requests and responses
