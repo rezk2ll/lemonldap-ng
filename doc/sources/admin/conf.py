@@ -138,6 +138,8 @@ if 'LLNGSPHINXWEBSITE' in os.environ:
     import sphinx_rtd_theme
     html_theme = 'sphinx_rtd_theme'
     html_theme_options = {}
+else:
+    html_copy_source = False
 
 
 # html_theme_options = {}
