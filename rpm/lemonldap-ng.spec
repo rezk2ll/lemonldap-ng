@@ -466,21 +466,6 @@ sed -i 's/nobody/%{lm_apacheuser}/g' \
 sed -i 's/nobody/%{lm_apacheuser}/g' \
     %{buildroot}%{_sysconfdir}/default/llng-fastcgi-server
 
-# Set UNIX rights
-mkdir -p %{buildroot}%{lm_vardir}/sessions/lock
-mkdir -p %{buildroot}%{lm_vardir}/psessions/lock
-chmod 750 %{buildroot}%{lm_vardir}/conf
-chmod 640 %{buildroot}%{lm_vardir}/conf/*
-chmod 640 %{buildroot}%{lm_storagefile}
-chmod 770 %{buildroot}%{lm_vardir}/sessions
-chmod 770 %{buildroot}%{lm_vardir}/sessions/lock
-chmod 770 %{buildroot}%{lm_vardir}/psessions
-chmod 770 %{buildroot}%{lm_vardir}/psessions/lock
-chmod 770 %{buildroot}%{lm_vardir}/notifications
-chmod 770 %{buildroot}%{lm_cachedir}
-chmod 770 %{buildroot}%{lm_vardir}/captcha
-chmod 775 %{buildroot}%{lm_sbindir}/llng-fastcgi-server
-
 # Install httpd conf files
 # We use "z-lemonldap-ng-*" so that httpd read the files after "perl.conf"
 mkdir -p %{buildroot}%{apache_confdir}
