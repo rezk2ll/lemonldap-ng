@@ -652,7 +652,7 @@ fi
 %{lm_bindir}/purgeCentralCache
 %config(noreplace) %{_sysconfdir}/cron.d/lemonldap-ng-portal
 %{lm_examplesdir}/portal
-%defattr(750,%{lm_apacheuser},%{lm_apachegroup},-)
+%defattr(-,%{lm_apacheuser},%{lm_apachegroup},750)
 %dir %{lm_vardir}/captcha
 
 %files test
@@ -664,7 +664,7 @@ fi
 %config(noreplace) %{_sysconfdir}/default/llng-fastcgi-server
 %{_unitdir}/llng-fastcgi-server.service
 %{_tmpfilesdir}/llng-fastcgi-server.conf
-%defattr(755,%{lm_apacheuser},%{lm_apachegroup},-)
+%defattr(755,%{lm_apacheuser},%{lm_apachegroup},755)
 %dir %{_rundir}/llng-fastcgi-server
 %{lm_examplesdir}/llngapp.psgi
 
