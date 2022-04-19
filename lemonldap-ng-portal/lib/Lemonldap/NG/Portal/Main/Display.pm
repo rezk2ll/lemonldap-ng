@@ -446,15 +446,21 @@ sub display {
         }
 
         # Display captcha if it's enabled
+        if ( $req->captchaHtml ) {
+            %templateParams =
+              ( %templateParams, CAPTCHA_HTML => $req->captchaHtml, );
+        }
+        if ( $req->token ) {
+            %templateParams = ( %templateParams, TOKEN => $req->token, );
+        }
+
+        # DEPRECATED: This is only used for compatibility with existing templates
         if ( $req->captcha ) {
             %templateParams = (
                 %templateParams,
                 CAPTCHA_SRC  => $req->captcha,
                 CAPTCHA_SIZE => $self->{conf}->{captcha_size} || 6
             );
-        }
-        if ( $req->token ) {
-            %templateParams = ( %templateParams, TOKEN => $req->token, );
         }
 
         # Show password form if password policy error
