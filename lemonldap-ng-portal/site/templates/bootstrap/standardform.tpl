@@ -33,8 +33,8 @@
     </TMPL_IF>
   </div>
 
-  <TMPL_IF NAME=CAPTCHA_SRC>
-    <TMPL_INCLUDE NAME="captcha.tpl">
+  <TMPL_IF NAME=CAPTCHA_HTML>
+    <TMPL_VAR NAME=CAPTCHA_HTML>
   </TMPL_IF>
 
   <TMPL_INCLUDE NAME="impersonation.tpl">

@@ -71,8 +71,8 @@
         <span trspan="resentConfirm">Do you want the confirmation mail to be resent?</span>
       </p>
 
-      <TMPL_IF NAME=CAPTCHA_SRC>
-        <TMPL_INCLUDE NAME="captcha.tpl">
+      <TMPL_IF NAME=CAPTCHA_HTML>
+        <TMPL_VAR NAME=CAPTCHA_HTML>
       </TMPL_IF>
 
       <div class="input-group mb-3">
