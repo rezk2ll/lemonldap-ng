@@ -681,6 +681,9 @@ sub attributes {
             'default' => 30,
             'type'    => 'int'
         },
+        'captcha' => {
+            'type' => 'PerlModule'
+        },
         'captcha_login_enabled' => {
             'default' => 0,
             'type'    => 'bool'
@@ -696,6 +699,9 @@ sub attributes {
         'captcha_size' => {
             'default' => 6,
             'type'    => 'int'
+        },
+        'captchaOptions' => {
+            'type' => 'keyTextContainer'
         },
         'casAccessControlPolicy' => {
             'default' => 'none',

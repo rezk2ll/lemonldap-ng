@@ -1479,6 +1479,16 @@ sub attributes {
             default       => 6,
             documentation => 'Captcha size',
         },
+        captcha => {
+            type          => 'PerlModule',
+            documentation => 'Captcha backend module',
+            flags         => 'hp',
+        },
+        captchaOptions => {
+            type    => 'keyTextContainer',
+            documentation => 'Captcha module options',
+            flags         => 'hp',
+        },
 
         # Variables
         exportedVars => {
