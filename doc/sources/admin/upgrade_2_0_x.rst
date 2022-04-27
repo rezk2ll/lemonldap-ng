@@ -26,6 +26,26 @@ Known regressions in the latest released version
 
 None
 
+2.0.15
+------
+
+New Captcha API
+~~~~~~~~~~~~~~~
+
+It is now possible to create your own Captcha modules to replace the one provided by default.
+
+In order for custom Captcha modules to work, you need to modify your custom ``standardform.tpl``, ``mail.tpl`` and ``register.tpl`` template files:
+
+.. code:: diff
+
+    -  <TMPL_IF NAME=CAPTCHA_SRC>
+    -    <TMPL_INCLUDE NAME="captcha.tpl">
+    +  <TMPL_IF NAME=CAPTCHA_HTML>
+    +    <TMPL_VAR NAME=CAPTCHA_HTML>
+       </TMPL_IF>
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
 2.0.14
 ------
 
