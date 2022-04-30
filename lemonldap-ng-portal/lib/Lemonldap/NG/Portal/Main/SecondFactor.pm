@@ -134,9 +134,9 @@ sub _verify {
             "Update sessionInfo with new authenticationLevel: $l");
         $req->sessionInfo->{authenticationLevel} = $l;
 
-        # Compute macros & local groups again with new authenticationLevel
-        $self->logger->debug("Compute macros and local groups...");
-        $req->steps( [ 'setMacros', 'setLocalGroups' ] );
+        # Compute macros & groups with new authenticationLevel
+        $self->logger->debug("Compute macros and groups...");
+        $req->steps( [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
         if ( my $error = $self->p->process($req) ) {
             $self->logger->debug("SFA: Process returned error: $error");
             $req->error($error);
