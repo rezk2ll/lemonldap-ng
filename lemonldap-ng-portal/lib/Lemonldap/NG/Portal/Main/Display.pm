@@ -10,11 +10,12 @@ use Mouse;
 use JSON;
 use URI;
 
-has isPP          => ( is => 'rw' );
-has speChars      => ( is => 'rw' );
-has skinRules     => ( is => 'rw' );
-has stayConnected => ( is => 'rw', default => sub { 0 } );
-has requireOldPwd => ( is => 'rw', default => sub { 1 } );
+has isPP                     => ( is => 'rw' );
+has speChars                 => ( is => 'rw' );
+has skinRules                => ( is => 'rw' );
+has stayConnected            => ( is => 'rw', default => sub { 0 } );
+has requireOldPwd            => ( is => 'rw', default => sub { 1 } );
+has passwordPolicyActivation => ( is => 'rw', default => sub { 0 } );
 
 sub displayInit {
     my ($self) = @_;
@@ -48,6 +49,14 @@ sub displayInit {
         $self->logger->error("Bad stayConnected rule: $error");
     }
     $self->stayConnected($rule);
+    $rule =
+      HANDLER->buildSub(
+        HANDLER->substitute( $self->conf->{passwordPolicyActivation} ) );
+    unless ($rule) {
+        my $error = HANDLER->tsv->{jail}->error || 'Unable to compile rule';
+        $self->logger->error("Bad passwordPolicyActivation rule: $error");
+    }
+    $self->passwordPolicyActivation($rule);
 
     my $speChars =
       $self->conf->{passwordPolicySpecialChar} eq '__ALL__'
@@ -259,12 +268,13 @@ sub display {
             DONT_STORE_PASSWORD => $self->conf->{browsersDontStorePassword},
             HIDE_OLDPASSWORD    => 0,
             PPOLICY_NOPOLICY    => !$self->isPP(),
-            DISPLAY_PPOLICY     => $self->conf->{portalDisplayPasswordPolicy},
-            PPOLICY_MINSIZE     => $self->conf->{passwordPolicyMinSize},
-            PPOLICY_MINLOWER    => $self->conf->{passwordPolicyMinLower},
-            PPOLICY_MINUPPER    => $self->conf->{passwordPolicyMinUpper},
-            PPOLICY_MINDIGIT    => $self->conf->{passwordPolicyMinDigit},
-            PPOLICY_MINSPECHAR  => $self->conf->{passwordPolicyMinSpeChar},
+            DISPLAY_PPOLICY     => $self->conf->{portalDisplayPasswordPolicy}
+              && $self->passwordPolicyActivation->( $req, $req->sessionInfo ),
+            PPOLICY_MINSIZE    => $self->conf->{passwordPolicyMinSize},
+            PPOLICY_MINLOWER   => $self->conf->{passwordPolicyMinLower},
+            PPOLICY_MINUPPER   => $self->conf->{passwordPolicyMinUpper},
+            PPOLICY_MINDIGIT   => $self->conf->{passwordPolicyMinDigit},
+            PPOLICY_MINSPECHAR => $self->conf->{passwordPolicyMinSpeChar},
             (
                 $self->requireOldPwd->( $req, $req->userData )
                 ? ( REQUIRE_OLDPASSWORD => 1 )
@@ -479,11 +489,13 @@ sub display {
                 HIDE_OLDPASSWORD    => $self->conf->{hideOldPassword},
                 DONT_STORE_PASSWORD => $self->conf->{browsersDontStorePassword},
                 PPOLICY_NOPOLICY    => !$self->isPP(),
-                DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy},
-                PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
-                PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
-                PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
-                PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
+                DISPLAY_PPOLICY => $self->conf->{portalDisplayPasswordPolicy}
+                  && $self->passwordPolicyActivation->( $req,
+                    $req->sessionInfo ),
+                PPOLICY_MINSIZE    => $self->conf->{passwordPolicyMinSize},
+                PPOLICY_MINLOWER   => $self->conf->{passwordPolicyMinLower},
+                PPOLICY_MINUPPER   => $self->conf->{passwordPolicyMinUpper},
+                PPOLICY_MINDIGIT   => $self->conf->{passwordPolicyMinDigit},
                 PPOLICY_MINSPECHAR => $self->conf->{passwordPolicyMinSpeChar},
                 (
                     $self->conf->{passwordPolicyMinSpeChar} || $self->speChars()
