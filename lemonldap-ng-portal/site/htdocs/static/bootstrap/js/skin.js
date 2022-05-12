@@ -51,7 +51,6 @@ $(window).on("load", function() {
   // when global checkbox is clicked
   $("#globalrememberauthchoice").change(function() {
       var checked = this.checked;
-      alert("checked " +checked);
       $( 'input[name="rememberauthchoice"]' ).each(function() {
           $( this ).val(checked);
       });
