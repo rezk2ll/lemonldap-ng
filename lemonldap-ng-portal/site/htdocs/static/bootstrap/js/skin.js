@@ -51,6 +51,7 @@ $(window).on("load", function() {
   // when global checkbox is clicked
   $("#globalrememberauthchoice").change(function() {
       var checked = this.checked;
+      alert("checked " +checked);
       $( 'input[name="rememberauthchoice"]' ).each(function() {
           $( this ).val(checked);
       });
@@ -116,6 +117,11 @@ $(window).on("load", function() {
       {
           // show timer
           $( "div#remembertimer" ).show();
+          // check all checkboxes
+          $("#globalrememberauthchoice").prop('checked',true);
+          $( 'input[name="rememberauthchoice"]' ).each(function() {
+            $( this ).val('true');
+          });
           // launch remembered authentication choice when timer reaches 0
           window.setTimeout( launchAuthenticationChoice, 1000 );
       }
