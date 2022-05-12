@@ -17,7 +17,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 # INITIALIZATION
 
@@ -59,7 +59,8 @@ sub _modifyPassword {
         )
     );
     unless ($oldPwdRule) {
-        my $error = $self->p->HANDLER->tsv->{jail}->error || '???';
+        my $error =
+          $self->p->HANDLER->tsv->{jail}->error || 'Unable to compile rule';
     }
 
     my $pwdPolicyRule = $self->p->HANDLER->buildSub(
@@ -68,7 +69,8 @@ sub _modifyPassword {
         )
     );
     unless ($pwdPolicyRule) {
-        my $error = $self->p->HANDLER->tsv->{jail}->error || '???';
+        my $error =
+          $self->p->HANDLER->tsv->{jail}->error || 'Unable to compile rule';
     }
 
     # Check if portal require old password
