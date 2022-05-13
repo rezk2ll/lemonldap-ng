@@ -629,13 +629,11 @@ sub display {
         DISPLAY_CONFIRMMAILSENT => 0,
         DISPLAY_MAILSENT        => 0,
         DISPLAY_PASSWORD_FORM   => 0,
-        DISPLAY_PPOLICY         => $isPP
-          && $self->conf->{portalDisplayPasswordPolicy}
-          && $self->passwordPolicyActivationRule->( $req, $req->sessionInfo ),
-        PPOLICY_MINSIZE           => $self->conf->{passwordPolicyMinSize},
-        PPOLICY_MINLOWER          => $self->conf->{passwordPolicyMinLower},
-        PPOLICY_MINUPPER          => $self->conf->{passwordPolicyMinUpper},
-        PPOLICY_MINDIGIT          => $self->conf->{passwordPolicyMinDigit},
+        DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy} && $isPP,
+        PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
+        PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
+        PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
+        PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
         PPOLICY_MINSPECHAR        => $self->conf->{passwordPolicyMinSpeChar},
         PPOLICY_ALLOWEDSPECHAR    => $speChars,
         DISPLAY_GENERATE_PASSWORD =>
