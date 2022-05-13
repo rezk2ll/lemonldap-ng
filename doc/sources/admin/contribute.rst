@@ -58,7 +58,7 @@ As *root:*
 
    apt install aptitude
    aptitude install vim make devscripts yui-compressor git git-gui libjs-uglify coffeescript cpanminus autopkgtest pkg-perl-autopkgtest
-   aptitude install libauth-yubikey-webclient-perl libnet-smtp-server-perl libtime-fake-perl libtest-output-perl libtest-pod-perl libtest-leaktrace-perl libtest-mockobject-perl uglifyjs
+   aptitude install libauth-yubikey-webclient-perl libnet-smtp-server-perl libtime-fake-perl libtest-output-perl libtest-pod-perl libtest-leaktrace-perl libtest-mockobject-perl uglifyjs libdbd-sqlite3-perl libauthen-webauthn-perl libauthen-oath-perl
 
    cpanm Authen::U2F Authen::U2F::Tester Crypt::U2F::Server::Simple
 
