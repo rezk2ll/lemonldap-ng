@@ -467,7 +467,11 @@ sub changePwd {
               $self->conf->{passwordPolicyMinLower} -
               $self->conf->{passwordPolicyMinDigit};
             $chars    = 1 if $chars < 1;
-            $pwdRegEx = "[A-Z]{$uppers}[a-z]{$lowers}\\d{$digits}.{$chars}";
+            $pwdRegEx = "[A-Z]{$uppers}[a-z]{$lowers}\\d{$digits}";
+            $pwdRegEx .=
+              $self->conf->{passwordPolicySpecialChar} eq '__ALL__'
+              ? "\\W{$chars}"
+              : "[$self->{conf}->{passwordPolicySpecialChar}]{$chars}";
             $self->logger->debug("Generated password RegEx: $pwdRegEx");
         }
         else {
