@@ -10,11 +10,12 @@ use Mouse;
 use JSON;
 use URI;
 
-has isPP          => ( is => 'rw' );
-has speChars      => ( is => 'rw' );
-has skinRules     => ( is => 'rw' );
-has stayConnected => ( is => 'rw', default => sub { 0 } );
-has requireOldPwd => ( is => 'rw', default => sub { 1 } );
+has isPP                     => ( is => 'rw' );
+has speChars                 => ( is => 'rw' );
+has skinRules                => ( is => 'rw' );
+has stayConnected            => ( is => 'rw', default => sub { 0 } );
+has requireOldPwd            => ( is => 'rw', default => sub { 1 } );
+has passwordPolicyActivation => ( is => 'rw', default => sub { 0 } );
 
 sub displayInit {
     my ($self) = @_;
@@ -48,6 +49,14 @@ sub displayInit {
         $self->logger->error("Bad stayConnected rule: $error");
     }
     $self->stayConnected($rule);
+    $rule =
+      HANDLER->buildSub(
+        HANDLER->substitute( $self->conf->{passwordPolicyActivation} ) );
+    unless ($rule) {
+        my $error = HANDLER->tsv->{jail}->error || 'Unable to compile rule';
+        $self->logger->error("Bad passwordPolicyActivation rule: $error");
+    }
+    $self->passwordPolicyActivation($rule);
 
     my $speChars =
       $self->conf->{passwordPolicySpecialChar} eq '__ALL__'
@@ -474,7 +483,7 @@ sub display {
                 CHOICE_PARAM          => $self->conf->{authChoiceParam},
                 CHOICE_VALUE          => $req->data->{_authChoice},
                 OLDPASSWORD           => $self->checkXSSAttack( 'oldpassword',
-                    $req->data->{oldpassword} ) ? ""
+                    $req->data->{oldpassword} ) ? ''
                 : $req->data->{oldpassword},
                 HIDE_OLDPASSWORD    => $self->conf->{hideOldPassword},
                 DONT_STORE_PASSWORD => $self->conf->{browsersDontStorePassword},

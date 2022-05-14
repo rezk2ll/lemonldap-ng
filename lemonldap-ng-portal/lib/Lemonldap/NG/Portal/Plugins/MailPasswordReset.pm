@@ -32,7 +32,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PP_INSUFFICIENT_PASSWORD_QUALITY
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 extends qw(
   Lemonldap::NG::Portal::Lib::SMTP
@@ -58,6 +58,9 @@ has ott => (
 # Captcha generator
 has captcha => ( is => 'rw' );
 
+# Password policy activation rule
+has passwordPolicyActivationRule => ( is => 'rw', default => sub { 0 } );
+
 # INITIALIZATION
 
 sub init {
@@ -70,6 +73,15 @@ sub init {
     if ( $self->conf->{captcha_mail_enabled} ) {
         $self->captcha( $self->p->loadModule('::Lib::Captcha') ) or return 0;
     }
+
+    # Parse password policy activation rule
+    $self->passwordPolicyActivationRule(
+        $self->p->buildRule(
+            $self->conf->{passwordPolicyActivation},
+            'passwordPolicyActivation'
+        )
+    );
+    return 0 unless $self->passwordPolicyActivationRule;
     return 1;
 }
 
@@ -442,8 +454,32 @@ sub changePwd {
             "Reset password request for $req->{sessionInfo}->{_user}");
 
         # Generate a complex password
-        my $password =
-          $self->gen_password( $self->conf->{randomPasswordRegexp} );
+        my $pwdRegEx;
+        if ( $self->passwordPolicyActivationRule->( $req, $req->sessionInfo )
+            && !$self->conf->{randomPasswordRegexp} )
+        {
+            my $uppers = $self->conf->{passwordPolicyMinUpper} || 3;
+            my $lowers = $self->conf->{passwordPolicyMinLower} || 5;
+            my $digits = $self->conf->{passwordPolicyMinDigit} || 2;
+            my $chars =
+              $self->conf->{passwordPolicyMinSize} -
+              $self->conf->{passwordPolicyMinUpper} -
+              $self->conf->{passwordPolicyMinLower} -
+              $self->conf->{passwordPolicyMinDigit};
+            $chars    = 1 if $chars < 1;
+            $pwdRegEx = "[A-Z]{$uppers}[a-z]{$lowers}\\d{$digits}";
+            $pwdRegEx .=
+              $self->conf->{passwordPolicySpecialChar} eq '__ALL__'
+              ? "\\W{$chars}"
+              : "[$self->{conf}->{passwordPolicySpecialChar}]{$chars}";
+            $self->logger->debug("Generated password RegEx: $pwdRegEx");
+        }
+        else {
+            $pwdRegEx =
+              $self->conf->{randomPasswordRegexp} || '[A-Z]{3}[a-z]{5}.\d{2}';
+            $self->logger->debug("Used password RegEx: $pwdRegEx");
+        }
+        my $password = $self->gen_password($pwdRegEx);
         $self->logger->debug("Generated password: $password");
         $req->data->{newpassword}     = $password;
         $req->data->{confirmpassword} = $password;
@@ -467,11 +503,13 @@ sub changePwd {
         }
     }
 
-    # Check password quality
+    # Check password quality if enabled
     require Lemonldap::NG::Portal::Password::Base;
     my $cpq =
-      $self->Lemonldap::NG::Portal::Password::Base::checkPasswordQuality(
-        $req->data->{newpassword} );
+      $self->passwordPolicyActivationRule->( $req, $req->sessionInfo )
+      ? $self->Lemonldap::NG::Portal::Password::Base::checkPasswordQuality(
+        $req->data->{newpassword} )
+      : PE_OK;
     unless ( $cpq == PE_OK ) {
         $self->ott->setToken( $req, $req->sessionInfo );
         return $cpq;
@@ -555,9 +593,19 @@ sub setSecurity {
 
 sub display {
     my ( $self, $req ) = @_;
-    my $speChars = $self->conf->{passwordPolicySpecialChar};
+    my $speChars =
+      $self->conf->{passwordPolicySpecialChar} eq '__ALL__'
+      ? ''
+      : $self->conf->{passwordPolicySpecialChar};
     $speChars =~ s/\s+/ /g;
     $speChars =~ s/(?:^\s|\s$)//g;
+    my $isPP =
+         $self->conf->{passwordPolicyMinSize}
+      || $self->conf->{passwordPolicyMinLower}
+      || $self->conf->{passwordPolicyMinUpper}
+      || $self->conf->{passwordPolicyMinDigit}
+      || $self->conf->{passwordPolicyMinSpeChar}
+      || $speChars;
     $self->logger->debug( 'Display called with code: ' . $req->error );
 
     my %tplPrm = (
@@ -576,7 +624,8 @@ sub display {
         STARTMAILTIME   => $req->data->{startMailTime},
         MAILALREADYSENT => $req->data->{mailAlreadySent},
         MAIL            => (
-              $self->p->checkXSSAttack( 'mail', $req->{user} ) ? ''
+            $self->p->checkXSSAttack( 'mail', $req->{user} )
+            ? ''
             : $req->{user}
         ),
         DISPLAY_FORM            => 0,
@@ -584,17 +633,13 @@ sub display {
         DISPLAY_CONFIRMMAILSENT => 0,
         DISPLAY_MAILSENT        => 0,
         DISPLAY_PASSWORD_FORM   => 0,
-        DISPLAY_PPOLICY         => $self->conf->{portalDisplayPasswordPolicy},
-        PPOLICY_MINSIZE         => $self->conf->{passwordPolicyMinSize},
-        PPOLICY_MINLOWER        => $self->conf->{passwordPolicyMinLower},
-        PPOLICY_MINUPPER        => $self->conf->{passwordPolicyMinUpper},
-        PPOLICY_MINDIGIT        => $self->conf->{passwordPolicyMinDigit},
-        PPOLICY_ALLOWEDSPECHAR  => $speChars,
-        (
-            $speChars
-            ? ( PPOLICY_MINSPECHAR => $self->conf->{passwordPolicyMinSpeChar} )
-            : ()
-        ),
+        DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy} && $isPP,
+        PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
+        PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
+        PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
+        PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
+        PPOLICY_MINSPECHAR        => $self->conf->{passwordPolicyMinSpeChar},
+        PPOLICY_ALLOWEDSPECHAR    => $speChars,
         DISPLAY_GENERATE_PASSWORD =>
           $self->conf->{portalDisplayGeneratePassword},
     );
