@@ -62,7 +62,7 @@ portal:
 
     Macros can be used for rewriting or overloading exported variables
     but it can lead to some side effects. Be aware of alphabetical order
-    and keep in mind that exported variables are set then macros and
+    and keep in mind that exported variables are set. Then macros and
     groups are computed.
 
 .. code-block:: perl
