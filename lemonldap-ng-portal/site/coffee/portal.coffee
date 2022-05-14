@@ -491,20 +491,25 @@ $(window).on 'load', () ->
 
 	# Functions to show/hide display password button
 	if datas['enablePasswordDisplay']
+		field = ''
 		if datas['dontStorePassword']
 			$(".toggle-password").mousedown () ->
+				field = $(this).attr("name")
+				console.log field
 				$(this).toggleClass("fa-eye fa-eye-slash")
-				$("input[name=password]").attr('class', 'form-control')
+				$("input[name=#{field}]").attr('class', 'form-control')
 			$(".toggle-password").mouseup () ->
 				$(this).toggleClass("fa-eye fa-eye-slash")
-				$("input[name=password]").attr('class', 'form-control key') if $("input[name=password]").get(0).value 
+				$("input[name=#{field}]").attr('class', 'form-control key') if $("input[name=password]").get(0).value
 		else
 			$(".toggle-password").mousedown () ->
+				field = $(this).attr("name")
+				console.log field
 				$(this).toggleClass("fa-eye fa-eye-slash")
-				$("input[name=password]").attr("type", "text")
+				$("input[name=#{field}]").attr("type", "text")
 			$(".toggle-password").mouseup () ->
 				$(this).toggleClass("fa-eye fa-eye-slash")
-				$("input[name=password]").attr("type", "password")
+				$("input[name=#{field}]").attr("type", "password")
 
 	# Ping if asked
 	if datas['pingInterval'] and datas['pingInterval'] > 0
@@ -517,31 +522,6 @@ $(window).on 'load', () ->
 
 	$('.oidcConsent').on 'click', () ->
 		removeOidcConsent $(this).attr 'partner'
-
-	# Functions to show/hide change password inputs
-	$('#show-hide-button').on 'click', () ->
-		if datas['dontStorePassword']
-			if  $("#newpassword").attr('class') == 'form-control key' || $("#confirmpassword").attr('class') == 'form-control key'
-				console.log 'Show passwords'
-				$("#newpassword").attr('class', 'form-control')
-				$("#confirmpassword").attr('class', 'form-control')
-				$("#show-hide-icon-button").attr('class', 'fa fa-eye-slash')
-			else
-				console.log 'Hide passwords'
-				$("#newpassword").attr('class', 'form-control key') if $("#newpassword").get(0).value
-				$("#confirmpassword").attr('class', 'form-control key') if $("#confirmpassword").get(0).value
-				$("#show-hide-icon-button").attr('class', 'fa fa-eye') if ($("#newpassword").get(0).value || $("#confirmpassword").get(0).value)
-		else
-			if  $("#newpassword").attr('type') == 'password'
-				console.log 'Show passwords'
-				$("#newpassword").attr('type', 'text')
-				$("#confirmpassword").attr('type', 'text')
-				$("#show-hide-icon-button").attr('class', 'fa fa-eye-slash')
-			else
-				console.log 'Hide passwords'
-				$("#newpassword").attr('type', 'password')
-				$("#confirmpassword").attr('type', 'password')
-				$("#show-hide-icon-button").attr('class', 'fa fa-eye')
 
 	# Functions to show/hide placeholder password inputs
 	$('#passwordfield').on 'input', () ->
