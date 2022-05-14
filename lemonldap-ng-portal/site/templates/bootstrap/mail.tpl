@@ -121,6 +121,11 @@
             <span class="input-group-text"><label for="newpassword" class="mb-0"><i class="fa fa-lock"></i></label></span>
           </div>
           <input id="newpassword" name="newpassword" type="password" class="form-control" trplaceholder="newPassword" />
+          <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
+            <div class="input-group-append">
+              <span class="input-group-text"><i name="newpassword" class="fa fa-eye-slash toggle-password"></i></span>
+            </div>
+          </TMPL_IF>
         </div>
 
         <div class="input-group mb-3">
@@ -128,6 +133,11 @@
             <span class="input-group-text"><label for="confirmpassword" class="mb-0"><i class="fa fa-lock"></i></label></span>
           </div>
           <input id="confirmpassword" name="confirmpassword" type="password" class="form-control" trplaceholder="confirmPwd" />
+          <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
+            <div class="input-group-append">
+              <span class="input-group-text"><i name="newpassword" class="fa fa-eye-slash toggle-password"></i></span>
+            </div>
+          </TMPL_IF>
         </div>
 
         <TMPL_IF NAME="DISPLAY_GENERATE_PASSWORD">
