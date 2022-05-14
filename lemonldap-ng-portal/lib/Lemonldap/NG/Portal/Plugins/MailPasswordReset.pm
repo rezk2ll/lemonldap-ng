@@ -633,6 +633,8 @@ sub display {
         DISPLAY_CONFIRMMAILSENT => 0,
         DISPLAY_MAILSENT        => 0,
         DISPLAY_PASSWORD_FORM   => 0,
+        ENABLE_PASSWORD_DISPLAY =>
+              $self->conf->{portalEnablePasswordDisplay},
         DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy} && $isPP,
         PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
         PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
