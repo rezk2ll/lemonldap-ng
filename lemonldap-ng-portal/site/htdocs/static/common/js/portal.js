@@ -550,20 +550,20 @@ LemonLDAP::NG Portal jQuery scripts
       if (datas['dontStorePassword']) {
         $(".toggle-password").mousedown(function() {
           field = $(this).attr("name");
-          console.log(field);
+          console.log('Display', field);
           $(this).toggleClass("fa-eye fa-eye-slash");
           return $("input[name=" + field + "]").attr('class', 'form-control');
         });
         $(".toggle-password").mouseup(function() {
           $(this).toggleClass("fa-eye fa-eye-slash");
-          if ($("input[name=password]").get(0).value) {
+          if ($("input[name=" + field + "]").get(0).value) {
             return $("input[name=" + field + "]").attr('class', 'form-control key');
           }
         });
       } else {
         $(".toggle-password").mousedown(function() {
           field = $(this).attr("name");
-          console.log(field);
+          console.log('Display', field);
           $(this).toggleClass("fa-eye fa-eye-slash");
           return $("input[name=" + field + "]").attr("type", "text");
         });
@@ -600,18 +600,14 @@ LemonLDAP::NG Portal jQuery scripts
     });
     $('#newpassword').on('input', function() {
       if ($('#newpassword').get(0).value && datas['dontStorePassword']) {
-        if ($("#show-hide-icon-button").attr('class') === 'fa fa-eye') {
-          return $("#newpassword").attr('class', 'form-control key');
-        }
+        return $("#newpassword").attr('class', 'form-control key');
       } else {
         return $("#newpassword").attr('class', 'form-control');
       }
     });
     $('#confirmpassword').on('input', function() {
       if ($('#confirmpassword').get(0).value && datas['dontStorePassword']) {
-        if ($("#show-hide-icon-button").attr('class') === 'fa fa-eye') {
-          return $("#confirmpassword").attr('class', 'form-control key');
-        }
+        return $("#confirmpassword").attr('class', 'form-control key');
       } else {
         return $("#confirmpassword").attr('class', 'form-control');
       }

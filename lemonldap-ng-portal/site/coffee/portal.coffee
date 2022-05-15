@@ -495,16 +495,16 @@ $(window).on 'load', () ->
 		if datas['dontStorePassword']
 			$(".toggle-password").mousedown () ->
 				field = $(this).attr("name")
-				console.log field
+				console.log 'Display', field
 				$(this).toggleClass("fa-eye fa-eye-slash")
 				$("input[name=#{field}]").attr('class', 'form-control')
 			$(".toggle-password").mouseup () ->
 				$(this).toggleClass("fa-eye fa-eye-slash")
-				$("input[name=#{field}]").attr('class', 'form-control key') if $("input[name=password]").get(0).value
+				$("input[name=#{field}]").attr('class', 'form-control key') if $("input[name=#{field}]").get(0).value
 		else
 			$(".toggle-password").mousedown () ->
 				field = $(this).attr("name")
-				console.log field
+				console.log 'Display', field
 				$(this).toggleClass("fa-eye fa-eye-slash")
 				$("input[name=#{field}]").attr("type", "text")
 			$(".toggle-password").mouseup () ->
@@ -536,12 +536,12 @@ $(window).on 'load', () ->
 			$("#oldpassword").attr('class', 'form-control')
 	$('#newpassword').on 'input', () ->
 		if $('#newpassword').get(0).value && datas['dontStorePassword']
-			$("#newpassword").attr('class', 'form-control key') if $("#show-hide-icon-button").attr('class') == 'fa fa-eye'
+			$("#newpassword").attr('class', 'form-control key')
 		else
 			$("#newpassword").attr('class', 'form-control')
 	$('#confirmpassword').on 'input', () ->
 		if $('#confirmpassword').get(0).value && datas['dontStorePassword']
-			$("#confirmpassword").attr('class', 'form-control key') if $("#show-hide-icon-button").attr('class') == 'fa fa-eye'
+			$("#confirmpassword").attr('class', 'form-control key')
 		else
 			$("#confirmpassword").attr('class', 'form-control')
 
