@@ -15,7 +15,7 @@ my $client = LLNG::Manager::Test->new( {
 );
 
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Display portal' );
-ok( $res->[2]->[0] =~ m%<i class="fa fa-eye-slash toggle-password">%,
+ok( $res->[2]->[0] =~ m%<i name="password" class="fa fa-eye-slash toggle-password">%,
     ' toggle password icon found' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(2);
