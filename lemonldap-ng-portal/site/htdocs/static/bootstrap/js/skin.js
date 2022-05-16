@@ -72,6 +72,8 @@ $(window).on("load", function() {
       }
       // store the new value
       $( "input#rememberStopped" ).val(newval);
+      $( "#remembertimer" ).hide();
+      $( "#globalrememberauthchoicecontainer" ).css('display', 'flex');
   });
 
   // function running the previously remembered authentication choice
@@ -79,7 +81,7 @@ $(window).on("load", function() {
   function launchAuthenticationChoice()
   {
 
-      var timer = $( "div#remembertimer p span" ).text();
+      var timer = $( "#remembertimer span" ).text();
       var isStopped = $( "input#rememberStopped" ).val();
 
       if ( isStopped != "stopped" )
@@ -88,7 +90,7 @@ $(window).on("load", function() {
           {
               timer--;
               // display decremented timer in the appropriate html element
-              $( "div#remembertimer p span" ).text(timer);
+              $( "#remembertimer span" ).text(timer);
               // wait for another 1s
               window.setTimeout( launchAuthenticationChoice, 1000 );
           }
@@ -115,14 +117,19 @@ $(window).on("load", function() {
          )
       {
           // show timer
-          $( "div#remembertimer" ).show();
-          // check all checkboxes
+          $( "#remembertimer" ).css('display', 'flex');
+          // remember last authentication choice again
           $("#globalrememberauthchoice").prop('checked',true);
           $( 'input[name="rememberauthchoice"]' ).each(function() {
             $( this ).val('true');
           });
           // launch remembered authentication choice when timer reaches 0
           window.setTimeout( launchAuthenticationChoice, 1000 );
+      }
+      else
+      {
+        // display the global checkbox
+        $( "#globalrememberauthchoicecontainer" ).css('display', 'flex');
       }
   }
 
