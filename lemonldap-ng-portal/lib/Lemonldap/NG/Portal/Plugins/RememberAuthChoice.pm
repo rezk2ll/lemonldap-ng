@@ -21,27 +21,11 @@ use constant beforeAuth   => 'checkRememberedAuthChoice';
 
 has rule => ( is => 'rw', default => sub { 0 } );
 
-has rememberDefaultChecked => (
-    is      => 'rw',
-    lazy    => 1,
-    default => sub {
-        $_[0]->conf->{rememberDefaultChecked} || 0;
-    }
-);
-
-has rememberTimer => (
-    is      => 'rw',
-    lazy    => 1,
-    default => sub {
-        $_[0]->conf->{rememberTimer} || 5;
-    }
-);
-
 has rememberCookieName => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        $_[0]->conf->{rememberCookieName} || 'llngrememberauthchoice';
+        $_[0]->conf->{rememberCookieName} // 'llngrememberauthchoice';
     }
 );
 
@@ -50,7 +34,7 @@ has rememberCookieTimeout => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        $_[0]->conf->{rememberCookieTimeout} || 31536000;
+        $_[0]->conf->{rememberCookieTimeout} // 31536000;
     }
 );
 
