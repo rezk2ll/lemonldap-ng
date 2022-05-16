@@ -1049,6 +1049,7 @@ sub tplParams {
         SKIN_PATH  => $portalPath . "skins",
         SAMESITE   => getSameSite( $self->conf ),
         SKIN_BG    => $self->conf->{portalSkinBackground},
+        FAVICON    => $self->conf->{portalFavicon} || 'common/favicon.ico',
         CUSTOM_CSS => $self->conf->{portalCustomCss},
         (
             $self->customParameters

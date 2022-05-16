@@ -806,6 +806,7 @@
 "portalEnablePasswordDisplay":"Allow to display password",
 "portalErrorOnExpiredSession":"Show error on expired session",
 "portalErrorOnMailNotFound":"Show error on mail not found",
+"portalFavicon":"Favicon",
 "portalForceAuthn":"Force authentication",
 "portalForceAuthnInterval":"Force authentication interval",
 "portalMainLogo":"Main logo",

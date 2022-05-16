@@ -53,6 +53,7 @@ sub tree {
                             help  => 'portalcustom.html',
                             nodes => [
                                 'portalMainLogo',
+                                'portalFavicon',
                                 'showLanguages',
                                 'portalCustomCss',
                                 'portalSkin',

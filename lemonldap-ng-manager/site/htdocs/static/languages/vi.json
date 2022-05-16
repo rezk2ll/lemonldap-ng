@@ -806,6 +806,7 @@
 "portalEnablePasswordDisplay":"Allow to display password",
 "portalErrorOnExpiredSession":"Show error on expired session",
 "portalErrorOnMailNotFound":"Show error on mail not found",
+"portalFavicon":"Favicon",
 "portalForceAuthn":"Bắt buộc xác thực",
 "portalForceAuthnInterval":"Khoảng thời gian bắt buộc xác thực",
 "portalMainLogo":"Main logo",

@@ -9,8 +9,14 @@ require 't/test-lib.pm';
 
 my $res;
 
-my $client = LLNG::Manager::Test->new(
-    { ini => { logLevel => 'error', useSafeJail => 1 } } );
+my $client = LLNG::Manager::Test->new( {
+        ini => {
+            logLevel      => 'error',
+            useSafeJail   => 1,
+            portalFavicon => 'common/llng.ico'
+        }
+    }
+);
 
 # Test normal first access
 # ------------------------
@@ -31,7 +37,9 @@ ok( $res->[2]->[0] =~ /<span trmsg="37">/, 'Rejected with PE_BADURL' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ m%<span id="languages"></span>%, ' Language icons found' )
   or print STDERR Dumper( $res->[2]->[0] );
-count(3);
+ok( $res->[2]->[0] =~ m%link href="/static/common/llng.ico%, ' Custom favicon found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(4);
 
 # Test "first access" with a wildcard-protected url
 ok(

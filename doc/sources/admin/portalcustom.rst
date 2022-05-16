@@ -15,12 +15,24 @@ Portal > Customization > Main logo.
 
 A blank value disables Main logo display.
 
-
 .. tip::
 
     - Logo files must be stored in lemonldap-ng-portal/site/htdocs/static/my/path directory
     - Logo file path must be like my/path/logo.png
     - Main logo is included in Portal templates AND mail body
+
+Favicon
+~~~~~~~~~~~~~~~~~~~~~
+
+You can change the default favicon in Manager: General Parameters >
+Portal > Customization > Favicon.
+
+A blank value displays default favicon ``common/favicon.ico``.
+
+.. tip::
+
+    - Logo files must be stored in lemonldap-ng-portal/site/htdocs/static/my/path directory
+    - Logo file path must be like my/path/logo.ico
 
 Show languages choice
 ~~~~~~~~~~~~~~~~~~~~~
@@ -32,8 +44,6 @@ Option enabled by default.
 
 
 .. tip::
-
-
 
     If languages choice is disabled, Portal displays accepted languages by
     your browser (EN by default).

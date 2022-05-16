@@ -806,6 +806,7 @@
 "portalEnablePasswordDisplay":"Allow to display password",
 "portalErrorOnExpiredSession":"在過期的工作階段上顯示錯誤",
 "portalErrorOnMailNotFound":"找不到郵件時顯示錯誤",
+"portalFavicon":"Favicon",
 "portalForceAuthn":"強制驗證",
 "portalForceAuthnInterval":"強制驗證間隔",
 "portalMainLogo":"主圖示",
