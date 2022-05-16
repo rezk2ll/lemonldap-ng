@@ -77,9 +77,9 @@ sub tree {
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'portalRequireOldPassword',
+                                        'portalEnablePasswordDisplay',
                                         'hideOldPassword',
                                         'mailOnPasswordChange',
-                                        'portalEnablePasswordDisplay',
                                     ]
                                 },
                                 {

@@ -20,14 +20,14 @@
       <input id="passwordfield" name="password" type="text" class="form-control" trplaceholder="password" autocomplete="off" required aria-required="true" aria-hidden="true"/>
       <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
         <div class="input-group-append">
-          <span class="input-group-text"><i class="fa fa-eye-slash toggle-password"></i></span>
+          <span class="input-group-text"><i id="toggle_password" class="fa fa-eye-slash toggle-password"></i></span>
         </div>
       </TMPL_IF>
     <TMPL_ELSE>
       <input id="passwordfield" name="password" type="password" class="form-control" trplaceholder="password" required aria-required="true"/>
       <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
         <div class="input-group-append">
-          <span class="input-group-text"><i class="fa fa-eye-slash toggle-password"></i></span>
+          <span class="input-group-text"><i id="toggle_password" class="fa fa-eye-slash toggle-password"></i></span>
         </div>
       </TMPL_IF>
     </TMPL_IF>
