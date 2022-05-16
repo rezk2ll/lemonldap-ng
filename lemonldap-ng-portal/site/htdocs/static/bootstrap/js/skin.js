@@ -68,7 +68,7 @@ $(window).on("load", function() {
       else
       {
           newval = "running";
-          window.setTimeout( launchAuthenticationChoice, 1000 );
+          window.setTimeout( launchAuthenticationChoice, 0 );
       }
       // store the new value
       $( "input#rememberStopped" ).val(newval);
@@ -86,11 +86,12 @@ $(window).on("load", function() {
 
       if ( isStopped != "stopped" )
       {
+          timer--;
+          // display decremented timer in the appropriate html element
+          $( "#remembertimer span" ).text(timer);
+
           if ( timer > 0 )
           {
-              timer--;
-              // display decremented timer in the appropriate html element
-              $( "#remembertimer span" ).text(timer);
               // wait for another 1s
               window.setTimeout( launchAuthenticationChoice, 1000 );
           }
@@ -123,8 +124,10 @@ $(window).on("load", function() {
           $( 'input[name="rememberauthchoice"]' ).each(function() {
             $( this ).val('true');
           });
+          // increment timer for starting to correct time
+          $( "#remembertimer span" ).text( parseInt($( "#remembertimer span" ).text()) + 1 );
           // launch remembered authentication choice when timer reaches 0
-          window.setTimeout( launchAuthenticationChoice, 1000 );
+          window.setTimeout( launchAuthenticationChoice, 0 );
       }
       else
       {
