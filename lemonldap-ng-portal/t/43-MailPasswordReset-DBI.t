@@ -13,7 +13,7 @@ BEGIN {
 }
 
 my ( $res, $user, $pwd );
-my $maintests = 17;
+my $maintests = 19;
 my $mailSend  = 0;
 
 my $mail2 = 0;
@@ -54,7 +54,12 @@ SKIP: {
                 dbiAuthPasswordHash         => '',
                 dbiDynamicHashEnabled       => 0,
                 dbiMailCol                  => 'mail',
+                portalDisplayPasswordPolicy => 1,
+                passwordPolicyActivation    => 0,
                 passwordResetAllowedRetries => 4,
+                passwordPolicyMinDigit      => 2,
+                passwordPolicyMinSpeChar    => 1,
+                passwordPolicySpecialChar   => '__ALL__'
             }
         }
     );
@@ -141,8 +146,16 @@ SKIP: {
     # Post new password
     ( $host, $url, $query ) = expectForm( $res, '#', undef, 'token' );
     ok( $res->[2]->[0] =~ /newpassword/s, ' Ask for a new password #4' );
-
-    $query .= '&newpassword=zz&confirmpassword=zz';
+    ok(
+        $res->[2]->[0] !~ /passwordPolicySpecialChar/,
+        ' Password special char list not found'
+    );
+    ok(
+        $res->[2]->[0] =~
+/<span trspan="passwordPolicyMinDigit">Minimal digit characters:<\/span> 2/,
+        ' Found password policy min digit == 2'
+    );
+    $query .= '&newpassword=zz11#&confirmpassword=zz11#';
     ok(
         $res = $client->_post(
             '/resetpwd', IO::String->new($query),
@@ -157,8 +170,8 @@ SKIP: {
     ok(
         $res = $client->_post(
             '/',
-            IO::String->new('user=dwho&password=zz'),
-            length => 21
+            IO::String->new('user=dwho&password=zz11#'),
+            length => 24
         ),
         'Auth query'
     );

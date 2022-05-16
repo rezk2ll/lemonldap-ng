@@ -301,7 +301,7 @@ In this example we have:
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
        addKey \
            casAppMetaDataExportedVars/testapp mail mail \
-           casAppMetaDataExportedVars/testapp cn cn
+           casAppMetaDataExportedVars/testapp cn cn \
            casAppMetaDataOptions/testapp casAppMetaDataOptionsService 'https://testapp.example.com/'
 
 Configure SAML Identity Provider

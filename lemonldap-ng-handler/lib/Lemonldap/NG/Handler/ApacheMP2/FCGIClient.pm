@@ -1,4 +1,4 @@
-# Apache2 FastCGI client to query remote LLNG FastCGI server
+# Apache2 FastCGI client to query remote LL::NG FastCGI server
 #
 package Lemonldap::NG::Handler::ApacheMP2::FCGIClient;
 
@@ -21,7 +21,7 @@ use constant REDIRECT          => Apache2::Const::REDIRECT;
 use constant DECLINED          => Apache2::Const::DECLINED;
 use constant SERVER_ERROR      => Apache2::Const::SERVER_ERROR;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 sub handler {
     my ( $class, $r ) = @_;
@@ -43,11 +43,13 @@ sub handler {
         SERVER_PORT    => $r->get_server_port,
         REQUEST_METHOD => $r->method,
     };
+
     foreach (qw(VHOSTTYPE RULES_URL HTTPS_REDIRECT PORT_REDIRECT)) {
         if ( my $t = $r->dir_config($_) ) {
             $env->{$_} = $t;
         }
     }
+
     $r->headers_in->do(
         sub {
             my $h = shift;
@@ -89,17 +91,14 @@ sub handler {
         return REDIRECT;
     }
 
-    if ( $hdrs{'Lm-Remote-User'} ) {
-        $r->user( $hdrs{'Lm-Remote-User'} );
-    }
-    if ( $hdrs{'Lm-Remote-Custom'} ) {
-        $r->subprocess_env( REMOTE_CUSTOM => $hdrs{'Lm-Remote-Custom'} );
-    }
+    $r->user( $hdrs{'Lm-Remote-User'} ) if $hdrs{'Lm-Remote-User'};
+    $r->subprocess_env( REMOTE_CUSTOM => $hdrs{'Lm-Remote-Custom'} )
+      if $hdrs{'Lm-Remote-Custom'};
 
     my $i = 1;
     while ( $hdrs{"Headername$i"} ) {
         $r->headers_in->set( $hdrs{"Headername$i"} => $hdrs{"Headervalue$i"} )
-          if ( $hdrs{"Headervalue$i"} );
+          if $hdrs{"Headervalue$i"};
         $i++;
     }
     $status = DECLINED if ( $status < 300 );
@@ -129,6 +128,9 @@ In apache2.conf:
     PerlSetVar VHOSTTYPE DevOps
     # or PerlSetVar VHOSTTYPE DevOpsST
     PerlSetVar RULES_URL http://app.tld/rules.json
+    PerlSetVar HOST HTTP_HOST
+    PerlSetVar PORT_REDIRECT SERVER_PORT
+    PerlSetVar HTTPS_REDIRECT HTTPS
     ...
   </VirtualHost>
 
@@ -148,7 +150,7 @@ L<https://lemonldap-ng.org/documentation/latest/ssoaas>
 
 =over
 
-=item LemonLDAP::NG team L<http://lemonldap-ng.org/team>
+=item LemonLDAP::NG team L<https://lemonldap-ng.org/team.html>
 
 =back
 
@@ -160,7 +162,7 @@ L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
 =head1 DOWNLOAD
 
 Lemonldap::NG is available at
-L<https://lemonldap-ng.org/download>
+L<https://lemonldap-ng.org/download.html>
 
 =head1 COPYRIGHT AND LICENSE
 

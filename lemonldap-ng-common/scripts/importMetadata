@@ -466,7 +466,7 @@ if ( !$opts{'dry-run'} ) {
         print "[OK] Configuration $numConf saved\n";
         $exitCode = 0;
     }
-    unless ($numConf) {
+    unless ( $numConf > 0 ) {
         print "[ERROR] Unable to save configuration\n";
         $exitCode = 1;
     }

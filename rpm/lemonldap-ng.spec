@@ -205,7 +205,7 @@ Requires: lemonldap-ng-test = %{version}-%{release}
 # ! Not available in Centos7, you need to install lemonldap-ng-selinux manually
 # This ensures that the *-selinux package and all it’s dependencies are not pulled
 # into containers and other systems that do not use SELinux
-Requires:        (%{name}-selinux if selinux-policy-%{selinuxtype})
+Requires:        (%{name}-selinux = %{version}-%{release} if selinux-policy-%{selinuxtype})
 %endif
 
 

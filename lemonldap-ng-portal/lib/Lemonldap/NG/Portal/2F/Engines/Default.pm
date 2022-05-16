@@ -367,6 +367,10 @@ sub run {
 
     # If only one 2F is authorized, display it
     unless ($#am) {
+        $self->userLogger->info( 'Second factor '
+              . $am[0]->prefix
+              . '2F selected for '
+              . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
         my $res = $am[0]->run( $req, $token );
         $req->authResult($res);
         return $res;
@@ -437,6 +441,10 @@ sub _choice {
     my $ch = $req->param('sf');
     foreach my $m ( @{ $self->sfModules } ) {
         if ( $m->{m}->prefix eq $ch ) {
+            $self->userLogger->info( 'Second factor '
+                  . $m->{m}->prefix
+                  . '2F selected for '
+                  . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
             my $res = $m->{m}->run( $req, $token );
             $req->authResult($res);
             return $self->p->do(

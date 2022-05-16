@@ -361,7 +361,7 @@ Password Policy
 -  **Minimal upper characters**: leave 0 to bypass the check
 -  **Minimal digit characters**: leave 0 to bypass the check
 -  **Minimal special characters**: leave 0 to bypass the check
--  **Allowed special characters**: set '__ALL__' value to allow ALL special characters. A blanck value forbids ALL special characters (Note that ``_`` is not a special character)
+-  **Allowed special characters**: set '__ALL__' value to allow ALL special characters. A blank value forbids ALL special characters (Note that ``_`` is not a special character)
 
 .. _portalcustom-other-parameters:
 

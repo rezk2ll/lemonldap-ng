@@ -115,7 +115,7 @@ sub new {
 # Serialize $conf and call store().
 # @param $conf Lemonldap::NG configuration hashRef
 # @param %args Parameters
-# @return Number of the saved configuration, 0 in case of error.
+# @return Number of the saved configuration, <=0 in case of error.
 sub saveConf {
     my ( $self, $conf, %args ) = @_;
 

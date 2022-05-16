@@ -21,6 +21,9 @@ example:
 
    $env->{HTTP_ACCEPT} !~ m:application/json:
 
+
+Another solution is using the :doc:`REST auth/user/password backend<restauthuserpwdbackend>`.
+
 API
 ^^^
 

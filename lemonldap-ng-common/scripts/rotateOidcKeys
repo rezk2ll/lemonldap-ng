@@ -50,7 +50,7 @@ $conf->{oidcServicePrivateKeySig} = $keys->{private};
 $conf->{oidcServicePublicKeySig}  = $keys->{public};
 $conf->{oidcServiceKeyIdSig}      = $keys->{id};
 
-$lmconf->saveConf($conf) or die $Lemonldap::NG::Common::Conf::msg;
+( $lmconf->saveConf($conf) > 0 ) or die $Lemonldap::NG::Common::Conf::msg;
 
 print "Configuration saved\n" if $debug;
 

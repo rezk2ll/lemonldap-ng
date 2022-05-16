@@ -56,6 +56,7 @@ C<LLNG::Manager::Test::_post()> call I<(see below)>.
 use strict;
 use Data::Dumper;
 use File::Find;
+use JSON;
 use LWP::UserAgent;
 use Time::Fake;
 use URI::Escape;
@@ -374,6 +375,31 @@ sub expectAuthenticatedAs {
     my ( $res, $user ) = @_;
     is( getHeader( $res, 'Lm-Remote-User' ), $user, "Authenticated as $user" );
     count(1);
+}
+
+=head4 expectSessionAttributes($app,$id,%attributes)
+
+Verify that the session contains attributes with these values
+
+=cut
+
+sub expectSessionAttributes {
+    my ( $app, $id, %attributes ) = @_;
+    my $res;
+    ok(
+        $res = $app->_get("/sessions/global/$id"),
+        "Get session using restSessionServer"
+    );
+    count(1);
+    expectOK($res);
+    ok( $res = eval { from_json( $res->[2]->[0] ) },
+        "Deserialize session content" );
+    count(1);
+    for my $attr ( keys %attributes ) {
+        is( $res->{$attr}, $attributes{$attr},
+            "Session has correct value for $attr" );
+        count(1);
+    }
 }
 
 =head4 expectOK($res)

@@ -46,6 +46,7 @@ Key           Description
 \_auth        Authentication module
 \_userDB      User module
 \_passwordDB  Password module
+\_2f          Second factor (if 2FA was used)
 \_issuerDB    Issuer module (can be multivalued)
 \_authChoice  User choice done if :doc:`authentication choice<authchoice>` was used
 \_authMulti   Full name of authentication module (with ``#label``) used in Multi

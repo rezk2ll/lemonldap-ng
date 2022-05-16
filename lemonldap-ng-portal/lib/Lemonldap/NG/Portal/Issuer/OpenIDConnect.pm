@@ -1962,7 +1962,7 @@ sub registration {
           $self->conf->{oidcServiceDynamicRegistrationExtraClaims};
     }
 
-    if ( $self->confAcc->saveConf($conf) ) {
+    if ( $self->confAcc->saveConf($conf) > 0 ) {
 
         # Reload RP list
         $self->loadRPs();

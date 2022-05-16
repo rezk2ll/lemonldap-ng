@@ -887,23 +887,9 @@ install_examples_site:
 install_doc_site:
 	# Offline documentation install
 	@rm -rf $(RDEFDOCDIR)
-	# Install doc directories
 	@install -v -d -m 755 $(RDEFDOCDIR)
-	@cd doc && find * -type d |(cd $(RDEFDOCDIR); xargs install -v -d -m 755) && cd -
-	# Install HTML files
-	@cd doc && for f in `find * -type f -name '*.html'`; do \
-		echo "Installing $$f"; \
-		../scripts/transform-templates \
-			usedebianlibs $(USEDEBIANLIBS) \
-			useexternallibs $(USEEXTERNALLIBS) \
-			jsminified $(JSCOMPRESS) \
-			cssminified $(CSSCOMPRESS) <$$f \
-		> $(RDEFDOCDIR)/$$f; \
-	done && cd -
-	# Install other files
-	@cd doc && for f in `find * -type f ! -name '*.html'`; do \
-		install -v -m 644 $$f $(RDEFDOCDIR)/$$f; \
-	done && cd -
+	@cd doc && find index.html pages/* -type f ! -path '*/.*' -exec install -v -m 644 -D '{}' $(RDEFDOCDIR)/'{}' \; && cd -
+
 	# Remove js
 	@cd $(RDEFDOCDIR) && if test "$(USEEXTERNALLIBS)" = "yes"; then \
 		rm -rvf $(DOCEXTERNALLIBS); \
@@ -1105,7 +1091,7 @@ debian-dist:	clean
 	@cp lemonldap-ng-$(VERSION)/_example/etc/api-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/api-apache2.conf
 	@cp lemonldap-ng-$(VERSION)/_example/etc/test-apache2.X.conf lemonldap-ng-$(VERSION)/_example/etc/test-apache2.conf
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
-	@find lemonldap-ng-$(VERSION)/ -name node_modules -exec rm -rf '{}' \;
+	-@find lemonldap-ng-$(VERSION)/ -name node_modules -exec rm -rf '{}' \;
 	@$(COMPRESS) lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
 

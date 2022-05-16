@@ -8,9 +8,59 @@ Presentation
 
 `Sympa <http://www.sympa.org>`__ is a mailing list manager.
 
-To configure SSO with Sympa, use **Magic authentication**: a special SSO
-URL is protected by LL::NG, Sympa will display a button for users who
-wants to use this feature.
+To configure SSO with Sympa, you have the choice between:
+  * CAS
+  * **Magic authentication**: a special SSO URL is protected by LL::NG, Sympa will display a button for users who wants to use this feature.
+
+We recommend to use CAS.
+
+CAS
+---
+
+
+Sympa configuration
+~~~~~~~~~~~~~~~~~~~
+
+Edit the file "auth.conf", for example:
+
+::
+
+   vi /etc/sympa/auth.conf
+
+And fill it:
+
+::
+
+    cas
+        base_url                        https://auth.example.com/cas
+        non_blocking_redirection        on
+        auth_service_name               SSO
+        ldap_host                       ldap.example.com:389
+        ldap_get_email_by_uid_filter    (uid=[uid])
+        ldap_timeout                    7
+        ldap_suffix                     dc=example,dc=com
+        ldap_scope                      sub
+        ldap_email_attribute            mail
+
+Restart services:
+
+::
+
+    service sympa restart
+    service apache2 restart
+
+See also `official documentation <https://sympa-community.github.io/manual/customize/cas.html>`__
+
+LemonLDAP::NG configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Declare CAS application in the configuration, register the service URL.
+
+No attributes are needed.
+
+
+Magic authentication
+--------------------
 
 
 .. tip::
@@ -18,9 +68,6 @@ wants to use this feature.
     Since LL::NG 1.9, old Auto-Login feature has been
     removed since it works only with Sympa-5 which has been deprecated
 
-
-Configuration
--------------
 
 Sympa configuration
 ~~~~~~~~~~~~~~~~~~~

@@ -58,7 +58,6 @@ sub displayInit {
         $self->logger->error("Bad passwordPolicyActivation rule: $error");
     }
     $self->passwordPolicyActivation($rule);
-
     $rule =
       HANDLER->buildSub( HANDLER->substitute( $self->conf->{rememberAuthChoiceRule} ) );
     unless ($rule) {
