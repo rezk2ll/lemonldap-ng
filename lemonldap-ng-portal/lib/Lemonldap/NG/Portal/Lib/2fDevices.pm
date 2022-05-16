@@ -48,7 +48,7 @@ Updates one field of a registered device
 
 =back
 
-Returns true iff the update was sucessful
+Returns true if the update was sucessful
 
 =cut
 
@@ -93,7 +93,7 @@ Register a new device
 
 =back
 
-Returns true iff the update was sucessful
+Returns true if the update was sucessful
 
 =cut
 
@@ -129,7 +129,7 @@ Delete the devices specified in the @$devices array
 
 =back
 
-Returns true iff the update was sucessful
+Returns true if the update was sucessful
 
 =cut
 
@@ -186,7 +186,7 @@ Delete a single device
 
 =back
 
-Returns true iff the update was sucessful
+Returns true if the update was sucessful
 
 =cut
 
