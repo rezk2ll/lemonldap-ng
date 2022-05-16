@@ -549,7 +549,9 @@ LemonLDAP::NG Portal jQuery scripts
       field = '';
       if (datas['dontStorePassword']) {
         $(".toggle-password").mousedown(function() {
-          field = $(this).attr("name");
+          field = $(this).attr('id');
+          console.log('Display****', field);
+          field = field.replace(/^toggle_/, '');
           console.log('Display', field);
           $(this).toggleClass("fa-eye fa-eye-slash");
           return $("input[name=" + field + "]").attr('class', 'form-control');
@@ -562,7 +564,9 @@ LemonLDAP::NG Portal jQuery scripts
         });
       } else {
         $(".toggle-password").mousedown(function() {
-          field = $(this).attr("name");
+          field = $(this).attr('id');
+          console.log('Display***', field);
+          field = field.replace(/^toggle_/, '');
           console.log('Display', field);
           $(this).toggleClass("fa-eye fa-eye-slash");
           return $("input[name=" + field + "]").attr("type", "text");

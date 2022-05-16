@@ -124,14 +124,14 @@
             <input id="newpassword" name="newpassword" type="text" class="form-control" trplaceholder="newPassword" autocomplete="off" required aria-required="true"/>
             <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
               <div class="input-group-append">
-                <span class="input-group-text"><i name="newpassword" class="fa fa-eye-slash toggle-password"></i></span>
+                <span class="input-group-text"><i id="toggle_newpassword" class="fa fa-eye-slash toggle-password"></i></span>
               </div>
             </TMPL_IF>
           <TMPL_ELSE>
             <input id="newpassword" name="newpassword" type="password" class="form-control" trplaceholder="newPassword" required aria-required="true"/>
             <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
               <div class="input-group-append">
-                <span class="input-group-text"><i name="newpassword" class="fa fa-eye-slash toggle-password"></i></span>
+                <span class="input-group-text"><i id="toggle_newpassword" class="fa fa-eye-slash toggle-password"></i></span>
               </div>
             </TMPL_IF>
           </TMPL_IF>
@@ -145,14 +145,14 @@
             <input id="confirmpassword" name="confirmpassword" type="text" class="form-control" trplaceholder="confirmPwd" autocomplete="off" required aria-required="true"/>
             <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
               <div class="input-group-append">
-                <span class="input-group-text"><i name="confirmpassword" class="fa fa-eye-slash toggle-password"></i></span>
+                <span class="input-group-text"><i id="toggle_confirmpassword" class="fa fa-eye-slash toggle-password"></i></span>
               </div>
             </TMPL_IF>
           <TMPL_ELSE>
             <input id="confirmpassword" name="confirmpassword" type="password" class="form-control" trplaceholder="confirmPwd" required aria-required="true"/>
             <TMPL_IF NAME="ENABLE_PASSWORD_DISPLAY">
               <div class="input-group-append">
-                <span class="input-group-text"><i name="confirmpassword" class="fa fa-eye-slash toggle-password"></i></span>
+                <span class="input-group-text"><i id="toggle_confirmpassword" class="fa fa-eye-slash toggle-password"></i></span>
               </div>
             </TMPL_IF>
           </TMPL_IF>

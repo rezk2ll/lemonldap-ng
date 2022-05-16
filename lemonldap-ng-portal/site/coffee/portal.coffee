@@ -494,7 +494,8 @@ $(window).on 'load', () ->
 		field = ''
 		if datas['dontStorePassword']
 			$(".toggle-password").mousedown () ->
-				field = $(this).attr("name")
+				field = $(this).attr 'id'
+				field = field.replace /^toggle_/, ''
 				console.log 'Display', field
 				$(this).toggleClass("fa-eye fa-eye-slash")
 				$("input[name=#{field}]").attr('class', 'form-control')
@@ -503,7 +504,8 @@ $(window).on 'load', () ->
 				$("input[name=#{field}]").attr('class', 'form-control key') if $("input[name=#{field}]").get(0).value
 		else
 			$(".toggle-password").mousedown () ->
-				field = $(this).attr("name")
+				field = $(this).attr 'id'
+				field = field.replace /^toggle_/, ''
 				console.log 'Display', field
 				$(this).toggleClass("fa-eye fa-eye-slash")
 				$("input[name=#{field}]").attr("type", "text")

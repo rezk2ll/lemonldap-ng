@@ -18,7 +18,7 @@ my $client = LLNG::Manager::Test->new( {
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Display portal' );
 ok(
     $res->[2]->[0] =~
-      m%<i name="password" class="fa fa-eye-slash toggle-password">%,
+      m%<i id="toggle_password" class="fa fa-eye-slash toggle-password">%,
     ' toggle password icon found'
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(2);
@@ -45,17 +45,17 @@ ok(
 );
 ok(
     $res->[2]->[0] =~
-      m%<i name="oldpassword" class="fa fa-eye-slash toggle-password">%,
+      m%<i id="toggle_oldpassword" class="fa fa-eye-slash toggle-password">%,
     ' toggle oldpassword icon found'
 ) or print STDERR Dumper( $res->[2]->[0] );
 ok(
     $res->[2]->[0] =~
-      m%<i name="newpassword" class="fa fa-eye-slash toggle-password">%,
+      m%<i id="toggle_newpassword" class="fa fa-eye-slash toggle-password">%,
     ' toggle newpassword icon found'
 ) or print STDERR Dumper( $res->[2]->[0] );
 ok(
     $res->[2]->[0] =~
-      m%<i name="confirmpassword" class="fa fa-eye-slash toggle-password">%,
+      m%<i id="toggle_confirmpassword" class="fa fa-eye-slash toggle-password">%,
     ' toggle confirmpassword icon found'
 ) or print STDERR Dumper( $res->[2]->[0] );
 ok(
