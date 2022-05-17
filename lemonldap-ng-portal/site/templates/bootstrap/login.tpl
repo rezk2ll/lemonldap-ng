@@ -130,13 +130,16 @@
       </div>
 
       <!-- Timer + stop button for triggering the remembered authentication choice -->
-      <p id="remembertimer" class="form-control">
-        <span><TMPL_VAR NAME="REMEMBERAUTHCHOICETIMER"></span>
-        <label id="rememberTimerLabel" trspan="rememberTimerLabel">s before automatic authentication</label>
-        <button id="buttonRememberStopped" class="btn"><i class="fa fa-stop-circle-o"></i> Stop</button>
+      <div id="remembertimercontainer" class="input-group">
+        <p class="form-control">
+          <span id="remembertimer"><TMPL_VAR NAME="REMEMBERAUTHCHOICETIMER"></span>
+          <label id="rememberTimerLabel" trspan="rememberTimerLabel">s before automatic authentication</label>
+        </p>
         <input id="rememberStopped" name="rememberStopped" type="hidden" value="">
-      </p>
-
+        <div class="input-group-append inout-group">
+          <button class="btn btn-danger" id="buttonRememberStopped"><i class="fa fa-stop-circle-o"></i> Stop</button>
+        </div>
+      </div>
     </div>
     </TMPL_IF>
 
