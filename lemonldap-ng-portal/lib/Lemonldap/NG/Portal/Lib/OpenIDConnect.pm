@@ -41,6 +41,7 @@ use constant OIDC_SCOPES => [qw/openid profile email address phone/];
 has oidcOPList   => ( is => 'rw', default => sub { {} }, );
 has oidcRPList   => ( is => 'rw', default => sub { {} }, );
 has rpAttributes => ( is => 'rw', default => sub { {} }, );
+has opRules      => ( is => 'rw', default => sub { {} } );
 has spRules      => ( is => 'rw', default => sub { {} } );
 has spMacros     => ( is => 'rw', default => sub { {} } );
 has spScopeRules => ( is => 'rw', default => sub { {} } );
@@ -90,6 +91,20 @@ sub loadOPs {
         $self->oidcOPList->{$_}->{jwks} =
           $self->decodeJSON( $self->conf->{oidcOPMetaDataJWKS}->{$_} );
     }
+
+    # Set rule
+    foreach ( keys %{ $self->conf->{oidcOPMetaDataOptions} } ) {
+        my $cond = $self->conf->{oidcOPMetaDataOptions}->{$_}
+          ->{oidcOPMetaDataOptionsResolutionRule};
+        if ( length $cond ) {
+            my $rule_sub =
+              $self->p->buildRule( $cond, "OIDC provider resolution" );
+            if ($rule_sub) {
+                $self->opRules->{$_} = $rule_sub;
+            }
+        }
+    }
+
     return 1;
 }
 
