@@ -2882,6 +2882,10 @@ sub attributes {
                                            'default' => 0,
                                            'type' => 'bool'
                                          },
+          'portalFavicon' => {
+                               'default' => 'common/favicon.ico',
+                               'type' => 'text'
+                             },
           'portalForceAuthn' => {
                                   'default' => 0,
                                   'type' => 'bool'

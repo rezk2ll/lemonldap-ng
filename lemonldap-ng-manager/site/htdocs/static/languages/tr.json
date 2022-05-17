@@ -806,6 +806,7 @@
 "portalEnablePasswordDisplay":"Parolayı göstermeye izin ver",
 "portalErrorOnExpiredSession":"Süresi dolmuş oturumda hatayı göster",
 "portalErrorOnMailNotFound":"E-posta bulunamadığında hatayı göster",
+"portalFavicon":"Favicon",
 "portalForceAuthn":"Kimlik doğrulamaya zorla",
 "portalForceAuthnInterval":"Kimlik doğrulama aralığını zorla",
 "portalMainLogo":"Ana logo",

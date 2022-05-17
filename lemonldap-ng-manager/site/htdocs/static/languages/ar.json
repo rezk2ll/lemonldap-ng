@@ -806,6 +806,7 @@
 "portalEnablePasswordDisplay":"Allow to display password",
 "portalErrorOnExpiredSession":"عرض الخطأ في الجلسة المنتهية صلحيتها",
 "portalErrorOnMailNotFound":"إظهار الخطأ في البريد الغيرالموجود",
+"portalFavicon":"Favicon",
 "portalForceAuthn":"فرض إثبات الهوية",
 "portalForceAuthnInterval":"فرض الفاصل الزمني لإثبات الهوية",
 "portalMainLogo":"Main logo",

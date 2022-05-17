@@ -53,6 +53,7 @@ sub tree {
                             help  => 'portalcustom.html',
                             nodes => [
                                 'portalMainLogo',
+                                'portalFavicon',
                                 'showLanguages',
                                 'portalCustomCss',
                                 'portalSkin',
@@ -77,9 +78,9 @@ sub tree {
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'portalRequireOldPassword',
+                                        'portalEnablePasswordDisplay',
                                         'hideOldPassword',
                                         'mailOnPasswordChange',
-                                        'portalEnablePasswordDisplay',
                                     ]
                                 },
                                 {

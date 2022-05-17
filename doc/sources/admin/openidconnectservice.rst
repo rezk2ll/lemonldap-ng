@@ -10,8 +10,9 @@ Issuer identifier
 ~~~~~~~~~~~~~~~~~
 
 Set the issuer identifier, which should be the portal URL.
-
 For example: http://auth.example.com
+
+Set a blank value to use Portal URL.
 
 Endpoints
 ~~~~~~~~~~

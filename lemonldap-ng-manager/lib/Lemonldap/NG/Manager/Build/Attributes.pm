@@ -368,6 +368,11 @@ sub attributes {
             test          => $url,
             msgFail       => '__badUrl__',
         },
+        portalFavicon => {
+            type          => 'text',
+            default       => 'common/favicon.ico',
+            documentation => 'Path to favicon file',
+        },
         portalCustomCss => {
             type          => 'text',
             documentation => 'Path to custom CSS file',
