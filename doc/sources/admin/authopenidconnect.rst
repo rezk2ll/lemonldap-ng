@@ -210,42 +210,59 @@ So you can define by example:
 Options
 ^^^^^^^
 
--  **Configuration**:
+Configuration
+"""""""""""""
 
-   -  **Configuration endpoint**: URL of OP configuration endpoint
-   -  **JWKS data timeout**: After this time, LL::NG will do a request
-      to get a fresh version of JWKS data. Set to 0 to disable it.
-   -  **Client ID**: Client ID given by OP
-   -  **Client secret**: Client secret given by OP
-   -  **Store ID token**: Allows one to store the ID Token (JWT) inside
-      user session. Do not enable it unless you need to replay this token
-      on an application, or if you need the id_token_hint parameter when
-      using logout.
+-  **Configuration endpoint**: URL of OP configuration endpoint
+-  **JWKS data timeout**: After this time, LL::NG will do a request
+   to get a fresh version of JWKS data. Set to 0 to disable it.
+-  **Client ID**: Client ID given by OP
+-  **Client secret**: Client secret given by OP
+-  **Store ID token**: Allows one to store the ID Token (JWT) inside
+   user session. Do not enable it unless you need to replay this token
+   on an application, or if you need the id_token_hint parameter when
+   using logout.
 
--  **Protocol**:
+Protocol
+""""""""
+-  **Scope**: Value of scope parameter (example: openid profile). The
+   ``openid`` scope is mandatory.
+-  **Display**: Value of display parameter (example: page)
+-  **Prompt**: Value of prompt parameter (example: consent)
+-  **Max age**: Value of max_age parameter (example: 3600)
+-  **UI locales**: Value of ui_locales parameter (example: en-GB en
+   fr-FR fr)
+-  **ACR values**: Value acr_values parameters (example: loa-1)
+-  **Token endpoint authentication method**: Choice between
+   ``client_secret_post`` and ``client_secret_basic``
+-  **Check JWT signature**: Set to 0 to disable JWT signature
+   checking
+-  **ID Token max age**: If defined, LL::NG will check the ID Token
+   date and reject it if too old
+-  **Use Nonce**: If enabled, a nonce will be sent, and verified from
+   the ID Token
 
-   -  **Scope**: Value of scope parameter (example: openid profile). The
-      ``openid`` scope is mandatory.
-   -  **Display**: Value of display parameter (example: page)
-   -  **Prompt**: Value of prompt parameter (example: consent)
-   -  **Max age**: Value of max_age parameter (example: 3600)
-   -  **UI locales**: Value of ui_locales parameter (example: en-GB en
-      fr-FR fr)
-   -  **ACR values**: Value acr_values parameters (example: loa-1)
-   -  **Token endpoint authentication method**: Choice between
-      ``client_secret_post`` and ``client_secret_basic``
-   -  **Check JWT signature**: Set to 0 to disable JWT signature
-      checking
-   -  **ID Token max age**: If defined, LL::NG will check the ID Token
-      date and reject it if too old
-   -  **Use Nonce**: If enabled, a nonce will be sent, and verified from
-      the ID Token
+Display
+"""""""
 
--  **Display**:
+-  **Display name**: Name of the application
+-  **Logo**: Logo of the application
+-  **Resolution Rule**: rule that will be applied to preselect an OP
+   for a user. You have access to all environment variable *(like user
+   IP address)* and all session keys.
 
-   -  **Display name**: Name of the application
-   -  **Logo**: Logo of the application
-   -  **Order**: Number to sort buttons
+For example, to preselect this OP for users coming from 129.168.0.0/16
+network
+
+::
+
+   $ENV{REMOTE_ADDR} =~ /^192\.168/
+
+To preselect this OP when the ``MY_OP`` :doc:`choice <authchoice>` is selected ::
+
+    $_choice eq "MY_OP"
+
+-  **Order**: Number to sort buttons
 
 
 .. attention::
