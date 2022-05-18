@@ -82,7 +82,6 @@ sub cTrees {
                 help  => 'authsaml.html#options',
                 form  => 'simpleInputContainer',
                 nodes => [
-                    'samlIDPMetaDataOptionsResolutionRule',
                     'samlIDPMetaDataOptionsNameIDFormat',
                     'samlIDPMetaDataOptionsForceAuthn',
                     'samlIDPMetaDataOptionsIsPassive',
@@ -98,6 +97,7 @@ sub cTrees {
                 nodes => [
                     "samlIDPMetaDataOptionsDisplayName",
                     "samlIDPMetaDataOptionsIcon",
+                    'samlIDPMetaDataOptionsResolutionRule',
                     "samlIDPMetaDataOptionsSortNumber"
                 ]
             }
@@ -186,6 +186,7 @@ sub cTrees {
                 nodes => [
                     'oidcOPMetaDataOptionsDisplayName',
                     'oidcOPMetaDataOptionsIcon',
+                    'oidcOPMetaDataOptionsResolutionRule',
                     'oidcOPMetaDataOptionsSortNumber'
                 ]
             },
@@ -285,6 +286,7 @@ sub cTrees {
                 nodes => [
                     'casSrvMetaDataOptionsDisplayName',
                     'casSrvMetaDataOptionsIcon',
+                    'casSrvMetaDataOptionsResolutionRule',
                     'casSrvMetaDataOptionsSortNumber',
                 ]
             },

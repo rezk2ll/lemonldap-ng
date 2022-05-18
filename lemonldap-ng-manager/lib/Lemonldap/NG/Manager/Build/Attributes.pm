@@ -3673,6 +3673,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'int',
             documentation => 'Number to sort buttons',
         },
+        casSrvMetaDataOptionsResolutionRule => {
+            type    => 'longtext',
+            default => '',
+        },
 
         # Fake attribute: used by manager REST API to agglomerate all nodes
         # related to a CAS IDP partner
@@ -4372,6 +4376,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataOptionsIcon          => { type => 'text', },
         oidcOPMetaDataOptionsStoreIDToken  => { type => 'bool', default => 0 },
         oidcOPMetaDataOptionsSortNumber    => { type => 'int', },
+        oidcOPMetaDataOptionsResolutionRule => {
+            type    => 'longtext',
+            default => '',
+        },
 
         # OpenID Connect relying parties
         oidcRPMetaDataExportedVars => {

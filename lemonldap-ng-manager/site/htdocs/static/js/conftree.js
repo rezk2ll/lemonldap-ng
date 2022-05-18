@@ -147,6 +147,13 @@ function templates(tpl,key) {
             "title" : "casSrvMetaDataOptionsIcon"
          },
          {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsResolutionRule",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsResolutionRule",
+            "title" : "casSrvMetaDataOptionsResolutionRule",
+            "type" : "longtext"
+         },
+         {
             "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSortNumber",
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSortNumber",
             "title" : "casSrvMetaDataOptionsSortNumber",
@@ -361,6 +368,13 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsIcon",
             "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsIcon",
             "title" : "oidcOPMetaDataOptionsIcon"
+         },
+         {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsResolutionRule",
+            "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsResolutionRule",
+            "title" : "oidcOPMetaDataOptionsResolutionRule",
+            "type" : "longtext"
          },
          {
             "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsSortNumber",
@@ -978,13 +992,6 @@ function templates(tpl,key) {
       "_nodes" : [
          {
             "default" : "",
-            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsResolutionRule",
-            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsResolutionRule",
-            "title" : "samlIDPMetaDataOptionsResolutionRule",
-            "type" : "longtext"
-         },
-         {
-            "default" : "",
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsNameIDFormat",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsNameIDFormat",
             "select" : [
@@ -1113,6 +1120,13 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsIcon",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsIcon",
             "title" : "samlIDPMetaDataOptionsIcon"
+         },
+         {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsResolutionRule",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsResolutionRule",
+            "title" : "samlIDPMetaDataOptionsResolutionRule",
+            "type" : "longtext"
          },
          {
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSortNumber",

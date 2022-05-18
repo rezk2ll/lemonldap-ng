@@ -797,6 +797,10 @@ sub attributes {
             'default' => 0,
             'type'    => 'bool'
         },
+        'casSrvMetaDataOptionsResolutionRule' => {
+            'default' => '',
+            'type'    => 'longtext'
+        },
         'casSrvMetaDataOptionsSortNumber' => {
             'type' => 'int'
         },
@@ -2276,6 +2280,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'oidcOPMetaDataOptionsPrompt' => {
             'type' => 'text'
+        },
+        'oidcOPMetaDataOptionsResolutionRule' => {
+            'default' => '',
+            'type'    => 'longtext'
         },
         'oidcOPMetaDataOptionsScope' => {
             'default' => 'openid profile',
