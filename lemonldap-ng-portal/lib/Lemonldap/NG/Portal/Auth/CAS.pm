@@ -133,14 +133,24 @@ sub extractFormInfo {
 
         else {
 
-            # Server list
-            my $portalPath = $self->conf->{portal};
-            $portalPath =~ s#^https?://[^/]+/?#/#;
+            # Try to use server resolution ruls
+            foreach ( keys %{ $self->srvRules } ) {
+                my $cond = $self->srvRules->{$_} or next;
+                if ( $cond->( $req, $req->sessionInfo ) ) {
+                    $self->logger->debug(
+                        "CAS Server $_ selected from resolution rule");
+                    $srv = $_;
+                    last;
+                }
+            }
 
-            $req->data->{list} = $self->srvList;
+            unless ($srv) {
 
-            $req->data->{login} = 1;
-            return PE_IDPCHOICE;
+                # Server list
+                $req->data->{list} = $self->srvList;
+                $req->data->{login} = 1;
+                return PE_IDPCHOICE;
+            }
         }
     }
 
