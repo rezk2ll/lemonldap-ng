@@ -561,8 +561,9 @@ t/30-Auth-and-issuer-SAML-POST.t
 t/30-Auth-and-issuer-SAML-Redirect-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Redirect-MultipleSP-Missing-SLO.t
 t/30-Auth-and-issuer-SAML-Redirect-MultipleSP.t
-t/30-Auth-and-issuer-SAML-Redirect-With-Info.t
 t/30-Auth-and-issuer-SAML-Redirect.t
+t/30-Auth-and-issuer-SAML-Redirect-With-Info.t
+t/30-Auth-ResolutionRule.t
 t/30-Auth-SAML-with-choice.t
 t/30-CDC.t
 t/30-SAML-Head-to-Tail-POST.t

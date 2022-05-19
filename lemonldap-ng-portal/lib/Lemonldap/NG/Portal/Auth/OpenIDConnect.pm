@@ -249,14 +249,23 @@ sub extractFormInfo {
 
         else {
 
-            # IDP list
-            my $portalPath = $self->{conf}->{portal};
-            $portalPath =~ s#^https?://[^/]+/?#/#;
+            # Try to use OP resolution ruls
+            foreach ( keys %{ $self->opRules } ) {
+                my $cond = $self->opRules->{$_} or next;
+                if ( $cond->( $req, $req->sessionInfo ) ) {
+                    $self->logger->debug("OP $_ selected from resolution rule");
+                    $op = $_;
+                    last;
+                }
+            }
 
-            $req->data->{list} = $self->opList;
+            unless ($op) {
 
-            $req->data->{login} = 1;
-            return PE_IDPCHOICE;
+                # display OP list
+                $req->data->{list}  = $self->opList;
+                $req->data->{login} = 1;
+                return PE_IDPCHOICE;
+            }
         }
     }
 
