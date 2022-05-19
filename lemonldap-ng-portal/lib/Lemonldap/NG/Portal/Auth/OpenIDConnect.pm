@@ -6,11 +6,11 @@ use MIME::Base64 qw/encode_base64 decode_base64/;
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
-  PE_OIDC_AUTH_ERROR
   PE_IDPCHOICE
+  PE_OIDC_AUTH_ERROR
 );
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth
@@ -249,7 +249,7 @@ sub extractFormInfo {
 
         else {
 
-            # Try to use OP resolution ruls
+            # Try to use OP resolution rules
             foreach ( keys %{ $self->opRules } ) {
                 my $cond = $self->opRules->{$_} or next;
                 if ( $cond->( $req, $req->sessionInfo ) ) {
