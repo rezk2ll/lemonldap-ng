@@ -550,6 +550,7 @@ sub conditionSub {
     # logout_app
     if ( $cond =~ /^logout_app(?:\s+(.*))?$/i ) {
         my $u = $1 || $class->tsv->{portal}->();
+        $class->logger->debug("logout_app redirect to $u");
         eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
         return (
             sub {
@@ -565,6 +566,7 @@ sub conditionSub {
     }
     elsif ( $cond =~ /^logout_app_sso(?:\s+(.*))?$/i ) {
         my $u = $1 || $class->tsv->{portal}->();
+        $class->logger->debug("logout_app_sso redirect to $u");
         eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
         return (
             sub {
