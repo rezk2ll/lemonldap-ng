@@ -7,11 +7,12 @@ use JSON qw(decode_json from_json to_json);
 use Digest::SHA qw(sha256);
 use URI;
 use Carp;
+with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 our $VERSION = '2.0.12';
 
-has rp_id    => ( is => 'rw', lazy    => 1, builder => "_build_rp_id" );
-has origin   => ( is => 'rw', lazy    => 1, builder => "_build_origin" );
+has rp_id  => ( is => 'rw', lazy => 1, builder => "_build_rp_id" );
+has origin => ( is => 'rw', lazy => 1, builder => "_build_origin" );
 has type     => ( is => 'ro', default => 'WebAuthn' );
 has verifier => ( is => 'rw', lazy    => 1, builder => "_build_verifier" );
 
@@ -67,7 +68,7 @@ sub generateChallenge {
     my ( $self, $req, $data ) = @_;
 
     # Find webauthn devices for user
-    my @webauthn_devices = $self->find2fByType( $req, $data, $self->type );
+    my @webauthn_devices = $self->find2fDevicesByType( $req, $data, $self->type );
     unless (@webauthn_devices) {
         return;
     }
@@ -138,7 +139,7 @@ sub validateAssertion {
     # credential.id If the user was identified before the authentication
     # ceremony was initiated, e.g., via a username or cookie, verify that the
     # identified user is the owner of credentialSource.
-    my @webauthn_devices = $self->find2fByType( $req, $data, $self->type );
+    my @webauthn_devices = $self->find2fDevicesByType( $req, $data, $self->type );
     my @matching_credentials =
       grep { $_->{_credentialId} eq $credential_id } @webauthn_devices;
     if ( @matching_credentials < 1 ) {
@@ -232,111 +233,6 @@ sub decode_credential {
     }
 
     return $credential;
-}
-
-sub update2fDevice {
-    my ( $self, $req, $info, $type, $key, $value, $update_key, $update_value )
-      = @_;
-
-    my $user = $info->{ $self->conf->{whatToTrace} };
-
-    my $_2fDevices = $self->get2fDevices( $req, $info );
-    return 0 unless $_2fDevices;
-
-    my @found =
-      grep { $_->{type} eq $type and $_->{$key} eq $value } @{$_2fDevices};
-
-    for my $device (@found) {
-        $device->{$update_key} = $update_value;
-    }
-
-    if (@found) {
-        $self->p->updatePersistentSession( $req,
-            { _2fDevices => to_json($_2fDevices) }, $user );
-        return 1;
-    }
-    return 0;
-}
-
-sub add2fDevice {
-    my ( $self, $req, $info, $device ) = @_;
-
-    my $_2fDevices = $self->get2fDevices( $req, $info );
-
-    push @{$_2fDevices}, $device;
-    $self->logger->debug(
-        "Append 2F Device: { type => 'Webauthn', name => $device->{name} }");
-    $self->p->updatePersistentSession( $req,
-        { _2fDevices => to_json($_2fDevices) } );
-    return 1;
-}
-
-sub del2fDevice {
-    my ( $self, $req, $info, $type, $epoch ) = @_;
-
-    my $_2fDevices = $self->get2fDevices( $req, $info );
-    return 0 unless $_2fDevices;
-
-    my @updated_2fDevices =
-      grep { not( $_->{type} eq $type and $_->{epoch} eq $epoch ) }
-      @{$_2fDevices};
-    $self->logger->debug(
-        "Deleted 2F Device: { type => $type, epoch => $epoch }");
-    $self->p->updatePersistentSession( $req,
-        { _2fDevices => to_json( [@updated_2fDevices] ) } );
-    return 1;
-}
-
-sub find2fByKey {
-    my ( $self, $req, $info, $type, $key, $value ) = @_;
-
-    my $_2fDevices = $self->get2fDevices( $req, $info );
-    return unless $_2fDevices;
-
-    my @found =
-      grep { $_->{type} eq $type and $_->{$key} eq $value } @{$_2fDevices};
-    return @found;
-}
-
-## @method get2fDevices($req, $info)
-# Validate logout request
-# @param req Request object
-# @param info HashRef of session data
-# @return undef or ArrayRef of second factors
-
-sub get2fDevices {
-    my ( $self, $req, $info ) = @_;
-
-    my $_2fDevices;
-    if ( $info->{_2fDevices} ) {
-        $_2fDevices =
-          eval { from_json( $info->{_2fDevices}, { allow_nonref => 1 } ); };
-        if ($@) {
-            $self->logger->error("Corrupted session (_2fDevices): $@");
-            return;
-        }
-    }
-    else {
-        # Return new ArrayRef
-        return [];
-    }
-    if ( ref($_2fDevices) eq "ARRAY" ) {
-        return $_2fDevices;
-    }
-    else {
-        return;
-    }
-}
-
-sub find2fByType {
-    my ( $self, $req, $info, $type ) = @_;
-
-    my $_2fDevices = $self->get2fDevices( $req, $info );
-    return unless $_2fDevices;
-
-    return @{$_2fDevices} unless $type;
-    my @found = grep { $_->{type} eq $type } @{$_2fDevices};
-    return @found;
 }
 
 1;

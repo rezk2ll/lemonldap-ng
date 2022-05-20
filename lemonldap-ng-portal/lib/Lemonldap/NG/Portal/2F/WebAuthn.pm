@@ -36,8 +36,7 @@ sub init {
     if (    $self->conf->{webauthn2fSelfRegistration}
         and $self->conf->{webauthn2fActivation} eq '1' )
     {
-        $self->conf->{webauthn2fActivation} =
-          '$_2fDevices && $_2fDevices =~ /"type"\s*:\s*"WebAuthn"/s';
+        $self->conf->{webauthn2fActivation} = 'has2f("WebAuthn")';
     }
     return 0
       unless ( $self->Lemonldap::NG::Portal::Main::SecondFactor::init() );
