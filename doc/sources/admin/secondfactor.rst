@@ -76,10 +76,19 @@ of doing a complete reauthentication.
 
 .. |beta| image:: /documentation/beta.png
 
+Login timeout
+-------------
+
+Allowed time for the user to authenticate using their second factor. By default
+it is set to 2 minutes, but some complex second factor types (TOTP, email...)
+may require more time to be used.
+
 Registration timeout
 --------------------
 
-Allowed time to register a TOTP.
+Allowed time for the user to register their new second factor. By default it is
+set to 2 minutes, but some complex second factor types (TOTP...) may require
+more time to be registered.
 
 Second factor expiration
 ------------------------

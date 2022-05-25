@@ -1076,6 +1076,7 @@
 "session_s":"oturum(lar)",
 "sessions":"Oturumlar",
 "sfExtra":"Ek ikinci faktörler",
+"sfLoginTimeout":"Login timeout",
 "sfManagerRule":"Yönetici bağlantısını görüntüle",
 "sfOnlyUpgrade":"Oturum yükseltme için 2FA kullan",
 "sfRegisterTimeout":"Kayıtlanma zaman aşımı",

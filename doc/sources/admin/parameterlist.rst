@@ -562,6 +562,7 @@ sfEngine                                                Second factor engine    
 sfExtra                                                 Extra second factors                                                                 ✔
 sfManagerRule                                           Rule to display second factor Manager link                                           ✔
 sfOnlyUpgrade                                           Only trigger second factor on session upgrade                                        ✔
+sfLoginTimeout                                          Timeout for 2F login process                                                         ✔
 sfRegisterTimeout                                       Timeout for 2F registration process                                                  ✔
 sfRemovedMsgRule                                        Display a message if at leat one expired SF has been removed                         ✔
 sfRemovedNotifMsg                                       Notification message                                                                 ✔

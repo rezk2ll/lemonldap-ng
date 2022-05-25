@@ -1076,6 +1076,7 @@
 "session_s":"sesja/e",
 "sessions":"Sesje",
 "sfExtra":"Dodatkowe drugie czynniki",
+"sfLoginTimeout":"Login timeout",
 "sfManagerRule":"Link do Menedżera wyświetlania",
 "sfOnlyUpgrade":"Użyj 2FA do aktualizacji sesji",
 "sfRegisterTimeout":"Registration timeout",
