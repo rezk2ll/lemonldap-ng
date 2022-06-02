@@ -55,6 +55,7 @@ sub tree {
                                 'portalMainLogo',
                                 'portalFavicon',
                                 'showLanguages',
+                                'scrollTop',
                                 'portalCustomCss',
                                 'portalSkin',
                                 'portalSkinBackground',

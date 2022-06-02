@@ -22,7 +22,7 @@ A blank value disables Main logo display.
     - Main logo is included in Portal templates AND mail body
 
 Favicon
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~
 
 You can change the default favicon in Manager: General Parameters >
 Portal > Customization > Favicon.
@@ -49,6 +49,14 @@ Option enabled by default.
     your browser (EN by default).
 
 
+Scroll to top button
+~~~~~~~~~~~~~~~~~~~~
+
+You can display a button to go to back to the top after <value> pixels scrolling.
+
+.. tip::
+
+    A blank or null value disable this feature. 
 
 Custom CSS file
 ~~~~~~~~~~~~~~~

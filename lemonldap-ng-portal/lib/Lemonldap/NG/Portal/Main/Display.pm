@@ -265,6 +265,7 @@ sub display {
             LOGOUT_URL              => $self->conf->{portal} . "?logout=1",
             APPSLIST_ORDER          => $req->{sessionInfo}->{'_appsListOrder'},
             PING                    => $self->conf->{portalPingInterval},
+            SCROLL_TOP              => $self->conf->{scrollTop},
             DONT_STORE_PASSWORD     => $self->conf->{browsersDontStorePassword},
             HIDE_OLDPASSWORD        => 0,
             PPOLICY_NOPOLICY        => !$self->isPP(),

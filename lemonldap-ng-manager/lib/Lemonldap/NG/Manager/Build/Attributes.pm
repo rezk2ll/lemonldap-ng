@@ -425,6 +425,11 @@ sub attributes {
             default       => 1,
             documentation => 'Display langs icons',
         },
+        scrollTop => {
+            type          => 'int',
+            default       => 400,
+            documentation => 'Display back to top button',
+        },
         staticPrefix => {
             type          => 'text',
             documentation => 'Prefix of static files for HTML templates',

@@ -208,7 +208,7 @@ Password
 -  **Allow a user to reset his expired password**: if activated, the
    user will be prompted to change password if his password is expired
    (default: disabled)
-- **Search for user before password change**: this option forces the password
+-  **Search for user before password change**: this option forces the password
    change module to search for the user again, refreshing its DN. This feature
    is only useful in rare cases when you use LDAP as the password module, but
    not as the UserDB module. (default: enabled)

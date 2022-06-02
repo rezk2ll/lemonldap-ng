@@ -3947,6 +3947,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
+        'scrollTop' => {
+            'default' => 400,
+            'type'    => 'int'
+        },
         'securedCookie' => {
             'default' => 0,
             'select'  => [ {

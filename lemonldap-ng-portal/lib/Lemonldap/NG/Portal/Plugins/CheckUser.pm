@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -163,6 +163,7 @@ sub display {
         MAIN_LOGO  => $self->conf->{portalMainLogo},
         SKIN       => $self->p->getSkin($req),
         LANGS      => $self->conf->{showLanguages},
+        SCROLL_TOP => $self->conf->{scrollTop},
         MSG        => 'checkUser' . $self->merged,
         ALERTE     => ( $self->merged ? 'alert-warning' : 'alert-info' ),
         LOGIN      => $req->{userData}->{ $self->conf->{whatToTrace} },
@@ -210,14 +211,15 @@ sub check {
         }
 
         my $params = {
-            PORTAL    => $self->conf->{portal},
-            MAIN_LOGO => $self->conf->{portalMainLogo},
-            SKIN      => $self->p->getSkin($req),
-            LANGS     => $self->conf->{showLanguages},
-            MSG       => "PE$msg",
-            ALERTE    => 'alert-warning',
-            LOGIN     => '',
-            TOKEN     => $token,
+            PORTAL     => $self->conf->{portal},
+            MAIN_LOGO  => $self->conf->{portalMainLogo},
+            SKIN       => $self->p->getSkin($req),
+            LANGS      => $self->conf->{showLanguages},
+            SCROLL_TOP => $self->conf->{scrollTop},
+            MSG        => "PE$msg",
+            ALERTE     => 'alert-warning',
+            LOGIN      => '',
+            TOKEN      => $token,
         };
         return $self->p->sendJSONresponse( $req, $params )
           if $req->wantJSON && $msg;
@@ -241,14 +243,15 @@ sub check {
             $req,
             'checkuser',
             params => {
-                PORTAL    => $self->conf->{portal},
-                MAIN_LOGO => $self->conf->{portalMainLogo},
-                SKIN      => $self->p->getSkin($req),
-                LANGS     => $self->conf->{showLanguages},
-                MSG       => 'PE' . PE_MALFORMEDUSER,
-                ALERTE    => 'alert-warning',
-                LOGIN     => '',
-                TOKEN     => (
+                PORTAL     => $self->conf->{portal},
+                MAIN_LOGO  => $self->conf->{portalMainLogo},
+                SKIN       => $self->p->getSkin($req),
+                LANGS      => $self->conf->{showLanguages},
+                SCROLL_TOP => $self->conf->{scrollTop},
+                MSG        => 'PE' . PE_MALFORMEDUSER,
+                ALERTE     => 'alert-warning',
+                LOGIN      => '',
+                TOKEN      => (
                       $self->ottRule->( $req, {} )
                     ? $self->ott->createToken()
                     : ''
@@ -413,6 +416,7 @@ sub check {
         MAIN_LOGO   => $self->conf->{portalMainLogo},
         SKIN        => $self->p->getSkin($req),
         LANGS       => $self->conf->{showLanguages},
+        SCROLL_TOP  => $self->conf->{scrollTop},
         MSG         => $msg,
         ALERTE      => ( $msg eq 'checkUser' ? 'alert-info' : 'alert-warning' ),
         LOGIN       => $user,

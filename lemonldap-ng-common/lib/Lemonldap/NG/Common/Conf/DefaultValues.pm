@@ -342,6 +342,7 @@ sub defaultValues {
         'samlSPSSODescriptorSingleLogoutServiceSOAP' =>
 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/proxySingleLogoutSOAP;',
         'samlSPSSODescriptorWantAssertionsSigned' => 1,
+        'scrollTop'                               => 400,
         'securedCookie'                           => 0,
         'sfEngine'                                => '::2F::Engines::Default',
         'sfManagerRule'                           => 1,
