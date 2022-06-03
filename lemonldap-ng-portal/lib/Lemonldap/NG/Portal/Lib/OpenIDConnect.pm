@@ -926,7 +926,7 @@ sub getRefreshToken {
 
 sub updateRefreshToken {
     my $self = shift;
-    return $self->updateToken($@);
+    return $self->updateToken(@_);
 }
 
 sub updateToken {
