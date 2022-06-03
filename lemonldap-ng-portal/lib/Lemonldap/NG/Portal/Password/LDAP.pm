@@ -14,7 +14,7 @@ extends qw(
   Lemonldap::NG::Portal::Password::Base
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 sub init {
     my ($self) = @_;
@@ -63,10 +63,8 @@ sub modifyPassword {
     my $code =
       $self->ldap->userModifyPassword( $dn, $pwd, $req->data->{oldpassword},
         0, $requireOldPassword );
+    return $code unless ( $code == PE_PASSWORD_OK );
 
-    unless ( $code == PE_PASSWORD_OK ) {
-        return $code;
-    }
 
     # If password policy and force reset, set reset flag
     if (    $self->conf->{ldapPpolicyControl}

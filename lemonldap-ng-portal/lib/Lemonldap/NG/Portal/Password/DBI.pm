@@ -16,8 +16,9 @@ extends qw(
 our $VERSION = '2.0.10';
 
 sub init {
-    $_[0]->Lemonldap::NG::Portal::Password::Base::init
-      and $_[0]->Lemonldap::NG::Portal::Lib::DBI::init;
+    my ($self) = @_;
+    $self->Lemonldap::NG::Portal::Password::Base::init
+      and $self->Lemonldap::NG::Portal::Lib::DBI::init;
 }
 
 sub confirm {
