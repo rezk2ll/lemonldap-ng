@@ -472,6 +472,7 @@ llapp.controller 'TreeCtrl', [
 			# Colorized link
 			$scope.activeModule = "viewer"
 			$scope.myStyle = {color: '#ffb84d'}
+			$scope.bannerStyle = {'background-color': "#{window.bannerColor}"}
 
 		c = $location.path().match(new RegExp('^/view/(latest|[0-9]+)'))
 		unless c

@@ -556,8 +556,11 @@ This file contains:
           return $scope.waiting = false;
         }, readError);
         $scope.activeModule = "viewer";
-        return $scope.myStyle = {
+        $scope.myStyle = {
           color: '#ffb84d'
+        };
+        return $scope.bannerStyle = {
+          'background-color': "" + window.bannerColor
         };
       };
       c = $location.path().match(new RegExp('^/view/(latest|[0-9]+)'));

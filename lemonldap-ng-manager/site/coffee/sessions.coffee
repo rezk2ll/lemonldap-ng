@@ -523,6 +523,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		# Colorized link
 		$scope.activeModule = "sessions"
 		$scope.myStyle = {color: '#ffb84d'}
+		$scope.bannerStyle = {'background-color': "#{window.bannerColor}"}
 
 	# Query scheme initialization
 	# Default to '_whatToTrace'

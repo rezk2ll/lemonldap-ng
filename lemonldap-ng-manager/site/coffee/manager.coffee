@@ -869,6 +869,7 @@ llapp.controller 'TreeCtrl', [
 			# Colorized link
 			$scope.activeModule = "conf"
 			$scope.myStyle = {color: '#ffb84d'}
+			$scope.bannerStyle = {'background-color': "#{window.bannerColor}"}
 					
 		c = $location.path().match(new RegExp('^/confs/(latest|[0-9]+)'))
 		unless c

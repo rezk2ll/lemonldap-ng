@@ -311,6 +311,7 @@ llapp.controller 'NotificationsExplorerCtrl', [ '$scope', '$translator', '$locat
 		# Colorized link
 		$scope.activeModule = "notifications"
 		$scope.myStyle = {color: '#ffb84d'}
+		$scope.bannerStyle = {'background-color': "#{window.bannerColor}"}
 
 	$scope.displayCreateForm = ->
 		$scope.activesStyle = {color: '#777'}

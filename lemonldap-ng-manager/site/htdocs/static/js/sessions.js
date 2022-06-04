@@ -610,8 +610,11 @@
           return $scope.waiting = false;
         });
         $scope.activeModule = "sessions";
-        return $scope.myStyle = {
+        $scope.myStyle = {
           color: '#ffb84d'
+        };
+        return $scope.bannerStyle = {
+          'background-color': "" + window.bannerColor
         };
       };
       c = $location.path().match(/^\/(\w+)/);
