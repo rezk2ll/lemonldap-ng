@@ -86,10 +86,16 @@ sub loadOPs {
 
     # Extract JSON data
     foreach ( keys %{ $self->conf->{oidcOPMetaDataJSON} } ) {
-        $self->oidcOPList->{$_}->{conf} =
+        my $op_conf =
           $self->decodeJSON( $self->conf->{oidcOPMetaDataJSON}->{$_} );
-        $self->oidcOPList->{$_}->{jwks} =
-          $self->decodeJSON( $self->conf->{oidcOPMetaDataJWKS}->{$_} );
+        if ($op_conf) {
+            $self->oidcOPList->{$_}->{conf} = $op_conf;
+            $self->oidcOPList->{$_}->{jwks} =
+              $self->decodeJSON( $self->conf->{oidcOPMetaDataJWKS}->{$_} );
+        }
+        else {
+            $self->logger->warn("Could not parse OIDC metadata for $_");
+        }
     }
 
     # Set rule
@@ -319,6 +325,14 @@ sub buildAuthorizationCodeAuthnRequest {
 
     my $authorize_uri =
       $self->oidcOPList->{$op}->{conf}->{authorization_endpoint};
+
+    unless ($authorize_uri) {
+        $self->logger->error(
+            "Could not build Authorize request: no
+            'authorization_endpoint'" . " in JSON metadata for OP $op"
+        );
+        return undef;
+    }
     my $client_id =
       $self->conf->{oidcOPMetaDataOptions}->{$op}
       ->{oidcOPMetaDataOptionsClientID};
@@ -482,6 +496,14 @@ sub getAuthorizationCodeAccessToken {
     my $redirect_uri = $self->getCallbackUri($req);
     my $access_token_uri =
       $self->oidcOPList->{$op}->{conf}->{token_endpoint};
+    unless ($access_token_uri) {
+        $self->logger->error(
+            "Could not build Token request: no
+            'token_endpoint'" . " in JSON metadata for OP $op"
+        );
+        return 0;
+    }
+
     my $grant_type = "authorization_code";
 
     unless ( $auth_method =~ /^client_secret_(basic|post)$/o ) {

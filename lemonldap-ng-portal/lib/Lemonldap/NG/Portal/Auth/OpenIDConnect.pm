@@ -19,9 +19,8 @@ extends qw(
 
 # INTERFACE
 
-has opList   => ( is => 'rw', default => sub { [] } );
-has opNumber => ( is => 'rw', default => 0 );
-has path     => ( is => 'rw', default => 'oauth2' );
+has opList => ( is => 'rw', isa     => 'ArrayRef', default => sub { [] } );
+has path   => ( is => 'rw', default => 'oauth2' );
 
 use constant sessionKind => 'OIDC';
 
@@ -36,7 +35,6 @@ sub init {
         $self->logger->error("No OP configured");
         return 0;
     }
-    $self->opNumber( scalar @tab );
     my @list       = ();
     my $portalPath = $self->conf->{portal};
 
@@ -242,7 +240,7 @@ sub extractFormInfo {
         $self->logger->debug("Redirecting user to OP list");
 
         # Auto select provider if there is only one
-        if ( $self->opNumber == 1 ) {
+        if ( @{ $self->opList } == 1 ) {
             $op = $self->opList->[0]->{val};
             $self->logger->debug("Selecting the only defined OP: $op");
         }
