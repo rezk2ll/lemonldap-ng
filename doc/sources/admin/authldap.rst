@@ -155,6 +155,7 @@ Groups
 -  **Search base**: DN of groups branch. If no value, disable group
    searching.
 -  **Object class**: objectClass of the groups (default: groupOfNames).
+   If you are using Active Directory you need to modify this value to ``group``. 
 -  **Target attribute**: name of the attribute in the groups storing the
    link to the user (default: member).
 -  **User source attribute**: name of the attribute in users entries
