@@ -3374,6 +3374,10 @@ sub attributes {
             help          => 'secondfactor.html',
             documentation => 'Notification message',
         },
+        sfLoginTimeout => {
+            type          => 'int',
+            documentation => 'Timeout for 2F login process',
+        },
         sfRegisterTimeout => {
             type          => 'int',
             documentation => 'Timeout for 2F registration process',

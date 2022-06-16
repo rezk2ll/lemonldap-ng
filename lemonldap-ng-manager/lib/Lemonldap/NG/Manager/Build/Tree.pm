@@ -886,6 +886,7 @@ sub tree {
                         'sfManagerRule',
                         'sfRequired',
                         'sfOnlyUpgrade',
+                        'sfLoginTimeout',
                         'sfRegisterTimeout',
                         {
                             title => 'utotp2f',

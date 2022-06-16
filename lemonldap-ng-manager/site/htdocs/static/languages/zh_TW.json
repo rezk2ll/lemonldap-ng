@@ -1076,6 +1076,7 @@
 "session_s":"工作階段",
 "sessions":"工作階段",
 "sfExtra":"額外的第二因素",
+"sfLoginTimeout":"Login timeout",
 "sfManagerRule":"顯示管理程式連結",
 "sfOnlyUpgrade":"使用 2FA 進行工作階段升級",
 "sfRegisterTimeout":"Registration timeout",

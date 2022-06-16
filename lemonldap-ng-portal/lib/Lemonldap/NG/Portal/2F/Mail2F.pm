@@ -35,6 +35,7 @@ has ott => (
         my $ott =
           $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
         $ott->timeout( $_[0]->{conf}->{mail2fTimeout}
+              || $_[0]->{conf}->{sfLoginTimeout}
               || $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
