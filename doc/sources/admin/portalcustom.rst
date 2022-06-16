@@ -220,6 +220,12 @@ To change CSS, two options:
 
    <link href="<TMPL_VAR NAME="STATIC_PREFIX">myskin/css/myskin.css" rel="stylesheet" type="text/css" />
 
+To add custom JS, create a new file in myskin/js/custom.js and load it in customhead.tpl ::
+
+   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/custom.js"></script>
+
+In this file, you can access JQuery functions, and hook your code to :doc:`JQuery events <jqueryevents>`
+
 Put then all custom HTML code in the custom template files.
 
 To configure your new skin in Manager, select the custom skin, and enter
