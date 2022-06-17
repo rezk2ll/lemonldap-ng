@@ -4,8 +4,10 @@ author:
   - 'Xavier Guimard <x.guimard@free.fr>, Clement Oudot <clement@oodo.net>, Christophe Maudoux <chrmdx@gmail.com>, Maxime Besson <maxime.besson@worteks.com>'
 build_requires:
   IO::String: '0'
+  MIME::Entity: '0'
   Net::LDAP: '0'
   String::Random: '0'
+  Test::Output: '0'
   Test::Pod: '1'
 configure_requires:
   ExtUtils::MakeMaker: '0'
@@ -46,7 +48,6 @@ requires:
   JSON::XS: '0'
   Mouse: '0'
   Plack: '0'
-  Test::Pod: '1'
   URI: '0'
 resources:
   MailingList: mailto:lemonldap-ng-dev@ow2.org
