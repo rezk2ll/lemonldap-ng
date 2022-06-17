@@ -1389,8 +1389,7 @@ sub _handleAuthorizationCodeGrant {
 
     # Get user identifier
     my $apacheSession =
-      $self->p->getApacheSession( $codeSession->data->{user_session_id},
-        noInfo => 1 );
+      $self->p->getApacheSession( $codeSession->data->{user_session_id} );
 
     unless ($apacheSession) {
         $self->userLogger->error("Unable to find user session");
@@ -1407,7 +1406,7 @@ sub _handleAuthorizationCodeGrant {
     # Generate access_token
     my $access_token = $self->newAccessToken(
         $req, $rp, $scope,
-        $codeSession->data->{user_session_id},
+        $apacheSession->data,
         {
             grant_type      => "authorizationcode",
             user_session_id => $apacheSession->id,
@@ -1590,7 +1589,7 @@ sub _handleRefreshTokenGrant {
         $access_token = $self->newAccessToken(
             $req, $rp,
             $refreshSession->data->{scope},
-            $user_session_id,
+            $session->data,
             {
                 user_session_id => $user_session_id,
                 grant_type      => $refreshSession->data->{grant_type},

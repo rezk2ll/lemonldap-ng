@@ -864,15 +864,8 @@ sub makeJWT {
         scope     => $scope,                      # Scope
     };
 
-    my $claims;
-    if ( ref($sessionInfo) eq "HASH" ) {
-        $claims = $self->buildUserInfoResponseFromData( $req, $scope,
-            $rp, $sessionInfo );
-    }
-    else {
-        $claims =
-          $self->buildUserInfoResponseFromId( $req, $scope, $rp, $sessionInfo );
-    }
+    my $claims =
+      $self->buildUserInfoResponseFromData( $req, $scope, $rp, $sessionInfo );
 
     # Release claims, or only sub
     if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
