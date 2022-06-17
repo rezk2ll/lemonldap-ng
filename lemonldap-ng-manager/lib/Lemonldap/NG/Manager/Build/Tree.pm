@@ -118,13 +118,20 @@ sub tree {
                         },
                         {
                             title => 'portalCaptcha',
-                            help  => 'captcha.html',
-                            form  => 'simpleInputContainer',
+                            help  => 'captcha.html#configuration',
                             nodes => [
                                 'captcha_login_enabled',
                                 'captcha_mail_enabled',
                                 'captcha_register_enabled',
                                 'captcha_size',
+                                {
+                                    title => 'captchaCustom',
+                                    help  => 'captcha.html#configuration',
+                                    nodes => [
+                                        'captcha',
+                                        'captchaOptions',
+                                    ]
+                                },
                             ]
                         }
                     ]
@@ -132,7 +139,7 @@ sub tree {
                 {
                     title => 'authParams',
                     help =>
-                      'start.html#authentication-users-and-password-databases',
+                    'start.html#authentication-users-and-password-databases',
                     form  => 'authParams',
                     nodes => [
                         'authentication', 'userDB', 'passwordDB', 'registerDB'
@@ -217,8 +224,8 @@ sub tree {
                                             nodes => [
                                                 'dbiDynamicHashEnabled',
                                                 'dbiDynamicHashValidSchemes',
-'dbiDynamicHashValidSaltedSchemes',
-'dbiDynamicHashNewPasswordScheme'
+                                                'dbiDynamicHashValidSaltedSchemes',
+                                                'dbiDynamicHashNewPasswordScheme'
                                             ]
                                         }
                                     ]
@@ -556,7 +563,7 @@ sub tree {
                     help  => 'logs.html',
                     form  => 'simpleInputContainer',
                     nodes =>
-                      [ 'whatToTrace', 'customToTrace', 'hiddenAttributes' ]
+                    [ 'whatToTrace', 'customToTrace', 'hiddenAttributes' ]
                 },
                 {
                     title => 'cookieParams',
@@ -653,7 +660,7 @@ sub tree {
                                 {
                                     title => 'soapServices',
                                     help =>
-                                      'portalservers.html#SOAP_(deprecated)',
+                                    'portalservers.html#SOAP_(deprecated)',
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'soapSessionServer',
@@ -687,14 +694,14 @@ sub tree {
                                 {
                                     title => 'serverNotification',
                                     help =>
-                                      'notifications.html#notification-server',
+                                    'notifications.html#notification-server',
                                     nodes => [
                                         'notificationServer',
                                         'notificationDefaultCond',
                                         'notificationServerSentAttributes',
                                         {
                                             title =>
-                                              'notificationServerMethods',
+                                            'notificationServerMethods',
                                             form  => 'simpleInputContainer',
                                             nodes => [
                                                 'notificationServerPOST',

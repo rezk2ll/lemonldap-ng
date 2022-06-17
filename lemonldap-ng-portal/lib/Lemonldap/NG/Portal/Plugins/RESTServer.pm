@@ -18,7 +18,6 @@
 #   * DELETE /sessions/my                        : ask for global logout (if GlobalLogout plugin is on)
 #
 # - Authentication
-#   * GET /renewcaptcha                          : get token and captcha image
 #   * POST /sessions/<type>/<session-id>?auth    : authenticate with a fixed
 #                                                  sessionId
 #   * Note that the "getCookie" method (authentification via SOAP) exists for
@@ -71,7 +70,6 @@ our $VERSION = '2.0.14';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
-  Lemonldap::NG::Portal::Lib::Captcha
 );
 
 has configStorage => (
@@ -116,7 +114,6 @@ has exportedAttr => (
         }
     }
 );
-has captcha => ( is => 'rw' );
 has ott     => (
     is      => 'rw',
     lazy    => 1,
@@ -134,13 +131,6 @@ sub init {
     my ($self)  = @_;
     my @parents = ('Lemonldap::NG::Portal::Main::Plugin');
     my $add     = 0;
-    if (   $self->conf->{captcha_mail_enabled}
-        || $self->conf->{captcha_login_enabled}
-        || $self->conf->{captcha_register_enabled} )
-    {
-        $self->captcha( $self->p->loadModule('::Lib::Captcha') ) or return 0;
-        $self->addUnauthRoute( renewcaptcha => 'sendCaptcha', ['GET'] );
-    }
     if ( $self->conf->{restConfigServer} ) {
         push @parents, 'Lemonldap::NG::Common::Conf::RESTServer';
         $add++;
@@ -639,15 +629,6 @@ sub removeSessions {
     my $nbr      = $glPlugin->removeOtherActiveSessions( $req, $sessions );
 
     return $self->p->sendJSONresponse( $req, { result => $nbr } );
-}
-
-sub sendCaptcha {
-    my ( $self, $req ) = @_;
-    $self->logger->info("User request for captcha renew");
-    my ( $token, $image ) = $self->captcha->getCaptcha($req);
-
-    return $self->p->sendJSONresponse( $req,
-        { newtoken => $token, newimage => $image } );
 }
 
 sub pwdReset {

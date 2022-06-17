@@ -30,6 +30,7 @@ has _authentication => ( is => 'rw' );
 has _userDB         => ( is => 'rw' );
 has _passwordDB     => ( is => 'rw' );
 has _sfEngine       => ( is => 'rw' );
+has _captcha        => ( is => 'rw' );
 
 has loadedModules => ( is => 'rw' );
 
@@ -335,6 +336,14 @@ sub reloadConf {
     return $self->fail
       unless $self->{_sfEngine} =
       $self->loadPlugin( $self->conf->{'sfEngine'} );
+
+    # Load Captcha module
+    return $self->fail
+      unless $self->_captcha(
+        $self->loadPlugin(
+            $self->conf->{'captcha'} || '::Captcha::SecurityImage'
+        )
+      );
 
     # Compile macros in _macros, groups in _groups
     foreach my $type (qw(macros groups)) {
