@@ -49,7 +49,8 @@ The JSON response fields are:
 -  ``error``: error code, the corresponding error can be found in
    :doc:`Portal error codes<error_codes>`
 -  ``id``: if authentication succeed, the session id is returned in this
-   field
+   field. This id is not returned if you call the REST endpoint with the
+   session cookie (which means you are already authenticated).
 
 
 .. tip::
@@ -62,7 +63,7 @@ The JSON response fields are:
 
     Before version 2.0.4, the response to a success
     authentication had no ``id`` field, and ``error`` field was named
-    ``code`` (use Cookie header to get id value).
+    ``code``.
 
 Example
 ^^^^^^^
