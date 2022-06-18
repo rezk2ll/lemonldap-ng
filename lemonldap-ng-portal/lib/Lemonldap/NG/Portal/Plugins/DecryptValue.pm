@@ -101,7 +101,7 @@ sub run {
             TOKEN     => $token,
         };
         return $self->p->sendJSONresponse( $req, $params )
-          if ( $req->wantJSON );
+          if $req->wantJSON;
         return $self->p->sendHtml( $req, 'decryptvalue', params => $params )
           if $msg;
     }

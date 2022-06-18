@@ -59,8 +59,8 @@ lib/Lemonldap/NG/Portal/Issuer/Get.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenID.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Issuer/SAML.pm
-lib/Lemonldap/NG/Portal/Lib/_tokenRule.pm
 lib/Lemonldap/NG/Portal/Lib/2fDevices.pm
+lib/Lemonldap/NG/Portal/Lib/_tokenRule.pm
 lib/Lemonldap/NG/Portal/Lib/Captcha.pm
 lib/Lemonldap/NG/Portal/Lib/CAS.pm
 lib/Lemonldap/NG/Portal/Lib/Choice.pm
@@ -564,8 +564,8 @@ t/30-Auth-and-issuer-SAML-POST.t
 t/30-Auth-and-issuer-SAML-Redirect-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Redirect-MultipleSP-Missing-SLO.t
 t/30-Auth-and-issuer-SAML-Redirect-MultipleSP.t
-t/30-Auth-and-issuer-SAML-Redirect.t
 t/30-Auth-and-issuer-SAML-Redirect-With-Info.t
+t/30-Auth-and-issuer-SAML-Redirect.t
 t/30-Auth-ResolutionRule.t
 t/30-Auth-SAML-with-choice.t
 t/30-CDC.t
@@ -671,6 +671,7 @@ t/40-Notifications-JSON-Server.t
 t/40-Notifications-XML-DBI.t
 t/40-Notifications-XML-File.t
 t/40-Notifications-XML-Server.t
+t/41-Captcha-old-api.t
 t/41-Captcha.t
 t/41-Token-with-global-storage.t
 t/41-Token.t
@@ -820,6 +821,7 @@ t/99-Bad-logLevel.t
 t/99-Dont-load-Dumper.t
 t/99-pod.t
 t/AfterDataCustomPlugin.pm
+t/CaptchaOldApi.pm
 t/CasHookPlugin.pm
 t/Custom.pm
 t/gpghome/key.asc

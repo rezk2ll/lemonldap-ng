@@ -93,6 +93,8 @@ site/htdocs/static/bwr/es5-shim/es5-shim.min.js
 site/htdocs/static/bwr/file-saver.js/FileSaver.js
 site/htdocs/static/bwr/file-saver.js/FileSaver.min.js
 site/htdocs/static/bwr/file-saver.js/FileSaver.min.js.map
+site/htdocs/static/css/custom.css
+site/htdocs/static/css/custom.min.css
 site/htdocs/static/css/manager.css
 site/htdocs/static/css/manager.min.css
 site/htdocs/static/forms/authChoice.html

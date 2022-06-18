@@ -183,14 +183,12 @@ sub javascript {
 
     return
 'var formPrefix=staticPrefix+"forms/";var confPrefix=scriptname+"confs/";var viewPrefix=scriptname+"view/";'
-      . 'var allowDiff=' . "$res;"
-      . 'var impPrefix=' . "'"
-      . $impPrefix . "'" . ';'
-      . 'var sessionTTL=' . "$ttl;"
+      . "var allowDiff=$res;"
+      . "var sessionTTL=$ttl;"
+      . "var impPrefix='$impPrefix';"
       . ( $self->links ? 'var links=' . to_json( $self->links ) . ';' : '' )
       . (
-        $self->menuLinks
-        ? 'var menulinks=' . to_json( $self->menuLinks ) . ';'
+        $self->menuLinks ? 'var menulinks=' . to_json( $self->menuLinks ) . ';'
         : ''
       );
 }
