@@ -1,5 +1,5 @@
   <!-- Menu bar -->
-  <header id="navbar" role="banner" ng-style="bannerStyle">
+  <header id="navbar" role="banner">
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <!-- XS buttons -->

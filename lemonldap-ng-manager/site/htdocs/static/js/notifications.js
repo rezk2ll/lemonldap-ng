@@ -374,11 +374,8 @@
           return $scope.waiting = false;
         });
         $scope.activeModule = "notifications";
-        $scope.myStyle = {
+        return $scope.myStyle = {
           color: '#ffb84d'
-        };
-        return $scope.bannerStyle = {
-          'background-color': "" + window.bannerColor
         };
       };
       $scope.displayCreateForm = function() {

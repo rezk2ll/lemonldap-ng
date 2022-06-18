@@ -99,7 +99,6 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 		# Colorized link
 		$scope.activeModule = "conf"
 		$scope.myStyle = {color: '#ffb84d'}
-		$scope.bannerStyle = {'background-color': "#{window.bannerColor}"}
 
 	readDiff = (c1,c2,tr=true) ->
 		res = []
