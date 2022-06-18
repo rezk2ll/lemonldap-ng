@@ -159,11 +159,6 @@ sub display {
         $self->_createArray( $req, $attrs, $req->userData ) );
 
     my $params = {
-        PORTAL     => $self->conf->{portal},
-        MAIN_LOGO  => $self->conf->{portalMainLogo},
-        SKIN       => $self->p->getSkin($req),
-        LANGS      => $self->conf->{showLanguages},
-        SCROLL_TOP => $self->conf->{scrollTop},
         MSG        => 'checkUser' . $self->merged,
         ALERTE     => ( $self->merged ? 'alert-warning' : 'alert-info' ),
         LOGIN      => $req->{userData}->{ $self->conf->{whatToTrace} },
@@ -211,11 +206,6 @@ sub check {
         }
 
         my $params = {
-            PORTAL     => $self->conf->{portal},
-            MAIN_LOGO  => $self->conf->{portalMainLogo},
-            SKIN       => $self->p->getSkin($req),
-            LANGS      => $self->conf->{showLanguages},
-            SCROLL_TOP => $self->conf->{scrollTop},
             MSG        => "PE$msg",
             ALERTE     => 'alert-warning',
             LOGIN      => '',
@@ -243,11 +233,6 @@ sub check {
             $req,
             'checkuser',
             params => {
-                PORTAL     => $self->conf->{portal},
-                MAIN_LOGO  => $self->conf->{portalMainLogo},
-                SKIN       => $self->p->getSkin($req),
-                LANGS      => $self->conf->{showLanguages},
-                SCROLL_TOP => $self->conf->{scrollTop},
                 MSG        => 'PE' . PE_MALFORMEDUSER,
                 ALERTE     => 'alert-warning',
                 LOGIN      => '',
@@ -412,11 +397,6 @@ sub check {
 
     # TODO:
     my $params = {
-        PORTAL      => $self->conf->{portal},
-        MAIN_LOGO   => $self->conf->{portalMainLogo},
-        SKIN        => $self->p->getSkin($req),
-        LANGS       => $self->conf->{showLanguages},
-        SCROLL_TOP  => $self->conf->{scrollTop},
         MSG         => $msg,
         ALERTE      => ( $msg eq 'checkUser' ? 'alert-info' : 'alert-warning' ),
         LOGIN       => $user,

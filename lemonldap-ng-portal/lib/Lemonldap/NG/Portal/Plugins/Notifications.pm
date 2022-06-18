@@ -189,11 +189,6 @@ sub myNotifs {
 
     # Build template
     my $params = {
-        PORTAL        => $self->conf->{portal},
-        MAIN_LOGO     => $self->conf->{portalMainLogo},
-        SKIN          => $self->p->getSkin($req),
-        LANGS         => $self->conf->{showLanguages},
-        SCROLL_TOP    => $self->conf->{scrollTop},
         NOTIFICATIONS => $_notifications,
         MSG           => $msg
     };

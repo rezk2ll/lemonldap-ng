@@ -65,11 +65,6 @@ sub display {
 
     # Display form
     my $params = {
-        PORTAL     => $self->conf->{portal},
-        MAIN_LOGO  => $self->conf->{portalMainLogo},
-        SKIN       => $self->p->getSkin($req),
-        LANGS      => $self->conf->{showLanguages},
-        SCROLL_TOP => $self->conf->{scrollTop},
         DOWNLOAD   => $self->conf->{checkDevOpsDownload},
         MSG        => 'checkDevOps',
         ALERTE     => 'alert-info',
@@ -111,10 +106,6 @@ sub parse {
 
         # Prepare form
         my $params = {
-            PORTAL    => $self->conf->{portal},
-            MAIN_LOGO => $self->conf->{portalMainLogo},
-            SKIN      => $self->p->getSkin($req),
-            LANGS     => $self->conf->{showLanguages},
             DOWNLOAD  => $self->conf->{checkDevOpsDownload},
             MSG       => "PE$msg",
             ALERTE    => 'alert-warning',
@@ -305,10 +296,6 @@ sub parse {
 
     # Prepare form
     my $params = {
-        PORTAL    => $self->conf->{portal},
-        MAIN_LOGO => $self->conf->{portalMainLogo},
-        SKIN      => $self->p->getSkin($req),
-        LANGS     => $self->conf->{showLanguages},
         DOWNLOAD  => $self->conf->{checkDevOpsDownload},
         MSG       => $msg,
         UNKNOWN   => join( $self->conf->{multiValuesSeparator}, @$unknown ),
