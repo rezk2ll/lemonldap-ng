@@ -16,19 +16,19 @@ DecryptValue plugin can be allowed or denied for specific users.
    -  **Use rule**: Select which users may use this plugin
    -  **Decrypt functions**: Set functions used for decrypting ciphered
       values. Each function is tested until one succeeds. Let it blank
-      to use internal decrypt function.
+      to use internal ``decrypt`` extended function.
 
 
-.. danger::
+.. attention::
+
+    The ciphered value is the first parameter passed to custom functions.
+
+    The ``Encryption key`` is passed to custom funtions as second parameter
+    (see :ref:`Security settings<security-configure-security-settings>)`.
 
     Custom functions must be defined into
-    ``Lemonldap::NG::Portal::My::Plugin`` and set:
+    ``My::Plugin`` and set:
 
     ::
 
        My::Plugin::function1 My::Plugin::function2
-
-
-
-.. |image0| image:: /documentation/beta.png
-   :width: 100px

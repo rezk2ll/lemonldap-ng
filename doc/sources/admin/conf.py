@@ -50,7 +50,7 @@ master_doc = 'start'
 
 # General information about the project.
 project = u'LemonLDAP::NG'
-copyright = u'2021, LemonLDAP::NG'
+copyright = u'2022, LemonLDAP::NG'
 author = u'LemonLDAP::NG'
 
 # The version info for the project you're documenting, acts as replacement for
