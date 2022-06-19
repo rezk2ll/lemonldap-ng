@@ -9,10 +9,10 @@ use URI;
 use Carp;
 with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.15';
 
-has rp_id  => ( is => 'rw', lazy => 1, builder => "_build_rp_id" );
-has origin => ( is => 'rw', lazy => 1, builder => "_build_origin" );
+has rp_id    => ( is => 'rw', lazy    => 1, builder => "_build_rp_id" );
+has origin   => ( is => 'rw', lazy    => 1, builder => "_build_origin" );
 has type     => ( is => 'ro', default => 'WebAuthn' );
 has verifier => ( is => 'rw', lazy    => 1, builder => "_build_verifier" );
 
@@ -68,10 +68,9 @@ sub generateChallenge {
     my ( $self, $req, $data ) = @_;
 
     # Find webauthn devices for user
-    my @webauthn_devices = $self->find2fDevicesByType( $req, $data, $self->type );
-    unless (@webauthn_devices) {
-        return;
-    }
+    my @webauthn_devices =
+      $self->find2fDevicesByType( $req, $data, $self->type );
+    return unless @webauthn_devices;
 
     my $challenge_base64 = encode_base64url( Crypt::URandom::urandom(32) );
     my $userVerification = $self->conf->{webauthn2fUserVerification};
@@ -91,16 +90,12 @@ sub generateChallenge {
 
 sub validateCredential {
     my ( $self, $req, $registration_options, $credential_json ) = @_;
-
-    my $credential = from_json($credential_json);
-
+    my $credential             = from_json($credential_json);
     my $client_data_json_b64   = $credential->{response}->{clientDataJSON};
     my $attestation_object_b64 = $credential->{response}->{attestationObject};
-
     my $requested_uv =
       $registration_options->{authenticatorSelection}->{userVerification} || "";
     my $challenge_b64 = $registration_options->{challenge};
-
     my $token_binding_id_b64 = encode_base64url(
         $req->headers->header('Sec-Provided-Token-Binding-ID') );
 
@@ -115,11 +110,10 @@ sub validateCredential {
 
 sub validateAssertion {
     my ( $self, $req, $data, $signature_options, $credential_json ) = @_;
-
     my $user = $data->{ $self->conf->{whatToTrace} };
-    $self->logger->debug("Get asserted credential $credential_json");
-    my $credential = from_json($credential_json);
 
+    $self->logger->debug("Get asserted credential $credential_json");
+    my $credential    = from_json($credential_json);
     my $credential_id = $credential->{id};
     croak("Empty credential id in credential response") unless $credential_id;
 
@@ -128,26 +122,24 @@ sub validateAssertion {
     # options.allowCredentials.
     my @allowed_credential_ids =
       map { $_->{id} } @{ $signature_options->{allowCredentials} };
-    if ( @allowed_credential_ids
-        and not grep { $_ eq $credential_id } @allowed_credential_ids )
-    {
-        croak("Received credential ID $credential_id was not requested");
-    }
+    croak("Received credential ID $credential_id was not requested")
+      if ( @allowed_credential_ids
+        and not grep { $_ eq $credential_id } @allowed_credential_ids );
 
     # 6. Identify the user being authenticated and verify that this user is the
     # owner of the public key credential source credentialSource identified by
     # credential.id If the user was identified before the authentication
     # ceremony was initiated, e.g., via a username or cookie, verify that the
     # identified user is the owner of credentialSource.
-    my @webauthn_devices = $self->find2fDevicesByType( $req, $data, $self->type );
+    my @webauthn_devices =
+      $self->find2fDevicesByType( $req, $data, $self->type );
     my @matching_credentials =
       grep { $_->{_credentialId} eq $credential_id } @webauthn_devices;
-    if ( @matching_credentials < 1 ) {
-        croak("Received credential ID $credential_id does not belong to user");
-    }
-    if ( @matching_credentials > 1 ) {
-        croak("Found multiple credentials with ID $credential_id for user");
-    }
+
+    croak("Received credential ID $credential_id does not belong to user")
+      if ( @matching_credentials < 1 );
+    croak("Found multiple credentials with ID $credential_id for user")
+      if ( @matching_credentials > 1 );
     my $matching_credential = $matching_credentials[0];
 
     # If response.userHandle is present, let userHandle be its value.
@@ -155,11 +147,9 @@ sub validateAssertion {
     if ( $credential->{response}->{userHandle} ) {
         my $user_handle         = $credential->{response}->{userHandle};
         my $current_user_handle = $self->getUserHandle( $req, $data );
-        unless ( $user_handle eq $current_user_handle ) {
-            croak(
+        croak(
 "Received user handle ($user_handle) does not match current user ($current_user_handle)"
-            );
-        }
+        ) unless ( $user_handle eq $current_user_handle );
     }
 
     # TODO If the user was not identified before the authentication ceremony

@@ -14,21 +14,19 @@ use Scalar::Util 'weaken';
 use IO::Socket::Timeout;
 use utf8;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 # INITIALIZATION
 
 # Build a Net::LDAP object using parameters issued from $portal
 sub new {
     my ( $class, $args ) = @_;
-    my $portal = $args->{p}    or die "$class : p argument required !";
-    my $conf   = $args->{conf} or die "$class : conf argument required !";
-    my $self;
+    my $portal = $args->{p}    or die "$class: p argument is required!";
+    my $conf   = $args->{conf} or die "$class: conf argument is required!";
+    my ( $self, @servers, %tlsParams );
     my $useStartTls = 0;
-    my %tlsParams;
-    my @servers = ();
-    foreach my $server ( split /[\s,]+/, $conf->{ldapServer} ) {
 
+    foreach my $server ( split /[\s,]+/, $conf->{ldapServer} ) {
         if ( $server =~ m{^ldap\+tls://([^/]+)/?\??(.*)$} ) {
             $useStartTls = 1;
             $server      = $1;
@@ -44,9 +42,9 @@ sub new {
         }
         push @servers, $server;
     }
-    $tlsParams{cafile} ||= $conf->{ldapCAFile} if ( $conf->{ldapCAFile} );
-    $tlsParams{capath} ||= $conf->{ldapCAPath} if ( $conf->{ldapCAPath} );
-    $tlsParams{verify} ||= $conf->{ldapVerify} if ( $conf->{ldapVerify} );
+    $tlsParams{cafile} ||= $conf->{ldapCAFile} if $conf->{ldapCAFile};
+    $tlsParams{capath} ||= $conf->{ldapCAPath} if $conf->{ldapCAPath};
+    $tlsParams{verify} ||= $conf->{ldapVerify} if $conf->{ldapVerify};
     $self = Net::LDAP->new(
         \@servers,
         onerror   => undef,
@@ -110,10 +108,9 @@ sub new {
 # @return Net::LDAP::Message
 sub bind {
     my ( $self, $dn, %args ) = @_;
+    my $mesg;
 
     $self->{portal}->logger->debug("Call bind for $dn") if $dn;
-
-    my $mesg;
     unless ($dn) {
         $dn = $self->{conf}->{managerDn};
         $args{password} =
