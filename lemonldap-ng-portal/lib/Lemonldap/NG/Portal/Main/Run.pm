@@ -1057,7 +1057,6 @@ sub tplParams {
 
     return (
         PORTAL_URL => $self->conf->{portal},
-        SCROLL_TOP => $self->conf->{scrollTop},
         MAIN_LOGO  => $self->conf->{portalMainLogo},
         LANGS      => $self->conf->{showLanguages},
         SCROLL_TOP => $self->conf->{scrollTop},
