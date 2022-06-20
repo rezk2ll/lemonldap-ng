@@ -2025,6 +2025,10 @@ sub attributes {
             type          => 'int',
             documentation => 'Second factor code timeout',
         },
+        mail2fResendInterval => {
+            type          => 'text',
+            documentation => 'Delay before user is allowed to resend code',
+        },
         mail2fAuthnLevel => {
             type          => 'int',
             documentation =>
@@ -2061,6 +2065,10 @@ sub attributes {
         ext2FValidateCommand => {
             type          => 'text',
             documentation => 'Validation command of External second factor',
+        },
+        ext2fResendInterval => {
+            type          => 'text',
+            documentation => 'Delay before user is allowed to resend code',
         },
         ext2fAuthnLevel => {
             type          => 'int',
@@ -2136,6 +2144,10 @@ sub attributes {
         rest2fVerifyArgs => {
             type          => 'keyTextContainer',
             documentation => 'Args for REST 2F init',
+        },
+        rest2fResendInterval => {
+            type          => 'text',
+            documentation => 'Delay before user is allowed to resend code',
         },
         rest2fAuthnLevel => {
             type          => 'int',

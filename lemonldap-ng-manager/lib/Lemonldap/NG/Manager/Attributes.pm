@@ -1397,6 +1397,9 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
         'ext2fLogo' => {
             'type' => 'text'
         },
+        'ext2fResendInterval' => {
+            'type' => 'text'
+        },
         'ext2FSendCommand' => {
             'type' => 'text'
         },
@@ -2008,6 +2011,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type' => 'text'
         },
         'mail2fLogo' => {
+            'type' => 'text'
+        },
+        'mail2fResendInterval' => {
             'type' => 'text'
         },
         'mail2fSessionKey' => {
@@ -3203,6 +3209,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'text'
         },
         'rest2fLogo' => {
+            'type' => 'text'
+        },
+        'rest2fResendInterval' => {
             'type' => 'text'
         },
         'rest2fVerifyArgs' => {
