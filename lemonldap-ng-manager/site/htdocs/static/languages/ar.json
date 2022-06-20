@@ -890,6 +890,7 @@
 "requireToken":"يتطلب توكن للإستمارة",
 "rest2f":"REST second factor",
 "rest2fActivation":"تفعيل",
+"rest2fCodeActivation":"Code regex",
 "rest2fAuthnLevel":"مستوى إثبات الهوية",
 "rest2fInitArgs":"Init arguments",
 "rest2fInitUrl":"Init URL",

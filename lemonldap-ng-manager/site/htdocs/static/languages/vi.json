@@ -890,6 +890,7 @@
 "requireToken":"Yêu cầu token cho các biểu mẫu",
 "rest2f":"REST second factor",
 "rest2fActivation":"Kích hoạt",
+"rest2fCodeActivation":"Code regex",
 "rest2fAuthnLevel":"Mức xác thực",
 "rest2fInitArgs":"Init arguments",
 "rest2fInitUrl":"Init URL",

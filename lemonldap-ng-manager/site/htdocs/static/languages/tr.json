@@ -890,6 +890,7 @@
 "requireToken":"Formlar için jeton gerekir",
 "rest2f":"REST ile ikinci faktör",
 "rest2fActivation":"Aktivasyon",
+"rest2fCodeActivation":"Düzenli ifade kodla",
 "rest2fAuthnLevel":"Doğrulama seviyesi",
 "rest2fInitArgs":"Başlangıç argümanları",
 "rest2fInitUrl":"Başlangıç URL",

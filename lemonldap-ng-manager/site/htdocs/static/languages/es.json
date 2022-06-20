@@ -890,6 +890,7 @@
 "requireToken":"Require token for forms",
 "rest2f":"Previo",
 "rest2fActivation":"Activación",
+"rest2fCodeActivation":"Expresión regular",
 "rest2fAuthnLevel":"Nivel de autentificación",
 "rest2fInitArgs":"Argumentos de inicio",
 "rest2fInitUrl":"URL de inicio",

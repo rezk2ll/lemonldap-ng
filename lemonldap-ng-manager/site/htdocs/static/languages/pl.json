@@ -890,6 +890,7 @@
 "requireToken":"Wymagaj tokena do formularzy",
 "rest2f":"Drugi czynnik REST",
 "rest2fActivation":"Aktywacja",
+"rest2fCodeActivation":"Wyrażenie regularne kodu",
 "rest2fAuthnLevel":"Poziom uwierzytelnienia",
 "rest2fInitArgs":"Początkowe argumenty",
 "rest2fInitUrl":"Początkowy adres URL",

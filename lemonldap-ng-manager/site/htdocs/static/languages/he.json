@@ -890,6 +890,7 @@
 "requireToken":"דרישת אסימון לטפסים",
 "rest2f":"אימות דו־שלבי ב־REST",
 "rest2fActivation":"הפעלה",
+"rest2fCodeActivation":"Code regex",
 "rest2fAuthnLevel":"דרגת אימות",
 "rest2fInitArgs":"Init arguments",
 "rest2fInitUrl":"כתובת אתחול",

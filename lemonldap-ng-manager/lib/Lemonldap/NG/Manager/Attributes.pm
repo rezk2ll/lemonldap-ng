@@ -3195,6 +3195,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'rest2fAuthnLevel' => {
             'type' => 'int'
         },
+        'rest2fCodeActivation' => {
+            'type' => 'pcre'
+        },
         'rest2fInitArgs' => {
             'keyMsgFail' => '__badKeyName__',
             'keyTest'    => qr/^\w+$/,

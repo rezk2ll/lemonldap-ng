@@ -994,11 +994,11 @@ sub tree {
                             help  => 'rest2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'rest2fActivation', 'rest2fInitUrl',
-                                'rest2fInitArgs',   'rest2fVerifyUrl',
-                                'rest2fVerifyArgs', 'rest2fResendInterval',
-                                'rest2fAuthnLevel', 'rest2fLabel',
-                                'rest2fLogo'
+                                'rest2fActivation', 'rest2fCodeActivation',
+                                'rest2fInitUrl', 'rest2fInitArgs',
+                                'rest2fVerifyUrl', 'rest2fVerifyArgs',
+                                'rest2fResendInterval', 'rest2fAuthnLevel',
+                                'rest2fLabel', 'rest2fLogo'
                             ]
                         },
                         {

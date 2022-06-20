@@ -890,6 +890,7 @@
 "requireToken":"Exiger un jeton pour les formulaires",
 "rest2f":"Second facteur REST",
 "rest2fActivation":"Activation",
+"rest2fCodeActivation":"Expression régulière pour la génération du code",
 "rest2fAuthnLevel":"Niveau d'authentification",
 "rest2fInitArgs":"Arguments d'initialisation",
 "rest2fInitUrl":"URL d'initialisation",

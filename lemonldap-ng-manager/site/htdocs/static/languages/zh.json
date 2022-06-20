@@ -890,6 +890,7 @@
 "requireToken":"需要表單權杖",
 "rest2f":"REST 第二因素",
 "rest2fActivation":"激活",
+"rest2fCodeActivation":"代碼正規表示式",
 "rest2fAuthnLevel":"认证等级",
 "rest2fInitArgs":"初始化參數",
 "rest2fInitUrl":"初始化 URL",

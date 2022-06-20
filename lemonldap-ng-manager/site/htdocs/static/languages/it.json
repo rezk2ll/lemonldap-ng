@@ -890,6 +890,7 @@
 "requireToken":"Richiede il token per i moduli",
 "rest2f":"REST secondo fattore",
 "rest2fActivation":"Attivazione",
+"rest2fCodeActivation":"Codice regex",
 "rest2fAuthnLevel":"Livello di autenticazione",
 "rest2fInitArgs":"Argomenti di init",
 "rest2fInitUrl":"URL iniziale",
