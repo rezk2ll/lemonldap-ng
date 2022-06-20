@@ -46,6 +46,32 @@ In order for custom Captcha modules to work, you need to modify your custom ``st
 
 If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
 
+Re-send 2FA code
+~~~~~~~~~~~~~~~~
+
+The :doc:`mail <mail2f>`, :doc:`external <external2f>` and :doc:`REST <rest2f>` based 2FA types can now re-send the user code if delivery failed for some reason. If you use custom templates, you must update ``ext2fcheck.tpl``
+
+.. code:: diff
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
+    @@ -26,6 +26,12 @@
+         </button>
+       </div>
+       <div class="buttons">
+    +    <TMPL_IF "RESENDTARGET">
+    +    <button type="submit" class="btn btn-primary" formaction="<TMPL_VAR "RESENDTARGET">">
+    +      <span class="fa fa-repeat"></span>
+    +      <span trspan="resendCode">Re-send code</span>
+    +    </button>
+    +    </TMPL_IF>
+         <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1&skin=<TMPL_VAR NAME="SKIN">" class="btn btn-primary" role="button">
+           <span class="fa fa-home"></span>
+           <span trspan="cancel">Cancel</span>
+
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
 2.0.14
 ------
 

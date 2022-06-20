@@ -17,6 +17,9 @@ Second Factors » REST 2nd Factor".
 -  **Init arguments**: list of arguments to send *(see below)*
 -  **Verify URL** *(required)*: REST URL to verify code
 -  **Verify arguments**: list of arguments to send *(see below)*
+-  **Re-send interval**: Set this to a non-empty value to allow the user to
+   re-send the code in case a transmission error occured. The value sets how
+   many seconds the user has to wait before each attempt
 -  **Authentication level** (Optional): if you want to overwrite the
    value sent by your authentication module, you can define here the new
    authentication level. Example: 5
