@@ -614,9 +614,8 @@ sub display {
             ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
             : ()
         ),
-        MAIL            => (
-            $self->p->checkXSSAttack( 'mail', $req->{user} )
-            ? ''
+        MAIL => (
+              $self->p->checkXSSAttack( 'mail', $req->{user} ) ? ''
             : $req->{user}
         ),
         DISPLAY_FORM            => 0,

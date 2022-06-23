@@ -29,7 +29,7 @@ SKIP: {
                 u2fSelfRegistration     => 1,
                 u2fActivation           => 1,
                 u2fAuthnLevel           => 5,
-                restSessionServer =>1,
+                restSessionServer       => 1,
                 skipUpgradeConfirmation => 1,
                 sfManagerRule           => '$uid eq "dwho"',
                 portalMainLogo          => 'common/logos/logo_llng_old.png',
@@ -152,7 +152,7 @@ SKIP: {
         'Post code'
     );
     $id = expectCookie($res);
-    expectSessionAttributes($client, $id, _2f => "totp");
+    expectSessionAttributes( $client, $id, _2f => "totp" );
 
     # Get 2F register form
     ok(
@@ -442,7 +442,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         'Push U2F signature'
     );
     $id = expectCookie($res);
-    expectSessionAttributes($client, $id, _2f => "u");
+    expectSessionAttributes( $client, $id, _2f => "u" );
     ok(
         $res = $client->_get(
             '/2fregisters',

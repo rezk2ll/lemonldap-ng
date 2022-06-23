@@ -429,7 +429,7 @@ sub display {
             %templateParams = ( %templateParams, TOKEN => $req->token, );
         }
 
-        # DEPRECATED: This is only used for compatibility with existing templates
+       # DEPRECATED: This is only used for compatibility with existing templates
         if ( $req->captcha ) {
             %templateParams = (
                 %templateParams,

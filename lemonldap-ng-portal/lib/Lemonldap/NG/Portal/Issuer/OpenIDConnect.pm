@@ -36,7 +36,7 @@ sub beforeAuth { 'exportRequestParameters' }
 
 use constant sessionKind => 'OIDCI';
 
-has rule          => ( is => 'rw' );
+has rule => ( is => 'rw' );
 has configStorage => (
     is      => 'ro',
     lazy    => 1,

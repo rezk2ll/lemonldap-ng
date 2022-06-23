@@ -36,7 +36,7 @@ sub new {
         $show = 0 if ( $level eq $_ );
     }
     die "Unknown logLevel $level" if $show;
-    
+
     return $self;
 }
 

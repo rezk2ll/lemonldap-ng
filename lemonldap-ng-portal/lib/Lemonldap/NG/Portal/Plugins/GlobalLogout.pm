@@ -24,7 +24,7 @@ use constant beforeLogout => 'run';
 
 # INITIALIZATION
 has rule => ( is => 'rw', default => sub { 0 } );
-has ott  => (
+has ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {

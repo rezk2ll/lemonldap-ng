@@ -205,7 +205,8 @@ sub jailInit {
 sub defaultValuesInit {
     my ( $class, $conf ) = @_;
 
-    $class->tsv->{$_} = $conf->{$_} foreach ( qw(
+    $class->tsv->{$_} = $conf->{$_}
+      foreach ( qw(
         cookieExpiration        cookieName         customFunctions httpOnly
         securedCookie           timeout            timeoutActivity
         timeoutActivityInterval useRedirectOnError useRedirectOnForbidden
@@ -214,7 +215,7 @@ sub defaultValuesInit {
         authChoiceAuthBasic     authChoiceParam    hiddenAttributes
         upgradeSession
         )
-    );
+      );
 
     $class->tsv->{cipher} = Lemonldap::NG::Common::Crypto->new( $conf->{key} );
 

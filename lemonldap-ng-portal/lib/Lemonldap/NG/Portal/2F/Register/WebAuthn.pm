@@ -18,7 +18,7 @@ has prefix   => ( is => 'rw', default => 'webauthn' );
 has template => ( is => 'ro', default => 'webauthn2fregister' );
 has welcome  => ( is => 'ro', default => 'webauthn2fWelcome' );
 has logo     => ( is => 'rw', default => 'webauthn.png' );
-has ott      => (
+has ott => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
@@ -178,7 +178,7 @@ sub _registration {
 
     if (
         $self->find2fDevicesByKey(
-            $req,            $req->userData, $self->type,
+            $req, $req->userData, $self->type,
             "_credentialId", $credential_id
         )
       )

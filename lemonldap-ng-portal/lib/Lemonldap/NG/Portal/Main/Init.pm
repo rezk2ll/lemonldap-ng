@@ -634,7 +634,8 @@ sub buildRule {
     my $compiledRule =
       $self->HANDLER->buildSub( $self->HANDLER->substitute($rule) );
     unless ($compiledRule) {
-        my $error = $self->HANDLER->tsv->{jail}->error || 'Unable to compile rule';
+        my $error =
+          $self->HANDLER->tsv->{jail}->error || 'Unable to compile rule';
         $self->logger->error( "Bad" . $ruleDesc . "rule: " . $error );
     }
     return $compiledRule,;

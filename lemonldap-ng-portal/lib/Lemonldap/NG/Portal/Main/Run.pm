@@ -129,7 +129,8 @@ sub authenticated {
             'controlUrl',
             @{ $self->forAuthUser },
             sub {
-                $req->response($self->sendJSONresponse( $req, { status => 1 } ));
+                $req->response(
+                    $self->sendJSONresponse( $req, { status => 1 } ) );
                 return PE_SENDRESPONSE;
             }
         ]
@@ -1145,11 +1146,12 @@ sub _sumUpSession {
       $withoutUser
       ? {}
       : { user => $session->{ $self->conf->{whatToTrace} } };
-    $res->{$_} = $session->{$_} foreach (
+    $res->{$_} = $session->{$_}
+      foreach (
         "_utime", "ipAddr",
         keys %{ $self->conf->{sessionDataToRemember} },
         keys %{ $self->pluginSessionDataToRemember }
-    );
+      );
     return $res;
 }
 

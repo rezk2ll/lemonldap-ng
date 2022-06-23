@@ -85,7 +85,7 @@ sub _getCaptcha {
     $image->random;
     $image->create( 'normal', 'default', $self->fgColor, $self->bgColor );
     my ( $imageData, $mimeType, $rdm ) = $image->out( force => 'png' );
-    my $img = 'data:image/png;base64,' . encode_base64( $imageData, '' );
+    my $img   = 'data:image/png;base64,' . encode_base64( $imageData, '' );
     my $token = $self->ott->createToken( { captcha => $rdm } );
     return ( $token, $img );
 }

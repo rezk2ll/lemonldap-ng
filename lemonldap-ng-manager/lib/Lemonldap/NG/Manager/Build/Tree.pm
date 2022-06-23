@@ -74,7 +74,7 @@ sub tree {
                                 },
                                 {
                                     title => 'passwordManagement',
-                                    help =>
+                                    help  =>
                                       'portalcustom.html#password-management',
                                     form  => 'simpleInputContainer',
                                     nodes => [
@@ -101,7 +101,7 @@ sub tree {
                                 },
                                 {
                                     title => 'portalOther',
-                                    help =>
+                                    help  =>
                                       'portalcustom.html#other-parameters',
                                     form  => 'simpleInputContainer',
                                     nodes => [
@@ -127,10 +127,7 @@ sub tree {
                                 {
                                     title => 'captchaCustom',
                                     help  => 'captcha.html#configuration',
-                                    nodes => [
-                                        'captcha',
-                                        'captchaOptions',
-                                    ]
+                                    nodes => [ 'captcha', 'captchaOptions', ]
                                 },
                             ]
                         }
@@ -138,8 +135,8 @@ sub tree {
                 },
                 {
                     title => 'authParams',
-                    help =>
-                    'start.html#authentication-users-and-password-databases',
+                    help  =>
+                      'start.html#authentication-users-and-password-databases',
                     form  => 'authParams',
                     nodes => [
                         'authentication', 'userDB', 'passwordDB', 'registerDB'
@@ -224,8 +221,8 @@ sub tree {
                                             nodes => [
                                                 'dbiDynamicHashEnabled',
                                                 'dbiDynamicHashValidSchemes',
-                                                'dbiDynamicHashValidSaltedSchemes',
-                                                'dbiDynamicHashNewPasswordScheme'
+'dbiDynamicHashValidSaltedSchemes',
+'dbiDynamicHashNewPasswordScheme'
                                             ]
                                         }
                                     ]
@@ -563,7 +560,7 @@ sub tree {
                     help  => 'logs.html',
                     form  => 'simpleInputContainer',
                     nodes =>
-                    [ 'whatToTrace', 'customToTrace', 'hiddenAttributes' ]
+                      [ 'whatToTrace', 'customToTrace', 'hiddenAttributes' ]
                 },
                 {
                     title => 'cookieParams',
@@ -659,8 +656,8 @@ sub tree {
                                 },
                                 {
                                     title => 'soapServices',
-                                    help =>
-                                    'portalservers.html#SOAP_(deprecated)',
+                                    help  =>
+                                      'portalservers.html#SOAP_(deprecated)',
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'soapSessionServer',
@@ -693,15 +690,15 @@ sub tree {
                                 'notificationStorageOptions',
                                 {
                                     title => 'serverNotification',
-                                    help =>
-                                    'notifications.html#notification-server',
+                                    help  =>
+                                      'notifications.html#notification-server',
                                     nodes => [
                                         'notificationServer',
                                         'notificationDefaultCond',
                                         'notificationServerSentAttributes',
                                         {
                                             title =>
-                                            'notificationServerMethods',
+                                              'notificationServerMethods',
                                             form  => 'simpleInputContainer',
                                             nodes => [
                                                 'notificationServerPOST',

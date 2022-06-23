@@ -31,10 +31,10 @@ has ott => (
     }
 );
 
-has prefix     => ( is => 'rw' );
-has logo       => ( is => 'rw', default => '2f.png' );
-has label      => ( is => 'rw' );
-has noRoute    => ( is => 'ro' );
+has prefix  => ( is => 'rw' );
+has logo    => ( is => 'rw', default => '2f.png' );
+has label   => ( is => 'rw' );
+has noRoute => ( is => 'ro' );
 has authnLevel => (
     is      => 'rw',
     lazy    => 1,
@@ -166,16 +166,19 @@ sub _verify {
                 authenticationLevel => $l,
                 groups              => $req->sessionInfo->{groups},
                 hGroups             => $req->sessionInfo->{hGroups},
-                _2f     => $self->prefix,
+                _2f                 => $self->prefix,
                 %macros
             }
         );
-    } else {
+    }
+    else {
         # Only update _2f session key
-        $self->p->updateSession($req,
+        $self->p->updateSession(
+            $req,
             {
-                _2f     => $self->prefix,
-                });
+                _2f => $self->prefix,
+            }
+        );
     }
 
     $req->authResult(PE_SENDRESPONSE);

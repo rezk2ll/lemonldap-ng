@@ -65,7 +65,6 @@ sub modifyPassword {
         0, $requireOldPassword );
     return $code unless ( $code == PE_PASSWORD_OK );
 
-
     # If password policy and force reset, set reset flag
     if (    $self->conf->{ldapPpolicyControl}
         and $req->data->{forceReset}

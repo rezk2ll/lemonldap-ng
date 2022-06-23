@@ -19,8 +19,8 @@ extends qw(
 
 # INTERFACE
 
-has opList => ( is => 'rw', isa     => 'ArrayRef', default => sub { [] } );
-has path   => ( is => 'rw', default => 'oauth2' );
+has opList => ( is => 'rw', isa => 'ArrayRef', default => sub { [] } );
+has path => ( is => 'rw', default => 'oauth2' );
 
 use constant sessionKind => 'OIDC';
 

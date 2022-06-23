@@ -104,7 +104,7 @@ q"I refuse to compile 'rules.json' when useSafeJail isn't activated! Yes I know,
 
     $class->logger->debug("DevOps handler called by $vhost");
     $class->locationRulesInit( undef, { $vhost => $json->{rules} } );
-    $class->headersInit( undef,       { $vhost => $json->{headers} } );
+    $class->headersInit( undef, { $vhost => $json->{headers} } );
     $class->tsv->{lastVhostUpdate}->{$vhost} = time;
     $class->tsv->{https}->{$vhost} = uc $req->env->{HTTPS_REDIRECT} eq 'ON'
       if exists $req->env->{HTTPS_REDIRECT};

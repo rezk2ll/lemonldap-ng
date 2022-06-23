@@ -125,7 +125,7 @@ sub getUser {
 
     $self->validateLdap;
     return PE_LDAPCONNECTFAILED unless $self->ldap;
-    return PE_LDAPERROR unless $self->bind();
+    return PE_LDAPERROR         unless $self->bind();
 
     my $mesg = $self->ldap->search(
         base   => $self->conf->{ldapBase},

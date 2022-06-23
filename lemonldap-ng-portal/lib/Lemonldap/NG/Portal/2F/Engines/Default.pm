@@ -229,7 +229,8 @@ sub run {
 
     # Skip 2F if authnLevel is already high enough
     if (
-        $self->conf->{sfOnlyUpgrade} and !$forceUpgrade
+            $self->conf->{sfOnlyUpgrade}
+        and !$forceUpgrade
         and ( ( $req->pdata->{targetAuthnLevel} || 0 ) <=
             ( $req->sessionInfo->{authenticationLevel} || 0 ) )
       )
@@ -392,7 +393,8 @@ sub run {
             MSG           => $self->canUpdateSfa($req) || 'choose2f',
             ALERT   => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
             MODULES => [
-                map { {
+                map {
+                    {
                         CODE  => $_->prefix,
                         LOGO  => $_->logo,
                         LABEL => $_->label
@@ -451,7 +453,7 @@ sub _choice {
             return $self->p->do(
                 $req,
                 [
-                    sub { $res }, 'controlUrl',
+                    sub { $res },  'controlUrl',
                     'buildCookie', @{ $self->p->endAuth },
                 ]
             );

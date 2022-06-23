@@ -23,7 +23,8 @@ sub runTest {
     my $idpId = login( $op, 'french' );
 
     # Inital first name
-    $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{french}->{cn} = 'Frédéric Accents';
+    $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{french}->{cn} =
+      'Frédéric Accents';
 
     my $code = authorize(
         $op, $idpId,
@@ -107,7 +108,8 @@ sub runTest {
     Time::Fake->offset("+10d");
 
     # Change attribute value
-    $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{french}->{cn} = 'Frédéric Freedom';
+    $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{french}->{cn} =
+      'Frédéric Freedom';
 
     $json = expectJSON( refreshGrant( $op, 'rpid', $refresh_token ) );
 
@@ -146,8 +148,8 @@ sub runTest {
 
     $json = expectJSON( getUserinfo( $op, $access_token ) );
 
-    is( $json->{name}, "Frédéric Freedom", "Correct user info" );
-    is( $json->{'sub'}, "customfrench",    'Got User Info' );
+    is( $json->{name},  "Frédéric Freedom", "Correct user info" );
+    is( $json->{'sub'}, "customfrench",     'Got User Info' );
 
     ## Test introspection of refreshed token #2171
     $json = expectJSON( introspect( $op, 'rpid', $access_token ) );

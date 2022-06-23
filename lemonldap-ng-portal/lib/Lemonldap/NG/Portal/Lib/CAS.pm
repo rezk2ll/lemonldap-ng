@@ -48,7 +48,8 @@ sub loadSrv {
         my $cond = $self->conf->{casSrvMetaDataOptions}->{$_}
           ->{casSrvMetaDataOptionsResolutionRule};
         if ( length $cond ) {
-            my $rule_sub = $self->p->buildRule( $cond, "CAS server resolution" );
+            my $rule_sub =
+              $self->p->buildRule( $cond, "CAS server resolution" );
             if ($rule_sub) {
                 $self->srvRules->{$_} = $rule_sub;
             }

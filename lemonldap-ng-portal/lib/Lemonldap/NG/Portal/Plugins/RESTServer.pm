@@ -114,7 +114,7 @@ has exportedAttr => (
         }
     }
 );
-has ott     => (
+has ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {

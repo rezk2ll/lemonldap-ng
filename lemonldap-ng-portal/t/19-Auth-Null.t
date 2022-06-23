@@ -17,7 +17,7 @@ my $client = LLNG::Manager::Test->new( {
     }
 );
 
-ok( $res = $client->_get('/', accept => 'text/html'), 'Auth query' );
+ok( $res = $client->_get( '/', accept => 'text/html' ), 'Auth query' );
 ok( $res->[2]->[0] =~ m%"scrollTop":100%, 'scrollTop param found' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ m%id="btn-back-to-top"%, 'scrollTop button found' )

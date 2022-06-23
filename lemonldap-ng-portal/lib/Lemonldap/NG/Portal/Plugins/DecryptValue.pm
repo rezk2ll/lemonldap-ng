@@ -17,7 +17,7 @@ extends qw(
 
 # INITIALIZATION
 has rule => ( is => 'rw', default => sub { 0 } );
-has ott  => (
+has ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
@@ -53,9 +53,9 @@ sub display {
 
     # Display form
     my $params = {
-        MSG       => 'decryptCipheredValue',
-        ALERTE    => 'alert-warning',
-        TOKEN     => (
+        MSG    => 'decryptCipheredValue',
+        ALERTE => 'alert-warning',
+        TOKEN  => (
               $self->ottRule->( $req, {} )
             ? $self->ott->createToken()
             : ''
@@ -96,9 +96,9 @@ sub run {
         }
 
         my $params = {
-            MSG       => "PE$msg",
-            ALERTE    => 'alert-warning',
-            TOKEN     => $token,
+            MSG    => "PE$msg",
+            ALERTE => 'alert-warning',
+            TOKEN  => $token,
         };
         return $self->p->sendJSONresponse( $req, $params )
           if $req->wantJSON;

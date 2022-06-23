@@ -1485,7 +1485,7 @@ sub attributes {
             flags         => 'hp',
         },
         captchaOptions => {
-            type    => 'keyTextContainer',
+            type          => 'keyTextContainer',
             documentation => 'Captcha module options',
             flags         => 'hp',
         },

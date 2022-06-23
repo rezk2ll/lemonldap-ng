@@ -18,7 +18,7 @@ has prefix   => ( is => 'rw', default => 'totp' );
 has template => ( is => 'ro', default => 'totp2fregister' );
 has welcome  => ( is => 'ro', default => 'yourNewTotpKey' );
 has logo     => ( is => 'rw', default => 'totp.png' );
-has ott      => (
+has ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {

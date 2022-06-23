@@ -95,7 +95,7 @@ sub validateCredential {
     my $attestation_object_b64 = $credential->{response}->{attestationObject};
     my $requested_uv =
       $registration_options->{authenticatorSelection}->{userVerification} || "";
-    my $challenge_b64 = $registration_options->{challenge};
+    my $challenge_b64        = $registration_options->{challenge};
     my $token_binding_id_b64 = encode_base64url(
         $req->headers->header('Sec-Provided-Token-Binding-ID') );
 

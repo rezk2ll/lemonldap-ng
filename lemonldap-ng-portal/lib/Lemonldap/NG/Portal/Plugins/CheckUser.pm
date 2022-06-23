@@ -206,10 +206,10 @@ sub check {
         }
 
         my $params = {
-            MSG        => "PE$msg",
-            ALERTE     => 'alert-warning',
-            LOGIN      => '',
-            TOKEN      => $token,
+            MSG    => "PE$msg",
+            ALERTE => 'alert-warning',
+            LOGIN  => '',
+            TOKEN  => $token,
         };
         return $self->p->sendJSONresponse( $req, $params )
           if $req->wantJSON && $msg;
@@ -233,10 +233,10 @@ sub check {
             $req,
             'checkuser',
             params => {
-                MSG        => 'PE' . PE_MALFORMEDUSER,
-                ALERTE     => 'alert-warning',
-                LOGIN      => '',
-                TOKEN      => (
+                MSG    => 'PE' . PE_MALFORMEDUSER,
+                ALERTE => 'alert-warning',
+                LOGIN  => '',
+                TOKEN  => (
                       $self->ottRule->( $req, {} )
                     ? $self->ott->createToken()
                     : ''

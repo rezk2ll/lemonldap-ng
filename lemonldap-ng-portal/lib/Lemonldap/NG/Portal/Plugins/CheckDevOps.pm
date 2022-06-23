@@ -65,10 +65,10 @@ sub display {
 
     # Display form
     my $params = {
-        DOWNLOAD   => $self->conf->{checkDevOpsDownload},
-        MSG        => 'checkDevOps',
-        ALERTE     => 'alert-info',
-        TOKEN      => (
+        DOWNLOAD => $self->conf->{checkDevOpsDownload},
+        MSG      => 'checkDevOps',
+        ALERTE   => 'alert-info',
+        TOKEN    => (
               $self->ottRule->( $req, {} )
             ? $self->ott->createToken()
             : ''
@@ -106,10 +106,10 @@ sub parse {
 
         # Prepare form
         my $params = {
-            DOWNLOAD  => $self->conf->{checkDevOpsDownload},
-            MSG       => "PE$msg",
-            ALERTE    => 'alert-warning',
-            TOKEN     => $token
+            DOWNLOAD => $self->conf->{checkDevOpsDownload},
+            MSG      => "PE$msg",
+            ALERTE   => 'alert-warning',
+            TOKEN    => $token
         };
         return $self->p->sendJSONresponse( $req, $params )
           if ( $req->wantJSON && $msg );
@@ -296,15 +296,15 @@ sub parse {
 
     # Prepare form
     my $params = {
-        DOWNLOAD  => $self->conf->{checkDevOpsDownload},
-        MSG       => $msg,
-        UNKNOWN   => join( $self->conf->{multiValuesSeparator}, @$unknown ),
-        ALERTE    => $alert,
-        FILE      => $json,
-        HEADERS   => $headers,
-        RULES     => $rules,
-        URL       => $url,
-        TOKEN     => (
+        DOWNLOAD => $self->conf->{checkDevOpsDownload},
+        MSG      => $msg,
+        UNKNOWN  => join( $self->conf->{multiValuesSeparator}, @$unknown ),
+        ALERTE   => $alert,
+        FILE     => $json,
+        HEADERS  => $headers,
+        RULES    => $rules,
+        URL      => $url,
+        TOKEN    => (
               $self->ottRule->( $req, {} )
             ? $self->ott->createToken()
             : ''

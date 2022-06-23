@@ -116,7 +116,7 @@ sub issuer {
 
                 oidcOPMetaDataOptions => {
                     op => {
-                        oidcOPMetaDataOptionsClientSecret => "rpsecret",
+                        oidcOPMetaDataOptionsClientSecret   => "rpsecret",
                         oidcOPMetaDataOptionsResolutionRule =>
                           '$_choice eq "OIDC1"',
                     },
