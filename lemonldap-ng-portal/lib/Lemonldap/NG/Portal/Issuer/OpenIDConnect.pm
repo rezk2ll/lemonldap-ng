@@ -36,7 +36,7 @@ sub beforeAuth { 'exportRequestParameters' }
 
 use constant sessionKind => 'OIDCI';
 
-has rule => ( is => 'rw' );
+has rule          => ( is => 'rw' );
 has configStorage => (
     is      => 'ro',
     lazy    => 1,
@@ -950,12 +950,50 @@ sub run {
 
             my $post_logout_redirect_uri =
               $oidc_request->{'post_logout_redirect_uri'};
-            my $state = $oidc_request->{'state'};
+            my $id_token_hint = $oidc_request->{'id_token_hint'};
+            my $state         = $oidc_request->{'state'};
+            my $bypassConfirm = 0;
+
+            # Check if we can bypass confirm using token_hint
+            if ($id_token_hint) {
+
+                $self->logger->debug("Check sub of ID Token $id_token_hint");
+
+                my $payload  = getJWTPayload($id_token_hint);
+                my @audience = @{ $payload->{aud} };
+
+                # Check bypassConfirm parameter for rp using audience
+                foreach ( keys %{ $self->conf->{oidcRPMetaDataOptions} } ) {
+                    my $logout_rp = $_;
+                    my $rpid =
+                      $self->conf->{oidcRPMetaDataOptions}->{$logout_rp}
+                      ->{oidcRPMetaDataOptionsClientID};
+                    foreach (@audience) {
+                        my $aud = $_;
+                        if ( $aud eq $rpid ) {
+                            $bypassConfirm =
+                              $self->conf->{oidcRPMetaDataOptions}->{$logout_rp}
+                              ->{oidcRPMetaDataOptionsLogoutBypassConfirm};
+                            $self->logger->debug(
+                                "Bypass logout confirm for RP $logout_rp")
+                              if $bypassConfirm;
+                            last;
+                        }
+                    }
+                    last if $bypassConfirm;
+                }
+            }
 
             # Ask consent for logout
-            if ( $req->param('confirm') ) {
+            if ( $req->param('confirm') or $bypassConfirm ) {
                 my $err;
-                if ( $req->param('confirm') == 1 ) {
+                if ( (
+                        defined( $req->param('confirm') )
+                        and $req->param('confirm') eq '1'
+                    )
+                    or $bypassConfirm
+                  )
+                {
                     $req->steps( [
                             @{ $self->p->beforeLogout }, 'authLogout',
                             'deleteSession'
@@ -982,7 +1020,6 @@ sub run {
                             $self->conf->{oidcRPMetaDataOptions}->{$logout_rp}
                             ->{oidcRPMetaDataOptionsPostLogoutRedirectUris} )
                         {
-
                             foreach ( split( /\s+/, $redirect_uris ) ) {
                                 if ( $post_logout_redirect_uri eq $_ ) {
                                     $self->logger->debug(
