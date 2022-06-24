@@ -4492,7 +4492,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default => 0
         },
         oidcRPMetaDataOptionsPostLogoutRedirectUris => { type => 'text', },
-        oidcRPMetaDataOptionsLogoutUrl              => {
+        oidcRPMetaDataOptionsLogoutBypassConfirm    => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Bypass logout confirmation'
+        },
+        oidcRPMetaDataOptionsLogoutUrl => {
             type          => 'url',
             documentation => 'Logout URL',
         },

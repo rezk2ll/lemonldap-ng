@@ -2469,6 +2469,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             'type' => 'select'
         },
+        'oidcRPMetaDataOptionsLogoutBypassConfirm' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'oidcRPMetaDataOptionsLogoutSessionRequired' => {
             'default' => 0,
             'type'    => 'bool'

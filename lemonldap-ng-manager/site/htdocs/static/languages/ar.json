@@ -696,6 +696,7 @@
 "oidcRPMetaDataOptionsIDTokenForceClaims":"Force claims to be returned in ID Token",
 "oidcRPMetaDataOptionsIDTokenSignAlg":"خوارزمية توقيع آي دي التوكن",
 "oidcRPMetaDataOptionsIcon":"شعار",
+"oidcRPMetaDataOptionsLogoutBypassConfirm":"تجاوز تأكيد",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"جلسة مطلوب",
 "oidcRPMetaDataOptionsLogoutType":"نوع",
 "oidcRPMetaDataOptionsLogoutUrl":"يو آر إل",

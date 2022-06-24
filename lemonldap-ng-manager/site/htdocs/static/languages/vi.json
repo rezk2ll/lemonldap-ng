@@ -696,6 +696,7 @@
 "oidcRPMetaDataOptionsIDTokenForceClaims":"Force claims to be returned in ID Token",
 "oidcRPMetaDataOptionsIDTokenSignAlg":"Thuật toán chữ ký ID Token",
 "oidcRPMetaDataOptionsIcon":"Logo",
+"oidcRPMetaDataOptionsLogoutBypassConfirm":"Bypass confirm",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"Phiên yêu cầu",
 "oidcRPMetaDataOptionsLogoutType":"Loại",
 "oidcRPMetaDataOptionsLogoutUrl":"URL",

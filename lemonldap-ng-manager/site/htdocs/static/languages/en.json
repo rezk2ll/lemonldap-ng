@@ -696,6 +696,7 @@
 "oidcRPMetaDataOptionsIDTokenForceClaims":"Force claims to be returned in ID Token",
 "oidcRPMetaDataOptionsIDTokenSignAlg":"ID Token signature algorithm",
 "oidcRPMetaDataOptionsIcon":"Logo",
+"oidcRPMetaDataOptionsLogoutBypassConfirm":"Bypass confirm",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"Session required",
 "oidcRPMetaDataOptionsLogoutType":"Type",
 "oidcRPMetaDataOptionsLogoutUrl":"URL",

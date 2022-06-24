@@ -710,6 +710,13 @@ function templates(tpl,key) {
          {
             "_nodes" : [
                {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutBypassConfirm",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutBypassConfirm",
+                  "title" : "oidcRPMetaDataOptionsLogoutBypassConfirm",
+                  "type" : "bool"
+               },
+               {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsPostLogoutRedirectUris",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsPostLogoutRedirectUris",
                   "title" : "oidcRPMetaDataOptionsPostLogoutRedirectUris"

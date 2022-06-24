@@ -696,6 +696,7 @@
 "oidcRPMetaDataOptionsIDTokenForceClaims":"ID Jetonunda özelliklerin yayınlanmasını zorla",
 "oidcRPMetaDataOptionsIDTokenSignAlg":"ID Token imzalama algoritması",
 "oidcRPMetaDataOptionsIcon":"Logo",
+"oidcRPMetaDataOptionsLogoutBypassConfirm":"Onayı atla",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"Oturum gerekli",
 "oidcRPMetaDataOptionsLogoutType":"Tür",
 "oidcRPMetaDataOptionsLogoutUrl":"URL",

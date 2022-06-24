@@ -696,6 +696,7 @@
 "oidcRPMetaDataOptionsIDTokenForceClaims":"Wymuś zwrot roszczeń w tokenie identyfikacyjnym",
 "oidcRPMetaDataOptionsIDTokenSignAlg":"Algorytm podpisu tokena identyfikacyjnego",
 "oidcRPMetaDataOptionsIcon":"Logo",
+"oidcRPMetaDataOptionsLogoutBypassConfirm":"Potwierdzenie obejścia",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"Wymagana sesja",
 "oidcRPMetaDataOptionsLogoutType":"Rodzaj",
 "oidcRPMetaDataOptionsLogoutUrl":"URL",

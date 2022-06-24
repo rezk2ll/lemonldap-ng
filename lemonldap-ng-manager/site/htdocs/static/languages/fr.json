@@ -696,6 +696,7 @@
 "oidcRPMetaDataOptionsIDTokenForceClaims":"Forcer la publication des attributs dans le jeton d'identité",
 "oidcRPMetaDataOptionsIDTokenSignAlg":"Algorithme de signature des jetons d'identité",
 "oidcRPMetaDataOptionsIcon":"Logo",
+"oidcRPMetaDataOptionsLogoutBypassConfirm":"Contourner la confirmation",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"Session requise",
 "oidcRPMetaDataOptionsLogoutType":"Type",
 "oidcRPMetaDataOptionsLogoutUrl":"URL",
