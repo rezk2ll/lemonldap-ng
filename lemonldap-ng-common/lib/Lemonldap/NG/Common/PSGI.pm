@@ -257,8 +257,9 @@ sub sendJs {
     my ( $self, $req ) = @_;
     my $sp = $self->staticPrefix;
     $sp =~ s/\/*$/\//;
-    my $sc = $req->script_name;
-    $sc = '.' unless ($sc);
+    my $sc = $req->script_name // "";
+
+    # Javascript scriptname is assumed by our JS code to end with /
     $sc =~ s#/*$#/#;
     my $s =
         sprintf 'var staticPrefix="%s";'
@@ -281,8 +282,9 @@ sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
     my $sp = $self->staticPrefix;
     $sp =~ s/\/*$/\//;
-    my $sc = $req->script_name;
-    $sc = '.' unless ($sc);
+    my $sc = $req->script_name // "";
+
+    # SCRIPTNAME is assumed by our templates to end with /
     $sc =~ s#/*$#/#;
     $args{code}    ||= 200;
     $args{headers} ||= [ $req->spliceHdrs ];
