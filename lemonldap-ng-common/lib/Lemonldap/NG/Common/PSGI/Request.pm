@@ -25,10 +25,6 @@ sub new {
     $self->env->{REQUEST_URI} = $self->env->{X_ORIGINAL_URI}
       if ( $self->env->{X_ORIGINAL_URI} );
     $self->env->{PATH_INFO} =~ s|//+|/|g;
-
-    #if ( my $tmp = $self->script_name ) {
-    #    $self->env->{PATH_INFO} =~ s|^$tmp|/|;
-    #}
     $self->env->{PATH_INFO} ||= '/';
     $self->env->{REQUEST_URI} =~ s|^//+|/|g;
     $self->{uri}         = uri_unescape( $self->env->{REQUEST_URI} );
