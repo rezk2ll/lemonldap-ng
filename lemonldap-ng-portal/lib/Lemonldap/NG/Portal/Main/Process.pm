@@ -297,7 +297,7 @@ sub deleteSession {
         # Redirect on logout page if no other target defined
         if ( !$req->urldc and !$req->postUrl ) {
             $self->logger->debug('No other target defined, redirect on logout');
-            $req->urldc( $req->script_name . "?logout=1" );
+            $req->urldc( $self->buildUrl( { logout => 1 } ) );
         }
     }
     $req->userData( {} );

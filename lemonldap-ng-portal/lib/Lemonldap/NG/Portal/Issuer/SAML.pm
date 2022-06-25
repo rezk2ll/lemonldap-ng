@@ -1407,7 +1407,7 @@ sub logout {
     # for them.
     # Redirect on logout page when all is done.
     if ( $self->sendLogoutRequestToProviders( $req, $logout ) ) {
-        $self->{urldc} = $req->script_name . "?logout=1";
+        $req->urldc( $self->p->buildUrl({logout => 1}));
         return PE_OK;
     }
 
