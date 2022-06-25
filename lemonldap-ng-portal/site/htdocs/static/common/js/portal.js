@@ -135,7 +135,7 @@ LemonLDAP::NG Portal jQuery scripts
   setKey = function(key, val, success, error) {
     return $.ajax({
       type: "GET",
-      url: datas['scriptname'] + '/mysession/?gettoken',
+      url: scriptname + 'mysession/?gettoken',
       dataType: 'json',
       error: error,
       success: function(data) {
@@ -146,7 +146,7 @@ LemonLDAP::NG Portal jQuery scripts
         d[key] = val;
         return $.ajax({
           type: "PUT",
-          url: datas['scriptname'] + '/mysession/persistent',
+          url: scriptname + 'mysession/persistent',
           dataType: 'json',
           data: d,
           success: success,
@@ -159,13 +159,13 @@ LemonLDAP::NG Portal jQuery scripts
   delKey = function(key, sub, success, error) {
     return $.ajax({
       type: "GET",
-      url: datas['scriptname'] + '/mysession/?gettoken',
+      url: scriptname + 'mysession/?gettoken',
       dataType: 'json',
       error: error,
       success: function(data) {
         return $.ajax({
           type: "DELETE",
-          url: datas['scriptname'] + "/mysession/persistent/" + key + "?sub=" + sub + "&token=" + data.token,
+          url: scriptname + "mysession/persistent/" + key + "?sub=" + sub + "&token=" + data.token,
           dataType: 'json',
           success: success,
           error: error
@@ -207,7 +207,7 @@ LemonLDAP::NG Portal jQuery scripts
   ping = function() {
     return $.ajax({
       type: "POST",
-      url: datas['scriptname'],
+      url: scriptname,
       data: {
         ping: 1
       },

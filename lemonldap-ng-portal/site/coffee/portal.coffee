@@ -116,7 +116,7 @@ setKey = (key,val,success,error) ->
 	# First request to get token
 	$.ajax
 		type: "GET"
-		url: datas['scriptname'] + '/mysession/?gettoken'
+		url: scriptname + 'mysession/?gettoken'
 		dataType: 'json'
 		error: error
 		# On success, value is set
@@ -126,7 +126,7 @@ setKey = (key,val,success,error) ->
 			d[key] = val
 			$.ajax
 				type: "PUT"
-				url: datas['scriptname'] + '/mysession/persistent'
+				url: scriptname + 'mysession/persistent'
 				dataType: 'json'
 				data: d
 				success: success
@@ -135,14 +135,14 @@ setKey = (key,val,success,error) ->
 delKey = (key,sub,success,error) ->
 	$.ajax
 		type: "GET"
-		url: datas['scriptname'] + '/mysession/?gettoken'
+		url: scriptname + 'mysession/?gettoken'
 		dataType: 'json'
 		error: error
 		# On success, value is set
 		success: (data) ->
 			$.ajax
 				type: "DELETE"
-				url: "#{datas['scriptname']}/mysession/persistent/#{key}?sub=#{sub}&token=#{data.token}"
+				url: "#{scriptname}mysession/persistent/#{key}?sub=#{sub}&token=#{data.token}"
 				dataType: 'json'
 				success: success
 				error: error
@@ -199,7 +199,7 @@ isHiddenFormValueSet = (option) ->
 ping = ->
 	$.ajax
 		type: "POST"
-		url: datas['scriptname']
+		url: scriptname
 		data:
 			ping: 1
 		dataType: 'json'
@@ -228,21 +228,6 @@ setCookie = (name, value, samesite, exdays) ->
 	d = new Date()
 	d.setTime d.getTime() + exdays*86400000
 	document.cookie = "#{name}=#{value}; expires=#{d.toUTCString()}; path=/; SameSite=#{samesite}"
-
-# Function to change password using Ajax (instead of POST)
-# NOT USED FOR NOW
-#changePwd = (event) ->
-#	event.preventDefault()
-#	$.ajax
-#		type: 'POST'
-#		url: datas['scriptname']
-#		dataType: 'json'
-#		data:
-#			oldpassword: $('#oldpassword').val()
-#			newpassword: $('#newpassword').val()
-#			confirmpassword: $('#confirmpassword').val()
-#		success: (data) ->
-#			console.log "R", data
 
 # Initialization
 datas = {}
