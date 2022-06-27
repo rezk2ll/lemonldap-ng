@@ -200,9 +200,13 @@ count(2);
 switch ('rp');
 ok( $res = $rp->_get("/sessions/global/$spId"), 'Get UTF-8' );
 $res = expectJSON($res);
-ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
-  or explain( $res, 'cn => Frédéric Accents' );
-count(2);
+my $access_token_eol = $res->{_oidc_access_token_eol};
+my $access_token_old = $res->{_oidc_access_token};
+ok( $access_token_eol, 'OIDC EOL time is stored' );
+ok( $access_token_old, 'Obtained refresh token' );
+is( $res->{cn},   'Frédéric Accents', 'UTF-8 values' );
+is( $res->{mail}, 'fa@badwolf.org',     'Correct email' );
+count(5);
 
 is( $res->{userinfo_hook}, "op/french", "oidcGotUserInfo called" );
 is( $res->{id_token_hook}, "op/french", "oidcGotIDToken called" );
@@ -211,6 +215,77 @@ count(2);
 my $id_token_decoded = id_token_payload( $res->{_oidc_id_token} );
 is( $id_token_decoded->{acr}, 'customacr-1', "Correct custom ACR" );
 count(1);
+
+# Update session at OP
+$Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{french} = {
+    uid  => 'french',
+    cn   => 'Frédéric Accents',
+    mail => 'fa2@badwolf.org',
+    guy  => '',
+    type => '',
+};
+switch ('op');
+ok( $op->_get( '/refresh', cookie => "lemonldap=$idpId" ) );
+count(1);
+switch ('rp');
+
+# Test session refresh (before access token refresh)
+ok(
+    $res = $rp->_get(
+        '/refresh',
+        cookie => "lemonldap=$spId",
+        accept => 'text/html'
+    ),
+    'Query RP for refresh'
+);
+count(1);
+
+ok( $res = $rp->_get("/sessions/global/$spId"), 'Get session after refresh' );
+count(1);
+$res = expectJSON($res);
+my $access_token_new     = $res->{_oidc_access_token};
+my $access_token_new_eol = $res->{_oidc_access_token_eol};
+is( $access_token_new_eol, $access_token_eol,
+    "Access token EOL has not changed" );
+is( $access_token_new, $access_token_old, "Access token has not changed" );
+is( $res->{mail},      'fa2@badwolf.org', 'Updated RP session' );
+count(3);
+
+# Update session at OP
+$Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{french} = {
+    uid  => 'french',
+    cn   => 'Frédéric Accents',
+    mail => 'fa3@badwolf.org',
+    guy  => '',
+    type => '',
+};
+switch ('op');
+ok( $op->_get( '/refresh', cookie => "lemonldap=$idpId" ) );
+count(1);
+switch ('rp');
+
+# Test session refresh (with access token refresh)
+Time::Fake->offset("+2h");
+ok(
+    $res = $rp->_get(
+        '/refresh',
+        cookie => "lemonldap=$spId",
+        accept => 'text/html'
+    ),
+    'Query RP for refresh'
+);
+count(1);
+
+ok( $res = $rp->_get("/sessions/global/$spId"), 'Get session after refresh' );
+count(1);
+$res                  = expectJSON($res);
+$access_token_new     = $res->{_oidc_access_token};
+$access_token_new_eol = $res->{_oidc_access_token_eol};
+isnt( $access_token_new_eol, $access_token_eol,
+    "Access token EOL has changed" );
+isnt( $access_token_new, $access_token_old, "Access token has changed" );
+is( $res->{mail}, 'fa3@badwolf.org', 'Updated RP session' );
+count(3);
 
 # Logout initiated by RP
 ok(
@@ -346,6 +421,7 @@ sub op {
                 userDB                          => 'Same',
                 issuerDBOpenIDConnectActivation => "1",
                 restSessionServer               => 1,
+                restExportSecretKeys            => 1,
                 oidcRPMetaDataExportedVars      => {
                     rp => {
                         email       => "mail",
@@ -364,6 +440,7 @@ sub op {
                         oidcRPMetaDataOptionsIDTokenSignAlg    => "HS512",
                         oidcRPMetaDataOptionsBypassConsent     => 0,
                         oidcRPMetaDataOptionsClientSecret      => "rpsecret",
+                        oidcRPMetaDataOptionsRefreshToken      => 1,
                         oidcRPMetaDataOptionsUserIDAttr        => "",
                         oidcRPMetaDataOptionsAccessTokenExpiration  => 3600,
                         oidcRPMetaDataOptionsPostLogoutRedirectUris =>
@@ -398,6 +475,7 @@ sub rp {
                 authentication             => 'OpenIDConnect',
                 userDB                     => 'Same',
                 restSessionServer          => 1,
+                restExportSecretKeys       => 1,
                 oidcOPMetaDataExportedVars => {
                     op => {
                         cn   => "name",
@@ -411,7 +489,7 @@ sub rp {
                         oidcOPMetaDataOptionsCheckJWTSignature => 1,
                         oidcOPMetaDataOptionsJWKSTimeout       => 0,
                         oidcOPMetaDataOptionsClientSecret      => "rpsecret",
-                        oidcOPMetaDataOptionsScope        => "openid profile",
+                        oidcOPMetaDataOptionsScope => "openid profile email",
                         oidcOPMetaDataOptionsStoreIDToken => 0,
                         oidcOPMetaDataOptionsMaxAge       => 30,
                         oidcOPMetaDataOptionsDisplay      => "",

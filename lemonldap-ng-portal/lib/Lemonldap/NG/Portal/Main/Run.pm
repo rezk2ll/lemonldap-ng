@@ -203,8 +203,30 @@ sub refresh {
     $req->user( $data{_user} || $data{ $self->conf->{whatToTrace} } );
     $req->id( $data{_session_id} );
     foreach ( keys %data ) {
-        delete $data{$_}
-          unless ( /^_/ or /^(?:startTime|authenticationLevel)$/ );
+
+        # Variables that start with _ are kept accross refresh
+        if (/^_/) {
+
+            # But not OIDC tokens, which can be refreshed
+            if (
+/^(_oidc_access_token|_oidc_refresh_token|_oidc_access_token_eol)$/
+              )
+            {
+                delete $data{$_};
+            }
+
+        }
+
+        # Other variables should be refreshed
+        else {
+            # But not these two
+            if (/^(?:startTime|authenticationLevel)$/) {
+                next;
+            }
+            else {
+                delete $data{$_};
+            }
+        }
     }
     $data{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
     $self->logger->debug(
