@@ -5,10 +5,10 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 extends qw(
-  Lemonldap::NG::Portal::Main::Plugin
+  Lemonldap::NG::Portal::2F::Register::Base
   Lemonldap::NG::Common::TOTP
 );
 
@@ -30,10 +30,6 @@ has ott => (
         return $ott;
     }
 );
-
-sub init {
-    return 1;
-}
 
 sub run {
     my ( $self, $req, $action ) = @_;
