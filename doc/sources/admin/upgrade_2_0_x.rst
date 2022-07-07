@@ -72,6 +72,35 @@ The :doc:`mail <mail2f>`, :doc:`external <external2f>` and :doc:`REST <rest2f>` 
 
 If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
 
+Customizing the 2FA logo in the registration screen
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The 2FA registration screen now displays the custom logo and label set in configuration. If you use custom templates, you should update ``2fregisters.tpl``
+
+.. code:: diff
+
+	@@ -77,10 +77,16 @@
+		 <div class="card border-secondary">
+		   <div class="card-body py-3">
+		   <a href="<TMPL_VAR NAME="URL">" class="nodecor">
+	-        <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/<TMPL_VAR NAME="LOGO">" alt="<TMPL_VAR NAME="CODE">2F" title="<TMPL_VAR NAME="CODE">2F" />
+	+        <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/<TMPL_VAR NAME="LOGO">" alt="<TMPL_VAR NAME="CODE">2f" title="<TMPL_VAR NAME="LABEL">" />
+		   </a>
+		   </div>
+	-      <div class="card-footer text-white text-uppercase bg-secondary"><TMPL_VAR NAME="CODE">2F</div>
+	+      <div class="card-footer text-white text-uppercase bg-secondary">
+	+      <TMPL_IF LABEL>
+	+        <p><TMPL_VAR NAME="LABEL"></p>
+	+      <TMPL_ELSE>
+	+        <p trspan="<TMPL_VAR NAME="CODE">2f"></p>
+	+      </TMPL_IF>
+	+      </div>
+		 </div>
+		 </div>
+		 </TMPL_LOOP>
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
 2.0.14
 ------
 

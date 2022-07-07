@@ -497,7 +497,6 @@ sub _displayRegister {
         );
     }
 
-    # If only one 2F is available, redirect to it
     my @am;
     foreach my $m ( @{ $self->sfRModules } ) {
         $self->logger->debug(
@@ -505,9 +504,10 @@ sub _displayRegister {
         if ( $m->{r}->( $req, $req->userData ) ) {
             push @am,
               {
-                CODE => $m->{m}->prefix,
-                URL  => '/2fregisters/' . $m->{m}->prefix,
-                LOGO => $m->{m}->logo,
+                CODE  => $m->{m}->prefix,
+                URL   => '/2fregisters/' . $m->{m}->prefix,
+                LOGO  => $m->{m}->logo,
+                LABEL => $m->{m}->label
               };
         }
     }
@@ -529,6 +529,7 @@ sub _displayRegister {
         $self->userLogger->warn("Do not display 2F devices!");
     }
 
+    # If only one 2F is available, redirect to it
     return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ], [] ]
       if (
         @am == 1

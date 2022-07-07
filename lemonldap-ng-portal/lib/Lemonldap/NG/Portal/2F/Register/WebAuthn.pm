@@ -9,7 +9,7 @@ use Crypt::URandom;
 
 our $VERSION = '2.0.12';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin';
+extends 'Lemonldap::NG::Portal::2F::Register::Base';
 with 'Lemonldap::NG::Portal::Lib::WebAuthn';
 
 # INITIALIZATION
@@ -51,8 +51,6 @@ has rpName => (
         $self->conf->{webauthnRpName} || "LemonLDAP::NG";
     }
 );
-
-sub init { return 1; }
 
 # RUNNING METHODS
 

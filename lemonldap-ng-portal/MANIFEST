@@ -9,6 +9,7 @@ lib/Lemonldap/NG/Portal/2F/Engines/Default.pm
 lib/Lemonldap/NG/Portal/2F/Ext2F.pm
 lib/Lemonldap/NG/Portal/2F/Mail2F.pm
 lib/Lemonldap/NG/Portal/2F/Radius.pm
+lib/Lemonldap/NG/Portal/2F/Register/Base.pm
 lib/Lemonldap/NG/Portal/2F/Register/TOTP.pm
 lib/Lemonldap/NG/Portal/2F/Register/U2F.pm
 lib/Lemonldap/NG/Portal/2F/Register/WebAuthn.pm
@@ -792,6 +793,7 @@ t/71-2F-U2F-with-History.t
 t/71-2F-U2F-with-TTL-and-msg.t
 t/71-2F-U2F-with-TTL.t
 t/71-2F-U2F.t
+t/72-2F-REST-CodeActivation-Resend.t
 t/72-2F-REST-with-History.t
 t/73-2F-UTOTP-TOTP-and-U2F-with-History.t
 t/73-2F-UTOTP-TOTP-and-U2F.t
@@ -801,6 +803,7 @@ t/74-2F-Required-Issuer-Timeouts.t
 t/74-2F-Required.t
 t/75-2F-Registers.t
 t/76-2F-Ext-with-BruteForce.t
+t/76-2F-Ext-with-CodeActivation-Resend.t
 t/76-2F-Ext-with-CodeActivation.t
 t/76-2F-Ext-with-GrantSession.t
 t/76-2F-Ext-with-History.t

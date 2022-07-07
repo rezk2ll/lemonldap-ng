@@ -5,7 +5,7 @@ use Data::Dumper;
 use MIME::Base64;
 
 require 't/test-lib.pm';
-my $maintests = 77;
+my $maintests = 78;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -26,6 +26,8 @@ SKIP: {
                 totp2fSelfRegistration  => 1,
                 totp2fActivation        => 1,
                 totp2fAuthnLevel        => 1,
+                totp2fLogo              => 'mytotp.png',
+                totp2fLabel             => 'My TOTP',
                 u2fSelfRegistration     => 1,
                 u2fActivation           => 1,
                 u2fAuthnLevel           => 5,
@@ -165,8 +167,10 @@ SKIP: {
     );
     ok( $res->[2]->[0] =~ /2fregistration\.(?:min\.)?js/,
         'Found 2f registration js' );
-    ok( $res->[2]->[0] =~ qr%<img src="/static/bootstrap/totp.png".*?/>%,
-        'Found totp.png' )
+    ok( $res->[2]->[0] =~ qr%<img src="/static/bootstrap/mytotp.png".*?/>%,
+        'Found custom totp logo' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0] =~ qr%<p>My TOTP</p>%, 'Found custom totp label' )
       or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ qr%<img src="/static/bootstrap/u2f.png".*?/>%,
         'Found u2f.png' )
