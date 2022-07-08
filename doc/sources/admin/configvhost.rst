@@ -498,7 +498,7 @@ Options
 Some options are available:
 
 -  **Port**: used to build redirection URL *(when user is not logged, or for
-   CDA requests)*
+   CDA requests)*, -1 means the handler builds the URL with the incoming port, as seen by the webserver
 -  **HTTPS**: used to build redirection URL
 -  **Maintenance mode**: reject all requests with a maintenance message
 -  **Aliases**: list of aliases for this virtual host *(avoid to rewrite
