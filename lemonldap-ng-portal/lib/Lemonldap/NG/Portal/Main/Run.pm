@@ -872,26 +872,17 @@ sub _dump {
     return;
 }
 
-sub sendHtml {
-    my ( $self, $req, $template, %args ) = @_;
+# Warning: this function returns a JSON string
+sub getTrOver {
+    my ( $self, $req, $templateDir ) = @_;
 
-    my $templateDir = $self->conf->{templateDir} . '/' . $self->getSkin($req);
-    $self->templateDir( [ $templateDir, @{ $self->templateDir } ] );
-
-    # Check template
-    $args{templateDir} = $templateDir;
-    my $tmpl = $args{templateDir} . "/$template.tpl";
-    unless ( -f $tmpl ) {
-        $self->logger->debug("Template $tmpl not found");
-        $args{templateDir} = $self->conf->{templateDir} . '/bootstrap';
-        $tmpl = $args{templateDir} . "/$template.tpl";
-        $self->logger->debug("-> Trying to load $tmpl");
-    }
-
-    # Override messages
-    my $trOverMessages = JSON::from_json( $self->trOver );
+    my $templateDir //= $self->conf->{templateDir} . '/' . $self->getSkin($req);
 
     unless ( $self->trOverCache->{$templateDir} ) {
+
+        # Override messages
+        my $trOverMessages = JSON::from_json( $self->trOver );
+
         opendir( DIR, $templateDir );
         my @langfiles = grep( /\.json$/, readdir(DIR) );
         close(DIR);
@@ -910,7 +901,27 @@ sub sendHtml {
 
         $self->trOverCache->{$templateDir} = JSON::to_json($trOverMessages);
     }
-    $args{params}->{TROVER} = $self->trOverCache->{$templateDir};
+
+    return $self->trOverCache->{$templateDir};
+}
+
+sub sendHtml {
+    my ( $self, $req, $template, %args ) = @_;
+
+    my $templateDir = $self->conf->{templateDir} . '/' . $self->getSkin($req);
+    $self->templateDir( [ $templateDir, @{ $self->templateDir } ] );
+
+    # Check template
+    $args{templateDir} = $templateDir;
+    my $tmpl = $args{templateDir} . "/$template.tpl";
+    unless ( -f $tmpl ) {
+        $self->logger->debug("Template $tmpl not found");
+        $args{templateDir} = $self->conf->{templateDir} . '/bootstrap';
+        $tmpl = $args{templateDir} . "/$template.tpl";
+        $self->logger->debug("-> Trying to load $tmpl");
+    }
+
+    $args{params}->{TROVER} = $self->getTrOver( $req, $templateDir );
 
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },
