@@ -959,8 +959,12 @@ sub run {
 
                 $self->logger->debug("Check sub of ID Token $id_token_hint");
 
-                my $payload  = getJWTPayload($id_token_hint);
-                my @audience = @{ $payload->{aud} };
+                # TODO: we should check JWT signature here to avoid DoS by
+                # logging the user out, however, as long as there is no logout
+                # confirmation when accessing ?logout=1, such a protection is
+                # trivial to bypass
+                my $payload = getJWTPayload($id_token_hint);
+                my $azp     = $payload->{azp};
 
                 # Check bypassConfirm parameter for rp using audience
                 foreach ( keys %{ $self->conf->{oidcRPMetaDataOptions} } ) {
@@ -968,19 +972,17 @@ sub run {
                     my $rpid =
                       $self->conf->{oidcRPMetaDataOptions}->{$logout_rp}
                       ->{oidcRPMetaDataOptionsClientID};
-                    foreach (@audience) {
-                        my $aud = $_;
-                        if ( $aud eq $rpid ) {
-                            $bypassConfirm =
-                              $self->conf->{oidcRPMetaDataOptions}->{$logout_rp}
-                              ->{oidcRPMetaDataOptionsLogoutBypassConfirm};
-                            $self->logger->debug(
-                                "Bypass logout confirm for RP $logout_rp")
-                              if $bypassConfirm;
-                            last;
-                        }
+
+                    # this works because _generateIDToken always sets azp
+                    if ( $azp and $rpid eq $azp ) {
+                        $bypassConfirm =
+                          $self->conf->{oidcRPMetaDataOptions}->{$logout_rp}
+                          ->{oidcRPMetaDataOptionsLogoutBypassConfirm};
+                        $self->logger->debug(
+                            "Bypass logout confirm for RP $logout_rp")
+                          if $bypassConfirm;
+                        last;
                     }
-                    last if $bypassConfirm;
                 }
             }
 
@@ -2421,9 +2423,9 @@ sub _generateIDToken {
         exp       => $id_token_exp,                      # expiration
         iat       => time,                               # Issued time
         auth_time => $sessionInfo->{_lastAuthnUTime},    # Authentication time
-        acr       => $id_token_acr,    # Authentication Context Class Reference
-        azp       => $client_id,       # Authorized party
-                                       # TODO amr
+        acr       => $id_token_acr,  # Authentication Context Class Reference
+        azp       => $client_id,     # Authorized party, this is used for logout
+                                     # TODO amr
     };
 
     for ( keys %{$extra_claims} ) {
