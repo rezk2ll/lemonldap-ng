@@ -764,7 +764,7 @@
   "type" : "object",
   "properties" : {
     "service" : {
-      "type" : "string"
+      "type" : "array"
     },
     "userAttribute" : {
       "type" : "string",
@@ -879,6 +879,9 @@
     "logoutUrl" : {
       "type" : "string",
       "format" : "url"
+    },
+    "logoutBypassConfirm" : {
+      "type" : "boolean"
     },
     "clientSecret" : {
       "type" : "string",
