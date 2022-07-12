@@ -891,8 +891,21 @@ sub getTrOver {
             my ($lang) = ( $file =~ /^(\w+)\.json/ );
             $self->logger->debug("Use $file to override messages");
             if ( open my $json, "<", $templateDir . "/" . $file ) {
-                local $/ = undef;
-                $trOverMessages->{$lang} = JSON::from_json(<$json>);
+                my $trdata;
+                eval {
+                    local $/ = undef;
+                    $trdata = JSON::from_json(<$json>);
+                };
+                if ($@) {
+                    $self->logger->warn("Ignoring $file because of error: $@");
+                }
+                if ( ref($trdata) eq "HASH" ) {
+                    for my $msg ( keys %$trdata ) {
+
+                        # lemonldap-ng.ini has priority
+                        $trOverMessages->{$lang}->{$msg} //= $trdata->{$msg};
+                    }
+                }
             }
             else {
                 $self->logger->error("Unable to read $file");
