@@ -2653,6 +2653,13 @@ sub sendLogoutRequestToProvider {
         $self->logger->debug('Relay state set');
     }
 
+    # Skip SLO if no method found (#2746)
+    unless ( defined $method and $method != -1 ) {
+        $self->logger->debug(
+            "No HTTP SLO method found for $providerID");
+        return ( 0, $method, undef );
+    }
+
     # Initiate the logout request
     unless ( $self->initLogoutRequest( $logout, $providerID, $method ) ) {
         $self->logger->error("Initiate logout request failed for $providerID");
