@@ -110,11 +110,11 @@ categories =
     dateTitle:          ['_utime', '_startTime', '_updateTime', '_lastAuthnUTime', '_lastSeen']
     connectionTitle:    ['ipAddr', '_timezone', '_url']
     authenticationTitle:['_session_id', '_user', '_password', 'authenticationLevel']
-    modulesTitle:       ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti']
+    modulesTitle:       ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti', '_2f']
     saml:               ['_idp', '_idpConfKey', '_samlToken', '_lassoSessionDump', '_lassoIdentityDump']
     groups:             ['groups', 'hGroups']
     ldap:               ['dn']
-    OpenIDConnect:      ['_oidc_id_token', '_oidc_OP', '_oidc_access_token']
+    OpenIDConnect:      ['_oidc_id_token', '_oidc_OP', '_oidc_access_token', '_oidc_refresh_token', '_oidc_access_token_eol']
     sfaTitle:			['_2fDevices']
     oidcConsents:		['_oidcConsents']
 

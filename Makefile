@@ -887,23 +887,9 @@ install_examples_site:
 install_doc_site:
 	# Offline documentation install
 	@rm -rf $(RDEFDOCDIR)
-	# Install doc directories
 	@install -v -d -m 755 $(RDEFDOCDIR)
-	@cd doc && find * -type d |(cd $(RDEFDOCDIR); xargs install -v -d -m 755) && cd -
-	# Install HTML files
-	@cd doc && for f in `find * -type f -name '*.html'`; do \
-		echo "Installing $$f"; \
-		../scripts/transform-templates \
-			usedebianlibs $(USEDEBIANLIBS) \
-			useexternallibs $(USEEXTERNALLIBS) \
-			jsminified $(JSCOMPRESS) \
-			cssminified $(CSSCOMPRESS) <$$f \
-		> $(RDEFDOCDIR)/$$f; \
-	done && cd -
-	# Install other files
-	@cd doc && for f in `find * -type f ! -name '*.html'`; do \
-		install -v -m 644 $$f $(RDEFDOCDIR)/$$f; \
-	done && cd -
+	@cd doc && find index.html pages/* -type f ! -path '*/.*' -exec install -v -m 644 -D '{}' $(RDEFDOCDIR)/'{}' \; && cd -
+
 	# Remove js
 	@cd $(RDEFDOCDIR) && if test "$(USEEXTERNALLIBS)" = "yes"; then \
 		rm -rvf $(DOCEXTERNALLIBS); \
@@ -1178,13 +1164,13 @@ test-diff:
 	done
 
 tidy: clean
-	@if perltidy -v|grep v20210717 >/dev/null; then \
+	@if perltidy -v|grep v20220217 >/dev/null; then \
 		for f in `find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \)`; do \
 			echo -n $$f; \
 			perltidy -se -b $$f; \
 			echo; \
 		done; \
-	else echo "Wrong perltidy version, please install Perl::Tidy@20210717" ; exit 1 ;\
+	else echo "Wrong perltidy version, please install Perl::Tidy@20220217" ; exit 1 ;\
 	fi
 	find lemon*/ -name '*.bak' -delete
 	$(MAKE) json

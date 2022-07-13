@@ -136,7 +136,7 @@ Application                                                       Configuration 
 .. image:: applications/simplesamlphp_logo.png                    :doc:`simpleSAMLphp<applications/simplesamlphp>`                                       ✔
 .. image:: applications/spring_logo.png                           :doc:`Spring<applications/spring>`                   ✔
 .. image:: applications/symfony_logo.png                          :doc:`Symfony<applications/symfony>`                 ✔
-.. image:: applications/sympa_logo.png                            :doc:`Sympa<applications/sympa>`                     ✔
+.. image:: applications/sympa_logo.png                            :doc:`Sympa<applications/sympa>`                     ✔                             ✔
 .. image:: applications/tomcat_logo.png                           :doc:`Tomcat<applications/tomcat>`                   ✔
 .. image:: applications/wekan-logo.png                            :doc:`Wekan<applications/wekan>`                                           ✔
 .. image:: applications/wiki.js.svg                               :doc:`Wiki.js<applications/wikijs>`                                           ✔

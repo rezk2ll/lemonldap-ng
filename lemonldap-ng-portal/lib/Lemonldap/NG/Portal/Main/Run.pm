@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -121,7 +121,20 @@ sub handler {
 
 sub authenticated {
     my ( $self, $req ) = @_;
-    return $self->sendJSONresponse( $req, { status => 1 } );
+
+    return $self->do(
+        $req,
+        [
+            'importHandlerData',
+            'controlUrl',
+            @{ $self->forAuthUser },
+            sub {
+                $req->response(
+                    $self->sendJSONresponse( $req, { status => 1 } ) );
+                return PE_SENDRESPONSE;
+            }
+        ]
+    );
 }
 
 sub pleaseAuth {
@@ -190,8 +203,30 @@ sub refresh {
     $req->user( $data{_user} || $data{ $self->conf->{whatToTrace} } );
     $req->id( $data{_session_id} );
     foreach ( keys %data ) {
-        delete $data{$_}
-          unless ( /^_/ or /^(?:startTime|authenticationLevel)$/ );
+
+        # Variables that start with _ are kept accross refresh
+        if (/^_/) {
+
+            # But not OIDC tokens, which can be refreshed
+            if (
+/^(_oidc_access_token|_oidc_refresh_token|_oidc_access_token_eol)$/
+              )
+            {
+                delete $data{$_};
+            }
+
+        }
+
+        # Other variables should be refreshed
+        else {
+            # But not these two
+            if (/^(?:startTime|authenticationLevel)$/) {
+                next;
+            }
+            else {
+                delete $data{$_};
+            }
+        }
     }
     $data{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
     $self->logger->debug(
@@ -1044,11 +1079,15 @@ sub tplParams {
     }
 
     return (
-        SKIN       => $self->getSkin($req),
         PORTAL_URL => $self->conf->{portal},
+        MAIN_LOGO  => $self->conf->{portalMainLogo},
+        LANGS      => $self->conf->{showLanguages},
+        SCROLL_TOP => $self->conf->{scrollTop},
+        SKIN       => $self->getSkin($req),
         SKIN_PATH  => $portalPath . "skins",
         SAMESITE   => getSameSite( $self->conf ),
         SKIN_BG    => $self->conf->{portalSkinBackground},
+        FAVICON    => $self->conf->{portalFavicon} || 'common/favicon.ico',
         CUSTOM_CSS => $self->conf->{portalCustomCss},
         (
             $self->customParameters
@@ -1129,11 +1168,12 @@ sub _sumUpSession {
       $withoutUser
       ? {}
       : { user => $session->{ $self->conf->{whatToTrace} } };
-    $res->{$_} = $session->{$_} foreach (
+    $res->{$_} = $session->{$_}
+      foreach (
         "_utime", "ipAddr",
         keys %{ $self->conf->{sessionDataToRemember} },
         keys %{ $self->pluginSessionDataToRemember }
-    );
+      );
     return $res;
 }
 

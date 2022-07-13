@@ -28,5 +28,6 @@ Plugins
    resetpassword
    resetcertificate
    restservices
+   restauthuserpwdbackend
    soapservices
    stayconnected

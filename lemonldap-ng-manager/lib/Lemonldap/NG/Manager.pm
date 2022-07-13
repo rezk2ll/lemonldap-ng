@@ -66,7 +66,7 @@ sub init {
         my @res = ( "Lemonldap::NG::Manager::" . ucfirst($_) );
         if ( my $tmp = $self->loadPlugin( @res, $conf ) ) {
             $self->logger->debug("Plugin $_ loaded");
-            push @links, $_;
+            push @links,                    $_;
             push @{ $self->loadedPlugins }, $tmp;
             $self->hLoadedPlugins->{$_} = $tmp;
         }
@@ -183,10 +183,9 @@ sub javascript {
 
     return
 'var formPrefix=staticPrefix+"forms/";var confPrefix=scriptname+"confs/";var viewPrefix=scriptname+"view/";'
-      . 'var allowDiff=' . "$res;"
-      . 'var impPrefix=' . "'"
-      . $impPrefix . "'" . ';'
-      . 'var sessionTTL=' . "$ttl;"
+      . "var allowDiff=$res;"
+      . "var sessionTTL=$ttl;"
+      . "var impPrefix='$impPrefix';"
       . ( $self->links ? 'var links=' . to_json( $self->links ) . ';' : '' )
       . (
         $self->menuLinks

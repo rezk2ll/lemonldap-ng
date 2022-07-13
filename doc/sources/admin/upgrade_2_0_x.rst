@@ -26,6 +26,81 @@ Known regressions in the latest released version
 
 None
 
+2.0.15
+------
+
+New Captcha API
+~~~~~~~~~~~~~~~
+
+It is now possible to create your own Captcha modules to replace the one provided by default.
+
+In order for custom Captcha modules to work, you need to modify your custom ``standardform.tpl``, ``mail.tpl`` and ``register.tpl`` template files:
+
+.. code:: diff
+
+    -  <TMPL_IF NAME=CAPTCHA_SRC>
+    -    <TMPL_INCLUDE NAME="captcha.tpl">
+    +  <TMPL_IF NAME=CAPTCHA_HTML>
+    +    <TMPL_VAR NAME=CAPTCHA_HTML>
+       </TMPL_IF>
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
+Re-send 2FA code
+~~~~~~~~~~~~~~~~
+
+The :doc:`mail <mail2f>`, :doc:`external <external2f>` and :doc:`REST <rest2f>` based 2FA types can now re-send the user code if delivery failed for some reason. If you use custom templates, you must update ``ext2fcheck.tpl``
+
+.. code:: diff
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
+    @@ -26,6 +26,12 @@
+         </button>
+       </div>
+       <div class="buttons">
+    +    <TMPL_IF "RESENDTARGET">
+    +    <button type="submit" class="btn btn-primary" formaction="<TMPL_VAR "RESENDTARGET">">
+    +      <span class="fa fa-repeat"></span>
+    +      <span trspan="resendCode">Re-send code</span>
+    +    </button>
+    +    </TMPL_IF>
+         <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1&skin=<TMPL_VAR NAME="SKIN">" class="btn btn-primary" role="button">
+           <span class="fa fa-home"></span>
+           <span trspan="cancel">Cancel</span>
+
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
+Customizing the 2FA logo in the registration screen
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The 2FA registration screen now displays the custom logo and label set in configuration. If you use custom templates, you should update ``2fregisters.tpl``
+
+.. code:: diff
+
+	@@ -77,10 +77,16 @@
+		 <div class="card border-secondary">
+		   <div class="card-body py-3">
+		   <a href="<TMPL_VAR NAME="URL">" class="nodecor">
+	-        <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/<TMPL_VAR NAME="LOGO">" alt="<TMPL_VAR NAME="CODE">2F" title="<TMPL_VAR NAME="CODE">2F" />
+	+        <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/<TMPL_VAR NAME="LOGO">" alt="<TMPL_VAR NAME="CODE">2f" title="<TMPL_VAR NAME="LABEL">" />
+		   </a>
+		   </div>
+	-      <div class="card-footer text-white text-uppercase bg-secondary"><TMPL_VAR NAME="CODE">2F</div>
+	+      <div class="card-footer text-white text-uppercase bg-secondary">
+	+      <TMPL_IF LABEL>
+	+        <p><TMPL_VAR NAME="LABEL"></p>
+	+      <TMPL_ELSE>
+	+        <p trspan="<TMPL_VAR NAME="CODE">2f"></p>
+	+      </TMPL_IF>
+	+      </div>
+		 </div>
+		 </div>
+		 </TMPL_LOOP>
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
 2.0.14
 ------
 

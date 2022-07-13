@@ -111,20 +111,6 @@ For each attribute, you can set:
 Options
 ^^^^^^^
 
-General options
-'''''''''''''''
-
--  **Resolution Rule**: rule that will be applied to preselect an IDP
-   for a user. You have access to all environment variable *(like user
-   IP address)* and all session keys.
-
-For example, to preselect this IDP for users coming from 129.168.0.0/16
-network and member of "admin" group:
-
-::
-
-   $ENV{REMOTE_ADDR} =~ /^192\.168/ and $groups =~ /\badmin\b/
-
 Authentication request
 ''''''''''''''''''''''
 
@@ -212,8 +198,6 @@ Used only if at least 2 SAML Identity Providers are declared
 
 -  **Display name**: Name of the IDP
 -  **Logo**: Logo of the IDP
--  **Order**: Number used for sorting IDP display
-
 
 .. tip::
 
@@ -221,6 +205,23 @@ Used only if at least 2 SAML Identity Providers are declared
     (``portal/static/common/``). You can set a custom icon by setting the
     icon file name directly in the field and copy the logo file in portal
     icons directory
+
+-  **Resolution Rule**: rule that will be applied to preselect an IDP
+   for a user. You have access to all environment variable *(like user
+   IP address)* and all session keys.
+
+For example, to preselect this IDP for users coming from 129.168.0.0/16
+network
+
+::
+
+   $ENV{REMOTE_ADDR} =~ /^192\.168/
+
+To preselect this IDP when the ``MY_IDP`` :doc:`choice <authchoice>` is selected ::
+
+    $_choice eq "MY_IDP"
+
+-  **Order**: Number used for sorting IDP display
 
 .. |image0| image:: /documentation/manager-saml-metadata.png
    :class: align-center

@@ -31,3 +31,18 @@ Go in ``General parameters`` > ``Portal`` > ``Captcha``:
 -  **Activation in register form**: set to 1 to display captcha in
    register form
 -  **Size**: length of captcha
+-  **Captcha module**: allows you to use a custom Captcha module, see
+   :ref:`below <customcaptcha>`. Leave it blank to use the default Captcha
+   implementation
+-  **Captcha module options**: options for the custom Captcha module
+
+.. _customcaptcha:
+
+Custom Captcha modules
+----------------------
+
+.. versionadded:: 2.0.15
+
+If the default Captcha does not meet your requirements, you can replace it with
+a different implementation. See the ``Lemonldap::NG::Portal::Captcha`` manual
+page for details on how to implement a Captcha module.

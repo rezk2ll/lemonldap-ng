@@ -11,6 +11,6 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 has authnLevel => ( is => 'rw' );
 
-sub stop { 0 }
+sub stop { return 0 }
 
 1;

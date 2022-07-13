@@ -1,6 +1,6 @@
 package Lemonldap::NG::Portal::Main::Process;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.15';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -165,10 +165,10 @@ sub controlUrl {
 
         # Try to resolve alias
         my $originalVhost = $self->HANDLER->resolveAlias($vhost);
-        $vhost = $proto . '://' . $originalVhost;
-        $self->logger->debug( "Required URL (param: "
-              . ( $req->param('logout') ? 'HTTP Referer' : 'urldc' )
-              . " | value: $tmp | alias: $vhost)" );
+        $vhost = "$proto://$originalVhost";
+        $self->logger->debug( 'Required URL (param: '
+              . ( $req->param('logout') ? 'HTTP Referer'   : 'urldc' )
+              . ( $tmp ? " | value: $tmp | alias: $vhost)" : ')' ) );
 
         # If the target URL has an authLevel set in config, remember it.
         my $level = $self->HANDLER->getLevel( $req, $appuri, $originalVhost );

@@ -25,6 +25,7 @@
             "Email::Sender" : "0",
             "IO::String" : "0",
             "Regexp::Common" : "0",
+            "Test::Output" : "0",
             "Test::Pod" : "1"
          }
       },
@@ -58,6 +59,6 @@
       ],
       "x_MailingList" : "mailto:lemonldap-ng-dev@ow2.org"
    },
-   "version" : "v2.0.14",
+   "version" : "v2.0.15",
    "x_serialization_backend" : "JSON::PP version 4.04"
 }

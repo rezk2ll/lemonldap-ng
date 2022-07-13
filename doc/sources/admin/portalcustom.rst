@@ -15,12 +15,24 @@ Portal > Customization > Main logo.
 
 A blank value disables Main logo display.
 
-
 .. tip::
 
     - Logo files must be stored in lemonldap-ng-portal/site/htdocs/static/my/path directory
     - Logo file path must be like my/path/logo.png
     - Main logo is included in Portal templates AND mail body
+
+Favicon
+~~~~~~~
+
+You can change the default favicon in Manager: General Parameters >
+Portal > Customization > Favicon.
+
+A blank value displays default favicon ``common/favicon.ico``.
+
+.. tip::
+
+    - Logo files must be stored in lemonldap-ng-portal/site/htdocs/static/my/path directory
+    - Logo file path must be like my/path/logo.ico
 
 Show languages choice
 ~~~~~~~~~~~~~~~~~~~~~
@@ -33,12 +45,18 @@ Option enabled by default.
 
 .. tip::
 
-
-
     If languages choice is disabled, Portal displays accepted languages by
     your browser (EN by default).
 
 
+Scroll to top button
+~~~~~~~~~~~~~~~~~~~~
+
+You can display a button to go to back to the top after <value> pixels scrolling.
+
+.. tip::
+
+    A blank or null value disable this feature. 
 
 Custom CSS file
 ~~~~~~~~~~~~~~~
@@ -202,6 +220,12 @@ To change CSS, two options:
 
    <link href="<TMPL_VAR NAME="STATIC_PREFIX">myskin/css/myskin.css" rel="stylesheet" type="text/css" />
 
+To add custom JS, create a new file in myskin/js/custom.js and load it in customhead.tpl ::
+
+   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/custom.js"></script>
+
+In this file, you can access JQuery functions, and hook your code to :doc:`JQuery events <jqueryevents>`
+
 Put then all custom HTML code in the custom template files.
 
 To configure your new skin in Manager, select the custom skin, and enter
@@ -361,7 +385,7 @@ Password Policy
 -  **Minimal upper characters**: leave 0 to bypass the check
 -  **Minimal digit characters**: leave 0 to bypass the check
 -  **Minimal special characters**: leave 0 to bypass the check
--  **Allowed special characters**: set '__ALL__' value to allow ALL special characters. A blanck value forbids ALL special characters (Note that ``_`` is not a special character)
+-  **Allowed special characters**: set '__ALL__' value to allow ALL special characters. A blank value forbids ALL special characters (Note that ``_`` is not a special character)
 
 .. _portalcustom-other-parameters:
 

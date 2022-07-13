@@ -38,9 +38,9 @@ sub new {
     return bless( $self, $_[0] );
 }
 
-sub data { $_[0]->{data} }
+sub data { return $_[0]->{data} }
 
-sub uri { $_[0]->{uri} }
+sub uri { return $_[0]->{uri} }
 
 sub userData {
     my ( $self, $v ) = @_;

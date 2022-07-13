@@ -74,7 +74,10 @@ has lockTime => ( is => 'rw' );
 
 # Security
 #
-# Captcha
+# Captcha HTML code to display in forms
+has captchaHtml => ( is => 'rw' );
+
+# DEPRECATED: 2.0 captcha compatibility
 has captcha => ( is => 'rw' );
 
 # Token

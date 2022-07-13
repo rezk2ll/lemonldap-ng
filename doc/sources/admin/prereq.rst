@@ -95,6 +95,8 @@ Second factor
 
 -  Crypt::U2F::Server::Simple (U2F keys)
 -  Convert::Base32 (TOTP)
+-  Authen::WebAuthn (FIDO2 WebAuthen)
+-  Authen::OATH (OTP)
 
 Specific authentication backends
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -138,6 +140,7 @@ Unit tests
 -  Authen::U2F::Tester
 -  Crypt::U2F::Server
 -  Test::MockObject
+-  DBD::SQLite 
 -  Test::Output
 -  Test::POD
 -  Time::Fake

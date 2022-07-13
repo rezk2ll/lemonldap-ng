@@ -84,8 +84,6 @@ Then go in Manager, ``General Parameters`` » ``Plugins`` »
    -  **Display generate password box**: display a checkbox to allow
       user to generate a new password instead of choosing one (default:
       disabled)
-
-::
-
-     * **Regexp for password generation**: Regular expression used to generate the password (default: [A-Z]{3}[a-z]{5}.\d{2})
+   -  **Regexp for password generation**: Regular expression used to generate the password. Set a blank value to use
+      password policy if enabled or default regexp will be employed: [A-Z]{3}[a-z]{5}.\d{2}
 

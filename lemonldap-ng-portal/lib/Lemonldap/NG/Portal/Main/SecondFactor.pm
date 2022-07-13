@@ -25,15 +25,16 @@ has ott => (
     default => sub {
         my $ott =
           $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        $ott->timeout( $_[0]->{conf}->{formTimeout} );
+        $ott->timeout( $_[0]->{conf}->{sfLoginTimeout}
+              || $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
 );
 
-has prefix     => ( is => 'rw' );
-has logo       => ( is => 'rw', default => '2f.png' );
-has label      => ( is => 'rw' );
-has noRoute    => ( is => 'ro' );
+has prefix  => ( is => 'rw' );
+has logo    => ( is => 'rw', default => '2f.png' );
+has label   => ( is => 'rw' );
+has noRoute => ( is => 'ro' );
 has authnLevel => (
     is      => 'rw',
     lazy    => 1,
@@ -134,9 +135,9 @@ sub _verify {
             "Update sessionInfo with new authenticationLevel: $l");
         $req->sessionInfo->{authenticationLevel} = $l;
 
-        # Compute macros & local groups again with new authenticationLevel
-        $self->logger->debug("Compute macros and local groups...");
-        $req->steps( [ 'setMacros', 'setLocalGroups' ] );
+        # Compute macros & groups with new authenticationLevel
+        $self->logger->debug("Compute macros and groups...");
+        $req->steps( [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
         if ( my $error = $self->p->process($req) ) {
             $self->logger->debug("SFA: Process returned error: $error");
             $req->error($error);
@@ -165,7 +166,17 @@ sub _verify {
                 authenticationLevel => $l,
                 groups              => $req->sessionInfo->{groups},
                 hGroups             => $req->sessionInfo->{hGroups},
+                _2f                 => $self->prefix,
                 %macros
+            }
+        );
+    }
+    else {
+        # Only update _2f session key
+        $self->p->updateSession(
+            $req,
+            {
+                _2f => $self->prefix,
             }
         );
     }

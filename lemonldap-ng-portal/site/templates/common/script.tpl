@@ -39,6 +39,7 @@
             },</TMPL_IF>
  "enablePasswordDisplay":<TMPL_VAR NAME="ENABLE_PASSWORD_DISPLAY" DEFAULT="0">,
  "dontStorePassword":<TMPL_VAR NAME="DONT_STORE_PASSWORD" DEFAULT="0">,
+ "scrollTop":<TMPL_VAR NAME="SCROLL_TOP" DEFAULT="0">,
  "sameSite":"<TMPL_VAR NAME="SAMESITE">"
  }
  </script>

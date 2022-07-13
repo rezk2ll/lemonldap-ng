@@ -39,7 +39,7 @@ must set:
 -  overloaded parameters: you can redefine any LLNG string parameters.
    For example, if you use 2 different LDAP, the first can use normal
    configuration and for the second, overwritten parameter can redefine
-   ldapServer,...
+   ldapServer or any existing parameter.
 
 
 .. note::
@@ -63,12 +63,13 @@ parameters.
 For example, if DBI is configured to use PostgreSQL but DB2 is a MySQL
 DB, you can override the "dbiChain" parameter.
 
-You can also override a complex key like ldapExportedVars, by setting a
-JSON value:
+The over parameter is a HASH ref where keys are attributes names and values are the overriden value.
+To override a complex key like ldapExportedVars, you must use a JSON value, as the over parameter
+expect string values:
 
 .. code-block:: javascript
 
-   {"cn" => "cn", "uid" => "sAMAccounName", "mail" => "mail"}
+   {"cn": "cn", "uid": "sAMAccounName", "mail": "mail"}
 
 
 .. attention::
