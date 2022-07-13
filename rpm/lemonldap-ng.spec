@@ -388,6 +388,16 @@ Custom SELinux policy module
 %endif
 
 #==============================================================================
+# SSOaaS client for Apache
+#==============================================================================
+%package -n perl-Lemonldap-NG-SSOaaS-Apache-Client
+Summary:        Lemonldap-NG SSOaaS client for Apache
+
+%description -n perl-Lemonldap-NG-SSOaaS-Apache-Client
+This package permits one to enroll an Apache server
+into Lemonldap::NG's SSOaaS service.
+
+#==============================================================================
 # Source preparation
 #==============================================================================
 %prep
@@ -745,6 +755,10 @@ fi
 %{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.*
 %ghost %{_sharedstatedir}/selinux/%{selinuxtype}/active/modules/200/%{modulename}
 %endif
+
+%files -n perl-Lemonldap-NG-SSOaaS-Apache-Client
+%{_mandir}/man3/Lemonldap::NG::SSOaaS::Apache*.3pm.*
+%{perl_vendorlib}/Lemonldap/NG/SSOaaS/Apache/
 
 #==============================================================================
 # Changelog
