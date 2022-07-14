@@ -143,6 +143,7 @@ Architecture: all
 Section: web
 Depends: ${misc:Depends},
          ${perl:Depends}
+Breaks: liblemonldap-ng-handler-perl (<< 2.0.14~)
 Description: Lemonldap::NG SSOaaS client for Apache
  Lemonldap::NG is a complete Web-SSO system that provides a SSO-as-a-Service
  system, natively usable with Nginx. Lemonldap::NG::SSOaaS::Apache::Client
