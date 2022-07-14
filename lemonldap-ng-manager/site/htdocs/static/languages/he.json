@@ -696,7 +696,7 @@
 "oidcRPMetaDataOptionsIDTokenForceClaims":"Force claims to be returned in ID Token",
 "oidcRPMetaDataOptionsIDTokenSignAlg":"אלגוריתם חתימת אסימון זיהוי",
 "oidcRPMetaDataOptionsIcon":"לוגו",
-"oidcRPMetaDataOptionsLogoutBypassConfirm":"עקוף את האישור",
+"oidcRPMetaDataOptionsLogoutBypassConfirm":"Bypass confirm",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"נדרשת הפעלה",
 "oidcRPMetaDataOptionsLogoutType":"סוג",
 "oidcRPMetaDataOptionsLogoutUrl":"כתובת",

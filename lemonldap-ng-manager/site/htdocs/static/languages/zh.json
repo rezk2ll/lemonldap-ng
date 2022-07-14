@@ -696,7 +696,7 @@
 "oidcRPMetaDataOptionsIDTokenForceClaims":"強制要求以 ID 權杖回傳",
 "oidcRPMetaDataOptionsIDTokenSignAlg":"ID 權杖簽章演算法",
 "oidcRPMetaDataOptionsIcon":"Logo",
-"oidcRPMetaDataOptionsLogoutBypassConfirm":"绕过确认",
+"oidcRPMetaDataOptionsLogoutBypassConfirm":"Bypass confirm",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"需要工作階段",
 "oidcRPMetaDataOptionsLogoutType":"類型",
 "oidcRPMetaDataOptionsLogoutUrl":"URL",
