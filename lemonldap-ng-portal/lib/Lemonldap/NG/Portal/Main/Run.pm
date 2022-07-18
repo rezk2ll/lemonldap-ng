@@ -208,13 +208,10 @@ sub refresh {
         if (/^_/) {
 
             # But not OIDC tokens, which can be refreshed
-            if (
+            delete $data{$_}
+              if (
 /^(_oidc_access_token|_oidc_refresh_token|_oidc_access_token_eol)$/
-              )
-            {
-                delete $data{$_};
-            }
-
+              );
         }
 
         # Other variables should be refreshed
@@ -306,14 +303,10 @@ sub do {
     }
 
     # Update history
-    if ( $err == PE_SENDRESPONSE ) {
-        return $req->response;
-    }
+    return $req->response if $err == PE_SENDRESPONSE;
 
     # Remove userData if authentication fails
-    if ( $err == PE_BADCREDENTIALS or $err == PE_BADOTP ) {
-        $req->userData( {} );
-    }
+    $req->userData( {} ) if ( $err == PE_BADCREDENTIALS or $err == PE_BADOTP );
 
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
         $self->logger->debug('Processing to JSON response');
@@ -342,7 +335,15 @@ sub do {
         elsif ( $err > 0 and $err != PE_PASSWORD_OK and $err != PE_LOGOUT_OK ) {
             return $self->sendJSONresponse(
                 $req,
-                { result => 0, error => $err },
+                {
+                    result => 0,
+                    error  => $err,
+                    (
+                        $err == PE_NOTIFICATION && $req->id
+                        ? ( ciphered_id => $req->id )
+                        : ()
+                    )
+                },
                 code => 400
             );
         }
@@ -956,7 +957,6 @@ sub sendHtml {
     {
         $self->logger->debug(
             "Add SAML Discovery Protocol URL in CSP form-action");
-
         $csp .= " " . $self->conf->{samlDiscoveryProtocolURL};
     }
     $csp .= ';';
@@ -1168,12 +1168,11 @@ sub _sumUpSession {
       $withoutUser
       ? {}
       : { user => $session->{ $self->conf->{whatToTrace} } };
-    $res->{$_} = $session->{$_}
-      foreach (
+    $res->{$_} = $session->{$_} foreach (
         "_utime", "ipAddr",
         keys %{ $self->conf->{sessionDataToRemember} },
         keys %{ $self->pluginSessionDataToRemember }
-      );
+    );
     return $res;
 }
 
