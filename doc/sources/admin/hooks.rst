@@ -100,6 +100,7 @@ Sample code::
 
    sub addClaimToUserInfo {
        my ( $self, $req, $userinfo, $rp, $session_data) = @_;
+       my $scope = $session_data->{_scope};
        $userinfo->{"userinfo_hook"} = 1;
        return PE_OK;
    }

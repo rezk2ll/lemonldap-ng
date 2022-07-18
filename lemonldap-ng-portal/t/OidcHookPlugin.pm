@@ -33,6 +33,7 @@ sub addClaimToUserInfo {
     my ( $self, $req, $userinfo, $rp, $session_data ) = @_;
     $userinfo->{"userinfo_hook"} = 1;
     $userinfo->{"_auth"}         = $session_data->{_auth};
+    $userinfo->{"_scope"}        = $session_data->{_scope};
     return PE_OK;
 }
 
