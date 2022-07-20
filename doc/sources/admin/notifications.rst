@@ -515,3 +515,14 @@ connect with any user, the message will be prompted.
 .. |image1| image:: /documentation/portal-notification.png
    :class: align-center
 
+
+JSON response
+~~~~~~~~~~~~~
+
+If a notification is pending, JSON response fields are:
+
+-  ``result``: ``0``
+-  ``error``: ``36``
+-  ``ciphered_id``: a ciphered session id is returned in this field.
+   This id can be used to forward and continue the notification process if you call the REST ``/notifback`` endpoint
+   with a LL::NG cookie built with this id.
