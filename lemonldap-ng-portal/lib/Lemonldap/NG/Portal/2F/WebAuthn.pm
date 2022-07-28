@@ -17,7 +17,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor';
 with 'Lemonldap::NG::Portal::Lib::WebAuthn';

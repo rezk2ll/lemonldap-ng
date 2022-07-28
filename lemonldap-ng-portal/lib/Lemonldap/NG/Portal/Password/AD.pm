@@ -14,7 +14,7 @@ extends qw(
   Lemonldap::NG::Portal::Password::Base
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 sub init {
     my ($self) = @_;

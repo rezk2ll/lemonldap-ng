@@ -6,7 +6,7 @@ use JSON;
 use Plack::Request;
 use URI::Escape;
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 our @ISA = ('Plack::Request');
 

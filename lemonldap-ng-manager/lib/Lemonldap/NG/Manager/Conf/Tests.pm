@@ -8,7 +8,7 @@ use Lemonldap::NG::Handler::Main;
 use Lemonldap::NG::Common::Util qw(getSameSite);
 use URI;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values

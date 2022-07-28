@@ -6,7 +6,7 @@ use strict;
 use Mouse;
 use MIME::Base64;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Common::Module';
 

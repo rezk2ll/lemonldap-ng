@@ -19,7 +19,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PASSWORDFORMEMPTY
 );
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth

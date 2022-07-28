@@ -7,7 +7,7 @@ use XML::Simple;
 use Lemonldap::NG::Common::UserAgent;
 use URI;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 # PROPERTIES
 

@@ -9,7 +9,7 @@ package Lemonldap::NG::Common::Session;
 use strict;
 use Lemonldap::NG::Common::Apache::Session;
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 # Workaround for another ModPerl/Mouse issue...
 BEGIN {

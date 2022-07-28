@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 # TODO: Missing:
 #  * activeTimer
