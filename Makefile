@@ -475,6 +475,7 @@ e2e-tests/conf/apache2.pid: start_web_server
 
 start_web_server:	all prepare_test_server
 	# Clean old server if launched
+	mkdir -p e2e-tests/conf
 	@if test "$(TESTBACKEND)" = "DBI"; then \
 		echo 'create table lmConfig (cfgNum int, data text);'|sqlite3 e2e-tests/conf/config.db; \
 		echo 'create table sessions (id text, a_session text, LastUpdated int);'|sqlite3 e2e-tests/conf/sessions.db; \
