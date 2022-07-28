@@ -91,6 +91,7 @@ Ubuntu dist               LL::NG version                     Secured            
 20.04       Focal  [9]_   `2.0.7 </documentation/2.0/>`__  |bad| CVE-2020-24660, CVE-2021-35472, CVE-2021-35473, CVE-2021-40874 None
 20.10       Groovy        `2.0.8 </documentation/2.0/>`__  |bad| CVE-2020-24660, CVE-2021-35472, CVE-2021-35473, CVE-2021-40874 None
 21.04       Hirsute       `2.0.11 </documentation/2.0/>`__ |bad| CVE-2021-35472, CVE-2021-35473, CVE-2021-40874                 None
+22.04       Jammy         `2.0.13 </documentation/2.0/>`__ |maybe| No real support                                              None
 =========== ============= ================================ ==================================================================== ===========
 
 Bug report
