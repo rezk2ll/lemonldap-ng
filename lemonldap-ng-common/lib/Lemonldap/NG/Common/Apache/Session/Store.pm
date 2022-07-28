@@ -56,7 +56,7 @@ sub materialize {
 
     # Get session from cache
     my $id = $session->{data}->{_session_id};
-    if ( $self->cache->get($id) ) {
+    if ( !$self->{args}->{noCache} and $self->cache->get($id) ) {
         $session->{serialized} = $self->cache->get($id);
         return;
     }

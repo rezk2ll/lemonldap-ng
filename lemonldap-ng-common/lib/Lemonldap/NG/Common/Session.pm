@@ -213,7 +213,8 @@ sub update {
         return 0;
     }
 
-    my $data = $self->_tie_session($tieOptions);
+    my $data = $self->_tie_session(
+        { ( $tieOptions ? %$tieOptions : () ), noCache => 1 } );
 
     if ($data) {
         foreach ( keys %$infos ) {
