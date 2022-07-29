@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.15';
 
 extends qw(
   Lemonldap::NG::Common::Module
@@ -27,7 +27,8 @@ sub init {
 
 sub getUser {
     my ( $self, $req ) = @_;
-    my $op = $req->data->{_oidcOPCurrent};
+
+    my ( $op, $access_token ) = $self->getUserInfoParams($req);
 
     # This is likely to happen when running getUser without extractFormInfo
     # see #1980
@@ -36,7 +37,10 @@ sub getUser {
         return PE_ERROR;
     }
 
-    my $access_token = $req->data->{access_token};
+    unless ($access_token) {
+        $self->logger->warn("Could not get Access Token for User Info request");
+        return PE_ERROR;
+    }
 
     my $userinfo_content = $self->getUserInfo( $op, $access_token );
 

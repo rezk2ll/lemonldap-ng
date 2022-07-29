@@ -19,6 +19,8 @@ use constant hook => {
     oidcGenerateTokenRequest          => 'genTokenRequest',
     oidcGotUserInfo                   => 'modifyUserInfo',
     oidcGotIDToken                    => 'modifyIDToken',
+    oidcGotOnlineRefresh              => 'refreshHook',
+    oidcGotOfflineRefresh             => 'refreshHook',
 };
 
 sub addClaimToIDToken {
@@ -31,6 +33,7 @@ sub addClaimToUserInfo {
     my ( $self, $req, $userinfo, $rp, $session_data ) = @_;
     $userinfo->{"userinfo_hook"} = 1;
     $userinfo->{"_auth"}         = $session_data->{_auth};
+    $userinfo->{"_scope"}        = $session_data->{_scope};
     return PE_OK;
 }
 
@@ -94,6 +97,13 @@ sub modifyUserInfo {
 
     # Custom attribute processing
     $req->sessionInfo->{userinfo_hook} = "$op/" . $userinfo_content->{sub};
+    return PE_OK;
+}
+
+sub refreshHook {
+    my ( $self, $req, $rp, $refreshInfo, $sessionInfo ) = @_;
+    my $uid = $refreshInfo->{uid} || ( "online_" . $sessionInfo->{uid} );
+    $refreshInfo->{scope} = $refreshInfo->{scope} . " refreshed_" . $uid;
     return PE_OK;
 }
 

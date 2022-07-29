@@ -21,7 +21,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_SLO_ERROR
 );
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 # PROPERTIES
 
@@ -2651,6 +2651,13 @@ sub sendLogoutRequestToProvider {
             return ( 0, $method, undef );
         }
         $self->logger->debug('Relay state set');
+    }
+
+    # Skip SLO if no method found (#2746)
+    unless ( defined $method and $method != -1 ) {
+        $self->logger->debug(
+            "No HTTP SLO method found for $providerID");
+        return ( 0, $method, undef );
     }
 
     # Initiate the logout request

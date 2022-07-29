@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -121,7 +121,20 @@ sub handler {
 
 sub authenticated {
     my ( $self, $req ) = @_;
-    return $self->sendJSONresponse( $req, { status => 1 } );
+
+    return $self->do(
+        $req,
+        [
+            'importHandlerData',
+            'controlUrl',
+            @{ $self->forAuthUser },
+            sub {
+                $req->response(
+                    $self->sendJSONresponse( $req, { status => 1 } ) );
+                return PE_SENDRESPONSE;
+            }
+        ]
+    );
 }
 
 sub pleaseAuth {
@@ -190,8 +203,27 @@ sub refresh {
     $req->user( $data{_user} || $data{ $self->conf->{whatToTrace} } );
     $req->id( $data{_session_id} );
     foreach ( keys %data ) {
-        delete $data{$_}
-          unless ( /^_/ or /^(?:startTime|authenticationLevel)$/ );
+
+        # Variables that start with _ are kept accross refresh
+        if (/^_/) {
+
+            # But not OIDC tokens, which can be refreshed
+            delete $data{$_}
+              if (
+/^(_oidc_access_token|_oidc_refresh_token|_oidc_access_token_eol)$/
+              );
+        }
+
+        # Other variables should be refreshed
+        else {
+            # But not these two
+            if (/^(?:startTime|authenticationLevel)$/) {
+                next;
+            }
+            else {
+                delete $data{$_};
+            }
+        }
     }
     $data{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
     $self->logger->debug(
@@ -271,14 +303,10 @@ sub do {
     }
 
     # Update history
-    if ( $err == PE_SENDRESPONSE ) {
-        return $req->response;
-    }
+    return $req->response if $err == PE_SENDRESPONSE;
 
     # Remove userData if authentication fails
-    if ( $err == PE_BADCREDENTIALS or $err == PE_BADOTP ) {
-        $req->userData( {} );
-    }
+    $req->userData( {} ) if ( $err == PE_BADCREDENTIALS or $err == PE_BADOTP );
 
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
         $self->logger->debug('Processing to JSON response');
@@ -307,7 +335,15 @@ sub do {
         elsif ( $err > 0 and $err != PE_PASSWORD_OK and $err != PE_LOGOUT_OK ) {
             return $self->sendJSONresponse(
                 $req,
-                { result => 0, error => $err },
+                {
+                    result => 0,
+                    error  => $err,
+                    (
+                        $err == PE_NOTIFICATION && $req->id
+                        ? ( ciphered_id => $req->id )
+                        : ()
+                    )
+                },
                 code => 400
             );
         }
@@ -921,7 +957,6 @@ sub sendHtml {
     {
         $self->logger->debug(
             "Add SAML Discovery Protocol URL in CSP form-action");
-
         $csp .= " " . $self->conf->{samlDiscoveryProtocolURL};
     }
     $csp .= ';';
@@ -1044,8 +1079,11 @@ sub tplParams {
     }
 
     return (
-        SKIN       => $self->getSkin($req),
         PORTAL_URL => $self->conf->{portal},
+        MAIN_LOGO  => $self->conf->{portalMainLogo},
+        LANGS      => $self->conf->{showLanguages},
+        SCROLL_TOP => $self->conf->{scrollTop},
+        SKIN       => $self->getSkin($req),
         SKIN_PATH  => $portalPath . "skins",
         SAMESITE   => getSameSite( $self->conf ),
         SKIN_BG    => $self->conf->{portalSkinBackground},

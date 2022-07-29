@@ -100,6 +100,7 @@ Sample code::
 
    sub addClaimToUserInfo {
        my ( $self, $req, $userinfo, $rp, $session_data) = @_;
+       my $scope = $session_data->{_scope};
        $userinfo->{"userinfo_hook"} = 1;
        return PE_OK;
    }
@@ -174,6 +175,61 @@ Sample code::
    sub addHardcodedScope{
        my ( $self, $req, $scopeList, $rp ) = @_;
        push @{$scopeList}, "myscope";
+       return PE_OK;
+   }
+
+
+oidcGotOnlineRefresh
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.15
+
+This hook is triggered when LemonLDAP::NG handles a Refresh Token grant for an
+online session
+
+The hook's parameters are:
+
+* the configuration key of the relying party which received the grant
+* A hash of session data for the (internal) Refresh Token session
+* A hash of the user's session data
+
+Sample code::
+
+   use constant hook => {
+       oidcGotOnlineRefresh          => 'logRefresh',
+   };
+
+   sub logRefresh {
+       my ( $self, $req, $rp, $refreshInfo, $sessionInfo ) = @_;
+       my $uid = $sessionInfo->{uid};
+       $self->userLogger->info("OIDC application $rp requested a new access token for $uid");
+       return PE_OK;
+   }
+
+oidcGotOfflineRefresh
+~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.15
+
+This hook is triggered when LemonLDAP::NG handles a Refresh Token grant for an
+offline session
+
+The hook's parameters are:
+
+* the configuration key of the relying party which received the grant
+* A hash of session data for the (internal) Refresh Token session, which also
+  contains user attributes
+
+Sample code::
+
+   use constant hook => {
+       oidcGotOfflineRefresh          => 'logRefreshOffline',
+   };
+
+   sub logRefreshOffline {
+       my ( $self, $req, $rp, $refreshInfo ) = @_;
+       my $uid = $refreshInfo->{uid};
+       $self->userLogger->info("OIDC application $rp used offline access for $uid");
        return PE_OK;
    }
 

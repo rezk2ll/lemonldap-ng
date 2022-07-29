@@ -37,6 +37,7 @@ WriteMakefile(
     LICENSE        => 'gpl',
     BUILD_REQUIRES => {
         'IO::String'     => 0,
+        'MIME::Entity'   => 0,
         'Net::LDAP'      => 0,
         'String::Random' => 0,
         'Test::Pod'      => 1.00,

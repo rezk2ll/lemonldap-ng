@@ -55,14 +55,14 @@ ok(
 ) or print STDERR Dumper( $res->[2]->[0] );
 ok(
     $res->[2]->[0] =~
-      m%<i id="toggle_confirmpassword" class="fa fa-eye-slash toggle-password">%,
+m%<i id="toggle_confirmpassword" class="fa fa-eye-slash toggle-password">%,
     ' toggle confirmpassword icon found'
 ) or print STDERR Dumper( $res->[2]->[0] );
 ok(
-        $res->[2]->[0] =~
+    $res->[2]->[0] =~
 m%<input id="newpassword" name="newpassword" type="text" class="form-control"%,
-        ' input type text found'
-    ) or print STDERR Dumper( $res->[2]->[0] );
+    ' input type text found'
+) or print STDERR Dumper( $res->[2]->[0] );
 count(5);
 
 $client->logout($id);

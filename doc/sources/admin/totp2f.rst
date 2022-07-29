@@ -47,8 +47,26 @@ In the manager (advanced parameters), you just have to enable it:
    TOTP
 -  **Issuer name** (Optional): default to portal hostname
 -  **Interval**: interval for TOTP algorithm (default: 30)
--  **Range of attempts**: number of additional intervals to test (default: 1)
+
+.. warning::
+
+    Many mobile applications only support the default value
+
+-  **Range of attempts**: number of additional intervals to test (default: 1).
+   Use this settings if your server and phone clocks are not perfectly in sync,
+   at the cost of weaker security.
+
+.. note::
+
+    Range is tested backward and forward to prevent
+    positive or negative clock drift.
+
 -  **Number of digits**: number of digit by codes (default: 6)
+
+.. warning::
+
+    Many mobile applications only support the default value
+
 -  **Authentication level**: you can overwrite here auth level for TOTP
    registered users. Leave it blank keeps auth level provided by first
    authentication module *(default: 2 for user/password based modules)*.

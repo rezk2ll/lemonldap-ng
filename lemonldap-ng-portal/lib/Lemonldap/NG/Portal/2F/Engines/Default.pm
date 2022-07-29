@@ -41,7 +41,8 @@ has ott => (
     default => sub {
         my $ott =
           $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        $ott->timeout( $_[0]->{conf}->{formTimeout} );
+        $ott->timeout( $_[0]->{conf}->{sfLoginTimeout}
+              || $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
 );
@@ -228,7 +229,8 @@ sub run {
 
     # Skip 2F if authnLevel is already high enough
     if (
-        $self->conf->{sfOnlyUpgrade} and !$forceUpgrade
+            $self->conf->{sfOnlyUpgrade}
+        and !$forceUpgrade
         and ( ( $req->pdata->{targetAuthnLevel} || 0 ) <=
             ( $req->sessionInfo->{authenticationLevel} || 0 ) )
       )
@@ -391,7 +393,8 @@ sub run {
             MSG           => $self->canUpdateSfa($req) || 'choose2f',
             ALERT   => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
             MODULES => [
-                map { {
+                map {
+                    {
                         CODE  => $_->prefix,
                         LOGO  => $_->logo,
                         LABEL => $_->label
@@ -450,7 +453,7 @@ sub _choice {
             return $self->p->do(
                 $req,
                 [
-                    sub { $res }, 'controlUrl',
+                    sub { $res },  'controlUrl',
                     'buildCookie', @{ $self->p->endAuth },
                 ]
             );
@@ -494,7 +497,6 @@ sub _displayRegister {
         );
     }
 
-    # If only one 2F is available, redirect to it
     my @am;
     foreach my $m ( @{ $self->sfRModules } ) {
         $self->logger->debug(
@@ -502,20 +504,13 @@ sub _displayRegister {
         if ( $m->{r}->( $req, $req->userData ) ) {
             push @am,
               {
-                CODE => $m->{m}->prefix,
-                URL  => '/2fregisters/' . $m->{m}->prefix,
-                LOGO => $m->{m}->logo,
+                CODE  => $m->{m}->prefix,
+                URL   => '/2fregisters/' . $m->{m}->prefix,
+                LOGO  => $m->{m}->logo,
+                LABEL => $m->{m}->label
               };
         }
     }
-
-    return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ], [] ]
-      if (
-        @am == 1
-        and not( $req->userData->{_2fDevices}
-            && $req->userData->{_2fDevices} =~ /\w+/
-            or $req->data->{sfRegRequired} )
-      );
 
     # Retrieve user all second factors
     my $_2fDevices = [];
@@ -533,6 +528,14 @@ sub _displayRegister {
     else {
         $self->userLogger->warn("Do not display 2F devices!");
     }
+
+    # If only one 2F is available, redirect to it
+    return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ], [] ]
+      if (
+        @am == 1
+        and not( @$_2fDevices
+            or $req->data->{sfRegRequired} )
+      );
 
    # Parse second factors to display delete button if allowed and upgrade button
     my $displayUpgBtn = 0;

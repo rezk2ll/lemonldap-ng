@@ -8,7 +8,7 @@ use Lemonldap::NG::Handler::Main;
 use Lemonldap::NG::Common::Util qw(getSameSite);
 use URI;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
@@ -552,22 +552,18 @@ sub tests {
             }
 
             # Use WebAuthn
-            if (   $conf->{webauthn2fActivation} )
-            {
+            if ( $conf->{webauthn2fActivation} ) {
                 eval "use Authen::WebAuthn";
                 return ( 1,
-"Authen::WebAuthn module is required to enable WebAuthn"
-                ) if ($@);
+                    "Authen::WebAuthn module is required to enable WebAuthn" )
+                  if ($@);
             }
 
             # WebAuthn requires https://
-            if (   $conf->{webauthn2fActivation} )
-            {
-                my $portal_uri = URI->new($conf->{portal});
-                unless ($portal_uri->scheme eq "https") {
-                    return ( 1,
-                        "WebAuthn requires HTTPS"
-                    );
+            if ( $conf->{webauthn2fActivation} ) {
+                my $portal_uri = URI->new( $conf->{portal} );
+                unless ( $portal_uri->scheme eq "https" ) {
+                    return ( 1, "WebAuthn requires HTTPS" );
                 }
             }
 

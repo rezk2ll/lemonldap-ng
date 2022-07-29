@@ -2,7 +2,7 @@
 # Display functions for LemonLDAP::NG Portal
 package Lemonldap::NG::Portal::Main::Display;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 package Lemonldap::NG::Portal::Main;
 use strict;
@@ -100,8 +100,6 @@ sub display {
         $self->logger->debug('Display: notification detected');
         $skinfile       = 'notification';
         %templateParams = (
-            MAIN_LOGO       => $self->conf->{portalMainLogo},
-            LANGS           => $self->conf->{showLanguages},
             AUTH_ERROR_TYPE => $req->error_type,
             AUTH_ERROR_ROLE => $req->error_role,
             NOTIFICATION    => $notif,
@@ -123,8 +121,6 @@ sub display {
         $self->logger->debug('Display: confirm detected');
         $skinfile       = 'confirm';
         %templateParams = (
-            MAIN_LOGO       => $self->conf->{portalMainLogo},
-            LANGS           => $self->conf->{showLanguages},
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
             AUTH_ERROR_ROLE => $req->error_role,
@@ -155,8 +151,6 @@ sub display {
         $self->logger->debug('Display: IDP choice detected');
         $skinfile       = 'idpchoice';
         %templateParams = (
-            MAIN_LOGO       => $self->conf->{portalMainLogo},
-            LANGS           => $self->conf->{showLanguages},
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
             AUTH_ERROR_ROLE => $req->error_role,
@@ -190,8 +184,6 @@ sub display {
           for keys %{ $req->{portalHiddenFormValues} // {} };
         $skinfile       = 'info';
         %templateParams = (
-            MAIN_LOGO       => $self->conf->{portalMainLogo},
-            LANGS           => $self->conf->{showLanguages},
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $req->error_type,
             AUTH_ERROR_ROLE => $req->error_role,
@@ -224,8 +216,6 @@ sub display {
         my $id = $req->{sessionInfo}
           ->{ $self->conf->{openIdAttr} || $self->conf->{whatToTrace} };
         %templateParams = (
-            MAIN_LOGO       => $self->conf->{portalMainLogo},
-            LANGS           => $self->conf->{showLanguages},
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $req->error_type,
             AUTH_ERROR_ROLE => $req->error_role,
@@ -247,8 +237,6 @@ sub display {
         my $method = $req->data->{redirectFormMethod} || 'get';
         $skinfile       = "redirect";
         %templateParams = (
-            MAIN_LOGO     => $self->conf->{portalMainLogo},
-            LANGS         => $self->conf->{showLanguages},
             URL           => $req->{urldc},
             HIDDEN_INPUTS => $self->buildOutgoingHiddenForm( $req, $method ),
             FORM_METHOD   => $method,
@@ -266,8 +254,6 @@ sub display {
 
         #utf8::decode($auth_user);
         %templateParams = (
-            MAIN_LOGO => $self->conf->{portalMainLogo},
-            LANGS     => $self->conf->{showLanguages},
             AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
             NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},
             LOGOUT_URL              => $self->conf->{portal} . "?logout=1",
@@ -308,8 +294,6 @@ sub display {
     elsif ( $req->error == PE_UPGRADESESSION ) {
         $skinfile       = 'upgradesession';
         %templateParams = (
-            MAIN_LOGO    => $self->conf->{portalMainLogo},
-            LANGS        => $self->conf->{showLanguages},
             FORMACTION   => '/upgradesession',
             MSG          => 'askToUpgrade',
             PORTALBUTTON => 1,
@@ -329,8 +313,6 @@ sub display {
     elsif ( $req->error == PE_RENEWSESSION ) {
         $skinfile       = 'upgradesession';
         %templateParams = (
-            MAIN_LOGO    => $self->conf->{portalMainLogo},
-            LANGS        => $self->conf->{showLanguages},
             FORMACTION   => '/renewsession',
             MSG          => 'askToRenew',
             CONFIRMKEY   => $self->stamp,
@@ -350,8 +332,6 @@ sub display {
     elsif ( $req->error == PE_MUSTAUTHN ) {
         $skinfile       = 'upgradesession';
         %templateParams = (
-            MAIN_LOGO  => $self->conf->{portalMainLogo},
-            LANGS      => $self->conf->{showLanguages},
             FORMACTION => '/renewsession',
             MSG        => 'PE87',
             CONFIRMKEY => $self->stamp,
@@ -384,8 +364,6 @@ sub display {
     {
         $skinfile       = 'error';
         %templateParams = (
-            MAIN_LOGO       => $self->conf->{portalMainLogo},
-            LANGS           => $self->conf->{showLanguages},
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
             AUTH_ERROR_ROLE => $req->error_role,
@@ -403,8 +381,6 @@ sub display {
         $skinfile = 'login';
         my $login = $req->user;
         %templateParams = (
-            MAIN_LOGO             => $self->conf->{portalMainLogo},
-            LANGS                 => $self->conf->{showLanguages},
             AUTH_ERROR            => $req->error,
             AUTH_ERROR_TYPE       => $req->error_type,
             AUTH_ERROR_ROLE       => $req->error_role,
@@ -461,15 +437,21 @@ sub display {
         }
 
         # Display captcha if it's enabled
+        if ( $req->captchaHtml ) {
+            %templateParams =
+              ( %templateParams, CAPTCHA_HTML => $req->captchaHtml, );
+        }
+        if ( $req->token ) {
+            %templateParams = ( %templateParams, TOKEN => $req->token, );
+        }
+
+       # DEPRECATED: This is only used for compatibility with existing templates
         if ( $req->captcha ) {
             %templateParams = (
                 %templateParams,
                 CAPTCHA_SRC  => $req->captcha,
                 CAPTCHA_SIZE => $self->{conf}->{captcha_size} || 6
             );
-        }
-        if ( $req->token ) {
-            %templateParams = ( %templateParams, TOKEN => $req->token, );
         }
 
         # Show password form if password policy error

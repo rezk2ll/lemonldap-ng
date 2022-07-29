@@ -84,14 +84,11 @@ sub ask {
         $req,
         'upgradesession',
         params => {
-            MAIN_LOGO    => $self->conf->{portalMainLogo},
-            LANGS        => $self->conf->{showLanguages},
             FORMACTION   => $form_action,
             PORTALBUTTON => 1,
             MSG          => $message,
             BUTTON       => $buttonlabel,
             CONFIRMKEY   => $self->p->stamp,
-            PORTAL       => $self->conf->{portal},
             FORCEUPGRADE => $forceUpgrade,
             URL          => $url,
             (
@@ -156,7 +153,7 @@ sub confirm {
     else {
 
         # Go to portal
-        $self->logger->debug("Upgrade session failed -> Go to Portal");
+        $self->logger->debug("Upgrade session did not trigger -> Go to Portal");
         $req->mustRedirect(1);
         return $self->p->do( $req, [ sub { PE_OK } ] );
     }

@@ -340,6 +340,8 @@ Options
 
 -  **Logout**
 
+   -  **Bypass confirm**: Bypass logout confirmation when logout is initiated
+      by relaying party
    -  **Allowed redirection addresses for logout**: A space-separated list of
       URLs that this client can redirect the user to once the logout is done
       (through ``post_logout_redirect_uri``)

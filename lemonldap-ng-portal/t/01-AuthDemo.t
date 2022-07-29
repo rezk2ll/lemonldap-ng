@@ -37,7 +37,8 @@ ok( $res->[2]->[0] =~ /<span trmsg="37">/, 'Rejected with PE_BADURL' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ m%<span id="languages"></span>%, ' Language icons found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ m%link href="/static/common/llng.ico%, ' Custom favicon found' )
+ok( $res->[2]->[0] =~ m%link href="/static/common/llng.ico%,
+    ' Custom favicon found' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(4);
 

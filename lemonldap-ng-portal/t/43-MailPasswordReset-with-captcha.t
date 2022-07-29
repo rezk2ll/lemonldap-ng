@@ -124,7 +124,10 @@ m#<img class="renewcaptchaclick" src="/static/common/icons/arrow_refresh.png"#,
     );
     ok( mail() =~ /<span>Your new password is<\/span>/, 'New password sent' );
     ok( mail() =~ /<b>(.+?)<\/b>/s, 'New generated password found' );
-    ok( $1 =~ /[A-Z]{1}[a-z]{1}\d{2}[*#@]{1}/, 'New generated password matches' );
+    ok(
+        $1 =~ /[A-Z]{1}[a-z]{1}\d{2}[*#@]{1}/,
+        'New generated password matches'
+    );
 
     #print STDERR Dumper($query);
 }

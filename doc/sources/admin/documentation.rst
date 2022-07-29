@@ -57,14 +57,14 @@ Debian dist                            LL::NG version                           
 =========== ========================== ======================================== ===================================================== ============================================================ =================================== =============================================================
 *6*         *Squeeze*                  *0.9.4.1*                                |maybe| No known vulnerability                        *None*                                                       *February 2016*                     *April 2019*
 *7*         *Wheezy*                   `1.1.2 </documentation/1.1/>`__          |maybe| No known vulnerability                        *None*                                                       *May 2018*                          *June 2020*
-**8**       Jessie                     `1.3.3 </documentation/1.3/>`__          |clean| CVE-2019-19791 tagged as minor                **None**  [1]_                                               June 2020                           June 2022, possibly 2024
-**9**       Stretch                    `1.9.7 </documentation/1.9/>`__          |clean| CVE-2019-19791 tagged as minor                `Debian LTS Team <https://www.debian.org/lts/>`__            June 2022                           Probably 2024
+*8*         *Jessie*                   `1.3.3 </documentation/1.3/>`__          |maybe| CVE-2019-19791 tagged as minor                **None**  [1]_                                               June 2020                           *June 2022*
+*9*         *Stretch*                  `1.9.7 </documentation/1.9/>`__          |maybe| CVE-2019-19791 tagged as minor                `Debian LTS Team <https://www.debian.org/lts/>`__            June 2022                           Possibly 2024
 \           *Stretch-backports*        `2.0.2 </documentation/2.0/>`__          |bad| CVE-2019-12046, CVE-2019-13031, CVE-2019-15941  *None*                                                       *June 2019*
 \           *Stretch-backports-sloppy* `2.0.11 </documentation/2.0/>`__         |maybe|                                               *None*                                                       *August 2021*
-**10**      Buster                     `2.0.2 </documentation/2.0/>`__          |clean| CVE-2019-19791 tagged as minor                `Debian Security Team <https://security-team.debian.org/>`__ June 2024                           Probably 2026
+**10**      Buster                     `2.0.2 </documentation/2.0/>`__          |clean| CVE-2019-19791 tagged as minor                `Debian Security Team <https://security-team.debian.org/>`__ June 2024                           June 2026
 \           Buster-backports           `2.0.14 </documentation/2.0/>`__         |clean|                                               LL::NG Team, "best effort" [3]_                              Maybe until Debian 12 release [4]_
 \           *Buster-backports-sloppy*  *Adds libauthen-webauthn-perl only*      |clean|                                               LL::NG Team, "best effort" [3]_                              June 2024
-**11**      Bullseye                   `2.0.11 </documentation/2.0/>`__         |clean|                                               `Debian Security Team <https://security-team.debian.org/>`__ July 2026                           Probably 2028
+**11**      Bullseye                   `2.0.11 </documentation/2.0/>`__         |clean|                                               `Debian Security Team <https://security-team.debian.org/>`__ July 2026                           June 2028
 \           Bullseye-backports         `2.0.14 </documentation/2.0/>`__         |clean|                                               LL::NG Team, "best effort" [3]_                              Maybe until Debian 13 release [4]_
 **Next**    Testing/Unstable           Latest  [5]_                             |clean|                                               LL::NG Team
 =========== ========================== ======================================== ===================================================== ============================================================ =================================== =============================================================
@@ -91,6 +91,7 @@ Ubuntu dist               LL::NG version                     Secured            
 20.04       Focal  [9]_   `2.0.7 </documentation/2.0/>`__  |bad| CVE-2020-24660, CVE-2021-35472, CVE-2021-35473, CVE-2021-40874 None
 20.10       Groovy        `2.0.8 </documentation/2.0/>`__  |bad| CVE-2020-24660, CVE-2021-35472, CVE-2021-35473, CVE-2021-40874 None
 21.04       Hirsute       `2.0.11 </documentation/2.0/>`__ |bad| CVE-2021-35472, CVE-2021-35473, CVE-2021-40874                 None
+22.04       Jammy         `2.0.13 </documentation/2.0/>`__ |bad| CVE-2021-40874                                                 None
 =========== ============= ================================ ==================================================================== ===========
 
 Bug report

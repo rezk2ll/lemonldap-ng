@@ -64,7 +64,7 @@ Build-Depends-Indep: gsfonts <!nocheck>,
                      python3-sphinx,
                      python3-sphinx-bootstrap-theme,
                      perl
-Standards-Version: 4.6.0
+Standards-Version: 4.6.1
 Vcs-Browser: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng
 Vcs-Git: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng.git
 Homepage: https://lemonldap-ng.org/
@@ -137,6 +137,17 @@ Description: Lemonldap::NG FastCGI server
  .
  Lemonldap::NG FastCGI server provides a Nginx auth_request server that handles
  also LLNG Portal and Manager.
+
+Package: liblemonldap-ng-ssoaas-apache-client-perl
+Architecture: all
+Section: web
+Depends: ${misc:Depends},
+         ${perl:Depends}
+Breaks: liblemonldap-ng-handler-perl (<< 2.0.14~)
+Description: Lemonldap::NG SSOaaS client for Apache
+ Lemonldap::NG is a complete Web-SSO system that provides a SSO-as-a-Service
+ system, natively usable with Nginx. Lemonldap::NG::SSOaaS::Apache::Client
+ permits one to enroll an Apache server into Lemonldap::NG's SSOaaS service.
 
 Package: lemonldap-ng-uwsgi-app
 Architecture: all

@@ -550,7 +550,6 @@ LemonLDAP::NG Portal jQuery scripts
       if (datas['dontStorePassword']) {
         $(".toggle-password").mousedown(function() {
           field = $(this).attr('id');
-          console.log('Display****', field);
           field = field.replace(/^toggle_/, '');
           console.log('Display', field);
           $(this).toggleClass("fa-eye fa-eye-slash");
@@ -565,7 +564,6 @@ LemonLDAP::NG Portal jQuery scripts
       } else {
         $(".toggle-password").mousedown(function() {
           field = $(this).attr('id');
-          console.log('Display***', field);
           field = field.replace(/^toggle_/, '');
           console.log('Display', field);
           $(this).toggleClass("fa-eye fa-eye-slash");
@@ -626,7 +624,7 @@ LemonLDAP::NG Portal jQuery scripts
       console.log('Clear modal');
       return $('#finduserForm').trigger('reset');
     });
-    return $('#finduserbutton').on('click', function(event) {
+    $('#finduserbutton').on('click', function(event) {
       var str;
       event.preventDefault();
       document.body.style.cursor = 'progress';
@@ -667,6 +665,18 @@ LemonLDAP::NG Portal jQuery scripts
           }
         }
       });
+    });
+    $('#btn-back-to-top').on('click', function() {
+      console.log('Back to top');
+      document.body.scrollTop = 0;
+      return document.documentElement.scrollTop = 0;
+    });
+    return $(window).on('scroll', function() {
+      if (datas['scrollTop'] && (document.body.scrollTop > Math.abs(datas['scrollTop']) || document.documentElement.scrollTop > Math.abs(datas['scrollTop']))) {
+        return $('#btn-back-to-top').css("display", "block");
+      } else {
+        return $('#btn-back-to-top').css("display", "none");
+      }
     });
   });
 

@@ -288,7 +288,7 @@ Name                                                                 Description
 :doc:`Context switching<contextswitching>`  [7]_\ |new|              Switch context other users
 :doc:`CrowdSec<crowdsec>`  [8]_\ |new|                               CrowdSec bouncer
 :doc:`Custom<plugincustom>`                                          Write a custom plugin
-:doc:`Decrypt value<decryptvalue>`  [9]_\ |beta|                     Decrypt ciphered values
+:doc:`Decrypt value<decryptvalue>`  [9]_\                            Decrypt ciphered values
 :doc:`Display login history<loginhistory>`                           Display Success/Fails logins
 :doc:`Force Authentication<forcereauthn>`                            Force authentication to access to Portal
 :doc:`Global Logout<globallogout>`  [10]_                            Suggest to close all opened sessions at logout

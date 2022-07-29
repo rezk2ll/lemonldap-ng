@@ -148,15 +148,17 @@ Key              Description
 OpenID Connect
 --------------
 
-============================ ===============================================
+============================ ======================================================================
 Key                          Description
-============================ ===============================================
+============================ ======================================================================
 \_oidc_id_token              ID Token
 \_oidc_OP                    Configuration key of OP used for authentication
 \_oidc_access_token          OAuth2 Access Token used to get UserInfo data
+\_oidc_access_token_eol      Timestamp after which the Access Token should no longer be valid
+\_oidc_refresh_token         OAuth2 Refresh Token. This should never be transmitted to applications
 \_oidc_consent_scope\_\ *rp* Scope for which consent was given for RP *rp*
 \_oidc_consent_time\_\ *rp*  Time when consent was given for RP *rp*
-============================ ===============================================
+============================ ======================================================================
 
 Other
 -----

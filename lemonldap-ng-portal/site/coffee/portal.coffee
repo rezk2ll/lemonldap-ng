@@ -585,3 +585,14 @@ $(window).on 'load', () ->
 				res = JSON.parse j.responseText if j
 				if res and res.error
 					console.log 'Returned error', res
+
+	$('#btn-back-to-top').on 'click', () ->
+		console.log 'Back to top'
+		document.body.scrollTop = 0
+		document.documentElement.scrollTop = 0
+
+	$(window).on 'scroll', () ->
+		if datas['scrollTop'] && (document.body.scrollTop > Math.abs(datas['scrollTop']) || document.documentElement.scrollTop > Math.abs(datas['scrollTop']))
+			$('#btn-back-to-top').css("display","block")
+		else
+    		$('#btn-back-to-top').css("display","none")

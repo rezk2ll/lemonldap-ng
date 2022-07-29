@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -25,15 +25,16 @@ has ott => (
     default => sub {
         my $ott =
           $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        $ott->timeout( $_[0]->{conf}->{formTimeout} );
+        $ott->timeout( $_[0]->{conf}->{sfLoginTimeout}
+              || $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
 );
 
-has prefix     => ( is => 'rw' );
-has logo       => ( is => 'rw', default => '2f.png' );
-has label      => ( is => 'rw' );
-has noRoute    => ( is => 'ro' );
+has prefix  => ( is => 'rw' );
+has logo    => ( is => 'rw', default => '2f.png' );
+has label   => ( is => 'rw' );
+has noRoute => ( is => 'ro' );
 has authnLevel => (
     is      => 'rw',
     lazy    => 1,
@@ -165,16 +166,19 @@ sub _verify {
                 authenticationLevel => $l,
                 groups              => $req->sessionInfo->{groups},
                 hGroups             => $req->sessionInfo->{hGroups},
-                _2f     => $self->prefix,
+                _2f                 => $self->prefix,
                 %macros
             }
         );
-    } else {
+    }
+    else {
         # Only update _2f session key
-        $self->p->updateSession($req,
+        $self->p->updateSession(
+            $req,
             {
-                _2f     => $self->prefix,
-                });
+                _2f => $self->prefix,
+            }
+        );
     }
 
     $req->authResult(PE_SENDRESPONSE);

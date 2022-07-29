@@ -45,6 +45,12 @@ and edit configuration:
    cp /usr/share/lemonldap-ng/bin/importMetadata /usr/share/lemonldap-ng/bin/importMetadataRenater
    vi /usr/share/lemonldap-ng/bin/importMetadataRenater
 
+.. versionchanged:: 2.0.15
+
+   Since version 2.0.15 it is no longer necessary to copy the script, you can
+   use the ``--configfile`` option to handle most customization use cases. See
+   :ref:`importmetadataconfig` below for details.
+
 Set attributes (use the SAML Name, not FriendlyName) that are provided
 by IDPs, for example:
 
@@ -92,26 +98,27 @@ Then run the script:
 
    /usr/share/lemonldap-ng/bin/importMetadataRenater -m https://metadata.federation.renater.fr/renater/main/main-idps-renater-metadata.xml -r -i "idp-renater-" -s "sp-renater-"
 
-The script provide the following options 
+The script provide the following options
 
- * -i (--idpconfprefix): Prefix used to set IDP configuration key
- * -h (--help): print this message
- * -m (--metadata): URL of metadata document
- * -s (--spconfprefix): Prefix used to set SP configuration key
- * --ignore-sp: ignore SP matching this entityID (can be specified multiple times)
- * --ignore-idp: ignore IdP matching this entityID (can be specified multiple times)
- * -a (--nagios): output statistics in Nagios format
- * -n (--dry-run): print statistics but do not apply changes
- * -v (--verbose): increase verbosity of output
- * -r (--remove): remove provider from LemonLDAP::NG if it does not appear in metadata
+* -i (--idpconfprefix): Prefix used to set IDP configuration key
+* -h (--help): print this message
+* -m (--metadata): URL of metadata document
+* -s (--spconfprefix): Prefix used to set SP configuration key
+* --ignore-sp: ignore SP matching this entityID (can be specified multiple times)
+* --ignore-idp: ignore IdP matching this entityID (can be specified multiple times)
+* -a (--nagios): output statistics in Nagios format
+* -n (--dry-run): print statistics but do not apply changes
+* -c (--configfile): use a configuration file
+* -v (--verbose): increase verbosity of output
+* -r (--remove): remove provider from LemonLDAP::NG if it does not appear in metadata
 
 
 Example :
 ::
 
     /usr/libexec/lemonldap-ng/bin/importMetadata -m https://pub.federation.renater.fr/metadata/renater/main/main-sps-renater-metadata.xml -s "sp-fed-prd" -c https://pub.federation.renater.fr/metadata/certs/renater-metadata-signing-cert-2016.pem -bs https://test-sp.federation.renater.fr -r -v -d
-    
-This command will 
+
+This command will
   * fetch all SPs metadata from renater
   * set a prefix to entity stored inside LemonLdap::NG
   * disable local modification of SP https://test-sp.federation.renater.fr
@@ -135,7 +142,7 @@ The output is the following :
 
 With "-n" options you could get a "nagios like" output with metrics :
 ::
- 
+
   /usr/libexec/lemonldap-ng/bin/importMetadataFedRenater -m https://pub.federation.renater.fr/metadata/renater/main/main-sps-renater-metadata.xml -s "sp-fed-prd" -c https://pub.federation.renater.fr/metadata/certs/renater-metadata-signing-cert-2016.pem -bs https://test-sp.federation.renater.fr -r -d -n
   Metadata loaded inside Conf: [DRY-RUN]|idp_found=0, idp_updated=0, idp_created=0, idp_removed=0, idp_rejected=0, idp_ignored=0, sp_found=1248, sp_updated=1240, sp_created=0, sp_removed=0, sp_rejected=7, sp_ignored=1
 
@@ -144,6 +151,57 @@ With "-n" options you could get a "nagios like" output with metrics :
 
     You need to add this in cron to refresh metadata into
     LL::NG configuration.
+
+
+.. _importmetadataconfig:
+
+Metadata import configuration file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.15
+
+You can now use a configuration file for the script in order to handle most custom cases.
+
+Here is an example of a INI-formatted configuration file::
+
+    # main script options, these will be overriden by the CLI options
+    [main]
+    dry-run=1
+    verbose=1
+    metadata=http://url/to/metadata.xml
+    ; Multi-value options
+    ignore-idp=entity-id-to-ignore-1
+    ignore-idp=entity-id-to-ignore-2
+
+    # Default exported attributes for IDPs
+    [exportedAttributes]
+    cn=0;cn
+    eduPersonPrincipalName=0;eduPersonPrincipalName
+    ...
+
+    # options that apply to all providers
+    [ALL]
+    ; Disable signature requirement on requests
+    samlSPMetaDataOptionsCheckSSOMessageSignature=0
+    samlSPMetaDataOptionsCheckSLOMessageSignature=0
+    ; Store SAML assertions in session
+    samlIDPMetaDataOptionsStoreSAMLToken=1
+    ; Mark ePPN as always required
+    attribute_required_eduPersonPrincipalName=1
+    ...
+
+    # Specific provider configurations
+    [https://test-sp.federation.renater.fr]
+    ; All attributes are optional for this provider
+    attribute_required=0
+    ; Override some options
+    samlSPMetaDataOptionsNameIDFormat=persistent
+
+    [https://idp.renater.fr/idp/shibboleth]
+    ; declare an extra attribute from this provider
+    exported_attribute_eduPersonAffiliation=1;uid
+
+
 
 Add your SP into the federation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
