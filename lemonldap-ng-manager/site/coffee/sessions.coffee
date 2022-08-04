@@ -212,13 +212,21 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			_insert = (re, title) ->
 				tmp = []
 				reg = new RegExp(re)
+				cv  = ""
 				for key,value of session
 					if key.match(reg) and value
-						tmp.push
-							title: key
-							value: value
+						cv += "#{value}:#{key},"
 						delete session[key]
-				if tmp.length > 0
+				if cv
+					cv = cv.replace(/,$/, '')
+					tab = cv.split ','
+					tab.sort()
+					tab.reverse()
+					for val in tab
+						vk = val.split ':'
+						tmp.push
+							title: vk[1]
+							value: $scope.localeDate vk[0]
 					res.push
 						title: title
 						nodes: tmp

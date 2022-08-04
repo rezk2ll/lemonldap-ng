@@ -233,20 +233,30 @@
         transformSession = function(session) {
           var _insert, array, attr, attrs, category, cv, element, epoch, i, j, k, key, l, len, len1, len2, len3, len4, len5, m, name, o, oidcConsent, p, real, ref, ref1, res, sfDevice, spoof, subres, tab, time, title, tmp, value;
           _insert = function(re, title) {
-            var key, reg, tmp, value;
+            var cv, i, key, len, reg, tab, tmp, val, value, vk;
             tmp = [];
             reg = new RegExp(re);
+            cv = "";
             for (key in session) {
               value = session[key];
               if (key.match(reg) && value) {
-                tmp.push({
-                  title: key,
-                  value: value
-                });
+                cv += value + ":" + key + ",";
                 delete session[key];
               }
             }
-            if (tmp.length > 0) {
+            if (cv) {
+              cv = cv.replace(/,$/, '');
+              tab = cv.split(',');
+              tab.sort();
+              tab.reverse();
+              for (i = 0, len = tab.length; i < len; i++) {
+                val = tab[i];
+                vk = val.split(':');
+                tmp.push({
+                  title: vk[1],
+                  value: $scope.localeDate(vk[0])
+                });
+              }
               return res.push({
                 title: title,
                 nodes: tmp
