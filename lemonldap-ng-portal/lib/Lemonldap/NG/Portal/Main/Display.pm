@@ -746,8 +746,12 @@ sub mkSessionArray {
                         user   => $session->{user},
                         utime  => $session->{_utime},
                         ip     => $session->{ipAddr},
-                        values => [ map { { v => $session->{$_} } } @fields ],
-                        error  => $session->{error},
+                        values => [
+                            map {
+                                { v => $session->{$_}, k => $_, "k_$_" => 1 }
+                            } @fields
+                        ],
+                        error        => $session->{error},
                         displayUser  => $displayUser,
                         displayError => $displayError,
                     }
