@@ -115,6 +115,7 @@ sub _verify {
     $req->id( delete $req->sessionInfo->{_2fRealSession} );
     $req->urldc( delete $req->sessionInfo->{_2fUrldc} );
     $req->{sessionInfo}->{_utime} = delete $req->{sessionInfo}->{_2fUtime};
+    $req->{sessionInfo}->{_2f}    = $self->prefix;
 
     # Case error
     if ($res) {
