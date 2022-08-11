@@ -824,9 +824,16 @@ sub getOrganizationName {
     return unless $node;
 
     # Extract organization name
-    my $xs   = XML::Simple->new();
-    my $data = $xs->XMLin($node);
-    return $data->{OrganizationName}->{content};
+    my $org_name;
+    eval {
+        my $xs   = XML::Simple->new();
+        my $data = $xs->XMLin( $node, ForceContent => 1 );
+        $org_name = $data->{OrganizationName}->{content};
+    };
+    if ($@) {
+        $self->logger->warn("Could not parse organization name for $idp: $@");
+    }
+    return $org_name;
 }
 
 ## @method string getNextProviderId(Lasso::Logout logout)
