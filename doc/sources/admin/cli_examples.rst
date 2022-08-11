@@ -494,6 +494,78 @@ To update the master encryption key:
            key 'xxxxxxxxxxxxxxx'
 
 
+Bulk configuration changes
+--------------------------
+
+.. versionadded:: 2.0.15
+
+The ``merge`` subcommand can be used to inject multiple configuration keys and
+variables at once. It reads a list of JSON or YAML formatted files and combines
+them with the current config. This allows you to script common configuration
+changes in the form of snippets.
+
+Example (JSON):
+
+.. code:: json
+
+    {
+        "https": 1,
+        "securedCookie": 1,
+        "sameSite": "None",
+        "macros": {
+            "UA": null,
+            "_whatToTrace": "uid"
+        }
+    }
+
+
+Example (YAML) :
+
+.. code:: yaml
+
+   # YAML files can be commented
+   https: 1
+   securedCookie: 1
+   sameSite: "None"
+
+   # override some default macros
+   macros:
+
+       # Remove UA
+       UA: ~
+
+       # Update _whatToTrace
+       _whatToTrace: uid
+
+
+Importing the changes:
+
+.. code:: shell
+
+    # Import a JSON snippet
+    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 merge example.json
+
+    # Import a YAML snippet
+    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 merge example.yaml
+
+    # Import several snippets
+    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 merge my_config/*.yaml
+
+.. note:: You may need to install the `YAML <https://metacpan.org/pod/YAML>`__
+   Perl module to be able to import
+   YAML configuration snippets
+
+.. warning::
+
+   * The config files will be read as the webserver (``apache``/``www-data``)
+     user. Make sure they have the correct permissions before running the
+     command
+   * Do not use booleans in JSON/YAML files, LemonLDAP only understands 0/1
+     values for boolean configuration keys
+   * Due to limitations in the Perl YAML parser, you need to set a key to ``~``
+     instead of ``null`` to remove it
+
+
 .. _cli-sessions:
 
 Sessions Management
@@ -546,7 +618,7 @@ OIDC Consents management
 .. versionadded:: 2.0.9
 
 List consents of a user ::
-   
+
    lemonldap-ng-sessions consents get dwho
 
 Revoke consents on OIDC provider 'test' for a user::
