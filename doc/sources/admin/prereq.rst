@@ -49,6 +49,7 @@ Core
 -  Digest::SHA
 -  Email::Sender
 -  GD::SecurityImage
+-  Hash::Merge::Simple
 -  HTML::Template
 -  HTTP::Headers
 -  HTTP::Request
@@ -172,7 +173,7 @@ Perl dependencies:
 
 ::
 
-   apt install libapache-session-perl libcache-cache-perl libclone-perl libconfig-inifiles-perl libconvert-pem-perl libcrypt-openssl-bignum-perl libcrypt-openssl-rsa-perl libcrypt-openssl-x509-perl libcrypt-rijndael-perl libdbi-perl libdigest-hmac-perl libemail-sender-perl libgd-securityimage-perl libhtml-template-perl libio-string-perl libjson-perl libmime-tools-perl libmouse-perl libnet-ldap-perl libplack-perl libregexp-assemble-perl libregexp-common-perl libsoap-lite-perl libstring-random-perl libunicode-string-perl liburi-perl libwww-perl libxml-simple-perl libxml-libxslt-perl libcrypt-urandom-perl libtext-unidecode-perl libcookie-baker-xs-perl libio-socket-timeout-perl
+   apt install libapache-session-perl libcache-cache-perl libclone-perl libconfig-inifiles-perl libconvert-pem-perl libcrypt-openssl-bignum-perl libcrypt-openssl-rsa-perl libcrypt-openssl-x509-perl libcrypt-rijndael-perl libdbi-perl libdigest-hmac-perl libemail-sender-perl libgd-securityimage-perl libhash-merge-simple-perl libhtml-template-perl libio-string-perl libjson-perl libmime-tools-perl libmouse-perl libnet-ldap-perl libplack-perl libregexp-assemble-perl libregexp-common-perl libsoap-lite-perl libstring-random-perl libunicode-string-perl liburi-perl libwww-perl libxml-simple-perl libxml-libxslt-perl libcrypt-urandom-perl libtext-unidecode-perl libcookie-baker-xs-perl libio-socket-timeout-perl
 
 For Apache:
 
@@ -202,7 +203,7 @@ Perl dependencies:
 
 ::
 
-   yum install perl-Apache-Session perl-Cache-Cache perl-Clone perl-Config-IniFiles perl-Convert-PEM perl-Crypt-OpenSSL-RSA perl-Crypt-OpenSSL-X509 perl-Crypt-Rijndael perl-Digest-HMAC perl-Digest-SHA perl-GD-SecurityImage perl-HTML-Template perl-IO-String perl-JSON perl-LDAP perl-Mouse perl-Plack perl-Regexp-Assemble perl-Regexp-Common perl-SOAP-Lite perl-String-Random perl-Unicode-String perl-version perl-XML-Simple perl-Crypt-URandom perl-Email-Sender
+   yum install perl-Apache-Session perl-Cache-Cache perl-Clone perl-Config-IniFiles perl-Convert-PEM perl-Crypt-OpenSSL-RSA perl-Crypt-OpenSSL-X509 perl-Crypt-Rijndael perl-Digest-HMAC perl-Digest-SHA perl-GD-SecurityImage perl-Hash-Merge-Simple perl-HTML-Template perl-IO-String perl-JSON perl-LDAP perl-Mouse perl-Plack perl-Regexp-Assemble perl-Regexp-Common perl-SOAP-Lite perl-String-Random perl-Unicode-String perl-version perl-XML-Simple perl-Crypt-URandom perl-Email-Sender
 
 For Apache:
 
