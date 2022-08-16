@@ -30,7 +30,7 @@ use constant PROFILE => [
     qw/name family_name given_name middle_name nickname preferred_username
       profile picture website gender birthdate zoneinfo locale updated_at/
 ];
-use constant EMAIL => [qw/email email_verified/];
+use constant EMAIL   => [qw/email email_verified/];
 use constant ADDRESS =>
   [qw/formatted street_address locality region postal_code country/];
 use constant PHONE => [qw/phone_number phone_number_verified/];
@@ -2248,18 +2248,11 @@ sub getUserIDForRP {
       ->{oidcRPMetaDataOptionsUserIDAttr}
       || $self->conf->{whatToTrace};
 
-    my $user_id;
-
     # If the main attribute is a SP macro, resolve it
     # else, get it directly from session data
-    if ( $self->spMacros->{$rp}->{$user_id_attribute} ) {
-        $user_id =
-          $self->spMacros->{$rp}->{$user_id_attribute}->( $req, $data );
-    }
-    else {
-        $user_id = $data->{$user_id_attribute};
-    }
-    return $user_id;
+    return $self->spMacros->{$rp}->{$user_id_attribute}
+      ? $self->spMacros->{$rp}->{$user_id_attribute}->( $req, $data )
+      : $data->{$user_id_attribute};
 }
 
 1;

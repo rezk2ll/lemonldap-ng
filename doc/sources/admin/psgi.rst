@@ -7,7 +7,7 @@ with any compatible server:
 -  `Starman <https://metacpan.org/pod/starman>`__
 -  `Twiggy <https://metacpan.org/pod/twiggy>`__
 -  `Twiggy::Prefork <https://metacpan.org/pod/Twiggy::Prefork>`__
--  `Starman <https://metacpan.org/pod/feersum>`__
+-  `Feersum <https://metacpan.org/pod/feersum>`__
 -  uWSGI using `uWSGI PSGI
    plugin <http://uwsgi-docs.readthedocs.io/en/latest/Perl.html>`__
 -  **Alternative**: :doc:`Node.js handler<nodehandler>` can be used as

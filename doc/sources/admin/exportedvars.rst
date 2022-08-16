@@ -45,15 +45,15 @@ module.
 Extend variables using macros and groups
 ----------------------------------------
 
-Macros and groups are calculated during authentication process by the
-portal:
+Macros and groups are computed during authentication process by the
+Portal:
 
 -  macros are used to extend (or rewrite)
    :doc:`exported variables<exportedvars>`. A macro is stored as
    attributes: it can contain boolean results or any string
 -  macros can also be used for importing environment variables *(these
    variables are in CGI format)*. Example: ``$ENV{HTTP_COOKIE}``
--  groups are stored as a string with values separated by ''; ''
+-  groups are stored as a string with values separated by '; '
    (default multivalues separator) in the special attribute ``groups``: it
    contains names of groups whose rules were returned true for the
    current user. For example:

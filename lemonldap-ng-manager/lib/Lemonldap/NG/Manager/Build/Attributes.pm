@@ -4488,7 +4488,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         oidcRPMetaDataOptionsBypassConsent => {
             type    => 'bool',
-            help    => 'openidconnectclaims.html',
             default => 0
         },
         oidcRPMetaDataOptionsPostLogoutRedirectUris => { type => 'text', },

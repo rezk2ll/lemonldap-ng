@@ -483,7 +483,6 @@ function templates(tpl,key) {
                {
                   "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsBypassConsent",
-                  "help" : "openidconnectclaims.html",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsBypassConsent",
                   "title" : "oidcRPMetaDataOptionsBypassConsent",
                   "type" : "bool"
