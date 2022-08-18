@@ -195,13 +195,13 @@ In this example we have:
 Configure form replay
 ---------------------
 
-To add form replay on a host, you need to set the catched URI and
+To add form replay on a host, you need to set the caught URI and
 the variables to post.
 
 In this example we have:
 
 - Host: test.example.com
-- Catched URI: /login.php
+- Caught URI: /login.php
 - jQuery URL: default
 
 - Variables:

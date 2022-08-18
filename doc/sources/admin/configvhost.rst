@@ -454,6 +454,26 @@ A virtual host contains:
 -  POST data: use form replay
 -  Options: redirection port, protocol, Handler type, aliases,required authentication level,...
 
+Wildcards in hostnames
+----------------------
+
+|image0| Since 2.0, a wildcard can be used in virtualhost name (not in
+aliases !): ``*.example.com`` matches all hostnames that belong to
+``example.com`` domain. Version 2.0.9 improves this and allows better
+wildcards such as ``test-*.example.com`` or ``test-%.example.com``. The
+``%`` wilcard doesn't match subdomains.
+
+Even if a wildcard exists, if a VirtualHost is explicitly declared, this
+rule will be applied. Example with precedence order for test.sub.example.com:
+
+#. test.sub.example.com
+#. test%.sub.example.com
+#. test*.sub.example.com
+#. %.sub.example.com
+#. \*.sub.example.com
+#. \*.example.com (``%.example.com`` does not match
+   test.sub.example.com)
+
 Access rules and HTTP headers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -574,3 +594,6 @@ Some options are available:
 "Port" and "HTTPS" options are used to build redirection URL *(when user
 is not logged, or for CDA requests)*. By default, default values are
 used. These options are only here to override default values.
+
+.. |image1| image:: /documentation/new.png
+   :width: 35px
