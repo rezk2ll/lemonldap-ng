@@ -56,7 +56,7 @@ Key           Description
 Connection
 ----------
 
-Datas concerning the first connection to the portal
+Data concerning the first connection to the portal
 
 ========== ========================================================================================================================================
 Key        Description
@@ -69,7 +69,7 @@ ipAddr     IP of the user (special care must be taken is you run the portal :doc
 Authentication
 --------------
 
-Datas around the authentication process.
+Data around the authentication process.
 
 =================== =========================================================================================================
 Key                 Description
@@ -95,7 +95,7 @@ Key              Description
 SAML
 ----
 
-Datas related to SAML protocol
+Data related to SAML protocol
 
 =================== ================================================
 Key                 Description

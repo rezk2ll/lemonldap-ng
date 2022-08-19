@@ -63,7 +63,7 @@ Nginx configuration
        include /etc/nginx/fastcgi_params;
        fastcgi_pass localhost:9090;
 
-       # Drop post datas
+       # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
 

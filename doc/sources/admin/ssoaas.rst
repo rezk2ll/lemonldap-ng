@@ -90,7 +90,7 @@ requesting a Central uWSGI server (Nginx only):
        fastcgi_pass 10.1.2.3:9090;
        fastcgi_param VHOSTTYPE DevOps;
 
-       # Drop post datas
+       # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
 
@@ -300,7 +300,7 @@ directory.
        # Force handler type:
        fastcgi_param VHOSTTYPE DevOps;
 
-       # Drop post datas
+       # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
 

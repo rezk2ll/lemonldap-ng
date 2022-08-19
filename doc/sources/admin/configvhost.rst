@@ -139,7 +139,7 @@ Then you can take any virtual host and modify it:
        include /etc/nginx/fastcgi_params;
        fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
 
-       # Drop post datas
+       # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
 
@@ -215,7 +215,7 @@ Example of a protected virtual host for a local application:
        internal;
        include /etc/nginx/fastcgi_params;
        fastcgi_pass /path/to/llng-fastcgi-server.sock;
-       # Drop post datas
+       # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
        # Keep original hostname
@@ -276,7 +276,7 @@ Reverse-Proxy
        internal;
        include /etc/nginx/fastcgi_params;
        fastcgi_pass /path/to/llng-fastcgi-server.sock;
-       # Drop post datas
+       # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
        # Keep original hostname

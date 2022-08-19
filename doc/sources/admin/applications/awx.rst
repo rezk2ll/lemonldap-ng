@@ -184,7 +184,7 @@ Go to "SAML service providers", click on "Add SAML SP" and name it as
 you want (example : 'AWX')
 
 In the new subtree 'AWX', open 'Metadata' and paste the content of the
-AWX Metadatas, wich can be found at the
+AWX Metadata, wich can be found at the
 ``SAML Service Provider Metadata URL`` in AWX :
 https://awx.example.com/sso/metadata/saml/
 

@@ -6,7 +6,7 @@ persistent sessions.
 
 LL::NG Portal provides REST end points for sessions management:
 
--  GET /sessions/<type>/<session-id> : get session datas
+-  GET /sessions/<type>/<session-id> : get session data
 -  GET /sessions/<type>/<session-id>/<key> : get a session key value
 -  GET /sessions/<type>/<session-id>/[k1,k2] : get some keys value
 -  POST /sessions/<type> : create a session
@@ -15,7 +15,7 @@ LL::NG Portal provides REST end points for sessions management:
 
 Sessions for connected users (used by :doc:`LLNG Proxy<authproxy>`):
 
--  GET /session/my/<type> : get session datas
+-  GET /session/my/<type> : get session data
 -  GET /session/my/<type>/key : get session key
 -  DELETE /session/my : ask for logout
 -  DELETE /sessions/my : ask for global logout (if GlobalLogout plugin is on)
