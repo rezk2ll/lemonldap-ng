@@ -263,6 +263,7 @@
 "register":"Enregistrer",
 "registerRequestAlreadyIssued":"Une demande de création pour ce compte a déjà été faite le ",
 "rememberChoice":"Se souvenir de mon choix",
+"rememberTimerLabel":"s avant authentification automatique",
 "remove2fWarning":"Cette action est définitive",
 "removeOtherSessions":"Fermer les autres sessions",
 "renewSession":"Renouveller la session",

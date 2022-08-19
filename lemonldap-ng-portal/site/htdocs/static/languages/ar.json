@@ -263,6 +263,7 @@
 "register":"Register",
 "registerRequestAlreadyIssued":"تم إصدار طلب تسجيل لهذا الحساب من قبل",
 "rememberChoice":"تذكر اختياري",
+"rememberTimerLabel":"s before automatic authentication",
 "remove2fWarning":"This operation cannot be undone",
 "removeOtherSessions":"إزالة الجلسات الأخرى",
 "renewSession":"Renew session",

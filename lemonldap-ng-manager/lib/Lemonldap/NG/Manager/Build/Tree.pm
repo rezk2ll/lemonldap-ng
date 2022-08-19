@@ -870,6 +870,18 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'rememberAuthChoice',
+                            help  => 'rememberauthchoice.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'rememberAuthChoiceRule',
+                                'rememberCookieName',
+                                'rememberCookieTimeout',
+                                'rememberDefaultChecked',
+                                'rememberTimer',
+                            ]
+                        },
+                        {
                             title => 'decryptValue',
                             help  => 'decryptvalue.html',
                             form  => 'simpleInputContainer',

@@ -263,6 +263,7 @@
 "register":"Zarejestruj",
 "registerRequestAlreadyIssued":"Wniosek o rejestrację tego konta został już złożony w dniu ",
 "rememberChoice":"Zapamiętaj mój wybór",
+"rememberTimerLabel":"s before automatic authentication",
 "remove2fWarning":"Tej operacji nie można cofnąć",
 "removeOtherSessions":"Usuń inne sesje",
 "renewSession":"Odnów sesję",

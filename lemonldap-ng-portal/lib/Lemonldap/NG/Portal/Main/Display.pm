@@ -15,6 +15,7 @@ has speChars                 => ( is => 'rw' );
 has skinRules                => ( is => 'rw' );
 has stayConnected            => ( is => 'rw', default => sub { 0 } );
 has requireOldPwd            => ( is => 'rw', default => sub { 1 } );
+has rememberAuthChoice       => ( is => 'rw', default => sub { 0 } );
 has passwordPolicyActivation => ( is => 'rw', default => sub { 0 } );
 
 sub displayInit {
@@ -57,6 +58,13 @@ sub displayInit {
         $self->logger->error("Bad passwordPolicyActivation rule: $error");
     }
     $self->passwordPolicyActivation($rule);
+    $rule =
+      HANDLER->buildSub( HANDLER->substitute( $self->conf->{rememberAuthChoiceRule} ) );
+    unless ($rule) {
+        my $error = HANDLER->tsv->{jail}->error || 'Unable to compile rule';
+        $self->logger->error("Bad rememberAuthChoiceRule rule: $error");
+    }
+    $self->rememberAuthChoice($rule);
 
     my $speChars =
       $self->conf->{passwordPolicySpecialChar} eq '__ALL__'
@@ -399,6 +407,14 @@ sub display {
                 ? ( STAYCONNECTED => 1 )
                 : ()
             ),
+            (
+                $self->rememberAuthChoice->( $req, $req->sessionInfo )
+                ? ( REMEMBERAUTHCHOICE => 1 )
+                : ()
+            ),
+            REMEMBERAUTHCHOICEDEFAULTCHECKED => $self->conf->{rememberDefaultChecked} // 0,
+            REMEMBERAUTHCHOICECOOKIENAME => $self->conf->{rememberCookieName} // 'llngrememberauthchoice',
+            REMEMBERAUTHCHOICETIMER => $self->conf->{rememberTimer} // 5,
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
