@@ -31,15 +31,12 @@ has logo   => ( is => 'rw', default => 'webauthn.png' );
 sub init {
     my ($self) = @_;
 
-    # If self registration is enabled and "activation" is just set to
-    # "enabled", replace the rule to detect if user has registered its key
-    if (    $self->conf->{webauthn2fSelfRegistration}
-        and $self->conf->{webauthn2fActivation} eq '1' )
-    {
-        $self->conf->{webauthn2fActivation} = 'has2f("WebAuthn")';
-    }
-    return 0
-      unless ( $self->Lemonldap::NG::Portal::Main::SecondFactor::init() );
+    # If "activation" is just set to "enabled",
+    # replace the rule to detect if user has registered its key
+    $self->conf->{webauthn2fActivation} = 'has2f("WebAuthn")'
+      if $self->conf->{webauthn2fActivation} eq '1';
+
+    return 0 unless $self->SUPER::init();
 
     return 1;
 }
