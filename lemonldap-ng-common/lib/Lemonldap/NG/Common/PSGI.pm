@@ -291,15 +291,12 @@ sub sendHtml {
     $args{code}    ||= 200;
     $args{headers} ||= [ $req->spliceHdrs ];
     my $htpl;
-    $template = ( $args{templateDir} // $self->templateDir ) . "/$template.tpl";
-    return $self->sendError( $req, "Unable to read $template", 500 )
-      unless ( -r $template and -f $template );
     eval {
         $self->logger->debug("Starting HTML generation using $template");
         require HTML::Template;
         $htpl = HTML::Template->new(
-            filehandle             => IO::File->new($template),
-            path                   => $self->templateDir,
+            filename => $template . ".tpl",
+            path     => ( $args{templateDir} // $self->templateDir ),
             search_path_on_include => 1,
             die_on_bad_params      => 0,
             die_on_missing_include => 1,
@@ -324,7 +321,9 @@ sub sendHtml {
         );
     };
     if ($@) {
-        return $self->sendError( $req, "Unable to load template: $@", 500 );
+        $self->logger->error("Unable to render template $template.tpl: $@");
+        return $self->sendError( $req,
+            "Unable to render template $template.tpl", 500 );
     }
 
     # Set headers

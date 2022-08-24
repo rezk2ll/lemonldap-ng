@@ -271,17 +271,6 @@ sub reloadConf {
     $self->cors($cors);
     $self->logger->debug( "Initialized CORS headers : " . $self->cors );
 
-    # Initialize templateDir
-    $self->{templateDir} =
-      $self->conf->{templateDir} . '/' . $self->conf->{portalSkin}
-      if ( $self->conf->{templateDir} and $self->conf->{portalSkin} );
-    unless ( -d $self->{templateDir} ) {
-        $self->error("Template dir $self->{templateDir} doesn't exist");
-        return $self->fail;
-    }
-    $self->templateDir(
-        [ $self->{templateDir}, $self->conf->{templateDir} . '/bootstrap' ] );
-
     $self->{staticPrefix} = $self->conf->{staticPrefix} || '/static';
     $self->{languages}    = $self->conf->{languages}    || 'en';
 
