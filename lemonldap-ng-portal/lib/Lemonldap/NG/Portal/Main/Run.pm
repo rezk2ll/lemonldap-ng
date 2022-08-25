@@ -872,6 +872,52 @@ sub _dump {
     return;
 }
 
+# Warning: this function returns a JSON string
+sub getTrOver {
+    my ( $self, $req, $templateDir ) = @_;
+
+    my $templateDir //= $self->conf->{templateDir} . '/' . $self->getSkin($req);
+
+    unless ( $self->trOverCache->{$templateDir} ) {
+
+        # Override messages
+        my $trOverMessages = JSON::from_json( $self->trOver );
+
+        opendir( DIR, $templateDir );
+        my @langfiles = grep( /\.json$/, readdir(DIR) );
+        close(DIR);
+
+        foreach my $file (@langfiles) {
+            my ($lang) = ( $file =~ /^(\w+)\.json/ );
+            $self->logger->debug("Use $file to override messages");
+            if ( open my $json, "<", $templateDir . "/" . $file ) {
+                my $trdata;
+                eval {
+                    local $/ = undef;
+                    $trdata = JSON::from_json(<$json>);
+                };
+                if ($@) {
+                    $self->logger->warn("Ignoring $file because of error: $@");
+                }
+                if ( ref($trdata) eq "HASH" ) {
+                    for my $msg ( keys %$trdata ) {
+
+                        # lemonldap-ng.ini has priority
+                        $trOverMessages->{$lang}->{$msg} //= $trdata->{$msg};
+                    }
+                }
+            }
+            else {
+                $self->logger->error("Unable to read $file");
+            }
+        }
+
+        $self->trOverCache->{$templateDir} = JSON::to_json($trOverMessages);
+    }
+
+    return $self->trOverCache->{$templateDir};
+}
+
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
 
@@ -888,29 +934,7 @@ sub sendHtml {
         $self->logger->debug("-> Trying to load $tmpl");
     }
 
-    # Override messages
-    my $trOverMessages = JSON::from_json( $self->trOver );
-
-    unless ( $self->trOverCache->{$templateDir} ) {
-        opendir( DIR, $templateDir );
-        my @langfiles = grep( /\.json$/, readdir(DIR) );
-        close(DIR);
-
-        foreach my $file (@langfiles) {
-            my ($lang) = ( $file =~ /^(\w+)\.json/ );
-            $self->logger->debug("Use $file to override messages");
-            if ( open my $json, "<", $templateDir . "/" . $file ) {
-                local $/ = undef;
-                $trOverMessages->{$lang} = JSON::from_json(<$json>);
-            }
-            else {
-                $self->logger->error("Unable to read $file");
-            }
-        }
-
-        $self->trOverCache->{$templateDir} = JSON::to_json($trOverMessages);
-    }
-    $args{params}->{TROVER} = $self->trOverCache->{$templateDir};
+    $args{params}->{TROVER} = $self->getTrOver( $req, $templateDir );
 
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },

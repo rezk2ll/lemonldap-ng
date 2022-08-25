@@ -29,6 +29,22 @@ None
 2.0.15
 ------
 
+Translation overrides in lemonldap-ng.ini now take priority over skin
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Previously, the presence of a translation JSON file within a skin prevented
+translation messages defined in ``lemonldap-ng.ini`` from being used.
+
+Additionally, it was not possible to translate strings in email templates using
+a custom skin file.
+
+These two bugs are now fixed, be sure to check that you do not have duplicate
+translations in ``lemonldap-ng.ini`` and in your skin files (``*.json``). If you do,
+the translation in ``lemonldap-ng.ini`` will now take priority.
+
+See :ref:`documentation on translating messages <intlmessages>` for
+details
+
 New Captcha API
 ~~~~~~~~~~~~~~~
 

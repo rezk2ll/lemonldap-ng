@@ -290,6 +290,9 @@ For example ``templates/myskin/en.json``:
 You can also create a file called ``all.json`` to override messages in
 all languages.
 
+.. versionchanged:: 2.0.15
+   Translations in lemonldap-ng.ini now take priority over translations from skin files
+
 Menu tabs
 ~~~~~~~~~
 
