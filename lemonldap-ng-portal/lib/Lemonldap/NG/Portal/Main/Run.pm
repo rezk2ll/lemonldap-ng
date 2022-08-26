@@ -298,7 +298,7 @@ sub do {
     # Update status
     if ( my $p = $self->HANDLER->tsv->{statusPipe} ) {
         $p->print( ( $req->user ? $req->user : $req->address ) . ' => '
-              . $req->uri
+              . $req->{env}->{REQUEST_URI}
               . " $err\n" );
     }
 
