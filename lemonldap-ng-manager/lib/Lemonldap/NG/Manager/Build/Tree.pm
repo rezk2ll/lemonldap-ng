@@ -968,11 +968,11 @@ sub tree {
                             help  => 'mail2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'mail2fActivation', 'mail2fCodeRegex',
-                                'mail2fTimeout',    'mail2fSubject',
-                                'mail2fBody',       'mail2fSessionKey',
+                                'mail2fActivation',     'mail2fCodeRegex',
+                                'mail2fTimeout',        'mail2fSubject',
+                                'mail2fBody',           'mail2fSessionKey',
                                 'mail2fResendInterval', 'mail2fAuthnLevel',
-                                'mail2fLabel', 'mail2fLogo'
+                                'mail2fLabel',          'mail2fLogo'
                             ]
                         },
                         {
@@ -980,10 +980,10 @@ sub tree {
                             help  => 'external2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'ext2fActivation', 'ext2fCodeActivation',
-                                'ext2FSendCommand', 'ext2FValidateCommand',
+                                'ext2fActivation',     'ext2fCodeActivation',
+                                'ext2FSendCommand',    'ext2FValidateCommand',
                                 'ext2fResendInterval', 'ext2fAuthnLevel',
-                                'ext2fLabel', 'ext2fLogo',
+                                'ext2fLabel',          'ext2fLogo',
                             ]
                         },
                         {
@@ -1006,11 +1006,16 @@ sub tree {
                             help  => 'rest2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'rest2fActivation', 'rest2fCodeActivation',
-                                'rest2fInitUrl', 'rest2fInitArgs',
-                                'rest2fVerifyUrl', 'rest2fVerifyArgs',
-                                'rest2fResendInterval', 'rest2fAuthnLevel',
-                                'rest2fLabel', 'rest2fLogo'
+                                'rest2fActivation',
+                                'rest2fCodeActivation',
+                                'rest2fInitUrl',
+                                'rest2fInitArgs',
+                                'rest2fVerifyUrl',
+                                'rest2fVerifyArgs',
+                                'rest2fResendInterval',
+                                'rest2fAuthnLevel',
+                                'rest2fLabel',
+                                'rest2fLogo'
                             ]
                         },
                         {
@@ -1244,8 +1249,8 @@ sub tree {
                     nodes => [
                         'samlAuthnContextMapPassword',
                         'samlAuthnContextMapPasswordProtectedTransport',
-                        'samlAuthnContextMapTLSClient',
-                        'samlAuthnContextMapKerberos'
+                        'samlAuthnContextMapKerberos',
+                        'samlAuthnContextMapTLSClient'
                     ]
                 },
                 {
@@ -1416,6 +1421,7 @@ sub tree {
                 },
                 {
                     title => 'oidcServiceMetaDataTimeouts',
+                    form  => 'simpleInputContainer',
                     nodes => [
                         'oidcServiceAuthorizationCodeExpiration',
                         'oidcServiceIDTokenExpiration',

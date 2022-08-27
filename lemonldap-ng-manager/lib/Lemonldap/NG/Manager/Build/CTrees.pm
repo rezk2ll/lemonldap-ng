@@ -198,13 +198,14 @@ sub cTrees {
             {
                 title => 'oidcRPMetaDataOptions',
                 help  => 'idpopenidconnect.html#options',
-                nodes => [ {
+                nodes => [ 
+                {
                         title => 'oidcRPMetaDataOptionsBasic',
                         form  => 'simpleInputContainer',
                         nodes => [
+                            'oidcRPMetaDataOptionsPublic',
                             'oidcRPMetaDataOptionsClientID',
                             'oidcRPMetaDataOptionsClientSecret',
-                            'oidcRPMetaDataOptionsPublic',
                             'oidcRPMetaDataOptionsRedirectUris',
                         ]
                     },
@@ -213,12 +214,12 @@ sub cTrees {
                         form  => 'simpleInputContainer',
                         nodes => [
                             'oidcRPMetaDataOptionsBypassConsent',
-                            'oidcRPMetaDataOptionsUserIDAttr',
                             'oidcRPMetaDataOptionsIDTokenForceClaims',
                             'oidcRPMetaDataOptionsAccessTokenJWT',
                             'oidcRPMetaDataOptionsAccessTokenClaims',
-                            'oidcRPMetaDataOptionsAdditionalAudiences',
                             'oidcRPMetaDataOptionsRefreshToken',
+                            'oidcRPMetaDataOptionsUserIDAttr',
+                            'oidcRPMetaDataOptionsAdditionalAudiences',
                         ]
                     },
                     {
@@ -251,10 +252,10 @@ sub cTrees {
                         form  => 'simpleInputContainer',
                         nodes => [
                             'oidcRPMetaDataOptionsLogoutBypassConfirm',
-                            'oidcRPMetaDataOptionsPostLogoutRedirectUris',
-                            'oidcRPMetaDataOptionsLogoutUrl',
-                            'oidcRPMetaDataOptionsLogoutType',
                             'oidcRPMetaDataOptionsLogoutSessionRequired',
+                            'oidcRPMetaDataOptionsLogoutType',
+                            'oidcRPMetaDataOptionsLogoutUrl',
+                            'oidcRPMetaDataOptionsPostLogoutRedirectUris',
                         ]
                     },
                 ]

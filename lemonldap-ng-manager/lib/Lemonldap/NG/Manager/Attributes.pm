@@ -4,4644 +4,4669 @@ package Lemonldap::NG::Manager::Attributes;
 our $VERSION = '2.0.15';
 
 sub perlExpr {
-            my($val, $conf) = @_;
-            my $cpt = 'Safe'->new;
-            $cpt->share_from('MIME::Base64', ['&encode_base64']);
-            $cpt->share_from('Lemonldap::NG::Handler::Main::Jail', ['&encrypt', '&token', @Lemonldap::NG::Handler::Main::Jail::builtCustomFunctions]);
-            $cpt->share_from('Lemonldap::NG::Common::Safelib', $Lemonldap::NG::Common::Safelib::functions);
-            $cpt->reval("BEGIN { 'warnings'->unimport; } $val");
-            my $err = join('', grep({$_ =~ /(?:Undefined subroutine|Devel::StackTrace)/ ? () : $_;} split(/\n/, $@, 0)));
-            return -1, "__badExpression__: $err" if $err and $conf->{'useSafeJail'};
-            return $val =~ qr/(?<=[^=<!>\|\?])=(?![>=~])/ && $conf->{'avoidAssignment'} ? (1, '__badExpressionAssignment__') : 1;
-        };
-
+    my ( $val, $conf ) = @_;
+    my $cpt = 'Safe'->new;
+    $cpt->share_from( 'MIME::Base64', ['&encode_base64'] );
+    $cpt->share_from(
+        'Lemonldap::NG::Handler::Main::Jail',
+        [
+            '&encrypt', '&token',
+            @Lemonldap::NG::Handler::Main::Jail::builtCustomFunctions
+        ]
+    );
+    $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
+        $Lemonldap::NG::Common::Safelib::functions );
+    $cpt->reval("BEGIN { 'warnings'->unimport; } $val");
+    my $err = join(
+        '',
+        grep( { $_ =~ /(?:Undefined subroutine|Devel::StackTrace)/ ? () : $_; }
+            split( /\n/, $@, 0 ) )
+    );
+    return -1, "__badExpression__: $err" if $err and $conf->{'useSafeJail'};
+    return $val =~ qr/(?<=[^=<!>\|\?])=(?![>=~])/
+      && $conf->{'avoidAssignment'} ? ( 1, '__badExpressionAssignment__' ) : 1;
+}
 
 sub types {
     return {
-          'array' => {
-                       'test' => sub {
-                                     1;
-                                 }
-                     },
-          'authParamsText' => {
-                                'test' => sub {
-                                              1;
-                                          }
-                              },
-          'blackWhiteList' => {
-                                'test' => sub {
-                                              1;
-                                          }
-                              },
-          'bool' => {
-                      'msgFail' => '__notABoolean__',
-                      'test' => qr/^[01]$/
-                    },
-          'boolOrExpr' => {
-                            'msgFail' => '__notAValidPerlExpression__',
-                            'test' => sub {
-                                          return perlExpr(@_);
-                                      }
-                          },
-          'catAndAppList' => {
-                               'test' => sub {
-                                             1;
-                                         }
-                             },
-          'file' => {
-                      'test' => sub {
-                                    1;
-                                }
-                    },
-          'hostname' => {
-                          'form' => 'text',
-                          'msgFail' => '__badHostname__',
-                          'test' => qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))?$/
-                        },
-          'int' => {
-                     'msgFail' => '__notAnInteger__',
-                     'test' => qr/^\-?\d+$/
-                   },
-          'keyText' => {
-                         'keyTest' => qr/^[a-zA-Z0-9_]+$/,
-                         'msgFail' => '__badValue__',
-                         'test' => qr/^.*$/
-                       },
-          'keyTextContainer' => {
-                                  'keyMsgFail' => '__badKeyName__',
-                                  'keyTest' => qr/^\w[\w\.\-]*$/,
-                                  'msgFail' => '__emptyValueNotAllowed__',
-                                  'test' => qr/./
-                                },
-          'lmAttrOrMacro' => {
-                               'form' => 'text',
-                               'test' => sub {
-                                             my($val, $conf) = @_;
-                                             return 1 if defined $conf->{'macros'}{$val} or $val =~ /^_/;
-                                             foreach $_ (keys %$conf) {
-                                                 return 1 if $_ =~ /exportedvars$/i and defined $conf->{$_}{$val};
-                                             }
-                                             return 1, "__unknownAttrOrMacro__: $val";
-                                         }
-                             },
-          'longtext' => {
-                          'test' => sub {
-                                        1;
-                                    }
-                        },
-          'menuApp' => {
-                         'test' => sub {
-                                       1;
-                                   }
-                       },
-          'menuCat' => {
-                         'test' => sub {
-                                       1;
-                                   }
-                       },
-          'oidcAttribute' => {
-                               'test' => sub {
-                                             1;
-                                         }
-                             },
-          'oidcmetadatajson' => {
-                                  'test' => sub {
-                                                1;
-                                            }
-                                },
-          'oidcmetadatajwks' => {
-                                  'test' => sub {
-                                                1;
-                                            }
-                                },
-          'oidcOPMetaDataNode' => {
-                                    'test' => sub {
-                                                  1;
-                                              }
-                                  },
-          'oidcRPMetaDataNode' => {
-                                    'test' => sub {
-                                                  1;
-                                              }
-                                  },
-          'password' => {
-                          'msgFail' => '__malformedValue__',
-                          'test' => sub {
-                                        1;
-                                    }
-                        },
-          'pcre' => {
-                      'form' => 'text',
-                      'test' => sub {
-                                    eval {
-                                        do {
-                                            qr/$_[0]/
-                                        }
-                                    };
-                                    return $@ ? (0, "__badRegexp__: $@") : 1;
-                                }
-                    },
-          'PerlModule' => {
-                            'form' => 'text',
-                            'msgFail' => '__badPerlPackageName__',
-                            'test' => qr/^(?:[a-zA-Z][a-zA-Z0-9]*)*(?:::[a-zA-Z][a-zA-Z0-9]*)*$/
-                          },
-          'portalskin' => {
-                            'test' => sub {
-                                          1;
-                                      }
-                          },
-          'portalskinbackground' => {
-                                      'test' => sub {
-                                                    1;
-                                                }
-                                    },
-          'post' => {
-                      'test' => sub {
-                                    1;
-                                }
-                    },
-          'RSAPrivateKey' => {
-                               'test' => sub {
-                                             return $_[0] =~ m[^(?:(?:\-+\s*BEGIN\s+(?:(?:RSA|ENCRYPTED)\s+)?PRIVATE\s+KEY\s*\-+\r?\n)?(?:Proc-Type:.*\r?\nDEK-Info:.*\r?\n[\r\n]*)?[a-zA-Z0-9/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:(?:RSA|ENCRYPTED)\s+)?PRIVATE\s+KEY\s*\-+)?[\r\n]*)?$]s ? 1 : (1, '__badPemEncoding__');
-                                         }
-                             },
-          'RSAPublicKey' => {
-                              'test' => sub {
-                                            return $_[0] =~ m[^(?:(?:\-+\s*BEGIN\s+PUBLIC\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+PUBLIC\s+KEY\s*\-+)?[\r\n]*)?$]s ? 1 : (1, '__badPemEncoding__');
-                                        }
-                            },
-          'RSAPublicKeyOrCertificate' => {
-                                           'test' => sub {
-                                                         return $_[0] =~ m[^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+)?[\r\n]*)?$]s ? 1 : (1, '__badPemEncoding__');
-                                                     }
-                                         },
-          'rule' => {
-                      'test' => sub {
-                                    1;
-                                }
-                    },
-          'samlAssertion' => {
-                               'test' => sub {
-                                             1;
-                                         }
-                             },
-          'samlAttribute' => {
-                               'test' => sub {
-                                             1;
-                                         }
-                             },
-          'samlIDPMetaDataNode' => {
-                                     'test' => sub {
-                                                   1;
-                                               }
-                                   },
-          'samlService' => {
-                             'test' => sub {
-                                           1;
-                                       }
-                           },
-          'samlSPMetaDataNode' => {
-                                    'test' => sub {
-                                                  1;
-                                              }
-                                  },
-          'select' => {
-                        'test' => sub {
-                                      return 0, 'Value is not a scalar' if ref $_[0];
-                                      my $test = grep({$_ eq $_[0];} map({$_->{'k'};} @{$_[2]{'select'};}));
-                                      return $test ? 1 : (1, "Invalid value '$_[0]' for this select");
-                                  }
-                      },
-          'subContainer' => {
-                              'keyTest' => qr/\w/,
-                              'test' => sub {
-                                            1;
-                                        }
-                            },
-          'text' => {
-                      'msgFail' => '__malformedValue__',
-                      'test' => sub {
-                                    1;
-                                }
-                    },
-          'trool' => {
-                       'msgFail' => '__authorizedValues__: -1, 0, 1',
-                       'test' => qr/^(?:-1|0|1)$/
-                     },
-          'url' => {
-                     'form' => 'text',
-                     'msgFail' => '__badUrl__',
-                     'test' => qr/(?:^$|(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?))/
-                   }
-        };
+        'array' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'authParamsText' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'blackWhiteList' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'bool' => {
+            'msgFail' => '__notABoolean__',
+            'test'    => qr/^[01]$/
+        },
+        'boolOrExpr' => {
+            'msgFail' => '__notAValidPerlExpression__',
+            'test'    => sub {
+                return perlExpr(@_);
+            }
+        },
+        'catAndAppList' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'file' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'hostname' => {
+            'form'    => 'text',
+            'msgFail' => '__badHostname__',
+            'test'    =>
+qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))?$/
+        },
+        'int' => {
+            'msgFail' => '__notAnInteger__',
+            'test'    => qr/^\-?\d+$/
+        },
+        'keyText' => {
+            'keyTest' => qr/^[a-zA-Z0-9_]+$/,
+            'msgFail' => '__badValue__',
+            'test'    => qr/^.*$/
+        },
+        'keyTextContainer' => {
+            'keyMsgFail' => '__badKeyName__',
+            'keyTest'    => qr/^\w[\w\.\-]*$/,
+            'msgFail'    => '__emptyValueNotAllowed__',
+            'test'       => qr/./
+        },
+        'lmAttrOrMacro' => {
+            'form' => 'text',
+            'test' => sub {
+                my ( $val, $conf ) = @_;
+                return 1 if defined $conf->{'macros'}{$val} or $val =~ /^_/;
+                foreach $_ ( keys %$conf ) {
+                    return 1
+                      if $_ =~ /exportedvars$/i and defined $conf->{$_}{$val};
+                }
+                return 1, "__unknownAttrOrMacro__: $val";
+            }
+        },
+        'longtext' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'menuApp' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'menuCat' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'oidcAttribute' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'oidcmetadatajson' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'oidcmetadatajwks' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'oidcOPMetaDataNode' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'oidcRPMetaDataNode' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'password' => {
+            'msgFail' => '__malformedValue__',
+            'test'    => sub {
+                1;
+            }
+        },
+        'pcre' => {
+            'form' => 'text',
+            'test' => sub {
+                eval {
+                    do {
+                        qr/$_[0]/;
+                    }
+                };
+                return $@ ? ( 0, "__badRegexp__: $@" ) : 1;
+            }
+        },
+        'PerlModule' => {
+            'form'    => 'text',
+            'msgFail' => '__badPerlPackageName__',
+            'test' => qr/^(?:[a-zA-Z][a-zA-Z0-9]*)*(?:::[a-zA-Z][a-zA-Z0-9]*)*$/
+        },
+        'portalskin' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'portalskinbackground' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'post' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'RSAPrivateKey' => {
+            'test' => sub {
+                return $_[0] =~
+m[^(?:(?:\-+\s*BEGIN\s+(?:(?:RSA|ENCRYPTED)\s+)?PRIVATE\s+KEY\s*\-+\r?\n)?(?:Proc-Type:.*\r?\nDEK-Info:.*\r?\n[\r\n]*)?[a-zA-Z0-9/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:(?:RSA|ENCRYPTED)\s+)?PRIVATE\s+KEY\s*\-+)?[\r\n]*)?$]s
+                  ? 1
+                  : ( 1, '__badPemEncoding__' );
+            }
+        },
+        'RSAPublicKey' => {
+            'test' => sub {
+                return $_[0] =~
+m[^(?:(?:\-+\s*BEGIN\s+PUBLIC\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+PUBLIC\s+KEY\s*\-+)?[\r\n]*)?$]s
+                  ? 1
+                  : ( 1, '__badPemEncoding__' );
+            }
+        },
+        'RSAPublicKeyOrCertificate' => {
+            'test' => sub {
+                return $_[0] =~
+m[^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+)?[\r\n]*)?$]s
+                  ? 1
+                  : ( 1, '__badPemEncoding__' );
+            }
+        },
+        'rule' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'samlAssertion' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'samlAttribute' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'samlIDPMetaDataNode' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'samlService' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'samlSPMetaDataNode' => {
+            'test' => sub {
+                1;
+            }
+        },
+        'select' => {
+            'test' => sub {
+                return 0, 'Value is not a scalar' if ref $_[0];
+                my $test = grep( { $_ eq $_[0]; }
+                    map( { $_->{'k'}; } @{ $_[2]{'select'}; } ) );
+                return $test
+                  ? 1
+                  : ( 1, "Invalid value '$_[0]' for this select" );
+            }
+        },
+        'subContainer' => {
+            'keyTest' => qr/\w/,
+            'test'    => sub {
+                1;
+            }
+        },
+        'text' => {
+            'msgFail' => '__malformedValue__',
+            'test'    => sub {
+                1;
+            }
+        },
+        'trool' => {
+            'msgFail' => '__authorizedValues__: -1, 0, 1',
+            'test'    => qr/^(?:-1|0|1)$/
+        },
+        'url' => {
+            'form'    => 'text',
+            'msgFail' => '__badUrl__',
+            'test'    =>
+qr/(?:^$|(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?))/
+        }
+    };
 }
 
 sub attributes {
     return {
-          'activeTimer' => {
-                             'default' => 1,
-                             'type' => 'bool'
-                           },
-          'adaptativeAuthenticationLevelRules' => {
-                                                    'keyMsgFail' => '__badRegexp__',
-                                                    'keyTest' => sub {
-                                                                     eval {
-                                                                         do {
-                                                                             qr/$_[0]/
-                                                                         }
-                                                                     };
-                                                                     return $@ ? 0 : 1;
-                                                                 },
-                                                    'type' => 'keyTextContainer'
-                                                  },
-          'ADPwdExpireWarning' => {
-                                    'default' => 0,
-                                    'type' => 'int'
-                                  },
-          'ADPwdMaxAge' => {
-                             'default' => 0,
-                             'type' => 'int'
-                           },
-          'apacheAuthnLevel' => {
-                                  'default' => 3,
-                                  'type' => 'int'
-                                },
-          'applicationList' => {
-                                 'default' => {
-                                                'default' => {
-                                                               'catname' => 'Default category',
-                                                               'type' => 'category'
-                                                             }
-                                              },
-                                 'keyTest' => qr/\w/,
-                                 'type' => 'catAndAppList'
-                               },
-          'authChoiceAuthBasic' => {
-                                     'type' => 'text'
-                                   },
-          'authChoiceFindUser' => {
-                                    'type' => 'text'
-                                  },
-          'authChoiceModules' => {
-                                   'keyMsgFail' => '__badChoiceKey__',
-                                   'keyTest' => qr/^(\d*)?[a-zA-Z0-9_]+$/,
-                                   'select' => [
-                                                 [
-                                                   {
-                                                     'k' => 'Apache',
-                                                     'v' => 'Apache'
-                                                   },
-                                                   {
-                                                     'k' => 'AD',
-                                                     'v' => 'Active Directory'
-                                                   },
-                                                   {
-                                                     'k' => 'CAS',
-                                                     'v' => 'Central Authentication Service (CAS)'
-                                                   },
-                                                   {
-                                                     'k' => 'DBI',
-                                                     'v' => 'Database (DBI)'
-                                                   },
-                                                   {
-                                                     'k' => 'Demo',
-                                                     'v' => 'Demo'
-                                                   },
-                                                   {
-                                                     'k' => 'Facebook',
-                                                     'v' => 'Facebook'
-                                                   },
-                                                   {
-                                                     'k' => 'GitHub',
-                                                     'v' => 'GitHub'
-                                                   },
-                                                   {
-                                                     'k' => 'GPG',
-                                                     'v' => 'GPG'
-                                                   },
-                                                   {
-                                                     'k' => 'Kerberos',
-                                                     'v' => 'Kerberos'
-                                                   },
-                                                   {
-                                                     'k' => 'LDAP',
-                                                     'v' => 'LDAP'
-                                                   },
-                                                   {
-                                                     'k' => 'LinkedIn',
-                                                     'v' => 'LinkedIn'
-                                                   },
-                                                   {
-                                                     'k' => 'PAM',
-                                                     'v' => 'PAM'
-                                                   },
-                                                   {
-                                                     'k' => 'Null',
-                                                     'v' => 'None'
-                                                   },
-                                                   {
-                                                     'k' => 'OpenID',
-                                                     'v' => 'OpenID'
-                                                   },
-                                                   {
-                                                     'k' => 'OpenIDConnect',
-                                                     'v' => 'OpenID Connect'
-                                                   },
-                                                   {
-                                                     'k' => 'Proxy',
-                                                     'v' => 'Proxy'
-                                                   },
-                                                   {
-                                                     'k' => 'Radius',
-                                                     'v' => 'Radius'
-                                                   },
-                                                   {
-                                                     'k' => 'REST',
-                                                     'v' => 'REST'
-                                                   },
-                                                   {
-                                                     'k' => 'Remote',
-                                                     'v' => 'Remote'
-                                                   },
-                                                   {
-                                                     'k' => 'SAML',
-                                                     'v' => 'SAML v2'
-                                                   },
-                                                   {
-                                                     'k' => 'Slave',
-                                                     'v' => 'Slave'
-                                                   },
-                                                   {
-                                                     'k' => 'SSL',
-                                                     'v' => 'SSL'
-                                                   },
-                                                   {
-                                                     'k' => 'Twitter',
-                                                     'v' => 'Twitter'
-                                                   },
-                                                   {
-                                                     'k' => 'WebID',
-                                                     'v' => 'WebID'
-                                                   },
-                                                   {
-                                                     'k' => 'Custom',
-                                                     'v' => 'customModule'
-                                                   }
-                                                 ],
-                                                 [
-                                                   {
-                                                     'k' => 'AD',
-                                                     'v' => 'Active Directory'
-                                                   },
-                                                   {
-                                                     'k' => 'CAS',
-                                                     'v' => 'Central Authentication Service (CAS)'
-                                                   },
-                                                   {
-                                                     'k' => 'DBI',
-                                                     'v' => 'Database (DBI)'
-                                                   },
-                                                   {
-                                                     'k' => 'Demo',
-                                                     'v' => 'Demo'
-                                                   },
-                                                   {
-                                                     'k' => 'Facebook',
-                                                     'v' => 'Facebook'
-                                                   },
-                                                   {
-                                                     'k' => 'LDAP',
-                                                     'v' => 'LDAP'
-                                                   },
-                                                   {
-                                                     'k' => 'Null',
-                                                     'v' => 'None'
-                                                   },
-                                                   {
-                                                     'k' => 'OpenID',
-                                                     'v' => 'OpenID'
-                                                   },
-                                                   {
-                                                     'k' => 'OpenIDConnect',
-                                                     'v' => 'OpenID Connect'
-                                                   },
-                                                   {
-                                                     'k' => 'Proxy',
-                                                     'v' => 'Proxy'
-                                                   },
-                                                   {
-                                                     'k' => 'REST',
-                                                     'v' => 'REST'
-                                                   },
-                                                   {
-                                                     'k' => 'Remote',
-                                                     'v' => 'Remote'
-                                                   },
-                                                   {
-                                                     'k' => 'SAML',
-                                                     'v' => 'SAML v2'
-                                                   },
-                                                   {
-                                                     'k' => 'Slave',
-                                                     'v' => 'Slave'
-                                                   },
-                                                   {
-                                                     'k' => 'WebID',
-                                                     'v' => 'WebID'
-                                                   },
-                                                   {
-                                                     'k' => 'Custom',
-                                                     'v' => 'customModule'
-                                                   }
-                                                 ],
-                                                 [
-                                                   {
-                                                     'k' => 'AD',
-                                                     'v' => 'Active Directory'
-                                                   },
-                                                   {
-                                                     'k' => 'DBI',
-                                                     'v' => 'Database (DBI)'
-                                                   },
-                                                   {
-                                                     'k' => 'Demo',
-                                                     'v' => 'Demo'
-                                                   },
-                                                   {
-                                                     'k' => 'LDAP',
-                                                     'v' => 'LDAP'
-                                                   },
-                                                   {
-                                                     'k' => 'REST',
-                                                     'v' => 'REST'
-                                                   },
-                                                   {
-                                                     'k' => 'Null',
-                                                     'v' => 'None'
-                                                   },
-                                                   {
-                                                     'k' => 'Custom',
-                                                     'v' => 'customModule'
-                                                   }
-                                                 ]
-                                               ],
-                                   'test' => sub {
-                                                 1;
-                                             },
-                                   'type' => 'authChoiceContainer'
-                                 },
-          'authChoiceParam' => {
-                                 'default' => 'lmAuth',
-                                 'type' => 'text'
-                               },
-          'authentication' => {
-                                'default' => 'Demo',
-                                'select' => [
-                                              {
-                                                'k' => 'Apache',
-                                                'v' => 'Apache'
-                                              },
-                                              {
-                                                'k' => 'AD',
-                                                'v' => 'Active Directory'
-                                              },
-                                              {
-                                                'k' => 'DBI',
-                                                'v' => 'Database (DBI)'
-                                              },
-                                              {
-                                                'k' => 'Facebook',
-                                                'v' => 'Facebook'
-                                              },
-                                              {
-                                                'k' => 'GitHub',
-                                                'v' => 'GitHub'
-                                              },
-                                              {
-                                                'k' => 'GPG',
-                                                'v' => 'GPG'
-                                              },
-                                              {
-                                                'k' => 'Kerberos',
-                                                'v' => 'Kerberos'
-                                              },
-                                              {
-                                                'k' => 'LDAP',
-                                                'v' => 'LDAP'
-                                              },
-                                              {
-                                                'k' => 'LinkedIn',
-                                                'v' => 'LinkedIn'
-                                              },
-                                              {
-                                                'k' => 'PAM',
-                                                'v' => 'PAM'
-                                              },
-                                              {
-                                                'k' => 'Radius',
-                                                'v' => 'Radius'
-                                              },
-                                              {
-                                                'k' => 'REST',
-                                                'v' => 'REST'
-                                              },
-                                              {
-                                                'k' => 'SSL',
-                                                'v' => 'SSL'
-                                              },
-                                              {
-                                                'k' => 'Twitter',
-                                                'v' => 'Twitter'
-                                              },
-                                              {
-                                                'k' => 'WebID',
-                                                'v' => 'WebID'
-                                              },
-                                              {
-                                                'k' => 'Demo',
-                                                'v' => 'Demonstration'
-                                              },
-                                              {
-                                                'k' => 'Choice',
-                                                'v' => 'authChoice'
-                                              },
-                                              {
-                                                'k' => 'Combination',
-                                                'v' => 'combineMods'
-                                              },
-                                              {
-                                                'k' => 'CAS',
-                                                'v' => 'Central Authentication Service (CAS)'
-                                              },
-                                              {
-                                                'k' => 'OpenID',
-                                                'v' => 'OpenID'
-                                              },
-                                              {
-                                                'k' => 'OpenIDConnect',
-                                                'v' => 'OpenID Connect'
-                                              },
-                                              {
-                                                'k' => 'SAML',
-                                                'v' => 'SAML v2'
-                                              },
-                                              {
-                                                'k' => 'Proxy',
-                                                'v' => 'Proxy'
-                                              },
-                                              {
-                                                'k' => 'Remote',
-                                                'v' => 'Remote'
-                                              },
-                                              {
-                                                'k' => 'Slave',
-                                                'v' => 'Slave'
-                                              },
-                                              {
-                                                'k' => 'Null',
-                                                'v' => 'None'
-                                              },
-                                              {
-                                                'k' => 'Custom',
-                                                'v' => 'customModule'
-                                              }
-                                            ],
-                                'type' => 'select'
-                              },
-          'AuthLDAPFilter' => {
-                                'type' => 'text'
-                              },
-          'autoSigninRules' => {
-                                 'type' => 'keyTextContainer'
-                               },
-          'available2F' => {
-                             'default' => 'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius',
-                             'type' => 'text'
-                           },
-          'available2FSelfRegistration' => {
-                                             'default' => 'TOTP,U2F,WebAuthn,Yubikey',
-                                             'type' => 'text'
-                                           },
-          'avoidAssignment' => {
-                                 'default' => 0,
-                                 'type' => 'bool'
-                               },
-          'browsersDontStorePassword' => {
-                                           'default' => 0,
-                                           'type' => 'bool'
-                                         },
-          'bruteForceProtection' => {
-                                      'default' => 0,
-                                      'type' => 'bool'
-                                    },
-          'bruteForceProtectionIncrementalTempo' => {
-                                                      'default' => 0,
-                                                      'type' => 'bool'
-                                                    },
-          'bruteForceProtectionLockTimes' => {
-                                               'default' => '15, 30, 60, 300, 600',
-                                               'type' => 'text'
-                                             },
-          'bruteForceProtectionMaxAge' => {
-                                            'default' => 300,
-                                            'type' => 'int'
-                                          },
-          'bruteForceProtectionMaxFailed' => {
-                                               'default' => 3,
-                                               'type' => 'int'
-                                             },
-          'bruteForceProtectionMaxLockTime' => {
-                                                 'default' => 900,
-                                                 'type' => 'int'
-                                               },
-          'bruteForceProtectionTempo' => {
-                                           'default' => 30,
-                                           'type' => 'int'
-                                         },
-          'captcha' => {
-                         'type' => 'PerlModule'
-                       },
-          'captcha_login_enabled' => {
-                                       'default' => 0,
-                                       'type' => 'bool'
-                                     },
-          'captcha_mail_enabled' => {
-                                      'default' => 1,
-                                      'type' => 'bool'
-                                    },
-          'captcha_register_enabled' => {
-                                          'default' => 1,
-                                          'type' => 'bool'
-                                        },
-          'captcha_size' => {
-                              'default' => 6,
-                              'type' => 'int'
-                            },
-          'captchaOptions' => {
-                                'type' => 'keyTextContainer'
-                              },
-          'casAccessControlPolicy' => {
-                                        'default' => 'none',
-                                        'select' => [
-                                                      {
-                                                        'k' => 'none',
-                                                        'v' => 'None'
-                                                      },
-                                                      {
-                                                        'k' => 'error',
-                                                        'v' => 'Display error on portal'
-                                                      },
-                                                      {
-                                                        'k' => 'faketicket',
-                                                        'v' => 'Send a fake service ticket'
-                                                      }
-                                                    ],
-                                        'type' => 'select'
-                                      },
-          'casAppMetaDataExportedVars' => {
-                                            'default' => {
-                                                           'cn' => 'cn',
-                                                           'mail' => 'mail',
-                                                           'uid' => 'uid'
-                                                         },
-                                            'type' => 'keyTextContainer'
-                                          },
-          'casAppMetaDataMacros' => {
-                                      'default' => {},
-                                      'test' => {
-                                                  'keyMsgFail' => '__badMacroName__',
-                                                  'keyTest' => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-                                                  'test' => sub {
-                                                                return perlExpr(@_);
-                                                            }
-                                                },
-                                      'type' => 'keyTextContainer'
-                                    },
-          'casAppMetaDataNodes' => {
-                                     'type' => 'casAppMetaDataNodeContainer'
-                                   },
-          'casAppMetaDataOptions' => {
-                                       'type' => 'subContainer'
-                                     },
-          'casAppMetaDataOptionsAuthnLevel' => {
-                                                 'type' => 'int'
-                                               },
-          'casAppMetaDataOptionsRule' => {
-                                           'test' => sub {
-                                                         return perlExpr(@_);
-                                                     },
-                                           'type' => 'text'
-                                         },
-          'casAppMetaDataOptionsService' => {
-                                              'type' => 'text'
-                                            },
-          'casAppMetaDataOptionsUserAttribute' => {
-                                                    'type' => 'text'
-                                                  },
-          'casAttr' => {
-                         'type' => 'text'
-                       },
-          'casAttributes' => {
-                               'type' => 'keyTextContainer'
-                             },
-          'casAuthnLevel' => {
-                               'default' => 1,
-                               'type' => 'int'
-                             },
-          'casSrvMetaDataExportedVars' => {
-                                            'default' => {
-                                                           'cn' => 'cn',
-                                                           'mail' => 'mail',
-                                                           'uid' => 'uid'
-                                                         },
-                                            'type' => 'keyTextContainer'
-                                          },
-          'casSrvMetaDataNodes' => {
-                                     'type' => 'casSrvMetaDataNodeContainer'
-                                   },
-          'casSrvMetaDataOptions' => {
-                                       'type' => 'subContainer'
-                                     },
-          'casSrvMetaDataOptionsDisplayName' => {
-                                                  'type' => 'text'
-                                                },
-          'casSrvMetaDataOptionsGateway' => {
-                                              'default' => 0,
-                                              'type' => 'bool'
-                                            },
-          'casSrvMetaDataOptionsIcon' => {
-                                           'type' => 'text'
-                                         },
-          'casSrvMetaDataOptionsProxiedServices' => {
-                                                      'keyMsgFail' => '__badCasProxyId__',
-                                                      'keyTest' => qr/^\w/,
-                                                      'type' => 'keyTextContainer'
-                                                    },
-          'casSrvMetaDataOptionsRenew' => {
-                                            'default' => 0,
-                                            'type' => 'bool'
-                                          },
-          'casSrvMetaDataOptionsResolutionRule' => {
-                                                     'default' => '',
-                                                     'type' => 'longtext'
-                                                   },
-          'casSrvMetaDataOptionsSortNumber' => {
-                                                 'type' => 'int'
-                                               },
-          'casSrvMetaDataOptionsUrl' => {
-                                          'msgFail' => '__badUrl__',
-                                          'test' => qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
-                                          'type' => 'text'
-                                        },
-          'casStorage' => {
-                            'type' => 'PerlModule'
-                          },
-          'casStorageOptions' => {
-                                   'type' => 'keyTextContainer'
-                                 },
-          'casStrictMatching' => {
-                                   'default' => 0,
-                                   'type' => 'bool'
-                                 },
-          'casTicketExpiration' => {
-                                     'default' => 0,
-                                     'type' => 'int'
-                                   },
-          'cda' => {
-                     'default' => 0,
-                     'type' => 'bool'
-                   },
-          'certificateResetByMailCeaAttribute' => {
-                                                    'default' => 'description',
-                                                    'type' => 'text'
-                                                  },
-          'certificateResetByMailCertificateAttribute' => {
-                                                            'default' => 'userCertificate;binary',
-                                                            'type' => 'text'
-                                                          },
-          'certificateResetByMailStep1Body' => {
-                                                 'type' => 'longtext'
-                                               },
-          'certificateResetByMailStep1Subject' => {
-                                                    'type' => 'text'
-                                                  },
-          'certificateResetByMailStep2Body' => {
-                                                 'type' => 'longtext'
-                                               },
-          'certificateResetByMailStep2Subject' => {
-                                                    'type' => 'text'
-                                                  },
-          'certificateResetByMailURL' => {
-                                           'default' => 'http://auth.example.com/certificateReset',
-                                           'type' => 'url'
-                                         },
-          'certificateResetByMailValidityDelay' => {
-                                                     'default' => 0,
-                                                     'type' => 'int'
-                                                   },
-          'cfgAuthor' => {
-                           'type' => 'text'
-                         },
-          'cfgAuthorIP' => {
-                             'type' => 'text'
-                           },
-          'cfgDate' => {
-                         'type' => 'int'
-                       },
-          'cfgLog' => {
-                        'type' => 'longtext'
-                      },
-          'cfgNum' => {
-                        'default' => 0,
-                        'type' => 'int'
-                      },
-          'cfgVersion' => {
-                            'type' => 'text'
-                          },
-          'checkDevOps' => {
-                             'default' => 0,
-                             'type' => 'bool'
-                           },
-          'checkDevOpsCheckSessionAttributes' => {
-                                                   'default' => 1,
-                                                   'type' => 'bool'
-                                                 },
-          'checkDevOpsDisplayNormalizedHeaders' => {
-                                                     'default' => 1,
-                                                     'type' => 'bool'
-                                                   },
-          'checkDevOpsDownload' => {
-                                     'default' => 1,
-                                     'type' => 'bool'
-                                   },
-          'checkState' => {
-                            'default' => 0,
-                            'type' => 'bool'
-                          },
-          'checkStateSecret' => {
-                                  'type' => 'text'
-                                },
-          'checkTime' => {
-                           'default' => 600,
-                           'type' => 'int'
-                         },
-          'checkUser' => {
-                           'default' => 0,
-                           'type' => 'bool'
-                         },
-          'checkUserDisplayComputedSession' => {
-                                                 'default' => 1,
-                                                 'type' => 'boolOrExpr'
-                                               },
-          'checkUserDisplayEmptyHeaders' => {
-                                              'default' => 0,
-                                              'type' => 'boolOrExpr'
-                                            },
-          'checkUserDisplayEmptyValues' => {
-                                             'default' => 0,
-                                             'type' => 'boolOrExpr'
-                                           },
-          'checkUserDisplayHiddenAttributes' => {
-                                                  'default' => 0,
-                                                  'type' => 'boolOrExpr'
-                                                },
-          'checkUserDisplayHistory' => {
-                                         'default' => 0,
-                                         'type' => 'boolOrExpr'
-                                       },
-          'checkUserDisplayNormalizedHeaders' => {
-                                                   'default' => 0,
-                                                   'type' => 'boolOrExpr'
-                                                 },
-          'checkUserDisplayPersistentInfo' => {
-                                                'default' => 0,
-                                                'type' => 'boolOrExpr'
-                                              },
-          'checkUserHiddenAttributes' => {
-                                           'default' => '_loginHistory, _session_id, hGroups',
-                                           'type' => 'text'
-                                         },
-          'checkUserHiddenHeaders' => {
-                                        'keyMsgFail' => '__badHostname__',
-                                        'keyTest' => qr/^\S+$/,
-                                        'test' => {
-                                                    'keyMsgFail' => '__badHeaderName__',
-                                                    'keyTest' => qr/^(?=[^\-])[\w\-\s]+(?<=[^-])$/,
-                                                    'test' => sub {
-                                                                  return perlExpr(@_);
-                                                              }
-                                                  },
-                                        'type' => 'keyTextContainer'
-                                      },
-          'checkUserIdRule' => {
-                                 'default' => 1,
-                                 'test' => sub {
-                                               return perlExpr(@_);
-                                           },
-                                 'type' => 'text'
-                               },
-          'checkUserSearchAttributes' => {
-                                           'type' => 'text'
-                                         },
-          'checkUserUnrestrictedUsersRule' => {
-                                                'test' => sub {
-                                                              return perlExpr(@_);
-                                                          },
-                                                'type' => 'text'
-                                              },
-          'checkXSS' => {
-                          'default' => 1,
-                          'type' => 'bool'
-                        },
-          'combination' => {
-                             'type' => 'text'
-                           },
-          'combModules' => {
-                             'keyTest' => qr/^\w+$/,
-                             'select' => [
-                                           {
-                                             'k' => 'Apache',
-                                             'v' => 'Apache'
-                                           },
-                                           {
-                                             'k' => 'AD',
-                                             'v' => 'Active Directory'
-                                           },
-                                           {
-                                             'k' => 'DBI',
-                                             'v' => 'Database (DBI)'
-                                           },
-                                           {
-                                             'k' => 'Facebook',
-                                             'v' => 'Facebook'
-                                           },
-                                           {
-                                             'k' => 'GitHub',
-                                             'v' => 'GitHub'
-                                           },
-                                           {
-                                             'k' => 'GPG',
-                                             'v' => 'GPG'
-                                           },
-                                           {
-                                             'k' => 'Kerberos',
-                                             'v' => 'Kerberos'
-                                           },
-                                           {
-                                             'k' => 'LDAP',
-                                             'v' => 'LDAP'
-                                           },
-                                           {
-                                             'k' => 'LinkedIn',
-                                             'v' => 'LinkedIn'
-                                           },
-                                           {
-                                             'k' => 'PAM',
-                                             'v' => 'PAM'
-                                           },
-                                           {
-                                             'k' => 'Radius',
-                                             'v' => 'Radius'
-                                           },
-                                           {
-                                             'k' => 'REST',
-                                             'v' => 'REST'
-                                           },
-                                           {
-                                             'k' => 'SSL',
-                                             'v' => 'SSL'
-                                           },
-                                           {
-                                             'k' => 'Twitter',
-                                             'v' => 'Twitter'
-                                           },
-                                           {
-                                             'k' => 'WebID',
-                                             'v' => 'WebID'
-                                           },
-                                           {
-                                             'k' => 'Demo',
-                                             'v' => 'Demonstration'
-                                           },
-                                           {
-                                             'k' => 'CAS',
-                                             'v' => 'Central Authentication Service (CAS)'
-                                           },
-                                           {
-                                             'k' => 'OpenID',
-                                             'v' => 'OpenID'
-                                           },
-                                           {
-                                             'k' => 'OpenIDConnect',
-                                             'v' => 'OpenID Connect'
-                                           },
-                                           {
-                                             'k' => 'SAML',
-                                             'v' => 'SAML v2'
-                                           },
-                                           {
-                                             'k' => 'Proxy',
-                                             'v' => 'Proxy'
-                                           },
-                                           {
-                                             'k' => 'Remote',
-                                             'v' => 'Remote'
-                                           },
-                                           {
-                                             'k' => 'Slave',
-                                             'v' => 'Slave'
-                                           },
-                                           {
-                                             'k' => 'Null',
-                                             'v' => 'None'
-                                           },
-                                           {
-                                             'k' => 'Custom',
-                                             'v' => 'customModule'
-                                           }
-                                         ],
-                             'test' => sub {
-                                           1;
-                                       },
-                             'type' => 'cmbModuleContainer'
-                           },
-          'compactConf' => {
-                             'default' => 0,
-                             'type' => 'bool'
-                           },
-          'configStorage' => {
-                               'type' => 'text'
-                             },
-          'confirmFormMethod' => {
-                                   'default' => 'post',
-                                   'select' => [
-                                                 {
-                                                   'k' => 'get',
-                                                   'v' => 'GET'
-                                                 },
-                                                 {
-                                                   'k' => 'post',
-                                                   'v' => 'POST'
-                                                 }
-                                               ],
-                                   'type' => 'select'
-                                 },
-          'contextSwitchingAllowed2fModifications' => {
-                                                        'default' => 0,
-                                                        'type' => 'bool'
-                                                      },
-          'contextSwitchingIdRule' => {
-                                        'default' => 1,
-                                        'test' => sub {
-                                                      return perlExpr(@_);
-                                                  },
-                                        'type' => 'text'
-                                      },
-          'contextSwitchingPrefix' => {
-                                        'default' => 'switching',
-                                        'type' => 'text'
-                                      },
-          'contextSwitchingRule' => {
-                                      'default' => 0,
-                                      'type' => 'boolOrExpr'
-                                    },
-          'contextSwitchingStopWithLogout' => {
-                                                'default' => 1,
-                                                'type' => 'bool'
-                                              },
-          'contextSwitchingUnrestrictedUsersRule' => {
-                                                       'test' => sub {
-                                                                     return perlExpr(@_);
-                                                                 },
-                                                       'type' => 'text'
-                                                     },
-          'cookieExpiration' => {
-                                  'type' => 'int'
-                                },
-          'cookieName' => {
-                            'default' => 'lemonldap',
-                            'msgFail' => '__badCookieName__',
-                            'test' => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
-                            'type' => 'text'
-                          },
-          'corsAllow_Credentials' => {
-                                       'default' => 'true',
-                                       'type' => 'text'
-                                     },
-          'corsAllow_Headers' => {
-                                   'default' => '*',
-                                   'type' => 'text'
-                                 },
-          'corsAllow_Methods' => {
-                                   'default' => 'POST,GET',
-                                   'type' => 'text'
-                                 },
-          'corsAllow_Origin' => {
-                                  'default' => '*',
-                                  'type' => 'text'
-                                },
-          'corsEnabled' => {
-                             'default' => 1,
-                             'type' => 'bool'
-                           },
-          'corsExpose_Headers' => {
-                                    'default' => '*',
-                                    'type' => 'text'
-                                  },
-          'corsMax_Age' => {
-                             'default' => '86400',
-                             'type' => 'text'
-                           },
-          'crowdsec' => {
-                          'type' => 'bool'
-                        },
-          'crowdsecAction' => {
-                                'default' => 'reject',
-                                'select' => [
-                                              {
-                                                'k' => 'reject',
-                                                'v' => 'Reject'
-                                              },
-                                              {
-                                                'k' => 'warn',
-                                                'v' => 'Warn'
-                                              }
-                                            ],
-                                'type' => 'select'
-                              },
-          'crowdsecKey' => {
-                             'type' => 'text'
-                           },
-          'crowdsecUrl' => {
-                             'type' => 'url'
-                           },
-          'cspConnect' => {
-                            'default' => '\'self\'',
-                            'type' => 'text'
-                          },
-          'cspDefault' => {
-                            'default' => '\'self\'',
-                            'type' => 'text'
-                          },
-          'cspFont' => {
-                         'default' => '\'self\'',
-                         'type' => 'text'
-                       },
-          'cspFormAction' => {
-                               'default' => '*',
-                               'type' => 'text'
-                             },
-          'cspFrameAncestors' => {
-                                   'default' => '',
-                                   'type' => 'text'
-                                 },
-          'cspImg' => {
-                        'default' => '\'self\' data:',
-                        'type' => 'text'
-                      },
-          'cspScript' => {
-                           'default' => '\'self\'',
-                           'type' => 'text'
-                         },
-          'cspStyle' => {
-                          'default' => '\'self\'',
-                          'type' => 'text'
-                        },
-          'customAddParams' => {
-                                 'type' => 'keyTextContainer'
-                               },
-          'customAuth' => {
-                            'type' => 'text'
-                          },
-          'customFunctions' => {
-                                 'msgFail' => '__badCustomFuncName__',
-                                 'test' => qr/^(?:\w+(?:::\w+)*(?:\s+\w+(?:::\w+)*)*)?$/,
-                                 'type' => 'text'
-                               },
-          'customPassword' => {
-                                'type' => 'text'
-                              },
-          'customPlugins' => {
-                               'type' => 'text'
-                             },
-          'customPluginsParams' => {
-                                     'type' => 'keyTextContainer'
-                                   },
-          'customRegister' => {
-                                'type' => 'text'
-                              },
-          'customResetCertByMail' => {
-                                       'type' => 'text'
-                                     },
-          'customToTrace' => {
-                               'type' => 'lmAttrOrMacro'
-                             },
-          'customUserDB' => {
-                              'type' => 'text'
-                            },
-          'dbiAuthChain' => {
-                              'type' => 'text'
-                            },
-          'dbiAuthLoginCol' => {
-                                 'type' => 'text'
-                               },
-          'dbiAuthnLevel' => {
-                               'default' => 2,
-                               'type' => 'int'
-                             },
-          'dbiAuthPassword' => {
-                                 'type' => 'password'
-                               },
-          'dbiAuthPasswordCol' => {
-                                    'type' => 'text'
-                                  },
-          'dbiAuthPasswordHash' => {
-                                     'type' => 'text'
-                                   },
-          'dbiAuthTable' => {
-                              'type' => 'text'
-                            },
-          'dbiAuthUser' => {
-                             'type' => 'text'
-                           },
-          'dbiDynamicHashEnabled' => {
-                                       'type' => 'bool'
-                                     },
-          'dbiDynamicHashNewPasswordScheme' => {
-                                                 'type' => 'text'
-                                               },
-          'dbiDynamicHashValidSaltedSchemes' => {
-                                                  'type' => 'text'
-                                                },
-          'dbiDynamicHashValidSchemes' => {
-                                            'type' => 'text'
-                                          },
-          'dbiExportedVars' => {
-                                 'default' => {},
-                                 'keyMsgFail' => '__badVariableName__',
-                                 'keyTest' => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-                                 'msgFail' => '__badValue__',
-                                 'test' => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-                                 'type' => 'keyTextContainer'
-                               },
-          'dbiPasswordMailCol' => {
-                                    'type' => 'text'
-                                  },
-          'dbiUserChain' => {
-                              'type' => 'text'
-                            },
-          'dbiUserPassword' => {
-                                 'type' => 'password'
-                               },
-          'dbiUserTable' => {
-                              'type' => 'text'
-                            },
-          'dbiUserUser' => {
-                             'type' => 'text'
-                           },
-          'decryptValueFunctions' => {
-                                       'msgFail' => '__badCustomFuncName__',
-                                       'test' => qr/^(?:\w+(?:::\w+)*(?:\s+\w+(?:::\w+)*)*)?$/,
-                                       'type' => 'text'
-                                     },
-          'decryptValueRule' => {
-                                  'default' => 0,
-                                  'type' => 'boolOrExpr'
-                                },
-          'demoExportedVars' => {
-                                  'default' => {
-                                                 'cn' => 'cn',
-                                                 'mail' => 'mail',
-                                                 'uid' => 'uid'
-                                               },
-                                  'keyMsgFail' => '__badVariableName__',
-                                  'keyTest' => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-                                  'msgFail' => '__badValue__',
-                                  'test' => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-                                  'type' => 'keyTextContainer'
-                                },
-          'disablePersistentStorage' => {
-                                          'default' => 0,
-                                          'type' => 'bool'
-                                        },
-          'displaySessionId' => {
-                                  'default' => 1,
-                                  'type' => 'bool'
-                                },
-          'domain' => {
-                        'default' => 'example.com',
-                        'msgFail' => '__badDomainName__',
-                        'test' => qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?))?$/,
-                        'type' => 'text'
-                      },
-          'exportedAttr' => {
-                              'type' => 'text'
-                            },
-          'exportedHeaders' => {
-                                 'keyMsgFail' => '__badHostname__',
-                                 'keyTest' => qr/^\S+$/,
-                                 'test' => {
-                                             'keyMsgFail' => '__badHeaderName__',
-                                             'keyTest' => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
-                                             'test' => sub {
-                                                           return perlExpr(@_);
-                                                       }
-                                           },
-                                 'type' => 'keyTextContainer'
-                               },
-          'exportedVars' => {
-                              'default' => {
-                                             'UA' => 'HTTP_USER_AGENT'
-                                           },
-                              'keyMsgFail' => '__badVariableName__',
-                              'keyTest' => qr/^!?[_a-zA-Z][a-zA-Z0-9_]*$/,
-                              'msgFail' => '__badValue__',
-                              'test' => qr/^[_a-zA-Z][a-zA-Z0-9_:\-]*$/,
-                              'type' => 'keyTextContainer'
-                            },
-          'ext2fActivation' => {
-                                 'default' => 0,
-                                 'type' => 'boolOrExpr'
-                               },
-          'ext2fAuthnLevel' => {
-                                 'type' => 'int'
-                               },
-          'ext2fCodeActivation' => {
-                                     'default' => '\\d{6}',
-                                     'type' => 'pcre'
-                                   },
-          'ext2fLabel' => {
-                            'type' => 'text'
-                          },
-          'ext2fLogo' => {
-                           'type' => 'text'
-                         },
-          'ext2fResendInterval' => {
-                                     'type' => 'text'
-                                   },
-          'ext2FSendCommand' => {
-                                  'type' => 'text'
-                                },
-          'ext2FValidateCommand' => {
-                                      'type' => 'text'
-                                    },
-          'facebookAppId' => {
-                               'type' => 'text'
-                             },
-          'facebookAppSecret' => {
-                                   'type' => 'text'
-                                 },
-          'facebookAuthnLevel' => {
-                                    'default' => 1,
-                                    'type' => 'int'
-                                  },
-          'facebookExportedVars' => {
-                                      'default' => {},
-                                      'keyMsgFail' => '__badVariableName__',
-                                      'keyTest' => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-                                      'msgFail' => '__badValue__',
-                                      'test' => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-                                      'type' => 'keyTextContainer'
-                                    },
-          'facebookUserField' => {
-                                   'default' => 'id',
-                                   'type' => 'text'
-                                 },
-          'failedLoginNumber' => {
-                                   'default' => 5,
-                                   'type' => 'int'
-                                 },
-          'findUser' => {
-                          'default' => 0,
-                          'type' => 'bool'
-                        },
-          'findUserControl' => {
-                                 'default' => '^[*\\w]+$',
-                                 'type' => 'pcre'
-                               },
-          'findUserExcludingAttributes' => {
-                                             'keyTest' => qr/^\S+$/,
-                                             'type' => 'keyTextContainer'
-                                           },
-          'findUserSearchingAttributes' => {
-                                             'keyTest' => qr/^\S+$/,
-                                             'type' => 'keyTextContainer'
-                                           },
-          'findUserWildcard' => {
-                                  'default' => '*',
-                                  'type' => 'text'
-                                },
-          'forceGlobalStorageIssuerOTT' => {
-                                             'type' => 'bool'
-                                           },
-          'forceGlobalStorageUpgradeOTT' => {
-                                              'type' => 'bool'
-                                            },
-          'formTimeout' => {
-                             'default' => 120,
-                             'type' => 'int'
-                           },
-          'githubAuthnLevel' => {
-                                  'default' => 1,
-                                  'type' => 'int'
-                                },
-          'githubClientID' => {
-                                'type' => 'text'
-                              },
-          'githubClientSecret' => {
-                                    'type' => 'password'
-                                  },
-          'githubScope' => {
-                             'default' => 'user:email',
-                             'type' => 'text'
-                           },
-          'githubUserField' => {
-                                 'default' => 'login',
-                                 'type' => 'text'
-                               },
-          'globalLogoutCustomParam' => {
-                                         'type' => 'text'
-                                       },
-          'globalLogoutRule' => {
-                                  'default' => 0,
-                                  'type' => 'boolOrExpr'
-                                },
-          'globalLogoutTimer' => {
-                                   'default' => 1,
-                                   'type' => 'bool'
-                                 },
-          'globalStorage' => {
-                               'default' => 'Apache::Session::File',
-                               'type' => 'PerlModule'
-                             },
-          'globalStorageOptions' => {
-                                      'default' => {
-                                                     'Directory' => '/var/lib/lemonldap-ng/sessions/',
-                                                     'generateModule' => 'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
-                                                     'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
-                                                   },
-                                      'type' => 'keyTextContainer'
-                                    },
-          'gpgAuthnLevel' => {
-                               'default' => 5,
-                               'type' => 'int'
-                             },
-          'gpgDb' => {
-                       'default' => '',
-                       'type' => 'text'
-                     },
-          'grantSessionRules' => {
-                                   'default' => {},
-                                   'keyTest' => sub {
-                                                    return perlExpr(@_);
-                                                },
-                                   'test' => sub {
-                                                 1;
-                                             },
-                                   'type' => 'grantContainer'
-                                 },
-          'groups' => {
-                        'default' => {},
-                        'test' => sub {
-                                      return perlExpr(@_);
-                                  },
-                        'type' => 'keyTextContainer'
-                      },
-          'groupsBeforeMacros' => {
-                                    'default' => 0,
-                                    'type' => 'bool'
-                                  },
-          'handlerInternalCache' => {
-                                      'default' => 15,
-                                      'type' => 'int'
-                                    },
-          'handlerServiceTokenTTL' => {
-                                        'default' => 30,
-                                        'type' => 'int'
-                                      },
-          'hiddenAttributes' => {
-                                  'default' => '_password, _2fDevices',
-                                  'type' => 'text'
-                                },
-          'hideOldPassword' => {
-                                 'default' => 0,
-                                 'type' => 'bool'
-                               },
-          'httpOnly' => {
-                          'default' => 1,
-                          'type' => 'bool'
-                        },
-          'https' => {
-                       'default' => -1,
-                       'type' => 'trool'
-                     },
-          'impersonationHiddenAttributes' => {
-                                               'default' => '_2fDevices, _loginHistory',
-                                               'type' => 'text'
-                                             },
-          'impersonationIdRule' => {
-                                     'default' => 1,
-                                     'test' => sub {
-                                                   return perlExpr(@_);
-                                               },
-                                     'type' => 'text'
-                                   },
-          'impersonationMergeSSOgroups' => {
-                                             'default' => 0,
-                                             'type' => 'boolOrExpr'
-                                           },
-          'impersonationPrefix' => {
-                                     'default' => 'real_',
-                                     'type' => 'text'
-                                   },
-          'impersonationRule' => {
-                                   'default' => 0,
-                                   'type' => 'boolOrExpr'
-                                 },
-          'impersonationSkipEmptyValues' => {
-                                              'default' => 1,
-                                              'type' => 'bool'
-                                            },
-          'impersonationUnrestrictedUsersRule' => {
-                                                    'test' => sub {
-                                                                  return perlExpr(@_);
-                                                              },
-                                                    'type' => 'text'
-                                                  },
-          'infoFormMethod' => {
-                                'default' => 'get',
-                                'select' => [
-                                              {
-                                                'k' => 'get',
-                                                'v' => 'GET'
-                                              },
-                                              {
-                                                'k' => 'post',
-                                                'v' => 'POST'
-                                              }
-                                            ],
-                                'type' => 'select'
-                              },
-          'issuerDBCASActivation' => {
-                                       'default' => 0,
-                                       'type' => 'bool'
-                                     },
-          'issuerDBCASPath' => {
-                                 'default' => '^/cas/',
-                                 'type' => 'pcre'
-                               },
-          'issuerDBCASRule' => {
-                                 'default' => 1,
-                                 'type' => 'boolOrExpr'
-                               },
-          'issuerDBGetActivation' => {
-                                       'default' => 0,
-                                       'type' => 'bool'
-                                     },
-          'issuerDBGetParameters' => {
-                                       'default' => {},
-                                       'keyMsgFail' => '__badHostname__',
-                                       'keyTest' => qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
-                                       'test' => {
-                                                   'keyMsgFail' => '__badKeyName__',
-                                                   'keyTest' => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
-                                                   'test' => sub {
-                                                                 my($val, $conf) = @_;
-                                                                 return 1 if defined $conf->{'macros'}{$val} or $val eq '_timezone';
-                                                                 foreach $_ (keys %$conf) {
-                                                                     return 1 if $_ =~ /exportedvars$/i and defined $conf->{$_}{$val};
-                                                                 }
-                                                                 return 1, "__unknownAttrOrMacro__: $val";
-                                                             }
-                                                 },
-                                       'type' => 'doubleHash'
-                                     },
-          'issuerDBGetPath' => {
-                                 'default' => '^/get/',
-                                 'type' => 'text'
-                               },
-          'issuerDBGetRule' => {
-                                 'default' => 1,
-                                 'type' => 'boolOrExpr'
-                               },
-          'issuerDBOpenIDActivation' => {
-                                          'default' => 0,
-                                          'type' => 'bool'
-                                        },
-          'issuerDBOpenIDConnectActivation' => {
-                                                 'default' => 0,
-                                                 'type' => 'bool'
-                                               },
-          'issuerDBOpenIDConnectPath' => {
-                                           'default' => '^/oauth2/',
-                                           'type' => 'text'
-                                         },
-          'issuerDBOpenIDConnectRule' => {
-                                           'default' => 1,
-                                           'type' => 'boolOrExpr'
-                                         },
-          'issuerDBOpenIDPath' => {
-                                    'default' => '^/openidserver/',
-                                    'type' => 'pcre'
-                                  },
-          'issuerDBOpenIDRule' => {
-                                    'default' => 1,
-                                    'type' => 'boolOrExpr'
-                                  },
-          'issuerDBSAMLActivation' => {
-                                        'default' => 0,
-                                        'type' => 'bool'
-                                      },
-          'issuerDBSAMLPath' => {
-                                  'default' => '^/saml/',
-                                  'type' => 'pcre'
-                                },
-          'issuerDBSAMLRule' => {
-                                  'default' => 1,
-                                  'type' => 'boolOrExpr'
-                                },
-          'issuersTimeout' => {
-                                'default' => 120,
-                                'type' => 'int'
-                              },
-          'jsRedirect' => {
-                            'default' => 0,
-                            'type' => 'boolOrExpr'
-                          },
-          'key' => {
-                     'type' => 'password'
-                   },
-          'krbAllowedDomains' => {
-                                   'type' => 'text'
-                                 },
-          'krbAuthnLevel' => {
-                               'default' => 3,
-                               'type' => 'int'
-                             },
-          'krbByJs' => {
-                         'default' => 0,
-                         'type' => 'bool'
-                       },
-          'krbKeytab' => {
-                           'type' => 'text'
-                         },
-          'krbRemoveDomain' => {
-                                 'default' => 1,
-                                 'type' => 'bool'
-                               },
-          'ldapAllowResetExpiredPassword' => {
-                                               'default' => 0,
-                                               'type' => 'bool'
-                                             },
-          'ldapAuthnLevel' => {
-                                'default' => 2,
-                                'type' => 'int'
-                              },
-          'ldapBase' => {
-                          'default' => 'dc=example,dc=com',
-                          'msgFail' => '__badValue__',
-                          'test' => qr/^(?:\w+=.*|)$/,
-                          'type' => 'text'
-                        },
-          'ldapCAFile' => {
-                            'type' => 'text'
-                          },
-          'ldapCAPath' => {
-                            'type' => 'text'
-                          },
-          'ldapChangePasswordAsUser' => {
-                                          'default' => 0,
-                                          'type' => 'bool'
-                                        },
-          'ldapExportedVars' => {
-                                  'default' => {
-                                                 'cn' => 'cn',
-                                                 'mail' => 'mail',
-                                                 'uid' => 'uid'
-                                               },
-                                  'keyMsgFail' => '__badVariableName__',
-                                  'keyTest' => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-                                  'msgFail' => '__badValue__',
-                                  'test' => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-                                  'type' => 'keyTextContainer'
-                                },
-          'LDAPFilter' => {
-                            'type' => 'text'
-                          },
-          'ldapGetUserBeforePasswordChange' => {
-                                                 'default' => 0,
-                                                 'type' => 'bool'
-                                               },
-          'ldapGroupAttributeName' => {
-                                        'default' => 'member',
-                                        'type' => 'text'
-                                      },
-          'ldapGroupAttributeNameGroup' => {
-                                             'default' => 'dn',
-                                             'type' => 'text'
-                                           },
-          'ldapGroupAttributeNameSearch' => {
-                                              'default' => 'cn',
-                                              'type' => 'text'
-                                            },
-          'ldapGroupAttributeNameUser' => {
-                                            'default' => 'dn',
-                                            'type' => 'text'
-                                          },
-          'ldapGroupBase' => {
-                               'type' => 'text'
-                             },
-          'ldapGroupDecodeSearchedValue' => {
-                                              'default' => 0,
-                                              'type' => 'bool'
-                                            },
-          'ldapGroupObjectClass' => {
-                                      'default' => 'groupOfNames',
-                                      'type' => 'text'
-                                    },
-          'ldapGroupRecursive' => {
-                                    'default' => 0,
-                                    'type' => 'bool'
-                                  },
-          'ldapIOTimeout' => {
-                               'default' => 10,
-                               'type' => 'int'
-                             },
-          'ldapITDS' => {
-                          'default' => 0,
-                          'type' => 'bool'
-                        },
-          'ldapPasswordResetAttribute' => {
-                                            'default' => 'pwdReset',
-                                            'type' => 'text'
-                                          },
-          'ldapPasswordResetAttributeValue' => {
-                                                 'default' => 'TRUE',
-                                                 'type' => 'text'
-                                               },
-          'ldapPort' => {
-                          'type' => 'int'
-                        },
-          'ldapPpolicyControl' => {
-                                    'default' => 0,
-                                    'type' => 'bool'
-                                  },
-          'ldapPwdEnc' => {
-                            'default' => 'utf-8',
-                            'msgFail' => '__badEncoding__',
-                            'test' => qr/^[a-zA-Z0-9_][a-zA-Z0-9_\-]*[a-zA-Z0-9_]$/,
-                            'type' => 'text'
-                          },
-          'ldapRaw' => {
-                         'type' => 'text'
-                       },
-          'ldapSearchDeref' => {
-                                 'default' => 'find',
-                                 'select' => [
-                                               {
-                                                 'k' => 'never',
-                                                 'v' => 'never'
-                                               },
-                                               {
-                                                 'k' => 'search',
-                                                 'v' => 'search'
-                                               },
-                                               {
-                                                 'k' => 'find',
-                                                 'v' => 'find'
-                                               },
-                                               {
-                                                 'k' => 'always',
-                                                 'v' => 'always'
-                                               }
-                                             ],
-                                 'type' => 'select'
-                               },
-          'ldapServer' => {
-                            'default' => 'ldap://localhost',
-                            'test' => sub {
-                                          my $l = shift();
-                                          my @s = split(/[\s,]+/, $l, 0);
-                                          foreach my $s (@s) {
-                                              return 0, qq[__badLdapUri__: "$s"] unless $s =~ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?::\d{1,5})?/?.*)$]o;
-                                          }
-                                          return 1;
-                                      },
-                            'type' => 'text'
-                          },
-          'ldapSetPassword' => {
-                                 'default' => 0,
-                                 'type' => 'bool'
-                               },
-          'ldapTimeout' => {
-                             'default' => 10,
-                             'type' => 'int'
-                           },
-          'ldapUsePasswordResetAttribute' => {
-                                               'default' => 1,
-                                               'type' => 'bool'
-                                             },
-          'ldapVerify' => {
-                            'default' => 'require',
-                            'select' => [
-                                          {
-                                            'k' => 'none',
-                                            'v' => 'None'
-                                          },
-                                          {
-                                            'k' => 'optional',
-                                            'v' => 'Optional'
-                                          },
-                                          {
-                                            'k' => 'require',
-                                            'v' => 'Require'
-                                          }
-                                        ],
-                            'type' => 'select'
-                          },
-          'ldapVersion' => {
-                             'default' => 3,
-                             'type' => 'int'
-                           },
-          'linkedInAuthnLevel' => {
-                                    'default' => 1,
-                                    'type' => 'int'
-                                  },
-          'linkedInClientID' => {
-                                  'type' => 'text'
-                                },
-          'linkedInClientSecret' => {
-                                      'type' => 'password'
-                                    },
-          'linkedInFields' => {
-                                'default' => 'id,first-name,last-name,email-address',
-                                'type' => 'text'
-                              },
-          'linkedInScope' => {
-                               'default' => 'r_liteprofile r_emailaddress',
-                               'type' => 'text'
-                             },
-          'linkedInUserField' => {
-                                   'default' => 'emailAddress',
-                                   'type' => 'text'
-                                 },
-          'localSessionStorage' => {
-                                     'default' => 'Cache::FileCache',
-                                     'type' => 'PerlModule'
-                                   },
-          'localSessionStorageOptions' => {
-                                            'default' => {
-                                                           'cache_depth' => 3,
-                                                           'cache_root' => '/var/cache/lemonldap-ng',
-                                                           'default_expires_in' => 600,
-                                                           'directory_umask' => '007',
-                                                           'namespace' => 'lemonldap-ng-sessions'
-                                                         },
-                                            'type' => 'keyTextContainer'
-                                          },
-          'localStorage' => {
-                              'type' => 'text'
-                            },
-          'localStorageOptions' => {
-                                     'type' => 'keyTextContainer'
-                                   },
-          'locationRules' => {
-                               'default' => {
-                                              'default' => 'deny'
-                                            },
-                               'keyMsgFail' => '__badHostname__',
-                               'keyTest' => qr/^\S+$/,
-                               'test' => {
-                                           'keyMsgFail' => '__badRegexp__',
-                                           'keyTest' => sub {
-                                                            eval {
-                                                                do {
-                                                                    qr/$_[0]/
-                                                                }
-                                                            };
-                                                            return $@ ? 0 : 1;
-                                                        },
-                                           'msgFail' => '__badExpression__',
-                                           'test' => sub {
-                                                         my($val, $conf) = @_;
-                                                         my $s = $val;
-                                                         if ($s =~ s/^logout(?:_(?:sso|app(?:_sso)?))?\s*//) {
-                                                             return $s =~ m[^(?:https?://.*)?$] ? 1 : (0, '__badUrl__');
-                                                         }
-                                                         $s =~ s/\b(accept|deny|unprotect|skip)\b/1/g;
-                                                         return &perlExpr($s, $conf);
-                                                     }
-                                         },
-                               'type' => 'ruleContainer'
-                             },
-          'log4perlConfFile' => {
-                                  'type' => 'text'
-                                },
-          'logger' => {
-                        'type' => 'text'
-                      },
-          'loginHistoryEnabled' => {
-                                     'default' => 0,
-                                     'type' => 'bool'
-                                   },
-          'logLevel' => {
-                          'type' => 'text'
-                        },
-          'logoutServices' => {
-                                'default' => {},
-                                'type' => 'keyTextContainer'
-                              },
-          'lwpOpts' => {
-                         'type' => 'keyTextContainer'
-                       },
-          'lwpSslOpts' => {
-                            'type' => 'keyTextContainer'
-                          },
-          'macros' => {
-                        'default' => {},
-                        'keyMsgFail' => '__badMacroName__',
-                        'keyTest' => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-                        'test' => sub {
-                                      return perlExpr(@_);
-                                  },
-                        'type' => 'keyTextContainer'
-                      },
-          'mail2fActivation' => {
-                                  'default' => 0,
-                                  'type' => 'boolOrExpr'
-                                },
-          'mail2fAuthnLevel' => {
-                                  'type' => 'int'
-                                },
-          'mail2fBody' => {
-                            'type' => 'longtext'
-                          },
-          'mail2fCodeRegex' => {
-                                 'default' => '\\d{6}',
-                                 'type' => 'pcre'
-                               },
-          'mail2fLabel' => {
-                             'type' => 'text'
-                           },
-          'mail2fLogo' => {
-                            'type' => 'text'
-                          },
-          'mail2fResendInterval' => {
-                                      'type' => 'text'
-                                    },
-          'mail2fSessionKey' => {
-                                  'type' => 'text'
-                                },
-          'mail2fSubject' => {
-                               'type' => 'text'
-                             },
-          'mail2fTimeout' => {
-                               'type' => 'int'
-                             },
-          'mailBody' => {
-                          'type' => 'longtext'
-                        },
-          'mailCharset' => {
-                             'default' => 'utf-8',
-                             'type' => 'text'
-                           },
-          'mailConfirmBody' => {
-                                 'type' => 'longtext'
-                               },
-          'mailConfirmSubject' => {
-                                    'type' => 'text'
-                                  },
-          'mailFrom' => {
-                          'default' => 'noreply@example.com',
-                          'type' => 'text'
-                        },
-          'mailLDAPFilter' => {
-                                'type' => 'text'
-                              },
-          'mailOnPasswordChange' => {
-                                      'default' => 0,
-                                      'type' => 'bool'
-                                    },
-          'mailReplyTo' => {
-                             'type' => 'text'
-                           },
-          'mailSessionKey' => {
-                                'default' => 'mail',
-                                'type' => 'text'
-                              },
-          'mailSubject' => {
-                             'type' => 'text'
-                           },
-          'mailTimeout' => {
-                             'default' => 0,
-                             'type' => 'int'
-                           },
-          'mailUrl' => {
-                         'default' => 'http://auth.example.com/resetpwd',
-                         'type' => 'url'
-                       },
-          'maintenance' => {
-                             'default' => 0,
-                             'type' => 'bool'
-                           },
-          'managerDn' => {
-                           'default' => '',
-                           'msgFail' => '__badValue__',
-                           'test' => qr/^.*$/,
-                           'type' => 'text'
-                         },
-          'managerPassword' => {
-                                 'default' => '',
-                                 'msgFail' => '__badValue__',
-                                 'test' => qr/^\S*$/,
-                                 'type' => 'password'
-                               },
-          'max2FDevices' => {
-                              'default' => 10,
-                              'type' => 'int'
-                            },
-          'max2FDevicesNameLength' => {
-                                        'default' => 20,
-                                        'type' => 'int'
-                                      },
-          'multiValuesSeparator' => {
-                                      'default' => '; ',
-                                      'type' => 'authParamsText'
-                                    },
-          'mySessionAuthorizedRWKeys' => {
-                                           'default' => [
-                                                          '_appsListOrder',
-                                                          '_oidcConnectedRP',
-                                                          '_oidcConsents'
-                                                        ],
-                                           'type' => 'array'
-                                         },
-          'newLocationWarning' => {
-                                    'default' => 0,
-                                    'type' => 'bool'
-                                  },
-          'newLocationWarningLocationAttribute' => {
-                                                     'default' => 'ipAddr',
-                                                     'type' => 'text'
-                                                   },
-          'newLocationWarningLocationDisplayAttribute' => {
-                                                            'default' => '',
-                                                            'type' => 'text'
-                                                          },
-          'newLocationWarningMailAttribute' => {
-                                                 'type' => 'text'
-                                               },
-          'newLocationWarningMailBody' => {
-                                            'type' => 'longtext'
-                                          },
-          'newLocationWarningMailSubject' => {
-                                               'type' => 'text'
-                                             },
-          'newLocationWarningMaxValues' => {
-                                             'default' => '0',
-                                             'type' => 'int'
-                                           },
-          'nginxCustomHandlers' => {
-                                     'keyTest' => qr/^\w+$/,
-                                     'msgFail' => '__badPerlPackageName__',
-                                     'test' => qr/^[a-zA-Z][a-zA-Z0-9]*(?:::[a-zA-Z][a-zA-Z0-9]*)*$/,
-                                     'type' => 'keyTextContainer'
-                                   },
-          'noAjaxHook' => {
-                            'default' => 0,
-                            'type' => 'bool'
-                          },
-          'notification' => {
-                              'default' => 0,
-                              'type' => 'bool'
-                            },
-          'notificationDefaultCond' => {
-                                         'default' => '',
-                                         'type' => 'text'
-                                       },
-          'notificationServer' => {
-                                    'default' => 0,
-                                    'type' => 'bool'
-                                  },
-          'notificationServerDELETE' => {
-                                          'default' => 0,
-                                          'type' => 'bool'
-                                        },
-          'notificationServerGET' => {
-                                       'default' => 0,
-                                       'type' => 'bool'
-                                     },
-          'notificationServerPOST' => {
-                                        'default' => 1,
-                                        'type' => 'bool'
-                                      },
-          'notificationServerSentAttributes' => {
-                                                  'default' => 'uid reference date title subtitle text check',
-                                                  'type' => 'text'
-                                                },
-          'notificationsExplorer' => {
-                                       'default' => 0,
-                                       'type' => 'bool'
-                                     },
-          'notificationsMaxRetrieve' => {
-                                          'default' => 3,
-                                          'type' => 'int'
-                                        },
-          'notificationStorage' => {
-                                     'default' => 'File',
-                                     'type' => 'PerlModule'
-                                   },
-          'notificationStorageOptions' => {
-                                            'default' => {
-                                                           'dirName' => '/var/lib/lemonldap-ng/notifications'
-                                                         },
-                                            'type' => 'keyTextContainer'
-                                          },
-          'notificationWildcard' => {
-                                      'default' => 'allusers',
-                                      'type' => 'text'
-                                    },
-          'notificationXSLTfile' => {
-                                      'type' => 'text'
-                                    },
-          'notifyDeleted' => {
-                               'default' => 1,
-                               'type' => 'bool'
-                             },
-          'notifyOther' => {
-                             'default' => 0,
-                             'type' => 'bool'
-                           },
-          'nullAuthnLevel' => {
-                                'default' => 0,
-                                'type' => 'int'
-                              },
-          'oidcAuthnLevel' => {
-                                'default' => 1,
-                                'type' => 'int'
-                              },
-          'oidcOPMetaDataExportedVars' => {
-                                            'default' => {
-                                                           'cn' => 'name',
-                                                           'mail' => 'email',
-                                                           'sn' => 'family_name',
-                                                           'uid' => 'sub'
-                                                         },
-                                            'type' => 'keyTextContainer'
-                                          },
-          'oidcOPMetaDataJSON' => {
-                                    'keyTest' => sub {
-                                                     1;
-                                                 },
-                                    'type' => 'file'
-                                  },
-          'oidcOPMetaDataJWKS' => {
-                                    'keyTest' => sub {
-                                                     1;
-                                                 },
-                                    'type' => 'file'
-                                  },
-          'oidcOPMetaDataNodes' => {
-                                     'type' => 'oidcOPMetaDataNodeContainer'
-                                   },
-          'oidcOPMetaDataOptions' => {
-                                       'type' => 'subContainer'
-                                     },
-          'oidcOPMetaDataOptionsAcrValues' => {
-                                                'type' => 'text'
-                                              },
-          'oidcOPMetaDataOptionsCheckJWTSignature' => {
-                                                        'default' => 1,
-                                                        'type' => 'bool'
-                                                      },
-          'oidcOPMetaDataOptionsClientID' => {
-                                               'type' => 'text'
-                                             },
-          'oidcOPMetaDataOptionsClientSecret' => {
-                                                   'type' => 'password'
-                                                 },
-          'oidcOPMetaDataOptionsConfigurationURI' => {
-                                                       'type' => 'url'
-                                                     },
-          'oidcOPMetaDataOptionsDisplay' => {
-                                              'default' => '',
-                                              'select' => [
-                                                            {
-                                                              'k' => '',
-                                                              'v' => ''
-                                                            },
-                                                            {
-                                                              'k' => 'page',
-                                                              'v' => 'page'
-                                                            },
-                                                            {
-                                                              'k' => 'popup',
-                                                              'v' => 'popup'
-                                                            },
-                                                            {
-                                                              'k' => 'touch',
-                                                              'v' => 'touch'
-                                                            },
-                                                            {
-                                                              'k' => 'wap',
-                                                              'v' => 'wap'
-                                                            }
-                                                          ],
-                                              'type' => 'select'
-                                            },
-          'oidcOPMetaDataOptionsDisplayName' => {
-                                                  'type' => 'text'
-                                                },
-          'oidcOPMetaDataOptionsIcon' => {
-                                           'type' => 'text'
-                                         },
-          'oidcOPMetaDataOptionsIDTokenMaxAge' => {
-                                                    'default' => 30,
-                                                    'type' => 'int'
-                                                  },
-          'oidcOPMetaDataOptionsJWKSTimeout' => {
-                                                  'default' => 0,
-                                                  'type' => 'int'
-                                                },
-          'oidcOPMetaDataOptionsMaxAge' => {
-                                             'default' => 0,
-                                             'type' => 'int'
-                                           },
-          'oidcOPMetaDataOptionsPrompt' => {
-                                             'type' => 'text'
-                                           },
-          'oidcOPMetaDataOptionsResolutionRule' => {
-                                                     'default' => '',
-                                                     'type' => 'longtext'
-                                                   },
-          'oidcOPMetaDataOptionsScope' => {
-                                            'default' => 'openid profile',
-                                            'type' => 'text'
-                                          },
-          'oidcOPMetaDataOptionsSortNumber' => {
-                                                 'type' => 'int'
-                                               },
-          'oidcOPMetaDataOptionsStoreIDToken' => {
-                                                   'default' => 0,
-                                                   'type' => 'bool'
-                                                 },
-          'oidcOPMetaDataOptionsTokenEndpointAuthMethod' => {
-                                                              'default' => 'client_secret_post',
-                                                              'select' => [
-                                                                            {
-                                                                              'k' => 'client_secret_post',
-                                                                              'v' => 'client_secret_post'
-                                                                            },
-                                                                            {
-                                                                              'k' => 'client_secret_basic',
-                                                                              'v' => 'client_secret_basic'
-                                                                            }
-                                                                          ],
-                                                              'type' => 'select'
-                                                            },
-          'oidcOPMetaDataOptionsUiLocales' => {
-                                                'type' => 'text'
-                                              },
-          'oidcOPMetaDataOptionsUseNonce' => {
-                                               'default' => 1,
-                                               'type' => 'bool'
-                                             },
-          'oidcRPCallbackGetParam' => {
-                                        'default' => 'openidconnectcallback',
-                                        'type' => 'text'
-                                      },
-          'oidcRPMetaDataExportedVars' => {
-                                            'default' => {
-                                                           'email' => 'mail',
-                                                           'family_name' => 'sn',
-                                                           'name' => 'cn'
-                                                         },
-                                            'keyTest' => qr/\w/,
-                                            'test' => qr/\w/,
-                                            'type' => 'oidcAttributeContainer'
-                                          },
-          'oidcRPMetaDataMacros' => {
-                                      'default' => {},
-                                      'test' => {
-                                                  'keyMsgFail' => '__badMacroName__',
-                                                  'keyTest' => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-                                                  'test' => sub {
-                                                                return perlExpr(@_);
-                                                            }
-                                                },
-                                      'type' => 'keyTextContainer'
-                                    },
-          'oidcRPMetaDataNodes' => {
-                                     'type' => 'oidcRPMetaDataNodeContainer'
-                                   },
-          'oidcRPMetaDataOptions' => {
-                                       'type' => 'subContainer'
-                                     },
-          'oidcRPMetaDataOptionsAccessTokenClaims' => {
-                                                        'default' => 0,
-                                                        'type' => 'bool'
-                                                      },
-          'oidcRPMetaDataOptionsAccessTokenExpiration' => {
-                                                            'type' => 'int'
-                                                          },
-          'oidcRPMetaDataOptionsAccessTokenJWT' => {
-                                                     'default' => 0,
-                                                     'type' => 'bool'
-                                                   },
-          'oidcRPMetaDataOptionsAccessTokenSignAlg' => {
-                                                         'default' => 'RS256',
-                                                         'select' => [
-                                                                       {
-                                                                         'k' => 'RS256',
-                                                                         'v' => 'RS256'
-                                                                       },
-                                                                       {
-                                                                         'k' => 'RS384',
-                                                                         'v' => 'RS384'
-                                                                       },
-                                                                       {
-                                                                         'k' => 'RS512',
-                                                                         'v' => 'RS512'
-                                                                       }
-                                                                     ],
-                                                         'type' => 'select'
-                                                       },
-          'oidcRPMetaDataOptionsAdditionalAudiences' => {
-                                                          'type' => 'text'
-                                                        },
-          'oidcRPMetaDataOptionsAllowClientCredentialsGrant' => {
-                                                                  'default' => 0,
-                                                                  'type' => 'bool'
-                                                                },
-          'oidcRPMetaDataOptionsAllowOffline' => {
-                                                   'default' => 0,
-                                                   'type' => 'bool'
-                                                 },
-          'oidcRPMetaDataOptionsAllowPasswordGrant' => {
-                                                         'default' => 0,
-                                                         'type' => 'bool'
-                                                       },
-          'oidcRPMetaDataOptionsAuthnLevel' => {
-                                                 'type' => 'int'
-                                               },
-          'oidcRPMetaDataOptionsAuthorizationCodeExpiration' => {
-                                                                  'type' => 'int'
-                                                                },
-          'oidcRPMetaDataOptionsBypassConsent' => {
-                                                    'default' => 0,
-                                                    'type' => 'bool'
-                                                  },
-          'oidcRPMetaDataOptionsClientID' => {
-                                               'type' => 'text'
-                                             },
-          'oidcRPMetaDataOptionsClientSecret' => {
-                                                   'type' => 'password'
-                                                 },
-          'oidcRPMetaDataOptionsDisplayName' => {
-                                                  'type' => 'text'
-                                                },
-          'oidcRPMetaDataOptionsExtraClaims' => {
-                                                  'default' => {},
-                                                  'keyTest' => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
-                                                  'type' => 'keyTextContainer'
-                                                },
-          'oidcRPMetaDataOptionsIcon' => {
-                                           'type' => 'text'
-                                         },
-          'oidcRPMetaDataOptionsIDTokenExpiration' => {
-                                                        'type' => 'int'
-                                                      },
-          'oidcRPMetaDataOptionsIDTokenForceClaims' => {
-                                                         'default' => 0,
-                                                         'type' => 'bool'
-                                                       },
-          'oidcRPMetaDataOptionsIDTokenSignAlg' => {
-                                                     'default' => 'HS512',
-                                                     'select' => [
-                                                                   {
-                                                                     'k' => 'none',
-                                                                     'v' => 'None'
-                                                                   },
-                                                                   {
-                                                                     'k' => 'HS256',
-                                                                     'v' => 'HS256'
-                                                                   },
-                                                                   {
-                                                                     'k' => 'HS384',
-                                                                     'v' => 'HS384'
-                                                                   },
-                                                                   {
-                                                                     'k' => 'HS512',
-                                                                     'v' => 'HS512'
-                                                                   },
-                                                                   {
-                                                                     'k' => 'RS256',
-                                                                     'v' => 'RS256'
-                                                                   },
-                                                                   {
-                                                                     'k' => 'RS384',
-                                                                     'v' => 'RS384'
-                                                                   },
-                                                                   {
-                                                                     'k' => 'RS512',
-                                                                     'v' => 'RS512'
-                                                                   }
-                                                                 ],
-                                                     'type' => 'select'
-                                                   },
-          'oidcRPMetaDataOptionsLogoutBypassConfirm' => {
-                                                          'default' => 0,
-                                                          'type' => 'bool'
-                                                        },
-          'oidcRPMetaDataOptionsLogoutSessionRequired' => {
-                                                            'default' => 0,
-                                                            'type' => 'bool'
-                                                          },
-          'oidcRPMetaDataOptionsLogoutType' => {
-                                                 'default' => 'front',
-                                                 'select' => [
-                                                               {
-                                                                 'k' => 'front',
-                                                                 'v' => 'Front Channel'
-                                                               }
-                                                             ],
-                                                 'type' => 'select'
-                                               },
-          'oidcRPMetaDataOptionsLogoutUrl' => {
-                                                'type' => 'url'
-                                              },
-          'oidcRPMetaDataOptionsOfflineSessionExpiration' => {
-                                                               'type' => 'int'
-                                                             },
-          'oidcRPMetaDataOptionsPostLogoutRedirectUris' => {
-                                                             'type' => 'text'
-                                                           },
-          'oidcRPMetaDataOptionsPublic' => {
-                                             'default' => 0,
-                                             'type' => 'bool'
-                                           },
-          'oidcRPMetaDataOptionsRedirectUris' => {
-                                                   'type' => 'text'
-                                                 },
-          'oidcRPMetaDataOptionsRefreshToken' => {
-                                                   'default' => 0,
-                                                   'type' => 'bool'
-                                                 },
-          'oidcRPMetaDataOptionsRequirePKCE' => {
-                                                  'default' => 0,
-                                                  'type' => 'bool'
-                                                },
-          'oidcRPMetaDataOptionsRule' => {
-                                           'test' => sub {
-                                                         return perlExpr(@_);
-                                                     },
-                                           'type' => 'text'
-                                         },
-          'oidcRPMetaDataOptionsUserIDAttr' => {
-                                                 'type' => 'text'
-                                               },
-          'oidcRPMetaDataOptionsUserInfoSignAlg' => {
-                                                      'default' => '',
-                                                      'select' => [
-                                                                    {
-                                                                      'k' => '',
-                                                                      'v' => 'JSON'
-                                                                    },
-                                                                    {
-                                                                      'k' => 'none',
-                                                                      'v' => 'JWT/None'
-                                                                    },
-                                                                    {
-                                                                      'k' => 'HS256',
-                                                                      'v' => 'JWT/HS256'
-                                                                    },
-                                                                    {
-                                                                      'k' => 'HS384',
-                                                                      'v' => 'JWT/HS384'
-                                                                    },
-                                                                    {
-                                                                      'k' => 'HS512',
-                                                                      'v' => 'JWT/HS512'
-                                                                    },
-                                                                    {
-                                                                      'k' => 'RS256',
-                                                                      'v' => 'JWT/RS256'
-                                                                    },
-                                                                    {
-                                                                      'k' => 'RS384',
-                                                                      'v' => 'JWT/RS384'
-                                                                    },
-                                                                    {
-                                                                      'k' => 'RS512',
-                                                                      'v' => 'JWT/RS512'
-                                                                    }
-                                                                  ],
-                                                      'type' => 'select'
-                                                    },
-          'oidcRPMetaDataScopeRules' => {
-                                          'default' => {},
-                                          'test' => {
-                                                      'keyMsgFail' => '__badMacroName__',
-                                                      'keyTest' => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
-                                                      'test' => sub {
-                                                                    return perlExpr(@_);
-                                                                }
-                                                    },
-                                          'type' => 'keyTextContainer'
-                                        },
-          'oidcRPStateTimeout' => {
-                                    'default' => 600,
-                                    'type' => 'int'
-                                  },
-          'oidcServiceAccessTokenExpiration' => {
-                                                  'default' => 3600,
-                                                  'type' => 'int'
-                                                },
-          'oidcServiceAllowAuthorizationCodeFlow' => {
-                                                       'default' => 1,
-                                                       'type' => 'bool'
-                                                     },
-          'oidcServiceAllowDynamicRegistration' => {
-                                                     'default' => 0,
-                                                     'type' => 'bool'
-                                                   },
-          'oidcServiceAllowHybridFlow' => {
-                                            'default' => 0,
-                                            'type' => 'bool'
-                                          },
-          'oidcServiceAllowImplicitFlow' => {
-                                              'default' => 0,
-                                              'type' => 'bool'
-                                            },
-          'oidcServiceAllowOnlyDeclaredScopes' => {
-                                                    'default' => 0,
-                                                    'type' => 'bool'
-                                                  },
-          'oidcServiceAuthorizationCodeExpiration' => {
-                                                        'default' => 60,
-                                                        'type' => 'int'
-                                                      },
-          'oidcServiceDynamicRegistrationExportedVars' => {
-                                                            'type' => 'keyTextContainer'
-                                                          },
-          'oidcServiceDynamicRegistrationExtraClaims' => {
-                                                           'keyTest' => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
-                                                           'type' => 'keyTextContainer'
-                                                         },
-          'oidcServiceIDTokenExpiration' => {
-                                              'default' => 3600,
-                                              'type' => 'int'
-                                            },
-          'oidcServiceKeyIdSig' => {
-                                     'type' => 'text'
-                                   },
-          'oidcServiceMetaDataAuthnContext' => {
-                                                 'default' => {
-                                                                'loa-1' => 1,
-                                                                'loa-2' => 2,
-                                                                'loa-3' => 3,
-                                                                'loa-4' => 4,
-                                                                'loa-5' => 5
-                                                              },
-                                                 'keyTest' => qr/\w/,
-                                                 'type' => 'keyTextContainer'
-                                               },
-          'oidcServiceMetaDataAuthorizeURI' => {
-                                                 'default' => 'authorize',
-                                                 'type' => 'text'
-                                               },
-          'oidcServiceMetaDataBackChannelURI' => {
-                                                   'default' => 'blogout',
-                                                   'type' => 'text'
-                                                 },
-          'oidcServiceMetaDataCheckSessionURI' => {
-                                                    'default' => 'checksession.html',
-                                                    'type' => 'text'
-                                                  },
-          'oidcServiceMetaDataEndSessionURI' => {
-                                                  'default' => 'logout',
-                                                  'type' => 'text'
-                                                },
-          'oidcServiceMetaDataFrontChannelURI' => {
-                                                    'default' => 'flogout',
-                                                    'type' => 'text'
-                                                  },
-          'oidcServiceMetaDataIntrospectionURI' => {
-                                                     'default' => 'introspect',
-                                                     'type' => 'text'
-                                                   },
-          'oidcServiceMetaDataIssuer' => {
-                                           'type' => 'text'
-                                         },
-          'oidcServiceMetaDataJWKSURI' => {
-                                            'default' => 'jwks',
-                                            'type' => 'text'
-                                          },
-          'oidcServiceMetaDataRegistrationURI' => {
-                                                    'default' => 'register',
-                                                    'type' => 'text'
-                                                  },
-          'oidcServiceMetaDataTokenURI' => {
-                                             'default' => 'token',
-                                             'type' => 'text'
-                                           },
-          'oidcServiceMetaDataUserInfoURI' => {
-                                                'default' => 'userinfo',
-                                                'type' => 'text'
-                                              },
-          'oidcServiceOfflineSessionExpiration' => {
-                                                     'default' => 2592000,
-                                                     'type' => 'int'
-                                                   },
-          'oidcServicePrivateKeySig' => {
-                                          'type' => 'RSAPrivateKey'
-                                        },
-          'oidcServicePublicKeySig' => {
-                                         'type' => 'RSAPublicKey'
-                                       },
-          'oidcStorage' => {
-                             'type' => 'PerlModule'
-                           },
-          'oidcStorageOptions' => {
-                                    'type' => 'keyTextContainer'
-                                  },
-          'oldNotifFormat' => {
-                                'default' => 0,
-                                'type' => 'bool'
-                              },
-          'openIdAttr' => {
-                            'type' => 'text'
-                          },
-          'openIdAuthnLevel' => {
-                                  'default' => 1,
-                                  'type' => 'int'
-                                },
-          'openIdExportedVars' => {
-                                    'default' => {},
-                                    'keyMsgFail' => '__badVariableName__',
-                                    'keyTest' => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-                                    'msgFail' => '__badValue__',
-                                    'test' => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-                                    'type' => 'keyTextContainer'
-                                  },
-          'openIdIDPList' => {
-                               'default' => '0;',
-                               'type' => 'blackWhiteList'
-                             },
-          'openIdIssuerSecret' => {
-                                    'type' => 'text'
-                                  },
-          'openIdSecret' => {
-                              'type' => 'text'
-                            },
-          'openIdSPList' => {
-                              'default' => '0;',
-                              'type' => 'blackWhiteList'
-                            },
-          'openIdSreg_country' => {
-                                    'type' => 'lmAttrOrMacro'
-                                  },
-          'openIdSreg_dob' => {
-                                'type' => 'lmAttrOrMacro'
-                              },
-          'openIdSreg_email' => {
-                                  'default' => 'mail',
-                                  'type' => 'lmAttrOrMacro'
-                                },
-          'openIdSreg_fullname' => {
-                                     'default' => 'cn',
-                                     'type' => 'lmAttrOrMacro'
-                                   },
-          'openIdSreg_gender' => {
-                                   'type' => 'lmAttrOrMacro'
-                                 },
-          'openIdSreg_language' => {
-                                     'type' => 'lmAttrOrMacro'
-                                   },
-          'openIdSreg_nickname' => {
-                                     'default' => 'uid',
-                                     'type' => 'lmAttrOrMacro'
-                                   },
-          'openIdSreg_postcode' => {
-                                     'type' => 'lmAttrOrMacro'
-                                   },
-          'openIdSreg_timezone' => {
-                                     'default' => '_timezone',
-                                     'type' => 'lmAttrOrMacro'
-                                   },
-          'pamAuthnLevel' => {
-                               'default' => 2,
-                               'type' => 'int'
-                             },
-          'pamService' => {
-                            'default' => 'login',
-                            'type' => 'text'
-                          },
-          'passwordDB' => {
-                            'default' => 'Demo',
-                            'select' => [
-                                          {
-                                            'k' => 'AD',
-                                            'v' => 'Active Directory'
-                                          },
-                                          {
-                                            'k' => 'Choice',
-                                            'v' => 'authChoice'
-                                          },
-                                          {
-                                            'k' => 'DBI',
-                                            'v' => 'Database (DBI)'
-                                          },
-                                          {
-                                            'k' => 'Demo',
-                                            'v' => 'Demonstration'
-                                          },
-                                          {
-                                            'k' => 'LDAP',
-                                            'v' => 'LDAP'
-                                          },
-                                          {
-                                            'k' => 'REST',
-                                            'v' => 'REST'
-                                          },
-                                          {
-                                            'k' => 'Null',
-                                            'v' => 'None'
-                                          },
-                                          {
-                                            'k' => 'Combination',
-                                            'v' => 'combineMods'
-                                          },
-                                          {
-                                            'k' => 'Custom',
-                                            'v' => 'customModule'
-                                          }
-                                        ],
-                            'type' => 'select'
-                          },
-          'passwordPolicyActivation' => {
-                                          'default' => 1,
-                                          'type' => 'boolOrExpr'
-                                        },
-          'passwordPolicyMinDigit' => {
-                                        'default' => 0,
-                                        'type' => 'int'
-                                      },
-          'passwordPolicyMinLower' => {
-                                        'default' => 0,
-                                        'type' => 'int'
-                                      },
-          'passwordPolicyMinSize' => {
-                                       'default' => 0,
-                                       'type' => 'int'
-                                     },
-          'passwordPolicyMinSpeChar' => {
-                                          'default' => 0,
-                                          'type' => 'int'
-                                        },
-          'passwordPolicyMinUpper' => {
-                                        'default' => 0,
-                                        'type' => 'int'
-                                      },
-          'passwordPolicySpecialChar' => {
-                                           'default' => '__ALL__',
-                                           'test' => qr/^(?:__ALL__|[\S\W]*)$/,
-                                           'type' => 'text'
-                                         },
-          'passwordResetAllowedRetries' => {
-                                             'default' => 3,
-                                             'type' => 'int'
-                                           },
-          'pdataDomain' => {
-                             'default' => '',
-                             'msgFail' => '__badDomainName__',
-                             'test' => qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?))?$/,
-                             'type' => 'text'
-                           },
-          'persistentSessionAttributes' => {
-                                             'default' => '_loginHistory _2fDevices notification_',
-                                             'type' => 'text'
-                                           },
-          'persistentStorage' => {
-                                   'type' => 'PerlModule'
-                                 },
-          'persistentStorageOptions' => {
-                                          'type' => 'keyTextContainer'
-                                        },
-          'port' => {
-                      'default' => -1,
-                      'type' => 'int'
+        'activeTimer' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'adaptativeAuthenticationLevelRules' => {
+            'keyMsgFail' => '__badRegexp__',
+            'keyTest'    => sub {
+                eval {
+                    do {
+                        qr/$_[0]/;
+                    }
+                };
+                return $@ ? 0 : 1;
+            },
+            'type' => 'keyTextContainer'
+        },
+        'ADPwdExpireWarning' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'ADPwdMaxAge' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'apacheAuthnLevel' => {
+            'default' => 3,
+            'type'    => 'int'
+        },
+        'applicationList' => {
+            'default' => {
+                'default' => {
+                    'catname' => 'Default category',
+                    'type'    => 'category'
+                }
+            },
+            'keyTest' => qr/\w/,
+            'type'    => 'catAndAppList'
+        },
+        'authChoiceAuthBasic' => {
+            'type' => 'text'
+        },
+        'authChoiceFindUser' => {
+            'type' => 'text'
+        },
+        'authChoiceModules' => {
+            'keyMsgFail' => '__badChoiceKey__',
+            'keyTest'    => qr/^(\d*)?[a-zA-Z0-9_]+$/,
+            'select'     => [ [ {
+                        'k' => 'Apache',
+                        'v' => 'Apache'
                     },
-          'portal' => {
-                        'default' => 'http://auth.example.com/',
-                        'msgFail' => '__badUrl__',
-                        'test' => qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
-                        'type' => 'url'
-                      },
-          'portalAntiFrame' => {
-                                 'default' => 1,
-                                 'type' => 'bool'
-                               },
-          'portalCheckLogins' => {
-                                   'default' => 1,
-                                   'type' => 'bool'
-                                 },
-          'portalCustomCss' => {
-                                 'type' => 'text'
-                               },
-          'portalDisplayAppslist' => {
-                                       'default' => 1,
-                                       'type' => 'boolOrExpr'
-                                     },
-          'portalDisplayCertificateResetByMail' => {
-                                                     'default' => 0,
-                                                     'type' => 'bool'
-                                                   },
-          'portalDisplayChangePassword' => {
-                                             'default' => '$_auth =~ /^(LDAP|DBI|Demo)$/',
-                                             'type' => 'boolOrExpr'
-                                           },
-          'portalDisplayGeneratePassword' => {
-                                               'default' => 1,
-                                               'type' => 'bool'
-                                             },
-          'portalDisplayLoginHistory' => {
-                                           'default' => 1,
-                                           'type' => 'boolOrExpr'
-                                         },
-          'portalDisplayLogout' => {
-                                     'default' => 1,
-                                     'type' => 'boolOrExpr'
-                                   },
-          'portalDisplayOidcConsents' => {
-                                           'default' => '$_oidcConsents && $_oidcConsents =~ /\\w+/',
-                                           'type' => 'boolOrExpr'
-                                         },
-          'portalDisplayPasswordPolicy' => {
-                                             'default' => 0,
-                                             'type' => 'bool'
-                                           },
-          'portalDisplayRefreshMyRights' => {
-                                              'default' => 1,
-                                              'type' => 'bool'
-                                            },
-          'portalDisplayRegister' => {
-                                       'default' => 1,
-                                       'type' => 'bool'
-                                     },
-          'portalDisplayResetPassword' => {
-                                            'default' => 0,
-                                            'type' => 'bool'
-                                          },
-          'portalEnablePasswordDisplay' => {
-                                             'default' => 0,
-                                             'type' => 'bool'
-                                           },
-          'portalErrorOnExpiredSession' => {
-                                             'default' => 1,
-                                             'type' => 'bool'
-                                           },
-          'portalErrorOnMailNotFound' => {
-                                           'default' => 0,
-                                           'type' => 'bool'
-                                         },
-          'portalFavicon' => {
-                               'default' => 'common/favicon.ico',
-                               'type' => 'text'
-                             },
-          'portalForceAuthn' => {
-                                  'default' => 0,
-                                  'type' => 'bool'
-                                },
-          'portalForceAuthnInterval' => {
-                                          'default' => 5,
-                                          'type' => 'int'
-                                        },
-          'portalMainLogo' => {
-                                'default' => 'common/logos/logo_llng_400px.png',
-                                'type' => 'text'
-                              },
-          'portalOpenLinkInNewWindow' => {
-                                           'default' => 0,
-                                           'type' => 'bool'
-                                         },
-          'portalPingInterval' => {
-                                    'default' => 60000,
-                                    'type' => 'int'
-                                  },
-          'portalRequireOldPassword' => {
-                                          'default' => 1,
-                                          'type' => 'boolOrExpr'
-                                        },
-          'portalSkin' => {
-                            'default' => 'bootstrap',
-                            'select' => [
-                                          {
-                                            'k' => 'bootstrap',
-                                            'v' => 'Bootstrap'
-                                          }
-                                        ],
-                            'type' => 'portalskin'
-                          },
-          'portalSkinBackground' => {
-                                      'select' => [
-                                                    {
-                                                      'k' => '',
-                                                      'v' => 'None'
-                                                    },
-                                                    {
-                                                      'k' => '1280px-Anse_Source_d\'Argent_2-La_Digue.jpg',
-                                                      'v' => 'Anse'
-                                                    },
-                                                    {
-                                                      'k' => '1280px-Autumn-clear-water-waterfall-landscape_-_Virginia_-_ForestWander.jpg',
-                                                      'v' => 'Waterfall'
-                                                    },
-                                                    {
-                                                      'k' => '1280px-BrockenSnowedTrees.jpg',
-                                                      'v' => 'Snowed Trees'
-                                                    },
-                                                    {
-                                                      'k' => '1280px-Cedar_Breaks_National_Monument_partially.jpg',
-                                                      'v' => 'National Monument'
-                                                    },
-                                                    {
-                                                      'k' => '1280px-Parry_Peak_from_Winter_Park.jpg',
-                                                      'v' => 'Winter'
-                                                    },
-                                                    {
-                                                      'k' => 'Aletschgletscher_mit_Pinus_cembra1.jpg',
-                                                      'v' => 'Pinus'
-                                                    }
-                                                  ],
-                                      'type' => 'portalskinbackground'
-                                    },
-          'portalSkinRules' => {
-                                 'keyMsgFail' => '__badSkinRule__',
-                                 'keyTest' => sub {
-                                                  return perlExpr(@_);
-                                              },
-                                 'msgFail' => '__badValue__',
-                                 'test' => qr/^\w+$/,
-                                 'type' => 'keyTextContainer'
-                               },
-          'portalStatus' => {
-                              'default' => 0,
-                              'type' => 'bool'
-                            },
-          'portalUserAttr' => {
-                                'default' => '_user',
-                                'type' => 'text'
-                              },
-          'post' => {
-                      'keyMsgFail' => '__badHostname__',
-                      'keyTest' => qr/^\S+$/,
-                      'test' => sub {
-                                    1;
-                                },
-                      'type' => 'postContainer'
+                    {
+                        'k' => 'AD',
+                        'v' => 'Active Directory'
                     },
-          'protection' => {
-                            'msgFail' => '__authorizedValues__: none authenticate manager',
-                            'test' => qr/^(?:none|authenticate|manager|)$/,
-                            'type' => 'text'
-                          },
-          'proxyAuthnLevel' => {
-                                 'default' => 2,
-                                 'type' => 'int'
-                               },
-          'proxyAuthService' => {
-                                  'type' => 'text'
-                                },
-          'proxyAuthServiceChoiceParam' => {
-                                             'default' => 'lmAuth',
-                                             'type' => 'text'
-                                           },
-          'proxyAuthServiceChoiceValue' => {
-                                             'type' => 'text'
-                                           },
-          'proxyAuthServiceImpersonation' => {
-                                               'default' => 0,
-                                               'type' => 'bool'
-                                             },
-          'proxyCookieName' => {
-                                 'msgFail' => '__badCookieName__',
-                                 'test' => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
-                                 'type' => 'text'
-                               },
-          'proxySessionService' => {
-                                     'type' => 'text'
-                                   },
-          'proxyUseSoap' => {
-                              'default' => 0,
-                              'type' => 'bool'
-                            },
-          'radius2fActivation' => {
-                                    'default' => 0,
-                                    'type' => 'boolOrExpr'
-                                  },
-          'radius2fAuthnLevel' => {
-                                    'type' => 'int'
-                                  },
-          'radius2fLabel' => {
-                               'type' => 'text'
-                             },
-          'radius2fLogo' => {
-                              'type' => 'text'
-                            },
-          'radius2fSecret' => {
-                                'type' => 'text'
-                              },
-          'radius2fServer' => {
-                                'type' => 'text'
-                              },
-          'radius2fTimeout' => {
-                                 'default' => 20,
-                                 'type' => 'int'
-                               },
-          'radius2fUsernameSessionKey' => {
-                                            'type' => 'text'
-                                          },
-          'radiusAuthnLevel' => {
-                                  'default' => 3,
-                                  'type' => 'int'
-                                },
-          'radiusSecret' => {
-                              'type' => 'text'
-                            },
-          'radiusServer' => {
-                              'type' => 'text'
-                            },
-          'randomPasswordRegexp' => {
-                                      'default' => '[A-Z]{3}[a-z]{5}.\\d{2}',
-                                      'type' => 'pcre'
-                                    },
-          'redirectFormMethod' => {
-                                    'default' => 'get',
-                                    'select' => [
-                                                  {
-                                                    'k' => 'get',
-                                                    'v' => 'GET'
-                                                  },
-                                                  {
-                                                    'k' => 'post',
-                                                    'v' => 'POST'
-                                                  }
-                                                ],
-                                    'type' => 'select'
-                                  },
-          'refreshSessions' => {
-                                 'type' => 'bool'
-                               },
-          'registerConfirmBody' => {
-                                     'type' => 'longtext'
-                                   },
-          'registerConfirmSubject' => {
-                                        'type' => 'text'
-                                      },
-          'registerDB' => {
-                            'default' => 'Null',
-                            'select' => [
-                                          {
-                                            'k' => 'AD',
-                                            'v' => 'Active Directory'
-                                          },
-                                          {
-                                            'k' => 'Demo',
-                                            'v' => 'Demonstration'
-                                          },
-                                          {
-                                            'k' => 'LDAP',
-                                            'v' => 'LDAP'
-                                          },
-                                          {
-                                            'k' => 'Null',
-                                            'v' => 'None'
-                                          },
-                                          {
-                                            'k' => 'Custom',
-                                            'v' => 'customModule'
-                                          }
-                                        ],
-                            'type' => 'select'
-                          },
-          'registerDoneBody' => {
-                                  'type' => 'longtext'
-                                },
-          'registerDoneSubject' => {
-                                     'type' => 'text'
-                                   },
-          'registerTimeout' => {
-                                 'default' => 0,
-                                 'type' => 'int'
-                               },
-          'registerUrl' => {
-                             'default' => 'http://auth.example.com/register',
-                             'type' => 'text'
-                           },
-          'reloadTimeout' => {
-                               'default' => 5,
-                               'type' => 'int'
-                             },
-          'reloadUrls' => {
-                            'keyTest' => qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+))(?::\d+)?$/,
-                            'msgFail' => '__badUrl__',
-                            'test' => qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
-                            'type' => 'keyTextContainer'
-                          },
-          'rememberAuthChoiceRule' => {
-                                        'default' => 0,
-                                        'type' => 'boolOrExpr'
-                                      },
-          'rememberCookieName' => {
-                                    'default' => 'llngrememberauthchoice',
-                                    'msgFail' => '__badCookieName__',
-                                    'test' => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
-                                    'type' => 'text'
-                                  },
-          'rememberCookieTimeout' => {
-                                       'default' => 31536000,
-                                       'type' => 'int'
-                                     },
-          'rememberDefaultChecked' => {
-                                        'default' => 0,
-                                        'type' => 'bool'
-                                      },
-          'rememberTimer' => {
-                               'default' => 5,
-                               'type' => 'int'
-                             },
-          'remoteCookieName' => {
-                                  'msgFail' => '__badCookieName__',
-                                  'test' => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
-                                  'type' => 'text'
-                                },
-          'remoteGlobalStorage' => {
-                                     'default' => 'Lemonldap::NG::Common::Apache::Session::SOAP',
-                                     'type' => 'PerlModule'
-                                   },
-          'remoteGlobalStorageOptions' => {
-                                            'default' => {
-                                                           'ns' => 'http://auth.example.com/Lemonldap/NG/Common/PSGI/SOAPService',
-                                                           'proxy' => 'http://auth.example.com/sessions'
-                                                         },
-                                            'type' => 'keyTextContainer'
-                                          },
-          'remotePortal' => {
-                              'type' => 'text'
-                            },
-          'requireToken' => {
-                              'default' => 1,
-                              'type' => 'boolOrExpr'
-                            },
-          'rest2fActivation' => {
-                                  'default' => 0,
-                                  'type' => 'boolOrExpr'
-                                },
-          'rest2fAuthnLevel' => {
-                                  'type' => 'int'
-                                },
-          'rest2fCodeActivation' => {
-                                      'type' => 'pcre'
-                                    },
-          'rest2fInitArgs' => {
-                                'keyMsgFail' => '__badKeyName__',
-                                'keyTest' => qr/^\w+$/,
-                                'msgFail' => '__badValue__',
-                                'test' => qr/^\w+$/,
-                                'type' => 'keyTextContainer'
-                              },
-          'rest2fInitUrl' => {
-                               'type' => 'url'
-                             },
-          'rest2fLabel' => {
-                             'type' => 'text'
-                           },
-          'rest2fLogo' => {
-                            'type' => 'text'
-                          },
-          'rest2fResendInterval' => {
-                                      'type' => 'text'
-                                    },
-          'rest2fVerifyArgs' => {
-                                  'type' => 'keyTextContainer'
-                                },
-          'rest2fVerifyUrl' => {
-                                 'keyMsgFail' => '__badKeyName__',
-                                 'keyTest' => qr/^\w+$/,
-                                 'msgFail' => '__badValue__',
-                                 'test' => qr/^\w+$/,
-                                 'type' => 'url'
-                               },
-          'restAuthnLevel' => {
-                                'default' => 2,
-                                'type' => 'int'
-                              },
-          'restAuthServer' => {
-                                'default' => 0,
-                                'type' => 'bool'
-                              },
-          'restAuthUrl' => {
-                             'type' => 'url'
-                           },
-          'restClockTolerance' => {
-                                    'default' => 15,
-                                    'type' => 'int'
-                                  },
-          'restConfigServer' => {
-                                  'default' => 0,
-                                  'type' => 'bool'
-                                },
-          'restExportSecretKeys' => {
-                                      'default' => 0,
-                                      'type' => 'bool'
-                                    },
-          'restFindUserDBUrl' => {
-                                   'type' => 'url'
-                                 },
-          'restPasswordServer' => {
-                                    'default' => 0,
-                                    'type' => 'bool'
-                                  },
-          'restPwdConfirmUrl' => {
-                                   'type' => 'url'
-                                 },
-          'restPwdModifyUrl' => {
-                                  'type' => 'url'
-                                },
-          'restSessionServer' => {
-                                   'default' => 0,
-                                   'type' => 'bool'
-                                 },
-          'restUserDBUrl' => {
-                               'type' => 'url'
-                             },
-          'sameSite' => {
-                          'default' => '',
-                          'select' => [
-                                        {
-                                          'k' => '',
-                                          'v' => ''
-                                        },
-                                        {
-                                          'k' => 'Strict',
-                                          'v' => 'Strict'
-                                        },
-                                        {
-                                          'k' => 'Lax',
-                                          'v' => 'Lax'
-                                        },
-                                        {
-                                          'k' => 'None',
-                                          'v' => 'None'
-                                        }
-                                      ],
-                          'type' => 'select'
-                        },
-          'samlAttributeAuthorityDescriptorAttributeServiceSOAP' => {
-                                                                      'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;',
-                                                                      'type' => 'samlService'
-                                                                    },
-          'samlAuthnContextMapKerberos' => {
-                                             'default' => 4,
-                                             'type' => 'int'
-                                           },
-          'samlAuthnContextMapPassword' => {
-                                             'default' => 2,
-                                             'type' => 'int'
-                                           },
-          'samlAuthnContextMapPasswordProtectedTransport' => {
-                                                               'default' => 3,
-                                                               'type' => 'int'
-                                                             },
-          'samlAuthnContextMapTLSClient' => {
-                                              'default' => 5,
-                                              'type' => 'int'
-                                            },
-          'samlCommonDomainCookieActivation' => {
-                                                  'default' => 0,
-                                                  'type' => 'bool'
-                                                },
-          'samlCommonDomainCookieDomain' => {
-                                              'msgFail' => '__badDomainName__',
-                                              'test' => qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
-                                              'type' => 'text'
-                                            },
-          'samlCommonDomainCookieReader' => {
-                                              'msgFail' => '__badUrl__',
-                                              'test' => qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
-                                              'type' => 'text'
-                                            },
-          'samlCommonDomainCookieWriter' => {
-                                              'msgFail' => '__badUrl__',
-                                              'test' => qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
-                                              'type' => 'text'
-                                            },
-          'samlDiscoveryProtocolActivation' => {
-                                                 'default' => 0,
-                                                 'type' => 'bool'
-                                               },
-          'samlDiscoveryProtocolIsPassive' => {
-                                                'default' => 0,
-                                                'type' => 'bool'
-                                              },
-          'samlDiscoveryProtocolPolicy' => {
-                                             'type' => 'text'
-                                           },
-          'samlDiscoveryProtocolURL' => {
-                                          'msgFail' => '__badUrl__',
-                                          'test' => qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
-                                          'type' => 'text'
-                                        },
-          'samlEntityID' => {
-                              'default' => '#PORTAL#/saml/metadata',
-                              'type' => 'text'
-                            },
-          'samlIDPMetaDataExportedAttributes' => {
-                                                   'default' => {},
-                                                   'keyMsgFail' => '__badMetadataName__',
-                                                   'keyTest' => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
-                                                   'msgFail' => '__badValue__',
-                                                   'test' => qr/\w/,
-                                                   'type' => 'samlAttributeContainer'
-                                                 },
-          'samlIDPMetaDataNodes' => {
-                                      'type' => 'samlIDPMetaDataNodeContainer'
-                                    },
-          'samlIDPMetaDataOptions' => {
-                                        'keyMsgFail' => '__badMetadataName__',
-                                        'keyTest' => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
-                                        'type' => 'keyTextContainer'
-                                      },
-          'samlIDPMetaDataOptionsAdaptSessionUtime' => {
-                                                         'default' => 0,
-                                                         'type' => 'bool'
-                                                       },
-          'samlIDPMetaDataOptionsAllowLoginFromIDP' => {
-                                                         'default' => 0,
-                                                         'type' => 'bool'
-                                                       },
-          'samlIDPMetaDataOptionsAllowProxiedAuthn' => {
-                                                         'default' => 0,
-                                                         'type' => 'bool'
-                                                       },
-          'samlIDPMetaDataOptionsCheckAudience' => {
-                                                     'default' => 1,
-                                                     'type' => 'bool'
-                                                   },
-          'samlIDPMetaDataOptionsCheckSLOMessageSignature' => {
-                                                                'default' => 1,
-                                                                'type' => 'bool'
-                                                              },
-          'samlIDPMetaDataOptionsCheckSSOMessageSignature' => {
-                                                                'default' => 1,
-                                                                'type' => 'bool'
-                                                              },
-          'samlIDPMetaDataOptionsCheckTime' => {
-                                                 'default' => 1,
-                                                 'type' => 'bool'
-                                               },
-          'samlIDPMetaDataOptionsDisplayName' => {
-                                                   'type' => 'text'
-                                                 },
-          'samlIDPMetaDataOptionsEncryptionMode' => {
-                                                      'default' => 'none',
-                                                      'select' => [
-                                                                    {
-                                                                      'k' => 'none',
-                                                                      'v' => 'None'
-                                                                    },
-                                                                    {
-                                                                      'k' => 'nameid',
-                                                                      'v' => 'Name ID'
-                                                                    },
-                                                                    {
-                                                                      'k' => 'assertion',
-                                                                      'v' => 'Assertion'
-                                                                    }
-                                                                  ],
-                                                      'type' => 'select'
-                                                    },
-          'samlIDPMetaDataOptionsForceAuthn' => {
-                                                  'default' => 0,
-                                                  'type' => 'bool'
-                                                },
-          'samlIDPMetaDataOptionsForceUTF8' => {
-                                                 'default' => 0,
-                                                 'type' => 'bool'
-                                               },
-          'samlIDPMetaDataOptionsIcon' => {
-                                            'type' => 'text'
-                                          },
-          'samlIDPMetaDataOptionsIsPassive' => {
-                                                 'default' => 0,
-                                                 'type' => 'bool'
-                                               },
-          'samlIDPMetaDataOptionsNameIDFormat' => {
-                                                    'default' => '',
-                                                    'select' => [
-                                                                  {
-                                                                    'k' => '',
-                                                                    'v' => ''
-                                                                  },
-                                                                  {
-                                                                    'k' => 'unspecified',
-                                                                    'v' => 'Unspecified'
-                                                                  },
-                                                                  {
-                                                                    'k' => 'email',
-                                                                    'v' => 'Email'
-                                                                  },
-                                                                  {
-                                                                    'k' => 'x509',
-                                                                    'v' => 'X509 certificate'
-                                                                  },
-                                                                  {
-                                                                    'k' => 'windows',
-                                                                    'v' => 'Windows'
-                                                                  },
-                                                                  {
-                                                                    'k' => 'kerberos',
-                                                                    'v' => 'Kerberos'
-                                                                  },
-                                                                  {
-                                                                    'k' => 'entity',
-                                                                    'v' => 'Entity'
-                                                                  },
-                                                                  {
-                                                                    'k' => 'persistent',
-                                                                    'v' => 'Persistent'
-                                                                  },
-                                                                  {
-                                                                    'k' => 'transient',
-                                                                    'v' => 'Transient'
-                                                                  },
-                                                                  {
-                                                                    'k' => 'encrypted',
-                                                                    'v' => 'Encrypted'
-                                                                  }
-                                                                ],
-                                                    'type' => 'select'
-                                                  },
-          'samlIDPMetaDataOptionsRelayStateURL' => {
-                                                     'default' => 0,
-                                                     'type' => 'bool'
-                                                   },
-          'samlIDPMetaDataOptionsRequestedAuthnContext' => {
-                                                             'default' => '',
-                                                             'select' => [
-                                                                           {
-                                                                             'k' => '',
-                                                                             'v' => ''
-                                                                           },
-                                                                           {
-                                                                             'k' => 'kerberos',
-                                                                             'v' => 'Kerberos'
-                                                                           },
-                                                                           {
-                                                                             'k' => 'password-protected-transport',
-                                                                             'v' => 'Password protected transport'
-                                                                           },
-                                                                           {
-                                                                             'k' => 'password',
-                                                                             'v' => 'Password'
-                                                                           },
-                                                                           {
-                                                                             'k' => 'tls-client',
-                                                                             'v' => 'TLS client certificate'
-                                                                           }
-                                                                         ],
-                                                             'type' => 'select'
-                                                           },
-          'samlIDPMetaDataOptionsResolutionRule' => {
-                                                      'default' => '',
-                                                      'type' => 'longtext'
-                                                    },
-          'samlIDPMetaDataOptionsSignatureMethod' => {
-                                                       'default' => '',
-                                                       'select' => [
-                                                                     {
-                                                                       'k' => '',
-                                                                       'v' => 'default'
-                                                                     },
-                                                                     {
-                                                                       'k' => 'RSA_SHA1',
-                                                                       'v' => 'RSA SHA1'
-                                                                     },
-                                                                     {
-                                                                       'k' => 'RSA_SHA256',
-                                                                       'v' => 'RSA SHA256'
-                                                                     },
-                                                                     {
-                                                                       'k' => 'RSA_SHA384',
-                                                                       'v' => 'RSA SHA384'
-                                                                     },
-                                                                     {
-                                                                       'k' => 'RSA_SHA512',
-                                                                       'v' => 'RSA SHA512'
-                                                                     }
-                                                                   ],
-                                                       'type' => 'select'
-                                                     },
-          'samlIDPMetaDataOptionsSignSLOMessage' => {
-                                                      'default' => -1,
-                                                      'type' => 'trool'
-                                                    },
-          'samlIDPMetaDataOptionsSignSSOMessage' => {
-                                                      'default' => -1,
-                                                      'type' => 'trool'
-                                                    },
-          'samlIDPMetaDataOptionsSLOBinding' => {
-                                                  'default' => '',
-                                                  'select' => [
-                                                                {
-                                                                  'k' => '',
-                                                                  'v' => ''
-                                                                },
-                                                                {
-                                                                  'k' => 'http-post',
-                                                                  'v' => 'POST'
-                                                                },
-                                                                {
-                                                                  'k' => 'http-redirect',
-                                                                  'v' => 'Redirect'
-                                                                },
-                                                                {
-                                                                  'k' => 'http-soap',
-                                                                  'v' => 'SOAP'
-                                                                }
-                                                              ],
-                                                  'type' => 'select'
-                                                },
-          'samlIDPMetaDataOptionsSortNumber' => {
-                                                  'type' => 'int'
-                                                },
-          'samlIDPMetaDataOptionsSSOBinding' => {
-                                                  'default' => '',
-                                                  'select' => [
-                                                                {
-                                                                  'k' => '',
-                                                                  'v' => ''
-                                                                },
-                                                                {
-                                                                  'k' => 'http-post',
-                                                                  'v' => 'POST'
-                                                                },
-                                                                {
-                                                                  'k' => 'http-redirect',
-                                                                  'v' => 'Redirect'
-                                                                },
-                                                                {
-                                                                  'k' => 'artifact-get',
-                                                                  'v' => 'Artifact GET'
-                                                                }
-                                                              ],
-                                                  'type' => 'select'
-                                                },
-          'samlIDPMetaDataOptionsStoreSAMLToken' => {
-                                                      'default' => 0,
-                                                      'type' => 'bool'
-                                                    },
-          'samlIDPMetaDataOptionsUserAttribute' => {
-                                                     'type' => 'text'
-                                                   },
-          'samlIDPMetaDataXML' => {
-                                    'test' => sub {
-                                                  my $v = shift();
-                                                  return 1 unless $v and %$v;
-                                                  my @msg;
-                                                  my $res = 1;
-                                                  my %entityIds;
-                                                  foreach my $idpId (keys %$v) {
-                                                      unless ($v->{$idpId}{'samlIDPMetaDataXML'} =~ /entityID="(.+?)"/is) {
-                                                          push @msg, "$idpId SAML metadata has no EntityID";
-                                                          $res = 0;
-                                                          next;
-                                                      }
-                                                      my $eid = $1;
-                                                      if (defined $entityIds{$eid}) {
-                                                          push @msg, "$idpId and $entityIds{$eid} have the same SAML EntityID";
-                                                          $res = 0;
-                                                          next;
-                                                      }
-                                                      $entityIds{$eid} = $idpId;
-                                                  }
-                                                  return $res, join(', ', @msg);
-                                              },
-                                    'type' => 'file'
-                                  },
-          'samlIDPSSODescriptorArtifactResolutionServiceArtifact' => {
-                                                                       'default' => '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact',
-                                                                       'type' => 'samlAssertion'
-                                                                     },
-          'samlIDPSSODescriptorSingleLogoutServiceHTTPPost' => {
-                                                                 'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/singleLogout;#PORTAL#/saml/singleLogoutReturn',
-                                                                 'type' => 'samlService'
-                                                               },
-          'samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect' => {
-                                                                     'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/singleLogout;#PORTAL#/saml/singleLogoutReturn',
-                                                                     'type' => 'samlService'
-                                                                   },
-          'samlIDPSSODescriptorSingleLogoutServiceSOAP' => {
-                                                             'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/singleLogoutSOAP;',
-                                                             'type' => 'samlService'
-                                                           },
-          'samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact' => {
-                                                                     'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/singleSignOnArtifact;',
-                                                                     'type' => 'samlService'
-                                                                   },
-          'samlIDPSSODescriptorSingleSignOnServiceHTTPPost' => {
-                                                                 'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/singleSignOn;',
-                                                                 'type' => 'samlService'
-                                                               },
-          'samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect' => {
-                                                                     'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/singleSignOn;',
-                                                                     'type' => 'samlService'
-                                                                   },
-          'samlIDPSSODescriptorWantAuthnRequestsSigned' => {
-                                                             'default' => 1,
-                                                             'type' => 'bool'
-                                                           },
-          'samlMetadataForceUTF8' => {
-                                       'default' => 1,
-                                       'type' => 'bool'
-                                     },
-          'samlNameIDFormatMapEmail' => {
-                                          'default' => 'mail',
-                                          'type' => 'text'
-                                        },
-          'samlNameIDFormatMapKerberos' => {
-                                             'default' => 'uid',
-                                             'type' => 'text'
-                                           },
-          'samlNameIDFormatMapWindows' => {
-                                            'default' => 'uid',
-                                            'type' => 'text'
-                                          },
-          'samlNameIDFormatMapX509' => {
-                                         'default' => 'mail',
-                                         'type' => 'text'
-                                       },
-          'samlOrganizationDisplayName' => {
-                                             'default' => 'Example',
-                                             'type' => 'text'
-                                           },
-          'samlOrganizationName' => {
-                                      'default' => 'Example',
-                                      'type' => 'text'
-                                    },
-          'samlOrganizationURL' => {
-                                     'default' => 'http://www.example.com',
-                                     'type' => 'text'
-                                   },
-          'samlOverrideIDPEntityID' => {
-                                         'default' => '',
-                                         'type' => 'text'
-                                       },
-          'samlRelayStateTimeout' => {
-                                       'default' => 600,
-                                       'type' => 'int'
-                                     },
-          'samlServicePrivateKeyEnc' => {
-                                          'default' => '',
-                                          'type' => 'RSAPrivateKey'
-                                        },
-          'samlServicePrivateKeyEncPwd' => {
-                                             'type' => 'password'
-                                           },
-          'samlServicePrivateKeySig' => {
-                                          'default' => '',
-                                          'type' => 'RSAPrivateKey'
-                                        },
-          'samlServicePrivateKeySigPwd' => {
-                                             'default' => '',
-                                             'type' => 'password'
-                                           },
-          'samlServicePublicKeyEnc' => {
-                                         'default' => '',
-                                         'type' => 'RSAPublicKeyOrCertificate'
-                                       },
-          'samlServicePublicKeySig' => {
-                                         'default' => '',
-                                         'type' => 'RSAPublicKeyOrCertificate'
-                                       },
-          'samlServiceSignatureMethod' => {
-                                            'default' => 'RSA_SHA256',
-                                            'select' => [
-                                                          {
-                                                            'k' => 'RSA_SHA1',
-                                                            'v' => 'RSA SHA1'
-                                                          },
-                                                          {
-                                                            'k' => 'RSA_SHA256',
-                                                            'v' => 'RSA SHA256'
-                                                          },
-                                                          {
-                                                            'k' => 'RSA_SHA384',
-                                                            'v' => 'RSA SHA384'
-                                                          },
-                                                          {
-                                                            'k' => 'RSA_SHA512',
-                                                            'v' => 'RSA SHA512'
-                                                          }
-                                                        ],
-                                            'type' => 'select'
-                                          },
-          'samlServiceUseCertificateInResponse' => {
-                                                     'default' => 0,
-                                                     'type' => 'bool'
-                                                   },
-          'samlSPMetaDataExportedAttributes' => {
-                                                  'default' => {},
-                                                  'keyMsgFail' => '__badMetadataName__',
-                                                  'keyTest' => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
-                                                  'msgFail' => '__badValue__',
-                                                  'test' => qr/\w/,
-                                                  'type' => 'samlAttributeContainer'
-                                                },
-          'samlSPMetaDataMacros' => {
-                                      'default' => {},
-                                      'test' => {
-                                                  'keyMsgFail' => '__badMacroName__',
-                                                  'keyTest' => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-                                                  'test' => sub {
-                                                                return perlExpr(@_);
-                                                            }
-                                                },
-                                      'type' => 'keyTextContainer'
-                                    },
-          'samlSPMetaDataNodes' => {
-                                     'type' => 'samlSPMetaDataNodeContainer'
-                                   },
-          'samlSPMetaDataOptions' => {
-                                       'keyMsgFail' => '__badMetadataName__',
-                                       'keyTest' => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
-                                       'type' => 'keyTextContainer'
-                                     },
-          'samlSPMetaDataOptionsAuthnLevel' => {
-                                                 'type' => 'int'
-                                               },
-          'samlSPMetaDataOptionsCheckSLOMessageSignature' => {
-                                                               'default' => 1,
-                                                               'type' => 'bool'
-                                                             },
-          'samlSPMetaDataOptionsCheckSSOMessageSignature' => {
-                                                               'default' => 1,
-                                                               'type' => 'bool'
-                                                             },
-          'samlSPMetaDataOptionsEnableIDPInitiatedURL' => {
-                                                            'default' => 0,
-                                                            'type' => 'bool'
-                                                          },
-          'samlSPMetaDataOptionsEncryptionMode' => {
-                                                     'default' => 'none',
-                                                     'select' => [
-                                                                   {
-                                                                     'k' => 'none',
-                                                                     'v' => 'None'
-                                                                   },
-                                                                   {
-                                                                     'k' => 'nameid',
-                                                                     'v' => 'Name ID'
-                                                                   },
-                                                                   {
-                                                                     'k' => 'assertion',
-                                                                     'v' => 'Assertion'
-                                                                   }
-                                                                 ],
-                                                     'type' => 'select'
-                                                   },
-          'samlSPMetaDataOptionsForceUTF8' => {
-                                                'default' => 1,
-                                                'type' => 'bool'
-                                              },
-          'samlSPMetaDataOptionsNameIDFormat' => {
-                                                   'default' => '',
-                                                   'select' => [
-                                                                 {
-                                                                   'k' => '',
-                                                                   'v' => ''
-                                                                 },
-                                                                 {
-                                                                   'k' => 'unspecified',
-                                                                   'v' => 'Unspecified'
-                                                                 },
-                                                                 {
-                                                                   'k' => 'email',
-                                                                   'v' => 'Email'
-                                                                 },
-                                                                 {
-                                                                   'k' => 'x509',
-                                                                   'v' => 'X509 certificate'
-                                                                 },
-                                                                 {
-                                                                   'k' => 'windows',
-                                                                   'v' => 'Windows'
-                                                                 },
-                                                                 {
-                                                                   'k' => 'kerberos',
-                                                                   'v' => 'Kerberos'
-                                                                 },
-                                                                 {
-                                                                   'k' => 'entity',
-                                                                   'v' => 'Entity'
-                                                                 },
-                                                                 {
-                                                                   'k' => 'persistent',
-                                                                   'v' => 'Persistent'
-                                                                 },
-                                                                 {
-                                                                   'k' => 'transient',
-                                                                   'v' => 'Transient'
-                                                                 },
-                                                                 {
-                                                                   'k' => 'encrypted',
-                                                                   'v' => 'Encrypted'
-                                                                 }
-                                                               ],
-                                                   'type' => 'select'
-                                                 },
-          'samlSPMetaDataOptionsNameIDSessionKey' => {
-                                                       'type' => 'text'
-                                                     },
-          'samlSPMetaDataOptionsNotOnOrAfterTimeout' => {
-                                                          'default' => 72000,
-                                                          'type' => 'int'
-                                                        },
-          'samlSPMetaDataOptionsOneTimeUse' => {
-                                                 'default' => 0,
-                                                 'type' => 'bool'
-                                               },
-          'samlSPMetaDataOptionsRule' => {
-                                           'test' => sub {
-                                                         return perlExpr(@_);
-                                                     },
-                                           'type' => 'text'
-                                         },
-          'samlSPMetaDataOptionsSessionNotOnOrAfterTimeout' => {
-                                                                 'default' => 72000,
-                                                                 'type' => 'int'
-                                                               },
-          'samlSPMetaDataOptionsSignatureMethod' => {
-                                                      'default' => '',
-                                                      'select' => [
-                                                                    {
-                                                                      'k' => '',
-                                                                      'v' => 'default'
-                                                                    },
-                                                                    {
-                                                                      'k' => 'RSA_SHA1',
-                                                                      'v' => 'RSA SHA1'
-                                                                    },
-                                                                    {
-                                                                      'k' => 'RSA_SHA256',
-                                                                      'v' => 'RSA SHA256'
-                                                                    },
-                                                                    {
-                                                                      'k' => 'RSA_SHA384',
-                                                                      'v' => 'RSA SHA384'
-                                                                    },
-                                                                    {
-                                                                      'k' => 'RSA_SHA512',
-                                                                      'v' => 'RSA SHA512'
-                                                                    }
-                                                                  ],
-                                                      'type' => 'select'
-                                                    },
-          'samlSPMetaDataOptionsSignSLOMessage' => {
-                                                     'default' => -1,
-                                                     'type' => 'trool'
-                                                   },
-          'samlSPMetaDataOptionsSignSSOMessage' => {
-                                                     'default' => -1,
-                                                     'type' => 'trool'
-                                                   },
-          'samlSPMetaDataXML' => {
-                                   'type' => 'file'
-                                 },
-          'samlSPSSODescriptorArtifactResolutionServiceArtifact' => {
-                                                                      'default' => '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact',
-                                                                      'type' => 'samlAssertion'
-                                                                    },
-          'samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact' => {
-                                                                         'default' => '0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/proxySingleSignOnArtifact',
-                                                                         'type' => 'samlAssertion'
-                                                                       },
-          'samlSPSSODescriptorAssertionConsumerServiceHTTPPost' => {
-                                                                     'default' => '1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleSignOnPost',
-                                                                     'type' => 'samlAssertion'
-                                                                   },
-          'samlSPSSODescriptorAuthnRequestsSigned' => {
-                                                        'default' => 1,
-                                                        'type' => 'bool'
-                                                      },
-          'samlSPSSODescriptorSingleLogoutServiceHTTPPost' => {
-                                                                'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleLogout;#PORTAL#/saml/proxySingleLogoutReturn',
-                                                                'type' => 'samlService'
-                                                              },
-          'samlSPSSODescriptorSingleLogoutServiceHTTPRedirect' => {
-                                                                    'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/proxySingleLogout;#PORTAL#/saml/proxySingleLogoutReturn',
-                                                                    'type' => 'samlService'
-                                                                  },
-          'samlSPSSODescriptorSingleLogoutServiceSOAP' => {
-                                                            'default' => 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/proxySingleLogoutSOAP;',
-                                                            'type' => 'samlService'
-                                                          },
-          'samlSPSSODescriptorWantAssertionsSigned' => {
-                                                         'default' => 1,
-                                                         'type' => 'bool'
-                                                       },
-          'samlStorage' => {
-                             'type' => 'PerlModule'
-                           },
-          'samlStorageOptions' => {
-                                    'type' => 'keyTextContainer'
-                                  },
-          'samlUseQueryStringSpecific' => {
-                                            'default' => 0,
-                                            'type' => 'bool'
-                                          },
-          'scrollTop' => {
-                           'default' => 400,
-                           'type' => 'int'
-                         },
-          'securedCookie' => {
-                               'default' => 0,
-                               'select' => [
-                                             {
-                                               'k' => '0',
-                                               'v' => 'unsecuredCookie'
-                                             },
-                                             {
-                                               'k' => '1',
-                                               'v' => 'securedCookie'
-                                             },
-                                             {
-                                               'k' => '2',
-                                               'v' => 'doubleCookie'
-                                             },
-                                             {
-                                               'k' => '3',
-                                               'v' => 'doubleCookieForSingleSession'
-                                             }
-                                           ],
-                               'type' => 'select'
-                             },
-          'secureTokenAllowOnError' => {
-                                         'type' => 'text'
-                                       },
-          'secureTokenAttribute' => {
-                                      'type' => 'text'
-                                    },
-          'secureTokenExpiration' => {
-                                       'type' => 'text'
-                                     },
-          'secureTokenHeader' => {
-                                   'type' => 'text'
-                                 },
-          'secureTokenMemcachedServers' => {
-                                             'type' => 'text'
-                                           },
-          'secureTokenUrls' => {
-                                 'type' => 'text'
-                               },
-          'sentryDsn' => {
-                           'type' => 'text'
-                         },
-          'sessionDataToRemember' => {
-                                       'keyMsgFail' => '__invalidSessionData__',
-                                       'keyTest' => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-                                       'type' => 'keyTextContainer'
-                                     },
-          'sfEngine' => {
-                          'default' => '::2F::Engines::Default',
-                          'type' => 'text'
-                        },
-          'sfExtra' => {
-                         'keyTest' => qr/^\w+$/,
-                         'select' => [
-                                       {
-                                         'k' => 'Mail2F',
-                                         'v' => 'E-Mail'
-                                       },
-                                       {
-                                         'k' => 'REST',
-                                         'v' => 'REST'
-                                       },
-                                       {
-                                         'k' => 'Ext2F',
-                                         'v' => 'External'
-                                       },
-                                       {
-                                         'k' => 'Radius',
-                                         'v' => 'Radius'
-                                       }
-                                     ],
-                         'test' => sub {
-                                       1;
-                                   },
-                         'type' => 'sfExtraContainer'
-                       },
-          'sfLoginTimeout' => {
-                                'type' => 'int'
-                              },
-          'sfManagerRule' => {
-                               'default' => 1,
-                               'type' => 'boolOrExpr'
-                             },
-          'sfOnlyUpgrade' => {
-                               'type' => 'bool'
-                             },
-          'sfRegisterTimeout' => {
-                                   'type' => 'int'
-                                 },
-          'sfRemovedMsgRule' => {
-                                  'default' => 0,
-                                  'type' => 'boolOrExpr'
-                                },
-          'sfRemovedNotifMsg' => {
-                                   'default' => '_removedSF_ expired second factor(s) has/have been removed (_nameSF_)!',
-                                   'type' => 'text'
-                                 },
-          'sfRemovedNotifRef' => {
-                                   'default' => 'RemoveSF',
-                                   'type' => 'text'
-                                 },
-          'sfRemovedNotifTitle' => {
-                                     'default' => 'Second factor notification',
-                                     'type' => 'text'
-                                   },
-          'sfRemovedUseNotif' => {
-                                   'default' => 0,
-                                   'type' => 'bool'
-                                 },
-          'sfRequired' => {
-                            'default' => 0,
-                            'type' => 'boolOrExpr'
-                          },
-          'showLanguages' => {
-                               'default' => 1,
-                               'type' => 'bool'
-                             },
-          'singleIP' => {
-                          'default' => 0,
-                          'type' => 'boolOrExpr'
-                        },
-          'singleSession' => {
-                               'default' => 0,
-                               'type' => 'boolOrExpr'
-                             },
-          'singleUserByIP' => {
-                                'default' => 0,
-                                'type' => 'boolOrExpr'
-                              },
-          'skipRenewConfirmation' => {
-                                       'default' => 0,
-                                       'type' => 'bool'
-                                     },
-          'skipUpgradeConfirmation' => {
-                                         'default' => 0,
-                                         'type' => 'bool'
-                                       },
-          'slaveAuthnLevel' => {
-                                 'default' => 2,
-                                 'type' => 'int'
-                               },
-          'slaveDisplayLogo' => {
-                                  'default' => 0,
-                                  'type' => 'bool'
-                                },
-          'slaveExportedVars' => {
-                                   'default' => {},
-                                   'keyMsgFail' => '__badVariableName__',
-                                   'keyTest' => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-                                   'msgFail' => '__badValue__',
-                                   'test' => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-                                   'type' => 'keyTextContainer'
-                                 },
-          'slaveHeaderContent' => {
-                                    'type' => 'text'
-                                  },
-          'slaveHeaderName' => {
-                                 'type' => 'text'
-                               },
-          'slaveMasterIP' => {
-                               'msgFail' => '__badIPv4Address__',
-                               'test' => qr/^((?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)\s*)*$/,
-                               'type' => 'text'
-                             },
-          'slaveUserHeader' => {
-                                 'type' => 'text'
-                               },
-          'SMTPAuthPass' => {
-                              'type' => 'password'
-                            },
-          'SMTPAuthUser' => {
-                              'type' => 'text'
-                            },
-          'SMTPPort' => {
-                          'type' => 'int'
-                        },
-          'SMTPServer' => {
-                            'default' => '',
-                            'test' => qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+))(?::\d+)?)?$/,
-                            'type' => 'text'
-                          },
-          'SMTPTLS' => {
-                         'default' => '',
-                         'select' => [
-                                       {
-                                         'k' => '',
-                                         'v' => 'none'
-                                       },
-                                       {
-                                         'k' => 'starttls',
-                                         'v' => 'SMTP + STARTTLS'
-                                       },
-                                       {
-                                         'k' => 'ssl',
-                                         'v' => 'SMTPS'
-                                       }
-                                     ],
-                         'type' => 'select'
-                       },
-          'SMTPTLSOpts' => {
-                             'type' => 'keyTextContainer'
-                           },
-          'soapConfigServer' => {
-                                  'default' => 0,
-                                  'type' => 'bool'
-                                },
-          'soapProxyUrn' => {
-                              'default' => 'urn:Lemonldap/NG/Common/PSGI/SOAPService',
-                              'type' => 'text'
-                            },
-          'soapSessionServer' => {
-                                   'default' => 0,
-                                   'type' => 'bool'
-                                 },
-          'SSLAuthnLevel' => {
-                               'default' => 5,
-                               'type' => 'int'
-                             },
-          'sslByAjax' => {
-                           'default' => 0,
-                           'type' => 'bool'
-                         },
-          'sslHost' => {
-                         'type' => 'url'
-                       },
-          'SSLVar' => {
-                        'default' => 'SSL_CLIENT_S_DN_Email',
-                        'type' => 'text'
-                      },
-          'SSLVarIf' => {
-                          'default' => {},
-                          'keyTest' => sub {
-                                           1;
-                                       },
-                          'type' => 'keyTextContainer'
-                        },
-          'staticPrefix' => {
-                              'type' => 'text'
-                            },
-          'status' => {
-                        'type' => 'bool'
-                      },
-          'stayConnected' => {
-                               'default' => 0,
-                               'type' => 'boolOrExpr'
-                             },
-          'stayConnectedBypassFG' => {
-                                       'default' => 0,
-                                       'type' => 'bool'
-                                     },
-          'stayConnectedCookieName' => {
-                                         'default' => 'llngconnection',
-                                         'msgFail' => '__badCookieName__',
-                                         'test' => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
-                                         'type' => 'text'
-                                       },
-          'stayConnectedTimeout' => {
-                                      'default' => 2592000,
-                                      'type' => 'int'
-                                    },
-          'storePassword' => {
-                               'default' => 0,
-                               'type' => 'bool'
-                             },
-          'successLoginNumber' => {
-                                    'default' => 5,
-                                    'type' => 'int'
-                                  },
-          'syslogFacility' => {
-                                'type' => 'text'
-                              },
-          'timeout' => {
-                         'default' => 72000,
-                         'test' => sub {
-                                       $_[0] > 0;
-                                   },
-                         'type' => 'int'
-                       },
-          'timeoutActivity' => {
-                                 'default' => 0,
-                                 'test' => sub {
-                                               $_[0] >= 0;
-                                           },
-                                 'type' => 'int'
-                               },
-          'timeoutActivityInterval' => {
-                                         'default' => 60,
-                                         'test' => sub {
-                                                       $_[0] >= 0;
-                                                   },
-                                         'type' => 'int'
-                                       },
-          'tokenUseGlobalStorage' => {
-                                       'default' => 0,
-                                       'type' => 'bool'
-                                     },
-          'totp2fActivation' => {
-                                  'default' => 0,
-                                  'type' => 'boolOrExpr'
-                                },
-          'totp2fAuthnLevel' => {
-                                  'type' => 'int'
-                                },
-          'totp2fDigits' => {
-                              'default' => 6,
-                              'type' => 'int'
-                            },
-          'totp2fEncryptSecret' => {
-                                     'default' => 0,
-                                     'type' => 'bool'
-                                   },
-          'totp2fInterval' => {
-                                'default' => 30,
-                                'type' => 'int'
-                              },
-          'totp2fIssuer' => {
-                              'type' => 'text'
-                            },
-          'totp2fLabel' => {
-                             'type' => 'text'
-                           },
-          'totp2fLogo' => {
-                            'type' => 'text'
-                          },
-          'totp2fRange' => {
-                             'default' => 1,
-                             'type' => 'int'
-                           },
-          'totp2fSelfRegistration' => {
-                                        'default' => 0,
-                                        'type' => 'boolOrExpr'
-                                      },
-          'totp2fTTL' => {
-                           'type' => 'int'
-                         },
-          'totp2fUserCanRemoveKey' => {
-                                        'default' => 1,
-                                        'type' => 'bool'
-                                      },
-          'trustedDomains' => {
-                                'type' => 'text'
-                              },
-          'twitterAppName' => {
-                                'type' => 'text'
-                              },
-          'twitterAuthnLevel' => {
-                                   'default' => 1,
-                                   'type' => 'int'
-                                 },
-          'twitterKey' => {
-                            'type' => 'text'
-                          },
-          'twitterSecret' => {
-                               'type' => 'text'
-                             },
-          'twitterUserField' => {
-                                  'default' => 'screen_name',
-                                  'type' => 'text'
-                                },
-          'u2fActivation' => {
-                               'default' => 0,
-                               'type' => 'boolOrExpr'
-                             },
-          'u2fAuthnLevel' => {
-                               'type' => 'int'
-                             },
-          'u2fLabel' => {
-                          'type' => 'text'
-                        },
-          'u2fLogo' => {
-                         'type' => 'text'
-                       },
-          'u2fSelfRegistration' => {
-                                     'default' => 0,
-                                     'type' => 'boolOrExpr'
-                                   },
-          'u2fTTL' => {
-                        'type' => 'int'
-                      },
-          'u2fUserCanRemoveKey' => {
-                                     'default' => 1,
-                                     'type' => 'bool'
-                                   },
-          'upgradeSession' => {
-                                'default' => 1,
-                                'type' => 'bool'
-                              },
-          'userControl' => {
-                             'default' => '^[\\w\\.\\-@]+$',
-                             'type' => 'pcre'
-                           },
-          'userDB' => {
-                        'default' => 'Same',
-                        'select' => [
-                                      {
-                                        'k' => 'Same',
-                                        'v' => 'Same'
-                                      },
-                                      {
-                                        'k' => 'AD',
-                                        'v' => 'Active Directory'
-                                      },
-                                      {
-                                        'k' => 'DBI',
-                                        'v' => 'Database (DBI)'
-                                      },
-                                      {
-                                        'k' => 'LDAP',
-                                        'v' => 'LDAP'
-                                      },
-                                      {
-                                        'k' => 'REST',
-                                        'v' => 'REST'
-                                      },
-                                      {
-                                        'k' => 'Null',
-                                        'v' => 'None'
-                                      },
-                                      {
-                                        'k' => 'Custom',
-                                        'v' => 'customModule'
-                                      }
-                                    ],
-                        'type' => 'select'
-                      },
-          'useRedirectOnError' => {
-                                    'default' => 1,
-                                    'type' => 'bool'
-                                  },
-          'useRedirectOnForbidden' => {
-                                        'default' => 0,
-                                        'type' => 'bool'
-                                      },
-          'userLogger' => {
-                            'type' => 'text'
-                          },
-          'userPivot' => {
-                           'type' => 'text'
-                         },
-          'userSyslogFacility' => {
-                                    'type' => 'text'
-                                  },
-          'useSafeJail' => {
-                             'default' => 1,
-                             'type' => 'bool'
-                           },
-          'utotp2fActivation' => {
-                                   'default' => 0,
-                                   'type' => 'boolOrExpr'
-                                 },
-          'utotp2fAuthnLevel' => {
-                                   'type' => 'int'
-                                 },
-          'utotp2fLabel' => {
-                              'type' => 'text'
-                            },
-          'utotp2fLogo' => {
-                             'type' => 'text'
-                           },
-          'vhostAccessToTrace' => {
-                                    'default' => '',
-                                    'type' => 'text'
-                                  },
-          'vhostAliases' => {
-                              'default' => '',
-                              'type' => 'text'
-                            },
-          'vhostAuthnLevel' => {
-                                 'type' => 'int'
-                               },
-          'vhostDevOpsRulesUrl' => {
-                                     'type' => 'url'
-                                   },
-          'vhostHttps' => {
-                            'default' => -1,
-                            'type' => 'trool'
-                          },
-          'vhostMaintenance' => {
-                                  'default' => 0,
-                                  'type' => 'bool'
-                                },
-          'vhostOptions' => {
-                              'type' => 'subContainer'
-                            },
-          'vhostPort' => {
-                           'default' => -1,
-                           'type' => 'int'
-                         },
-          'vhostServiceTokenTTL' => {
-                                      'default' => -1,
-                                      'type' => 'int'
-                                    },
-          'vhostType' => {
-                           'default' => 'Main',
-                           'select' => [
-                                         {
-                                           'k' => 'AuthBasic',
-                                           'v' => 'AuthBasic'
-                                         },
-                                         {
-                                           'k' => 'CDA',
-                                           'v' => 'CDA'
-                                         },
-                                         {
-                                           'k' => 'DevOps',
-                                           'v' => 'DevOps'
-                                         },
-                                         {
-                                           'k' => 'DevOpsST',
-                                           'v' => 'DevOpsST'
-                                         },
-                                         {
-                                           'k' => 'Main',
-                                           'v' => 'Main'
-                                         },
-                                         {
-                                           'k' => 'OAuth2',
-                                           'v' => 'OAuth2'
-                                         },
-                                         {
-                                           'k' => 'SecureToken',
-                                           'v' => 'SecureToken'
-                                         },
-                                         {
-                                           'k' => 'ServiceToken',
-                                           'v' => 'ServiceToken'
-                                         },
-                                         {
-                                           'k' => 'ZimbraPreAuth',
-                                           'v' => 'ZimbraPreAuth'
-                                         }
-                                       ],
-                           'type' => 'select'
-                         },
-          'viewerAllowBrowser' => {
-                                    'default' => 0,
-                                    'type' => 'bool'
-                                  },
-          'viewerAllowDiff' => {
-                                 'default' => 0,
-                                 'type' => 'bool'
-                               },
-          'viewerHiddenKeys' => {
-                                  'default' => 'samlIDPMetaDataNodes, samlSPMetaDataNodes',
-                                  'type' => 'text'
-                                },
-          'virtualHosts' => {
-                              'type' => 'virtualHostContainer'
-                            },
-          'webauthn2fActivation' => {
-                                      'default' => 0,
-                                      'type' => 'boolOrExpr'
-                                    },
-          'webauthn2fAuthnLevel' => {
-                                      'type' => 'int'
-                                    },
-          'webauthn2fLabel' => {
-                                 'type' => 'text'
-                               },
-          'webauthn2fLogo' => {
-                                'type' => 'text'
-                              },
-          'webauthn2fSelfRegistration' => {
-                                            'default' => 0,
-                                            'type' => 'boolOrExpr'
-                                          },
-          'webauthn2fUserCanRemoveKey' => {
-                                            'default' => 1,
-                                            'type' => 'bool'
-                                          },
-          'webauthn2fUserVerification' => {
-                                            'default' => 'preferred',
-                                            'select' => [
-                                                          {
-                                                            'k' => 'discouraged',
-                                                            'v' => 'Discouraged'
-                                                          },
-                                                          {
-                                                            'k' => 'preferred',
-                                                            'v' => 'Preferred'
-                                                          },
-                                                          {
-                                                            'k' => 'required',
-                                                            'v' => 'Required'
-                                                          }
-                                                        ],
-                                            'type' => 'select'
-                                          },
-          'webauthnDisplayNameAttr' => {
-                                         'type' => 'text'
-                                       },
-          'webauthnRpName' => {
-                                'type' => 'text'
-                              },
-          'webIDAuthnLevel' => {
-                                 'default' => 1,
-                                 'type' => 'int'
-                               },
-          'webIDExportedVars' => {
-                                   'default' => {},
-                                   'keyMsgFail' => '__badVariableName__',
-                                   'keyTest' => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-                                   'msgFail' => '__badValue__',
-                                   'test' => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-                                   'type' => 'keyTextContainer'
-                                 },
-          'webIDWhitelist' => {
-                                'type' => 'text'
-                              },
-          'whatToTrace' => {
-                             'default' => 'uid',
-                             'type' => 'lmAttrOrMacro'
-                           },
-          'wsdlServer' => {
-                            'default' => 0,
-                            'type' => 'bool'
-                          },
-          'yubikey2fActivation' => {
-                                     'default' => 0,
-                                     'type' => 'boolOrExpr'
-                                   },
-          'yubikey2fAuthnLevel' => {
-                                     'type' => 'int'
-                                   },
-          'yubikey2fClientID' => {
-                                   'type' => 'text'
-                                 },
-          'yubikey2fFromSessionAttribute' => {
-                                               'type' => 'text'
-                                             },
-          'yubikey2fLabel' => {
-                                'type' => 'text'
-                              },
-          'yubikey2fLogo' => {
-                               'type' => 'text'
-                             },
-          'yubikey2fNonce' => {
-                                'type' => 'text'
-                              },
-          'yubikey2fPublicIDSize' => {
-                                       'default' => 12,
-                                       'type' => 'int'
-                                     },
-          'yubikey2fSecretKey' => {
-                                    'type' => 'text'
-                                  },
-          'yubikey2fSelfRegistration' => {
-                                           'default' => 0,
-                                           'type' => 'boolOrExpr'
-                                         },
-          'yubikey2fTTL' => {
-                              'type' => 'int'
-                            },
-          'yubikey2fUrl' => {
-                              'type' => 'text'
-                            },
-          'yubikey2fUserCanRemoveKey' => {
-                                           'default' => 1,
-                                           'type' => 'bool'
-                                         },
-          'zimbraAccountKey' => {
-                                  'type' => 'text'
-                                },
-          'zimbraBy' => {
-                          'type' => 'text'
-                        },
-          'zimbraPreAuthKey' => {
-                                  'type' => 'text'
-                                },
-          'zimbraSsoUrl' => {
-                              'type' => 'text'
-                            },
-          'zimbraUrl' => {
-                           'type' => 'text'
-                         }
-        };
+                    {
+                        'k' => 'CAS',
+                        'v' => 'Central Authentication Service (CAS)'
+                    },
+                    {
+                        'k' => 'DBI',
+                        'v' => 'Database (DBI)'
+                    },
+                    {
+                        'k' => 'Demo',
+                        'v' => 'Demo'
+                    },
+                    {
+                        'k' => 'Facebook',
+                        'v' => 'Facebook'
+                    },
+                    {
+                        'k' => 'GitHub',
+                        'v' => 'GitHub'
+                    },
+                    {
+                        'k' => 'GPG',
+                        'v' => 'GPG'
+                    },
+                    {
+                        'k' => 'Kerberos',
+                        'v' => 'Kerberos'
+                    },
+                    {
+                        'k' => 'LDAP',
+                        'v' => 'LDAP'
+                    },
+                    {
+                        'k' => 'LinkedIn',
+                        'v' => 'LinkedIn'
+                    },
+                    {
+                        'k' => 'PAM',
+                        'v' => 'PAM'
+                    },
+                    {
+                        'k' => 'Null',
+                        'v' => 'None'
+                    },
+                    {
+                        'k' => 'OpenID',
+                        'v' => 'OpenID'
+                    },
+                    {
+                        'k' => 'OpenIDConnect',
+                        'v' => 'OpenID Connect'
+                    },
+                    {
+                        'k' => 'Proxy',
+                        'v' => 'Proxy'
+                    },
+                    {
+                        'k' => 'Radius',
+                        'v' => 'Radius'
+                    },
+                    {
+                        'k' => 'REST',
+                        'v' => 'REST'
+                    },
+                    {
+                        'k' => 'Remote',
+                        'v' => 'Remote'
+                    },
+                    {
+                        'k' => 'SAML',
+                        'v' => 'SAML v2'
+                    },
+                    {
+                        'k' => 'Slave',
+                        'v' => 'Slave'
+                    },
+                    {
+                        'k' => 'SSL',
+                        'v' => 'SSL'
+                    },
+                    {
+                        'k' => 'Twitter',
+                        'v' => 'Twitter'
+                    },
+                    {
+                        'k' => 'WebID',
+                        'v' => 'WebID'
+                    },
+                    {
+                        'k' => 'Custom',
+                        'v' => 'customModule'
+                    }
+                ],
+                [ {
+                        'k' => 'AD',
+                        'v' => 'Active Directory'
+                    },
+                    {
+                        'k' => 'CAS',
+                        'v' => 'Central Authentication Service (CAS)'
+                    },
+                    {
+                        'k' => 'DBI',
+                        'v' => 'Database (DBI)'
+                    },
+                    {
+                        'k' => 'Demo',
+                        'v' => 'Demo'
+                    },
+                    {
+                        'k' => 'Facebook',
+                        'v' => 'Facebook'
+                    },
+                    {
+                        'k' => 'LDAP',
+                        'v' => 'LDAP'
+                    },
+                    {
+                        'k' => 'Null',
+                        'v' => 'None'
+                    },
+                    {
+                        'k' => 'OpenID',
+                        'v' => 'OpenID'
+                    },
+                    {
+                        'k' => 'OpenIDConnect',
+                        'v' => 'OpenID Connect'
+                    },
+                    {
+                        'k' => 'Proxy',
+                        'v' => 'Proxy'
+                    },
+                    {
+                        'k' => 'REST',
+                        'v' => 'REST'
+                    },
+                    {
+                        'k' => 'Remote',
+                        'v' => 'Remote'
+                    },
+                    {
+                        'k' => 'SAML',
+                        'v' => 'SAML v2'
+                    },
+                    {
+                        'k' => 'Slave',
+                        'v' => 'Slave'
+                    },
+                    {
+                        'k' => 'WebID',
+                        'v' => 'WebID'
+                    },
+                    {
+                        'k' => 'Custom',
+                        'v' => 'customModule'
+                    }
+                ],
+                [ {
+                        'k' => 'AD',
+                        'v' => 'Active Directory'
+                    },
+                    {
+                        'k' => 'DBI',
+                        'v' => 'Database (DBI)'
+                    },
+                    {
+                        'k' => 'Demo',
+                        'v' => 'Demo'
+                    },
+                    {
+                        'k' => 'LDAP',
+                        'v' => 'LDAP'
+                    },
+                    {
+                        'k' => 'REST',
+                        'v' => 'REST'
+                    },
+                    {
+                        'k' => 'Null',
+                        'v' => 'None'
+                    },
+                    {
+                        'k' => 'Custom',
+                        'v' => 'customModule'
+                    }
+                ]
+            ],
+            'test' => sub {
+                1;
+            },
+            'type' => 'authChoiceContainer'
+        },
+        'authChoiceParam' => {
+            'default' => 'lmAuth',
+            'type'    => 'text'
+        },
+        'authentication' => {
+            'default' => 'Demo',
+            'select'  => [ {
+                    'k' => 'Apache',
+                    'v' => 'Apache'
+                },
+                {
+                    'k' => 'AD',
+                    'v' => 'Active Directory'
+                },
+                {
+                    'k' => 'DBI',
+                    'v' => 'Database (DBI)'
+                },
+                {
+                    'k' => 'Facebook',
+                    'v' => 'Facebook'
+                },
+                {
+                    'k' => 'GitHub',
+                    'v' => 'GitHub'
+                },
+                {
+                    'k' => 'GPG',
+                    'v' => 'GPG'
+                },
+                {
+                    'k' => 'Kerberos',
+                    'v' => 'Kerberos'
+                },
+                {
+                    'k' => 'LDAP',
+                    'v' => 'LDAP'
+                },
+                {
+                    'k' => 'LinkedIn',
+                    'v' => 'LinkedIn'
+                },
+                {
+                    'k' => 'PAM',
+                    'v' => 'PAM'
+                },
+                {
+                    'k' => 'Radius',
+                    'v' => 'Radius'
+                },
+                {
+                    'k' => 'REST',
+                    'v' => 'REST'
+                },
+                {
+                    'k' => 'SSL',
+                    'v' => 'SSL'
+                },
+                {
+                    'k' => 'Twitter',
+                    'v' => 'Twitter'
+                },
+                {
+                    'k' => 'WebID',
+                    'v' => 'WebID'
+                },
+                {
+                    'k' => 'Demo',
+                    'v' => 'Demonstration'
+                },
+                {
+                    'k' => 'Choice',
+                    'v' => 'authChoice'
+                },
+                {
+                    'k' => 'Combination',
+                    'v' => 'combineMods'
+                },
+                {
+                    'k' => 'CAS',
+                    'v' => 'Central Authentication Service (CAS)'
+                },
+                {
+                    'k' => 'OpenID',
+                    'v' => 'OpenID'
+                },
+                {
+                    'k' => 'OpenIDConnect',
+                    'v' => 'OpenID Connect'
+                },
+                {
+                    'k' => 'SAML',
+                    'v' => 'SAML v2'
+                },
+                {
+                    'k' => 'Proxy',
+                    'v' => 'Proxy'
+                },
+                {
+                    'k' => 'Remote',
+                    'v' => 'Remote'
+                },
+                {
+                    'k' => 'Slave',
+                    'v' => 'Slave'
+                },
+                {
+                    'k' => 'Null',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'Custom',
+                    'v' => 'customModule'
+                }
+            ],
+            'type' => 'select'
+        },
+        'AuthLDAPFilter' => {
+            'type' => 'text'
+        },
+        'autoSigninRules' => {
+            'type' => 'keyTextContainer'
+        },
+        'available2F' => {
+            'default' =>
+              'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius',
+            'type' => 'text'
+        },
+        'available2FSelfRegistration' => {
+            'default' => 'TOTP,U2F,WebAuthn,Yubikey',
+            'type'    => 'text'
+        },
+        'avoidAssignment' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'browsersDontStorePassword' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'bruteForceProtection' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'bruteForceProtectionIncrementalTempo' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'bruteForceProtectionLockTimes' => {
+            'default' => '15, 30, 60, 300, 600',
+            'type'    => 'text'
+        },
+        'bruteForceProtectionMaxAge' => {
+            'default' => 300,
+            'type'    => 'int'
+        },
+        'bruteForceProtectionMaxFailed' => {
+            'default' => 3,
+            'type'    => 'int'
+        },
+        'bruteForceProtectionMaxLockTime' => {
+            'default' => 900,
+            'type'    => 'int'
+        },
+        'bruteForceProtectionTempo' => {
+            'default' => 30,
+            'type'    => 'int'
+        },
+        'captcha' => {
+            'type' => 'PerlModule'
+        },
+        'captcha_login_enabled' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'captcha_mail_enabled' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'captcha_register_enabled' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'captcha_size' => {
+            'default' => 6,
+            'type'    => 'int'
+        },
+        'captchaOptions' => {
+            'type' => 'keyTextContainer'
+        },
+        'casAccessControlPolicy' => {
+            'default' => 'none',
+            'select'  => [ {
+                    'k' => 'none',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'error',
+                    'v' => 'Display error on portal'
+                },
+                {
+                    'k' => 'faketicket',
+                    'v' => 'Send a fake service ticket'
+                }
+            ],
+            'type' => 'select'
+        },
+        'casAppMetaDataExportedVars' => {
+            'default' => {
+                'cn'   => 'cn',
+                'mail' => 'mail',
+                'uid'  => 'uid'
+            },
+            'type' => 'keyTextContainer'
+        },
+        'casAppMetaDataMacros' => {
+            'default' => {},
+            'test'    => {
+                'keyMsgFail' => '__badMacroName__',
+                'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                'test'       => sub {
+                    return perlExpr(@_);
+                }
+            },
+            'type' => 'keyTextContainer'
+        },
+        'casAppMetaDataNodes' => {
+            'type' => 'casAppMetaDataNodeContainer'
+        },
+        'casAppMetaDataOptions' => {
+            'type' => 'subContainer'
+        },
+        'casAppMetaDataOptionsAuthnLevel' => {
+            'type' => 'int'
+        },
+        'casAppMetaDataOptionsRule' => {
+            'test' => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'text'
+        },
+        'casAppMetaDataOptionsService' => {
+            'type' => 'text'
+        },
+        'casAppMetaDataOptionsUserAttribute' => {
+            'type' => 'text'
+        },
+        'casAttr' => {
+            'type' => 'text'
+        },
+        'casAttributes' => {
+            'type' => 'keyTextContainer'
+        },
+        'casAuthnLevel' => {
+            'default' => 1,
+            'type'    => 'int'
+        },
+        'casSrvMetaDataExportedVars' => {
+            'default' => {
+                'cn'   => 'cn',
+                'mail' => 'mail',
+                'uid'  => 'uid'
+            },
+            'type' => 'keyTextContainer'
+        },
+        'casSrvMetaDataNodes' => {
+            'type' => 'casSrvMetaDataNodeContainer'
+        },
+        'casSrvMetaDataOptions' => {
+            'type' => 'subContainer'
+        },
+        'casSrvMetaDataOptionsDisplayName' => {
+            'type' => 'text'
+        },
+        'casSrvMetaDataOptionsGateway' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'casSrvMetaDataOptionsIcon' => {
+            'type' => 'text'
+        },
+        'casSrvMetaDataOptionsProxiedServices' => {
+            'keyMsgFail' => '__badCasProxyId__',
+            'keyTest'    => qr/^\w/,
+            'type'       => 'keyTextContainer'
+        },
+        'casSrvMetaDataOptionsRenew' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'casSrvMetaDataOptionsResolutionRule' => {
+            'default' => '',
+            'type'    => 'longtext'
+        },
+        'casSrvMetaDataOptionsSortNumber' => {
+            'type' => 'int'
+        },
+        'casSrvMetaDataOptionsUrl' => {
+            'msgFail' => '__badUrl__',
+            'test'    =>
+qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
+            'type' => 'text'
+        },
+        'casStorage' => {
+            'type' => 'PerlModule'
+        },
+        'casStorageOptions' => {
+            'type' => 'keyTextContainer'
+        },
+        'casStrictMatching' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'casTicketExpiration' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'cda' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'certificateResetByMailCeaAttribute' => {
+            'default' => 'description',
+            'type'    => 'text'
+        },
+        'certificateResetByMailCertificateAttribute' => {
+            'default' => 'userCertificate;binary',
+            'type'    => 'text'
+        },
+        'certificateResetByMailStep1Body' => {
+            'type' => 'longtext'
+        },
+        'certificateResetByMailStep1Subject' => {
+            'type' => 'text'
+        },
+        'certificateResetByMailStep2Body' => {
+            'type' => 'longtext'
+        },
+        'certificateResetByMailStep2Subject' => {
+            'type' => 'text'
+        },
+        'certificateResetByMailURL' => {
+            'default' => 'http://auth.example.com/certificateReset',
+            'type'    => 'url'
+        },
+        'certificateResetByMailValidityDelay' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'cfgAuthor' => {
+            'type' => 'text'
+        },
+        'cfgAuthorIP' => {
+            'type' => 'text'
+        },
+        'cfgDate' => {
+            'type' => 'int'
+        },
+        'cfgLog' => {
+            'type' => 'longtext'
+        },
+        'cfgNum' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'cfgVersion' => {
+            'type' => 'text'
+        },
+        'checkDevOps' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'checkDevOpsCheckSessionAttributes' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'checkDevOpsDisplayNormalizedHeaders' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'checkDevOpsDownload' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'checkState' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'checkStateSecret' => {
+            'type' => 'text'
+        },
+        'checkTime' => {
+            'default' => 600,
+            'type'    => 'int'
+        },
+        'checkUser' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'checkUserDisplayComputedSession' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
+        'checkUserDisplayEmptyHeaders' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'checkUserDisplayEmptyValues' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'checkUserDisplayHiddenAttributes' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'checkUserDisplayHistory' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'checkUserDisplayNormalizedHeaders' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'checkUserDisplayPersistentInfo' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'checkUserHiddenAttributes' => {
+            'default' => '_loginHistory, _session_id, hGroups',
+            'type'    => 'text'
+        },
+        'checkUserHiddenHeaders' => {
+            'keyMsgFail' => '__badHostname__',
+            'keyTest'    => qr/^\S+$/,
+            'test'       => {
+                'keyMsgFail' => '__badHeaderName__',
+                'keyTest'    => qr/^(?=[^\-])[\w\-\s]+(?<=[^-])$/,
+                'test'       => sub {
+                    return perlExpr(@_);
+                }
+            },
+            'type' => 'keyTextContainer'
+        },
+        'checkUserIdRule' => {
+            'default' => 1,
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'text'
+        },
+        'checkUserSearchAttributes' => {
+            'type' => 'text'
+        },
+        'checkUserUnrestrictedUsersRule' => {
+            'test' => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'text'
+        },
+        'checkXSS' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'combination' => {
+            'type' => 'text'
+        },
+        'combModules' => {
+            'keyTest' => qr/^\w+$/,
+            'select'  => [ {
+                    'k' => 'Apache',
+                    'v' => 'Apache'
+                },
+                {
+                    'k' => 'AD',
+                    'v' => 'Active Directory'
+                },
+                {
+                    'k' => 'DBI',
+                    'v' => 'Database (DBI)'
+                },
+                {
+                    'k' => 'Facebook',
+                    'v' => 'Facebook'
+                },
+                {
+                    'k' => 'GitHub',
+                    'v' => 'GitHub'
+                },
+                {
+                    'k' => 'GPG',
+                    'v' => 'GPG'
+                },
+                {
+                    'k' => 'Kerberos',
+                    'v' => 'Kerberos'
+                },
+                {
+                    'k' => 'LDAP',
+                    'v' => 'LDAP'
+                },
+                {
+                    'k' => 'LinkedIn',
+                    'v' => 'LinkedIn'
+                },
+                {
+                    'k' => 'PAM',
+                    'v' => 'PAM'
+                },
+                {
+                    'k' => 'Radius',
+                    'v' => 'Radius'
+                },
+                {
+                    'k' => 'REST',
+                    'v' => 'REST'
+                },
+                {
+                    'k' => 'SSL',
+                    'v' => 'SSL'
+                },
+                {
+                    'k' => 'Twitter',
+                    'v' => 'Twitter'
+                },
+                {
+                    'k' => 'WebID',
+                    'v' => 'WebID'
+                },
+                {
+                    'k' => 'Demo',
+                    'v' => 'Demonstration'
+                },
+                {
+                    'k' => 'CAS',
+                    'v' => 'Central Authentication Service (CAS)'
+                },
+                {
+                    'k' => 'OpenID',
+                    'v' => 'OpenID'
+                },
+                {
+                    'k' => 'OpenIDConnect',
+                    'v' => 'OpenID Connect'
+                },
+                {
+                    'k' => 'SAML',
+                    'v' => 'SAML v2'
+                },
+                {
+                    'k' => 'Proxy',
+                    'v' => 'Proxy'
+                },
+                {
+                    'k' => 'Remote',
+                    'v' => 'Remote'
+                },
+                {
+                    'k' => 'Slave',
+                    'v' => 'Slave'
+                },
+                {
+                    'k' => 'Null',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'Custom',
+                    'v' => 'customModule'
+                }
+            ],
+            'test' => sub {
+                1;
+            },
+            'type' => 'cmbModuleContainer'
+        },
+        'compactConf' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'configStorage' => {
+            'type' => 'text'
+        },
+        'confirmFormMethod' => {
+            'default' => 'post',
+            'select'  => [ {
+                    'k' => 'get',
+                    'v' => 'GET'
+                },
+                {
+                    'k' => 'post',
+                    'v' => 'POST'
+                }
+            ],
+            'type' => 'select'
+        },
+        'contextSwitchingAllowed2fModifications' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'contextSwitchingIdRule' => {
+            'default' => 1,
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'text'
+        },
+        'contextSwitchingPrefix' => {
+            'default' => 'switching',
+            'type'    => 'text'
+        },
+        'contextSwitchingRule' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'contextSwitchingStopWithLogout' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'contextSwitchingUnrestrictedUsersRule' => {
+            'test' => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'text'
+        },
+        'cookieExpiration' => {
+            'type' => 'int'
+        },
+        'cookieName' => {
+            'default' => 'lemonldap',
+            'msgFail' => '__badCookieName__',
+            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'type'    => 'text'
+        },
+        'corsAllow_Credentials' => {
+            'default' => 'true',
+            'type'    => 'text'
+        },
+        'corsAllow_Headers' => {
+            'default' => '*',
+            'type'    => 'text'
+        },
+        'corsAllow_Methods' => {
+            'default' => 'POST,GET',
+            'type'    => 'text'
+        },
+        'corsAllow_Origin' => {
+            'default' => '*',
+            'type'    => 'text'
+        },
+        'corsEnabled' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'corsExpose_Headers' => {
+            'default' => '*',
+            'type'    => 'text'
+        },
+        'corsMax_Age' => {
+            'default' => '86400',
+            'type'    => 'text'
+        },
+        'crowdsec' => {
+            'type' => 'bool'
+        },
+        'crowdsecAction' => {
+            'default' => 'reject',
+            'select'  => [ {
+                    'k' => 'reject',
+                    'v' => 'Reject'
+                },
+                {
+                    'k' => 'warn',
+                    'v' => 'Warn'
+                }
+            ],
+            'type' => 'select'
+        },
+        'crowdsecKey' => {
+            'type' => 'text'
+        },
+        'crowdsecUrl' => {
+            'type' => 'url'
+        },
+        'cspConnect' => {
+            'default' => '\'self\'',
+            'type'    => 'text'
+        },
+        'cspDefault' => {
+            'default' => '\'self\'',
+            'type'    => 'text'
+        },
+        'cspFont' => {
+            'default' => '\'self\'',
+            'type'    => 'text'
+        },
+        'cspFormAction' => {
+            'default' => '*',
+            'type'    => 'text'
+        },
+        'cspFrameAncestors' => {
+            'default' => '',
+            'type'    => 'text'
+        },
+        'cspImg' => {
+            'default' => '\'self\' data:',
+            'type'    => 'text'
+        },
+        'cspScript' => {
+            'default' => '\'self\'',
+            'type'    => 'text'
+        },
+        'cspStyle' => {
+            'default' => '\'self\'',
+            'type'    => 'text'
+        },
+        'customAddParams' => {
+            'type' => 'keyTextContainer'
+        },
+        'customAuth' => {
+            'type' => 'text'
+        },
+        'customFunctions' => {
+            'msgFail' => '__badCustomFuncName__',
+            'test'    => qr/^(?:\w+(?:::\w+)*(?:\s+\w+(?:::\w+)*)*)?$/,
+            'type'    => 'text'
+        },
+        'customPassword' => {
+            'type' => 'text'
+        },
+        'customPlugins' => {
+            'type' => 'text'
+        },
+        'customPluginsParams' => {
+            'type' => 'keyTextContainer'
+        },
+        'customRegister' => {
+            'type' => 'text'
+        },
+        'customResetCertByMail' => {
+            'type' => 'text'
+        },
+        'customToTrace' => {
+            'type' => 'lmAttrOrMacro'
+        },
+        'customUserDB' => {
+            'type' => 'text'
+        },
+        'dbiAuthChain' => {
+            'type' => 'text'
+        },
+        'dbiAuthLoginCol' => {
+            'type' => 'text'
+        },
+        'dbiAuthnLevel' => {
+            'default' => 2,
+            'type'    => 'int'
+        },
+        'dbiAuthPassword' => {
+            'type' => 'password'
+        },
+        'dbiAuthPasswordCol' => {
+            'type' => 'text'
+        },
+        'dbiAuthPasswordHash' => {
+            'type' => 'text'
+        },
+        'dbiAuthTable' => {
+            'type' => 'text'
+        },
+        'dbiAuthUser' => {
+            'type' => 'text'
+        },
+        'dbiDynamicHashEnabled' => {
+            'type' => 'bool'
+        },
+        'dbiDynamicHashNewPasswordScheme' => {
+            'type' => 'text'
+        },
+        'dbiDynamicHashValidSaltedSchemes' => {
+            'type' => 'text'
+        },
+        'dbiDynamicHashValidSchemes' => {
+            'type' => 'text'
+        },
+        'dbiExportedVars' => {
+            'default'    => {},
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
+        },
+        'dbiPasswordMailCol' => {
+            'type' => 'text'
+        },
+        'dbiUserChain' => {
+            'type' => 'text'
+        },
+        'dbiUserPassword' => {
+            'type' => 'password'
+        },
+        'dbiUserTable' => {
+            'type' => 'text'
+        },
+        'dbiUserUser' => {
+            'type' => 'text'
+        },
+        'decryptValueFunctions' => {
+            'msgFail' => '__badCustomFuncName__',
+            'test'    => qr/^(?:\w+(?:::\w+)*(?:\s+\w+(?:::\w+)*)*)?$/,
+            'type'    => 'text'
+        },
+        'decryptValueRule' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'demoExportedVars' => {
+            'default' => {
+                'cn'   => 'cn',
+                'mail' => 'mail',
+                'uid'  => 'uid'
+            },
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
+        },
+        'disablePersistentStorage' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'displaySessionId' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'domain' => {
+            'default' => 'example.com',
+            'msgFail' => '__badDomainName__',
+            'test'    =>
+qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?))?$/,
+            'type' => 'text'
+        },
+        'exportedAttr' => {
+            'type' => 'text'
+        },
+        'exportedHeaders' => {
+            'keyMsgFail' => '__badHostname__',
+            'keyTest'    => qr/^\S+$/,
+            'test'       => {
+                'keyMsgFail' => '__badHeaderName__',
+                'keyTest'    => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
+                'test'       => sub {
+                    return perlExpr(@_);
+                }
+            },
+            'type' => 'keyTextContainer'
+        },
+        'exportedVars' => {
+            'default' => {
+                'UA' => 'HTTP_USER_AGENT'
+            },
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[_a-zA-Z][a-zA-Z0-9_]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[_a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
+        },
+        'ext2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'ext2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'ext2fCodeActivation' => {
+            'default' => '\\d{6}',
+            'type'    => 'pcre'
+        },
+        'ext2fLabel' => {
+            'type' => 'text'
+        },
+        'ext2fLogo' => {
+            'type' => 'text'
+        },
+        'ext2fResendInterval' => {
+            'type' => 'text'
+        },
+        'ext2FSendCommand' => {
+            'type' => 'text'
+        },
+        'ext2FValidateCommand' => {
+            'type' => 'text'
+        },
+        'facebookAppId' => {
+            'type' => 'text'
+        },
+        'facebookAppSecret' => {
+            'type' => 'text'
+        },
+        'facebookAuthnLevel' => {
+            'default' => 1,
+            'type'    => 'int'
+        },
+        'facebookExportedVars' => {
+            'default'    => {},
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
+        },
+        'facebookUserField' => {
+            'default' => 'id',
+            'type'    => 'text'
+        },
+        'failedLoginNumber' => {
+            'default' => 5,
+            'type'    => 'int'
+        },
+        'findUser' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'findUserControl' => {
+            'default' => '^[*\\w]+$',
+            'type'    => 'pcre'
+        },
+        'findUserExcludingAttributes' => {
+            'keyTest' => qr/^\S+$/,
+            'type'    => 'keyTextContainer'
+        },
+        'findUserSearchingAttributes' => {
+            'keyTest' => qr/^\S+$/,
+            'type'    => 'keyTextContainer'
+        },
+        'findUserWildcard' => {
+            'default' => '*',
+            'type'    => 'text'
+        },
+        'forceGlobalStorageIssuerOTT' => {
+            'type' => 'bool'
+        },
+        'forceGlobalStorageUpgradeOTT' => {
+            'type' => 'bool'
+        },
+        'formTimeout' => {
+            'default' => 120,
+            'type'    => 'int'
+        },
+        'githubAuthnLevel' => {
+            'default' => 1,
+            'type'    => 'int'
+        },
+        'githubClientID' => {
+            'type' => 'text'
+        },
+        'githubClientSecret' => {
+            'type' => 'password'
+        },
+        'githubScope' => {
+            'default' => 'user:email',
+            'type'    => 'text'
+        },
+        'githubUserField' => {
+            'default' => 'login',
+            'type'    => 'text'
+        },
+        'globalLogoutCustomParam' => {
+            'type' => 'text'
+        },
+        'globalLogoutRule' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'globalLogoutTimer' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'globalStorage' => {
+            'default' => 'Apache::Session::File',
+            'type'    => 'PerlModule'
+        },
+        'globalStorageOptions' => {
+            'default' => {
+                'Directory'      => '/var/lib/lemonldap-ng/sessions/',
+                'generateModule' =>
+                  'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
+                'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
+            },
+            'type' => 'keyTextContainer'
+        },
+        'gpgAuthnLevel' => {
+            'default' => 5,
+            'type'    => 'int'
+        },
+        'gpgDb' => {
+            'default' => '',
+            'type'    => 'text'
+        },
+        'grantSessionRules' => {
+            'default' => {},
+            'keyTest' => sub {
+                return perlExpr(@_);
+            },
+            'test' => sub {
+                1;
+            },
+            'type' => 'grantContainer'
+        },
+        'groups' => {
+            'default' => {},
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
+        },
+        'groupsBeforeMacros' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'handlerInternalCache' => {
+            'default' => 15,
+            'type'    => 'int'
+        },
+        'handlerServiceTokenTTL' => {
+            'default' => 30,
+            'type'    => 'int'
+        },
+        'hiddenAttributes' => {
+            'default' => '_password, _2fDevices',
+            'type'    => 'text'
+        },
+        'hideOldPassword' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'httpOnly' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'https' => {
+            'default' => -1,
+            'type'    => 'trool'
+        },
+        'impersonationHiddenAttributes' => {
+            'default' => '_2fDevices, _loginHistory',
+            'type'    => 'text'
+        },
+        'impersonationIdRule' => {
+            'default' => 1,
+            'test'    => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'text'
+        },
+        'impersonationMergeSSOgroups' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'impersonationPrefix' => {
+            'default' => 'real_',
+            'type'    => 'text'
+        },
+        'impersonationRule' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'impersonationSkipEmptyValues' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'impersonationUnrestrictedUsersRule' => {
+            'test' => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'text'
+        },
+        'infoFormMethod' => {
+            'default' => 'get',
+            'select'  => [ {
+                    'k' => 'get',
+                    'v' => 'GET'
+                },
+                {
+                    'k' => 'post',
+                    'v' => 'POST'
+                }
+            ],
+            'type' => 'select'
+        },
+        'issuerDBCASActivation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'issuerDBCASPath' => {
+            'default' => '^/cas/',
+            'type'    => 'pcre'
+        },
+        'issuerDBCASRule' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
+        'issuerDBGetActivation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'issuerDBGetParameters' => {
+            'default'    => {},
+            'keyMsgFail' => '__badHostname__',
+            'keyTest'    =>
+qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
+            'test' => {
+                'keyMsgFail' => '__badKeyName__',
+                'keyTest'    => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
+                'test'       => sub {
+                    my ( $val, $conf ) = @_;
+                    return 1
+                      if defined $conf->{'macros'}{$val} or $val eq '_timezone';
+                    foreach $_ ( keys %$conf ) {
+                        return 1
+                          if $_ =~ /exportedvars$/i
+                          and defined $conf->{$_}{$val};
+                    }
+                    return 1, "__unknownAttrOrMacro__: $val";
+                }
+            },
+            'type' => 'doubleHash'
+        },
+        'issuerDBGetPath' => {
+            'default' => '^/get/',
+            'type'    => 'text'
+        },
+        'issuerDBGetRule' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
+        'issuerDBOpenIDActivation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'issuerDBOpenIDConnectActivation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'issuerDBOpenIDConnectPath' => {
+            'default' => '^/oauth2/',
+            'type'    => 'text'
+        },
+        'issuerDBOpenIDConnectRule' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
+        'issuerDBOpenIDPath' => {
+            'default' => '^/openidserver/',
+            'type'    => 'pcre'
+        },
+        'issuerDBOpenIDRule' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
+        'issuerDBSAMLActivation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'issuerDBSAMLPath' => {
+            'default' => '^/saml/',
+            'type'    => 'pcre'
+        },
+        'issuerDBSAMLRule' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
+        'issuersTimeout' => {
+            'default' => 120,
+            'type'    => 'int'
+        },
+        'jsRedirect' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'key' => {
+            'type' => 'password'
+        },
+        'krbAllowedDomains' => {
+            'type' => 'text'
+        },
+        'krbAuthnLevel' => {
+            'default' => 3,
+            'type'    => 'int'
+        },
+        'krbByJs' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'krbKeytab' => {
+            'type' => 'text'
+        },
+        'krbRemoveDomain' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'ldapAllowResetExpiredPassword' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'ldapAuthnLevel' => {
+            'default' => 2,
+            'type'    => 'int'
+        },
+        'ldapBase' => {
+            'default' => 'dc=example,dc=com',
+            'msgFail' => '__badValue__',
+            'test'    => qr/^(?:\w+=.*|)$/,
+            'type'    => 'text'
+        },
+        'ldapCAFile' => {
+            'type' => 'text'
+        },
+        'ldapCAPath' => {
+            'type' => 'text'
+        },
+        'ldapChangePasswordAsUser' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'ldapExportedVars' => {
+            'default' => {
+                'cn'   => 'cn',
+                'mail' => 'mail',
+                'uid'  => 'uid'
+            },
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
+        },
+        'LDAPFilter' => {
+            'type' => 'text'
+        },
+        'ldapGetUserBeforePasswordChange' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'ldapGroupAttributeName' => {
+            'default' => 'member',
+            'type'    => 'text'
+        },
+        'ldapGroupAttributeNameGroup' => {
+            'default' => 'dn',
+            'type'    => 'text'
+        },
+        'ldapGroupAttributeNameSearch' => {
+            'default' => 'cn',
+            'type'    => 'text'
+        },
+        'ldapGroupAttributeNameUser' => {
+            'default' => 'dn',
+            'type'    => 'text'
+        },
+        'ldapGroupBase' => {
+            'type' => 'text'
+        },
+        'ldapGroupDecodeSearchedValue' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'ldapGroupObjectClass' => {
+            'default' => 'groupOfNames',
+            'type'    => 'text'
+        },
+        'ldapGroupRecursive' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'ldapIOTimeout' => {
+            'default' => 10,
+            'type'    => 'int'
+        },
+        'ldapITDS' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'ldapPasswordResetAttribute' => {
+            'default' => 'pwdReset',
+            'type'    => 'text'
+        },
+        'ldapPasswordResetAttributeValue' => {
+            'default' => 'TRUE',
+            'type'    => 'text'
+        },
+        'ldapPort' => {
+            'type' => 'int'
+        },
+        'ldapPpolicyControl' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'ldapPwdEnc' => {
+            'default' => 'utf-8',
+            'msgFail' => '__badEncoding__',
+            'test'    => qr/^[a-zA-Z0-9_][a-zA-Z0-9_\-]*[a-zA-Z0-9_]$/,
+            'type'    => 'text'
+        },
+        'ldapRaw' => {
+            'type' => 'text'
+        },
+        'ldapSearchDeref' => {
+            'default' => 'find',
+            'select'  => [ {
+                    'k' => 'never',
+                    'v' => 'never'
+                },
+                {
+                    'k' => 'search',
+                    'v' => 'search'
+                },
+                {
+                    'k' => 'find',
+                    'v' => 'find'
+                },
+                {
+                    'k' => 'always',
+                    'v' => 'always'
+                }
+            ],
+            'type' => 'select'
+        },
+        'ldapServer' => {
+            'default' => 'ldap://localhost',
+            'test'    => sub {
+                my $l = shift();
+                my @s = split( /[\s,]+/, $l, 0 );
+                foreach my $s (@s) {
+                    return 0, qq[__badLdapUri__: "$s"]
+                      unless $s =~
+m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?::\d{1,5})?/?.*)$]o;
+                }
+                return 1;
+            },
+            'type' => 'text'
+        },
+        'ldapSetPassword' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'ldapTimeout' => {
+            'default' => 10,
+            'type'    => 'int'
+        },
+        'ldapUsePasswordResetAttribute' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'ldapVerify' => {
+            'default' => 'require',
+            'select'  => [ {
+                    'k' => 'none',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'optional',
+                    'v' => 'Optional'
+                },
+                {
+                    'k' => 'require',
+                    'v' => 'Require'
+                }
+            ],
+            'type' => 'select'
+        },
+        'ldapVersion' => {
+            'default' => 3,
+            'type'    => 'int'
+        },
+        'linkedInAuthnLevel' => {
+            'default' => 1,
+            'type'    => 'int'
+        },
+        'linkedInClientID' => {
+            'type' => 'text'
+        },
+        'linkedInClientSecret' => {
+            'type' => 'password'
+        },
+        'linkedInFields' => {
+            'default' => 'id,first-name,last-name,email-address',
+            'type'    => 'text'
+        },
+        'linkedInScope' => {
+            'default' => 'r_liteprofile r_emailaddress',
+            'type'    => 'text'
+        },
+        'linkedInUserField' => {
+            'default' => 'emailAddress',
+            'type'    => 'text'
+        },
+        'localSessionStorage' => {
+            'default' => 'Cache::FileCache',
+            'type'    => 'PerlModule'
+        },
+        'localSessionStorageOptions' => {
+            'default' => {
+                'cache_depth'        => 3,
+                'cache_root'         => '/var/cache/lemonldap-ng',
+                'default_expires_in' => 600,
+                'directory_umask'    => '007',
+                'namespace'          => 'lemonldap-ng-sessions'
+            },
+            'type' => 'keyTextContainer'
+        },
+        'localStorage' => {
+            'type' => 'text'
+        },
+        'localStorageOptions' => {
+            'type' => 'keyTextContainer'
+        },
+        'locationRules' => {
+            'default' => {
+                'default' => 'deny'
+            },
+            'keyMsgFail' => '__badHostname__',
+            'keyTest'    => qr/^\S+$/,
+            'test'       => {
+                'keyMsgFail' => '__badRegexp__',
+                'keyTest'    => sub {
+                    eval {
+                        do {
+                            qr/$_[0]/;
+                        }
+                    };
+                    return $@ ? 0 : 1;
+                },
+                'msgFail' => '__badExpression__',
+                'test'    => sub {
+                    my ( $val, $conf ) = @_;
+                    my $s = $val;
+                    if ( $s =~ s/^logout(?:_(?:sso|app(?:_sso)?))?\s*// ) {
+                        return $s =~ m[^(?:https?://.*)?$]
+                          ? 1
+                          : ( 0, '__badUrl__' );
+                    }
+                    $s =~ s/\b(accept|deny|unprotect|skip)\b/1/g;
+                    return &perlExpr( $s, $conf );
+                }
+            },
+            'type' => 'ruleContainer'
+        },
+        'log4perlConfFile' => {
+            'type' => 'text'
+        },
+        'logger' => {
+            'type' => 'text'
+        },
+        'loginHistoryEnabled' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'logLevel' => {
+            'type' => 'text'
+        },
+        'logoutServices' => {
+            'default' => {},
+            'type'    => 'keyTextContainer'
+        },
+        'lwpOpts' => {
+            'type' => 'keyTextContainer'
+        },
+        'lwpSslOpts' => {
+            'type' => 'keyTextContainer'
+        },
+        'macros' => {
+            'default'    => {},
+            'keyMsgFail' => '__badMacroName__',
+            'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+            'test'       => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'keyTextContainer'
+        },
+        'mail2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'mail2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'mail2fBody' => {
+            'type' => 'longtext'
+        },
+        'mail2fCodeRegex' => {
+            'default' => '\\d{6}',
+            'type'    => 'pcre'
+        },
+        'mail2fLabel' => {
+            'type' => 'text'
+        },
+        'mail2fLogo' => {
+            'type' => 'text'
+        },
+        'mail2fResendInterval' => {
+            'type' => 'text'
+        },
+        'mail2fSessionKey' => {
+            'type' => 'text'
+        },
+        'mail2fSubject' => {
+            'type' => 'text'
+        },
+        'mail2fTimeout' => {
+            'type' => 'int'
+        },
+        'mailBody' => {
+            'type' => 'longtext'
+        },
+        'mailCharset' => {
+            'default' => 'utf-8',
+            'type'    => 'text'
+        },
+        'mailConfirmBody' => {
+            'type' => 'longtext'
+        },
+        'mailConfirmSubject' => {
+            'type' => 'text'
+        },
+        'mailFrom' => {
+            'default' => 'noreply@example.com',
+            'type'    => 'text'
+        },
+        'mailLDAPFilter' => {
+            'type' => 'text'
+        },
+        'mailOnPasswordChange' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'mailReplyTo' => {
+            'type' => 'text'
+        },
+        'mailSessionKey' => {
+            'default' => 'mail',
+            'type'    => 'text'
+        },
+        'mailSubject' => {
+            'type' => 'text'
+        },
+        'mailTimeout' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'mailUrl' => {
+            'default' => 'http://auth.example.com/resetpwd',
+            'type'    => 'url'
+        },
+        'maintenance' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'managerDn' => {
+            'default' => '',
+            'msgFail' => '__badValue__',
+            'test'    => qr/^.*$/,
+            'type'    => 'text'
+        },
+        'managerPassword' => {
+            'default' => '',
+            'msgFail' => '__badValue__',
+            'test'    => qr/^\S*$/,
+            'type'    => 'password'
+        },
+        'max2FDevices' => {
+            'default' => 10,
+            'type'    => 'int'
+        },
+        'max2FDevicesNameLength' => {
+            'default' => 20,
+            'type'    => 'int'
+        },
+        'multiValuesSeparator' => {
+            'default' => '; ',
+            'type'    => 'authParamsText'
+        },
+        'mySessionAuthorizedRWKeys' => {
+            'default' =>
+              [ '_appsListOrder', '_oidcConnectedRP', '_oidcConsents' ],
+            'type' => 'array'
+        },
+        'newLocationWarning' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'newLocationWarningLocationAttribute' => {
+            'default' => 'ipAddr',
+            'type'    => 'text'
+        },
+        'newLocationWarningLocationDisplayAttribute' => {
+            'default' => '',
+            'type'    => 'text'
+        },
+        'newLocationWarningMailAttribute' => {
+            'type' => 'text'
+        },
+        'newLocationWarningMailBody' => {
+            'type' => 'longtext'
+        },
+        'newLocationWarningMailSubject' => {
+            'type' => 'text'
+        },
+        'newLocationWarningMaxValues' => {
+            'default' => '0',
+            'type'    => 'int'
+        },
+        'nginxCustomHandlers' => {
+            'keyTest' => qr/^\w+$/,
+            'msgFail' => '__badPerlPackageName__',
+            'test'    => qr/^[a-zA-Z][a-zA-Z0-9]*(?:::[a-zA-Z][a-zA-Z0-9]*)*$/,
+            'type'    => 'keyTextContainer'
+        },
+        'noAjaxHook' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'notification' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'notificationDefaultCond' => {
+            'default' => '',
+            'type'    => 'text'
+        },
+        'notificationServer' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'notificationServerDELETE' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'notificationServerGET' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'notificationServerPOST' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'notificationServerSentAttributes' => {
+            'default' => 'uid reference date title subtitle text check',
+            'type'    => 'text'
+        },
+        'notificationsExplorer' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'notificationsMaxRetrieve' => {
+            'default' => 3,
+            'type'    => 'int'
+        },
+        'notificationStorage' => {
+            'default' => 'File',
+            'type'    => 'PerlModule'
+        },
+        'notificationStorageOptions' => {
+            'default' => {
+                'dirName' => '/var/lib/lemonldap-ng/notifications'
+            },
+            'type' => 'keyTextContainer'
+        },
+        'notificationWildcard' => {
+            'default' => 'allusers',
+            'type'    => 'text'
+        },
+        'notificationXSLTfile' => {
+            'type' => 'text'
+        },
+        'notifyDeleted' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'notifyOther' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'nullAuthnLevel' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'oidcAuthnLevel' => {
+            'default' => 1,
+            'type'    => 'int'
+        },
+        'oidcOPMetaDataExportedVars' => {
+            'default' => {
+                'cn'   => 'name',
+                'mail' => 'email',
+                'sn'   => 'family_name',
+                'uid'  => 'sub'
+            },
+            'type' => 'keyTextContainer'
+        },
+        'oidcOPMetaDataJSON' => {
+            'keyTest' => sub {
+                1;
+            },
+            'type' => 'file'
+        },
+        'oidcOPMetaDataJWKS' => {
+            'keyTest' => sub {
+                1;
+            },
+            'type' => 'file'
+        },
+        'oidcOPMetaDataNodes' => {
+            'type' => 'oidcOPMetaDataNodeContainer'
+        },
+        'oidcOPMetaDataOptions' => {
+            'type' => 'subContainer'
+        },
+        'oidcOPMetaDataOptionsAcrValues' => {
+            'type' => 'text'
+        },
+        'oidcOPMetaDataOptionsCheckJWTSignature' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'oidcOPMetaDataOptionsClientID' => {
+            'type' => 'text'
+        },
+        'oidcOPMetaDataOptionsClientSecret' => {
+            'type' => 'password'
+        },
+        'oidcOPMetaDataOptionsConfigurationURI' => {
+            'type' => 'url'
+        },
+        'oidcOPMetaDataOptionsDisplay' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => 'page',
+                    'v' => 'page'
+                },
+                {
+                    'k' => 'popup',
+                    'v' => 'popup'
+                },
+                {
+                    'k' => 'touch',
+                    'v' => 'touch'
+                },
+                {
+                    'k' => 'wap',
+                    'v' => 'wap'
+                }
+            ],
+            'type' => 'select'
+        },
+        'oidcOPMetaDataOptionsDisplayName' => {
+            'type' => 'text'
+        },
+        'oidcOPMetaDataOptionsIcon' => {
+            'type' => 'text'
+        },
+        'oidcOPMetaDataOptionsIDTokenMaxAge' => {
+            'default' => 30,
+            'type'    => 'int'
+        },
+        'oidcOPMetaDataOptionsJWKSTimeout' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'oidcOPMetaDataOptionsMaxAge' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'oidcOPMetaDataOptionsPrompt' => {
+            'type' => 'text'
+        },
+        'oidcOPMetaDataOptionsResolutionRule' => {
+            'default' => '',
+            'type'    => 'longtext'
+        },
+        'oidcOPMetaDataOptionsScope' => {
+            'default' => 'openid profile',
+            'type'    => 'text'
+        },
+        'oidcOPMetaDataOptionsSortNumber' => {
+            'type' => 'int'
+        },
+        'oidcOPMetaDataOptionsStoreIDToken' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcOPMetaDataOptionsTokenEndpointAuthMethod' => {
+            'default' => 'client_secret_post',
+            'select'  => [ {
+                    'k' => 'client_secret_post',
+                    'v' => 'client_secret_post'
+                },
+                {
+                    'k' => 'client_secret_basic',
+                    'v' => 'client_secret_basic'
+                }
+            ],
+            'type' => 'select'
+        },
+        'oidcOPMetaDataOptionsUiLocales' => {
+            'type' => 'text'
+        },
+        'oidcOPMetaDataOptionsUseNonce' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'oidcRPCallbackGetParam' => {
+            'default' => 'openidconnectcallback',
+            'type'    => 'text'
+        },
+        'oidcRPMetaDataExportedVars' => {
+            'default' => {
+                'email'       => 'mail',
+                'family_name' => 'sn',
+                'name'        => 'cn'
+            },
+            'keyTest' => qr/\w/,
+            'test'    => qr/\w/,
+            'type'    => 'oidcAttributeContainer'
+        },
+        'oidcRPMetaDataMacros' => {
+            'default' => {},
+            'test'    => {
+                'keyMsgFail' => '__badMacroName__',
+                'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                'test'       => sub {
+                    return perlExpr(@_);
+                }
+            },
+            'type' => 'keyTextContainer'
+        },
+        'oidcRPMetaDataNodes' => {
+            'type' => 'oidcRPMetaDataNodeContainer'
+        },
+        'oidcRPMetaDataOptions' => {
+            'type' => 'subContainer'
+        },
+        'oidcRPMetaDataOptionsAccessTokenClaims' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcRPMetaDataOptionsAccessTokenExpiration' => {
+            'type' => 'int'
+        },
+        'oidcRPMetaDataOptionsAccessTokenJWT' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcRPMetaDataOptionsAccessTokenSignAlg' => {
+            'default' => 'RS256',
+            'select'  => [ {
+                    'k' => 'RS256',
+                    'v' => 'RS256'
+                },
+                {
+                    'k' => 'RS384',
+                    'v' => 'RS384'
+                },
+                {
+                    'k' => 'RS512',
+                    'v' => 'RS512'
+                }
+            ],
+            'type' => 'select'
+        },
+        'oidcRPMetaDataOptionsAdditionalAudiences' => {
+            'type' => 'text'
+        },
+        'oidcRPMetaDataOptionsAllowClientCredentialsGrant' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcRPMetaDataOptionsAllowOffline' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcRPMetaDataOptionsAllowPasswordGrant' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcRPMetaDataOptionsAuthnLevel' => {
+            'type' => 'int'
+        },
+        'oidcRPMetaDataOptionsAuthorizationCodeExpiration' => {
+            'type' => 'int'
+        },
+        'oidcRPMetaDataOptionsBypassConsent' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcRPMetaDataOptionsClientID' => {
+            'type' => 'text'
+        },
+        'oidcRPMetaDataOptionsClientSecret' => {
+            'type' => 'password'
+        },
+        'oidcRPMetaDataOptionsDisplayName' => {
+            'type' => 'text'
+        },
+        'oidcRPMetaDataOptionsExtraClaims' => {
+            'default' => {},
+            'keyTest' => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
+            'type'    => 'keyTextContainer'
+        },
+        'oidcRPMetaDataOptionsIcon' => {
+            'type' => 'text'
+        },
+        'oidcRPMetaDataOptionsIDTokenExpiration' => {
+            'type' => 'int'
+        },
+        'oidcRPMetaDataOptionsIDTokenForceClaims' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcRPMetaDataOptionsIDTokenSignAlg' => {
+            'default' => 'HS512',
+            'select'  => [ {
+                    'k' => 'none',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'HS256',
+                    'v' => 'HS256'
+                },
+                {
+                    'k' => 'HS384',
+                    'v' => 'HS384'
+                },
+                {
+                    'k' => 'HS512',
+                    'v' => 'HS512'
+                },
+                {
+                    'k' => 'RS256',
+                    'v' => 'RS256'
+                },
+                {
+                    'k' => 'RS384',
+                    'v' => 'RS384'
+                },
+                {
+                    'k' => 'RS512',
+                    'v' => 'RS512'
+                }
+            ],
+            'type' => 'select'
+        },
+        'oidcRPMetaDataOptionsLogoutBypassConfirm' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcRPMetaDataOptionsLogoutSessionRequired' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcRPMetaDataOptionsLogoutType' => {
+            'default' => 'front',
+            'select'  => [ {
+                    'k' => 'front',
+                    'v' => 'Front Channel'
+                }
+            ],
+            'type' => 'select'
+        },
+        'oidcRPMetaDataOptionsLogoutUrl' => {
+            'type' => 'url'
+        },
+        'oidcRPMetaDataOptionsOfflineSessionExpiration' => {
+            'type' => 'int'
+        },
+        'oidcRPMetaDataOptionsPostLogoutRedirectUris' => {
+            'type' => 'text'
+        },
+        'oidcRPMetaDataOptionsPublic' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcRPMetaDataOptionsRedirectUris' => {
+            'type' => 'text'
+        },
+        'oidcRPMetaDataOptionsRefreshToken' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcRPMetaDataOptionsRequirePKCE' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcRPMetaDataOptionsRule' => {
+            'test' => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'text'
+        },
+        'oidcRPMetaDataOptionsUserIDAttr' => {
+            'type' => 'text'
+        },
+        'oidcRPMetaDataOptionsUserInfoSignAlg' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => 'JSON'
+                },
+                {
+                    'k' => 'none',
+                    'v' => 'JWT/None'
+                },
+                {
+                    'k' => 'HS256',
+                    'v' => 'JWT/HS256'
+                },
+                {
+                    'k' => 'HS384',
+                    'v' => 'JWT/HS384'
+                },
+                {
+                    'k' => 'HS512',
+                    'v' => 'JWT/HS512'
+                },
+                {
+                    'k' => 'RS256',
+                    'v' => 'JWT/RS256'
+                },
+                {
+                    'k' => 'RS384',
+                    'v' => 'JWT/RS384'
+                },
+                {
+                    'k' => 'RS512',
+                    'v' => 'JWT/RS512'
+                }
+            ],
+            'type' => 'select'
+        },
+        'oidcRPMetaDataScopeRules' => {
+            'default' => {},
+            'test'    => {
+                'keyMsgFail' => '__badMacroName__',
+                'keyTest'    => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
+                'test'       => sub {
+                    return perlExpr(@_);
+                }
+            },
+            'type' => 'keyTextContainer'
+        },
+        'oidcRPStateTimeout' => {
+            'default' => 600,
+            'type'    => 'int'
+        },
+        'oidcServiceAccessTokenExpiration' => {
+            'default' => 3600,
+            'type'    => 'int'
+        },
+        'oidcServiceAllowAuthorizationCodeFlow' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'oidcServiceAllowDynamicRegistration' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcServiceAllowHybridFlow' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcServiceAllowImplicitFlow' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcServiceAllowOnlyDeclaredScopes' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'oidcServiceAuthorizationCodeExpiration' => {
+            'default' => 60,
+            'type'    => 'int'
+        },
+        'oidcServiceDynamicRegistrationExportedVars' => {
+            'type' => 'keyTextContainer'
+        },
+        'oidcServiceDynamicRegistrationExtraClaims' => {
+            'keyTest' => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
+            'type'    => 'keyTextContainer'
+        },
+        'oidcServiceIDTokenExpiration' => {
+            'default' => 3600,
+            'type'    => 'int'
+        },
+        'oidcServiceKeyIdSig' => {
+            'type' => 'text'
+        },
+        'oidcServiceMetaDataAuthnContext' => {
+            'default' => {
+                'loa-1' => 1,
+                'loa-2' => 2,
+                'loa-3' => 3,
+                'loa-4' => 4,
+                'loa-5' => 5
+            },
+            'keyTest' => qr/\w/,
+            'type'    => 'keyTextContainer'
+        },
+        'oidcServiceMetaDataAuthorizeURI' => {
+            'default' => 'authorize',
+            'type'    => 'text'
+        },
+        'oidcServiceMetaDataBackChannelURI' => {
+            'default' => 'blogout',
+            'type'    => 'text'
+        },
+        'oidcServiceMetaDataCheckSessionURI' => {
+            'default' => 'checksession.html',
+            'type'    => 'text'
+        },
+        'oidcServiceMetaDataEndSessionURI' => {
+            'default' => 'logout',
+            'type'    => 'text'
+        },
+        'oidcServiceMetaDataFrontChannelURI' => {
+            'default' => 'flogout',
+            'type'    => 'text'
+        },
+        'oidcServiceMetaDataIntrospectionURI' => {
+            'default' => 'introspect',
+            'type'    => 'text'
+        },
+        'oidcServiceMetaDataIssuer' => {
+            'type' => 'text'
+        },
+        'oidcServiceMetaDataJWKSURI' => {
+            'default' => 'jwks',
+            'type'    => 'text'
+        },
+        'oidcServiceMetaDataRegistrationURI' => {
+            'default' => 'register',
+            'type'    => 'text'
+        },
+        'oidcServiceMetaDataTokenURI' => {
+            'default' => 'token',
+            'type'    => 'text'
+        },
+        'oidcServiceMetaDataUserInfoURI' => {
+            'default' => 'userinfo',
+            'type'    => 'text'
+        },
+        'oidcServiceOfflineSessionExpiration' => {
+            'default' => 2592000,
+            'type'    => 'int'
+        },
+        'oidcServicePrivateKeySig' => {
+            'type' => 'RSAPrivateKey'
+        },
+        'oidcServicePublicKeySig' => {
+            'type' => 'RSAPublicKey'
+        },
+        'oidcStorage' => {
+            'type' => 'PerlModule'
+        },
+        'oidcStorageOptions' => {
+            'type' => 'keyTextContainer'
+        },
+        'oldNotifFormat' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'openIdAttr' => {
+            'type' => 'text'
+        },
+        'openIdAuthnLevel' => {
+            'default' => 1,
+            'type'    => 'int'
+        },
+        'openIdExportedVars' => {
+            'default'    => {},
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
+        },
+        'openIdIDPList' => {
+            'default' => '0;',
+            'type'    => 'blackWhiteList'
+        },
+        'openIdIssuerSecret' => {
+            'type' => 'text'
+        },
+        'openIdSecret' => {
+            'type' => 'text'
+        },
+        'openIdSPList' => {
+            'default' => '0;',
+            'type'    => 'blackWhiteList'
+        },
+        'openIdSreg_country' => {
+            'type' => 'lmAttrOrMacro'
+        },
+        'openIdSreg_dob' => {
+            'type' => 'lmAttrOrMacro'
+        },
+        'openIdSreg_email' => {
+            'default' => 'mail',
+            'type'    => 'lmAttrOrMacro'
+        },
+        'openIdSreg_fullname' => {
+            'default' => 'cn',
+            'type'    => 'lmAttrOrMacro'
+        },
+        'openIdSreg_gender' => {
+            'type' => 'lmAttrOrMacro'
+        },
+        'openIdSreg_language' => {
+            'type' => 'lmAttrOrMacro'
+        },
+        'openIdSreg_nickname' => {
+            'default' => 'uid',
+            'type'    => 'lmAttrOrMacro'
+        },
+        'openIdSreg_postcode' => {
+            'type' => 'lmAttrOrMacro'
+        },
+        'openIdSreg_timezone' => {
+            'default' => '_timezone',
+            'type'    => 'lmAttrOrMacro'
+        },
+        'pamAuthnLevel' => {
+            'default' => 2,
+            'type'    => 'int'
+        },
+        'pamService' => {
+            'default' => 'login',
+            'type'    => 'text'
+        },
+        'passwordDB' => {
+            'default' => 'Demo',
+            'select'  => [ {
+                    'k' => 'AD',
+                    'v' => 'Active Directory'
+                },
+                {
+                    'k' => 'Choice',
+                    'v' => 'authChoice'
+                },
+                {
+                    'k' => 'DBI',
+                    'v' => 'Database (DBI)'
+                },
+                {
+                    'k' => 'Demo',
+                    'v' => 'Demonstration'
+                },
+                {
+                    'k' => 'LDAP',
+                    'v' => 'LDAP'
+                },
+                {
+                    'k' => 'REST',
+                    'v' => 'REST'
+                },
+                {
+                    'k' => 'Null',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'Combination',
+                    'v' => 'combineMods'
+                },
+                {
+                    'k' => 'Custom',
+                    'v' => 'customModule'
+                }
+            ],
+            'type' => 'select'
+        },
+        'passwordPolicyActivation' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
+        'passwordPolicyMinDigit' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'passwordPolicyMinLower' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'passwordPolicyMinSize' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'passwordPolicyMinSpeChar' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'passwordPolicyMinUpper' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'passwordPolicySpecialChar' => {
+            'default' => '__ALL__',
+            'test'    => qr/^(?:__ALL__|[\S\W]*)$/,
+            'type'    => 'text'
+        },
+        'passwordResetAllowedRetries' => {
+            'default' => 3,
+            'type'    => 'int'
+        },
+        'pdataDomain' => {
+            'default' => '',
+            'msgFail' => '__badDomainName__',
+            'test'    =>
+qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?))?$/,
+            'type' => 'text'
+        },
+        'persistentSessionAttributes' => {
+            'default' => '_loginHistory _2fDevices notification_',
+            'type'    => 'text'
+        },
+        'persistentStorage' => {
+            'type' => 'PerlModule'
+        },
+        'persistentStorageOptions' => {
+            'type' => 'keyTextContainer'
+        },
+        'port' => {
+            'default' => -1,
+            'type'    => 'int'
+        },
+        'portal' => {
+            'default' => 'http://auth.example.com/',
+            'msgFail' => '__badUrl__',
+            'test'    =>
+qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
+            'type' => 'url'
+        },
+        'portalAntiFrame' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'portalCheckLogins' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'portalCustomCss' => {
+            'type' => 'text'
+        },
+        'portalDisplayAppslist' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
+        'portalDisplayCertificateResetByMail' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'portalDisplayChangePassword' => {
+            'default' => '$_auth =~ /^(LDAP|DBI|Demo)$/',
+            'type'    => 'boolOrExpr'
+        },
+        'portalDisplayGeneratePassword' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'portalDisplayLoginHistory' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
+        'portalDisplayLogout' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
+        'portalDisplayOidcConsents' => {
+            'default' => '$_oidcConsents && $_oidcConsents =~ /\\w+/',
+            'type'    => 'boolOrExpr'
+        },
+        'portalDisplayPasswordPolicy' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'portalDisplayRefreshMyRights' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'portalDisplayRegister' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'portalDisplayResetPassword' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'portalEnablePasswordDisplay' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'portalErrorOnExpiredSession' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'portalErrorOnMailNotFound' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'portalFavicon' => {
+            'default' => 'common/favicon.ico',
+            'type'    => 'text'
+        },
+        'portalForceAuthn' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'portalForceAuthnInterval' => {
+            'default' => 5,
+            'type'    => 'int'
+        },
+        'portalMainLogo' => {
+            'default' => 'common/logos/logo_llng_400px.png',
+            'type'    => 'text'
+        },
+        'portalOpenLinkInNewWindow' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'portalPingInterval' => {
+            'default' => 60000,
+            'type'    => 'int'
+        },
+        'portalRequireOldPassword' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
+        'portalSkin' => {
+            'default' => 'bootstrap',
+            'select'  => [ {
+                    'k' => 'bootstrap',
+                    'v' => 'Bootstrap'
+                }
+            ],
+            'type' => 'portalskin'
+        },
+        'portalSkinBackground' => {
+            'select' => [ {
+                    'k' => '',
+                    'v' => 'None'
+                },
+                {
+                    'k' => '1280px-Anse_Source_d\'Argent_2-La_Digue.jpg',
+                    'v' => 'Anse'
+                },
+                {
+                    'k' =>
+'1280px-Autumn-clear-water-waterfall-landscape_-_Virginia_-_ForestWander.jpg',
+                    'v' => 'Waterfall'
+                },
+                {
+                    'k' => '1280px-BrockenSnowedTrees.jpg',
+                    'v' => 'Snowed Trees'
+                },
+                {
+                    'k' =>
+                      '1280px-Cedar_Breaks_National_Monument_partially.jpg',
+                    'v' => 'National Monument'
+                },
+                {
+                    'k' => '1280px-Parry_Peak_from_Winter_Park.jpg',
+                    'v' => 'Winter'
+                },
+                {
+                    'k' => 'Aletschgletscher_mit_Pinus_cembra1.jpg',
+                    'v' => 'Pinus'
+                }
+            ],
+            'type' => 'portalskinbackground'
+        },
+        'portalSkinRules' => {
+            'keyMsgFail' => '__badSkinRule__',
+            'keyTest'    => sub {
+                return perlExpr(@_);
+            },
+            'msgFail' => '__badValue__',
+            'test'    => qr/^\w+$/,
+            'type'    => 'keyTextContainer'
+        },
+        'portalStatus' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'portalUserAttr' => {
+            'default' => '_user',
+            'type'    => 'text'
+        },
+        'post' => {
+            'keyMsgFail' => '__badHostname__',
+            'keyTest'    => qr/^\S+$/,
+            'test'       => sub {
+                1;
+            },
+            'type' => 'postContainer'
+        },
+        'protection' => {
+            'msgFail' => '__authorizedValues__: none authenticate manager',
+            'test'    => qr/^(?:none|authenticate|manager|)$/,
+            'type'    => 'text'
+        },
+        'proxyAuthnLevel' => {
+            'default' => 2,
+            'type'    => 'int'
+        },
+        'proxyAuthService' => {
+            'type' => 'text'
+        },
+        'proxyAuthServiceChoiceParam' => {
+            'default' => 'lmAuth',
+            'type'    => 'text'
+        },
+        'proxyAuthServiceChoiceValue' => {
+            'type' => 'text'
+        },
+        'proxyAuthServiceImpersonation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'proxyCookieName' => {
+            'msgFail' => '__badCookieName__',
+            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'type'    => 'text'
+        },
+        'proxySessionService' => {
+            'type' => 'text'
+        },
+        'proxyUseSoap' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'radius2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'radius2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'radius2fLabel' => {
+            'type' => 'text'
+        },
+        'radius2fLogo' => {
+            'type' => 'text'
+        },
+        'radius2fSecret' => {
+            'type' => 'text'
+        },
+        'radius2fServer' => {
+            'type' => 'text'
+        },
+        'radius2fTimeout' => {
+            'default' => 20,
+            'type'    => 'int'
+        },
+        'radius2fUsernameSessionKey' => {
+            'type' => 'text'
+        },
+        'radiusAuthnLevel' => {
+            'default' => 3,
+            'type'    => 'int'
+        },
+        'radiusSecret' => {
+            'type' => 'text'
+        },
+        'radiusServer' => {
+            'type' => 'text'
+        },
+        'randomPasswordRegexp' => {
+            'default' => '[A-Z]{3}[a-z]{5}.\\d{2}',
+            'type'    => 'pcre'
+        },
+        'redirectFormMethod' => {
+            'default' => 'get',
+            'select'  => [ {
+                    'k' => 'get',
+                    'v' => 'GET'
+                },
+                {
+                    'k' => 'post',
+                    'v' => 'POST'
+                }
+            ],
+            'type' => 'select'
+        },
+        'refreshSessions' => {
+            'type' => 'bool'
+        },
+        'registerConfirmBody' => {
+            'type' => 'longtext'
+        },
+        'registerConfirmSubject' => {
+            'type' => 'text'
+        },
+        'registerDB' => {
+            'default' => 'Null',
+            'select'  => [ {
+                    'k' => 'AD',
+                    'v' => 'Active Directory'
+                },
+                {
+                    'k' => 'Demo',
+                    'v' => 'Demonstration'
+                },
+                {
+                    'k' => 'LDAP',
+                    'v' => 'LDAP'
+                },
+                {
+                    'k' => 'Null',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'Custom',
+                    'v' => 'customModule'
+                }
+            ],
+            'type' => 'select'
+        },
+        'registerDoneBody' => {
+            'type' => 'longtext'
+        },
+        'registerDoneSubject' => {
+            'type' => 'text'
+        },
+        'registerTimeout' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
+        'registerUrl' => {
+            'default' => 'http://auth.example.com/register',
+            'type'    => 'text'
+        },
+        'reloadTimeout' => {
+            'default' => 5,
+            'type'    => 'int'
+        },
+        'reloadUrls' => {
+            'keyTest' =>
+qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+))(?::\d+)?$/,
+            'msgFail' => '__badUrl__',
+            'test'    =>
+qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
+            'type' => 'keyTextContainer'
+        },
+        'rememberAuthChoiceRule' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'rememberCookieName' => {
+            'default' => 'llngrememberauthchoice',
+            'msgFail' => '__badCookieName__',
+            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'type'    => 'text'
+        },
+        'rememberCookieTimeout' => {
+            'default' => 31536000,
+            'type'    => 'int'
+        },
+        'rememberDefaultChecked' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'rememberTimer' => {
+            'default' => 5,
+            'type'    => 'int'
+        },
+        'remoteCookieName' => {
+            'msgFail' => '__badCookieName__',
+            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'type'    => 'text'
+        },
+        'remoteGlobalStorage' => {
+            'default' => 'Lemonldap::NG::Common::Apache::Session::SOAP',
+            'type'    => 'PerlModule'
+        },
+        'remoteGlobalStorageOptions' => {
+            'default' => {
+                'ns' =>
+'http://auth.example.com/Lemonldap/NG/Common/PSGI/SOAPService',
+                'proxy' => 'http://auth.example.com/sessions'
+            },
+            'type' => 'keyTextContainer'
+        },
+        'remotePortal' => {
+            'type' => 'text'
+        },
+        'requireToken' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
+        'rest2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'rest2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'rest2fCodeActivation' => {
+            'type' => 'pcre'
+        },
+        'rest2fInitArgs' => {
+            'keyMsgFail' => '__badKeyName__',
+            'keyTest'    => qr/^\w+$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^\w+$/,
+            'type'       => 'keyTextContainer'
+        },
+        'rest2fInitUrl' => {
+            'type' => 'url'
+        },
+        'rest2fLabel' => {
+            'type' => 'text'
+        },
+        'rest2fLogo' => {
+            'type' => 'text'
+        },
+        'rest2fResendInterval' => {
+            'type' => 'text'
+        },
+        'rest2fVerifyArgs' => {
+            'type' => 'keyTextContainer'
+        },
+        'rest2fVerifyUrl' => {
+            'keyMsgFail' => '__badKeyName__',
+            'keyTest'    => qr/^\w+$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^\w+$/,
+            'type'       => 'url'
+        },
+        'restAuthnLevel' => {
+            'default' => 2,
+            'type'    => 'int'
+        },
+        'restAuthServer' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'restAuthUrl' => {
+            'type' => 'url'
+        },
+        'restClockTolerance' => {
+            'default' => 15,
+            'type'    => 'int'
+        },
+        'restConfigServer' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'restExportSecretKeys' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'restFindUserDBUrl' => {
+            'type' => 'url'
+        },
+        'restPasswordServer' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'restPwdConfirmUrl' => {
+            'type' => 'url'
+        },
+        'restPwdModifyUrl' => {
+            'type' => 'url'
+        },
+        'restSessionServer' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'restUserDBUrl' => {
+            'type' => 'url'
+        },
+        'sameSite' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => 'Strict',
+                    'v' => 'Strict'
+                },
+                {
+                    'k' => 'Lax',
+                    'v' => 'Lax'
+                },
+                {
+                    'k' => 'None',
+                    'v' => 'None'
+                }
+            ],
+            'type' => 'select'
+        },
+        'samlAttributeAuthorityDescriptorAttributeServiceSOAP' => {
+            'default' =>
+'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;',
+            'type' => 'samlService'
+        },
+        'samlAuthnContextMapKerberos' => {
+            'default' => 4,
+            'type'    => 'int'
+        },
+        'samlAuthnContextMapPassword' => {
+            'default' => 2,
+            'type'    => 'int'
+        },
+        'samlAuthnContextMapPasswordProtectedTransport' => {
+            'default' => 3,
+            'type'    => 'int'
+        },
+        'samlAuthnContextMapTLSClient' => {
+            'default' => 5,
+            'type'    => 'int'
+        },
+        'samlCommonDomainCookieActivation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'samlCommonDomainCookieDomain' => {
+            'msgFail' => '__badDomainName__',
+            'test'    =>
+qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
+            'type' => 'text'
+        },
+        'samlCommonDomainCookieReader' => {
+            'msgFail' => '__badUrl__',
+            'test'    =>
+qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
+            'type' => 'text'
+        },
+        'samlCommonDomainCookieWriter' => {
+            'msgFail' => '__badUrl__',
+            'test'    =>
+qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
+            'type' => 'text'
+        },
+        'samlDiscoveryProtocolActivation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'samlDiscoveryProtocolIsPassive' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'samlDiscoveryProtocolPolicy' => {
+            'type' => 'text'
+        },
+        'samlDiscoveryProtocolURL' => {
+            'msgFail' => '__badUrl__',
+            'test'    =>
+qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
+            'type' => 'text'
+        },
+        'samlEntityID' => {
+            'default' => '#PORTAL#/saml/metadata',
+            'type'    => 'text'
+        },
+        'samlIDPMetaDataExportedAttributes' => {
+            'default'    => {},
+            'keyMsgFail' => '__badMetadataName__',
+            'keyTest'    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/\w/,
+            'type'       => 'samlAttributeContainer'
+        },
+        'samlIDPMetaDataNodes' => {
+            'type' => 'samlIDPMetaDataNodeContainer'
+        },
+        'samlIDPMetaDataOptions' => {
+            'keyMsgFail' => '__badMetadataName__',
+            'keyTest'    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
+            'type'       => 'keyTextContainer'
+        },
+        'samlIDPMetaDataOptionsAdaptSessionUtime' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'samlIDPMetaDataOptionsAllowLoginFromIDP' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'samlIDPMetaDataOptionsAllowProxiedAuthn' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'samlIDPMetaDataOptionsCheckAudience' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'samlIDPMetaDataOptionsCheckSLOMessageSignature' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'samlIDPMetaDataOptionsCheckSSOMessageSignature' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'samlIDPMetaDataOptionsCheckTime' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'samlIDPMetaDataOptionsDisplayName' => {
+            'type' => 'text'
+        },
+        'samlIDPMetaDataOptionsEncryptionMode' => {
+            'default' => 'none',
+            'select'  => [ {
+                    'k' => 'none',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'nameid',
+                    'v' => 'Name ID'
+                },
+                {
+                    'k' => 'assertion',
+                    'v' => 'Assertion'
+                }
+            ],
+            'type' => 'select'
+        },
+        'samlIDPMetaDataOptionsForceAuthn' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'samlIDPMetaDataOptionsForceUTF8' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'samlIDPMetaDataOptionsIcon' => {
+            'type' => 'text'
+        },
+        'samlIDPMetaDataOptionsIsPassive' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'samlIDPMetaDataOptionsNameIDFormat' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => 'unspecified',
+                    'v' => 'Unspecified'
+                },
+                {
+                    'k' => 'email',
+                    'v' => 'Email'
+                },
+                {
+                    'k' => 'x509',
+                    'v' => 'X509 certificate'
+                },
+                {
+                    'k' => 'windows',
+                    'v' => 'Windows'
+                },
+                {
+                    'k' => 'kerberos',
+                    'v' => 'Kerberos'
+                },
+                {
+                    'k' => 'entity',
+                    'v' => 'Entity'
+                },
+                {
+                    'k' => 'persistent',
+                    'v' => 'Persistent'
+                },
+                {
+                    'k' => 'transient',
+                    'v' => 'Transient'
+                },
+                {
+                    'k' => 'encrypted',
+                    'v' => 'Encrypted'
+                }
+            ],
+            'type' => 'select'
+        },
+        'samlIDPMetaDataOptionsRelayStateURL' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'samlIDPMetaDataOptionsRequestedAuthnContext' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => 'kerberos',
+                    'v' => 'Kerberos'
+                },
+                {
+                    'k' => 'password-protected-transport',
+                    'v' => 'Password protected transport'
+                },
+                {
+                    'k' => 'password',
+                    'v' => 'Password'
+                },
+                {
+                    'k' => 'tls-client',
+                    'v' => 'TLS client certificate'
+                }
+            ],
+            'type' => 'select'
+        },
+        'samlIDPMetaDataOptionsResolutionRule' => {
+            'default' => '',
+            'type'    => 'longtext'
+        },
+        'samlIDPMetaDataOptionsSignatureMethod' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => 'default'
+                },
+                {
+                    'k' => 'RSA_SHA1',
+                    'v' => 'RSA SHA1'
+                },
+                {
+                    'k' => 'RSA_SHA256',
+                    'v' => 'RSA SHA256'
+                },
+                {
+                    'k' => 'RSA_SHA384',
+                    'v' => 'RSA SHA384'
+                },
+                {
+                    'k' => 'RSA_SHA512',
+                    'v' => 'RSA SHA512'
+                }
+            ],
+            'type' => 'select'
+        },
+        'samlIDPMetaDataOptionsSignSLOMessage' => {
+            'default' => -1,
+            'type'    => 'trool'
+        },
+        'samlIDPMetaDataOptionsSignSSOMessage' => {
+            'default' => -1,
+            'type'    => 'trool'
+        },
+        'samlIDPMetaDataOptionsSLOBinding' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => 'http-post',
+                    'v' => 'POST'
+                },
+                {
+                    'k' => 'http-redirect',
+                    'v' => 'Redirect'
+                },
+                {
+                    'k' => 'http-soap',
+                    'v' => 'SOAP'
+                }
+            ],
+            'type' => 'select'
+        },
+        'samlIDPMetaDataOptionsSortNumber' => {
+            'type' => 'int'
+        },
+        'samlIDPMetaDataOptionsSSOBinding' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => 'http-post',
+                    'v' => 'POST'
+                },
+                {
+                    'k' => 'http-redirect',
+                    'v' => 'Redirect'
+                },
+                {
+                    'k' => 'artifact-get',
+                    'v' => 'Artifact GET'
+                }
+            ],
+            'type' => 'select'
+        },
+        'samlIDPMetaDataOptionsStoreSAMLToken' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'samlIDPMetaDataOptionsUserAttribute' => {
+            'type' => 'text'
+        },
+        'samlIDPMetaDataXML' => {
+            'test' => sub {
+                my $v = shift();
+                return 1 unless $v and %$v;
+                my @msg;
+                my $res = 1;
+                my %entityIds;
+                foreach my $idpId ( keys %$v ) {
+                    unless ( $v->{$idpId}{'samlIDPMetaDataXML'} =~
+                        /entityID="(.+?)"/is )
+                    {
+                        push @msg, "$idpId SAML metadata has no EntityID";
+                        $res = 0;
+                        next;
+                    }
+                    my $eid = $1;
+                    if ( defined $entityIds{$eid} ) {
+                        push @msg,
+"$idpId and $entityIds{$eid} have the same SAML EntityID";
+                        $res = 0;
+                        next;
+                    }
+                    $entityIds{$eid} = $idpId;
+                }
+                return $res, join( ', ', @msg );
+            },
+            'type' => 'file'
+        },
+        'samlIDPSSODescriptorArtifactResolutionServiceArtifact' => {
+            'default' =>
+'1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact',
+            'type' => 'samlAssertion'
+        },
+        'samlIDPSSODescriptorSingleLogoutServiceHTTPPost' => {
+            'default' =>
+'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/singleLogout;#PORTAL#/saml/singleLogoutReturn',
+            'type' => 'samlService'
+        },
+        'samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect' => {
+            'default' =>
+'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/singleLogout;#PORTAL#/saml/singleLogoutReturn',
+            'type' => 'samlService'
+        },
+        'samlIDPSSODescriptorSingleLogoutServiceSOAP' => {
+            'default' =>
+'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/singleLogoutSOAP;',
+            'type' => 'samlService'
+        },
+        'samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact' => {
+            'default' =>
+'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/singleSignOnArtifact;',
+            'type' => 'samlService'
+        },
+        'samlIDPSSODescriptorSingleSignOnServiceHTTPPost' => {
+            'default' =>
+'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/singleSignOn;',
+            'type' => 'samlService'
+        },
+        'samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect' => {
+            'default' =>
+'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/singleSignOn;',
+            'type' => 'samlService'
+        },
+        'samlIDPSSODescriptorWantAuthnRequestsSigned' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'samlMetadataForceUTF8' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'samlNameIDFormatMapEmail' => {
+            'default' => 'mail',
+            'type'    => 'text'
+        },
+        'samlNameIDFormatMapKerberos' => {
+            'default' => 'uid',
+            'type'    => 'text'
+        },
+        'samlNameIDFormatMapWindows' => {
+            'default' => 'uid',
+            'type'    => 'text'
+        },
+        'samlNameIDFormatMapX509' => {
+            'default' => 'mail',
+            'type'    => 'text'
+        },
+        'samlOrganizationDisplayName' => {
+            'default' => 'Example',
+            'type'    => 'text'
+        },
+        'samlOrganizationName' => {
+            'default' => 'Example',
+            'type'    => 'text'
+        },
+        'samlOrganizationURL' => {
+            'default' => 'http://www.example.com',
+            'type'    => 'text'
+        },
+        'samlOverrideIDPEntityID' => {
+            'default' => '',
+            'type'    => 'text'
+        },
+        'samlRelayStateTimeout' => {
+            'default' => 600,
+            'type'    => 'int'
+        },
+        'samlServicePrivateKeyEnc' => {
+            'default' => '',
+            'type'    => 'RSAPrivateKey'
+        },
+        'samlServicePrivateKeyEncPwd' => {
+            'type' => 'password'
+        },
+        'samlServicePrivateKeySig' => {
+            'default' => '',
+            'type'    => 'RSAPrivateKey'
+        },
+        'samlServicePrivateKeySigPwd' => {
+            'default' => '',
+            'type'    => 'password'
+        },
+        'samlServicePublicKeyEnc' => {
+            'default' => '',
+            'type'    => 'RSAPublicKeyOrCertificate'
+        },
+        'samlServicePublicKeySig' => {
+            'default' => '',
+            'type'    => 'RSAPublicKeyOrCertificate'
+        },
+        'samlServiceSignatureMethod' => {
+            'default' => 'RSA_SHA256',
+            'select'  => [ {
+                    'k' => 'RSA_SHA1',
+                    'v' => 'RSA SHA1'
+                },
+                {
+                    'k' => 'RSA_SHA256',
+                    'v' => 'RSA SHA256'
+                },
+                {
+                    'k' => 'RSA_SHA384',
+                    'v' => 'RSA SHA384'
+                },
+                {
+                    'k' => 'RSA_SHA512',
+                    'v' => 'RSA SHA512'
+                }
+            ],
+            'type' => 'select'
+        },
+        'samlServiceUseCertificateInResponse' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'samlSPMetaDataExportedAttributes' => {
+            'default'    => {},
+            'keyMsgFail' => '__badMetadataName__',
+            'keyTest'    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/\w/,
+            'type'       => 'samlAttributeContainer'
+        },
+        'samlSPMetaDataMacros' => {
+            'default' => {},
+            'test'    => {
+                'keyMsgFail' => '__badMacroName__',
+                'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+                'test'       => sub {
+                    return perlExpr(@_);
+                }
+            },
+            'type' => 'keyTextContainer'
+        },
+        'samlSPMetaDataNodes' => {
+            'type' => 'samlSPMetaDataNodeContainer'
+        },
+        'samlSPMetaDataOptions' => {
+            'keyMsgFail' => '__badMetadataName__',
+            'keyTest'    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
+            'type'       => 'keyTextContainer'
+        },
+        'samlSPMetaDataOptionsAuthnLevel' => {
+            'type' => 'int'
+        },
+        'samlSPMetaDataOptionsCheckSLOMessageSignature' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'samlSPMetaDataOptionsCheckSSOMessageSignature' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'samlSPMetaDataOptionsEnableIDPInitiatedURL' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'samlSPMetaDataOptionsEncryptionMode' => {
+            'default' => 'none',
+            'select'  => [ {
+                    'k' => 'none',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'nameid',
+                    'v' => 'Name ID'
+                },
+                {
+                    'k' => 'assertion',
+                    'v' => 'Assertion'
+                }
+            ],
+            'type' => 'select'
+        },
+        'samlSPMetaDataOptionsForceUTF8' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'samlSPMetaDataOptionsNameIDFormat' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => 'unspecified',
+                    'v' => 'Unspecified'
+                },
+                {
+                    'k' => 'email',
+                    'v' => 'Email'
+                },
+                {
+                    'k' => 'x509',
+                    'v' => 'X509 certificate'
+                },
+                {
+                    'k' => 'windows',
+                    'v' => 'Windows'
+                },
+                {
+                    'k' => 'kerberos',
+                    'v' => 'Kerberos'
+                },
+                {
+                    'k' => 'entity',
+                    'v' => 'Entity'
+                },
+                {
+                    'k' => 'persistent',
+                    'v' => 'Persistent'
+                },
+                {
+                    'k' => 'transient',
+                    'v' => 'Transient'
+                },
+                {
+                    'k' => 'encrypted',
+                    'v' => 'Encrypted'
+                }
+            ],
+            'type' => 'select'
+        },
+        'samlSPMetaDataOptionsNameIDSessionKey' => {
+            'type' => 'text'
+        },
+        'samlSPMetaDataOptionsNotOnOrAfterTimeout' => {
+            'default' => 72000,
+            'type'    => 'int'
+        },
+        'samlSPMetaDataOptionsOneTimeUse' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'samlSPMetaDataOptionsRule' => {
+            'test' => sub {
+                return perlExpr(@_);
+            },
+            'type' => 'text'
+        },
+        'samlSPMetaDataOptionsSessionNotOnOrAfterTimeout' => {
+            'default' => 72000,
+            'type'    => 'int'
+        },
+        'samlSPMetaDataOptionsSignatureMethod' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => 'default'
+                },
+                {
+                    'k' => 'RSA_SHA1',
+                    'v' => 'RSA SHA1'
+                },
+                {
+                    'k' => 'RSA_SHA256',
+                    'v' => 'RSA SHA256'
+                },
+                {
+                    'k' => 'RSA_SHA384',
+                    'v' => 'RSA SHA384'
+                },
+                {
+                    'k' => 'RSA_SHA512',
+                    'v' => 'RSA SHA512'
+                }
+            ],
+            'type' => 'select'
+        },
+        'samlSPMetaDataOptionsSignSLOMessage' => {
+            'default' => -1,
+            'type'    => 'trool'
+        },
+        'samlSPMetaDataOptionsSignSSOMessage' => {
+            'default' => -1,
+            'type'    => 'trool'
+        },
+        'samlSPMetaDataXML' => {
+            'type' => 'file'
+        },
+        'samlSPSSODescriptorArtifactResolutionServiceArtifact' => {
+            'default' =>
+'1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact',
+            'type' => 'samlAssertion'
+        },
+        'samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact' => {
+            'default' =>
+'0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/proxySingleSignOnArtifact',
+            'type' => 'samlAssertion'
+        },
+        'samlSPSSODescriptorAssertionConsumerServiceHTTPPost' => {
+            'default' =>
+'1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleSignOnPost',
+            'type' => 'samlAssertion'
+        },
+        'samlSPSSODescriptorAuthnRequestsSigned' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'samlSPSSODescriptorSingleLogoutServiceHTTPPost' => {
+            'default' =>
+'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleLogout;#PORTAL#/saml/proxySingleLogoutReturn',
+            'type' => 'samlService'
+        },
+        'samlSPSSODescriptorSingleLogoutServiceHTTPRedirect' => {
+            'default' =>
+'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/proxySingleLogout;#PORTAL#/saml/proxySingleLogoutReturn',
+            'type' => 'samlService'
+        },
+        'samlSPSSODescriptorSingleLogoutServiceSOAP' => {
+            'default' =>
+'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/proxySingleLogoutSOAP;',
+            'type' => 'samlService'
+        },
+        'samlSPSSODescriptorWantAssertionsSigned' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'samlStorage' => {
+            'type' => 'PerlModule'
+        },
+        'samlStorageOptions' => {
+            'type' => 'keyTextContainer'
+        },
+        'samlUseQueryStringSpecific' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'scrollTop' => {
+            'default' => 400,
+            'type'    => 'int'
+        },
+        'securedCookie' => {
+            'default' => 0,
+            'select'  => [ {
+                    'k' => '0',
+                    'v' => 'unsecuredCookie'
+                },
+                {
+                    'k' => '1',
+                    'v' => 'securedCookie'
+                },
+                {
+                    'k' => '2',
+                    'v' => 'doubleCookie'
+                },
+                {
+                    'k' => '3',
+                    'v' => 'doubleCookieForSingleSession'
+                }
+            ],
+            'type' => 'select'
+        },
+        'secureTokenAllowOnError' => {
+            'type' => 'text'
+        },
+        'secureTokenAttribute' => {
+            'type' => 'text'
+        },
+        'secureTokenExpiration' => {
+            'type' => 'text'
+        },
+        'secureTokenHeader' => {
+            'type' => 'text'
+        },
+        'secureTokenMemcachedServers' => {
+            'type' => 'text'
+        },
+        'secureTokenUrls' => {
+            'type' => 'text'
+        },
+        'sentryDsn' => {
+            'type' => 'text'
+        },
+        'sessionDataToRemember' => {
+            'keyMsgFail' => '__invalidSessionData__',
+            'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+            'type'       => 'keyTextContainer'
+        },
+        'sfEngine' => {
+            'default' => '::2F::Engines::Default',
+            'type'    => 'text'
+        },
+        'sfExtra' => {
+            'keyTest' => qr/^\w+$/,
+            'select'  => [ {
+                    'k' => 'Mail2F',
+                    'v' => 'E-Mail'
+                },
+                {
+                    'k' => 'REST',
+                    'v' => 'REST'
+                },
+                {
+                    'k' => 'Ext2F',
+                    'v' => 'External'
+                },
+                {
+                    'k' => 'Radius',
+                    'v' => 'Radius'
+                }
+            ],
+            'test' => sub {
+                1;
+            },
+            'type' => 'sfExtraContainer'
+        },
+        'sfLoginTimeout' => {
+            'type' => 'int'
+        },
+        'sfManagerRule' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
+        'sfOnlyUpgrade' => {
+            'type' => 'bool'
+        },
+        'sfRegisterTimeout' => {
+            'type' => 'int'
+        },
+        'sfRemovedMsgRule' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'sfRemovedNotifMsg' => {
+            'default' =>
+'_removedSF_ expired second factor(s) has/have been removed (_nameSF_)!',
+            'type' => 'text'
+        },
+        'sfRemovedNotifRef' => {
+            'default' => 'RemoveSF',
+            'type'    => 'text'
+        },
+        'sfRemovedNotifTitle' => {
+            'default' => 'Second factor notification',
+            'type'    => 'text'
+        },
+        'sfRemovedUseNotif' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'sfRequired' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'showLanguages' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'singleIP' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'singleSession' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'singleUserByIP' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'skipRenewConfirmation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'skipUpgradeConfirmation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'slaveAuthnLevel' => {
+            'default' => 2,
+            'type'    => 'int'
+        },
+        'slaveDisplayLogo' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'slaveExportedVars' => {
+            'default'    => {},
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
+        },
+        'slaveHeaderContent' => {
+            'type' => 'text'
+        },
+        'slaveHeaderName' => {
+            'type' => 'text'
+        },
+        'slaveMasterIP' => {
+            'msgFail' => '__badIPv4Address__',
+            'test'    => qr/^((?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)\s*)*$/,
+            'type'    => 'text'
+        },
+        'slaveUserHeader' => {
+            'type' => 'text'
+        },
+        'SMTPAuthPass' => {
+            'type' => 'password'
+        },
+        'SMTPAuthUser' => {
+            'type' => 'text'
+        },
+        'SMTPPort' => {
+            'type' => 'int'
+        },
+        'SMTPServer' => {
+            'default' => '',
+            'test'    =>
+qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+))(?::\d+)?)?$/,
+            'type' => 'text'
+        },
+        'SMTPTLS' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => 'none'
+                },
+                {
+                    'k' => 'starttls',
+                    'v' => 'SMTP + STARTTLS'
+                },
+                {
+                    'k' => 'ssl',
+                    'v' => 'SMTPS'
+                }
+            ],
+            'type' => 'select'
+        },
+        'SMTPTLSOpts' => {
+            'type' => 'keyTextContainer'
+        },
+        'soapConfigServer' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'soapProxyUrn' => {
+            'default' => 'urn:Lemonldap/NG/Common/PSGI/SOAPService',
+            'type'    => 'text'
+        },
+        'soapSessionServer' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'SSLAuthnLevel' => {
+            'default' => 5,
+            'type'    => 'int'
+        },
+        'sslByAjax' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'sslHost' => {
+            'type' => 'url'
+        },
+        'SSLVar' => {
+            'default' => 'SSL_CLIENT_S_DN_Email',
+            'type'    => 'text'
+        },
+        'SSLVarIf' => {
+            'default' => {},
+            'keyTest' => sub {
+                1;
+            },
+            'type' => 'keyTextContainer'
+        },
+        'staticPrefix' => {
+            'type' => 'text'
+        },
+        'status' => {
+            'type' => 'bool'
+        },
+        'stayConnected' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'stayConnectedBypassFG' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'stayConnectedCookieName' => {
+            'default' => 'llngconnection',
+            'msgFail' => '__badCookieName__',
+            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'type'    => 'text'
+        },
+        'stayConnectedTimeout' => {
+            'default' => 2592000,
+            'type'    => 'int'
+        },
+        'storePassword' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'successLoginNumber' => {
+            'default' => 5,
+            'type'    => 'int'
+        },
+        'syslogFacility' => {
+            'type' => 'text'
+        },
+        'timeout' => {
+            'default' => 72000,
+            'test'    => sub {
+                $_[0] > 0;
+            },
+            'type' => 'int'
+        },
+        'timeoutActivity' => {
+            'default' => 0,
+            'test'    => sub {
+                $_[0] >= 0;
+            },
+            'type' => 'int'
+        },
+        'timeoutActivityInterval' => {
+            'default' => 60,
+            'test'    => sub {
+                $_[0] >= 0;
+            },
+            'type' => 'int'
+        },
+        'tokenUseGlobalStorage' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'totp2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'totp2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'totp2fDigits' => {
+            'default' => 6,
+            'type'    => 'int'
+        },
+        'totp2fEncryptSecret' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'totp2fInterval' => {
+            'default' => 30,
+            'type'    => 'int'
+        },
+        'totp2fIssuer' => {
+            'type' => 'text'
+        },
+        'totp2fLabel' => {
+            'type' => 'text'
+        },
+        'totp2fLogo' => {
+            'type' => 'text'
+        },
+        'totp2fRange' => {
+            'default' => 1,
+            'type'    => 'int'
+        },
+        'totp2fSelfRegistration' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'totp2fTTL' => {
+            'type' => 'int'
+        },
+        'totp2fUserCanRemoveKey' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'trustedDomains' => {
+            'type' => 'text'
+        },
+        'twitterAppName' => {
+            'type' => 'text'
+        },
+        'twitterAuthnLevel' => {
+            'default' => 1,
+            'type'    => 'int'
+        },
+        'twitterKey' => {
+            'type' => 'text'
+        },
+        'twitterSecret' => {
+            'type' => 'text'
+        },
+        'twitterUserField' => {
+            'default' => 'screen_name',
+            'type'    => 'text'
+        },
+        'u2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'u2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'u2fLabel' => {
+            'type' => 'text'
+        },
+        'u2fLogo' => {
+            'type' => 'text'
+        },
+        'u2fSelfRegistration' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'u2fTTL' => {
+            'type' => 'int'
+        },
+        'u2fUserCanRemoveKey' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'upgradeSession' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'userControl' => {
+            'default' => '^[\\w\\.\\-@]+$',
+            'type'    => 'pcre'
+        },
+        'userDB' => {
+            'default' => 'Same',
+            'select'  => [ {
+                    'k' => 'Same',
+                    'v' => 'Same'
+                },
+                {
+                    'k' => 'AD',
+                    'v' => 'Active Directory'
+                },
+                {
+                    'k' => 'DBI',
+                    'v' => 'Database (DBI)'
+                },
+                {
+                    'k' => 'LDAP',
+                    'v' => 'LDAP'
+                },
+                {
+                    'k' => 'REST',
+                    'v' => 'REST'
+                },
+                {
+                    'k' => 'Null',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'Custom',
+                    'v' => 'customModule'
+                }
+            ],
+            'type' => 'select'
+        },
+        'useRedirectOnError' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'useRedirectOnForbidden' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'userLogger' => {
+            'type' => 'text'
+        },
+        'userPivot' => {
+            'type' => 'text'
+        },
+        'userSyslogFacility' => {
+            'type' => 'text'
+        },
+        'useSafeJail' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'utotp2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'utotp2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'utotp2fLabel' => {
+            'type' => 'text'
+        },
+        'utotp2fLogo' => {
+            'type' => 'text'
+        },
+        'vhostAccessToTrace' => {
+            'default' => '',
+            'type'    => 'text'
+        },
+        'vhostAliases' => {
+            'default' => '',
+            'type'    => 'text'
+        },
+        'vhostAuthnLevel' => {
+            'type' => 'int'
+        },
+        'vhostDevOpsRulesUrl' => {
+            'type' => 'url'
+        },
+        'vhostHttps' => {
+            'default' => -1,
+            'type'    => 'trool'
+        },
+        'vhostMaintenance' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'vhostOptions' => {
+            'type' => 'subContainer'
+        },
+        'vhostPort' => {
+            'default' => -1,
+            'type'    => 'int'
+        },
+        'vhostServiceTokenTTL' => {
+            'default' => -1,
+            'type'    => 'int'
+        },
+        'vhostType' => {
+            'default' => 'Main',
+            'select'  => [ {
+                    'k' => 'AuthBasic',
+                    'v' => 'AuthBasic'
+                },
+                {
+                    'k' => 'CDA',
+                    'v' => 'CDA'
+                },
+                {
+                    'k' => 'DevOps',
+                    'v' => 'DevOps'
+                },
+                {
+                    'k' => 'DevOpsST',
+                    'v' => 'DevOpsST'
+                },
+                {
+                    'k' => 'Main',
+                    'v' => 'Main'
+                },
+                {
+                    'k' => 'OAuth2',
+                    'v' => 'OAuth2'
+                },
+                {
+                    'k' => 'SecureToken',
+                    'v' => 'SecureToken'
+                },
+                {
+                    'k' => 'ServiceToken',
+                    'v' => 'ServiceToken'
+                },
+                {
+                    'k' => 'ZimbraPreAuth',
+                    'v' => 'ZimbraPreAuth'
+                }
+            ],
+            'type' => 'select'
+        },
+        'viewerAllowBrowser' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'viewerAllowDiff' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'viewerHiddenKeys' => {
+            'default' => 'samlIDPMetaDataNodes, samlSPMetaDataNodes',
+            'type'    => 'text'
+        },
+        'virtualHosts' => {
+            'type' => 'virtualHostContainer'
+        },
+        'webauthn2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'webauthn2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'webauthn2fLabel' => {
+            'type' => 'text'
+        },
+        'webauthn2fLogo' => {
+            'type' => 'text'
+        },
+        'webauthn2fSelfRegistration' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'webauthn2fUserCanRemoveKey' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'webauthn2fUserVerification' => {
+            'default' => 'preferred',
+            'select'  => [ {
+                    'k' => 'discouraged',
+                    'v' => 'Discouraged'
+                },
+                {
+                    'k' => 'preferred',
+                    'v' => 'Preferred'
+                },
+                {
+                    'k' => 'required',
+                    'v' => 'Required'
+                }
+            ],
+            'type' => 'select'
+        },
+        'webauthnDisplayNameAttr' => {
+            'type' => 'text'
+        },
+        'webauthnRpName' => {
+            'type' => 'text'
+        },
+        'webIDAuthnLevel' => {
+            'default' => 1,
+            'type'    => 'int'
+        },
+        'webIDExportedVars' => {
+            'default'    => {},
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
+        },
+        'webIDWhitelist' => {
+            'type' => 'text'
+        },
+        'whatToTrace' => {
+            'default' => 'uid',
+            'type'    => 'lmAttrOrMacro'
+        },
+        'wsdlServer' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'yubikey2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'yubikey2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'yubikey2fClientID' => {
+            'type' => 'text'
+        },
+        'yubikey2fFromSessionAttribute' => {
+            'type' => 'text'
+        },
+        'yubikey2fLabel' => {
+            'type' => 'text'
+        },
+        'yubikey2fLogo' => {
+            'type' => 'text'
+        },
+        'yubikey2fNonce' => {
+            'type' => 'text'
+        },
+        'yubikey2fPublicIDSize' => {
+            'default' => 12,
+            'type'    => 'int'
+        },
+        'yubikey2fSecretKey' => {
+            'type' => 'text'
+        },
+        'yubikey2fSelfRegistration' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'yubikey2fTTL' => {
+            'type' => 'int'
+        },
+        'yubikey2fUrl' => {
+            'type' => 'text'
+        },
+        'yubikey2fUserCanRemoveKey' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'zimbraAccountKey' => {
+            'type' => 'text'
+        },
+        'zimbraBy' => {
+            'type' => 'text'
+        },
+        'zimbraPreAuthKey' => {
+            'type' => 'text'
+        },
+        'zimbraSsoUrl' => {
+            'type' => 'text'
+        },
+        'zimbraUrl' => {
+            'type' => 'text'
+        }
+    };
 }
 
