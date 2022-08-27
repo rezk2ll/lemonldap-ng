@@ -2,15 +2,14 @@ Test OpenID Connect with command line tools
 ===========================================
 
 We present here how to test the OpenID Connect protocol (authorization code flow) with commande line tools, like `curl`.
-
 We use in this example a public OIDC provider based on LL::NG: `<https://oidctest.wsweet.org>`_
 
 Authentication
 --------------
 
-The first step is to obtain a valid SSO session on the portal. The standard solution  is to use a web browser and log into the portal, then get the value of the SSO cookie.
+The first step is to obtain a valid SSO session on the portal. The standard solution is to use a web browser and log into the portal, then get the value of the SSO cookie.
 
-In our case, to be able to use only command lines, we will use portal REST API (which requires to adapt the `requireToken` configuration to get cookie value in JSON response (see :doc:`REST services<restservices>`). This should not be what you will on a production service.
+In our case, to be able to use only command lines, we will use portal REST API (which requires to adapt the `requireToken` configuration to get cookie value in JSON response (see :doc:`REST services<restservices>`). This should not be what you want on a production service.
 
 Example of REST service usage, with credentials `dwho`/`dwho`:
 
@@ -31,12 +30,12 @@ The session id is displayed in JSON response:
 Authorization code
 ------------------
 
-In the first step of authorization code flow, we request a temporary code, ont the `authorize` end point.
+In the first step of authorization code flow, we request a temporary code, on the `authorize` end point.
 
-Parameters needed:
+Required parameters:
  * SSO session id (will be passed in `lemonldap` cookie, adapt the name if needed)
  * Client ID: given by your OIDC provider, we use here `private`
- * Scope: depends on which information you need, we will use here `openid profile email`
+ * Scope: depends on which information you want, we will use here `openid profile email`
  * Redirect URI: shoud match the value registered in your OIDC provider, we will use here `http://localhost`
 
 The OIDC provide will return the code in the location header, so we just output this reponse header:
@@ -52,7 +51,7 @@ The value of the location header is:
    location: http://localhost?code=294b0facd91a0fa92762edc48d18369e99c330ba2b8fb05ab2c45999fcef6e17&session_state=BpB8KRMBEDUs%2B7lAjsz4DRk3E0RJImxgUbMsCFFAUa8%3D.N3dVOFg3a2RpNXVJK3ltSldrYXZjUjhtU0tvd29sWkpuWWJJbll5ZGs5NzhZMnh5bmQwd0IxRmJVWUxJSTlkWDBnSWZ2SWFVZmU0UnRaMkVJVjNUY3c9PQ
 
 
-So we get the code value: `94b0facd91a0fa92762edc48d18369e99c330ba2b8fb05ab2c45999fcef6e17`
+So we get the code value: `294b0facd91a0fa92762edc48d18369e99c330ba2b8fb05ab2c45999fcef6e17`
 
 This code has a short lifetime, we will use it to get access token and ID token in the next step
 
@@ -64,7 +63,7 @@ In this step, we exchange the authorization code against tokens:
  * ID token
  * Refresh token (optional)
 
-Parameters needed:
+Required parameters:
  * Authorization code: see previous step
  * Grant type: we use here `authorization_code`
  * Redirect URI: same value as the one used in the previous step
@@ -72,7 +71,7 @@ Parameters needed:
 
 .. code-block:: shell
 
-   curl -X POST -d grant_type=authorization_code -d 'redirect_uri=http://localhost' -d code=94b0facd91a0fa92762edc48d18369e99c330ba2b8fb05ab2c45999fcef6e17 -u 'private:tardis' 'https://oidctest.wsweet.org/oauth2/token' | json_pp
+   curl -X POST -d grant_type=authorization_code -d 'redirect_uri=http://localhost' -d code=294b0facd91a0fa92762edc48d18369e99c330ba2b8fb05ab2c45999fcef6e17 -u 'private:tardis' 'https://oidctest.wsweet.org/oauth2/token' | json_pp
 
 The JSON response looks like this:
 
@@ -86,7 +85,7 @@ The JSON response looks like this:
     "token_type" : "Bearer"
    }
 
-The access token will be used for the last step, to get information about the user.
+The access token will be used for the last step, to retrieve information about the user.
 
 The ID Token is a JWT (JSON Web Token) and can be parsed easily, as this is the concatenation of 3 JSON strings encoded in base 64: `base64(header).base64(payload).base64(signature)`.
 
@@ -113,7 +112,7 @@ User info
 
 This step is optional and allows to fetch user information linked to scopes requested in the first step.
 
-Parameters needed:
+Required parameters:
  * Access token, used as bearer authorization
 
 .. code-block:: shell
@@ -134,9 +133,9 @@ JSON response:
 Introspection
 -------------
 
-You can the validity of the access token with the introspection endpoint.
+You can test access token validity with the introspection endpoint.
 
-Parameters needed:
+Required parameters:
  * Client ID and Client Secret, used as basic authorization
  * Access token, sent as POST data
 
@@ -162,7 +161,7 @@ Refresh an access token
 
 If the access token has expired, you can get a new one with the refresh token.
 
-Parameters needed:
+Required parameters:
  * Grant type: we use here `refresh_token`, sent as POST data
  * Refresh token, sent as POST data
  * Client ID and Client Secret, used as basic authorization
@@ -187,7 +186,7 @@ Logout
 
 To kill SSO session, call the OIDC logout endpoint. By default a confirmation is requested, but you can bypass it by adding `confirm=1` to URL.
 
-Parameters needed:
+Required parameters:
  * SSO session id (will be passed in `lemonldap` cookie)
 
 .. code-block:: shell

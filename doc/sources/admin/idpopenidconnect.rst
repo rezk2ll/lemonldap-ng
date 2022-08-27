@@ -265,12 +265,12 @@ Options
 
 -  **Basic**
 
+   -  **Public client** (since version ``2.0.4``): Set this RP as public
+      client, so authentication is not needed on tokens endpoint
    -  **Client ID**: Client ID for this RP
    -  **Client secret**: Client secret for this RP (can be used for
       symmetric signature)
-   -  **Public client** (since version ``2.0.4``): Set this RP as public
-      client, so authentication is not needed on tokens endpoint
-   -  **Redirection addresses**: Space-separated list of redirect
+   -  **Allowed redirection addresses for login**: Space-separated list of redirect
       addresses allowed for this RP
 
 -  **Advanced**
@@ -279,8 +279,6 @@ Options
       sharing consent screen (consent will be accepted by default).
       Bypassing the consent is **not** compliant with OpenID Connect
       standard.
-   -  **User attribute**: Session field that will be used as main
-      identifier (``sub``). Default value is ``whatToTrace``.
    -  **Force claims to be returned in ID Token**: This options will
       make user attributes from the requested scope appear as ID Token claims
    -  **Use JWT format for Access Token** (since version ``2.0.12``): When
@@ -290,13 +288,15 @@ Options
    -  **Release claims in Access Token** (since version ``2.0.12``): If Access
       Tokens are in JWT format, this option lets you release the claims defined
       in the *Extra Claims* section inside the Access Token itself
-   -  **Additional audiences** (since version ``2.0.8``): You can
-      specify a space-separated list of audiences that will be added to the
-      ID Token audiences
    -  **Use refresh tokens** (since version ``2.0.7``): If this option
       is enabled, LL::NG will issue a Refresh Token that can be used
       to obtain new access tokens as long as the user session is still
       valid
+   -  **User attribute**: Session field that will be used as main
+      identifier (``sub``). Default value is ``whatToTrace``.
+   -  **Additional audiences** (since version ``2.0.8``): You can
+      specify a space-separated list of audiences that will be added to the
+      ID Token audiences
 
 -  **Security**
 
@@ -321,40 +321,39 @@ Options
       This feature only works if you have configured a form-based authentication module.
    -  **Allow OAuth2.0 Client Credentials Grant** (since version ``2.0.11``): Allow the use of the
       :ref:`Client Credentials Grant <client-credentials-grant>` by this client.
-   -  **Authentication Level**: Required authentication level to access this application
-   -  **Access Rule**: Lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
+   -  **Authentication level**: Required authentication level to access this application
+   -  **Access rule**: Lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
 
 -  **Timeouts**
 
-   -  **Authorization Code expiration**: Expiration time of
-      authorization code, when using the Authorization Code flow. The
-      default value is one minute.
-   -  **ID Token expiration**: Expiration time of ID Tokens. The default
+   -  **Authorization Codes**: Expiration time of
+      Authorization Codes, when using the Authorization Code flow.
+      Default value is one minute.
+   -  **ID Tokens**: Expiration time of ID Tokens. Default
       value is one hour.
-   -  **Access token expiration**: Expiration time
-      of Access Tokens. The default value is one hour.
-   -  **Offline session expiration**: This sets the lifetime of the
-      refresh token obtained with the **offline_access** scope. The
-      default value is one month. This parameter only applies if offline
+   -  **Access Tokens**: Expiration time
+      of Access Tokens. Default value is one hour.
+   -  **Offline sessions**: Lifetime of the
+      refresh token obtained with the **offline_access** scope.
+      Default value is one month. This parameter only applies if offline
       sessions are enabled.
 
 -  **Logout**
 
    -  **Bypass confirm**: Bypass logout confirmation when logout is initiated
       by relaying party
+   -  **Session required**: Whether to send the Session ID in the logout request
+   -  **Type**: Type of logout to perform (only Front-Channel is implemented for now)
+   -  **URL**: Specify the relying party's logout URL
    -  **Allowed redirection addresses for logout**: A space-separated list of
       URLs that this client can redirect the user to once the logout is done
       (through ``post_logout_redirect_uri``)
-   -  **URL**: Specify the relying party's logout URL
-   -  **Type**: Type of logout to perform (only Front-Channel is implemented for now)
-   -  **Session required**: Whether to send the Session ID in the logout request
-
 
 Macros
 ^^^^^^
 
 You can define here macros that will be only evaluated for this service,
-and not registered in the session of the user.
+and not registered in the user's session.
 
 Display
 ^^^^^^^

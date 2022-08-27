@@ -4,14 +4,12 @@ CAS server
 Presentation
 ------------
 
-LL::NG can be used as a CAS server. It can allow one to federate LL::NG
-with:
+LL::NG can be used as a CAS server. It can allow one to federate LL::NG with:
 
 -  Another :doc:`CAS authentication<authcas>` LL::NG provider
 -  Any CAS consumer
 
-LL::NG is compatible with the `CAS
-protocol <https://jasig.github.io/cas/development/protocol/CAS-Protocol-Specification.html>`__
+LL::NG is compatible with the `CAS protocol <https://apereo.github.io/cas/6.5.x/index.html>`__
 versions 1.0, 2.0 and part of 3.0 (attributes exchange).
 
 Configuration
@@ -20,8 +18,7 @@ Configuration
 Enabling CAS
 ~~~~~~~~~~~~
 
-In the Manager, go in ``General Parameters`` » ``Issuer modules`` »
-``CAS`` and configure:
+In the Manager, go in ``General Parameters`` » ``Issuer modules`` » ``CAS`` and configure:
 
 -  **Activation**: set to ``On``.
 -  **Path**: it is recommended to keep the default value (``^/cas/``)
@@ -31,8 +28,7 @@ In the Manager, go in ``General Parameters`` » ``Issuer modules`` »
 
 .. tip::
 
-    For example, to allow only users with a strong authentication
-    level:
+    For example, to allow only users with a strong authentication level:
 
     ::
 

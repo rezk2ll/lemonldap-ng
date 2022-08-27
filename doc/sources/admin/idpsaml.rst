@@ -171,8 +171,8 @@ Security
    NameID or Assertion).
 -  **Enable use of IDP initiated URL**: set to ``On`` to enable IDP
    Initiated URL on this SP.
--  **Authentication Level**: required authentication level to access this SP
--  **Access Rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this SP
+-  **Authentication level**: required authentication level to access this SP
+-  **Access rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this SP
 
 Extra variables
 ^^^^^^^^^^^^^^^
