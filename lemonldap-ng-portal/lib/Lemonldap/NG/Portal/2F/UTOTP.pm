@@ -27,7 +27,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 sub init {
     my ($self) = @_;
     $self->conf->{utotp2fActivation} = 'has2f("TOTP") or has2f("U2F")'
-      if ( $self->conf->{utotp2fActivation} eq '1' );
+      if $self->conf->{utotp2fActivation} eq '1';
 
     foreach (qw(U2F TOTP)) {
 
