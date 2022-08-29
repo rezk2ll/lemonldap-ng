@@ -595,5 +595,5 @@ Some options are available:
 is not logged, or for CDA requests)*. By default, default values are
 used. These options are only here to override default values.
 
-.. |image1| image:: /documentation/new.png
+.. |image0| image:: /documentation/new.png
    :width: 35px
