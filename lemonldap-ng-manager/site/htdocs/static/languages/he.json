@@ -1134,6 +1134,7 @@
 "stayConnectedTimeout":"Expiration time",
 "storePassword":"Store user password in session",
 "string":"String",
+"strictTransportSecurityMax_Age":"Strict-Transport-Security max age",
 "subtitle":"Subtitle",
 "successLoginNumber":"Max successful logins count",
 "successfullySaved":"נשמר בהצלחה",

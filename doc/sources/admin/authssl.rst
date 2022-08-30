@@ -181,7 +181,6 @@ Nginx SSL Virtual Host example with uWSGI
      #index index.psgi;
      location / {
        try_files $uri $uri/ =404;
-       add_header Strict-Transport-Security "max-age=15768000";
      }
    }
 

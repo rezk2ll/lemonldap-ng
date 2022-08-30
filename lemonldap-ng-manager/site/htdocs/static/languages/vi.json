@@ -1134,6 +1134,7 @@
 "stayConnectedTimeout":"Expiration time",
 "storePassword":"Lưu trữ mật khẩu người dùng trong các dữ liệu phiên",
 "string":"String",
+"strictTransportSecurityMax_Age":"Strict-Transport-Security max age",
 "subtitle":"Subtitle",
 "successLoginNumber":"Max successful logins count",
 "successfullySaved":"Lưu thành công",

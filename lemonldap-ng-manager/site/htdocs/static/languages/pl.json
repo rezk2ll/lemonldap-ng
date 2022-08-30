@@ -1134,6 +1134,7 @@
 "stayConnectedTimeout":"Data ważności",
 "storePassword":"Przechowuj hasło użytkownika w sesji",
 "string":"Łańcuch znaków",
+"strictTransportSecurityMax_Age":"Strict-Transport-Security max age",
 "subtitle":"Podtytuł",
 "successLoginNumber":"Maksymalna liczba udanych logowań",
 "successfullySaved":"Pomyślnie zapisano",

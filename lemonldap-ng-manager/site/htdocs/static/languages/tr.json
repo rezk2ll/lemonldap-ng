@@ -1134,6 +1134,7 @@
 "stayConnectedTimeout":"Son kullanma süresi",
 "storePassword":"Kullanıcı parolasını oturumda sakla",
 "string":"Dize",
+"strictTransportSecurityMax_Age":"Strict-Transport-Security max age",
 "subtitle":"Altyazı",
 "successLoginNumber":"Maksimum başarılı giriş sayısı",
 "successfullySaved":"Başarıyla kaydedildi",

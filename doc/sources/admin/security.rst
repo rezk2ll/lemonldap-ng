@@ -332,6 +332,7 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
 -  **Form timeout**: Form token timeout (default to 120 seconds)
 -  **Use global storage**: Local cache is used by default for one time
    tokens. To use global storage, set it to 'On'
+-  **Strict-Transport-Security Max-age**: set STS header max-age if you use SSL only (default=15768000)
 -  **CrowdSec Bouncer**: set to 'On' to enable :doc:`CrowdSec Bouncer plugin<crowdsec>`
 -  **Brute-Force Attack protection**: set to 'On' to enable :doc:`Brute-force protection plugin<bruteforceprotection>`
 -  **LWP::UserAgent and SSL options**: insert here options to pass to

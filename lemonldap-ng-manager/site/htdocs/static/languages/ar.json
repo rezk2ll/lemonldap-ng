@@ -1134,6 +1134,7 @@
 "stayConnectedTimeout":"Expiration time",
 "storePassword":"تخزين كلمة مرور المستخدم في بيانات الجلسة",
 "string":"String",
+"strictTransportSecurityMax_Age":"Strict-Transport-Security max age",
 "subtitle":"Subtitle",
 "successLoginNumber":"Max successful logins count",
 "successfullySaved":"تم الحفظ بنجاح",
