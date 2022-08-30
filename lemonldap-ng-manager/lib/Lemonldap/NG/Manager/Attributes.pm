@@ -4259,6 +4259,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 0,
             'type'    => 'bool'
         },
+        'strictTransportSecurityMax_Age' => {
+            'default' => '15768000',
+            'type'    => 'text'
+        },
         'successLoginNumber' => {
             'default' => 5,
             'type'    => 'int'
