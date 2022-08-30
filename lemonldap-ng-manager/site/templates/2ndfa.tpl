@@ -14,17 +14,11 @@
           <ul class="nav navbar-nav" role="grid">
             <form class="navbar-form" name="filterForm">
               <div class="form-check ">
-                <input type="checkbox" ng-model="sfatypes.U2F" class="form-check-input" ng-change="search2FA()"/>
-                <label class="form-check-label" for="U2FCheck">U2F</label>
-                &nbsp;&nbsp;&&nbsp;&nbsp;
-                <input type="checkbox" ng-model="sfatypes.TOTP" class="form-check-input" ng-change="search2FA()"/>
-                <label class="form-check-label" for="TOTPCheck">TOTP</label>
-                &nbsp;&nbsp;&&nbsp;&nbsp;
-                <input type="checkbox" ng-model="sfatypes.UBK" class="form-check-input" ng-change="search2FA()"/>
-                <label class="form-check-label" for="UBKCheck">UBK</label>
-                &nbsp;&nbsp;&&nbsp;&nbsp;
-                <input type="checkbox" ng-model="sfatypes.WebAuthn" class="form-check-input" ng-change="search2FA()"/>
-                <label class="form-check-label" for="WebAuthnCheck">WebAuthn</label>
+              <TMPL_LOOP NAME=SFATYPES>
+                <input type="checkbox" ng-model="sfatypes.<TMPL_VAR NAME=SFATYPE>" class="form-check-input" ng-change="search2FA()"/>
+                <label class="form-check-label" for="<TMPL_VAR NAME=SFATYPE>Check"><TMPL_VAR NAME=SFATYPE></label>
+                <TMPL_UNLESS NAME="__last__">&nbsp;&nbsp;&amp;&nbsp;&nbsp;</TMPL_UNLESS>
+              </TMPL_LOOP>
               </div>
             </form>
           </ul>

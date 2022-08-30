@@ -351,6 +351,11 @@ ok( $res->{count} == 0,  'Found 0 session with 2F device' )
 ok( @{ $res->{values} } == 0, 'List 0 result' );
 count(3);
 
+ok( $res = &client->_get('/2ndfa.html'), 'Succeed to get /2ndfa.html' );
+like( $res->[2]->[0],
+    qr,<label class="form-check-label" for="TOTPCheck">TOTP</label>, );
+count(2);
+
 done_testing( count() );
 
 # Remove sessions directory

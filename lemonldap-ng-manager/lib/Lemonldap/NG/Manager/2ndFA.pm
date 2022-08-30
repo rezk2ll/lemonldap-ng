@@ -28,7 +28,7 @@ sub init {
 
     # Remote Procedure are defined in Lemonldap::NG::Common::Session::REST
     # HTML template
-    $self->addRoute( '2ndfa.html', undef, ['GET'] )
+    $self->addRoute( '2ndfa.html', 'sfaView', ['GET'] )
 
       ->addRoute(
         sfa => { ':sessionType' => 'sfa' },
@@ -46,6 +46,11 @@ sub init {
     $self->{hiddenAttributes} //= "_password";
     $self->{hiddenAttributes} .= ' _session_id'
       unless $conf->{displaySessionId};
+
+    $self->{regSfaTypes} = [
+        sort map { s/^Yubikey$/UBK/r } split /[\s,]+/,
+        $conf->{available2FSelfRegistration}
+    ];
     return 1;
 }
 
@@ -270,6 +275,16 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
             count  => scalar(@$res),
             total  => $total,
             values => $res
+        }
+    );
+}
+
+sub sfaView {
+    my ( $self, $req ) = @_;
+    return $self->p->sendHtml(
+        $req, "2ndfa",
+        params => {
+            SFATYPES => [ map { { SFATYPE => $_ } } @{ $self->{regSfaTypes} } ],
         }
     );
 }
