@@ -1,6 +1,6 @@
 {
 "2FDeviceNotFound":"Second facteur non trouvé",
-"2fRegRequired":"Ce service requiert une authentification à deux facteurs. Enregistrez un équipement ici et retournez au portail.",
+"2fRegRequired":"Ce service requiert une authentification à deux facteurs. Enregistrez un équipement ici et retournez au portail",
 "PE0":"Utilisateur authentifié",
 "PE1":"Votre session a expiré, vous devez vous ré-authentifier",
 "PE10":"Certificat invalide",
@@ -11,6 +11,8 @@
 "PE104":"Fichier DevOps mal formaté",
 "PE105":"Fichier inexistant",
 "PE106":"Erreur pendant l'authentification auprès du fournisseur OpenID",
+"PE107":"URL non authorisée",
+"PE108":"Cette URL n'est pas protégée",
 "PE2":"Identifiant ou mot de passe non renseigné",
 "PE20":"Base des mots de passe non définie",
 "PE21":"Votre compte est bloqué",

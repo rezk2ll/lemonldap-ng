@@ -11,6 +11,8 @@
 "PE104":"Kötü DevOps eğitici dosyası",
 "PE105":"Dosya bulunamadı",
 "PE106":"OpenID Sağlayıcı ile kimlik doğrulama sırasında hata",
+"PE107":"Unauthorized URL",
+"PE108":"Not a protected URL",
 "PE2":"Kullanıcı adı ve parola alanları doldurulmalı",
 "PE20":"Parola back-end'i tanımlanmadı",
 "PE21":"Hesabınız kilitli",

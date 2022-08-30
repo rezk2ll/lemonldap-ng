@@ -11,6 +11,8 @@
 "PE104":"Bad DevOps handler file",
 "PE105":"File not found",
 "PE106":"Error during authentication with OpenID Provider",
+"PE107":"Unauthorized URL",
+"PE108":"Not a protected URL",
 "PE2":"Các trường người dùng và mật khẩu phải được điền",
 "PE20":"No password backend defined",
 "PE21":"Tài khoản của bạn bị khóa",
