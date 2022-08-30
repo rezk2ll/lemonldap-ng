@@ -101,7 +101,7 @@ sub _verify {
     my $session;
     unless ( $session = $self->ott->getToken($token) ) {
         $self->userLogger->info('Token expired');
-        $self->setSecurity($req);
+        $req->noLoginDisplay(1);
         return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
     }
 

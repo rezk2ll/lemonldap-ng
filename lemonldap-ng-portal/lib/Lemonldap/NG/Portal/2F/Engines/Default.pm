@@ -433,6 +433,7 @@ sub _choice {
     my $session;
     unless ( $session = $self->ott->getToken($token) ) {
         $self->userLogger->info('Token expired');
+        $req->noLoginDisplay(1);
         return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
     }
 
