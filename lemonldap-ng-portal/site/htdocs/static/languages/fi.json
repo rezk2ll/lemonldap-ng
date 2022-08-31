@@ -263,7 +263,7 @@
 "register":"Rekisteröidy",
 "registerRequestAlreadyIssued":"Tämän käyttäjätilin rekisteröintipyyntö lähetettiin jo laitteelta ",
 "rememberChoice":"Muista valintani",
-"rememberTimerLabel":"s before automatic authentication",
+"rememberTimerLabel":"sekuntia automaattiseen todentautumiseen",
 "remove2fWarning":"Tätä toimenpidettä ei voi perua",
 "removeOtherSessions":"Poista muut istunnot",
 "renewSession":"Uudista istunto",
