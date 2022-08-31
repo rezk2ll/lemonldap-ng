@@ -946,21 +946,32 @@ sub sendHtml {
 
     $self->setCorsHeaderFromConfig($res);
 
+    if (    $self->conf->{strictTransportSecurityMax_Age}
+        and $self->conf->{portal} =~ /^https:/ )
+    {
+        push @{ $res->[1] },
+          'Strict-Transport-Security' =>
+          "max-age=$self->{conf}->{strictTransportSecurityMax_Age}";
+        $self->logger->debug(
+"Set Strict-Transport-Security with: $self->{conf}->{strictTransportSecurityMax_Age}"
+        );
+    }
+
     # Set authorized URL for POST
     my $csp = $self->csp . "form-action " . $self->conf->{cspFormAction};
     if ( my $url = $req->urldc ) {
-        $self->logger->debug("Required urldc : $url");
+        $self->logger->debug("Required urldc: $url");
         $url =~ URIRE;
         $url = $2 . '://' . $3 . ( $4 ? ":$4" : '' );
-        $self->logger->debug("Set CSP form-action with urldc : $url");
+        $self->logger->debug("Set CSP form-action with urldc: $url");
         $csp .= " $url";
     }
     my $url = $args{params}->{URL};
     if ( defined $url ) {
-        $self->logger->debug("Required Params URL : $url");
+        $self->logger->debug("Required Params URL: $url");
         if ( $url =~ URIRE ) {
             $url = $2 . '://' . $3 . ( $4 ? ":$4" : '' );
-            $self->logger->debug("Set CSP form-action with Params URL : $url");
+            $self->logger->debug("Set CSP form-action with Params URL: $url");
             $csp .= " $url";
         }
     }
@@ -1018,7 +1029,7 @@ sub sendHtml {
 
     # Set CSP header
     push @{ $res->[1] }, 'Content-Security-Policy' => $csp;
-    $self->logger->debug("Apply following CSP : $csp");
+    $self->logger->debug("Apply following CSP: $csp");
     return $res;
 }
 
@@ -1259,7 +1270,7 @@ sub setCorsHeaderFromConfig {
     if ( $self->conf->{corsEnabled} ) {
         my @cors = split /;/, $self->cors;
         push @{ $response->[1] }, @cors;
-        $self->logger->debug('Apply following CORS policy :');
+        $self->logger->debug('Apply following CORS policy:');
         $self->logger->debug(" $_") for @cors;
     }
 }

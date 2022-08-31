@@ -1134,6 +1134,7 @@
 "stayConnectedTimeout":"Expiration time",
 "storePassword":"Almacenar contraseña de usuario en la sesión",
 "string":"String",
+"strictTransportSecurityMax_Age":"Strict-Transport-Security max age",
 "subtitle":"Subtítulo",
 "successLoginNumber":"Max successful logins count",
 "successfullySaved":"Salvado con éxito",

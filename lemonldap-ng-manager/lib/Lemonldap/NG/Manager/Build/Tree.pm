@@ -1092,6 +1092,7 @@ sub tree {
                                 'requireToken',
                                 'formTimeout',
                                 'tokenUseGlobalStorage',
+                                'strictTransportSecurityMax_Age',
                                 {
                                     title => 'CrowdSecPlugin',
                                     help  => 'crowdsec.html',

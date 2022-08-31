@@ -1133,6 +1133,7 @@
 "stayConnectedCookieName":"Cookie name",
 "stayConnectedTimeout":"Expiration time",
 "storePassword":"Store user password in session",
+"strictTransportSecurityMax_Age":"Strict-Transport-Security max age",
 "string":"String",
 "subtitle":"Subtitle",
 "successLoginNumber":"Max successful logins count",

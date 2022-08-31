@@ -1093,7 +1093,11 @@ sub attributes {
         corsMax_Age => {
             type          => 'text',
             default       => '86400',    # 24 hours
-            documentation => 'MAx-age for Cross-Origin Resource Sharing',
+            documentation => 'Max-age for Cross-Origin Resource Sharing',
+        },
+        strictTransportSecurityMax_Age => {
+            type          => 'text',
+            documentation => 'Max-age for Strict-Transport-Security',
         },
         cspDefault => {
             type          => 'text',
