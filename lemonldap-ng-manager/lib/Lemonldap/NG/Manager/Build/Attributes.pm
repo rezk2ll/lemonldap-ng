@@ -1097,7 +1097,6 @@ sub attributes {
         },
         strictTransportSecurityMax_Age => {
             type          => 'text',
-            default       => '15768000',
             documentation => 'Max-age for Strict-Transport-Security',
         },
         cspDefault => {
