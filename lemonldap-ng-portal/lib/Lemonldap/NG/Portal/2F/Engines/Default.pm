@@ -433,7 +433,14 @@ sub _choice {
     my $session;
     unless ( $session = $self->ott->getToken($token) ) {
         $self->userLogger->info('Token expired');
+        $req->noLoginDisplay(1);
         return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+    }
+
+    unless ( $session->{_2fRealSession} ) {
+        $self->logger->error("Invalid 2FA session token");
+        $req->noLoginDisplay(1);
+        return $self->p->do( $req, [ sub { PE_ERROR } ] );
     }
 
     $req->sessionInfo($session);
