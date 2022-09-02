@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 25;
+my $maintests = 27;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 
@@ -143,6 +143,13 @@ SKIP: {
     ( $host, $url, $s ) =
       expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleSignOnPost',
         'SAMLResponse' );
+
+    my $resp = expectSamlResponse($s);
+    like(
+        $resp,
+        qr/AuthnInstant="2000-01-01T00:00:01Z"/,
+        "Found AuthnInstant modified by hook"
+    );
 
     $pdata_hash = expectPdata($res);
     is( $pdata_hash->{gotRequestHookCalled},
