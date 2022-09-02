@@ -457,11 +457,13 @@ A virtual host contains:
 Wildcards in hostnames
 ----------------------
 
-|image0| Since 2.0, a wildcard can be used in virtualhost name (not in
+A wildcard can be used in virtualhost name (not in
 aliases !): ``*.example.com`` matches all hostnames that belong to
-``example.com`` domain. Version 2.0.9 improves this and allows better
-wildcards such as ``test-*.example.com`` or ``test-%.example.com``. The
-``%`` wilcard doesn't match subdomains.
+``example.com`` domain.
+
+.. versionchanged:: 2.0.9
+   You can now use wildcards of the form ``test-*.example.com`` or
+   ``test-%.example.com``. The ``%`` wilcard doesn't match subdomains.
 
 Even if a wildcard exists, if a VirtualHost is explicitly declared, this
 rule will be applied. Example with precedence order for test.sub.example.com:
