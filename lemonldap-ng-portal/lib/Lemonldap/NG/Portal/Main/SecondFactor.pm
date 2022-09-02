@@ -5,6 +5,7 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
   PE_OK
+  PE_ERROR
   PE_NOTOKEN
   PE_TOKENEXPIRED
   PE_BADCREDENTIALS
@@ -103,6 +104,11 @@ sub _verify {
         $self->userLogger->info('Token expired');
         $req->noLoginDisplay(1);
         return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+    }
+    unless ( $session->{_2fRealSession} ) {
+        $self->logger->error("Invalid 2FA session token");
+        $req->noLoginDisplay(1);
+        return $self->p->do( $req, [ sub { PE_ERROR } ] );
     }
 
     # Launch second factor verification

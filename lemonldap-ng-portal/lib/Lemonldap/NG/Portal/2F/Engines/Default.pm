@@ -437,6 +437,12 @@ sub _choice {
         return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
     }
 
+    unless ( $session->{_2fRealSession} ) {
+        $self->logger->error("Invalid 2FA session token");
+        $req->noLoginDisplay(1);
+        return $self->p->do( $req, [ sub { PE_ERROR } ] );
+    }
+
     $req->sessionInfo($session);
 
     # New token
