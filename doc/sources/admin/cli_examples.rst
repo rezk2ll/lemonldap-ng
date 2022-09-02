@@ -608,7 +608,7 @@ List second factors of a user ::
 
    lemonldap-ng-sessions secondfactors get dwho
 
-Deregister Yubikey of a user ::
+Deregister Yubico OTP for a user ::
 
    lemonldap-ng-sessions secondfactors delType dwho UBK
 

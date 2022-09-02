@@ -157,7 +157,7 @@ Official Backends                                                    Authenticat
 :doc:`SSL<authssl>`                                                  ✔
 :doc:`Twitter<authtwitter>`                                          ✔
 :doc:`WebID<authwebid>`                                              ✔                                               ✔
-:doc:`Yubikey<authyubikey>` |deprecated|                             *Replaced by* :doc:`yubikey2f`
+:doc:`Yubico OTP<authyubikey>` |deprecated|                          *Replaced by* :doc:`yubikey2f`
 :doc:`Custom modules<authcustom>` |new|                              ✔                                               ✔        ✔
 ==================================================================== =============================================== ======== ========
 
@@ -182,7 +182,7 @@ Second factor (:doc:`documentation<secondfactor>`)                   Authenticat
 :doc:`TOTP<totp2f>` *(Google Authenticator,...)* |new|               ✔              ✔
 :doc:`WebAuthn<webauthn2f>` |new|                                    ✔              ✔
 :doc:`E-mail Second Factor<mail2f>` |new|                            ✔
-:doc:`Yubikey<yubikey2f>` |new|                                      ✔              ✔
+:doc:`Yubico OTP<yubikey2f>` |new|                                   ✔              ✔
 :doc:`External Second Factor<external2f>` *(OTP, SMS,...)* |new|     ✔
 :doc:`REST Second Factor<rest2f>` |new|                              ✔
 :doc:`Radius Second Factor<radius2f>` |new|  [3]_                    ✔

@@ -657,17 +657,17 @@ webauthnDisplayNameAttr                                 Session attribute contai
 webauthnRpName                                          WebAuthn Relying Party display name                                                  ✔
 whatToTrace                                             Session parameter used to fill REMOTE_USER                                           ✔      ✔
 wsdlServer                                              Enable /portal.wsdl server                                                           ✔
-yubikey2fActivation                                     Yubikey second factor activation                                                     ✔
-yubikey2fAuthnLevel                                     Authentication level for users authentified by Yubikey second factor                 ✔
+yubikey2fActivation                                     Yubico OTP second factor activation                                                  ✔
+yubikey2fAuthnLevel                                     Authentication level for users authentified by Yubico OTP second factor              ✔
 yubikey2fClientID                                       Yubico client ID                                                                     ✔
-yubikey2fFromSessionAttribute                           Provision yubikey from the given session variable                                    ✔
-yubikey2fLabel                                          Portal label for Yubikey second factor                                               ✔
-yubikey2fLogo                                           Custom logo for Yubikey 2F                                                           ✔
+yubikey2fFromSessionAttribute                           Provision Yubico OTP ID from the given session variable                              ✔
+yubikey2fLabel                                          Portal label for Yubico OTP second factor                                            ✔
+yubikey2fLogo                                           Custom logo for Yubico OTP 2F                                                        ✔
 yubikey2fNonce                                          Yubico nonce                                                                         ✔
-yubikey2fPublicIDSize                                   Yubikey public ID size                                                               ✔
+yubikey2fPublicIDSize                                   Yubico public ID size                                                                ✔
 yubikey2fSecretKey                                      Yubico secret key                                                                    ✔
-yubikey2fSelfRegistration                               Yubikey self registration activation                                                 ✔
-yubikey2fTTL                                            Yubikey device time to live                                                          ✔
+yubikey2fSelfRegistration                               Yubico self registration activation                                                  ✔
+yubikey2fTTL                                            Yubico device time to live                                                           ✔
 yubikey2fUrl                                            Yubico server                                                                        ✔
 yubikey2fUserCanRemoveKey                               Authorize users to remove existing Yubikey                                           ✔
 zimbraAccountKey                                        Zimbra account session key                                                                  ✔               ✔

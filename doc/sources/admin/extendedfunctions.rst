@@ -260,11 +260,12 @@ has2f
 
 .. versionadded:: 2.0.10
 
-This function tests if the current user has registered a second factor. The following types are supported:
+This function tests if the current user has registered a second factor. The following types are supported out of the box:
 
 * :doc:`TOTP<totp2f>`
 * :doc:`U2F<u2f>`
 * :doc:`UBK<yubikey2f>`
+* :doc:`WebAuthn<webauthn2f>`
 
 Example::
 

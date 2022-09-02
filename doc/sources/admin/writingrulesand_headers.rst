@@ -119,12 +119,11 @@ level depends on authentication backend used by this user. Default
 values are:
 
 -  0 for :doc:`Null<authnull>`
--  1 for :doc:`CAS<authcas>`, :doc:`old OpenID-2<authopenid>`,
+-  1 for :doc:`CAS<authcas>`, :doc:`OpenID Connect<authopenidconnect>`,
    :doc:`Facebook<authfacebook>`,…
 -  2 for web-form based authentication (:doc:`LDAP<authldap>`,
    :doc:`DBI<authdbi>`,…)
--  3 for :doc:`Yubikey<authyubikey>`
--  4 for :doc:`Kerberos<authapache>`
+-  3 for :doc:`Kerberos<authkerberos>`
 -  5 for :doc:`SSL<authssl>`
 
 There are three ways to impose users a higher authentication level:
