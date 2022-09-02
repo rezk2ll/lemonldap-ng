@@ -922,7 +922,8 @@ sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
 
     my $templateDir = $self->conf->{templateDir} . '/' . $self->getSkin($req);
-    $self->templateDir( [ $templateDir, @{ $self->templateDir } ] );
+    my $defaultTemplateDir = $self->conf->{templateDir} . '/bootstrap';
+    $self->templateDir( [ $templateDir, $defaultTemplateDir ] );
 
     # Check template
     $args{templateDir} = $templateDir;
