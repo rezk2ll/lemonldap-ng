@@ -20,7 +20,7 @@ has allowedDomains => ( is => 'rw', isa => 'ArrayRef' );
 has keytab         => ( is => 'rw' );
 has AjaxInitScript => ( is => 'rw', default => '' );
 has Name           => ( is => 'ro', default => 'Kerberos' );
-has InitCmd => (
+has InitCmd        => (
     is      => 'ro',
     default => q@$self->p->setHiddenFormValue( $req, kerberos => 0, '', 0 )@
 );
@@ -58,85 +58,114 @@ sub extractFormInfo {
     }
 
     my $auth = $req->env->{HTTP_AUTHORIZATION};
-    unless ($auth) {
-
-        # Case 1: simple usage or first Kerberos Ajax request
-        #         => return 401 to initiate Kerberos
-        if ( !$self->{conf}->{krbByJs} or $req->param('kerberos') ) {
-            $self->logger->debug('Initialize Kerberos dialog');
-
-            # Case 1.1: Ajax request
-            if ( $req->wantJSON ) {
-                $req->response( [
-                        401,
-                        [
-                            'WWW-Authenticate' => 'Negotiate',
-                            'Content-Type'     => 'application/json',
-                            'Content-Length'   => 35
-                        ],
-                        ['{"error":"Authentication required"}']
-                    ]
-                );
-            }
-
-            # Case 1.2: HTML request: display error and initiate Kerberos
-            #           dialog
-            else {
-                $req->error(PE_BADCREDENTIALS);
-                push @{ $req->respHeaders }, 'WWW-Authenticate' => 'Negotiate';
-                my ( $tpl, $prms ) = $self->p->display($req);
-                $req->response(
-                    $self->p->sendHtml(
-                        $req, $tpl,
-                        params => $prms,
-                        code   => 401
-                    )
-                );
-            }
-            return PE_SENDRESPONSE;
-        }
-
-        # Case 2: Ajax Kerberos request has failed, and javascript has reloaded
-        # page with "kerberos=0". Return an error to be able to switch to
-        # another backend (Combination)
-        # switch to another backend
-        elsif ( defined $req->param('kerberos') ) {
-            $self->userLogger->warn(
-                'Kerberos authentication has failed, back to portal');
-            $self->p->setHiddenFormValue( $req, kerberos => 0, '', 0 );
-            return PE_BADCREDENTIALS;
-        }
-
-        # Case 3: Display kerberos auth page (with javascript)
-        else {
-            $self->logger->debug( 'Append ' . $self->Name . ' init/script' );
-
-            # Call kerberos.js if Kerberos is the only Auth module
-            # kerberosChoice.js is used by Choice
-            $self->{AjaxInitScript} =~ s/kerberosChoice/kerberos/;
-
-            # In some Combination scenarios, Kerberos may be called multiple
-            # times but we only want to add the JS once
-            unless ( $req->data->{_krbJsAlreadySent} ) {
-
-                $req->data->{customScript} .= $self->{AjaxInitScript};
-                $self->logger->debug(
-                    "Send init/script -> " . $req->data->{customScript} );
-                $req->data->{_krbJsAlreadySent} = 1;
-            }
-
-            #$self->p->setHiddenFormValue( $req, kerberos => 0, '', 0 );
-            eval( $self->InitCmd );
-            die 'Unable to launch init commmand ' . $self->{InitCmd} if ($@);
-            $req->data->{waitingMessage} = 1;
-            return PE_FIRSTACCESS;
-        }
+    if ($auth) {
+        return $self->_handle_response( $req, $auth );
     }
+    else {
+        return $self->_request_credential($req);
+    }
+}
+
+sub _request_credential {
+    my ( $self, $req ) = @_;
+
+    # Case 1: simple usage or first Kerberos Ajax request
+    #         => return 401 to initiate Kerberos
+    if ( !$self->{conf}->{krbByJs} or $req->param('kerberos') ) {
+        $self->logger->debug('Initialize Kerberos dialog');
+
+        # Case 1.1: Ajax request
+        if ( $req->wantJSON ) {
+            $req->response( [
+                    401,
+                    [
+                        'WWW-Authenticate' => 'Negotiate',
+                        'Content-Type'     => 'application/json',
+                        'Content-Length'   => 35
+                    ],
+                    ['{"error":"Authentication required"}']
+                ]
+            );
+        }
+
+        # Case 1.2: HTML request: display error and initiate Kerberos
+        #           dialog
+        else {
+            $req->error(PE_BADCREDENTIALS);
+            push @{ $req->respHeaders }, 'WWW-Authenticate' => 'Negotiate';
+            my ( $tpl, $prms ) = $self->p->display($req);
+            $req->response(
+                $self->p->sendHtml(
+                    $req, $tpl,
+                    params => $prms,
+                    code   => 401
+                )
+            );
+        }
+        return PE_SENDRESPONSE;
+    }
+
+    # Case 2: Ajax Kerberos request has failed, and javascript has reloaded
+    # page with "kerberos=0". Return an error to be able to switch to
+    # another backend (Combination)
+    elsif ( defined $req->param('kerberos') ) {
+        $self->userLogger->warn(
+            'Kerberos authentication has failed, back to portal');
+        $self->p->setHiddenFormValue( $req, kerberos => 0, '', 0 );
+        return PE_BADCREDENTIALS;
+    }
+
+    # Case 3: Display kerberos auth page (with javascript)
+    else {
+        $self->logger->debug( 'Append ' . $self->Name . ' init/script' );
+
+        # Call kerberos.js if Kerberos is the only Auth module
+        # kerberosChoice.js is used by Choice
+        $self->{AjaxInitScript} =~ s/kerberosChoice/kerberos/;
+
+        # In some Combination scenarios, Kerberos may be called multiple
+        # times but we only want to add the JS once
+        unless ( $req->data->{_krbJsAlreadySent} ) {
+
+            $req->data->{customScript} .= $self->{AjaxInitScript};
+            $self->logger->debug(
+                "Send init/script -> " . $req->data->{customScript} );
+            $req->data->{_krbJsAlreadySent} = 1;
+        }
+
+        #$self->p->setHiddenFormValue( $req, kerberos => 0, '', 0 );
+        eval( $self->InitCmd );
+        die 'Unable to launch init commmand ' . $self->{InitCmd} if ($@);
+        $req->data->{waitingMessage} = 1;
+        return PE_FIRSTACCESS;
+    }
+}
+
+sub _handle_response {
+    my ( $self, $req, $auth ) = @_;
+
+    my $client_name = $self->_krb_get_user($auth);
+    unless ($client_name) {
+        return PE_BADCREDENTIALS;
+    }
+
+    $self->userLogger->notice("$client_name authentified by Kerberos");
+
+    $req->data->{_krbUser} = $client_name;
+    if ( $self->conf->{krbRemoveDomain} ) {
+        $client_name =~ s/^(.*)@.*$/$1/;
+    }
+    $req->user($client_name);
+    return $self->_checkDomains($req);
+}
+
+sub _krb_get_user {
+    my ( $self, $auth ) = @_;
 
     # Case 4: an "Authorization header" has been sent
     if ( $auth !~ /^Negotiate (.*)$/ ) {
         $self->userLogger->error('Bad authorization header');
-        return PE_BADCREDENTIALS;
+        return;
     }
 
     # Case 5: Kerberos ticket received
@@ -145,7 +174,7 @@ sub extractFormInfo {
     eval { $data = MIME::Base64::decode($1) };
     if ($@) {
         $self->userLogger->error( 'Bad authorization header: ' . $@ );
-        return PE_BADCREDENTIALS;
+        return;
     }
     $ENV{KRB5_KTNAME} = $self->keytab;
     $self->logger->debug( "Set KRB5_KTNAME env to " . $ENV{KRB5_KTNAME} );
@@ -158,7 +187,7 @@ sub extractFormInfo {
               . 'ticket, make sure the workstation is correctly configured: '
               . 'portal in trusted internet zone, clock synchronization, '
               . 'correct reverse DNS configuration...' );
-        return PE_ERROR;
+        return;
     }
 
     my $status = GSSAPI::Context::accept(
@@ -178,7 +207,7 @@ sub extractFormInfo {
         foreach ( $status->generic_message(), $status->specific_message() ) {
             $self->logger->error($_);
         }
-        return PE_ERROR;
+        return;
     }
     my $client_name;
     $status = $gss_client_name->display($client_name);
@@ -187,15 +216,10 @@ sub extractFormInfo {
         foreach ( $status->generic_message(), $status->specific_message() ) {
             $self->logger->error($_);
         }
-        return PE_ERROR;
+        return;
     }
-    $self->userLogger->notice("$client_name authentified by Kerberos");
-    $req->data->{_krbUser} = $client_name;
-    if ( $self->conf->{krbRemoveDomain} ) {
-        $client_name =~ s/^(.*)@.*$/$1/;
-    }
-    $req->user($client_name);
-    return $self->_checkDomains($req);
+
+    return $client_name;
 }
 
 sub _checkDomains {
