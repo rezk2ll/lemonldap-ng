@@ -1,21 +1,41 @@
 use Test::More;
 use IO::String;
+use URI;
 use strict;
 
 require 't/test-lib.pm';
 
 my $res;
 
-subtest 'Legacy AJAX SSL Auth' => sub {
+sub testUserTokenSSLAuth {
+    my %params = @_;
+    my $choice = $params{'choice'};
+
     my $client = LLNG::Manager::Test->new( {
             ini => {
-                logLevel       => 'error',
-                useSafeJail    => 1,
-                authentication => 'SSL',
-                userDB         => 'Null',
-                SSLVar         => 'SSL_CLIENT_S_DN_Custom',
-                sslByAjax      => 1,
-                sslHost        => 'https://authssl.example.com:19876'
+                logLevel    => 'error',
+                useSafeJail => 1,
+                (
+                    $choice
+                    ? (
+                        authentication    => 'Choice',
+                        userDB            => 'Same',
+                        authChoiceParam   => 'test',
+                        authChoiceModules => {
+                            '1_demo' => 'Demo;Demo;Null',
+                            '2_ssl'  => 'SSL;Demo;Null',
+                        },
+                      )
+                    : (
+                        authentication => 'SSL',
+                        userDB         => 'Demo',
+                    )
+                ),
+
+                SSLVar            => 'SSL_CLIENT_S_DN_Custom',
+                sslByAjax         => 1,
+                sslHost           => 'https://authssl.example.com/authssl',
+                restSessionServer => 1,
             }
         }
     );
@@ -32,23 +52,123 @@ subtest 'Legacy AJAX SSL Auth' => sub {
 
     ok(
         $res->[2]->[0] =~
-m%<script type="application/init">\s*\{"sslHost":"https://authssl.example.com:19876"\}\s*</script>%s,
+m%<script type="application/init">\s*\{"sslHost":"https://authssl.example.com/authssl"\}\s*</script>%s,
         ' SSL AJAX URL found'
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ qr%<img src="/static/common/modules/SSL.png"%,
         'Found 5_ssl Logo' )
       or print STDERR Dumper( $res->[2]->[0] );
-    ok( $res->[2]->[0] =~ /ssl\.(?:min\.)?js/, 'Get ssl javascript' )
+    my $scriptname = "ssl" . ( $choice ? "Choice" : "" ) . "(?:min)?\.js";
+    ok( $res->[2]->[0] =~ /$scriptname/, 'Get ssl javascript' )
       or print STDERR Dumper( $res->[2]->[0] );
-    count(4);
+
+    my ( $host, $url, $query ) =
+      expectForm( $res, '#', undef, 'nossl', 'ajax_auth_token' );
+
+    # AJAX request
+    ok(
+        $res = $client->_get(
+            '/authssl',
+            accept => 'application/json',
+            custom => {
+                SSL_CLIENT_S_DN_Custom => 'dwho',
+                SSL_CLIENT_I_DN        => 'cn=MyIssuer'
+            }
+        ),
+        'Auth query'
+    );
+    my $json = expectJSON($res);
+    ok( $json->{ajax_auth_token}, "User token was returned" );
+    my $ajax_auth_token = $json->{ajax_auth_token};
+
+    $query .= "&ajax_auth_token=$ajax_auth_token";
+
+    ok(
+        $res = $client->_post(
+            '/', IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'Post form'
+    );
+    my $id = expectCookie($res);
+    expectRedirection( $res, 'http://test1.example.com/' );
+    expectSessionAttributes(
+        $client, $id,
+        authenticationLevel => 5,
+        _auth               => 'SSL',
+        _Issuer             => 'cn=MyIssuer',
+        _user               => 'dwho',
+        uid                 => 'dwho'
+    );
+}
+
+sub testLegacyAjaxSSL {
+    my %params = @_;
+    my $choice = $params{'choice'};
+    my $client = LLNG::Manager::Test->new( {
+            ini => {
+                logLevel    => 'error',
+                useSafeJail => 1,
+                (
+                    $choice
+                    ? (
+                        authentication    => 'Choice',
+                        userDB            => 'Same',
+                        authChoiceParam   => 'test',
+                        authChoiceModules => {
+                            '1_demo' => 'Demo;Demo;Null',
+                            '2_ssl'  => 'SSL;Demo;Null',
+                        },
+                        sslHost =>
+                          'https://authssl.example.com:19876/?test=2_ssl'
+                      )
+                    : (
+                        authentication => 'SSL',
+                        userDB         => 'Demo',
+                        sslHost        => 'https://authssl.example.com:19876/'
+                    )
+                ),
+                SSLVar    => 'SSL_CLIENT_S_DN_Custom',
+                sslByAjax => 1,
+            }
+        }
+    );
+
+    ok(
+        $res = $client->_get(
+            '/',
+            query  => 'url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==',
+            accept => 'text/html'
+        ),
+        'Get Menu'
+    );
+    my $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
+
+    ok(
+        $res->[2]->[0] =~
+m%<script type="application/init">\s*\{"sslHost":"([^"]*)"\}\s*</script>%s,
+        ' SSL AJAX URL found'
+    ) or print STDERR Dumper( $res->[2]->[0] );
+    my $sslHost = URI->new($1);
+    is( $sslHost->authority, "authssl.example.com:19876", "Correct hostname" );
+    is( $sslHost->path,      "/",                         "Correct path" );
+    is( $sslHost->query, ( $choice ? "test=2_ssl" : undef ), "Correct query" );
+
+    ok( $res->[2]->[0] =~ qr%<img src="/static/common/modules/SSL.png"%,
+        'Found 5_ssl Logo' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    my $scriptname = "ssl" . ( $choice ? "Choice" : "" ) . "(?:min)?\.js";
+    ok( $res->[2]->[0] =~ /$scriptname/, 'Get ssl javascript' )
+      or print STDERR Dumper( $res->[2]->[0] );
 
     my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'nossl' );
 
     # AJAX request
     ok(
         $res = $client->_get(
-            '/',
-            cookie => $pdata,
+            $sslHost->path,
+            query  => $sslHost->query,
             accept => 'application/json',
             custom => { SSL_CLIENT_S_DN_Custom => 'dwho' }
         ),
@@ -59,9 +179,6 @@ m%<script type="application/init">\s*\{"sslHost":"https://authssl.example.com:19
     is( $json->{error},  0, "No error" );
 
     my $id = expectCookie($res);
-    $pdata = expectCookie( $res, 'lemonldappdata' );
-    ok( $pdata eq '', 'pdata is empty' );
-    count(2);
 
     ok(
         $res = $client->_post(
@@ -73,7 +190,17 @@ m%<script type="application/init">\s*\{"sslHost":"https://authssl.example.com:19
         'Post form'
     );
     expectRedirection( $res, 'http://test1.example.com/' );
-};
+}
+
+subtest 'Usertoken SSL Auth' => \&testUserTokenSSLAuth, choice => 0;
+subtest
+  'Usertoken SSL Auth (with choice)' => \&testUserTokenSSLAuth,
+  choice                             => 1;
+
+subtest 'Legacy AJAX SSL Auth' => \&testLegacyAjaxSSL, choice => 0;
+subtest
+  'Legacy AJAX SSL Auth (with Choice)' => \&testLegacyAjaxSSL,
+  choice                               => 1;
 
 subtest 'Regular SSL Auth' => sub {
     &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
@@ -96,7 +223,6 @@ subtest 'Regular SSL Auth' => sub {
 
     expectOK($res);
     expectCookie($res);
-    count(1);
 };
 
 done_testing();
