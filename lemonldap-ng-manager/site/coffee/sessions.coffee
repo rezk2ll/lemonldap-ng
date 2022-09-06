@@ -254,26 +254,27 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 				subres = []
 				for attr in attrs
 					if session[attr]
-						if session[attr].toString().match(/"type":\s*"(?:TOTP|U2F|UBK|WebAuthn)"/)
-							subres.push
-								title: "type"
-								value: "name"
-								epoch: "date"
-								td: "0"
+						if attr == "_2fDevices" && session[attr]
 							array = JSON.parse(session[attr])
-							for sfDevice in array
-								for key, value of sfDevice
-									if key == 'type'
-										title = value
-									if key == 'name'
-										name = value
-									if key == 'epoch'
-										epoch = value
+							if array.length > 0
 								subres.push
-									title: title
-									value: name
-									epoch: epoch
-									td: "1"
+									title: "type"
+									value: "name"
+									epoch: "date"
+									td: "0"
+								for sfDevice in array
+									for key, value of sfDevice
+										if key == 'type'
+											title = value
+										if key == 'name'
+											name = value
+										if key == 'epoch'
+											epoch = value
+									subres.push
+										title: title
+										value: name
+										epoch: epoch
+										td: "1"
 							delete session[attr]
 						else if session[attr].toString().match(/"rp":\s*"[\w-]+"/)
 							subres.push

@@ -290,34 +290,36 @@
             for (i = 0, len = attrs.length; i < len; i++) {
               attr = attrs[i];
               if (session[attr]) {
-                if (session[attr].toString().match(/"type":\s*"(?:TOTP|U2F|UBK|WebAuthn)"/)) {
-                  subres.push({
-                    title: "type",
-                    value: "name",
-                    epoch: "date",
-                    td: "0"
-                  });
+                if (attr === "_2fDevices" && session[attr]) {
                   array = JSON.parse(session[attr]);
-                  for (j = 0, len1 = array.length; j < len1; j++) {
-                    sfDevice = array[j];
-                    for (key in sfDevice) {
-                      value = sfDevice[key];
-                      if (key === 'type') {
-                        title = value;
-                      }
-                      if (key === 'name') {
-                        name = value;
-                      }
-                      if (key === 'epoch') {
-                        epoch = value;
-                      }
-                    }
+                  if (array.length > 0) {
                     subres.push({
-                      title: title,
-                      value: name,
-                      epoch: epoch,
-                      td: "1"
+                      title: "type",
+                      value: "name",
+                      epoch: "date",
+                      td: "0"
                     });
+                    for (j = 0, len1 = array.length; j < len1; j++) {
+                      sfDevice = array[j];
+                      for (key in sfDevice) {
+                        value = sfDevice[key];
+                        if (key === 'type') {
+                          title = value;
+                        }
+                        if (key === 'name') {
+                          name = value;
+                        }
+                        if (key === 'epoch') {
+                          epoch = value;
+                        }
+                      }
+                      subres.push({
+                        title: title,
+                        value: name,
+                        epoch: epoch,
+                        td: "1"
+                      });
+                    }
                   }
                   delete session[attr];
                 } else if (session[attr].toString().match(/"rp":\s*"[\w-]+"/)) {
