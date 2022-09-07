@@ -137,11 +137,9 @@ To achieve this, you can create a rule in the Manager: select
    skin is applied.
 -  **Value**: the name of the skin to use.
 
-Example:
+Example::
 
-```
-$_url =~ m#^http://test1.example.com#
-```
+    $_url =~ m#^http://test1.example.com#
 
 Skin files
 ~~~~~~~~~~

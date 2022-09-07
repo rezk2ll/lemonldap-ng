@@ -186,17 +186,13 @@ LemonLDAP::NG version is returned by the CheckState plugin
 
 If you use the `/checkstate` URL to monitor LemonLDAP::NG, you may notice a slight change in the output format:
 
-*2.0.13* :
+*2.0.13* ::
 
-```
-{"result":1}
-```
+    {"result":1}
 
-*2.0.14* :
+*2.0.14* ::
 
-```
-{"result":1,"version":"2.0.14"}
-```
+    {"result":1,"version":"2.0.14"}
 
 Depending on your load balancer or monitoring configuration, this can cause false negatives.
 
