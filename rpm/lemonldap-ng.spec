@@ -34,8 +34,8 @@
 # Main package
 #==============================================================================
 Name:           lemonldap-ng
-Version:        2.0.14
-Release:        %{?pre_release:0.}2%{?pre_release:.%{pre_release}}%{?dist}
+Version:        2.0.15
+Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        LemonLDAP-NG WebSSO
 License:        GPLv2+
 URL:            https://lemonldap-ng.org
@@ -765,6 +765,9 @@ fi
 # Changelog
 #==============================================================================
 %changelog
+* Wed Sep 07 2022 Clement Oudot <clem.oudot@gmail.com> - 2.0.15-1
+- Update to 2.0.15
+
 * Thu Feb 24 2022 Xavier Bachelot <xavier@bachelot.org> - 2.0.14-2
 - Prepare for EL9 support
 
