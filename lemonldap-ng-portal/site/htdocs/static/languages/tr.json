@@ -263,7 +263,7 @@
 "register":"Kaydol",
 "registerRequestAlreadyIssued":"Bu hesap için kayıt olma isteği zaten şu tarihte alındı:",
 "rememberChoice":"Seçimimi hatırla",
-"rememberTimerLabel":"s before automatic authentication",
+"rememberTimerLabel":"s otomatik kimlik doğrulamasından önce",
 "remove2fWarning":"Bu işlem geri alınamaz",
 "removeOtherSessions":"Diğer oturumları sil",
 "renewSession":"Oturumu yenile",
