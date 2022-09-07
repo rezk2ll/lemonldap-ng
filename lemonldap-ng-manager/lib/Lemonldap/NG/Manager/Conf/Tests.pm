@@ -867,6 +867,33 @@ sub tests {
             return 1;
         },
 
+        # Public OIDC clients require a public key algorithm
+        oidcRPPublicNeedPubAlg => sub {
+            return 1
+              unless ( $conf->{oidcRPMetaDataOptions}
+                and %{ $conf->{oidcRPMetaDataOptions} || {} } );
+            my @clients;
+            for ( keys %{ $conf->{oidcRPMetaDataOptions} || {} } ) {
+                if ( $conf->{oidcRPMetaDataOptions}->{$_}
+                    ->{oidcRPMetaDataOptionsPublic}
+                    and $conf->{oidcRPMetaDataOptions}->{$_}
+                    ->{oidcRPMetaDataOptionsIDTokenSignAlg} =~ /^HS/ )
+                {
+                    push @clients, $_;
+                }
+            }
+            if (@clients) {
+                my $msg =
+                    join( ", ", @clients )
+                  . ": public clients should use a public key algorithm"
+                  . " for ID token signature";
+                return 1, $msg;
+            }
+            else {
+                return 1;
+            }
+        },
+
         # OIDC RP Client ID must exist and be unique
         oidcRPClientIdUniqueness => sub {
             return 1
@@ -878,7 +905,8 @@ sub tests {
             foreach
               my $clientConfKey ( keys %{ $conf->{oidcRPMetaDataOptions} } )
             {
-                my $clientId = $conf->{oidcRPMetaDataOptions}->{$clientConfKey}
+                my $clientId =
+                  $conf->{oidcRPMetaDataOptions}->{$clientConfKey}
                   ->{oidcRPMetaDataOptionsClientID};
                 unless ($clientId) {
                     push @msg,
