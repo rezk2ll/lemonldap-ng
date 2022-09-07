@@ -25,13 +25,15 @@ values unless you have a specific need to change them.
 -  **User Info**
 -  **JWKS**
 -  **Registration**
+-  **Introspection**
 -  **End of session**
 -  **Check Session**
-
+-  **Front-Channel URI**
+-  **Back-Channel URI**
 
 .. tip::
 
-    These endpoints are published inside JSON metadata.
+    These endpoints are published in JSON metadata.
 
 Authentication context
 ~~~~~~~~~~~~~~~~~~~~~~
