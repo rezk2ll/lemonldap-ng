@@ -141,9 +141,6 @@ Other
    Don't use backports unless you plan to update your system because
    backports are not covered by Debian Security Policy
 
-.. [4]
-   around July 2023
-
 .. [5]
    few days after release
 
