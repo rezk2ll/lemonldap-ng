@@ -16,6 +16,7 @@ LemonLDAP::NG provides these packages:
 -  liblemonldap-ng-handler-perl: Handler common libraries
 -  liblemonldap-ng-manager-perl: Manager files
 -  liblemonldap-ng-portal-perl: Portal files
+-  liblemonldap-ng-ssoaas-apache-client-perl: SSOaaS client module
 
 Get the packages
 ----------------
