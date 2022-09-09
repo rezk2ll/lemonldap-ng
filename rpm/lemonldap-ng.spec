@@ -765,7 +765,7 @@ fi
 # Changelog
 #==============================================================================
 %changelog
-* Wed Sep 07 2022 Clement Oudot <clem.oudot@gmail.com> - 2.0.15-1
+* Fri Sep 09 2022 Clement Oudot <clem.oudot@gmail.com> - 2.0.15-1
 - Update to 2.0.15
 
 * Thu Feb 24 2022 Xavier Bachelot <xavier@bachelot.org> - 2.0.14-2
