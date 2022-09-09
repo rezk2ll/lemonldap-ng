@@ -462,17 +462,19 @@ sub attributes {
             type          => 'int',
             default       => 31536000,
             documentation => 'lifetime of the remember auth choice cookie',
-            flags => 'm',
+            flags         => 'm',
         },
         rememberDefaultChecked => {
             type          => 'bool',
             default       => 0,
-            documentation => 'Is remember auth choice checkbox enabled by default?',
+            documentation =>
+              'Is remember auth choice checkbox enabled by default?',
         },
         rememberTimer => {
             type          => 'int',
             default       => 5,
-            documentation => 'timer before automatic authentication with the previous remembered authentication choice',
+            documentation =>
+'timer before automatic authentication with the previous remembered authentication choice',
             flags => 'm',
         },
         stayConnected => {
@@ -2423,6 +2425,25 @@ sub attributes {
             help          => "adaptativeauthenticationlevel.html",
             documentation => 'Adaptative authentication level rules',
             flags         => 'p',
+        },
+
+        # LocationDetect plugin
+        locationDetect => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable LocationDetect plugin',
+        },
+        locationDetectGeoIpDatabase => {
+            type          => 'text',
+            documentation => 'Path to GeoIP database',
+        },
+        locationDetectIpDetail => {
+            type          => 'text',
+            documentation => 'Information requested for IP',
+        },
+        locationDetectUaDetail => {
+            type          => 'text',
+            documentation => 'Information requested for User Agent',
         },
 
         ## Virtualhosts
