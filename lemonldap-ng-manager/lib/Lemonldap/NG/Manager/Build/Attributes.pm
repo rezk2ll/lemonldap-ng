@@ -472,7 +472,7 @@ sub attributes {
         rememberTimer => {
             type          => 'int',
             default       => 5,
-            documentation => 'timer before automatic authentication with the previous remembered authentication choice',
+            documentation => 'timer before automatic authentication with remembered choice',
             flags => 'm',
         },
         stayConnected => {

@@ -479,7 +479,7 @@ rememberAuthChoiceRule                                  remember auth choice act
 rememberCookieName                                      Name of the remember auth choice cookie                                              ✔
 rememberCookieTimeout                                   lifetime of the remember auth choice cookie                                                         ✔
 rememberDefaultChecked                                  Is remember auth choice checkbox enabled by default?                                 ✔
-rememberTimer                                           timer before automatic authentication with the previous remembered authentication choice               ✔
+rememberTimer                                           timer before automatic authentication with remembered choice                                        ✔
 remoteCookieName                                        Name of the remote portal cookie                                                     ✔
 remoteGlobalStorage                                     Remote session backend                                                               ✔
 remoteGlobalStorageOptions                              Apache::Session module parameters                                                    ✔
