@@ -38,7 +38,7 @@ our @pList = (
       '::Plugins::AdaptativeAuthenticationLevel',
     refreshSessions  => '::Plugins::Refresh',
     crowdsec         => '::Plugins::CrowdSec',
-    locationDetect   => '::Location::Detect',
+    locationDetect   => '::Plugins::LocationDetect',
     globalLogoutRule => '::Plugins::GlobalLogout',
 );
 
