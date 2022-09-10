@@ -172,7 +172,7 @@ expectJWT( $token,
       "openid profile email my_hooked_scope myscope refreshed_online_french" );
 
 ## Test Offline refresh hook
-$code = authorize(
+$code = codeAuthorize(
     $op, $idpId,
     {
         response_type => 'code',

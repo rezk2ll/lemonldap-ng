@@ -75,7 +75,7 @@ my $op = LLNG::Manager::Test->new( {
 
 my $idpId = login( $op, "french" );
 
-my $code = authorize(
+my $code = codeAuthorize(
     $op, $idpId,
     {
         response_type => "code",

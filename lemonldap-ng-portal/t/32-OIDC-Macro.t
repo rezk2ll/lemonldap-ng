@@ -18,7 +18,7 @@ my $res;
 ok( my $op = op(), 'OP portal' );
 
 my $idpId = login( $op, "french" );
-my $code  = authorize(
+my $code  = codeAuthorize(
     $op, $idpId,
     {
         response_type => "code",

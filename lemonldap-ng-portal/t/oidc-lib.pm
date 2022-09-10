@@ -75,6 +75,13 @@ sub authorize {
         accept => 'text/html',
         cookie => "lemonldap=$id",
     );
+    return $res;
+}
+
+sub codeAuthorize {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ( $op, $id, $params ) = @_;
+    my $res = authorize( $op, $id, $params );
     my ($code) = expectRedirection( $res, qr#http://.*code=([^\&]*)# );
     return $code;
 }

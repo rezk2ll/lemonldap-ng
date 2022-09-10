@@ -26,7 +26,7 @@ sub runTest {
     $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{french}->{cn} =
       'Frédéric Accents';
 
-    my $code = authorize(
+    my $code = codeAuthorize(
         $op, $idpId,
         {
             response_type => "code",

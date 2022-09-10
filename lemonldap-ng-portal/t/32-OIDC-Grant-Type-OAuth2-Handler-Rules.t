@@ -120,7 +120,7 @@ sub get_access_token_code {
 
     my $id = login( $portal, 'dwho' );
 
-    my $code = authorize(
+    my $code = codeAuthorize(
         $portal, $id,
         {
             response_type => "code",
