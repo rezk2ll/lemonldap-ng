@@ -197,6 +197,14 @@ sub run {
             $self->logger->debug(
                 "OIDC $flow flow requested (response type: $response_type)");
 
+            # Check if response mode is allowed for flow
+            my $response_mode = $oidc_request->{'response_mode'};
+            if ( !$self->isResponseModeAllowed( $flow, $response_mode ) ) {
+                $self->logger->error(
+                    "Reponse mode $response_mode is not allowed in $flow Flow");
+                return PE_ERROR;
+            }
+
             # Extract request_uri/request parameter
             if ( $oidc_request->{'request_uri'} ) {
                 my $request =
@@ -727,14 +735,22 @@ sub run {
 
                 $self->logger->debug("Generated code: $code");
 
-                # Build Response
-                my $response_url = $self->buildAuthorizationCodeAuthnResponse(
-                    $oidc_request->{'redirect_uri'},
-                    $code, $oidc_request->{'state'},
-                    $session_state
-                );
+                my $state         = $oidc_request->{'state'};
 
-                return $self->_redirectToUrl( $req, $response_url );
+                return $self->sendOidcResponse(
+                    $req, $flow,
+                    $oidc_request->{'response_mode'},
+                    $oidc_request->{'redirect_uri'},
+                    {
+                        ( $code  ? ( code  => $code )  : () ),
+                        ( $state ? ( state => $state ) : () ),
+                        (
+                            $session_state
+                            ? ( session_state => $session_state )
+                            : ()
+                        ),
+                    }
+                );
             }
 
             # Implicit Flow
@@ -803,18 +819,30 @@ sub run {
                   ->{oidcRPMetaDataOptionsAccessTokenExpiration}
                   || $self->conf->{oidcServiceAccessTokenExpiration};
 
-                # Build Response
-                my $response_url = $self->buildImplicitAuthnResponse(
+                my $state = $oidc_request->{'state'};
+                return $self->sendOidcResponse(
+                    $req, $flow,
+                    $oidc_request->{'response_mode'},
                     $oidc_request->{'redirect_uri'},
-                    $access_token,
-                    $id_token,
-                    $expires_in,
-                    $oidc_request->{'state'},
-                    $session_state,
-                    ( ( $req_scope ne $scope ) ? $scope : undef )
+                    {
+                        id_token => $id_token,
+                        (
+                            $access_token
+                            ? (
+                                token_type   => 'bearer',
+                                access_token => $access_token
+                              )
+                            : ()
+                        ),
+                        ( $expires_in ? ( expires_in => $expires_in )    : () ),
+                        ( $state      ? ( state      => $state )         : () ),
+                        ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
+                        (
+                            $session_state ? ( session_state => $session_state )
+                            : ()
+                        )
+                    }
                 );
-
-                return $self->_redirectToUrl( $req, $response_url );
             }
 
             # Hybrid Flow
@@ -911,19 +939,35 @@ sub run {
                   ->{oidcRPMetaDataOptionsAccessTokenExpiration}
                   || $self->conf->{oidcServiceAccessTokenExpiration};
 
-                # Build Response
-                my $response_url = $self->buildHybridAuthnResponse(
-                    $oidc_request->{'redirect_uri'},
-                    $code,
-                    $access_token,
-                    $id_token,
-                    $expires_in,
-                    $oidc_request->{'state'},
-                    $session_state,
-                    ( ( $req_scope ne $scope ) ? $scope : undef )
-                );
+                my $state = $oidc_request->{state};
 
-                return $self->_redirectToUrl( $req, $response_url );
+                return $self->sendOidcResponse(
+                    $req, $flow,
+                    $oidc_request->{'response_mode'},
+                    $oidc_request->{'redirect_uri'},
+                    {
+                        code => $code,
+                        (
+                            $access_token
+                            ? (
+                                token_type   => 'bearer',
+                                access_token => $access_token
+                              )
+                            : ()
+                        ),
+                        (
+                            $id_token ? ( id_token => $id_token )
+                            : ()
+                        ),
+                        ( $expires_in ? ( expires_in => $expires_in )    : () ),
+                        ( $state      ? ( state      => $state )         : () ),
+                        ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
+                        (
+                            $session_state ? ( session_state => $session_state )
+                            : ()
+                        )
+                    }
+                );
             }
 
             $self->logger->debug("None flow has been selected");
@@ -2250,6 +2294,7 @@ sub metadata {
             request_parameter_supported      => JSON::true,
             request_uri_parameter_supported  => JSON::true,
             require_request_uri_registration => JSON::false,
+            response_modes_supported => [ "query", "fragment", "form_post", ],
 
             # Algorithms
             id_token_signing_alg_values_supported =>
@@ -2261,8 +2306,6 @@ sub metadata {
             code_challenge_methods_supported => [qw/plain S256/],
         }
     );
-
-    # response_modes_supported
 
     # id_token_encryption_alg_values_supported
     # id_token_encryption_enc_values_supported
@@ -2448,17 +2491,6 @@ sub _generateIDToken {
 
     # Create ID Token
     return $self->createIDToken( $req, $id_token_payload_hash, $rp );
-}
-
-sub _redirectToUrl {
-    my ( $self, $req, $response_url ) = @_;
-
-    # We must clear hidden form fields saved from the request (#2085)
-    $self->p->clearHiddenFormValue($req);
-    $self->logger->debug("Redirect user to $response_url");
-    $req->urldc($response_url);
-
-    return PE_REDIRECT;
 }
 
 1;

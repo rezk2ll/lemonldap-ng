@@ -19,9 +19,11 @@ use Lemonldap::NG::Common::JWT
 use MIME::Base64
   qw/encode_base64 decode_base64 encode_base64url decode_base64url/;
 use Scalar::Util qw/looks_like_number/;
+use URI;
+use URI::QueryParam;
 use Mouse;
 
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT);
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
 
 our $VERSION = '2.0.15';
 
@@ -393,6 +395,117 @@ sub buildAuthorizationCodeAuthnRequest {
         "OpenIDConnect Authorization Code Flow Authn Request: $authn_uri");
 
     return $authn_uri;
+}
+
+sub isResponseModeAllowed {
+    my ( $self, $flow, $response_mode ) = @_;
+
+    # Query encoding can only be used for authorization code flow
+    # cf oauth-v2-multiple-response-types-1_0.html
+    if ( $response_mode and $response_mode eq "query" ) {
+        return ( $flow eq "authorizationcode" );
+    }
+
+    # Fragment or Form Post are OK for all types
+    # cf oauth-v2-form-post-response-mode-1_0.html
+    return 1;
+}
+
+# Build OpenID Connect response
+# This method does not check if the response mode is allowed for the current
+# grant type. Use isResponseModeAllowed for that
+sub sendOidcResponse {
+    my ( $self, $req, $flow, $response_mode, $redirect_uri, $response_params )
+      = @_;
+
+    $response_mode //= $self->getDefaultResponseModeForFlow($flow);
+
+    if ( $response_mode eq "query" ) {
+        return $self->sendQueryResponse( $req, $redirect_uri,
+            $response_params );
+    }
+    elsif ( $response_mode eq "fragment" ) {
+        return $self->sendFragmentResponse( $req, $redirect_uri,
+            $response_params );
+    }
+    elsif ( $response_mode eq "form_post" ) {
+        return $self->sendFormPostResponse( $req, $redirect_uri,
+            $response_params );
+    }
+    else {
+        $self->logger->error("Unknown response_mode $response_mode");
+        return PE_ERROR;
+    }
+}
+
+sub getDefaultResponseModeForFlow {
+    my ( $self, $flow ) = @_;
+    my %def_flows = (
+        authorizationcode => "query",
+        implicit          => "fragment",
+        hybrid            => "fragment",
+    );
+    return $def_flows{$flow};
+}
+
+sub sendQueryResponse {
+    my ( $self, $req, $redirect_uri, $response_params ) = @_;
+    my $response_uri =
+      $self->getQueryResponse( $redirect_uri, $response_params );
+    return $self->_redirectToUrl( $req, $response_uri );
+}
+
+sub sendFragmentResponse {
+    my ( $self, $req, $redirect_uri, $response_params ) = @_;
+    my $response_uri =
+      $self->getFragmentResponse( $redirect_uri, $response_params );
+    return $self->_redirectToUrl( $req, $response_uri );
+}
+
+sub getQueryResponse {
+    my ( $self, $redirect_uri, $response_params ) = @_;
+    my $uri = URI->new($redirect_uri);
+    for ( keys %$response_params ) {
+        $uri->query_param( $_, $response_params->{$_} );
+    }
+    return $uri;
+}
+
+sub getFragmentResponse {
+    my ( $self, $redirect_uri, $response_params ) = @_;
+    my $uri = URI->new($redirect_uri);
+
+   # Use a temporary URL so we can use QueryParam features to build the fragment
+    my $tmp = URI->new;
+    $tmp->query( $uri->fragment );
+    for ( keys %$response_params ) {
+        $tmp->query_param( $_, $response_params->{$_} );
+    }
+
+    $uri->fragment( $tmp->query );
+
+    return $uri;
+}
+
+sub sendFormPostResponse {
+    my ( $self, $req, $redirect_uri, $response_params ) = @_;
+
+    $self->p->clearHiddenFormValue($req);
+    $req->postUrl($redirect_uri);
+    $req->postFields($response_params);
+    $req->steps( ['autoPost'] );
+    return PE_OK;
+}
+
+sub _redirectToUrl {
+    my ( $self, $req, $response_url ) = @_;
+
+    # We must clear hidden form fields saved from the request (#2085)
+    $self->p->clearHiddenFormValue($req);
+    $self->logger->debug("Redirect user to $response_url");
+    $req->urldc($response_url);
+
+    return PE_REDIRECT;
 }
 
 # Build Authentication Response URI for Authorization Code Flow
