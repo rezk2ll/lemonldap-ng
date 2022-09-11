@@ -99,6 +99,7 @@ Architecture: all
 Section: doc
 Depends: ${misc:Depends}
 Pre-Depends: ${misc:Pre-Depends}
+Multi-Arch: foreign
 Description: Lemonldap::NG Web-SSO system documentation
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
