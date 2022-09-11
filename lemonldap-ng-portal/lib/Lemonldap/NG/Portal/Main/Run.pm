@@ -876,7 +876,7 @@ sub _dump {
 sub getTrOver {
     my ( $self, $req, $templateDir ) = @_;
 
-    my $templateDir //= $self->conf->{templateDir} . '/' . $self->getSkin($req);
+    $templateDir //= $self->conf->{templateDir} . '/' . $self->getSkin($req);
 
     unless ( $self->trOverCache->{$templateDir} ) {
 
