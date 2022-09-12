@@ -8,6 +8,7 @@ The version
 * changelog: change version in scripts/generate-changelog.pl and run it
 * Main modules (Common.pm/Handler.pm/Portal.pm/Manager.pm)
 * Makefile.PL for cross-dependencies
+* codemeta.json
 
 - Then update packages information with:
 $ make clean && make cpan
