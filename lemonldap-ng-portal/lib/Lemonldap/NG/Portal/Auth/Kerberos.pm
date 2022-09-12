@@ -20,10 +20,17 @@ has allowedDomains => ( is => 'rw', isa => 'ArrayRef' );
 has keytab         => ( is => 'rw' );
 has AjaxInitScript => ( is => 'rw', default => '' );
 has Name           => ( is => 'ro', default => 'Kerberos' );
+
+# Override _Ajax InitCmd
 has InitCmd        => (
     is      => 'ro',
-    default => q@$self->p->setHiddenFormValue( $req, kerberos => 0, '', 0 )@
+    default =>
+q@$self->p->setHiddenFormValue( $req, kerberos => 0, '', 0 );$self->p->setHiddenFormValue( $req, ajax_auth_token => 0, '', 0 )@
 );
+
+has auth_id => ( is => 'ro', default => 'krb' );
+
+with 'Lemonldap::NG::Portal::Auth::_Ajax';
 
 # INITIALIZATION
 
@@ -48,15 +55,41 @@ sub init {
     return 1;
 }
 
+sub auth_route {
+    my ( $self, $req ) = @_;
+
+    my $auth = $req->env->{HTTP_AUTHORIZATION};
+    if ($auth) {
+        return $self->_handle_ajax_response( $req, $auth );
+    }
+    else {
+        return $self->_request_ajax_credential($req);
+    }
+}
+
 sub extractFormInfo {
     my ( $self, $req ) = @_;
 
+    # This is used when a Combination stack defined different UserDB
+    # for different Kerberos domains
     if ( $req->data->{_krbUser} ) {
         $self->logger->debug(
             'Kerberos ticket already validated for ' . $req->data->{_krbUser} );
         return $self->_checkDomains($req);
     }
 
+    my $token_id = $req->param('ajax_auth_token');
+    if ($token_id) {
+        my $token = $self->get_auth_token( $req, $token_id );
+        if ( $token->{user} ) {
+            return $self->_krbAuthFinish( $req, $token->{user} );
+        }
+        else {
+            return PE_ERROR;
+        }
+    }
+
+    # Non-AJAX auth
     my $auth = $req->env->{HTTP_AUTHORIZATION};
     if ($auth) {
         return $self->_handle_response( $req, $auth );
@@ -145,18 +178,53 @@ sub _handle_response {
     my ( $self, $req, $auth ) = @_;
 
     my $client_name = $self->_krb_get_user($auth);
-    unless ($client_name) {
+    if ($client_name) {
+        return $self->_krbAuthFinish( $req, $client_name );
+    }
+    else {
         return PE_BADCREDENTIALS;
     }
+}
+
+sub _krbAuthFinish {
+    my ( $self, $req, $client_name ) = @_;
 
     $self->userLogger->notice("$client_name authentified by Kerberos");
-
     $req->data->{_krbUser} = $client_name;
     if ( $self->conf->{krbRemoveDomain} ) {
         $client_name =~ s/^(.*)@.*$/$1/;
     }
     $req->user($client_name);
     return $self->_checkDomains($req);
+}
+
+sub _request_ajax_credential {
+    my ( $self, $req ) = @_;
+
+    $self->logger->debug('Initialize Kerberos dialog');
+
+    return [
+        401,
+        [
+            'WWW-Authenticate' => 'Negotiate',
+            'Content-Type'     => 'application/json',
+            'Content-Length'   => 35
+        ],
+        ['{"error":"Authentication required"}']
+    ];
+}
+
+sub _handle_ajax_response {
+    my ( $self, $req, $auth ) = @_;
+
+    my $client_name = $self->_krb_get_user($auth);
+    if ($client_name) {
+        return $self->ajax_success( $req, $client_name );
+    }
+    else {
+        $req->wantErrorRender(1);
+        return $self->p->do( $req, [ sub { PE_BADCREDENTIALS } ] );
+    }
 }
 
 sub _krb_get_user {
@@ -211,15 +279,14 @@ sub _krb_get_user {
     }
     my $client_name;
     $status = $gss_client_name->display($client_name);
-    unless ($status) {
-        $self->logger->error('Unable to display KRB client name');
-        foreach ( $status->generic_message(), $status->specific_message() ) {
-            $self->logger->error($_);
-        }
-        return;
+    if ($status) {
+        return $client_name;
     }
-
-    return $client_name;
+    $self->logger->error('Unable to display KRB client name');
+    foreach ( $status->generic_message(), $status->specific_message() ) {
+        $self->logger->error($_);
+    }
+    return;
 }
 
 sub _checkDomains {
