@@ -18,22 +18,10 @@ extends 'Lemonldap::NG::Portal::Main::Auth';
 
 has AjaxInitScript => ( is => 'rw', default => '' );
 has Name           => ( is => 'ro', default => 'SSL' );
-has InitCmd        => (
-    is      => 'ro',
-    default => q@$self->p->setHiddenFormValue( $req, usertoken => 0, '', 0 )@
-);
 
-# Auth Token
-has authott => (
-    is      => 'rw',
-    lazy    => 1,
-    default => sub {
-        my $ott =
-          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        $ott->cache(0);
-        return $ott;
-    }
-);
+has auth_id => ( is => 'ro', default => 'ssl' );
+
+with 'Lemonldap::NG::Portal::Auth::_Ajax';
 
 sub init {
     my ($self) = @_;
@@ -41,40 +29,22 @@ sub init {
           . $self->conf->{sslHost}
           . '"}</script>' )
       if $self->conf->{sslByAjax};
-
-    $self->addUnauthRoute( 'authssl' => 'auth_ssl', ['GET'] );
-
-    # Used for session upgrade/reauthn
-    $self->addAuthRoute( 'authssl' => 'auth_ssl', ['GET'] );
-
     return 1;
 }
 
 # Create authentication token so you can use 2FA, notifications, etc, with Ajax
-sub auth_ssl {
+sub auth_route {
     my ( $self, $req ) = @_;
 
     my $ssl_user = $self->get_user_from_req($req);
     if ($ssl_user) {
-        my $token = $self->authott->createToken( {
-                ssl_user => $ssl_user,
-                type     => 'auth_ssl_token',
+        return $self->ajax_success(
+            $req,
+            $ssl_user,
+            {
+                _Issuer => $req->env->{SSL_CLIENT_I_DN},
             }
         );
-        if ($token) {
-            return $self->sendJSONresponse(
-                $req,
-                {
-                    usertoken => $token,
-                    error     => PE_OK,
-                }
-            );
-        }
-        else {
-            $self->logger->error("Could not create user token for $ssl_user");
-            $req->wantErrorRender(1);
-            return $self->p->do( $req, [ sub { PE_ERROR } ] );
-        }
     }
     else {
         $req->wantErrorRender(1);
@@ -119,15 +89,26 @@ sub extractFormInfo {
         $req->wantErrorRender(1);
     }
 
-    my $token_id = $req->param('usertoken');
+    my $token_id = $req->param('ajax_auth_token');
     if ($token_id) {
-        return $self->_set_user_from_token( $req, $token_id );
+        my $token = $self->get_auth_token( $req, $token_id );
+        if ( $token->{user} ) {
+            my $user = $token->{user};
+            $self->userLogger->notice( "GoodSSL authentication for " . $user );
+            $req->user($user);
+            $req->data->{_Issuer} = $token->{extraInfo}->{_Issuer};
+            return PE_OK;
+        }
+        else {
+            return PE_ERROR;
+        }
     }
 
     my $ssl_user = $self->get_user_from_req($req);
 
     if ( $ssl_user and $req->user($ssl_user) ) {
         $self->userLogger->notice( "GoodSSL authentication for " . $req->user );
+        $req->data->{_Issuer} = $req->env->{SSL_CLIENT_I_DN};
         return PE_OK;
     }
     elsif ( $req->env->{SSL_CLIENT_S_DN} ) {
@@ -163,26 +144,6 @@ sub extractFormInfo {
     }
 }
 
-sub _set_user_from_token {
-    my ( $self, $req, $token_id ) = @_;
-    my $token = $self->authott->getToken($token_id);
-    if ($token) {
-        if ( $token->{type} eq 'auth_ssl_token' ) {
-            $req->user( $token->{ssl_user} );
-            $self->userLogger->notice(
-                "GoodSSL authentication for " . $req->user );
-            return PE_OK;
-        }
-        else {
-            $self->logger->error( "Unexpected token type: " . $token->{type} );
-            return PE_ERROR;
-        }
-    }
-
-    $self->logger->error("Could not fetch user token $token_id");
-    return PE_ERROR;
-}
-
 sub authenticate {
     return PE_OK;
 }
@@ -190,6 +151,7 @@ sub authenticate {
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     $req->sessionInfo->{authenticationLevel} = $self->conf->{SSLAuthnLevel};
+    $req->sessionInfo->{_Issuer}             = $req->data->{_Issuer};
     return PE_OK;
 }
 
