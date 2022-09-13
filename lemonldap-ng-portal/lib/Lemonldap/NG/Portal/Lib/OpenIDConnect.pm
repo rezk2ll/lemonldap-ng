@@ -509,6 +509,7 @@ sub _redirectToUrl {
 }
 
 # Build Authentication Response URI for Authorization Code Flow
+# DEPRECATED, remove in 3.0, use sendOidcResponse instead
 # @param redirect_uri Redirect URI
 # @param code Code
 # @param state State
@@ -517,19 +518,18 @@ sub _redirectToUrl {
 sub buildAuthorizationCodeAuthnResponse {
     my ( $self, $redirect_uri, $code, $state, $session_state ) = @_;
 
-    my $response_url =
-        $redirect_uri
-      . ( $redirect_uri =~ /\?/ ? '&' : '?' )
-      . build_urlencoded(
-        code => $code,
-        ( $state         ? ( state         => $state )         : () ),
-        ( $session_state ? ( session_state => $session_state ) : () )
-      );
-
-    return $response_url;
+    return $self->getQueryResponse(
+        $redirect_uri,
+        {
+            code => $code,
+            ( $state         ? ( state         => $state )         : () ),
+            ( $session_state ? ( session_state => $session_state ) : () )
+        }
+    );
 }
 
 # Build Authentication Response URI for Implicit Flow
+# DEPRECATED, remove in 3.0, use sendOidcResponse instead
 # @param redirect_uri Redirect URI
 # @param access_token Access token
 # @param id_token ID token
@@ -542,23 +542,25 @@ sub buildImplicitAuthnResponse {
         $state, $session_state, $scope )
       = @_;
 
-    my $response_url = "$redirect_uri#"
-      . build_urlencoded(
-        id_token => $id_token,
-        (
-            $access_token
-            ? ( token_type => 'bearer', access_token => $access_token )
-            : ()
-        ),
-        ( $expires_in    ? ( expires_in    => $expires_in )    : () ),
-        ( $state         ? ( state         => $state )         : () ),
-        ( $scope         ? ( scope         => $scope )         : () ),
-        ( $session_state ? ( session_state => $session_state ) : () )
-      );
-    return $response_url;
+    return $self->getFragmentResponse(
+        $redirect_uri,
+        {
+            id_token => $id_token,
+            (
+                $access_token
+                ? ( token_type => 'bearer', access_token => $access_token )
+                : ()
+            ),
+            ( $expires_in    ? ( expires_in    => $expires_in )    : () ),
+            ( $state         ? ( state         => $state )         : () ),
+            ( $scope         ? ( scope         => $scope )         : () ),
+            ( $session_state ? ( session_state => $session_state ) : () )
+        }
+    );
 }
 
 # Build Authentication Response URI for Hybrid Flow
+# DEPRECATED, remove in 3.0, use sendOidcResponse instead
 # @param redirect_uri Redirect URI
 # @param code Code
 # @param access_token Access token
@@ -573,24 +575,25 @@ sub buildHybridAuthnResponse {
         $expires_in, $state,        $session_state, $scope
     ) = @_;
 
-    my $response_url = "$redirect_uri#"
-      . build_urlencoded(
-        code => $code,
-        (
-            $access_token
-            ? ( token_type => 'bearer', access_token => $access_token )
-            : ()
-        ),
-        (
-            $id_token ? ( id_token => $id_token )
-            : ()
-        ),
-        ( $expires_in    ? ( expires_in    => $expires_in )    : () ),
-        ( $state         ? ( state         => $state )         : () ),
-        ( $scope         ? ( scope         => $scope )         : () ),
-        ( $session_state ? ( session_state => $session_state ) : () )
-      );
-    return $response_url;
+    return $self->getFragmentResponse(
+        $redirect_uri,
+        {
+            code => $code,
+            (
+                $access_token
+                ? ( token_type => 'bearer', access_token => $access_token )
+                : ()
+            ),
+            (
+                $id_token ? ( id_token => $id_token )
+                : ()
+            ),
+            ( $expires_in    ? ( expires_in    => $expires_in )    : () ),
+            ( $state         ? ( state         => $state )         : () ),
+            ( $scope         ? ( scope         => $scope )         : () ),
+            ( $session_state ? ( session_state => $session_state ) : () )
+        }
+    );
 }
 
 sub getAccessTokenFromTokenEndpoint {
