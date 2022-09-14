@@ -344,26 +344,26 @@ Configuration database
 LL::NG needs a storage system to store its own configuration (managed by
 the manager). Choose one in the following list:
 
-=========================================== ========= ====================================================================
-Backend                                     Shareable Comment
-=========================================== ========= ====================================================================
-:doc:`File (JSON)<fileconfbackend>`                   Not shareable between servers except
-                                                      if used in conjunction with :doc:`REST<restconfbackend>`
-                                                      or with a shared file system (NFS,...).
-                                                      Selected by default during installation.
-:doc:`YAML<yamlconfbackend>` |new|                    Same as :doc:`File<fileconfbackend>` but in YAML format
-                                                      instead of JSON
-:doc:`SQL (CDBI/RDBI)<sqlconfbackend>`      ✔         **Recommended for large-scale systems**. Prefer CDBI.
-:doc:`LDAP<ldapconfbackend>`                ✔
-:doc:`MongoDB<mongodbconfbackend>`          ✔
-:doc:`SOAP<soapconfbackend>` |deprecated|   ✔         Proxy backend to be used in conjunction with another
-                                                      configuration backend. \ **Can be used to secure another backend**
-                                                      for remote servers.
-:doc:`REST<restconfbackend>` |new|          ✔         Proxy backend to be used in conjunction with another configuration
-                                                      backend. \ **Can be used to secure another backend** for
-                                                      remote servers.
-:doc:`Local<localconfbackend>` |new|                  Use only lemonldap-ng.ini parameters.
-=========================================== ========= ====================================================================
+===================================================== ========= ====================================================================
+Backend                                               Shareable Comment
+===================================================== ========= ====================================================================
+:doc:`File (JSON)<fileconfbackend>`                             Not shareable between servers except
+                                                                if used in conjunction with :doc:`REST<restconfbackend>`
+                                                                or with a shared file system (NFS,...).
+                                                                Selected by default during installation.
+:doc:`YAML<yamlconfbackend>` |new|                              Same as :doc:`File<fileconfbackend>` but in YAML format
+                                                                instead of JSON
+:doc:`SQL (CDBI/RDBI)<sqlconfbackend>`                ✔         **Recommended for large-scale systems**. Prefer CDBI.
+:doc:`LDAP<ldapconfbackend>`                          ✔
+:doc:`MongoDB<mongodbconfbackend>` |deprecated|       ✔
+:doc:`SOAP<soapconfbackend>` |deprecated|             ✔         Proxy backend to be used in conjunction with another
+                                                                configuration backend. \ **Can be used to secure another backend**
+                                                                for remote servers.
+:doc:`REST<restconfbackend>` |new|                    ✔         Proxy backend to be used in conjunction with another configuration
+                                                                backend. \ **Can be used to secure another backend** for
+                                                                remote servers.
+:doc:`Local<localconfbackend>` |new|                            Use only lemonldap-ng.ini parameters.
+===================================================== ========= ====================================================================
 
 
 .. tip::
@@ -402,7 +402,7 @@ Backend                                                          Shareable :ref:
 :doc:`Browseable MySQL<browseablemysqlsessionbackend>`           ✔         ✔                                                ✔                                                    ✔                  Recommended for those who prefer MySQL
 :doc:`Browseable LDAP<browseableldapsessionbackend>`             ✔         ✔                                                ✔                                                    ✔
 :doc:`Redis<nosqlsessionbackend>`                                ✔         ✔                                                ✔                                                    ✔                  The fastest. Must be secured by network access control.
-:doc:`MongoDB<mongodbsessionbackend>`                            ✔         ✔                                                ✔                                                    ✔                  Must be secured by network access control.
+:doc:`MongoDB<mongodbsessionbackend>` |deprecated|               ✔         ✔                                                ✔                                                    ✔                  Must be secured by network access control.
 :doc:`SQL<sqlsessionbackend>`                                    ✔         ✔                                                ✔                                                    ✔                  Unoptimized for :doc:`session explorer<features>` and :doc:`single session<features>` features.
 :doc:`REST<restsessionbackend>` |new|                            ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
 :doc:`SOAP<soapsessionbackend>`  |deprecated|                    ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
