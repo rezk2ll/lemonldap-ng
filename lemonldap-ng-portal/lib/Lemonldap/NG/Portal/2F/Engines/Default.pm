@@ -131,13 +131,25 @@ sub init {
 
         $self->logger->debug(
             "Loading extra 2F module $extraKey of type $moduleType");
-        my $m =
-          $self->loadPlugin( "::2F::$moduleType", $over, prefix => $extraKey, )
-          or return 0;
+        my $m = $self->loadPlugin(
+            "::2F::$moduleType",
+            $over,
+            prefix => $extraKey,
+            (
+                $self->conf->{sfExtra}->{$extraKey}->{register}
+                ? ( is_registrable => 1 )
+                : ()
+            ),
+        ) or return 0;
 
         # Rule and prefix may be modified by 2F module, reread them
-        my $rule   = $self->conf->{sfExtra}->{$extraKey}->{rule} || 1;
+        my $rule = $self->conf->{sfExtra}->{$extraKey}->{rule} || 1;
+        my $reg_rule;
         my $prefix = $m->prefix;
+        if ( $self->conf->{sfExtra}->{$extraKey}->{register} ) {
+            $reg_rule = $rule;
+            $rule     = "( $rule ) and has2f('$prefix')";
+        }
 
         # Overwrite logo, label, level from user configuration
         $m->logo( $self->conf->{sfExtra}->{$extraKey}->{logo} )
@@ -148,12 +160,8 @@ sub init {
           if $self->conf->{sfExtra}->{$extraKey}->{level};
 
         # Compile rule
-        $rule = $self->p->HANDLER->substitute($rule);
-        unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-            $self->error( 'External 2F rule error: '
-                  . $self->p->HANDLER->tsv->{jail}->error );
-            return 0;
-        }
+        $rule = $self->p->buildRule( $rule, "extra 2F activation for $prefix" );
+        return 0 unless $rule;
 
         # Store module
         push @{ $self->{'sfModules'} },
@@ -161,8 +169,42 @@ sub init {
             p => $prefix,
             m => $m,
             r => $rule,
-            t => ( $m->can('type') ? $m->type : $prefix ),
+            t => $prefix,
           };
+
+        # Push register module
+        if ( $self->conf->{sfExtra}->{$extraKey}->{register} ) {
+            $self->logger->debug(
+                "Loading register module for $extraKey of type $moduleType");
+            my $register_module_name = $self->findRegisterModuleFor($m);
+            if ($register_module_name) {
+                my $rm = $self->loadPlugin(
+                    "::2F::Register::Generic",
+                    $over,
+                    prefix             => $extraKey,
+                    logo               => $m->logo,
+                    label              => $m->label,
+                    userCanRemove      => 1,
+                    verificationModule => $m,
+                    authnLevel => $self->conf->{sfExtra}->{$extraKey}->{level},
+                ) or return 0;
+
+                my $reg_rule = $self->p->buildRule( $reg_rule,
+                    "extra 2F registration for $prefix" );
+                return 0 unless $reg_rule;
+                push @{ $self->{'sfRModules'} },
+                  {
+                    p => $prefix,
+                    m => $rm,
+                    r => $reg_rule,
+                    t => $prefix,
+                  };
+            }
+            else {
+                $self->logger->warn(
+                    "Could not find a proper register module for $moduleType");
+            }
+        }
     }
 
     unless (
@@ -380,7 +422,6 @@ sub run {
         $req->sessionInfo->{_impSpoofId} = $spoofId;
         $req->sessionInfo->{_impUser}    = $req->user;
     }
-    my $token = $self->ott->createToken( $req->sessionInfo );
     delete $req->{authResult};
 
     # If only one 2F is authorized, display it
@@ -389,10 +430,14 @@ sub run {
               . $am[0]->prefix
               . '2F selected for '
               . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
-        my $res = $am[0]->run( $req, $token );
+
+        my $token = $self->ott->createToken( $req->sessionInfo );
+        my $res   = $am[0]->run( $req, $token );
         $req->authResult($res);
         return $res;
     }
+
+    my $token = $self->ott->createToken( $req->sessionInfo );
 
     # More than 1 2F has been found, display choice
     $self->logger->debug("Prepare 2F choice");
@@ -461,9 +506,6 @@ sub _choice {
 
     $req->sessionInfo($session);
 
-    # New token
-    $token = $self->ott->createToken($session);
-
     my $ch = $req->param('sf');
     foreach my $m ( @{ $self->sfModules } ) {
         if ( $m->{m}->prefix eq $ch ) {
@@ -471,6 +513,9 @@ sub _choice {
                   . $m->{m}->prefix
                   . '2F selected for '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+
+            # New token
+            $token = $self->ott->createToken( $req->sessionInfo );
             my $res = $m->{m}->run( $req, $token );
             $req->authResult($res);
             return $self->p->do(
@@ -573,12 +618,9 @@ sub _displayRegister {
             if ( $_->{type} eq $type ) {
 
                 # Populate additional info for template engine
-                $_->{prefix} = $prefix;
-                $_->{label}  = $module->label;
-                $_->{delAllowed} =
-                     $self->conf->{ $prefix . '2fActivation' }
-                  && $module->userCanRemove
-                  && $self->conf->{ $prefix . '2fSelfRegistration' };
+                $_->{prefix}     = $prefix;
+                $_->{label}      = $module->label;
+                $_->{delAllowed} = $self->isDelAllowed($module);
 
                 # Display upgrade button
                 $displayUpgBtn ||= $module->authnLevel
@@ -609,6 +651,25 @@ sub _displayRegister {
               encode_base64( "$self->{conf}->{portal}2fregisters", '' )
         }
     );
+}
+
+sub isDelAllowed {
+    my ( $self, $module ) = @_;
+    return ( $self->isRegistrationEnabled($module) && $module->userCanRemove );
+}
+
+sub isRegistrationEnabled {
+    my ( $self, $module ) = @_;
+    my $prefix = $module->prefix;
+
+    # Extra modules require special processing
+    if ( $self->conf->{sfExtra}->{$prefix} ) {
+        return 1;
+    }
+    else {
+        return $self->conf->{ $prefix . '2fActivation' }
+          && $self->conf->{ $prefix . '2fSelfRegistration' };
+    }
 }
 
 # Check rule and display
@@ -672,6 +733,15 @@ sub searchForAuthorized2Fmodules {
         }
     }
     return @am;
+}
+
+# TODO improve this? class attribute?
+sub findRegisterModuleFor {
+    my ( $self, $mod ) = @_;
+    if ( $mod->isa("Lemonldap::NG::Portal::Lib::Code2F") ) {
+        return "::2F::Register::Generic";
+    }
+    return;
 }
 
 1;

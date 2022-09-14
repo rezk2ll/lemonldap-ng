@@ -37,11 +37,17 @@ has code_activation => (
     }
 );
 
+has is_registrable => (
+    is      => 'rw',
+    default => 0,
+);
+
 has random => ( is => 'rw' );
 
 our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor';
+with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 sub init {
     my ($self) = @_;
@@ -64,6 +70,20 @@ sub init {
 
 sub run {
     my ( $self, $req, $token ) = @_;
+    $self->populateDestAttribute($req, $req->sessionInfo);
+
+    return PE_ERROR unless $self->challenge( $req, $req->sessionInfo, $token );
+
+    $self->logger->debug("Prepare external 2F verification");
+    my $tmp =
+      $self->sendCodeForm( $req, TOKEN => $token, LEGEND => $self->legend );
+
+    $req->response($tmp);
+    return PE_SENDRESPONSE;
+}
+
+sub challenge {
+    my ( $self, $req, $sessionInfo, $token ) = @_;
 
     # Generate Code to send
     my $code;
@@ -75,14 +95,7 @@ sub run {
             '__' . $self->prefix . '2fcode' => $code );
     }
 
-    return PE_ERROR unless $self->sendCode( $req, $req->sessionInfo, $code );
-
-    $self->logger->debug("Prepare external 2F verification");
-    my $tmp =
-      $self->sendCodeForm( $req, TOKEN => $token, LEGEND => $self->legend );
-
-    $req->response($tmp);
-    return PE_SENDRESPONSE;
+    return $self->sendCode( $req, $sessionInfo, $code );
 }
 
 sub _resend {
@@ -135,6 +148,15 @@ sub verify {
         $self->userLogger->error( $self->prefix . '2f: no code found' );
         return PE_FORMEMPTY;
     }
+
+    $self->populateDestAttribute($req, $req->sessionInfo);
+
+    return $self->verify_supplied_code( $req, $session, $usercode );
+
+}
+
+sub verify_supplied_code {
+    my ( $self, $req, $session, $usercode ) = @_;
 
     if ( $self->code_activation ) {
         return $self->verify_internal( $req, $session, $usercode );
@@ -205,5 +227,17 @@ sub sendCodeForm {
         }
     );
 }
+
+sub populateDestAttribute {
+    my ( $self, $req, $sessionInfo ) = @_;
+    if ( $self->is_registrable ) {
+        my @registered_devices =
+          $self->find2fDevicesByType( $req, $sessionInfo, $self->prefix );
+        if (@registered_devices) {
+            $sessionInfo->{destination} = $registered_devices[0]->{_generic};
+        }
+    }
+}
+
 
 1;
