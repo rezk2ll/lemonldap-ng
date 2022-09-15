@@ -20,6 +20,10 @@ $ make clean && make cpan
 Before release
 --------------
 
+- Run unit tests
+  $ make test
+  $ make LLNGTESTLDAP=1 LLNGTESTLDAP_SLAPD_BIN=/usr/local/openldap/libexec/slapd LLNGTESTLDAP_SLAPADD_BIN=/usr/local/openldap/sbin/slapadd LLNGTESTLDAP_SCHEMA_DIR=/usr/local/openldap/etc/openldap/schema/ test
+
 - Update languages (needs a Transifex token)
   $ ./scripts/download_translations
 
