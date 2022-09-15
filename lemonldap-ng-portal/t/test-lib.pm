@@ -391,6 +391,19 @@ Verify that the session contains attributes with these values
 sub expectSessionAttributes {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $app, $id, %attributes ) = @_;
+
+    my $res = getSessionAttributes( $app, $id );
+
+    for my $attr ( keys %attributes ) {
+        is( $res->{$attr}, $attributes{$attr},
+            "Session has correct value for $attr" );
+        count(1);
+    }
+}
+
+sub getSessionAttributes {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ( $app, $id ) = @_;
     my $res;
     ok(
         $res = $app->_get("/sessions/global/$id"),
@@ -401,11 +414,8 @@ sub expectSessionAttributes {
     ok( $res = eval { from_json( $res->[2]->[0] ) },
         "Deserialize session content" );
     count(1);
-    for my $attr ( keys %attributes ) {
-        is( $res->{$attr}, $attributes{$attr},
-            "Session has correct value for $attr" );
-        count(1);
-    }
+
+    return $res;
 }
 
 =head4 expectOK($res)
