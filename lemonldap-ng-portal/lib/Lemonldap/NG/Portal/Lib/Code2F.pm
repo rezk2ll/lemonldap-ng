@@ -174,13 +174,15 @@ sub sendCodeForm {
       if $stayconnected;
 
     # Prepare form
+    my $prefix = $self->prefix;
     return $self->p->sendHtml(
         $req,
         'ext2fcheck',
         params => {
             MAIN_LOGO => $self->conf->{portalMainLogo},
             SKIN      => $self->p->getSkin($req),
-            PREFIX    => $self->prefix,
+            "PREFIX_$prefix" => 1,
+            PREFIX    => $prefix,
             (
                 $self->resend_interval
                 ? ( RESENDTARGET => '/'

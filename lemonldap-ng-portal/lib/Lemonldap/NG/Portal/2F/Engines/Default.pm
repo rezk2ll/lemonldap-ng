@@ -492,11 +492,14 @@ sub _displayRegister {
           unless $m;
         return $self->p->sendError( $req, 'Registration not authorized', 403 )
           unless $m->{r}->( $req, $req->userData );
+        my $prefix = $m->{m}->prefix;
         return $self->p->sendHtml(
             $req,
             $m->{m}->template,
             params => {
                 MAIN_LOGO => $self->conf->{portalMainLogo},
+                PREFIX    => $prefix,
+                "PREFIX_$prefix" => 1,
                 LANGS     => $self->conf->{showLanguages},
                 MSG       => $self->canUpdateSfa($req) || $m->{m}->welcome,
                 ALERT => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
