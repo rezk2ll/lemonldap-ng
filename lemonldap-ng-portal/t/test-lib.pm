@@ -883,6 +883,35 @@ has ini => (
 
 =head3 Methods
 
+=head4 login($client, $uid, $getParams)
+Do a simple login using the Demo backend
+=cut
+
+sub login {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ( $self, $uid, $getParams ) = @_;
+    my $res;
+    $getParams ||= {};
+
+    my $query = main::buildForm( {
+            user     => $uid,
+            password => $uid,
+            %$getParams,
+        }
+    );
+    main::ok(
+        $res = $self->_post(
+            '/',
+            IO::String->new($query),
+            length => length($query),
+        ),
+        'Auth query'
+    );
+    main::expectOK($res);
+    my $id = main::expectCookie($res);
+    return $id;
+}
+
 =head4 logout($id)
 
 Launch a C</?logout=1> request an test:
