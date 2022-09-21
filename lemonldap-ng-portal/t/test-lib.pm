@@ -721,6 +721,7 @@ package LLNG::Manager::Test;
 
 use strict;
 use Mouse;
+use IO::String;
 
 extends 'Lemonldap::NG::Common::PSGI::Cli::Lib';
 
@@ -820,6 +821,7 @@ has p => ( is => 'rw' );
 
 =cut
 
+has accept => ( is => 'rw', default => 'application/json, text/plain, */*' );
 has confFailure => ( is => 'rw' );
 
 has ini => (
@@ -991,9 +993,14 @@ to test content I<(to launch a C<expectForm()> for example)>.
 
 sub _get {
     my ( $self, $path, %args ) = @_;
+
+    # Automatically serialize query if given as HASHREF
+    if (ref($args{query}) eq "HASH") {
+        $args{query} = main::buildForm($args{query});
+    }
+
     my $res = $self->app->( {
-            'HTTP_ACCEPT' => $args{accept}
-              || 'application/json, text/plain, */*',
+            'HTTP_ACCEPT' => $args{accept} // $self->accept,
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
             ( $args{cookie} ? ( HTTP_COOKIE => $args{cookie} ) : () ),
@@ -1042,11 +1049,23 @@ Example with IO::String:
 
 sub _post {
     my ( $self, $path, $body, %args ) = @_;
+
+    # If $body is a HASHREF, serialize as string
+    if ( ref($body) eq "HASH" ) {
+        $body = main::buildForm($body);
+    }
+
+    # If $body is a string, wrap in IO::Handle
+    unless ( ref($body) ) {
+        $args{length} = length($body);
+        # We must force a string copy here to avoid circular references
+        $body = IO::String->new("$body");
+    }
+
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
     my $res = $self->app->( {
-            'HTTP_ACCEPT' => $args{accept}
-              || 'application/json, text/plain, */*',
+            'HTTP_ACCEPT' => $args{accept} // $self->accept,
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
             ( $args{cookie} ? ( HTTP_COOKIE => $args{cookie} ) : () ),
@@ -1074,7 +1093,7 @@ sub _post {
             ( $args{custom} ? %{ $args{custom} } : () ),
             'psgix.input.buffered' => 0,
             'psgi.input'           => $body,
-            'CONTENT_LENGTH' => $args{length} // scalar( ( stat $body )[7] ),
+            'CONTENT_LENGTH' => $args{length},
             'CONTENT_TYPE'   => $args{type}
               || 'application/x-www-form-urlencoded',
         }
