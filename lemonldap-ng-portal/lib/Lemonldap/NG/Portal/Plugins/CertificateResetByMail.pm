@@ -214,7 +214,7 @@ sub _certificateReset {
     # Search user in database
     $req->steps( [
             'getUser',                  'setSessionInfo',
-            'setMacros',                'setGroups',
+            $self->p->groupsAndMacros,
             'setPersistentSessionInfo', 'setLocalGroups'
         ]
     );
