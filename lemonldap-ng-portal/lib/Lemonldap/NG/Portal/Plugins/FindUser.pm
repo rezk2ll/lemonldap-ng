@@ -5,11 +5,11 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_NOTOKEN
-  PE_TOKENEXPIRED
   PE_FIRSTACCESS
+  PE_TOKENEXPIRED
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.14';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -32,6 +32,10 @@ sub init {
     my ($self) = @_;
     ( my $imp = grep /::Plugins::Impersonation$/, $self->p->enabledPlugins )
       ? $self->addUnauthRoute( finduser => 'provideUser', ['POST'] )
+      ->addAuthRoute(
+        finduser => 'provideUser',
+        ['POST']
+      )    # Allow findUser with reAuth
       : $self->logger->warn('FindUser plugin enabled without Impersonation');
     $self->logger->warn('FindUser plugin enabled without searching attribute')
       unless keys %{ $self->conf->{findUserSearchingAttributes} };
@@ -76,28 +80,33 @@ sub retreiveFindUserParams {
     $self->logger->debug("FindUser: reading parameters...");
     @$searching = map {
         my ( $key, $value, $null ) = split '#', $_;
+        $key =~ s/^(?:\d+_)?//;
         my $param  = $req->params($key) // '';
-        my @values = split $self->conf->{multiValuesSeparator},
-          $self->conf->{findUserSearchingAttributes}->{$_} || '';
+        my @values = grep s/^(?:\d+_)?//,
+          split( $self->conf->{multiValuesSeparator},
+            $self->conf->{findUserSearchingAttributes}->{$_} || '' );
         my $select  = scalar @values > 1 && not scalar @values % 2;
         my %values  = @values if $select;
         my $defined = length $param;
         my $regex   = '^(?:' . join( '|', keys %values ) . ')$';
         my $checked =
             $select
-          ? $param =~ /$regex/o
-          : $param =~ /$self->{conf}->{findUserControl}/o;
-        push @required, $key if $select && !$null;
+          ? $param =~ /$regex/
+          : $param =~ /$self->{conf}->{findUserControl}/;
+        push @required, $key unless $null;
 
         # For <select>, accept only set values or empty if allowed
         if ( $defined && $checked ) {
-            $self->logger->debug("Append searching parameter: $key =>  $param");
+            $self->logger->debug("Append searching parameter: $key => $param");
             { key => $key, value => $param };
         }
         else {
-            $self->logger->warn(
-                "Parameter $key has been reject by findUserControl")
-              if $defined;
+            if ($defined) {
+                my $warn =
+                  "Parameter $key has been rejected by findUserControl: ";
+                $warn .= $select ? $regex : $self->conf->{findUserControl};
+                $self->logger->warn($warn);
+            }
             ();
         }
     } sort keys %{ $self->conf->{findUserSearchingAttributes} };
@@ -138,16 +147,17 @@ sub retreiveFindUserParams {
 }
 
 sub buildForm {
-    my $self   = shift;
-    my $fields = [];
+    my $self = shift;
+    my ( $fields, @required ) = ( [], () );
 
     $self->logger->debug('Building array ref with searching fields...');
     @$fields =
-      sort { $a->{select} <=> $b->{select} || $a->{value} cmp $b->{value} }
       map {
         my ( $key, $value, $null ) = split '#', $_;
         my @values = split $self->conf->{multiValuesSeparator},
           $self->conf->{findUserSearchingAttributes}->{$_} || $key;
+        $key =~ s/^(?:\d+_)?//;
+        push @required, $key unless $null;
         my $nbr = scalar @values;
         if ( $nbr > 1 ) {
             if ( $nbr % 2 ) { () }
@@ -157,14 +167,17 @@ sub buildForm {
                 $nbr /= 2;
                 $self->logger->debug(
                     "Building $key with type 'select' and $nbr entries...");
-                @$choices = sort { $a->{value} cmp $b->{value} }
-                  map { { key => $_, value => $hash{$_} } } keys %hash;
+                @$choices = map {
+                    my $k = $_;
+                    $k =~ s/^(?:\d+_)?//;
+                    { key => $k, value => $hash{$_} }
+                } sort keys %hash;
                 {
                     select  => 1,
                     key     => $key,
-                    null    => $null,
                     value   => $value ? $value : $key,
-                    choices => $choices
+                    choices => $choices,
+                    null    => $null
                 };
             }
         }
@@ -172,12 +185,14 @@ sub buildForm {
             {
                 select => 0,
                 key    => $key,
-                value  => $values[0]
+                value  => $values[0],
+                null   => $null
             };
         }
-      } keys %{ $self->conf->{findUserSearchingAttributes} };
+      } sort keys %{ $self->conf->{findUserSearchingAttributes} };
+    $self->logger->debug('Mandatory field(s) required') if scalar @required;
 
-    return $fields;
+    return ( $fields, scalar @required );
 }
 
 sub _sendResult {

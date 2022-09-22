@@ -16,7 +16,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text"><label for="extcode" class="mb-0"><i class="fa fa-lock"></i></label></span>
       </div>
-      <input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code" autocomplete="off" />
+      <input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code" autocomplete="one-time-code" />
     </div>
   </div>
   <div class="buttons">
@@ -26,10 +26,16 @@
     </button>
   </div>
   <div class="buttons">
-  <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1&skin=<TMPL_VAR NAME="SKIN">" class="btn btn-primary" role="button">
-    <span class="fa fa-home"></span>
-    <span trspan="cancel">Cancel</span>
-  </a>
+    <TMPL_IF "RESENDTARGET">
+    <button type="submit" class="btn btn-primary" formaction="<TMPL_VAR "RESENDTARGET">">
+      <span class="fa fa-repeat"></span>
+      <span trspan="resendCode">Re-send code</span>
+    </button>
+    </TMPL_IF>
+    <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1&skin=<TMPL_VAR NAME="SKIN">" class="btn btn-primary" role="button">
+      <span class="fa fa-home"></span>
+      <span trspan="cancel">Cancel</span>
+    </a>
   </div>
 </form>
 </div>

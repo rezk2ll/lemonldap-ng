@@ -9,14 +9,14 @@ use Lemonldap::NG::Handler::PSGI::Main;
 
 extends 'Lemonldap::NG::Handler::Lib::PSGI', 'Lemonldap::NG::Common::PSGI';
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.14';
 
 sub init {
     my ( $self, $args ) = @_;
     $self->api('Lemonldap::NG::Handler::PSGI::Main') unless ( $self->api );
-    my $tmp = ( $self->Lemonldap::NG::Common::PSGI::init($args)
-          and $self->Lemonldap::NG::Handler::Lib::PSGI::init($args) );
-    return $tmp;
+    return 0 unless $self->Lemonldap::NG::Handler::Lib::PSGI::init($args);
+
+    return $self->Lemonldap::NG::Common::PSGI::init( $self->api->localConfig );
 }
 
 1;
@@ -130,7 +130,7 @@ L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
 =head1 DOWNLOAD
 
 Lemonldap::NG is available at
-L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+L<https://lemonldap-ng.org/download>
 
 =head1 COPYRIGHT AND LICENSE
 

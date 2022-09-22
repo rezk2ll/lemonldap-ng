@@ -77,3 +77,7 @@ You can also add some other parameters
    # LWP::UserAgent parameters
    proxyOptions = { timeout => 5 }
 
+`User` and `Password` parameters are only used if the entry point `index.fcgi/config`
+is protected by a basic authentication. Thus, handlers will make requests to the portal
+using these parameters.
+

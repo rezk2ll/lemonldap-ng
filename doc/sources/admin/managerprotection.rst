@@ -89,7 +89,7 @@ Save the configuration and exit the Manager.
 
 .. tip::
 
-    The next time you will access Manager, it will be trough
+    The next time you will access Manager, it will be through
     LL::NG.
 
 Enable protection on Manager, by editing ``lemonldap-ng.ini``:

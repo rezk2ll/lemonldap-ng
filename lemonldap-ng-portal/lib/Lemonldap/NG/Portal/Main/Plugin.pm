@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.14';
 
 extends 'Lemonldap::NG::Common::Module';
 
@@ -107,7 +107,7 @@ sub createNotification {
 sub canUpdateSfa {
     my ( $self, $req, $action ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
-    my $msg = undef;
+    my $msg  = undef;
 
     # Test action
     if ( $action && $action eq 'delete' ) {
@@ -149,7 +149,8 @@ sub canUpdateSfa {
         if (
             $req->userData->{
                 "$self->{conf}->{contextSwitchingPrefix}_session_id"}
-            && !$self->conf->{contextSwitchingAllowed2fModifications} )
+            && !$self->conf->{contextSwitchingAllowed2fModifications}
+          )
         {
             $self->userLogger->warn(
 "ContextSwitching in progress! $user is not allowed to update 2FA."
@@ -157,8 +158,17 @@ sub canUpdateSfa {
             $msg = 'notAuthorized';
         }
     }
-    $self->userLogger->info("$user is allowed to update 2FA") unless $msg;
+    $self->logger->debug("$user is allowed to update 2FA") unless $msg;
     return $msg;
+}
+
+sub addSessionDataToRemember {
+    my ( $self, $newData ) = @_;
+    for my $sessionAttr ( keys %{ $newData || {} } ) {
+        $self->p->pluginSessionDataToRemember->{$sessionAttr} =
+          $newData->{$sessionAttr};
+    }
+    return;
 }
 
 1;
@@ -269,7 +279,8 @@ constants set with method name to run. Following entry points are available.
 setting C<sessionInfo> provisionning
 
 =item C<afterData>: method called after C<sessionInfo> provisionning
-I<(macros, groups,...)>
+I<(macros, groups,...)>. This entry point is called after 'storeHistory'
+if login process fails and before 'validSession' if succeeds.
 
 =item C<endAuth>: method called when session is validated (after cookie build)
 
@@ -404,7 +415,7 @@ L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
 =head1 DOWNLOAD
 
 Lemonldap::NG is available at
-L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+L<https://lemonldap-ng.org/download>
 
 =head1 COPYRIGHT AND LICENSE
 

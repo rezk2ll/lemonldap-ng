@@ -15,10 +15,9 @@
 #   * GET /session/my/<type>                     : get session data
 #   * GET /session/my/<type>/key                 : get session key
 #   * DELETE /session/my                         : ask for logout
-#   * DELETE /sessions/my                        : ask for global logout
+#   * DELETE /sessions/my                        : ask for global logout (if GlobalLogout plugin is on)
 #
 # - Authentication
-#   * GET /renewcaptcha                          : get token and captcha image
 #   * POST /sessions/<type>/<session-id>?auth    : authenticate with a fixed
 #                                                  sessionId
 #   * Note that the "getCookie" method (authentification via SOAP) exists for
@@ -49,6 +48,8 @@
 #                                                            (restricted)
 #   * DELETE /mysession/<type>/key                         : delete key in data
 #                                                            (restricted)
+#   * GET    /myapplications                               : get my appplications
+#                                                            list
 #
 # There is no conflict with SOAP server, they can be used together
 
@@ -62,13 +63,13 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   portalConsts
   PE_PASSWORD_OK
+  URIRE
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
-  Lemonldap::NG::Portal::Lib::Captcha
 );
 
 has configStorage => (
@@ -78,14 +79,13 @@ has configStorage => (
         $_[0]->{p}->HANDLER->localConfig->{configStorage};
     }
 );
-
 has exportedAttr => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
         my $conf = $_[0]->{conf};
         if ( $conf->{exportedAttr} and $conf->{exportedAttr} !~ /^\s*\+/ ) {
-            return [ split /\s+/, $conf->{exportedAttr} ];
+            return '[' . join( ',', split /\s+/, $conf->{exportedAttr} ) . ']';
         }
         else {
             my @attributes = (
@@ -97,20 +97,24 @@ has exportedAttr => (
             if ( my $exportedAttr = $conf->{exportedAttr} ) {
                 $exportedAttr =~ s/^\s*\+\s+//;
                 @attributes = ( @attributes, split( /\s+/, $exportedAttr ) );
+
+                # Convert @attributes into hash to remove duplicates
+                my %attributes = map( { $_ => 1 } @attributes );
+                return '[' . join( ',', keys %attributes ) . ']';
             }
 
-            # convert @attributes into hash to remove duplicates
+            # Convert @attributes into hash to remove duplicates
             my %attributes = map( { $_ => 1 } @attributes );
-            %attributes =
-              ( %attributes, %{ $conf->{exportedVars} }, %{ $conf->{macros} },
-              );
-
+            %attributes = (
+                %attributes,
+                %{ $conf->{exportedVars} },
+                %{ $conf->{macros} },
+            );
             return '[' . join( ',', keys %attributes ) . ']';
         }
     }
 );
-has captcha => ( is => 'rw' );
-has ott     => (
+has ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
@@ -127,13 +131,6 @@ sub init {
     my ($self)  = @_;
     my @parents = ('Lemonldap::NG::Portal::Main::Plugin');
     my $add     = 0;
-    if (   $self->conf->{captcha_mail_enabled}
-        || $self->conf->{captcha_login_enabled}
-        || $self->conf->{captcha_register_enabled} )
-    {
-        $self->captcha( $self->p->loadModule('::Lib::Captcha') ) or return 0;
-        $self->addUnauthRoute( renewcaptcha => 'sendCaptcha', ['GET'] );
-    }
     if ( $self->conf->{restConfigServer} ) {
         push @parents, 'Lemonldap::NG::Common::Conf::RESTServer';
         $add++;
@@ -195,9 +192,16 @@ sub init {
           )
 
           ->addAuthRoute(
-            sessions => { my => { ':sessionType' => 'removeSessions' } },
+            session => { my => 'removeSession' },
             ['DELETE']
           );
+
+        if ( $self->conf->{globalLogoutRule} ) {
+            $self->addAuthRoute(
+                sessions => { my => 'removeSessions' },
+                ['DELETE']
+            );
+        }
     }
 
     if ( $self->conf->{restPasswordServer} ) {
@@ -244,9 +248,13 @@ sub init {
       ->addAuthRoute(
         mysession => { ':sessionType' => 'updateMySession' },
         ['PUT']
-      );
-    extends @parents if ($add);
+      )
+
+      ->addAuthRoute( myapplications => 'myApplications', ['GET'] );
+
+    extends @parents               if ($add);
     $self->setTypes( $self->conf ) if ( $self->conf->{restSessionServer} );
+
     return 1;
 }
 
@@ -326,9 +334,8 @@ sub newAuthSession {
     $self->logger->debug(
         "REST authentication result for $req->{user}: code $req->{error}");
 
-    if ( $req->error > 0 ) {
-        return $self->p->sendError( $req, 'Bad credentials', 401 );
-    }
+    return $self->p->sendError( $req, 'Bad credentials', 401 )
+      if ( $req->error > 0 );
     return $self->session( $req, $id );
 }
 
@@ -349,7 +356,7 @@ sub updateSession {
 
     # Get session and store info
     my $session = $self->getApacheSession( $mod, $id, $infos, $force )
-      or return $self->p->sendError( $req, 'Session id does not exists', 400 );
+      or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     return $self->p->sendJSONresponse( $req, { result => 1 } );
 }
@@ -362,17 +369,19 @@ sub delSession {
 
     # Get session
     my $session = $self->getApacheSession( $mod, $id )
-      or return $self->p->sendError( $req, 'Session id does not exists', 400 );
+      or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     # Delete it
     $self->logger->debug("REST request to delete session $id");
     my $res = $self->p->_deleteSession( $req, $session );
     $self->logger->debug(" Result is $res");
+
     return $self->p->sendJSONresponse( $req, { result => $res } );
 }
 
 sub delMySession {
     my ( $self, $req, $id ) = @_;
+
     return $self->delSession( $req, $req->userData->{_session_id} );
 }
 
@@ -380,10 +389,9 @@ sub mysession {
     my ( $self, $req ) = @_;
 
     # 1. whoami
-    if ( defined $req->param('whoami') ) {
-        return $self->p->sendJSONresponse( $req,
-            { result => $req->userData->{ $self->conf->{whatToTrace} } } );
-    }
+    return $self->p->sendJSONresponse( $req,
+        { result => $req->userData->{ $self->conf->{whatToTrace} } } )
+      if defined $req->param('whoami');
 
     if ( defined $req->param('gettoken') ) {
         return $self->p->sendJSONresponse( $req,
@@ -403,7 +411,8 @@ sub mysession {
           if ( $self->p->checkXSSAttack( 'authorizationfor', $req->urldc ) );
 
         # Split URL
-        my ( $host, $uri ) = ( $req->urldc =~ m#^https?://([^/]+)(/.*)?$# );
+        $req->urldc =~ URIRE;
+        my ( $host, $uri ) = ( $3 . ( $4 ? ":$4" : '' ), $5 );
         $uri ||= '/';
         return $self->p->sendError( $req, "Bad URL $req->{urldc}", 400 )
           unless ($host);
@@ -416,6 +425,7 @@ sub mysession {
         $self->logger->debug(" Result is $res");
         return $self->p->sendJSONresponse( $req, { result => $res } );
     }
+
     return $self->p->sendError( $req,
         'whoami or authorizationfor is required', 400 );
 }
@@ -423,7 +433,18 @@ sub mysession {
 sub getMyKey {
     my ( $self, $req, $key ) = @_;
     $key ||= '';
-    $self->logger->debug("Request to get personal session info -> Key : $key");
+    if ($key) {
+        $self->logger->debug(
+            "Request to get personal session info -> Key: $key");
+    }
+    else {
+        my $keys = $self->exportedAttr;
+        $keys =~ s/(?:\[|\])//g;
+        $keys =~ s/,/, /g;
+        $self->logger->debug(
+            "Request to get exported attributes -> Keys: $keys");
+    }
+
     return $self->session(
         $req,
         $req->userData->{_session_id},
@@ -435,6 +456,7 @@ sub updateMySession {
     my ( $self, $req ) = @_;
     my $res   = 0;
     my $mKeys = [];
+
     if ( my $token = $req->param('token') ) {
         if ( $self->ott->getToken($token) ) {
             if ( $req->param('sessionType') eq 'persistent' ) {
@@ -469,9 +491,8 @@ sub updateMySession {
     else {
         $self->logger->error('Update session request without token');
     }
-    unless ($res) {
-        return $self->p->sendError( $req, 'Modification refused', 403 );
-    }
+
+    return $self->p->sendError( $req, 'Modification refused', 403 ) unless $res;
     return $self->p->sendJSONresponse( $req,
         { result => 1, count => $res, modifiedKeys => $mKeys } );
 }
@@ -482,6 +503,7 @@ sub delKeyInMySession {
     my $mKeys = [];
     my $dkey  = $req->param('key');
     my $sub   = $req->param('sub');
+
     if ( my $token = $req->param('token') ) {
         if ( $self->ott->getToken($token) ) {
             if ( $req->param('sessionType') eq 'persistent' ) {
@@ -554,9 +576,8 @@ sub delKeyInMySession {
     else {
         $self->logger->error('Update session request without token');
     }
-    unless ($res) {
-        return $self->p->sendError( $req, 'Modification refused', 403 );
-    }
+
+    return $self->p->sendError( $req, 'Modification refused', 403 ) unless $res;
     return $self->p->sendJSONresponse( $req,
         { result => 1, count => $res, modifiedKeys => $dkey } );
 }
@@ -571,14 +592,33 @@ sub getError {
     return $self->p->sendJSONresponse(
         $req,
         {
-            result   => 1,
-            lang     => $lang,
-            errorNum => $errNum ? $errNum : 'all',
+            result        => 1,
+            lang          => $lang,
+            errorNum      => $errNum ? $errNum : 'all',
             errorsFileURL =>
               "$self->{conf}->{staticPrefix}/languages/$lang.json",
-            ( $errNum ? ( errorMsgRef => "PE$errNum" ) : () ),
+            ( $errNum ? ( errorMsgRef => "PE$errNum" ) : () )
         }
     );
+}
+
+sub removeSession {
+    my ( $self, $req ) = @_;
+    my $id = $req->userData->{_session_id};
+    return $self->p->sendError( $req, 'ID is required', 400 ) unless ($id);
+    my $mod = $self->getGlobal()
+      or return $self->p->sendError( $req, undef, 400 );
+
+    # Get session
+    my $session = $self->getApacheSession( $mod, $id )
+      or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
+
+    # Delete it
+    $self->logger->debug("REST request to delete global session $id");
+    my $res = $self->p->_deleteSession( $req, $session );
+    $self->logger->debug(" Result is $res");
+
+    return $self->p->sendJSONresponse( $req, { result => $res } );
 }
 
 sub removeSessions {
@@ -589,15 +629,6 @@ sub removeSessions {
     my $nbr      = $glPlugin->removeOtherActiveSessions( $req, $sessions );
 
     return $self->p->sendJSONresponse( $req, { result => $nbr } );
-}
-
-sub sendCaptcha {
-    my ( $self, $req ) = @_;
-    $self->logger->info("User request for captcha renew");
-    my ( $token, $image ) = $self->captcha->getCaptcha($req);
-
-    return $self->p->sendJSONresponse( $req,
-        { newtoken => $token, newimage => $image } );
 }
 
 sub pwdReset {
@@ -645,7 +676,7 @@ sub pwdReset {
         return $self->p->sendError( $req, "User not found", 400 );
     }
     $result =
-      $self->p->_passwordDB->modifyPassword( $req, $password, $mail ? 1 : 0 );
+      $self->p->_passwordDB->setNewPassword( $req, $password, $mail ? 1 : 0 );
     $req->{user} = undef;
     $self->conf->{portalRequireOldPassword} = $tmp;
 
@@ -681,11 +712,13 @@ sub pwdConfirm {
             400 );
     }
 
-    $req->user($user);
-    $req->data->{password} = $password;
+    $req->parameters->{user}     = $user;
+    $req->parameters->{password} = $password;
+    $req->data->{_pwdCheck}      = 1;
+    $req->data->{skipToken}      = 1;
 
     if ( $self->p->_userDB ) {
-        $req->steps( [ 'getUser', 'authenticate' ] );
+        $req->steps( [ $self->p->authProcess ] );
         my $result = $self->p->process($req);
         if ( $result == PE_PASSWORD_OK or $result == PE_OK ) {
             return $self->p->sendJSONresponse( $req,
@@ -721,12 +754,12 @@ sub getUser {
     }
 
     $req->user( $user || $mail );
+    $req->data->{_pwdCheck} = 1;
 
     # Search user in database
     $req->steps( [
-            'getUser',   'setSessionInfo',
-            'setMacros', 'setGroups',
-            'setLocalGroups'
+            'getUser',                 'setSessionInfo',
+            $self->p->groupsAndMacros, 'setLocalGroups'
         ]
     );
     my $error = $self->p->process( $req, ( $mail ? ( useMail => 1 ) : () ) );
@@ -742,6 +775,24 @@ sub getUser {
     else {
         return $self->p->sendJSONresponse( $req, { 'result' => JSON::false } );
     }
+}
+
+sub myApplications {
+    my ( $self, $req ) = @_;
+    my @appslist = map {
+        my @apps = map {
+            {
+                $_->{appname} => {
+                    AppUri  => $_->{appuri},
+                    AppDesc => $_->{appdesc}
+                }
+            }
+        } @{ $_->{applications} };
+        { Category => $_->{catname}, Applications => \@apps },
+    } @{ $self->p->menu->appslist($req) };
+
+    return $self->p->sendJSONresponse( $req,
+        { result => 1, myapplications => \@appslist } );
 }
 
 sub _checkSecret {
@@ -765,8 +816,8 @@ sub _checkSecret {
             $self->logger->error('Bad key, force denied');
         }
     }
-    return $isValid;
 
+    return $isValid;
 }
 
 1;

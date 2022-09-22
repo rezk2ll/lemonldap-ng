@@ -50,7 +50,7 @@ master_doc = 'start'
 
 # General information about the project.
 project = u'LemonLDAP::NG'
-copyright = u'2021, LemonLDAP::NG'
+copyright = u'2022, LemonLDAP::NG'
 author = u'LemonLDAP::NG'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -138,6 +138,8 @@ if 'LLNGSPHINXWEBSITE' in os.environ:
     import sphinx_rtd_theme
     html_theme = 'sphinx_rtd_theme'
     html_theme_options = {}
+else:
+    html_copy_source = False
 
 
 # html_theme_options = {}
@@ -173,6 +175,9 @@ html_static_path = ['_static']
 html_css_files = [
     'css/custom.css',
 ]
+
+html_favicon = 'logos/favicon.ico'
+html_logo = 'logos/lemonldap-ng-logo.png'
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied

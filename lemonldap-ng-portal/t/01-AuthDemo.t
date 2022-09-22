@@ -2,13 +2,23 @@ use Test::More;
 use strict;
 use IO::String;
 use MIME::Base64;
+use URI;
+use URI::QueryParam;
 
 require 't/test-lib.pm';
 
 my $res;
 
-my $client = LLNG::Manager::Test->new(
-    { ini => { logLevel => 'error', useSafeJail => 1 } } );
+my $client = LLNG::Manager::Test->new( {
+        ini => {
+            logLevel                       => 'error',
+            portal                         => 'https://auth.example.com/',
+            useSafeJail                    => 1,
+            strictTransportSecurityMax_Age => '1977',
+            portalFavicon                  => 'common/llng.ico'
+        }
+    }
+);
 
 # Test normal first access
 # ------------------------
@@ -25,11 +35,17 @@ ok(
     ),
     'Get Menu'
 );
+ok( getHeader( $res, 'Strict-Transport-Security' ) =~ /^max-age=1977$/,
+    'Strict-Transport-Security is set' )
+  or explain( $res->[1], 'Content-Type => application/xml' );
 ok( $res->[2]->[0] =~ /<span trmsg="37">/, 'Rejected with PE_BADURL' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ m%<span id="languages"></span>%, ' Language icons found' )
   or print STDERR Dumper( $res->[2]->[0] );
-count(3);
+ok( $res->[2]->[0] =~ m%link href="/static/common/llng.ico%,
+    ' Custom favicon found' )
+  or print STDERR Dumper( $res->[2]->[0] );
+count(5);
 
 # Test "first access" with a wildcard-protected url
 ok(
@@ -79,6 +95,14 @@ ok( $res->[2]->[0] =~ m%<span trspan="connect">Connect</span>%,
     'Found connect button' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(3);
+
+my ( $host, $uri, $query ) =
+  expectForm( $res, undef, undef, 'user', 'password' );
+my $uri = URI->new;
+$uri->query($query);
+is( $uri->query_param("user"), 'jdoe',
+    "Login is pre-filled on second attemps" );
+count(1);
 
 # Try to authenticate with bad password
 # -------------------------------------

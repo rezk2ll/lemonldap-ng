@@ -31,7 +31,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_MAILCONFIRMATION_ALREADY_SENT
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 extends qw(
   Lemonldap::NG::Portal::Lib::SMTP
@@ -98,7 +98,7 @@ sub init {
 
     # Initialize Captcha if needed
     if ( $self->conf->{captcha_mail_enabled} ) {
-        $self->captcha( $self->p->loadModule('::Lib::Captcha') ) or return 0;
+        $self->captcha(1);
     }
 
     # Load registered module
@@ -129,7 +129,7 @@ sub certificateReset {
 
 sub _certificateReset {
     my ( $self, $req ) = @_;
-    my ( $mailToken, %tplPrms );
+    my ($mailToken);
 
     # CertificatReset FORM => modifyCertificate()
     if ( $req->method =~ /^POST$/i
@@ -179,46 +179,32 @@ sub _certificateReset {
         # Use submitted value
         $req->{user} = $req->param('mail');
 
-        # Check if token exists
-        my $token;
-        if ( $self->ottRule->( $req, {} ) or $self->captcha ) {
-            $token = $req->param('token');
+        # Captcha for register form
+        if ( $self->captcha ) {
+            my $result = $self->p->_captcha->check_captcha($req);
+            if ($result) {
+                $self->logger->debug("Captcha code verified");
+            }
+            else {
+                $self->setSecurity($req);
+                $self->userLogger->warn("Captcha failed");
+                return PE_CAPTCHAERROR;
+            }
+        }
+        elsif ( $self->ottRule->( $req, {} ) ) {
+            my $token = $req->param('token');
             unless ($token) {
                 $self->setSecurity($req);
                 $self->userLogger->warn('Reset try without token');
                 return PE_NOTOKEN;
             }
-        }
-
-        # Captcha for register form
-        if ( $self->captcha ) {
-            my $captcha = $req->param('captcha');
-
-            unless ($captcha) {
-                $self->userLogger->notice('Reset try with captcha not filled');
-
-                # Set captcha or token
-                $self->setSecurity($req);
-                return PE_CAPTCHAEMPTY;
-            }
-
-            # Check captcha
-            unless ( $self->captcha->validateCaptcha( $token, $captcha ) ) {
-                $self->userLogger->info('Captcha failed: wrong code');
-
-                # Set captcha or token
-                $self->setSecurity($req);
-                return PE_CAPTCHAERROR;
-            }
-            $self->logger->debug('Captcha code verified');
-        }
-        elsif ( $self->ottRule->( $req, {} ) ) {
             unless ( $self->ott->getToken($token) ) {
                 $self->setSecurity($req);
                 $self->userLogger->warn('Reset try with expired/bad token');
                 return PE_TOKENEXPIRED;
             }
         }
+
         unless ( $req->{user} =~ /$self->{conf}->{userControl}/o ) {
             $self->setSecurity($req);
             return PE_MALFORMEDUSER;
@@ -228,7 +214,7 @@ sub _certificateReset {
     # Search user in database
     $req->steps( [
             'getUser',                  'setSessionInfo',
-            'setMacros',                'setGroups',
+            $self->p->groupsAndMacros,
             'setPersistentSessionInfo', 'setLocalGroups'
         ]
     );
@@ -359,7 +345,6 @@ sub _certificateReset {
           );
 
         # Build mail content
-        $tplPrms{MAIN_LOGO} = $self->conf->{portalMainLogo};
         my $tr      = $self->translate($req);
         my $subject = $self->conf->{certificateResetByMailStep1Subject};
         unless ($subject) {
@@ -372,6 +357,13 @@ sub _certificateReset {
 
             # We use a specific text message, no html
             $body = $self->conf->{certificateResetByMailStep1Body};
+
+            # Replace variables in body
+            $body =~ s/\$expMailDate/$req->data->{expMailDate}/ge;
+            $body =~ s/\$expMailTime/$req->data->{expMailTime}/ge;
+            $body =~ s/\$url/$url/g;
+            $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
+
         }
         else {
 
@@ -380,16 +372,14 @@ sub _certificateReset {
                 $req,
                 'mail_certificateConfirm',
                 filter => $tr,
-                params => \%tplPrms
+                params => {
+                    expMailDate => $req->data->{expMailDate},
+                    expMailTime => $req->data->{expMailTime},
+                    url         => $url,
+                },
             );
             $html = 1;
         }
-
-        # Replace variables in body
-        $body =~ s/\$expMailDate/$req->data->{expMailDate}/ge;
-        $body =~ s/\$expMailTime/$req->data->{expMailTime}/ge;
-        $body =~ s/\$url/$url/g;
-        $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
 
         # Send mail
         unless (
@@ -420,7 +410,6 @@ sub _certificateReset {
 
 sub modifyCertificate {
     my ( $self, $req ) = @_;
-    my %tplPrms;
     my $nbio;
     my $x509;
     my $notAfter;
@@ -539,7 +528,6 @@ sub modifyCertificate {
         $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
 
     # Build mail content
-    $tplPrms{MAIN_LOGO} = $self->conf->{portalMainLogo};
     my $tr      = $self->translate($req);
     my $subject = $self->conf->{certificateResetByMailStep2Subject};
     unless ($subject) {
@@ -552,6 +540,10 @@ sub modifyCertificate {
 
         # We use a specific text message, no html
         $body = $self->conf->{certificateResetByMailStep2Body};
+
+        # Replace variables in body
+        $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
+
     }
     else {
 
@@ -560,13 +552,10 @@ sub modifyCertificate {
             $req,
             'mail_certificateReset',
             filter => $tr,
-            params => \%tplPrms
+            params => {},
         );
         $html = 1;
     }
-
-    # Replace variables in body
-    $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
 
     # Send mail
     return PE_MAILERROR
@@ -578,9 +567,11 @@ sub modifyCertificate {
 
 sub setSecurity {
     my ( $self, $req ) = @_;
+
     if ( $self->captcha ) {
-        $self->captcha->setCaptcha($req);
+        $self->p->_captcha->init_captcha($req);
     }
+
     elsif ( $self->ottRule->( $req, {} ) ) {
         $self->ott->setToken($req);
     }
@@ -597,6 +588,7 @@ sub display {
         MAIN_LOGO       => $self->conf->{portalMainLogo},
         AUTH_ERROR      => $req->error,
         AUTH_ERROR_TYPE => $req->error_type,
+        AUTH_ERROR_ROLE => $req->error_role,
         AUTH_URL        => $req->data->{_url},
         CHOICE_VALUE    => $req->{_authChoice},
         EXPMAILDATE     => $req->data->{expMailDate},
@@ -604,9 +596,13 @@ sub display {
         STARTMAILDATE   => $req->data->{startMailDate},
         STARTMAILTIME   => $req->data->{startMailTime},
         MAILALREADYSENT => $req->data->{mailAlreadySent},
-        MAIL            => (
-            $self->p->checkXSSAttack( 'mail', $req->{user} )
-            ? ''
+        (
+            $req->data->{customScript}
+            ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
+            : ()
+        ),
+        MAIL => (
+              $self->p->checkXSSAttack( 'mail', $req->{user} ) ? ''
             : $req->{user}
         ),
         DISPLAY_FORM            => 0,
@@ -623,12 +619,17 @@ sub display {
     }
 
     # Display captcha if enabled
-    if ( $req->captcha ) {
-        $tplPrm{CAPTCHA_SRC}  = $req->captcha;
-        $tplPrm{CAPTCHA_SIZE} = $self->conf->{captcha_size};
+    if ( $req->captchaHtml ) {
+        $tplPrm{CAPTCHA_HTML} = $req->captchaHtml;
     }
     if ( $req->token ) {
         $tplPrm{TOKEN} = $req->token;
+    }
+
+    # DEPRECATED: This is only used for compatibility with existing templates
+    if ( $req->captcha ) {
+        $tplPrm{CAPTCHA_SRC}  = $req->captcha;
+        $tplPrm{CAPTCHA_SIZE} = $self->conf->{captcha_size};
     }
 
     # Display form the first time

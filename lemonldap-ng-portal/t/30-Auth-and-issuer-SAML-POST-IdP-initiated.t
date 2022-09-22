@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 17;
+my $maintests = 18;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 
@@ -47,7 +47,45 @@ SKIP: {
     expectOK($res);
     my $idpId = expectCookie($res);
 
-    # Query IdP to access to SP
+    # Query IdP to access to SP (override URL)
+    ok(
+        $res = $issuer->_get(
+            '/saml/singleSignOn',
+            query => buildForm( {
+                    IDPInitiated => 1,
+                    spConfKey    => 'sp.com',
+                    spDest       =>
+                      'http://auth.alternate.com/saml/proxySingleSignOnPost',
+                }
+            ),
+            cookie => "lemonldap=$idpId",
+            accept => 'test/html'
+        ),
+        'Query IdP to access to SP'
+    );
+    my ( $host, $url, $query ) =
+      expectAutoPost( $res, 'auth.alternate.com', '/saml/proxySingleSignOnPost',
+        'SAMLResponse' );
+
+    # Query IdP to access to SP (unrecognized URL)
+    ok(
+        $res = $issuer->_get(
+            '/saml/singleSignOn',
+            query => buildForm( {
+                    IDPInitiated => 1,
+                    spConfKey    => 'sp.com',
+                    spDest       =>
+                      'http://auth.perdu.com/saml/proxySingleSignOnPost',
+                }
+            ),
+            cookie => "lemonldap=$idpId",
+            accept => 'test/html'
+        ),
+        'Query IdP to access to SP'
+    );
+    expectPortalError( $res, 51, "Bad destination" );
+
+    # Query IdP to access to SP (normal URL)
     ok(
         $res = $issuer->_get(
             '/saml/singleSignOn',
@@ -57,7 +95,7 @@ SKIP: {
         ),
         'Query IdP to access to SP'
     );
-    my ( $host, $url, $query ) =
+    ( $host, $url, $query ) =
       expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleSignOnPost',
         'SAMLResponse' );
 
@@ -110,13 +148,8 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
         'Get iframe request'
     ) or explain( $res, '' );
     ( $url, $query ) = ( $1, $2 );
-    ok(
-        getHeader( $res, 'Content-Security-Policy' ) =~
-          /child-src auth.idp.com/,
-        ' Frame is authorized'
-      )
-      or explain( $res->[1],
-        'Content-Security-Policy => ...child-src auth.idp.com' );
+    expectCspChildOK( $res, "auth.idp.com" );
+    expectCspChildOK( $res, "http://auth.sp.com" );
 
     ok(
         $res = $issuer->_get(

@@ -22,14 +22,14 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.12';
 
 # PROPERTIES
 
 has type  => ( is => 'rw' );
 has path  => ( is => 'rw' );
 has ipath => ( is => 'rw' );
-has _ott  => (
+has _ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
@@ -100,7 +100,7 @@ sub _redirect {
         $self->logger->debug(
             'Add ' . $self->ipath . ', ' . $self->ipath . 'Path in keepPdata' );
         push @{ $req->pdata->{keepPdata} }, $self->ipath, $self->ipath . 'Path';
-        $req->{urldc} = $self->conf->{portal} . '/' . $self->path;
+        $req->{urldc}           = $self->p->buildUrl( $self->path );
         $req->pdata->{_url}     = encode_base64( $req->urldc, '' );
         $req->pdata->{issuerTs} = time;
     }
@@ -128,7 +128,7 @@ sub _redirect {
                     $self->restoreRequest( $_[0], $ir );
                     $self->cleanPdata( $_[0] );
                     return $self->run( @_, @path );
-                }
+                  }
                 : ()
             )
         ]
@@ -212,6 +212,8 @@ sub storeRequest {
     my $info = {};
     $info->{content} = $req->content;
     foreach ( keys %{ $req->env } ) {
+        next if $_ eq "psgi.errors";
+        next if $_ eq "psgi.input";
         $info->{$_} = $req->env->{$_} unless ( ref $req->env->{$_} );
     }
     return $self->_ott->createToken($info);
@@ -394,7 +396,7 @@ L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
 =head1 DOWNLOAD
 
 Lemonldap::NG is available at
-L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+L<https://lemonldap-ng.org/download>
 
 =head1 COPYRIGHT AND LICENSE
 

@@ -1,0 +1,11 @@
+#!/bin/sh
+curl https://lemonldap-ng.org/_media/rpm-gpg-key-ow2 > /etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
+cat > /etc/yum.repos.d/lemonldap-ng-extras.repo <<\EOF
+[lemonldap-ng-extras]
+name=LemonLDAP::NG extra packages
+baseurl=https://lemonldap-ng.org/redhat/extras/$releasever
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
+EOF
+yum -y install lasso-perl

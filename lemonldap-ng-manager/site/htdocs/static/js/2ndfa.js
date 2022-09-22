@@ -86,9 +86,7 @@
       $scope.currentSession = null;
       $scope.menu = menu;
       $scope.searchString = '';
-      $scope.U2FCheck = "1";
-      $scope.TOTPCheck = "1";
-      $scope.UBKCheck = "1";
+      $scope.sfatypes = {};
       $scope.translateP = $translator.translateP;
       $scope.translate = $translator.translate;
       $scope.translateTitle = function(node) {
@@ -150,7 +148,7 @@
       $scope.displaySession = function(scope) {
         var sessionId, transformSession;
         transformSession = function(session) {
-          var _insert, _stToStr, array, arrayDate, attr, attrs, category, epoch, i, id, k, key, len, len1, name, pattern, res, sfDevice, subres, time, title, value;
+          var _insert, _stToStr, array, arrayDate, attr, attrs, category, epoch, i, k, key, len, len1, name, pattern, res, sfDevice, subres, time, title, value;
           _stToStr = function(s) {
             return s;
           };
@@ -176,7 +174,6 @@
             }
           };
           time = session._utime;
-          id = session._session_id;
           for (key in session) {
             value = session[key];
             if (!value) {
@@ -206,32 +203,35 @@
             for (i = 0, len = attrs.length; i < len; i++) {
               attr = attrs[i];
               if (session[attr]) {
-                if (session[attr].toString().match(/"type":\s*"(?:TOTP|U2F|UBK)"/)) {
-                  subres.push({
-                    title: "type",
-                    value: "name",
-                    epoch: "date"
-                  });
+                if (attr === "_2fDevices" && session[attr]) {
                   array = JSON.parse(session[attr]);
-                  for (k = 0, len1 = array.length; k < len1; k++) {
-                    sfDevice = array[k];
-                    for (key in sfDevice) {
-                      value = sfDevice[key];
-                      if (key === 'type') {
-                        title = value;
-                      }
-                      if (key === 'name') {
-                        name = value;
-                      }
-                      if (key === 'epoch') {
-                        epoch = value;
-                      }
-                    }
+                  if (array.length > 0) {
                     subres.push({
-                      title: title,
-                      value: name,
-                      epoch: epoch
+                      title: "type",
+                      value: "name",
+                      epoch: "date"
                     });
+                    for (k = 0, len1 = array.length; k < len1; k++) {
+                      sfDevice = array[k];
+                      for (key in sfDevice) {
+                        value = sfDevice[key];
+                        if (key === 'type') {
+                          title = value;
+                        }
+                        if (key === 'name') {
+                          name = value;
+                        }
+                        if (key === 'epoch') {
+                          epoch = value;
+                        }
+                      }
+                      subres.push({
+                        title: title,
+                        value: name,
+                        epoch: epoch,
+                        sfrow: true
+                      });
+                    }
                   }
                   delete session[attr];
                 } else if (session[attr].toString().match(/\w+/)) {
@@ -256,14 +256,14 @@
           }
           return {
             _utime: time,
-            id: id,
             nodes: res
           };
         };
         $scope.currentScope = scope;
         sessionId = scope.$modelValue.session;
         $http.get(scriptname + "sfa/" + sessionType + "/" + sessionId).then(function(response) {
-          return $scope.currentSession = transformSession(response.data);
+          $scope.currentSession = transformSession(response.data);
+          return $scope.currentSession.id = sessionId;
         });
         return $scope.showT = false;
       };
@@ -304,7 +304,13 @@
         } else {
           over = 0;
         }
-        return $http.get(scriptname + "sfa/" + sessionType + "?" + query + "&U2FCheck=" + $scope.U2FCheck + "&TOTPCheck=" + $scope.TOTPCheck + "&UBKCheck=" + $scope.UBKCheck).then(function(response) {
+        return $http.get((scriptname + "sfa/" + sessionType + "?" + query) + Object.entries($scope.sfatypes).map(function(x) {
+          if (x[1]) {
+            return "&type=" + x[0];
+          } else {
+            return "";
+          }
+        }).join("")).then(function(response) {
           var data, i, len, n, ref;
           data = response.data;
           if (data.result) {
@@ -346,7 +352,13 @@
         } else {
           over = 0;
         }
-        return $http.get(scriptname + "sfa/" + sessionType + "?_session_uid=" + $scope.searchString + "*&groupBy=substr(_session_uid," + $scope.searchString.length + ")&U2FCheck=" + $scope.U2FCheck + "&TOTPCheck=" + $scope.TOTPCheck + "&UBKCheck=" + $scope.UBKCheck).then(function(response) {
+        return $http.get((scriptname + "sfa/" + sessionType + "?_session_uid=" + $scope.searchString + "*&groupBy=substr(_session_uid," + $scope.searchString.length + ")") + Object.entries($scope.sfatypes).map(function(x) {
+          if (x[1]) {
+            return "&type=" + x[0];
+          } else {
+            return "";
+          }
+        }).join("")).then(function(response) {
           var data, i, len, n, ref;
           data = response.data;
           if (data.result) {

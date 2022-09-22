@@ -4,7 +4,7 @@ Installation from the tarball
 Get the tarball
 ---------------
 
-Get the tarball from :doc:`download page</download>`. You can also find
+Get the tarball from `download page <https://lemonldap-ng.org/download.html>`__. You can also find
 on this page the SVN tarball if you want to test latest features.
 
 

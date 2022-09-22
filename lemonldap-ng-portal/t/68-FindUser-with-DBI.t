@@ -15,7 +15,6 @@ SKIP: {
     }
     my $res;
     my $json;
-    my $request;
     my $dbh = DBI->connect("dbi:SQLite:dbname=$userdb");
     $dbh->do(
 'CREATE TABLE users (uid text,password text,cn text,type text,guy text, room text)'
@@ -59,10 +58,10 @@ SKIP: {
                 findUserWildcard            => '#',
                 impersonationRule           => 1,
                 findUserSearchingAttributes => {
-                    uid  => 'Login',
-                    guy  => 'Kind',
-                    cn   => 'Name',
-                    room => 'Room'
+                    'uid##1'    => 'Login',
+                    '1_guy##1'  => 'Kind',
+                    '2_cn##1'   => 'Name',
+                    '3_room##1' => 'Room'
                 },
                 findUserExcludingAttributes =>
                   { type => 'mutant', uid => 'rtyler # davrosjr # ' },
@@ -77,7 +76,7 @@ SKIP: {
       expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
     ( $host, $url, $query ) =
       expectForm( $res, '#', undef, 'uid', 'guy', 'cn', 'room' );
-    $request = '';
+    my $request = '';
     ok(
         $res = $client->_post(
             '/finduser', IO::String->new($request),
@@ -92,7 +91,7 @@ SKIP: {
       expectForm( $res, '#', undef, 'uid', 'guy', 'cn', 'room' );
     ok(
         $res->[2]->[0] =~
-m%<input id="spoofIdfield" name="spoofId" type="text" class="form-control" value="" autocomplete="off"%,
+m%<input name="spoofId" type="text" class="form-control" value="" autocomplete="off"%,
         'value=""'
     ) or explain( $res->[2]->[0], 'value=""' );
 
@@ -116,24 +115,33 @@ m%<input id="spoofIdfield" name="spoofId" type="text" class="form-control" value
     ) or explain( $res->[2]->[0], 'Search for an account' );
     ok(
         $res->[2]->[0] =~
-m%<input id="findUser_guy" name="guy" type="text" autocomplete="off" class="form-control" placeholder="Kind" />%,
+m%<input id="findUser_guy" name="guy" type="text" autocomplete="off" class="form-control" aria-label="Kind" placeholder="Kind" />%,
         'id="findUser_guy"'
     ) or explain( $res->[2]->[0], 'id="findUser_guy"' );
     ok(
         $res->[2]->[0] =~
-m%<input id="findUser_uid" name="uid" type="text" autocomplete="off" class="form-control" placeholder="Login" />%,
+m%<input id="findUser_uid" name="uid" type="text" autocomplete="off" class="form-control" aria-label="Login" placeholder="Login" />%,
         'id="findUser_uid"'
     ) or explain( $res->[2]->[0], 'id="findUser_uid"' );
     ok(
         $res->[2]->[0] =~
-m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-control" placeholder="Name" />%,
+m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-control" aria-label="Name" placeholder="Name" />%,
         'id="findUser_cn"'
     ) or explain( $res->[2]->[0], 'id="findUser_cn"' );
     ok(
         $res->[2]->[0] =~
-m%<input id="findUser_room" name="room" type="text" autocomplete="off" class="form-control" placeholder="Room" />%,
+m%<input id="findUser_room" name="room" type="text" autocomplete="off" class="form-control" aria-label="Room" placeholder="Room" />%,
         'id="findUser_room"'
     ) or explain( $res->[2]->[0], 'id="findUser_room"' );
+
+    my @c = ( $res->[2]->[0] =~ m%<input id="findUser_(\w+)"%gs );
+    ok( @c == 4, ' -> Four entries found' )
+      or explain( $res->[2]->[0], '4, found ' . scalar @c );
+    ok( $c[0] eq 'guy',  '  1st -> guy' );
+    ok( $c[1] eq 'cn',   '  2nd -> cn' );
+    ok( $c[2] eq 'room', '  3rd -> room' );
+    ok( $c[3] eq 'uid',  '  4th -> uid' );
+    count(5);
 
     $request = 'uid=dwho';
     ok(

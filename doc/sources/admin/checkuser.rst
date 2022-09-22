@@ -17,27 +17,30 @@ Just enable it in the manager (section “plugins”).
    -  **Identities use rule**: Rule to define which profiles can be
       displayed (by example: ``!$anonymous``)
    -  **Unrestricted users rule**: Rule to define which users can check
-      ALL users. ``Identities use rule`` is bypassed.
-   -  **Hidden attributes**: Session attributes not displayed
+      ALL users and attributes.
+   -  **Hidden attributes**: Session attributes not displayed except for unrestricted users
    -  **Attributes used for searching sessions**: User's attributes used
       for searching sessions in backend if ``whatToTrace`` fails. Useful
       to look for sessions by mail or givenName. Let it blank to search
       by ``whatToTrace`` only
-   -  **Display computed sessions**: Rule to define which users can display a
-      computed session if no SSO session is found
-   -  **Display empty headers**: Rule to define which users can display ALL headers
-      appended by LemonLDAP::NG including empty ones
-   -  **Display normalized headers**: Rule to define which users see headers name sent by
-      the web server (see RFC3875)
-   -  **Display empty values**: Rule to define which users can display ALL attributes
-      even empty ones
-   -  **Display persistent session data**: Rule to define which users can display
-      persistent session data
    -  **Hidden headers**: Sent headers whose value is masked except for unrestricted users.
-      Key is a Virtualhost name and value represents a space-separated headers list.
-      A blank value obfuscates ALL relative Virtualhost sent headers.
+      Key is a VirtualHost name and value represents a space-separated headers list.
+      A blank value obfuscates ALL relative VirtualHost sent headers.
       Note that just valued hearders are masked.
 
+-  **Display**:
+
+   -  **Computed sessions**: Rule to define which users can display a
+      computed session if no SSO session is found
+   -  **Persistent session data**: Rule to define which users can display
+      persistent session data
+   -  **Normalized headers**: Rule to define which users can see headers name sent by
+      the web server (see RFC3875)
+   -  **Empty headers**: Rule to define which users can display ALL headers
+      sent by LemonLDAP::NG including empty ones
+   -  **Empty values**: Rule to define which users can display empty values
+   -  **Hidden attributes**: Rule to define which users can display hidden attributes
+   -  **History**: Rule to define which users can display logins history
 
 .. note::
 
@@ -55,7 +58,7 @@ Just enable it in the manager (section “plugins”).
 
     By example:
 
-    \* Search attributes => ``mail uid givenName``
+    \* Search attributes => ``mail, uid, givenName``
 
     If ``whatToTrace`` fails, sessions are searched by ``mail``, next
     ``uid`` if none session is found and so on...

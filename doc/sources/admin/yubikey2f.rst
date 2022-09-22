@@ -1,9 +1,13 @@
-Yubikey Second Factor
-=====================
+Yubico OTP Second Factor
+========================
 
-A `Yubikey <http://www.yubico.com/yubikey>`__ is a small material token
-manufactured by `Yubico <http://www.yubico.com>`__. It sends an OTP,
-which is validated via Yubico server.
+Yubico OTP is a type of One-Time-Password authentication based on a
+keyboard-emulating hardware device (Yubikey). OTPs are validated against an
+external server, either on the cloud or on premices.
+
+|deprecated| Almost all Yubikeys sold by Yubico now support :doc:`FIDO2 <webauthn2f>`.
+You are encouraged to use this type of second factor instead, since it is
+compatible with a much broader range of devices, and also more secure.
 
 Prerequisites and dependencies
 ------------------------------
@@ -23,36 +27,36 @@ In the manager (second factors), you just have to enable it:
 -  **Activation**: set it to "on"
 -  **Self registration**: set it to "on" if users are authorized to
    register their keys
+-  **Allow users to remove Yubikey**: If enabled, users can unregister
+   Yubikey device.
+-  **API client ID**: given by Yubico or another service
+-  **API secret key**: given by Yubico or another service
+-  **Nonce** (optional): if any
+-  **Service URL**: service URL (leave it blank to use Yubico cloud services)
+-  **OTP public ID part size**: leave it to default (12) unless you know
+   what you are doing
+-  **Get Yubikey ID from session attribute**: if non-empty, the Yubikey ID will
+   be read from this session attribute. This allows external provisionning of Yubikeys.
 -  **Authentication level**: you can overwrite here auth level for
    Yubikey registered users. Leave it blank keeps auth level provided by
    first authentication module *(default: 2 for user/password based
    modules)*. **It is recommended to set an higher value here if you
-   want to give access to some apps only to enrolled users**
--  **Client ID**: given by Yubico or another service
--  **API secret key**: given by Yubico or another service
--  **Nonce (optional)**: if any
--  **URL**: Url of service (leave blank to use Yubico cloud services)
--  **OTP public ID part size**: leave it to default (12) unless you know
-   what you are doing
--  **Allow users to remove Yubikey**: If enabled, users can unregister
-   Yubikey device.
--  **Get Yubikey ID from session attribute**: If non-empty, the Yubikey ID will
-   be read from this session attribute. This allows external provisionning of Yubikeys.
--  **Lifetime**: Unlimited by default. Set a Time To Live in seconds.
-   TTL is checked at each login process if set. If TTL is expired,
-   relative Yubikey is removed.
--  **Logo** (Optional): logo file *(in static/<skin> directory)*
+   want to give access to some apps only for enrolled users**
 -  **Label** (Optional): label that should be displayed to the user on
    the choice screen
+-  **Logo** (Optional): logo file *(in static/<skin> directory)*
+-  **Lifetime** (Optional): Unlimited by default. Set a Time To Live in seconds.
+   TTL is checked at each login process if set. If TTL is expired,
+   relative Yubikey is removed.
 
 
 .. attention::
 
     If you want to use a custom rule for "activation" and
     want to keep self-registration, you must include this in your rule:
-    ``$_2fDevices =~ /"type":\s*"UBK"/s``, else Yubikey will be required
-    even if users are not registered. This is automatically done when
-    "activation" is simply set to "on".
+    ``has2f('UBK')``, else Yubico OTP will be required even if users are not
+    registered. This is automatically done when "activation" is simply set to
+    "on".
 
 Provisioning
 ------------
@@ -71,3 +75,5 @@ Enrollment
 
 If you have enabled self registration, users can register their U2F keys
 using https://portal/2fregisters
+
+.. |deprecated| image:: /documentation/deprecated.png

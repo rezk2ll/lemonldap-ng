@@ -79,8 +79,7 @@ Macros and groups are stored in session database. Local macros is a
 special feature of handler that permit one to have macros useable localy
 only. Those macros are calculated only at the first usage and stored in
 the local session cache (only for this server) and only if the user
-access to the related applications. This avoid to have to many datas
-stored.
+access to the related applications. This avoid to have to many data stored.
 
 .. code-block:: perl
 

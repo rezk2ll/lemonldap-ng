@@ -7,59 +7,56 @@ use Net::LDAP;    #inherits
 use Net::LDAP::Util qw(escape_filter_value);
 use base qw(Net::LDAP);
 use Lemonldap::NG::Portal::Main::Constants ':all';
+use Net::LDAP::Control::PasswordPolicy;
 use Encode;
 use Unicode::String qw(utf8);
 use Scalar::Util 'weaken';
 use IO::Socket::Timeout;
 use utf8;
 
-our $VERSION  = '2.0.10';
-our $ppLoaded = 0;
-
-BEGIN {
-    eval {
-        require threads::shared;
-        threads::shared::share($ppLoaded);
-    };
-}
+our $VERSION = '2.0.15';
 
 # INITIALIZATION
 
 # Build a Net::LDAP object using parameters issued from $portal
 sub new {
     my ( $class, $args ) = @_;
-    my $portal = $args->{p}    or die "$class : p argument required !";
-    my $conf   = $args->{conf} or die "$class : conf argument required !";
-    my $self;
-    my $useTls = 0;
-    my $tlsParam;
-    my @servers = ();
-    foreach my $server ( split /[\s,]+/, $conf->{ldapServer} ) {
+    my $portal = $args->{p}    or die "$class: p argument is required!";
+    my $conf   = $args->{conf} or die "$class: conf argument is required!";
+    my ( $self, @servers, %tlsParams );
+    my $useStartTls = 0;
 
+    foreach my $server ( split /[\s,]+/, $conf->{ldapServer} ) {
         if ( $server =~ m{^ldap\+tls://([^/]+)/?\??(.*)$} ) {
-            $useTls   = 1;
-            $server   = $1;
-            $tlsParam = $2 || "";
+            $useStartTls = 1;
+            $server      = $1;
+            %tlsParams   = split( /[&=]/, $2 || "" );
+        }
+        elsif ( $server =~ m{^(ldaps://[^/]+)/?\??(.*)$} ) {
+            $useStartTls = 0;
+            $server      = $1;
+            %tlsParams   = split( /[&=]/, $2 || "" );
         }
         else {
-            $useTls = 0;
+            $useStartTls = 0;
         }
         push @servers, $server;
     }
+    $tlsParams{cafile} ||= $conf->{ldapCAFile} if $conf->{ldapCAFile};
+    $tlsParams{capath} ||= $conf->{ldapCAPath} if $conf->{ldapCAPath};
+    $tlsParams{verify} ||= $conf->{ldapVerify} if $conf->{ldapVerify};
     $self = Net::LDAP->new(
         \@servers,
         onerror   => undef,
         keepalive => 1,
+        %tlsParams,
         ( $conf->{ldapPort}    ? ( port    => $conf->{ldapPort} )    : () ),
         ( $conf->{ldapTimeout} ? ( timeout => $conf->{ldapTimeout} ) : () ),
         ( $conf->{ldapVersion} ? ( version => $conf->{ldapVersion} ) : () ),
         ( $conf->{ldapRaw}     ? ( raw     => $conf->{ldapRaw} )     : () ),
-        ( $conf->{ldapCAFile}  ? ( cafile  => $conf->{ldapCAFile} )  : () ),
-        ( $conf->{ldapCAPath}  ? ( capath  => $conf->{ldapCAPath} )  : () ),
-        ( $conf->{ldapVerify}  ? ( verify  => $conf->{ldapVerify} )  : () ),
     );
     unless ($self) {
-        $portal->logger->error($@);
+        $portal->logger->error( "LDAP initialization error: " . $@ );
         return 0;
     }
     elsif ( $Net::LDAP::VERSION < '0.64' ) {
@@ -72,7 +69,7 @@ sub new {
             and $self->socket->errstr < 0 )
         {
             $portal->logger->error(
-                "SSL connection error: " . $self->socket->errstr );
+                "LDAP SSL connection failed: " . $self->socket->errstr );
             return 0;
         }
     }
@@ -84,14 +81,10 @@ sub new {
     $socket->read_timeout( $conf->{ldapIOTimeout} );
     $socket->write_timeout( $conf->{ldapIOTimeout} );
 
-    if ($useTls) {
-        my %h = split( /[&=]/, $tlsParam );
-        $h{cafile} ||= $conf->{ldapCAFile} if ( $conf->{ldapCAFile} );
-        $h{capath} ||= $conf->{ldapCAPath} if ( $conf->{ldapCAPath} );
-        $h{verify} ||= $conf->{ldapVerify} if ( $conf->{ldapVerify} );
-        my $mesg = $self->start_tls(%h);
+    if ($useStartTls) {
+        my $mesg = $self->start_tls(%tlsParams);
         if ( $mesg->code ) {
-            $portal->logger->error( 'StartTLS failed: ' . $mesg->error );
+            $portal->logger->error( 'LDAP StartTLS failed: ' . $mesg->error );
             return 0;
         }
     }
@@ -115,10 +108,9 @@ sub new {
 # @return Net::LDAP::Message
 sub bind {
     my ( $self, $dn, %args ) = @_;
+    my $mesg;
 
     $self->{portal}->logger->debug("Call bind for $dn") if $dn;
-
-    my $mesg;
     unless ($dn) {
         $dn = $self->{conf}->{managerDn};
         $args{password} =
@@ -135,7 +127,43 @@ sub bind {
             };
             print STDERR "$@\n" if ($@);
         }
+
+        if ( $self->{conf}->{ldapPpolicyControl} ) {
+            my $pp = Net::LDAP::Control::PasswordPolicy->new();
+            $args{control} = [$pp];
+        }
+
         $mesg = $self->SUPER::bind( $dn, %args );
+
+        if ( $mesg->code ) {
+            my ($resp) = $mesg->control("1.3.6.1.4.1.42.2.27.8.5.1");
+
+            # Check for ppolicy error
+            my $pp_error = $resp->pp_error if ( defined($resp) );
+            if ( defined $pp_error ) {
+                my $ppolicy_error = [
+                    "password expired",
+                    "account locked",
+                    "change after reset",
+                    "password mod not allowed",
+                    "supply old password",
+                    "insufficient password quality",
+                    "password too short",
+                    "password too young",
+                    "password in history"
+                ]->[$pp_error];
+
+                $self->{portal}
+                  ->logger->error( "Error when binding to LDAP server: "
+                      . $mesg->error
+                      . " | extended ppolicy control response error: $ppolicy_error"
+                  );
+            }
+            else {
+                $self->{portal}->logger->error(
+                    "Error when binding to LDAP server: " . $mesg->error );
+            }
+        }
     }
     else {
         $mesg = $self->SUPER::bind();
@@ -158,30 +186,6 @@ sub unbind {
     return $mesg;
 }
 
-## @method private boolean loadPP ()
-# Load Net::LDAP::Control::PasswordPolicy
-# @return true if succeed.
-sub loadPP {
-    my $self = shift;
-    return 1 if ($ppLoaded);
-
-    # Minimal version of Net::LDAP required
-    if ( $Net::LDAP::VERSION < 0.38 ) {
-        die(
-"Module Net::LDAP is too old for password policy, please install version 0.38 or higher"
-        );
-    }
-
-    # Require Perl module
-    eval { require Net::LDAP::Control::PasswordPolicy };
-    if ($@) {
-        $self->{portal}->logger->error(
-            "Module Net::LDAP::Control::PasswordPolicy not found in @INC");
-        return 0;
-    }
-    $ppLoaded = 1;
-}
-
 ## @method protected int userBind(string dn, hash args)
 # Call bind() with dn/password and return
 # @param $dn LDAP distinguish name
@@ -202,7 +206,7 @@ sub userBind {
         # Get server control response
         my ($resp) = $mesg->control("1.3.6.1.4.1.42.2.27.8.5.1");
 
-        # Return direct unless control resonse
+        # Return direct unless control response
         unless ( defined $resp ) {
             if ( $mesg->code == 49 ) {
                 $self->{portal}->userLogger->warn(
@@ -621,39 +625,6 @@ sub userModifyPassword {
             return PE_LDAPERROR;
         }
     }
-}
-
-## @method protected Lemonldap::NG::Portal::_LDAP ldap()
-# @return Lemonldap::NG::Portal::_LDAP object
-sub ldap {
-    my $self = shift;
-    return $self->{ldap}
-      if ( ref( $self->{ldap} )
-        and $self->{flags}->{ldapActive} );
-    if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self)
-        and my $mesg = $self->{ldap}->bind )
-    {
-        if ( $mesg->code != 0 ) {
-            $self->logger->error( "LDAP error: " . $mesg->error );
-            $self->{ldap}->unbind;
-        }
-        else {
-            if ( $self->{ldapPpolicyControl}
-                and not $self->{ldap}->loadPP() )
-            {
-                $self->logger->error("LDAP password policy error");
-                $self->{ldap}->unbind;
-            }
-            else {
-                $self->{flags}->{ldapActive} = 1;
-                return $self->{ldap};
-            }
-        }
-    }
-    else {
-        $self->logger->error("LDAP error: $@");
-    }
-    return 0;
 }
 
 ## @method string searchGroups(string base, string key, string value, string attributes, hashref dupcheck)

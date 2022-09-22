@@ -16,6 +16,7 @@ LemonLDAP::NG provides these packages:
 -  liblemonldap-ng-handler-perl: Handler common libraries
 -  liblemonldap-ng-manager-perl: Manager files
 -  liblemonldap-ng-portal-perl: Portal files
+-  liblemonldap-ng-ssoaas-apache-client-perl: SSOaaS client module
 
 Get the packages
 ----------------
@@ -68,7 +69,7 @@ repositories:
 
    apt install apt-transport-https
 
-You will need to trust the following GPG key : |image0|
+You will need to trust the `DEB signing key <https://lemonldap-ng.org/_media/rpm-gpg-key-ow2>`__ :
 
 ::
 
@@ -83,20 +84,19 @@ Then, add the official LL::NG repository
 ::
 
    # LemonLDAP::NG repository
-   deb     https://lemonldap-ng.org/deb stable main
-   deb-src https://lemonldap-ng.org/deb stable main
+   deb     https://lemonldap-ng.org/deb 2.0 main
 
 
 .. tip::
 
-
-
+    -  Use the ``stable`` repository to get packages from current major
+       version
     -  Use the ``oldstable`` repository to get packages from previous major
        version
     -  Use the ``testing`` repository to get packages from next major
        version
-    -  Use the ``2.0`` repository to avoid upgrade to next major version
-
+    -  Use the ``2.0`` repository to stay on this major version and avoid
+       upgrade to next major version
 
 
 Finally update your APT cache:
@@ -108,7 +108,7 @@ Finally update your APT cache:
 Manual download
 ~~~~~~~~~~~~~~~
 
-Packages are available on the :doc:`Download page</download>`.
+Packages are available on the `Download page <https://lemonldap-ng.org/download.html>`__.
 
 Install packages
 ----------------
@@ -189,7 +189,7 @@ File location
 Build your packages
 -------------------
 
-You can also get the :doc:`LemonLDAP::NG archive</download>` and make
+You can also get the `LemonLDAP::NG source <https://lemonldap-ng.org/download.html>`__ and make
 the package yourself:
 
 ::
@@ -197,6 +197,3 @@ the package yourself:
    tar xzf lemonldap-ng-*.tar.gz
    cd lemonldap-ng-*
    make debian-packages
-
-.. |image0| image:: /rpm-gpg-key-ow2
-

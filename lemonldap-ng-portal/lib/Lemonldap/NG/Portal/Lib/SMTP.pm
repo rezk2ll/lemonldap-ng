@@ -15,7 +15,7 @@ use Lemonldap::NG::Common::EmailTransport;
 use MIME::Base64;
 use Encode;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.12';
 
 our $transport;
 
@@ -47,8 +47,9 @@ sub loadMailTemplate {
     my ( $self, $req, $name, %prm ) = @_;
 
     # HTML::Template cache interferes with email translation (#1897)
-    $prm{cache} = 0 unless defined $prm{cache};
+    $prm{cache}                   = 0 unless defined $prm{cache};
     $prm{params}->{STATIC_PREFIX} = $self->p->staticPrefix;
+    $prm{params}->{MAIN_LOGO}     = $self->conf->{portalMainLogo};
     my %extra =
         $self->p->can('tplParams')
       ? $self->p->tplParams($req)
@@ -72,8 +73,9 @@ sub translate {
       . " ($self->{conf}->{templateDir}/$lang_code.json or $self->{conf}->{templateDir}/common/mail/en.json)";
     $json = join '', <F>;
     close F;
-    my $lang     = from_json( $json,            { allow_nonref => 1 } );
-    my $langOver = from_json( $self->p->trOver, { allow_nonref => 1 } );
+    my $lang = from_json( $json, { allow_nonref => 1 } );
+    my $langOver =
+      from_json( $self->p->getTrOver($req), { allow_nonref => 1 } );
 
     if ($langOver) {
         for my $k ( keys %{ $langOver->{all} || {} } ) {

@@ -9,13 +9,13 @@ To configure sessions, go in Manager, ``General Parameters`` »
 ``Sessions``:
 
 -  **Store user password in session data**: see
-   :doc:`password store documentation<passwordstore>`.
--  **Display session identifier**: Should the session ID be displayed in the manager's session explorer. The session ID is a sensitive information that should only be shown to highly trusted administrators.
--  **Sessions timeout**: Maximum lifetime of a session. Old sessions are
-   deleted by a cron script.
--  **Sessions activity timeout**: Maximum inactivity duration.
--  **Sessions update interval**: Minimum interval used to update session
-   when activity timeout is set.
+   :doc:`password store documentation<passwordstore>`
+-  **Display session identifier**: should the session ID be displayed in the manager's session explorer. The session ID is a sensitive information that should only be shown to highly trusted administrators
+-  **Sessions timeout**: maximum lifetime of a session. Old sessions are
+   deleted by a cron script
+-  **Sessions activity timeout**: maximum inactivity duration
+-  **Sessions update interval**: minimum interval used to update session
+   when activity timeout is set
 
 
 .. danger::
@@ -56,13 +56,13 @@ To configure sessions, go in Manager, ``General Parameters`` »
    disable persistent sessions storage to avoid too many database
    tuples.
 
-   -  **Disable storage**: Do not store user persitent sessions.
+   -  **Disable storage**: do not store user persitent sessions
 
 
 .. attention::
 
     Note that since HTTP protocol is not connected,
-    restrictions are not applied to the new session: the oldest are
+    restrictions are not applied to the new session. The oldest are
     destroyed.
 
 Command-line tools

@@ -15,10 +15,10 @@ for several usage:
 Configuration
 -------------
 
--  **SOAP/REST exported attributes**: list session attributes shared
-   trough SOAP/REST
+-  **REST/SOAP exported attributes**: list session attributes shared
+   through SOAP/REST
    
-   -  Use ``+`` to append to the default list of technical attributes,
+   -  Use ``+`` to append the default list of technical attributes,
       example: ``+ uid mail``
 
 REST

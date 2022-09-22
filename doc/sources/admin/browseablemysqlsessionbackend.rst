@@ -59,7 +59,7 @@ Create the following tables. You may skip the session types you are not going to
        _session_kind varchar(15),
        _utime bigint,
        ProxyID varchar(64),
-       _nameID varchar(128),
+       _nameID varchar(255),
        _assert_id varchar(64),
        _art_id varchar(64),
        _saml_id varchar(64)
@@ -89,7 +89,7 @@ Create the following tables. You may skip the session types you are not going to
        _utime bigint,
        _cas_id varchar(128),
        pgtIou varchar(128)
-   ) DEFAULT CHARSET utf8
+   ) DEFAULT CHARSET utf8;
    CREATE INDEX i_c__session_kind ON cassessions (_session_kind);
    CREATE INDEX i_c__utime        ON cassessions (_utime);
    CREATE INDEX i_c__cas_id       ON cassessions (_cas_id);
@@ -98,7 +98,7 @@ Create the following tables. You may skip the session types you are not going to
 LemonLDAP::NG configuration
 ---------------------------
 
-Go in the Manager and set the session module to ``Apache::Session::Browseable::PgJSON`` for each session type you intend to use:
+Go in the Manager and set the session module to ``Apache::Session::Browseable::MySQL`` for each session type you intend to use:
 
 * ``General parameters`` » ``Sessions`` » ``Session storage`` » ``Apache::Session module``
 * ``General parameters`` » ``Sessions`` » ``Persistent sessions`` » ``Apache::Session module``

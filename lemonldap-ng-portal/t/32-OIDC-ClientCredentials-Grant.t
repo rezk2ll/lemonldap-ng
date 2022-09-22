@@ -22,10 +22,12 @@ my $op = LLNG::Manager::Test->new( {
             portal                          => 'http://auth.op.com',
             authentication                  => 'Demo',
             userDB                          => 'Same',
+            customPlugins                   => 't::OidcHookPlugin',
             issuerDBOpenIDConnectActivation => 1,
             oidcRPMetaDataExportedVars      => {
                 rp => {
-                    "name" => "mymacro",
+                    "name"               => "mymacro",
+                    "preferred_username" => "hooked_username",
                 }
             },
             oidcRPMetaDataMacros => {
@@ -48,6 +50,21 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsRefreshToken          => 1,
                     oidcRPMetaDataOptionsIDTokenForceClaims    => 1,
                     oidcRPMetaDataOptionsRule => '$_scope =~ /\bread\b/',
+                },
+                scopelessrp => {
+                    oidcRPMetaDataOptionsDisplayName       => "RP",
+                    oidcRPMetaDataOptionsIDTokenExpiration => 3600,
+                    oidcRPMetaDataOptionsClientID          => "scopelessrp",
+                    oidcRPMetaDataOptionsAllowOffline      => 1,
+                    oidcRPMetaDataOptionsAllowClientCredentialsGrant => 1,
+                    oidcRPMetaDataOptionsIDTokenSignAlg              => "HS512",
+                    oidcRPMetaDataOptionsClientSecret          => "rpsecret",
+                    oidcRPMetaDataOptionsUserIDAttr            => "",
+                    oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
+                    oidcRPMetaDataOptionsBypassConsent         => 1,
+                    oidcRPMetaDataOptionsRefreshToken          => 1,
+                    oidcRPMetaDataOptionsIDTokenForceClaims    => 1,
+                    oidcRPMetaDataOptionsRule                  => '',
                 },
                 pubrp => {
                     oidcRPMetaDataOptionsAccessTokenExpiration       => 3600,
@@ -101,6 +118,13 @@ my $badquery2 = buildForm( {
     }
 );
 
+my $badquery3 = buildForm( {
+        client_id     => 'scopelessrp',
+        client_secret => 'rpsecret',
+        grant_type    => 'client_credentials',
+    }
+);
+
 my $goodquery = buildForm( {
         client_id     => 'rpid',
         client_secret => 'rpsecret',
@@ -127,6 +151,15 @@ $res = $op->_post(
 );
 expectBadRequest($res);
 
+## Test empty scope
+$res = $op->_post(
+    "/oauth2/token",
+    IO::String->new($badquery3),
+    accept => 'application/json',
+    length => length($badquery3),
+);
+expectReject( $res, 400, "invalid_scope" );
+
 ## Test a confidential RP
 $res = $op->_post(
     "/oauth2/token",
@@ -139,6 +172,8 @@ my $payload = expectJSON($res);
 my $access_token = $payload->{access_token};
 ok( $access_token, "Access Token found" );
 count(1);
+my $token_res_scope = $payload->{scope};
+ok( $token_res_scope, "Token response returned scope" );
 
 # Get userinfo
 $res = $op->_post(
@@ -153,8 +188,9 @@ $res = $op->_post(
 
 $payload = expectJSON($res);
 
-is( $payload->{sub},  'rpid' );
-is( $payload->{name}, 'foo' );
+is( $payload->{sub},                'rpid' );
+is( $payload->{name},               'foo' );
+is( $payload->{preferred_username}, 'hook' );
 
 my $query = "token=$access_token";
 ok(
@@ -172,6 +208,8 @@ ok(
 $payload = expectJSON($res);
 like( $payload->{scope}, qr/\bread\b/,   "Scope read found" );
 like( $payload->{scope}, qr/\balways\b/, "Rule-enforced scope found" );
+is( $token_res_scope, $payload->{scope},
+    "Token response scope match token scope" );
 
 clean_sessions();
 done_testing();

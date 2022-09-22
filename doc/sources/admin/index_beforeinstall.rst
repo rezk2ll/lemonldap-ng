@@ -5,5 +5,5 @@ Before installation
    :maxdepth: 1
 
    prereq
-   download
+   Download <https://lemonldap-ng.org/download.html>
    upgrade

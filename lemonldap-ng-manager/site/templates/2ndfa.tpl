@@ -14,21 +14,18 @@
           <ul class="nav navbar-nav" role="grid">
             <form class="navbar-form" name="filterForm">
               <div class="form-check ">
-                <input type="checkbox" ng-model="U2FCheck" class="form-check-input"  ng-true-value="2" ng-false-value="1" ng-change="search2FA()"/>
-                <label class="form-check-label" for="U2FCheck">U2F</label>
-                &nbsp;&nbsp;&&nbsp;&nbsp;
-                <input type="checkbox" ng-model="TOTPCheck" class="form-check-input" ng-true-value="2" ng-false-value="1" ng-change="search2FA()"/>
-                <label class="form-check-label" for="TOTPCheck">TOTP</label>
-                &nbsp;&nbsp;&&nbsp;&nbsp;
-                <input type="checkbox" ng-model="UBKCheck" class="form-check-input" ng-true-value="2" ng-false-value="1" ng-change="search2FA()"/>
-                <label class="form-check-label" for="UBKCheck">UBK</label>
+              <TMPL_LOOP NAME=SFATYPES>
+                <input type="checkbox" ng-model="sfatypes.<TMPL_VAR NAME=SFATYPE>" class="form-check-input" ng-change="search2FA()"/>
+                <label class="form-check-label" for="<TMPL_VAR NAME=SFATYPE>Check"><TMPL_VAR NAME=SFATYPE></label>
+                <TMPL_UNLESS NAME="__last__">&nbsp;&nbsp;&amp;&nbsp;&nbsp;</TMPL_UNLESS>
+              </TMPL_LOOP>
               </div>
             </form>
           </ul>
 		      <div class="col-lg-6 col-md-6 col-sm-8 col-xs-14" >
 		        <form class="navbar-form" role="search">
               <div class="input-group add-on">
-                <input class="form-control" placeholder="{{translate('search')}}" type="text" ng-model="searchString" ng-init="" ng-keyup="search2FA()"/>
+                <input class="form-control" trplaceholder="search" type="text" ng-model="searchString" ng-init="" ng-keyup="search2FA()"/>
                 <div class="input-group-btn">
                 <button class="btn btn-default" ng-click="search2FA(1)"><i class="glyphicon glyphicon-search"></i></button>
                 </div>
@@ -104,17 +101,14 @@
       </table>
     </div>
     <div ng-if="!node.nodes" >
-	  <th class="col-md-3" ng-if="node.title!='UBK' && node.title!='TOTP' && node.title!='U2F'">{{translate(node.title)}}</th>
-      <td class="data-{{node.epoch}}" ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'" >{{node.title}}</td>
-	  <th class="col-md-3" ng-if="node.title=='type'">{{translate(node.value)}}</th>
-	  <td class="col-md-3 data-{{node.epoch}}" ng-if="node.title!='type'" >{{node.value}}</td>
-	  <th class="col-md-3" ng-if="node.title=='type'">{{translate(node.epoch)}}</th>
-	  <td class="col-md-3 data-{{node.epoch}}" ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'">{{localeDate(node.epoch)}}</td>
+      <th class="col-md-3" ng-if="!node.sfrow">{{translate(node.title)}}</th>
+      <td class="data-{{node.epoch}}" ng-if="node.sfrow" >{{node.title}}</td>
+      <th class="col-md-3" ng-if="node.title=='type'">{{translate(node.value)}}</th>
+      <td class="col-md-3 data-{{node.epoch}}" ng-if="node.title!='type'" >{{node.value}}</td>
+      <th class="col-md-3" ng-if="node.title=='type'">{{translate(node.epoch)}}</th>
+      <td class="col-md-3 data-{{node.epoch}}" ng-if="node.sfrow">{{localeDate(node.epoch)}}</td>
       <td class="data-{{node.epoch}}">
-	  <span ng-if="node.title=='TOTP' || node.title=='UBK' || node.title=='U2F'" class="link text-danger glyphicon glyphicon-minus-sign" ng-click="delete2FA(node.title, node.epoch)"></span>
-		  <!--
-		  <span ng-if="$last && ( node.title=='TOTP' || node.title=='UBK' || node.title=='U2F' )" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newRule'})"></span>
-		  -->
+        <span ng-if="node.sfrow" class="link text-danger glyphicon glyphicon-minus-sign" ng-click="delete2FA(node.title, node.epoch)"></span>
       </td>
     </div>
   </script>

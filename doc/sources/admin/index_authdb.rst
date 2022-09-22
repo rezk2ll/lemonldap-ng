@@ -41,4 +41,5 @@ Authentication, users and password databases
    radius2f
    rest2f
    yubikey2f
+   webauthn2f
    sfextra

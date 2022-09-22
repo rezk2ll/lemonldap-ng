@@ -28,7 +28,7 @@ sub init {
 
     # Remote Procedure are defined in Lemonldap::NG::Common::Session::REST
     # HTML template
-    $self->addRoute( '2ndfa.html', undef, ['GET'] )
+    $self->addRoute( '2ndfa.html', 'sfaView', ['GET'] )
 
       ->addRoute(
         sfa => { ':sessionType' => 'sfa' },
@@ -46,7 +46,11 @@ sub init {
     $self->{hiddenAttributes} //= "_password";
     $self->{hiddenAttributes} .= ' _session_id'
       unless $conf->{displaySessionId};
-    $self->{TOTPCheck} = $self->{U2FCheck} = $self->{UBKCheck} = '1';
+
+    $self->{regSfaTypes} = [
+        sort map { s/^Yubikey$/UBK/r } split /[\s,]+/,
+        $conf->{available2FSelfRegistration}
+    ];
     return 1;
 }
 
@@ -67,14 +71,9 @@ sub del2F {
     my $epoch = $params->{epoch}
       or return $self->sendError( $req, 'Missing "epoch" parameter', 400 );
 
-    if ( $type =~ /\b(?:U2F|TOTP|UBK)\b/ ) {
-        $self->logger->debug(
-            "Call procedure delete2F with type=$type and epoch=$epoch");
-        return $self->delete2F( $req, $session, $skey );
-    }
-    else {
-        return $self->sendError( $req, 'Bad value "type" parameter', 400 );
-    }
+    $self->logger->debug(
+        "Call procedure delete2F with type=$type and epoch=$epoch");
+    return $self->delete2F( $req, $session, $skey );
 }
 
 ########################
@@ -116,11 +115,8 @@ sub sfa {
     my $moduleOptions = $mod->{options};
     $moduleOptions->{backend} = $mod->{module};
 
-    # Select 2FA sessions to display
-    foreach (qw(U2F TOTP UBK)) {
-        $self->{ $_ . 'Check' } = delete $params->{ $_ . 'Check' }
-          if ( defined $params->{ $_ . 'Check' } );
-    }
+    my @display_types = $params->get_all('type');
+    $params->remove('type');
 
     my %filters = map {
         my $s = $_;
@@ -191,15 +187,15 @@ sub sfa {
     foreach my $session ( keys %$res ) {
         delete $res->{$session}
           unless ( defined $res->{$session}->{_2fDevices}
-            and $res->{$session}->{_2fDevices} =~
-            /"type":\s*"(?:U2F|TOTP|UBK)"/s );
+            and $res->{$session}->{_2fDevices} =~ /"type"/s );
     }
 
-    # Filter 2FA sessions if needed
-    $self->logger->debug("Filtering 2F sessions...");
     my $all = ( keys %$res );
-    foreach (qw(U2F TOTP UBK)) {
-        if ( $self->{ $_ . 'Check' } eq '2' ) {
+
+    # Filter 2FA sessions if needed
+    if (@display_types) {
+        $self->logger->debug("Filtering 2F sessions...");
+        foreach (@display_types) {
             foreach my $session ( keys %$res ) {
                 delete $res->{$session}
                   unless ( defined $res->{$session}->{_2fDevices}
@@ -266,7 +262,7 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
     #   { session => <sessionId>, userId => <_session_uid> }
     else {
         $res = [
-            sort { $a->{date} <=> $b->{date} }
+            sort  { $a->{date} <=> $b->{date} }
               map { { session => $_, userId => $res->{$_}->{_session_uid} } }
               keys %$res
         ];
@@ -279,6 +275,16 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
             count  => scalar(@$res),
             total  => $total,
             values => $res
+        }
+    );
+}
+
+sub sfaView {
+    my ( $self, $req ) = @_;
+    return $self->p->sendHtml(
+        $req, "2ndfa",
+        params => {
+            SFATYPES => [ map { { SFATYPE => $_ } } @{ $self->{regSfaTypes} } ],
         }
     );
 }

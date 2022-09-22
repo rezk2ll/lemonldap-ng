@@ -26,7 +26,7 @@ password was given by user on authentication phase.
 Configuration
 -------------
 
-Go in Manager, ``General Parameters`` » ''Sessions '' »
+Go in Manager, ``General Parameters`` » ``Sessions`` »
 ``Store user password in session data`` and set to ``On``.
 
 Usage

@@ -32,13 +32,16 @@ SKIP: {
                     roomNumber  => 'roomNumber',
                     mail        => 'mail'
                 },
-                requireToken      => 0,
-                findUser          => 1,
-                impersonationRule => 1,
-                findUserWildcard  => '#',
-                findUserControl   => '^[\w#\s]+$',
-                findUserSearchingAttributes =>
-                  { uid => 'Login', roomNumber => 'Room', cn => 'Name' },
+                requireToken                => 0,
+                findUser                    => 1,
+                impersonationRule           => 1,
+                findUserWildcard            => '#',
+                findUserControl             => '^[\w#\s]+$',
+                findUserSearchingAttributes => {
+                    'uid##1'        => 'Login',
+                    'roomNumber##1' => 'Room',
+                    'cn##1'         => 'Name'
+                },
                 findUserExcludingAttributes =>
                   { mail => 'french@badwolf.org', uid => 'russian' },
             }
@@ -66,7 +69,7 @@ SKIP: {
       expectForm( $res, '#', undef, 'uid', 'roomNumber', 'cn' );
     ok(
         $res->[2]->[0] =~
-m%<input id="spoofIdfield" name="spoofId" type="text" class="form-control" value="" autocomplete="off"%,
+m%<input name="spoofId" type="text" class="form-control" value="" autocomplete="off"%,
         'value=""'
     ) or explain( $res->[2]->[0], 'value=""' );
 
@@ -88,17 +91,17 @@ m%<input id="spoofIdfield" name="spoofId" type="text" class="form-control" value
     ) or explain( $res->[2]->[0], 'Search for an account' );
     ok(
         $res->[2]->[0] =~
-m%<input id="findUser_roomNumber" name="roomNumber" type="text" autocomplete="off" class="form-control" placeholder="Room" />%,
+m%<input id="findUser_roomNumber" name="roomNumber" type="text" autocomplete="off" class="form-control" aria-label="Room" placeholder="Room" />%,
         'id="findUser_roomNumber"'
     ) or explain( $res->[2]->[0], 'id="findUser_roomNumber"' );
     ok(
         $res->[2]->[0] =~
-m%<input id="findUser_uid" name="uid" type="text" autocomplete="off" class="form-control" placeholder="Login" />%,
+m%<input id="findUser_uid" name="uid" type="text" autocomplete="off" class="form-control" aria-label="Login" placeholder="Login" />%,
         'id="findUser_uid"'
     ) or explain( $res->[2]->[0], 'id="findUser_uid"' );
     ok(
         $res->[2]->[0] =~
-m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-control" placeholder="Name" />%,
+m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-control" aria-label="Name" placeholder="Name" />%,
         'id="findUser_cn"'
     ) or explain( $res->[2]->[0], 'id="findUser_cn"' );
 

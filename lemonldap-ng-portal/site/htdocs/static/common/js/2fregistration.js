@@ -8,13 +8,15 @@ LemonLDAP::NG 2F registration script
   var delete2F, displayError, setMsg;
 
   setMsg = function(msg, level) {
+    $('#msg').attr('trspan', msg);
     $('#msg').html(window.translate(msg));
     $('#color').removeClass('message-positive message-warning alert-success alert-warning');
     $('#color').addClass("message-" + level);
     if (level === 'positive') {
       level = 'success';
     }
-    return $('#color').addClass("alert-" + level);
+    $('#color').addClass("alert-" + level);
+    return $('#color').attr("role", "status");
   };
 
   displayError = function(j, status, err) {
@@ -39,6 +41,8 @@ LemonLDAP::NG 2F registration script
       device = 'yubikey';
     } else if (device === 'TOTP') {
       device = 'totp';
+    } else if (device === 'WebAuthn') {
+      device = 'webauthn';
     } else {
       setMsg('u2fFailed', 'warning');
     }
@@ -59,6 +63,12 @@ LemonLDAP::NG 2F registration script
           }
         } else if (resp.result) {
           $("#delete-" + epoch).hide();
+          $(document).trigger("mfaDeleted", [
+            {
+              "type": device,
+              "epoch": epoch
+            }
+          ]);
           return setMsg('yourKeyIsUnregistered', 'positive');
         }
       },

@@ -3,7 +3,7 @@
 <div id="mailcontent" class="container">
 
   <TMPL_IF NAME="AUTH_ERROR">
-    <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert">
+    <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert" role="<TMPL_VAR NAME="AUTH_ERROR_ROLE">">
     <span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span>
     </div>
   </TMPL_IF>
@@ -25,19 +25,11 @@
         <div class="input-group-prepend">
           <span class="input-group-text"><label for="mailfield" class="mb-0"><i class="fa fa-envelope"></i></label></span>
         </div>
-        <input id="mailfield" name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" trplaceholder="mail" required />
+        <input id="mailfield" name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control"  trplaceholder="mail" required />
       </div>
 
-      <TMPL_IF NAME=CAPTCHA_SRC>
-        <div class="form-group">
-          <img src="<TMPL_VAR NAME=CAPTCHA_SRC>" class="img-thumbnail" />
-        </div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><label for="captchafield" class="mb-0"><i class="fa fa-eye"></i></label></span>
-          </div>
-          <input id="captchafield" type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" trplaceholder="captcha" required autocomplete="off" />
-        </div>
+      <TMPL_IF NAME=CAPTCHA_HTML>
+        <TMPL_VAR NAME=CAPTCHA_HTML>
       </TMPL_IF>
       <TMPL_IF NAME="TOKEN">
         <input type="hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
@@ -164,7 +156,7 @@
     <div class="card">
     <form action="#" method="post" class="login" role="form">
       <div class="form">
-        <h3 trspan="resetCertificateOK">A confirmation has been sent to your mail address.</h3>
+        <h3 trspan="newPwdSentTo">A confirmation has been sent to your mail address.</h3>
       </div>
     </form>
     </div>

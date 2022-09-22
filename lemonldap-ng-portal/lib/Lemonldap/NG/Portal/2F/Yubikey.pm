@@ -1,7 +1,7 @@
-# Yubikey second factor authentication
+# Yubico OTP second factor authentication
 #
 # This plugin handle authentications to ask Yubikey second factor for users that
-# have registered their Yubikey
+# have registered their Yubikey using legacy OTP mode
 package Lemonldap::NG::Portal::2F::Yubikey;
 
 use strict;
@@ -15,15 +15,15 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.12';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor';
 
 # INITIALIZATION
 
 has prefix => ( is => 'ro', default => 'yubikey' );
-has logo => ( is => 'rw', default => 'yubikey.png' );
-has yubi => ( is => 'rw' );
+has logo   => ( is => 'rw', default => 'yubikey.png' );
+has yubi   => ( is => 'rw' );
 
 sub init {
     my ($self) = @_;
@@ -77,7 +77,7 @@ sub init {
                     $self->conf->{yubikey2fUrl}
                     ? ( url => $self->conf->{yubikey2fUrl} )
                     : ()
-                ),
+                )
             }
         )
     );
@@ -96,7 +96,7 @@ sub _findYubikey {
 
     # If we didn't find a key, lookup psession
     if ( !$yubikey and $sessionInfo->{_2fDevices} ) {
-        $self->logger->debug("Loading 2F Devices ...");
+        $self->logger->debug("Loading 2F Devices...");
 
         # Read existing 2FDevices
         $_2fDevices = eval {
@@ -107,13 +107,22 @@ sub _findYubikey {
             return PE_ERROR;
         }
         $self->logger->debug("2F Device(s) found");
-        $self->logger->debug("Reading Yubikey ...");
+        $self->logger->debug("Reading Yubikey...");
 
-        $yubikey = $_->{_yubikey}
-          foreach grep { $_->{type} eq 'UBK' } @$_2fDevices;
+        if ( my $code = $req->param('code') ) {
+            $yubikey = $_->{_yubikey} foreach grep {
+                ( $_->{type} eq 'UBK' )
+                  and ( $_->{_yubikey} eq
+                    substr( $code, 0, $self->conf->{yubikey2fPublicIDSize} ) )
+            } @$_2fDevices;
+        }
+        else {
+            $yubikey = $_->{_yubikey}
+              foreach grep { $_->{type} eq 'UBK' } @$_2fDevices;
+        }
     }
 
-    return $yubikey;
+    return $yubikey || '';
 
 }
 
@@ -121,7 +130,7 @@ sub run {
     my ( $self, $req, $token, $_2fDevices ) = @_;
 
     my $checkLogins = $req->param('checkLogins');
-    $self->logger->debug("Yubikey; checkLogins set") if ($checkLogins);
+    $self->logger->debug("Yubikey; checkLogins set") if $checkLogins;
 
     my $stayconnected = $req->param('stayconnected');
     $self->logger->debug("Yubikey: stayconnected set") if $stayconnected;
@@ -141,13 +150,13 @@ sub run {
         $req,
         'ext2fcheck',
         params => {
-            MAIN_LOGO   => $self->conf->{portalMainLogo},
-            SKIN        => $self->p->getSkin($req),
-            TOKEN       => $token,
-            TARGET      => '/yubikey2fcheck?skin=' . $self->p->getSkin($req),
-            INPUTLOGO   => 'yubikey.png',
-            LEGEND      => 'clickOnYubikey',
-            CHECKLOGINS => $checkLogins,
+            MAIN_LOGO     => $self->conf->{portalMainLogo},
+            SKIN          => $self->p->getSkin($req),
+            TOKEN         => $token,
+            TARGET        => '/yubikey2fcheck?skin=' . $self->p->getSkin($req),
+            INPUTLOGO     => 'yubikey.png',
+            LEGEND        => 'clickOnYubikey',
+            CHECKLOGINS   => $checkLogins,
             STAYCONNECTED => $stayconnected
         }
     );

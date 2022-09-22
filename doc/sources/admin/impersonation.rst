@@ -51,17 +51,19 @@ protected from being impersonated.
 
 
 
-
 .. attention::
 
     Both spoofed and real session attributes can be used to
     set access rules, groups or macros.
 
-    By example : ``$real_uid eq 'dwho'`` or ``$real_groups =~ /\bsu\b/``
+    By example : ``$real_uid && $real_uid eq 'dwho'`` or ``$real_groups && $real_groups =~ /\bsu\b/``
 
     Keep in mind that real session is computed first. Afterward, if access
     is granted, impersonated session is computed with real and spoofed
     session attributes if Impersonation is allowed.
+    So, ``real_`` attributes are computed by second authentication process.
+    To avoid Perl warnings, you have to prefix regex with ``$real_var &&``.
+
 
 
 .. attention::

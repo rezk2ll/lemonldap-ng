@@ -7,7 +7,7 @@ use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::FormEncode;
 use XML::Simple;
-use HTML::Entities qw(decode_entities);
+use HTML::Entities qw(decode_entities encode_entities);
 use MIME::Base64;
 use HTTP::Request;         # SOAP call
 use POSIX qw(strftime);    # Convert SAML2 date into timestamp
@@ -21,7 +21,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_SLO_ERROR
 );
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.15';
 
 # PROPERTIES
 
@@ -300,7 +300,7 @@ sub loadIDPs {
         }
         $self->logger->debug("Set encryption mode $encryption_mode on IDP $_");
 
-        # Set signature method if overriden
+        # Set signature method if overridden
         my $signature_method = $self->conf->{samlIDPMetaDataOptions}->{$_}
           ->{samlIDPMetaDataOptionsSignatureMethod};
         if ($signature_method) {
@@ -386,6 +386,54 @@ sub loadSPs {
             $sp_metadata = encode( "utf8", $sp_metadata );
         }
 
+        # Get SP entityID
+        my ( $tmp, $entityID ) = ( $sp_metadata =~ /entityID=(['"])(.+?)\1/si );
+
+        # Decode HTML entities from entityID
+        # TODO: see Lasso comment below
+        decode_entities($entityID);
+
+        my $valid = 1;
+        my $rule  = $self->conf->{samlSPMetaDataOptions}->{$_}
+          ->{samlSPMetaDataOptionsRule};
+
+        if ( length $rule ) {
+            $rule = $self->p->HANDLER->substitute($rule);
+            unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
+                $self->logger->error( 'SAML SP rule error: '
+                      . $self->p->HANDLER->tsv->{jail}->error );
+                $valid = 0;
+            }
+        }
+
+        # Load per-SP macros
+        my $macros         = $self->conf->{samlSPMetaDataMacros}->{$_};
+        my $compiledMacros = {};
+        for my $macroAttr ( keys %{$macros} ) {
+            my $macroRule = $macros->{$macroAttr};
+            if ( length $macroRule ) {
+                $macroRule = $self->p->HANDLER->substitute($macroRule);
+                if ( $macroRule = $self->p->HANDLER->buildSub($macroRule) ) {
+                    $compiledMacros->{$macroAttr} = $macroRule;
+                }
+                else {
+                    $valid = 0;
+                    $self->logger->error(
+                        "Error processing macro $macroAttr for SAML SP $_"
+                          . $self->p->HANDLER->tsv->{jail}->error );
+                }
+            }
+        }
+
+        if ($valid) {
+            $self->spRules->{$_}         = $rule;
+            $self->spMacros->{$entityID} = $compiledMacros;
+        }
+        else {
+            $self->logger->error("SAML SP $_ has errors and will be ignored");
+            next;
+        }
+
         # Add this SP to Lasso::Server
         # TODO: when Lasso issue #35061 is fixed in all distros,
         # we could load the metadata into a new LassoProvider, extract the
@@ -399,13 +447,7 @@ sub loadSPs {
             next;
         }
 
-        # Store SP entityID and Organization Name
-        my ( $tmp, $entityID ) = ( $sp_metadata =~ /entityID=(['"])(.+?)\1/si );
-
-        # Decode HTML entities from entityID
-        # TODO: see Lasso comment above
-        decode_entities($entityID);
-
+        # Store Org name
         my $name = $self->getOrganizationName( $self->lassoServer, $entityID )
           || ucfirst($_);
         $self->spList->{$entityID}->{confKey} = $_;
@@ -429,7 +471,7 @@ sub loadSPs {
         }
         $self->logger->debug("Set encryption mode $encryption_mode on SP $_");
 
-        # Set signature method if overriden
+        # Set signature method if overridden
         my $signature_method = $self->conf->{samlSPMetaDataOptions}->{$_}
           ->{samlSPMetaDataOptionsSignatureMethod};
         if ($signature_method) {
@@ -450,34 +492,6 @@ sub loadSPs {
             }
             $self->logger->debug(
                 "Set signature method $signature_method on SP $_");
-        }
-
-        my $rule = $self->conf->{samlSPMetaDataOptions}->{$_}
-          ->{samlSPMetaDataOptionsRule};
-        if ( length $rule ) {
-            $rule = $self->p->HANDLER->substitute($rule);
-            unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-                $self->logger->error( 'SAML SP rule error: '
-                      . $self->p->HANDLER->tsv->{jail}->error );
-                next;
-            }
-            $self->spRules->{$_} = $rule;
-        }
-
-        # Load per-SP macros
-        my $macros = $self->conf->{samlSPMetaDataMacros}->{$_};
-        for my $macroAttr ( keys %{$macros} ) {
-            my $macroRule = $macros->{$macroAttr};
-            if ( length $macroRule ) {
-                $macroRule = $self->p->HANDLER->substitute($macroRule);
-                unless ( $macroRule = $self->p->HANDLER->buildSub($macroRule) )
-                {
-                    $self->error( 'SAML SP macro error: '
-                          . $self->p->HANDLER->tsv->{jail}->error );
-                    return 0;
-                }
-                $self->spMacros->{$entityID}->{$macroAttr} = $macroRule;
-            }
         }
 
         $self->logger->debug("SP $_ added");
@@ -536,7 +550,7 @@ sub checkMessage {
             $message = $self->resolveArtifact( $profile, $artifact, $method );
 
             # Request or response ?
-            if ( $message =~ /samlp:response/i ) {
+            if ( $self->_isArtifactSamlResponse($message) ) {
                 $response = $message;
             }
             else {
@@ -584,7 +598,7 @@ sub checkMessage {
                   $self->resolveArtifact( $profile, $artifact, $method );
 
                 # Request or response ?
-                if ( $message =~ /samlp:response/i ) {
+                if ( $self->_isArtifactSamlResponse($message) ) {
                     $response = $message;
                 }
                 else {
@@ -611,6 +625,29 @@ sub checkMessage {
 
     # 4. Return values
     return ( $request, $response, $method, $relaystate, $artifact ? 1 : 0 );
+}
+
+sub _isArtifactSamlResponse {
+    my ( $self, $message ) = @_;
+
+    my $type = eval {
+        my $resp = Lasso::Samlp2ArtifactResponse->new;
+        $resp->init_from_message($message);
+        $resp->any->get_name;
+    };
+
+    if ($@) {
+        $self->logger->warn("Could not detect type of Artifact response");
+        return;
+    }
+
+    $self->logger->debug("Artifact response type is $type");
+    if ( $type eq "Response" ) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 ## @method boolean checkLassoError(Lasso::Error error, string level)
@@ -739,13 +776,23 @@ sub addProvider {
         and defined $role
         and defined $metadata );
 
+    # https://dev.entrouvert.org/issues/51415
+    my $save_env = $ENV{'SSL_CERT_FILE'};
+    $ENV{'SSL_CERT_FILE'} = "/dev/null";
+
     eval {
         Lasso::Server::add_provider_from_buffer( $server, $role, $metadata,
             $public_key, $ca_cert_chain );
     };
 
-    return $self->checkLassoError($@);
+    if ( defined $save_env ) {
+        $ENV{'SSL_CERT_FILE'} = $save_env;
+    }
+    else {
+        delete $ENV{'SSL_CERT_FILE'};
+    }
 
+    return $self->checkLassoError($@);
 }
 
 ## @method string getOrganizationName(Lasso::Server server, string idp)
@@ -777,9 +824,16 @@ sub getOrganizationName {
     return unless $node;
 
     # Extract organization name
-    my $xs   = XML::Simple->new();
-    my $data = $xs->XMLin($node);
-    return $data->{OrganizationName}->{content};
+    my $org_name;
+    eval {
+        my $xs   = XML::Simple->new();
+        my $data = $xs->XMLin( $node, ForceContent => 1 );
+        $org_name = $data->{OrganizationName}->{content};
+    };
+    if ($@) {
+        $self->logger->warn("Could not parse organization name for $idp: $@");
+    }
+    return $org_name;
 }
 
 ## @method string getNextProviderId(Lasso::Logout logout)
@@ -976,6 +1030,11 @@ sub createAuthnRequest {
             return;
         }
     }
+
+    # Call samlGenerateAuthnRequest hook
+    my $h =
+      $self->p->processHook( $req, 'samlGenerateAuthnRequest', $idp, $login );
+    return if ( $h != PE_OK );
 
     # Build authentication request
     unless ( $self->buildAuthnRequestMsg($login) ) {
@@ -1559,7 +1618,7 @@ sub buildLogoutRequestMsg {
 sub setSessionFromDump {
     my ( $self, $profile, $dump ) = @_;
 
-    $self->logger->debug("Loading Session dump: $dump");
+    $self->logger->debug("Loading Session dump: $dump") if $dump;
 
     eval { Lasso::Profile::set_session_from_dump( $profile, $dump ); };
 
@@ -1839,6 +1898,10 @@ sub resolveArtifact {
         if ( $soap_answer->code() == "200" ) {
             $message = $soap_answer->content();
             $self->logger->debug("Get message $message");
+        }
+        else {
+            $self->logger->error(
+                "Error while sending message: " . $soap_answer->status_line );
         }
     }
 
@@ -2509,8 +2572,10 @@ sub sendLogoutResponseToServiceProvider {
         $req->{postFields} = { 'SAMLResponse' => $slo_body };
 
         # RelayState
-        $req->{postFields}->{'RelayState'} = $relaystate
-          if ($relaystate);
+        if ($relaystate) {
+            $req->{postFields}->{'RelayState'} = encode_entities($relaystate);
+            $req->data->{safeHiddenFormValues}->{RelayState} = 1;
+        }
 
         return $self->p->do( $req, ['autoPost'] );
     }
@@ -2595,6 +2660,13 @@ sub sendLogoutRequestToProvider {
         $self->logger->debug('Relay state set');
     }
 
+    # Skip SLO if no method found (#2746)
+    unless ( defined $method and $method != -1 ) {
+        $self->logger->debug(
+            "No HTTP SLO method found for $providerID");
+        return ( 0, $method, undef );
+    }
+
     # Initiate the logout request
     unless ( $self->initLogoutRequest( $logout, $providerID, $method ) ) {
         $self->logger->error("Initiate logout request failed for $providerID");
@@ -2675,6 +2747,8 @@ sub sendLogoutRequestToProvider {
                 name => $providerName,
             }
         );
+        $req->data->{cspChildSrc}->{ $self->p->cspGetHost( $logout->msg_url ) }
+          = 1;
     }
 
     # HTTP-SOAP
@@ -2985,7 +3059,7 @@ sub createAttributeValue {
 
     # Decode UTF-8
     $self->logger->debug("Decode UTF8 value $value") if $force_utf8;
-    $value = decode( "utf8", $value ) if $force_utf8;
+    $value = decode( "utf8", $value )                if $force_utf8;
     $self->logger->debug("Create attribute value $value");
 
     # SAML2 attribute value
@@ -3624,7 +3698,7 @@ L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
 =head1 DOWNLOAD
 
 Lemonldap::NG is available at
-L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+L<https://lemonldap-ng.org/download>
 
 =head1 COPYRIGHT AND LICENSE
 

@@ -22,6 +22,7 @@ Name                     Comment                           Example
 **ldapConfBase**         DN of sessions branch             ou=sessions,dc=example,dc=com
 **ldapBindDN**           Connection login                  cn=admin,dc=example,dc=password
 **ldapBindPassword**     Connection password               secret
+**ldapRaw**              Binary attributes                 (?i:^jpegPhoto|;binary)
 **Index**                Fields to index                   refer to :ref:`fieldstoindex`
 Optional parameters
 Name                     Comment                           Default value
@@ -33,3 +34,9 @@ Name                     Comment                           Default value
 **ldapCAFile**           Path of CA file bundle            (system CA bundle)
 **ldapCAPath**           Perform CA directory              (system CA bundle)
 ======================== ================================= ===============================
+
+.. note::
+
+   In order to properly handle UTF-8 encoded values, you may need to set the
+   ldapRaw parameter to a non-null value. This requires
+   Apache::Session::Browseable >= 1.3.3

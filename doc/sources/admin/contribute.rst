@@ -52,13 +52,13 @@ Install basic tools
 Debian
 ^^^^^^
 
-As *root :*
+As *root:*
 
 ::
 
    apt install aptitude
    aptitude install vim make devscripts yui-compressor git git-gui libjs-uglify coffeescript cpanminus autopkgtest pkg-perl-autopkgtest
-   aptitude install libauth-yubikey-webclient-perl libnet-smtp-server-perl libtime-fake-perl libtest-output-perl libtest-pod-perl libtest-leaktrace-perl
+   aptitude install libauth-yubikey-webclient-perl libnet-smtp-server-perl libtime-fake-perl libtest-output-perl libtest-pod-perl libtest-leaktrace-perl libtest-mockobject-perl uglifyjs libdbd-sqlite3-perl libauthen-webauthn-perl libauthen-oath-perl
 
    cpanm Authen::U2F Authen::U2F::Tester Crypt::U2F::Server::Simple
 
@@ -71,7 +71,7 @@ As *root :*
 Configure Git
 ^^^^^^^^^^^^^
 
-As *user :*
+As *user:*
 
 ::
 
@@ -126,7 +126,7 @@ Install dependencies
 
 ::
 
-   aptitude install libapache-session-perl libcache-cache-perl libclone-perl libconfig-inifiles-perl libconvert-pem-perl libcrypt-openssl-bignum-perl libcrypt-openssl-rsa-perl libcrypt-openssl-x509-perl libcrypt-rijndael-perl libdbi-perl libdigest-hmac-perl libemail-sender-perl libgd-securityimage-perl libhtml-template-perl libio-string-perl libjson-perl libmime-tools-perl libmouse-perl libnet-ldap-perl libplack-perl libregexp-assemble-perl libregexp-common-perl libsoap-lite-perl libstring-random-perl libtext-unidecode-perl libunicode-string-perl liburi-perl libwww-perl libxml-simple-perl libxml-libxslt-perl libcrypt-urandom-perl libconvert-base32-perl cpanminus
+   aptitude install libapache-session-perl libcache-cache-perl libclone-perl libconfig-inifiles-perl libconvert-pem-perl libio-socket-timeout-perl libcrypt-openssl-bignum-perl libcrypt-openssl-rsa-perl libcrypt-openssl-x509-perl libcrypt-rijndael-perl libdbi-perl libdigest-hmac-perl libemail-sender-perl libgd-securityimage-perl libhtml-template-perl libio-string-perl libjson-perl libmime-tools-perl libmouse-perl libnet-ldap-perl libplack-perl libregexp-assemble-perl libregexp-common-perl libsoap-lite-perl libstring-random-perl libtext-unidecode-perl libunicode-string-perl liburi-perl libwww-perl libxml-simple-perl libxml-libxslt-perl libcrypt-urandom-perl libconvert-base32-perl cpanminus
    aptitude install apache2 libapache2-mod-fcgid libapache2-mod-perl2  # install Apache
    aptitude install nginx nginx-extras  # install Nginx
    cpanm perltidy@20181120

@@ -764,7 +764,7 @@
   "type" : "object",
   "properties" : {
     "service" : {
-      "type" : "string"
+      "type" : "array"
     },
     "userAttribute" : {
       "type" : "string",
@@ -880,6 +880,9 @@
       "type" : "string",
       "format" : "url"
     },
+    "logoutBypassConfirm" : {
+      "type" : "boolean"
+    },
     "clientSecret" : {
       "type" : "string",
       "format" : "password"
@@ -894,6 +897,11 @@
       "type" : "string",
       "default" : "HS512",
       "enum" : [ "none", "RS256", "RS384", "RS512" ]
+    },
+    "userInfoSignAlg" : {
+      "type" : "string",
+      "default" : "",
+      "enum" : [ "", "none", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512" ]
     },
     "accessTokenJWT" : {
       "type" : "bool"
@@ -1264,7 +1272,7 @@
     "type" : {
       "type" : "string",
       "description" : "The type of token in use",
-      "example" : "TOTP, U2F, UBK (Yubikey)"
+      "example" : "TOTP, U2F, UBK (Yubikey), WebAuthn"
     },
     "name" : {
       "type" : "string",

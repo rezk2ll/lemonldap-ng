@@ -5,6 +5,7 @@ use IO::String;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;
 use MIME::Base64;
+use URI::QueryParam;
 
 BEGIN {
     require 't/test-lib.pm';
@@ -38,6 +39,11 @@ LWP::Protocol::PSGI->register(
         }
         if ( $req->method =~ /^post$/i ) {
             my $s = $req->content;
+            if ( $req->uri eq '/token/oauth2' ) {
+                is( $req->param("my_param"),
+                    "my value", "oidcGenerateTokenRequest called" );
+                count(1);
+            }
             ok(
                 $res = $client->_post(
                     $url, IO::String->new($s),
@@ -105,7 +111,24 @@ ok( $res = $op->_get( $url, query => $query, accept => 'text/html' ),
 count(1);
 expectOK($res);
 
-# Try to authenticate to OP
+# Try to authenticate to OP with unallowed user
+my $failquery = "user=rtyler&password=rtyler&$query";
+ok(
+    $res = $op->_post(
+        $url,
+        IO::String->new($failquery),
+        accept => 'text/html',
+        length => length($failquery),
+    ),
+    "Post authentication,        endpoint $url"
+);
+count(1);
+my $idpId = expectCookie($res);
+
+# Should be denied by rule
+expectPortalError( $res, 84 );
+
+# Try to authenticate to OP with allowed user
 $query = "user=french&password=french&$query";
 ok(
     $res = $op->_post(
@@ -117,7 +140,7 @@ ok(
     "Post authentication,        endpoint $url"
 );
 count(1);
-my $idpId = expectCookie($res);
+$idpId = expectCookie($res);
 my ( $host, $tmp );
 ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
 
@@ -177,9 +200,92 @@ count(2);
 switch ('rp');
 ok( $res = $rp->_get("/sessions/global/$spId"), 'Get UTF-8' );
 $res = expectJSON($res);
-ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
-  or explain( $res, 'cn => Frédéric Accents' );
+my $access_token_eol = $res->{_oidc_access_token_eol};
+my $access_token_old = $res->{_oidc_access_token};
+ok( $access_token_eol, 'OIDC EOL time is stored' );
+ok( $access_token_old, 'Obtained refresh token' );
+is( $res->{cn},   'Frédéric Accents', 'UTF-8 values' );
+is( $res->{mail}, 'fa@badwolf.org',     'Correct email' );
+count(5);
+
+is( $res->{userinfo_hook}, "op/french", "oidcGotUserInfo called" );
+is( $res->{id_token_hook}, "op/french", "oidcGotIDToken called" );
 count(2);
+
+my $id_token_decoded = id_token_payload( $res->{_oidc_id_token} );
+is( $id_token_decoded->{acr}, 'customacr-1', "Correct custom ACR" );
+count(1);
+
+# Update session at OP
+$Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{french} = {
+    uid  => 'french',
+    cn   => 'Frédéric Accents',
+    mail => 'fa2@badwolf.org',
+    guy  => '',
+    type => '',
+};
+switch ('op');
+ok( $op->_get( '/refresh', cookie => "lemonldap=$idpId" ) );
+count(1);
+switch ('rp');
+
+# Test session refresh (before access token refresh)
+ok(
+    $res = $rp->_get(
+        '/refresh',
+        cookie => "lemonldap=$spId",
+        accept => 'text/html'
+    ),
+    'Query RP for refresh'
+);
+count(1);
+
+ok( $res = $rp->_get("/sessions/global/$spId"), 'Get session after refresh' );
+count(1);
+$res = expectJSON($res);
+my $access_token_new     = $res->{_oidc_access_token};
+my $access_token_new_eol = $res->{_oidc_access_token_eol};
+is( $access_token_new_eol, $access_token_eol,
+    "Access token EOL has not changed" );
+is( $access_token_new, $access_token_old, "Access token has not changed" );
+is( $res->{mail},      'fa2@badwolf.org', 'Updated RP session' );
+count(3);
+
+# Update session at OP
+$Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{french} = {
+    uid  => 'french',
+    cn   => 'Frédéric Accents',
+    mail => 'fa3@badwolf.org',
+    guy  => '',
+    type => '',
+};
+switch ('op');
+ok( $op->_get( '/refresh', cookie => "lemonldap=$idpId" ) );
+count(1);
+switch ('rp');
+
+# Test session refresh (with access token refresh)
+Time::Fake->offset("+2h");
+ok(
+    $res = $rp->_get(
+        '/refresh',
+        cookie => "lemonldap=$spId",
+        accept => 'text/html'
+    ),
+    'Query RP for refresh'
+);
+count(1);
+
+ok( $res = $rp->_get("/sessions/global/$spId"), 'Get session after refresh' );
+count(1);
+$res                  = expectJSON($res);
+$access_token_new     = $res->{_oidc_access_token};
+$access_token_new_eol = $res->{_oidc_access_token_eol};
+isnt( $access_token_new_eol, $access_token_eol,
+    "Access token EOL has changed" );
+isnt( $access_token_new, $access_token_old, "Access token has changed" );
+is( $res->{mail}, 'fa3@badwolf.org', 'Updated RP session' );
+count(3);
 
 # Logout initiated by RP
 ok(
@@ -193,7 +299,7 @@ ok(
 );
 count(1);
 ( $url, $query ) = expectRedirection( $res,
-    qr#http://auth.op.com(/oauth2/logout)\?(post_logout_redirect_uri=.+)$# );
+    qr#http://auth.op.com(/oauth2/logout)\?.*(post_logout_redirect_uri=.+)$# );
 
 # Push logout to OP
 switch ('op');
@@ -268,6 +374,12 @@ count(1);
 ( $url, $query ) =
   expectRedirection( $res, qr#^http://auth.op.com(/oauth2/authorize)\?(.*)$# );
 
+my $u = URI->new;
+$u->query($query);
+is( $u->query_param('my_param'),
+    "my value", "oidcGenerateAuthenticationRequest called" );
+count(1);
+
 # Test if consent was saved
 # -------------------------
 
@@ -309,6 +421,7 @@ sub op {
                 userDB                          => 'Same',
                 issuerDBOpenIDConnectActivation => "1",
                 restSessionServer               => 1,
+                restExportSecretKeys            => 1,
                 oidcRPMetaDataExportedVars      => {
                     rp => {
                         email       => "mail",
@@ -327,21 +440,23 @@ sub op {
                         oidcRPMetaDataOptionsIDTokenSignAlg    => "HS512",
                         oidcRPMetaDataOptionsBypassConsent     => 0,
                         oidcRPMetaDataOptionsClientSecret      => "rpsecret",
+                        oidcRPMetaDataOptionsRefreshToken      => 1,
                         oidcRPMetaDataOptionsUserIDAttr        => "",
-                        oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
+                        oidcRPMetaDataOptionsAccessTokenExpiration  => 3600,
                         oidcRPMetaDataOptionsPostLogoutRedirectUris =>
-                          "http://auth.rp.com/?logout=1"
+                          "http://auth.rp.com/?logout=1",
+                        oidcRPMetaDataOptionsRule => '$uid eq "french"',
                     }
                 },
                 oidcOPMetaDataOptions           => {},
                 oidcOPMetaDataJSON              => {},
                 oidcOPMetaDataJWKS              => {},
                 oidcServiceMetaDataAuthnContext => {
-                    'loa-4' => 4,
-                    'loa-1' => 1,
-                    'loa-5' => 5,
-                    'loa-2' => 2,
-                    'loa-3' => 3
+                    'loa-4'       => 4,
+                    'customacr-1' => 1,
+                    'loa-5'       => 5,
+                    'loa-2'       => 2,
+                    'loa-3'       => 3
                 },
                 oidcServicePrivateKeySig => oidc_key_op_private_sig,
                 oidcServicePublicKeySig  => oidc_key_op_public_sig,
@@ -360,6 +475,7 @@ sub rp {
                 authentication             => 'OpenIDConnect',
                 userDB                     => 'Same',
                 restSessionServer          => 1,
+                restExportSecretKeys       => 1,
                 oidcOPMetaDataExportedVars => {
                     op => {
                         cn   => "name",
@@ -373,11 +489,12 @@ sub rp {
                         oidcOPMetaDataOptionsCheckJWTSignature => 1,
                         oidcOPMetaDataOptionsJWKSTimeout       => 0,
                         oidcOPMetaDataOptionsClientSecret      => "rpsecret",
-                        oidcOPMetaDataOptionsScope        => "openid profile",
+                        oidcOPMetaDataOptionsScope => "openid profile email",
                         oidcOPMetaDataOptionsStoreIDToken => 0,
                         oidcOPMetaDataOptionsMaxAge       => 30,
                         oidcOPMetaDataOptionsDisplay      => "",
                         oidcOPMetaDataOptionsClientID     => "rpid",
+                        oidcOPMetaDataOptionsStoreIDToken => 1,
                         oidcOPMetaDataOptionsConfigurationURI =>
                           "https://auth.op.com/.well-known/openid-configuration"
                     }
@@ -387,7 +504,8 @@ sub rp {
                 },
                 oidcOPMetaDataJSON => {
                     op => $metadata,
-                }
+                },
+                customPlugins => 't::OidcHookPlugin',
             }
         }
     );

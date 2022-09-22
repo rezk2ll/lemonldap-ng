@@ -10,71 +10,93 @@ Issuer identifier
 ~~~~~~~~~~~~~~~~~
 
 Set the issuer identifier, which should be the portal URL.
-
 For example: http://auth.example.com
 
-End points
+Set a blank value to use Portal URL.
+
+Endpoints
 ~~~~~~~~~~
 
 Name of different OpenID Connect endpoints. You can keep the default
 values unless you have a specific need to change them.
 
 -  **Authorization**
--  **Token**
+-  **Tokens**
 -  **User Info**
 -  **JWKS**
 -  **Registration**
+-  **Introspection**
 -  **End of session**
 -  **Check Session**
-
+-  **Front-Channel URI**
+-  **Back-Channel URI**
 
 .. tip::
 
-    The end points are published inside JSON metadata.
+    These endpoints are published in JSON metadata.
 
 Authentication context
 ~~~~~~~~~~~~~~~~~~~~~~
 
-You can associate here an authentication context to an authentication
-level.
+You can associate here an authentication context to an authentication level.
 
 Security
 ~~~~~~~~
 
--  **Keys** : define public/private key pair to do asymmetric signature. A JWKS
-   ``kid`` (Key ID) is automatically derived when generating new keys.
--  **Dynamic Registration**: Set to 1 to allow clients to register
-   themselves. This may be a security risk as this will create a new
-   configuration in the backend per registration request. You can limit
-   this by protecting in the WebServer the registration end point with
-   an authentication module, and give the credentials to clients.
--  **Authorization Code flow**: Set to 1 to allow Authorization Code
-   flow
+-  **Keys**: Define public/private key pair for asymmetric signature. A JWKS
+   ``kid`` (Key ID) is automatically derived when new keys are generated.
+-  **Authorization Code flow**: Set to 1 to allow Authorization Code flow
 -  **Implicit flow**: Set to 1 to allow Implicit flow
 -  **Hybrid flow**: Set to 1 to allow Hybrid flow
+-  **Only allow declared scopes**: By default, LL::NG will grant all requested scopes.
+   When this option is enabled, LL::NG will only grant:
+
+   - Standard OIDC scopes (``openid`` ``profile`` ``email`` ``address`` ``phone``)
+   - Scopes declared in :ref:`Scope values content <oidcextraclaims>`
+   - Scopes declared in :ref:`Scope Rules <oidcscoperules>` (if they match the rule)
+
+Timeouts
+~~~~~~~~
+
+-  **Authorization Codes**: Expiration time of
+   authorization code. Default value is one minute.
+-  **ID Tokens**: Expiration time of ID Tokens.
+   Default value is one hour.
+-  **Access Tokens**: Expiration time of Access Tokens.
+   Default value is one hour.
+-  **Offline sessions**: This option sets lifetime of Refresh Tokens
+   retrieved with ``offline_access`` scope. Default value is one month.
+
 
 Sessions
 ~~~~~~~~
 
-It is recommended to use a separate sessions storage for OpenID Connect
-sessions, else they will stored in the main sessions storage.
+Best pratice is to use a separate sessions storage for OpenID Connect
+sessions, else they will be stored in main sessions storage.
 
 Dynamic Registration
 ~~~~~~~~~~~~~~~~~~~~
 
-If dynamic registration is enabled, you can configure the following
-options to define attributes and extra claims when a new relying party
-is registered trough the ``/oauth2/register`` endpoint:
+-  **Activation**: Set to 1 to allow clients to register themselves
 
--  Exported vars for dynamic registration
--  Extra claims for dynamic registration
+If **Dynamic Registration** is enabled, you can configure the following
+options to define attributes and extra claims released when a new relying
+party is registered through ``/oauth2/register`` endpoint:
 
-Key rotation script
--------------------
+-  **Exported vars**
+-  **Extra claims**
 
-OpenID Connect specification let the possibility to rotate keys to
-improve security. LL::NG provide a script to do this, that should be put
-in a cronjob.
+.. warning::
+    Dynamic Registration can be a security risk because a new configuration
+    will be created in the backend for each registration request.
+    You can restrict this by protecting the WebServer registration endpoint
+    with an authentication module, and give credentials to clients.
+
+Keys rotation script
+--------------------
+
+OpenID Connect specifications allow to rotate keys to improve security.
+LL::NG provides a script to do this, that should be used in a cronjob.
 
 The script is ``/usr/share/lemonldap-ng/bin/rotateOidcKeys``. It can be
 run for example each week:
@@ -86,20 +108,20 @@ run for example each week:
 
 .. tip::
 
-    Set the correct Apache user, else generated configuration will
+    Set the correct WebServer user, else generated configuration will
     not be readable by LL::NG.
 
 Session management
 ------------------
 
-LL::NG implements the `OpenID Connect Chance Notification specification <http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification>`__
+LL::NG implements the `OpenID Connect Change Notification specification <http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification>`__
 
 A ``changed`` state will be sent if the user is disconnected from LL::NG
-portal (or has destroyed its SSO cookie). Else the ``unchanged`` state
+portal (or has removed its SSO cookie). Else the ``unchanged`` state
 will be returned.
 
 
 .. tip::
 
-    To work, the LL::NG cookie must not be protected against
-    javascript (``httpOnly`` option should be set to ``0``).
+    This feature requires that the LL::NG cookie is exposed to 
+    javascript (``httpOnly`` option must be set to ``0``).

@@ -12,13 +12,13 @@ use Lemonldap::NG::Common::IPv6;
 use JSON::XS;
 use Date::Parse;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.15';
 
 # Set here all the names of functions that must be available in Safe objects.
-# Not that only functions, not methods, can be written here
+# Note that only functions, not methods, can be written here
 our $functions =
   [
-    qw(&checkLogonHours &date &dateToTime &checkDate &basic &unicode2iso &iso2unicode &groupMatch &isInNet6 &varIsInUri &has2f)
+    qw(&checkLogonHours &date &dateToTime &checkDate &basic &unicode2iso &unicode2isoSafe &iso2unicode &iso2unicodeSafe &groupMatch &isInNet6 &varIsInUri &has2f_internal)
   ];
 
 ## @function boolean checkLogonHours(string logon_hours, string syntax, string time_correction, boolean default_access)
@@ -121,20 +121,29 @@ sub date {
     return $year . $mon . $mday . $hour . $min . $sec;
 }
 
-
 ## @function integer dateToTime(string date)
 # Converts a LDAP date into epoch time or returns undef upon failure.
 # @param $date string Date in YYYYMMDDHHMMSS[+/-0000] format. It may contain a differential timezone, otherwise default TZ is GMT
 # @return Date converted to time
 sub dateToTime {
     my $date = shift;
-    return undef unless ( $date );
+    return undef unless ($date);
 
     # Parse date
-    my ( $year, $month, $day, $hour, $min, $sec, $zone ) = ( $date =~ /(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})([-+\w]*)/ );
+    my ( $year, $month, $day, $hour, $min, $sec, $zone ) =
+      ( $date =~ /(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})([-+\w]*)/ );
 
-    # Convert date to epoch time with GMT as default timezone if date contains none
-    return str2time( $year . "-" . $month . "-" . $day . "T" . $hour . ":" . $min . ":" . $sec . $zone, "GMT" );
+ # Convert date to epoch time with GMT as default timezone if date contains none
+    return str2time(
+        $year . "-"
+          . $month . "-"
+          . $day . "T"
+          . $hour . ":"
+          . $min . ":"
+          . $sec
+          . $zone,
+        "GMT"
+    );
 }
 
 ## @function boolean checkDate(string start, string end, boolean default_access)
@@ -158,10 +167,10 @@ sub checkDate {
 
     # Convert dates to epoch time
     my $starttime = &dateToTime($start);
-    my $endtime = &dateToTime($end);
+    my $endtime   = &dateToTime($end);
 
     # Convert current GMT date to epoch time
-    my $datetime = &dateToTime(&date(1));
+    my $datetime = &dateToTime( &date(1) );
 
     return 1 if ( ( $datetime >= $starttime ) and ( $datetime <= $endtime ) );
     return 0;
@@ -193,6 +202,21 @@ sub unicode2iso {
     return encode( "iso-8859-1", decode( "utf-8", $string ) );
 }
 
+## @function string unicode2isoSafe(string string)
+## This function is compliant with the Safe jail
+## but not as portable as the original one
+# Convert UTF-8 in ISO-8859-1
+# @param string UTF-8 string
+# @return ISO string
+sub unicode2isoSafe {
+    my ($string) = @_;
+
+    my $res = $string;
+    utf8::decode($res);
+    utf8::downgrade($res);
+    return $res;
+}
+
 ## @function string iso2unicode(string string)
 # Convert ISO-8859-1 in UTF-8
 # @param string ISO string
@@ -201,6 +225,20 @@ sub iso2unicode {
     my ($string) = @_;
 
     return encode( "utf-8", decode( "iso-8859-1", $string ) );
+}
+
+## @function string iso2unicodeSafe(string string)
+## This function is compliant with the Safe jail
+## but not as portable as the original one
+# Convert ISO-8859-1 in UTF-8
+# @param string ISO string
+# @return UTF-8 string
+sub iso2unicodeSafe {
+    my ($string) = @_;
+
+    my $res = $string;
+    utf8::encode($res);
+    return $res;
 }
 
 ## @function int groupMatch(hashref groups, string attribute, string value)
@@ -244,7 +282,7 @@ sub varIsInUri {
 
 my $json = JSON::XS->new;
 
-sub has2f {
+sub has2f_internal {
     my ( $session, $type ) = @_;
     return 0 unless $session->{_2fDevices};
 

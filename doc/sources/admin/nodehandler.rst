@@ -12,13 +12,13 @@ Examples
 
 **Important things**:
 
+-  The above examples below are written for version 0.6.0 in CommonJS
+   but Node.js handler can be used in ES7 and/or Typescript code
 -  Rules and headers must be written in javascript for these hosts
    (example ``$uid eq "dwho"`` becomes ``$uid === "dwho"``)
--  Multi-lines are not supported in lemonldap-ng.ini
 -  Virtualhosts handled by node-lemonldap-ng-handler must be explicitly
    declared in your ``lemonldap-ng.ini`` file in ``[node-handler]``
-   section (**NB**: section ``[handler]`` isn't used by node
-   handler):
+   section
 
 .. code-block:: ini
 
@@ -40,12 +40,14 @@ FastCGI server
      configStorage: {
        "confFile": "/path/to/lemonldap-ng.ini"
      }
-   });
+   }).then( () => {
 
-   handler.nginxServer({
-     "mode": "fcgi",   // or "http", default: fcgi
-     "port": 9090,     // default value
-     "ip": 'localhost' // default value
+     handler.nginxServer({
+       "mode": "fcgi",   // or "http", default: fcgi
+       "port": 9090,     // default value
+       "ip": 'localhost' // default value
+     });
+
    });
 
 Nginx configuration
@@ -61,7 +63,7 @@ Nginx configuration
        include /etc/nginx/fastcgi_params;
        fastcgi_pass localhost:9090;
 
-       # Drop post datas
+       # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
 
@@ -98,16 +100,17 @@ Use it to protect an express app
      configStorage: {
        "confFile":"test/lemonldap-ng.ini"
      }
-   });
+   }).then( () => {
 
-   // and load it
-   app.use(handler.run);
+     // and load it
+     app.use(handler.run);
 
-   // Then simply use your express app
-   app.get('/', function(req, res) {
-     return res.send('Hello ' + req.headers['Auth-User'] + ' !');
-   });
-   app.listen(3000, function() {
-     return console.log('Example app listening on port 3000!');
+     // Then simply use your express app
+     app.get('/', function(req, res) {
+       return res.send('Hello ' + req.headers['Auth-User'] + ' !');
+     });
+     app.listen(3000, function() {
+       return console.log('Example app listening on port 3000!');
+     });
    });
 

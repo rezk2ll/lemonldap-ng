@@ -139,11 +139,6 @@ sub _get2F {
     my ( $self, $uid, $type, $id ) = @_;
     my ( $res, $psessions, @secondFactors );
 
-    if ( defined $type ) {
-        $res = $self->_checkType($type);
-        return $res if ( $res->{res} ne 'ok' );
-    }
-
     $psessions = $self->_getSessions2F( $self->_getPersistentMod, 'Persistent',
         '_session_uid', $uid );
 
@@ -159,7 +154,7 @@ sub _get2F {
                 type => $device->{type},
                 name => $device->{name}
               }
-              unless ( ( defined $type and $type ne $device->{type} )
+              unless ( ( defined $type and uc($type) ne uc( $device->{type} ) )
                 or ( defined $id and $id ne genId2F($device) ) );
         }
     }
@@ -224,8 +219,12 @@ sub _delete2FFromSessions {
                 my $element = shift @$devices;
                 if (
                     ( defined $type or defined $id )
-                    and (  ( defined $type and $type ne $element->{type} )
-                        or ( defined $id and $id ne genId2F($element) ) )
+                    and ( (
+                            defined $type
+                            and uc($type) ne uc( $element->{type} )
+                        )
+                        or ( defined $id and $id ne genId2F($element) )
+                    )
                   )
                 {
                     push @keep, $element;
@@ -275,10 +274,6 @@ sub _delete2FFromSessions {
 sub _delete2F {
     my ( $self, $uid, $type, $id ) = @_;
     my ( $res, $removed, $count );
-    if ( defined $type ) {
-        $res = $self->_checkType($type);
-        return $res if ( $res->{res} ne 'ok' );
-    }
 
     $res =
       $self->_delete2FFromSessions( $uid, $type, $id, $self->_getPersistentMod,
@@ -325,20 +320,6 @@ sub _getDevicesFromSessionData {
         }
     }
     return [];
-}
-
-sub _checkType {
-    my ( $self, $type ) = @_;
-
-    return {
-        res  => "ko",
-        code => 400,
-        msg =>
-"Invalid input: Type \"$type\" does not exist. Allowed values for type are: \"U2F\", \"TOTP\" or \"UBK\""
-      }
-      unless ( $type =~ /\b(?:U2F|TOTP|UBK)\b/ );
-
-    return { res => "ok" };
 }
 
 1;

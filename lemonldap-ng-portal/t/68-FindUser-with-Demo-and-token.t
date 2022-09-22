@@ -9,15 +9,15 @@ my $res;
 my $json;
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel          => 'error',
-            authentication    => 'Demo',
-            userDB            => 'Same',
-            useSafeJail       => 1,
-            requireToken      => 1,
-            findUser          => 1,
-            impersonationRule => 1,
+            logLevel                    => 'error',
+            authentication              => 'Demo',
+            userDB                      => 'Same',
+            useSafeJail                 => 1,
+            requireToken                => 1,
+            findUser                    => 1,
+            impersonationRule           => 1,
             findUserSearchingAttributes =>
-              { uid => 'Login', guy => 'Kind', cn => 'Name' },
+              { 'uid##1' => 'Login', 'guy##1' => 'Kind', 'cn##1' => 'Name' },
             findUserExcludingAttributes =>
               { type => 'mutant', uid => 'rtyler' },
         }
@@ -74,7 +74,9 @@ ok( $json->{error} == 82, ' Token expired' )
   or explain( $json, 'Token expired' );
 ok( $json->{result} == 0, ' result => 0' )
   or explain( $json, 'Result => 0' );
-count(5);
+ok( $json->{token} =~ /\w+/, ' Token found' )
+  or explain( $json, 'Token renewed' );
+count(6);
 
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Portal', );
 ( $host, $url, $query ) =
@@ -94,7 +96,9 @@ ok( $json->{error} == 81, ' No Token' )
   or explain( $json, 'No token' );
 ok( $json->{result} == 0, ' result => 0' )
   or explain( $json, 'Result => 0' );
-count(5);
+ok( $json->{token} =~ /\w+/, ' Token found' )
+  or explain( $json, 'Token renewed' );
+count(6);
 
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Portal', );
 ( $host, $url, $query ) =
@@ -115,24 +119,17 @@ ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
 ok( $json->{result} == 1, ' result => 1' )
   or explain( $json, 'Result => 1' );
-$query = 'uid=dwho';
 ok(
-    $res = $client->_post(
-        '/finduser',
-        IO::String->new($query),
-        accept => 'application/json',
-        length => length($query),
-        cookie => "lemonldap=$id"
+    $res = $client->_get(
+        '/',
+        accept => 'text/html',
+        cookie => "lemonldap=$id",
     ),
-    'Get findUser'
+    'GET Portal'
 );
 expectOK($res);
 expectAuthenticatedAs( $res, 'rtyler' );
-ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
-  or print STDERR "$@\n" . Dumper($res);
-ok( $json->{result} == 1, ' result => 1' )
-  or explain( $json, 'Result => 1' );
-count(7);
+count(5);
 
 $client->logout($id);
 clean_sessions();

@@ -26,6 +26,481 @@ Known regressions in the latest released version
 
 None
 
+2.0.15
+------
+
+Translation overrides in lemonldap-ng.ini now take priority over skin
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Previously, the presence of a translation JSON file within a skin prevented
+translation messages defined in ``lemonldap-ng.ini`` from being used.
+
+Additionally, it was not possible to translate strings in email templates using
+a custom skin file.
+
+These two bugs are now fixed, be sure to check that you do not have duplicate
+translations in ``lemonldap-ng.ini`` and in your skin files (``*.json``). If you do,
+the translation in ``lemonldap-ng.ini`` will now take priority.
+
+See :ref:`documentation on translating messages <intlmessages>` for
+details
+
+New Captcha API
+~~~~~~~~~~~~~~~
+
+It is now possible to create your own Captcha modules to replace the one provided by default.
+
+In order for custom Captcha modules to work, you need to modify your custom ``standardform.tpl``, ``mail.tpl`` and ``register.tpl`` template files:
+
+.. code:: diff
+
+    -  <TMPL_IF NAME=CAPTCHA_SRC>
+    -    <TMPL_INCLUDE NAME="captcha.tpl">
+    +  <TMPL_IF NAME=CAPTCHA_HTML>
+    +    <TMPL_VAR NAME=CAPTCHA_HTML>
+       </TMPL_IF>
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
+Re-send 2FA code
+~~~~~~~~~~~~~~~~
+
+The :doc:`mail <mail2f>`, :doc:`external <external2f>` and :doc:`REST <rest2f>` based 2FA types can now re-send the user code if delivery failed for some reason. If you use custom templates, you must update ``ext2fcheck.tpl``
+
+.. code:: diff
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
+    @@ -26,6 +26,12 @@
+         </button>
+       </div>
+       <div class="buttons">
+    +    <TMPL_IF "RESENDTARGET">
+    +    <button type="submit" class="btn btn-primary" formaction="<TMPL_VAR "RESENDTARGET">">
+    +      <span class="fa fa-repeat"></span>
+    +      <span trspan="resendCode">Re-send code</span>
+    +    </button>
+    +    </TMPL_IF>
+         <a href="<TMPL_VAR NAME="PORTAL_URL">?cancel=1&skin=<TMPL_VAR NAME="SKIN">" class="btn btn-primary" role="button">
+           <span class="fa fa-home"></span>
+           <span trspan="cancel">Cancel</span>
+
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
+Customizing the 2FA logo in the registration screen
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The 2FA registration screen now displays the custom logo and label set in configuration. If you use custom templates, you should update ``2fregisters.tpl``
+
+.. code:: diff
+
+	@@ -77,10 +77,16 @@
+		 <div class="card border-secondary">
+		   <div class="card-body py-3">
+		   <a href="<TMPL_VAR NAME="URL">" class="nodecor">
+	-        <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/<TMPL_VAR NAME="LOGO">" alt="<TMPL_VAR NAME="CODE">2F" title="<TMPL_VAR NAME="CODE">2F" />
+	+        <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/<TMPL_VAR NAME="LOGO">" alt="<TMPL_VAR NAME="CODE">2f" title="<TMPL_VAR NAME="LABEL">" />
+		   </a>
+		   </div>
+	-      <div class="card-footer text-white text-uppercase bg-secondary"><TMPL_VAR NAME="CODE">2F</div>
+	+      <div class="card-footer text-white text-uppercase bg-secondary">
+	+      <TMPL_IF LABEL>
+	+        <p><TMPL_VAR NAME="LABEL"></p>
+	+      <TMPL_ELSE>
+	+        <p trspan="<TMPL_VAR NAME="CODE">2f"></p>
+	+      </TMPL_IF>
+	+      </div>
+		 </div>
+		 </div>
+		 </TMPL_LOOP>
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
+Remember authentication choice
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A :doc:`new plugin<rememberauthchoice>` can be enabled to display a checkbox in :doc:`authentication choice<authchoice>` module to allow users remembering their choice, which will automatically redirect them to the selected choice the next time they connect to the portal. 
+
+If you use custom templates, you should update ``login.tpl``
+
+.. code:: diff
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/login.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/login.tpl
+    @@ -66,6 +66,12 @@
+     
+                 <TMPL_IF NAME="sslform">
+                   <TMPL_INCLUDE NAME="sslformChoice.tpl">
+    +
+    +              <!-- Remember my authentication choice for this module -->
+    +              <TMPL_IF NAME="REMEMBERAUTHCHOICE">
+    +                <input type="hidden" id="rememberauthchoice" name="rememberauthchoice" value="<TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">true</TMPL_IF>" />
+    +              </TMPL_IF>
+    +
+                 </TMPL_IF>
+     
+                 <TMPL_IF NAME="gpgform">
+    @@ -92,6 +98,11 @@
+     
+                   </div>
+     
+    +              <!-- Remember my authentication choice for this module -->
+    +              <TMPL_IF NAME="REMEMBERAUTHCHOICE">
+    +                <input type="hidden" id="rememberauthchoice" name="rememberauthchoice" value="<TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">true</TMPL_IF>" />
+    +              </TMPL_IF>
+    +
+                 </TMPL_IF>
+     
+               </form>
+    @@ -104,6 +115,34 @@
+     
+         </div> <!-- end authMenu -->
+     
+    +    <TMPL_IF NAME="REMEMBERAUTHCHOICE">
+    +    <div class="input-group col-md-6 offset-md-3">
+    +
+    +      <!-- Global checkbox for remembering the authentication choice for all modules -->
+    +      <div id="globalrememberauthchoicecontainer" class="input-group-prepend input-group">
+    +        <div class="input-group-text">
+    +          <input type="checkbox" id="globalrememberauthchoice" name="globalrememberauthchoice" aria-describedby="globalrememberauthchoiceLabel" <TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">checked</TMPL_IF> />
+    +          <input id="rememberCookieName" name="rememberCookieName" type="hidden" value="<TMPL_VAR NAME="REMEMBERAUTHCHOICECOOKIENAME">">
+    +        </div>
+    +          <p class="form-control">
+    +            <label id="globalrememberauthchoiceLabel" for="globalrememberauthchoice" trspan="rememberChoice">Remember my choice</label>
+    +          </p>
+    ...skipping...
+                   </div>
+     
+    +              <!-- Remember my authentication choice for this module -->
+    +              <TMPL_IF NAME="REMEMBERAUTHCHOICE">
+    +                <input type="hidden" id="rememberauthchoice" name="rememberauthchoice" value="<TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">true</TMPL_IF>" />
+    +              </TMPL_IF>
+    +
+                 </TMPL_IF>
+     
+               </form>
+    @@ -104,6 +115,34 @@
+     
+         </div> <!-- end authMenu -->
+     
+    +    <TMPL_IF NAME="REMEMBERAUTHCHOICE">
+    +    <div class="input-group col-md-6 offset-md-3">
+    +
+    +      <!-- Global checkbox for remembering the authentication choice for all modules -->
+    +      <div id="globalrememberauthchoicecontainer" class="input-group-prepend input-group">
+    +        <div class="input-group-text">
+    +          <input type="checkbox" id="globalrememberauthchoice" name="globalrememberauthchoice" aria-describedby="globalrememberauthchoiceLabel" <TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">checked</TMPL_IF> />
+    +          <input id="rememberCookieName" name="rememberCookieName" type="hidden" value="<TMPL_VAR NAME="REMEMBERAUTHCHOICECOOKIENAME">">
+    +        </div>
+    +          <p class="form-control">
+    +            <label id="globalrememberauthchoiceLabel" for="globalrememberauthchoice" trspan="rememberChoice">Remember my choice</label>
+    +          </p>
+    +      </div>
+    +
+    +      <!-- Timer + stop button for triggering the remembered authentication choice -->
+    +      <div id="remembertimercontainer" class="input-group">
+    +        <p class="form-control">
+    +          <span id="remembertimer"><TMPL_VAR NAME="REMEMBERAUTHCHOICETIMER"></span>
+    +          <label id="rememberTimerLabel" trspan="rememberTimerLabel">s before automatic authentication</label>
+    +        </p>
+    +        <input id="rememberStopped" name="rememberStopped" type="hidden" value="">
+    +        <div class="input-group-append inout-group">
+    +          <button class="btn btn-danger" id="buttonRememberStopped"><i class="fa fa-stop-circle-o"></i> Stop</button>
+    +        </div>
+    +      </div>
+    +    </div>
+    +    </TMPL_IF>
+    +
+       </TMPL_IF>
+     
+       <TMPL_IF NAME="DISPLAY_FORM">
+
+Copy also ``styles.min.css`` and ``skin.min.js`` from ``bootstrap`` into your custom theme.
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
+2.0.14
+------
+
+Security
+~~~~~~~~
+
+* **CVE-2021-40874**: RESTServer pwdConfirm always returns true with Combination + Kerberos (see `issue 2612 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2612>`__)
+
+
+U2F deprecation in Chrome 98
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Chrome 98 `removed U2F support by default <https://developer.chrome.com/blog/deps-rems-95/#deprecate-u2f-api-cryptotoken>`__. You can enable them back temporarily in ``chrome://flags`` by setting *Enable the U2F Security Key API* to *Enabled* and *Enable a permission prompt for the U2F Security Key API* to *Disabled*
+
+LemonLDAP::NG provides a newer alternative: :doc:`webauthn2f`, which is compatible with U2F security keys. Please read :ref:`migrateu2ftowebauthn` for instructions on how to convert U2F secrets to WebAuthn.
+
+After migration, you will need to disable U2F from the configuration and enable WebAuthn instead, in *General Parameters* » *Second Factors* » *WebAuthn*
+
+Weak encryption used for password-protected SAML keys
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Previous versions of LemonLDAP::NG used a weak encryption algorithm to protect
+SAML keys when a password was set during certificate generation.
+
+Run the following command to check if this is your case::
+
+    lemonldap-ng-cli get samlServicePrivateKeySig
+    lemonldap-ng-cli get samlServicePrivateKeyEnc
+
+If the output of either command starts with ``BEGIN ENCRYPTED PRIVATE KEY``,
+then it probably means you generated your keys using the vulnerable manager
+code.
+
+In this case, you can convert your existing keys to a stronger encryption using
+the following command ::
+
+    # Extract your existing keys. If samlServicePrivateKeyEnc is empty, you can
+    # skip it entirely
+    lemonldap-ng-cli get samlServicePrivateKeySig | \
+        sed 's/samlServicePrivateKeySig = //' > saml-sig.pem
+    lemonldap-ng-cli get samlServicePrivateKeyEnc | \
+        sed 's/samlServicePrivateKeyEnc = //' > saml-enc.pem
+
+    # Re-encrypt the private key, using the same passphrase
+    openssl pkey -in saml-sig.pem -aes256 -out saml-sig-aes.pem
+    openssl pkey -in saml-enc.pem -aes256 -out saml-enc-aes.pem
+
+    #Or, if you are using OpenSSL 3+
+    openssl pkey -provider legacy -provider default -in saml-sig.pem \
+        -aes256 -out saml-sig-aes.pem
+    openssl pkey -provider legacy -provider default -in saml-enc.pem \
+        -aes256 -out saml-enc-aes.pem
+
+Then, simply reimport your keys ::
+
+    lemonldap-ng-cli set samlServicePrivateKeySig "$(cat saml-sig-aes.pem)"
+    lemonldap-ng-cli set samlServicePrivateKeyEnc "$(cat saml-enc-aes.pem)"
+
+If is recommended to keep the same password as before, if not, adjust the
+``samlServicePrivateKeySigPwd`` and ``samlServicePrivateKeyEncPwd`` variables as well.
+
+This operation is transparent and does not require any change to your existing
+SAML configuration or SAML applications
+
+LemonLDAP::NG version is returned by the CheckState plugin
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you use the `/checkstate` URL to monitor LemonLDAP::NG, you may notice a slight change in the output format:
+
+*2.0.13* ::
+
+    {"result":1}
+
+*2.0.14* ::
+
+    {"result":1,"version":"2.0.14"}
+
+Depending on your load balancer or monitoring configuration, this can cause false negatives.
+
+This plugin is disabled by default, and you may use a shared secret to hide this information to regular users and bots, please check the :doc:`checkstate` documentation for more information.
+
+Empty scopes now rejected in OAuth2.0 grants
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Previously, it was possible to be granted an empty scope, or an automatic
+``openid`` scope when doing :ref:`OAuth2.0 Password Grant
+<resource-owner-password-grant>` or :ref:`Client Credentials Grant
+<client-credentials-grant>`.
+
+Starting with *2.0.14*, empty scopes are no longer allowed (:rfc:`6749#section-3.3`).
+You need to either add a `scope` parameter to your request, or define a default
+scope in your Relying Party's :ref:`Scope Rules <oidcscoperules>`.
+
+
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you defined the "Register page URL" or the password "Reset page URL" to an external application, you need to fix the ``standardform.tpl`` template by applying the following patch:
+
+.. code:: diff
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl b/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
+    index 3a6256e59..d5192f0ce 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
+    @@ -48,14 +48,14 @@
+
+     <div class="actions">
+       <TMPL_IF NAME="DISPLAY_RESETPASSWORD">
+    -  <a class="btn btn-secondary" href="<TMPL_VAR NAME="MAIL_URL">?skin=<TMPL_VAR NAME="SKIN"><TMPL_IF NAME="key">&<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF><TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>">
+    +  <a class="btn btn-secondary" href="<TMPL_VAR NAME="MAIL_URL"><TMPL_UNLESS NAME="MAIL_URL_EXTERNAL">?skin=<TMPL_VAR NAME="SKIN"><TMPL_IF NAME="key">&<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF><TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF></TMPL_UNLESS>">
+         <span class="fa fa-info-circle"></span>
+         <span trspan="resetPwd">Reset my password</span>
+       </a>
+       </TMPL_IF>
+
+       <TMPL_IF NAME="DISPLAY_UPDATECERTIF">
+    -     <a class="btn btn-secondary" href="<TMPL_VAR NAME="MAILCERTIF_URL">?skin=<TMPL_VAR NAME="SKIN"><TMPL_IF NAME="key">&<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF><TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>">
+    +     <a class="btn btn-secondary" href="<TMPL_VAR NAME="MAILCERTIF_URL"><TMPL_UNLESS NAME="MAILCERTIF_URL_EXTERNAL">?skin=<TMPL_VAR NAME="SKIN"><TMPL_IF NAME="key">&<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF><TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF></TMPL_UNLESS>">
+             <span class="fa fa-refresh"></span>
+             <span trspan="certificateReset">Reset my certificate</span>
+          </a>
+    @@ -69,7 +69,7 @@
+       </TMPL_IF>
+
+       <TMPL_IF NAME="DISPLAY_REGISTER">
+    -    <a class="btn btn-secondary" href="<TMPL_VAR NAME="REGISTER_URL">?skin=<TMPL_VAR NAME="SKIN"><TMPL_IF NAME="key">&<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF><TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF>">
+    +    <a class="btn btn-secondary" href="<TMPL_VAR NAME="REGISTER_URL"><TMPL_UNLESS NAME="REGISTER_URL_EXTERNAL">?skin=<TMPL_VAR NAME="SKIN"><TMPL_IF NAME="key">&<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF><TMPL_IF NAME="AUTH_URL">&url=<TMPL_VAR NAME="AUTH_URL"></TMPL_IF></TMPL_UNLESS>">
+           <span class="fa fa-plus-circle"></span>
+           <span trspan="createAccount">Create an account</span>
+         </a>
+
+
+
+Manager API
+~~~~~~~~~~~
+
+The service parameter set in a request to create or update a CAS application must now be an array, and no more a string.
+
+Changes impacting plugin developpers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* If you are using Custom authentication modules, userDB modules or password
+  modules, ``$portal->loadedPlugins`` no longer contains a key with the name of
+  your module. You should use ``$portal->_authentication``, ``$portal->_userDB``,
+  or ``$portal->_passwordDB`` instead to get your module instance.
+
+
+2.0.13
+------
+
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some ``autocomplete`` attributes have been added to improve accessibility in the following files: ``checkdevops.tpl``, ``checkuser.tpl``, ``register.tpl``, ``ext2fcheck.tpl``, ``totp2fcheck.tpl``, ``utotp2fcheck.tpl``.
+
+
+2.0.12
+------
+
+Security
+~~~~~~~~
+
+* **CVE-2021-35473**: Access token lifetime is not verified with OAuth2 Handler (see `issue 2549 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2549>`__)
+* **CVE-2021-35472**: Session cache corruption can lead to authorization bypass or spoofing (see `issue 2539 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2539>`__)
+* 2FA bypass with sfOnlyUpgrade and totp2fDisplayExistingSecret (see `issue 2543 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2543>`__)
+* Incorrect regexp construction in isTrustedUrl lets attacker steal session on CDA application (see `issue 2535 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2535>`__)
+* XSS on register form (see `issue 2495 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2495>`__)
+* Wildcard in virtualhost allows being redirected to untrusted domains (see `issue 2477 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2477>`__)
+
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Email templates
+^^^^^^^^^^^^^^^
+
+If you customized the HTML email templates, you must update them to use HTML::Template variables (this was changed to fix XSS injections).
+
+In the following files: ``mail_2fcode.tpl`` ``mail_certificateReset.tpl`` ``mail_footer.tpl`` ``mail_password.tpl`` ``mail_register_done.tpl`` ``mail_certificateConfirm.tpl`` ``mail_confirm.tpl`` ``mail_header.tpl`` ``mail_register_confirm.tpl``
+
+Replace the following variables:
+
+
+.. list-table::
+   :header-rows: 1
+
+   * - Old syntax
+     - New syntax
+   * - ``$code``
+     - ``<TMPL_VAR NAME="code" ESCAPE=HTML>``
+   * - ``$url``
+     - ``<TMPL_VAR NAME="url" ESCAPE=HTML>``
+   * - ``$login``
+     - ``<TMPL_VAR NAME="login" ESCAPE=HTML>``
+   * - ``$password``
+     - ``<TMPL_VAR NAME="password" ESCAPE=HTML>``
+   * - ``$firstname``
+     - ``<TMPL_VAR NAME="firstname" ESCAPE=HTML>``
+   * - ``$lastname``
+     - ``<TMPL_VAR NAME="lastname" ESCAPE=HTML>``
+
+Replace all other variables such as ``$cn`` by ``<TMPL_VAR NAME="session_cn" ESCAPE=HTML>``.
+
+Login form
+^^^^^^^^^^
+To benefit from the new feature allowing to show password on login form, adapt ``standardform.tpl`` (see `changes <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/commit/bdeb1e70d98ddc89316b0912d9d5ee6d11d0bee5#fbbcec1fdc36cc042eeaa83274a32ef2231fe977_23_23>`__)
+
+To disable password store in browser when changing password (this was already possible for login form), adapt ``password.tpl`` (see `changes <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/commit/466b6a3241fff5013d27b3dd22982e5e26ed7dfb#0ae060b3d1e289f08f510c268ed72de5dcafe425_36_35>`__)
+
+To fix placeholder display in password field when password store is disabled in browser, adapt ``password.tpl`` (see `changes <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/commit/547d80985290495d33ed72a388e9ddf482980354#fbbcec1fdc36cc042eeaa83274a32ef2231fe977_21_20>`__)
+
+TOTP
+^^^^
+See also `Simplification of TOTP options`_ below.
+
+FindUser, CheckDevOps templates
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Some changes have been made to include new plugins (FindUser and CheckDevOps), you need to report them only if you have a custom theme and you want to use these plugins
+
+Client Credential sessions missing expiration time
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you started using Client Credential grants in 2.0.11, you may have encountered
+`issue 2481 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2481>`__.
+
+Because of this bug, the created sessions may never be purged by the ``purgeCentralCache`` script.
+
+In order to detect these sessions, you can run the following command:
+
+::
+
+   lemonldap-ng-sessions  search --where _session_kind=SSO --select _session_id --select _utime | \
+   jq -r  '. | map(select(._utime == null)) | map(._session_id) | join ("\n")'
+
+This will output a list of SSO sessions with no expiration time.
+
+Review them manually using ::
+
+   lemonldap-ng-sessions get <session_id>
+
+You can then remove them with ::
+
+   lemonldap-ng-sessions delete <session_id> <session_id> <etc.>
+
+Brute-force protection plugin may cause duplicate persistent sessions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Because of `bug #2482 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2482>`__ , some users may notice that the persistent session database is filling with duplicate sessions. Some examples include:
+
+* An uppercase version of the regular persistent session (dwho vs DWHO)
+* An unqualified version (dwho vs dwho@idp.com)
+
+This bug was fixed in 2.0.12, but administrators are advised to clean up their persistent session database to remove any duplicate persistent sessions remaining after the upgrade.
+
+OpenID Connect check session iframe
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The OIDC check session iframe is not working, it has been removed from OIDC configuration metadata. It should not impact any installation as this feature was already broken.
+
+Simplification of TOTP options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following options have been removed from TOTP configuration:
+
+* Display existing secret (``totp2fDisplayExistingSecret``)
+* Change existing secret (``totp2fUserCanChangeKey``)
+
+As a consequence, users who are *not* using the default ``bootstrap`` skin may need to ajust their ``totp2fregister.tpl`` template:
+
+* Move ``#divToHide`` from the ``.col-md-6`` div to the ``.card`` div
+* Change::
+
+  <pre id="serialized"></pre>
+
+* to::
+
+  <br/><tt id="secret"></tt>
+
+* Remove the ``#changekey`` button
+
 2.0.11
 ------
 
@@ -232,7 +707,7 @@ Please note that it is HIGHLY recommended to set certificate validation to `requ
 -  OAuth2.0 Handler: a VHost protected by the OAuth2.0 handler will now
    return a 401 when called without an Access Token, instead of
    redirecting to the portal, as specified by
-   `RFC6750 <https://tools.ietf.org/html/rfc6750>`__
+   :rfc:`6750#section-3`.
 
 -  If you encounter the following issue:
 

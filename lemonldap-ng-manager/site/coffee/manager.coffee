@@ -189,7 +189,7 @@ llapp.controller 'TreeCtrl', [
 					id: "cfgLog"
 					title: "cfgLog"
 					data: if $scope.result then $scope.result else ''
-				$http.post("#{window.confPrefix}?cfgNum=#{$scope.currentCfg.cfgNum}#{if $scope.forceSave then "&force=1" else ''}", $scope.data).then (response) ->
+				$http.post("#{window.confPrefix}?cfgNum=#{$scope.currentCfg.cfgNum}&cfgDate=#{$scope.currentCfg.cfgDate}#{if $scope.forceSave then "&force=1" else ''}", $scope.data).then (response) ->
 					$scope.data.pop()
 					_checkSaveResponse response.data
 				,(response) ->
@@ -665,12 +665,13 @@ llapp.controller 'TreeCtrl', [
 			#  menuApp
 			#  menuCat
 			#  rule
+			#  oidcAttribute
 			#  samlAttribute
 			#  samlIDPMetaDataNode
 			#  samlSPMetaDataNode
 			#  sfExtra
 			#  virtualHost
-			return if node.type and node.type.match /^(?:s(?:aml(?:(?:ID|S)PMetaDataNod|Attribut)e|fExtra)|(?:(?:cmbMod|r)ul|authChoic)e|(?:virtualHos|keyTex)t|menu(?:App|Cat))$/ then true else false
+			return if node.type and node.type.match /^(?:s(?:aml(?:(?:ID|S)PMetaDataNod|Attribut)e|fExtra)|oidcAttribute|(?:(?:cmbMod|r)ul|authChoic)e|(?:virtualHos|keyTex)t|menu(?:App|Cat))$/ then true else false
 
 		# Send test Email
 		$scope.sendTestMail = ->

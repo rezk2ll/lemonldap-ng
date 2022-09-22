@@ -28,7 +28,7 @@ Little effort is required to translate the encoded string back into the
 user name and password, and many popular security tools will decode the
 strings "on the fly".
 
-So HTTP Basic Authentication is managed trough an HTTP header
+So HTTP Basic Authentication is managed through an HTTP header
 (``Authorization``), that can be forged by LL::NG, with this
 precautions:
 

@@ -27,9 +27,11 @@ use Config::IniFiles;
 #inherits Lemonldap::NG::Common::Conf::Backends::SOAP
 #inherits Lemonldap::NG::Common::Conf::Backends::LDAP
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.15';
 our $msg     = '';
 our $iniObj;
+
+our $PlaceHolderRe = '%SERVERENV:(.*?)%';
 
 BEGIN {
     eval {
@@ -107,6 +109,7 @@ sub new {
               $self->{localStorage}->new( $self->{localStorageOptions} );
         }
     }
+
     return $self;
 }
 
@@ -114,7 +117,7 @@ sub new {
 # Serialize $conf and call store().
 # @param $conf Lemonldap::NG configuration hashRef
 # @param %args Parameters
-# @return Number of the saved configuration, 0 in case of error.
+# @return Number of the saved configuration, <=0 in case of error.
 sub saveConf {
     my ( $self, $conf, %args ) = @_;
 
@@ -122,7 +125,9 @@ sub saveConf {
 
     # If configuration was modified, return an error
     if ( not $args{force} ) {
-        return CONFIG_WAS_CHANGED if ( $conf->{cfgNum} != $last );
+        return CONFIG_WAS_CHANGED
+          if ( $conf->{cfgNum} ne $last
+            || $args{cfgDate} && $args{cfgDate} ne $args{currentCfgDate} );
         return DATABASE_LOCKED if ( $self->isLocked() or not $self->lock() );
     }
     $conf->{cfgNum} = $last + 1 unless ( $args{cfgNumFixed} );
@@ -187,6 +192,7 @@ sub getConf {
             eval { $r = $self->{refLocalStorage}->get('conf') }
               if ( $> and not $args->{noCache} );
             $msg .= "Warn: $@" if ($@);
+
             if (    ref($r)
                 and $r->{cfgNum}
                 and $args->{cfgNum}
@@ -224,9 +230,10 @@ sub getConf {
         $res = $r;
     }
 
-    # Create cipher object
+    # Create cipher object and replace variable placeholder
     unless ( $args->{raw} ) {
 
+        $self->replacePlaceholders($res) if $self->{useServerEnv};
         eval {
             $res->{cipher} = Lemonldap::NG::Common::Crypto->new( $res->{key} );
         };
@@ -238,7 +245,11 @@ sub getConf {
     return $res;
 }
 
-# Set default values
+## @method hashRef setDefault(hashRef conf, hashRef localPrm)
+# Set default params
+# @param $conf Lemonldap::NG configuration hashRef
+# @param $localPrm Local parameters
+# @return conf
 sub setDefault {
     my ( $self, $conf, $localPrm ) = @_;
     if ( defined $localPrm ) {
@@ -393,6 +404,7 @@ sub getDBConf {
           : $a[0];
     }
     my $conf = $self->load( $args->{cfgNum} );
+    return undef if $conf == "-1";
     $msg .= "Get configuration $conf->{cfgNum}.\n"
       if ( defined $conf->{cfgNum} );
     return $conf;
@@ -411,7 +423,11 @@ sub _launch {
         alarm 0;
         die $@ if $@;
     };
-    $msg .= $@ if $@;
+    if ($@) {
+        $msg .= $@;
+        print STDERR "MSG $msg\n";
+        return undef;
+    }
     return wantarray ? (@res) : $res[0];
 }
 
@@ -489,6 +505,46 @@ sub delete {
 
 sub logError {
     return shift->_launch( 'logError', @_ );
+}
+
+sub _substPlaceHolders {
+    return $_[0] unless $_[0];
+    $_[0] =~ s/$PlaceHolderRe/$ENV{$1}/geo;
+    return $_[0];
+}
+
+## @method void replacePlaceholders(res: LLNG_Conf)
+#
+# Recursively replace %SERVERENV:VariableName% by $ENV{VariableName} value
+sub replacePlaceholders {
+    my ( $self, $conf ) = @_;
+    if ( ref $conf eq 'HASH' ) {
+        foreach my $key ( keys %$conf ) {
+            if ( $key =~ /$PlaceHolderRe/o ) {
+                my $val = $conf->{$key};
+                delete $conf->{$key};
+                my $nk = _substPlaceHolders($key);
+                $conf->{$nk} = $val;
+            }
+            next unless ( $conf->{$key} );
+            if ( ref $conf->{$key} ) {
+                $self->replacePlaceholders( $conf->{$key} );
+            }
+            elsif ( $conf->{$key} =~ /$PlaceHolderRe/o ) {
+                $conf->{$key} = _substPlaceHolders( $conf->{$key} );
+            }
+        }
+    }
+    elsif ( ref $conf eq 'ARRAY' ) {
+        for ( my $i = 0 ; $i < @$conf ; $i++ ) {
+            if ( ref $conf->[$i] ) {
+                $self->replacePlaceholders( $conf->[$i] );
+            }
+            elsif ( $conf->[$i] =~ /$PlaceHolderRe/o ) {
+                $conf->[$i] = _substPlaceHolders( $conf->[$i] );
+            }
+        }
+    }
 }
 
 1;
@@ -593,7 +649,7 @@ L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
 =head1 DOWNLOAD
 
 Lemonldap::NG is available at
-L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+L<https://lemonldap-ng.org/download>
 
 =head1 COPYRIGHT AND LICENSE
 

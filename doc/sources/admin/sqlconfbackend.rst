@@ -4,7 +4,7 @@ SQL configuration backends
 There is 2 types of SQL configuration backends for LemonLDAP::NG:
 
 -  **CDBI**: very simple storage (recommended)
--  **RDBI**: triple store storage
+-  **RDBI**: triple store storage (not recommended)
 
 
 .. tip::
@@ -50,6 +50,16 @@ Use database to create table:
 
    use lemonldap-ng
 
+CDBI
+^^^^
+
+.. code-block:: sql
+
+   CREATE TABLE lmConfig (
+       cfgNum int not null primary key,
+       data longtext
+   );
+
 RDBI
 ^^^^
 
@@ -61,16 +71,6 @@ RDBI
        value longtext,
        PRIMARY KEY (cfgNum,field)
        );
-
-CDBI
-^^^^
-
-.. code-block:: sql
-
-   CREATE TABLE lmConfig (
-       cfgNum int not null primary key,
-       data longtext
-   );
 
 Grant access
 ~~~~~~~~~~~~
@@ -107,7 +107,7 @@ file (section configuration):
 .. code-block:: ini
 
    [configuration]
-   type = RDBI
+   type = CDBI
    dbiChain    = DBI:mysql:database=lemonldap-ng;host=1.2.3.4
    dbiUser     = lemonldaprw
    dbiPassword = mypassword
@@ -155,6 +155,18 @@ Use database to create table:
 
 .. _rdbi-1:
 
+CDBI
+^^^^
+
+.. code-block:: sql
+
+   CREATE TABLE lmConfig (
+       cfgnum integer not null primary key,
+       data text
+   );
+
+.. _connection-settings-1:
+
 RDBI
 ^^^^
 
@@ -169,18 +181,6 @@ RDBI
 
 .. _cdbi-1:
 
-CDBI
-^^^^
-
-.. code-block:: sql
-
-   CREATE TABLE lmConfig (
-       cfgnum integer not null primary key,
-       data text
-   );
-
-.. _connection-settings-1:
-
 Connection settings
 -------------------
 
@@ -190,7 +190,7 @@ file (section configuration):
 .. code-block:: ini
 
    [configuration]
-   type = RDBI
+   type = CDBI
    dbiChain    = DBI:Pg:database=lemonldap-ng;host=1.2.3.4
    dbiUser     = lemonldaprw
    dbiPassword = mypassword

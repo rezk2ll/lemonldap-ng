@@ -11,7 +11,7 @@ Presentation
 Since 4.0 release, it offers an easy way to configure SSO thanks to
 authentication subsystems.
 
-Authentication against LL::NG can be done trough:
+Authentication against LL::NG can be done through:
 
 -  HTTP headers (LL::NG Handler)
 -  SAML 2 (LL::NG as SAML2 IDP)

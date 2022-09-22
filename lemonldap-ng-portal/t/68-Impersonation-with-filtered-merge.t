@@ -127,13 +127,17 @@ ok( $res->[2]->[0] =~ m%Auth-User: %, 'Found Auth-User' )
   or explain( $res->[2]->[0], 'Header Key: Auth-User' );
 ok( $res->[2]->[0] =~ m%: dwho<br/>%, 'Found dwho' )
   or explain( $res->[2]->[0], 'Header Value: dwho' );
-ok( $res->[2]->[0] =~ m%<div class="col">su</div>%, 'Found su' )
+ok( $res->[2]->[0] =~ m%<div class="card-text text-left ml-2">su</div>%,
+    'Found su' )
   or explain( $res->[2]->[0], 'SSO Groups: su' );
-ok( $res->[2]->[0] =~ m%<div class="col">su_test</div>%, 'Found su_test' )
+ok( $res->[2]->[0] =~ m%<div class="card-text text-left ml-2">su_test</div>%,
+    'Found su_test' )
   or explain( $res->[2]->[0], 'SSO Groups: su_test' );
-ok( $res->[2]->[0] !~ m%<div class="col">_test_</div>%, 'NOT found _test_' )
+ok( $res->[2]->[0] !~ m%<div class="card-text text-left ml-2">_test_</div>%,
+    'NOT found _test_' )
   or explain( $res->[2]->[0], 'SSO Groups: _test_' );
-ok( $res->[2]->[0] !~ m%<div class="col">test_su</td>%, 'NOT found test_su' )
+ok( $res->[2]->[0] !~ m%<div class="card-text text-left ml-2">test_su</td>%,
+    'NOT found test_su' )
   or explain( $res->[2]->[0], 'SSO Groups: test_su' );
 ok( $res->[2]->[0] =~ m%<td scope="row">uid</td>%, 'Found uid' )
   or explain( $res->[2]->[0], 'Attribute Value uid' );
@@ -156,15 +160,16 @@ count(1);
 my $json;
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
-my @real_hGroups = map { $_->{key} eq 'real_hGroups' ? $_ : () }
-  @{ $json->{ATTRIBUTES} };
-ok( keys %{$real_hGroups[0]->{value}} == 5, 'Right number of real_hGroups found' )
-  or explain( $real_hGroups[0]->{value}, 'Wrong real_hGroups' );
+my @real_hGroups =
+  map { $_->{key} eq 'real_hGroups' ? $_ : () } @{ $json->{ATTRIBUTES} };
+ok(
+    keys %{ $real_hGroups[0]->{value} } == 5,
+    'Right number of real_hGroups found'
+) or explain( $real_hGroups[0]->{value}, 'Wrong real_hGroups' );
 count(2);
 
-my @hGroups = map { $_->{key} eq 'hGroups' ? $_ : () }
-  @{ $json->{ATTRIBUTES} };
-ok( keys %{$hGroups[0]->{value}} == 4, 'Right number of hGroups found' )
+my @hGroups = map { $_->{key} eq 'hGroups' ? $_ : () } @{ $json->{ATTRIBUTES} };
+ok( keys %{ $hGroups[0]->{value} } == 4, 'Right number of hGroups found' )
   or explain( $hGroups[0]->{value}, 'Wrong hGroups' );
 count(1);
 

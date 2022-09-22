@@ -20,13 +20,13 @@ LemonLDAP::NG portal menu has 4 modules:
 -  **OIDC Consents**: display user's OpenId Connect consents
 -  **Logout**: logout button
 
-Each module can be activated trough a rule, using user session
-information. These rules can be set trough Manager:
+Each module can be activated through a rule, using user session
+information. These rules can be set through Manager:
 ``General Parameters`` > ``Portal`` > ``Menu`` > ``Modules activation``.
 
 You can use ``0`` or ``1`` to disable/enable the module, or use a more
 complex rule. For example, to display the password change form only for
-user authenticated trough LDAP or DBI:
+user authenticated through LDAP or DBI:
 
 .. code-block:: perl
 
@@ -38,7 +38,7 @@ Categories and applications
 ---------------------------
 
 :doc:`Configuring the virtual hosts<configvhost>` is not sufficient to
-display an application in the menu. Indeed, a virtual host can contain
+display an application in the menu. Indeed, a virtual host can serve
 several applications (http://vhost.example.com/appli1,
 http://vhost.example.com/appli2).
 

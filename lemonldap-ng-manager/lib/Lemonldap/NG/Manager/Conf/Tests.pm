@@ -6,8 +6,9 @@ use strict;
 use Lemonldap::NG::Common::Regexp;
 use Lemonldap::NG::Handler::Main;
 use Lemonldap::NG::Common::Util qw(getSameSite);
+use URI;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.15';
 
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
@@ -44,10 +45,18 @@ sub tests {
 
         # Check if portal URL is well formated
         portalURL => sub {
+            my $url = $conf->{portal};
 
-            # Append or remove trailing ending slashes
+            # Append or remove trailing slashes
             $conf->{portal} =~ s%/*$%/%;
-            return 1;
+            return (
+                1,
+                (
+                    ( $url =~ m%/$% )
+                    ? ''
+                    : "Portal URL should end with a /"
+                )
+            );
         },
 
         # Check if virtual hosts are in the domain
@@ -406,7 +415,9 @@ sub tests {
         },
 
         samlSignatureOverrideNeedsCertificate => sub {
-            return 1 if $conf->{samlServicePublicKeySig} =~ /CERTIFICATE/;
+            return 1
+              if $conf->{samlServicePublicKeySig}
+              && $conf->{samlServicePublicKeySig} =~ /CERTIFICATE/;
 
             my @offenders;
             for my $idp ( keys %{ $conf->{samlIDPMetaDataOptions} } ) {
@@ -540,6 +551,22 @@ sub tests {
                 ) if ($@);
             }
 
+            # Use WebAuthn
+            if ( $conf->{webauthn2fActivation} ) {
+                eval "use Authen::WebAuthn";
+                return ( 1,
+                    "Authen::WebAuthn module is required to enable WebAuthn" )
+                  if ($@);
+            }
+
+            # WebAuthn requires https://
+            if ( $conf->{webauthn2fActivation} ) {
+                my $portal_uri = URI->new( $conf->{portal} );
+                unless ( $portal_uri->scheme eq "https" ) {
+                    return ( 1, "WebAuthn requires HTTPS" );
+                }
+            }
+
             # Use Yubikey
             if ( $conf->{yubikey2fActivation} ) {
                 eval "use Auth::Yubikey_WebClient";
@@ -620,7 +647,7 @@ sub tests {
 
             my $msg = '';
             my $ok  = 0;
-            foreach (qw(u totp yubikey)) {
+            foreach (qw(u totp yubikey webauthn)) {
                 $ok ||= $conf->{ $_ . '2fActivation' }
                   && $conf->{ $_ . '2fSelfRegistration' };
                 last if ($ok);
@@ -693,7 +720,7 @@ sub tests {
                 abs $_;
               }
               grep { /\d+/ }
-              split /\s*,\s*/, $conf->{bruteForceProtectionLockTimes};
+              split /\s*,\s*/, $conf->{bruteForceProtectionLockTimes} || '';
             $conf->{bruteForceProtectionLockTimes} = join ', ', @lockTimes
               if scalar @lockTimes;
             return 1 unless ( $conf->{bruteForceProtection} );
@@ -736,8 +763,8 @@ sub tests {
             return ( 1,
                 "Impersonation and ContextSwitching are simultaneously enabled"
               )
-              if ( $conf->{impersonationRule}
-                && $conf->{contextSwitchingRule} );
+              if (  $conf->{impersonationRule}
+                and $conf->{contextSwitchingRule} );
             return 1;
         },
 
@@ -881,25 +908,32 @@ sub tests {
             my %casUrl;
             foreach my $casConfKey ( keys %{ $conf->{casAppMetaDataOptions} } )
             {
-                my $appUrl =
-                  $conf->{casAppMetaDataOptions}->{$casConfKey}
-                  ->{casAppMetaDataOptionsService}
-                  || "";
-                $appUrl =~ m#^(https?://[^/]+)(/.*)?$#;
-                my $appHost = $1;
-                unless ($appHost) {
-                    push @msg, "$casConfKey CAS Application has no Service URL";
-                    $res = 0;
-                    next;
-                }
+                for my $appUrl (
+                    split(
+                        /\s+/,
+                        $conf->{casAppMetaDataOptions}->{$casConfKey}
+                          ->{casAppMetaDataOptionsService}
+                    )
+                  )
+                {
+                    $appUrl ||= "";
+                    $appUrl =~ m#^(https?://[^/]+)(/.*)?$#;
+                    my $appHost = $1;
+                    unless ($appHost) {
+                        push @msg,
+                          "$casConfKey CAS Application has no Service URL";
+                        $res = 0;
+                        next;
+                    }
 
-                if ( defined $casUrl{$appUrl} ) {
-                    push @msg,
+                    if ( defined $casUrl{$appUrl} ) {
+                        push @msg,
 "$casConfKey and $casUrl{$appUrl} have the same Service URL";
-                    $res = 0;
-                    next;
+                        $res = 0;
+                        next;
+                    }
+                    $casUrl{$appUrl} = $casConfKey;
                 }
-                $casUrl{$appUrl} = $casConfKey;
             }
             return ( $res, join( ', ', @msg ) );
         },
@@ -909,7 +943,9 @@ sub tests {
             return 1 unless ( $conf->{sfRemovedMsgRule} );
             return ( 1,
 'Notification system must be enabled to display a notification if a SF is removed'
-            ) if ( $conf->{sfRemovedUseNotif} and not $conf->{notification} );
+              )
+              if ( $conf->{sfRemovedUseNotif}
+                and not $conf->{notification} );
             return 1;
         },
 
@@ -926,7 +962,8 @@ sub tests {
         # Same with SameSite=(auto) and SAML issuer in use
         SameSiteNoneWithSecure => sub {
             return ( -1, 'SameSite value = None requires the secured flag' )
-              if ( getSameSite($conf) eq 'None' and !$conf->{securedCookie} );
+              if ( getSameSite($conf) eq 'None'
+                and !$conf->{securedCookie} );
             return 1;
         },
 
@@ -954,8 +991,8 @@ sub tests {
                     $hasPwdBE ||= 1 unless $mods[2] eq 'Null';
                 }
                 return ( -1,
-                    'Password module is enabled without AuthChoice password backend' )
-                  unless $hasPwdBE;
+'Password module is enabled without AuthChoice password backend'
+                ) unless $hasPwdBE;
             }
             return 1;
         },
@@ -990,7 +1027,10 @@ sub tests {
 
         # AuthChoice parameters must exist
         AuthChoiceParams => sub {
-            return 1 unless %{ $conf->{authChoiceModules} };
+            return 1
+              unless ( $conf->{authChoiceModules}
+                and %{ $conf->{authChoiceModules} }
+                and $conf->{authentication} eq 'Choice' );
             foreach (qw(AuthBasic FindUser)) {
                 if ( $conf->{"authChoice$_"} ) {
                     my $test  = $conf->{"authChoice$_"};
@@ -1018,6 +1058,33 @@ sub tests {
             return ( -1, 'Authentication choice enabled without chain' )
               if ( $conf->{authentication} eq 'Choice'
                 and scalar keys %{ $conf->{authChoiceModules} } == 0 );
+            return 1;
+        },
+
+        # Internal portal URL must be defined with Proxy authentication
+        authProxy => sub {
+            return ( 0,
+                'Proxy authentication enabled without internal portal URL' )
+              if ( $conf->{authentication} eq 'Proxy'
+                and !$conf->{proxyAuthService} );
+            return 1;
+        },
+
+# Warn if Impersonation and proxyAuthServiceImpersonation are simultaneously enabled
+        impersonationProxy => sub {
+            return ( -1,
+'Impersonation and internal portal Impersonation are simultaneously enabled'
+              )
+              if (  $conf->{impersonationRule}
+                and $conf->{proxyAuthServiceImpersonation} );
+            return 1;
+        },
+
+        # CheckDevOps requires Safe jail
+        checkDevOpsWithSafeJail => sub {
+            return ( 0, 'Safe jail must be enabled with CheckDevOps plugin' )
+              if ( $conf->{checkDevOps}
+                and !$conf->{useSafeJail} );
             return 1;
         }
     };

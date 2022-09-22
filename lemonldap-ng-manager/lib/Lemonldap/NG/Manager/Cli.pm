@@ -5,9 +5,10 @@ use Crypt::URandom;
 use Mouse;
 use Data::Dumper;
 use JSON;
+use Hash::Merge::Simple;
 use Lemonldap::NG::Common::Conf::ReConstants;
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.12';
 $Data::Dumper::Useperl = 1;
 
 extends('Lemonldap::NG::Manager::Cli::Lib');
@@ -24,8 +25,8 @@ has cfgNum => (
 
 has log    => ( is => 'rw' );
 has req    => ( is => 'ro' );
-has sep    => ( is => 'rw', isa => 'Str', default => '/' );
-has format => ( is => 'rw', isa => 'Str', default => "%-25s | %-25s | %-25s" );
+has sep    => ( is => 'rw', isa => 'Str',  default => '/' );
+has format => ( is => 'rw', isa => 'Str',  default => "%-25s | %-25s | %-25s" );
 has yes    => ( is => 'rw', isa => 'Bool', default => 0 );
 has safe   => ( is => 'rw', isa => 'Bool', default => 0 );
 has force  => ( is => 'rw', isa => 'Bool', default => 0 );
@@ -136,6 +137,73 @@ sub del {
         delete $new->{$_};
     }
     return $self->_save($new);
+}
+
+sub merge {
+    my ( $self, @files ) = @_;
+    die 'merge requires at least one file' unless (@files);
+    require Clone;
+    my $old = Clone::clone( $self->mgr->hLoadedPlugins->{conf}->currentConf );
+    my $new;
+    my @valid_files;
+
+    foreach my $file (@files) {
+
+        my $merging;
+        if ( $file =~ /\.ya?ml/ ) {
+            eval {
+                require YAML;
+                $merging = YAML::LoadFile($file);
+            };
+            if ($@) {
+                print STDERR "Skipping invalid YAML file $file: " . $@;
+            }
+        }
+        else {
+            eval {
+                local $/ = undef;
+                open my $fh, '<', $file or die $!;
+                $merging = from_json(<$fh>);
+            };
+            if ($@) {
+                print STDERR "Skipping invalid JSON file $file: " . $@;
+            }
+        }
+        if ( ref($merging) eq "HASH" ) {
+            $new = Hash::Merge::Simple::merge( $new, $merging );
+            push @valid_files, $file;
+        }
+    }
+    die "Nothing to do" unless ref($new) eq "HASH";
+
+    unless ( $self->yes ) {
+        print "Merge configuration changes from "
+          . join( " ", @valid_files ) . " \n";
+        print Dumper($new);
+        print "Confirm (N/y)? ";
+        my $c = <STDIN>;
+        unless ( $c =~ /^y(?:es)?$/ ) {
+            die "Aborting";
+        }
+    }
+
+    $new = Hash::Merge::Simple::merge( $old, $new );
+    _clean_hash_undef($new);
+    return $self->_save($new);
+}
+
+# Remove key => undef from hashes
+# This allows you to remove keys from the config
+sub _clean_hash_undef {
+    my ($hash) = @_;
+    for my $key ( keys %$hash ) {
+        if ( !defined( $hash->{$key} ) ) {
+            delete $hash->{$key};
+        }
+        if ( ref( $hash->{$key} ) eq "HASH" ) {
+            _clean_hash_undef( $hash->{$key} );
+        }
+    }
 }
 
 sub addKey {
@@ -317,8 +385,8 @@ sub lastCfg {
 
 sub save {
     my ($self) = @_;
-    my $conf = $self->jsonResponse( '/confs/' . $self->cfgNum, 'full=1' );
-    my $json = JSON->new->indent->canonical;
+    my $conf   = $self->jsonResponse( '/confs/' . $self->cfgNum, 'full=1' );
+    my $json   = JSON->new->indent->canonical;
     print $json->encode($conf);
 }
 
@@ -404,9 +472,9 @@ sub _getKey {
 
 sub _setKey {
     my ( $self, $conf, $key, $value ) = @_;
-    my $sep = $self->sep;
+    my $sep    = $self->sep;
     my (@path) = split $sep, $key;
-    my $last = pop @path;
+    my $last   = pop @path;
     while ( my $next = shift @path ) {
         $conf = $conf->{$next};
     }
@@ -416,8 +484,7 @@ sub _setKey {
 sub _save {
     my ( $self, $new ) = @_;
     require Lemonldap::NG::Manager::Conf::Parser;
-    my $parser = Lemonldap::NG::Manager::Conf::Parser->new(
-        {
+    my $parser = Lemonldap::NG::Manager::Conf::Parser->new( {
             newConf => $new,
             refConf => $self->mgr->hLoadedPlugins->{conf}->currentConf,
             req     => $self->req
@@ -513,11 +580,11 @@ sub run {
     }
     my $action = shift;
     unless ( $action =~
-/^(?:get|set|del|addKey|delKey|addPostVars|delPostVars|save|restore|rollback)$/
+/^(?:get|set|del|addKey|delKey|addPostVars|delPostVars|merge|save|restore|rollback)$/
       )
     {
         die
-"Unknown action $action. Only get, set, del, addKey, delKey, addPostVars, delPostVars, save, restore, rollback allowed";
+"Unknown action $action. Only get, set, del, addKey, delKey, addPostVars, delPostVars, merge, save, restore, rollback allowed";
     }
 
     unless ( $action eq "restore" ) {
@@ -655,7 +722,7 @@ L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
 =head1 DOWNLOAD
 
 Lemonldap::NG is available at
-L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+L<https://lemonldap-ng.org/download>
 
 =head1 COPYRIGHT AND LICENSE
 

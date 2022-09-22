@@ -9,6 +9,7 @@ Build-Depends-Indep: gsfonts <!nocheck>,
                      libapache-session-perl <!nocheck>,
                      libauth-yubikey-webclient-perl <!nocheck>,
                      libauthen-oath-perl <!nocheck>,
+                     libauthen-radius-perl <!nocheck>,
                      libcache-cache-perl <!nocheck>,
                      libclone-perl <!nocheck>,
                      libconfig-inifiles-perl <!nocheck>,
@@ -18,6 +19,8 @@ Build-Depends-Indep: gsfonts <!nocheck>,
                      libcrypt-openssl-x509-perl <!nocheck>,
                      libcrypt-urandom-perl <!nocheck>,
                      libcrypt-rijndael-perl <!nocheck>,
+                     libcrypt-u2f-server-perl <!nocheck>,
+                     libdatetime-format-rfc3339-perl <!nocheck>,
                      libdbd-sqlite3-perl <!nocheck>,
                      libdbi-perl <!nocheck>,
                      libdigest-hmac-perl <!nocheck>,
@@ -25,10 +28,12 @@ Build-Depends-Indep: gsfonts <!nocheck>,
                      libgd-securityimage-perl <!nocheck>,
                      libglib-perl <!nocheck>,
                      libgssapi-perl <!nocheck>,
+                     libhash-merge-simple-perl <!nocheck>,
                      libhtml-template-perl <!nocheck>,
                      libimage-magick-perl <!nocheck>,
                      libio-string-perl <!nocheck>,
                      libipc-run-perl <!nocheck>,
+                     liblist-moreutils-perl <!nocheck>,
                      libjson-perl <!nocheck>,
                      libjson-xs-perl <!nocheck>,
                      liblasso-perl <!nocheck>,
@@ -36,6 +41,7 @@ Build-Depends-Indep: gsfonts <!nocheck>,
                      libmouse-perl <!nocheck>,
                      libnet-cidr-lite-perl <!nocheck>,
                      libnet-ldap-perl <!nocheck>,
+                     libio-socket-timeout-perl <!nocheck>,
                      libnet-openid-consumer-perl <!nocheck>,
                      libnet-openid-server-perl <!nocheck>,
                      libplack-perl <!nocheck>,
@@ -44,12 +50,13 @@ Build-Depends-Indep: gsfonts <!nocheck>,
                      libsoap-lite-perl <!nocheck>,
                      libstring-random-perl <!nocheck>,
                      libtest-mockobject-perl <!nocheck>,
-                     libtest-pod-perl <!nocheck>,
                      libtest-output-perl <!nocheck>,
+                     libtest-pod-perl <!nocheck>,
                      libtext-unidecode-perl <!nocheck>,
                      libtime-fake-perl <!nocheck>,
                      libunicode-string-perl <!nocheck>,
                      liburi-perl <!nocheck>,
+                     libhttp-message-perl <!nocheck>,
                      libwww-perl <!nocheck>,
                      libxml-libxml-perl <!nocheck>,
                      libxml-libxslt-perl <!nocheck>,
@@ -58,7 +65,7 @@ Build-Depends-Indep: gsfonts <!nocheck>,
                      python3-sphinx,
                      python3-sphinx-bootstrap-theme,
                      perl
-Standards-Version: 4.5.1
+Standards-Version: 4.6.1
 Vcs-Browser: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng
 Vcs-Git: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng.git
 Homepage: https://lemonldap-ng.org/
@@ -92,6 +99,7 @@ Architecture: all
 Section: doc
 Depends: ${misc:Depends}
 Pre-Depends: ${misc:Pre-Depends}
+Multi-Arch: foreign
 Description: Lemonldap::NG Web-SSO system documentation
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
@@ -108,7 +116,6 @@ Description: Lemonldap::NG Web-SSO system documentation
 Package: lemonldap-ng-fastcgi-server
 Architecture: all
 Section: web
-Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends},
          ${perl:Depends},
          lsb-base,
@@ -118,6 +125,7 @@ Depends: ${misc:Depends},
          libplack-perl
 Recommends: libhttp-parser-xs-perl,
             nginx-extras | nginx
+Pre-Depends: ${misc:Pre-Depends}
 Description: Lemonldap::NG FastCGI server
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
@@ -132,11 +140,22 @@ Description: Lemonldap::NG FastCGI server
  Lemonldap::NG FastCGI server provides a Nginx auth_request server that handles
  also LLNG Portal and Manager.
 
+Package: liblemonldap-ng-ssoaas-apache-client-perl
+Architecture: all
+Section: web
+Depends: ${misc:Depends},
+         ${perl:Depends}
+Breaks: liblemonldap-ng-handler-perl (<< 2.0.14~)
+Multi-Arch: foreign
+Description: Lemonldap::NG SSOaaS client for Apache
+ Lemonldap::NG is a complete Web-SSO system that provides a SSO-as-a-Service
+ system, natively usable with Nginx. Lemonldap::NG::SSOaaS::Apache::Client
+ permits one to enroll an Apache server into Lemonldap::NG's SSOaaS service.
+
 Package: lemonldap-ng-uwsgi-app
 Architecture: all
 Section: web
 Depends: ${misc:Depends},
-         ${perl:Depends},
          liblemonldap-ng-handler-perl (= ${binary:Version})
 Recommends: libhttp-parser-xs-perl,
             uwsgi-plugin-psgi
@@ -163,8 +182,8 @@ Recommends: lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uws
 Suggests: libcache-memcached-perl,
           libdigest-hmac-perl,
           libsoap-lite-perl
-Breaks: liblemonldap-ng-handler-perl (<< 1.9.1-2~)
-Replaces: liblemonldap-ng-handler-perl (<< 1.9.1-2~)
+Breaks: liblemonldap-ng-handler-perl (<< 1.9.1-2~), lemonldap-ng-fastcgi-server (<< 2.0.5~)
+Replaces: liblemonldap-ng-handler-perl (<< 1.9.1-2~), lemonldap-ng-fastcgi-server (<< 2.0.5~)
 Description: Lemonldap::NG handler part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
@@ -228,7 +247,6 @@ Suggests: libconvert-base32-perl,
           libsoap-lite-perl,
           libxml-libxml-perl,
           libxml-simple-perl
-Conflicts: liblemonldap-ng-cli-perl
 Description: Lemonldap::NG common files
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
@@ -252,6 +270,7 @@ Depends: ${misc:Depends},
          libcrypt-openssl-rsa-perl,
          libemail-date-format-perl,
          liblemonldap-ng-handler-perl (= ${binary:Version}),
+         libhash-merge-simple-perl,
          lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uwsgi-app (= ${binary:Version}) | apache2 | httpd-cgi
 Recommends: lemonldap-ng-doc (= ${binary:Version}),
             libxml-libxml-perl,
@@ -282,8 +301,10 @@ Depends: ${misc:Depends},
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          libtext-unidecode-perl,
          libregexp-assemble-perl,
+         liblist-moreutils-perl,
          libemail-date-format-perl
 Recommends: gsfonts,
+            libauthen-webauthn-perl,
             libcrypt-openssl-bignum-perl,
             libconvert-base32-perl,
             libio-string-perl,
@@ -294,13 +315,14 @@ Recommends: gsfonts,
             libio-socket-timeout-perl,
             libunicode-string-perl
 Suggests: gpg,
+          libauthen-radius-perl,
           libcrypt-u2f-server-perl,
           libdbi-perl,
           libglib-perl,
           libgssapi-perl,
           libimage-magick-perl,
           liblasso-perl,
-          libnet-facebook-oauth2-perl (>= 0.10),
+          libnet-facebook-oauth2-perl,
           libnet-openid-consumer-perl,
           libnet-openid-server-perl,
           libnet-oauth-perl,

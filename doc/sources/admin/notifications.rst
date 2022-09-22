@@ -20,7 +20,7 @@ Activation
 
 To activate notifications system:
 
-Go to Manager ``General Parameters`` » ``Advanced Parameters`` » ``Notifications`` » ``Activation``
+Go to Manager ``General Parameters`` » ``Plugins`` » ``Notifications`` » ``Activation``
 
 or in ``lemonldap-ng.ini`` [portal] section:
 
@@ -34,7 +34,7 @@ Explorer
 
 Notifications explorer allows users to see and display theirs accepted
 notifications. Disable by default, you just have to activate it in the
-Manager (``General Parameters`` » ``Advanced Parameters`` » ``Notifications`` »
+Manager (``General Parameters`` » ``Plugins`` » ``Notifications`` »
 ``Explorer``)
 
 or in ``lemonldap-ng.ini`` [portal] section:
@@ -91,7 +91,7 @@ configuration:
 You can change default parameters using the "notificationStorage" and
 "notificationStorageOptions" parameters with the same syntax as
 configuration storage parameters. To do this in Manager, go in General
-Parameters > Advanced Parameters > Notifications.
+Parameters > Plugins > Notifications.
 
 File
 ^^^^
@@ -200,7 +200,7 @@ The notifications module uses a wildcard to manage notifications for all
 users. The default value of this wildcard is ``allusers``, but you can
 change it if ``allusers`` is a known identifier in your system.
 
-To change it, go in General Parameters > Advanced Parameters >
+To change it, go in General Parameters > Plugins >
 Notifications > Wildcard for all users, and set for example
 ``alluserscustom``.
 
@@ -515,3 +515,14 @@ connect with any user, the message will be prompted.
 .. |image1| image:: /documentation/portal-notification.png
    :class: align-center
 
+
+JSON response
+~~~~~~~~~~~~~
+
+If a notification is pending, JSON response fields are:
+
+-  ``result``: ``0``
+-  ``error``: ``36``
+-  ``ciphered_id``: a ciphered session id is returned in this field.
+   This id can be used to forward and continue the notification process if you call the REST ``/notifback`` endpoint
+   with a LL::NG cookie built with this id.

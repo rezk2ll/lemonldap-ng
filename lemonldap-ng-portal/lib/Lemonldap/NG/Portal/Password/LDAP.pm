@@ -14,7 +14,7 @@ extends qw(
   Lemonldap::NG::Portal::Password::Base
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 sub init {
     my ($self) = @_;
@@ -38,13 +38,15 @@ sub modifyPassword {
       if $self->conf->{ldapGetUserBeforePasswordChange};
 
     if ( $req->data->{dn} ) {
-        $dn                 = $req->data->{dn};
-        $requireOldPassword = $self->requireOldPwdRule->( $req, $req->userData );
+        $dn = $req->data->{dn};
+        $requireOldPassword =
+          $self->requireOldPwdRule->( $req, $req->userData );
         $self->logger->debug("Get DN from request data: $dn");
     }
     else {
-        $dn                 = $req->sessionInfo->{_dn};
-        $requireOldPassword = $self->requireOldPwdRule->( $req, $req->sessionInfo );
+        $dn = $req->sessionInfo->{_dn};
+        $requireOldPassword =
+          $self->requireOldPwdRule->( $req, $req->sessionInfo );
         $self->logger->debug("Get DN from session data: $dn");
     }
     unless ($dn) {
@@ -61,10 +63,7 @@ sub modifyPassword {
     my $code =
       $self->ldap->userModifyPassword( $dn, $pwd, $req->data->{oldpassword},
         0, $requireOldPassword );
-
-    unless ( $code == PE_PASSWORD_OK ) {
-        return $code;
-    }
+    return $code unless ( $code == PE_PASSWORD_OK );
 
     # If password policy and force reset, set reset flag
     if (    $self->conf->{ldapPpolicyControl}

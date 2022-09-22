@@ -56,13 +56,13 @@ Mail second factor".
    code against the Radius server, use this attribute as the login and
    the OTP code as password. By default, the attribute designated as
    ``whatToTrace`` is used.
--  **Authentication timeout** (Optional) :
+-  **Authentication timeout** (Optional): Allowed time to perform authentication
 -  **Authentication level** (Optional): if you want to overwrite the
    value sent by your authentication module, you can define here the new
    authentication level. Example: 5
--  **Logo** (Optional): logo file *(in static/<skin> directory)*
 -  **Label** (Optional): label that should be displayed to the user on
    the choice screen
+-  **Logo** (Optional): logo file *(in static/<skin> directory)*
 
 Vendor specific
 ~~~~~~~~~~~~~~~

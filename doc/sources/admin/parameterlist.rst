@@ -45,10 +45,12 @@ browsersDontStorePassword                               Avoid browsers to store 
 bruteForceProtection                                    Enable brute force attack protection                                                 ✔
 bruteForceProtectionIncrementalTempo                    Enable incremental lock time for brute force attack protection                       ✔
 bruteForceProtectionLockTimes                           Incremental lock time values for brute force attack protection                       ✔
-bruteForceProtectionMaxAge                              Max age between current and first failed login                                       ✔                      ✔
+bruteForceProtectionMaxAge                              Max age between current and first failed login                                       ✔
 bruteForceProtectionMaxFailed                           Max allowed failed login                                                             ✔
-bruteForceProtectionMaxLockTime                         Max lock time                                                                        ✔                      ✔
+bruteForceProtectionMaxLockTime                         Max lock time                                                                        ✔
 bruteForceProtectionTempo                               Lock time                                                                            ✔
+captcha                                                 Captcha backend module                                                               ✔      ✔
+captchaOptions                                          Captcha module options                                                               ✔      ✔
 captcha_login_enabled                                   Captcha on login page                                                                ✔
 captcha_mail_enabled                                    Captcha on password reset page                                                       ✔
 captcha_register_enabled                                Captcha on account creation page                                                     ✔
@@ -61,6 +63,8 @@ casAuthnLevel                                           CAS authentication level
 casSrvMetaDataOptions                                   Root of CAS server options                                                           ✔                      [1]
 casStorage                                              Apache::Session module to store CAS user data                                        ✔
 casStorageOptions                                       Apache::Session module parameters                                                    ✔
+casStrictMatching                                       Disable host-based matching of CAS services                                          ✔
+casTicketExpiration                                     Expiration time of Service and Proxy tickets                                         ✔
 cda                                                     Enable Cross Domain Authentication                                                   ✔      ✔
 certificateResetByMailCeaAttribute                                                                                                           ✔
 certificateResetByMailCertificateAttribute                                                                                                   ✔
@@ -76,6 +80,10 @@ cfgDate                                                 Timestamp of the current
 cfgLog                                                  Configuration update log                                                             ✔                      ✔
 cfgNum                                                  Enable Cross Domain Authentication                                                   ✔                      ✔
 cfgVersion                                              Version of LLNG which build configuration                                            ✔                      ✔
+checkDevOps                                             Enable check DevOps                                                                  ✔
+checkDevOpsCheckSessionAttributes                       Check if session attributes exist                                                    ✔
+checkDevOpsDisplayNormalizedHeaders                     Display normalized headers                                                           ✔
+checkDevOpsDownload                                     Enable check DevOps download field                                                   ✔
 checkState                                              Enable CheckState plugin                                                             ✔
 checkStateSecret                                        Secret token for CheckState plugin                                                   ✔
 checkTime                                               Timeout to check new configuration in local cache                                    ✔      ✔               ✔
@@ -83,6 +91,8 @@ checkUser                                               Enable check user       
 checkUserDisplayComputedSession                         Display empty headers rule                                                           ✔
 checkUserDisplayEmptyHeaders                            Display empty headers rule                                                           ✔
 checkUserDisplayEmptyValues                             Display session empty values rule                                                    ✔
+checkUserDisplayHiddenAttributes                        Display hidden attributes rule                                                       ✔
+checkUserDisplayHistory                                 Display history rule                                                                 ✔
 checkUserDisplayNormalizedHeaders                       Display normalized headers rule                                                      ✔
 checkUserDisplayPersistentInfo                          Display persistent session info rule                                                 ✔
 checkUserHiddenAttributes                               Attributes to hide in CheckUser plugin                                               ✔
@@ -110,7 +120,11 @@ corsAllow_Methods                                       Allowed methods for Cros
 corsAllow_Origin                                        Allowed origine for Cross-Origin Resource Sharing                                    ✔
 corsEnabled                                             Enable Cross-Origin Resource Sharing                                                 ✔
 corsExpose_Headers                                      Exposed headers for Cross-Origin Resource Sharing                                    ✔
-corsMax_Age                                             MAx-age for Cross-Origin Resource Sharing                                            ✔
+corsMax_Age                                             Max-age for Cross-Origin Resource Sharing                                            ✔
+crowdsec                                                CrowdSec plugin activation                                                           ✔
+crowdsecAction                                          CrowdSec action                                                                      ✔
+crowdsecKey                                             CrowdSec API key                                                                     ✔
+crowdsecUrl                                             Base URL of CrowdSec local API                                                       ✔
 cspConnect                                              Authorized Ajax destination for Content-Security-Policy                              ✔
 cspDefault                                              Default value for Content-Security-Policy                                            ✔
 cspFont                                                 Font source for Content-Security-Policy                                              ✔
@@ -162,6 +176,7 @@ ext2fAuthnLevel                                         Authentication level for
 ext2fCodeActivation                                     OTP generated by Portal                                                              ✔
 ext2fLabel                                              Portal label for External second factor                                              ✔
 ext2fLogo                                               Custom logo for External 2F                                                          ✔
+ext2fResendInterval                                     Delay before user is allowed to resend code                                          ✔
 facebookAppId                                                                                                                                ✔
 facebookAppSecret                                                                                                                            ✔
 facebookAuthnLevel                                      Facebook authentication level                                                        ✔
@@ -275,8 +290,8 @@ logLevel                                                Log level, must be set i
 logger                                                  technical logger                                                                     ✔      ✔       ✔       ✔
 loginHistoryEnabled                                     Enable login history                                                                 ✔
 logoutServices                                          Send logout trough GET request to these services                                     ✔
-lwpOpts                                                 Options given to LWP::UserAgent                                                      ✔
-lwpSslOpts                                              SSL options given to LWP::UserAgent                                                  ✔
+lwpOpts                                                 Options passed to LWP::UserAgent                                                     ✔
+lwpSslOpts                                              SSL options passed to LWP::UserAgent                                                 ✔
 macros                                                  Macros                                                                               ✔
 mail2fActivation                                        Mail second factor activation                                                        ✔
 mail2fAuthnLevel                                        Authentication level for users authenticated by Mail second factor                   ✔
@@ -284,6 +299,7 @@ mail2fBody                                              Mail body for second fac
 mail2fCodeRegex                                         Regular expression to create a mail OTP code                                         ✔
 mail2fLabel                                             Portal label for Mail second factor                                                  ✔
 mail2fLogo                                              Custom logo for Mail 2F                                                              ✔
+mail2fResendInterval                                    Delay before user is allowed to resend code                                          ✔
 mail2fSessionKey                                        Session parameter where mail is stored                                               ✔
 mail2fSubject                                           Mail subject for second factor authentication                                        ✔
 mail2fTimeout                                           Second factor code timeout                                                           ✔
@@ -306,6 +322,13 @@ max2FDevices                                            Maximum registered 2F de
 max2FDevicesNameLength                                  Maximum 2F devices name length                                                       ✔                      ✔
 multiValuesSeparator                                    Separator for multiple values                                                        ✔      ✔       ✔
 mySessionAuthorizedRWKeys                               Alterable session keys by user itself                                                ✔                      ✔
+newLocationWarning                                      Enable New Location Warning                                                          ✔
+newLocationWarningLocationAttribute                     New location session attribute                                                       ✔
+newLocationWarningLocationDisplayAttribute              New location session attribute for user display                                      ✔
+newLocationWarningMailAttribute                         New location warning mail session attribute                                          ✔
+newLocationWarningMailBody                              Mail body for new location warning                                                   ✔
+newLocationWarningMailSubject                           Mail subject for new location warning                                                ✔
+newLocationWarningMaxValues                             How many previous locations should be compared                                       ✔
 nginxCustomHandlers                                     Custom Nginx handler (deprecated)                                                    ✔
 noAjaxHook                                              Avoid replacing 302 by 401 for Ajax responses                                        ✔
 notification                                            Notification activation                                                              ✔
@@ -334,6 +357,7 @@ oidcServiceAllowAuthorizationCodeFlow                   OpenID Connect allow aut
 oidcServiceAllowDynamicRegistration                     OpenID Connect allow dynamic client registration                                     ✔
 oidcServiceAllowHybridFlow                              OpenID Connect allow hybrid flow                                                     ✔
 oidcServiceAllowImplicitFlow                            OpenID Connect allow implicit flow                                                   ✔
+oidcServiceAllowOnlyDeclaredScopes                      OpenID Connect allow only declared scopes                                            ✔
 oidcServiceAuthorizationCodeExpiration                  OpenID Connect global code TTL                                                       ✔
 oidcServiceDynamicRegistrationExportedVars              OpenID Connect exported variables for dynamic registration                           ✔
 oidcServiceDynamicRegistrationExtraClaims               OpenID Connect extra claims for dynamic registration                                 ✔
@@ -404,8 +428,10 @@ portalDisplayPasswordPolicy                             Display policy in passwo
 portalDisplayRefreshMyRights                            Display link to refresh the user session                                             ✔
 portalDisplayRegister                                   Display register button in portal                                                    ✔
 portalDisplayResetPassword                              Display reset password button in portal                                              ✔
+portalEnablePasswordDisplay                             Allow to display password in login form                                              ✔
 portalErrorOnExpiredSession                             Show error if session is expired                                                     ✔
 portalErrorOnMailNotFound                               Show error if mail is not found in password reset process                            ✔
+portalFavicon                                           Path to favicon file                                                                 ✔
 portalForceAuthn                                        Enable force to authenticate when displaying portal                                  ✔
 portalForceAuthnInterval                                Maximum interval in seconds since last authentication to force reauthentication      ✔
 portalMainLogo                                          Portal main logo path                                                                ✔
@@ -419,7 +445,11 @@ portalStatus                                            Enable portal status    
 portalUserAttr                                          Session parameter to display connected user in portal                                ✔
 protection                                              Manager protection method                                                                   ✔       ✔       ✔
 proxyAuthService                                                                                                                             ✔
+proxyAuthServiceChoiceParam                                                                                                                  ✔
+proxyAuthServiceChoiceValue                                                                                                                  ✔
+proxyAuthServiceImpersonation                           Enable internal portal Impersonation                                                 ✔
 proxyAuthnLevel                                         Proxy authentication level                                                           ✔
+proxyCookieName                                         Name of the internal portal cookie                                                   ✔
 proxySessionService                                                                                                                          ✔
 proxyUseSoap                                            Use SOAP instead of REST                                                             ✔
 radius2fActivation                                      Radius second factor activation                                                      ✔
@@ -436,24 +466,33 @@ radiusServer                                                                    
 randomPasswordRegexp                                    Regular expression to create a random password                                       ✔
 redirectFormMethod                                      HTTP method for redirect page form                                                   ✔
 refreshSessions                                         Refresh sessions plugin                                                              ✔
+registerConfirmBody                                     Mail body for register confirmation                                                  ✔
 registerConfirmSubject                                  Mail subject for register confirmation                                               ✔
 registerDB                                              Register module                                                                      ✔
+registerDoneBody                                        Mail body when register is done                                                      ✔
 registerDoneSubject                                     Mail subject when register is done                                                   ✔
 registerTimeout                                         Register session timeout                                                             ✔
 registerUrl                                             URL of register page                                                                 ✔
 reloadTimeout                                           Configuration reload timeout                                                                        ✔
 reloadUrls                                              URL to call on reload                                                                ✔
-remoteCookieName                                                                                                                             ✔
+rememberAuthChoiceRule                                  remember auth choice activation rule                                                 ✔
+rememberCookieName                                      Name of the remember auth choice cookie                                              ✔
+rememberCookieTimeout                                   lifetime of the remember auth choice cookie                                                         ✔
+rememberDefaultChecked                                  Is remember auth choice checkbox enabled by default?                                 ✔
+rememberTimer                                           timer before automatic authentication with remembered choice                                        ✔
+remoteCookieName                                        Name of the remote portal cookie                                                     ✔
 remoteGlobalStorage                                     Remote session backend                                                               ✔
 remoteGlobalStorageOptions                              Apache::Session module parameters                                                    ✔
 remotePortal                                                                                                                                 ✔
 requireToken                                            Enable token for forms                                                               ✔
 rest2fActivation                                        REST second factor activation                                                        ✔
 rest2fAuthnLevel                                        Authentication level for users authentified by REST second factor                    ✔
+rest2fCodeActivation                                    OTP generated by Portal                                                              ✔
 rest2fInitArgs                                          Args for REST 2F init                                                                ✔
 rest2fInitUrl                                           REST 2F init URL                                                                     ✔
 rest2fLabel                                             Portal label for REST second factor                                                  ✔
 rest2fLogo                                              Custom logo for REST 2F                                                              ✔
+rest2fResendInterval                                    Delay before user is allowed to resend code                                          ✔
 rest2fVerifyArgs                                        Args for REST 2F init                                                                ✔
 rest2fVerifyUrl                                         REST 2F init URL                                                                     ✔
 restAuthServer                                          Enable REST authentication server                                                    ✔
@@ -522,6 +561,7 @@ samlServiceUseCertificateInResponse                     Use certificate instead 
 samlStorage                                             Apache::Session module to store SAML user data                                       ✔
 samlStorageOptions                                      Apache::Session module parameters                                                    ✔
 samlUseQueryStringSpecific                              SAML use specific method for query_string                                            ✔
+scrollTop                                               Display back to top button                                                           ✔
 secureTokenAllowOnError                                 Secure Token allow requests in error                                                        ✔               ✔
 secureTokenAttribute                                    Secure Token attribute                                                                      ✔               ✔
 secureTokenExpiration                                   Secure Token expiration                                                                     ✔               ✔
@@ -533,8 +573,10 @@ sentryDsn                                               Sentry logger DSN       
 sessionDataToRemember                                   Data to remember in login history                                                    ✔
 sfEngine                                                Second factor engine                                                                 ✔                      ✔
 sfExtra                                                 Extra second factors                                                                 ✔
+sfLoginTimeout                                          Timeout for 2F login process                                                         ✔
 sfManagerRule                                           Rule to display second factor Manager link                                           ✔
 sfOnlyUpgrade                                           Only trigger second factor on session upgrade                                        ✔
+sfRegisterTimeout                                       Timeout for 2F registration process                                                  ✔
 sfRemovedMsgRule                                        Display a message if at leat one expired SF has been removed                         ✔
 sfRemovedNotifMsg                                       Notification message                                                                 ✔
 sfRemovedNotifRef                                       Notification reference                                                               ✔
@@ -561,10 +603,12 @@ sslByAjax                                               Use Ajax request for SSL
 sslHost                                                 URL for SSL Ajax request                                                             ✔
 staticPrefix                                            Prefix of static files for HTML templates                                            ✔                      ✔
 status                                                  Status daemon activation                                                                    ✔               ✔
-stayConnected                                           Enable StayConnected plugin                                                          ✔
+stayConnected                                           Stay connected activation rule                                                       ✔
+stayConnectedBypassFG                                   Disable fingerprint checkng                                                          ✔
 stayConnectedCookieName                                 Name of the stayConnected plugin cookie                                              ✔
 stayConnectedTimeout                                    StayConnected persistent connexion session timeout                                                  ✔
 storePassword                                           Store password in session                                                            ✔
+strictTransportSecurityMax_Age                          Max-age for Strict-Transport-Security                                                ✔
 successLoginNumber                                      Number of success stored in login history                                            ✔
 syslogFacility                                          Syslog logger technical facility                                                     ✔      ✔       ✔       ✔
 timeout                                                 Session timeout on server side                                                       ✔
@@ -574,7 +618,7 @@ tokenUseGlobalStorage                                   Enable global token stor
 totp2fActivation                                        TOTP activation                                                                      ✔
 totp2fAuthnLevel                                        Authentication level for users authentified by password+TOTP                         ✔
 totp2fDigits                                            Number of digits for TOTP code                                                       ✔
-totp2fDisplayExistingSecret                             Display existing TOTP secret in registration form                                    ✔
+totp2fEncryptSecret                                     Encrypt TOTP secrets in database                                                     ✔
 totp2fInterval                                          TOTP interval                                                                        ✔
 totp2fIssuer                                            TOTP Issuer                                                                          ✔
 totp2fLabel                                             Portal label for TOTP 2F                                                             ✔
@@ -582,7 +626,6 @@ totp2fLogo                                              Custom logo for TOTP 2F 
 totp2fRange                                             TOTP range (number of interval to test)                                              ✔
 totp2fSelfRegistration                                  TOTP self registration activation                                                    ✔
 totp2fTTL                                               TOTP device time to live                                                             ✔
-totp2fUserCanChangeKey                                  Authorize users to change existing TOTP secret                                       ✔
 totp2fUserCanRemoveKey                                  Authorize users to remove existing TOTP secret                                       ✔
 trustedDomains                                          Trusted domains                                                                      ✔
 twitterAppName                                                                                                                               ✔
@@ -617,6 +660,15 @@ viewerHiddenKeys                                        Hidden Conf keys        
 webIDAuthnLevel                                         WebID authentication level                                                           ✔
 webIDExportedVars                                       WebID exported variables                                                             ✔
 webIDWhitelist                                                                                                                               ✔
+webauthn2fActivation                                    WebAuthn second factor activation                                                    ✔
+webauthn2fAuthnLevel                                    Authentication level for users authentified by WebAuthn second factor                ✔
+webauthn2fLabel                                         Portal label for WebAuthn second factor                                              ✔
+webauthn2fLogo                                          Custom logo for WebAuthn 2F                                                          ✔
+webauthn2fSelfRegistration                              WebAuthn self registration activation                                                ✔
+webauthn2fUserCanRemoveKey                              Authorize users to remove existing WebAuthn                                          ✔
+webauthn2fUserVerification                              Verify user during registration and login                                            ✔
+webauthnDisplayNameAttr                                 Session attribute containing user display name                                       ✔
+webauthnRpName                                          WebAuthn Relying Party display name                                                  ✔
 whatToTrace                                             Session parameter used to fill REMOTE_USER                                           ✔      ✔
 wsdlServer                                              Enable /portal.wsdl server                                                           ✔
 yubikey2fActivation                                     Yubikey second factor activation                                                     ✔

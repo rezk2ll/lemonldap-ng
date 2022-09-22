@@ -36,7 +36,7 @@ Databases
 .. attention::
 
     We call "database" a backend where we can read or write a data.
-    This can be a file, an LDAP directory, etc.
+    This can be a file, an LDAP directory, etc...
 
 We split databases in two categories:
 
@@ -76,29 +76,22 @@ Login
 
 |image1|
 
-#. User tries to access protected application, his request is catched by
-   Handler
-#. :doc:`SSO cookies<ssocookie>` is not
-   detected, so Handler redirects user to Portal
+#. User tries to access a protected application, his request is caught by Handler
+#. :doc:`SSO cookie<ssocookie>` is not detected, so Handler redirects user to Portal
 #. User authenticates on Portal
 #. Portal checks authentication
-#. If authentication succeed, Portal collect user data
+#. If authentication succeeds, Portal collects user data
 #. Portal creates a session to store user data
-#. Portal gets the session key
-#. Portal creates
-   :doc:`SSO cookies<ssocookie>` with
-   session key as value
-#. User is redirected on protected application, with his new cookie
-#. Handler reads session key from cookie and retrieves user session
-   datas
-#. Handler stores user datas in its cache
-#. Handler check access rule and send headers to protected application
+#. Portal gets the session Id
+#. Portal creates :doc:`SSO cookie<ssocookie>` with the session Id as value
+#. User is redirected on protected application, with a SSO cookie
+#. Handler reads session Id from the cookie and retrieves user session data
+#. Handler stores user data in its cache
+#. Handler checks access rules and sends headers to the protected application
 #. Protected application sends response to Handler
-#. Handler forwards the response to user
+#. Handler forwards the response to the user
 
-Then handler will check
-:doc:`SSO cookies<ssocookie>` for each
-HTTP request.
+Then handler will check :doc:`SSO cookies<ssocookie>` for each HTTP request.
 
 Logout
 ~~~~~~
@@ -108,9 +101,7 @@ Default use case:
 #. User clicks on the logout link in Portal
 #. Portal destroys session and redirects user on itself with an empty
    :doc:`SSO cookies<ssocookie>`
-#. User is redirected on portal and his
-   :doc:`SSO cookies<ssocookie>` is
-   empty
+#. User is redirected on portal and his :doc:`SSO cookies<ssocookie>` is empty
 
 LemonLDAP::NG is also able to
 :doc:`catch logout request<writingrulesand_headers>`
@@ -123,8 +114,7 @@ on protected applications, with different behavior:
 -  **SSO and Application logout**: the request is forwarded to
    application and SSO session is closed
 
-After logout process, the user is redirected on portal, or on a
-configured URL.
+After logout process, the user is redirected on portal, or on a configured URL.
 
 Session expiration
 ~~~~~~~~~~~~~~~~~~
@@ -136,10 +126,8 @@ This duration can be set in the manager's Configuration tab (General Parameters 
 
     -  Handlers have a session cache, with a default lifetime of 10 minutes.
        So for Handlers located on different physical servers than the Portal, a user
-       with an expired session can still be authorized until the cache
-       expires.
-    -  Sessions are deleted by a scheduled task. Don't forget to install
-       cron files !
+       with an expired session can still be authorized until the cache expires.
+    -  Sessions are deleted by a scheduled task. Don't forget to install cron files!
 
 
 

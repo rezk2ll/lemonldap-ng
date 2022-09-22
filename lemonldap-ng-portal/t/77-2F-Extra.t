@@ -61,7 +61,7 @@ my ( $host, $url, $query ) =
 
 ok(
     $res->[2]->[0] =~
-qr%<input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code" autocomplete="off" />%,
+qr%<input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code" autocomplete="one-time-code" />%,
     'Found EXTCODE input'
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(1);
@@ -84,6 +84,7 @@ ok(
 );
 count(1);
 my $id = expectCookie($res);
+expectSessionAttributes( $client, $id, _2f => "work" );
 $client->logout($id);
 
 clean_sessions();
@@ -123,7 +124,7 @@ ok( $res->[2]->[0] =~ qq%<h4 trspan="work2f"></h4>%, 'Found translation label' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
-ok( $res->[2]->[0] =~ qq%<h4>Home Label</h4>%, 'Found overriden label' )
+ok( $res->[2]->[0] =~ qq%<h4>Home Label</h4>%, 'Found overridden label' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(1);
 
@@ -144,7 +145,7 @@ count(1);
 
 ok(
     $res->[2]->[0] =~
-qr%<input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code" autocomplete="off" />%,
+qr%<input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code" autocomplete="one-time-code" />%,
     'Found EXTCODE input'
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(1);
@@ -167,6 +168,7 @@ ok(
 );
 count(1);
 $id = expectCookie($res);
+expectSessionAttributes( $client, $id, _2f => "home" );
 
 # Verify Authn Level
 ok( $res = $client->_get("/sessions/global/$id"), 'Get session' );

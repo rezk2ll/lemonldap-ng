@@ -1,5 +1,6 @@
 .build_job:
   stage: build
+  retry: 1
   artifacts:
     expire_in: 1 hour
     paths:
@@ -11,7 +12,7 @@
 .debian_build_job:
   extends: .build_job
   script:
-     - apt-get update && apt-get -y dist-upgrade
+     - apt-get update --allow-releaseinfo-change && apt-get -y dist-upgrade
      - DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata
      - ci-build-pkg
   before_script:
@@ -29,13 +30,13 @@ stages:
 before_script:
   - env | grep ^CI_
 
-build_stretch:
-  extends: .debian_build_job
-  image: buildpkg/debian:stretch
-
 build_buster:
   extends: .debian_build_job
   image: buildpkg/debian:buster
+
+build_bullseye:
+  extends: .debian_build_job
+  image: buildpkg/debian:bullseye
 
 #build_xenial:
 #  extends: .debian_build_job
@@ -52,21 +53,25 @@ build_centos_7:
   script:
      - rm -f /etc/yum.repos.d/CentOS-Sources.repo
      - yum -y install epel-release
-     - make rpm-dist
+     - scripts/ci-install-lasso-centos
+     - make dist
      - ci-build-pkg
 
 build_centos_8:
   extends: .build_job
   image: buildpkg/centos:8
   script:
+     - sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+     - sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
      - yum-config-manager --enable PowerTools
      - yum-config-manager --enable AppStream
      - yum -y install epel-release
-     - make rpm-dist
+     - scripts/ci-install-lasso-centos
+     - make dist
      - ci-build-pkg
 
 sign:
-  image: buildpkg/debian:stretch
+  image: buildpkg/debian:bullseye
   stage: sign
 #  variables:
 #    SIGN_USER: firstname.lastname@orange.com
@@ -75,12 +80,12 @@ sign:
     - cd $CI_PROJECT_DIR
     - ci-sign-pkg
   dependencies:
-    - build_stretch
     - build_buster
+    - build_bullseye
 #    - build_xenial
     - build_bionic
     - build_centos_7
-#    - build_centos_8
+    - build_centos_8
   artifacts:
     expire_in: 1 day
     paths:
@@ -89,7 +94,7 @@ sign:
     - master
 
 pages:
-  image: buildpkg/debian:stretch
+  image: buildpkg/debian:bullseye
   stage: deploy
   variables:
     # Default page dir
@@ -130,7 +135,7 @@ sonar-upload:
   stage: deploy
   image: sonarsource/sonar-scanner-cli
   script:
-      - sonar-scanner
+      - /usr/bin/entrypoint.sh
   only:
     variables:
       - $SONARJOB == "1"

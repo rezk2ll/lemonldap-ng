@@ -16,12 +16,7 @@ Configuration
 Gerrit
 ------
 
-`Install <https://gerrit-review.googlesource.com/Documentation/config-plugins.html#installation>`__ the OAuth Provider plugin.
-
-.. tip::
-
-   The LemonLDAP::NG support was added on February 23, 2020.
-   If you can't find a prebuilt package, you can use this `dockerfile <https://github.com/atisne/gerrit-oauth-build>`__ to build your own.
+`Install <https://gerrit-review.googlesource.com/Documentation/config-plugins.html#installation>`__ the OAuth Provider plugin. A prebuilt package of the plugin can be found on the `Gerrit CI <https://gerrit-ci.gerritforge.com/job/plugin-oauth-bazel-master-master/lastSuccessfulBuild/artifact/bazel-bin/plugins/oauth/oauth.jar>`__.
 
 Then, configure Gerrit:
 

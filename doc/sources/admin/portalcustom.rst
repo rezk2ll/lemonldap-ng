@@ -11,16 +11,28 @@ Main Logo
 ~~~~~~~~~
 
 You can change the default Main Logo in Manager: General Parameters >
-Portal > Customization > Main Logo.
+Portal > Customization > Main logo.
 
-A blank value disables Main Logo display.
-
+A blank value disables Main logo display.
 
 .. tip::
 
     - Logo files must be stored in lemonldap-ng-portal/site/htdocs/static/my/path directory
     - Logo file path must be like my/path/logo.png
     - Main logo is included in Portal templates AND mail body
+
+Favicon
+~~~~~~~
+
+You can change the default favicon in Manager: General Parameters >
+Portal > Customization > Favicon.
+
+A blank value displays default favicon ``common/favicon.ico``.
+
+.. tip::
+
+    - Logo files must be stored in lemonldap-ng-portal/site/htdocs/static/my/path directory
+    - Logo file path must be like my/path/logo.ico
 
 Show languages choice
 ~~~~~~~~~~~~~~~~~~~~~
@@ -33,25 +45,31 @@ Option enabled by default.
 
 .. tip::
 
-
-
     If languages choice is disabled, Portal displays accepted languages by
     your browser (EN by default).
 
 
+Scroll to top button
+~~~~~~~~~~~~~~~~~~~~
+
+You can display a button to go to back to the top after <value> pixels scrolling.
+
+.. tip::
+
+    A blank or null value disable this feature.
 
 Custom CSS file
 ~~~~~~~~~~~~~~~
 
 You can define a custom CSS file, for example ``custom.css``, which will
-be loaded after default CSS files. This file needs to be created in the
+be loaded after default CSS files. This file must be created in the
 static repository
-(``/usr/share/lemonldap-ng/portal/htdocs/static/boostrap/css``).
+(``/usr/share/lemonldap-ng/portal/htdocs/static/bootstrap/css``).
 
-Then set this value in Custom CSS parameter :
+Then set this value in Custom CSS parameter:
 ``bootstrap/css/custom.css``.
 
-Sample CSS file, to remove white background of main logo:
+CSS file example to remove white background of main logo:
 
 .. code-block:: css
 
@@ -65,9 +83,9 @@ Sample CSS file, to remove white background of main logo:
 Skin
 ----
 
-LemonLDAP::NG is shipped with bootstrap skin.
+LemonLDAP::NG is shipped with a bootstrap skin.
 
-But you can make your own. See Skin customization below.
+But you can provide your own. See Skin customization below.
 
 Default skin
 ~~~~~~~~~~~~
@@ -83,13 +101,12 @@ Skin background
 
 Go in ``General Parameters`` > ``Portal`` > ``Customization`` >
 ``Skin background``. You can define a background by selecting one of the
-available image. Use ``None`` to use the default skin background
-configuration.
+available image. Select ``None`` to use the default skin background configuration.
 
 |image0|
 
 To set your own background, copy your file in
-``/usr/share/lemonldap-ng/portal/htdocs/skins/common/backgrounds/`` and
+``/usr/share/lemonldap-ng/portal/htdocs/static/common/backgrounds/`` and
 register it in ``/etc/lemonldap-ng/lemonldap-ng.ini``:
 
 .. code-block:: ini
@@ -112,20 +129,24 @@ user.
 
 To achieve this, you can create a rule in the Manager: select
 ``General Parameters`` > ``Portal`` > ``Customization`` >
-``Skin display rules`` on click on "New key". Then fill the two fields;
+``Skin display rules`` and click on "New entry". Then fill the two fields;
 
--  **Rule**: a Perl expression (you can use %ENV hash to get environment
-   variables, or $_url to get URL called before redirection, or $ipAddr
-   to use user IP address). If the rule evaluation is true, the
-   corresponding skin is applied.
--  **Skin**: the name of the skin to use.
+-  **Key**: a Perl expression (you can use ``%ENV`` hash to get environment
+   variables, or ``$_url`` to get URL called before redirection, or ``$ipAddr``
+   to use user IP address). If the rule evaluation is true, the corresponding
+   skin is applied.
+-  **Value**: the name of the skin to use.
+
+Example::
+
+    $_url =~ m#^http://test1.example.com#
 
 Skin files
 ~~~~~~~~~~
 
 A skin is composed of different files:
 
--  **.tpl**: Perl HTML::Template files, for HTML content
+-  **.tpl**: Perl `HTML::Template <https://metacpan.org/pod/HTML::Template>`__ files, for HTML content
 -  **.css**: CSS (styles)
 -  **.js**: Javascript
 -  images and other media files
@@ -157,8 +178,7 @@ First copy static content:
    cp -a ../bootstrap/css/ .
    mkdir images
 
-Then create symbolic links on template files, as you might not want to
-rewrite all HTML code (else, do as you want).
+Then create a folder for template overrides
 
 ::
 
@@ -166,19 +186,25 @@ rewrite all HTML code (else, do as you want).
    mkdir myskin
    cd myskin/
 
-We include some template files that can be customized:
+LemonLDAP::NG contains templates that are made for common customization, these
+particular templates do not need any modification when you upgrade
+LemonLDAP::NG:
 
--  customhead.tpl : HTML header markups (like CSS, js inclusion)
--  customheader.tpl : HTML code in the header
--  customfooter.tpl : HTML code in the footer
--  customLoginHeader.tpl : HTML code in the login header
--  customLoginFooter.tpl : HTML code in the login footer
+-  ``customhead.tpl`` : HTML header markups (like CSS, js inclusion)
+-  ``customheader.tpl`` : HTML code in the header
+-  ``customfooter.tpl`` : HTML code in the footer
+-  ``customLoginHeader.tpl`` : HTML code in the login header
+-  ``customLoginFooter.tpl`` : HTML code in the login footer
 
-To use custom files, copy them into your skin folder:
+To use override these files, copy them into your skin folder:
 
 ::
 
    cp ../bootstrap/custom* .
+
+Any other template file can also be overriden, be sure you check
+:doc:`upgrade notes <upgrade>` for important updates in your overriden template
+files.
 
 Then you can add your media to ``myskin/images``, you will be able to
 use them in HTML template with this code:
@@ -197,6 +223,12 @@ To change CSS, two options:
 
    <link href="<TMPL_VAR NAME="STATIC_PREFIX">myskin/css/myskin.css" rel="stylesheet" type="text/css" />
 
+To add custom JS, create a new file in myskin/js/custom.js and load it in customhead.tpl ::
+
+   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/custom.js"></script>
+
+In this file, you can access JQuery functions, and hook your code to :doc:`JQuery events <jqueryevents>`
+
 Put then all custom HTML code in the custom template files.
 
 To configure your new skin in Manager, select the custom skin, and enter
@@ -207,12 +239,18 @@ lemonldap-ng-cli:
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set portalSkin 'myskin' portalSkinBackground ''
 
+You can find additional documentation on the syntax of template files in the
+`official documentation of the HTML::Template module
+<https://metacpan.org/pod/HTML::Template>`__
+
+.. _intlmessages:
+
 Messages
 ~~~~~~~~
 
-Messages are defined in source code. If they really do not please you,
+Messages are defined in source code. If they really do not suit you,
 override them! You just need to know the ID of the message (look at
-Portal/Simple.pm).
+Portal/Main/Constants.pm).
 
 There are two methods to do this:
 
@@ -234,7 +272,7 @@ boxes by using the bareword ``_hide_`` :
 .. code-block:: ini
 
    error_en_0        = Big brother is watching you, authenticated user
-   error_fr_0        = Souriez vous êtes surveillés !
+   error_fr_0        = Souriez, vous êtes surveillés !
    msg_fr_lastLogins = Dernières connexions
    error_9           = _hide_
 
@@ -254,6 +292,9 @@ For example ``templates/myskin/en.json``:
 
 You can also create a file called ``all.json`` to override messages in
 all languages.
+
+.. versionchanged:: 2.0.15
+   Translations in lemonldap-ng.ini now take priority over translations from skin files
 
 Menu tabs
 ~~~~~~~~~
@@ -303,27 +344,25 @@ You can also display environment variables, with the prefix ``env_``:
 
    Your IP is <TMPL_VAR NAME="env_REMOTE_ADDR">
 
-Buttons
--------
+Buttons on login page
+---------------------
 
 This node allows one to enable/disable buttons on the login page:
 
 -  **Check last logins**: display a checkbox on login form, allowing
    user to check his login history right after opening session
+-  **Register new account**: display a link to :doc:`register page<register>` (for
+   password based authentication backends)
+-  **Reset your certificate**: display a link to :doc:`reset certificate page<resetcertificate>` (for
+   password based authentication backends)
 -  **Reset password**: display a link to
    :doc:`reset your password page<resetpassword>` (for password based
    authentication backends). Number of allowed retries can be set (3
    times by default)
--  **Register**: display a link to :doc:`register page<register>` (for
-   password based authentication backends)
--  **Reset certificate**: display a link to :doc:`reset certificate page<resetcertificate>` (for
-   password based authentication backends)
+-  **Max reset password retries**: number of retries allowed for resetting password
 
 Password management
 -------------------
-
-General
-~~~~~~~
 
 -  **Require old password**: used only in the password changing module
    of the menu, will check the old password before updating it
@@ -332,29 +371,32 @@ General
 -  **Send mail on password change**: send a mail if the password is
    changed from the Menu, or from forced password reset (LDAP password
    policy)
+-  **Allow to display password**: if enabled, a small icon in the password
+   field is added and when users click on it, the password value is
+   revealed. Disabled by default.
 
 Password Policy
-~~~~~~~~~~~~~~~
-
+---------------
 
 .. tip::
 
     Available since version 2.0.6
 
+-  **Activation**: enable/disable password policy. You can set a rule
+   to enable policy for specific users only
+-  **Display policy in password form**: enable this option to display an
+   information message about password policy constraints
 -  **Minimal size**: leave 0 to bypass the check
 -  **Minimal lower characters**: leave 0 to bypass the check
 -  **Minimal upper characters**: leave 0 to bypass the check
 -  **Minimal digit characters**: leave 0 to bypass the check
 -  **Minimal special characters**: leave 0 to bypass the check
--  **Allowed special characters**: set blanck to forbid special
-   characters (``_`` is not a special character)
--  **Display policy in password form**: enable this to display an
-   information message about password policy constraints
+-  **Allowed special characters**: set '__ALL__' value to allow ALL special characters. A blank value forbids ALL special characters (Note that ``_`` is not a special character)
 
 .. _portalcustom-other-parameters:
 
-Other parameters
-----------------
+Other
+-----
 
 -  **User attribute**: which session attribute will be used to display
    ``Connected as`` in the menu
@@ -362,15 +404,16 @@ Other parameters
 -  **Anti iframe protection**: Set ``X-Frame-Options`` and CSP
    ``frame-ancestors`` headers (see `Browser
    compatibility <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options#Browser_compatibility>`__)
--  **Ping interval**: Number of milliseconds between each ping (Ajax
+-  **Ping interval**: number of milliseconds between each ping (Ajax
    request) on the portal menu. Set to 0 to dismiss checks.
--  **Show error on expired session**: Display the error "Session
+-  **Show error on expired session**: display the error "Session
    expired", which stops the authentication process. This is enabled by
    default but can be disabled to prevent transparent authentication
    (like SSL or Kerberos) to be stopped.
--  **Show error on mail not found**: Display error if provided mail is
+-  **Show error on mail not found**: display error if provided mail is
    not found in password reset by mail process. Disabled by default to
    prevent mail enumeration from this page.
+-  **Display rights refresh link**: enable/disable link in Portal menu to allow users to refresh their rights
 
 .. |image0| image:: /documentation/manager-skin-background.png
    :class: align-center

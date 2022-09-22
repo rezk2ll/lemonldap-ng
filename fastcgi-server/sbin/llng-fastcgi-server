@@ -7,7 +7,7 @@ use POSIX;
 use Getopt::Long;
 use Lemonldap::NG::Handler::Main::Reload;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.15';
 
 our (
     $foreground,  $engine,              $nproc,  $pidFile,
@@ -76,6 +76,10 @@ my %builder = (
         require Lemonldap::NG::Manager;
         return Lemonldap::NG::Manager->run( {} );
     },
+    portal => sub {
+        require Lemonldap::NG::Portal;
+        return Lemonldap::NG::Portal->run( {} );
+    },
     cgi => sub {
         require CGI::Emulate::PSGI;
         require CGI::Compile;
@@ -104,6 +108,9 @@ require Lemonldap::NG::Handler::Server::Nginx;
 $_apps{handler} = Lemonldap::NG::Handler::Server::Nginx->run( {} );
 
 my $app = sub {
+    $SIG{'PIPE'} = sub {
+        print STDERR "Got a PIPE signal";
+    };
     my $type = $_[0]->{LLTYPE} || 'handler';
     return $_apps{$type}->(@_) if ( defined $_apps{$type} );
     if ( defined $builder{$type} ) {
@@ -165,24 +172,24 @@ __END__
 
 =encoding utf8
 
-llng-fastcgi-server - FastCGI server used to provide Lemonldap::NG services to
-Nginx
+llng-fastcgi-server - FastCGI server used for providing LemonLDAP::NG services.
 
 =head1 SYNOPSIS
 
-  # Start server listening to /run/llng.sock with 10 process
+  # Start server listening to /run/llng.sock with 10 workers
   llng-fastcgi-server -u nobody -g nobody -s /run/llng.sock -n 10
 
 =head1 DESCRIPTION
 
-llng-fastcgi-server has been designed provides Lemonldap::NG services to Nginx.
-Portal, manager and handler will be compiled only is used. So this FastCGI
-server can be used on every Lemonldap::NG server even if it needs only some
+llng-fastcgi-server has been designed to provide LemonLDAP::NG services to Nginx
+or DevOps Handler.
+Portal, Manager and Handler will be compiled just-in-time. So this FastCGI
+server can be used on every LemonLDAP::NG server even if it needs only some
 parts (isolated handlers, portal,...).
 
 =head1 PARAMETERS
 
-Each parameter can be set by an option or a environment variable.
+Each parameter can be set by using options or environment variables.
 
 =over
 
@@ -220,17 +227,17 @@ Plack::Handler engine, default to FCGI (see below)
 
 =item --plackOptions:
 
-other options to pass to the Plack handler. This multi-valued parameter must
+To pass other options to the Plack handler. This multi-valued parameter must
 have "key=value" values.
 
-See Plack::Handler::FCGI for a list of options for the default FCGI engine
+See Plack::Handler::FCGI to find out list of available options for default FCGI engine
 
 =back
 
 =head1 ENGINES
 
-By default, llng-fastcgi-server uses FCGI (= L<Plack::Handler::FCGI>). Some
-other engines can be used:
+By default, llng-fastcgi-server uses FCGI (= L<Plack::Handler::FCGI>).
+Some other engines can be used:
 
 =head2 FCGI (default)
 
@@ -287,7 +294,7 @@ L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
 =head1 DOWNLOAD
 
 Lemonldap::NG is available at
-L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+L<https://lemonldap-ng.org/download>
 
 =head1 COPYRIGHT AND LICENSE
 

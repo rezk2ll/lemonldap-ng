@@ -1,6 +1,11 @@
 Documentation for LemonLDAP::NG 2.0
 ===================================
 
+.. image:: logos/logo_llng_600px.png
+   :alt: LL::NG logo
+   :align: center
+   :target: https://www.lemonldap-ng.org
+
 .. toctree::
    
    Documentation index<documentation>
@@ -152,7 +157,7 @@ Official Backends                                                    Authenticat
 :doc:`SSL<authssl>`                                                  ✔
 :doc:`Twitter<authtwitter>`                                          ✔
 :doc:`WebID<authwebid>`                                              ✔                                               ✔
-:doc:`Yubikey<authyubikey>` |deprecated|                             *Replaced by* :doc:`yubikey2f`
+:doc:`Yubico OTP<authyubikey>` |deprecated|                          *Replaced by* :doc:`yubikey2f`
 :doc:`Custom modules<authcustom>` |new|                              ✔                                               ✔        ✔
 ==================================================================== =============================================== ======== ========
 
@@ -171,19 +176,24 @@ Obsolete Backends                                                    Authenticat
 :doc:`Remote LL::NG<authremote>`                                     ✔                                               ✔
 ==================================================================== =============================================== ======== ========
 
-==================================================================== ==============
-Second factor (:doc:`documentation<secondfactor>`)                   Authentication
-==================================================================== ==============
-:doc:`TOTP-or-U2F<utotp2f>` |new|                                    ✔
-:doc:`U2F<u2f>` |new|                                                ✔
-:doc:`TOTP<totp2f>` *(Google Authenticator,...)* |new|               ✔
+==================================================================== ============== =================
+Second factor (:doc:`documentation<secondfactor>`)                   Authentication Self-registration
+==================================================================== ============== =================
+:doc:`TOTP<totp2f>` *(Google Authenticator,...)* |new|               ✔              ✔
+:doc:`WebAuthn<webauthn2f>` |new|                                    ✔              ✔
 :doc:`E-mail Second Factor<mail2f>` |new|                            ✔
+:doc:`Yubico OTP<yubikey2f>` |new|                                   ✔              ✔
 :doc:`External Second Factor<external2f>` *(OTP, SMS,...)* |new|     ✔
-:doc:`Radius Second Factor<radius2f>` |new|  [3]_                    ✔
 :doc:`REST Second Factor<rest2f>` |new|                              ✔
-:doc:`Yubikey<yubikey2f>` |new|                                      ✔
-:doc:`Additional second factors<sfextra>` |new|  [4]_                ✔
-==================================================================== ==============
+:doc:`Radius Second Factor<radius2f>` |new|  [3]_                    ✔
+:doc:`TOTP-or-U2F<utotp2f>` |deprecated|                             ✔              ✔
+:doc:`U2F<u2f>` |deprecated|                                         ✔              ✔
+==================================================================== ============== =================
+
+.. versionadded:: 2.0.6
+    See :doc:`Additional second factors<sfextra>` for configuring several multiple
+    REST, external or e-mail based second factors with different parameters
+
 
 ==================================================================== ==============
 Auth addons                                                          Authentication
@@ -278,22 +288,24 @@ Name                                                                 Description
 :doc:`Context switching<contextswitching>`  [7]_\ |new|              Switch context other users
 :doc:`CrowdSec<crowdsec>`  [8]_\ |new|                               CrowdSec bouncer
 :doc:`Custom<plugincustom>`                                          Write a custom plugin
-:doc:`Decrypt value<decryptvalue>`  [9]_\ |beta|                     Decrypt ciphered values
+:doc:`Decrypt value<decryptvalue>`  [9]_\                            Decrypt ciphered values
 :doc:`Display login history<loginhistory>`                           Display Success/Fails logins
 :doc:`Force Authentication<forcereauthn>`                            Force authentication to access to Portal
 :doc:`Global Logout<globallogout>`  [10]_                            Suggest to close all opened sessions at logout
 :doc:`Grant Sessions<grantsession>`                                  Rules to apply before allowing a user to open a session
 :doc:`Impersonation<impersonation>`  [11]_\ |new|                    Allow users to use another identity
-:doc:`Find user<finduser>`  [12]_\ |beta|                            Search for user account
-:doc:`Notifications system<notifications>`                           DIsplay a message during log in process 
+:doc:`Find user<finduser>`  [12]_\ |new|                             Search for user account
+:doc:`NewLocationWarning<newlocationwarning>`  [13]_\ |beta|         Send an email when user sign in from a new location 
+:doc:`Notifications system<notifications>`                           Display a message during log in process 
 :doc:`Portal Status<status>`                                         Experimental portal status page
 :doc:`Public pages<public_pages>`                                    Enable public pages system
-:doc:`Refresh session API<refreshsessionapi>`  [13]_                 Plugin that provides an API to refresh a user session
+:doc:`Refresh session API<refreshsessionapi>`  [14]_                 Plugin that provides an API to refresh a user session
 :doc:`Reset password by mail<resetpassword>`                         Send a mail to reset its password
-:doc:`Reset certificate by mail<resetcertificate>`  [14]_\ |beta|    Allow users to reset their certificate
+:doc:`Reset certificate by mail<resetcertificate>`  [15]_\ |new|     Allow users to reset their certificate
 :doc:`REST services<restservices>` |new|                             REST server for :doc:`Proxy<authproxy>`
 :doc:`SOAP services<soapservices>` |deprecated|                      SOAP server for :doc:`Proxy<authproxy>`
 :doc:`Stay connected<stayconnected>` |new|                           Enable persistent connection on same browser
+:doc:`Remember auth choice<rememberauthchoice>` |new|                Remember user last authentication choice
 Upgrade session |new|                                                This plugin explains to an already authenticated user that a higher authentication level is required to access the URL instead of reject him
 ==================================================================== ============================================================================================================================================
 
@@ -308,12 +320,12 @@ Handlers are software control agents to be installed on your web servers
 ==================================================================== ========== ============================================================= =========================================== ================================================================================== =============================================== ======================================================================================================================
 Handler type                                                         Apache     LLNG FastCGI/uWSGI server (Nginx, or :doc:`SSOaaS<ssoaas>`)   `Plack servers <https://plackperl.org>`__   Node.js  ( `express apps <http://expressjs.com/>`__\  or :doc:`SSOaaS<ssoaas>`)    :doc:`Self protected apps<selfmadeapplication>`   Comment
 ==================================================================== ========== ============================================================= =========================================== ================================================================================== =============================================== ======================================================================================================================
-Main *(default handler)*                                             ✔          ✔                                                             ✔                                           :doc:`Partial<nodehandler>` ** [15]_ **                                            ✔
-:doc:`AuthBasic<handlerauthbasic>`                                   ✔          ✔                                                             ✔                                                                                                                              ✔                                               Designed for some server-to-server applications
+Main *(default handler)*                                             ✔          ✔                                                             ✔                                           :doc:`Partial<nodehandler>` ** [16]_ **                                            ✔
+:doc:`AuthBasic<authbasichandler>`                                   ✔          ✔                                                             ✔                                                                                                                              ✔                                               Designed for some server-to-server applications
 :doc:`CDA<cda>`                                                      ✔          ✔                                                             ✔                                                                                                                              ✔                                               For Cross Domain Authentication
 :doc:`DevOps<devopshandler>`  (:doc:`SSOaaS<ssoaas>`)  |new|         ✔          ✔                                                             ✔                                           ✔                                                                                                                                  Allows application developers to define their own rules and headers inside their applications
 :doc:`DevOpsST<devopssthandler>`  (:doc:`SSOaaS<ssoaas>`)  |new|     ✔          ✔                                                             ✔                                           ✔                                                                                                                                  Enables both :doc:`DevOps<devopshandler>` and :doc:`Service Token<servertoserver>`
-:doc:`OAuth2<oauth2handler>`  [16]_\ |new|                           ✔          ✔                                                             ✔                                                                                                                              ✔                                               Uses OpenID Connect/OAuth2 access token to check authentication and authorization, can be used to protect Web Services
+:doc:`OAuth2<oauth2handler>`  [17]_\ |new|                           ✔          ✔                                                             ✔                                                                                                                              ✔                                               Uses OpenID Connect/OAuth2 access token to check authentication and authorization, can be used to protect Web Services
 :doc:`Secure Token<securetoken>`                                     ✔          ✔                                                             ✔                                                                                                                                                                              Designed to secure exchanges between a LLNG reverse-proxy and a remote app
 :doc:`Service Token<servertoserver>` |new| *(Server-to-Server)*      ✔          ✔                                                             ✔                                           ✔                                                                                  ✔                                               Designed to permit underlying requests *(API-Based Infrastructure)*
 :doc:`Zimbra PreAuth<applications/zimbra>`                           ✔          ✔                                                             ✔
@@ -332,26 +344,26 @@ Configuration database
 LL::NG needs a storage system to store its own configuration (managed by
 the manager). Choose one in the following list:
 
-=========================================== ========= ====================================================================
-Backend                                     Shareable Comment
-=========================================== ========= ====================================================================
-:doc:`File (JSON)<fileconfbackend>`                   Not shareable between servers except
-                                                      if used in conjunction with :doc:`REST<restconfbackend>`
-                                                      or with a shared file system (NFS,...).
-                                                      Selected by default during installation.
-:doc:`YAML<yamlconfbackend>` |new|                    Same as :doc:`File<fileconfbackend>` but in YAML format
-                                                      instead of JSON
-:doc:`SQL (RDBI/CDBI)<sqlconfbackend>`      ✔         Recommended for large-scale systems. Prefer CDBI.
-:doc:`LDAP<ldapconfbackend>`                ✔
-:doc:`MongoDB<mongodbconfbackend>`          ✔
-:doc:`SOAP<soapconfbackend>` |deprecated|   ✔         Proxy backend to be used in conjunction with another
-                                                      configuration backend. \ **Can be used to secure another backend**
-                                                      for remote servers.
-:doc:`REST<restconfbackend>` |new|          ✔         Proxy backend to be used in conjunction with another configuration
-                                                      backend. \ **Can be used to secure another backend** for
-                                                      remote servers.
-:doc:`Local<localconfbackend>` |new|                  Use only lemonldap-ng.ini parameters.
-=========================================== ========= ====================================================================
+===================================================== ========= ====================================================================
+Backend                                               Shareable Comment
+===================================================== ========= ====================================================================
+:doc:`File (JSON)<fileconfbackend>`                             Not shareable between servers except
+                                                                if used in conjunction with :doc:`REST<restconfbackend>`
+                                                                or with a shared file system (NFS,...).
+                                                                Selected by default during installation.
+:doc:`YAML<yamlconfbackend>` |new|                              Same as :doc:`File<fileconfbackend>` but in YAML format
+                                                                instead of JSON
+:doc:`SQL (CDBI/RDBI)<sqlconfbackend>`                ✔         **Recommended for large-scale systems**. Prefer CDBI.
+:doc:`LDAP<ldapconfbackend>`                          ✔
+:doc:`MongoDB<mongodbconfbackend>` |deprecated|       ✔
+:doc:`SOAP<soapconfbackend>` |deprecated|             ✔         Proxy backend to be used in conjunction with another
+                                                                configuration backend. \ **Can be used to secure another backend**
+                                                                for remote servers.
+:doc:`REST<restconfbackend>` |new|                    ✔         Proxy backend to be used in conjunction with another configuration
+                                                                backend. \ **Can be used to secure another backend** for
+                                                                remote servers.
+:doc:`Local<localconfbackend>` |new|                            Use only lemonldap-ng.ini parameters.
+===================================================== ========= ====================================================================
 
 
 .. tip::
@@ -386,11 +398,11 @@ style modules are usable except for some features.
 Backend                                                          Shareable :ref:`Session explorer<session-explorer>`        :ref:`Session restrictions<session-restrictions>`    Session expiration Comment
 ================================================================ ========= ================================================ ==================================================== ================== =================================================================================================================================================================================================
 :doc:`File<filesessionbackend>`                                            ✔                                                ✔                                                    ✔                  Not shareable between servers except if used in conjunction with :doc:`REST session backend<restsessionbackend>` or with a shared file system (NFS,...). Selected by default during installation.
-:doc:`PgJSON<pgjsonsessionbackend>`                              ✔         ✔                                                ✔                                                    ✔                  Recommended backend for production installations
+:doc:`PgJSON<pgjsonsessionbackend>`                              ✔         ✔                                                ✔                                                    ✔                  **Recommended backend for production installations**
 :doc:`Browseable MySQL<browseablemysqlsessionbackend>`           ✔         ✔                                                ✔                                                    ✔                  Recommended for those who prefer MySQL
 :doc:`Browseable LDAP<browseableldapsessionbackend>`             ✔         ✔                                                ✔                                                    ✔
 :doc:`Redis<nosqlsessionbackend>`                                ✔         ✔                                                ✔                                                    ✔                  The fastest. Must be secured by network access control.
-:doc:`MongoDB<mongodbsessionbackend>`                            ✔         ✔                                                ✔                                                    ✔                  Must be secured by network access control.
+:doc:`MongoDB<mongodbsessionbackend>` |deprecated|               ✔         ✔                                                ✔                                                    ✔                  Must be secured by network access control.
 :doc:`SQL<sqlsessionbackend>`                                    ✔         ✔                                                ✔                                                    ✔                  Unoptimized for :doc:`session explorer<features>` and :doc:`single session<features>` features.
 :doc:`REST<restsessionbackend>` |new|                            ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
 :doc:`SOAP<soapsessionbackend>`  |deprecated|                    ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
@@ -458,7 +470,7 @@ Advanced features
 -  :doc:`Create an account (self service)<register>`
 -  :doc:`Forward logout to applications<logoutforward>`
 -  :doc:`Secure Token Handler<securetoken>`
--  :doc:`AuthBasic Handler<handlerauthbasic>`
+-  :doc:`AuthBasic Handler<authbasichandler>`
 -  :doc:`SSO as a Service<ssoaas>` *(SSOaaS)* |new|
 -  :doc:`Handling server webservice calls<servertoserver>` |new|
 -  `LemonLDAP::NG kubernetes
@@ -563,13 +575,9 @@ by your language code):
 .. [3]
    :doc:`Radius second factor<radius2f>` is available with LLNG ≥ 2.0.6
 
-.. [4]
+.. [5]
    :doc:`Check DevOps file plugin<checkdevops>` are available with LLNG ≥
    2.0.12
-
-.. [5]
-   :doc:`Additional second factors<sfextra>` are available with LLNG ≥
-   2.0.6
 
 .. [6]
    :doc:`Check user plugin<checkuser>` is available with LLNG ≥ 2.0.3
@@ -598,18 +606,22 @@ by your language code):
    2.0.11
 
 .. [13]
+   :doc:`NewLocationWarning<newlocationwarning>` is available
+   with LLNG ≥ 2.0.14
+
+.. [14]
    :doc:`Refresh session API plugin<refreshsessionapi>` is available
    with LLNG ≥ 2.0.7
 
-.. [14]
+.. [15]
    :doc:`Reset certificate by mail plugin<resetcertificate>` is
    available with LLNG ≥ 2.0.7
 
-.. [15]
+.. [16]
    :doc:`Node.js handler<nodehandler>` has not yet reached the same
    level of functionalities
 
-.. [16]
+.. [17]
    :doc:`OAuth2 Handler<oauth2handler>` is available with LLNG ≥ 2.0.4
 
 .. |image0| image:: /icons/kthememgr.png

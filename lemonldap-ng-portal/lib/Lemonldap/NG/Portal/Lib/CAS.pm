@@ -7,7 +7,7 @@ use XML::Simple;
 use Lemonldap::NG::Common::UserAgent;
 use URI;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.15';
 
 # PROPERTIES
 
@@ -26,6 +26,7 @@ has ua => (
 
 has casSrvList => ( is => 'rw', default => sub { {} }, );
 has casAppList => ( is => 'rw', default => sub { {} }, );
+has srvRules   => ( is => 'rw', default => sub { {} }, );
 has spRules    => ( is => 'rw', default => sub { {} }, );
 has spMacros   => ( is => 'rw', default => sub { {} }, );
 
@@ -41,50 +42,78 @@ sub loadSrv {
         return 0;
     }
     $self->casSrvList( $self->conf->{casSrvMetaDataOptions} );
+
+    # Set rule
+    foreach ( keys %{ $self->conf->{casSrvMetaDataOptions} } ) {
+        my $cond = $self->conf->{casSrvMetaDataOptions}->{$_}
+          ->{casSrvMetaDataOptionsResolutionRule};
+        if ( length $cond ) {
+            my $rule_sub =
+              $self->p->buildRule( $cond, "CAS server resolution" );
+            if ($rule_sub) {
+                $self->srvRules->{$_} = $rule_sub;
+            }
+        }
+    }
     return 1;
 }
 
 # Load CAS application list
 sub loadApp {
     my ($self) = @_;
-    if ( $self->conf->{casAppMetaDataOptions}
+    unless ( $self->conf->{casAppMetaDataOptions}
         and %{ $self->conf->{casAppMetaDataOptions} } )
     {
-        $self->casAppList( $self->conf->{casAppMetaDataOptions} );
-    }
-    else {
         $self->logger->info("No CAS apps found in configuration");
     }
 
     foreach ( keys %{ $self->conf->{casAppMetaDataOptions} } ) {
 
+        my $valid = 1;
+
         # Load access rule
-        my $rule = $self->conf->{casAppMetaDataOptions}->{$_}
+        my $rule =
+          $self->conf->{casAppMetaDataOptions}->{$_}
           ->{casAppMetaDataOptionsRule};
         if ( length $rule ) {
             $rule = $self->p->HANDLER->substitute($rule);
             unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-                $self->error( 'CAS App rule error: '
+                $self->logger->error(
+                    "Unable to build access rule for CAS Application $_: "
                       . $self->p->HANDLER->tsv->{jail}->error );
-                return 0;
+                $valid = 0;
             }
-            $self->spRules->{$_} = $rule;
         }
 
         # Load per-application macros
-        my $macros = $self->conf->{casAppMetaDataMacros}->{$_};
+        my $macros         = $self->conf->{casAppMetaDataMacros}->{$_};
+        my $compiledMacros = {};
         for my $macroAttr ( keys %{$macros} ) {
             my $macroRule = $macros->{$macroAttr};
             if ( length $macroRule ) {
                 $macroRule = $self->p->HANDLER->substitute($macroRule);
-                unless ( $macroRule = $self->p->HANDLER->buildSub($macroRule) )
-                {
-                    $self->error( 'SAML SP macro error: '
-                          . $self->p->HANDLER->tsv->{jail}->error );
-                    return 0;
+                if ( $macroRule = $self->p->HANDLER->buildSub($macroRule) ) {
+                    $compiledMacros->{$macroAttr} = $macroRule;
                 }
-                $self->spMacros->{$_}->{$macroAttr} = $macroRule;
+                else {
+                    $self->logger->error(
+"Unable to build macro $macroAttr for CAS Application $_: "
+                          . $self->p->HANDLER->tsv->{jail}->error );
+                    $valid = 0;
+                }
             }
+        }
+
+        if ($valid) {
+            $self->casAppList->{$_} =
+              $self->conf->{casAppMetaDataOptions}->{$_};
+            $self->spRules->{$_}  = $rule;
+            $self->spMacros->{$_} = $compiledMacros;
+        }
+        else {
+            $self->logger->error(
+                "CAS Application $_ has errors and will be ignored");
+
         }
     }
     return 1;
@@ -211,8 +240,10 @@ sub returnCasServiceValidateSuccess {
     }
     if ($proxies) {
         $self->logger->debug("Add proxies $proxies in response");
-        $s .= "\t\t<cas:proxies>\n\t\t\t<cas:proxy>$_</cas:proxy>\n"
-          foreach ( split( /$self->conf->{multiValuesSeparator}/, $proxies ) );
+        $s .= "\t\t<cas:proxies>\n";
+        $s .= "\t\t\t<cas:proxy>$_</cas:proxy>\n"
+          foreach (
+            reverse( split( $self->conf->{multiValuesSeparator}, $proxies ) ) );
         $s .= "\t\t</cas:proxies>\n";
     }
     $s .= "\t</cas:authenticationSuccess>\n</cas:serviceResponse>\n";
@@ -397,7 +428,7 @@ sub validateST {
 
     if ( defined $xml->{'cas:authenticationFailure'} ) {
         $self->logger->error( "Failed to validate Service Ticket $ticket: "
-              . $xml->{'cas:authenticationFailure'} );
+              . $xml->{'cas:authenticationFailure'}->{content} );
         return 0;
     }
 
@@ -514,21 +545,29 @@ sub getCasApp {
 
     for my $app ( keys %{ $self->casAppList } ) {
 
-        my $candidateUri =
-          URI->new( $self->casAppList->{$app}->{casAppMetaDataOptionsService} );
-        my $candidateHost  = $candidateUri->authority;
-        my $candidateCanon = $candidateUri->canonical;
+        for my $appservice (
+            split(
+                /\s+/, $self->casAppList->{$app}->{casAppMetaDataOptionsService}
+            )
+          )
+        {
+            my $candidateUri   = URI->new($appservice);
+            my $candidateHost  = $candidateUri->authority;
+            my $candidateCanon = $candidateUri->canonical;
 
-        # Try to match prefix, remembering the longest match found
-        if ( index( $uriCanon, $candidateCanon ) == 0 ) {
-            if ( length($longestCandidate) < length($candidateCanon) ) {
-                $longestCandidate = $candidateCanon;
-                $prefixConfKey    = $app;
+            # Try to match prefix, remembering the longest match found
+            if ( index( $uriCanon, $candidateCanon ) == 0 ) {
+                if ( length($longestCandidate) < length($candidateCanon) ) {
+                    $longestCandidate = $candidateCanon;
+                    $prefixConfKey    = $app;
+                }
+            }
+
+            # Try to match host, only if strict matching is disabled
+            unless ( $self->conf->{casStrictMatching} ) {
+                $hostnameConfKey = $app if ( $hostname eq $candidateHost );
             }
         }
-
-        # Try to match host
-        $hostnameConfKey = $app if ( $hostname eq $candidateHost );
     }
 
     # Application found by prefix has priority
@@ -632,7 +671,7 @@ L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
 =head1 DOWNLOAD
 
 Lemonldap::NG is available at
-L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+L<https://lemonldap-ng.org/download>
 
 =head1 COPYRIGHT AND LICENSE
 

@@ -9,19 +9,19 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 require 't/test-lib.pm';
 
-my $res;
+my ( $res, $json );
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                 => 'error',
-            passwordDB               => 'Demo',
-            passwordPolicy           => 1,
-            portalRequireOldPassword => 1,
-            passwordPolicyMinSize    => 6,
-            passwordPolicyMinLower   => 3,
-            passwordPolicyMinUpper   => 3,
-            passwordPolicyMinDigit   => 1,
-            passwordPolicyMinSpeChar => 2,
+            logLevel                    => 'error',
+            passwordDB                  => 'Demo',
+            passwordPolicy              => 1,
+            portalRequireOldPassword    => 1,
+            passwordPolicyMinSize       => 6,
+            passwordPolicyMinLower      => 3,
+            passwordPolicyMinUpper      => 3,
+            passwordPolicyMinDigit      => 1,
+            passwordPolicyMinSpeChar    => 2,
             passwordPolicySpecialChar   => '   [  } \   ',
             portalDisplayPasswordPolicy => 1
         }
@@ -56,7 +56,7 @@ ok(
     'Password min size not respected'
 );
 expectBadRequest($res);
-my $json;
+
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
 ok(
@@ -327,11 +327,9 @@ ok(
 m%\Q<span trspan="passwordPolicySpecialChar">Allowed special characters:</span> [ } \E%,
     ' passwordPolicySpecialChar'
 ) or print STDERR Dumper( $res->[2]->[0], 'passwordPolicySpecialChar' );
-ok(
-    $res->[2]->[0] =~
-      m%<span id=\'show-hide-icon-button\' class="fa fa-eye"></span>%,
-    'Show/Hide toogle button'
-) or print STDERR Dumper( $res->[2]->[0], 'Toogle button' );
+ok( $res->[2]->[0] !~ m%class="fa fa-eye-slash toggle-password">%,
+    ' no toggle icon found' )
+  or print STDERR Dumper( $res->[2]->[0] );
 count(8);
 
 # Test $client->logout

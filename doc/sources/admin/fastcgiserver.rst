@@ -1,19 +1,19 @@
 LemonLDAP::NG FastCGI server
 ============================
 
-Since 1.9, Lemonldap::NG provides a FastCGI server usable to protect
+Since 1.9, LL::NG provides a FastCGI server that can be used for protecting
 applications with Nginx (See
-:doc:`Manage virtual hosts<configvhost>` page to
-configure virtual hosts).
+:doc:`Manage virtual hosts<configvhost>` page to configure virtual hosts)
+or the DevOps Handler (See :doc:`SSO as a Service<ssoaas>`).
 
-This FastCGI server can be used for all LLNG components. It compiles
-enabled components on-the-fly.
+This FastCGI server can be implemented for all LL::NG components.
+It compiles enabled components just-in-time.
 
 Start
 -----
 
-Using packages
-~~~~~~~~~~~~~~
+Using package
+~~~~~~~~~~~~~
 
 You just have to install lemonldap-ng-fastcgi-server package, it will be
 started automatically.
@@ -32,15 +32,18 @@ Configuration
 FastCGI server has few parameters. They can be set by environment
 variables (read by startup script) or by command line options. A default
 configuration file can be found in
-``/usr/local/lemonlda-ng/etc/default/llng-fastcgi-server`` (or
+``/usr/local/lemonldap-ng/etc/default/llng-fastcgi-server`` (or
 ``/etc/default/lemonldap-ng-fastcgi-server`` in Debian package).
 
 The FastCGI server reads also ``LLTYPE`` parameter in FastCGI requests
 (see portal-nginx.conf or manager-nginx.conf) to choose which module is
 called:
 
--  ``cgi`` for the portal (or any CGI: it works like PHP-FPM for Perl !)
+-  ``cgi`` to run .cgi scripts in FastCGI compatibility mode
+-  ``psgi`` ro run .psgi scripts under FastCGI
 -  ``manager`` for the manager
+-  ``handler`` for the handler
+-  ``portal`` for the portal
 -  ``status`` to see statistics (if enabled)
 
 if ``LLTYPE`` is set to another value or not set, FastCGI server works

@@ -28,11 +28,13 @@ Unifying authentications (Identity Federation)
 
 LL::NG can easily exchange with other authentication systems by using
 SAML, OpenID or CAS protocoles. It may be the backbone of a
-heterogeneous architecture. LL:NG can be set as Identity provider,
+heterogeneous architecture.
+
+LL:NG can be set as Identity provider,
 Service Provider or Protocol Proxy
 (:doc:`LL::NG as federation protocol proxy<federationproxy>`).
 
-Its SOAP API can also be used to dialogue directly with your custom
+Its REST / SOAP API can also be used to dialogue directly with your custom
 applications.
 
 Sessions
@@ -48,8 +50,7 @@ opened sessions:
 
 -  by users
 -  by IP *(IPv4 and IPv6)*
--  by double IP (sessions opened by the same user from multiple
-   computers)
+-  by double IP (sessions opened by the same user from multiple computers)
 -  by date
 
 It can be used to delete a session
@@ -59,9 +60,8 @@ It can be used to delete a session
 Session restrictions
 ~~~~~~~~~~~~~~~~~~~~
 
-By default, a user can open several
-:doc:`sessions<sessions>`. LL::NG can restrict
-the following:
+By default, a user can open several :doc:`sessions<sessions>`.
+LL::NG can restrict the following:
 
 -  Allow only one session per user
 -  Allow only one IP address per user
@@ -72,17 +72,17 @@ Those capabilities can be used simultaneously or separately.
 Double cookie
 ~~~~~~~~~~~~~
 
-LL::NG can be configured to provides
-:doc:`2 cookies<ssocookie>`:
+LL::NG can be configured to provides :doc:`2 cookies<ssocookie>`:
 
 -  one secured (SSL only) for sensitive applications
 -  one unsecured for other applications
 
 So that if the http cookie is stolen, sensitive applications remain secured.
 
+
 Notifications
 -------------
 
 LL::NG can be used to notify users with a message when authenticating. This can be used to
-inform of a change in access rights, the publication of a new IT charter, etc. (See
-:doc:`notifications<notifications>` for more details)
+inform of a change in access rights, the publication of a new IT charter, etc...
+(See :doc:`notifications<notifications>` for more details)

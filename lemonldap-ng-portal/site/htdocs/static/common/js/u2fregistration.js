@@ -8,13 +8,15 @@ LemonLDAP::NG U2F registration script
   var displayError, register, setMsg, verify;
 
   setMsg = function(msg, level) {
+    $('#msg').attr('trspan', msg);
     $('#msg').html(window.translate(msg));
     $('#color').removeClass('message-positive message-warning message-danger alert-success alert-warning alert-danger');
     $('#color').addClass("message-" + level);
     if (level === 'positive') {
       level = 'success';
     }
-    return $('#color').addClass("alert-" + level);
+    $('#color').addClass("alert-" + level);
+    return $('#msg').attr('role', (level === 'danger' ? 'alert' : 'status'));
   };
 
   displayError = function(j, status, err) {
@@ -67,6 +69,11 @@ LemonLDAP::NG U2F registration script
                     return setMsg('u2fFailed', 'danger');
                   }
                 } else if (resp.result) {
+                  $(document).trigger("mfaAdded", [
+                    {
+                      "type": "u"
+                    }
+                  ]);
                   return setMsg('yourKeyIsRegistered', 'positive');
                 }
               },

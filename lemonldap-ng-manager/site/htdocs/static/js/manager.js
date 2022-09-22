@@ -225,7 +225,7 @@ This file contains:
             title: "cfgLog",
             data: $scope.result ? $scope.result : ''
           });
-          return $http.post(window.confPrefix + "?cfgNum=" + $scope.currentCfg.cfgNum + ($scope.forceSave ? "&force=1" : ''), $scope.data).then(function(response) {
+          return $http.post(window.confPrefix + "?cfgNum=" + $scope.currentCfg.cfgNum + "&cfgDate=" + $scope.currentCfg.cfgDate + ($scope.forceSave ? "&force=1" : ''), $scope.data).then(function(response) {
             $scope.data.pop();
             return _checkSaveResponse(response.data);
           }, function(response) {
@@ -811,7 +811,7 @@ This file contains:
       $scope.keyWritable = function(scope) {
         var node;
         node = scope.$modelValue;
-        if (node.type && node.type.match(/^(?:s(?:aml(?:(?:ID|S)PMetaDataNod|Attribut)e|fExtra)|(?:(?:cmbMod|r)ul|authChoic)e|(?:virtualHos|keyTex)t|menu(?:App|Cat))$/)) {
+        if (node.type && node.type.match(/^(?:s(?:aml(?:(?:ID|S)PMetaDataNod|Attribut)e|fExtra)|oidcAttribute|(?:(?:cmbMod|r)ul|authChoic)e|(?:virtualHos|keyTex)t|menu(?:App|Cat))$/)) {
           return true;
         } else {
           return false;

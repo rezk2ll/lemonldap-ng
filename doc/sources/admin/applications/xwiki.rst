@@ -75,19 +75,30 @@ Configure the :ref:`access rules<rules>`.
 
 Configure the :ref:`headers<headers>`:
 
--  remote_user: $uid
--  remote_groups: encode_base64($groups,'')
+-  remote_user: ``$uid``
+-  remote_groups: ``join('|', keys(%{$hGroups}))``
+-  secret: ``choose_a_secret_key``
 
 Xwiki Configuration
 ~~~~~~~~~~~~~~~~~~~
 
+First, you need to install the `Headers Trusted Authentication Adapter <https://extensions.xwiki.org/xwiki/bin/view/Extension/Trusted%20Headers%20Authentication%20Adapter>`__
+
+Then, configure in `xwiki.cfg`
+
 ::
+
 
    xwiki.authentication.authclass=org.xwiki.contrib.authentication.XWikiTrustedAuthenticator
    xwiki.authentication.trusted.adapterHint=headers
    xwiki.authentication.trusted.auth_field=remote_user
    xwiki.authentication.trusted.group_field=remote_groups
-   xwiki.authentication.trusted.logout_url=https://auth.acme.fr/#logout
+   xwiki.authentication.trusted.logout_url=https://auth.example.com/?logout=1
+   xwiki.authentication.trusted.secret_field=secret
+   xwiki.authentication.trusted.secret_value=choose_a_secret_key
+
+   # Adjust the XWiki=>LemonLDAP group map to your liking
+   xwiki.authentication.trusted.groupsMapping=XWiki.XWikiAdminGroup=xwiki-admins|XWiki.XWikiAdminGroup=timelords
 
 .. |image0| image:: /applications/xwiki.png
    :class: align-center

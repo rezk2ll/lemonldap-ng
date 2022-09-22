@@ -1,3 +1,280 @@
+lemonldap-ng (2.0.15.1) jammy; urgency=medium
+
+  * Bugs:
+    * #2796: "Internal Server Error" during MFA flow when using LDAP as UserDB in 2.0.15
+
+ -- Clément <clem.oudot@gmail.com>  Thu, 15 Sep 2022 15:58:47 +0200
+
+lemonldap-ng (2.0.15) jammy; urgency=medium
+
+  * Bugs:
+    * #2615: Redirection issue with Issue SAML + ForceAuthn=true + Kerberos authentication
+    * #2650: Empty SCRIPT_NAME breaks the portal
+    * #2690: Second factor logo/label not used on registration screen
+    * #2708: Auth::OpenIDConnect redirects in a loop when invalid JSON metadata is provided
+    * #2712: 2fSelfRegistration == 0 + 2fActivation == 1 leads to registrable second factor being presented every time
+    * #2714: Session upgrade link in 2FA manager not working
+    * #2716: 2FA registration does not auto-redirect to only available provider after deleting an existing 2FA
+    * #2724: one importMetadata Script default option isn't correct
+    * #2733: Allowing ALL special characters does not work with reset password form
+    * #2742: convertConfig no error but nothing converted
+    * #2758: [CVE-2022-37186] Session destroyed on portal but still valid on handlers while there is activity
+    * #2760: Userinfo does not show updated attributs when using Offline sessions
+    * #2769: missing handler logs with default Nginx + LemonLDAP
+    * #2772: translation overrides from skin json files are not used when sending emails
+    * #2773: translation override from skin bypasses llng.ini
+    * #2785: Invalid <Organization> in SAML metadata can crash portal startup
+    * #2787: Status: Unknown command line during OIDC flow
+    * #2789: $portal->templateDir causes skin mix-up
+    * #2791: After token timeout during 2FA flow,  login form is left in broken state
+    * #2793: samlGotAuthnRequest cannot modify $login->request when signature validation is enabled
+
+  * New features:
+    * #2491: Use environment variables placeholder in lemonldap json configuration
+    * #2713: handle refresh tokens in Auth::OpenIDConnect
+    * #2737: remember previous authentication choice
+    * #2763: Install LL::NG on EL9
+
+  * Improvements:
+    * #2607: bypass OIDC logout confirmation
+    * #2674: Add HSTS as new security parameter in the Manager
+    * #2692: New API for CAPTCHA plugins
+    * #2719: importMetadata should handle conflicts between multiple federations
+    * #2720: importMetadata should be configurable
+    * #2723: Cannot specify custom urn:oasis:names:tc:SAML:2.0:assertion:AuthnContextClassRef values for LemonLDAP IdPs
+    * #2725: Add session data to oidcGenerateUserInfoResponse
+    * #2726: Add a session variable for used 2F module
+    * #2732: Add userLogger event when a specific 2FA is selected
+    * #2739: Provide a specific package to install LLNG FastCGI client
+    * #2745: portalEnablePasswordDisplay is not used in password change form
+    * #2746: SAML metadata without SingleLogoutService leads to error at logout
+    * #2753: Add IDP selection rules for CAS and OIDC
+    * #2755: OIDC : issue on token endpoint with method client_secret_basic
+    * #2756: Allow customization of portal JS code with jQuery events
+    * #2757: Allow admins to change the 2FA timeout
+    * #2759: Append a go-back-to-top button
+    * #2761: Append an option to customize Manager CSS
+    * #2762: Add re-send option to code-based OTPs
+    * #2768: Add new hooks on Access Token refresh
+    * #2775: Notification process can not be continued with JSON response
+    * #2780: New lemonldap-ng-cli subcommand: merge
+    * #2782: Notifications are not sorted by sessions explorer and epoch is  not converted into local date
+    * #2784: Allow history fields to be translated in templates
+
+  * Templates:
+    * #2690: Second factor logo/label not used on registration screen
+    * #2714: Session upgrade link in 2FA manager not working
+    * #2737: remember previous authentication choice
+    * #2745: portalEnablePasswordDisplay is not used in password change form
+    * #2750: Option to define the favicon
+    * #2759: Append a go-back-to-top button
+    * #2761: Append an option to customize Manager CSS
+
+ -- Clément <clem.oudot@gmail.com>  Fri, 09 Sep 2022 10:13:43 +0200
+
+lemonldap-ng (2.0.14) focal; urgency=medium
+
+  * Bugs:
+    * #2519: first authentication returns 500 code after inactivity period
+    * #2566: No configuration available in fresh LemonLDAP 2.0.12
+    * #2594: Double slashes in _pdata->{_url} when LLNG is OIDC RP
+    * #2595: Portal does not run correctly with portalRequireOldPassword=0
+    * #2596: [security:low] open redirect in CAS gateway mode
+    * #2597: External password reset URL is called with skin= and url= parameters
+    * #2600: RESTProxy authentication does not work with AuthChoice-enabled internal Portal
+    * #2603: Saving configuration drops OIDC scope rules
+    * #2606: FindUser plugin: SpoofId field is not updated if a value has been already set before the Ajax request
+    * #2612: [Security: low, CVE-2021-40874] RESTServer pwdConfirm always returns true with Combination + Kerberos
+    * #2613: ProxyAuth cookie name can not be modified
+    * #2616: Login is not remembered when password is incorrect
+    * #2618: DevOps handler does not work if RULES_URL uWSGI/FastCGI parameter is set
+    * #2620: Net::LDAP::Control::PasswordPolicy is not always loaded
+    * #2622: Fail oauth2 grants when resulting scope is empty
+    * #2626: Portal fatal errors cause "Conflict detected between 2 extensions, aborting 1 route" message to appear in logs
+    * #2632: Handler::Server::Nginx does not use logger config from lemonldap-ng.ini
+    * #2637: Error with default locationRules
+    * #2645: importMetadata does not set NameIDFormat to "persistent" for new providers
+    * #2648: "Authentication module succeed but has not set $req->user" when using SAML Artifact mode with some, but not all IDPs
+    * #2655: 'afterData' plugins loaded after Impersonation will be never executed
+    * #2656: CAS: multiple proxies is not correctly implemented
+    * #2658: Macros based on '_XXX' and authenticationLevel attributes are not computed by refresh function
+    * #2660: Combination is not compatible with LDAP password policies
+    * #2663: Radius authentication fails when radius used as authentication module
+    * #2671: xss attack detected on a relayState parameter
+    * #2675: Auth::Custom calls module init twice
+    * #2676: UserDB::Custom and Password::Custom loads module twice and calls init three times
+    * #2677: *::Custom do not allow config overrides
+    * #2678: Auth::Custom getDisplayType is broken with choice
+    * #2682: Fails to create password-protected X509 certificates with OpenSSL 3.0
+    * #2689: REST server: 400 bad request with DELETE /session/my
+    * #2691: Error when using has2f in a manager rule
+    * #2693: "Status: Unknown command line -> " log line for each SKIP and EXPIRED accesses
+    * #2703: OIDC RP menu attributes name do not refresh live
+
+  * New features:
+    * #1411: Web Authentication API (webauthn)
+    * #2325: "Warn on new network location" plugin
+    * #2679: CheckDevOps: Append an option to check if used attributes are existing
+    * #2686: Web service for application list
+
+  * Improvements:
+    * #1714: Check logLevel value
+    * #2277: pdata cookie is not removed if SAML flow fails
+    * #2457: Do not translate OIDC RP exported attributes
+    * #2476: $groups is not initialize  for  at least LDAP authentication
+    * #2508: Look configuration timestamp to dismiss cache
+    * #2558: Add a new portal error code for Auth::OIDC issues
+    * #2565: Adding per-request information in logs
+    * #2570: RGAA: Adding a role attribute into messages
+    * #2577: RGAA: placeholder only should not be used as label
+    * #2591: stayconnected plugin: allow to disable browser fingerprint check and update documentation
+    * #2593: Contextual / Adaptive authentication / Risk-based authentication
+    * #2599: Certificate reset templates are not translated
+    * #2601: RESTProxy authentication does not support Impersonation
+    * #2602: Export OIDC grant type in rules
+    * #2604: Append an option to normalize HTTP headers with CheckDevOps plugin
+    * #2605: llnglanguage cookie will be rejected if sameSite attribute is not set
+    * #2609: Better history management for plugins
+    * #2614: display precise error while sending direct SOAP SAML message
+    * #2617: SafeJail must be enabled with CheckDevOps plugin
+    * #2619: Brazilian translation
+    * #2621: SAML: HTTP-Artifact mode should be discouraged
+    * #2625: Add an option to encrypt TOTP secrets
+    * #2627: Append an option in Manager to be able to set RULES_URL param
+    * #2638: Redirect to 2fregisters is missing a slash
+    * #2644: No error displayed in logs in DevOps Handler when rules file can't be downloaded
+    * #2646: bruteForceProtectionMaxAge and bruteForceProtectionMaxLockTime missing from manager
+    * #2647: Display logins history with CheckUser plugin
+    * #2649: Portal plugins should not require an "init" method
+    * #2651: Hebrew Translation
+    * #2654: CAS temporary tickets should have a short expiration time
+    * #2657: Hidden attributes, custom functions and plugins declarations are inconsistent
+    * #2662: CheckUser plugin: Append a rule to allow some users to display hidden attributes
+    * #2664: impossible to use getModule in the Password modules
+    * #2667: Add RP confkey to oidcGenerateUserInfoResponse plugin hook
+    * #2668: CheckDevOps: prevent portal crash/loop if a bad rules.json file is provided
+    * #2672: DBI password hash list is too restrictive
+    * #2673: Allow to configure multiple service URL per CAS application
+    * #2679: CheckDevOps: Append an option to check if used attributes are existing
+    * #2683: Possibility to set an activation rule for "remember me" option
+    * #2685: DevOps handler uses default HTTPS redirection if no VH is defined
+    * #2694: Chrome warns about compromised data when using form replay
+    * #2698: Avoid useless warning messages in log
+
+  * Templates:
+    * #2325: "Warn on new network location" plugin
+    * #2570: RGAA: Adding a role attribute into messages
+    * #2577: RGAA: placeholder only should not be used as label
+    * #2597: External password reset URL is called with skin= and url= parameters
+
+ -- Clément <clem.oudot@gmail.com>  Sat, 19 Feb 2022 17:49:18 +0100
+
+lemonldap-ng (2.0.13) focal; urgency=medium
+
+  * Bugs:
+    * #2428: Correctly report the number of purged sessions when using deleteIfLowerThan
+    * #2566: No configuration available in fresh LemonLDAP 2.0.12
+    * #2567: CORS headers not sent in userinfo endpoint error response
+    * #2568: SafeJail does not report errors correctly
+    * #2573: convertConfig does not work when target backend is empty
+    * #2589: FindUser plugin: minor improvements and several issues
+
+  * Improvements:
+    * #2558: Add a new portal error code for Auth::OIDC issues
+    * #2564: Missing options to use text emails for some features
+    * #2585: RGAA: to use autocomplete when possible
+    * #2589: FindUser plugin: minor improvements and several issues
+    * #2592: Bad error reporting during portal init
+
+  * Templates:
+    * #2585: RGAA: to use autocomplete when possible
+    * #2589: FindUser plugin: minor improvements and several issues
+
+ -- Clément <clem.oudot@gmail.com>  Fri, 20 Aug 2021 18:30:23 +0200
+
+lemonldap-ng (2.0.12) focal; urgency=medium
+
+  * Bugs:
+    * #2153: logout forward url pointing to a protected application cause infinite redirection (pdata)
+    * #2439: Unable to configure oidcOPMetaDataJSON and oidcOPMetaDataJWKS trough lemonldap-ng-cli
+    * #2453: Manager API: missing doc and array handling of additional audiences
+    * #2455: llng-fastcgi-server exited with signal 13
+    * #2459: Debian packages: missing dependency to gsfonts may break Captcha
+    * #2460: "Underlying object can't load conf" in v2.0.11
+    * #2463: Portal plugin hooks triggered multiple times after reload
+    * #2469: mySessionAuthorizedRWKeys causes internal server error when removing OIDC consent
+    * #2474: OAuth2 endpoints should return an error when multiple client authentication methods are used
+    * #2475: OIDC: Invalid error code returned in badAuthRequest
+    * #2477: [security:low] Wildcard in virtualhost allows being redirected to untrusted domains
+    * #2480: Set an authLevel and disable ReAuthentication plugin leads to an endless loop
+    * #2481: missing _utime in OIDC Client Credential sessions
+    * #2482: unexpected persistent sessions appear since 2.0.10
+    * #2483: Second factor removal does not work when hiding session ids from manager
+    * #2487: Incorrect error reporting in convertSessions
+    * #2489: Do not grant the openid scope during Resource Owner Password Grant
+    * #2493: Unable to register a new configuration attribute with CLI when option force is enabled and backend is RDBI
+    * #2495: [security:medium] XSS on register form
+    * #2498: convertSessions does not filter sessionKind correctly
+    * #2503: REST/SOAP exported attributes are not sent by REST server
+    * #2509: Local password policy: Allowing ALL special characters does not work
+    * #2511: expires_in in token response has the wrong JSON type in some cases
+    * #2513: LLNG 2.0.11 : SAML SLO from IDP to SP with POST Binding blocked by browser
+    * #2518: SAML: persistent NameID is empty when using "unspecified" format on SP side
+    * #2520: Missing translations for DBI configuration
+    * #2525: Gracefully handle invalid perl expression in CAS/SAML/OIDC
+    * #2529: [bug] OIDC userinfo as jwt not readable
+    * #2531: calling to_json with hash containing file handle fails
+    * #2534: CDA does not work with wildcard vhosts
+    * #2535: [security:low] Incorrect regexp construction in isTrustedUrl lets attacker steal session on CDA application
+    * #2539: [security:high, CVE-2021-35472] session cache corruption can lead to authorization bypass or spoofing
+    * #2541: Misleading TOTP options
+    * #2543: [security:low] 2FA bypass with sfOnlyUpgrade and totp2fDisplayExistingSecret
+    * #2547: Parameter oidcRPMetaDataOptionsUserInfoSignAlg is missing in Manager
+    * #2548: OpenID Connect ACR value can't be configured with something else than 'loa-...'
+    * #2549: [security:low, CVE-2021-35473] OAuth2 handler does not verify access token validity
+    * #2550: Token endpoint should only emit ID token when scope contains "openid"
+
+  * New features:
+    * #1976: FindUser plugin
+    * #2451: CrowdSec plugin to query Crowdsec server
+    * #2458: CheckDevOps plugin
+    * #2510: Hook on password change
+    * #2532: add oidcGenerateCode hook
+    * #2554: Remove OIDC checksession iframe from metadata
+
+  * Improvements:
+    * #2260: Missing elements in sphinx documentation (mongodb)
+    * #2419: Support JWT as OAuth 2.0 Bearer Access Tokens
+    * #2424: Feature: Scope Rules
+    * #2454: Append a Show/Hide password button into login form
+    * #2456: Prevent DevOps handler to send hidden session attributes
+    * #2462: Use timezone provided in input dates in extended function "checkDate"
+    * #2465: Force OIDC error messages to use JSON
+    * #2472: Loading metadata can be slow due to parsing of default certificate bundle
+    * #2484: Hook for populating client credential session
+    * #2488: Allow selection of AssertionConsumerServiceURL in IDP-Initiated SAML login
+    * #2496: Add new option to ignore undeclared OIDC scopes
+    * #2499: add key mapper for convertSession
+    * #2502: Resource Owner Password fails with PE_FIRSTACCESS when using Auth::Choice
+    * #2506: CAS: add an option to forbid host-based matching
+    * #2521: Avoid browsers parameter hide placeholder
+    * #2533: add hooks for CAS issuer
+    * #2536: optimize SingleSession to avoid unneeded session fetches
+    * #2544: Default 2FA register timeout is too low
+    * #2557: Avoid browsers to store new, old and confirmed password during update process
+    * #2562: Add --user/--group options to lmConfigEditor and lemonldap-ng-cli (user:group hardcoded to apache may not work correctly)
+
+  * Templates:
+    * #1976: FindUser plugin
+    * #2454: Append a Show/Hide password button into login form
+    * #2458: CheckDevOps plugin
+    * #2495: [security:medium] XSS on register form
+    * #2521: Avoid browsers parameter hide placeholder
+    * #2541: Misleading TOTP options
+    * #2557: Avoid browsers to store new, old and confirmed password during update process
+
+ -- Clément <clem.oudot@gmail.com>  Thu, 22 Jul 2021 17:41:44 +0200
+
 lemonldap-ng (2.0.11) focal; urgency=medium
 
   * Bugs:
@@ -1935,7 +2212,7 @@ lemonldap-ng (1.0.6) stable; urgency=low
     * [LEMONLDAP-304] - Cannot use spaces between values of Multi
       authentication
       parameter
-    * [LEMONLDAP-305] - Parameters are not overriden in the first Multi module
+    * [LEMONLDAP-305] - Parameters are not overridden in the first Multi module
     * [LEMONLDAP-307] - Base64 encoded IDs can contain more than one "/", but
       only the first is escaped
 
@@ -1943,7 +2220,7 @@ lemonldap-ng (1.0.5) stable; urgency=low
 
     * [LEMONLDAP-292] - Application menu is not well displayed with multiple
       users having differents rights
-    * [LEMONLDAP-294] - Subroutines can not be overriden in lemonldap-ng.ini
+    * [LEMONLDAP-294] - Subroutines can not be overridden in lemonldap-ng.ini
     * [LEMONLDAP-293] - Password Manager - Sending Mail
 
 lemonldap-ng (1.0.4) stable; urgency=low

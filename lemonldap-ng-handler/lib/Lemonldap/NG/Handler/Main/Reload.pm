@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::Main::Reload;
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -59,9 +59,17 @@ sub checkConf {
     }
     $Lemonldap::NG::Common::Conf::msg = '';
 
-    if ( $force or !$class->cfgNum or $class->cfgNum != $conf->{cfgNum} ) {
-        $class->logger->debug("Get configuration $conf->{cfgNum}");
-        unless ( $class->cfgNum( $conf->{cfgNum} ) ) {
+    if (   $force
+        or !$class->cfgNum
+        or !$class->cfgDate
+        or $class->cfgNum != $conf->{cfgNum}
+        or $class->cfgDate != $conf->{cfgDate} )
+    {
+        $class->logger->debug(
+            "Get configuration $conf->{cfgNum} aged $conf->{cfgDate}");
+        unless ( $class->cfgNum( $conf->{cfgNum} )
+            && $class->cfgDate( $conf->{cfgDate} ) )
+        {
             $class->logger->error('No configuration available');
             return 0;
         }
@@ -80,7 +88,7 @@ sub checkConf {
             }
         }
     }
-    $class->tsv->{checkTime} = $conf->{checkTime} if ( $conf->{checkTime} );
+    $class->checkTime( $conf->{checkTime} ) if $conf->{checkTime};
     $class->lastCheck( time() );
     $class->logger->debug("$class: configuration is up to date");
     return 1;
@@ -197,15 +205,17 @@ sub jailInit {
 sub defaultValuesInit {
     my ( $class, $conf ) = @_;
 
-    $class->tsv->{$_} = $conf->{$_} foreach ( qw(
+    $class->tsv->{$_} = $conf->{$_}
+      foreach ( qw(
         cookieExpiration        cookieName         customFunctions httpOnly
         securedCookie           timeout            timeoutActivity
         timeoutActivityInterval useRedirectOnError useRedirectOnForbidden
         useSafeJail             whatToTrace        handlerInternalCache
         handlerServiceTokenTTL  customToTrace      lwpOpts lwpSslOpts
         authChoiceAuthBasic     authChoiceParam    hiddenAttributes
+        upgradeSession
         )
-    );
+      );
 
     $class->tsv->{cipher} = Lemonldap::NG::Common::Crypto->new( $conf->{key} );
 
@@ -240,6 +250,8 @@ sub defaultValuesInit {
               $conf->{vhostOptions}->{$vhost}->{vhostServiceTokenTTL};
             $class->tsv->{accessToTrace}->{$vhost} =
               $conf->{vhostOptions}->{$vhost}->{vhostAccessToTrace};
+            $class->tsv->{devOpsRulesUrl}->{$vhost} =
+              $conf->{vhostOptions}->{$vhost}->{vhostDevOpsRulesUrl};
         }
     }
     return 1;
@@ -539,6 +551,7 @@ sub conditionSub {
     # logout_app
     if ( $cond =~ /^logout_app(?:\s+(.*))?$/i ) {
         my $u = $1 || $class->tsv->{portal}->();
+        $class->logger->debug("logout_app redirect to $u");
         eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
         return (
             sub {
@@ -554,6 +567,7 @@ sub conditionSub {
     }
     elsif ( $cond =~ /^logout_app_sso(?:\s+(.*))?$/i ) {
         my $u = $1 || $class->tsv->{portal}->();
+        $class->logger->debug("logout_app_sso redirect to $u");
         eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
         return (
             sub {
@@ -631,6 +645,7 @@ sub oauth2Init {
 
 sub substitute {
     my ( $class, $expr ) = @_;
+    $expr //= '';
 
     # substitute special vars, just for retro-compatibility
     $expr =~ s/\$date\b/&date/sg;
@@ -647,7 +662,7 @@ sub substitute {
     $expr =~ s/\binGroup\(([^)]*)\)/listMatch(\$s->{'hGroups'},$1,1)/g;
 
     # handle has2f
-    $expr =~ s/\bhas2f\(([^),]*)\)/has2f(\$s,$1)/g;
+    $expr =~ s/\bhas2f\(([^),]*)\)/has2f_internal(\$s,$1)/g;
 
     return $expr;
 }

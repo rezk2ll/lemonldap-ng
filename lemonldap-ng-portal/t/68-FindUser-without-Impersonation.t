@@ -9,18 +9,17 @@ my $maintests = 6;
 
 my $res;
 my $json;
-my $request;
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel          => 'error',
-            authentication    => 'Demo',
-            userDB            => 'Same',
-            useSafeJail       => 1,
-            requireToken      => 0,
-            findUser          => 1,
-            impersonationRule => 0,
+            logLevel                    => 'error',
+            authentication              => 'Demo',
+            userDB                      => 'Same',
+            useSafeJail                 => 1,
+            requireToken                => 0,
+            findUser                    => 1,
+            impersonationRule           => 0,
             findUserSearchingAttributes =>
-              { uid => 'Login', guy => 'Kind', cn => 'Name' },
+              { 'uid##1' => 'Login', 'guy##1' => 'Kind', 'cn##1' => 'Name' },
             findUserExcludingAttributes =>
               { type => 'mutant', uid => 'rtyler' },
         }
@@ -35,7 +34,7 @@ ok(
       m%<span trspan="searchAccount">Search for an account</span>%,
     'Search an account not found'
 ) or explain( $res->[2]->[0], 'Found search for an account' );
-$request = 'uid=dwho';
+my $request = 'uid=dwho';
 ok(
     $res = $client->_post(
         '/finduser', IO::String->new($request),

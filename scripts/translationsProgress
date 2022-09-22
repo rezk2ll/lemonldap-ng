@@ -1,0 +1,45 @@
+#!/usr/bin/perl
+
+use strict;
+use JSON;
+
+my $tr = {
+    portal  => 'lemonldap-ng-portal/site/htdocs/static/languages',
+    manager => 'lemonldap-ng-manager/site/htdocs/static/languages',
+    mail    => 'lemonldap-ng-portal/site/templates/common/mail',
+};
+my @order = (qw(portal mail manager));
+
+foreach my $target (@order) {
+    opendir my $dir, $tr->{$target};
+    my @langs =
+      map { s/\.json$//; $_ }
+      grep { /\.json$/ and $_ !~ /^(?:fr|en)\.json$/ } readdir($dir);
+    close $dir;
+    my ( $file, $ref, $res );
+
+    # Get reference file
+    {
+        local $/ = undef;
+        open $file, '<', "$tr->{$target}/en.json" or die $!;
+        $ref = JSON::from_json(<$file>);
+    }
+    my @keys = keys %$ref;
+    foreach my $lang (@langs) {
+        my $content;
+        {
+            local $/ = undef;
+            open $file, '<', "$tr->{$target}/$lang.json" or die $!;
+            $content = JSON::from_json(<$file>);
+        }
+        my $good;
+        foreach (@keys) {
+            $good++ if $content->{$_} ne $ref->{$_};
+        }
+        $res->{$lang} = int( $good * 100 / @keys );
+    }
+    print "# $target\n";
+    foreach my $lang ( sort { $res->{$b} <=> $res->{$a} } keys %$res ) {
+        printf "  %-5s: %3d%\n", $lang, $res->{$lang};
+    }
+}

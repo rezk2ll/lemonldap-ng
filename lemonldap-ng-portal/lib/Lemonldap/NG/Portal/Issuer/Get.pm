@@ -5,9 +5,9 @@ use Mouse;
 use URI::Escape;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants
-  qw(PE_OK PE_BADURL PE_GET_SERVICE_NOT_ALLOWED);
+  qw(PE_OK PE_BADURL PE_GET_SERVICE_NOT_ALLOWED URIRE);
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer';
 
@@ -29,7 +29,7 @@ sub init {
         return 0;
     }
     $self->{rule} = $rule;
-    return 0 unless ( $self->SUPER::init() );
+    return 0 unless $self->SUPER::init();
     return 1;
 }
 
@@ -71,7 +71,7 @@ sub run {
 
 # Nothing to do here for now
 sub logout {
-    PE_OK;
+    return PE_OK;
 }
 
 # INTERNAL METHODS
@@ -82,11 +82,11 @@ sub computeGetParams {
     # Additional GET variables
     my %getPrms;
     if ( exists $self->conf->{issuerDBGetParameters} ) {
-        unless ( $req->urldc =~ m#^https?://([^/]+)# ) {
+        unless ( $req->urldc =~ URIRE ) {
             $self->logger->error("Malformed url $req->urldc");
             return;
         }
-        my $vhost = $1;
+        my $vhost = $3 . ( $4 ? ":$4" : '' );
         my $prms  = $self->conf->{issuerDBGetParameters}->{$vhost};
         unless ($prms) {
             $self->logger->warn("IssuerGet: $vhost has no configuration");

@@ -44,15 +44,15 @@ Handler parameters
 SecureToken parameters are the following:
 
 -  **Memcached servers**: addresses of Memcached servers, separated with
-   spaces.
+   spaces
 -  **Token expiration**: time in seconds for token expiration (remove
-   from Memcached server).
--  **Attribute to store**: the session key that will be stored in
-   Memcached.
+   from Memcached server)
+-  **Attribute to store**: session key that will be stored in
+   Memcached
 -  **Protected URLs**: Regexp of URLs for which the secure token will be
    sent, separated by spaces
 -  **Header name**: name of the HTTP header carrying by the secure
-   token.
+   token
 -  **Allow requests in error**: allow a request that has generated an
    error in token generation to be forwarded to the protected
    application without secure token (default: yes)

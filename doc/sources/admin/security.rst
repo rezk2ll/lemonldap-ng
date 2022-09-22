@@ -310,7 +310,7 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
    authentication renewal cannot be forced, used to prevent to loose the
    current authentication during the main process. If you experience
    slow network performances, you can increase this value.
--  **Encryption key**: key used to crypt some data, should not be known
+-  **Encryption key**: key used for crypting some data, should not be known
    by other applications
 -  **Trusted domains**: domains on which the user can be redirected
    after login on portal.
@@ -332,6 +332,7 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
 -  **Form timeout**: Form token timeout (default to 120 seconds)
 -  **Use global storage**: Local cache is used by default for one time
    tokens. To use global storage, set it to 'On'
+-  **Strict-Transport-Security Max-age**: set STS header max-age if you use SSL only (by example: 15768000)
 -  **CrowdSec Bouncer**: set to 'On' to enable :doc:`CrowdSec Bouncer plugin<crowdsec>`
 -  **Brute-Force Attack protection**: set to 'On' to enable :doc:`Brute-force protection plugin<bruteforceprotection>`
 -  **LWP::UserAgent and SSL options**: insert here options to pass to
@@ -354,7 +355,7 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
     to disable CSRF token by setting a special rule based on callers IP
     address like this :
 
-    requireToken => $env->{REMOTE_ADDR} !~ /^127\.0\.[1-3]\.1$/
+    requireToken => $env->{REMOTE_ADDR} && $env->{REMOTE_ADDR} !~ /^127\.0\.[1-3]\.1$/
 
 .. danger::
 

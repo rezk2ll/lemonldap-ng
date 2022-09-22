@@ -17,7 +17,7 @@ protected with a firewall that only accepts HTTP flows.
 Most of the time, SOAP session backend is used by Handlers installed on
 external servers.
 
-To configure it, SOAP session backend will be set trough Manager in
+To configure it, SOAP session backend will be set through Manager in
 global configuration (used by all Hanlders), and the real session
 backend will be configured for local components in lemonldap-ng.ini.
 
@@ -78,12 +78,12 @@ configuration (for example, access by IP range):
 
    # SOAP functions for sessions management (disabled by default)
    <Location /index.fcgi/adminSessions>
-       Require 192.168.2.0/24
+       Require ip 192.168.2.0/24
    </Location>
 
    # SOAP functions for sessions access (disabled by default)
    <Location /index.fcgi/sessions>
-       Require 192.168.2.0/24
+       Require ip 192.168.2.0/24
    </Location>
 
 Real session backend

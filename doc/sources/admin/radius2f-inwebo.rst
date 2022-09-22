@@ -2,7 +2,7 @@ InWebo Second Factor
 ====================
 
 `InWebo <https://www.inwebo.com/>`_ is a proprietary MFA solution.
-You can use is as second factor trough :doc:`Radius 2FA module<radius2f>`.
+You can use is as second factor through :doc:`Radius 2FA module<radius2f>`.
 
 Configuration
 ~~~~~~~~~~~~~

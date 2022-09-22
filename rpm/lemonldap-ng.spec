@@ -34,14 +34,15 @@
 # Main package
 #==============================================================================
 Name:           lemonldap-ng
-Version:        2.0.11
+Version:        2.0.15.1
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        LemonLDAP-NG WebSSO
 License:        GPLv2+
-URL:            http://lemonldap-ng.org
+URL:            https://lemonldap-ng.org
 Source0:        https://release.ow2.org/lemonldap/%{name}-%{version}%{?pre_release:~%{pre_release}}.tar.gz
 BuildArch:      noarch
 
+BuildRequires:  make
 BuildRequires:  gnupg
 BuildRequires:  which
 BuildRequires:  perl-generators
@@ -106,6 +107,7 @@ BuildRequires:  perl(GD::SecurityImage)
 BuildRequires:  perl(Getopt::Long)
 BuildRequires:  perl(Getopt::Std)
 BuildRequires:  perl(GSSAPI)
+BuildRequires:  perl(Hash::Merge::Simple)
 BuildRequires:  perl(HTML::Template)
 BuildRequires:  perl(HTTP::Headers)
 BuildRequires:  perl(HTTP::Message)
@@ -150,7 +152,7 @@ BuildRequires:  perl(Regexp::Assemble)
 BuildRequires:  perl(Regexp::Common)
 BuildRequires:  perl(Safe)
 BuildRequires:  perl(Scalar::Util)
-%if 0%{?fedora}%{?el8}
+%if ! 0%{?el7}
 BuildRequires:  perl(Sentry::Raven)
 %endif
 BuildRequires:  perl(SOAP::Lite)
@@ -158,6 +160,7 @@ BuildRequires:  perl(SOAP::Transport::HTTP)
 BuildRequires:  perl(strict)
 BuildRequires:  perl(String::Random)
 BuildRequires:  perl(Sys::Syslog)
+BuildRequires:  perl(Test::LeakTrace)
 BuildRequires:  perl(Test::MockObject)
 BuildRequires:  perl(Test::Output)
 BuildRequires:  perl(Test::Pod) >= 1.00
@@ -170,26 +173,26 @@ BuildRequires:  perl(URI::Escape)
 BuildRequires:  perl(URI::URL)
 BuildRequires:  perl(utf8)
 BuildRequires:  perl(warnings)
-%if 0%{?fedora}%{?el8}
+%if ! 0%{?el7}
 BuildRequires:  perl(Web::ID)
 %endif
 BuildRequires:  perl(XML::LibXML)
 BuildRequires:  perl(XML::LibXSLT)
 BuildRequires:  perl(XML::Simple)
 BuildRequires:  perl(YAML)
-%if 0%{?fedora}
+%if 0%{?fedora}%{?el9}
 BuildRequires:  systemd-rpm-macros
 %else
 BuildRequires:  systemd
 %endif
 
 # Doc
-%if 0%{?fedora}%{?el8}
-BuildRequires:  python3-sphinx-bootstrap-theme
-BuildRequires:  python3-sphinx
-%else
+%if 0%{?el7}
 BuildRequires:  python-sphinx
 BuildRequires:  python2-sphinx-bootstrap-theme
+%else
+BuildRequires:  python3-sphinx-bootstrap-theme
+BuildRequires:  python3-sphinx
 %endif
 
 Requires: lemonldap-ng-conf = %{version}-%{release}
@@ -199,11 +202,11 @@ Requires: lemonldap-ng-manager = %{version}-%{release}
 Requires: lemonldap-ng-portal = %{version}-%{release}
 Requires: lemonldap-ng-test = %{version}-%{release}
 
-%if 0%{?with_selinux} && 0%{?fedora}%{?el8}
+%if 0%{?with_selinux} && ! 0%{?el7}
 # ! Not available in Centos7, you need to install lemonldap-ng-selinux manually
 # This ensures that the *-selinux package and all it’s dependencies are not pulled
 # into containers and other systems that do not use SELinux
-Requires:        (%{name}-selinux if selinux-policy-%{selinuxtype})
+Requires:        (%{name}-selinux = %{version}-%{release} if selinux-policy-%{selinuxtype})
 %endif
 
 
@@ -211,6 +214,7 @@ Requires:        (%{name}-selinux if selinux-policy-%{selinuxtype})
 %{?perl_default_filter}
 %{?el7:%global __requires_exclude perl\\(Lasso|perl\\(Web::ID|perl\\(Sentry::Raven}
 %{?el8:%global __requires_exclude perl\\(Lasso}
+%{?el9:%global __requires_exclude perl\\(Lasso}
 
 
 %description
@@ -383,6 +387,16 @@ BuildRequires:       selinux-policy-devel
 %description selinux
 Custom SELinux policy module
 %endif
+
+#==============================================================================
+# SSOaaS client for Apache
+#==============================================================================
+%package -n perl-Lemonldap-NG-SSOaaS-Apache-Client
+Summary:        Lemonldap-NG SSOaaS client for Apache
+
+%description -n perl-Lemonldap-NG-SSOaaS-Apache-Client
+This package permits one to enroll an Apache server
+into Lemonldap::NG's SSOaaS service.
 
 #==============================================================================
 # Source preparation
@@ -631,12 +645,14 @@ fi
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
 %{_mandir}/man1/convertConfig*
 %{_mandir}/man1/convertSessions*
+%{_mandir}/man1/encryptTotpSecrets*
 %{_mandir}/man1/lemonldap-ng-sessions*
 %dir %{_libexecdir}/%{name}
 %dir %{lm_sbindir}
 %dir %{lm_bindir}
 %{lm_bindir}/convertConfig
 %{lm_bindir}/convertSessions
+%{lm_bindir}/encryptTotpSecrets
 %{lm_bindir}/lemonldap-ng-sessions
 %{lm_bindir}/importMetadata
 %{lm_bindir}/lmMigrateConfFiles2ini
@@ -674,6 +690,7 @@ fi
 %{lm_bindir}/lemonldap-ng-cli
 %{lm_bindir}/llngDeleteSession
 %{_mandir}/man1/lemonldap-ng-cli*
+%{_mandir}/man1/importMetadata*
 
 %files portal
 %{lm_sharedir}/portal
@@ -740,10 +757,35 @@ fi
 %ghost %{_sharedstatedir}/selinux/%{selinuxtype}/active/modules/200/%{modulename}
 %endif
 
+%files -n perl-Lemonldap-NG-SSOaaS-Apache-Client
+%{_mandir}/man3/Lemonldap::NG::SSOaaS::Apache*.3pm.*
+%{perl_vendorlib}/Lemonldap/NG/SSOaaS/Apache/
+
 #==============================================================================
 # Changelog
 #==============================================================================
 %changelog
+* Thu Sep 15 2022 Clement Oudot <clem.oudot@gmail.com> - 2.0.15.1-1
+- Update to 2.0.15.1
+
+* Fri Sep 09 2022 Clement Oudot <clem.oudot@gmail.com> - 2.0.15-1
+- Update to 2.0.15
+
+* Thu Feb 24 2022 Xavier Bachelot <xavier@bachelot.org> - 2.0.14-2
+- Prepare for EL9 support
+
+* Sat Feb 19 2022 Clement Oudot <clem.oudot@gmail.com> - 2.0.14-1
+- Update to 2.0.14
+
+* Fri Aug 20 2021 Clement Oudot <clem.oudot@gmail.com> - 2.0.13-1
+- Update to 2.0.13
+
+* Thu Jul 22 2021 Clement Oudot <clem.oudot@gmail.com> - 2.0.12-1
+- Update to 2.0.12
+
+* Wed Mar 17 2021 Xavier Bachelot <xavier@bachelot.org> - 2.0.11-2
+- Add BR: make
+
 * Sat Jan 30 2021 Clement Oudot <clem.oudot@gmail.com> - 2.0.11-1
 - Update to 2.0.11
 

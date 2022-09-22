@@ -287,9 +287,6 @@
         "k": "AD",
         "v": "Active Directory"
       }, {
-        "k": "BrowserID",
-        "v": "BrowserID (Mozilla Persona)"
-      }, {
         "k": "Choice",
         "v": "authChoice"
       }, {
@@ -408,33 +405,6 @@
       "id": "apacheParams",
       "show": false,
       "title": "apacheParams",
-      "type": "simpleInputContainer"
-    }, {
-      "_nodes": [{
-        "default": 1,
-        "id": "browserIdAuthnLevel",
-        "title": "browserIdAuthnLevel",
-        "type": "int"
-      }, {
-        "id": "browserIdAutoLogin",
-        "title": "browserIdAutoLogin",
-        "type": "bool"
-      }, {
-        "id": "browserIdVerificationURL",
-        "title": "browserIdVerificationURL"
-      }, {
-        "id": "browserIdSiteName",
-        "title": "browserIdSiteName"
-      }, {
-        "id": "browserIdSiteLogo",
-        "title": "browserIdSiteLogo"
-      }, {
-        "id": "browserIdBackgroundColor",
-        "title": "browserIdBackgroundColor"
-      }],
-      "id": "browserIdParams",
-      "show": false,
-      "title": "browserIdParams",
       "type": "simpleInputContainer"
     }, {
       "_nodes": [{
@@ -2051,17 +2021,17 @@
       "id": "samlSPSSODescriptorAssertionConsumerService",
       "title": "samlSPSSODescriptorAssertionConsumerService",
       "nodes": [{
-        "default": "1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/proxySingleSignOnArtifact",
+        "default": "0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/proxySingleSignOnArtifact",
         "id": "samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact",
         "title": "samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact",
         "type": "samlAssertion",
-        "data": ["1", "0", "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact", "#PORTAL#/saml/proxySingleSignOnArtifact"]
+        "data": ["0", "1", "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact", "#PORTAL#/saml/proxySingleSignOnArtifact"]
       }, {
-        "default": "0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleSignOnPost",
+        "default": "1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleSignOnPost",
         "id": "samlSPSSODescriptorAssertionConsumerServiceHTTPPost",
         "title": "samlSPSSODescriptorAssertionConsumerServiceHTTPPost",
         "type": "samlAssertion",
-        "data": ["0", "1", "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST", "#PORTAL#/saml/proxySingleSignOnPost"]
+        "data": ["1", "0", "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST", "#PORTAL#/saml/proxySingleSignOnPost"]
       }]
     }, {
       "id": "samlSPSSODescriptorArtifactResolutionService",

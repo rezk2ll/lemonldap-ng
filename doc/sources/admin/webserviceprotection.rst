@@ -35,8 +35,8 @@ OAuth2 endpoints.
 UserInfo
 ~~~~~~~~
 
-You can use the UserInfo endpoint, which requires the access token to
-deliver user attributes.
+You can use the UserInfo endpoint, which requires the Access Token to
+provide user attributes.
 
 For example:
 
@@ -44,24 +44,23 @@ For example:
 
    curl \
      -H "Authorization: Bearer a74d504ec9e784785e70a1da2b95d1d2" \
-     https://auth.example.ccom/oauth2/userinfo | json_pp
+     https://auth.example.com/oauth2/userinfo | json_pp
 
 .. code-block:: javascript
 
    {
-     "family_name" : "OUDOT",
-     "name" : "Clément OUDOT",
-     "email" : "clement@example.com",
-     "sub" : "coudot"
+      "family_name" : "OUDOT",
+      "name" : "Clément OUDOT",
+      "email" : "clement@example.com",
+      "sub" : "coudot"
    }
 
 Introspection
 ~~~~~~~~~~~~~
 
-Introspection endpoint is defined in `RFC
-7662 <https://tools.ietf.org/html/rfc7662>`__. It requires an
-authentication (same as the authentication for the token endpoint) and
-takes to access token as parameter.
+Introspection endpoint is defined in :rfc:`7662`. It requires an authentication
+(same as the authentication for the tokens endpoint) and consumes an Access Token
+as parameter.
 
 For example:
 

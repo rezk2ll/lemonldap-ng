@@ -4,11 +4,12 @@ package Lemonldap::NG::Portal::2F::Register::U2F;
 use strict;
 use Mouse;
 use JSON qw(from_json to_json);
+use MIME::Base64 qw(encode_base64url decode_base64url);
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 extends qw(
-  Lemonldap::NG::Portal::Main::Plugin
+  Lemonldap::NG::Portal::2F::Register::Base
   Lemonldap::NG::Portal::Lib::U2F
 );
 
@@ -21,8 +22,8 @@ has logo     => ( is => 'rw', default => 'u2f.png' );
 
 sub init {
     my ($self) = @_;
-    return 0 unless $self->SUPER::init;
-    return 1;
+    return 0 unless ( $self->Lemonldap::NG::Portal::Lib::U2F::init() );
+    return ( $self->Lemonldap::NG::Portal::2F::Register::Base::init() );
 }
 
 # RUNNING METHODS
@@ -141,7 +142,7 @@ sub run {
                   {
                     type       => 'U2F',
                     name       => $keyName,
-                    _userKey   => $self->encode_base64url( $userKey, '' ),
+                    _userKey   => encode_base64url( $userKey, '' ),
                     _keyHandle => $keyHandle,
                     epoch      => $epoch
                   };
@@ -279,8 +280,11 @@ sub run {
 
         # Delete U2F device
         @$_2fDevices = map {
-            if ( $_->{epoch} eq $epoch ) { $keyName = $_->{name}; () }
-            else                         { $_ }
+            if ( $_->{epoch} eq $epoch and $_->{type} eq "U2F" ) {
+                $keyName = $_->{name};
+                ();
+            }
+            else { $_ }
         } @$_2fDevices;
         if ($keyName) {
             $self->logger->debug(
@@ -347,7 +351,7 @@ sub loadUser {
                   . $_->{_userKey}
                   . "/ _keyHandle = "
                   . $_->{_keyHandle} );
-            $_->{_userKey} = $self->decode_base64url( $_->{_userKey} );
+            $_->{_userKey} = decode_base64url( $_->{_userKey} );
             push @u2fs, $_;
         }
     }

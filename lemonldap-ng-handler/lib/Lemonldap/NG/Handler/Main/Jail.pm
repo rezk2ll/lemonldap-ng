@@ -26,7 +26,7 @@ has multiValuesSeparator => ( is => 'rw', isa => 'Maybe[Str]' );
 has jail                 => ( is => 'rw' );
 has error                => ( is => 'rw' );
 
-our $VERSION = '2.0.11';
+our $VERSION = '2.0.14';
 our @builtCustomFunctions;
 
 ## @imethod protected build_jail()
@@ -45,7 +45,7 @@ sub build_jail {
     $self->useSafeJail(1) unless defined $self->useSafeJail;
 
     if ($require) {
-        foreach my $f ( split /[, ]+/, $require ) {
+        foreach my $f ( split /[,\s]+/, $require ) {
             if ( $f =~ /^[\w\:]+$/ ) {
                 eval "require $f";
             }
@@ -63,7 +63,9 @@ sub build_jail {
 
     if ($build) {
         @builtCustomFunctions =
-          $self->customFunctions ? split( /\s+/, $self->customFunctions ) : ();
+          $self->customFunctions
+          ? split( /[,\s]+/, $self->customFunctions )
+          : ();
         foreach (@builtCustomFunctions) {
             no warnings 'redefine';
             $api->logger->debug("Custom function: $_");
@@ -122,20 +124,14 @@ sub encrypt {
 }
 
 sub token {
-    return encrypt( join( ':', time, @_ ) );
+    return $_[0] ? encrypt( join( ':', time, @_ ) ) : encrypt(time);
 }
 
 ## @method reval
 # Fake reval method if useSafeJail is off
 sub reval {
     my ( $self, $e ) = @_;
-
-    my $res = eval $e;
-    if ($@) {
-        $self->error($@);
-        return undef;
-    }
-    return $res;
+    return eval $e;
 }
 
 ## @method wrap_code_ref
@@ -180,11 +176,10 @@ sub share_from {
 sub jail_reval {
     my ( $self, $reval ) = @_;
 
-    # if nothing is returned by reval, add the return statement to
-    # the "no safe wrap" reval
+    # If nothing is returned by reval, add the return statement to
+    # the "no safe wrap" reval
 
-    my $res;
-    eval { $res = ( $self->jail->reval($reval) ) };
+    my $res = $self->jail->reval($reval);
     if ($@) {
         $self->error($@);
         return undef;

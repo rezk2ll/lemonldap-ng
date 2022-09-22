@@ -3,9 +3,7 @@ use strict;
 use IO::String;
 use JSON;
 
-BEGIN {
-    require 't/test-lib.pm';
-}
+require 't/test-lib.pm';
 
 my $res;
 
@@ -27,9 +25,7 @@ my $client = LLNG::Manager::Test->new( {
             totp2fActivation               => 1,
             totp2fDigits                   => 6,
             totp2fAuthnLevel               => 8,
-            impersonationRule              => 1,
-
-            #hiddenAttributes               => 'test',
+            impersonationRule              => 1
         }
     }
 );
@@ -433,7 +429,8 @@ ok( $res->[2]->[0] =~ m%Auth-User: %, 'Found Auth-User' )
   or explain( $res->[2]->[0], 'Header Key: Auth-User' );
 ok( $res->[2]->[0] =~ m%: rtyler<br/>%, 'Found rtyler' )
   or explain( $res->[2]->[0], 'Header Value: rtyler' );
-ok( $res->[2]->[0] =~ m%<div class="col">su</div>%, 'Found su' )
+ok( $res->[2]->[0] =~ m%<div class="card-text text-left ml-2">su</div>%,
+    'Found su' )
   or explain( $res->[2]->[0], 'SSO Groups: su' );
 ok( $res->[2]->[0] =~ m%<td scope="row">uid</td>%, 'Found uid' )
   or explain( $res->[2]->[0], 'Attribute Value uid' );
@@ -493,7 +490,8 @@ ok( $res->[2]->[0] =~ m%Auth-User: %, 'Found Auth-User' )
   or explain( $res->[2]->[0], 'Header Key: Auth-User' );
 ok( $res->[2]->[0] =~ m%: rtyler<br/>%, 'Found rtyler' )
   or explain( $res->[2]->[0], 'Header Value: rtyler' );
-ok( $res->[2]->[0] =~ m%<div class="col">su</div>%, 'Found su' )
+ok( $res->[2]->[0] =~ m%<div class="card-text text-left ml-2">su</div>%,
+    'Found su' )
   or explain( $res->[2]->[0], 'SSO Groups: su' );
 ok( $res->[2]->[0] =~ m%<td scope="row">uid</td>%, 'Found uid' )
   or explain( $res->[2]->[0], 'Attribute Value uid' );

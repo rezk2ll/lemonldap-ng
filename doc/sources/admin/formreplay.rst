@@ -22,7 +22,7 @@ anything to the user.
 
 If you configure form replay with LL::NG, the Handler will detect forms
 to fill, add a javascript in the html page to fill form fields with
-dummy datas and submit it, then intercept the POST request and add POST
+dummy data and submit it, then intercept the POST request and add POST
 data in the request body.
 
 POST data can be static values or computed from user's session.
@@ -76,8 +76,8 @@ For example:
    -  postmail: $mail
    -  poststatic: 'static'
 
-Go in Manager, "Virtual Hosts" » *virtualhost* » "Form replay" and click
-on "New form replay".
+Go in Manager, ``Virtual Hosts`` » ``virtualhost`` » ``Form replay`` and click
+on ``New form replay``.
 
 |image0|
 

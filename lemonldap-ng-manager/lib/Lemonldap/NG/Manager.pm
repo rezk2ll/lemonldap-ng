@@ -17,14 +17,14 @@ use JSON;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
 
-our $VERSION = '2.0.11';
+our $VERSION = '2.0.15.1';
 
 extends qw(
   Lemonldap::NG::Handler::PSGI::Router
   Lemonldap::NG::Common::Conf::AccessLib
 );
 
-has csp => ( is => 'rw' );
+has csp            => ( is => 'rw' );
 has loadedPlugins  => ( is => 'rw', default => sub { [] } );
 has hLoadedPlugins => ( is => 'rw', default => sub { {} } );
 
@@ -66,7 +66,7 @@ sub init {
         my @res = ( "Lemonldap::NG::Manager::" . ucfirst($_) );
         if ( my $tmp = $self->loadPlugin( @res, $conf ) ) {
             $self->logger->debug("Plugin $_ loaded");
-            push @links, $_;
+            push @links,                    $_;
             push @{ $self->loadedPlugins }, $tmp;
             $self->hLoadedPlugins->{$_} = $tmp;
         }
@@ -167,7 +167,11 @@ sub tplParams {
     my $res = eval {
         $self->hLoadedPlugins->{viewer}->brwRule->( $req, $req->{userData} );
     } || 0;
-    return ( VERSION => $VERSION, ALLOWBROWSER => $res );
+    return (
+        VERSION      => $VERSION,
+        ALLOWBROWSER => $res,
+        DOC_PREFIX   => ( $self->{docPrefix} || '/doc' ),
+    );
 }
 
 sub javascript {
@@ -183,10 +187,9 @@ sub javascript {
 
     return
 'var formPrefix=staticPrefix+"forms/";var confPrefix=scriptname+"confs/";var viewPrefix=scriptname+"view/";'
-      . 'var allowDiff=' . "$res;"
-      . 'var impPrefix=' . "'"
-      . $impPrefix . "'" . ';'
-      . 'var sessionTTL=' . "$ttl;"
+      . "var allowDiff=$res;"
+      . "var sessionTTL=$ttl;"
+      . "var impPrefix='$impPrefix';"
       . ( $self->links ? 'var links=' . to_json( $self->links ) . ';' : '' )
       . (
         $self->menuLinks
@@ -369,7 +372,7 @@ see L<Lemonldap::NG::Manager::Conf::Parser> before.
 =head1 DOWNLOAD
 
 Lemonldap::NG is available at
-L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+L<https://lemonldap-ng.org/download>
 
 =head1 COPYRIGHT AND LICENSE
 

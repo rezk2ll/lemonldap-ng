@@ -4,8 +4,8 @@ Error messages
 
 .. note::
 
-    This page do not reference all error messages, but only the
-    most common
+    This page does not reference all error messages,
+    but only the most common ones
 
 Lemonldap::NG::Common
 ---------------------
@@ -14,7 +14,7 @@ Lemonldap::NG::Common
 
    Warning: key is not defined, set it in the manager !
 
-→ LemonLDAP::NG uses a key to crypt/decrypt some datas. You have to set
+→ LemonLDAP::NG uses a key to crypt/decrypt some data. You have to set
 its value in Manager. This message is displayed only when you upgrade
 from a version older than 1.0
 
@@ -140,3 +140,10 @@ set ``*`` in trustedDomains to accept all).
    XSS attack detected
 
 → Some URL parameters contain forbidden characters.
+
+::
+   
+   Detailled error codes list
+
+→ Corresponding error codes can be found in
+   :doc:`Portal error codes<error_codes>`

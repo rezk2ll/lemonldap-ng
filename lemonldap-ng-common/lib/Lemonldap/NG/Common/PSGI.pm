@@ -6,7 +6,7 @@ use JSON;
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::PSGI::Request;
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 our $_json = JSON->new->allow_nonref;
 
@@ -18,11 +18,12 @@ has logLevel     => ( is => 'rw', isa     => 'Str', default => 'info' );
 has portal       => ( is => 'rw', isa     => 'Str' );
 has staticPrefix => ( is => 'rw', isa     => 'Str' );
 has instanceName => ( is => 'rw', isa     => 'Str', default => '' );
+has customCSS    => ( is => 'rw', isa     => 'Str', default => '' );
 has templateDir  => ( is => 'rw', isa     => 'Str|ArrayRef' );
 has links        => ( is => 'rw', isa     => 'ArrayRef' );
 has menuLinks    => ( is => 'rw', isa     => 'ArrayRef' );
-has logger     => ( is => 'rw' );
-has userLogger => ( is => 'rw' );
+has logger       => ( is => 'rw' );
+has userLogger   => ( is => 'rw' );
 
 # INITIALIZATION
 
@@ -43,7 +44,17 @@ sub init {
         unless ( ref $self->logger ) {
             eval "require $logger";
             die $@ if ($@);
+            my $err;
+            unless ( $self->{logLevel} =~ /^(?:debug|info|notice|warn|error)$/ )
+            {
+                $err =
+                    'Bad logLevel value \''
+                  . $self->{logLevel}
+                  . "', switching to 'info'";
+                $self->{logLevel} = 'info';
+            }
             $self->logger( $logger->new($self) );
+            $self->logger->error($err) if $err;
         }
         unless ( ref $self->userLogger ) {
             $logger = $ENV{LLNG_USERLOGGER} || $args->{userLogger} || $logger;
@@ -246,8 +257,9 @@ sub sendJs {
     my ( $self, $req ) = @_;
     my $sp = $self->staticPrefix;
     $sp =~ s/\/*$/\//;
-    my $sc = $req->script_name;
-    $sc = '.' unless ($sc);
+    my $sc = $req->script_name // "";
+
+    # Javascript scriptname is assumed by our JS code to end with /
     $sc =~ s#/*$#/#;
     my $s =
         sprintf 'var staticPrefix="%s";'
@@ -270,8 +282,9 @@ sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
     my $sp = $self->staticPrefix;
     $sp =~ s/\/*$/\//;
-    my $sc = $req->script_name;
-    $sc = '.' unless ($sc);
+    my $sc = $req->script_name // "";
+
+    # SCRIPTNAME is assumed by our templates to end with /
     $sc =~ s#/*$#/#;
     $args{code}    ||= 200;
     $args{headers} ||= [ $req->spliceHdrs ];
@@ -298,6 +311,7 @@ sub sendHtml {
         $htpl->param(
             STATIC_PREFIX => $sp,
             INSTANCE_NAME => $self->instanceName,
+            CUSTOM_CSS    => $self->customCSS,
             SCRIPTNAME    => $sc,
             ( $self->can('tplParams') ? ( $self->tplParams($req) ) : () ),
             (
@@ -334,8 +348,37 @@ sub run {
 sub _run {
     my $self = shift;
     return sub {
-        $self->handler( Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
+        $self->_logAndHandle(
+            Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
     };
+}
+
+sub _logAndHandle {
+    my ( $self, $req ) = @_;
+
+    # register the request object to the logging system
+    if ( ref( $self->logger ) and $self->logger->can('setRequestObj') ) {
+        $self->logger->setRequestObj($req);
+    }
+    if ( ref( $self->userLogger ) and $self->userLogger->can('setRequestObj') )
+    {
+        $self->userLogger->setRequestObj($req);
+    }
+
+    # Call the handler
+    my $res = $self->handler($req);
+
+    # Clear the logging system before the next request
+    if ( ref( $self->logger ) and $self->logger->can('clearRequestObj') ) {
+        $self->logger->clearRequestObj($req);
+    }
+    if ( ref( $self->userLogger )
+        and $self->userLogger->can('clearRequestObj') )
+    {
+        $self->userLogger->clearRequestObj($req);
+    }
+
+    return $res;
 }
 
 1;
@@ -536,7 +579,7 @@ L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
 =head1 DOWNLOAD
 
 Lemonldap::NG is available at
-L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+L<https://lemonldap-ng.org/download>
 
 =head1 COPYRIGHT AND LICENSE
 

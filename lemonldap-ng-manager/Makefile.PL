@@ -8,9 +8,11 @@ WriteMakefile(
     VERSION_FROM   => 'lib/Lemonldap/NG/Manager.pm',    # finds $VERSION
     LICENSE        => 'gpl',
     BUILD_REQUIRES => {
+        'Email::Sender'  => 0,
         'IO::String'     => 0,
         'Regexp::Common' => 0,
         'Test::Pod'      => 1.00,
+        'Test::Output'   => 0,
     },
     META_MERGE => {
         recommends => {
@@ -24,8 +26,8 @@ WriteMakefile(
             },
             MailingList => 'mailto:lemonldap-ng-dev@ow2.org',
             license     => 'http://opensource.org/licenses/GPL-2.0',
-            homepage    => 'http://lemonldap-ng.org/',
-            bugtracker =>
+            homepage    => 'https://lemonldap-ng.org/',
+            bugtracker  =>
               'https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues',
             x_twitter => 'https://twitter.com/lemonldapng',
         },
@@ -33,8 +35,8 @@ WriteMakefile(
     PREREQ_PM => {
         'Convert::PEM'           => 0,
         'Crypt::OpenSSL::RSA'    => 0,
-        'Lemonldap::NG::Common'  => '2.0.11',
-        'Lemonldap::NG::Handler' => '2.0.11',
+        'Lemonldap::NG::Common'  => '2.0.15.1',
+        'Lemonldap::NG::Handler' => '2.0.15.1',
         'LWP::UserAgent'         => 0,
     },    # e.g., Module::Name => 1.1
     (
@@ -44,7 +46,7 @@ WriteMakefile(
             ABSTRACT_FROM =>
               'lib/Lemonldap/NG/Manager.pm',    # retrieve abstract from module
             AUTHOR =>
-'Xavier Guimard <x.guimard@free.fr>, Clément Oudot <clement@oodo.net>'
+'Xavier Guimard <x.guimard@free.fr>, Clement Oudot <clement@oodo.net>, Christophe Maudoux <chrmdx@gmail.com>, Maxime Besson <maxime.besson@worteks.com>'
           )
         : ()
     ),

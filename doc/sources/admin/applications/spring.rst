@@ -20,7 +20,7 @@ Configuration
 You can find all suitable information here:
 http://static.springsource.org/spring-security/site/docs/3.0.x/reference/preauth.html
 
-To summarize, to get the user connected trough the ``Auth-User`` HTTP
+To summarize, to get the user connected through the ``Auth-User`` HTTP
 Header, use this Sping Security configuration:
 
 .. code-block:: xml

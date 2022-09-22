@@ -7,7 +7,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
 
 extends 'Lemonldap::NG::Portal::Lib::LDAP';
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.0.12';
 
 has ldapGroupAttributeNameSearch => (
     is      => 'rw',
@@ -36,8 +36,10 @@ sub setSessionInfo {
     my ( $self, $req ) = @_;
     $req->{sessionInfo}->{_dn} = $req->data->{dn};
 
-    my %vars = ( %{ $self->conf->{exportedVars} },
-        %{ $self->conf->{ldapExportedVars} } );
+    my %vars = (
+        %{ $self->conf->{exportedVars} },
+        %{ $self->conf->{ldapExportedVars} }
+    );
     while ( my ( $k, $v ) = each %vars ) {
 
         my $value = $self->ldap->getLdapValue( $req->data->{ldapentry}, $v );
@@ -50,15 +52,16 @@ sub setSessionInfo {
 
         $req->sessionInfo->{$k} = $value;
     }
-    PE_OK;
+
+    return PE_OK;
 }
 
 # Load all groups in $groups.
 # @return Lemonldap::NG::Portal constant
 sub setGroups {
     my ( $self, $req ) = @_;
-    my $groups  = $req->{sessionInfo}->{groups};
-    my $hGroups = $req->{sessionInfo}->{hGroups};
+    my $groups  = $req->{sessionInfo}->{groups}  || '';
+    my $hGroups = $req->{sessionInfo}->{hGroups} || {};
 
     if ( $self->conf->{ldapGroupBase} ) {
 
@@ -100,7 +103,8 @@ sub setGroups {
 
     $req->{sessionInfo}->{groups}  = $groups;
     $req->{sessionInfo}->{hGroups} = $hGroups;
-    PE_OK;
+
+    return PE_OK;
 }
 
 1;

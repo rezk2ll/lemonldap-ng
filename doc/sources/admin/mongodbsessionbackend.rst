@@ -1,8 +1,12 @@
-MongoDB session backend
-=======================
+MongoDB session backend (deprecated)
+====================================
 
 `Apache::Session::MongoDB <https://metacpan.org/pod/Apache::Session::MongoDB>`__
 is a faster shareable session backend.
+
+.. tip::
+
+   `MongoDB has officially deprecated the Perl driver <https://www.mongodb.com/blog/post/the-mongodb-perl-driver-is-being-deprecated>`__, so we advice to choose another backend
 
 
 .. attention::
@@ -19,6 +23,21 @@ Perl module (version ⩾ 0.15 required). You also need a recent version of
 `Perl MongoDB
 client <http://search.cpan.org/~mongodb/MongoDB-v1.2.2/>`__ (version ⩾
 1.00 required).
+
+For Debian, you can install mongodb module and Apache::Session module with:
+
+::
+
+   apt install libmongodb-perl
+   cpan Apache::Session::MongoDB
+
+For CentOS:
+
+::
+
+   yum install perl-MongoDB
+   cpan Apache::Session::MongoDB
+
 
 In the manager: set
 `Apache::Session::MongoDB <http://search.cpan.org/perldoc?Apache::Session::MongoDB>`__

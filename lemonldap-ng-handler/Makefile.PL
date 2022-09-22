@@ -13,7 +13,7 @@ WriteMakefile(
         'Env'               => 0,
         'IO::Pipe'          => 0,
         'Test::MockObject'  => 0,
-        'Test::Pod'         => 0,
+        'Test::Pod'         => 1.00,
         'Time::Fake'        => 0,
         'Cwd'               => 0,
     },
@@ -32,14 +32,14 @@ WriteMakefile(
             },
             MailingList => 'mailto:lemonldap-ng-dev@ow2.org',
             license     => 'http://opensource.org/licenses/GPL-2.0',
-            homepage    => 'http://lemonldap-ng.org/',
-            bugtracker =>
+            homepage    => 'https://lemonldap-ng.org/',
+            bugtracker  =>
               'https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues',
             x_twitter => 'https://twitter.com/lemonldapng',
         },
     },
     PREREQ_PM => {
-        'Lemonldap::NG::Common' => '2.0.11',
+        'Lemonldap::NG::Common' => '2.0.15.1',
         'LWP::UserAgent'        => 0,
         'Mouse'                 => 0,
         'URI'                   => 0,
@@ -51,7 +51,7 @@ WriteMakefile(
             ABSTRACT_FROM =>
               'lib/Lemonldap/NG/Handler.pm',    # retrieve abstract from module
             AUTHOR =>
-'Xavier Guimard <x.guimard@free.fr>, Clément Oudot <clement@oodo.net>'
+'Xavier Guimard <x.guimard@free.fr>, Clement Oudot <clement@oodo.net>, Christophe Maudoux <chrmdx@gmail.com>, Maxime Besson <maxime.besson@worteks.com>'
           )
         : ()
     ),

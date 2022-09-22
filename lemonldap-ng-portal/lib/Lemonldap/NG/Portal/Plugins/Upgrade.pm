@@ -8,7 +8,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_TOKENEXPIRED
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -72,8 +72,9 @@ sub ask {
     return $self->confirm($req)
       if ( $req->param('upgrading') or $req->param('kerberos') );
 
-    my $url    = $req->param('url') || '';
-    my $action = ( $message =~ /^askTo(\w+)$/ )[0];
+    my $url          = $req->param('url')          || '';
+    my $forceUpgrade = $req->param('forceUpgrade') || '';
+    my $action       = ( $message =~ /^askTo(\w+)$/ )[0];
     $self->logger->debug(" -> $action required");
     $self->logger->debug(" -> Skip confirmation is enabled")
       if $self->conf->{"skip${action}Confirmation"};
@@ -83,14 +84,12 @@ sub ask {
         $req,
         'upgradesession',
         params => {
-            MAIN_LOGO    => $self->conf->{portalMainLogo},
-            LANGS        => $self->conf->{showLanguages},
             FORMACTION   => $form_action,
             PORTALBUTTON => 1,
             MSG          => $message,
             BUTTON       => $buttonlabel,
             CONFIRMKEY   => $self->p->stamp,
-            PORTAL       => $self->conf->{portal},
+            FORCEUPGRADE => $forceUpgrade,
             URL          => $url,
             (
                 $self->conf->{"skip${action}Confirmation"}
@@ -125,7 +124,7 @@ sub confirm {
     my $res = $self->p->process($req);
     return $self->p->do( $req, [ sub { $res } ] ) if $res;
 
-    if ( $upg or $req->param('confirm') == 1 ) {
+    if ( $upg or $req->param('confirm') and $req->param('confirm') == 1 ) {
         $req->data->{noerror} = 1;
 
         if ($sfOnly) {
@@ -152,7 +151,11 @@ sub confirm {
         }
     }
     else {
+
         # Go to portal
+        $self->logger->debug("Upgrade session did not trigger -> Go to Portal");
+        $req->mustRedirect(1);
+        return $self->p->do( $req, [ sub { PE_OK } ] );
     }
 }
 

@@ -4,9 +4,11 @@ package Lemonldap::NG::Portal::Main::Constants;
 use strict;
 use Exporter 'import';
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.15';
 
 use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::Main';
+use constant URIRE =>
+qr{(((?^:https?))://((?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::((?:[0-9]*)))?(/(((?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():\@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():\@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():\@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():\@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?]((?:(?:[;/?:\@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)};
 use constant {
     PE_IDPCHOICE                         => -5,
     PE_SENDRESPONSE                      => -4,
@@ -110,6 +112,7 @@ use constant {
     PE_NO_SECOND_FACTORS                 => 103,
     PE_BAD_DEVOPS_FILE                   => 104,
     PE_FILENOTFOUND                      => 105,
+    PE_OIDC_AUTH_ERROR                   => 106,
 };
 
 sub portalConsts {
@@ -128,6 +131,7 @@ sub portalConsts {
         '103' => 'PE_NO_SECOND_FACTORS',
         '104' => 'PE_BAD_DEVOPS_FILE',
         '105' => 'PE_FILENOTFOUND',
+        '106' => 'PE_OIDC_AUTH_ERROR',
         '2'   => 'PE_FORMEMPTY',
         '20'  => 'PE_NO_PASSWORD_BE',
         '21'  => 'PE_PP_ACCOUNT_LOCKED',
@@ -224,6 +228,7 @@ sub portalConsts {
 our @EXPORT_OK = (
     'portalConsts',
     'HANDLER',
+    'URIRE',
     'PE_IDPCHOICE',
     'PE_SENDRESPONSE',
     'PE_INFO',
@@ -325,7 +330,8 @@ our @EXPORT_OK = (
     'PE_UPGRADESESSION',
     'PE_NO_SECOND_FACTORS',
     'PE_BAD_DEVOPS_FILE',
-    'PE_FILENOTFOUND'
+    'PE_FILENOTFOUND',
+    'PE_OIDC_AUTH_ERROR'
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT_OK, 'import' ], );
 

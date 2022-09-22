@@ -78,5 +78,4 @@ variables:
 .. tip::
 
     You can use the same Facebook access token in your
-    applications. It is stored in session datas under the name
-    ``$_facebookToken``\
+    applications. It is stored in session data under the name ``$_facebookToken``\

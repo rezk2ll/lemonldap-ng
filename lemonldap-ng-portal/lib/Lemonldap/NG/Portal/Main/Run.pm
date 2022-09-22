@@ -9,14 +9,15 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15.1';
 
 package Lemonldap::NG::Portal::Main;
 
 use strict;
 use URI::Escape;
+use URI;
 use JSON;
-use Lemonldap::NG::Common::Util qw(getPSessionID);
+use Lemonldap::NG::Common::Util qw(getPSessionID getSameSite);
 
 has trOverCache => ( is => 'rw', default => sub { {} } );
 
@@ -120,7 +121,20 @@ sub handler {
 
 sub authenticated {
     my ( $self, $req ) = @_;
-    return $self->sendJSONresponse( $req, { status => 1 } );
+
+    return $self->do(
+        $req,
+        [
+            'importHandlerData',
+            'controlUrl',
+            @{ $self->forAuthUser },
+            sub {
+                $req->response(
+                    $self->sendJSONresponse( $req, { status => 1 } ) );
+                return PE_SENDRESPONSE;
+            }
+        ]
+    );
 }
 
 sub pleaseAuth {
@@ -133,7 +147,7 @@ sub login {
     return $self->do(
         $req,
         [
-            'checkUnauthLogout', 'controlUrl',    # Fix 2342
+            'checkUnauthLogout',            'controlUrl',          # Fix 2342
             @{ $self->beforeAuth },         $self->authProcess,
             @{ $self->betweenAuthAndData }, $self->sessionData,
             @{ $self->afterData },          $self->validSession,
@@ -147,7 +161,7 @@ sub postLogin {
     return $self->do(
         $req,
         [
-            'checkUnauthLogout', 'restoreArgs',            # Fix 2342
+            'checkUnauthLogout', 'restoreArgs',                    # Fix 2342
             'controlUrl',        @{ $self->beforeAuth },
             $self->authProcess,  @{ $self->betweenAuthAndData },
             $self->sessionData,  @{ $self->afterData },
@@ -158,6 +172,7 @@ sub postLogin {
 
 sub authenticatedRequest {
     my ( $self, $req ) = @_;
+    $req->data->{alreadyAuthenticated} = 1;
     return $self->do(
         $req,
         [
@@ -188,7 +203,27 @@ sub refresh {
     $req->user( $data{_user} || $data{ $self->conf->{whatToTrace} } );
     $req->id( $data{_session_id} );
     foreach ( keys %data ) {
-        delete $data{$_} unless ( /^_/ or /^(?:startTime)$/ );
+
+        # Variables that start with _ are kept accross refresh
+        if (/^_/) {
+
+            # But not OIDC tokens, which can be refreshed
+            delete $data{$_}
+              if (
+/^(_oidc_access_token|_oidc_refresh_token|_oidc_access_token_eol)$/
+              );
+        }
+
+        # Other variables should be refreshed
+        else {
+            # But not these two
+            if (/^(?:startTime|authenticationLevel)$/) {
+                next;
+            }
+            else {
+                delete $data{$_};
+            }
+        }
     }
     $data{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
     $self->logger->debug(
@@ -197,14 +232,14 @@ sub refresh {
             'getUser',
             @{ $self->betweenAuthAndData },
             'setSessionInfo',
-            $self->groupsAndMacros,
-            'setLocalGroups',
             sub {
                 $_[0]->sessionInfo->{$_} = $data{$_} foreach ( keys %data );
                 $_[0]->refresh(1);
                 return PE_OK;
             },
-            'store',
+            $self->groupsAndMacros,
+            'setLocalGroups',
+            'store'
         ]
     );
     my $res = $req->error( $self->process($req) );
@@ -263,19 +298,15 @@ sub do {
     # Update status
     if ( my $p = $self->HANDLER->tsv->{statusPipe} ) {
         $p->print( ( $req->user ? $req->user : $req->address ) . ' => '
-              . $req->uri
+              . $req->{env}->{REQUEST_URI}
               . " $err\n" );
     }
 
     # Update history
-    if ( $err == PE_SENDRESPONSE ) {
-        return $req->response;
-    }
+    return $req->response if $err == PE_SENDRESPONSE;
 
     # Remove userData if authentication fails
-    if ( $err == PE_BADCREDENTIALS or $err == PE_BADOTP ) {
-        $req->userData( {} );
-    }
+    $req->userData( {} ) if ( $err == PE_BADCREDENTIALS or $err == PE_BADOTP );
 
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
         $self->logger->debug('Processing to JSON response');
@@ -288,6 +319,7 @@ sub do {
                     params => {
                         AUTH_ERROR      => $err,
                         AUTH_ERROR_TYPE => $req->error_type,
+                        AUTH_ERROR_ROLE => $req->error_role,
                     }
                 );
             }
@@ -303,24 +335,26 @@ sub do {
         elsif ( $err > 0 and $err != PE_PASSWORD_OK and $err != PE_LOGOUT_OK ) {
             return $self->sendJSONresponse(
                 $req,
-                { result => 0, error => $err },
+                {
+                    result => 0,
+                    error  => $err,
+                    (
+                        $err == PE_NOTIFICATION && $req->id
+                        ? ( ciphered_id => $req->id )
+                        : ()
+                    )
+                },
                 code => 400
             );
         }
         else {
-            return $self->sendJSONresponse(
-                $req,
-                {
-                    result => 1,
-                    error  => $err,
-                    id     => $req->id,
-                    (
-                        $req->sessionInfo->{_httpSession}
-                        ? ( id_http => $req->sessionInfo->{_httpSession} )
-                        : ()
-                    )
-                }
-            );
+            my $res = { result => 1, error => $err };
+            unless ( $req->data->{alreadyAuthenticated} ) {
+                $res->{id}      = $req->id;
+                $res->{id_http} = $req->sessionInfo->{_httpSession}
+                  if $req->sessionInfo->{_httpSession};
+            }
+            return $self->sendJSONresponse( $req, $res );
         }
     }
     else {
@@ -354,6 +388,11 @@ sub do {
 
 sub getModule {
     my ( $self, $req, $type ) = @_;
+    if ( my $val =
+        $req->userData->{ { auth => '_auth', user => '_userDB' }->{$type} } )
+    {
+        return $val;
+    }
     if (
         my $mod = {
             auth     => '_authentication',
@@ -450,7 +489,8 @@ sub getApacheSession {
         $self->logger->debug("Session $args{kind} $id not found");
         return;
     }
-    $self->logger->debug("Get session $id from Portal::Main::Run") if ($id);
+    $self->logger->debug("Get session $id from Portal::Main::Run")
+      if ($id);
     $self->logger->debug(
         "Check session validity  -> " . $self->conf->{timeoutActivity} . "s" )
       if ( $self->conf->{timeoutActivity} );
@@ -482,7 +522,9 @@ sub getApacheSession {
 sub getPersistentSession {
     my ( $self, $uid, $info ) = @_;
 
-    return unless ( defined $uid and !$self->conf->{disablePersistentStorage} );
+    return
+      unless ( defined $uid
+        and !$self->conf->{disablePersistentStorage} );
 
     # Compute persistent identifier
     my $pid = getPSessionID($uid);
@@ -575,14 +617,18 @@ sub updateSession {
     if ($id) {
 
         # Update sessionInfo data
-        ## sessionInfo updated if $id defined : quite strange !!
+        ## sessionInfo updated if $id defined : quite strange!!
         ## See https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/430
         $self->logger->debug("Update session $id");
         foreach ( keys %$infos ) {
             $self->logger->debug("Update sessionInfo $_");
             $self->_dump( $infos->{$_} );
-            $req->{sessionInfo}->{$_} = $self->HANDLER->data->{$_} =
-              $infos->{$_};
+            $req->{sessionInfo}->{$_} = $infos->{$_};
+            if (   $self->HANDLER->data->{_session_id}
+                && $id eq $self->HANDLER->data->{_session_id} )
+            {
+                $self->HANDLER->data->{$_} = $infos->{$_};
+            }
         }
 
         # Update session in global storage with _updateTime
@@ -826,11 +872,58 @@ sub _dump {
     return;
 }
 
+# Warning: this function returns a JSON string
+sub getTrOver {
+    my ( $self, $req, $templateDir ) = @_;
+
+    $templateDir //= $self->conf->{templateDir} . '/' . $self->getSkin($req);
+
+    unless ( $self->trOverCache->{$templateDir} ) {
+
+        # Override messages
+        my $trOverMessages = JSON::from_json( $self->trOver );
+
+        opendir( DIR, $templateDir );
+        my @langfiles = grep( /\.json$/, readdir(DIR) );
+        close(DIR);
+
+        foreach my $file (@langfiles) {
+            my ($lang) = ( $file =~ /^(\w+)\.json/ );
+            $self->logger->debug("Use $file to override messages");
+            if ( open my $json, "<", $templateDir . "/" . $file ) {
+                my $trdata;
+                eval {
+                    local $/ = undef;
+                    $trdata = JSON::from_json(<$json>);
+                };
+                if ($@) {
+                    $self->logger->warn("Ignoring $file because of error: $@");
+                }
+                if ( ref($trdata) eq "HASH" ) {
+                    for my $msg ( keys %$trdata ) {
+
+                        # lemonldap-ng.ini has priority
+                        $trOverMessages->{$lang}->{$msg} //= $trdata->{$msg};
+                    }
+                }
+            }
+            else {
+                $self->logger->error("Unable to read $file");
+            }
+        }
+
+        $self->trOverCache->{$templateDir} = JSON::to_json($trOverMessages);
+    }
+
+    return $self->trOverCache->{$templateDir};
+}
+
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
 
     my $templateDir = $self->conf->{templateDir} . '/' . $self->getSkin($req);
-    $self->templateDir( [ $templateDir, @{ $self->templateDir } ] );
+    my $defaultTemplateDir = $self->conf->{templateDir} . '/bootstrap';
+    $self->templateDir( [ $templateDir, $defaultTemplateDir ] );
 
     # Check template
     $args{templateDir} = $templateDir;
@@ -842,29 +935,7 @@ sub sendHtml {
         $self->logger->debug("-> Trying to load $tmpl");
     }
 
-    # Override messages
-    my $trOverMessages = JSON::from_json( $self->trOver );
-
-    unless ( $self->trOverCache->{$templateDir} ) {
-        opendir( DIR, $templateDir );
-        my @langfiles = grep( /\.json$/, readdir(DIR) );
-        close(DIR);
-
-        foreach my $file (@langfiles) {
-            my ($lang) = ( $file =~ /^(\w+)\.json/ );
-            $self->logger->debug("Use $file to override messages");
-            if ( open my $json, "<", $templateDir . "/" . $file ) {
-                local $/ = undef;
-                $trOverMessages->{$lang} = JSON::from_json(<$json>);
-            }
-            else {
-                $self->logger->error("Unable to read $file");
-            }
-        }
-
-        $self->trOverCache->{$templateDir} = JSON::to_json($trOverMessages);
-    }
-    $args{params}->{TROVER} = $self->trOverCache->{$templateDir};
+    $args{params}->{TROVER} = $self->getTrOver( $req, $templateDir );
 
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },
@@ -874,33 +945,45 @@ sub sendHtml {
       'Pragma'        => 'no-cache',                               # HTTP 1.0
       'Expires'       => '0';                                      # Proxies
 
-    if ( $self->conf->{corsEnabled} ) {
-        my @cors = split /;/, $self->cors;
-        push @{ $res->[1] }, @cors;
-        $self->logger->debug('Apply following CORS policy :');
-        $self->logger->debug(" $_") for @cors;
+    $self->setCorsHeaderFromConfig($res);
+
+    if (    $self->conf->{strictTransportSecurityMax_Age}
+        and $self->conf->{portal} =~ /^https:/ )
+    {
+        push @{ $res->[1] },
+          'Strict-Transport-Security' =>
+          "max-age=$self->{conf}->{strictTransportSecurityMax_Age}";
+        $self->logger->debug(
+"Set Strict-Transport-Security with: $self->{conf}->{strictTransportSecurityMax_Age}"
+        );
     }
 
     # Set authorized URL for POST
     my $csp = $self->csp . "form-action " . $self->conf->{cspFormAction};
     if ( my $url = $req->urldc ) {
-        $self->logger->debug("Required urldc : $url");
-        $url =~ s#(https?://[^/]+).*#$1#;
-        $self->logger->debug("Set CSP form-action with urldc : $url");
+        $self->logger->debug("Required urldc: $url");
+        $url =~ URIRE;
+        $url = $2 . '://' . $3 . ( $4 ? ":$4" : '' );
+        $self->logger->debug("Set CSP form-action with urldc: $url");
         $csp .= " $url";
     }
     my $url = $args{params}->{URL};
     if ( defined $url ) {
-        $self->logger->debug("Required Params URL : $url");
-        if ( $url =~ s#(https?://[^/]+).*#$1# ) {
-            $self->logger->debug("Set CSP form-action with Params URL : $url");
+        $self->logger->debug("Required Params URL: $url");
+        if ( $url =~ URIRE ) {
+            $url = $2 . '://' . $3 . ( $4 ? ":$4" : '' );
+            $self->logger->debug("Set CSP form-action with Params URL: $url");
             $csp .= " $url";
         }
     }
-    if ( defined $req->{cspFormAction} ) {
-        $self->logger->debug(
-            "Set CSP form-action with request URL: " . $req->{cspFormAction} );
-        $csp .= " " . $req->{cspFormAction};
+    if ( defined $req->data->{cspFormAction}
+        and ref( $req->data->{cspFormAction} ) eq "HASH" )
+    {
+        my $request_csp_form_action =
+          join( " ", keys %{ $req->data->{cspFormAction} } );
+        $self->logger->debug( "Set CSP form-action with request URL: "
+              . $request_csp_form_action );
+        $csp .= " " . $request_csp_form_action;
     }
 
     # Set SAML Discovery Protocol in form-action
@@ -910,7 +993,6 @@ sub sendHtml {
     {
         $self->logger->debug(
             "Add SAML Discovery Protocol URL in CSP form-action");
-
         $csp .= " " . $self->conf->{samlDiscoveryProtocolURL};
     }
     $csp .= ';';
@@ -930,10 +1012,17 @@ sub sendHtml {
     }
 
     # Check if frames need to be embedded
+    # FIXME: we should use $req->data->{cspChildSrc} anywhere an iframe is
+    # created in the code, and remove this
     my @url;
     if ( $req->info ) {
         @url = map { s#https?://([^/]+).*#$1#; $_ }
           ( $req->info =~ /<iframe.*?src="(.*?)"/sg );
+    }
+
+    # Update child-src header from request data
+    if ( ref( $req->data->{cspChildSrc} ) eq "HASH" ) {
+        push @url, keys %{ $req->data->{cspChildSrc} };
     }
     if (@url) {
         $csp .= join( ' ', 'child-src', @url, "'self'" ) . ';';
@@ -941,7 +1030,7 @@ sub sendHtml {
 
     # Set CSP header
     push @{ $res->[1] }, 'Content-Security-Policy' => $csp;
-    $self->logger->debug("Apply following CSP : $csp");
+    $self->logger->debug("Apply following CSP: $csp");
     return $res;
 }
 
@@ -1026,20 +1115,27 @@ sub tplParams {
     }
 
     return (
-        SKIN       => $self->getSkin($req),
         PORTAL_URL => $self->conf->{portal},
+        MAIN_LOGO  => $self->conf->{portalMainLogo},
+        LANGS      => $self->conf->{showLanguages},
+        SCROLL_TOP => $self->conf->{scrollTop},
+        SKIN       => $self->getSkin($req),
         SKIN_PATH  => $portalPath . "skins",
+        SAMESITE   => getSameSite( $self->conf ),
         SKIN_BG    => $self->conf->{portalSkinBackground},
+        FAVICON    => $self->conf->{portalFavicon} || 'common/favicon.ico',
         CUSTOM_CSS => $self->conf->{portalCustomCss},
-        ( $self->customParameters ? ( %{ $self->customParameters } ) : () ),
+        (
+            $self->customParameters
+            ? ( %{ $self->customParameters } )
+            : ()
+        ),
         %templateParams
     );
 }
 
 sub registerLogin {
-
-    # $user passed by BruteForceProtection plugin
-    my ( $self, $req, $uid ) = @_;
+    my ( $self, $req ) = @_;
     return
       unless ( $self->conf->{loginHistoryEnabled}
         and defined $req->authResult );
@@ -1069,8 +1165,7 @@ sub registerLogin {
                 }
             }
         }
-        $self->updatePersistentSession( $req, { 'loginHistory' => undef },
-            $uid );
+        $self->updatePersistentSession( $req, { 'loginHistory' => undef } );
         delete $req->sessionInfo->{loginHistory};
     }
 
@@ -1095,7 +1190,7 @@ sub registerLogin {
       if ( scalar @{ $history->{$type} } > $self->conf->{ $type . "Number" } );
 
     # Save into persistent session
-    $self->updatePersistentSession( $req, { _loginHistory => $history }, $uid );
+    $self->updatePersistentSession( $req, { _loginHistory => $history, } );
 
     PE_OK;
 }
@@ -1109,22 +1204,22 @@ sub _sumUpSession {
       $withoutUser
       ? {}
       : { user => $session->{ $self->conf->{whatToTrace} } };
-    $res->{$_} = $session->{$_}
-      foreach ( "_utime", "ipAddr",
-        keys %{ $self->conf->{sessionDataToRemember} } );
+    $res->{$_} = $session->{$_} foreach (
+        "_utime", "ipAddr",
+        keys %{ $self->conf->{sessionDataToRemember} },
+        keys %{ $self->pluginSessionDataToRemember }
+    );
     return $res;
 }
 
 sub corsPreflight {
     my ( $self, $req ) = @_;
     my @headers;
-    if ( $self->conf->{corsEnabled} ) {
-        my @cors = split /;/, $self->cors;
-        push @headers, @cors;
-        $self->logger->debug('Apply following CORS policy :');
-        $self->logger->debug(" $_") for @cors;
-    }
-    return [ 204, \@headers, [] ];
+    my $res = [ 204, \@headers, [] ];
+
+    $self->setCorsHeaderFromConfig($res);
+
+    return $res;
 }
 
 sub sendJSONresponse {
@@ -1145,7 +1240,9 @@ sub sendJSONresponse {
     # If this is a cross-domain request from the portal itself
     # (Ajax SSL to a different VHost)
     # we allow CORS
-    if ( $req->origin and index( $self->conf->{portal}, $req->origin ) == 0 ) {
+    if ( $req->origin
+        and index( $self->conf->{portal}, $req->origin ) == 0 )
+    {
         $self->logger->debug('AJAX request from portal, allowing CORS');
         push @{ $res->[1] },
           "Access-Control-Allow-Origin"      => $req->origin,
@@ -1153,11 +1250,8 @@ sub sendJSONresponse {
           "Access-Control-Allow-Credentials" => "true";
 
     }
-    elsif ( $self->conf->{corsEnabled} ) {
-        my @cors = split /;/, $self->cors;
-        push @{ $res->[1] }, @cors;
-        $self->logger->debug('Apply following CORS policy :');
-        $self->logger->debug(" $_") for @cors;
+    else {
+        $self->setCorsHeaderFromConfig($res);
     }
     return $res;
 }
@@ -1165,13 +1259,21 @@ sub sendJSONresponse {
 sub sendRawHtml {
     my ($self) = $_[0];
     my $res = Lemonldap::NG::Common::PSGI::sendRawHtml(@_);
+
+    $self->setCorsHeaderFromConfig($res);
+
+    return $res;
+}
+
+sub setCorsHeaderFromConfig {
+    my ( $self, $response ) = @_;
+
     if ( $self->conf->{corsEnabled} ) {
         my @cors = split /;/, $self->cors;
-        push @{ $res->[1] }, @cors;
-        $self->logger->debug('Apply following CORS policy :');
+        push @{ $response->[1] }, @cors;
+        $self->logger->debug('Apply following CORS policy:');
         $self->logger->debug(" $_") for @cors;
     }
-    return $res;
 }
 
 # Temlate loader
@@ -1196,6 +1298,43 @@ sub loadTemplate {
         $tpl->param( %{ $prm{params} } );
     }
     return $tpl->output;
+}
+
+# This method extracts the scheme://host:port part of a URL for use in
+# Content-Security-Polity header
+sub cspGetHost {
+    my ( $self, $url ) = @_;
+    my $uri = $url // "";
+    unless ( $uri->isa("URI") ) {
+        $uri = URI->new($uri);
+    }
+    return (
+        $uri->scheme . "://" . ( $uri->_port ? $uri->host_port : $uri->host ) );
+}
+
+sub buildUrl {
+    my $self = shift;
+    return $self->portal unless @_;
+
+    # URL base is $self->portal unless first arg is an URL
+    my $uri =
+      URI->new( ( $_[0] =~ m#^https?://# ) ? shift(@_) : $self->portal );
+    my @pathSg = grep { $_ ne '' } $uri->path_segments;
+    while (@_) {
+        my $s = shift;
+        if ( ref $s ) {
+            $uri->query_form($s);
+            if (@_) {
+                require Carp;
+                Carp::confess('Query must be the last arg of buildUrl');
+            }
+        }
+        else {
+            push @pathSg, $s;
+        }
+    }
+    $uri->path_segments(@pathSg);
+    return $uri;
 }
 
 1;

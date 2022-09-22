@@ -23,7 +23,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NO_SECOND_FACTORS
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 with 'Lemonldap::NG::Portal::Lib::OverConf';
@@ -41,7 +41,21 @@ has ott => (
     default => sub {
         my $ott =
           $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        $ott->timeout( $_[0]->{conf}->{formTimeout} );
+        $ott->timeout( $_[0]->{conf}->{sfLoginTimeout}
+              || $_[0]->{conf}->{formTimeout} );
+        return $ott;
+    }
+);
+
+has regOtt => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        my $ott =
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        my $timeout = $_[0]->{conf}->{sfRegisterTimeout}
+          // $_[0]->{conf}->{formTimeout};
+        $ott->timeout($timeout);
         return $ott;
     }
 );
@@ -194,9 +208,11 @@ sub init {
 sub run {
     my ( $self, $req ) = @_;
     my $checkLogins   = $req->param('checkLogins');
+    my $forceUpgrade  = $req->param('forceUpgrade');
     my $stayconnected = $req->param('stayconnected');
     my $spoofId       = $req->param('spoofId') || '';
-    $self->logger->debug("2F checkLogins set") if ($checkLogins);
+    $self->logger->debug("2F checkLogins set")  if $checkLogins;
+    $self->logger->debug("2F forceUpgrade set") if $forceUpgrade;
 
     # Skip 2F unless a module has been registered
     unless ( @{ $self->sfModules } ) {
@@ -213,7 +229,8 @@ sub run {
 
     # Skip 2F if authnLevel is already high enough
     if (
-        $self->conf->{sfOnlyUpgrade}
+            $self->conf->{sfOnlyUpgrade}
+        and !$forceUpgrade
         and ( ( $req->pdata->{targetAuthnLevel} || 0 ) <=
             ( $req->sessionInfo->{authenticationLevel} || 0 ) )
       )
@@ -227,7 +244,7 @@ sub run {
     # Remove expired 2F devices
     my $session = $req->sessionInfo;
     if ( $session->{_2fDevices} ) {
-        $self->logger->debug("Loading 2F Devices ...");
+        $self->logger->debug("Loading 2F devices...");
 
         # Read existing 2FDevices
         my $_2fDevices =
@@ -240,6 +257,7 @@ sub run {
 
         $self->logger->debug("Looking for expired 2F device(s)...");
         my $removed = 0;
+        my $name    = '';
         my $now     = time();
         foreach my $device (@$_2fDevices) {
             my $type = lc( $device->{type} );
@@ -252,16 +270,18 @@ sub run {
                 );
                 $self->userLogger->info("Remove expired $device->{type}");
                 $device->{type} = 'EXPIRED';
+                $name .= "$device->{name}; ";
                 $removed++;
             }
         }
 
         if ($removed) {
+            $name =~ s/;\s$//;
             $self->logger->debug(
 "Found $removed EXPIRED 2F device(s) => Update persistent session"
             );
             $self->userLogger->notice(
-                " -> $removed expired 2F device(s) removed");
+                " -> $removed expired 2F device(s) removed ($name)");
             @$_2fDevices =
               map { $_->{type} =~ /\bEXPIRED\b/ ? () : $_ } @$_2fDevices;
             $self->p->updatePersistentSession( $req,
@@ -276,13 +296,13 @@ sub run {
                 my $title = $self->conf->{sfRemovedNotifTitle}
                   || 'Second factor notification';
                 my $msg = $self->conf->{sfRemovedNotifMsg}
-                  || "$removed expired second factor(s) has/have been removed!";
-                $msg =~ s/_removedSF_/$removed/;
-
+                  || "$removed expired second factor(s) has/have been removed ($name)!";
+                $msg =~ s/\b_removedSF_\b/$removed/;
+                $msg =~ s/\b_nameSF_\b/$name/;
                 my $params =
                   $removed > 1
-                  ? { trspan => "expired2Fremoved, $removed" }
-                  : { trspan => "oneExpired2Fremoved" };
+                  ? { trspan => "expired2Fremoved, $removed, $name" }
+                  : { trspan => "oneExpired2Fremoved, $name" };
 
                 my $notifEngine = $self->p->loadedModules->{
                     'Lemonldap::NG::Portal::Plugins::Notifications'};
@@ -309,7 +329,7 @@ sub run {
             $self->logger->debug("2F is required...");
             $self->logger->debug(" -> Register 2F");
             $req->pdata->{sfRegToken} =
-              $self->ott->createToken( $req->sessionInfo );
+              $self->regOtt->createToken( $req->sessionInfo );
             $self->logger->debug("Just one 2F is enabled");
             $self->logger->debug(" -> Redirect to 2fregisters/");
             $req->response( [
@@ -349,6 +369,10 @@ sub run {
 
     # If only one 2F is authorized, display it
     unless ($#am) {
+        $self->userLogger->info( 'Second factor '
+              . $am[0]->prefix
+              . '2F selected for '
+              . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
         my $res = $am[0]->run( $req, $token );
         $req->authResult($res);
         return $res;
@@ -369,7 +393,8 @@ sub run {
             MSG           => $self->canUpdateSfa($req) || 'choose2f',
             ALERT   => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
             MODULES => [
-                map { {
+                map {
+                    {
                         CODE  => $_->prefix,
                         LOGO  => $_->logo,
                         LABEL => $_->label
@@ -384,8 +409,8 @@ sub run {
 
 # bool public display2fRegisters($req, $session)
 #
-# Return true if at least 1 register module is available for this user. Used
-# by Menu to display or not /2fregisters page
+# Return true if at least 1 register module is available for this user.
+# Used by Menu for displaying or not /2fregisters page
 sub display2fRegisters {
     my ( $self, $req, $session ) = @_;
     foreach my $m ( @{ $self->sfRModules } ) {
@@ -408,7 +433,14 @@ sub _choice {
     my $session;
     unless ( $session = $self->ott->getToken($token) ) {
         $self->userLogger->info('Token expired');
+        $req->noLoginDisplay(1);
         return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+    }
+
+    unless ( $session->{_2fRealSession} ) {
+        $self->logger->error("Invalid 2FA session token");
+        $req->noLoginDisplay(1);
+        return $self->p->do( $req, [ sub { PE_ERROR } ] );
     }
 
     $req->sessionInfo($session);
@@ -419,12 +451,16 @@ sub _choice {
     my $ch = $req->param('sf');
     foreach my $m ( @{ $self->sfModules } ) {
         if ( $m->{m}->prefix eq $ch ) {
+            $self->userLogger->info( 'Second factor '
+                  . $m->{m}->prefix
+                  . '2F selected for '
+                  . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
             my $res = $m->{m}->run( $req, $token );
             $req->authResult($res);
             return $self->p->do(
                 $req,
                 [
-                    sub { $res }, 'controlUrl',
+                    sub { $res },  'controlUrl',
                     'buildCookie', @{ $self->p->endAuth },
                 ]
             );
@@ -468,7 +504,6 @@ sub _displayRegister {
         );
     }
 
-    # If only one 2F is available, redirect to it
     my @am;
     foreach my $m ( @{ $self->sfRModules } ) {
         $self->logger->debug(
@@ -476,19 +511,13 @@ sub _displayRegister {
         if ( $m->{r}->( $req, $req->userData ) ) {
             push @am,
               {
-                CODE => $m->{m}->prefix,
-                URL  => '/2fregisters/' . $m->{m}->prefix,
-                LOGO => $m->{m}->logo,
+                CODE  => $m->{m}->prefix,
+                URL   => '/2fregisters/' . $m->{m}->prefix,
+                LOGO  => $m->{m}->logo,
+                LABEL => $m->{m}->label
               };
         }
     }
-
-    return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ], [] ]
-      if (
-        @am == 1
-        and not( $req->userData->{_2fDevices}
-            or $req->data->{sfRegRequired} )
-      );
 
     # Retrieve user all second factors
     my $_2fDevices = [];
@@ -499,13 +528,21 @@ sub _displayRegister {
           }
           : undef;
         unless ($_2fDevices) {
-            $self->logger->debug("No 2F Device found");
+            $self->logger->debug("None 2F device found");
             $_2fDevices = [];
         }
     }
     else {
-        $self->userLogger->warn("Do not diplay 2F Devices!");
+        $self->userLogger->warn("Do not display 2F devices!");
     }
+
+    # If only one 2F is available, redirect to it
+    return [ 302, [ Location => $self->conf->{portal} . $am[0]->{URL} ], [] ]
+      if (
+        @am == 1
+        and not( @$_2fDevices
+            or $req->data->{sfRegRequired} )
+      );
 
    # Parse second factors to display delete button if allowed and upgrade button
     my $displayUpgBtn = 0;
@@ -599,7 +636,7 @@ sub restoreSession {
     my ( $self, $req, @path ) = @_;
     my $token = $req->pdata->{sfRegToken}
       or return [ 302, [ Location => $self->conf->{portal} ], [] ];
-    $req->userData( $self->ott->getToken( $token, 1 ) );
+    $req->userData( $self->regOtt->getToken( $token, 1 ) );
     $req->data->{sfRegRequired} = 1;
     return $req->method eq 'POST'
       ? $self->register( $req, @path )

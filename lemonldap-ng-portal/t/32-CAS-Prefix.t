@@ -56,10 +56,70 @@ ok(
 count(1);
 expectRedirection( $res, qr#^http://auth.other.com/srv2\?(ticket=[^&]+)$# );
 
+# Service defined with multiple URLs, will be matched by URI
+ok(
+    $res = $issuer->_get(
+        '/cas/login',
+        query  => 'service=http://auth.sp.com/srv4/index.php',
+        accept => 'text/html',
+        cookie => "lemonldap=$id",
+    ),
+    'Query CAS server'
+);
+count(1);
+expectRedirection( $res,
+    qr#^http://auth.sp.com/srv4/index.php\?(ticket=[^&]+)$# );
+
+# New test with StrictMatching
+ok( $issuer = issuer(1), 'Issuer portal' );
+count(1);
+
+# Service 1, will be matched by URI
+ok(
+    $res = $issuer->_get(
+        '/cas/login',
+        query  => 'service=http://auth.sp.com/srv1/index.php',
+        accept => 'text/html',
+        cookie => "lemonldap=$id",
+    ),
+    'Query CAS server'
+);
+count(1);
+expectRedirection( $res,
+    qr#^http://auth.sp.com/srv1/index.php\?(ticket=[^&]+)$# );
+
+# Service 2, will now fail
+ok(
+    $res = $issuer->_get(
+        '/cas/login',
+        query  => 'service=http://auth.other.com/srv2',
+        accept => 'text/html',
+        cookie => "lemonldap=$id",
+    ),
+    'Query CAS server'
+);
+count(1);
+expectPortalError( $res, 68 );
+
+# Service defined with multiple URLs, will be matched by URI
+ok(
+    $res = $issuer->_get(
+        '/cas/login',
+        query  => 'service=http://auth.sp.com/srv4/index.php',
+        accept => 'text/html',
+        cookie => "lemonldap=$id",
+    ),
+    'Query CAS server'
+);
+count(1);
+expectRedirection( $res,
+    qr#^http://auth.sp.com/srv4/index.php\?(ticket=[^&]+)$# );
+
 clean_sessions();
 done_testing( count() );
 
 sub issuer {
+    my ($strict) = @_;
     return LLNG::Manager::Test->new( {
             ini => {
                 logLevel              => $debug,
@@ -69,6 +129,7 @@ sub issuer {
                 userDB                => 'Same',
                 issuerDBCASActivation => 1,
                 casAttr               => 'uid',
+                casStrictMatching     => $strict,
                 casAppMetaDataOptions => {
                     sp1 => {
                         casAppMetaDataOptionsService =>
@@ -88,6 +149,11 @@ sub issuer {
                         casAppMetaDataOptionsService =>
                           'http://auth.sp.com/srv2/',
                         casAppMetaDataOptionsRule => "0",
+                    },
+                    sp5 => {
+                        casAppMetaDataOptionsService =>
+'http://auth.sp.com/srv3/ http://auth.sp.com/srv4/ http://auth.sp.com/srv5/',
+                        casAppMetaDataOptionsRule => "1",
                     },
                 },
                 casAccessControlPolicy => 'error',

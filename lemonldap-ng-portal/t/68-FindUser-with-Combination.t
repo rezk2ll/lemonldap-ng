@@ -7,7 +7,6 @@ require 't/test-lib.pm';
 
 my $res;
 my $json;
-my $request;
 my $maintests = 24;
 
 SKIP: {
@@ -31,7 +30,8 @@ SKIP: {
                 combination                 => '[Demo, Demo] or [LDAP, LDAP]',
                 findUser                    => 1,
                 impersonationRule           => 1,
-                findUserSearchingAttributes => { uid => 'Login', cn => 'Name' },
+                findUserSearchingAttributes =>
+                  { 'uid##1' => 'Login', 'cn##1' => 'Name' },
                 findUserExcludingAttributes => { uid => 'rtyler' },
             }
         }
@@ -43,7 +43,7 @@ SKIP: {
     my ( $host, $url, $query ) =
       expectForm( $res, '#', undef, 'user', 'password', 'spoofId' );
 
-    $request = '';
+    my $request = '';
     ok(
         $res = $client->_post(
             '/finduser', IO::String->new($request),
@@ -57,7 +57,7 @@ SKIP: {
     ( $host, $url, $query ) = expectForm( $res, '#', undef, 'uid', 'cn' );
     ok(
         $res->[2]->[0] =~
-m%<input id="spoofIdfield" name="spoofId" type="text" class="form-control" value="" autocomplete="off"%,
+m%<input name="spoofId" type="text" class="form-control" value="" autocomplete="off" trplaceholder="spoofId" aria-required="false"%,
         'value=""'
     ) or explain( $res->[2]->[0], 'value=""' );
 
@@ -81,12 +81,12 @@ m%<input id="spoofIdfield" name="spoofId" type="text" class="form-control" value
     ) or explain( $res->[2]->[0], 'Search for an account' );
     ok(
         $res->[2]->[0] =~
-m%<input id="findUser_uid" name="uid" type="text" autocomplete="off" class="form-control" placeholder="Login" />%,
+m%<input id="findUser_uid" name="uid" type="text" autocomplete="off" class="form-control" aria-label="Login" placeholder="Login" />%,
         'id="findUser_uid"'
     ) or explain( $res->[2]->[0], 'id="findUser_uid"' );
     ok(
         $res->[2]->[0] =~
-m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-control" placeholder="Name" />%,
+m%<input id="findUser_cn" name="cn" type="text" autocomplete="off" class="form-control" aria-label="Name" placeholder="Name" />%,
         'id="findUser_cn"'
     ) or explain( $res->[2]->[0], 'id="findUser_cn"' );
 

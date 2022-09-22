@@ -13,7 +13,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Common::Module';
 
-our $VERSION = '2.0.11';
+our $VERSION = '2.0.15';
 
 # PROPERTIES
 
@@ -38,25 +38,21 @@ sub newLdap {
     my $self = $_[0];
     my $ldap;
 
-    # Build object and test LDAP connexion
-    unless (
+    # Build object and test LDAP connection
+    $self->logger->debug( "Try to build new LDAP connection with: $self->{conf}->{ldapServer}" );
+
+    return undef
+      unless (
         $ldap = Lemonldap::NG::Portal::Lib::Net::LDAP->new(
             { p => $self->{p}, conf => $self->{conf} }
         )
-      )
-    {
-        $self->logger->error("LDAP initialization error: $@");
-        return undef;
-    }
+      );
 
     # Test connection
     my $msg = $ldap->bind;
-    if ( $msg->code ) {
-        $self->logger->error( 'LDAP test has failed: ' . $msg->error );
-    }
-    elsif ( $self->{conf}->{ldapPpolicyControl} and not $ldap->loadPP() ) {
-        $self->logger->error("LDAP password policy error");
-    }
+    $self->logger->error( 'LDAP test has failed: ' . $msg->error )
+      if $msg->code;
+
     return $ldap;
 }
 
@@ -131,8 +127,7 @@ sub getUser {
 
     $self->validateLdap;
     return PE_LDAPCONNECTFAILED unless $self->ldap;
-
-    $self->bind();
+    return PE_LDAPERROR         unless $self->bind();
 
     my $mesg = $self->ldap->search(
         base   => $self->conf->{ldapBase},
@@ -179,8 +174,10 @@ sub findUser {
     $self->validateLdap;
     return PE_LDAPCONNECTFAILED unless $self->ldap;
 
-    $self->findUserFilter =~ /\bobjectClass=(\w+)\b/;
-    my $filter   = "(&(objectClass=$1)";
+    my $filter =
+      $self->findUserFilter =~ /\bobjectClass=(\w+)\b/
+      ? "(&(objectClass=$1)"
+      : '(&';
     my $wildcard = $self->conf->{findUserWildcard};
     $self->logger->info("LDAP UserDB with wildcard ($wildcard)") if $wildcard;
     foreach (@$searching) {
@@ -198,11 +195,12 @@ sub findUser {
 
     $self->bind();
     my $mesg = $self->ldap->search(
-        base   => $self->conf->{ldapBase},
-        scope  => 'sub',
-        filter => $filter,
-        deref  => $self->conf->{ldapSearchDeref} || 'find',
-        attrs  => $self->attrs,
+        base      => $self->conf->{ldapBase},
+        scope     => 'sub',
+        filter    => $filter,
+        deref     => $self->conf->{ldapSearchDeref} || 'find',
+        attrs     => $self->attrs,
+        sizelimit => 50
     );
 
     if ( $mesg->code() != 0 ) {
@@ -217,9 +215,10 @@ sub findUser {
         my $rank = int( rand( $mesg->count() ) );
         $self->logger->debug("Demo UserDB random rank: $rank");
         my $entry =
-          ( $mesg->entry($rank)->dn() =~ /\b(?:uid|sAMAccountName)=(\w+?)\b/ )
-          [0];
-        $self->userLogger->info("FindUser: LDAP UserDB returns $entry");
+          ( $mesg->entry($rank)->dn() =~ /\b(?:uid|sAMAccountName)\x3d(.+?),/ )
+          [0] || '';
+        $self->userLogger->info("FindUser: LDAP UserDB returns $entry")
+          if $entry;
         $req->data->{findUser} = $entry;
         return PE_OK;
     }
@@ -230,6 +229,10 @@ sub findUser {
 # Validate LDAP connection before use
 sub validateLdap {
     my ($self) = @_;
+    local $SIG{'PIPE'} = sub {
+        $self->logger->info("Reconnecting to LDAP server due to broken socket");
+    };
+
     unless ($self->ldap
         and $self->ldap->root_dse( attrs => ['supportedLDAPVersion'] ) )
     {

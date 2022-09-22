@@ -14,7 +14,7 @@
 
 package Lemonldap::NG::Manager::Build::CTrees;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.15';
 
 sub cTrees {
     return {
@@ -30,7 +30,8 @@ sub cTrees {
                     'vhostPort',          'vhostHttps',
                     'vhostMaintenance',   'vhostAliases',
                     'vhostAccessToTrace', 'vhostType',
-                    'vhostAuthnLevel',    'vhostServiceTokenTTL'
+                    'vhostAuthnLevel',    'vhostDevOpsRulesUrl',
+                    'vhostServiceTokenTTL'
                 ],
             },
         ],
@@ -81,7 +82,6 @@ sub cTrees {
                 help  => 'authsaml.html#options',
                 form  => 'simpleInputContainer',
                 nodes => [
-                    'samlIDPMetaDataOptionsResolutionRule',
                     'samlIDPMetaDataOptionsNameIDFormat',
                     'samlIDPMetaDataOptionsForceAuthn',
                     'samlIDPMetaDataOptionsIsPassive',
@@ -97,6 +97,7 @@ sub cTrees {
                 nodes => [
                     "samlIDPMetaDataOptionsDisplayName",
                     "samlIDPMetaDataOptionsIcon",
+                    'samlIDPMetaDataOptionsResolutionRule',
                     "samlIDPMetaDataOptionsSortNumber"
                 ]
             }
@@ -185,6 +186,7 @@ sub cTrees {
                 nodes => [
                     'oidcOPMetaDataOptionsDisplayName',
                     'oidcOPMetaDataOptionsIcon',
+                    'oidcOPMetaDataOptionsResolutionRule',
                     'oidcOPMetaDataOptionsSortNumber'
                 ]
             },
@@ -192,16 +194,18 @@ sub cTrees {
         oidcRPMetaDataNode => [
             'oidcRPMetaDataExportedVars',
             'oidcRPMetaDataOptionsExtraClaims',
+            'oidcRPMetaDataScopeRules',
             {
                 title => 'oidcRPMetaDataOptions',
                 help  => 'idpopenidconnect.html#options',
-                nodes => [ {
+                nodes => [ 
+                {
                         title => 'oidcRPMetaDataOptionsBasic',
                         form  => 'simpleInputContainer',
                         nodes => [
+                            'oidcRPMetaDataOptionsPublic',
                             'oidcRPMetaDataOptionsClientID',
                             'oidcRPMetaDataOptionsClientSecret',
-                            'oidcRPMetaDataOptionsPublic',
                             'oidcRPMetaDataOptionsRedirectUris',
                         ]
                     },
@@ -210,12 +214,12 @@ sub cTrees {
                         form  => 'simpleInputContainer',
                         nodes => [
                             'oidcRPMetaDataOptionsBypassConsent',
-                            'oidcRPMetaDataOptionsUserIDAttr',
                             'oidcRPMetaDataOptionsIDTokenForceClaims',
                             'oidcRPMetaDataOptionsAccessTokenJWT',
                             'oidcRPMetaDataOptionsAccessTokenClaims',
-                            'oidcRPMetaDataOptionsAdditionalAudiences',
                             'oidcRPMetaDataOptionsRefreshToken',
+                            'oidcRPMetaDataOptionsUserIDAttr',
+                            'oidcRPMetaDataOptionsAdditionalAudiences',
                         ]
                     },
                     {
@@ -224,6 +228,7 @@ sub cTrees {
                         nodes => [
                             'oidcRPMetaDataOptionsIDTokenSignAlg',
                             'oidcRPMetaDataOptionsAccessTokenSignAlg',
+                            'oidcRPMetaDataOptionsUserInfoSignAlg',
                             'oidcRPMetaDataOptionsRequirePKCE',
                             'oidcRPMetaDataOptionsAllowOffline',
                             'oidcRPMetaDataOptionsAllowPasswordGrant',
@@ -246,16 +251,16 @@ sub cTrees {
                         title => 'logout',
                         form  => 'simpleInputContainer',
                         nodes => [
-                            'oidcRPMetaDataOptionsPostLogoutRedirectUris',
-                            'oidcRPMetaDataOptionsLogoutUrl',
-                            'oidcRPMetaDataOptionsLogoutType',
+                            'oidcRPMetaDataOptionsLogoutBypassConfirm',
                             'oidcRPMetaDataOptionsLogoutSessionRequired',
+                            'oidcRPMetaDataOptionsLogoutType',
+                            'oidcRPMetaDataOptionsLogoutUrl',
+                            'oidcRPMetaDataOptionsPostLogoutRedirectUris',
                         ]
                     },
                 ]
             },
             'oidcRPMetaDataMacros',
-            'oidcRPMetaDataScopeRules',
             {
                 title => 'oidcRPMetaDataOptionsDisplay',
                 form  => 'simpleInputContainer',
@@ -283,6 +288,7 @@ sub cTrees {
                 nodes => [
                     'casSrvMetaDataOptionsDisplayName',
                     'casSrvMetaDataOptionsIcon',
+                    'casSrvMetaDataOptionsResolutionRule',
                     'casSrvMetaDataOptionsSortNumber',
                 ]
             },

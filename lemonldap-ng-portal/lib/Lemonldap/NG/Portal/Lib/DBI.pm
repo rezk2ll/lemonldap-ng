@@ -12,7 +12,7 @@ use Mouse;
 
 extends 'Lemonldap::NG::Common::Module';
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.0.14';
 
 # PROPERTIES
 
@@ -92,26 +92,28 @@ sub init {
 sub hash_password {
     my ( $self, $password, $hash ) = @_;
     my $dbsalt;
-    if ( $hash =~ /^(md5|sha|sha1)$/i ) {
-        $self->logger->debug( "Using " . uc($hash) . " to hash password" );
-        return uc($hash) . "($password)";
-    }
+
     # If encrypt hash: We need to give a salt and algorithm as second parameter.
     # A unix salted password string starts with algorithm,
     # then salt and ends with the hash.
     # $6$ telling encrypt that we want sha512...
-    if ( $hash =~ /^(encrypt)$/i ) {
+    if ( $hash =~ /^(encrypt6)$/i ) {
         # Lets get salt
         $dbsalt = $self->gen_salt_text();
         $self->logger->debug( "Using " . uc($hash) . " to hash password" );
         # Build the prefix of the unix password string.
         return uc($hash) . "($password,'\$6\$$dbsalt')";
     }
-    else {
-        $self->logger->notice(
-            "No valid password hash, using clear text for password");
-        return $password;
+
+    # Non salted Password
+    if ($hash) {
+        $self->logger->debug( "Using " . uc($hash) . " to hash password" );
+        return uc($hash) . "($password)";
     }
+
+    $self->logger->debug("No password hash, using clear text for password");
+    return $password;
+
 
 }
 
@@ -259,9 +261,9 @@ sub gen_salt {
     return $dbsalt;
 }
 
-## @method protected Lemonldap::NG::Portal::_DBI gen_salt()
+## @method protected Lemonldap::NG::Portal::_DBI gen_salt_text()
 # Generate 16 bytes of text random salt
-# @return generated salt
+# @return generated salt text
 sub gen_salt_text {
     my $self = shift;
     my $dbsalt;

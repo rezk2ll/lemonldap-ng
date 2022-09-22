@@ -60,7 +60,7 @@ attribute you see there can be used in a rule!
 ::
 
    $cn =~ /^Doctor.*/i
-   $email !~ /@spam.com$/
+   $email !~ /\@spam.com$/
 
 -  Filtering on Authentication Level
 

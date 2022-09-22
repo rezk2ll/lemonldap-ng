@@ -19,22 +19,22 @@ configuration file with the following content:
    # This example migrates psessions from the default File backend to a PostgreSQL database
    [sessions_from]
    storageModule = Apache::Session::File
-   storageModuleOptions = {    \\
-         'Directory' => '/var/lib/lemonldap-ng/psessions',     \\
-         'LockDirectory' => '/var/lib/lemonldap-ng/psessions/lock', \\
+   storageModuleOptions = {    \
+         'Directory' => '/var/lib/lemonldap-ng/psessions',     \
+         'LockDirectory' => '/var/lib/lemonldap-ng/psessions/lock', \
    }
    # Only convert some session types
    # sessionKind = Persistent, SSO
 
    [sessions_to]
    storageModule = Apache::Session::Browseable::Postgres
-   storageModuleOptions = {    \\
-       'DataSource' => 'DBI:Pg:database=lemonldapdb;host=pg.example.com', \\
-       'UserName' => 'lemonldaplogin', \\
-       'Password' => 'lemonldappw', \\
-       'Commit' => 1, \\
-       'Index' => 'ipAddr _whatToTrace user', \\
-       'TableName' => 'psessions', \\
+   storageModuleOptions = {    \
+       'DataSource' => 'DBI:Pg:database=lemonldapdb;host=pg.example.com', \
+       'UserName' => 'lemonldaplogin', \
+       'Password' => 'lemonldappw', \
+       'Commit' => 1, \
+       'Index' => 'ipAddr _whatToTrace user', \
+       'TableName' => 'psessions', \
    }
 
 Invocation
@@ -45,6 +45,8 @@ Invocation
 Options:
 
 -  ``-c``: job configuration file (mandatory)
+-  ``-r oldkey=newkey``: rename session keys during conversion (optional, can be given multiple times)
+-  ``-x key``: remove session keys during conversion (optional, can be given multiple times)
 -  ``-i``: ignore errors. By default errors will stop the script
    execution
 -  ``-d``: print debugging output

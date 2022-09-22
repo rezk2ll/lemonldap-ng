@@ -30,6 +30,7 @@ theses :
 * **OAUTH2_USERNAME_MAP**: ``sub``
 * **OAUTH2_FULLNAME_MAP**: ``name``
 * **OAUTH2_EMAIL_MAP**: ``email``
+* **OAUTH2_REQUEST_PERMISSIONS**: ``openid profile email``
 
 
 .. danger::

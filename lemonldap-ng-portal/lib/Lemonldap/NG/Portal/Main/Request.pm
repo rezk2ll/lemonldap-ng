@@ -7,7 +7,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants ':all';
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Common::PSGI::Request';
 
@@ -74,7 +74,10 @@ has lockTime => ( is => 'rw' );
 
 # Security
 #
-# Captcha
+# Captcha HTML code to display in forms
+has captchaHtml => ( is => 'rw' );
+
+# DEPRECATED: 2.0 captcha compatibility
 has captcha => ( is => 'rw' );
 
 # Token
@@ -85,9 +88,16 @@ has token => ( is => 'rw' );
 has wantErrorRender => ( is => 'rw' );
 
 # Error type
+
+sub error_role {
+    my $req = shift;
+    return $req->error_type(@_) eq 'negative' ? 'alert' : 'status';
+}
+
 sub error_type {
     my $req  = shift;
     my $code = shift || $req->error;
+    $req->error($code);
 
     # Positive errors
     return "positive"
@@ -313,7 +323,7 @@ L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
 =head1 DOWNLOAD
 
 Lemonldap::NG is available at
-L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+L<https://lemonldap-ng.org/download>
 
 =head1 COPYRIGHT AND LICENSE
 

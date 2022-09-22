@@ -8,13 +8,15 @@ LemonLDAP::NG TOTP registration script
   var displayError, getKey, setMsg, token, verify;
 
   setMsg = function(msg, level) {
+    $('#msg').attr('trspan', msg);
     $('#msg').html(window.translate(msg));
     $('#color').removeClass('message-positive message-warning message-danger alert-success alert-warning alert-danger');
     $('#color').addClass("message-" + level);
     if (level === 'positive') {
       level = 'success';
     }
-    return $('#color').addClass("alert-" + level);
+    $('#color').addClass("alert-" + level);
+    return $('#msg').attr('role', (level === 'danger' ? 'alert' : 'status'));
   };
 
   displayError = function(j, status, err) {
@@ -30,18 +32,15 @@ LemonLDAP::NG TOTP registration script
 
   token = '';
 
-  getKey = function(reset) {
+  getKey = function() {
     setMsg('yourTotpKey', 'warning');
     return $.ajax({
       type: "POST",
       url: portal + "/2fregisters/totp/getkey",
       dataType: 'json',
-      data: {
-        newkey: reset
-      },
       error: displayError,
       success: function(data) {
-        var qr, s;
+        var qr, s, secret;
         if (data.error) {
           if (data.error.match(/totpExistingKey/)) {
             $("#divToHide").hide();
@@ -64,7 +63,8 @@ LemonLDAP::NG TOTP registration script
           value: s,
           size: 150
         });
-        $('#serialized').text(s);
+        secret = data.secret || "";
+        $('#secret').text(secret.toUpperCase().replace(/(.{4})/g, '$1 ').trim());
         if (data.newkey) {
           setMsg('yourNewTotpKey', 'warning');
         } else {
@@ -79,7 +79,8 @@ LemonLDAP::NG TOTP registration script
     var val;
     val = $('#code').val();
     if (!val) {
-      return setMsg('fillTheForm', 'warning');
+      setMsg('totpMissingCode', 'warning');
+      return $("#code").focus();
     } else {
       return $.ajax({
         type: "POST",
@@ -99,6 +100,11 @@ LemonLDAP::NG TOTP registration script
               return setMsg(data.error, 'danger');
             }
           } else {
+            $(document).trigger("mfaAdded", [
+              {
+                "type": "totp"
+              }
+            ]);
             return setMsg('yourKeyIsRegistered', 'success');
           }
         }
@@ -107,10 +113,7 @@ LemonLDAP::NG TOTP registration script
   };
 
   $(document).ready(function() {
-    getKey(0);
-    $('#changekey').on('click', function() {
-      return getKey(1);
-    });
+    getKey();
     return $('#verify').on('click', function() {
       return verify();
     });

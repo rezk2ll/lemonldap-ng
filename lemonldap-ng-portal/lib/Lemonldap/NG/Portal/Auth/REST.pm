@@ -22,7 +22,7 @@ sub init {
 
     # Add warning in log
     unless ( $self->conf->{restAuthUrl} ) {
-        $self->logger->error('No Auth REST URL given');
+        $self->logger->error('No REST Authentication URL given');
         return 0;
     }
 

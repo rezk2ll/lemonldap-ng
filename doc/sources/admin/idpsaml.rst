@@ -58,6 +58,8 @@ IDP related metadata.
 In both cases, the entityID of the LemonLDAP::NG server is
 http://auth.example.com/saml/metadata
 
+.. _samlidp-register-sp:
+
 Register partner Service Provider on LemonLDAP::NG
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -95,7 +97,7 @@ For each attribute, you can set:
 -  **Mandatory**: if set to "On", then this attribute is required to
    build the SAML response, an error will displayed if there is no value
    for it. Optional attribute will be sent only if there is a value
-   associated. Else it just will be sent trough an attribute response,
+   associated. Else it just will be sent through an attribute response,
    if explicitly requested in an attribute request.
 -  **Format**: optional, SAML attribute format.
 
@@ -169,8 +171,8 @@ Security
    NameID or Assertion).
 -  **Enable use of IDP initiated URL**: set to ``On`` to enable IDP
    Initiated URL on this SP.
--  **Authentication Level**: required authentication level to access this SP
--  **Access Rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this SP
+-  **Authentication level**: required authentication level to access this SP
+-  **Access rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this SP
 
 Extra variables
 ^^^^^^^^^^^^^^^
@@ -190,14 +192,20 @@ IDP Initiated mode
 The IDP Initiated URL is the SSO SAML URL with GET
 parameters:
 
--  IDPInitiated: 1
--  One of:
+- ``IDPInitiated``: ``1``
+- One of:
 
-   -  sp: SP entity ID
-   -  spConfKey: SP configuration key
+  - ``sp``: Service Provider entity ID
+  - ``spConfKey``: Service Provider configuration key
 
 For example:
 http://auth.example.com/saml/singleSignOn?IDPInitiated=1&spConfKey=simplesamlphp
+
+- Optionally, if you may also specify, in addition to ``sp`` or ``spConfKey``:
+
+  - ``spDest``: URL of Service Provider's AssertionConsumerService
+
+The URL specified in ``spDest`` *must* be present in the Service Provider metadata registered in LemonLDAP::NG. This is only useful if your Service Provider is reachable over multiple URLs.
 
 Macros
 ^^^^^^

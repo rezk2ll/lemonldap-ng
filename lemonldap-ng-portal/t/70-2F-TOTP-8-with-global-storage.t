@@ -3,7 +3,7 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 27;
+my $maintests = 28;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -137,7 +137,7 @@ SKIP: {
     # Generate TOTP with an external application to validate LLNG TOTP formula
     my $oath = Authen::OATH->new( digits => 8 );
     ok( $code = $oath->totp($key), 'Ext. App Code' );
-    ok( $code == $totp, 'Both TOTP match' )
+    ok( $code == $totp,            'Both TOTP match' )
       or explain( [ $code, $totp ], 'LLNG and Ext. App TOTP mismatch' );
 
     $query =~ s/code=/code=$code/;
@@ -186,10 +186,13 @@ SKIP: {
         ),
         'Post code'
     );
-    ( $host, $url, $query ) =
-      expectForm( $res, '#', undef, 'user', 'password', 'token' );
     ok( $res->[2]->[0] =~ /<span trmsg="82"><\/span>/, 'Token expired' )
       or print STDERR Dumper( $res->[2]->[0] );
+    unlike(
+        $res->[2]->[0],
+        qr/input id="userfield"/,
+        'Login form is not displayed'
+    );
 
     # Try to sign-in
     ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Menu', );

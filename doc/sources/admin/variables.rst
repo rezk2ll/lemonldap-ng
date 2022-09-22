@@ -46,6 +46,7 @@ Key           Description
 \_auth        Authentication module
 \_userDB      User module
 \_passwordDB  Password module
+\_2f          Second factor (if 2FA was used)
 \_issuerDB    Issuer module (can be multivalued)
 \_authChoice  User choice done if :doc:`authentication choice<authchoice>` was used
 \_authMulti   Full name of authentication module (with ``#label``) used in Multi
@@ -55,7 +56,7 @@ Key           Description
 Connection
 ----------
 
-Datas concerning the first connection to the portal
+Data concerning the first connection to the portal
 
 ========== ========================================================================================================================================
 Key        Description
@@ -68,7 +69,7 @@ ipAddr     IP of the user (special care must be taken is you run the portal :doc
 Authentication
 --------------
 
-Datas around the authentication process.
+Data around the authentication process.
 
 =================== =========================================================================================================
 Key                 Description
@@ -94,7 +95,7 @@ Key              Description
 SAML
 ----
 
-Datas related to SAML protocol
+Data related to SAML protocol
 
 =================== ================================================
 Key                 Description
@@ -141,21 +142,23 @@ OpenID
 ================ =============================================
 Key              Description
 ================ =============================================
-\_openid\_\ *id* Consent to share attribute *id* trough OpenID
+\_openid\_\ *id* Consent to share attribute *id* through OpenID
 ================ =============================================
 
 OpenID Connect
 --------------
 
-============================ ===============================================
+============================ ======================================================================
 Key                          Description
-============================ ===============================================
+============================ ======================================================================
 \_oidc_id_token              ID Token
 \_oidc_OP                    Configuration key of OP used for authentication
 \_oidc_access_token          OAuth2 Access Token used to get UserInfo data
+\_oidc_access_token_eol      Timestamp after which the Access Token should no longer be valid
+\_oidc_refresh_token         OAuth2 Refresh Token. This should never be transmitted to applications
 \_oidc_consent_scope\_\ *rp* Scope for which consent was given for RP *rp*
 \_oidc_consent_time\_\ *rp*  Time when consent was given for RP *rp*
-============================ ===============================================
+============================ ======================================================================
 
 Other
 -----

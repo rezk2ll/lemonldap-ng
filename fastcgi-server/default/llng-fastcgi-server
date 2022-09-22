@@ -1,13 +1,13 @@
 # Number of process (default: 7)
 #NPROC = 7
 
-# Unix socket to listen to
+# Socket to listen to (UDS or TCP)
 SOCKET=__FASTCGISOCKDIR__/llng-fastcgi.sock
 
 # Pid file
 PID=__FASTCGISOCKDIR__/llng-fastcgi-server.pid
 
-# User and GROUP
+# USER and GROUP
 USER=__USER__
 GROUP=__GROUP__
 

@@ -7,11 +7,11 @@ use Safe;
 extends 'Lemonldap::NG::Portal::Lib::Wrapper';
 with 'Lemonldap::NG::Portal::Lib::OverConf';
 
-our $VERSION = '2.0.11';
+our $VERSION = '2.0.14';
 
-has modules => ( is => 'rw', default => sub { {} } );
-has rules   => ( is => 'rw', default => sub { {} } );
-has type    => ( is => 'rw' );
+has modules    => ( is => 'rw', default => sub { {} } );
+has rules      => ( is => 'rw', default => sub { {} } );
+has type       => ( is => 'rw' );
 has catch      => ( is => 'rw', default => sub { {} } );
 has sessionKey => ( is => 'ro', default => '_choice' );
 
@@ -117,6 +117,15 @@ sub checkChoice {
 
     unless ($name) {
 
+        # Set by OAuth Resource Owner grant // RESTServer pwdCheck
+        if ( $req->data->{_pwdCheck} and $self->{conf}->{authChoiceAuthBasic} )
+        {
+            $name = $self->{conf}->{authChoiceAuthBasic};
+        }
+    }
+
+    unless ($name) {
+
         # Check with other methods
         $name ||=
              $req->data->{findUserChoice}
@@ -206,7 +215,7 @@ sub _buildAuthLoop {
             if ( $auth and $userDB and $passwordDB ) {
 
                 # Default URL
-                $req->{cspFormAction} ||= '';
+                $req->data->{cspFormAction} ||= {};
                 if (
                     defined $url
                     and not $self->checkXSSAttack( 'URI',
@@ -215,11 +224,9 @@ sub _buildAuthLoop {
                     q%^(https?://)?[^\s/.?#$].[^\s]+$% # URL must be well formatted
                   )
                 {
-                    #$url .= $req->env->{'REQUEST_URI'};
 
-                    # Avoid append same URL
-                    $req->{cspFormAction} .= " $url"
-                      unless $req->{cspFormAction} =~ qr%\b$url\b%;
+                    my $csp_uri = $self->cspGetHost($url);
+                    $req->data->{cspFormAction}->{$csp_uri} = 1;
                 }
                 else {
                     $url .= '#';
@@ -237,7 +244,7 @@ sub _buildAuthLoop {
                 # Get displayType for this module
                 no strict 'refs';
                 my $displayType = eval {
-                    "Lemonldap::NG::Portal::Auth::${auth}"
+                    $self->_authentication->modules->{$_}
                       ->can('getDisplayType')->( $self, $req );
                 } || 'logo';
 
@@ -245,10 +252,8 @@ sub _buildAuthLoop {
                     "Display type $displayType for module $auth");
                 $optionsLoop->{$displayType} = 1;
                 my $logo = $_;
-                if ( $auth eq 'Custom' ) {
-                    $logo =
-                      ( $self->{conf}->{customAuth} =~ /::(\w+)$/ )[0];
-                }
+
+                my $foundLogo = 0;
 
                 # If displayType is logo, check if key.png is available
                 if (  -e $self->conf->{templateDir}
@@ -257,9 +262,28 @@ sub _buildAuthLoop {
                     . ".png" )
                 {
                     $optionsLoop->{logoFile} = $logo . ".png";
+                    $foundLogo = 1;
                 }
                 else {
                     $optionsLoop->{logoFile} = $auth . ".png";
+                }
+
+                # Compatibility, with Custom, try the module name if
+                # key was not found
+                if ( $auth eq 'Custom' and not $foundLogo ) {
+                    $logo =
+                      ( ( $self->{conf}->{customAuth} || "" ) =~ /::(\w+)$/ )
+                      [0];
+                    if (
+                        $logo
+                        and ( -e $self->conf->{templateDir}
+                            . "/../htdocs/static/common/modules/"
+                            . $logo
+                            . ".png" )
+                      )
+                    {
+                        $optionsLoop->{logoFile} = $logo . ".png";
+                    }
                 }
 
                 # Register item in loop

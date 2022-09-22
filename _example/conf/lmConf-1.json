@@ -85,8 +85,9 @@
    },
    "authentication" : "Demo",
    "cfgAuthor" : "The LemonLDAP::NG team",
+   "cfgDate" : "1627287638",
    "cfgNum" : 1,
-   "cfgVersion" : "2.0.9",
+   "cfgVersion" : "2.0.13",
    "cookieName" : "lemonldap",
    "demoExportedVars" : {
       "cn" : "cn",
@@ -127,7 +128,7 @@
          "default" : "accept"
       },
       "manager.__DNSDOMAIN__" : {
-         "(?#Configuration)^/(.*?\\.(fcgi|psgi)/)?(manager\\.html|confs/|$)" : "inGroup(\"timelords\")",
+         "(?#Configuration)^/(.*?\\.(fcgi|psgi)/)?(manager\\.html|confs|prx/|$)" : "inGroup(\"timelords\")",
          "(?#Notifications)/(.*?\\.(fcgi|psgi)/)?notifications" : "inGroup(\"timelords\") or $uid eq \"rtyler\"",
          "(?#Sessions)/(.*?\\.(fcgi|psgi)/)?sessions" : "inGroup(\"timelords\") or $uid eq \"rtyler\"",
          "default" : "inGroup(\"timelords\") or $uid eq \"rtyler\""

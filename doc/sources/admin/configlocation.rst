@@ -19,7 +19,7 @@ modules to access it.
     :ref:`here<start-configuration-database>`.
 
 By default, configuration is stored in :doc:`files<fileconfbackend>`, so
-access trough network is not possible. To allow this, use
+access through network is not possible. To allow this, use
 :doc:`SOAP<soapconfbackend>` for configuration access, or use a network
 service like :doc:`SQL database<sqlconfbackend>` or
 :doc:`LDAP directory<ldapconfbackend>`.
@@ -46,7 +46,7 @@ For example, to configure the ``File`` configuration backend:
 Manager
 -------
 
-Most of configuration can be done trough LemonLDAP::NG Manager (by
+Most of configuration can be done through LemonLDAP::NG Manager (by
 default http://manager.example.com).
 
 By default, Manager is protected to allow only the demonstration user
@@ -128,6 +128,21 @@ configuration.
        instanceName = LLNG_Demo
 
 
+.. tip::
+
+
+    It is possible to use environment variable placeholders anywhere in
+    configuration. Those placeholders will be replaced by each LLNG component
+    using environment variables set locally.
+    The format is: ``%SERVERENV:VariableName%``.
+    To enable this feature, you must edit ``lemonldap-ng.ini`` to set
+    ``useServerEnv`` value in [configuration] section:
+
+    .. code:: ini
+
+       [configuration]
+       useServerEnv = 1
+
 
 Manager API
 -----------
@@ -173,6 +188,11 @@ and is stored in the LemonLDAP::NG bin/ directory, for example
 
     This script must be run as root, it will then use the Apache
     user and group to access configuration.
+
+.. tip::
+
+    You can change the user and group by setting ``--user`` and
+    ``--group`` options in the command line.
 
 The script uses the ``editor`` system command, that links to your
 favorite editor. To change it:
@@ -276,6 +296,11 @@ You can use accessors (options) to change the behavior:
    configuration.
 -  -force: set it to 1 to save a configuration earlier than latest.
 
+Additional options:
+
+- --user=<user>: change user running the script
+- --group=<group>: change group running the script
+
 Some examples:
 
 ::
@@ -283,6 +308,7 @@ Some examples:
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -cfgNum 10 get exportedHeaders/test1.example.com
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set notification 1
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -sep ',' get macros,_whatToTrace
+   /usr/share/lemonldap-ng/bin/lemonldap-ng-cli get portal --user=nginx --group=nginx
 
 
 .. tip::

@@ -14,7 +14,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_IMPERSONATION_SERVICE_NOT_ALLOWED
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -40,7 +40,7 @@ has unrestrictedUsersRule => ( is => 'rw', default => sub { 0 } );
 
 sub init {
     my ($self) = @_;
-    $self->addAuthRoute( switchcontext => 'run',  ['POST'] )
+    $self->addAuthRoute( switchcontext => 'run', ['POST'] )
       ->addAuthRoute( switchcontext => 'display', ['GET'] );
 
     # Parse ContextSwitching rules
@@ -119,10 +119,6 @@ sub display {
 
     # Display form
     my $params = {
-        PORTAL        => $self->conf->{portal},
-        MAIN_LOGO     => $self->conf->{portalMainLogo},
-        SKIN          => $self->p->getSkin($req),
-        LANGS         => $self->conf->{showLanguages},
         MSG           => 'contextSwitching_ON',
         ALERTE        => 'alert-danger',
         IMPERSONATION => $self->conf->{contextSwitchingRule},
@@ -138,10 +134,10 @@ sub display {
 
 sub run {
     my ( $self, $req ) = @_;
-    my $statut = PE_OK;
-    my $realId = $req->userData->{ $self->conf->{whatToTrace} };
+    my $statut  = PE_OK;
+    my $realId  = $req->userData->{ $self->conf->{whatToTrace} };
     my $spoofId = $req->param('spoofId') || '';    # ContextSwitching required ?
-    my $unUser = $self->unrestrictedUsersRule->( $req, $req->userData ) || 0;
+    my $unUser  = $self->unrestrictedUsersRule->( $req, $req->userData ) || 0;
 
     # Check token
     if ( $self->ottRule->( $req, {} ) ) {

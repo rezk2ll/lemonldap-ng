@@ -1,7 +1,7 @@
 # Main running methods file
 package Lemonldap::NG::Handler::Main::Run;
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -139,7 +139,9 @@ sub run {
     }
 
     # Try to recover cookie and user session
-    if (    $id = $class->fetchId($req)
+    $id = $class->fetchId($req);
+    $class->data( {} ) unless ($id);
+    if (    $id
         and $session = $class->retrieveSession( $req, $id ) )
     {
 
@@ -225,6 +227,7 @@ sub run {
         $class->cleanHeaders($req);
         return $class->OK;
     }
+
     elsif ( $protection == $class->MAYSKIP
         and $class->grant( $req, $session, $uri, $cond ) eq '999_SKIP' )
     {
@@ -319,14 +322,13 @@ sub getLevel {
         $i++
       )
     {
-        if ( $uri =~ $class->tsv->{locationRegexp}->{$vhost}->[$i] ) {
+        if ( $uri && $uri =~ $class->tsv->{locationRegexp}->{$vhost}->[$i] ) {
             $level = $class->tsv->{locationAuthnLevel}->{$vhost}->[$i];
             last;
         }
     }
     if ($level) {
-        $class->logger->debug(
-            'Found AuthnLevel=' . $level . ' for "' . "$vhost$uri" . '"' );
+        $class->logger->debug("Found AuthnLevel=$level for \"$vhost$uri\"");
         return $level;
     }
     else {
@@ -343,10 +345,9 @@ sub getLevel {
 sub grant {
     my ( $class, $req, $session, $uri, $cond, $vhost ) = @_;
 
-    return $cond->( $req, $session ) if ($cond);
+    return $cond->( $req, $session ) if $cond;
 
     $vhost ||= $class->resolveAlias($req);
-
     my $level = $class->getLevel( $req, $uri );
 
     # Using VH authentification level if exists
@@ -356,9 +357,11 @@ sub grant {
                 "User authentication level = $session->{authenticationLevel}");
             $class->logger->debug("Required authentication level = $level");
             $class->logger->warn(
-"User rejected due to insufficient authentication level -> Session upgrade enabled"
-            );
-            $session->{_upgrade} = 1;
+                'User rejected due to insufficient authentication level');
+            if ( $class->tsv->{upgradeSession} ) {
+                $class->logger->warn(' -> Session upgrade enabled');
+                $session->{_upgrade} = 1;
+            }
             return 0;
         }
     }
@@ -501,7 +504,7 @@ sub fetchId {
       if $class->_isHttps( $req, $vhost );
     my $lookForHttpCookie = ( $class->tsv->{securedCookie} =~ /^(2|3)$/
           and not $class->_isHttps( $req, $vhost ) );
-    my $cn = $class->tsv->{cookieName};
+    my $cn    = $class->tsv->{cookieName};
     my $value = $lookForHttpCookie    # Avoid prefix and bad cookie name (#2417)
       ? ( $t =~ /(?<![-.~])\b${cn}http=([^,; ]+)/o ? $1 : 0 )
       : ( $t =~ /(?<![-.~])\b$cn=([^,; ]+)/o       ? $1 : 0 );
@@ -533,8 +536,8 @@ sub retrieveSession {
     #     (15 seconds)
     if (    defined $class->data->{_session_id}
         and $id eq $class->data->{_session_id}
-        and
-        ( $now - $class->dataUpdate < $class->tsv->{handlerInternalCache} ) )
+        and ( $now - $class->dataUpdate < $class->tsv->{handlerInternalCache} )
+      )
     {
         $class->logger->debug("Get session $id from Handler internal cache");
         return $class->data;
@@ -643,14 +646,10 @@ sub _getPort {
         return $class->tsv->{port}->{$vhost};
     }
     else {
-        if ( defined $class->tsv->{port}->{_}
-            and ( $class->tsv->{port}->{_} > 0 ) )
-        {
-            return $class->tsv->{port}->{_};
-        }
-        else {
-            return $req->port;
-        }
+        return ( defined $class->tsv->{port}->{_}
+              and ( $class->tsv->{port}->{_} > 0 ) )
+          ? $class->tsv->{port}->{_}
+          : $req->port;
     }
 }
 
@@ -667,14 +666,10 @@ sub _isHttps {
         return $class->tsv->{https}->{$vhost};
     }
     else {
-        if ( defined $class->tsv->{https}->{_}
-            and ( $class->tsv->{https}->{_} > -1 ) )
-        {
-            return $class->tsv->{https}->{_};
-        }
-        else {
-            return $req->secure;
-        }
+        return ( defined $class->tsv->{https}->{_}
+              and ( $class->tsv->{https}->{_} > -1 ) )
+          ? $class->tsv->{https}->{_}
+          : $req->secure;
     }
 }
 
@@ -712,9 +707,8 @@ sub isUnprotected {
         $i++
       )
     {
-        if ( $uri =~ $class->tsv->{locationRegexp}->{$vhost}->[$i] ) {
-            return $class->tsv->{locationProtection}->{$vhost}->[$i];
-        }
+        return $class->tsv->{locationProtection}->{$vhost}->[$i]
+          if ( $uri =~ $class->tsv->{locationRegexp}->{$vhost}->[$i] );
     }
     return $class->tsv->{defaultProtection}->{$vhost};
 }
@@ -731,10 +725,10 @@ sub sendHeaders {
           $class->tsv->{forgeHeaders}->{$vhost}->( $req, $session );
         foreach my $h ( sort keys %headers ) {
             if ( defined( my $v = $headers{$h} ) ) {
-                $class->logger->debug("Send header $h with value $v");
+                $class->logger->debug("Send header '$h' with value '$v'");
             }
             else {
-                $class->logger->debug("Send header $h with empty value");
+                $class->logger->debug("Send header '$h' with an empty value");
             }
         }
         $class->set_header_in( $req, %headers );
@@ -782,8 +776,8 @@ sub resolveAlias {
 
     $vhost =~ s/:\d+//;
     return $class->tsv->{vhostAlias}->{$vhost}
-      if ( $class->tsv->{vhostAlias}->{$vhost} );
-    return $vhost if ( $class->tsv->{defaultCondition}->{$vhost} );
+      if $class->tsv->{vhostAlias}->{$vhost};
+    return $vhost if $class->tsv->{defaultCondition}->{$vhost};
     foreach ( @{ $class->tsv->{vhostReg} } ) {
         return $_->[1] if $vhost =~ $_->[0];
     }
@@ -895,7 +889,9 @@ sub postJavascript {
     my $filler;
     foreach my $name ( keys %$data ) {
         use bytes;
-        my $value = "x" x bytes::length( $data->{$name} );
+        my @characterSet = ( '0' .. '9', 'A' .. 'Z', 'a' .. 'z' );
+        my $value        = join '' => map $characterSet[ rand @characterSet ],
+          1 .. bytes::length( $data->{$name} );
         $filler .=
 "form.find('input[name=\"$name\"], select[name=\"$name\"], textarea[name=\"$name\"]').val('$value')\n";
     }

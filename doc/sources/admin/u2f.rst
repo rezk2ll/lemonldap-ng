@@ -9,11 +9,13 @@ two-factor authentication using specialized USB or NFC devices.
 LLNG can propose to users to register their keys. When done, 2F
 registered users can not login without using their key.
 
+.. warning::
 
-.. tip::
-
-    Note that it's a second factor, not an authentication module.
-    Users are authenticated by both login form and U2F form.
+    Since February 2022, U2F is considered to be deprecated in Chrome and its
+    derivatives. Administrators must migrate to :doc:`WebAuthn <webauthn2f>`
+    instead. U2F security keys are compatible with WebAuthn but require a
+    :ref:`migration step <migrateu2ftowebauthn>` to be performed in
+    LemonLDAP::NG.
 
 Prerequisites and dependencies
 ------------------------------
@@ -43,20 +45,19 @@ In the manager (second factors), you just have to enable it:
 -  **Activation**: set it to "on"
 -  **Self registration**: set it to "on" if users are authorized to
    register their keys
+-  **Allow users to remove U2F key**: If enabled, users can unregister
+   enrolled U2F device
 -  **Authentication level**: you can overwrite here auth level for U2F
    registered users. Leave it blank keeps auth level provided by first
    authentication module *(default: 2 for user/password based modules)*.
    **It is recommended to set an higher value here if you want to give
    access to some apps only for enrolled users**
--  **Allow users to remove U2F key**: If enabled, users can unregister
-   enrolled U2F device.
--  **Lifetime**: Unlimited by default. Set a Time To Live in seconds.
-   TTL is checked at each login process if set. If TTL is expired,
-   relative 2F device is removed.
--  **Logo** (Optional): logo file *(in static/<skin> directory)*
 -  **Label** (Optional): label that should be displayed to the user on
    the choice screen
-
+-  **Logo** (Optional): logo file *(in static/<skin> directory)*
+-  **Lifetime** (Optional): Unlimited by default. Set a Time To Live in seconds.
+   TTL is checked at each login process if set. If TTL is expired,
+   relative 2F device is removed.
 
 .. attention::
 

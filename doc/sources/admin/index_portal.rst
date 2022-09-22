@@ -6,6 +6,7 @@ Portal configuration
 
    portal
    portalcustom
+   jqueryevents
    portalmenu
    portalservers
    captcha

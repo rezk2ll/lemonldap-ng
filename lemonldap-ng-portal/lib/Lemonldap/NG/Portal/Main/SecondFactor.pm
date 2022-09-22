@@ -5,12 +5,13 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
   PE_OK
+  PE_ERROR
   PE_NOTOKEN
   PE_TOKENEXPIRED
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.15.1';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -25,7 +26,8 @@ has ott => (
     default => sub {
         my $ott =
           $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        $ott->timeout( $_[0]->{conf}->{formTimeout} );
+        $ott->timeout( $_[0]->{conf}->{sfLoginTimeout}
+              || $_[0]->{conf}->{formTimeout} );
         return $ott;
     }
 );
@@ -45,7 +47,7 @@ has authnLevel => (
 sub init {
     my ($self) = @_;
 
-    # Set logo if overriden
+    # Set logo if overridden
     $self->logo( $self->conf->{ $self->prefix . "2fLogo" } )
       if ( $self->conf->{ $self->prefix . "2fLogo" } );
 
@@ -100,8 +102,13 @@ sub _verify {
     my $session;
     unless ( $session = $self->ott->getToken($token) ) {
         $self->userLogger->info('Token expired');
-        $self->setSecurity($req);
+        $req->noLoginDisplay(1);
         return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+    }
+    unless ( $session->{_2fRealSession} ) {
+        $self->logger->error("Invalid 2FA session token");
+        $req->noLoginDisplay(1);
+        return $self->p->do( $req, [ sub { PE_ERROR } ] );
     }
 
     # Launch second factor verification
@@ -114,6 +121,7 @@ sub _verify {
     $req->id( delete $req->sessionInfo->{_2fRealSession} );
     $req->urldc( delete $req->sessionInfo->{_2fUrldc} );
     $req->{sessionInfo}->{_utime} = delete $req->{sessionInfo}->{_2fUtime};
+    $req->{sessionInfo}->{_2f}    = $self->prefix;
 
     # Case error
     if ($res) {
@@ -165,7 +173,17 @@ sub _verify {
                 authenticationLevel => $l,
                 groups              => $req->sessionInfo->{groups},
                 hGroups             => $req->sessionInfo->{hGroups},
+                _2f                 => $self->prefix,
                 %macros
+            }
+        );
+    }
+    else {
+        # Only update _2f session key
+        $self->p->updateSession(
+            $req,
+            {
+                _2f => $self->prefix,
             }
         );
     }
@@ -322,7 +340,7 @@ L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
 =head1 DOWNLOAD
 
 Lemonldap::NG is available at
-L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+L<https://lemonldap-ng.org/download>
 
 =head1 COPYRIGHT AND LICENSE
 

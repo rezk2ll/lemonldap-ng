@@ -70,9 +70,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	$scope.currentSession = null
 	$scope.menu = menu
 	$scope.searchString = ''
-	$scope.U2FCheck = "1"
-	$scope.TOTPCheck = "1"
-	$scope.UBKCheck = "1"
+	$scope.sfatypes = {}
 
 	# Import translations functions
 	$scope.translateP = $translator.translateP
@@ -175,7 +173,6 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 						title: title
 						nodes: tmp
 			time = session._utime
-			id = session._session_id
 
 			# 1. Replace values if needed
 			for key, value of session
@@ -202,24 +199,26 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 				subres = []
 				for attr in attrs
 					if session[attr]
-						if session[attr].toString().match(/"type":\s*"(?:TOTP|U2F|UBK)"/)
-							subres.push
-								title: "type"
-								value: "name"
-								epoch: "date"
+						if attr == "_2fDevices" && session[attr]
 							array = JSON.parse(session[attr])
-							for sfDevice in array
-								for key, value of sfDevice
-									if key == 'type'
-										title = value
-									if key == 'name'
-										name = value
-									if key == 'epoch'
-										epoch = value
+							if array.length > 0
 								subres.push
-									title: title
-									value: name
-									epoch: epoch
+									title: "type"
+									value: "name"
+									epoch: "date"
+								for sfDevice in array
+									for key, value of sfDevice
+										if key == 'type'
+											title = value
+										if key == 'name'
+											name = value
+										if key == 'epoch'
+											epoch = value
+									subres.push
+										title: title
+										value: name
+										epoch: epoch
+										sfrow: true
 							delete session[attr]
 						else if session[attr].toString().match(/\w+/)
 							subres.push
@@ -236,7 +235,6 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 						nodes: subres
 			return {
 				_utime: time
-				id: id
 				nodes: res
 			}
 
@@ -244,6 +242,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		sessionId = scope.$modelValue.session
 		$http.get("#{scriptname}sfa/#{sessionType}/#{sessionId}").then (response) ->
 			$scope.currentSession = transformSession response.data
+			$scope.currentSession.id = sessionId
 		$scope.showT = false
 
 	$scope.localeDate = (s) ->
@@ -296,7 +295,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			over = 0
 
 		# Launch HTTP query
-		$http.get("#{scriptname}sfa/#{sessionType}?#{query}&U2FCheck=#{$scope.U2FCheck}&TOTPCheck=#{$scope.TOTPCheck}&UBKCheck=#{$scope.UBKCheck}").then (response) ->
+		$http.get("#{scriptname}sfa/#{sessionType}?#{query}"+Object.entries($scope.sfatypes).map((x) -> if x[1] then "&type=" + x[0] else "").join("")).then (response) ->
 			data = response.data
 			if data.result
 				for n in data.values
@@ -347,7 +346,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			over = 0
 
 		# Launch HTTP
-		$http.get("#{scriptname}sfa/#{sessionType}?_session_uid=#{$scope.searchString}*&groupBy=substr(_session_uid,#{$scope.searchString.length})&U2FCheck=#{$scope.U2FCheck}&TOTPCheck=#{$scope.TOTPCheck}&UBKCheck=#{$scope.UBKCheck}").then (response) ->
+		$http.get("#{scriptname}sfa/#{sessionType}?_session_uid=#{$scope.searchString}*&groupBy=substr(_session_uid,#{$scope.searchString.length})"+Object.entries($scope.sfatypes).map((x) -> if x[1] then "&type=" + x[0] else "").join("")).then (response) ->
 			data = response.data
 			if data.result
 				for n in data.values

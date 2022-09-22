@@ -1,8 +1,7 @@
 LL::NG as federation protocol proxy
 ===================================
 
-LL::NG can use federation protocols (SAML, CAS, OpenID) independently
-to:
+LL::NG can use federation protocols (SAML, CAS, OpenID) independently to:
 
 -  authenticate users
 -  provide identities to other systems
@@ -11,7 +10,7 @@ So you can configure it to authenticate users using a federation
 protocol and simultaneously to provide identities using other(s)
 federation protocols.
 
-Schemes tested:
+Tested schemes:
 
 -  SAML / OpenID-Connect:
 
@@ -30,8 +29,8 @@ Schemes tested:
       :doc:`CAS<idpcas>`/:doc:`SAML<authsaml>` proxy **<=>** SAML
       Identity Provider
 
-Note that OpenID-Connect consortium hasn't already defined single-logout
-initiated by OpenID-Connect Provider. LLNG will implement it when this
+Note that OpenID-Connect consortium has not already defined single-logout
+initiated by OpenID-Connect Provider. LL::NG will implement it when this
 standard will be published.
 
 

@@ -26,7 +26,7 @@ use JSON 'to_json';
 use Lemonldap::NG::Common::Conf::ReConstants;
 use Lemonldap::NG::Manager::Attributes;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.12';
 
 extends 'Lemonldap::NG::Common::Conf::Compact';
 
@@ -438,8 +438,8 @@ sub _scanNodes {
                         $self->_scanNodes($subNodes);
                     }
                 }
-                elsif (
-                    $target =~ /^oidc(?:O|R)PMetaData(?:ExportedVars|Macros|ScopeRules)$/ )
+                elsif ( $target =~
+                    /^oidc(?:O|R)PMetaData(?:ExportedVars|Macros|ScopeRules)$/ )
                 {
                     hdebug("  $target");
                     if ( $leaf->{cnodes} ) {
@@ -1411,7 +1411,7 @@ ticket.
 =head1 DOWNLOAD
 
 Lemonldap::NG is available at
-L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+L<https://lemonldap-ng.org/download>
 
 =head1 COPYRIGHT AND LICENSE
 

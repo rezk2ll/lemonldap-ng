@@ -3,7 +3,7 @@ use Lemonldap::NG::Common::JWT qw(getAccessTokenSessionId);
 
 use strict;
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.14';
 
 sub retrieveSession {
     my ( $class, $req, $id ) = @_;
@@ -11,16 +11,17 @@ sub retrieveSession {
 
     # Retrieve regular session if this is not an offline access token
     unless ($offlineId) {
-        my $data = {
-            %{
-                $class->Lemonldap::NG::Handler::Main::retrieveSession( $req,
-                    $id )
-            },
-            $class->_getTokenAttributes($req)
-        };
+        my $data =
+          $class->Lemonldap::NG::Handler::Main::retrieveSession( $req, $id );
+        if ( ref($data) eq "HASH" ) {
+            $data = { %{$data}, $class->_getTokenAttributes($req) };
 
-        # Update cache
-        $class->data($data);
+            # Update cache
+            $class->data($data);
+        }
+        else {
+            $req->data->{oauth2_error} = 'invalid_token';
+        }
         return $data;
     }
 
@@ -93,12 +94,17 @@ sub fetchId {
         return;
     }
     my $infos = $class->getOIDCInfos($access_token_sid);
+    unless ($infos) {
+        $req->data->{oauth2_error} = 'invalid_token';
+        return;
+    }
 
     # Store scope and rpid for future session attributes
     if ( $infos->{rp} ) {
         my $rp = $infos->{rp};
-        $req->data->{_scope}         = $infos->{scope};
-        $req->data->{_clientConfKey} = $rp;
+        $req->data->{_scope}           = $infos->{scope};
+        $req->data->{_oidc_grant_type} = $infos->{grant_type};
+        $req->data->{_clientConfKey}   = $rp;
         if (    $class->tsv->{oauth2Options}->{$rp}
             and $class->tsv->{oauth2Options}->{$rp}->{clientId} )
         {
@@ -147,6 +153,20 @@ sub getOIDCInfos {
     unless ( $oidcSession->error ) {
         $class->logger->debug("Get OIDC session $id");
 
+        # Verify that session is valid
+        unless ( $oidcSession->data->{_utime} ) {
+            $class->logger->error("_utime missing from Access Token session");
+            return;
+        }
+
+        my $ttl = $class->tsv->{timeout} - time + $oidcSession->data->{_utime};
+        $class->logger->debug( "Session TTL = " . $ttl );
+
+        if ( time - $oidcSession->data->{_utime} > $class->tsv->{timeout} ) {
+            $class->logger->info("Access Token session $id expired");
+            return;
+        }
+
         $infos = { %{ $oidcSession->data } };
     }
     else {
@@ -174,7 +194,7 @@ sub goToPortal {
 sub _getTokenAttributes {
     my ( $class, $req ) = @_;
     my %res;
-    for my $attr (qw/_scope _clientConfKey _clientId/) {
+    for my $attr (qw/_scope _clientConfKey _clientId _oidc_grant_type/) {
         if ( $req->data->{$attr} ) {
             $res{$attr} = $req->data->{$attr};
         }

@@ -7,10 +7,12 @@ is the faster shareable session backend
 Setup
 -----
 
-Install and launch a `Redis server <http://code.google.com/p/redis/>`__.
+Install and launch a `Redis server <https://redis.io/>`__.
 Install
-`Apache::Session::Browseable::Redis <https://metacpan.org/pod/Apache::Session::Redis>`__
+`Apache::Session::Browseable::Redis <https://metacpan.org/pod/Apache::Session::Browseable::Redis>`__
 Perl module.
+
+With Sentinel, make sure you are using at least version 1.3.8 of ``Apache::Session::Browseable``, this might require installing it from Debian Backports or CPAN.
 
 In the manager: set
 `Apache::Session::Browseable::Redis <https://metacpan.org/pod/Apache::Session::Browseable::Redis>`__
@@ -28,8 +30,9 @@ Name          Comment                     Example
 **server**    Redis server @ IP:PORT      127.0.0.1:6379
 **sock**      Redis server @ unix socket  unix:/path/to/redis.sock
 **sentinels** Redis sentinels list        127.0.0.1:26379,127.0.0.2:26379,127.0.0.3:26379
+**service**   Sentinel service name       mymaster
 **password**  password (== requirepass)   ChangeMe
-**select**    Redis DB                    1
+**database**  Redis DB                    1
 **Index**     Fields to index             refer to :ref:`fieldstoindex`
 ============= =========================== ===============================================
 

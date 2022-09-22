@@ -11,8 +11,8 @@ extends 'Lemonldap::NG::Common::PSGI';
 
 # Properties
 has 'routes' => (
-    is  => 'rw',
-    isa => 'HashRef',
+    is      => 'rw',
+    isa     => 'HashRef',
     default =>
       sub { { GET => {}, POST => {}, PUT => {}, PATCH => {}, DELETE => {} } }
 );
@@ -56,7 +56,7 @@ sub genRoute {
         else {
             $dest ||= $word;
         }
-        if ( $dest =~ /^(.+)\.html$/ ) {
+        if ( $word =~ /^(.+)\.html$/ and $word eq $dest ) {
             my $tpl = $1 or die;
             $self->logger->debug("route $dest will use $tpl");
             $routes->{$word} = sub { $self->sendHtml( $_[1], $tpl ) };
@@ -305,8 +305,8 @@ the subroutine will be called with the word of path_info as second argument
 
 =item 'something.html':
 
-if $word finishes with '.html', then sendHtml() will be called with
-'something.tpl' as template name. In this case, $dest is not used.
+if $word finishes with '.html', and $dest is undef, then sendHtml() will be
+called with 'something.tpl' as template name.
 
 =back
 
@@ -369,7 +369,7 @@ L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
 =head1 DOWNLOAD
 
 Lemonldap::NG is available at
-L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+L<https://lemonldap-ng.org/download>
 
 =head1 COPYRIGHT AND LICENSE
 

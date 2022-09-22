@@ -7,6 +7,7 @@ package Lemonldap::NG::Portal::2F::U2F;
 use strict;
 use Mouse;
 use JSON qw(from_json to_json);
+use MIME::Base64 qw(decode_base64url);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
@@ -15,7 +16,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 extends qw(
   Lemonldap::NG::Portal::Main::SecondFactor
@@ -31,14 +32,11 @@ has logo   => ( is => 'rw', default => 'u2f.png' );
 sub init {
     my ($self) = @_;
 
-    # If self registration is enabled and "activation" is just set to
-    # "enabled", replace the rule to detect if user has registered its key
-    if (    $self->conf->{u2fSelfRegistration}
-        and $self->conf->{u2fActivation} eq '1' )
-    {
-        $self->conf->{u2fActivation} =
-          '$_2fDevices && $_2fDevices =~ /"type":\s*"U2F"/s';
-    }
+    # If "activation" is just set to "enabled",
+    # replace the rule to detect if user has registered its key
+    $self->conf->{u2fActivation} = 'has2f("U2F")'
+      if $self->conf->{u2fActivation} eq '1';
+
     return 0
       unless ( $self->Lemonldap::NG::Portal::Main::SecondFactor::init()
         and $self->Lemonldap::NG::Portal::Lib::U2F::init() );
@@ -186,6 +184,7 @@ sub fail {
                 MAIN_LOGO       => $self->conf->{portalMainLogo},
                 AUTH_ERROR      => $req->error,
                 AUTH_ERROR_TYPE => $req->error_type,
+                AUTH_ERROR_ROLE => $req->error_role,
                 SKIN            => $self->p->getSkin($req),
                 FAILED          => 1
             }
@@ -224,7 +223,7 @@ sub loadUser {
                       . $_->{_userKey}
                       . " / _keyHandle = "
                       . $_->{_keyHandle} );
-                $_->{_userKey} = $self->decode_base64url( $_->{_userKey} );
+                $_->{_userKey} = decode_base64url( $_->{_userKey} );
                 push @u2fs, $_;
             }
         }

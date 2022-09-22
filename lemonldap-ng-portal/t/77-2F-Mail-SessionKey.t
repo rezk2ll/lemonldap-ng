@@ -17,7 +17,7 @@ my $client = LLNG::Manager::Test->new( {
             authentication   => 'Demo',
             userDB           => 'Same',
             mailSessionKey   => 'mail',
-            macros =>
+            macros           =>
               { mail2f => '"test\@example.com"', _whatToTrace => '$uid' },
             mail2fSessionKey => 'mail2f',
         }
@@ -42,7 +42,7 @@ my ( $host, $url, $query ) =
 
 ok(
     $res->[2]->[0] =~
-qr%<input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code" autocomplete="off" />%,
+qr%<input name="code" value="" type="text" class="form-control" id="extcode" trplaceholder="code" autocomplete="one-time-code" />%,
     'Found EXTCODE input'
 ) or print STDERR Dumper( $res->[2]->[0] );
 count(1);

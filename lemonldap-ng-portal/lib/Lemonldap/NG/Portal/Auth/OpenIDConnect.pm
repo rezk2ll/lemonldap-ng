@@ -3,14 +3,15 @@ package Lemonldap::NG::Portal::Auth::OpenIDConnect;
 use strict;
 use Mouse;
 use MIME::Base64 qw/encode_base64 decode_base64/;
+use Scalar::Util qw/looks_like_number/;
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
-  PE_ERROR
   PE_IDPCHOICE
+  PE_OIDC_AUTH_ERROR
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.15';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth
@@ -19,9 +20,8 @@ extends qw(
 
 # INTERFACE
 
-has opList   => ( is => 'rw', default => sub { [] } );
-has opNumber => ( is => 'rw', default => 0 );
-has path     => ( is => 'rw', default => 'oauth2' );
+has opList => ( is => 'rw', isa => 'ArrayRef', default => sub { [] } );
+has path => ( is => 'rw', default => 'oauth2' );
 
 use constant sessionKind => 'OIDC';
 
@@ -36,7 +36,6 @@ sub init {
         $self->logger->error("No OP configured");
         return 0;
     }
-    $self->opNumber( scalar @tab );
     my @list       = ();
     my $portalPath = $self->conf->{portal};
 
@@ -110,7 +109,7 @@ sub extractFormInfo {
             }
             else {
                 $self->userLogger->error("Unable to extract state $state");
-                return PE_ERROR;
+                return PE_OIDC_AUTH_ERROR;
             }
         }
 
@@ -118,11 +117,11 @@ sub extractFormInfo {
         my $op = $req->data->{_oidcOPCurrent};
 
         unless ($op) {
-            $self->userLogger->error("OpenID Provider not found");
-            return PE_ERROR;
+            $self->userLogger->error("OpenIDConnect Provider not found");
+            return PE_OIDC_AUTH_ERROR;
         }
 
-        $self->logger->debug("Using OpenID Provider $op");
+        $self->logger->debug("Using OpenIDConnect Provider $op");
 
         # Check error
         my $error = $req->param("error");
@@ -135,42 +134,45 @@ sub extractFormInfo {
               if $error_description;
             $self->logger->error("Error URI: $error_uri") if $error_uri;
 
-            return PE_ERROR;
+            return PE_OIDC_AUTH_ERROR;
         }
 
         # Get access_token and id_token
         my $code = $req->param("code");
-        my $auth_method =
-          $self->conf->{oidcOPMetaDataOptions}->{$op}
-          ->{oidcOPMetaDataOptionsTokenEndpointAuthMethod}
-          || 'client_secret_post';
 
         my $content =
-          $self->getAuthorizationCodeAccessToken( $req, $op, $code,
-            $auth_method );
-        return PE_ERROR unless $content;
+          $self->getAuthorizationCodeAccessToken( $req, $op, $code );
+        return PE_OIDC_AUTH_ERROR unless $content;
 
         my $token_response = $self->decodeTokenResponse($content);
 
         unless ($token_response) {
             $self->logger->error("Could not decode Token Response: $content");
-            return PE_ERROR;
+            return PE_OIDC_AUTH_ERROR;
         }
 
         # Check validity of token response
         unless ( $self->checkTokenResponseValidity($token_response) ) {
             $self->logger->error("Token response is not valid");
-            return PE_ERROR;
+            return PE_OIDC_AUTH_ERROR;
         }
         else {
             $self->logger->debug("Token response is valid");
         }
 
-        my $access_token = $token_response->{access_token};
-        my $id_token     = $token_response->{id_token};
+        my $access_token  = $token_response->{access_token};
+        my $expires_in    = $token_response->{expires_in};
+        my $id_token      = $token_response->{id_token};
+        my $refresh_token = $token_response->{refresh_token};
+
+        undef $expires_in unless looks_like_number($expires_in);
 
         $self->logger->debug("Access token: $access_token");
+        $self->logger->debug(
+            "Access token expires in: " . ( $expires_in || "<unknown>" ) );
         $self->logger->debug("ID token: $id_token");
+        $self->logger->debug(
+            "Refresh token: " . ( $refresh_token || "<none>" ) );
 
         # Verify JWT signature
         if ( $self->conf->{oidcOPMetaDataOptions}->{$op}
@@ -178,7 +180,7 @@ sub extractFormInfo {
         {
             unless ( $self->verifyJWTSignature( $id_token, $op ) ) {
                 $self->logger->error("JWT signature verification failed");
-                return PE_ERROR;
+                return PE_OIDC_AUTH_ERROR;
             }
             $self->logger->debug("JWT signature verified");
         }
@@ -190,8 +192,13 @@ sub extractFormInfo {
         unless ( defined $id_token_payload_hash ) {
             $self->logger->error(
                 "Could not decode incoming ID token: $id_token");
-            return PE_ERROR;
+            return PE_OIDC_AUTH_ERROR;
         }
+
+        # Call oidcGotIDToken hook
+        my $h = $self->p->processHook( $req, 'oidcGotIDToken',
+            $op, $id_token_payload_hash, );
+        return PE_OIDC_AUTH_ERROR if ( $h != PE_OK );
 
         # Check validity of Access Token (optional)
         my $at_hash = $id_token_payload_hash->{at_hash};
@@ -199,7 +206,7 @@ sub extractFormInfo {
             unless ( $self->verifyHash( $access_token, $at_hash, $id_token ) ) {
                 $self->userLogger->error(
                     "Access token hash verification failed");
-                return PE_ERROR;
+                return PE_OIDC_AUTH_ERROR;
             }
             $self->logger->debug("Access token hash verified");
         }
@@ -211,7 +218,7 @@ sub extractFormInfo {
         # Check validity of ID Token
         unless ( $self->checkIDTokenValidity( $op, $id_token_payload_hash ) ) {
             $self->userLogger->error('ID Token not valid');
-            return PE_ERROR;
+            return PE_OIDC_AUTH_ERROR;
         }
         else {
             $self->logger->debug('ID Token is valid');
@@ -221,8 +228,15 @@ sub extractFormInfo {
         my $user_id = $id_token_payload_hash->{sub};
 
         # Remember tokens
-        $req->data->{access_token} = $access_token;
-        $req->data->{id_token}     = $id_token;
+        $req->data->{access_token}  = $access_token;
+        $req->data->{refresh_token} = $refresh_token if $refresh_token;
+        $req->data->{id_token}      = $id_token;
+
+        # If access token TTL is given save expiration date
+        # (with security margin)
+        if ($expires_in) {
+            $req->data->{access_token_eol} = time + ( $expires_in * 0.9 );
+        }
 
         $self->logger->debug( "Found user_id: " . $user_id );
         $req->user($user_id);
@@ -237,21 +251,30 @@ sub extractFormInfo {
         $self->logger->debug("Redirecting user to OP list");
 
         # Auto select provider if there is only one
-        if ( $self->opNumber == 1 ) {
+        if ( @{ $self->opList } == 1 ) {
             $op = $self->opList->[0]->{val};
             $self->logger->debug("Selecting the only defined OP: $op");
         }
 
         else {
 
-            # IDP list
-            my $portalPath = $self->{conf}->{portal};
-            $portalPath =~ s#^https?://[^/]+/?#/#;
+            # Try to use OP resolution rules
+            foreach ( keys %{ $self->opRules } ) {
+                my $cond = $self->opRules->{$_} or next;
+                if ( $cond->( $req, $req->sessionInfo ) ) {
+                    $self->logger->debug("OP $_ selected from resolution rule");
+                    $op = $_;
+                    last;
+                }
+            }
 
-            $req->data->{list} = $self->opList;
+            unless ($op) {
 
-            $req->data->{login} = 1;
-            return PE_IDPCHOICE;
+                # display OP list
+                $req->data->{list}  = $self->opList;
+                $req->data->{login} = 1;
+                return PE_IDPCHOICE;
+            }
         }
     }
 
@@ -267,8 +290,13 @@ sub extractFormInfo {
     my $state = $self->storeState( $req, qw/urldc checkLogins _oidcOPCurrent/ );
 
     # Authorization Code Flow
-    $req->urldc(
-        $self->buildAuthorizationCodeAuthnRequest( $req, $op, $state ) );
+    my $authorization_request_uri =
+      $self->buildAuthorizationCodeAuthnRequest( $req, $op, $state );
+    unless ($authorization_request_uri) {
+        return PE_OIDC_AUTH_ERROR;
+    }
+
+    $req->urldc($authorization_request_uri);
 
     $self->logger->debug( "Redirect user to " . $req->{urldc} );
     $req->continue(1);
@@ -290,6 +318,16 @@ sub setAuthSessionInfo {
     $req->{sessionInfo}->{_oidc_OP} = $op;
     $req->{sessionInfo}->{_oidc_access_token} =
       $req->data->{access_token};
+
+    if ( $req->data->{refresh_token} ) {
+        $req->{sessionInfo}->{_oidc_refresh_token} =
+          $req->data->{refresh_token};
+    }
+
+    if ( $req->data->{access_token_eol} ) {
+        $req->{sessionInfo}->{_oidc_access_token_eol} =
+          $req->data->{access_token_eol};
+    }
 
     # Keep ID Token in session
     my $store_IDToken = $self->conf->{oidcOPMetaDataOptions}->{$op}

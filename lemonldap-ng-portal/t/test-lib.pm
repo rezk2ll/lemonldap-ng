@@ -56,11 +56,13 @@ C<LLNG::Manager::Test::_post()> call I<(see below)>.
 use strict;
 use Data::Dumper;
 use File::Find;
+use JSON;
 use LWP::UserAgent;
 use Time::Fake;
 use URI::Escape;
 use MIME::Base64;
 use Lemonldap::NG::Common::FormEncode;
+use Lemonldap::NG::Common::Util qw/getPSessionID/;
 
 #use 5.10.0;
 
@@ -184,6 +186,40 @@ sub getCache {
     );
 }
 
+sub getSession {
+    my $id           = shift;
+    my @sessionsOpts = (
+        storageModule        => "Apache::Session::File",
+        storageModuleOptions => {
+            Directory     => "$tmpDir",
+            LockDirectory => "$tmpDir/lock",
+        },
+        kind => 'SSO'
+    );
+
+    return Lemonldap::NG::Common::Session->new( {
+            @sessionsOpts, id => $id,
+        }
+    );
+}
+
+sub getPSession {
+    my $uid          = shift;
+    my @sessionsOpts = (
+        storageModule        => "Apache::Session::File",
+        storageModuleOptions => {
+            Directory     => "$tmpDir",
+            LockDirectory => "$tmpDir/lock",
+        },
+        kind => 'Persistent'
+    );
+
+    return Lemonldap::NG::Common::Session->new( {
+            @sessionsOpts, id => getPSessionID($uid),
+        }
+    );
+}
+
 =head4 expectRedirection( $res, $location )
 
 Verify that request result is a redirection to $location. $location can be:
@@ -202,6 +238,7 @@ matching strings are returned. Example:
 =cut
 
 sub expectRedirection {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $location ) = @_;
     ok( $res->[0] == 302, ' Get redirection' )
       or explain( $res->[0], 302 );
@@ -230,6 +267,8 @@ TODO: verify javascript
 =cut
 
 sub expectAutoPost {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+
     my @r      = expectForm(@_);
     my $method = pop @r;
     ok( $method =~ /^post$/i, ' Method is POST' ) or explain( $method, 'POST' );
@@ -261,6 +300,7 @@ in $query
 =cut
 
 sub expectForm {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $hostRe, $uriRe, @requiredFields ) = @_;
     expectOK($res);
     count(1);
@@ -309,6 +349,7 @@ m@<form.+?action="(?:(?:http://([^/]+))?(/.*?)?|(#))".+method="(post|get)"@is,
               m#<input.+?name="([^"]+)"[^>]+(?:value="([^"]*?)")?#gs,
             %fields
         );
+
         # Add textarea
         %fields = (
             $res->[2]->[0] =~
@@ -335,11 +376,46 @@ Verify that result has a C<Lm-Remote-User> header and value is $user
 =cut
 
 sub expectAuthenticatedAs {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $user ) = @_;
-    ok( getHeader( $res, 'Lm-Remote-User' ) eq $user,
-        " Authenticated as $user" )
-      or explain( $res->[1], "Lm-Remote-User => $user" );
+    is( getHeader( $res, 'Lm-Remote-User' ), $user, "Authenticated as $user" );
     count(1);
+}
+
+=head4 expectSessionAttributes($app,$id,%attributes)
+
+Verify that the session contains attributes with these values
+
+=cut
+
+sub expectSessionAttributes {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ( $app, $id, %attributes ) = @_;
+
+    my $res = getSessionAttributes( $app, $id );
+
+    for my $attr ( keys %attributes ) {
+        is( $res->{$attr}, $attributes{$attr},
+            "Session has correct value for $attr" );
+        count(1);
+    }
+}
+
+sub getSessionAttributes {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ( $app, $id ) = @_;
+    my $res;
+    ok(
+        $res = $app->_get("/sessions/global/$id"),
+        "Get session using restSessionServer"
+    );
+    count(1);
+    expectOK($res);
+    ok( $res = eval { from_json( $res->[2]->[0] ) },
+        "Deserialize session content" );
+    count(1);
+
+    return $res;
 }
 
 =head4 expectOK($res)
@@ -349,6 +425,7 @@ Verify that returned code is 200
 =cut
 
 sub expectOK {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ($res) = @_;
     ok( $res->[0] == 200, ' HTTP code is 200' ) or explain( $res, 200 );
     count(1);
@@ -361,6 +438,7 @@ Verify that the HTTP response contains valid JSON and returns the corresponding 
 =cut
 
 sub expectJSON {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ($res) = @_;
     is( $res->[0], 200, ' HTTP code is 200' ) or explain( $res, 200 );
     my %hdr = @{ $res->[1] };
@@ -374,6 +452,19 @@ sub expectJSON {
     return $json;
 }
 
+=head4 expectForbidden($res)
+
+Verify that returned code is 403.
+
+=cut
+
+sub expectForbidden {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ($res) = @_;
+    ok( $res->[0] == 403, ' HTTP code is 403' ) or explain( $res->[0], 403 );
+    count(1);
+}
+
 =head4 expectBadRequest($res)
 
 Verify that returned code is 400. Note that it works only for Ajax request
@@ -382,6 +473,7 @@ Verify that returned code is 400. Note that it works only for Ajax request
 =cut
 
 sub expectBadRequest {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ($res) = @_;
     ok( $res->[0] == 400, ' HTTP code is 400' ) or explain( $res->[0], 400 );
     count(1);
@@ -393,6 +485,7 @@ Verify that an error is displayed on the portal
 =cut
 
 sub expectPortalError {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $errnum, $message ) = @_;
     $errnum ||= 9;
     like( $res->[2]->[0], qr/<span trmsg="$errnum">/, $message );
@@ -407,6 +500,7 @@ C<error:"$code">.  Note that it works only for Ajax request (see below).
 =cut
 
 sub expectReject {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $status, $code ) = @_;
     $status ||= 401;
     cmp_ok( $res->[0], '==', $status, " Response status is $status" );
@@ -430,6 +524,7 @@ its value.
 =cut
 
 sub expectCookie {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $cookieName ) = @_;
     $cookieName ||= 'lemonldap';
     my $cookies = getCookies($res);
@@ -442,6 +537,24 @@ sub expectCookie {
     return $id;
 }
 
+=head4 expectPdata( $res );
+
+Check if the pdata cookie exists and returns its deserialized value.
+
+=cut
+
+sub expectPdata {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ($res) = @_;
+    my $val = expectCookie( $res, "lemonldappdata" );
+    ok( $val, "Pdata is not empty" );
+    count(1);
+    my $pdata;
+    eval { $pdata = JSON::from_json( uri_unescape($val) ); };
+    diag($@) if $@;
+    return $pdata;
+}
+
 =head4 exceptCspFormOK( $res, $host )
 
 Verify that C<Content-Security-Policy> header allows one to connect to $host.
@@ -449,6 +562,7 @@ Verify that C<Content-Security-Policy> header allows one to connect to $host.
 =cut
 
 sub exceptCspFormOK {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $host ) = @_;
     return 1 unless ($host);
     my $csp = getHeader( $res, 'Content-Security-Policy' );
@@ -467,6 +581,17 @@ sub exceptCspFormOK {
         fail(" CSP header authorize POST request to $host");
         explain( $res->[1], "form-action ... $host" );
     }
+    count(1);
+}
+
+sub expectCspChildOK {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ( $res, $host ) = @_;
+    return 1 unless ($host);
+    my $csp = getHeader( $res, 'Content-Security-Policy' );
+    ok( $csp, "Content-Security-Policy header found" );
+    count(1);
+    like( $csp, qr/child-src[^;]*\Q$host\E/, "Found $host in CSP child-src" );
     count(1);
 }
 
@@ -551,6 +676,7 @@ Registers a new LLNG instance
 =cut
 
 sub register {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $type, $constructor ) = @_;
     my $obj;
     @Lemonldap::NG::Handler::Main::_onReload = ();
@@ -598,6 +724,20 @@ use Mouse;
 
 extends 'Lemonldap::NG::Common::PSGI::Cli::Lib';
 
+# try to find template dir in @INC
+my $templateDir = "site/templates";
+unless ( -d $templateDir ) {
+    for (@INC) {
+        if ( -d "$_/site/templates" ) {
+            $templateDir = "$_/site/templates";
+            last;
+        }
+    }
+    unless ( -d $templateDir ) {
+        die "Could not find template dir";
+    }
+}
+
 our $defaultIni = {
     configStorage => {
         type    => 'File',
@@ -612,7 +752,7 @@ our $defaultIni = {
     logLevel              => 'error',
     cookieName            => 'lemonldap',
     domain                => 'example.com',
-    templateDir           => 'site/templates',
+    templateDir           => $templateDir,
     staticPrefix          => '/static',
     tokenUseGlobalStorage => 0,
     securedCookie         => 0,
@@ -626,26 +766,26 @@ our $defaultIni = {
     ),
     https                => 0,
     globalStorageOptions => {
-        Directory     => $tmpDir,
-        LockDirectory => "$tmpDir/lock",
+        Directory      => $tmpDir,
+        LockDirectory  => "$tmpDir/lock",
         generateModule =>
           'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
     },
     casStorageOptions => {
-        Directory     => "$tmpDir/saml",
-        LockDirectory => "$tmpDir/saml/lock",
+        Directory      => "$tmpDir/saml",
+        LockDirectory  => "$tmpDir/saml/lock",
         generateModule =>
           'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
     },
     samlStorageOptions => {
-        Directory     => "$tmpDir/saml",
-        LockDirectory => "$tmpDir/saml/lock",
+        Directory      => "$tmpDir/saml",
+        LockDirectory  => "$tmpDir/saml/lock",
         generateModule =>
           'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
     },
     oidcStorageOptions => {
-        Directory     => "$tmpDir/saml",
-        LockDirectory => "$tmpDir/saml/lock",
+        Directory      => "$tmpDir/saml",
+        LockDirectory  => "$tmpDir/saml/lock",
         generateModule =>
           'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
     },
@@ -743,6 +883,35 @@ has ini => (
 
 =head3 Methods
 
+=head4 login($client, $uid, $getParams)
+Do a simple login using the Demo backend
+=cut
+
+sub login {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ( $self, $uid, $getParams ) = @_;
+    my $res;
+    $getParams ||= {};
+
+    my $query = main::buildForm( {
+            user     => $uid,
+            password => $uid,
+            %$getParams,
+        }
+    );
+    main::ok(
+        $res = $self->_post(
+            '/',
+            IO::String->new($query),
+            length => length($query),
+        ),
+        'Auth query'
+    );
+    main::expectOK($res);
+    my $id = main::expectCookie($res);
+    return $id;
+}
+
 =head4 logout($id)
 
 Launch a C</?logout=1> request an test:
@@ -751,7 +920,7 @@ Launch a C</?logout=1> request an test:
 
 =item if response is 200
 
-=item if cookie 'lemonldap' and 'lemonldappdata' have no value
+=item if cookie $cookieName and "${cookieName}pdata" have no value
 
 =item if a GET request with previous cookie value I<($i)> is rejected
 
@@ -760,13 +929,16 @@ Launch a C</?logout=1> request an test:
 =cut
 
 sub logout {
-    my ( $self, $id ) = @_;
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ( $self, $id, $cookieName ) = @_;
     my $res;
+    $cookieName ||= 'lemonldap';
+
     main::ok(
         $res = $self->_get(
             '/',
             query  => 'logout',
-            cookie => "lemonldap=$id",
+            cookie => "$cookieName=$id",
             accept => 'text/html'
         ),
         'Logout request'
@@ -775,11 +947,12 @@ sub logout {
       or main::explain( $res->[0], 200 );
     my $c;
     main::ok(
-        ( defined( $c = main::getCookies($res)->{lemonldap} ) and not $c ),
+        ( defined( $c = main::getCookies($res)->{$cookieName} ) and not $c ),
         ' Cookie is deleted' )
       or main::explain( $res->[1], "Set-Cookie => 'lemonldap='" );
-    main::ok( not( main::getCookies($res)->{lemonldappdata} ), ' No pdata' );
-    main::ok( $res = $self->_get( '/', cookie => "lemonldap=$id" ),
+    main::ok( not( main::getCookies($res)->{"${cookieName}pdata"} ),
+        ' No pdata' );
+    main::ok( $res = $self->_get( '/', cookie => "$cookieName=$id" ),
         'Disconnect request' )
       or explain( $res, '[<code>,<hdrs>,<content>]' );
     main::ok( $res->[0] == 401, ' Response is 401' )

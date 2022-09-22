@@ -74,12 +74,12 @@ Connection
 
    -  More than one server can be set here separated by spaces or
       commas. They will be tested in the specified order.
-   -  To use TLS, set ``ldap+tls://server`` and to use LDAPS, set
+   -  To use StartTLS, set ``ldap+tls://server`` and to use LDAPS, set
       ``ldaps://server`` instead of server name.
-   -  If you use TLS, you can set any of the
+   -  If you use StartTLS or LDAPS, you can set any of the
       `Net::LDAP <http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod>`__
-      start_tls() sub like
-      ``ldap+tls://server/verify=none&capath=/etc/ssl``. You can
+      start_tls() options in the URL, such as ``ldap+tls://server/verify=none``
+      or ``ldaps://server/cafile=/etc/ssl/ca.pem&sslversion=tlsv1_2``. You can
       also use cafile and capath parameters.
 
 -  **Server port**: TCP port used by LDAP server if different from the standard
@@ -109,7 +109,7 @@ Connection
 
 .. attention::
 
-    LemonLDAP::NG need anonymous access to LDAP Directory
+    LL::NG needs anonymous access to LDAP Directory
     RootDSE in order to check LDAP connection.
 
 Filters
@@ -155,6 +155,7 @@ Groups
 -  **Search base**: DN of groups branch. If no value, disable group
    searching.
 -  **Object class**: objectClass of the groups (default: groupOfNames).
+   If you are using Active Directory you need to modify this value to ``group``. 
 -  **Target attribute**: name of the attribute in the groups storing the
    link to the user (default: member).
 -  **User source attribute**: name of the attribute in users entries
@@ -208,7 +209,7 @@ Password
 -  **Allow a user to reset his expired password**: if activated, the
    user will be prompted to change password if his password is expired
    (default: disabled)
-- **Search for user before password change**: this option forces the password
+-  **Search for user before password change**: this option forces the password
    change module to search for the user again, refreshing its DN. This feature
    is only useful in rare cases when you use LDAP as the password module, but
    not as the UserDB module. (default: enabled)

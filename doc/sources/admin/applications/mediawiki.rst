@@ -153,12 +153,12 @@ Configure MediaWiki virtual host like other
        internal;
        include /etc/nginx/fastcgi_params;
        fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
-       # Drop post datas
+       # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
        # Keep original hostname
        fastcgi_param HOST $http_host;
-       # Keep original request (LLNG server will received /llauth)
+       # Keep original request (LL::NG server will receive /lmauth)
        fastcgi_param X_ORIGINAL_URI  $original_uri;
      }
 

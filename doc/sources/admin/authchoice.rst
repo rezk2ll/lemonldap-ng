@@ -50,8 +50,8 @@ Then, go in ``Choice Parameters``:
 -  **URL parameter**: parameter name used to set choice value (default:
    ``lmAuth``)
 -  **Allowed modules**: click on ``New chain`` to add a choice.
--  **AuthBasic handler parameter**: authentication module called by
-   AuthBasic handler (:doc:`AuthBasic handler<handlerauthbasic>`)
+-  **Choice used for password authentication**: authentication module used by
+   :doc:`AuthBasic handler<authbasichandler>` and :ref:`OAuth2.0 Password Grant <resource-owner-password-grant>`
 -  **FindUser plugin parameter**: authentication module called by
    Find user plugin (:doc:`Find user plugin<finduser>`)
 

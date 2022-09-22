@@ -8,7 +8,7 @@
 #                  of lemonldap-ng.ini) and underlying handler configuration
 package Lemonldap::NG::Portal::Main::Init;
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -30,6 +30,7 @@ has _authentication => ( is => 'rw' );
 has _userDB         => ( is => 'rw' );
 has _passwordDB     => ( is => 'rw' );
 has _sfEngine       => ( is => 'rw' );
+has _captcha        => ( is => 'rw' );
 
 has loadedModules => ( is => 'rw' );
 
@@ -94,18 +95,21 @@ has cors => ( is => 'rw' );
 # Cookie SameSite value
 has cookieSameSite => ( is => 'rw' );
 
+# Plugins may declare the session data they want to store in login history here
+has pluginSessionDataToRemember =>
+  ( is => 'rw', isa => "HashRef", default => sub { {} } );
+
 # INITIALIZATION
 
 sub init {
     my ( $self, $args ) = @_;
     $args ||= {};
-    $self->localConfig( {
-            %{ Lemonldap::NG::Common::Conf->new( $args->{configStorage} )
-                  ->getLocalConf('portal')
-            },
-            %$args
-        }
-    );
+    my $confAcc = Lemonldap::NG::Common::Conf->new( $args->{configStorage} );
+    unless ($confAcc) {
+        die( 'Could not read configuration: '
+              . $Lemonldap::NG::Common::Conf::msg );
+    }
+    $self->localConfig( { %{ $confAcc->getLocalConf('portal') }, %$args } );
 
     # Load override messages from lemonldap-ng.ini
     foreach my $k ( keys %{ $self->localConfig } ) {
@@ -125,9 +129,9 @@ sub init {
 
     # Purge loaded module list
     $self->loadedModules( {} );
-    $self->afterSub(      {} );
-    $self->aroundSub(     {} );
-    $self->hook(          {} );
+    $self->afterSub( {} );
+    $self->aroundSub( {} );
+    $self->hook( {} );
 
     # Insert `reloadConf` in handler reload stack
     Lemonldap::NG::Handler::Main->onReload( $self, 'reloadConf' );
@@ -153,10 +157,24 @@ sub init {
 
 sub setPortalRoutes {
     my ($self) = @_;
-    $self->authRoutes(
-        { GET => {}, POST => {}, PUT => {}, DELETE => {}, OPTIONS => {} } );
-    $self->unAuthRoutes(
-        { GET => {}, POST => {}, PUT => {}, DELETE => {}, OPTIONS => {} } );
+    $self->authRoutes( {
+            GET     => {},
+            POST    => {},
+            PUT     => {},
+            PATCH   => {},
+            DELETE  => {},
+            OPTIONS => {}
+        }
+    );
+    $self->unAuthRoutes( {
+            GET     => {},
+            POST    => {},
+            PUT     => {},
+            PATCH   => {},
+            DELETE  => {},
+            OPTIONS => {}
+        }
+    );
     $self
 
       # "/" or undeclared paths
@@ -211,10 +229,13 @@ sub reloadConf {
     foreach ( qw(_macros _groups), @entryPoints ) {
         $self->{$_} = [];
     }
-    $self->afterSub(  {} );
+    $self->afterSub( {} );
     $self->aroundSub( {} );
-    $self->spRules(   {} );
-    $self->hook(      {} );
+    $self->spRules( {} );
+    $self->hook( {} );
+
+    # Plugin history fields
+    $self->pluginSessionDataToRemember( {} );
 
     # Load conf in portal object
     foreach my $key ( keys %$conf ) {
@@ -316,6 +337,14 @@ sub reloadConf {
       unless $self->{_sfEngine} =
       $self->loadPlugin( $self->conf->{'sfEngine'} );
 
+    # Load Captcha module
+    return $self->fail
+      unless $self->_captcha(
+        $self->loadPlugin(
+            $self->conf->{'captcha'} || '::Captcha::SecurityImage'
+        )
+      );
+
     # Compile macros in _macros, groups in _groups
     foreach my $type (qw(macros groups)) {
         $self->{"_$type"} = {};
@@ -377,9 +406,17 @@ sub reloadConf {
             $p =~ s#https?://([^/]*).*$#$1#;
             $re->add( quotemeta($p) );
         }
+
         foreach my $vhost ( keys %{ $self->conf->{locationRules} } ) {
+            my $expr = quotemeta($vhost);
+
+            # Handle wildcards
+            if ( $vhost =~ /[\%\*]/ ) {
+                $expr =~ s/\\\*/[A-Za-z0-9\.]\*/;
+                $expr =~ s/\\\%/[A-Za-z0-9]\*/;
+            }
+            $re->add($expr);
             $self->logger->debug("Vhost $vhost added in trusted domains");
-            $re->add( quotemeta($vhost) );
             $self->conf->{vhostOptions} ||= {};
             if ( my $tmp =
                 $self->conf->{vhostOptions}->{$vhost}->{vhostAliases} )
@@ -392,7 +429,7 @@ sub reloadConf {
             }
         }
 
-        my $tmp = 'https?://' . $re->as_string . '(?::\d+)?(?:/|$)';
+        my $tmp = '^https?://' . $re->as_string . '(?::\d+)?(?:/|$)';
         $self->trustedDomainsRe(qr/$tmp/);
 
     }
@@ -523,13 +560,13 @@ sub findEP {
             }
         }
     }
-    $self->logger->debug("Plugin $plugin initializated");
+    $self->logger->debug("Plugin $plugin initialized");
 
     # Rules for menu
     if ( $obj->can('spRules') ) {
         foreach my $k ( keys %{ $obj->{spRules} } ) {
             $self->logger->info(
-"$k is defined more than one time, it can have some bad effect on Menu display"
+"$k is defined more than one time, it can have some bad effects on Menu display"
             ) if ( $self->spRules->{$k} );
             $self->spRules->{$k} = $obj->{spRules}->{$k};
         }
@@ -553,11 +590,15 @@ sub loadModule {
         $self->logger->debug("Module $module loaded");
     };
     if ($@) {
-        $self->error("Unable to build $module object: $@");
+        $self->logger->error("Unable to build $module object: $@");
         return 0;
     }
-    unless ( $obj and $obj->init ) {
-        $self->error("$module init failed");
+    unless ($obj) {
+        $self->logger->error("$module new() method returned undef");
+        return 0;
+    }
+    if ( $obj->can("init") and ( !$obj->init ) ) {
+        $self->logger->error("$module init failed");
         return 0;
     }
 
@@ -593,7 +634,8 @@ sub buildRule {
     my $compiledRule =
       $self->HANDLER->buildSub( $self->HANDLER->substitute($rule) );
     unless ($compiledRule) {
-        my $error = $self->HANDLER->tsv->{jail}->error || '???';
+        my $error =
+          $self->HANDLER->tsv->{jail}->error || 'Unable to compile rule';
         $self->logger->error( "Bad" . $ruleDesc . "rule: " . $error );
     }
     return $compiledRule,;

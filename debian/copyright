@@ -4,22 +4,22 @@ Upstream-Contact: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues
 Source: https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/tags?sort=updated_desc
 
 Files: *
-Copyright: 2005-2020, Xavier Guimard <yadd@debian.org>
- 2006-2020, Clement Oudot <clem.oudot@gmail.com>
+Copyright: 2005-2022, Xavier Guimard <yadd@debian.org>
+ 2006-2022, Clement Oudot <clem.oudot@gmail.com>
+ 2018-2022, Christophe Maudoux <chrmdx@gmail.com>
+ 2019-2022, Maxime Besson <maxime.besson@worteks.com>
  2008, Mikael Ates <mikael.ates@univ-st-etienne.fr>
  2008-2011, Thomas Chemineau <thomas.chemineau@gmail.com>
  2012-2013, Sandro Cazzaniga <cazzaniga.sandro@gmail.com>
  2012-2015, François-Xavier Deltombe <fxdeltombe@gmail.com>
- 2012-2019, David Coutadeur <david.coutadeur@gmail.com>
- 2018-2020, Christophe Maudoux <chrmdx@gmail.com>
- 2019-2020, Maxime Besson <maxime.besson@worteks.com>
+ 2012-2021, David Coutadeur <david.coutadeur@gmail.com>
  2019, Soisik Frogier <soisik.froger@worteks.com>
  2019, Mame Dieynaba Sene <msene@linagora.com>
- 2019, Antoine Rosier <lemonldap@mon-refuge.fr>
- 2005-2020, Gendarmerie nationale <https://www.gendarmerie.interieur.gouv.fr>
+ 2019-2021, Antoine Rosier <lemonldap@mon-refuge.fr>
+ 2005-2022, Gendarmerie nationale <https://www.gendarmerie.interieur.gouv.fr>
  2006-2019, LINAGORA <info@linagora.com>
  2015-2018, Savoir-faire Linux <contact@savoirfairelinux.com>
- 2018-2020, Worteks <info@worteks.com>
+ 2018-2022, Worteks <info@worteks.com>
 License: GPL-2+
 
 Files: lemonldap-ng-portal/lib/Lemonldap/NG/Portal/Auth/PAM.pm
@@ -33,17 +33,23 @@ Copyright: 2011, Tatsuhiko Miyagawa <miyagawa@bulknews.net>
 License: Artistic or GPL-1+
 
 Files: *.js
-Copyright: 2005-2019, Xavier Guimard <yadd@debian.org>
- 2006-2019, Clement Oudot <clem.oudot@gmail.com>
+Copyright: 2005-2022, Xavier Guimard <yadd@debian.org>
+ 2006-2022, Clement Oudot <clem.oudot@gmail.com>
  2008-2012, Thomas Chemineau <thomas.chemineau@gmail.com>
- 2018-2019, Christophe Maudoux <chrmdx@gmail.com>
+ 2018-2022, Christophe Maudoux <chrmdx@gmail.com>
+ 2019-2022, Maxime Besson <maxime.besson@worteks.com>
 License: GPL-2+
 
+Files: lemonldap-ng-portal/site/htdocs/static/bootstrap/webauthn.png
+Copyright: James Cullum <https://github.com/JamesCullum>
+License: WebAuthnLogoLicense
+
 Files: lemonldap-ng-portal/site/htdocs/static/common/js/portal.js
-Copyright: 2005-2019, Xavier Guimard <yadd@debian.org>
- 2006-2019, Clement Oudot <clem.oudot@gmail.com>
+Copyright: 2005-2022, Xavier Guimard <yadd@debian.org>
+ 2006-2022, Clement Oudot <clem.oudot@gmail.com>
  2008-2012, Thomas Chemineau <thomas.chemineau@gmail.com>
- 2018-2019, Christophe Maudoux <chrmdx@gmail.com>
+ 2018-2022, Christophe Maudoux <chrmdx@gmail.com>
+ 2019-2022, Maxime Besson <maxime.besson@worteks.com>
 License: GPL-2+
 Comment: a little part of it comes from JQuery-UI examples
  (https://snipplr.com/view/29434/)
@@ -1271,3 +1277,26 @@ License: BSD-3-clause
  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+License: WebAuthnLogoLicense
+ How to Use These Logos
+ .
+ Do these awesome things:
+ .
+  * Use the WebAuthn logo to link to WebAuthn specs or webauthn.org
+  * Use the WebAuthn logo to show that your product or project has built-in WebAuthn integration
+  * Use the WebAuthn logo in a blog post or news article about WebAuthn
+ .
+ Please don't do these things:
+ .
+  x Use the WebAuthn logo for your application’s icon
+  x Create a modified version of the WebAuthn logo
+  x Integrate the WebAuthn logo into your logo
+  x Use any WebAuthn artwork without permission
+  x Sell any WebAuthn artwork without permission
+  x Change the colors, dimensions or add your own text/images
+ .
+ Please contact me
+ .
+  * If you want to use artwork not included in this repository
+  * If you want to use these images in a video/mainstream media

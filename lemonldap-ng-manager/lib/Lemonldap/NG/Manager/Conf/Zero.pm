@@ -2,10 +2,12 @@ package Lemonldap::NG::Manager::Conf::Zero;
 
 use strict;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.0.13';
 
 sub zeroConf {
-    my ( $domain, $sessionDir, $persistentSessionDir, $notificationDir, $cacheDir ) = @_;
+    my ( $domain, $sessionDir, $persistentSessionDir, $notificationDir,
+        $cacheDir )
+      = @_;
     $domain               ||= 'example.com';
     $sessionDir           ||= '/var/lib/lemonldap-ng/sessions';
     $persistentSessionDir ||= '/var/lib/lemonldap-ng/psessions';
@@ -104,7 +106,7 @@ sub zeroConf {
         },
         'cfgNum'               => 0,
         'globalStorageOptions' => {
-            'Directory' => $sessionDir,
+            'Directory'      => $sessionDir,
             'generateModule' =>
               'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
             'LockDirectory' => "$sessionDir/lock"
@@ -167,7 +169,7 @@ sub zeroConf {
             },
             "manager.$domain" => {
                 'default' => 'inGroup("timelords") or $uid eq "rtyler"',
-'(?#Configuration)^/(.*?\.(fcgi|psgi)/)?(manager\.html|confs/|$)'
+'(?#Configuration)^/(.*?\.(fcgi|psgi)/)?(manager\.html|confs|prx/|$)'
                   => 'inGroup("timelords")',
                 '(?#Sessions)/(.*?\.(fcgi|psgi)/)?sessions' =>
                   'inGroup("timelords") or $uid eq "rtyler"',
@@ -175,13 +177,14 @@ sub zeroConf {
                   'inGroup("timelords") or $uid eq "rtyler"',
             }
         },
-        'whatToTrace'   => '_whatToTrace',
-        'securedCookie' => 0,
-        'cookieName'    => 'lemonldap',
-        'cfgAuthor'     => 'The LemonLDAP::NG team',
-        'cfgVersion'    => $VERSION,
-        'exportedVars'  => {},
-        'portalSkin'    => 'bootstrap',
+        'whatToTrace'          => '_whatToTrace',
+        'securedCookie'        => 0,
+        'cookieName'           => 'lemonldap',
+        'cfgAuthor'            => 'The LemonLDAP::NG team',
+        'cfgDate'              => '1627287638',
+        'cfgVersion'           => $VERSION,
+        'exportedVars'         => {},
+        'portalSkin'           => 'bootstrap',
         'portalSkinBackground' =>
           '1280px-Cedar_Breaks_National_Monument_partially.jpg',
         'mailUrl'                    => "http://auth.$domain/resetpwd",

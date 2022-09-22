@@ -2,9 +2,7 @@ use Test::More;
 use strict;
 use IO::String;
 
-BEGIN {
-    require 't/test-lib.pm';
-}
+require 't/test-lib.pm';
 
 my $res;
 
@@ -168,7 +166,8 @@ ok( $res->[2]->[0] !~ m%emptyHeader: %, 'emptyHeader not found' )
   or explain( $res->[2]->[0], 'Header Key: emptyHeader' );
 ok( $res->[2]->[0] =~ m%: rtyler%, 'Found rtyler' )
   or explain( $res->[2]->[0], 'Header Value: rtyler' );
-ok( $res->[2]->[0] =~ m%<div class="col">su</div>%, 'Found su' )
+ok( $res->[2]->[0] =~ m%<div class="card-text text-left ml-2">su</div>%,
+    'Found su' )
   or explain( $res->[2]->[0], 'SSO Groups: su' );
 ok( $res->[2]->[0] =~ m%<td scope="row">uid</td>%, 'Found uid' )
   or explain( $res->[2]->[0], 'Attribute Value uid' );

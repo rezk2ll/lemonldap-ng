@@ -19,7 +19,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PASSWORDFORMEMPTY
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth
@@ -44,7 +44,7 @@ sub init {
     my $self = shift;
 
     if ( $self->{conf}->{captcha_login_enabled} ) {
-        $self->captcha( $self->p->loadModule('::Lib::Captcha') ) or return 0;
+        $self->captcha(1);
     }
     else {
         $self->ott( $self->p->loadModule('::Lib::OneTimeToken') ) or return 0;
@@ -73,7 +73,10 @@ sub extractFormInfo {
     my $res            = PE_OK;
 
     # 1. No user defined at all -> first access
-    unless ( $defUser and $req->method =~ /^POST$/i ) {
+    # _pwdCheck is a workaround to make CheckUser work while using a GET
+    unless ( $defUser
+        and ( uc( $req->method ) eq "POST" or $req->data->{_pwdCheck} ) )
+    {
         $res = PE_FIRSTACCESS;
     }
 
@@ -87,11 +90,13 @@ sub extractFormInfo {
     # 3. If user and oldpassword defined -> password form
     elsif ( $defUser and $defOldPassword ) {
         $res = PE_PASSWORDFORMEMPTY
-          unless ( ( $req->{user} = $req->param('user') )
+          unless (
+               ( $req->{user} = $req->param('user') )
             && ( $req->data->{oldpassword} = $req->param('oldpassword') )
             && ( $req->data->{newpassword} = $req->param('newpassword') )
             && ( $req->data->{confirmpassword} =
-                $req->param('confirmpassword') ) );
+                $req->param('confirmpassword') )
+          );
     }
 
     # If form seems empty
@@ -112,18 +117,15 @@ sub extractFormInfo {
         }
 
         if ( $self->captcha ) {
-            my $code = $req->param('captcha');
-            unless ($code) {
-                $self->captcha->setCaptcha($req);
-                return PE_CAPTCHAEMPTY;
+            my $result = $self->p->_captcha->check_captcha($req);
+            if ($result) {
+                $self->logger->debug("Captcha code verified");
             }
-            unless ( $self->captcha->validateCaptcha( $token, $code ) ) {
-                $self->captcha->setCaptcha($req);
-                $self->userLogger->warn(
-                    "Captcha failed: wrong or expired code");
+            else {
+                $self->p->_captcha->init_captcha($req);
+                $self->userLogger->warn("Captcha failed");
                 return PE_CAPTCHAERROR;
             }
-            $self->logger->debug("Captcha code verified");
         }
         elsif ( $self->ottRule->( $req, {} ) ) {
             unless ( $req->data->{tokenVerified}
@@ -170,10 +172,11 @@ sub getDisplayType {
 
 sub setSecurity {
     my ( $self, $req ) = @_;
+    return if $req->data->{skipToken};
 
     # If captcha is enable, prepare it
     if ( $self->captcha ) {
-        $self->captcha->setCaptcha($req);
+        $self->p->_captcha->init_captcha($req);
     }
 
     # Else get token

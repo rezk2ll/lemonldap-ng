@@ -6,7 +6,7 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use strict;
-use Test::More tests => 20;
+use Test::More tests => 22;
 require 't/test.pm';
 BEGIN { use_ok('Lemonldap::NG::Handler::Main::Jail') }
 
@@ -36,7 +36,7 @@ ok(
     ( defined($code) and ref($code) eq 'CODE' ),
     'encode_base64 function is defined'
 );
-ok( $res = &$code, "Function works" );
+ok( $res = &$code,      "Function works" );
 ok( $res eq 'dGVzdA==', 'Get good result' );
 
 $sub  = "sub { return ( listMatch('ABC; DEF; GHI','abc',1) ) }";
@@ -58,18 +58,18 @@ ok(
     'checkDate extended function is defined'
 );
 ok( $res = &$code, "Function works" );
-ok( $res == 1, 'Get good result' );
+ok( $res == 1,     'Get good result' );
 
-$sub  = "sub { return(checkDate('20000101000000+0100','21000101000000+0100')) }";
+$sub = "sub { return(checkDate('20000101000000+0100','21000101000000+0100')) }";
 $code = $jail->jail_reval($sub);
 ok(
     ( defined($code) and ref($code) eq 'CODE' ),
     'checkDate extended function is defined'
 );
 ok( $res = &$code, "Function works" );
-ok( $res == 1, 'Get good result' );
+ok( $res == 1,     'Get good result' );
 
-$sub  = "sub { return(has2f(\$_[0],\$_[1])) }";
+$sub  = "sub { return(has2f_internal(\$_[0],\$_[1])) }";
 $code = $jail->jail_reval($sub);
 ok(
     ( defined($code) and ref($code) eq 'CODE' ),
@@ -105,3 +105,11 @@ is(
     "Function works"
 );
 
+$sub  = "sub { return(";
+$code = $jail->jail_reval($sub);
+ok( ( not defined($code) ), 'Syntax error yields undef result' );
+like(
+    $jail->error,
+    qr/Missing right curly or square bracket/,
+    'Found correct error message'
+);

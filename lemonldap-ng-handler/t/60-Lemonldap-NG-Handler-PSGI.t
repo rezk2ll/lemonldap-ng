@@ -15,7 +15,7 @@ my $SKIPUSER = 0;
 # --------------------
 ok( $res = $client->_get('/'), 'Unauthentified query' );
 ok( ref($res) eq 'ARRAY', 'Response is an array' ) or explain( $res, 'array' );
-ok( $res->[0] == 302, ' Code is 302' ) or explain( $res->[0], 302 );
+ok( $res->[0] == 302,     ' Code is 302' )         or explain( $res->[0], 302 );
 my %h = @{ $res->[1] };
 ok(
     $h{Location} eq 'http://auth.example.com/?url='
@@ -224,8 +224,13 @@ ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
 count(2);
 
 # Forged headers
-ok( $res = $client->_get( '/skipif/zz', undef, 'test1.example.com', undef, HTTP_AUTH_USER => 'rtyler' ),
-    'Test skip() with forged header' );
+ok(
+    $res = $client->_get(
+        '/skipif/zz', undef, 'test1.example.com', undef,
+        HTTP_AUTH_USER => 'rtyler'
+    ),
+    'Test skip() with forged header'
+);
 ok( $res->[0] == 200, ' Code is 200' ) or explain( $res, 200 );
 count(2);
 
@@ -234,7 +239,7 @@ ok(
       $client->_get( '/', undef, 'foo.example.fr', "lemonldap=$sessionId" ),
     'Reject "foo.example.fr"'
 );
-ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
+ok( $res->[0] == 403, ' Code is 403' ) or explain( $res, 403 );
 count(2);
 
 ok(
@@ -243,7 +248,7 @@ ok(
     ),
     'Reject "foo.example.org/orgdeny"'
 );
-ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
+ok( $res->[0] == 403, ' Code is 403' ) or explain( $res, 403 );
 count(2);
 
 ok(
@@ -261,7 +266,7 @@ ok(
     ),
     'Reject "abfoo.example.org/orgdeny"'
 );
-ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
+ok( $res->[0] == 403, ' Code is 403' ) or explain( $res, 403 );
 count(2);
 
 ok(
@@ -287,7 +292,7 @@ ok(
       $client->_get( '/', undef, 'abfoo.example.org', "lemonldap=$sessionId" ),
     'Reject "abfoo.example.org/"'
 );
-ok( $res->[0] == 302, ' Code is 302' ) or explain( $res, 302 );
+ok( $res->[0] == 403, ' Code is 403' ) or explain( $res, 403 );
 count(2);
 
 ok(

@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.15';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -28,11 +28,14 @@ has ott => (
         return $ott;
     }
 );
+
+has displayHistoryRule           => ( is => 'rw', default => sub { 0 } );
 has unrestrictedUsersRule        => ( is => 'rw', default => sub { 0 } );
 has displayEmptyValuesRule       => ( is => 'rw', default => sub { 0 } );
 has displayEmptyHeadersRule      => ( is => 'rw', default => sub { 0 } );
 has displayPersistentInfoRule    => ( is => 'rw', default => sub { 0 } );
 has displayComputedSessionRule   => ( is => 'rw', default => sub { 0 } );
+has displayHiddenAttributesRule  => ( is => 'rw', default => sub { 0 } );
 has displayNormalizedHeadersRule => ( is => 'rw', default => sub { 0 } );
 has idRule                       => ( is => 'rw', default => sub { 1 } );
 has sorted                       => ( is => 'rw', default => sub { 0 } );
@@ -97,6 +100,7 @@ sub init {
         )
     );
     return 0 unless $self->displayComputedSessionRule;
+
     $self->displayNormalizedHeadersRule(
         $self->p->buildRule(
             $self->conf->{checkUserDisplayNormalizedHeaders},
@@ -104,6 +108,22 @@ sub init {
         )
     );
     return 0 unless $self->displayNormalizedHeadersRule;
+
+    $self->displayHistoryRule(
+        $self->p->buildRule(
+            $self->conf->{checkUserDisplayHistory},
+            'checkUserDisplayHistory'
+        )
+    );
+    return 0 unless $self->displayHistoryRule;
+
+    $self->displayHiddenAttributesRule(
+        $self->p->buildRule(
+            $self->conf->{checkUserDisplayHiddenAttributes},
+            'checkUserDisplayHiddenAttributes'
+        )
+    );
+    return 0 unless $self->displayHistoryRule;
 
     # Init. other options
     $self->sorted( $self->conf->{impersonationRule}
@@ -116,12 +136,17 @@ sub init {
 
 # RUNNING METHODS
 sub display {
-    my ( $self,  $req )         = @_;
+    my ( $self, $req ) = @_;
+    my $history = [ [], [] ];
     my ( $attrs, $array_attrs ) = ( $req->userData, [] );
 
     $self->logger->debug("Display current session data...");
     $self->userLogger->info("Using spoofed SSO groups if exist")
       if ( $self->conf->{impersonationRule} );
+
+    $history = $self->_concatHistory( $attrs->{_loginHistory} )
+      if $self->displayHistoryRule->( $req, $req->userData )
+      && $self->conf->{loginHistoryEnabled};
 
     $attrs =
       $self->_removeKeys( $attrs, $self->persistentAttrs,
@@ -134,13 +159,12 @@ sub display {
         $self->_createArray( $req, $attrs, $req->userData ) );
 
     my $params = {
-        PORTAL     => $self->conf->{portal},
-        MAIN_LOGO  => $self->conf->{portalMainLogo},
-        SKIN       => $self->p->getSkin($req),
-        LANGS      => $self->conf->{showLanguages},
         MSG        => 'checkUser' . $self->merged,
         ALERTE     => ( $self->merged ? 'alert-warning' : 'alert-info' ),
         LOGIN      => $req->{userData}->{ $self->conf->{whatToTrace} },
+        HISTORY    => ( @{ $history->[0] } || @{ $history->[1] } ) ? 1 : 0,
+        SUCCESS    => $history->[0],
+        FAILED     => $history->[1],
         ATTRIBUTES => $array_attrs->[2],
         MACROS     => $array_attrs->[1],
         GROUPS     => $array_attrs->[0],
@@ -161,7 +185,8 @@ sub check {
     my ( $attrs, $array_attrs, $array_hdrs ) = ( {}, [], [] );
     my $msg           = my $auth = my $computed = '';
     my $savedUserData = $req->userData;
-    my $unUser = $self->unrestrictedUsersRule->( $req, $savedUserData ) || 0;
+    my $unUser  = $self->unrestrictedUsersRule->( $req, $savedUserData ) || 0;
+    my $history = [ [], [] ];
 
     # Check token
     if ( $self->ottRule->( $req, {} ) ) {
@@ -181,18 +206,14 @@ sub check {
         }
 
         my $params = {
-            PORTAL    => $self->conf->{portal},
-            MAIN_LOGO => $self->conf->{portalMainLogo},
-            SKIN      => $self->p->getSkin($req),
-            LANGS     => $self->conf->{showLanguages},
-            MSG       => "PE$msg",
-            ALERTE    => 'alert-warning',
-            LOGIN     => '',
-            TOKEN     => $token,
+            MSG    => "PE$msg",
+            ALERTE => 'alert-warning',
+            LOGIN  => '',
+            TOKEN  => $token,
         };
         return $self->p->sendJSONresponse( $req, $params )
           if $req->wantJSON && $msg;
-          
+
         # Display form
         return $self->p->sendHtml( $req, 'checkuser', params => $params )
           if $msg;
@@ -212,14 +233,10 @@ sub check {
             $req,
             'checkuser',
             params => {
-                PORTAL    => $self->conf->{portal},
-                MAIN_LOGO => $self->conf->{portalMainLogo},
-                SKIN      => $self->p->getSkin($req),
-                LANGS     => $self->conf->{showLanguages},
-                MSG       => 'PE' . PE_MALFORMEDUSER,
-                ALERTE    => 'alert-warning',
-                LOGIN     => '',
-                TOKEN     => (
+                MSG    => 'PE' . PE_MALFORMEDUSER,
+                ALERTE => 'alert-warning',
+                LOGIN  => '',
+                TOKEN  => (
                       $self->ottRule->( $req, {} )
                     ? $self->ott->createToken()
                     : ''
@@ -250,7 +267,7 @@ sub check {
           . $self->conf->{checkUserSearchAttributes}
           : $self->conf->{whatToTrace};
 
-        foreach ( split /\s+/, $searchAttrs ) {
+        foreach ( split /[,\s]+/, $searchAttrs ) {
             $self->logger->debug("Searching with: $_ = $user");
             $sessions = $self->module->searchOn( $moduleOptions, $_, $user );
             last if ( keys %$sessions );
@@ -294,7 +311,11 @@ sub check {
         $attrs       = {};
     }
     else {
-        $msg = 'checkUser' . $self->merged;
+        $msg     = 'checkUser' . $self->merged;
+        $history = $self->_concatHistory( $attrs->{_loginHistory} )
+          if $self->displayHistoryRule->( $req, $savedUserData )
+          && $self->conf->{loginHistoryEnabled};
+
         $attrs =
           $self->_removeKeys( $attrs, $self->persistentAttrs,
             'Remove persistent session attributes...' )
@@ -376,10 +397,6 @@ sub check {
 
     # TODO:
     my $params = {
-        PORTAL      => $self->conf->{portal},
-        MAIN_LOGO   => $self->conf->{portalMainLogo},
-        SKIN        => $self->p->getSkin($req),
-        LANGS       => $self->conf->{showLanguages},
         MSG         => $msg,
         ALERTE      => ( $msg eq 'checkUser' ? 'alert-info' : 'alert-warning' ),
         LOGIN       => $user,
@@ -387,6 +404,9 @@ sub check {
         ALLOWED     => $auth,
         ALERTE_AUTH => $alert_auth,
         HEADERS     => $array_hdrs,
+        HISTORY     => ( @{ $history->[0] } || @{ $history->[1] } ) ? 1 : 0,
+        SUCCESS     => $history->[0],
+        FAILED      => $history->[1],
         ATTRIBUTES  => $array_attrs->[2],
         MACROS      => $array_attrs->[1],
         GROUPS      => $array_attrs->[0],
@@ -405,7 +425,7 @@ sub check {
 sub _resolveURL {
     my ( $self, $req, $url ) = @_;
     my ($proto) = $url =~ m#^(https?://).*#i;
-    my ( $vhost, $appuri ) = $url =~ m#^(?:https?://)?([^/]*)(.*)#i;
+    my ( $vhost, $appuri ) = $url =~ m@^(?:https?://)?([^/#]*)(.*)@i;
     my ($port) = $vhost =~ m#^.+(:\d+)$#;
     $port ||= '';
     $vhost =~ s/:\d+$//;
@@ -467,7 +487,7 @@ sub _userData {
 
 sub _authorization {
     my ( $self, $req, $uri, $attrs ) = @_;
-    my ( $vhost, $appuri ) = $uri =~ m#^https?://([^/]*)(.*)#;
+    my ( $vhost, $appuri ) = $uri =~ m@^https?://([^/#]*)(.*)@;
     my $exist = 0;
 
     $vhost =~ s/:\d+$//;
@@ -489,7 +509,7 @@ sub _authorization {
 
 sub _headers {
     my ( $self, $req, $uri, $attrs, $savedUserData ) = @_;
-    my ($vhost) = $uri =~ m#^https?://([^/]*).*#;
+    my ($vhost) = $uri =~ m@^https?://([^/#]*).*@;
 
     $vhost =~ s/:\d+$//;
     $req->{env}->{HTTP_HOST} = $vhost;
@@ -555,23 +575,16 @@ sub _createArray {
     my ( $self, $req, $attrs, $userData ) = @_;
     my $array_attrs = [];
 
-    if ( $self->displayEmptyValuesRule->( $req, $userData ) ) {
-        $self->logger->debug("Delete hidden attributes...");
-        foreach my $k ( sort keys %$attrs ) {
-
-            # Ignore hidden attributes
-            push @$array_attrs, { key => $k, value => $attrs->{$k} }
-              unless ( $self->hAttr =~ /\b$k\b/ );
-        }
-    }
-    else {
-        $self->logger->debug("Delete hidden and empty attributes...");
-        foreach my $k ( sort keys %$attrs ) {
-
-            # Ignore hidden attributes and empty values
-            push @$array_attrs, { key => $k, value => $attrs->{$k} }
-              unless ( $self->hAttr =~ /\b$k\b/ or !$attrs->{$k} );
-        }
+    foreach my $k ( sort keys %$attrs ) {
+        push @$array_attrs,
+          { key => $k, value => $attrs->{$k} }
+          unless ( (
+                $self->hAttr =~ /\b$k\b/
+                && !$self->displayHiddenAttributesRule->( $req, $userData )
+            )
+            || (   !$attrs->{$k}
+                && !$self->displayEmptyValuesRule->( $req, $userData ) )
+          );
     }
 
     return $array_attrs;
@@ -649,6 +662,34 @@ sub _removeKeys {
     }
 
     return $attrs;
+}
+
+sub _concatHistory {
+    my ( $self,    $history ) = @_;
+    my ( $success, $failed )  = ( [], [] );
+
+    $self->logger->debug('Concatenate history...');
+    @$success = map {
+        my $element = $_;
+        my $utime   = delete $element->{_utime};
+        {
+            utime  => $utime,
+            values => join $self->conf->{multiValuesSeparator},
+            map "$_=$element->{$_}", sort keys %$element
+        }
+    } @{ $history->{successLogin} };
+
+    @$failed = map {
+        my $element = $_;
+        my $utime   = delete $element->{_utime};
+        {
+            utime  => $utime,
+            values => join $self->conf->{multiValuesSeparator},
+            map "$_=$element->{$_}", sort keys %$element
+        }
+    } @{ $history->{failedLogin} };
+
+    return [ $success, $failed ];
 }
 
 1;

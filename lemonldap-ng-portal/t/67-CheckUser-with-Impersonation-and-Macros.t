@@ -2,9 +2,7 @@ use Test::More;
 use strict;
 use IO::String;
 
-BEGIN {
-    require 't/test-lib.pm';
-}
+require 't/test-lib.pm';
 
 my $res;
 
@@ -18,7 +16,7 @@ my $client = LLNG::Manager::Test->new( {
             portalMainLogo                  => 'common/logos/logo_llng_old.png',
             requireToken                    => 0,
             checkUser                       => 1,
-            checkUserSearchAttributes       => 'employee_nbr  test1 mail ',
+            checkUserSearchAttributes       => 'employee_nbr,  test1 mail ',
             impersonationRule               => 1,
             checkUserDisplayComputedSession => 1,
             checkUserDisplayPersistentInfo  => 0,
@@ -29,7 +27,7 @@ my $client = LLNG::Manager::Test->new( {
             macros                          => {
                 authLevel     => '"Macro_$authenticationLevel"',
                 realAuthLevel => '"realMacro_$real_authenticationLevel"',
-                _whatToTrace =>
+                _whatToTrace  =>
                   '$real__user ? "$_user / $real__user" : "$_user / $_user"',
             },
             groups => {
@@ -124,7 +122,7 @@ count(1);
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok(
     $res->[2]->[0] =~
-m%<input id="urlfield" name="url" type="text" class="form-control" value="http://test1.example.com" trplaceholder="URL / DNS"%,
+m%<input id="urlfield" name="url" type="text" class="form-control" value="http://test1.example.com" trplaceholder="URL / DNS" aria-required="true" autocomplete="url" />%,
     'Found HTTP url'
 ) or explain( $res->[2]->[0], 'HTTP url' );
 ok(
@@ -188,12 +186,15 @@ ok( $res->[2]->[0] =~ m%<td scope="row">Macro_1</td>%, 'Found uid' )
 ok( $nbr = ( $res->[2]->[0] =~ s%<td scope="row">Macro_1</td>%%g ),
     'Found two well computed macros' )
   or explain( $res->[2]->[0], 'Macros not well computed' );
-ok( $res->[2]->[0] =~ m%<div class="col">authGroup</div>%,
-    'Found group "authGroup"' )
-  or explain( $res->[2]->[0], 'Group "authgroup"' );
-ok( $res->[2]->[0] =~ m%<div class="col">realAuthGroup</div>%,
-    'Found group "realAuthGroup"' )
-  or explain( $res->[2]->[0], 'Found group "realAuthGroup"' );
+ok(
+    $res->[2]->[0] =~ m%<div class="card-text text-left ml-2">authGroup</div>%,
+    'Found group "authGroup"'
+) or explain( $res->[2]->[0], 'Group "authgroup"' );
+ok(
+    $res->[2]->[0] =~
+      m%<div class="card-text text-left ml-2">realAuthGroup</div>%,
+    'Found group "realAuthGroup"'
+) or explain( $res->[2]->[0], 'Found group "realAuthGroup"' );
 count(7);
 
 ok(
@@ -224,7 +225,7 @@ ok(
   expectForm( $res, undef, '/checkuser', 'user', 'url' );
 ok(
     $res->[2]->[0] =~
-m%<input id="urlfield" name="url" type="text" class="form-control" value="https://test2.example.com" trplaceholder="URL / DNS"%,
+m%<input id="urlfield" name="url" type="text" class="form-control" value="https://test2.example.com" trplaceholder="URL / DNS" aria-required="true" autocomplete="url" />%,
     'Found HTTPS url'
 ) or explain( $res->[2]->[0], 'HTTP url' );
 count(2);

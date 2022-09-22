@@ -37,8 +37,8 @@ In Debian/Ubuntu, install the library through apt-get command
 
    apt-get install libauthen-radius-perl
 
-Configuration of LemonLDAP::NG
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Configuration of LL::NG
+~~~~~~~~~~~~~~~~~~~~~~~
 
 In Manager, go in ``General Parameters`` > ``Authentication modules``
 and choose Radius for authentication.

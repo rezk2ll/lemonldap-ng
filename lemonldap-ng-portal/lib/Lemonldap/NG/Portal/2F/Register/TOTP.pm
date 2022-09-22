@@ -5,10 +5,10 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.15';
 
 extends qw(
-  Lemonldap::NG::Portal::Main::Plugin
+  Lemonldap::NG::Portal::2F::Register::Base
   Lemonldap::NG::Common::TOTP
 );
 
@@ -18,26 +18,23 @@ has prefix   => ( is => 'rw', default => 'totp' );
 has template => ( is => 'ro', default => 'totp2fregister' );
 has welcome  => ( is => 'ro', default => 'yourNewTotpKey' );
 has logo     => ( is => 'rw', default => 'totp.png' );
-has ott      => (
+has ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
         my $ott =
           $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        $ott->timeout( $_[0]->conf->{formTimeout} );
+        my $timeout = $_[0]->{conf}->{sfRegisterTimeout}
+          // $_[0]->{conf}->{formTimeout};
+        $ott->timeout($timeout);
         return $ott;
     }
 );
 
-sub init {
-    return 1;
-}
-
 sub run {
     my ( $self, $req, $action ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
-    return $self->p->sendError( $req,
-        'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 )
+    return $self->p->sendError( $req, 'PE82', 400 )
       unless $user;
 
     # Check if TOTP can be updated
@@ -118,7 +115,7 @@ sub run {
             };
             if ($@) {
                 $self->logger->error("Corrupted session (_2fDevices): $@");
-                return $self->p->sendError( $req, "Corrupted session", 500 );
+                return $self->p->sendError( $req, "serverError", 500 );
             }
         }
         else {
@@ -139,7 +136,7 @@ sub run {
         $self->logger->debug("Reading TOTP secret if exists...");
         $secret = $_->{_secret} foreach (@totp2f);
         return $self->p->sendError( $req, 'totpExistingKey', 200 )
-          if ( $token->{_totp2fSecret} eq $secret );
+          if $secret;
 
         ### USER CAN ONLY REGISTER ONE TOTP ###
         # Delete TOTP previously registered
@@ -156,12 +153,19 @@ sub run {
                 400 );
         }
 
+        my $storable_secret =
+          $self->get_storable_secret( $token->{_totp2fSecret} );
+        unless ($storable_secret) {
+            $self->logger->error("Unable to encrypt TOTP secret");
+            return $self->p->sendError( $req, "serverError", 500 );
+        }
+
         # Store TOTP secret
         push @keep,
           {
             type    => 'TOTP',
             name    => $TOTPName,
-            _secret => $token->{_totp2fSecret},
+            _secret => $storable_secret,
             epoch   => $epoch
           };
         $self->logger->debug(
@@ -192,7 +196,7 @@ sub run {
             };
             if ($@) {
                 $self->logger->error("Corrupted session (_2fDevices): $@");
-                return $self->p->sendError( $req, "Corrupted session", 500 );
+                return $self->p->sendError( $req, "serverError", 500 );
             }
         }
 
@@ -214,24 +218,13 @@ sub run {
         $self->logger->debug("Reading TOTP secret if exists...");
         $secret = $_->{_secret} foreach (@totp2f);
 
-        if ( ( $req->param('newkey') and $self->conf->{totp2fUserCanChangeKey} )
-            or not $secret )
-        {
+        if ($secret) {
+            return $self->p->sendError( $req, 'totpExistingKey', 200 );
+        }
+        else {
             $secret = $self->newSecret;
             $self->logger->debug("Generating new secret = $secret");
             $nk = 1;
-        }
-
-        elsif ( $req->param('newkey') ) {
-            return $self->p->sendError( $req, 'notAuthorized', 200 );
-        }
-
-        elsif ( $self->conf->{totp2fDisplayExistingSecret} ) {
-            $self->logger->debug("User secret = $secret");
-        }
-
-        else {
-            return $self->p->sendError( $req, 'totpExistingKey', 200 );
         }
 
         # Secret is stored in a token: we choose to not accept secret returned
@@ -283,7 +276,7 @@ sub run {
             };
             if ($@) {
                 $self->logger->error("Corrupted session (_2fDevices): $@");
-                return $self->p->sendError( $req, "Corrupted session", 500 );
+                return $self->p->sendError( $req, "serverError", 500 );
             }
         }
         else {

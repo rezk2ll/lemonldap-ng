@@ -23,10 +23,9 @@
  "login":"<TMPL_VAR NAME="LOGIN">",
  "newwindow":<TMPL_VAR NAME="NEWWINDOW" DEFAULT="0">,
  "appslistorder":"<TMPL_VAR NAME="APPSLIST_ORDER">",
- "scriptname":"<TMPL_VAR NAME="SCRIPT_NAME">",
  "activeTimer":<TMPL_VAR NAME="ACTIVE_TIMER" DEFAULT="0">,
  "pingInterval":<TMPL_VAR NAME="PING" DEFAULT="0">,
- "trOver":<TMPL_VAR NAME="TROVER" DEFAULT="[]"><TMPL_IF NAME="DISPLAY_PPOLICY">,
+ "trOver":<TMPL_VAR NAME="TROVER" DEFAULT="[]">,<TMPL_IF NAME="DISPLAY_PPOLICY">
  "ppolicy": {
             "display": "<TMPL_VAR NAME="DISPLAY_PPOLICY" DEFAULT="0">",
             "minsize": "<TMPL_VAR NAME="PPOLICY_MINSIZE" DEFAULT="0">",
@@ -36,7 +35,11 @@
             "nopolicy": "<TMPL_VAR NAME="PPOLICY_NOPOLICY" DEFAULT="0">",
             "allowedspechar": "<TMPL_VAR NAME="PPOLICY_ALLOWEDSPECHAR" ESCAPE="js" DEFAULT="">",
             "minspechar": "<TMPL_VAR NAME="PPOLICY_MINSPECHAR" DEFAULT="0">"
-            }</TMPL_IF>
+            },</TMPL_IF>
+ "enablePasswordDisplay":<TMPL_VAR NAME="ENABLE_PASSWORD_DISPLAY" DEFAULT="0">,
+ "dontStorePassword":<TMPL_VAR NAME="DONT_STORE_PASSWORD" DEFAULT="0">,
+ "scrollTop":<TMPL_VAR NAME="SCROLL_TOP" DEFAULT="0">,
+ "sameSite":"<TMPL_VAR NAME="SAMESITE">"
  }
  </script>
 
