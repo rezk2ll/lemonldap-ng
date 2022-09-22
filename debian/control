@@ -5,7 +5,7 @@ Section: perl
 Priority: optional
 Build-Depends: debhelper (>= 10),
                po-debconf
-Build-Depends-Indep: gsfonts <!nocheck>,
+Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libapache-session-perl <!nocheck>,
                      libauth-yubikey-webclient-perl <!nocheck>,
                      libauthen-oath-perl <!nocheck>,
@@ -303,7 +303,7 @@ Depends: ${misc:Depends},
          libregexp-assemble-perl,
          liblist-moreutils-perl,
          libemail-date-format-perl
-Recommends: gsfonts,
+Recommends: fonts-urw-base35 | gsfonts,
             libauthen-webauthn-perl,
             libcrypt-openssl-bignum-perl,
             libconvert-base32-perl,
@@ -344,5 +344,5 @@ Description: Lemonldap::NG authentication portal part
  Lemonldap::NG::Portal provides the authentication portal.
  .
  You may have to install some suggested packages depending on plugins you
- enabled. For example, libgd-securityimage-perl and gsfonts are needed if you
- want to use Captcha, libcrypt-u2f-server-perl for U2F features,...
+ enabled. For example, libgd-securityimage-perl and fonts-urw-base35 are needed
+ if you want to use Captcha, libcrypt-u2f-server-perl for U2F features,...
