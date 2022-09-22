@@ -130,7 +130,7 @@ sub hash_password_for_select {
         $dbsalt = $self->gen_salt_text();
         $self->logger->debug( "Using " . uc($hash) . " to hash salted password" );
 
-        $unixAlgorithm = substr($str, 7, 1);
+        $unixAlgorithm = substr($hash, 7, 1);
         # Build the the unix password string.
         return uc("encrypt") . "($password,'\$$unixAlgorithm\$$dbsalt')";
     }
