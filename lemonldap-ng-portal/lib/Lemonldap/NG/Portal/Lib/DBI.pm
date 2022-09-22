@@ -93,18 +93,6 @@ sub hash_password {
     my ( $self, $password, $hash ) = @_;
     my $dbsalt;
 
-    # If encrypt hash: We need to give a salt and algorithm as second parameter.
-    # A unix salted password string starts with algorithm,
-    # then salt and ends with the hash.
-    # $6$ telling encrypt that we want sha512...
-    if ( $hash =~ /^(encrypt6)$/i ) {
-        # Lets get salt
-        $dbsalt = $self->gen_salt_text();
-        $self->logger->debug( "Using " . uc($hash) . " to hash password" );
-        # Build the prefix of the unix password string.
-        return uc($hash) . "($password,'\$6\$$dbsalt')";
-    }
-
     # Non salted Password
     if ($hash) {
         $self->logger->debug( "Using " . uc($hash) . " to hash password" );
@@ -113,8 +101,6 @@ sub hash_password {
 
     $self->logger->debug("No password hash, using clear text for password");
     return $password;
-
-
 }
 
 # Return hashed password for use in SQL SELECT statement
@@ -125,13 +111,32 @@ sub hash_password {
 sub hash_password_for_select {
     my ( $self, $password, $hash ) = @_;
     my $passwordCol = $self->conf->{dbiAuthPasswordCol};
+    my $unixAlgorithm
 
+    # Stay backward compatible
     if ( $hash =~ /^encrypt$/i ) {
         return uc($hash) . "($password,$passwordCol)";
     }
-    else {
-        return $self->hash_password( $password, $hash );
+
+    # If an unix encryption allgorithm is specifid:
+    # We need to give a salt and algorithm as second parameter.
+    # A unix salted password string starts with algorithm,
+    # then salt and ends with the hash.
+    # eg. $6$ telling encrypt that we want sha512...
+    # $2a$ and $2y$ not working in latest mariadb. If wanted
+    # there is additional research nessesary!
+    if ( $hash =~ /^(encrypt6|encrypt5|encrypt1)$/i ) {
+        # Lets get salt
+        $dbsalt = $self->gen_salt_text();
+        $self->logger->debug( "Using " . uc($hash) . " to hash salted password" );
+
+        $unixAlgorithm = substr($str, 7, 1);
+        # Build the the unix password string.
+        return uc("encrypt") . "($password,'\$$unixAlgorithm\$$dbsalt')";
     }
+
+    return $self->hash_password( $password, $hash );
+
 }
 
 ## @method protected Lemonldap::NG::Portal::_DBI get_password(ref dbh, string user)
