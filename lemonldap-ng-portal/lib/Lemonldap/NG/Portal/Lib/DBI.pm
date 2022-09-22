@@ -91,7 +91,6 @@ sub init {
 # @return SQL statement string
 sub hash_password {
     my ( $self, $password, $hash ) = @_;
-    my $dbsalt;
 
     # Non salted Password
     if ($hash) {
@@ -111,7 +110,8 @@ sub hash_password {
 sub hash_password_for_select {
     my ( $self, $password, $hash ) = @_;
     my $passwordCol = $self->conf->{dbiAuthPasswordCol};
-    my $unixAlgorithm
+    my $unixAlgorithm;
+    my $dbsalt;
 
     # Stay backward compatible
     if ( $hash =~ /^encrypt$/i ) {
