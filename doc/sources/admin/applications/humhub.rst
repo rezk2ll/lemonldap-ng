@@ -192,7 +192,7 @@ Configuration sample using CLI:
            oidcRPMetaDataOptions/humhub oidcRPMetaDataOptionsIDTokenSignAlg RS512 \
            oidcRPMetaDataOptions/humhub oidcRPMetaDataOptionsIDTokenExpiration 3600 \
            oidcRPMetaDataOptions/humhub oidcRPMetaDataOptionsAccessTokenExpiration 3600 \
-           oidcRPMetaDataOptions/humhub oidcRPMetaDataOptionsBypassConsent 1 && \
+           oidcRPMetaDataOptions/humhub oidcRPMetaDataOptionsBypassConsent 1
 
 Migrate former local or ldap Humhub account to connect through SSO
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
