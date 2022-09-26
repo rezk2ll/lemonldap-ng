@@ -64,7 +64,7 @@ can be executed to set all the session backends.
 
 In this example we have:
 
--  Backend: PostGreSQL
+-  Backend: PgJSON
 -  DB user: lemonldaplogin
 -  DB password: lemonldappw
 -  Database: lemonldapdb
@@ -81,7 +81,7 @@ In this example we have:
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
        set \
-           globalStorage Apache::Session::Browseable::Postgres
+           globalStorage Apache::Session::Browseable::PgJSON
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
        addKey \
@@ -89,7 +89,6 @@ In this example we have:
            globalStorageOptions UserName 'lemonldaplogin' \
            globalStorageOptions Password 'lemonldappw' \
            globalStorageOptions Commit 1 \
-           globalStorageOptions Index 'ipAddr _whatToTrace user' \
            globalStorageOptions TableName 'sessions'
 
 -  Persistent sessions:
@@ -103,7 +102,7 @@ In this example we have:
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
        set \
-           persistentStorage Apache::Session::Browseable::Postgres
+           persistentStorage Apache::Session::Browseable::PgJSON
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
        addKey \
@@ -111,7 +110,6 @@ In this example we have:
            persistentStorageOptions UserName 'lemonldaplogin' \
            persistentStorageOptions Password 'lemonldappw' \
            persistentStorageOptions Commit 1 \
-           persistentStorageOptions Index '_session_uid' \
            persistentStorageOptions TableName 'psessions'
 
 -  CAS sessions
@@ -120,7 +118,7 @@ In this example we have:
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
        set \
-           casStorage Apache::Session::Browseable::Postgres
+           casStorage Apache::Session::Browseable::PgJSON
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
        addKey \
@@ -128,7 +126,6 @@ In this example we have:
            casStorageOptions UserName 'lemonldaplogin' \
            casStorageOptions Password 'lemonldappw' \
            casStorageOptions Commit 1 \
-           casStorageOptions Index '_cas_id' \
            casStorageOptions TableName 'cassessions'
 
 -  SAML sessions
@@ -137,7 +134,7 @@ In this example we have:
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
        set \
-           samlStorage Apache::Session::Browseable::Postgres
+           samlStorage Apache::Session::Browseable::PgJSON
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
        addKey \
@@ -145,7 +142,6 @@ In this example we have:
           samlStorageOptions UserName 'lemonldaplogin' \
           samlStorageOptions Password 'lemonldappw' \
           samlStorageOptions Commit 1 \
-          samlStorageOptions Index '_saml_id ProxyID _nameID _assert_id _art_id _session_id' \
           samlStorageOptions TableName 'samlsessions'
 
 -  OpenID Connect sessions
@@ -154,7 +150,7 @@ In this example we have:
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
        set \
-          oidcStorage Apache::Session::Browseable::Postgres
+          oidcStorage Apache::Session::Browseable::PgJSON
 
    /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 \
        addKey \
