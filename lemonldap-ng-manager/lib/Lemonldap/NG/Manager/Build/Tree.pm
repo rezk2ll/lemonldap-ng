@@ -905,6 +905,20 @@ sub tree {
                         'sfLoginTimeout',
                         'sfRegisterTimeout',
                         {
+                            title => 'password2f',
+                            help  => 'password2f.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'password2fActivation',
+                                'password2fSelfRegistration',
+                                'password2fAuthnLevel',
+                                'password2fLabel',
+                                'password2fLogo',
+                                'password2fUserCanRemoveKey',
+                                'password2fTTL',
+                            ]
+                        },
+                        {
                             title => 'utotp2f',
                             help  => 'utotp2f.html',
                             form  => 'simpleInputContainer',

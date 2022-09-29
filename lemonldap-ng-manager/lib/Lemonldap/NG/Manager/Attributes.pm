@@ -638,11 +638,11 @@ sub attributes {
         },
         'available2F' => {
             'default' =>
-              'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius',
+'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius,Password',
             'type' => 'text'
         },
         'available2FSelfRegistration' => {
-            'default' => 'TOTP,U2F,WebAuthn,Yubikey',
+            'default' => 'Password,TOTP,U2F,WebAuthn,Yubikey',
             'type'    => 'text'
         },
         'avoidAssignment' => {
@@ -2754,6 +2754,30 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'pamService' => {
             'default' => 'login',
             'type'    => 'text'
+        },
+        'password2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'password2fAuthnLevel' => {
+            'type' => 'int'
+        },
+        'password2fLabel' => {
+            'type' => 'text'
+        },
+        'password2fLogo' => {
+            'type' => 'text'
+        },
+        'password2fSelfRegistration' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'password2fTTL' => {
+            'type' => 'int'
+        },
+        'password2fUserCanRemoveKey' => {
+            'default' => 1,
+            'type'    => 'bool'
         },
         'passwordDB' => {
             'default' => 'Demo',

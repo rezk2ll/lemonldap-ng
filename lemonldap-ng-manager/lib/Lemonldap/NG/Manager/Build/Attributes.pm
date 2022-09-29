@@ -1926,6 +1926,40 @@ sub attributes {
             documentation => 'Maximum 2F devices name length',
         },
 
+        # Password 2FA
+        password2fActivation => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Password2F activation',
+        },
+        password2fSelfRegistration => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Password2F self registration activation',
+        },
+        password2fAuthnLevel => {
+            type          => 'int',
+            documentation =>
+              'Authentication level for users authentified by Password2F'
+        },
+        password2fLabel => {
+            type          => 'text',
+            documentation => 'Portal label for Password2F'
+        },
+        password2fLogo => {
+            type          => 'text',
+            documentation => 'Custom logo for Password 2F',
+        },
+        password2fUserCanRemoveKey => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Authorize users to remove existing Password2F secret',
+        },
+        password2fTTL => {
+            type          => 'int',
+            documentation => 'Password2F device time to live ',
+        },
+
         # U2F
         u2fActivation => {
             type          => 'boolOrExpr',
@@ -3446,13 +3480,14 @@ sub attributes {
         },
         available2F => {
             type    => 'text',
-            default =>
-              'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius',
+            default => join( ',',
+                qw/UTOTP TOTP U2F REST Mail2F Ext2F WebAuthn Yubikey Radius Password/
+            ),
             documentation => 'Available second factor modules',
         },
         available2FSelfRegistration => {
-            type          => 'text',
-            default       => 'TOTP,U2F,WebAuthn,Yubikey',
+            type    => 'text',
+            default => join( ',', qw/Password TOTP U2F WebAuthn Yubikey/ ),
             documentation =>
               'Available self-registration modules for second factor',
         },
