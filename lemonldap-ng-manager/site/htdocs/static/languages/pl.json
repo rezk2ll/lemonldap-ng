@@ -956,7 +956,6 @@
 "samlIDPMetaDataOptions":"Opcje",
 "samlIDPMetaDataOptionsAdaptSessionUtime":"Dostosuj czas życia sesji",
 "samlIDPMetaDataOptionsAllowLoginFromIDP":"Zezwalaj na logowanie od IDP",
-"samlIDPMetaDataOptionsAllowProxiedAuthn":"Zezwalaj na uwierzytelnianie proxy",
 "samlIDPMetaDataOptionsAuthnRequest":"Żądanie uwierzytelnienia",
 "samlIDPMetaDataOptionsBinding":"Przywiązania",
 "samlIDPMetaDataOptionsCheckAudience":"Sprawdź warunki widowni",

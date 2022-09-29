@@ -956,7 +956,6 @@
 "samlIDPMetaDataOptions":"Opzioni",
 "samlIDPMetaDataOptionsAdaptSessionUtime":"Adatta la durata della sessione",
 "samlIDPMetaDataOptionsAllowLoginFromIDP":"Consenti l'accesso da IDP",
-"samlIDPMetaDataOptionsAllowProxiedAuthn":"Consenti l'autenticazione proxied",
 "samlIDPMetaDataOptionsAuthnRequest":"Richiesta di autenticazione",
 "samlIDPMetaDataOptionsBinding":"Vincolante",
 "samlIDPMetaDataOptionsCheckAudience":"Controllare le condizioni del pubblico",

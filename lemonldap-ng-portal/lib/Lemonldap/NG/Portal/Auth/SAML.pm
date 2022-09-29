@@ -1026,10 +1026,6 @@ sub extractFormInfo {
       ->{samlIDPMetaDataOptionsNameIDFormat};
     $nameIDFormat = $self->getNameIDFormat($nameIDFormat) if $nameIDFormat;
 
-    # IDP ProxyRestriction
-    my $allowProxiedAuthn = $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
-      ->{samlIDPMetaDataOptionsAllowProxiedAuthn};
-
     # IDP HTTP method
     my $method = $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
       ->{samlIDPMetaDataOptionsSSOBinding};
@@ -1068,7 +1064,7 @@ sub extractFormInfo {
     my $login = $self->createAuthnRequest(
         $req,          $self->lassoServer, $idp,
         $method,       $forceAuthn,        $isPassive,
-        $nameIDFormat, $allowProxiedAuthn, $signSSOMessage,
+        $nameIDFormat, 0, $signSSOMessage,
         $requestedAuthnContext
     );
 
