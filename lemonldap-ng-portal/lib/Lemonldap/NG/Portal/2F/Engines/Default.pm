@@ -30,10 +30,16 @@ with 'Lemonldap::NG::Portal::Lib::OverConf';
 
 # INITIALIZATION
 
+# Arrayref of objects
+# p => module prefix
+# m => module instance
+# r => compiled rule
+# t => type of record in _2fDevices
 has sfModules  => ( is => 'rw', default => sub { [] } );
 has sfRModules => ( is => 'rw', default => sub { [] } );
-has sfReq      => ( is => 'rw' );
-has sfMsgRule  => ( is => 'rw' );
+
+has sfReq     => ( is => 'rw' );
+has sfMsgRule => ( is => 'rw' );
 
 has ott => (
     is      => 'rw',
@@ -102,7 +108,12 @@ sub init {
 
                 # Store module
                 push @{ $self->{ $i ? 'sfRModules' : 'sfModules' } },
-                  { p => $prefix, m => $m, r => $rule };
+                  {
+                    p => $prefix,
+                    m => $m,
+                    r => $rule,
+                    t => ( $m->can('type') ? $m->type : $prefix ),
+                  };
             }
             else {
                 $self->logger->debug(' -> not enabled');
@@ -145,7 +156,13 @@ sub init {
         }
 
         # Store module
-        push @{ $self->{'sfModules'} }, { p => $prefix, m => $m, r => $rule };
+        push @{ $self->{'sfModules'} },
+          {
+            p => $prefix,
+            m => $m,
+            r => $rule,
+            t => ( $m->can('type') ? $m->type : $prefix ),
+          };
     }
 
     unless (
@@ -548,28 +565,26 @@ sub _displayRegister {
    # Parse second factors to display delete button if allowed and upgrade button
     my $displayUpgBtn = 0;
     my $action        = '';
-    foreach
-      my $type ( split /,\s*/, $self->conf->{available2FSelfRegistration} )
-    {
+    foreach my $reg_mod_info ( @{ $self->sfRModules } ) {
+        my $type   = $reg_mod_info->{t};
+        my $prefix = $reg_mod_info->{p};
+        my $module = $reg_mod_info->{m};
         foreach (@$_2fDevices) {
-            $_->{type} =~ s/^UBK$/Yubikey/;
             if ( $_->{type} eq $type ) {
-                my $t = lc($type);
-                $t =~ s/2f$//i;
 
                 # Display delete button
+                $_->{prefix} = $prefix;
                 $_->{delAllowed} =
-                     $self->conf->{ $t . '2fActivation' }
-                  && $self->conf->{ $t . '2fUserCanRemoveKey' }
-                  && $self->conf->{ $t . '2fSelfRegistration' };
+                     $self->conf->{ $prefix . '2fActivation' }
+                  && $module->userCanRemove
+                  && $self->conf->{ $prefix . '2fSelfRegistration' };
 
                 # Display upgrade button
-                $displayUpgBtn ||= $self->conf->{ $t . '2fAuthnLevel' }
-                  && $self->conf->{ $t . '2fAuthnLevel' } >
+                $displayUpgBtn ||= $module->authnLevel
+                  && $module->authnLevel >
                   $req->userData->{authenticationLevel};
             }
             $action ||= $_->{delAllowed};
-            $_->{type} =~ s/^Yubikey$/UBK/;
         }
     }
     $displayUpgBtn = 0 unless $self->conf->{upgradeSession};
