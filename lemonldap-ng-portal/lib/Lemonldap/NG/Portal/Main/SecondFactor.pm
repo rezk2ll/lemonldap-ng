@@ -32,15 +32,25 @@ has ott => (
     }
 );
 
-has prefix  => ( is => 'rw' );
-has logo    => ( is => 'rw', default => '2f.png' );
-has label   => ( is => 'rw' );
-has noRoute => ( is => 'ro' );
+has prefix     => ( is => 'rw' );
+has logo       => ( is => 'rw', default => '2f.png' );
+has label      => ( is => 'rw' );
+has noRoute    => ( is => 'ro' );
 has authnLevel => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
         return $_[0]->conf->{ $_[0]->prefix . '2fAuthnLevel' };
+    }
+);
+
+# 'type' field of stored _2fDevices
+# Defaults to the last component of the package name
+# But can be overriden by sfExtra
+has type => (
+    is      => 'rw',
+    default => sub {
+        ( split( '::', ref( $_[0] ) ) )[-1];
     }
 );
 

@@ -13,6 +13,16 @@ has label         => ( is => 'rw' );
 has authnLevel    => ( is => 'rw' );
 has userCanRemove => ( is => 'rw' );
 
+# 'type' field of stored _2fDevices
+# Defaults to the last component of the package name
+# But can be overriden by sfExtra
+has type => (
+    is      => 'rw',
+    default => sub {
+        ( split( '::', ref( $_[0] ) ) )[-1];
+    }
+);
+
 sub init {
     my ($self) = @_;
 

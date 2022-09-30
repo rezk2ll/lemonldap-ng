@@ -11,10 +11,9 @@ with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 our $VERSION = '2.0.15';
 
-has rp_id    => ( is => 'rw', lazy    => 1, builder => "_build_rp_id" );
-has origin   => ( is => 'rw', lazy    => 1, builder => "_build_origin" );
-has type     => ( is => 'ro', default => 'WebAuthn' );
-has verifier => ( is => 'rw', lazy    => 1, builder => "_build_verifier" );
+has rp_id    => ( is => 'rw', lazy => 1, builder => "_build_rp_id" );
+has origin   => ( is => 'rw', lazy => 1, builder => "_build_origin" );
+has verifier => ( is => 'rw', lazy => 1, builder => "_build_verifier" );
 
 sub _build_verifier {
     my $self = shift;

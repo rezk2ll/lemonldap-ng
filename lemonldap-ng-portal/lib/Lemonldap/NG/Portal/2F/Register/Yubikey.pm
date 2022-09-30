@@ -16,6 +16,7 @@ extends 'Lemonldap::NG::Portal::2F::Register::Base';
 # INITIALIZATION
 
 has prefix   => ( is => 'rw', default => 'yubikey' );
+has type     => ( is => 'rw', default => 'UBK' );
 has template => ( is => 'ro', default => 'yubikey2fregister' );
 has welcome  => ( is => 'ro', default => 'clickOnYubikey' );
 has logo     => ( is => 'rw', default => 'yubikey.png' );
@@ -120,7 +121,7 @@ sub run {
 
             push @{$_2fDevices},
               {
-                type     => 'UBK',
+                type     => $self->type,
                 name     => $UBKName,
                 _yubikey => $key,
                 epoch    => $epoch

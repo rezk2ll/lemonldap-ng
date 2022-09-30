@@ -18,7 +18,7 @@ has prefix   => ( is => 'rw', default => 'totp' );
 has template => ( is => 'ro', default => 'totp2fregister' );
 has welcome  => ( is => 'ro', default => 'yourNewTotpKey' );
 has logo     => ( is => 'rw', default => 'totp.png' );
-has ott => (
+has ott      => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
@@ -124,7 +124,7 @@ sub run {
         }
 
         # Reading existing TOTP
-        my @totp2f = grep { $_->{type} eq 'TOTP' } @$_2fDevices;
+        my @totp2f = grep { $_->{type} eq $self->type } @$_2fDevices;
         unless (@totp2f) {
             $self->logger->debug("No TOTP Device found");
 
@@ -142,7 +142,7 @@ sub run {
         # Delete TOTP previously registered
         $self->logger->debug("Looking for TOTP to delete...");
         my $size = my @keep =
-          map { $_->{type} eq 'TOTP' ? () : $_ } @$_2fDevices;
+          map { $_->{type} eq $self->type ? () : $_ } @$_2fDevices;
 
         # Check if user can register one more device
         my $maxSize = $self->conf->{max2FDevices};
@@ -163,7 +163,7 @@ sub run {
         # Store TOTP secret
         push @keep,
           {
-            type    => 'TOTP',
+            type    => $self->type,
             name    => $TOTPName,
             _secret => $storable_secret,
             epoch   => $epoch
