@@ -39,6 +39,7 @@ Authentication, users and password databases
    mail2f
    external2f
    radius2f
+   password2f
    rest2f
    yubikey2f
    webauthn2f
