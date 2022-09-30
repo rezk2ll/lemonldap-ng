@@ -26,6 +26,51 @@ Known regressions in the latest released version
 
 None
 
+2.0.16
+------
+
+Improve the use of multiple 2FA types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Changes in custom 2F::Register:: modules
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* Users who use their own ``Lemonldap::NG::Portal::2F::Register::`` modules
+  must now inherit from ``Lemonldap::NG::Portal::2F::Register::Base``
+
+* The `canUpdateSfa` function has been moved into the 2FA Engine and should not
+  be called by your registration module anymore
+
+
+Changes in templates
+^^^^^^^^^^^^^^^^^^^^
+
+The default ``skin.min.js`` file has been updated in this release, be sure to copy ``skin.min.js`` from ``bootstrap`` into your custom theme.
+
+Due to some internal changes in the way registrable second factors are handled, it is recommended to update your custom `2fregisters.tpl`
+
+.. code:: diff
+
+    @@ -32,7 +32,14 @@
+                 <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
+                 <td>
+                   <TMPL_IF NAME="delAllowed">
+    -                <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger" role="button" data-toggle="modal" data-target="#remove2fModal">
+    +                <span
+    +                    device='<TMPL_VAR NAME="type">'
+    +                    epoch='<TMPL_VAR NAME="epoch">'
+    +                    prefix='<TMPL_VAR NAME="prefix">'
+    +                    class="btn btn-danger"
+    +                    role="button"
+    +                    data-toggle="modal"
+    +                    data-target="#remove2fModal">
+                       <span class="fa fa-minus-circle"></span>
+                       <span trspan="unregister">Unregister</span>
+                        </span>
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
+
 2.0.15
 ------
 
