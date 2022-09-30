@@ -22,8 +22,8 @@ extends qw(
 # Prefix can overriden by sfExtra and is used for routes
 has prefix => ( is => 'rw', default => 'rest' );
 
-# Type is used to lookup config
-has type => ( is => 'ro', default => 'rest' );
+# Used to lookup config
+has conf_type => ( is => 'ro', default => 'rest' );
 
 has legend    => ( is => 'rw', default => 'enterRest2fCode' );
 has initAttrs => ( is => 'rw', default => sub { {} } );

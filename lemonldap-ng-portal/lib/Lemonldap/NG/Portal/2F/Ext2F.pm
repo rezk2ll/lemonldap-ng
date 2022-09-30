@@ -21,9 +21,9 @@ extends 'Lemonldap::NG::Portal::Lib::Code2F';
 # Prefix can overriden by sfExtra and is used for routes
 has prefix => ( is => 'rw', default => 'ext' );
 
-# Type is used to lookup config
-has type   => ( is => 'ro', default => 'ext' );
-has legend => ( is => 'rw', default => 'enterExt2fCode' );
+# Used to lookup config
+has conf_type => ( is => 'ro', default => 'ext' );
+has legend    => ( is => 'rw', default => 'enterExt2fCode' );
 
 sub init {
     my ($self) = @_;

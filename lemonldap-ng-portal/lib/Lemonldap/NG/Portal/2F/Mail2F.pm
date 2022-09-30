@@ -23,10 +23,10 @@ extends qw(
 # Prefix can overriden by sfExtra and is used for routes
 has prefix => ( is => 'rw', default => 'mail' );
 
-# Type is used to lookup config
-has type   => ( is => 'ro', default => 'mail' );
-has legend => ( is => 'rw', default => 'enterMail2fCode' );
+# Used to lookup config
+has conf_type => ( is => 'ro', default => 'mail' );
 
+has legend => ( is => 'rw', default => 'enterMail2fCode' );
 
 has ott => (
     is      => 'rw',

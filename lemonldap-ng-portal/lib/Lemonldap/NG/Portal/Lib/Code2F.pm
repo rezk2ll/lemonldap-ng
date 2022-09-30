@@ -5,6 +5,9 @@ package Lemonldap::NG::Portal::Lib::Code2F;
 # * delivering the code through an external system (mail/rest/shell...)
 # * validating that the input code is the correct one
 
+# Subclasses must define a 'conf_type' field that contains the configuration prefix
+# to use to lookup common configuration keys
+
 use strict;
 use Mouse;
 
@@ -22,7 +25,7 @@ has resend_interval => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        $_[0]->{conf}->{ $_[0]->type . '2fResendInterval' } || 0;
+        $_[0]->{conf}->{ $_[0]->conf_type . '2fResendInterval' } || 0;
     }
 );
 
@@ -30,7 +33,7 @@ has code_activation => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        $_[0]->{conf}->{ $_[0]->type . '2fCodeActivation' };
+        $_[0]->{conf}->{ $_[0]->conf_type . '2fCodeActivation' };
     }
 );
 
@@ -66,9 +69,10 @@ sub run {
     my $code;
     if ( $self->code_activation ) {
         $code = $self->random->randregex( $self->code_activation );
-        $self->logger->debug( "Generated " . $self->type . "2f code : $code" );
+        $self->logger->debug(
+            "Generated " . $self->prefix . "2f code : $code" );
         $self->ott->updateToken( $token,
-            '__' . $self->type . '2fcode' => $code );
+            '__' . $self->prefix . '2fcode' => $code );
     }
 
     return PE_ERROR unless $self->sendCode( $req, $req->sessionInfo, $code );
@@ -87,7 +91,7 @@ sub _resend {
     # Check token
     my $token;
     unless ( $token = $req->param('token') ) {
-        $self->userLogger->error( $self->type . ' 2F access without token' );
+        $self->userLogger->error( $self->prefix . '2f access without token' );
         eval { $self->setSecurity($req) };
         $req->mustRedirect(1);
         return $self->p->do( $req, [ sub { PE_NOTOKEN } ] );
@@ -102,7 +106,7 @@ sub _resend {
         return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
     }
 
-    my $code = $session->{ '__' . $self->type . '2fcode' };
+    my $code = $session->{ '__' . $self->prefix . '2fcode' };
 
     my $legend = $self->legend;
 
@@ -128,7 +132,7 @@ sub verify {
     my ( $self, $req, $session ) = @_;
     my $usercode;
     unless ( $usercode = $req->param('code') ) {
-        $self->userLogger->error( $self->type . '2f: no code found' );
+        $self->userLogger->error( $self->prefix . '2f: no code found' );
         return PE_FORMEMPTY;
     }
 
@@ -143,7 +147,7 @@ sub verify {
 sub verify_internal {
     my ( $self, $req, $session, $code ) = @_;
 
-    my $savedcode = $session->{ '__' . $self->type . '2fcode' };
+    my $savedcode = $session->{ '__' . $self->prefix . '2fcode' };
     unless ($savedcode) {
         $self->logger->error(
             'Unable to find generated 2F code in token session');
@@ -151,7 +155,7 @@ sub verify_internal {
     }
 
     $self->logger->debug(
-        "Verifying " . $self->type . "2f code: $code VS $savedcode" );
+        "Verifying " . $self->prefix . "2f code: $code VS $savedcode" );
     if ( $code eq $savedcode ) {
         return PE_OK;
     }
@@ -166,11 +170,11 @@ sub sendCodeForm {
     my ( $self, $req, %params ) = @_;
 
     my $checkLogins = $req->param('checkLogins');
-    $self->logger->debug( $self->type . "2f: checkLogins set" )
+    $self->logger->debug( $self->prefix . "2f: checkLogins set" )
       if $checkLogins;
 
     my $stayconnected = $req->param('stayconnected');
-    $self->logger->debug( $self->type . "2f: stayconnected set" )
+    $self->logger->debug( $self->prefix . "2f: stayconnected set" )
       if $stayconnected;
 
     # Prepare form
