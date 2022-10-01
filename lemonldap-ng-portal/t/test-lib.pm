@@ -57,6 +57,7 @@ use strict;
 use Data::Dumper;
 use File::Find;
 use JSON;
+use XML::LibXML;
 use LWP::UserAgent;
 use Time::Fake;
 use URI::Escape;
@@ -593,6 +594,17 @@ sub expectCspChildOK {
     count(1);
     like( $csp, qr/child-src[^;]*\Q$host\E/, "Found $host in CSP child-src" );
     count(1);
+}
+
+sub getHtmlElement {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ( $res, $xpath ) = @_;
+
+    # Use recover to ignore parsing errors
+    my $doc =
+      XML::LibXML->new->load_html( string => $res->[2]->[0], recover => 2 );
+
+    return $doc->findnodes($xpath);
 }
 
 =head4 getCookies($res)
