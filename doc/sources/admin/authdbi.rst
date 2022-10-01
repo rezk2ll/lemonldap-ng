@@ -169,8 +169,13 @@ Password
    hash schemes, of the form "**s**\ scheme", where scheme MUST match a
    non-salted hash function in the database. LemonLDAP::NG relies on
    this hashing function for computing user password hashes. Salted and
-   non-salted scheme lists are not necessarily equivalent. (for example:
-   non-salted="sha256" and salted="ssha ssha512" is valid)
+   non-salted scheme lists are not necessarily equivalent. An exception
+   for this are unix passwords, they don't need to start with 's'.
+   Possible shemes for unix passwords are encrypt1, encrypt5, encrypt6.
+   For using unix passwords it is also needed to create the Database
+   function encrypth. See example for details.
+   (for example:
+   non-salted="sha256" and salted="ssha ssha512 encrypt6" is valid)
 -  **Dynamic hash scheme for new passwords**: LemonLDAP::NG is able to
    store new passwords in the database (while modifying or
    reinitializing the password). You can choose a salted or non salted
@@ -195,5 +200,17 @@ Password
        CREATE OR REPLACE FUNCTION sha256(varchar) returns text AS $$
        SELECT encode(digest(decode($1, 'hex'), 'sha256'), 'hex')
        $$ LANGUAGE SQL STRICT IMMUTABLE;
+
+    Another example to create an unix hash function in MariaDB.
+    Caution: The encrypt function is only avaible if the database
+    is running on a unix based OS.
+    1. Use the lemonldapng database. 2. Create the unix hash function:
+    
+    ::
+    
+       CREATE FUNCTION `encrypth`(`pwd` VARCHAR(255), `unix_salt`
+       VARCHAR(255)) RETURNS VARCHAR(255) CHARSET utf8mb4
+       NOT DETERMINISTIC NO SQL SQL SECURITY INVOKER RETURN
+       HEX( ENCRYPT( UNHEX(pwd), UNHEX(unix_salt) ) );
 
 
