@@ -956,7 +956,6 @@
 "samlIDPMetaDataOptions":"אפשרויות",
 "samlIDPMetaDataOptionsAdaptSessionUtime":"Adapt session lifetime",
 "samlIDPMetaDataOptionsAllowLoginFromIDP":"לאפשר כניסה מ־IDP",
-"samlIDPMetaDataOptionsAllowProxiedAuthn":"Allow proxied authentication",
 "samlIDPMetaDataOptionsAuthnRequest":"בקשת אימות",
 "samlIDPMetaDataOptionsBinding":"איגוד",
 "samlIDPMetaDataOptionsCheckAudience":"בדיקת מצב הקהל",

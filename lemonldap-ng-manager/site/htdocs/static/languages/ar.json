@@ -956,7 +956,6 @@
 "samlIDPMetaDataOptions":"الخيارات",
 "samlIDPMetaDataOptionsAdaptSessionUtime":"تكييف صلحية الجلسة",
 "samlIDPMetaDataOptionsAllowLoginFromIDP":"السماح بتسجيل الدخول من IDP",
-"samlIDPMetaDataOptionsAllowProxiedAuthn":"سماح تَوْكِيل إثبات الهوية",
 "samlIDPMetaDataOptionsAuthnRequest":"طلب إثبات الهوية",
 "samlIDPMetaDataOptionsBinding":"ربط",
 "samlIDPMetaDataOptionsCheckAudience":"تحقق من شروط السمع",

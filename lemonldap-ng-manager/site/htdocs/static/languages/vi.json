@@ -956,7 +956,6 @@
 "samlIDPMetaDataOptions":"Tùy chọn",
 "samlIDPMetaDataOptionsAdaptSessionUtime":"Tương thích phiên toàn bộ thời gian",
 "samlIDPMetaDataOptionsAllowLoginFromIDP":"Cho phép đăng nhập từ IDP",
-"samlIDPMetaDataOptionsAllowProxiedAuthn":"Cho phép xác thực qua proxy",
 "samlIDPMetaDataOptionsAuthnRequest":"Yêu cầu xác thực",
 "samlIDPMetaDataOptionsBinding":"Liên kết",
 "samlIDPMetaDataOptionsCheckAudience":"Điều kiện kiểm tra đối tượng",

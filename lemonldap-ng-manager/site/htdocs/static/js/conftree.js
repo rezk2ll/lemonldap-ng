@@ -1061,13 +1061,6 @@ function templates(tpl,key) {
          },
          {
             "default" : 0,
-            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsAllowProxiedAuthn",
-            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsAllowProxiedAuthn",
-            "title" : "samlIDPMetaDataOptionsAllowProxiedAuthn",
-            "type" : "bool"
-         },
-         {
-            "default" : 0,
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsAllowLoginFromIDP",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsAllowLoginFromIDP",
             "title" : "samlIDPMetaDataOptionsAllowLoginFromIDP",

@@ -956,7 +956,6 @@
 "samlIDPMetaDataOptions":"Options",
 "samlIDPMetaDataOptionsAdaptSessionUtime":"Adapatation de la durée de vie de la session",
 "samlIDPMetaDataOptionsAllowLoginFromIDP":"Authentification depuis le fournisseur autorisée",
-"samlIDPMetaDataOptionsAllowProxiedAuthn":"Authentification proxy autorisée",
 "samlIDPMetaDataOptionsAuthnRequest":"Requête d'authentification",
 "samlIDPMetaDataOptionsBinding":"Méthode",
 "samlIDPMetaDataOptionsCheckAudience":"Vérifier les conditions d'audience",

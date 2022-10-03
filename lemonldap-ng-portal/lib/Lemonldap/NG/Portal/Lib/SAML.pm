@@ -875,7 +875,7 @@ sub resetProviderIdIndex {
 # @param forceAuthn force authentication on IDP
 # @param isPassive require passive authentication
 # @param nameIDFormat SAML2 NameIDFormat
-# @param allowProxiedAuthn allow proxy on IDP
+# @param allowProxiedAuthn allow proxy on IDP // Not used anymore but kept to avoid API break
 # @param signSSOMessage sign request
 # @param requestedAuthnContext authentication context
 # @return Lasso::Login object
@@ -979,24 +979,6 @@ sub createAuthnRequest {
     if ($isPassive) {
         $self->logger->debug("Passive authentication on IDP");
         $request->IsPassive(1);
-    }
-
-    # Allow proxy
-    unless ($allowProxiedAuthn) {
-        $self->logger->debug("Do not allow this request to be proxied");
-        eval {
-            my $proxyRestriction = Lasso::Saml2ProxyRestriction->new();
-            $proxyRestriction->Audience($idp);
-            $proxyRestriction->Count(0);
-            my $conditions = $request->Conditions()
-              || Lasso::Saml2Conditions->new();
-            $conditions->ProxyRestriction($proxyRestriction);
-            $request->Conditions($conditions);
-        };
-        if ($@) {
-            $self->checkLassoError($@);
-            return;
-        }
     }
 
     # Signature

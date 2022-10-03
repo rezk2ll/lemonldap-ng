@@ -3042,10 +3042,6 @@ sub attributes {
             type    => 'bool',
             default => 0,
         },
-        samlIDPMetaDataOptionsAllowProxiedAuthn => {
-            type    => 'bool',
-            default => 0,
-        },
         samlIDPMetaDataOptionsAllowLoginFromIDP => {
             type    => 'bool',
             default => 0,

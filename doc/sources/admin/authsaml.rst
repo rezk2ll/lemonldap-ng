@@ -121,10 +121,6 @@ Authentication request
    request
 -  **Passive authentication**: set IsPassive flag in authentication
    request
--  **Allow proxied authentication**: allow an authentication response to
-   be issued from another IDP that the one we register (proxy IDP). If
-   you disallow this, you should also disallow direct login form IDP,
-   because proxy restriction is set in authentication requests.
 -  **Allow login from IDP**: allow a user to connect directly from an
    IDP link. In this case, authentication is not a response to an issued
    authentication request, and we have less control on conditions.

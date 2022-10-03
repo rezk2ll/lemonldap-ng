@@ -956,7 +956,6 @@
 "samlIDPMetaDataOptions":"選項",
 "samlIDPMetaDataOptionsAdaptSessionUtime":"調整工作階段壽命",
 "samlIDPMetaDataOptionsAllowLoginFromIDP":"允許從 IDP 登入",
-"samlIDPMetaDataOptionsAllowProxiedAuthn":"允許代理驗證",
 "samlIDPMetaDataOptionsAuthnRequest":"驗證請求",
 "samlIDPMetaDataOptionsBinding":"綁定",
 "samlIDPMetaDataOptionsCheckAudience":"檢查觀眾條件",

@@ -3405,10 +3405,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
-        'samlIDPMetaDataOptionsAllowProxiedAuthn' => {
-            'default' => 0,
-            'type'    => 'bool'
-        },
         'samlIDPMetaDataOptionsCheckAudience' => {
             'default' => 1,
             'type'    => 'bool'

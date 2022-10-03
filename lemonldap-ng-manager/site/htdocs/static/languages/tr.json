@@ -956,7 +956,6 @@
 "samlIDPMetaDataOptions":"Seçenekler",
 "samlIDPMetaDataOptionsAdaptSessionUtime":"Oturum kullanım ömrünü uyarla",
 "samlIDPMetaDataOptionsAllowLoginFromIDP":"IDP'den girişe izin ver",
-"samlIDPMetaDataOptionsAllowProxiedAuthn":"Vekilleştirilmiş doğrulamaya izin ver",
 "samlIDPMetaDataOptionsAuthnRequest":"Doğrulama isteği",
 "samlIDPMetaDataOptionsBinding":"Bağlayıcı",
 "samlIDPMetaDataOptionsCheckAudience":"Hedef kitle koşullarını kontrol et",
