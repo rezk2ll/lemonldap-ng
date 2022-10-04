@@ -572,8 +572,9 @@ sub _displayRegister {
         foreach (@$_2fDevices) {
             if ( $_->{type} eq $type ) {
 
-                # Display delete button
+                # Populate additional info for template engine
                 $_->{prefix} = $prefix;
+                $_->{label}  = $module->label;
                 $_->{delAllowed} =
                      $self->conf->{ $prefix . '2fActivation' }
                   && $module->userCanRemove

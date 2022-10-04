@@ -27,7 +27,13 @@
       <tbody>
         <TMPL_LOOP NAME="SFDEVICES">
           <tr id='delete-<TMPL_VAR NAME="epoch">'>
-            <td class="align-middle"><TMPL_VAR NAME="type"></td>
+            <td class="align-middle">
+            <TMPL_IF name="label">
+                <TMPL_VAR NAME="label">
+            <TMPL_ELSE>
+                <TMPL_VAR NAME="type">
+            </TMPL_IF>
+            </td>
             <td class="align-middle"><TMPL_VAR NAME="name"></td>
             <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
             <td>
