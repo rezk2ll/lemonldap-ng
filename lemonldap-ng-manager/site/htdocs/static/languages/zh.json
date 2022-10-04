@@ -878,6 +878,7 @@
 "registerDoneSubject":"Subject for credentials mail",
 "registerTimeout":"註冊請求的有效時間",
 "registerUrl":"註冊 URL",
+"registerextra":"Registrable",
 "reloadParams":"設定重新載入",
 "reloadTimeout":"重新載入逾時",
 "reloadUrls":"重新載入 URL",

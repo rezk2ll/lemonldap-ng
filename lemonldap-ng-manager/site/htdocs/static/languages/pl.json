@@ -878,6 +878,7 @@
 "registerDoneSubject":"Temat wiadomości z danymi uwierzytelniającymi",
 "registerTimeout":"Termin ważności wniosku o rejestrację",
 "registerUrl":"Zarejestruj adres URL strony",
+"registerextra":"Registrable",
 "reloadParams":"Załaduj ponownie konfigurację",
 "reloadTimeout":"Limit czasu przeładowania",
 "reloadUrls":"Załaduj ponownie adresy URL",

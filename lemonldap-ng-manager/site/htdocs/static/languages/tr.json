@@ -878,6 +878,7 @@
 "registerDoneSubject":"Kimlik bilgileri postası için konu",
 "registerTimeout":"Kayıt isteğinin geçerlilik süresi",
 "registerUrl":"Kayıt sayfası URL'si",
+"registerextra":"Registrable",
 "reloadParams":"Yapılandırma yeniden yüklendi",
 "reloadTimeout":"Yeniden yükleme zaman aşımı",
 "reloadUrls":"URL'leri yeniden yükle",

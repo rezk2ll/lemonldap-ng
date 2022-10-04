@@ -878,6 +878,7 @@
 "registerDoneSubject":"Subject for credentials mail",
 "registerTimeout":"Tiempo de validez para una solicitud de registro",
 "registerUrl":"URL de la página de registro",
+"registerextra":"Registrable",
 "reloadParams":"Recargar configuración",
 "reloadTimeout":"Reload timeout",
 "reloadUrls":"Recargar las URL",

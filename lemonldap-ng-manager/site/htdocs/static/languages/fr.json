@@ -878,6 +878,7 @@
 "registerDoneSubject":"Sujet du mail d'envoi du mot de passe",
 "registerTimeout":"Durée de validité d'une requête de création",
 "registerUrl":"URL de la page de création",
+"registerextra":"Enregistrable",
 "reloadParams":"Mise à jour de la configuration",
 "reloadTimeout":"Délai de mise à jour",
 "reloadUrls":"URLs de mise à jour",

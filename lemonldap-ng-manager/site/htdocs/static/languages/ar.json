@@ -878,6 +878,7 @@
 "registerDoneSubject":"Subject for credentials mail",
 "registerTimeout":"مدة صلاحية طلب التسجيل",
 "registerUrl":"Register page URL",
+"registerextra":"Registrable",
 "reloadParams":"إعادة تحميل الإعدادات",
 "reloadTimeout":"Reload timeout",
 "reloadUrls":"Reload URLs",
