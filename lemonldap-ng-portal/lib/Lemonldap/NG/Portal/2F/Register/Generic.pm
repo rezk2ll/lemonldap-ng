@@ -50,10 +50,6 @@ sub run {
     return $self->p->sendError( $req, 'PE82', 400 )
       unless $user;
 
-    # Check if device can be updated
-    my $msg = $self->canUpdateSfa( $req, $action );
-    return $self->p->sendError( $req, $msg, 400 ) if $msg;
-
     # Send a code to generic
     if ( $action eq 'sendcode' ) {
 

@@ -31,17 +31,6 @@ sub run {
         'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 )
       unless $user;
 
-    # Check if UBK key can be updated
-    my $msg = $self->canUpdateSfa( $req, $action );
-    return $self->p->sendHtml(
-        $req, 'error',
-        params => {
-            MAIN_LOGO       => $self->conf->{portalMainLogo},
-            RAW_ERROR       => 'notAuthorizedAuthLevel',
-            AUTH_ERROR_TYPE => 'warning',
-        }
-    ) if $msg;
-
     if ( $action eq 'register' ) {
         my $otp     = $req->param('otp');
         my $UBKName = $req->param('UBKName');

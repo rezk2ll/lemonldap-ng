@@ -45,4 +45,15 @@ sub init {
     return 1;
 }
 
+# Legacy
+sub canUpdateSfa {
+    my ( $self, $req ) = @_;
+    $self->logger->warn(
+            ref($self)
+          . "::canUpdateSfa is deprecated,"
+          . " this check is now performed by the 2F Engine,"
+          . " you can remove it from your custom module" );
+    return;
+}
+
 1;
