@@ -182,10 +182,10 @@ Second factor (:doc:`documentation<secondfactor>`)                   Authenticat
 ==================================================================== ============== =================
 :doc:`TOTP<totp2f>` *(Google Authenticator,...)* |new|               ✔              ✔
 :doc:`WebAuthn<webauthn2f>` |new|                                    ✔              ✔
-:doc:`E-mail Second Factor<mail2f>` |new|                            ✔
+:doc:`E-mail Second Factor<mail2f>` |new|                            ✔              [18]_
 :doc:`Yubico OTP<yubikey2f>` |new|                                   ✔              ✔
-:doc:`External Second Factor<external2f>` *(OTP, SMS,...)* |new|     ✔
-:doc:`REST Second Factor<rest2f>` |new|                              ✔
+:doc:`External Second Factor<external2f>` *(OTP, SMS,...)* |new|     ✔              [18]_
+:doc:`REST Second Factor<rest2f>` |new|                              ✔              [18]_
 :doc:`Radius Second Factor<radius2f>` |new|  [3]_                    ✔
 :doc:`TOTP-or-U2F<utotp2f>` |deprecated|                             ✔              ✔
 :doc:`U2F<u2f>` |deprecated|                                         ✔              ✔
@@ -625,6 +625,9 @@ by your language code):
 
 .. [17]
    :doc:`OAuth2 Handler<oauth2handler>` is available with LLNG ≥ 2.0.4
+
+.. [18]
+   When configured as an additional second factor, see :ref:`sfextraregister`
 
 .. |image0| image:: /icons/kthememgr.png
 .. |image1| image:: /icons/warehause.png
