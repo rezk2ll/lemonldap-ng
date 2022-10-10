@@ -8,8 +8,9 @@ our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-has logo  => ( is => 'rw', default => '2f.png' );
-has label => ( is => 'rw' );
+has logo       => ( is => 'rw', default => '2f.png' );
+has label      => ( is => 'rw' );
+has authnLevel => ( is => 'rw' );
 
 sub init {
     my ($self) = @_;
@@ -21,6 +22,9 @@ sub init {
     # Set label if provided, translation files will be used otherwise
     $self->label( $self->conf->{ $self->prefix . "2fLabel" } )
       if ( $self->conf->{ $self->prefix . "2fLabel" } );
+
+    $self->authnLevel( $self->conf->{ $self->prefix . "2fAuthnLevel" } )
+      if ( $self->conf->{ $self->prefix . "2fAuthnLevel" } );
 
     return 1;
 }
