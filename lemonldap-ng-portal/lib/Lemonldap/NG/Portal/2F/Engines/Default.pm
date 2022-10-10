@@ -380,7 +380,7 @@ sub run {
 
     # More than 1 2F has been found, display choice
     $self->logger->debug("Prepare 2F choice");
-    my $tpl = $self->p->sendHtml(
+    my $res = $self->p->sendHtml(
         $req,
         '2fchoice',
         params => {
@@ -403,7 +403,7 @@ sub run {
             ],
         }
     );
-    $req->response($tpl);
+    $req->response($res);
     return PE_SENDRESPONSE;
 }
 
@@ -480,28 +480,27 @@ sub _redirect {
 }
 
 sub _displayRegister {
-    my ( $self, $req, $tpl ) = @_;
+    my ( $self, $req, $prefix ) = @_;
 
     # After verifying rule:
-    #  - display template if $tpl
+    #  - display template if $prefix
     #  - else display choice template
-    if ($tpl) {
+    if ($prefix) {
         my ($m) =
-          grep { $_->{m}->prefix eq $tpl } @{ $self->sfRModules };
+          grep { $_->{m}->prefix eq $prefix } @{ $self->sfRModules };
         return $self->p->sendError( $req, 'Inexistent register module', 400 )
           unless $m;
         return $self->p->sendError( $req, 'Registration not authorized', 403 )
           unless $m->{r}->( $req, $req->userData );
-        my $prefix = $m->{m}->prefix;
         return $self->p->sendHtml(
             $req,
             $m->{m}->template,
             params => {
-                MAIN_LOGO => $self->conf->{portalMainLogo},
-                PREFIX    => $prefix,
+                MAIN_LOGO        => $self->conf->{portalMainLogo},
+                PREFIX           => $prefix,
                 "PREFIX_$prefix" => 1,
-                LANGS     => $self->conf->{showLanguages},
-                MSG       => $self->canUpdateSfa($req) || $m->{m}->welcome,
+                LANGS            => $self->conf->{showLanguages},
+                MSG   => $self->canUpdateSfa($req) || $m->{m}->welcome,
                 ALERT => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
             }
         );
@@ -599,20 +598,20 @@ sub _displayRegister {
 
 # Check rule and display
 sub register {
-    my ( $self, $req, $tpl, @args ) = @_;
+    my ( $self, $req, $prefix, @args ) = @_;
 
     # After verifying rule:
-    #   - call register run method if $tpl
+    #   - call register run method if $prefix
     #   - else give JSON list of available registers for this user
-    if ($tpl) {
+    if ($prefix) {
         my ($m) =
-          grep { $_->{m}->prefix eq $tpl } @{ $self->sfRModules };
+          grep { $_->{m}->prefix eq $prefix } @{ $self->sfRModules };
         unless ($m) {
             return $self->p->sendError( $req,
                 'Inexistent register module', 400 );
         }
         unless ( $m->{r}->( $req, $req->userData ) ) {
-            $self->userLogger->error("$tpl 2F registration refused");
+            $self->userLogger->error("$prefix 2F registration refused");
             return $self->p->sendError( $req, 'Registration refused', 403 );
         }
         return $m->{m}->run( $req, @args );

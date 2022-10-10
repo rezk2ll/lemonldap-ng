@@ -56,10 +56,9 @@ has code_activation => (
     lazy    => 1,
     default => sub {
 
-        $_[0]->{conf}->{ mail2fCodeRegex } || '\d{6}';
+        $_[0]->{conf}->{mail2fCodeRegex} || '\d{6}';
     }
 );
-
 
 sub init {
     my ($self) = @_;
@@ -86,12 +85,11 @@ sub run {
     }
 
     # Delegate code generation to SUPER
-    return $self->SUPER::run($req, $token);
+    return $self->SUPER::run( $req, $token );
 }
 
 sub sendCode {
     my ( $self, $req, $sessionInfo, $code ) = @_;
-
 
     my $dest = $sessionInfo->{ $self->sessionKey };
 
@@ -141,9 +139,10 @@ sub sendCode {
 }
 
 sub verify_external {
-        my ($self, $req, $session, $usercode) = @_;
-        $self->logger->error("Error in Mail2F: verify_external is not supposed to be invoked");
-        return PE_ERROR;
+    my ( $self, $req, $session, $usercode ) = @_;
+    $self->logger->error(
+        "Error in Mail2F: verify_external is not supposed to be invoked");
+    return PE_ERROR;
 }
 
 1;
