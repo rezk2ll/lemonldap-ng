@@ -253,8 +253,8 @@ sub run {
     elsif ( $action eq 'delete' ) {
 
         # Check if unregistration is allowed
-        return $self->p->sendError( $req, 'notAuthorized', 200 )
-          unless $self->conf->{u2fUserCanRemoveKey};
+        return $self->p->sendError( $req, 'notAuthorized', 400 )
+          unless $self->userCanRemove;
 
         my $epoch = $req->param('epoch')
           or return $self->p->sendError( $req, '"epoch" parameter is missing',

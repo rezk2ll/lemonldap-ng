@@ -260,7 +260,7 @@ sub run {
 
         # Check if unregistration is allowed
         return $self->p->sendError( $req, 'notAuthorized', 400 )
-          unless $self->conf->{totp2fUserCanRemoveKey};
+          unless $self->userCanRemove;
 
         my $epoch = $req->param('epoch')
           or return $self->p->sendError( $req, '"epoch" parameter is missing',

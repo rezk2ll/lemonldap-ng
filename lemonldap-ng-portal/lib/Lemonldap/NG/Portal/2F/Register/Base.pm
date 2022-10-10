@@ -8,9 +8,10 @@ our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-has logo       => ( is => 'rw', default => '2f.png' );
-has label      => ( is => 'rw' );
-has authnLevel => ( is => 'rw' );
+has logo          => ( is => 'rw', default => '2f.png' );
+has label         => ( is => 'rw' );
+has authnLevel    => ( is => 'rw' );
+has userCanRemove => ( is => 'rw' );
 
 sub init {
     my ($self) = @_;
@@ -25,6 +26,11 @@ sub init {
 
     $self->authnLevel( $self->conf->{ $self->prefix . "2fAuthnLevel" } )
       if ( $self->conf->{ $self->prefix . "2fAuthnLevel" } );
+
+    # Set whether the user can remove this registration
+    $self->userCanRemove(
+        $self->conf->{ $self->prefix . '2fUserCanRemoveKey' } )
+      if ( $self->conf->{ $self->prefix . '2fUserCanRemoveKey' } );
 
     return 1;
 }

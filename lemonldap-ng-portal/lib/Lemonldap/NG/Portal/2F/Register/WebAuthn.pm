@@ -290,8 +290,8 @@ sub _delete {
     my ( $self, $req, $user ) = @_;
 
     # Check if unregistration is allowed
-    return $self->p->sendError( $req, 'notAuthorized', 200 )
-      unless $self->conf->{webauthn2fUserCanRemoveKey};
+    return $self->p->sendError( $req, 'notAuthorized', 400 )
+      unless $self->userCanRemove;
 
     my $epoch = $req->param('epoch')
       or
