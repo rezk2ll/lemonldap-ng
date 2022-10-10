@@ -116,13 +116,12 @@ sub init {
 
         my $moduleType = $self->conf->{sfExtra}->{$extraKey}->{type};
         next unless ($moduleType);
+        my $over = $self->conf->{sfExtra}->{$extraKey}->{over};
 
-        my %over = %{ $self->conf->{sfExtra}->{$extraKey}->{over} or {} };
         $self->logger->debug(
             "Loading extra 2F module $extraKey of type $moduleType");
         my $m =
-          $self->loadPlugin( "::2F::$moduleType",
-            { sfPrefix => $extraKey, %over } )
+          $self->loadPlugin( "::2F::$moduleType", $over, prefix => $extraKey, )
           or return 0;
 
         # Rule and prefix may be modified by 2F module, reread them
