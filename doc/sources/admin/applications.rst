@@ -44,6 +44,7 @@ Applications
    applications/publik
    applications/phpldapadmin
    applications/redmine
+   applications/rocketchat
    applications/roundcube
    applications/salesforce
    applications/sap
