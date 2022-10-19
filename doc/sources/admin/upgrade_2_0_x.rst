@@ -70,6 +70,12 @@ Due to some internal changes in the way registrable second factors are handled, 
 
 If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
 
+Change in ``passwordAfterChange`` hook behavior
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you wrote a custom plugin using the ``passwordAfterChange`` hook, return
+codes other than ``PE_OK`` will now be displayed by the portal, instead of
+being ignored.
 
 2.0.15
 ------
