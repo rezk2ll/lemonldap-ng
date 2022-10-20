@@ -3001,8 +3001,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 return perlExpr(@_);
             },
             'msgFail' => '__badValue__',
-            'test'    => qr/^\w+$/,
-            'type'    => 'keyTextContainer'
+            'test'    => sub {
+                1;
+            },
+            'type' => 'keyTextContainer'
         },
         'portalStatus' => {
             'default' => 0,

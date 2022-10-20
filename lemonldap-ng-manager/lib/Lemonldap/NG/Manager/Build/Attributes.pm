@@ -940,7 +940,7 @@ sub attributes {
             help          => 'portalcustom.html',
             keyTest       => sub { return perlExpr(@_) },
             keyMsgFail    => '__badSkinRule__',
-            test          => qr/^\w+$/,
+            test          => sub { 1 },
             msgFail       => '__badValue__',
             documentation => 'Rules to choose portal skin',
         },
