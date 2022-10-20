@@ -679,7 +679,6 @@ sub buildHiddenForm {
 
 # Return skin name
 # @return skin name
-# TODO: create property for skinRule
 sub getSkin {
     my ( $self, $req ) = @_;
     my $skin = $self->conf->{portalSkin};
@@ -689,12 +688,17 @@ sub getSkin {
     $req->{sessionInfo}->{ipAddr} ||= $req->address;
 
     # Load specific skin from skinRules
-    foreach my $rule ( @{ $self->{skinRules} } ) {
+    foreach my $rule ( @{ $self->skinRules } ) {
         if ( $rule->[1]->( $req, $req->sessionInfo ) ) {
-            if ( -d $self->conf->{templateDir} . '/' . $rule->[0] ) {
+            my $directory = $self->conf->{templateDir} . '/' . $rule->[0];
+            if ( -d $directory ) {
                 $skin = $rule->[0];
                 $self->logger->debug("Skin $skin selected from skin rule");
                 last;
+            }
+            else {
+                $self->logger->warn( "Skin $rule->[0] was not selected "
+                      . "because $directory does not exist" );
             }
         }
     }
