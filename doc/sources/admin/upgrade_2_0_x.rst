@@ -552,14 +552,16 @@ No change is required if you are using the default ``bootstrap`` theme.
 2FA manager
 ^^^^^^^^^^^
 
-In ``2fregisters.tpl`` you need to add the ``remove2f`` class to the button that triggers second factor removal:
+If you use a custom theme, even if you did not modify ``2fregisters.tpl``, you need to copy ``skin.min.js`` from the ``htdocs/static/bootstrap/js`` folder to your custom theme's ``js`` folder.
+
+If you modified ``2fregisters.tpl`` you need to add the ``remove2f`` class to the button that triggers second factor removal:
 
 .. code-block:: diff
 
    - <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger" role="button">
    + <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger remove2f" role="button">
 
-Or, better yet, integrate the changes in ``2fregisters.tpl`` and ``skin.min.js`` into your custom theme to benefit from the `new 2F removal confirmation dialog <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2438>`__
+Or, better yet, integrate the changes in ``2fregisters.tpl`` into your custom theme to benefit from the `new 2F removal confirmation dialog <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2438>`__
 
 Checkboxes
 ^^^^^^^^^^
