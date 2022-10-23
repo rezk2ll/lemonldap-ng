@@ -1214,6 +1214,7 @@
 "vhostAccessToTrace":"İzlemeye erişim",
 "vhostAliases":"Takma adlar",
 "vhostAuthnLevel":"Gereken doğrulama seviyesi",
+"vhostComment": "Comment",
 "vhostDevOpsRulesUrl":"DevOps kuralları dosya URL'si",
 "vhostHttps":"HTTPS",
 "vhostMaintenance":"Bakım modu",

@@ -4465,6 +4465,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'vhostAuthnLevel' => {
             'type' => 'int'
         },
+        'vhostComment' => {
+            'default' => '',
+            'type'    => 'longtext'
+        },
         'vhostDevOpsRulesUrl' => {
             'type' => 'url'
         },

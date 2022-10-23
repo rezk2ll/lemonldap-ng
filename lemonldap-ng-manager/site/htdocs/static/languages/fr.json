@@ -1214,6 +1214,7 @@
 "vhostAccessToTrace":"Accès à tracer",
 "vhostAliases":"Alias",
 "vhostAuthnLevel":"Niveau d'authentification requis",
+"vhostComment": "Commentaire",
 "vhostDevOpsRulesUrl":"URL du fichier de règles DevOps",
 "vhostHttps":"HTTPS",
 "vhostMaintenance":"Mode maintenance",

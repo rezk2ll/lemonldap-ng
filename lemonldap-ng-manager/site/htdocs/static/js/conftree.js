@@ -1440,6 +1440,12 @@ function templates(tpl,key) {
             "title" : "vhostAccessToTrace"
          },
          {
+            "get" : tpl+"s/"+key+"/"+"vhostAuthnLevel",
+            "id" : tpl+"s/"+key+"/"+"vhostAuthnLevel",
+            "title" : "vhostAuthnLevel",
+            "type" : "int"
+         },
+         {
             "default" : "Main",
             "get" : tpl+"s/"+key+"/"+"vhostType",
             "id" : tpl+"s/"+key+"/"+"vhostType",
@@ -1485,12 +1491,6 @@ function templates(tpl,key) {
             "type" : "select"
          },
          {
-            "get" : tpl+"s/"+key+"/"+"vhostAuthnLevel",
-            "id" : tpl+"s/"+key+"/"+"vhostAuthnLevel",
-            "title" : "vhostAuthnLevel",
-            "type" : "int"
-         },
-         {
             "get" : tpl+"s/"+key+"/"+"vhostDevOpsRulesUrl",
             "id" : tpl+"s/"+key+"/"+"vhostDevOpsRulesUrl",
             "title" : "vhostDevOpsRulesUrl"
@@ -1501,6 +1501,13 @@ function templates(tpl,key) {
             "id" : tpl+"s/"+key+"/"+"vhostServiceTokenTTL",
             "title" : "vhostServiceTokenTTL",
             "type" : "int"
+         },
+         {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"vhostComment",
+            "id" : tpl+"s/"+key+"/"+"vhostComment",
+            "title" : "vhostComment",
+            "type" : "longtext"
          }
       ],
       "help" : "configvhost.html#options",

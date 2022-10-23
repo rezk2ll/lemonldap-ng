@@ -1214,6 +1214,7 @@
 "vhostAccessToTrace":"Access to trace",
 "vhostAliases":"כינויים",
 "vhostAuthnLevel":"דרגת אימות נדרשת",
+"vhostComment": "Comment",
 "vhostDevOpsRulesUrl":"DevOps rules file URL",
 "vhostHttps":"HTTPS",
 "vhostMaintenance":"מצב תחזוקה",

@@ -27,11 +27,11 @@ sub cTrees {
                 help  => 'configvhost.html#options',
                 form  => 'simpleInputContainer',
                 nodes => [
-                    'vhostPort',          'vhostHttps',
-                    'vhostMaintenance',   'vhostAliases',
-                    'vhostAccessToTrace', 'vhostType',
-                    'vhostAuthnLevel',    'vhostDevOpsRulesUrl',
-                    'vhostServiceTokenTTL'
+                    'vhostPort',            'vhostHttps',
+                    'vhostMaintenance',     'vhostAliases',
+                    'vhostAccessToTrace',   'vhostAuthnLevel',
+                    'vhostType',            'vhostDevOpsRulesUrl',
+                    'vhostServiceTokenTTL', 'vhostComment'
                 ],
             },
         ],
@@ -197,8 +197,7 @@ sub cTrees {
             {
                 title => 'oidcRPMetaDataOptions',
                 help  => 'idpopenidconnect.html#options',
-                nodes => [ 
-                {
+                nodes => [ {
                         title => 'oidcRPMetaDataOptionsBasic',
                         form  => 'simpleInputContainer',
                         nodes => [

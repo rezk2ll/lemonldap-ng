@@ -2502,6 +2502,10 @@ sub attributes {
             type    => 'int',
             default => -1,
         },
+        vhostComment => {
+            type    => 'longtext',
+            default => '',
+        },
         vhostAccessToTrace => { type => 'text', default => '' },
         vhostAliases       => { type => 'text', default => '' },
         vhostType          => {
