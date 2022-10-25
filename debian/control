@@ -222,6 +222,7 @@ Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
          debconf,
+         perl-doc,
          libapache-session-perl,
          libcache-cache-perl,
          libconfig-inifiles-perl,
