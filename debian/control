@@ -234,6 +234,7 @@ Depends: ${misc:Depends},
          libjson-perl,
          libjson-xs-perl,
          libmouse-perl,
+         libclass-xsaccessor-perl,
          libplack-perl,
          liburi-perl,
          libwww-perl
