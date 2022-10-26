@@ -17,24 +17,24 @@ information (through UserInfo endpoint).
 As an OP, LL::NG supports many OpenID Connect features:
 
 -  Authorization Code, Implicit and Hybrid flows
--  Publication of JSON metadata and JWKS data (Discovery)
+-  `Publication of JSON metadata and JWKS data (Discovery) <https://openid.net/specs/openid-connect-discovery-1_0.html>`__
 -  ``prompt``, ``display``, ``ui_locales``, ``max_age`` parameters
--  Extra claims definition
+-  :ref:`Mapping custom scope values to non-standard claims <oidcextraclaims>`
 -  Authentication context Class References (ACR)
 -  Nonce
--  Dynamic registration
+-  `Dynamic registration <https://openid.net/specs/openid-connect-registration-1_0.html>`__
 -  Access Token Hash generation
 -  ID Token signature (HS256/HS384/HS512/RS256/RS384/RS512)
 -  UserInfo endpoint, as JSON or as JWT
 -  Request and Request URI
--  Session management
--  FrontChannel Logout
--  BackChannel Logout
+-  `FrontChannel Logout <https://openid.net/specs/openid-connect-frontchannel-1_0.html>`__
+-  `RP-Initiated Logout <https://openid.net/specs/openid-connect-rpinitiated-1_0.html>`__
 -  PKCE (Since ``2.0.4``) - See :rfc:`7636`
 -  Introspection endpoint (Since ``2.0.6``) - See :rfc:`7662`
 -  Offline access (Since ``2.0.7``)
 -  Refresh Tokens (Since ``2.0.7``)
 -  Optional JWT Access Tokens (Since ``2.0.12``) - See :rfc:`9068`
+-  `Form Post Response Mode <https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html>`__ (Since ``2.0.16``)
 
 Configuration
 -------------
