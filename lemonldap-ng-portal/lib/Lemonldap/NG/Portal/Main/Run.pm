@@ -429,18 +429,17 @@ sub autoRedirect {
     # Redirection should be made if urldc defined
     if ( $req->{urldc} ) {
         $self->logger->debug("Building redirection to $req->{urldc}");
+        if (    $req->{pdata}->{_url}
+            and $req->{pdata}->{_url} eq encode_base64( $req->{urldc}, '' ) )
+        {
+            $self->logger->info("Force cleaning pdata");
+            delete $req->{pdata}->{_url};
+        }
         if ( $self->_jsRedirect->( $req, $req->sessionInfo ) ) {
             $req->error(PE_REDIRECT);
             $req->data->{redirectFormMethod} = "get";
         }
         else {
-            if (    $req->{pdata}->{_url}
-                and $req->{pdata}->{_url} eq encode_base64( $req->{urldc}, '' )
-              )
-            {
-                $self->logger->info("Force cleaning pdata");
-                delete $req->{pdata}->{_url};
-            }
             return [ 302, [ Location => $req->{urldc}, $req->spliceHdrs ], [] ];
         }
     }
