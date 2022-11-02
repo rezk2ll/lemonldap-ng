@@ -1214,7 +1214,7 @@
 "vhostAccessToTrace":"存取追蹤",
 "vhostAliases":"別名",
 "vhostAuthnLevel":"需要的驗證等級",
-"vhostComment": "Comment",
+"vhostComment":"註解",
 "vhostDevOpsRulesUrl":"DevOps rules file URL",
 "vhostHttps":"HTTPS",
 "vhostMaintenance":"維護模式",
