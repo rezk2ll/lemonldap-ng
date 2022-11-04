@@ -859,6 +859,7 @@
 "radius2fTimeout":"驗證逾時",
 "radius2fUsernameSessionKey":"包含登入的工作階段金鑰",
 "radiusAuthnLevel":"认证等级",
+"radiusExportedVars":"导出的参数",
 "radiusParams":"Radius 參數",
 "radiusSecret":"已分享的祕密",
 "radiusServer":"伺服器主機名稱",

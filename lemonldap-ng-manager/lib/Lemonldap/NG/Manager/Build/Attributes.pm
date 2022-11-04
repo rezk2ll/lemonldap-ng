@@ -3788,6 +3788,18 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         radiusSecret => { type => 'text' },
         radiusServer => { type => 'text' },
 
+        radiusExportedVars => {
+            type          => 'keyTextContainer',
+            # session key name
+            keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            keyMsgFail    => '__badVariableName__',
+            # radius attribue name (from discitonary)
+            test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            msgFail       => '__badValue__',
+            default       => { },
+            documentation => 'RADIUS exported variables',
+        },
+
         # REST
         restAuthUrl       => { type => 'url' },
         restUserDBUrl     => { type => 'url' },

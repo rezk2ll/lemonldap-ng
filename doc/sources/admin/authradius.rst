@@ -56,3 +56,12 @@ Then, go in ``Radius parameters``:
    Radius server
 -  **Server hostname**: this is the hostname or IP address of the Radius
    server
+-  **Exported variables**: radius attributes stored in user session at
+   authentication time. key is name in user session and value is
+   attribute name in radius dictionary.
+
+.. warning::
+
+   Exported variables radius attribute names require to load radius dictionary.
+   Authen::Radius library requires at least /etc/raddb/dictionary to be
+   filled.

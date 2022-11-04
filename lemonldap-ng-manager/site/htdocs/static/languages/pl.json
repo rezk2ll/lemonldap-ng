@@ -859,6 +859,7 @@
 "radius2fTimeout":"Limit czasu uwierzytelnienia",
 "radius2fUsernameSessionKey":"Klucz sesji zawierający login",
 "radiusAuthnLevel":"Poziom uwierzytelnienia",
+"radiusExportedVars":"Wyeksportowane zmienne",
 "radiusParams":"Parametry Radius",
 "radiusSecret":"Współdzielony sekret",
 "radiusServer":"Nazwa hosta",

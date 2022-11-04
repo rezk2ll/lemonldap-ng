@@ -3087,6 +3087,14 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 3,
             'type'    => 'int'
         },
+        'radiusExportedVars' => {
+            'default'    => {},
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
+        },
         'radiusSecret' => {
             'type' => 'text'
         },

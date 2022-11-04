@@ -859,6 +859,7 @@
 "radius2fTimeout":"Authentication timeout",
 "radius2fUsernameSessionKey":"Session key containing login",
 "radiusAuthnLevel":"مستوى إثبات الهوية",
+"radiusExportedVars":"المتغيرات المصدرة",
 "radiusParams":"معايير راديوس",
 "radiusSecret":"سر مشترك",
 "radiusServer":"اسم الخادم",

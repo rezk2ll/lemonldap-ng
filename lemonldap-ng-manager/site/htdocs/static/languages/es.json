@@ -859,6 +859,7 @@
 "radius2fTimeout":"Autentificación caducada",
 "radius2fUsernameSessionKey":"Clave de sesión que contiene el login",
 "radiusAuthnLevel":"Nivel de autentificación",
+"radiusExportedVars":"Variables exportadas",
 "radiusParams":"Parámetros RADIUS",
 "radiusSecret":"Secreto compartido",
 "radiusServer":"Nombre del servidor",

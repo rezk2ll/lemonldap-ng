@@ -22,7 +22,7 @@ our $specialNodeHash = {
 };
 
 our $doubleHashKeys = 'issuerDBGetParameters';
-our $simpleHashKeys = '(?:(?:c(?:a(?:s(?:StorageOption|Attribute)|ptchaOption)|ustom(?:Plugins|Add)Param|heckUserHiddenHeader|ombModule)|l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar|wp(?:Ssl)?Opt)|f(?:indUser(?:Exclud|Search)ingAttribute|acebookExportedVar)|re(?:moteGlobalStorageOption|st2f(?:Verify|Init)Arg|loadUrl)|g(?:r(?:antSessionRule|oup)|lobalStorageOption)|n(?:otificationStorageOption|ginxCustomHandler)|p(?:ersistentStorageOption|ortalSkinRule)|(?:(?:d(?:emo|bi)|webID)E|e)xportedVar|macro)s|o(?:idc(?:S(?:ervice(?:DynamicRegistrationEx(?:portedVar|traClaim)s|MetaDataAuthnContext)|torageOptions)|OPMetaDataJ(?:SON|WKS))|penIdExportedVars)|a(?:(?:daptativeAuthenticationLevelR|ut(?:hChoiceMod|oSigninR))ules|pplicationList)|s(?:(?:amlStorageOption|laveExportedVar)s|essionDataToRemember|fExtra)|S(?:MTPTLSOpts|SLVarIf))';
+our $simpleHashKeys = '(?:(?:c(?:a(?:s(?:StorageOption|Attribute)|ptchaOption)|ustom(?:Plugins|Add)Param|heckUserHiddenHeader|ombModule)|r(?:e(?:moteGlobalStorageOption|st2f(?:Verify|Init)Arg|loadUrl)|adiusExportedVar)|l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar|wp(?:Ssl)?Opt)|f(?:indUser(?:Exclud|Search)ingAttribute|acebookExportedVar)|g(?:r(?:antSessionRule|oup)|lobalStorageOption)|n(?:otificationStorageOption|ginxCustomHandler)|p(?:ersistentStorageOption|ortalSkinRule)|(?:(?:d(?:emo|bi)|webID)E|e)xportedVar|macro)s|o(?:idc(?:S(?:ervice(?:DynamicRegistrationEx(?:portedVar|traClaim)s|MetaDataAuthnContext)|torageOptions)|OPMetaDataJ(?:SON|WKS))|penIdExportedVars)|a(?:(?:daptativeAuthenticationLevelR|ut(?:hChoiceMod|oSigninR))ules|pplicationList)|s(?:(?:amlStorageOption|laveExportedVar)s|essionDataToRemember|fExtra)|S(?:MTPTLSOpts|SLVarIf))';
 our $specialNodeKeys = '(?:(?:(?:saml(?:ID|S)|oidc[OR])P|cas(?:App|Srv))MetaDataNode|virtualHost)s';
 our $casAppMetaDataNodeKeys = 'casAppMetaData(?:Options(?:(?:UserAttribut|Servic|Rul)e|AuthnLevel)|(?:ExportedVar|Macro)s)';
 our $casSrvMetaDataNodeKeys = 'casSrvMetaData(?:Options(?:Re(?:solutionRule|new)|ProxiedServices|DisplayName|SortNumber|Gateway|Icon|Url)|ExportedVars)';
@@ -52,7 +52,7 @@ our $authParameters = {
   openidParams => [qw(openIdAuthnLevel openIdExportedVars openIdSecret openIdIDPList)],
   pamParams => [qw(pamAuthnLevel pamService)],
   proxyParams => [qw(proxyAuthnLevel proxyUseSoap proxyAuthService proxySessionService proxyAuthServiceChoiceParam proxyAuthServiceChoiceValue proxyCookieName proxyAuthServiceImpersonation)],
-  radiusParams => [qw(radiusAuthnLevel radiusSecret radiusServer)],
+  radiusParams => [qw(radiusAuthnLevel radiusSecret radiusServer radiusExportedVars)],
   remoteParams => [qw(remotePortal remoteCookieName remoteGlobalStorage remoteGlobalStorageOptions)],
   restParams => [qw(restAuthnLevel restAuthUrl restUserDBUrl restPwdConfirmUrl restPwdModifyUrl)],
   slaveParams => [qw(slaveAuthnLevel slaveUserHeader slaveMasterIP slaveHeaderName slaveHeaderContent slaveDisplayLogo slaveExportedVars)],
