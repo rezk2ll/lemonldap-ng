@@ -125,6 +125,7 @@ Depends: ${misc:Depends},
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          libplack-perl
 Recommends: libhttp-parser-xs-perl,
+            libnginx-mod-http-lua,
             nginx-extras | nginx
 Pre-Depends: ${misc:Pre-Depends}
 Description: Lemonldap::NG FastCGI server
