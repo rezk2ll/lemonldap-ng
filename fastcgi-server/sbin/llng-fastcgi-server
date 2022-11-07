@@ -10,9 +10,9 @@ use Lemonldap::NG::Handler::Main::Reload;
 our $VERSION = '2.0.15';
 
 our (
-    $foreground,  $engine,              $nproc,  $pidFile,
-    $socket,      $user,                $listen, $group,
-    $procmanager, $customFunctionsFile, %plackOptions
+    $foreground,  $engine,              $nproc,        $pidFile,
+    $socket,      $user,                $listen,       $group,
+    $procmanager, $customFunctionsFile, %plackOptions, $sourceServer,
 );
 my %_apps;
 
@@ -20,13 +20,14 @@ $SIG{'PIPE'} = 'IGNORE';
 $ENV{LLNG_DEFAULTLOGGER} ||= 'Lemonldap::NG::Common::Logger::Syslog';
 
 $foreground = 0;
-$engine  ||= $ENV{ENGINE} || 'FCGI';
-$nproc   ||= $ENV{NPROC}  || 7;
-$pidFile ||= $ENV{PID}    || '__FASTCGISOCKDIR__/llng-fastcgi.pid';
-$socket  ||= $ENV{SOCKET} || '__FASTCGISOCKDIR__/llng-fastcgi.sock';
-$listen  ||= $ENV{LISTEN} || undef;
-$user    ||= $ENV{USER};
-$group   ||= $ENV{GROUP};
+$engine              ||= $ENV{ENGINE} || 'FCGI';
+$nproc               ||= $ENV{NPROC}  || 7;
+$pidFile             ||= $ENV{PID}    || '__FASTCGISOCKDIR__/llng-fastcgi.pid';
+$socket              ||= $ENV{SOCKET} || '__FASTCGISOCKDIR__/llng-fastcgi.sock';
+$listen              ||= $ENV{LISTEN} || undef;
+$user                ||= $ENV{USER};
+$group               ||= $ENV{GROUP};
+$sourceServer        ||= $ENV{SOURCE_SERVER} || 'nginx';
 $customFunctionsFile ||= $ENV{CUSTOM_FUNCTIONS_FILE};
 
 # If the user specified any PM_ constrains, run under ::Constrained
@@ -44,16 +45,25 @@ GetOptions(
     'group|g=s'               => \$group,
     'customFunctionsFile|f=s' => \$customFunctionsFile,
     'plackOptions=s'          => \%plackOptions,
+    'sourceServer=s'          => \$sourceServer,
 );
+
+my $class = (
+      $sourceServer eq 'nginx'   ? 'Lemonldap::NG::Handler::Server::Nginx'
+    : $sourceServer eq 'traefik' ? 'Lemonldap::NG::Handler::Server::Traefik'
+    :                              die("Unknown server $sourceServer")
+);
+eval "require $class";
+die $@ if $@;
 
 if ($group) {
     my $grp = getgrnam($group) or die "Can't change gid to $group";
-    POSIX::setgid($grp) or die "setgid: $!";
+    POSIX::setgid($grp)        or die "setgid: $!";
 }
 
 if ($user) {
     my $uid = getpwnam($user) or die "Can't change uid to $user";
-    POSIX::setuid($uid) or die "setuid: $!";
+    POSIX::setuid($uid)       or die "setuid: $!";
 }
 
 unless ($>) {
@@ -67,10 +77,10 @@ if ($customFunctionsFile) {
 
 my %builder = (
     reload => sub {
-        return Lemonldap::NG::Handler::Server::Nginx->reload();
+        return $class->reload();
     },
     status => sub {
-        return Lemonldap::NG::Handler::Server::Nginx->status();
+        return $class->status();
     },
     manager => sub {
         require Lemonldap::NG::Manager;
@@ -104,8 +114,7 @@ my %builder = (
     },
 );
 
-require Lemonldap::NG::Handler::Server::Nginx;
-$_apps{handler} = Lemonldap::NG::Handler::Server::Nginx->run( {} );
+$_apps{handler} = $class->run( {} );
 
 my $app = sub {
     $SIG{'PIPE'} = sub {
