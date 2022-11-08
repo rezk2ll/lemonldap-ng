@@ -277,3 +277,4 @@ t/lemonldap-ng-dbi.ini
 t/lemonldap-ng-noDiff.ini
 t/lemonldap-ng.ini
 t/test-lib.pm
+t/test-merge.json
