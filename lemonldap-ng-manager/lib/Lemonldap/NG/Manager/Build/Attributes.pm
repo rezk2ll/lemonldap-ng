@@ -2678,6 +2678,11 @@ sub attributes {
             type          => 'int',
             documentation => 'Expiration time of Service and Proxy tickets',
         },
+        casBackChannelSingleLogout => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable CAS (Back-Channel) Single Logout',
+        },
         issuerDBCASActivation => {
             default       => 0,
             type          => 'bool',

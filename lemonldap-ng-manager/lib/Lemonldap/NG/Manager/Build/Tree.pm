@@ -1528,6 +1528,7 @@ sub tree {
                 'casAccessControlPolicy',
                 'casStrictMatching',
                 'casTicketExpiration',
+                'casBackChannelSingleLogout',
                 'casStorage',
                 'casStorageOptions',
                 'casAttributes',
