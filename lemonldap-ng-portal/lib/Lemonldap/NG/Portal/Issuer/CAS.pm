@@ -391,7 +391,9 @@ sub run {
 
         # Delete local session
         if ( my $session = $self->p->getApacheSession($session_id) ) {
-            $self->_send_back_channel_LogoutRequests($session);
+            if ( $self->conf->{casBackChannelSingleLogout} ) {
+                $self->_send_back_channel_LogoutRequests($session->data);
+            }
 
             unless ( $self->p->_deleteSession( $req, $session ) ) {
                 $self->logger->error("Fail to delete session $session_id ");
@@ -495,9 +497,7 @@ sub logout {
     $self->deleteCasSecondarySessions($session_id) if ($session_id);
 
     if ( $self->conf->{casBackChannelSingleLogout} ) {
-        if ( my $session = $self->p->getApacheSession($session_id) ) {
-            $self->_send_back_channel_LogoutRequests($session);
-        }
+        $self->_send_back_channel_LogoutRequests($req->sessionInfo);
     }
 
     return PE_OK;
@@ -988,9 +988,9 @@ sub _save_ticket_for_single_logout {
 }
 
 sub _send_back_channel_LogoutRequests {
-    my ( $self, $session ) = @_;
+    my ( $self, $sessionData ) = @_;
 
-    my $service2ticket = $session->data->{cas_tickets_for_SLO} or return;
+    my $service2ticket = $sessionData->{cas_tickets_for_SLO} or return;
 
     foreach my $service (keys %$service2ticket) {
         my $ticket = $service2ticket->{$service};
@@ -1006,15 +1006,10 @@ sub _send_back_channel_LogoutRequests {
             </samlp:LogoutRequest>};
 
         # Apereo CAS is doing async requests by defaut. But doing it synchronously with a timeout should do it
-        my $prev_timeout = $self->ua->timeout(3);
-        my $response = eval {
-            $self->ua->post(
-                $service,
-                { logoutRequest => $logoutRequest },
-                "Content-Type" => 'application/x-www-form-urlencoded' );
-        };
-        $self->ua->timeout($prev_timeout);
-
+        my $response = $self->ua->post(
+            $service,
+            { logoutRequest => $logoutRequest },
+            "Content-Type" => 'application/x-www-form-urlencoded' );
         $self->logger->debug("Sending back-channel LogoutRequest to $service: result (" . $response->message . ")" . "\n$logoutRequest");
     }
 }
