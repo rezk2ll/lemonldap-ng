@@ -15,6 +15,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PASSWORD_OK
   PE_BADCREDENTIALS
   PE_UNAUTHORIZEDPARTNER
+  PE_UNKNOWNPARTNER
   PE_OIDC_SERVICE_NOT_ALLOWED
   PE_FIRSTACCESS
 );
@@ -261,9 +262,9 @@ sub run {
 
             unless ($rp) {
                 $self->logger->error(
-"No registered Relying Party found with client_id $client_id"
-                );
-                return PE_UNAUTHORIZEDPARTNER;
+                        "No registered Relying Party found with"
+                      . " client_id $client_id" );
+                return PE_UNKNOWNPARTNER;
             }
             else {
                 $self->logger->debug("Client id $client_id matches RP $rp");
