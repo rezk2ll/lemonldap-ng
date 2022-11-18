@@ -11,6 +11,7 @@
 "PE104":"Bad DevOps handler file",
 "PE105":"File not found",
 "PE106":"Error during authentication with OpenID Provider",
+"PE107":"This application is not known",
 "PE2":"用户名和密码必须填写",
 "PE20":"No password backend defined",
 "PE21":"您的账号被锁定",

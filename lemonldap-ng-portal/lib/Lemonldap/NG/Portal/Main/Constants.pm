@@ -113,6 +113,7 @@ use constant {
     PE_BAD_DEVOPS_FILE                   => 104,
     PE_FILENOTFOUND                      => 105,
     PE_OIDC_AUTH_ERROR                   => 106,
+    PE_UNKNOWNPARTNER                    => 107,
 };
 
 sub portalConsts {
@@ -132,6 +133,7 @@ sub portalConsts {
         '104' => 'PE_BAD_DEVOPS_FILE',
         '105' => 'PE_FILENOTFOUND',
         '106' => 'PE_OIDC_AUTH_ERROR',
+        '107' => 'PE_UNKNOWNPARTNER',
         '2'   => 'PE_FORMEMPTY',
         '20'  => 'PE_NO_PASSWORD_BE',
         '21'  => 'PE_PP_ACCOUNT_LOCKED',
@@ -331,7 +333,8 @@ our @EXPORT_OK = (
     'PE_NO_SECOND_FACTORS',
     'PE_BAD_DEVOPS_FILE',
     'PE_FILENOTFOUND',
-    'PE_OIDC_AUTH_ERROR'
+    'PE_OIDC_AUTH_ERROR',
+    'PE_UNKNOWNPARTNER'
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT_OK, 'import' ], );
 

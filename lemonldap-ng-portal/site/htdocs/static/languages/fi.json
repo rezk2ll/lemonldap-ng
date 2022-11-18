@@ -11,6 +11,7 @@
 "PE104":"Virheellinen DevOps-käsittelijätiedosto",
 "PE105":"Tiedostoa ei löydy",
 "PE106":"Virhe tunnistauduttaessa OpenID-palveluntarjoajalle",
+"PE107":"This application is not known",
 "PE2":"Käyttäjänimi- ja salasanakentät pitää täyttää",
 "PE20":"Salasanataustaosia ei ole määritetty",
 "PE21":"Käyttäjätilisi on lukittu",

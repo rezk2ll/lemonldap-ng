@@ -11,6 +11,7 @@
 "PE104":"Fichier DevOps mal formaté",
 "PE105":"Fichier inexistant",
 "PE106":"Erreur pendant l'authentification auprès du fournisseur OpenID",
+"PE107":"Cette application n'est pas reconnue",
 "PE2":"Identifiant ou mot de passe non renseigné",
 "PE20":"Base des mots de passe non définie",
 "PE21":"Votre compte est bloqué",

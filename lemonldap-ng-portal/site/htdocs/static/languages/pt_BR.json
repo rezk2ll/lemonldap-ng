@@ -11,6 +11,7 @@
 "PE104":"Arquivo gerenciador do DevOps inválido",
 "PE105":"Arquivo não encontrado",
 "PE106":"Erro durante a autenticação com o provedor OpenID",
+"PE107":"This application is not known",
 "PE2":"Os campos de usuário e senha devem ser preenchidos",
 "PE20":"Não há backend de senhas definido",
 "PE21":"A sua conta está bloqueada",
