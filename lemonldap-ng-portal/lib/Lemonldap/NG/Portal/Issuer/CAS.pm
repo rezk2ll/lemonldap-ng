@@ -12,6 +12,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_BADURL
   PE_SENDRESPONSE
+  PE_UNAUTHORIZEDPARTNER
+  PE_UNKNOWNPARTNER
   URIRE
 );
 
@@ -101,7 +103,7 @@ sub storeEnvAndCheckGateway {
         else {
             $self->logger->error(
                 "Disallowing redirection to unknown service $service");
-            return PE_CAS_SERVICE_NOT_ALLOWED;
+            return PE_UNKNOWNPARTNER;
         }
     }
 
@@ -234,7 +236,7 @@ sub run {
 
             unless ($app) {
                 $self->userLogger->error('CAS service not configured');
-                return PE_CAS_SERVICE_NOT_ALLOWED;
+                return PE_UNKNOWNPARTNER;
             }
 
             # Check if we have sufficient auth level
@@ -262,9 +264,9 @@ sub run {
 
                     if ( $casAccessControlPolicy =~ /^(error)$/i ) {
                         $self->logger->debug(
-"Return error instead of redirecting user on CAS service"
-                        );
-                        return PE_CAS_SERVICE_NOT_ALLOWED;
+                                "Return error instead of redirecting user"
+                              . " on CAS service" );
+                        return PE_UNAUTHORIZEDPARTNER;
                     }
 
                     else {
