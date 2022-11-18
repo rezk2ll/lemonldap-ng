@@ -489,8 +489,11 @@ sub expectPortalError {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $errnum, $message ) = @_;
     $errnum ||= 9;
-    like( $res->[2]->[0], qr/<span trmsg="$errnum">/, $message );
-    count(1);
+    $message ||= "Expected portal error code";
+    my ($error) = $res->[2]->[0] =~ qr/<span trmsg="(\d+)">/;
+    ok ($error, "$message: code found on page") or explain $res->[2]->[0];
+    is ($error, $errnum, $message);
+    count(2);
 }
 
 =head4 expectReject( $res, $status, $code )
