@@ -29,6 +29,24 @@ None
 2.0.16
 ------
 
+Change in error messages for issuers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The error messages for the following situations have been changed:
+
+.. csv-table::
+   :header: "Situation", "Translation code (lemonldap-ng.ini)", "Translation code (lang.json)", "New error message"
+   :delim: ;
+   :widths: auto
+
+   An authentication request has been made to an unknown CAS application;error_107;PE107;This application is not known
+   An authentication request has been made to an unknown SAML service provider;error_107;PE107;This application is not known
+   An authentication request has been made to an unknown OIDC relying party;error_107;PE107;This application is not known
+   User was not allowed to access a CAS application;error_84;PE84;You're not authorized to access to this host
+
+Users who wish to adjust error messages in these situations should update their translation files
+
+
 Improve the use of multiple 2FA types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
