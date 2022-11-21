@@ -151,8 +151,7 @@ The OP should publish its metadata in a JSON file (see for example
 `Google
 metadata <https://accounts.google.com/.well-known/openid-configuration>`__).
 Copy the content of this file in the textarea.
-Portal discovery document can be found here:
-https://#portal#/.well-known/openid-configuration
+Portal discovery document can be found here: \https://#portal#/.well-known/openid-configuration
 
 If no metadata is available, you need to write them in the textarea.
 Mandatory fields are:
