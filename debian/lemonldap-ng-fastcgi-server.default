@@ -13,3 +13,8 @@ GROUP=www-data
 
 # Custom functions file
 #CUSTOM_FUNCTIONS_FILE=/var/lib/lemonldap-ng/myfile.pm
+
+# SERVER_SOURCE
+#
+# default: nginx
+# alternative: traefik
