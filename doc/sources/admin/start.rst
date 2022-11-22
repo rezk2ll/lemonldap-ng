@@ -36,6 +36,7 @@ Documentation for LemonLDAP::NG 2.0
    formreplay
    customhandlers
    webserviceprotection
+   websocketapplications
    applications/authbasic
    applications
 
@@ -426,6 +427,7 @@ Applications protection
 -  :doc:`Form replay<formreplay>`
 -  :doc:`Custom Handlers<customhandlers>`
 -  :doc:`WebServices / API<webserviceprotection>`
+-  :doc:`WebSocket Applications<websocketapplications>`
 
 Well known compatible applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
