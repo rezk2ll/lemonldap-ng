@@ -1114,6 +1114,30 @@ sub tests {
               if ( $conf->{checkDevOps}
                 and !$conf->{useSafeJail} );
             return 1;
+        },
+
+        # Work around for #1740
+        corruptApplicationConfig => sub {
+            for my $cat ( keys %{ $conf->{applicationList} || {} } ) {
+                if ( ref( $conf->{applicationList}->{$cat} ) eq "HASH" ) {
+                    for my $app (
+                        keys %{ $conf->{applicationList}->{$cat} || {} } )
+                    {
+                        if (
+                            ref( $conf->{applicationList}->{$cat}->{$app} ) eq
+                            "HASH"
+                            and
+                            $conf->{applicationList}->{$cat}->{$app}->{type} eq
+                            "menuApp" )
+                        {
+                            return ( 0,
+                                    'Error saving application list.'
+                                  . ' Reload the manager and try again' );
+                        }
+                    }
+                }
+            }
+            return 1;
         }
     };
 }
