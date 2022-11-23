@@ -4308,7 +4308,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'OpenID Connect Authentication Context Class Ref',
         },
         oidcServicePrivateKeySig => { type => 'RSAPrivateKey', },
-        oidcServicePublicKeySig  => { type => 'RSAPublicKey', },
+        oidcServicePublicKeySig  => { type => 'RSAPublicKeyOrCertificate', },
         oidcServiceKeyIdSig      => {
             type          => 'text',
             documentation => 'OpenID Connect Signature Key ID',

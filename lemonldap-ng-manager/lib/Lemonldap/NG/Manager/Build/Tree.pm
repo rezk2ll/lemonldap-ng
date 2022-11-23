@@ -1407,7 +1407,7 @@ sub tree {
                     title => 'oidcServiceMetaDataSecurity',
                     nodes => [ {
                             title => 'oidcServiceMetaDataKeys',
-                            form  => 'RSAKeyNoPassword',
+                            form  => 'RSACertKeyNoPassword',
                             group => [
                                 'oidcServicePrivateKeySig',
                                 'oidcServicePublicKeySig',
