@@ -17,6 +17,7 @@
 "SMTPTLS":"Protocole SSL/TLS",
 "SMTPTLSOpts":"Options SSL/TLS",
 "SSLAuthnLevel":"Niveau d'authentification",
+"SSLIssuerVar":"Variable contenant l'emetteur",
 "SSLVar":"Champ extrait du certificat",
 "SSLVarIf":"Champ conditionnel extrait du certificat",
 "Same":"Identique",

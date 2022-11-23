@@ -17,6 +17,7 @@
 "SMTPTLS":"Protokół SSL/TLS",
 "SMTPTLSOpts":"Opcje SSL/TLS",
 "SSLAuthnLevel":"Poziom uwierzytelnienia",
+"SSLIssuerVar":"Issuer environment variable",
 "SSLVar":"Wyodrębnione pole certyfikatu",
 "SSLVarIf":"Warunkowe wyodrębnione pole certyfikatu",
 "Same":"Podobnie",

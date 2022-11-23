@@ -3725,6 +3725,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type    => 'text',
             default => 'SSL_CLIENT_S_DN_Email'
         },
+        SSLIssuerVar => {
+            type    => 'text',
+            default => 'SSL_CLIENT_I_DN'
+        },
         SSLVarIf => {
             type    => 'keyTextContainer',
             keyTest => sub { 1 },

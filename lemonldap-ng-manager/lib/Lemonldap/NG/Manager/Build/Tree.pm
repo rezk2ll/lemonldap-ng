@@ -440,8 +440,8 @@ sub tree {
                             help  => 'authssl.html',
                             nodes => [
                                 'SSLAuthnLevel', 'SSLVar',
-                                'SSLVarIf',      'sslByAjax',
-                                'sslHost',
+                                'SSLIssuerVar',  'SSLVarIf',
+                                'sslByAjax',     'sslHost',
                             ]
                         },
                         {

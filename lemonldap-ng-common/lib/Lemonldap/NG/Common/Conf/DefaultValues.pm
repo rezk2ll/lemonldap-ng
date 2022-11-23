@@ -369,6 +369,7 @@ sub defaultValues {
         'SMTPTLS'                 => '',
         'soapProxyUrn'            => 'urn:Lemonldap/NG/Common/PSGI/SOAPService',
         'SSLAuthnLevel'           => 5,
+        'SSLIssuerVar'            => 'SSL_CLIENT_I_DN',
         'SSLVar'                  => 'SSL_CLIENT_S_DN_Email',
         'SSLVarIf'                => {},
         'stayConnected'           => 0,

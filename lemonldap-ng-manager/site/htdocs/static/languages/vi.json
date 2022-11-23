@@ -17,6 +17,7 @@
 "SMTPTLS":"Giao thức SSL/TLS",
 "SMTPTLSOpts":"Tùy chọn SSL/TLS",
 "SSLAuthnLevel":"Mức xác thực",
+"SSLIssuerVar":"Issuer environment variable",
 "SSLVar":"Trích xuất trường chứng chỉ",
 "SSLVarIf":"Trích xuất trường chứng chỉ có điều kiện",
 "Same":"Tương tự",

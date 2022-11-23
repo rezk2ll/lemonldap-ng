@@ -17,6 +17,7 @@
 "SMTPTLS":"פרוטוקול SSL/TLS",
 "SMTPTLSOpts":"אפשרויות SSL/TLS",
 "SSLAuthnLevel":"דרגת אימות",
+"SSLIssuerVar":"Issuer environment variable",
 "SSLVar":"שדה אישור שחולץ",
 "SSLVarIf":"Conditional extracted certificate field",
 "Same":"אותו דבר",

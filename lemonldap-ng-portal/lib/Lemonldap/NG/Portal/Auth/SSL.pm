@@ -21,6 +21,11 @@ has Name           => ( is => 'ro', default => 'SSL' );
 
 has auth_id => ( is => 'ro', default => 'ssl' );
 
+has subject_var =>
+  ( is => 'rw', lazy => 1, default => sub { $_[0]->conf->{SSLVar} } );
+has issuer_var =>
+  ( is => 'rw', lazy => 1, default => sub { $_[0]->conf->{SSLIssuerVar} } );
+
 with 'Lemonldap::NG::Portal::Auth::_Ajax';
 
 sub init {
@@ -42,7 +47,7 @@ sub auth_route {
             $req,
             $ssl_user,
             {
-                _Issuer => $req->env->{SSL_CLIENT_I_DN},
+                _Issuer => $req->env->{ $self->issuer_var },
             }
         );
     }
@@ -55,14 +60,13 @@ sub auth_route {
 sub get_user_from_req {
     my ( $self, $req ) = @_;
 
-    my $field = $self->conf->{SSLVar};
-    if ( $req->env->{SSL_CLIENT_I_DN} ) {
+    my $field      = $self->subject_var;
+    my $issuer_var = $self->issuer_var;
+    if ( $req->env->{$issuer_var} ) {
         $self->logger->debug(
-            'Received SSL issuer ' . $req->env->{SSL_CLIENT_I_DN} );
+            'Received SSL issuer ' . $req->env->{$issuer_var} );
 
-        if ( my $tmp =
-            $self->conf->{SSLVarIf}->{ $req->env->{SSL_CLIENT_I_DN} } )
-        {
+        if ( my $tmp = $self->conf->{SSLVarIf}->{ $req->env->{$issuer_var} } ) {
             $field = $tmp;
         }
     }
@@ -108,7 +112,7 @@ sub extractFormInfo {
 
     if ( $ssl_user and $req->user($ssl_user) ) {
         $self->userLogger->notice( "GoodSSL authentication for " . $req->user );
-        $req->data->{_Issuer} = $req->env->{SSL_CLIENT_I_DN};
+        $req->data->{_Issuer} = $req->env->{ $self->issuer_var };
         return PE_OK;
     }
     elsif ( $req->env->{SSL_CLIENT_S_DN} ) {

@@ -33,6 +33,7 @@ sub testUserTokenSSLAuth {
                 ),
 
                 SSLVar            => 'SSL_CLIENT_S_DN_Custom',
+                SSLIssuerVar      => 'SSL_CLIENT_I_DN_Custom',
                 sslByAjax         => 1,
                 sslHost           => 'https://authssl.example.com/authssl',
                 restSessionServer => 1,
@@ -71,8 +72,8 @@ m%<script type="application/init">\s*\{"sslHost":"https://authssl.example.com/au
             '/authssl',
             accept => 'application/json',
             custom => {
-                SSL_CLIENT_S_DN_Custom => 'dwho',
-                SSL_CLIENT_I_DN        => 'cn=MyIssuer'
+                SSL_CLIENT_S_DN_Custom   => 'dwho',
+                'SSL_CLIENT_I_DN_Custom' => 'cn=MyIssuer'
             }
         ),
         'Auth query'
@@ -223,6 +224,62 @@ subtest 'Regular SSL Auth' => sub {
 
     expectOK($res);
     expectCookie($res);
+};
+
+sub testSSLVarIf {
+    my ( $client, $headers, $expected ) = @_;
+    my $res;
+    ok( $res = $client->_get( '/', custom => $headers ), 'Auth query' );
+
+    expectOK($res);
+    my $id = expectCookie($res);
+
+    # Test authentication
+    ok( $res = $client->_get( '/', cookie => "lemonldap=$id" ) );
+    expectOK($res);
+    expectAuthenticatedAs( $res, $expected );
+}
+
+subtest 'SSLVarIf mechanism' => sub {
+    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
+    my $client = LLNG::Manager::Test->new( {
+            ini => {
+                logLevel       => 'error',
+                useSafeJail    => 1,
+                authentication => 'SSL',
+                userDB         => 'Null',
+                SSLVar         => 'SSL_CLIENT_S_DN_Email',
+                SSLIssuerVar   => 'SSL_CLIENT_I_DN_CN',
+                SSLVarIf       => {
+                    'CA1' => "SSL_CLIENT_S_DN_UID",
+                    'CA2' => "SSL_CLIENT_S_DN_CN",
+                },
+            }
+        }
+    );
+
+    my $subjectInfo = {
+        'SSL_CLIENT_S_DN_Email' => 'dwho@example.com',
+        'SSL_CLIENT_S_DN_UID'   => 'dwho',
+        'SSL_CLIENT_S_DN_CN'    => 'Doctor Who',
+    };
+
+    subtest "Testing SSLVarIf with CA1", sub {
+        testSSLVarIf( $client,
+            { %$subjectInfo, 'SSL_CLIENT_I_DN_CN' => 'CA1' }, 'dwho' );
+    };
+    subtest "Testing SSLVarIf with CA2", sub {
+        testSSLVarIf( $client, { %$subjectInfo, 'SSL_CLIENT_I_DN_CN' => 'CA2' },
+            'Doctor Who' );
+    };
+    subtest "Testing SSLVarIf with unknown CA", sub {
+        testSSLVarIf( $client, { %$subjectInfo, 'SSL_CLIENT_I_DN_CN' => 'CA3' },
+            'dwho@example.com' );
+    };
+    subtest "Testing SSLVarIf with no CA", sub {
+        testSSLVarIf( $client, $subjectInfo, 'dwho@example.com' );
+    };
+
 };
 
 done_testing();
