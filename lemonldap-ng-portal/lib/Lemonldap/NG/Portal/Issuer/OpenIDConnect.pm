@@ -1943,14 +1943,18 @@ sub jwks {
 
     my $jwks = { keys => [] };
 
-    my $public_key_sig = $self->conf->{oidcServicePublicKeySig};
-    my $key_id_sig     = $self->conf->{oidcServiceKeyIdSig};
-    if ($public_key_sig) {
-        my $key = $self->key2jwks($public_key_sig);
-        $key->{kty} = "RSA";
-        $key->{use} = "sig";
-        $key->{kid} = $key_id_sig if $key_id_sig;
-        push @{ $jwks->{keys} }, $key;
+    my $public_key_sig_or_cert = $self->conf->{oidcServicePublicKeySig};
+    my $private_key_sig        = $self->conf->{oidcServicePrivateKeySig};
+    my $key_id_sig             = $self->conf->{oidcServiceKeyIdSig};
+    if ($private_key_sig) {
+        my $jwk = {
+            kty => "RSA",
+            use => "sig",
+            ( $key_id_sig ? ( kid => $key_id_sig ) : () ),
+            %{ $self->key2jwks($private_key_sig) },
+            %{ $self->getCertInfo($public_key_sig_or_cert) },
+        };
+        push @{ $jwks->{keys} }, $jwk;
     }
     $self->logger->debug("Send JWKS response sent");
     return $self->p->sendJSONresponse( $req, $jwks );
