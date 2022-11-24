@@ -16,6 +16,7 @@ USEDEBIANLIBS=no
 PROD=$(USEDEBIANLIBS)
 USEEXTERNALLIBS=no
 PARA=$(shell perl -000 -e 'print ( "$(MAKEFLAGS)" =~ /-j(\d+)/ ? "j$$1:c" : "")')
+PARAXARGS=$(shell perl -000 -e 'print ( "$(MAKEFLAGS)" =~ /-j(\d+)/ ? "-P $$1" : "")')
 
 # Perl options
 #PERLOPTIONS="INSTALLDIRS=vendor"
@@ -1168,11 +1169,7 @@ test-diff:
 
 tidy: clean
 	@if perltidy -v|grep v20220217 >/dev/null; then \
-		for f in `find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \)`; do \
-			echo -n $$f; \
-			perltidy -se -b $$f; \
-			echo; \
-		done; \
+		find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \) -print0 | xargs -t -0 $(PARAXARGS) -n10 perltidy -se -b ;\
 	else echo "Wrong perltidy version, please install Perl::Tidy@20220217" ; exit 1 ;\
 	fi
 	find lemon*/ -name '*.bak' -delete
