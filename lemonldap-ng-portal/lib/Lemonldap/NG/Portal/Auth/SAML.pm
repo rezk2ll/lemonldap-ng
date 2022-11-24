@@ -1064,7 +1064,7 @@ sub extractFormInfo {
     my $login = $self->createAuthnRequest(
         $req,          $self->lassoServer, $idp,
         $method,       $forceAuthn,        $isPassive,
-        $nameIDFormat, 0, $signSSOMessage,
+        $nameIDFormat, 0,                  $signSSOMessage,
         $requestedAuthnContext
     );
 

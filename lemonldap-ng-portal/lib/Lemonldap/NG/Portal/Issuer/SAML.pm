@@ -465,7 +465,7 @@ sub run {
             return $h if ( $h != PE_OK );
 
             # Set environment for rule/macro evaluation
-            $req->env->{llng_saml_sp} = $sp;
+            $req->env->{llng_saml_sp}        = $sp;
             $req->env->{llng_saml_spconfkey} = $spConfKey;
             if ( $login->request ) {
                 my $acs = $login->request->AssertionConsumerServiceURL;
@@ -1424,7 +1424,7 @@ sub logout {
     # for them.
     # Redirect on logout page when all is done.
     if ( $self->sendLogoutRequestToProviders( $req, $logout ) ) {
-        $req->urldc( $self->p->buildUrl({logout => 1}));
+        $req->urldc( $self->p->buildUrl( { logout => 1 } ) );
         return PE_OK;
     }
 

@@ -59,7 +59,8 @@ sub displayInit {
     }
     $self->passwordPolicyActivation($rule);
     $rule =
-      HANDLER->buildSub( HANDLER->substitute( $self->conf->{rememberAuthChoiceRule} ) );
+      HANDLER->buildSub(
+        HANDLER->substitute( $self->conf->{rememberAuthChoiceRule} ) );
     unless ($rule) {
         my $error = HANDLER->tsv->{jail}->error || 'Unable to compile rule';
         $self->logger->error("Bad rememberAuthChoiceRule rule: $error");
@@ -412,8 +413,10 @@ sub display {
                 ? ( REMEMBERAUTHCHOICE => 1 )
                 : ()
             ),
-            REMEMBERAUTHCHOICEDEFAULTCHECKED => $self->conf->{rememberDefaultChecked} // 0,
-            REMEMBERAUTHCHOICECOOKIENAME => $self->conf->{rememberCookieName} // 'llngrememberauthchoice',
+            REMEMBERAUTHCHOICEDEFAULTCHECKED =>
+              $self->conf->{rememberDefaultChecked} // 0,
+            REMEMBERAUTHCHOICECOOKIENAME => $self->conf->{rememberCookieName}
+              // 'llngrememberauthchoice',
             REMEMBERAUTHCHOICETIMER => $self->conf->{rememberTimer} // 5,
             (
                 $req->data->{customScript}

@@ -294,7 +294,8 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     my $devices;
     ok(
         $devices =
-          $res->[2]->[0] =~ s%<span\s*device=\'(?:TOTP|U2F)\'\s*epoch=\'\d{10}\'%%mg,
+          $res->[2]->[0] =~
+          s%<span\s*device=\'(?:TOTP|U2F)\'\s*epoch=\'\d{10}\'%%mg,
         '2F device found'
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $devices == 2, '2F devices found' )

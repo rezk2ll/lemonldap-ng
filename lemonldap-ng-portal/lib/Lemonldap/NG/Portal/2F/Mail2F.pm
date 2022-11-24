@@ -25,7 +25,7 @@ has prefix => ( is => 'rw', default => 'mail' );
 
 # Used to lookup config
 has conf_type => ( is => 'ro', default => 'mail' );
-has legend => ( is => 'rw', default => 'enterMail2fCode' );
+has legend    => ( is => 'rw', default => 'enterMail2fCode' );
 
 has ott => (
     is      => 'rw',
@@ -75,11 +75,11 @@ sub init {
 sub run {
     my ( $self, $req, $token ) = @_;
 
-    if (!$self->is_registrable) {
+    if ( !$self->is_registrable ) {
         my $dest = $req->{sessionInfo}->{ $self->sessionKey };
         unless ($dest) {
             $self->logger->error( "Could not find mail attribute for login "
-                . $req->{sessionInfo}->{_user} );
+                  . $req->{sessionInfo}->{_user} );
             return PE_MUSTHAVEMAIL;
         }
     }
@@ -93,8 +93,8 @@ sub sendCode {
 
     my $dest = $sessionInfo->{ $self->sessionKey };
 
-    if (!$dest) {
-        $self->logger->error( 'Unable to find email recipient' );
+    if ( !$dest ) {
+        $self->logger->error('Unable to find email recipient');
         return 0;
     }
 

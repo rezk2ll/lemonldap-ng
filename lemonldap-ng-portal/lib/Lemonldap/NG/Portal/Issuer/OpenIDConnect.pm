@@ -37,7 +37,7 @@ sub beforeAuth { 'exportRequestParameters' }
 
 use constant sessionKind => 'OIDCI';
 
-has rule          => ( is => 'rw' );
+has rule => ( is => 'rw' );
 has configStorage => (
     is      => 'ro',
     lazy    => 1,
@@ -736,7 +736,7 @@ sub run {
 
                 $self->logger->debug("Generated code: $code");
 
-                my $state         = $oidc_request->{'state'};
+                my $state = $oidc_request->{'state'};
 
                 return $self->sendOidcResponse(
                     $req, $flow,

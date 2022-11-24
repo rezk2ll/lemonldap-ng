@@ -16,7 +16,7 @@ BEGIN { use_ok('Lemonldap::NG::Common::Conf') }
 
 my $h;
 use File::Temp;
-my $dir = File::Temp::tempdir(CLEANUP=>1);
+my $dir = File::Temp::tempdir( CLEANUP => 1 );
 
 ok(
     $h = new Lemonldap::NG::Common::Conf( {

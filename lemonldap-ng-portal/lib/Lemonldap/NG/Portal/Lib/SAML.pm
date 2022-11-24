@@ -2671,8 +2671,7 @@ sub sendLogoutRequestToProvider {
 
     # Skip SLO if no method found (#2746)
     unless ( defined $method and $method != -1 ) {
-        $self->logger->debug(
-            "No HTTP SLO method found for $providerID");
+        $self->logger->debug("No HTTP SLO method found for $providerID");
         return ( 0, $method, undef );
     }
 

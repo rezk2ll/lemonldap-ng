@@ -462,17 +462,19 @@ sub attributes {
             type          => 'int',
             default       => 31536000,
             documentation => 'lifetime of the remember auth choice cookie',
-            flags => 'm',
+            flags         => 'm',
         },
         rememberDefaultChecked => {
             type          => 'bool',
             default       => 0,
-            documentation => 'Is remember auth choice checkbox enabled by default?',
+            documentation =>
+              'Is remember auth choice checkbox enabled by default?',
         },
         rememberTimer => {
             type          => 'int',
             default       => 5,
-            documentation => 'timer before automatic authentication with remembered choice',
+            documentation =>
+              'timer before automatic authentication with remembered choice',
             flags => 'm',
         },
         stayConnected => {

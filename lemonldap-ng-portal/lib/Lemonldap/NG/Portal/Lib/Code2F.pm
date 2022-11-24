@@ -70,7 +70,7 @@ sub init {
 
 sub run {
     my ( $self, $req, $token ) = @_;
-    $self->populateDestAttribute($req, $req->sessionInfo);
+    $self->populateDestAttribute( $req, $req->sessionInfo );
 
     return PE_ERROR unless $self->challenge( $req, $req->sessionInfo, $token );
 
@@ -149,7 +149,7 @@ sub verify {
         return PE_FORMEMPTY;
     }
 
-    $self->populateDestAttribute($req, $req->sessionInfo);
+    $self->populateDestAttribute( $req, $req->sessionInfo );
 
     return $self->verify_supplied_code( $req, $session, $usercode );
 
@@ -205,10 +205,10 @@ sub sendCodeForm {
         $req,
         'ext2fcheck',
         params => {
-            MAIN_LOGO => $self->conf->{portalMainLogo},
-            SKIN      => $self->p->getSkin($req),
+            MAIN_LOGO        => $self->conf->{portalMainLogo},
+            SKIN             => $self->p->getSkin($req),
             "PREFIX_$prefix" => 1,
-            PREFIX    => $prefix,
+            PREFIX           => $prefix,
             (
                 $self->resend_interval
                 ? ( RESENDTARGET => '/'
@@ -238,6 +238,5 @@ sub populateDestAttribute {
         }
     }
 }
-
 
 1;

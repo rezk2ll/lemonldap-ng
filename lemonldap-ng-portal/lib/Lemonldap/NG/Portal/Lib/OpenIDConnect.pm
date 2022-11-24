@@ -32,7 +32,7 @@ use constant PROFILE => [
     qw/name family_name given_name middle_name nickname preferred_username
       profile picture website gender birthdate zoneinfo locale updated_at/
 ];
-use constant EMAIL   => [qw/email email_verified/];
+use constant EMAIL => [qw/email email_verified/];
 use constant ADDRESS =>
   [qw/formatted street_address locality region postal_code country/];
 use constant PHONE => [qw/phone_number phone_number_verified/];

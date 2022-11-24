@@ -5,7 +5,7 @@ use Data::Dumper;
 BEGIN { use_ok('Lemonldap::NG::Common::Conf') }
 
 use File::Temp;
-my $dir = File::Temp::tempdir(CLEANUP=>1);
+my $dir = File::Temp::tempdir( CLEANUP => 1 );
 my $h;
 
 ok(

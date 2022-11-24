@@ -488,11 +488,11 @@ Verify that an error is displayed on the portal
 sub expectPortalError {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $errnum, $message ) = @_;
-    $errnum ||= 9;
+    $errnum  ||= 9;
     $message ||= "Expected portal error code";
     my ($error) = $res->[2]->[0] =~ qr/<span trmsg="(\d+)">/;
-    ok ($error, "$message: code found on page") or explain $res->[2]->[0];
-    is ($error, $errnum, $message);
+    ok( $error, "$message: code found on page" ) or explain $res->[2]->[0];
+    is( $error, $errnum, $message );
     count(2);
 }
 
@@ -1010,12 +1010,12 @@ sub _get {
     my ( $self, $path, %args ) = @_;
 
     # Automatically serialize query if given as HASHREF
-    if (ref($args{query}) eq "HASH") {
-        $args{query} = main::buildForm($args{query});
+    if ( ref( $args{query} ) eq "HASH" ) {
+        $args{query} = main::buildForm( $args{query} );
     }
 
     my $res = $self->app->( {
-            'HTTP_ACCEPT' => $args{accept} // $self->accept,
+            'HTTP_ACCEPT'          => $args{accept} // $self->accept,
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
             ( $args{cookie} ? ( HTTP_COOKIE => $args{cookie} ) : () ),
@@ -1073,6 +1073,7 @@ sub _post {
     # If $body is a string, wrap in IO::Handle
     unless ( ref($body) ) {
         $args{length} = length($body);
+
         # We must force a string copy here to avoid circular references
         $body = IO::String->new("$body");
     }
@@ -1080,7 +1081,7 @@ sub _post {
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
     my $res = $self->app->( {
-            'HTTP_ACCEPT' => $args{accept} // $self->accept,
+            'HTTP_ACCEPT'          => $args{accept} // $self->accept,
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
             ( $args{cookie} ? ( HTTP_COOKIE => $args{cookie} ) : () ),
@@ -1108,8 +1109,8 @@ sub _post {
             ( $args{custom} ? %{ $args{custom} } : () ),
             'psgix.input.buffered' => 0,
             'psgi.input'           => $body,
-            'CONTENT_LENGTH' => $args{length},
-            'CONTENT_TYPE'   => $args{type}
+            'CONTENT_LENGTH'       => $args{length},
+            'CONTENT_TYPE'         => $args{type}
               || 'application/x-www-form-urlencoded',
         }
     );

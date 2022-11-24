@@ -35,7 +35,7 @@ extends 'Email::Sender::Transport';
 
 sub send_email {
     my ( $self, $email, $envelope ) = @_;
-    $mime = $email->cast('MIME::Entity');
+    $mime          = $email->cast('MIME::Entity');
     $mail          = $email->get_body;
     $mail_subject  = $email->get_header("Subject");
     $mail_envelope = $envelope;
