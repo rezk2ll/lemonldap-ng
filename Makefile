@@ -15,7 +15,7 @@ DESTDIR=
 USEDEBIANLIBS=no
 PROD=$(USEDEBIANLIBS)
 USEEXTERNALLIBS=no
-PARA=$(shell perl -000 -e 'print ( "$(MAKEFLAGS)" =~ /-j(\d+)/ ? "j$1:c" : "")')
+PARA=$(shell perl -000 -e 'print ( "$(MAKEFLAGS)" =~ /-j(\d+)/ ? "j$$1:c" : "")')
 
 # Perl options
 #PERLOPTIONS="INSTALLDIRS=vendor"
