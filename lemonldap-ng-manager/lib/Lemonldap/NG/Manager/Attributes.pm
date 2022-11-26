@@ -810,6 +810,9 @@ sub attributes {
         'casSrvMetaDataOptionsSortNumber' => {
             'type' => 'int'
         },
+        'casSrvMetaDataOptionsTooltip' => {
+            'type' => 'text'
+        },
         'casSrvMetaDataOptionsUrl' => {
             'msgFail' => '__badUrl__',
             'test'    =>
@@ -2321,6 +2324,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             'type' => 'select'
         },
+        'oidcOPMetaDataOptionsTooltip' => {
+            'type' => 'text'
+        },
         'oidcOPMetaDataOptionsUiLocales' => {
             'type' => 'text'
         },
@@ -3617,6 +3623,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'samlIDPMetaDataOptionsStoreSAMLToken' => {
             'default' => 0,
             'type'    => 'bool'
+        },
+        'samlIDPMetaDataOptionsTooltip' => {
+            'type' => 'text'
         },
         'samlIDPMetaDataOptionsUserAttribute' => {
             'type' => 'text'

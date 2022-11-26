@@ -3153,6 +3153,7 @@ sub attributes {
         samlIDPMetaDataOptionsUserAttribute => { type => 'text', },
         samlIDPMetaDataOptionsDisplayName   => { type => 'text', },
         samlIDPMetaDataOptionsIcon          => { type => 'text', },
+        samlIDPMetaDataOptionsTooltip       => { type => 'text', },
         samlIDPMetaDataOptionsSortNumber    => { type => 'int', },
 
         # SP keys
@@ -3739,6 +3740,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         casSrvMetaDataOptionsIcon => {
             type          => 'text',
             documentation => 'Path of CAS Server Icon',
+        },
+        casSrvMetaDataOptionsTooltip => {
+            type          => 'text',
+            documentation => 'Tooltip of CAS Server',
         },
         casSrvMetaDataOptionsSortNumber => {
             type          => 'int',
@@ -4445,6 +4450,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataOptionsUseNonce      => { type => 'bool', default => 1 },
         oidcOPMetaDataOptionsDisplayName   => { type => 'text', },
         oidcOPMetaDataOptionsIcon          => { type => 'text', },
+        oidcOPMetaDataOptionsTooltip       => { type => 'text', },
         oidcOPMetaDataOptionsStoreIDToken  => { type => 'bool', default => 0 },
         oidcOPMetaDataOptionsSortNumber    => { type => 'int', },
         oidcOPMetaDataOptionsResolutionRule => {

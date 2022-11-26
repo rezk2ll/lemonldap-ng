@@ -147,6 +147,11 @@ function templates(tpl,key) {
             "title" : "casSrvMetaDataOptionsIcon"
          },
          {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsTooltip",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsTooltip",
+            "title" : "casSrvMetaDataOptionsTooltip"
+         },
+         {
             "default" : "",
             "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsResolutionRule",
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsResolutionRule",
@@ -368,6 +373,11 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsIcon",
             "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsIcon",
             "title" : "oidcOPMetaDataOptionsIcon"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsTooltip",
+            "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsTooltip",
+            "title" : "oidcOPMetaDataOptionsTooltip"
          },
          {
             "default" : "",
@@ -1119,6 +1129,11 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsIcon",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsIcon",
             "title" : "samlIDPMetaDataOptionsIcon"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsTooltip",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsTooltip",
+            "title" : "samlIDPMetaDataOptionsTooltip"
          },
          {
             "default" : "",

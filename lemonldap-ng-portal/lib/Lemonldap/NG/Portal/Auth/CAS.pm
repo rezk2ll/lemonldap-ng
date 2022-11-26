@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth
@@ -49,6 +49,8 @@ sub init {
           ->{casSrvMetaDataOptionsDisplayName};
         my $icon = $self->conf->{casSrvMetaDataOptions}->{$_}
           ->{casSrvMetaDataOptionsIcon};
+        my $tooltip = $self->conf->{casSrvMetaDataOptions}->{$_}
+          ->{casSrvMetaDataOptionsTooltip} || $name;
         my $order = $self->conf->{casSrvMetaDataOptions}->{$_}
           ->{casSrvMetaDataOptionsSortNumber} // 0;
         my $img_src;
@@ -59,14 +61,15 @@ sub init {
               ? $icon
               : $portalPath . $self->p->staticPrefix . "/common/" . $icon;
         }
-        push @list,
-          {
+        push @list, {
             val   => $_,
             name  => $name,
+            title => $tooltip,
             icon  => $img_src,
             order => $order,
-            class => "openidconnect",
-          };
+
+            #class => "openidconnect", #Usefull or mistake??
+        };
     }
     @list =
       sort {

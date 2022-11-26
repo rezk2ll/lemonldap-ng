@@ -96,6 +96,7 @@ sub cTrees {
                 nodes => [
                     "samlIDPMetaDataOptionsDisplayName",
                     "samlIDPMetaDataOptionsIcon",
+                    "samlIDPMetaDataOptionsTooltip",
                     'samlIDPMetaDataOptionsResolutionRule',
                     "samlIDPMetaDataOptionsSortNumber"
                 ]
@@ -185,6 +186,7 @@ sub cTrees {
                 nodes => [
                     'oidcOPMetaDataOptionsDisplayName',
                     'oidcOPMetaDataOptionsIcon',
+                    'oidcOPMetaDataOptionsTooltip',
                     'oidcOPMetaDataOptionsResolutionRule',
                     'oidcOPMetaDataOptionsSortNumber'
                 ]
@@ -286,6 +288,7 @@ sub cTrees {
                 nodes => [
                     'casSrvMetaDataOptionsDisplayName',
                     'casSrvMetaDataOptionsIcon',
+                    'casSrvMetaDataOptionsTooltip',
                     'casSrvMetaDataOptionsResolutionRule',
                     'casSrvMetaDataOptionsSortNumber',
                 ]
