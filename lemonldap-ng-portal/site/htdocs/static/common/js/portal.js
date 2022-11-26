@@ -545,6 +545,17 @@ LemonLDAP::NG Portal jQuery scripts
     if ((window.datas.ppolicy != null) && $('#newpassword').length) {
       $('#reset').change(togglecheckpassword);
     }
+    $(".localeDate").each(function() {
+      var s;
+      s = new Date($(this).attr("val") * 1000);
+      return $(this).text(s.toLocaleString());
+    });
+    $('.oidcConsent').on('click', function() {
+      return removeOidcConsent($(this).attr('partner'));
+    });
+    if (datas['pingInterval'] && datas['pingInterval'] > 0) {
+      window.setTimeout(ping, datas['pingInterval']);
+    }
     if (datas['enablePasswordDisplay']) {
       field = '';
       if (datas['dontStorePassword']) {
@@ -575,16 +586,20 @@ LemonLDAP::NG Portal jQuery scripts
         });
       }
     }
-    if (datas['pingInterval'] && datas['pingInterval'] > 0) {
-      window.setTimeout(ping, datas['pingInterval']);
-    }
-    $(".localeDate").each(function() {
-      var s;
-      s = new Date($(this).attr("val") * 1000);
-      return $(this).text(s.toLocaleString());
-    });
-    $('.oidcConsent').on('click', function() {
-      return removeOidcConsent($(this).attr('partner'));
+    $('#reset').change(function() {
+      var checked;
+      checked = $(this).prop('checked');
+      console.log('Reset is checked', checked);
+      if (checked === true) {
+        $('#newpasswords').hide();
+        $('#newpassword').removeAttr('required');
+        $('#confirmpassword').removeAttr('required');
+      }
+      if (checked === false) {
+        $('#newpasswords').show();
+        $('#newpassword').attr('required', true);
+        return $('#confirmpassword').attr('required', true);
+      }
     });
     $('#passwordfield').on('input', function() {
       if ($('#passwordfield').get(0).value && datas['dontStorePassword']) {

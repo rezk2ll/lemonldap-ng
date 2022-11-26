@@ -474,6 +474,18 @@ $(window).on 'load', () ->
 	if window.datas.ppolicy? and $('#newpassword').length
 		$('#reset').change togglecheckpassword
 
+	# Set local dates (used to display history)
+	$(".localeDate").each ->
+		s = new Date($(this).attr("val")*1000)
+		$(this).text s.toLocaleString()
+
+	$('.oidcConsent').on 'click', () ->
+		removeOidcConsent $(this).attr 'partner'
+
+	# Ping if asked
+	if datas['pingInterval'] and datas['pingInterval'] > 0
+		window.setTimeout ping, datas['pingInterval']
+
 	# Functions to show/hide display password button
 	if datas['enablePasswordDisplay']
 		field = ''
@@ -498,17 +510,18 @@ $(window).on 'load', () ->
 				$(this).toggleClass("fa-eye fa-eye-slash")
 				$("input[name=#{field}]").attr("type", "password")
 
-	# Ping if asked
-	if datas['pingInterval'] and datas['pingInterval'] > 0
-		window.setTimeout ping, datas['pingInterval']
-
-	# Set local dates (used to display history)
-	$(".localeDate").each ->
-		s = new Date($(this).attr("val")*1000)
-		$(this).text s.toLocaleString()
-
-	$('.oidcConsent').on 'click', () ->
-		removeOidcConsent $(this).attr 'partner'
+	# Functions to show/hide newpassword inputs
+	$('#reset').change () ->
+		checked = $(this).prop('checked')
+		console.log 'Reset is checked', checked
+		if checked == true
+			$('#newpasswords').hide()
+			$('#newpassword').removeAttr('required')
+			$('#confirmpassword').removeAttr('required')
+		if checked == false
+			$('#newpasswords').show()
+			$('#newpassword').attr('required', true)
+			$('#confirmpassword').attr('required', true)
 
 	# Functions to show/hide placeholder password inputs
 	$('#passwordfield').on 'input', () ->
