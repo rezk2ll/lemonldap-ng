@@ -61,7 +61,7 @@ and choose CAS for authentication.
 
 Then, go in ``CAS parameters``:
 
--  **Authentication level**: authentication level for this module.
+-  **Authentication level**: Authentication level for this module.
 
 Then create the list of CAS servers in the manager.
 
@@ -69,9 +69,9 @@ Options
 ~~~~~~~
 
 -  **Server URL** *(required)*: CAS server URL (must use https://)
--  **Renew authentication** *(default: disabled)*: force authentication
+-  **Renew authentication** *(default: disabled)*: Force authentication
    renewal on CAS server
--  **Gateways authentication** *(default: disabled)*: force transparent
+-  **Gateways authentication** *(default: disabled)*: Force transparent
    authentication on CAS server
 
 Proxied services
@@ -81,17 +81,19 @@ In this section, set the list of services for which a proxy ticket is
 requested:
 
 -  **Key**: Service ID
--  **Value** Service URL (CAS service identifier)
+-  **Value**: Service URL (CAS service identifier)
 
 Display
 ~~~~~~~
--  **Display Name**: Name to display. Required if you have more than 1
-   CAS server declared
--  **Icon**: Path to CAS Server icon. Used only if you have more than 1
-   CAS server declared
--  **Resolution Rule**: rule that will be applied to preselect a CAS server for
+
+Used only if at least 2 CAS servers are declared
+
+-  **Name**: Name of the CAS server
+-  **Logo**: Logo of the CAS server
+-  **Tooltip**: Information displayed on mouse over the button
+-  **Resolution rule**: Rule that will be applied to preselect a CAS server for
    a user. You have access to all environment variable *(like user IP address)*
-   and all session keys.
+   and all session keys
 
 For example, to preselect this server for users coming from 129.168.0.0/16
 network
@@ -104,8 +106,7 @@ To preselect this server when the ``MY_SRV`` :doc:`choice <authchoice>` is selec
 
     $_choice eq "MY_SRV"
 
--  **Order**: Number to sort CAS Servers display
-
+-  **Order**: Used for sorting CAS server
 
 .. tip::
 

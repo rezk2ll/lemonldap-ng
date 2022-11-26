@@ -457,6 +457,14 @@ function templates(tpl,key) {
       "type" : "keyTextContainer"
    },
    {
+      "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
+      "default" : [],
+      "help" : "exportedvars.html#extend-variables-using-macros-and-groups",
+      "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
+      "title" : "oidcRPMetaDataMacros",
+      "type" : "keyTextContainer"
+   },
+   {
       "_nodes" : [
          {
             "_nodes" : [
@@ -764,14 +772,6 @@ function templates(tpl,key) {
       "help" : "idpopenidconnect.html#options",
       "id" : "oidcRPMetaDataOptions",
       "title" : "oidcRPMetaDataOptions"
-   },
-   {
-      "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
-      "default" : [],
-      "help" : "exportedvars.html#extend-variables-using-macros-and-groups",
-      "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
-      "title" : "oidcRPMetaDataMacros",
-      "type" : "keyTextContainer"
    },
    {
       "_nodes" : [

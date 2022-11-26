@@ -259,6 +259,11 @@ Examples:
 
   * the ``write`` scope will be granted if the user is a member of the ``writers`` group, but only if the application requested it.
 
+Macros
+^^^^^^
+
+You can define here macros that will be only evaluated for this service,
+and not registered in the user's session.
 
 Options
 ^^^^^^^
@@ -349,11 +354,6 @@ Options
       URLs that this client can redirect the user to once the logout is done
       (through ``post_logout_redirect_uri``)
 
-Macros
-^^^^^^
-
-You can define here macros that will be only evaluated for this service,
-and not registered in the user's session.
 
 Display
 ^^^^^^^
@@ -364,7 +364,7 @@ Display
 .. |beta| image:: /documentation/beta.png
 
 
-Access Rule extra variables
+Access rule extra variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When writing your access rules, you can additionally use the following variables:

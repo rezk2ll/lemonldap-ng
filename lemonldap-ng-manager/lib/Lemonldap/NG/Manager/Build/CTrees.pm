@@ -196,6 +196,7 @@ sub cTrees {
             'oidcRPMetaDataExportedVars',
             'oidcRPMetaDataOptionsExtraClaims',
             'oidcRPMetaDataScopeRules',
+            'oidcRPMetaDataMacros',
             {
                 title => 'oidcRPMetaDataOptions',
                 help  => 'idpopenidconnect.html#options',
@@ -260,7 +261,6 @@ sub cTrees {
                     },
                 ]
             },
-            'oidcRPMetaDataMacros',
             {
                 title => 'oidcRPMetaDataOptionsDisplay',
                 form  => 'simpleInputContainer',

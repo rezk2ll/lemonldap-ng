@@ -105,10 +105,10 @@ In ``General Parameters`` > ``Authentication modules``, set:
 Then in ``General Parameters`` > ``Authentication modules`` >
 ``OpenID Connect parameters``, you can set:
 
--  **Authentication level**: Authentication level associated to this module
--  **Callback GET parameter**: Name of the GET parameter used for intercepting
+-  **Authentication level**: authentication level associated to this module
+-  **Callback GET parameter**: name of the GET parameter used for intercepting
    callback (default: openidconnectcallback)
--  **State session timeout**: Duration of a state session (used for keeping
+-  **State session timeout**: duration of a state session (used for keeping
    state information between authentication request and authentication
    response) in seconds (default: 600)
 
@@ -211,12 +211,11 @@ Options
 
 Configuration
 """""""""""""
-
 -  **Configuration endpoint**: URL of OP configuration endpoint
 -  **JWKS data timeout**: After this time, LL::NG will do a request
-   to get a fresh version of JWKS data. Set to 0 to disable it.
--  **Client ID**: Client ID given by OP
--  **Client secret**: Client secret given by OP
+   to get a fresh version of JWKS data. Set to 0 to disable it
+-  **Client ID**: client ID given by OP
+-  **Client secret**: client secret given by OP
 -  **Store ID token**: Allows one to store the ID Token (JWT) inside
    user session. Do not enable it unless you need to replay this token
    on an application, or if you need the id_token_hint parameter when
@@ -232,21 +231,24 @@ Protocol
 -  **UI locales**: Value of ui_locales parameter (example: en-GB en
    fr-FR fr)
 -  **ACR values**: Value acr_values parameters (example: loa-1)
--  **Token endpoint authentication method**: Choice between
+-  **Token endpoint authentication method**: choice between
    ``client_secret_post`` and ``client_secret_basic``
 -  **Check JWT signature**: Set to 0 to disable JWT signature
    checking
 -  **ID Token max age**: If defined, LL::NG will check the ID Token
    date and reject it if too old
--  **Use Nonce**: If enabled, a nonce will be sent, and verified from
+-  **Use nonce**: If enabled, a nonce will be sent, and verified from
    the ID Token
 
 Display
 """""""
 
--  **Display name**: Name of the application
--  **Logo**: Logo of the application
--  **Resolution Rule**: rule that will be applied to preselect an OP
+Used only if at least 2 OIDC Providers are declared
+
+-  **Name**: Name of the OP
+-  **Logo**: Logo of the OP
+-  **Tooltip**: Information displayed on mouse over the button
+-  **Resolution rule**: Rule that will be applied to preselect an OP
    for a user. You have access to all environment variable *(like user
    IP address)* and all session keys.
 
@@ -261,8 +263,7 @@ To preselect this OP when the ``MY_OP`` :doc:`choice <authchoice>` is selected :
 
     $_choice eq "MY_OP"
 
--  **Order**: Number to sort buttons
-
+-  **Order**: Used for sorting OP
 
 .. attention::
 
