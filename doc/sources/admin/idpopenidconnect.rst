@@ -207,7 +207,7 @@ attributes as **Value**:
 
 -  `employment_info` => `position company`
 
-In this example, an OpenID Client requesting for the ``employment_info`` scope will
+In this example, an OpenID Connect client (RP) requesting for the ``employment_info`` scope will
 be able to read the ``company`` and ``position`` attributes from the UserInfo endpoint.
 
 .. important::
