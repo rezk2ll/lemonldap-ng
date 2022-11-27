@@ -518,10 +518,15 @@ $(window).on 'load', () ->
 			$('#newpasswords').hide()
 			$('#newpassword').removeAttr('required')
 			$('#confirmpassword').removeAttr('required')
-		if checked == false
+			$('#confirmpassword').get(0)?.setCustomValidity('')
+		else
 			$('#newpasswords').show()
 			$('#newpassword').attr('required', true)
 			$('#confirmpassword').attr('required', true)
+			if $('#confirmpassword').get(0)?.value == $('#newpassword').get(0)?.value
+				$('#confirmpassword').get(0)?.setCustomValidity('')
+			else
+				$('#confirmpassword').get(0)?.setCustomValidity(translate('PE34'))
 
 	# Functions to show/hide placeholder password inputs
 	$('#passwordfield').on 'input', () ->

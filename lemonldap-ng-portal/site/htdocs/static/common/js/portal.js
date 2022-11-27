@@ -587,18 +587,23 @@ LemonLDAP::NG Portal jQuery scripts
       }
     }
     $('#reset').change(function() {
-      var checked;
+      var checked, ref3, ref4, ref5, ref6, ref7;
       checked = $(this).prop('checked');
       console.log('Reset is checked', checked);
       if (checked === true) {
         $('#newpasswords').hide();
         $('#newpassword').removeAttr('required');
         $('#confirmpassword').removeAttr('required');
-      }
-      if (checked === false) {
+        return (ref3 = $('#confirmpassword').get(0)) != null ? ref3.setCustomValidity('') : void 0;
+      } else {
         $('#newpasswords').show();
         $('#newpassword').attr('required', true);
-        return $('#confirmpassword').attr('required', true);
+        $('#confirmpassword').attr('required', true);
+        if (((ref4 = $('#confirmpassword').get(0)) != null ? ref4.value : void 0) === ((ref5 = $('#newpassword').get(0)) != null ? ref5.value : void 0)) {
+          return (ref6 = $('#confirmpassword').get(0)) != null ? ref6.setCustomValidity('') : void 0;
+        } else {
+          return (ref7 = $('#confirmpassword').get(0)) != null ? ref7.setCustomValidity(translate('PE34')) : void 0;
+        }
       }
     });
     $('#passwordfield').on('input', function() {
