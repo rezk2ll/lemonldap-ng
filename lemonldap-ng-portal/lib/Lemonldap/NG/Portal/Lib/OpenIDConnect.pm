@@ -1670,6 +1670,20 @@ sub returnBearerError {
     return $res;
 }
 
+sub invalidClientResponse {
+    my ( $self, $req ) = @_;
+    if ( $req->authorization ) {
+        my ($method) = $req->authorization =~ qw/^(\w+) /;
+        if ($method) {
+            $req->respHeaders( [ 'WWW-Authenticate' => $method ] );
+            return $self->sendOIDCError( $req, 'invalid_client', 401 );
+        }
+    }
+    else {
+        return $self->sendOIDCError( $req, 'invalid_client', 400 );
+    }
+}
+
 sub checkEndPointAuthenticationCredentials {
     my ( $self, $req ) = @_;
 

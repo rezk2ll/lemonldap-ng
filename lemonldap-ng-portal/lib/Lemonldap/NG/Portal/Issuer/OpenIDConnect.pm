@@ -1116,7 +1116,7 @@ sub token {
     $self->logger->debug("URL detected as an OpenID Connect TOKEN URL");
 
     my $rp = $self->checkEndPointAuthenticationCredentials($req);
-    return $self->sendOIDCError( $req, 'invalid_request', 400 ) unless ($rp);
+    return $self->invalidClientResponse($req) unless ($rp);
 
     my $grant_type = $req->param('grant_type') || '';
 
@@ -1176,7 +1176,7 @@ sub _handleClientCredentialsGrant {
     if ( $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsPublic} ) {
         $self->logger->error(
             "Client Credentials grant cannot be used on public clients");
-        return $self->sendOIDCError( $req, 'invalid_client', 400 );
+        return $self->sendOIDCError( $req, 'unauthorized_client', 400 );
     }
     my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
 
@@ -1892,7 +1892,7 @@ sub introspection {
     $self->logger->debug("URL detected as an OpenID Connect INTROSPECTION URL");
 
     my $rp = $self->checkEndPointAuthenticationCredentials($req);
-    return $self->sendOIDCError( $req, 'invalid_client', 401 ) unless ($rp);
+    return $self->invalidClientResponse($req) unless ($rp);
 
     if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
         ->{oidcRPMetaDataOptionsPublic} )

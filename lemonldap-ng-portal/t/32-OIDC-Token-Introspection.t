@@ -107,7 +107,23 @@ ok(
     "Try introspection without authentication"
 );
 
-expectReject($res);
+expectReject( $res, 400, 'invalid_client' );
+
+# Bad HTTP authorization
+ok(
+    $res = $op->_post(
+        "/oauth2/introspect",
+        IO::String->new($query),
+        accept => 'text/html',
+        length => length $query,
+        custom => {
+            HTTP_AUTHORIZATION => "Basic " . encode_base64("oauth:servic2e"),
+        },
+    ),
+    "Post introspection"
+);
+expectReject( $res, 401, 'invalid_client' );
+is( getHeader( $res, "WWW-Authenticate" ), "Basic" );
 
 ok(
     $res = $op->_post(
