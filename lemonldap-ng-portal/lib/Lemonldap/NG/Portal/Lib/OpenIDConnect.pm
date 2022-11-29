@@ -2217,7 +2217,7 @@ sub getCertInfo {
         my $hash = sha1($der);
         return {
             # Caution, x5c is B64, x5t is B64URL, this is not a mistake
-            x5c => encode_base64( $der, '' ),
+            x5c => [ encode_base64( $der, '' ) ],
             x5t => encode_base64url($hash),
         };
 
