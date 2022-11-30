@@ -103,6 +103,15 @@ sub run {
         my $tokenid     = $req->param("token");
         my $epoch       = time();
 
+     # Set default name if empty, check characters and truncate name if too long
+        unless ( $genericname =~ /^[\w]+$/ ) {
+            $self->userLogger->error('Generic 2F name with bad character(s)');
+            return $self->p->sendError( $req, 'badName', 200 );
+        }
+        $genericname =
+          substr( $genericname, 0, $self->conf->{max2FDevicesNameLength} );
+        $self->logger->debug("Generic 2F name: $genericname");
+
         # Verify code
         my $token = $self->ott->getToken( $tokenid, 1 );
 
