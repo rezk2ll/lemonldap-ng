@@ -2681,7 +2681,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type' => 'RSAPrivateKey'
         },
         'oidcServicePublicKeySig' => {
-            'type' => 'RSAPublicKey'
+            'type' => 'RSAPublicKeyOrCertificate'
         },
         'oidcStorage' => {
             'type' => 'PerlModule'

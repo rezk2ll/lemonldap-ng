@@ -8,8 +8,9 @@ package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 use strict;
 use Crypt::OpenSSL::Bignum;
 use Crypt::OpenSSL::RSA;
+use Crypt::OpenSSL::X509;
 use Digest::SHA
-  qw/hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64 sha256 sha384
+  qw/sha1 hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64 sha256 sha384
   sha512 sha256_base64 sha384_base64 sha512_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
@@ -1670,6 +1671,20 @@ sub returnBearerError {
     return $res;
 }
 
+sub invalidClientResponse {
+    my ( $self, $req ) = @_;
+    if ( $req->authorization ) {
+        my ($method) = $req->authorization =~ qw/^(\w+) /;
+        if ($method) {
+            $req->respHeaders( [ 'WWW-Authenticate' => $method ] );
+            return $self->sendOIDCError( $req, 'invalid_client', 401 );
+        }
+    }
+    else {
+        return $self->sendOIDCError( $req, 'invalid_client', 400 );
+    }
+}
+
 sub checkEndPointAuthenticationCredentials {
     my ( $self, $req ) = @_;
 
@@ -2180,13 +2195,36 @@ sub getIDTokenSub {
 sub key2jwks {
     my ( $self, $key ) = @_;
 
-    my $rsa_pub = Crypt::OpenSSL::RSA->new_public_key($key);
+    my $rsa_pub = Crypt::OpenSSL::RSA->new_private_key($key);
     my @params  = $rsa_pub->get_key_parameters();
 
     return {
         n => encode_base64url( $params[0]->to_bin(), "" ),
         e => encode_base64url( $params[1]->to_bin(), "" ),
     };
+}
+
+# Return X.509 data if public key is a certificate
+# @param key public key or certificate
+# @return HashRef of JWK attributes
+sub getCertInfo {
+    my ( $self, $key ) = @_;
+
+    if ( $key =~ /CERTIFICATE/ ) {
+        my $x509 = Crypt::OpenSSL::X509->new_from_string( $key,
+            Crypt::OpenSSL::X509::FORMAT_PEM );
+        my $der  = $x509->as_string(Crypt::OpenSSL::X509::FORMAT_ASN1);
+        my $hash = sha1($der);
+        return {
+            # Caution, x5c is B64, x5t is B64URL, this is not a mistake
+            x5c => [ encode_base64( $der, '' ) ],
+            x5t => encode_base64url($hash),
+        };
+
+    }
+    else {
+        return {};
+    }
 }
 
 # Build Logout Request URI

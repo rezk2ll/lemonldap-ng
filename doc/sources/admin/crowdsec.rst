@@ -13,6 +13,8 @@ requests or just provide an environment variable that can be used in
 another plugin rule. For example, a second factor may be required if user's
 IP is CrowdSec-banned.
 
+You can find **CrowdSec** agents in `CrowdSec hub <https://hub.crowdsec.net>`
+
 Configuration
 -------------
 

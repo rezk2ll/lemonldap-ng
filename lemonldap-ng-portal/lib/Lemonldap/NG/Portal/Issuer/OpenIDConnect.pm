@@ -1116,7 +1116,7 @@ sub token {
     $self->logger->debug("URL detected as an OpenID Connect TOKEN URL");
 
     my $rp = $self->checkEndPointAuthenticationCredentials($req);
-    return $self->sendOIDCError( $req, 'invalid_request', 400 ) unless ($rp);
+    return $self->invalidClientResponse($req) unless ($rp);
 
     my $grant_type = $req->param('grant_type') || '';
 
@@ -1176,7 +1176,7 @@ sub _handleClientCredentialsGrant {
     if ( $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsPublic} ) {
         $self->logger->error(
             "Client Credentials grant cannot be used on public clients");
-        return $self->sendOIDCError( $req, 'invalid_client', 400 );
+        return $self->sendOIDCError( $req, 'unauthorized_client', 400 );
     }
     my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
 
@@ -1892,7 +1892,7 @@ sub introspection {
     $self->logger->debug("URL detected as an OpenID Connect INTROSPECTION URL");
 
     my $rp = $self->checkEndPointAuthenticationCredentials($req);
-    return $self->sendOIDCError( $req, 'invalid_client', 401 ) unless ($rp);
+    return $self->invalidClientResponse($req) unless ($rp);
 
     if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
         ->{oidcRPMetaDataOptionsPublic} )
@@ -1943,14 +1943,18 @@ sub jwks {
 
     my $jwks = { keys => [] };
 
-    my $public_key_sig = $self->conf->{oidcServicePublicKeySig};
-    my $key_id_sig     = $self->conf->{oidcServiceKeyIdSig};
-    if ($public_key_sig) {
-        my $key = $self->key2jwks($public_key_sig);
-        $key->{kty} = "RSA";
-        $key->{use} = "sig";
-        $key->{kid} = $key_id_sig if $key_id_sig;
-        push @{ $jwks->{keys} }, $key;
+    my $public_key_sig_or_cert = $self->conf->{oidcServicePublicKeySig};
+    my $private_key_sig        = $self->conf->{oidcServicePrivateKeySig};
+    my $key_id_sig             = $self->conf->{oidcServiceKeyIdSig};
+    if ($private_key_sig) {
+        my $jwk = {
+            kty => "RSA",
+            use => "sig",
+            ( $key_id_sig ? ( kid => $key_id_sig ) : () ),
+            %{ $self->key2jwks($private_key_sig) },
+            %{ $self->getCertInfo($public_key_sig_or_cert) },
+        };
+        push @{ $jwks->{keys} }, $jwk;
     }
     $self->logger->debug("Send JWKS response sent");
     return $self->p->sendJSONresponse( $req, $jwks );

@@ -58,7 +58,7 @@ my $op = LLNG::Manager::Test->new( {
                 }
             },
             oidcServicePrivateKeySig => oidc_key_op_private_sig,
-            oidcServicePublicKeySig  => oidc_key_op_public_sig,
+            oidcServicePublicKeySig  => oidc_cert_op_public_sig,
             customPlugins            => 't::OidcHookPlugin',
         }
     }
