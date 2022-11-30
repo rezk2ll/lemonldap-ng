@@ -56,6 +56,8 @@ Security
    - Scopes declared in :ref:`Scope Rules <oidcscoperules>` (if they match the rule)
 
 
+.. _x5c:
+
 .. versionchanged:: 2.0.16
 
     In order to increase compatibility with some applications, LemonLDAP::NG

@@ -47,6 +47,7 @@ Applications
    applications/roundcube
    applications/salesforce
    applications/sap
+   applications/sharepoint
    applications/simplesamlphp
    applications/spring
    applications/symfony
@@ -135,6 +136,7 @@ Application                                                       Configuration 
 .. image:: applications/roundcube_logo.png                        :doc:`Roundcube<applications/roundcube>`             ✔
 .. image:: applications/salesforce-logo.jpg                       :doc:`SalesForce<applications/salesforce>`                                             ✔
 .. image:: applications/SAPLogo.gif                               :doc:`SAP<applications/sap>`                         ✔                                 ✔
+.. image:: applications/sharepoint.png                            :doc:`Sharepoint<applications/sharepoint>`                                                  ✔
 .. image:: applications/simplesamlphp_logo.png                    :doc:`simpleSAMLphp<applications/simplesamlphp>`                                       ✔
 .. image:: applications/spring_logo.png                           :doc:`Spring<applications/spring>`                   ✔
 .. image:: applications/symfony_logo.png                          :doc:`Symfony<applications/symfony>`                 ✔
