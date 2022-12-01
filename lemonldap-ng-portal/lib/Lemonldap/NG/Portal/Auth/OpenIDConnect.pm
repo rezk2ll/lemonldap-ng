@@ -66,9 +66,7 @@ sub init {
             name  => $name,
             title => $tooltip,
             icon  => $img_src,
-            order => $order,
-
-            #class => "openidconnect", #Usefull??
+            order => $order
         };
     }
     $self->addRouteFromConf(
