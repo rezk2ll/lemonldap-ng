@@ -147,6 +147,11 @@ function templates(tpl,key) {
             "title" : "casSrvMetaDataOptionsIcon"
          },
          {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsTooltip",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsTooltip",
+            "title" : "casSrvMetaDataOptionsTooltip"
+         },
+         {
             "default" : "",
             "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsResolutionRule",
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsResolutionRule",
@@ -370,6 +375,11 @@ function templates(tpl,key) {
             "title" : "oidcOPMetaDataOptionsIcon"
          },
          {
+            "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsTooltip",
+            "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsTooltip",
+            "title" : "oidcOPMetaDataOptionsTooltip"
+         },
+         {
             "default" : "",
             "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsResolutionRule",
             "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsResolutionRule",
@@ -444,6 +454,14 @@ function templates(tpl,key) {
       "help" : "idpopenidconnect.html#scope-rules",
       "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataScopeRules",
       "title" : "oidcRPMetaDataScopeRules",
+      "type" : "keyTextContainer"
+   },
+   {
+      "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
+      "default" : [],
+      "help" : "exportedvars.html#extend-variables-using-macros-and-groups",
+      "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
+      "title" : "oidcRPMetaDataMacros",
       "type" : "keyTextContainer"
    },
    {
@@ -754,14 +772,6 @@ function templates(tpl,key) {
       "help" : "idpopenidconnect.html#options",
       "id" : "oidcRPMetaDataOptions",
       "title" : "oidcRPMetaDataOptions"
-   },
-   {
-      "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
-      "default" : [],
-      "help" : "exportedvars.html#extend-variables-using-macros-and-groups",
-      "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
-      "title" : "oidcRPMetaDataMacros",
-      "type" : "keyTextContainer"
    },
    {
       "_nodes" : [
@@ -1119,6 +1129,11 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsIcon",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsIcon",
             "title" : "samlIDPMetaDataOptionsIcon"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsTooltip",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsTooltip",
+            "title" : "samlIDPMetaDataOptionsTooltip"
          },
          {
             "default" : "",

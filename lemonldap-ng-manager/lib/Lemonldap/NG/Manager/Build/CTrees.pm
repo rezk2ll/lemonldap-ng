@@ -96,6 +96,7 @@ sub cTrees {
                 nodes => [
                     "samlIDPMetaDataOptionsDisplayName",
                     "samlIDPMetaDataOptionsIcon",
+                    "samlIDPMetaDataOptionsTooltip",
                     'samlIDPMetaDataOptionsResolutionRule',
                     "samlIDPMetaDataOptionsSortNumber"
                 ]
@@ -185,6 +186,7 @@ sub cTrees {
                 nodes => [
                     'oidcOPMetaDataOptionsDisplayName',
                     'oidcOPMetaDataOptionsIcon',
+                    'oidcOPMetaDataOptionsTooltip',
                     'oidcOPMetaDataOptionsResolutionRule',
                     'oidcOPMetaDataOptionsSortNumber'
                 ]
@@ -194,6 +196,7 @@ sub cTrees {
             'oidcRPMetaDataExportedVars',
             'oidcRPMetaDataOptionsExtraClaims',
             'oidcRPMetaDataScopeRules',
+            'oidcRPMetaDataMacros',
             {
                 title => 'oidcRPMetaDataOptions',
                 help  => 'idpopenidconnect.html#options',
@@ -258,7 +261,6 @@ sub cTrees {
                     },
                 ]
             },
-            'oidcRPMetaDataMacros',
             {
                 title => 'oidcRPMetaDataOptionsDisplay',
                 form  => 'simpleInputContainer',
@@ -286,6 +288,7 @@ sub cTrees {
                 nodes => [
                     'casSrvMetaDataOptionsDisplayName',
                     'casSrvMetaDataOptionsIcon',
+                    'casSrvMetaDataOptionsTooltip',
                     'casSrvMetaDataOptionsResolutionRule',
                     'casSrvMetaDataOptionsSortNumber',
                 ]

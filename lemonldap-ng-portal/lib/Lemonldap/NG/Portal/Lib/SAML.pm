@@ -21,7 +21,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_SLO_ERROR
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
 # PROPERTIES
 
@@ -349,6 +349,8 @@ sub load_idp_metadata {
       $options->{samlIDPMetaDataOptionsDisplayName};
     $self->idpList->{$entityID}->{icon} =
       $options->{samlIDPMetaDataOptionsIcon};
+    $self->idpList->{$entityID}->{tooltip} =
+      $options->{samlIDPMetaDataOptionsTooltip};
     $self->idpList->{$entityID}->{order} =
       $options->{samlIDPMetaDataOptionsSortNumber};
 
