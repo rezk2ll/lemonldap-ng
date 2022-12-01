@@ -782,7 +782,7 @@
 "password2fLogo":"Logo",
 "password2fSelfRegistration":"Auto-registrazione",
 "password2fTTL":"Lifetime",
-"password2fUserCanRemoveKey":"Autorizza l'utente a rimuovere Password",
+"password2fUserCanRemoveKey":"Allow user to remove password",
 "passwordDB":"Modulo password",
 "passwordManagement":"Gestione password",
 "passwordPolicy":"Password policy",
