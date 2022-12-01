@@ -108,6 +108,59 @@ For each attribute, you can set:
 
 |image1|
 
+Session
+^^^^^^^
+
+-  **Adapt session lifetime**: Session lifetime will be adapted from
+   ``SessionNotOnOrAfter`` value found in authentication response. It
+   means that if the IDP propose to close session earlier than the
+   default LemonLDAP::NG timeout, the session \_utime will be modified
+   so that session is erased at the date indicated by the IDP.
+-  **Force UTF-8**: This will force UTF-8 conversion of attributes
+   values collected from IDP.
+-  **Store SAML Token**: Allows one to keep SAML token (assertion)
+   inside user session. Don't enable it unless you need to replay this
+   token on an application.
+-  **Attribute containing user identifier**: Set the value of SAML
+   attribute ("Name") that should be used as user main identifier
+   ($user). If empty, the NameID content is used.
+
+Signature
+^^^^^^^^^
+
+These options override service signature options (see
+:ref:`SAML service configuration<samlservice-general-options>`).
+
+-  **Signature method**: Signature method for requests sent to this provider
+-  **Sign SSO message**: Sign SSO message
+-  **Check SSO message signature**: Check SSO message signature
+-  **Sign SLO message**: Sign SLO message
+-  **Check SLO message signature**: Check SLO message signature
+
+Binding
+^^^^^^^
+
+-  **SSO binding**: Force binding to use for SSO (http-redirect,
+   http-post, etc.)
+-  **SLO binding**: Force binding to use for SLO (http-redirect,
+   http-post, etc.)
+
+
+.. note::
+
+    If no binding is defined, the default binding in IDP metadata
+    will be used.
+
+Security
+^^^^^^^^
+
+-  **Encryption mode**: Set the encryption mode for this IDP (None,
+   NameID or Assertion).
+-  **Check time conditions**: Set to Off to disable time conditions
+   checking on authentication responses.
+-  **Check audience conditions**: Set to Off to disable audience
+   conditions checking on authentication responses.
+
 Options
 ^^^^^^^
 
@@ -130,65 +183,14 @@ Authentication request
    level (see
    :ref:`how configure the mapping<samlservice-authentication-contexts>`),
    that you can check to allow or deny session creation.
--  **Allow URL as RelayState**: Set to On if the RelayState value sent
+-  **Allow URL as RelayState**: set to On if the RelayState value sent
    by IDP is the URL where the user must be redirected after
-   authentication.
+   authentication
+-  **Comment**: set a comment
 
-Session
-'''''''
-
--  **Adapt session lifetime**: Session lifetime will be adapted from
-   ``SessionNotOnOrAfter`` value found in authentication response. It
-   means that if the IDP propose to close session earlier than the
-   default LemonLDAP::NG timeout, the session \_utime will be modified
-   so that session is erased at the date indicated by the IDP.
--  **Force UTF-8**: This will force UTF-8 conversion of attributes
-   values collected from IDP.
--  **Store SAML Token**: Allows one to keep SAML token (assertion)
-   inside user session. Don't enable it unless you need to replay this
-   token on an application.
--  **Attribute containing user identifier**: Set the value of SAML
-   attribute ("Name") that should be used as user main identifier
-   ($user). If empty, the NameID content is used.
-
-Signature
-'''''''''
-
-These options override service signature options (see
-:ref:`SAML service configuration<samlservice-general-options>`).
-
--  **Signature method**: Signature method for requests sent to this provider
--  **Sign SSO message**: Sign SSO message
--  **Check SSO message signature**: Check SSO message signature
--  **Sign SLO message**: Sign SLO message
--  **Check SLO message signature**: Check SLO message signature
-
-Binding
-'''''''
-
--  **SSO binding**: Force binding to use for SSO (http-redirect,
-   http-post, etc.)
--  **SLO binding**: Force binding to use for SLO (http-redirect,
-   http-post, etc.)
-
-
-.. note::
-
-    If no binding is defined, the default binding in IDP metadata
-    will be used.
-
-Security
-''''''''
-
--  **Encryption mode**: Set the encryption mode for this IDP (None,
-   NameID or Assertion).
--  **Check time conditions**: Set to Off to disable time conditions
-   checking on authentication responses.
--  **Check audience conditions**: Set to Off to disable audience
-   conditions checking on authentication responses.
 
 Display
-'''''''
+^^^^^^^
 
 Used only if at least 2 SAML Identity Providers are declared
 

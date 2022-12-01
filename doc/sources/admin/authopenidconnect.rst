@@ -240,8 +240,11 @@ Protocol
 -  **Use nonce**: If enabled, a nonce will be sent, and verified from
    the ID Token
 
+Comment: Set a comment
+"""""""""""""""""""""""
+
 Display
-"""""""
+^^^^^^^
 
 Used only if at least 2 OIDC Providers are declared
 

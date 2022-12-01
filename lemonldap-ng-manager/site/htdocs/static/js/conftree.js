@@ -58,6 +58,12 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsRule",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsRule",
             "title" : "casAppMetaDataOptionsRule"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsComment",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsComment",
+            "title" : "casAppMetaDataOptionsComment",
+            "type" : "longtext"
          }
       ],
       "id" : "casAppMetaDataOptions",
@@ -128,6 +134,12 @@ function templates(tpl,key) {
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsGateway",
             "title" : "casSrvMetaDataOptionsGateway",
             "type" : "bool"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsComment",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsComment",
+            "title" : "casSrvMetaDataOptionsComment",
+            "type" : "longtext"
          }
       ],
       "id" : "casSrvMetaDataOptions",
@@ -357,6 +369,12 @@ function templates(tpl,key) {
             "id" : "oidcOPMetaDataOptionsProtocol",
             "title" : "oidcOPMetaDataOptionsProtocol",
             "type" : "simpleInputContainer"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsComment",
+            "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsComment",
+            "title" : "oidcOPMetaDataOptionsComment",
+            "type" : "longtext"
          }
       ],
       "id" : "oidcOPMetaDataOptions",
@@ -767,6 +785,12 @@ function templates(tpl,key) {
             "id" : "logout",
             "title" : "logout",
             "type" : "simpleInputContainer"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsComment",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsComment",
+            "title" : "oidcRPMetaDataOptionsComment",
+            "type" : "longtext"
          }
       ],
       "help" : "idpopenidconnect.html#options",
@@ -1111,6 +1135,12 @@ function templates(tpl,key) {
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsRelayStateURL",
             "title" : "samlIDPMetaDataOptionsRelayStateURL",
             "type" : "bool"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsComment",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsComment",
+            "title" : "samlIDPMetaDataOptionsComment",
+            "type" : "longtext"
          }
       ],
       "help" : "authsaml.html#options",
@@ -1371,6 +1401,12 @@ function templates(tpl,key) {
             "id" : "samlSPMetaDataOptionsSecurity",
             "title" : "samlSPMetaDataOptionsSecurity",
             "type" : "simpleInputContainer"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsComment",
+            "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsComment",
+            "title" : "samlSPMetaDataOptionsComment",
+            "type" : "longtext"
          }
       ],
       "help" : "idpsaml.html#options",

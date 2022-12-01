@@ -331,17 +331,14 @@ Options
 
 -  **Timeouts**
 
-   -  **Authorization Codes**: Expiration time of
+   -  **Authorization Codes** *(default: one minute)*: Expiration time of
       Authorization Codes, when using the Authorization Code flow.
-      Default value is one minute.
-   -  **ID Tokens**: Expiration time of ID Tokens. Default
-      value is one hour.
-   -  **Access Tokens**: Expiration time
-      of Access Tokens. Default value is one hour.
-   -  **Offline sessions**: Lifetime of the
+   -  **ID Tokens** *(default: one hour)*: Expiration time of ID Tokens.
+   -  **Access Tokens** *(default: one hour)*: Expiration time
+      of Access Tokens.
+   -  **Offline sessions** *(default: one month)*: Lifetime of the
       refresh token obtained with the **offline_access** scope.
-      Default value is one month. This parameter only applies if offline
-      sessions are enabled.
+      This parameter only applies if offline sessions are enabled.
 
 -  **Logout**
 
@@ -354,6 +351,7 @@ Options
       URLs that this client can redirect the user to once the logout is done
       (through ``post_logout_redirect_uri``)
 
+-  **Comment**: set a comment
 
 Display
 ^^^^^^^
@@ -372,6 +370,23 @@ When writing your access rules, you can additionally use the following variables
 * ``$_oidc_grant_type`` (since version ``2.0.14``): the grant type being used to
   access this service. Possible values: ``authorizationcode``,
   ``implicit``, ``hybrid``, ``clientcredentials``, ``password``
+
+The following attributes are made available in the created session:
+
+* The ``_whatToTrace`` attribute (main session identifier), is set to the
+  relying party's Client ID
+* The ``_scope`` attribute is set to the requested scopes
+* The ``_clientId`` attribute is set to the Client ID that obtained the access
+  token.
+* The ``_clientConfKey`` attribute is set to the LemonLDAP::NG configuration
+  key for the client that obtained the access token.
+
+The **Access Rule**, if defined, will have access to those variables, as well as
+the `@ENV` array. You can use it to restrict the use of this grant to
+pre-determined scopes, a particular IP address, etc.
+
+These session attributes will be released on the UserInfo endpoint if they are
+mapped to **Exported Attributes** and **Extra Claims**.
 
 .. _resource-owner-password-grant:
 
@@ -394,23 +409,6 @@ Client Credentials Grant
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Client Credentials Grant allows you to obtain an Access Token using only a Relying Party's Client ID and Client Secret.
-
-The following attributes are made available in the created session:
-
-* The ``_whatToTrace`` attribute (main session identifier), is set to the
-  relying party's Client ID
-* The ``_scope`` attribute is set to the requested scopes
-* The ``_clientId`` attribute is set to the Client ID that obtained the access
-  token.
-* The ``_clientConfKey`` attribute is set to the LemonLDAP::NG configuration
-  key for the client that obtained the access token.
-
-The **Access Rule**, if defined, will have access to those variables, as well as
-the `@ENV` array. You can use it to restrict the use of this grant to
-pre-determined scopes, a particular IP address, etc.
-
-These session attributes will be released on the UserInfo endpoint if they are
-mapped to **Exported Attributes** and **Extra Claims**.
 
 .. seealso::
 

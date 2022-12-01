@@ -748,6 +748,9 @@ sub attributes {
         'casAppMetaDataOptionsAuthnLevel' => {
             'type' => 'int'
         },
+        'casAppMetaDataOptionsComment' => {
+            'type' => 'longtext'
+        },
         'casAppMetaDataOptionsRule' => {
             'test' => sub {
                 return perlExpr(@_);
@@ -783,6 +786,9 @@ sub attributes {
         },
         'casSrvMetaDataOptions' => {
             'type' => 'subContainer'
+        },
+        'casSrvMetaDataOptionsComment' => {
+            'type' => 'longtext'
         },
         'casSrvMetaDataOptionsDisplayName' => {
             'type' => 'text'
@@ -2247,6 +2253,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcOPMetaDataOptionsClientSecret' => {
             'type' => 'password'
         },
+        'oidcOPMetaDataOptionsComment' => {
+            'type' => 'longtext'
+        },
         'oidcOPMetaDataOptionsConfigurationURI' => {
             'type' => 'url'
         },
@@ -2423,6 +2432,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'oidcRPMetaDataOptionsClientSecret' => {
             'type' => 'password'
+        },
+        'oidcRPMetaDataOptionsComment' => {
+            'type' => 'longtext'
         },
         'oidcRPMetaDataOptionsDisplayName' => {
             'type' => 'text'
@@ -3453,6 +3465,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 1,
             'type'    => 'bool'
         },
+        'samlIDPMetaDataOptionsComment' => {
+            'type' => 'longtext'
+        },
         'samlIDPMetaDataOptionsDisplayName' => {
             'type' => 'text'
         },
@@ -3846,6 +3861,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'samlSPMetaDataOptionsCheckSSOMessageSignature' => {
             'default' => 1,
             'type'    => 'bool'
+        },
+        'samlSPMetaDataOptionsComment' => {
+            'type' => 'longtext'
         },
         'samlSPMetaDataOptionsEnableIDPInitiatedURL' => {
             'default' => 0,

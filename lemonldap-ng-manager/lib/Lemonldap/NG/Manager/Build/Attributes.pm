@@ -1953,7 +1953,8 @@ sub attributes {
         password2fUserCanRemoveKey => {
             type          => 'bool',
             default       => 1,
-            documentation => 'Authorize users to remove existing Password2F secret',
+            documentation =>
+              'Authorize users to remove existing Password2F secret',
         },
         password2fTTL => {
             type          => 'int',
@@ -2683,23 +2684,27 @@ sub attributes {
             default       => { cn => 'cn', mail => 'mail', uid => 'uid', },
             documentation => 'CAS exported variables',
         },
-        casAppMetaDataOptionsService => {
-            type          => 'text',
-            documentation => 'CAS App service',
-        },
-        casAppMetaDataOptionsUserAttribute => {
-            type          => 'text',
-            documentation => 'CAS User attribute',
-        },
         casAppMetaDataOptionsAuthnLevel => {
             type          => 'int',
             documentation =>
               'Authentication level requires to access to this CAS application',
         },
+        casAppMetaDataOptionsComment => {
+            type          => 'longtext',
+            documentation => 'Comment for this CAS application',
+        },
         casAppMetaDataOptionsRule => {
             type          => 'text',
             test          => sub { return perlExpr(@_) },
-            documentation => 'CAS App rule',
+            documentation => 'CAS application rule',
+        },
+        casAppMetaDataOptionsService => {
+            type          => 'text',
+            documentation => 'CAS application service',
+        },
+        casAppMetaDataOptionsUserAttribute => {
+            type          => 'text',
+            documentation => 'CAS User attribute',
         },
         casAppMetaDataMacros => {
             type => 'keyTextContainer',
@@ -3104,6 +3109,13 @@ sub attributes {
             type    => 'bool',
             default => 0,
         },
+        samlIDPMetaDataOptionsCheckSSOMessageSignature => {
+            type    => 'bool',
+            default => 1,
+        },
+        samlIDPMetaDataOptionsComment => {
+            type => 'longtext'
+        },
         samlIDPMetaDataOptionsForceUTF8 => {
             type    => 'bool',
             default => 0,
@@ -3111,10 +3123,6 @@ sub attributes {
         samlIDPMetaDataOptionsSignSSOMessage => {
             type    => 'trool',
             default => -1,
-        },
-        samlIDPMetaDataOptionsCheckSSOMessageSignature => {
-            type    => 'bool',
-            default => 1,
         },
         samlIDPMetaDataOptionsSignSLOMessage => {
             type    => 'trool',
@@ -3255,6 +3263,9 @@ sub attributes {
               . '#PORTAL#/saml/artifact',
             documentation => 'SAML SP artifact resolution service ',
         },
+        samlSPMetaDataOptionsComment => {
+            type => 'longtext'
+        },
         samlSPMetaDataOptionsNameIDFormat => {
             type   => 'select',
             select => [
@@ -3271,16 +3282,16 @@ sub attributes {
             ],
             default => '',
         },
-        samlSPMetaDataOptionsNameIDSessionKey => { type => 'text', },
-        samlSPMetaDataOptionsOneTimeUse       => {
+        samlSPMetaDataOptionsNameIDSessionKey    => { type => 'text' },
+        samlSPMetaDataOptionsNotOnOrAfterTimeout => {
+            type    => 'int',
+            default => 72000,
+        },
+        samlSPMetaDataOptionsOneTimeUse => {
             type    => 'bool',
             default => 0,
         },
         samlSPMetaDataOptionsSessionNotOnOrAfterTimeout => {
-            type    => 'int',
-            default => 72000,
-        },
-        samlSPMetaDataOptionsNotOnOrAfterTimeout => {
             type    => 'int',
             default => 72000,
         },
@@ -3768,17 +3779,17 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             test    => $url,
             msgFail => '__badUrl__',
         },
+        casSrvMetaDataOptionsComment => {
+            type          => 'longtext',
+            documentation => 'Comment for this CAS server',
+        },
         casSrvMetaDataOptionsDisplayName => {
             type          => 'text',
-            documentation => 'Name to display for CAS server',
+            documentation => 'Name to display for this CAS server',
         },
         casSrvMetaDataOptionsIcon => {
             type          => 'text',
-            documentation => 'Path of CAS Server Icon',
-        },
-        casSrvMetaDataOptionsTooltip => {
-            type          => 'text',
-            documentation => 'Tooltip of CAS Server',
+            documentation => 'Path of CAS server icon',
         },
         casSrvMetaDataOptionsSortNumber => {
             type          => 'int',
@@ -3787,6 +3798,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         casSrvMetaDataOptionsResolutionRule => {
             type    => 'longtext',
             default => '',
+        },
+        casSrvMetaDataOptionsTooltip => {
+            type          => 'text',
+            documentation => 'Tooltip for this CAS Server',
         },
 
         # Fake attribute: used by manager REST API to agglomerate all nodes
@@ -4485,9 +4500,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataOptionsUseNonce      => { type => 'bool', default => 1 },
         oidcOPMetaDataOptionsDisplayName   => { type => 'text', },
         oidcOPMetaDataOptionsIcon          => { type => 'text', },
-        oidcOPMetaDataOptionsTooltip       => { type => 'text', },
         oidcOPMetaDataOptionsStoreIDToken  => { type => 'bool', default => 0 },
         oidcOPMetaDataOptionsSortNumber    => { type => 'int', },
+        oidcOPMetaDataOptionsTooltip       => { type => 'text', },
+        oidcOPMetaDataOptionsComment       => { type => 'longtext', },
         oidcOPMetaDataOptionsResolutionRule => {
             type    => 'longtext',
             default => '',
@@ -4555,9 +4571,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsAdditionalAudiences         => { type => 'text' },
         oidcRPMetaDataOptionsAccessTokenExpiration       => { type => 'int' },
         oidcRPMetaDataOptionsAuthorizationCodeExpiration => { type => 'int' },
-        oidcRPMetaDataOptionsOfflineSessionExpiration    => { type => 'int' },
-        oidcRPMetaDataOptionsRedirectUris                => { type => 'text', },
-        oidcRPMetaDataOptionsExtraClaims                 => {
+        oidcRPMetaDataOptionsComment                  => { type => 'longtext' },
+        oidcRPMetaDataOptionsOfflineSessionExpiration => { type => 'int' },
+        oidcRPMetaDataOptionsRedirectUris             => { type => 'text', },
+        oidcRPMetaDataOptionsExtraClaims              => {
             type    => 'keyTextContainer',
             keyTest => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
             default => {},

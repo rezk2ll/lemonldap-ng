@@ -109,14 +109,15 @@ list.
 Options
 ^^^^^^^
 
--  **Service URL** : the service (user-facing) URL of the CAS-enabled
+-  **Service URL**: the service (user-facing) URL of the CAS-enabled
    application. See :ref:`idpcas-url-matching`
--  **User attribute** : session field that will be used as main
+-  **User attribute**: session field that will be used as main
    identifier.
--  **Authentication Level** : required authentication level to access this
+-  **Authentication Level**: required authentication level to access this
    application
--  **Rule** : The access control rule to enforce on this application. If
+-  **Access rule**: access rule to enforce on this application. If
    left blank, access will be allowed for everyone.
+-  **Comment**: set a comment
 
 
 .. attention::

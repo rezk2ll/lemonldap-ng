@@ -10,7 +10,7 @@
 #
 # All other ideas have to be set in Manager/Build/Attributes.pm !
 
-# DON'T FORGET TO RUN "make json" AFTER EACH CHANGE
+# DON'T FORGET TO RUN 'make json' AFTER EACH CHANGE
 
 package Lemonldap::NG::Manager::Build::CTrees;
 
@@ -40,41 +40,41 @@ sub cTrees {
             'samlIDPMetaDataExportedAttributes',
 
             {
-                title => "samlIDPMetaDataOptionsSession",
+                title => 'samlIDPMetaDataOptionsSession',
                 form  => 'simpleInputContainer',
                 nodes => [
-                    "samlIDPMetaDataOptionsAdaptSessionUtime",
-                    "samlIDPMetaDataOptionsForceUTF8",
-                    "samlIDPMetaDataOptionsStoreSAMLToken",
-                    "samlIDPMetaDataOptionsUserAttribute"
+                    'samlIDPMetaDataOptionsAdaptSessionUtime',
+                    'samlIDPMetaDataOptionsForceUTF8',
+                    'samlIDPMetaDataOptionsStoreSAMLToken',
+                    'samlIDPMetaDataOptionsUserAttribute'
                 ]
             },
             {
-                title => "samlIDPMetaDataOptionsSignature",
+                title => 'samlIDPMetaDataOptionsSignature',
                 form  => 'simpleInputContainer',
                 nodes => [
-                    "samlIDPMetaDataOptionsSignatureMethod",
-                    "samlIDPMetaDataOptionsSignSSOMessage",
-                    "samlIDPMetaDataOptionsCheckSSOMessageSignature",
-                    "samlIDPMetaDataOptionsSignSLOMessage",
-                    "samlIDPMetaDataOptionsCheckSLOMessageSignature"
+                    'samlIDPMetaDataOptionsSignatureMethod',
+                    'samlIDPMetaDataOptionsSignSSOMessage',
+                    'samlIDPMetaDataOptionsCheckSSOMessageSignature',
+                    'samlIDPMetaDataOptionsSignSLOMessage',
+                    'samlIDPMetaDataOptionsCheckSLOMessageSignature'
                 ]
             },
             {
-                title => "samlIDPMetaDataOptionsBinding",
+                title => 'samlIDPMetaDataOptionsBinding',
                 form  => 'simpleInputContainer',
                 nodes => [
-                    "samlIDPMetaDataOptionsSSOBinding",
-                    "samlIDPMetaDataOptionsSLOBinding"
+                    'samlIDPMetaDataOptionsSSOBinding',
+                    'samlIDPMetaDataOptionsSLOBinding'
                 ]
             },
             {
-                title => "samlIDPMetaDataOptionsSecurity",
+                title => 'samlIDPMetaDataOptionsSecurity',
                 form  => 'simpleInputContainer',
                 nodes => [
-                    "samlIDPMetaDataOptionsEncryptionMode",
-                    "samlIDPMetaDataOptionsCheckTime",
-                    "samlIDPMetaDataOptionsCheckAudience"
+                    'samlIDPMetaDataOptionsEncryptionMode',
+                    'samlIDPMetaDataOptionsCheckTime',
+                    'samlIDPMetaDataOptionsCheckAudience'
                 ]
             },
             {
@@ -88,62 +88,64 @@ sub cTrees {
                     'samlIDPMetaDataOptionsAllowLoginFromIDP',
                     'samlIDPMetaDataOptionsRequestedAuthnContext',
                     'samlIDPMetaDataOptionsRelayStateURL',
+                    'samlIDPMetaDataOptionsComment'
                 ],
             },
             {
-                title => "samlIDPMetaDataOptionsDisplay",
+                title => 'samlIDPMetaDataOptionsDisplay',
                 form  => 'simpleInputContainer',
                 nodes => [
-                    "samlIDPMetaDataOptionsDisplayName",
-                    "samlIDPMetaDataOptionsIcon",
-                    "samlIDPMetaDataOptionsTooltip",
+                    'samlIDPMetaDataOptionsDisplayName',
+                    'samlIDPMetaDataOptionsIcon',
+                    'samlIDPMetaDataOptionsTooltip',
                     'samlIDPMetaDataOptionsResolutionRule',
-                    "samlIDPMetaDataOptionsSortNumber"
+                    'samlIDPMetaDataOptionsSortNumber'
                 ]
             }
         ],
         samlSPMetaDataNode => [
-            "samlSPMetaDataXML",
-            "samlSPMetaDataExportedAttributes",
+            'samlSPMetaDataXML',
+            'samlSPMetaDataExportedAttributes',
             {
-                title => "samlSPMetaDataOptions",
+                title => 'samlSPMetaDataOptions',
                 help  => 'idpsaml.html#options',
                 nodes => [ {
-                        title => "samlSPMetaDataOptionsAuthnResponse",
+                        title => 'samlSPMetaDataOptionsAuthnResponse',
                         form  => 'simpleInputContainer',
                         nodes => [
-                            "samlSPMetaDataOptionsNameIDFormat",
-                            "samlSPMetaDataOptionsNameIDSessionKey",
-                            "samlSPMetaDataOptionsOneTimeUse",
-                            "samlSPMetaDataOptionsSessionNotOnOrAfterTimeout",
-                            "samlSPMetaDataOptionsNotOnOrAfterTimeout",
-                            "samlSPMetaDataOptionsForceUTF8"
+                            'samlSPMetaDataOptionsNameIDFormat',
+                            'samlSPMetaDataOptionsNameIDSessionKey',
+                            'samlSPMetaDataOptionsOneTimeUse',
+                            'samlSPMetaDataOptionsSessionNotOnOrAfterTimeout',
+                            'samlSPMetaDataOptionsNotOnOrAfterTimeout',
+                            'samlSPMetaDataOptionsForceUTF8'
                         ]
                     },
                     {
-                        title => "samlSPMetaDataOptionsSignature",
+                        title => 'samlSPMetaDataOptionsSignature',
                         form  => 'simpleInputContainer',
                         nodes => [
-                            "samlSPMetaDataOptionsSignatureMethod",
-                            "samlSPMetaDataOptionsSignSSOMessage",
-                            "samlSPMetaDataOptionsCheckSSOMessageSignature",
-                            "samlSPMetaDataOptionsSignSLOMessage",
-                            "samlSPMetaDataOptionsCheckSLOMessageSignature",
+                            'samlSPMetaDataOptionsSignatureMethod',
+                            'samlSPMetaDataOptionsSignSSOMessage',
+                            'samlSPMetaDataOptionsCheckSSOMessageSignature',
+                            'samlSPMetaDataOptionsSignSLOMessage',
+                            'samlSPMetaDataOptionsCheckSLOMessageSignature',
                         ]
                     },
                     {
-                        title => "samlSPMetaDataOptionsSecurity",
+                        title => 'samlSPMetaDataOptionsSecurity',
                         form  => 'simpleInputContainer',
                         nodes => [
-                            "samlSPMetaDataOptionsEncryptionMode",
-                            "samlSPMetaDataOptionsEnableIDPInitiatedURL",
-                            "samlSPMetaDataOptionsAuthnLevel",
-                            "samlSPMetaDataOptionsRule",
+                            'samlSPMetaDataOptionsEncryptionMode',
+                            'samlSPMetaDataOptionsEnableIDPInitiatedURL',
+                            'samlSPMetaDataOptionsAuthnLevel',
+                            'samlSPMetaDataOptionsRule',
                         ]
-                    }
+                    },
+                    'samlSPMetaDataOptionsComment'
                 ]
             },
-            "samlSPMetaDataMacros",
+            'samlSPMetaDataMacros',
         ],
         oidcOPMetaDataNode => [
             'oidcOPMetaDataJSON',
@@ -178,6 +180,7 @@ sub cTrees {
                             'oidcOPMetaDataOptionsUseNonce'
                         ]
                     },
+                'oidcOPMetaDataOptionsComment'
                 ]
             },
             {
@@ -207,7 +210,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsPublic',
                             'oidcRPMetaDataOptionsClientID',
                             'oidcRPMetaDataOptionsClientSecret',
-                            'oidcRPMetaDataOptionsRedirectUris',
+                            'oidcRPMetaDataOptionsRedirectUris'
                         ]
                     },
                     {
@@ -259,6 +262,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsPostLogoutRedirectUris',
                         ]
                     },
+                    'oidcRPMetaDataOptionsComment'
                 ]
             },
             {
@@ -280,6 +284,7 @@ sub cTrees {
                     'casSrvMetaDataOptionsUrl',
                     'casSrvMetaDataOptionsRenew',
                     'casSrvMetaDataOptionsGateway',
+                    'casSrvMetaDataOptionsComment'
                 ]
             },
             {
@@ -290,7 +295,7 @@ sub cTrees {
                     'casSrvMetaDataOptionsIcon',
                     'casSrvMetaDataOptionsTooltip',
                     'casSrvMetaDataOptionsResolutionRule',
-                    'casSrvMetaDataOptionsSortNumber',
+                    'casSrvMetaDataOptionsSortNumber'
                 ]
             },
         ],
@@ -303,7 +308,8 @@ sub cTrees {
                     'casAppMetaDataOptionsService',
                     'casAppMetaDataOptionsUserAttribute',
                     'casAppMetaDataOptionsAuthnLevel',
-                    'casAppMetaDataOptionsRule'
+                    'casAppMetaDataOptionsRule',
+                    'casAppMetaDataOptionsComment',
                 ]
             },
             'casAppMetaDataMacros',

@@ -40,18 +40,20 @@ Configuration
 In Manager, go in ``General Parameters`` > ``Authentication modules``
 and choose CAS for authentication.
 
-
 .. tip::
 
     You can then choose any other module for users and
     password.
 
+Then, go in ``CAS parameters``:
+
+-  **Authentication level**: Authentication level for this module
 
 .. attention::
 
-    Browser implementations of formAction directive are
-    inconsistent (e.g. Firefox doesn't block the redirects whereas Chrome
-    does). Administrators may have to modify formAction value with wildcard
+    Browser implementations of formAction directive are inconsistent
+    (e.g. Firefox doesn't block the redirects whereas Chrome does).
+    Administrators may have to modify formAction value with wildcard
     likes \*.
 
     In Manager, go in :
@@ -59,20 +61,16 @@ and choose CAS for authentication.
     ``General Parameters`` > ``Advanced Parameters`` > ``Security`` >
     ``Content Security Policy`` > ``Form destination``
 
-Then, go in ``CAS parameters``:
 
--  **Authentication level**: Authentication level for this module.
+Then create CAS servers in the Manager.
 
-Then create the list of CAS servers in the manager.
+Exported Attributes
+~~~~~~~~~~~~~~~~~~~
 
-Options
-~~~~~~~
-
--  **Server URL** *(required)*: CAS server URL (must use https://)
--  **Renew authentication** *(default: disabled)*: Force authentication
-   renewal on CAS server
--  **Gateways authentication** *(default: disabled)*: Force transparent
-   authentication on CAS server
+The attributes defined here will completely replace any attributes you
+may have declared in the global ``CAS Service`` configuration. In order
+to re-use the global configuration, simply set this section to an empty
+list.
 
 Proxied services
 ~~~~~~~~~~~~~~~~
@@ -82,6 +80,17 @@ requested:
 
 -  **Key**: Service ID
 -  **Value**: Service URL (CAS service identifier)
+
+
+Options
+~~~~~~~
+
+-  **Server URL** *(required)*: CAS server URL (must use \https://)
+-  **Renew authentication** *(default: disabled)*: Force authentication
+   renewal on CAS server
+-  **Gateways authentication** *(default: disabled)*: Force transparent
+   authentication on CAS server
+-  **Comment**: set a comment
 
 Display
 ~~~~~~~
@@ -95,8 +104,7 @@ Used only if at least 2 CAS servers are declared
    a user. You have access to all environment variable *(like user IP address)*
    and all session keys
 
-For example, to preselect this server for users coming from 129.168.0.0/16
-network
+For example, to preselect this server for users coming from 129.168.0.0/16 network
 
 ::
 
