@@ -2236,9 +2236,9 @@ sub getCertInfo {
 sub buildLogoutRequest {
     my ( $self, $redirect_uri, @args ) = @_;
 
-    my @tab = (qw(id_token_hint post_logout_redirect_uri state));
+    my @tab = (qw(id_token_hint post_logout_redirect_uri state client_id));
     my @prms;
-    for ( my $i = 0 ; $i < 3 ; $i++ ) {
+    for ( my $i = 0 ; $i < @tab ; $i++ ) {
         push @prms, $tab[$i], $args[$i]
           if defined( $args[$i] );
     }

@@ -353,12 +353,16 @@ sub authLogout {
     my $endsession_endpoint =
       $self->oidcOPList->{$op}->{conf}->{end_session_endpoint};
 
+    my $client_id =
+      $self->conf->{oidcOPMetaDataOptions}->{$op}
+      ->{oidcOPMetaDataOptionsClientID};
+
     if ($endsession_endpoint) {
         my $logout_url = $self->conf->{portal} . '?logout=1';
         $req->urldc(
             $self->buildLogoutRequest(
                 $endsession_endpoint, $req->{sessionInfo}->{_oidc_id_token},
-                $logout_url
+                $logout_url, undef, $client_id,
             )
         );
 
