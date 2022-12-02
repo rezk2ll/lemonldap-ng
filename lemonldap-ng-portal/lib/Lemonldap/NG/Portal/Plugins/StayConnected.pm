@@ -134,6 +134,10 @@ sub storeBrowser {
                         );
                         $req->sessionInfo->{_loginHistory} = $tmp->{history}
                           if exists $tmp->{history};
+
+                        # Store connection ID in current session
+                        $self->p->updateSession( $req,
+                            { _stayConnectedSession => $ps->id } );
                     }
                     else {
                         $self->logger->warn(
@@ -189,31 +193,13 @@ sub check {
                         $req->data->{dataKeep} = $ps->data->{dataKeep};
                         $self->logger->debug('Persistent connection found');
                         if ( $self->conf->{stayConnectedBypassFG} ) {
-                            $req->user($uid);
-                            my @steps =
-                              grep {
-                                ref $_
-                                  or $_ !~ /^(?:extractFormInfo|authenticate)$/
-                              } @{ $req->steps };
-                            $req->steps( \@steps );
-                            $self->userLogger->notice(
-"$uid connected by StayConnected cookie without fingerprint checking"
-                            );
-                            return PE_OK;
+                            return $self->skipAuthentication( $req, $uid, $cid,
+                                0 );
                         }
                         else {
                             if ( $fg eq $ps->data->{fingerprint} ) {
-                                $req->user($uid);
-                                my @steps =
-                                  grep {
-                                    ref $_
-                                      or $_ !~
-                                      /^(?:extractFormInfo|authenticate)$/
-                                  } @{ $req->steps };
-                                $req->steps( \@steps );
-                                $self->userLogger->notice(
-                                    "$uid connected by StayConnected cookie");
-                                return PE_OK;
+                                return $self->skipAuthentication( $req, $uid,
+                                    $cid, 1 );
                             }
                             else {
                                 $self->userLogger->warn(
@@ -272,6 +258,36 @@ sub logout {
             secure  => $self->conf->{securedCookie},
         )
     );
+
+    # Try to clean stayconnected cookie
+    my $cid = $req->sessionInfo->{_stayConnectedSession};
+    if ($cid) {
+        my $ps = Lemonldap::NG::Common::Session->new(
+            storageModule        => $self->conf->{globalStorage},
+            storageModuleOptions => $self->conf->{globalStorageOptions},
+            kind                 => "SSO",
+            id                   => $cid,
+        );
+        if ($ps) {
+            $self->logger->debug("Cleaning up Stay Connected session $cid");
+            $ps->remove;
+        }
+    }
+
+    return PE_OK;
+}
+
+# Remove authentication steps from the login flow
+sub skipAuthentication {
+    my ( $self, $req, $uid, $cid, $fp ) = @_;
+    $req->user($uid);
+    $req->sessionInfo->{_stayConnectedSession} = $cid;
+    my @steps =
+      grep { ref $_ or $_ !~ /^(?:extractFormInfo|authenticate)$/ }
+      @{ $req->steps };
+    $req->steps( \@steps );
+    $self->userLogger->notice( "$uid connected by StayConnected cookie"
+          . ( $fp ? "" : " without fingerprint checking" ) );
     return PE_OK;
 }
 
