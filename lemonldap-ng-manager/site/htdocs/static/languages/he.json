@@ -1157,6 +1157,7 @@
 "stayConnected":"הפעלה",
 "stayConnectedBypassFG":"Do not check fingerprint",
 "stayConnectedCookieName":"שם עוגיה",
+"stayConnectedSingleSession":"הפעלה אחת למשתמש",
 "stayConnectedTimeout":"Expiration time",
 "storePassword":"Store user password in session",
 "strictTransportSecurityMax_Age":"Strict-Transport-Security max age",

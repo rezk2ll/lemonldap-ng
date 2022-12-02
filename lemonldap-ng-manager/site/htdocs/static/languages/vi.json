@@ -1157,6 +1157,7 @@
 "stayConnected":"Kích hoạt",
 "stayConnectedBypassFG":"Do not check fingerprint",
 "stayConnectedCookieName":"Tên cookie",
+"stayConnectedSingleSession":"One session per user",
 "stayConnectedTimeout":"Expiration time",
 "storePassword":"Lưu trữ mật khẩu người dùng trong các dữ liệu phiên",
 "strictTransportSecurityMax_Age":"Strict-Transport-Security max age",

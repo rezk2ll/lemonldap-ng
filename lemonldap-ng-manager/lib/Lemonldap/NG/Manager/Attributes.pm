@@ -4323,6 +4323,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'test'    => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
             'type'    => 'text'
         },
+        'stayConnectedSingleSession' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'stayConnectedTimeout' => {
             'default' => 2592000,
             'type'    => 'int'

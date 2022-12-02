@@ -701,7 +701,8 @@ sub tree {
                                 'stayConnected',
                                 'stayConnectedBypassFG',
                                 'stayConnectedTimeout',
-                                'stayConnectedCookieName'
+                                'stayConnectedCookieName',
+                                'stayConnectedSingleSession',
                             ],
                         },
                         {

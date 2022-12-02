@@ -502,6 +502,11 @@ sub attributes {
             documentation => 'Name of the stayConnected plugin cookie',
             flags         => 'p',
         },
+        stayConnectedSingleSession => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Allow only one permanent session per user',
+        },
         checkState => {
             type          => 'bool',
             default       => 0,

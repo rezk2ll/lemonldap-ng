@@ -1157,6 +1157,7 @@
 "stayConnected":"啟用",
 "stayConnectedBypassFG":"Do not check fingerprint",
 "stayConnectedCookieName":"Cookie 名稱",
+"stayConnectedSingleSession":"每個使用者一個工作階段",
 "stayConnectedTimeout":"過期名稱",
 "storePassword":"在工作階段中儲存使用者密碼",
 "strictTransportSecurityMax_Age":"Strict-Transport-Security max age",

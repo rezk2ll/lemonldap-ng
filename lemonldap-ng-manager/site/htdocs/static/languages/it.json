@@ -1157,6 +1157,7 @@
 "stayConnected":"Attivazione",
 "stayConnectedBypassFG":"Do not check fingerprint",
 "stayConnectedCookieName":"Nome del cookie",
+"stayConnectedSingleSession":"One session per user",
 "stayConnectedTimeout":"Expiration time",
 "storePassword":"Memorizzare la password dell'utente nei dati di sessione",
 "strictTransportSecurityMax_Age":"Strict-Transport-Security max age",

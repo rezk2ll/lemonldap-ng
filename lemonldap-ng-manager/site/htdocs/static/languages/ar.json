@@ -1157,6 +1157,7 @@
 "stayConnected":"تفعيل",
 "stayConnectedBypassFG":"Do not check fingerprint",
 "stayConnectedCookieName":"اسم ملف تعريف الارتباط",
+"stayConnectedSingleSession":"One session per user",
 "stayConnectedTimeout":"Expiration time",
 "storePassword":"تخزين كلمة مرور المستخدم في بيانات الجلسة",
 "strictTransportSecurityMax_Age":"Strict-Transport-Security max age",

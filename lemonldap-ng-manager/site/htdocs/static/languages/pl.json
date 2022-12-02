@@ -1157,6 +1157,7 @@
 "stayConnected":"Aktywacja",
 "stayConnectedBypassFG":"Nie sprawdzaj odcisku palca",
 "stayConnectedCookieName":"Nazwa ciasteczka",
+"stayConnectedSingleSession":"Jedna sesja na użytkownika",
 "stayConnectedTimeout":"Data ważności",
 "storePassword":"Przechowuj hasło użytkownika w sesji",
 "strictTransportSecurityMax_Age":"Maksymalny wiek ścisłego bezpieczeństwa transportu",

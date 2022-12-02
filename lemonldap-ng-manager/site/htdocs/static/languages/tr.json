@@ -1157,6 +1157,7 @@
 "stayConnected":"Aktivasyon",
 "stayConnectedBypassFG":"Parmak izini kontrol etme",
 "stayConnectedCookieName":"Çerez adı",
+"stayConnectedSingleSession":"Her kullanıcı için bir oturum",
 "stayConnectedTimeout":"Son kullanma süresi",
 "storePassword":"Kullanıcı parolasını oturumda sakla",
 "strictTransportSecurityMax_Age":"Sıkı Taşıma Güvenliği maksimum yıl",

@@ -15,6 +15,8 @@ Just enable it in the manager (section “plugins”).
    -  **Do not check fingerprint**: Enable/Disable browser fingerprint checking 
    -  **Expiration time**: Persistent session connection and cookie timeout
    -  **Cookie name**: Persistent connection cookie name
+   -  **One session per user**: Allow only one persistent connection per user.
+      New persistent connections will disable the old ones.
 
 .. tip::
 
