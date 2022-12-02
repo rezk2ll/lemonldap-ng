@@ -11,7 +11,10 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 our $VERSION = '2.0.14';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin';
+extends qw(
+  Lemonldap::NG::Portal::Main::Plugin
+  Lemonldap::NG::Portal::Lib::OtherSessions
+);
 
 # INTERFACE
 
@@ -36,6 +39,13 @@ has cookieName => (
     lazy    => 1,
     default => sub {
         $_[0]->conf->{stayConnectedCookieName} || 'llngconnection';
+    }
+);
+has singleSession => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        $_[0]->conf->{stayConnectedSingleSession};
     }
 );
 
@@ -109,12 +119,7 @@ sub storeBrowser {
                 my $uid = $req->userData->{ $self->conf->{whatToTrace} };
                 if ( $tmp->{name} eq $uid ) {
                     if ( my $fg = $req->param('fg') ) {
-                        my $ps = Lemonldap::NG::Common::Session->new(
-                            storageModule => $self->conf->{globalStorage},
-                            storageModuleOptions =>
-                              $self->conf->{globalStorageOptions},
-                            kind => "SSO",
-                            info => {
+                        my $ps = $self->newConnectionSession( {
                                 _utime          => time + $self->timeout,
                                 _session_uid    => $uid,
                                 _connectedSince => time,
@@ -269,7 +274,7 @@ sub logout {
             id                   => $cid,
         );
         if ($ps) {
-            $self->logger->debug("Cleaning up Stay Connected session $cid");
+            $self->logger->debug("Cleaning up StayConnected session $cid");
             $ps->remove;
         }
     }
@@ -289,6 +294,49 @@ sub skipAuthentication {
     $self->userLogger->notice( "$uid connected by StayConnected cookie"
           . ( $fp ? "" : " without fingerprint checking" ) );
     return PE_OK;
+}
+
+sub removeExistingSessions {
+    my ( $self, $uid ) = @_;
+    $self->logger->debug("StayConnected: removing all sessions for $uid");
+
+    my $sessions =
+      $self->module->searchOn( $self->moduleOpts, '_session_uid', $uid );
+
+    foreach ( keys %{ $sessions || {} } ) {
+        if (
+            my $ps = Lemonldap::NG::Common::Session->new(
+                storageModule        => $self->conf->{globalStorage},
+                storageModuleOptions => $self->conf->{globalStorageOptions},
+                kind                 => "SSO",
+                id                   => $_,
+            )
+          )
+        {
+            # If this is a StayConnected session, remove it
+            $ps->remove if $ps->{data}->{_connectedSince};
+            $self->logger->debug("StayConnected removed session $_");
+        }
+        else {
+            $self->logger->debug("StayConnected session $_ expired");
+        }
+    }
+}
+
+sub newConnectionSession {
+    my ( $self, $info ) = @_;
+
+    # Remove existing sessions
+    if ( $self->singleSession ) {
+        $self->removeExistingSessions( $info->{_session_uid} );
+    }
+
+    return Lemonldap::NG::Common::Session->new(
+        storageModule        => $self->conf->{globalStorage},
+        storageModuleOptions => $self->conf->{globalStorageOptions},
+        kind                 => "SSO",
+        info                 => $info,
+    );
 }
 
 1;
