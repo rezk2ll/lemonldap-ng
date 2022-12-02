@@ -11,6 +11,7 @@ lib/Lemonldap/NG/Portal/2F/Mail2F.pm
 lib/Lemonldap/NG/Portal/2F/Password.pm
 lib/Lemonldap/NG/Portal/2F/Radius.pm
 lib/Lemonldap/NG/Portal/2F/Register/Base.pm
+lib/Lemonldap/NG/Portal/2F/Register/Generic.pm
 lib/Lemonldap/NG/Portal/2F/Register/Password.pm
 lib/Lemonldap/NG/Portal/2F/Register/TOTP.pm
 lib/Lemonldap/NG/Portal/2F/Register/U2F.pm
@@ -178,6 +179,7 @@ site/coffee/2fregistration.coffee
 site/coffee/autoRenew.coffee
 site/coffee/captcha.coffee
 site/coffee/confirm.coffee
+site/coffee/generic2fregistration.coffee
 site/coffee/globalLogout.coffee
 site/coffee/idpchoice.coffee
 site/coffee/info.coffee
@@ -319,6 +321,9 @@ site/htdocs/static/common/js/captcha.min.js.map
 site/htdocs/static/common/js/confirm.js
 site/htdocs/static/common/js/confirm.min.js
 site/htdocs/static/common/js/confirm.min.js.map
+site/htdocs/static/common/js/generic2fregistration.js
+site/htdocs/static/common/js/generic2fregistration.min.js
+site/htdocs/static/common/js/generic2fregistration.min.js.map
 site/htdocs/static/common/js/globalLogout.js
 site/htdocs/static/common/js/globalLogout.min.js
 site/htdocs/static/common/js/globalLogout.min.js.map
@@ -439,6 +444,7 @@ site/templates/bootstrap/errormsg.tpl
 site/templates/bootstrap/ext2fcheck.tpl
 site/templates/bootstrap/finduser.tpl
 site/templates/bootstrap/footer.tpl
+site/templates/bootstrap/generic2fregister.tpl
 site/templates/bootstrap/globallogout.tpl
 site/templates/bootstrap/gpgform.tpl
 site/templates/bootstrap/header.tpl
@@ -826,6 +832,7 @@ t/76-2F-Ext-with-CodeActivation-Resend.t
 t/76-2F-Ext-with-CodeActivation.t
 t/76-2F-Ext-with-GrantSession.t
 t/76-2F-Ext-with-History.t
+t/77-2F-Extra-Register.t
 t/77-2F-Extra.t
 t/77-2F-Mail-SessionKey.t
 t/77-2F-Mail-with-global-storage.t
