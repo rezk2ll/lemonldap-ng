@@ -759,6 +759,7 @@ t/64-StayConnected-with-2F-and-History.t
 t/64-StayConnected-with-History.t
 t/64-StayConnected-with-rule.t
 t/64-StayConnected-without-fingerprint-checking.t
+t/64-StayConnected.t
 t/65-AutoSignin.t
 t/65-CheckState.t
 t/66-CDA-already-auth.t
