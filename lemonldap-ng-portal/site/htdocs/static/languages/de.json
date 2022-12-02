@@ -249,7 +249,7 @@
 "openidRpns":"Der für den Verbund angeforderte Parameter %s ist nicht verfügbar",
 "otherSessions":"Andere aktive Sitzungen",
 "password":"Passwort",
-"password2f":"Password",
+"password2f":"Passwort",
 "passwordPolicy":"Please respect the following policy:",
 "passwordPolicyMinDigit":"Minimal digit characters:",
 "passwordPolicyMinLower":"Minimal lower characters:",

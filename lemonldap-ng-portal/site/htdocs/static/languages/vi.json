@@ -249,7 +249,7 @@
 "openidRpns":"Đã yêu cầu tham số %s không có sẵn",
 "otherSessions":"Các phiên hoạt động khác",
 "password":"Mật khẩu",
-"password2f":"Password",
+"password2f":"Mật khẩu",
 "passwordPolicy":"Please respect the following policy:",
 "passwordPolicyMinDigit":"Minimal digit characters:",
 "passwordPolicyMinLower":"Minimal lower characters:",

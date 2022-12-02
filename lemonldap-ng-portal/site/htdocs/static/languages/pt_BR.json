@@ -249,7 +249,7 @@
 "openidRpns":"Parâmetro %s solicitado para federação não está disponível",
 "otherSessions":"Outras sessões ativas",
 "password":"Senha",
-"password2f":"Password",
+"password2f":"Senha",
 "passwordPolicy":"Por favor, respeite a seguinte política:",
 "passwordPolicyMinDigit":"Mínimo de caracteres de dígitos:",
 "passwordPolicyMinLower":"Mínimo de caracteres minúsculos:",

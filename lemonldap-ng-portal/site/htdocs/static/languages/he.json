@@ -249,7 +249,7 @@
 "openidRpns":"המשתנה %s נחוץ שאיחוד אינו זמין",
 "otherSessions":"הפעלות פעילות נוספות",
 "password":"סיסמה",
-"password2f":"Password",
+"password2f":"סיסמה",
 "passwordPolicy":"נא לכבד את המדיניות הבאה:",
 "passwordPolicyMinDigit":"כמות מזערית של ספרות:",
 "passwordPolicyMinLower":"כמות מזערית של אותיות קטנות:",

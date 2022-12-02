@@ -249,7 +249,7 @@
 "openidRpns":"Parametr %s wymagany dla federacji jest niedostępny",
 "otherSessions":"Inne aktywne sesje",
 "password":"Hasło",
-"password2f":"Password",
+"password2f":"Hasło",
 "passwordPolicy":"Przestrzegaj następujących zasad:",
 "passwordPolicyMinDigit":"Minimalna liczba cyfr:",
 "passwordPolicyMinLower":"Minimalna liczba małych liter:",

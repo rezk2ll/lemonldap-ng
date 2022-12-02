@@ -249,7 +249,7 @@
 "openidRpns":"聯盟要求的 %s 參數不可用",
 "otherSessions":"其他作用中的工作階段",
 "password":"密碼",
-"password2f":"Password",
+"password2f":"密碼",
 "passwordPolicy":"請遵守以下政策：",
 "passwordPolicyMinDigit":"最少數字字元：",
 "passwordPolicyMinLower":"最少小寫字母：",

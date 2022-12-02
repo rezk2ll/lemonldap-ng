@@ -249,7 +249,7 @@
 "openidRpns":"El parámetro %s solicitado por la agrupación no está disponible",
 "otherSessions":"Otras sesiones activas",
 "password":"Contraseña",
-"password2f":"Password",
+"password2f":"Contraseña",
 "passwordPolicy":"Por favor respete la siguiente política de seguridad:",
 "passwordPolicyMinDigit":"Dígitos, como mínimo:",
 "passwordPolicyMinLower":"Minúsculas, como mínimo:",
