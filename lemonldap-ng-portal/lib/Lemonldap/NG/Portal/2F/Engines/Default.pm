@@ -690,7 +690,13 @@ sub register {
             $self->userLogger->error("$prefix 2F registration refused");
             return $self->p->sendError( $req, 'Registration refused', 403 );
         }
-        return $m->{m}->run( $req, @args );
+        my $can_update_error = $self->canUpdateSfa( $req, $m->{m}, @args );
+        if ($can_update_error) {
+            return $self->sendError( $req, $can_update_error, 400 );
+        }
+        else {
+            return $m->{m}->run( $req, @args );
+        }
     }
     my @am;
     foreach my $m ( @{ $self->sfRModules } ) {
@@ -735,7 +741,61 @@ sub searchForAuthorized2Fmodules {
     return @am;
 }
 
-# TODO improve this? class attribute?
+sub canUpdateSfa {
+    my ( $self, $req, $module, $action ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
+    my $msg  = undef;
+
+    # Test action
+    if ( $module && $action && $action eq 'delete' ) {
+        my $prefix     = $module->prefix;
+        my $authnLevel = $module->authnLevel;
+        $self->logger->debug("$user request to delete ${prefix}2f device");
+        if (   $authnLevel
+            && $req->userData->{authenticationLevel} < $authnLevel )
+        {
+            $self->userLogger->warn(
+"$user request to delete ${prefix}2f device rejected due to insufficient authentication level!"
+            );
+            $self->logger->debug(
+"authLevel: $req->{userData}->{authenticationLevel} < requiredLevel: "
+                  . $authnLevel );
+            $msg = 'notAuthorizedAuthLevel';
+        }
+    }
+
+    # Test if impersonation is in progress
+    if ( !$msg && $self->conf->{impersonationRule} ) {
+        $self->logger->debug('Impersonation plugin is enabled');
+        if (   $req->userData->{"$self->{conf}->{impersonationPrefix}_user"}
+            && $req->userData->{"$self->{conf}->{impersonationPrefix}_user"} ne
+            $req->userData->{_user} )
+        {
+            $self->userLogger->warn(
+                "Impersonation in progress! $user is not allowed to update 2FA."
+            );
+            $msg = 'notAuthorized';
+        }
+    }
+
+    # Test if contextSwitching is in progress
+    if ( !$msg && $self->conf->{contextSwitchingRule} ) {
+        $self->logger->debug('ContextSwitching plugin is enabled');
+        if (
+            $req->userData->{
+                "$self->{conf}->{contextSwitchingPrefix}_session_id"}
+            && !$self->conf->{contextSwitchingAllowed2fModifications} )
+        {
+            $self->userLogger->warn(
+"ContextSwitching in progress! $user is not allowed to update 2FA."
+            );
+            $msg = 'notAuthorized';
+        }
+    }
+    $self->logger->debug("$user is allowed to update 2FA") unless $msg;
+    return $msg;
+}
+
 sub findRegisterModuleFor {
     my ( $self, $mod ) = @_;
     if ( $mod->isa("Lemonldap::NG::Portal::Lib::Code2F") ) {

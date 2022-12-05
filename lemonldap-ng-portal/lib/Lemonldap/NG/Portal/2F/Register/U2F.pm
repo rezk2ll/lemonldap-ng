@@ -37,10 +37,6 @@ sub run {
         'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 )
       unless $user;
 
-    # Check if U2F key can be updated
-    my $msg = $self->canUpdateSfa( $req, $action );
-    return $self->p->sendError( $req, $msg, 400 ) if $msg;
-
     if ( $action eq 'register' ) {
 
         # Read existing 2FDevices
