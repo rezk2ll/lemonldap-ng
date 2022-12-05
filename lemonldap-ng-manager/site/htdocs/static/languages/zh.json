@@ -17,6 +17,7 @@
 "SMTPTLS":"SSL/TLS 連接埠",
 "SMTPTLSOpts":"SSL/TLS 選項",
 "SSLAuthnLevel":"认证等级",
+"SSLIssuerVar":"Issuer environment variable",
 "SSLVar":"提取憑證欄位",
 "SSLVarIf":"有條件的提取憑證欄位",
 "Same":"相同",

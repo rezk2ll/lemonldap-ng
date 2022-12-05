@@ -17,6 +17,7 @@
 "SMTPTLS":"SSL/TLS protokolü",
 "SMTPTLSOpts":"SSL/TLS seçenekleri",
 "SSLAuthnLevel":"Doğrulama seviyesi",
+"SSLIssuerVar":"Issuer environment variable",
 "SSLVar":"Çıkartılmış sertifika alanı",
 "SSLVarIf":"Koşullu çıkartılmış sertifika alanı",
 "Same":"Aynı",

@@ -17,6 +17,7 @@
 "SMTPTLS":"بروتوكول سسل / تلس",
 "SMTPTLSOpts":"خيارات سسل / تلس",
 "SSLAuthnLevel":"مستوى إثبات الهوية",
+"SSLIssuerVar":"Issuer environment variable",
 "SSLVar":"حقل الشهادة الرقمية المستخرجة",
 "SSLVarIf":"حقل الشهادة الرقمية المستخرجة الشرطية",
 "Same":"نفسه",

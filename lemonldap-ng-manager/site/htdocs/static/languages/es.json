@@ -17,6 +17,7 @@
 "SMTPTLS":"Protocolo SSL/TLS",
 "SMTPTLSOpts":"Opciones SSL/TLS",
 "SSLAuthnLevel":"Nivel de autentificación",
+"SSLIssuerVar":"Issuer environment variable",
 "SSLVar":"Campo de certificado extraído",
 "SSLVarIf":"Campo de certificado condicional extraído",
 "Same":"Igual",

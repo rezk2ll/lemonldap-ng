@@ -56,7 +56,7 @@ our $authParameters = {
   remoteParams => [qw(remotePortal remoteCookieName remoteGlobalStorage remoteGlobalStorageOptions)],
   restParams => [qw(restAuthnLevel restAuthUrl restUserDBUrl restPwdConfirmUrl restPwdModifyUrl)],
   slaveParams => [qw(slaveAuthnLevel slaveUserHeader slaveMasterIP slaveHeaderName slaveHeaderContent slaveDisplayLogo slaveExportedVars)],
-  sslParams => [qw(SSLAuthnLevel SSLVar SSLVarIf sslByAjax sslHost)],
+  sslParams => [qw(SSLAuthnLevel SSLVar SSLIssuerVar SSLVarIf sslByAjax sslHost)],
   twitterParams => [qw(twitterAuthnLevel twitterKey twitterSecret twitterAppName twitterUserField)],
   webidParams => [qw(webIDAuthnLevel webIDExportedVars webIDWhitelist)],
 };

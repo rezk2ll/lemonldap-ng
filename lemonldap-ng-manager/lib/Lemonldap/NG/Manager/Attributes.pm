@@ -4269,6 +4269,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'sslHost' => {
             'type' => 'url'
         },
+        'SSLIssuerVar' => {
+            'default' => 'SSL_CLIENT_I_DN',
+            'type'    => 'text'
+        },
         'SSLVar' => {
             'default' => 'SSL_CLIENT_S_DN_Email',
             'type'    => 'text'

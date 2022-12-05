@@ -24,6 +24,7 @@ lib/Lemonldap/NG/Portal/2F/UTOTP.pm
 lib/Lemonldap/NG/Portal/2F/WebAuthn.pm
 lib/Lemonldap/NG/Portal/2F/Yubikey.pm
 lib/Lemonldap/NG/Portal/Auth.pod
+lib/Lemonldap/NG/Portal/Auth/_Ajax.pm
 lib/Lemonldap/NG/Portal/Auth/_WebForm.pm
 lib/Lemonldap/NG/Portal/Auth/AD.pm
 lib/Lemonldap/NG/Portal/Auth/Apache.pm
