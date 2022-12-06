@@ -387,48 +387,6 @@ sub loadSPs {
 sub loadSP {
     my ( $self, $spConfKey ) = @_;
 
-    my $valid = 1;
-    my $rule  = $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
-      ->{samlSPMetaDataOptionsRule};
-
-    if ( length $rule ) {
-        $rule = $self->p->HANDLER->substitute($rule);
-        unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-            $self->logger->error( 'SAML SP rule error: '
-                  . $self->p->HANDLER->tsv->{jail}->error );
-            $valid = 0;
-        }
-    }
-
-    # Load per-SP macros
-    my $macros         = $self->conf->{samlSPMetaDataMacros}->{$spConfKey};
-    my $compiledMacros = {};
-    for my $macroAttr ( keys %{$macros} ) {
-        my $macroRule = $macros->{$macroAttr};
-        if ( length $macroRule ) {
-            $macroRule = $self->p->HANDLER->substitute($macroRule);
-            if ( $macroRule = $self->p->HANDLER->buildSub($macroRule) ) {
-                $compiledMacros->{$macroAttr} = $macroRule;
-            }
-            else {
-                $valid = 0;
-                $self->logger->error(
-                    "Error processing macro $macroAttr for SAML SP $spConfKey"
-                      . $self->p->HANDLER->tsv->{jail}->error );
-            }
-        }
-    }
-
-    if ($valid) {
-        $self->spRules->{$spConfKey}  = $rule;
-        $self->spMacros->{$spConfKey} = $compiledMacros;
-    }
-    else {
-        $self->logger->error(
-            "SAML SP $spConfKey has errors and will be ignored");
-        return;
-    }
-
     $self->logger->debug("Get Metadata for SP $spConfKey");
 
     # If XML metadata has been set in conf, load this provider from conf
@@ -469,13 +427,55 @@ sub load_sp_from_conf {
         $sp_metadata,
         $entityID,
         $self->conf->{samlSPMetaDataExportedAttributes}->{$spConfKey},
-        $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
+        $self->conf->{samlSPMetaDataOptions}->{$spConfKey},
+        $self->conf->{samlSPMetaDataMacros}->{$spConfKey},
     );
 }
 
 sub load_sp_metadata {
-    my ( $self, $spConfKey, $sp_metadata, $entityID, $attributes, $options ) =
-      @_;
+    my ( $self, $spConfKey, $sp_metadata, $entityID, $attributes, $options,
+        $macros )
+      = @_;
+
+    my $valid = 1;
+    my $rule  = $options->{samlSPMetaDataOptionsRule};
+
+    if ( length $rule ) {
+        $rule = $self->p->HANDLER->substitute($rule);
+        unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
+            $self->logger->error( 'SAML SP rule error: '
+                  . $self->p->HANDLER->tsv->{jail}->error );
+            $valid = 0;
+        }
+    }
+
+    # Load per-SP macros
+    my $compiledMacros = {};
+    for my $macroAttr ( keys %{$macros} ) {
+        my $macroRule = $macros->{$macroAttr};
+        if ( length $macroRule ) {
+            $macroRule = $self->p->HANDLER->substitute($macroRule);
+            if ( $macroRule = $self->p->HANDLER->buildSub($macroRule) ) {
+                $compiledMacros->{$macroAttr} = $macroRule;
+            }
+            else {
+                $valid = 0;
+                $self->logger->error(
+                    "Error processing macro $macroAttr for SAML SP $spConfKey"
+                      . $self->p->HANDLER->tsv->{jail}->error );
+            }
+        }
+    }
+
+    if ($valid) {
+        $self->spRules->{$spConfKey}  = $rule;
+        $self->spMacros->{$spConfKey} = $compiledMacros;
+    }
+    else {
+        $self->logger->error(
+            "SAML SP $spConfKey has errors and will be ignored");
+        return;
+    }
 
     $self->spAttributes->{$entityID} = { %{ $attributes || {} } };
 
