@@ -1169,10 +1169,9 @@ test-diff:
 
 tidy: clean
 	@if perltidy -v|grep v20220217 >/dev/null; then \
-		find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \) -print0 | xargs -t -0 $(PARAXARGS) -n10 perltidy -se -b ;\
+		find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \) -print0 | xargs -t -0 $(PARAXARGS) -n10 perltidy -se -b -bext=/ ;\
 	else echo "Wrong perltidy version, please install Perl::Tidy@20220217" ; exit 1 ;\
 	fi
-	find lemon*/ -name '*.bak' -delete
 	$(MAKE) json
 
 tidy-js: clean
