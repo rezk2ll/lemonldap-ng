@@ -7,7 +7,7 @@ use Mouse;
 use Clone 'clone';
 use Lemonldap::NG::Portal::Main::Constants 'URIRE';
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.16';
 
 extends 'Lemonldap::NG::Common::Module';
 
@@ -173,7 +173,10 @@ sub displayModules {
         if ( $module->[1]->( $req, $req->userData ) ) {
             my $moduleHash = { $module->[0] => 1 };
             if ( $module->[0] eq 'Appslist' ) {
-                $moduleHash->{'APPSLIST_LOOP'} = $self->appslist($req);
+                my $appslist = $self->appslist($req);
+                $moduleHash->{'APPSLIST_LOOP'} = $appslist;
+                $moduleHash = { $module->[0] => 0 }
+                  unless scalar @{$appslist};
             }
             elsif ( $module->[0] eq 'LoginHistory' ) {
                 $moduleHash->{'SUCCESS_LOGIN'} =
