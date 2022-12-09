@@ -1693,8 +1693,9 @@ sub _finishSlo {
 
     # Signature
     my $sp = $logout->remote_providerID;
-    my $signSLOMessage =
-      $self->spOptions->{$sp}->{samlSPMetaDataOptionsSignSLOMessage};
+    my $signSLOMessage = '';
+    $signSLOMessage =
+      $self->spOptions->{$sp}->{samlSPMetaDataOptionsSignSLOMessage} if $sp;
 
     unless ($signSLOMessage) {
         $self->logger->debug("Do not sign this SLO response");
