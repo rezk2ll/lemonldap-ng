@@ -20,12 +20,13 @@ has menuModules => (
         my $conf = $_[0]->{conf};
         my @res;
         foreach (qw(Appslist ChangePassword LoginHistory OidcConsents Logout)) {
-            my $cond = $conf->{"portalDisplay$_"} // 1;
+            my $cond  = $conf->{"portalDisplay$_"} // 1;
+            my $order = $conf->{"portalDisplayOrder$_"} || 0;
             $_[0]->p->logger->debug("Evaluate condition $cond for module $_");
             my $tmp =
               $_[0]->{p}
               ->HANDLER->buildSub( $_[0]->{p}->HANDLER->substitute($cond) );
-            push @res, [ $_, $tmp ] if ($tmp);
+            push @res, [ $_, $tmp, $order ] if $tmp;
         }
         return \@res;
     }
@@ -33,8 +34,7 @@ has menuModules => (
 
 has specific      => ( is => 'rw', default => sub { {} } );
 has sfManagerRule => ( is => 'rw', default => sub { 1 } );
-
-has imgPath => (
+has imgPath       => (
     is      => 'rw',
     lazy    => 1,
     builder => sub {
@@ -70,8 +70,8 @@ sub params {
     my @defaultTabs = (qw/appslist password logout loginHistory oidcConsents/);
     my @customTabs  = split( /,\s*/, $self->{conf}->{customMenuTabs} || '' );
 
-    # Tab to display
-    # Get the tab URL parameter
+    # Modules to display
+    $res{DISPLAY_MODULES} = $self->displayModules($req);
 
     # Force password tab in case of password error
     if (
@@ -97,8 +97,10 @@ sub params {
         $res{DISPLAY_TAB} = "password";
     }
 
-    # else calculate modules to display
+    # else compute modules to display and default tab
     else {
+        # Get the tab URL parameter
+
         my $tab = $req->param("tab");
         if ( defined $tab
             and grep ( /^$tab$/, ( @defaultTabs, @customTabs ) ) )
@@ -109,11 +111,10 @@ sub params {
             $res{DISPLAY_TAB} = $req->param("tab");
         }
         else {
-            $res{DISPLAY_TAB} = "appslist";
+            $res{DISPLAY_TAB} = $res{DISPLAY_MODULES}->[0];
         }
     }
 
-    $res{DISPLAY_MODULES} = $self->displayModules($req);
     $res{AUTH_ERROR_TYPE} =
       $req->error_type( $res{AUTH_ERROR} = $req->menuError );
     $res{AUTH_ERROR_ROLE} = $req->error_role;
@@ -122,10 +123,12 @@ sub params {
     $res{sfaManager} =
          $self->p->_sfEngine->display2fRegisters( $req, $req->userData )
       && $self->sfManagerRule->( $req, $req->userData );
-    $self->logger->debug("Display 2fRegisters link") if $res{sfaManager};
+    $self->logger->debug('Display 2fRegisters link') if $res{sfaManager};
 
     # Display refresh my rights unless disabled
     $res{RefreshMyRights} = $self->conf->{portalDisplayRefreshMyRights};
+    $self->logger->debug('Display RefreshMyRights link')
+      if $res{RefreshMyRights};
 
     # Display menu links only if required
     foreach (qw(ContextSwitching DecryptValue Notifications)) {
@@ -144,7 +147,6 @@ sub params {
 
     # Decide whether to display the dropdown or regular text
     $res{DropdownMenu} = 0;
-
     foreach (
         qw(RefreshMyRights sfaManager Notifications DecryptValue ContextSwitching)
       )
@@ -169,14 +171,13 @@ sub displayModules {
     # Store module in result if condition is valid
     foreach my $module ( @{ $self->menuModules } ) {
         $self->logger->debug("Check if $module->[0] has to be displayed");
-
         if ( $module->[1]->( $req, $req->userData ) ) {
-            my $moduleHash = { $module->[0] => 1 };
+            $self->logger->debug("Module: $module->[0] / Order: $module->[2]");
+            my $moduleHash = { $module->[0] => 1, order => $module->[2] };
             if ( $module->[0] eq 'Appslist' ) {
                 my $appslist = $self->appslist($req);
                 $moduleHash->{'APPSLIST_LOOP'} = $appslist;
-                $moduleHash = { $module->[0] => 0 }
-                  unless scalar @{$appslist};
+                $moduleHash->{'Appslist'}      = 0 unless scalar @{$appslist};
             }
             elsif ( $module->[0] eq 'LoginHistory' ) {
                 $moduleHash->{'SUCCESS_LOGIN'} =
@@ -195,6 +196,8 @@ sub displayModules {
             push @$displayModules, $moduleHash;
         }
     }
+    @$displayModules =
+      sort { $a->{'order'} <=> $b->{'order'} } @$displayModules;
 
     return $displayModules;
 }

@@ -1277,6 +1277,10 @@ sub attributes {
             default       => 1,
             documentation => 'Display login history tab in portal',
         },
+        portalDisplayOrderLoginHistory => {
+            type          => 'int',
+            documentation => 'Display order of login history tab in portal',
+        },
         successLoginNumber => {
             default       => 5,
             type          => 'int',
@@ -1289,15 +1293,27 @@ sub attributes {
             default       => 1,
             documentation => 'Display applications tab in portal',
         },
+        portalDisplayOrderAppslist => {
+            type          => 'int',
+            documentation => 'Display order of applications tab in portal',
+        },
         portalDisplayChangePassword => {
             type          => 'boolOrExpr',
             default       => '$_auth =~ /^(LDAP|DBI|Demo)$/',
             documentation => 'Display password tab in portal',
         },
+        portalDisplayOrderChangePassword => {
+            type          => 'int',
+            documentation => 'Display order of password tab in portal',
+        },
         portalDisplayLogout => {
-            default       => 1,
             type          => 'boolOrExpr',
+            default       => 1,
             documentation => 'Display logout tab in portal',
+        },
+        portalDisplayOrderLogout => {
+            type          => 'int',
+            documentation => 'Display order of logout tab in portal',
         },
         portalDisplayCertificateResetByMail => {
             type          => 'bool',
@@ -1323,6 +1339,10 @@ sub attributes {
         portalDisplayOidcConsents => {
             type          => 'boolOrExpr',
             default       => '$_oidcConsents && $_oidcConsents =~ /\w+/',
+            documentation => 'Display OIDC consent tab in portal',
+        },
+        portalDisplayOrderOidcConsents => {
+            type          => 'int',
             documentation => 'Display OIDC consent tab in portal',
         },
         portalDisplayGeneratePassword => {

@@ -2938,6 +2938,21 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => '$_oidcConsents && $_oidcConsents =~ /\\w+/',
             'type'    => 'boolOrExpr'
         },
+        'portalDisplayOrderAppslist' => {
+            'type' => 'int'
+        },
+        'portalDisplayOrderChangePassword' => {
+            'type' => 'int'
+        },
+        'portalDisplayOrderLoginHistory' => {
+            'type' => 'int'
+        },
+        'portalDisplayOrderLogout' => {
+            'type' => 'int'
+        },
+        'portalDisplayOrderOidcConsents' => {
+            'type' => 'int'
+        },
         'portalDisplayPasswordPolicy' => {
             'default' => 0,
             'type'    => 'bool'
