@@ -41,7 +41,7 @@
                "description" : "Explore WebSSO notifications",
                "display" : "auto",
                "logo" : "database.png",
-               "name" : "Notifications explorer",
+               "name" : "Notifications Explorer",
                "uri" : "http://manager.__DNSDOMAIN__/notifications.html"
             },
             "type" : "application"
@@ -51,7 +51,7 @@
                "description" : "Explore WebSSO sessions",
                "display" : "auto",
                "logo" : "database.png",
-               "name" : "Sessions explorer",
+               "name" : "Sessions Explorer",
                "uri" : "http://manager.__DNSDOMAIN__/sessions.html"
             },
             "type" : "application"
@@ -76,7 +76,7 @@
                "display" : "on",
                "logo" : "network.png",
                "name" : "Official Website",
-               "uri" : "http://lemonldap-ng.org/"
+               "uri" : "https://lemonldap-ng.org/"
             },
             "type" : "application"
          },
@@ -87,7 +87,7 @@
    "cfgAuthor" : "The LemonLDAP::NG team",
    "cfgDate" : "1627287638",
    "cfgNum" : 1,
-   "cfgVersion" : "2.0.13",
+   "cfgVersion" : "2.0.16",
    "cookieName" : "lemonldap",
    "demoExportedVars" : {
       "cn" : "cn",

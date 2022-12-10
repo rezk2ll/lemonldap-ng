@@ -665,7 +665,7 @@ t/35-REST-sessions-with-REST-server.t
 t/35-SOAP-config-backend.t
 t/35-SOAP-sessions-with-SOAP-server.t
 t/36-Combination-Custom.t
-t/36-Combination-Kerberos-or-Demo.t
+t/36-Combination-Kerberos-multiple-domains.t
 t/36-Combination-Password.t
 t/36-Combination-with-Choice.t
 t/36-Combination-with-over.t
