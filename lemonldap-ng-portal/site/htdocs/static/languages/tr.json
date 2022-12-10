@@ -161,7 +161,7 @@
 "enterExt2fCode":"Size bir kod gönderildi. Lütfen onu giriniz",
 "enterMail2fCode":"E-posta adresinize bir kod gönderildi. Lütfen onu giriniz",
 "enterOpenIDLogin":"Lütfen OpenID giriş bilgilerinizi giriniz",
-"enterPassword":"Enter your password",
+"enterPassword":"Parolanızı girin",
 "enterRadius2fCode":"Lütfen OTP kodunuzu girin",
 "enterRest2fCode":"Lütfen OTP kodunuzu girin",
 "enterTotpCode":"TOTP kodunu gir",
