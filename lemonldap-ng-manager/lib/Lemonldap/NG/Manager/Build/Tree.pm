@@ -32,10 +32,9 @@ sub tree {
                             help  => 'portalmenu.html',
                             nodes => [ {
                                     title => 'portalModules',
-                                    help  => 'portalcustom.html#buttons',
+                                    help  => 'portalmenu.html#menu-modules',
                                     nodes => [ {
                                             title => 'appslist',
-                                            help => 'portalcustom.html#buttons',
                                             form => 'simpleInputContainer',
                                             nodes => [
                                                 'portalDisplayAppslist',
@@ -44,7 +43,6 @@ sub tree {
                                         },
                                         {
                                             title => 'loginHistory',
-                                            help => 'portalcustom.html#buttons',
                                             form => 'simpleInputContainer',
                                             nodes => [
                                                 'portalDisplayLoginHistory',
@@ -53,7 +51,6 @@ sub tree {
                                         },
                                         {
                                             title => 'changePassword',
-                                            help => 'portalcustom.html#buttons',
                                             form => 'simpleInputContainer',
                                             nodes => [
                                                 'portalDisplayChangePassword',
@@ -62,7 +59,6 @@ sub tree {
                                         },
                                         {
                                             title => 'oidcConsents',
-                                            help => 'portalcustom.html#buttons',
                                             form => 'simpleInputContainer',
                                             nodes => [
                                                 'portalDisplayOidcConsents',
