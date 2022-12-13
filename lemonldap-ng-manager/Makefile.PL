@@ -10,6 +10,7 @@ WriteMakefile(
     BUILD_REQUIRES => {
         'Email::Sender'  => 0,
         'IO::String'     => 0,
+        'Net::SSLeay'    => 0,
         'Regexp::Common' => 0,
         'Test::Pod'      => 1.00,
         'Test::Output'   => 0,

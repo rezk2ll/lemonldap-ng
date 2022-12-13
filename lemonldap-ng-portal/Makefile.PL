@@ -58,6 +58,7 @@ WriteMakefile(
         'IO::String'        => 0,
         'LWP::UserAgent'    => 0,
         'MIME::Entity'      => 0,
+        'Net::SSLeay'       => 0,
         'SOAP::Lite'        => 0,
         'Text::Unidecode'   => 0,
         'XML::LibXML'       => 0,
