@@ -543,6 +543,7 @@ sub _redirect {
 sub _displayRegister {
     my ( $self, $req, $prefix ) = @_;
 
+    $self->p->importHandlerData($req);
     # After verifying rule:
     #  - display template if $prefix
     #  - else display choice template
