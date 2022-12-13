@@ -26,6 +26,7 @@
             "Email::Sender" : "0",
             "GD::SecurityImage" : "0",
             "HTTP::Message" : "0",
+            "Hash::Merge::Simple" : "0",
             "IO::String" : "0",
             "Image::Magick" : "0",
             "LWP::UserAgent" : "0",

@@ -23,6 +23,7 @@
       "build" : {
          "requires" : {
             "Email::Sender" : "0",
+            "Hash::Merge::Simple" : "0",
             "IO::String" : "0",
             "Net::SSLeay" : "0",
             "Regexp::Common" : "0",
