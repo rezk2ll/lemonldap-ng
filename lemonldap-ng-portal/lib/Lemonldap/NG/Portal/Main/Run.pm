@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.15.1';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -429,18 +429,17 @@ sub autoRedirect {
     # Redirection should be made if urldc defined
     if ( $req->{urldc} ) {
         $self->logger->debug("Building redirection to $req->{urldc}");
+        if (    $req->{pdata}->{_url}
+            and $req->{pdata}->{_url} eq encode_base64( $req->{urldc}, '' ) )
+        {
+            $self->logger->info("Force cleaning pdata");
+            delete $req->{pdata}->{_url};
+        }
         if ( $self->_jsRedirect->( $req, $req->sessionInfo ) ) {
             $req->error(PE_REDIRECT);
             $req->data->{redirectFormMethod} = "get";
         }
         else {
-            if (    $req->{pdata}->{_url}
-                and $req->{pdata}->{_url} eq encode_base64( $req->{urldc}, '' )
-              )
-            {
-                $self->logger->info("Force cleaning pdata");
-                delete $req->{pdata}->{_url};
-            }
             return [ 302, [ Location => $req->{urldc}, $req->spliceHdrs ], [] ];
         }
     }
@@ -876,7 +875,7 @@ sub _dump {
 sub getTrOver {
     my ( $self, $req, $templateDir ) = @_;
 
-    my $templateDir //= $self->conf->{templateDir} . '/' . $self->getSkin($req);
+    $templateDir //= $self->conf->{templateDir} . '/' . $self->getSkin($req);
 
     unless ( $self->trOverCache->{$templateDir} ) {
 
@@ -922,7 +921,8 @@ sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
 
     my $templateDir = $self->conf->{templateDir} . '/' . $self->getSkin($req);
-    $self->templateDir( [ $templateDir, @{ $self->templateDir } ] );
+    my $defaultTemplateDir = $self->conf->{templateDir} . '/bootstrap';
+    $self->templateDir( [ $templateDir, $defaultTemplateDir ] );
 
     # Check template
     $args{templateDir} = $templateDir;
@@ -946,21 +946,32 @@ sub sendHtml {
 
     $self->setCorsHeaderFromConfig($res);
 
+    if (    $self->conf->{strictTransportSecurityMax_Age}
+        and $self->conf->{portal} =~ /^https:/ )
+    {
+        push @{ $res->[1] },
+          'Strict-Transport-Security' =>
+          "max-age=$self->{conf}->{strictTransportSecurityMax_Age}";
+        $self->logger->debug(
+"Set Strict-Transport-Security with: $self->{conf}->{strictTransportSecurityMax_Age}"
+        );
+    }
+
     # Set authorized URL for POST
     my $csp = $self->csp . "form-action " . $self->conf->{cspFormAction};
     if ( my $url = $req->urldc ) {
-        $self->logger->debug("Required urldc : $url");
+        $self->logger->debug("Required urldc: $url");
         $url =~ URIRE;
         $url = $2 . '://' . $3 . ( $4 ? ":$4" : '' );
-        $self->logger->debug("Set CSP form-action with urldc : $url");
+        $self->logger->debug("Set CSP form-action with urldc: $url");
         $csp .= " $url";
     }
     my $url = $args{params}->{URL};
     if ( defined $url ) {
-        $self->logger->debug("Required Params URL : $url");
+        $self->logger->debug("Required Params URL: $url");
         if ( $url =~ URIRE ) {
             $url = $2 . '://' . $3 . ( $4 ? ":$4" : '' );
-            $self->logger->debug("Set CSP form-action with Params URL : $url");
+            $self->logger->debug("Set CSP form-action with Params URL: $url");
             $csp .= " $url";
         }
     }
@@ -1018,7 +1029,7 @@ sub sendHtml {
 
     # Set CSP header
     push @{ $res->[1] }, 'Content-Security-Policy' => $csp;
-    $self->logger->debug("Apply following CSP : $csp");
+    $self->logger->debug("Apply following CSP: $csp");
     return $res;
 }
 
@@ -1192,11 +1203,12 @@ sub _sumUpSession {
       $withoutUser
       ? {}
       : { user => $session->{ $self->conf->{whatToTrace} } };
-    $res->{$_} = $session->{$_} foreach (
+    $res->{$_} = $session->{$_}
+      foreach (
         "_utime", "ipAddr",
         keys %{ $self->conf->{sessionDataToRemember} },
         keys %{ $self->pluginSessionDataToRemember }
-    );
+      );
     return $res;
 }
 
@@ -1259,7 +1271,7 @@ sub setCorsHeaderFromConfig {
     if ( $self->conf->{corsEnabled} ) {
         my @cors = split /;/, $self->cors;
         push @{ $response->[1] }, @cors;
-        $self->logger->debug('Apply following CORS policy :');
+        $self->logger->debug('Apply following CORS policy:');
         $self->logger->debug(" $_") for @cors;
     }
 }

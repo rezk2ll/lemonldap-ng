@@ -56,7 +56,7 @@ You can display a button to go to back to the top after <value> pixels scrolling
 
 .. tip::
 
-    A blank or null value disable this feature. 
+    A blank or null value disable this feature.
 
 Custom CSS file
 ~~~~~~~~~~~~~~~
@@ -137,11 +137,9 @@ To achieve this, you can create a rule in the Manager: select
    skin is applied.
 -  **Value**: the name of the skin to use.
 
-Example:
+Example::
 
-```
-$_url =~ m#^http://test1.example.com#
-```
+    $_url =~ m#^http://test1.example.com#
 
 Skin files
 ~~~~~~~~~~
@@ -180,8 +178,7 @@ First copy static content:
    cp -a ../bootstrap/css/ .
    mkdir images
 
-Then create symbolic links on template files, as you might not want to
-rewrite all HTML code (else, do as you want).
+Then create a folder for template overrides
 
 ::
 
@@ -189,19 +186,25 @@ rewrite all HTML code (else, do as you want).
    mkdir myskin
    cd myskin/
 
-We include some template files that can be customized:
+LemonLDAP::NG contains templates that are made for common customization, these
+particular templates do not need any modification when you upgrade
+LemonLDAP::NG:
 
--  customhead.tpl : HTML header markups (like CSS, js inclusion)
--  customheader.tpl : HTML code in the header
--  customfooter.tpl : HTML code in the footer
--  customLoginHeader.tpl : HTML code in the login header
--  customLoginFooter.tpl : HTML code in the login footer
+-  ``customhead.tpl`` : HTML header markups (like CSS, js inclusion)
+-  ``customheader.tpl`` : HTML code in the header
+-  ``customfooter.tpl`` : HTML code in the footer
+-  ``customLoginHeader.tpl`` : HTML code in the login header
+-  ``customLoginFooter.tpl`` : HTML code in the login footer
 
-To use custom files, copy them into your skin folder:
+To use override these files, copy them into your skin folder:
 
 ::
 
    cp ../bootstrap/custom* .
+
+Any other template file can also be overriden, be sure you check
+:doc:`upgrade notes <upgrade>` for important updates in your overriden template
+files.
 
 Then you can add your media to ``myskin/images``, you will be able to
 use them in HTML template with this code:

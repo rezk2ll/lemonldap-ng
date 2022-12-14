@@ -37,10 +37,6 @@ sub run {
     return $self->p->sendError( $req, 'PE82', 400 )
       unless $user;
 
-    # Check if TOTP can be updated
-    my $msg = $self->canUpdateSfa( $req, $action );
-    return $self->p->sendError( $req, $msg, 400 ) if $msg;
-
     # Verification that user has a valid TOTP app
     if ( $action eq 'verify' ) {
 
@@ -124,7 +120,7 @@ sub run {
         }
 
         # Reading existing TOTP
-        my @totp2f = grep { $_->{type} eq 'TOTP' } @$_2fDevices;
+        my @totp2f = grep { $_->{type} eq $self->type } @$_2fDevices;
         unless (@totp2f) {
             $self->logger->debug("No TOTP Device found");
 
@@ -142,7 +138,7 @@ sub run {
         # Delete TOTP previously registered
         $self->logger->debug("Looking for TOTP to delete...");
         my $size = my @keep =
-          map { $_->{type} eq 'TOTP' ? () : $_ } @$_2fDevices;
+          map { $_->{type} eq $self->type ? () : $_ } @$_2fDevices;
 
         # Check if user can register one more device
         my $maxSize = $self->conf->{max2FDevices};
@@ -163,7 +159,7 @@ sub run {
         # Store TOTP secret
         push @keep,
           {
-            type    => 'TOTP',
+            type    => $self->type,
             name    => $TOTPName,
             _secret => $storable_secret,
             epoch   => $epoch
@@ -260,7 +256,7 @@ sub run {
 
         # Check if unregistration is allowed
         return $self->p->sendError( $req, 'notAuthorized', 400 )
-          unless $self->conf->{totp2fUserCanRemoveKey};
+          unless $self->userCanRemove;
 
         my $epoch = $req->param('epoch')
           or return $self->p->sendError( $req, '"epoch" parameter is missing',

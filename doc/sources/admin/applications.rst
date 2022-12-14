@@ -27,6 +27,7 @@ Applications
    applications/guacamole
    applications/humhub
    applications/iparapheur
+   applications/itsm-ng
    applications/jitsimeet
    applications/liferay
    applications/limesurvey
@@ -46,6 +47,7 @@ Applications
    applications/roundcube
    applications/salesforce
    applications/sap
+   applications/sharepoint
    applications/simplesamlphp
    applications/spring
    applications/symfony
@@ -114,6 +116,7 @@ Application                                                       Configuration 
 .. image:: applications/guacamole.png                             :doc:`Apache Guacamole<applications/guacamole>`      ✔                             ✔        ✔
 .. image:: applications/humhub_logo.png                           :doc:`HumHub<applications/humhub>`                                                          ✔
 .. image:: applications/iparapheur_logo.png                       :doc:`i-Parapheur<applications/iparapheur>`          ✔
+.. image:: applications/itsm-ng.png                               :doc:`ITSM-NG<applications/itsm-ng>`                 ✔                                      ✔
 .. image:: applications/logo-jitsimeet.png                        :doc:`Jitsi Meet<applications/jitsimeet>`            ✔
 .. image:: applications/liferay_logo.png                          :doc:`Liferay<applications/liferay>`                 ✔
 .. image:: applications/limesurvey_logo.png                       :doc:`LimeSurvey<applications/limesurvey>`           ✔
@@ -133,6 +136,7 @@ Application                                                       Configuration 
 .. image:: applications/roundcube_logo.png                        :doc:`Roundcube<applications/roundcube>`             ✔
 .. image:: applications/salesforce-logo.jpg                       :doc:`SalesForce<applications/salesforce>`                                             ✔
 .. image:: applications/SAPLogo.gif                               :doc:`SAP<applications/sap>`                         ✔                                 ✔
+.. image:: applications/sharepoint.png                            :doc:`Sharepoint<applications/sharepoint>`                                                  ✔
 .. image:: applications/simplesamlphp_logo.png                    :doc:`simpleSAMLphp<applications/simplesamlphp>`                                       ✔
 .. image:: applications/spring_logo.png                           :doc:`Spring<applications/spring>`                   ✔
 .. image:: applications/symfony_logo.png                          :doc:`Symfony<applications/symfony>`                 ✔

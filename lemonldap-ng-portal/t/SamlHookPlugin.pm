@@ -7,7 +7,16 @@ use constant hook => {
     samlGotAuthnRequest      => 'gotRequest',
     samlGenerateAuthnRequest => 'genRequest',
     samlGotAuthnResponse     => 'gotResponse',
+    samlBuildAuthnResponse   => 'genResponse',
 };
+
+sub genResponse {
+    my ( $self, $req, $login ) = @_;
+    use Test::More;
+    $login->response->Assertion->AuthnStatement->AuthnInstant(
+        "2000-01-01T00:00:01Z");
+    return 0;
+}
 
 sub gotRequest {
     my ( $self, $req, $login ) = @_;

@@ -457,11 +457,13 @@ A virtual host contains:
 Wildcards in hostnames
 ----------------------
 
-|image0| Since 2.0, a wildcard can be used in virtualhost name (not in
+A wildcard can be used in virtualhost name (not in
 aliases !): ``*.example.com`` matches all hostnames that belong to
-``example.com`` domain. Version 2.0.9 improves this and allows better
-wildcards such as ``test-*.example.com`` or ``test-%.example.com``. The
-``%`` wilcard doesn't match subdomains.
+``example.com`` domain.
+
+.. versionchanged:: 2.0.9
+   You can now use wildcards of the form ``test-*.example.com`` or
+   ``test-%.example.com``. The ``%`` wilcard doesn't match subdomains.
 
 Even if a wildcard exists, if a VirtualHost is explicitly declared, this
 rule will be applied. Example with precedence order for test.sub.example.com:
@@ -527,21 +529,22 @@ Some options are available:
    Provide a comma separated parameters list with custom function path and args.
    Args can be vars or session attributes, macros, ...
    By example: My::accessToTrace, Doctor, Who, _whatToTrace
+-  **Required authentication level**: this option avoids to reject user with
+   a rule based on ``$_authenticationLevel``. When user has not got the
+   required level, he is redirected to an upgrade page in the portal.
+   This default level is required for ALL locations relative to this virtual host.
+   It can be overrided for each locations.
 -  **Type**: handler type (:ref:`Main<presentation-kinematics>`,
    :doc:`AuthBasic<authbasichandler>`,
    :doc:`ServiceToken<servertoserver>`,
    :doc:`DevOps<devopshandler>`,
    :doc:`DevOpsST<devopssthandler>`,
    :doc:`OAuth2<oauth2handler>`,...)
--  **Required authentication level**: this option avoids to reject user with
-   a rule based on ``$_authenticationLevel``. When user has not got the
-   required level, he is redirected to an upgrade page in the portal.
-   This default level is required for ALL locations relative to this virtual host.
-   It can be overrided for each locations.
 -  **DevOps rules file URL**: option to define URL to retreive DevOps rules file.
    This option can be overridden with ``uwsgi_param/fastcgi_param RULES_URL`` parameter.
 -  **ServiceToken timeout**: by default, ServiceToken is just valid during 30
    seconds. This TTL can be customized for each virtual host.
+-  **Comment**: Can be used for setting comment.
 
 
 .. attention::

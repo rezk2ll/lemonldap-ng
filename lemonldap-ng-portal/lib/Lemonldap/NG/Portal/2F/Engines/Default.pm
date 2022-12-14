@@ -30,10 +30,16 @@ with 'Lemonldap::NG::Portal::Lib::OverConf';
 
 # INITIALIZATION
 
+# Arrayref of objects
+# p => module prefix
+# m => module instance
+# r => compiled rule
+# t => type of record in _2fDevices
 has sfModules  => ( is => 'rw', default => sub { [] } );
 has sfRModules => ( is => 'rw', default => sub { [] } );
-has sfReq      => ( is => 'rw' );
-has sfMsgRule  => ( is => 'rw' );
+
+has sfReq     => ( is => 'rw' );
+has sfMsgRule => ( is => 'rw' );
 
 has ott => (
     is      => 'rw',
@@ -102,7 +108,12 @@ sub init {
 
                 # Store module
                 push @{ $self->{ $i ? 'sfRModules' : 'sfModules' } },
-                  { p => $prefix, m => $m, r => $rule };
+                  {
+                    p => $prefix,
+                    m => $m,
+                    r => $rule,
+                    t => ( $m->can('type') ? $m->type : $prefix ),
+                  };
             }
             else {
                 $self->logger->debug(' -> not enabled');
@@ -116,18 +127,29 @@ sub init {
 
         my $moduleType = $self->conf->{sfExtra}->{$extraKey}->{type};
         next unless ($moduleType);
+        my $over = $self->conf->{sfExtra}->{$extraKey}->{over};
 
-        my %over = %{ $self->conf->{sfExtra}->{$extraKey}->{over} or {} };
         $self->logger->debug(
             "Loading extra 2F module $extraKey of type $moduleType");
-        my $m =
-          $self->loadPlugin( "::2F::$moduleType",
-            { sfPrefix => $extraKey, %over } )
-          or return 0;
+        my $m = $self->loadPlugin(
+            "::2F::$moduleType",
+            $over,
+            prefix => $extraKey,
+            (
+                $self->conf->{sfExtra}->{$extraKey}->{register}
+                ? ( is_registrable => 1 )
+                : ()
+            ),
+        ) or return 0;
 
         # Rule and prefix may be modified by 2F module, reread them
-        my $rule   = $self->conf->{sfExtra}->{$extraKey}->{rule} || 1;
+        my $rule = $self->conf->{sfExtra}->{$extraKey}->{rule} || 1;
+        my $reg_rule;
         my $prefix = $m->prefix;
+        if ( $self->conf->{sfExtra}->{$extraKey}->{register} ) {
+            $reg_rule = $rule;
+            $rule     = "( $rule ) and has2f('$prefix')";
+        }
 
         # Overwrite logo, label, level from user configuration
         $m->logo( $self->conf->{sfExtra}->{$extraKey}->{logo} )
@@ -138,15 +160,51 @@ sub init {
           if $self->conf->{sfExtra}->{$extraKey}->{level};
 
         # Compile rule
-        $rule = $self->p->HANDLER->substitute($rule);
-        unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-            $self->error( 'External 2F rule error: '
-                  . $self->p->HANDLER->tsv->{jail}->error );
-            return 0;
-        }
+        $rule = $self->p->buildRule( $rule, "extra 2F activation for $prefix" );
+        return 0 unless $rule;
 
         # Store module
-        push @{ $self->{'sfModules'} }, { p => $prefix, m => $m, r => $rule };
+        push @{ $self->{'sfModules'} },
+          {
+            p => $prefix,
+            m => $m,
+            r => $rule,
+            t => $prefix,
+          };
+
+        # Push register module
+        if ( $self->conf->{sfExtra}->{$extraKey}->{register} ) {
+            $self->logger->debug(
+                "Loading register module for $extraKey of type $moduleType");
+            my $register_module_name = $self->findRegisterModuleFor($m);
+            if ($register_module_name) {
+                my $rm = $self->loadPlugin(
+                    "::2F::Register::Generic",
+                    $over,
+                    prefix             => $extraKey,
+                    logo               => $m->logo,
+                    label              => $m->label,
+                    userCanRemove      => 1,
+                    verificationModule => $m,
+                    authnLevel => $self->conf->{sfExtra}->{$extraKey}->{level},
+                ) or return 0;
+
+                my $reg_rule = $self->p->buildRule( $reg_rule,
+                    "extra 2F registration for $prefix" );
+                return 0 unless $reg_rule;
+                push @{ $self->{'sfRModules'} },
+                  {
+                    p => $prefix,
+                    m => $rm,
+                    r => $reg_rule,
+                    t => $prefix,
+                  };
+            }
+            else {
+                $self->logger->warn(
+                    "Could not find a proper register module for $moduleType");
+            }
+        }
     }
 
     unless (
@@ -364,7 +422,6 @@ sub run {
         $req->sessionInfo->{_impSpoofId} = $spoofId;
         $req->sessionInfo->{_impUser}    = $req->user;
     }
-    my $token = $self->ott->createToken( $req->sessionInfo );
     delete $req->{authResult};
 
     # If only one 2F is authorized, display it
@@ -373,14 +430,18 @@ sub run {
               . $am[0]->prefix
               . '2F selected for '
               . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
-        my $res = $am[0]->run( $req, $token );
+
+        my $token = $self->ott->createToken( $req->sessionInfo );
+        my $res   = $am[0]->run( $req, $token );
         $req->authResult($res);
         return $res;
     }
 
+    my $token = $self->ott->createToken( $req->sessionInfo );
+
     # More than 1 2F has been found, display choice
     $self->logger->debug("Prepare 2F choice");
-    my $tpl = $self->p->sendHtml(
+    my $res = $self->p->sendHtml(
         $req,
         '2fchoice',
         params => {
@@ -403,7 +464,7 @@ sub run {
             ],
         }
     );
-    $req->response($tpl);
+    $req->response($res);
     return PE_SENDRESPONSE;
 }
 
@@ -433,13 +494,17 @@ sub _choice {
     my $session;
     unless ( $session = $self->ott->getToken($token) ) {
         $self->userLogger->info('Token expired');
+        $req->noLoginDisplay(1);
         return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
     }
 
-    $req->sessionInfo($session);
+    unless ( $session->{_2fRealSession} ) {
+        $self->logger->error("Invalid 2FA session token");
+        $req->noLoginDisplay(1);
+        return $self->p->do( $req, [ sub { PE_ERROR } ] );
+    }
 
-    # New token
-    $token = $self->ott->createToken($session);
+    $req->sessionInfo($session);
 
     my $ch = $req->param('sf');
     foreach my $m ( @{ $self->sfModules } ) {
@@ -448,6 +513,9 @@ sub _choice {
                   . $m->{m}->prefix
                   . '2F selected for '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+
+            # New token
+            $token = $self->ott->createToken( $req->sessionInfo );
             my $res = $m->{m}->run( $req, $token );
             $req->authResult($res);
             return $self->p->do(
@@ -473,14 +541,14 @@ sub _redirect {
 }
 
 sub _displayRegister {
-    my ( $self, $req, $tpl ) = @_;
+    my ( $self, $req, $prefix ) = @_;
 
     # After verifying rule:
-    #  - display template if $tpl
+    #  - display template if $prefix
     #  - else display choice template
-    if ($tpl) {
+    if ($prefix) {
         my ($m) =
-          grep { $_->{m}->prefix eq $tpl } @{ $self->sfRModules };
+          grep { $_->{m}->prefix eq $prefix } @{ $self->sfRModules };
         return $self->p->sendError( $req, 'Inexistent register module', 400 )
           unless $m;
         return $self->p->sendError( $req, 'Registration not authorized', 403 )
@@ -489,9 +557,11 @@ sub _displayRegister {
             $req,
             $m->{m}->template,
             params => {
-                MAIN_LOGO => $self->conf->{portalMainLogo},
-                LANGS     => $self->conf->{showLanguages},
-                MSG       => $self->canUpdateSfa($req) || $m->{m}->welcome,
+                MAIN_LOGO        => $self->conf->{portalMainLogo},
+                PREFIX           => $prefix,
+                "PREFIX_$prefix" => 1,
+                LANGS            => $self->conf->{showLanguages},
+                MSG   => $self->canUpdateSfa($req) || $m->{m}->welcome,
                 ALERT => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
             }
         );
@@ -540,28 +610,24 @@ sub _displayRegister {
    # Parse second factors to display delete button if allowed and upgrade button
     my $displayUpgBtn = 0;
     my $action        = '';
-    foreach
-      my $type ( split /,\s*/, $self->conf->{available2FSelfRegistration} )
-    {
+    foreach my $reg_mod_info ( @{ $self->sfRModules } ) {
+        my $type   = $reg_mod_info->{t};
+        my $prefix = $reg_mod_info->{p};
+        my $module = $reg_mod_info->{m};
         foreach (@$_2fDevices) {
-            $_->{type} =~ s/^UBK$/Yubikey/;
             if ( $_->{type} eq $type ) {
-                my $t = lc($type);
-                $t =~ s/2f$//i;
 
-                # Display delete button
-                $_->{delAllowed} =
-                     $self->conf->{ $t . '2fActivation' }
-                  && $self->conf->{ $t . '2fUserCanRemoveKey' }
-                  && $self->conf->{ $t . '2fSelfRegistration' };
+                # Populate additional info for template engine
+                $_->{prefix}     = $prefix;
+                $_->{label}      = $module->label;
+                $_->{delAllowed} = $self->isDelAllowed($module);
 
                 # Display upgrade button
-                $displayUpgBtn ||= $self->conf->{ $t . '2fAuthnLevel' }
-                  && $self->conf->{ $t . '2fAuthnLevel' } >
+                $displayUpgBtn ||= $module->authnLevel
+                  && $module->authnLevel >
                   $req->userData->{authenticationLevel};
             }
             $action ||= $_->{delAllowed};
-            $_->{type} =~ s/^Yubikey$/UBK/;
         }
     }
     $displayUpgBtn = 0 unless $self->conf->{upgradeSession};
@@ -587,25 +653,50 @@ sub _displayRegister {
     );
 }
 
+sub isDelAllowed {
+    my ( $self, $module ) = @_;
+    return ( $self->isRegistrationEnabled($module) && $module->userCanRemove );
+}
+
+sub isRegistrationEnabled {
+    my ( $self, $module ) = @_;
+    my $prefix = $module->prefix;
+
+    # Extra modules require special processing
+    if ( $self->conf->{sfExtra}->{$prefix} ) {
+        return 1;
+    }
+    else {
+        return $self->conf->{ $prefix . '2fActivation' }
+          && $self->conf->{ $prefix . '2fSelfRegistration' };
+    }
+}
+
 # Check rule and display
 sub register {
-    my ( $self, $req, $tpl, @args ) = @_;
+    my ( $self, $req, $prefix, @args ) = @_;
 
     # After verifying rule:
-    #   - call register run method if $tpl
+    #   - call register run method if $prefix
     #   - else give JSON list of available registers for this user
-    if ($tpl) {
+    if ($prefix) {
         my ($m) =
-          grep { $_->{m}->prefix eq $tpl } @{ $self->sfRModules };
+          grep { $_->{m}->prefix eq $prefix } @{ $self->sfRModules };
         unless ($m) {
             return $self->p->sendError( $req,
                 'Inexistent register module', 400 );
         }
         unless ( $m->{r}->( $req, $req->userData ) ) {
-            $self->userLogger->error("$tpl 2F registration refused");
+            $self->userLogger->error("$prefix 2F registration refused");
             return $self->p->sendError( $req, 'Registration refused', 403 );
         }
-        return $m->{m}->run( $req, @args );
+        my $can_update_error = $self->canUpdateSfa( $req, $m->{m}, @args );
+        if ($can_update_error) {
+            return $self->sendError( $req, $can_update_error, 400 );
+        }
+        else {
+            return $m->{m}->run( $req, @args );
+        }
     }
     my @am;
     foreach my $m ( @{ $self->sfRModules } ) {
@@ -648,6 +739,69 @@ sub searchForAuthorized2Fmodules {
         }
     }
     return @am;
+}
+
+sub canUpdateSfa {
+    my ( $self, $req, $module, $action ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
+    my $msg  = undef;
+
+    # Test action
+    if ( $module && $action && $action eq 'delete' ) {
+        my $prefix     = $module->prefix;
+        my $authnLevel = $module->authnLevel;
+        $self->logger->debug("$user request to delete ${prefix}2f device");
+        if (   $authnLevel
+            && $req->userData->{authenticationLevel} < $authnLevel )
+        {
+            $self->userLogger->warn(
+"$user request to delete ${prefix}2f device rejected due to insufficient authentication level!"
+            );
+            $self->logger->debug(
+"authLevel: $req->{userData}->{authenticationLevel} < requiredLevel: "
+                  . $authnLevel );
+            $msg = 'notAuthorizedAuthLevel';
+        }
+    }
+
+    # Test if impersonation is in progress
+    if ( !$msg && $self->conf->{impersonationRule} ) {
+        $self->logger->debug('Impersonation plugin is enabled');
+        if (   $req->userData->{"$self->{conf}->{impersonationPrefix}_user"}
+            && $req->userData->{"$self->{conf}->{impersonationPrefix}_user"} ne
+            $req->userData->{_user} )
+        {
+            $self->userLogger->warn(
+                "Impersonation in progress! $user is not allowed to update 2FA."
+            );
+            $msg = 'notAuthorized';
+        }
+    }
+
+    # Test if contextSwitching is in progress
+    if ( !$msg && $self->conf->{contextSwitchingRule} ) {
+        $self->logger->debug('ContextSwitching plugin is enabled');
+        if (
+            $req->userData->{
+                "$self->{conf}->{contextSwitchingPrefix}_session_id"}
+            && !$self->conf->{contextSwitchingAllowed2fModifications} )
+        {
+            $self->userLogger->warn(
+"ContextSwitching in progress! $user is not allowed to update 2FA."
+            );
+            $msg = 'notAuthorized';
+        }
+    }
+    $self->logger->debug("$user is allowed to update 2FA") unless $msg;
+    return $msg;
+}
+
+sub findRegisterModuleFor {
+    my ( $self, $mod ) = @_;
+    if ( $mod->isa("Lemonldap::NG::Portal::Lib::Code2F") ) {
+        return "::2F::Register::Generic";
+    }
+    return;
 }
 
 1;

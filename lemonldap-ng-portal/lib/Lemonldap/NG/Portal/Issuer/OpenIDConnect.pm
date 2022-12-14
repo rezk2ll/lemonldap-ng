@@ -15,6 +15,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
   PE_UNAUTHORIZEDURL
   PE_UNAUTHORIZEDPARTNER
+  PE_UNKNOWNPARTNER
   PE_OIDC_SERVICE_NOT_ALLOWED
   PE_FIRSTACCESS
 );
@@ -36,7 +37,7 @@ sub beforeAuth { 'exportRequestParameters' }
 
 use constant sessionKind => 'OIDCI';
 
-has rule          => ( is => 'rw' );
+has rule => ( is => 'rw' );
 has configStorage => (
     is      => 'ro',
     lazy    => 1,
@@ -197,6 +198,14 @@ sub run {
             $self->logger->debug(
                 "OIDC $flow flow requested (response type: $response_type)");
 
+            # Check if response mode is allowed for flow
+            my $response_mode = $oidc_request->{'response_mode'};
+            if ( !$self->isResponseModeAllowed( $flow, $response_mode ) ) {
+                $self->logger->error(
+                    "Reponse mode $response_mode is not allowed in $flow Flow");
+                return PE_ERROR;
+            }
+
             # Extract request_uri/request parameter
             if ( $oidc_request->{'request_uri'} ) {
                 my $request =
@@ -253,9 +262,9 @@ sub run {
 
             unless ($rp) {
                 $self->logger->error(
-"No registered Relying Party found with client_id $client_id"
-                );
-                return PE_UNAUTHORIZEDPARTNER;
+                        "No registered Relying Party found with"
+                      . " client_id $client_id" );
+                return PE_UNKNOWNPARTNER;
             }
             else {
                 $self->logger->debug("Client id $client_id matches RP $rp");
@@ -727,14 +736,22 @@ sub run {
 
                 $self->logger->debug("Generated code: $code");
 
-                # Build Response
-                my $response_url = $self->buildAuthorizationCodeAuthnResponse(
-                    $oidc_request->{'redirect_uri'},
-                    $code, $oidc_request->{'state'},
-                    $session_state
-                );
+                my $state = $oidc_request->{'state'};
 
-                return $self->_redirectToUrl( $req, $response_url );
+                return $self->sendOidcResponse(
+                    $req, $flow,
+                    $oidc_request->{'response_mode'},
+                    $oidc_request->{'redirect_uri'},
+                    {
+                        ( $code  ? ( code  => $code )  : () ),
+                        ( $state ? ( state => $state ) : () ),
+                        (
+                            $session_state
+                            ? ( session_state => $session_state )
+                            : ()
+                        ),
+                    }
+                );
             }
 
             # Implicit Flow
@@ -803,18 +820,30 @@ sub run {
                   ->{oidcRPMetaDataOptionsAccessTokenExpiration}
                   || $self->conf->{oidcServiceAccessTokenExpiration};
 
-                # Build Response
-                my $response_url = $self->buildImplicitAuthnResponse(
+                my $state = $oidc_request->{'state'};
+                return $self->sendOidcResponse(
+                    $req, $flow,
+                    $oidc_request->{'response_mode'},
                     $oidc_request->{'redirect_uri'},
-                    $access_token,
-                    $id_token,
-                    $expires_in,
-                    $oidc_request->{'state'},
-                    $session_state,
-                    ( ( $req_scope ne $scope ) ? $scope : undef )
+                    {
+                        id_token => $id_token,
+                        (
+                            $access_token
+                            ? (
+                                token_type   => 'bearer',
+                                access_token => $access_token
+                              )
+                            : ()
+                        ),
+                        ( $expires_in ? ( expires_in => $expires_in )    : () ),
+                        ( $state      ? ( state      => $state )         : () ),
+                        ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
+                        (
+                            $session_state ? ( session_state => $session_state )
+                            : ()
+                        )
+                    }
                 );
-
-                return $self->_redirectToUrl( $req, $response_url );
             }
 
             # Hybrid Flow
@@ -911,19 +940,35 @@ sub run {
                   ->{oidcRPMetaDataOptionsAccessTokenExpiration}
                   || $self->conf->{oidcServiceAccessTokenExpiration};
 
-                # Build Response
-                my $response_url = $self->buildHybridAuthnResponse(
-                    $oidc_request->{'redirect_uri'},
-                    $code,
-                    $access_token,
-                    $id_token,
-                    $expires_in,
-                    $oidc_request->{'state'},
-                    $session_state,
-                    ( ( $req_scope ne $scope ) ? $scope : undef )
-                );
+                my $state = $oidc_request->{state};
 
-                return $self->_redirectToUrl( $req, $response_url );
+                return $self->sendOidcResponse(
+                    $req, $flow,
+                    $oidc_request->{'response_mode'},
+                    $oidc_request->{'redirect_uri'},
+                    {
+                        code => $code,
+                        (
+                            $access_token
+                            ? (
+                                token_type   => 'bearer',
+                                access_token => $access_token
+                              )
+                            : ()
+                        ),
+                        (
+                            $id_token ? ( id_token => $id_token )
+                            : ()
+                        ),
+                        ( $expires_in ? ( expires_in => $expires_in )    : () ),
+                        ( $state      ? ( state      => $state )         : () ),
+                        ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
+                        (
+                            $session_state ? ( session_state => $session_state )
+                            : ()
+                        )
+                    }
+                );
             }
 
             $self->logger->debug("None flow has been selected");
@@ -1071,7 +1116,7 @@ sub token {
     $self->logger->debug("URL detected as an OpenID Connect TOKEN URL");
 
     my $rp = $self->checkEndPointAuthenticationCredentials($req);
-    return $self->sendOIDCError( $req, 'invalid_request', 400 ) unless ($rp);
+    return $self->invalidClientResponse($req) unless ($rp);
 
     my $grant_type = $req->param('grant_type') || '';
 
@@ -1131,7 +1176,7 @@ sub _handleClientCredentialsGrant {
     if ( $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsPublic} ) {
         $self->logger->error(
             "Client Credentials grant cannot be used on public clients");
-        return $self->sendOIDCError( $req, 'invalid_client', 400 );
+        return $self->sendOIDCError( $req, 'unauthorized_client', 400 );
     }
     my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
 
@@ -1847,7 +1892,7 @@ sub introspection {
     $self->logger->debug("URL detected as an OpenID Connect INTROSPECTION URL");
 
     my $rp = $self->checkEndPointAuthenticationCredentials($req);
-    return $self->sendOIDCError( $req, 'invalid_client', 401 ) unless ($rp);
+    return $self->invalidClientResponse($req) unless ($rp);
 
     if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
         ->{oidcRPMetaDataOptionsPublic} )
@@ -1898,14 +1943,18 @@ sub jwks {
 
     my $jwks = { keys => [] };
 
-    my $public_key_sig = $self->conf->{oidcServicePublicKeySig};
-    my $key_id_sig     = $self->conf->{oidcServiceKeyIdSig};
-    if ($public_key_sig) {
-        my $key = $self->key2jwks($public_key_sig);
-        $key->{kty} = "RSA";
-        $key->{use} = "sig";
-        $key->{kid} = $key_id_sig if $key_id_sig;
-        push @{ $jwks->{keys} }, $key;
+    my $public_key_sig_or_cert = $self->conf->{oidcServicePublicKeySig};
+    my $private_key_sig        = $self->conf->{oidcServicePrivateKeySig};
+    my $key_id_sig             = $self->conf->{oidcServiceKeyIdSig};
+    if ($private_key_sig) {
+        my $jwk = {
+            kty => "RSA",
+            use => "sig",
+            ( $key_id_sig ? ( kid => $key_id_sig ) : () ),
+            %{ $self->key2jwks($private_key_sig) },
+            %{ $self->getCertInfo($public_key_sig_or_cert) },
+        };
+        push @{ $jwks->{keys} }, $jwk;
     }
     $self->logger->debug("Send JWKS response sent");
     return $self->p->sendJSONresponse( $req, $jwks );
@@ -2250,6 +2299,7 @@ sub metadata {
             request_parameter_supported      => JSON::true,
             request_uri_parameter_supported  => JSON::true,
             require_request_uri_registration => JSON::false,
+            response_modes_supported => [ "query", "fragment", "form_post", ],
 
             # Algorithms
             id_token_signing_alg_values_supported =>
@@ -2261,8 +2311,6 @@ sub metadata {
             code_challenge_methods_supported => [qw/plain S256/],
         }
     );
-
-    # response_modes_supported
 
     # id_token_encryption_alg_values_supported
     # id_token_encryption_enc_values_supported
@@ -2448,17 +2496,6 @@ sub _generateIDToken {
 
     # Create ID Token
     return $self->createIDToken( $req, $id_token_payload_hash, $rp );
-}
-
-sub _redirectToUrl {
-    my ( $self, $req, $response_url ) = @_;
-
-    # We must clear hidden form fields saved from the request (#2085)
-    $self->p->clearHiddenFormValue($req);
-    $self->logger->debug("Redirect user to $response_url");
-    $req->urldc($response_url);
-
-    return PE_REDIRECT;
 }
 
 1;

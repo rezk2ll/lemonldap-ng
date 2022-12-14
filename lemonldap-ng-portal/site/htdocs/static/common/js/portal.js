@@ -545,6 +545,17 @@ LemonLDAP::NG Portal jQuery scripts
     if ((window.datas.ppolicy != null) && $('#newpassword').length) {
       $('#reset').change(togglecheckpassword);
     }
+    $(".localeDate").each(function() {
+      var s;
+      s = new Date($(this).attr("val") * 1000);
+      return $(this).text(s.toLocaleString());
+    });
+    $('.oidcConsent').on('click', function() {
+      return removeOidcConsent($(this).attr('partner'));
+    });
+    if (datas['pingInterval'] && datas['pingInterval'] > 0) {
+      window.setTimeout(ping, datas['pingInterval']);
+    }
     if (datas['enablePasswordDisplay']) {
       field = '';
       if (datas['dontStorePassword']) {
@@ -575,16 +586,25 @@ LemonLDAP::NG Portal jQuery scripts
         });
       }
     }
-    if (datas['pingInterval'] && datas['pingInterval'] > 0) {
-      window.setTimeout(ping, datas['pingInterval']);
-    }
-    $(".localeDate").each(function() {
-      var s;
-      s = new Date($(this).attr("val") * 1000);
-      return $(this).text(s.toLocaleString());
-    });
-    $('.oidcConsent').on('click', function() {
-      return removeOidcConsent($(this).attr('partner'));
+    $('#reset').change(function() {
+      var checked, ref3, ref4, ref5, ref6, ref7;
+      checked = $(this).prop('checked');
+      console.log('Reset is checked', checked);
+      if (checked === true) {
+        $('#newpasswords').hide();
+        $('#newpassword').removeAttr('required');
+        $('#confirmpassword').removeAttr('required');
+        return (ref3 = $('#confirmpassword').get(0)) != null ? ref3.setCustomValidity('') : void 0;
+      } else {
+        $('#newpasswords').show();
+        $('#newpassword').attr('required', true);
+        $('#confirmpassword').attr('required', true);
+        if (((ref4 = $('#confirmpassword').get(0)) != null ? ref4.value : void 0) === ((ref5 = $('#newpassword').get(0)) != null ? ref5.value : void 0)) {
+          return (ref6 = $('#confirmpassword').get(0)) != null ? ref6.setCustomValidity('') : void 0;
+        } else {
+          return (ref7 = $('#confirmpassword').get(0)) != null ? ref7.setCustomValidity(translate('PE34')) : void 0;
+        }
+      }
     });
     $('#passwordfield').on('input', function() {
       if ($('#passwordfield').get(0).value && datas['dontStorePassword']) {

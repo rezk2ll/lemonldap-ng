@@ -5,12 +5,13 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
   PE_OK
+  PE_ERROR
   PE_NOTOKEN
   PE_TOKENEXPIRED
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.15.1';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -40,6 +41,16 @@ has authnLevel => (
     lazy    => 1,
     default => sub {
         return $_[0]->conf->{ $_[0]->prefix . '2fAuthnLevel' };
+    }
+);
+
+# 'type' field of stored _2fDevices
+# Defaults to the last component of the package name
+# But can be overriden by sfExtra
+has type => (
+    is      => 'rw',
+    default => sub {
+        ( split( '::', ref( $_[0] ) ) )[-1];
     }
 );
 
@@ -101,8 +112,13 @@ sub _verify {
     my $session;
     unless ( $session = $self->ott->getToken($token) ) {
         $self->userLogger->info('Token expired');
-        $self->setSecurity($req);
+        $req->noLoginDisplay(1);
         return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+    }
+    unless ( $session->{_2fRealSession} ) {
+        $self->logger->error("Invalid 2FA session token");
+        $req->noLoginDisplay(1);
+        return $self->p->do( $req, [ sub { PE_ERROR } ] );
     }
 
     # Launch second factor verification
@@ -136,9 +152,9 @@ sub _verify {
             "Update sessionInfo with new authenticationLevel: $l");
         $req->sessionInfo->{authenticationLevel} = $l;
 
-        # Compute macros & groups with new authenticationLevel
-        $self->logger->debug("Compute macros and groups...");
-        $req->steps( [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
+        # Compute macros & local groups again with new authenticationLevel
+        $self->logger->debug("Compute macros and local groups...");
+        $req->steps( [ 'setMacros', 'setLocalGroups' ] );
         if ( my $error = $self->p->process($req) ) {
             $self->logger->debug("SFA: Process returned error: $error");
             $req->error($error);

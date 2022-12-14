@@ -23,10 +23,9 @@ extends qw(
 # Prefix can overriden by sfExtra and is used for routes
 has prefix => ( is => 'rw', default => 'mail' );
 
-# Type is used to lookup config
-has type   => ( is => 'ro', default => 'mail' );
-has legend => ( is => 'rw', default => 'enterMail2fCode' );
-
+# Used to lookup config
+has conf_type => ( is => 'ro', default => 'mail' );
+has legend    => ( is => 'rw', default => 'enterMail2fCode' );
 
 has ott => (
     is      => 'rw',
@@ -45,6 +44,7 @@ has sessionKey => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
+        return "destination" if $_[0]->is_registrable;
         return $_[0]->{conf}->{mail2fSessionKey}
           || $_[0]->{conf}->{mailSessionKey};
     }
@@ -56,10 +56,9 @@ has code_activation => (
     lazy    => 1,
     default => sub {
 
-        $_[0]->{conf}->{ mail2fCodeRegex } || '\d{6}';
+        $_[0]->{conf}->{mail2fCodeRegex} || '\d{6}';
     }
 );
-
 
 sub init {
     my ($self) = @_;
@@ -69,8 +68,6 @@ sub init {
         return 0;
     }
 
-    $self->prefix( $self->conf->{sfPrefix} )
-      if ( $self->conf->{sfPrefix} );
     return $self->SUPER::init();
 }
 
@@ -78,22 +75,28 @@ sub init {
 sub run {
     my ( $self, $req, $token ) = @_;
 
-    my $dest = $req->{sessionInfo}->{ $self->sessionKey };
-    unless ($dest) {
-        $self->logger->error( "Could not find mail attribute for login "
-              . $req->{sessionInfo}->{_user} );
-        return PE_MUSTHAVEMAIL;
+    if ( !$self->is_registrable ) {
+        my $dest = $req->{sessionInfo}->{ $self->sessionKey };
+        unless ($dest) {
+            $self->logger->error( "Could not find mail attribute for login "
+                  . $req->{sessionInfo}->{_user} );
+            return PE_MUSTHAVEMAIL;
+        }
     }
 
     # Delegate code generation to SUPER
-    return $self->SUPER::run($req, $token);
+    return $self->SUPER::run( $req, $token );
 }
 
 sub sendCode {
     my ( $self, $req, $sessionInfo, $code ) = @_;
 
-
     my $dest = $sessionInfo->{ $self->sessionKey };
+
+    if ( !$dest ) {
+        $self->logger->error('Unable to find email recipient');
+        return 0;
+    }
 
     # Build mail content
     my $tr      = $self->translate($req);
@@ -141,9 +144,10 @@ sub sendCode {
 }
 
 sub verify_external {
-        my ($self, $req, $session, $usercode) = @_;
-        $self->logger->error("Error in Mail2F: verify_external is not supposed to be invoked");
-        return PE_ERROR;
+    my ( $self, $req, $session, $usercode ) = @_;
+    $self->logger->error(
+        "Error in Mail2F: verify_external is not supposed to be invoked");
+    return PE_ERROR;
 }
 
 1;

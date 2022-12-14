@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OIDC_AUTH_ERROR
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth
@@ -48,6 +48,8 @@ sub init {
           ->{oidcOPMetaDataOptionsDisplayName};
         my $icon = $self->conf->{oidcOPMetaDataOptions}->{$_}
           ->{oidcOPMetaDataOptionsIcon};
+        my $tooltip = $self->conf->{oidcOPMetaDataOptions}->{$_}
+          ->{oidcOPMetaDataOptionsTooltip} || $name;
         my $order = $self->conf->{oidcOPMetaDataOptions}->{$_}
           ->{oidcOPMetaDataOptionsSortNumber} // 0;
         my $img_src;
@@ -59,14 +61,13 @@ sub init {
               : $portalPath . $self->p->staticPrefix . "/common/" . $icon;
         }
 
-        push @list,
-          {
+        push @list, {
             val   => $_,
             name  => $name,
+            title => $tooltip,
             icon  => $img_src,
-            class => "openidconnect",
             order => $order
-          };
+        };
     }
     $self->addRouteFromConf(
         'Unauth',
@@ -352,12 +353,16 @@ sub authLogout {
     my $endsession_endpoint =
       $self->oidcOPList->{$op}->{conf}->{end_session_endpoint};
 
+    my $client_id =
+      $self->conf->{oidcOPMetaDataOptions}->{$op}
+      ->{oidcOPMetaDataOptionsClientID};
+
     if ($endsession_endpoint) {
         my $logout_url = $self->conf->{portal} . '?logout=1';
         $req->urldc(
             $self->buildLogoutRequest(
                 $endsession_endpoint, $req->{sessionInfo}->{_oidc_id_token},
-                $logout_url
+                $logout_url, undef, $client_id,
             )
         );
 

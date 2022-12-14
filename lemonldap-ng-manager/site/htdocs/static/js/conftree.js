@@ -58,6 +58,12 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsRule",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsRule",
             "title" : "casAppMetaDataOptionsRule"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsComment",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsComment",
+            "title" : "casAppMetaDataOptionsComment",
+            "type" : "longtext"
          }
       ],
       "id" : "casAppMetaDataOptions",
@@ -128,6 +134,12 @@ function templates(tpl,key) {
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsGateway",
             "title" : "casSrvMetaDataOptionsGateway",
             "type" : "bool"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsComment",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsComment",
+            "title" : "casSrvMetaDataOptionsComment",
+            "type" : "longtext"
          }
       ],
       "id" : "casSrvMetaDataOptions",
@@ -145,6 +157,11 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsIcon",
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsIcon",
             "title" : "casSrvMetaDataOptionsIcon"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsTooltip",
+            "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsTooltip",
+            "title" : "casSrvMetaDataOptionsTooltip"
          },
          {
             "default" : "",
@@ -352,6 +369,12 @@ function templates(tpl,key) {
             "id" : "oidcOPMetaDataOptionsProtocol",
             "title" : "oidcOPMetaDataOptionsProtocol",
             "type" : "simpleInputContainer"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsComment",
+            "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsComment",
+            "title" : "oidcOPMetaDataOptionsComment",
+            "type" : "longtext"
          }
       ],
       "id" : "oidcOPMetaDataOptions",
@@ -368,6 +391,11 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsIcon",
             "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsIcon",
             "title" : "oidcOPMetaDataOptionsIcon"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsTooltip",
+            "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsTooltip",
+            "title" : "oidcOPMetaDataOptionsTooltip"
          },
          {
             "default" : "",
@@ -444,6 +472,14 @@ function templates(tpl,key) {
       "help" : "idpopenidconnect.html#scope-rules",
       "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataScopeRules",
       "title" : "oidcRPMetaDataScopeRules",
+      "type" : "keyTextContainer"
+   },
+   {
+      "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
+      "default" : [],
+      "help" : "exportedvars.html#extend-variables-using-macros-and-groups",
+      "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
+      "title" : "oidcRPMetaDataMacros",
       "type" : "keyTextContainer"
    },
    {
@@ -749,19 +785,17 @@ function templates(tpl,key) {
             "id" : "logout",
             "title" : "logout",
             "type" : "simpleInputContainer"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsComment",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsComment",
+            "title" : "oidcRPMetaDataOptionsComment",
+            "type" : "longtext"
          }
       ],
       "help" : "idpopenidconnect.html#options",
       "id" : "oidcRPMetaDataOptions",
       "title" : "oidcRPMetaDataOptions"
-   },
-   {
-      "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
-      "default" : [],
-      "help" : "exportedvars.html#extend-variables-using-macros-and-groups",
-      "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
-      "title" : "oidcRPMetaDataMacros",
-      "type" : "keyTextContainer"
    },
    {
       "_nodes" : [
@@ -1061,13 +1095,6 @@ function templates(tpl,key) {
          },
          {
             "default" : 0,
-            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsAllowProxiedAuthn",
-            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsAllowProxiedAuthn",
-            "title" : "samlIDPMetaDataOptionsAllowProxiedAuthn",
-            "type" : "bool"
-         },
-         {
-            "default" : 0,
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsAllowLoginFromIDP",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsAllowLoginFromIDP",
             "title" : "samlIDPMetaDataOptionsAllowLoginFromIDP",
@@ -1108,6 +1135,12 @@ function templates(tpl,key) {
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsRelayStateURL",
             "title" : "samlIDPMetaDataOptionsRelayStateURL",
             "type" : "bool"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsComment",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsComment",
+            "title" : "samlIDPMetaDataOptionsComment",
+            "type" : "longtext"
          }
       ],
       "help" : "authsaml.html#options",
@@ -1126,6 +1159,11 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsIcon",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsIcon",
             "title" : "samlIDPMetaDataOptionsIcon"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsTooltip",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsTooltip",
+            "title" : "samlIDPMetaDataOptionsTooltip"
          },
          {
             "default" : "",
@@ -1363,6 +1401,12 @@ function templates(tpl,key) {
             "id" : "samlSPMetaDataOptionsSecurity",
             "title" : "samlSPMetaDataOptionsSecurity",
             "type" : "simpleInputContainer"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsComment",
+            "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsComment",
+            "title" : "samlSPMetaDataOptionsComment",
+            "type" : "longtext"
          }
       ],
       "help" : "idpsaml.html#options",
@@ -1447,6 +1491,12 @@ function templates(tpl,key) {
             "title" : "vhostAccessToTrace"
          },
          {
+            "get" : tpl+"s/"+key+"/"+"vhostAuthnLevel",
+            "id" : tpl+"s/"+key+"/"+"vhostAuthnLevel",
+            "title" : "vhostAuthnLevel",
+            "type" : "int"
+         },
+         {
             "default" : "Main",
             "get" : tpl+"s/"+key+"/"+"vhostType",
             "id" : tpl+"s/"+key+"/"+"vhostType",
@@ -1492,12 +1542,6 @@ function templates(tpl,key) {
             "type" : "select"
          },
          {
-            "get" : tpl+"s/"+key+"/"+"vhostAuthnLevel",
-            "id" : tpl+"s/"+key+"/"+"vhostAuthnLevel",
-            "title" : "vhostAuthnLevel",
-            "type" : "int"
-         },
-         {
             "get" : tpl+"s/"+key+"/"+"vhostDevOpsRulesUrl",
             "id" : tpl+"s/"+key+"/"+"vhostDevOpsRulesUrl",
             "title" : "vhostDevOpsRulesUrl"
@@ -1508,6 +1552,13 @@ function templates(tpl,key) {
             "id" : tpl+"s/"+key+"/"+"vhostServiceTokenTTL",
             "title" : "vhostServiceTokenTTL",
             "type" : "int"
+         },
+         {
+            "default" : "",
+            "get" : tpl+"s/"+key+"/"+"vhostComment",
+            "id" : tpl+"s/"+key+"/"+"vhostComment",
+            "title" : "vhostComment",
+            "type" : "longtext"
          }
       ],
       "help" : "configvhost.html#options",

@@ -99,56 +99,52 @@ SKIP: {
     $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     ( $host, $tmp, $query ) =
-      expectForm( $res, '#', undef, 'upgrading', 'url' );
+      expectForm( $res, '#', undef, 'upgrading', 'url', 'kerberos', 'ajax_auth_token' );
 
-# The JS code is supposed to call /renewsession?kerberos=1 (see kerberos.coffee)
+    # JS code should call /authkrb
     ok(
         $res = $issuer->_get(
-            '/renewsession',
-            query  => 'kerberos=1',
+            '/authkrb',
             accept => 'application/json',
             cookie => "lemonldap=$idpId;$pdata",
         ),
-        'Request to Krb endpoint'
+        'AJAX query'
     );
-
-    is( $res->[0], 401, 'Get 401' );
-    is( getHeader( $res, 'WWW-Authenticate' ),
-        'Negotiate', 'Get negotiate header' );
-
-    # Update pdata
     $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
+    is( getHeader( $res, 'WWW-Authenticate' ), 'Negotiate' ),
 
-    # Kerberos request
-    ok(
+      ok(
         $res = $issuer->_get(
-            '/renewsession',
-            query  => 'kerberos=1',
+            '/authkrb',
             accept => 'application/json',
             cookie => "lemonldap=$idpId;$pdata",
             custom => { HTTP_AUTHORIZATION => 'Negotiate c29tZXRoaW5n' },
         ),
-        'Push fake kerberos'
+        'AJAX query'
+      );
+    $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
+    my $json = expectJSON($res);
+    ok( $json->{ajax_auth_token}, "User token was returned" );
+    my $ajax_auth_token = $json->{ajax_auth_token};
+
+    $query =~ s/ajax_auth_token=/ajax_auth_token=$ajax_auth_token/;
+
+    ok(
+        $res = $issuer->_post(
+            '/renewsession', IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+            cookie => "lemonldap=$idpId;$pdata",
+        ),
+        'Post form'
     );
+
+    # Update pdata
     $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
     $tmp   = expectCookie($res);
     ok( $tmp ne $idpId, 'Get a new session' );
     $idpId = $tmp;
 
-    # JS code has done its magic and is supposed to post the form without the
-    # "upgrading" param
-
-    $query =~ s/upgrading=[^&]*//;
-    ok(
-        $res = $issuer->_post(
-            '/renewsession',
-            IO::String->new($query),
-            accept => 'text/html',
-            length => length($query),
-            cookie => "lemonldap=$idpId;$pdata",
-        ),
-        'Re auth'
-    );
     $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
     ( $url, $query ) = expectRedirection( $res,
         qr#http://auth.idp.com(/+saml/singleSignOn)(?:\?(.*))?# );

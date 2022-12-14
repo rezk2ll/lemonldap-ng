@@ -103,30 +103,30 @@ Providing tokens from an external source
 ----------------------------------------
 
 If you do not want to use self-registration features for U2F, TOTP and so
-on, you can set tokens by yourself *(in your LDAP server for example)*
+on, you can set devices by yourself *(in your LDAP server for example)*
 and map it to ``_2fDevices`` attribute. ``_2fDevices`` is a JSON array
-that contains token descriptions :
+that contains device descriptions :
 
 .. code::
 
-   [ {"type" : "TOTP", "name" : "MyTOTP", …}, {<other_token>}, …]
+   [ {"type" : "TOTP", "name" : "MyTOTP", …}, {<other_device>}, …]
 
-U2F Tokens
+U2F Device
 ~~~~~~~~~~
 
 .. code-block:: json
 
    {"name" : "MyU2FKey" , "type" : "U2F" , "_userKey" : "########" , "_keyHandle":"########" , "epoch":"1524078936"}
 
-TOTP Tokens
+TOTP Device
 ~~~~~~~~~~~
 
 .. code-block:: json
 
    {"name" : "MyTOTP" , "type" : "TOTP" , "_secret" : "########" , "epoch" : "1523817955"}
 
-Yubikey Tokens
-~~~~~~~~~~~~~~
+Yubico OTP Device
+~~~~~~~~~~~~~~~~~
 
 .. code-block:: json
 

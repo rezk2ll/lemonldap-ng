@@ -56,16 +56,14 @@ Debian
 Debian dist                            LL::NG version                             Secured                                               Maintenance                                                  LTS Limit                           `Extended LTS <https://wiki.debian.org/LTS/Extended>`__ Limit
 =========== ========================== ======================================== ===================================================== ============================================================ =================================== =============================================================
 *6*         *Squeeze*                  *0.9.4.1*                                |maybe| No known vulnerability                        *None*                                                       *February 2016*                     *April 2019*
-*7*         *Wheezy*                   `1.1.2 </documentation/1.1/>`__          |maybe| No known vulnerability                        *None*                                                       *May 2018*                          *June 2020*
-*8*         *Jessie*                   `1.3.3 </documentation/1.3/>`__          |maybe| CVE-2019-19791 tagged as minor                **None**  [1]_                                               June 2020                           *June 2022*
-*9*         *Stretch*                  `1.9.7 </documentation/1.9/>`__          |maybe| CVE-2019-19791 tagged as minor                `Debian LTS Team <https://www.debian.org/lts/>`__            June 2022                           Possibly 2024
-\           *Stretch-backports*        `2.0.2 </documentation/2.0/>`__          |bad| CVE-2019-12046, CVE-2019-13031, CVE-2019-15941  *None*                                                       *June 2019*
-\           *Stretch-backports-sloppy* `2.0.11 </documentation/2.0/>`__         |maybe|                                               *None*                                                       *August 2021*
-**10**      Buster                     `2.0.2 </documentation/2.0/>`__          |clean| CVE-2019-19791 tagged as minor                `Debian Security Team <https://security-team.debian.org/>`__ June 2024                           June 2026
-\           Buster-backports           `2.0.14 </documentation/2.0/>`__         |clean|                                               LL::NG Team, "best effort" [3]_                              Maybe until Debian 12 release [4]_
-\           *Buster-backports-sloppy*  *Adds libauthen-webauthn-perl only*      |clean|                                               LL::NG Team, "best effort" [3]_                              June 2024
-**11**      Bullseye                   `2.0.11 </documentation/2.0/>`__         |clean|                                               `Debian Security Team <https://security-team.debian.org/>`__ July 2026                           June 2028
-\           Bullseye-backports         `2.0.14 </documentation/2.0/>`__         |clean|                                               LL::NG Team, "best effort" [3]_                              Maybe until Debian 13 release [4]_
+*7*         *Wheezy*                   *1.1.2*                                  |maybe| No known vulnerability                        *None*                                                       *May 2018*                          *June 2020*
+*8*         *Jessie*                   *1.3.3*                                  |maybe| CVE-2019-19791 tagged as minor                **None**  [1]_                                               *June 2020*                         *Possibly 2024*
+*9*         *Stretch*                  *1.9.7*                                  |maybe| CVE-2019-19791 tagged as minor                `Debian LTS Team <https://www.debian.org/lts/>`__            *June 2022*                         *Possibly 2024*
+**10**      Buster                     `2.0.2 </documentation/2.0/>`__          |clean| CVE-2019-19791 tagged as minor                `Debian Security Team <https://security-team.debian.org/>`__ June 2024                           Possibly 2026
+\           *Buster-backports*         `2.0.14 </documentation/2.0/>`__         |maybe|                                               *None*                                                       *September 2022*
+\           *Buster-backports-sloppy*  *Adds libauthen-webauthn-perl only*      |maybe|                                               *None*                                                       *September 2022*
+**11**      Bullseye                   `2.0.11 </documentation/2.0/>`__         |clean|                                               `Debian Security Team <https://security-team.debian.org/>`__ July 2026                           Possibly 2028
+\           Bullseye-backports         `2.0.14 </documentation/2.0/>`__         |clean|                                               LL::NG Team, "best effort" [3]_                              July 2024
 **Next**    Testing/Unstable           Latest  [5]_                             |clean|                                               LL::NG Team
 =========== ========================== ======================================== ===================================================== ============================================================ =================================== =============================================================
 
@@ -142,9 +140,6 @@ Other
    updated by `LL::NG Team </team>`__ until dependencies are compatible.
    Don't use backports unless you plan to update your system because
    backports are not covered by Debian Security Policy
-
-.. [4]
-   around July 2023
 
 .. [5]
    few days after release

@@ -303,14 +303,14 @@ sub deleteSession {
     $req->userData( {} );
 
     # Redirect or Post if asked by authLogout
-    if ( $req->urldc and $req->urldc ne $self->conf->{portal} ) {
-        $req->steps( [] );
-        return PE_REDIRECT;
-    }
-
     if ( $req->postUrl ) {
         $req->steps( ['autoPost'] );
         return PE_OK;
+    }
+
+    if ( $req->urldc and $req->urldc ne $self->conf->{portal} ) {
+        $req->steps( [] );
+        return PE_REDIRECT;
     }
 
     # If logout redirects to another URL, just remove next steps for the

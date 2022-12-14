@@ -1,3 +1,77 @@
+lemonldap-ng (2.0.15.1) jammy; urgency=medium
+
+  * Bugs:
+    * #2796: "Internal Server Error" during MFA flow when using LDAP as UserDB in 2.0.15
+
+ -- Clément <clem.oudot@gmail.com>  Thu, 15 Sep 2022 15:58:47 +0200
+
+lemonldap-ng (2.0.15) jammy; urgency=medium
+
+  * Bugs:
+    * #2615: Redirection issue with Issue SAML + ForceAuthn=true + Kerberos authentication
+    * #2650: Empty SCRIPT_NAME breaks the portal
+    * #2690: Second factor logo/label not used on registration screen
+    * #2708: Auth::OpenIDConnect redirects in a loop when invalid JSON metadata is provided
+    * #2712: 2fSelfRegistration == 0 + 2fActivation == 1 leads to registrable second factor being presented every time
+    * #2714: Session upgrade link in 2FA manager not working
+    * #2716: 2FA registration does not auto-redirect to only available provider after deleting an existing 2FA
+    * #2724: one importMetadata Script default option isn't correct
+    * #2733: Allowing ALL special characters does not work with reset password form
+    * #2742: convertConfig no error but nothing converted
+    * #2758: [CVE-2022-37186] Session destroyed on portal but still valid on handlers while there is activity
+    * #2760: Userinfo does not show updated attributs when using Offline sessions
+    * #2769: missing handler logs with default Nginx + LemonLDAP
+    * #2772: translation overrides from skin json files are not used when sending emails
+    * #2773: translation override from skin bypasses llng.ini
+    * #2785: Invalid <Organization> in SAML metadata can crash portal startup
+    * #2787: Status: Unknown command line during OIDC flow
+    * #2789: $portal->templateDir causes skin mix-up
+    * #2791: After token timeout during 2FA flow,  login form is left in broken state
+    * #2793: samlGotAuthnRequest cannot modify $login->request when signature validation is enabled
+
+  * New features:
+    * #2491: Use environment variables placeholder in lemonldap json configuration
+    * #2713: handle refresh tokens in Auth::OpenIDConnect
+    * #2737: remember previous authentication choice
+    * #2763: Install LL::NG on EL9
+
+  * Improvements:
+    * #2607: bypass OIDC logout confirmation
+    * #2674: Add HSTS as new security parameter in the Manager
+    * #2692: New API for CAPTCHA plugins
+    * #2719: importMetadata should handle conflicts between multiple federations
+    * #2720: importMetadata should be configurable
+    * #2723: Cannot specify custom urn:oasis:names:tc:SAML:2.0:assertion:AuthnContextClassRef values for LemonLDAP IdPs
+    * #2725: Add session data to oidcGenerateUserInfoResponse
+    * #2726: Add a session variable for used 2F module
+    * #2732: Add userLogger event when a specific 2FA is selected
+    * #2739: Provide a specific package to install LLNG FastCGI client
+    * #2745: portalEnablePasswordDisplay is not used in password change form
+    * #2746: SAML metadata without SingleLogoutService leads to error at logout
+    * #2753: Add IDP selection rules for CAS and OIDC
+    * #2755: OIDC : issue on token endpoint with method client_secret_basic
+    * #2756: Allow customization of portal JS code with jQuery events
+    * #2757: Allow admins to change the 2FA timeout
+    * #2759: Append a go-back-to-top button
+    * #2761: Append an option to customize Manager CSS
+    * #2762: Add re-send option to code-based OTPs
+    * #2768: Add new hooks on Access Token refresh
+    * #2775: Notification process can not be continued with JSON response
+    * #2780: New lemonldap-ng-cli subcommand: merge
+    * #2782: Notifications are not sorted by sessions explorer and epoch is  not converted into local date
+    * #2784: Allow history fields to be translated in templates
+
+  * Templates:
+    * #2690: Second factor logo/label not used on registration screen
+    * #2714: Session upgrade link in 2FA manager not working
+    * #2737: remember previous authentication choice
+    * #2745: portalEnablePasswordDisplay is not used in password change form
+    * #2750: Option to define the favicon
+    * #2759: Append a go-back-to-top button
+    * #2761: Append an option to customize Manager CSS
+
+ -- Clément <clem.oudot@gmail.com>  Fri, 09 Sep 2022 10:13:43 +0200
+
 lemonldap-ng (2.0.14) focal; urgency=medium
 
   * Bugs:

@@ -17,24 +17,24 @@ information (through UserInfo endpoint).
 As an OP, LL::NG supports many OpenID Connect features:
 
 -  Authorization Code, Implicit and Hybrid flows
--  Publication of JSON metadata and JWKS data (Discovery)
+-  `Publication of JSON metadata and JWKS data (Discovery) <https://openid.net/specs/openid-connect-discovery-1_0.html>`__
 -  ``prompt``, ``display``, ``ui_locales``, ``max_age`` parameters
--  Extra claims definition
+-  :ref:`Mapping custom scope values to non-standard claims <oidcextraclaims>`
 -  Authentication context Class References (ACR)
 -  Nonce
--  Dynamic registration
+-  `Dynamic registration <https://openid.net/specs/openid-connect-registration-1_0.html>`__
 -  Access Token Hash generation
 -  ID Token signature (HS256/HS384/HS512/RS256/RS384/RS512)
 -  UserInfo endpoint, as JSON or as JWT
 -  Request and Request URI
--  Session management
--  FrontChannel Logout
--  BackChannel Logout
+-  `FrontChannel Logout <https://openid.net/specs/openid-connect-frontchannel-1_0.html>`__
+-  `RP-Initiated Logout <https://openid.net/specs/openid-connect-rpinitiated-1_0.html>`__
 -  PKCE (Since ``2.0.4``) - See :rfc:`7636`
 -  Introspection endpoint (Since ``2.0.6``) - See :rfc:`7662`
 -  Offline access (Since ``2.0.7``)
 -  Refresh Tokens (Since ``2.0.7``)
 -  Optional JWT Access Tokens (Since ``2.0.12``) - See :rfc:`9068`
+-  `Form Post Response Mode <https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html>`__ (Since ``2.0.16``)
 
 Configuration
 -------------
@@ -207,7 +207,7 @@ attributes as **Value**:
 
 -  `employment_info` => `position company`
 
-In this example, an OpenID Client requesting for the ``employment_info`` scope will
+In this example, an OpenID Connect client (RP) requesting for the ``employment_info`` scope will
 be able to read the ``company`` and ``position`` attributes from the UserInfo endpoint.
 
 .. important::
@@ -259,6 +259,11 @@ Examples:
 
   * the ``write`` scope will be granted if the user is a member of the ``writers`` group, but only if the application requested it.
 
+Macros
+^^^^^^
+
+You can define here macros that will be only evaluated for this service,
+and not registered in the user's session.
 
 Options
 ^^^^^^^
@@ -326,17 +331,14 @@ Options
 
 -  **Timeouts**
 
-   -  **Authorization Codes**: Expiration time of
+   -  **Authorization Codes** *(default: one minute)*: Expiration time of
       Authorization Codes, when using the Authorization Code flow.
-      Default value is one minute.
-   -  **ID Tokens**: Expiration time of ID Tokens. Default
-      value is one hour.
-   -  **Access Tokens**: Expiration time
-      of Access Tokens. Default value is one hour.
-   -  **Offline sessions**: Lifetime of the
+   -  **ID Tokens** *(default: one hour)*: Expiration time of ID Tokens.
+   -  **Access Tokens** *(default: one hour)*: Expiration time
+      of Access Tokens.
+   -  **Offline sessions** *(default: one month)*: Lifetime of the
       refresh token obtained with the **offline_access** scope.
-      Default value is one month. This parameter only applies if offline
-      sessions are enabled.
+      This parameter only applies if offline sessions are enabled.
 
 -  **Logout**
 
@@ -349,11 +351,7 @@ Options
       URLs that this client can redirect the user to once the logout is done
       (through ``post_logout_redirect_uri``)
 
-Macros
-^^^^^^
-
-You can define here macros that will be only evaluated for this service,
-and not registered in the user's session.
+-  **Comment**: set a comment
 
 Display
 ^^^^^^^
@@ -364,7 +362,7 @@ Display
 .. |beta| image:: /documentation/beta.png
 
 
-Access Rule extra variables
+Access rule extra variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When writing your access rules, you can additionally use the following variables:
@@ -372,6 +370,23 @@ When writing your access rules, you can additionally use the following variables
 * ``$_oidc_grant_type`` (since version ``2.0.14``): the grant type being used to
   access this service. Possible values: ``authorizationcode``,
   ``implicit``, ``hybrid``, ``clientcredentials``, ``password``
+
+The following attributes are made available in the created session:
+
+* The ``_whatToTrace`` attribute (main session identifier), is set to the
+  relying party's Client ID
+* The ``_scope`` attribute is set to the requested scopes
+* The ``_clientId`` attribute is set to the Client ID that obtained the access
+  token.
+* The ``_clientConfKey`` attribute is set to the LemonLDAP::NG configuration
+  key for the client that obtained the access token.
+
+The **Access Rule**, if defined, will have access to those variables, as well as
+the `@ENV` array. You can use it to restrict the use of this grant to
+pre-determined scopes, a particular IP address, etc.
+
+These session attributes will be released on the UserInfo endpoint if they are
+mapped to **Exported Attributes** and **Extra Claims**.
 
 .. _resource-owner-password-grant:
 
@@ -394,23 +409,6 @@ Client Credentials Grant
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Client Credentials Grant allows you to obtain an Access Token using only a Relying Party's Client ID and Client Secret.
-
-The following attributes are made available in the created session:
-
-* The ``_whatToTrace`` attribute (main session identifier), is set to the
-  relying party's Client ID
-* The ``_scope`` attribute is set to the requested scopes
-* The ``_clientId`` attribute is set to the Client ID that obtained the access
-  token.
-* The ``_clientConfKey`` attribute is set to the LemonLDAP::NG configuration
-  key for the client that obtained the access token.
-
-The **Access Rule**, if defined, will have access to those variables, as well as
-the `@ENV` array. You can use it to restrict the use of this grant to
-pre-determined scopes, a particular IP address, etc.
-
-These session attributes will be released on the UserInfo endpoint if they are
-mapped to **Exported Attributes** and **Extra Claims**.
 
 .. seealso::
 

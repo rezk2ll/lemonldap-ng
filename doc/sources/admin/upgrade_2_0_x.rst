@@ -26,6 +26,69 @@ Known regressions in the latest released version
 
 None
 
+2.0.16
+------
+
+Change in error messages for issuers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The error messages for the following situations have been changed:
+
+.. csv-table::
+   :header: "Situation", "Translation code (lemonldap-ng.ini)", "Translation code (lang.json)", "New error message"
+   :delim: ;
+   :widths: auto
+
+   An authentication request has been made to an unknown CAS application;error_107;PE107;This application is not known
+   An authentication request has been made to an unknown SAML service provider;error_107;PE107;This application is not known
+   An authentication request has been made to an unknown OIDC relying party;error_107;PE107;This application is not known
+   User was not allowed to access a CAS application;error_84;PE84;You're not authorized to access to this host
+
+Users who wish to adjust error messages in these situations should update their translation files
+
+
+Improve the use of multiple 2FA types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Changes in custom 2F::Register:: modules
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* Users who use their own ``Lemonldap::NG::Portal::2F::Register::`` modules
+  must now inherit from ``Lemonldap::NG::Portal::2F::Register::Base``
+
+* The `canUpdateSfa` function has been moved into the 2FA Engine and should not
+  be called by your registration module anymore
+
+
+Changes in templates
+^^^^^^^^^^^^^^^^^^^^
+
+The default ``skin.min.js`` file has been updated in this release, be sure to copy ``skin.min.js`` from ``bootstrap`` into your custom theme.
+
+Due to some internal changes in the way registrable second factors are handled, it is recommended to update your custom `2fregisters.tpl`
+
+.. code:: diff
+
+    @@ -32,7 +32,14 @@
+                 <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
+                 <td>
+                   <TMPL_IF NAME="delAllowed">
+    -                <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger" role="button" data-toggle="modal" data-target="#remove2fModal">
+    +                <span
+    +                    device='<TMPL_VAR NAME="type">'
+    +                    epoch='<TMPL_VAR NAME="epoch">'
+    +                    prefix='<TMPL_VAR NAME="prefix">'
+    +                    class="btn btn-danger"
+    +                    role="button"
+    +                    data-toggle="modal"
+    +                    data-target="#remove2fModal">
+                       <span class="fa fa-minus-circle"></span>
+                       <span trspan="unregister">Unregister</span>
+                        </span>
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
+
 2.0.15
 ------
 
@@ -117,6 +180,109 @@ The 2FA registration screen now displays the custom logo and label set in config
 
 If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
 
+Remember authentication choice
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A :doc:`new plugin<rememberauthchoice>` can be enabled to display a checkbox in :doc:`authentication choice<authchoice>` module to allow users remembering their choice, which will automatically redirect them to the selected choice the next time they connect to the portal. 
+
+If you use custom templates, you should update ``login.tpl``
+
+.. code:: diff
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/login.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/login.tpl
+    @@ -66,6 +66,12 @@
+     
+                 <TMPL_IF NAME="sslform">
+                   <TMPL_INCLUDE NAME="sslformChoice.tpl">
+    +
+    +              <!-- Remember my authentication choice for this module -->
+    +              <TMPL_IF NAME="REMEMBERAUTHCHOICE">
+    +                <input type="hidden" id="rememberauthchoice" name="rememberauthchoice" value="<TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">true</TMPL_IF>" />
+    +              </TMPL_IF>
+    +
+                 </TMPL_IF>
+     
+                 <TMPL_IF NAME="gpgform">
+    @@ -92,6 +98,11 @@
+     
+                   </div>
+     
+    +              <!-- Remember my authentication choice for this module -->
+    +              <TMPL_IF NAME="REMEMBERAUTHCHOICE">
+    +                <input type="hidden" id="rememberauthchoice" name="rememberauthchoice" value="<TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">true</TMPL_IF>" />
+    +              </TMPL_IF>
+    +
+                 </TMPL_IF>
+     
+               </form>
+    @@ -104,6 +115,34 @@
+     
+         </div> <!-- end authMenu -->
+     
+    +    <TMPL_IF NAME="REMEMBERAUTHCHOICE">
+    +    <div class="input-group col-md-6 offset-md-3">
+    +
+    +      <!-- Global checkbox for remembering the authentication choice for all modules -->
+    +      <div id="globalrememberauthchoicecontainer" class="input-group-prepend input-group">
+    +        <div class="input-group-text">
+    +          <input type="checkbox" id="globalrememberauthchoice" name="globalrememberauthchoice" aria-describedby="globalrememberauthchoiceLabel" <TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">checked</TMPL_IF> />
+    +          <input id="rememberCookieName" name="rememberCookieName" type="hidden" value="<TMPL_VAR NAME="REMEMBERAUTHCHOICECOOKIENAME">">
+    +        </div>
+    +          <p class="form-control">
+    +            <label id="globalrememberauthchoiceLabel" for="globalrememberauthchoice" trspan="rememberChoice">Remember my choice</label>
+    +          </p>
+    ...skipping...
+                   </div>
+     
+    +              <!-- Remember my authentication choice for this module -->
+    +              <TMPL_IF NAME="REMEMBERAUTHCHOICE">
+    +                <input type="hidden" id="rememberauthchoice" name="rememberauthchoice" value="<TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">true</TMPL_IF>" />
+    +              </TMPL_IF>
+    +
+                 </TMPL_IF>
+     
+               </form>
+    @@ -104,6 +115,34 @@
+     
+         </div> <!-- end authMenu -->
+     
+    +    <TMPL_IF NAME="REMEMBERAUTHCHOICE">
+    +    <div class="input-group col-md-6 offset-md-3">
+    +
+    +      <!-- Global checkbox for remembering the authentication choice for all modules -->
+    +      <div id="globalrememberauthchoicecontainer" class="input-group-prepend input-group">
+    +        <div class="input-group-text">
+    +          <input type="checkbox" id="globalrememberauthchoice" name="globalrememberauthchoice" aria-describedby="globalrememberauthchoiceLabel" <TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">checked</TMPL_IF> />
+    +          <input id="rememberCookieName" name="rememberCookieName" type="hidden" value="<TMPL_VAR NAME="REMEMBERAUTHCHOICECOOKIENAME">">
+    +        </div>
+    +          <p class="form-control">
+    +            <label id="globalrememberauthchoiceLabel" for="globalrememberauthchoice" trspan="rememberChoice">Remember my choice</label>
+    +          </p>
+    +      </div>
+    +
+    +      <!-- Timer + stop button for triggering the remembered authentication choice -->
+    +      <div id="remembertimercontainer" class="input-group">
+    +        <p class="form-control">
+    +          <span id="remembertimer"><TMPL_VAR NAME="REMEMBERAUTHCHOICETIMER"></span>
+    +          <label id="rememberTimerLabel" trspan="rememberTimerLabel">s before automatic authentication</label>
+    +        </p>
+    +        <input id="rememberStopped" name="rememberStopped" type="hidden" value="">
+    +        <div class="input-group-append inout-group">
+    +          <button class="btn btn-danger" id="buttonRememberStopped"><i class="fa fa-stop-circle-o"></i> Stop</button>
+    +        </div>
+    +      </div>
+    +    </div>
+    +    </TMPL_IF>
+    +
+       </TMPL_IF>
+     
+       <TMPL_IF NAME="DISPLAY_FORM">
+
+Copy also ``styles.min.css`` and ``skin.min.js`` from ``bootstrap`` into your custom theme.
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
 2.0.14
 ------
 
@@ -186,17 +352,13 @@ LemonLDAP::NG version is returned by the CheckState plugin
 
 If you use the `/checkstate` URL to monitor LemonLDAP::NG, you may notice a slight change in the output format:
 
-*2.0.13* :
+*2.0.13* ::
 
-```
-{"result":1}
-```
+    {"result":1}
 
-*2.0.14* :
+*2.0.14* ::
 
-```
-{"result":1,"version":"2.0.14"}
-```
+    {"result":1,"version":"2.0.14"}
 
 Depending on your load balancer or monitoring configuration, this can cause false negatives.
 
@@ -453,14 +615,16 @@ No change is required if you are using the default ``bootstrap`` theme.
 2FA manager
 ^^^^^^^^^^^
 
-In ``2fregisters.tpl`` you need to add the ``remove2f`` class to the button that triggers second factor removal:
+If you use a custom theme, even if you did not modify ``2fregisters.tpl``, you need to copy ``skin.min.js`` from the ``htdocs/static/bootstrap/js`` folder to your custom theme's ``js`` folder.
+
+If you modified ``2fregisters.tpl`` you need to add the ``remove2f`` class to the button that triggers second factor removal:
 
 .. code-block:: diff
 
    - <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger" role="button">
    + <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger remove2f" role="button">
 
-Or, better yet, integrate the changes in ``2fregisters.tpl`` and ``skin.min.js`` into your custom theme to benefit from the `new 2F removal confirmation dialog <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2438>`__
+Or, better yet, integrate the changes in ``2fregisters.tpl`` into your custom theme to benefit from the `new 2F removal confirmation dialog <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2438>`__
 
 Checkboxes
 ^^^^^^^^^^

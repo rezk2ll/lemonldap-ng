@@ -4,20 +4,20 @@ Captcha
 Presentation
 ------------
 
-Captcha is a security mechanism aimed to prevent robots to submit forms.
+Captcha is a security mechanism to prevent forms from being submited by robots.
 
-Captchas are available on the following forms:
+Captchas are available on following forms:
 
--  Login form: where user enters login and password to authenticate
--  Password reset by mail form: where user enters mail to recover a lost
-   password
--  Register form: where user enters information to create a new account
+-  Login form: where user inputs login and password for authenticating
+-  Password reset by mail form: where user inputs mail to recover a forgotten password
+-  Register form: where user inputs information to create a new account
 
 
 .. attention::
 
-    We use the Perl module GD::SecurityImage to generate
-    images, you need to install it if you enable Captcha feature.
+    We use the GD::SecurityImage Perl module to generate images.
+    This module is required if you enable Captcha feature.
+    With Debian-based distributions, you may have to install 'gsfonts' package.
 
 Configuration
 -------------
@@ -30,7 +30,7 @@ Go in ``General parameters`` > ``Portal`` > ``Captcha``:
    captcha in password reset by mail form
 -  **Activation in register form**: set to 1 to display captcha in
    register form
--  **Size**: length of captcha
+-  **Size**: define captcha length
 -  **Captcha module**: allows you to use a custom Captcha module, see
    :ref:`below <customcaptcha>`. Leave it blank to use the default Captcha
    implementation

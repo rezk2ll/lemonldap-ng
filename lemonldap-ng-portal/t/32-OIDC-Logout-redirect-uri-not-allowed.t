@@ -171,6 +171,9 @@ ok(
     qr#http://auth.op.com(/oauth2/logout)\?(post_logout_redirect_uri=.+)$# );
 count(1);
 
+like($query, qr/client_id=rpid/, "Found client ID in logout request");
+count(1);
+
 # Push logout to OP
 switch ('op');
 
@@ -203,8 +206,7 @@ clean_sessions();
 done_testing( count() );
 
 sub op {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                        => $debug,
                 domain                          => 'idp.com',
@@ -249,7 +251,7 @@ sub op {
                     'loa-3' => 3
                 },
                 oidcServicePrivateKeySig => oidc_key_op_private_sig,
-                oidcServicePublicKeySig  => oidc_key_op_public_sig,
+                oidcServicePublicKeySig  => oidc_cert_op_public_sig,
             }
         }
     );
@@ -257,8 +259,7 @@ sub op {
 
 sub rp {
     my ( $jwks, $metadata ) = @_;
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                   => $debug,
                 domain                     => 'rp.com',

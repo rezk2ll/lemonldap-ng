@@ -36,6 +36,7 @@ Documentation for LemonLDAP::NG 2.0
    formreplay
    customhandlers
    webserviceprotection
+   websocketapplications
    applications/authbasic
    applications
 
@@ -157,7 +158,7 @@ Official Backends                                                    Authenticat
 :doc:`SSL<authssl>`                                                  ✔
 :doc:`Twitter<authtwitter>`                                          ✔
 :doc:`WebID<authwebid>`                                              ✔                                               ✔
-:doc:`Yubikey<authyubikey>` |deprecated|                             *Replaced by* :doc:`yubikey2f`
+:doc:`Yubico OTP<authyubikey>` |deprecated|                          *Replaced by* :doc:`yubikey2f`
 :doc:`Custom modules<authcustom>` |new|                              ✔                                               ✔        ✔
 ==================================================================== =============================================== ======== ========
 
@@ -181,11 +182,12 @@ Second factor (:doc:`documentation<secondfactor>`)                   Authenticat
 ==================================================================== ============== =================
 :doc:`TOTP<totp2f>` *(Google Authenticator,...)* |new|               ✔              ✔
 :doc:`WebAuthn<webauthn2f>` |new|                                    ✔              ✔
-:doc:`E-mail Second Factor<mail2f>` |new|                            ✔
-:doc:`Yubikey<yubikey2f>` |new|                                      ✔              ✔
-:doc:`External Second Factor<external2f>` *(OTP, SMS,...)* |new|     ✔
-:doc:`REST Second Factor<rest2f>` |new|                              ✔
+:doc:`E-mail Second Factor<mail2f>` |new|                            ✔              [18]_
+:doc:`Yubico OTP<yubikey2f>` |new|                                   ✔              ✔
+:doc:`External Second Factor<external2f>` *(OTP, SMS,...)* |new|     ✔              [18]_
+:doc:`REST Second Factor<rest2f>` |new|                              ✔              [18]_
 :doc:`Radius Second Factor<radius2f>` |new|  [3]_                    ✔
+:doc:`Password as second factor<password2f>` |new| [4]_              ✔              ✔
 :doc:`TOTP-or-U2F<utotp2f>` |deprecated|                             ✔              ✔
 :doc:`U2F<u2f>` |deprecated|                                         ✔              ✔
 ==================================================================== ============== =================
@@ -344,26 +346,26 @@ Configuration database
 LL::NG needs a storage system to store its own configuration (managed by
 the manager). Choose one in the following list:
 
-=========================================== ========= ====================================================================
-Backend                                     Shareable Comment
-=========================================== ========= ====================================================================
-:doc:`File (JSON)<fileconfbackend>`                   Not shareable between servers except
-                                                      if used in conjunction with :doc:`REST<restconfbackend>`
-                                                      or with a shared file system (NFS,...).
-                                                      Selected by default during installation.
-:doc:`YAML<yamlconfbackend>` |new|                    Same as :doc:`File<fileconfbackend>` but in YAML format
-                                                      instead of JSON
-:doc:`SQL (CDBI/RDBI)<sqlconfbackend>`      ✔         **Recommended for large-scale systems**. Prefer CDBI.
-:doc:`LDAP<ldapconfbackend>`                ✔
-:doc:`MongoDB<mongodbconfbackend>`          ✔
-:doc:`SOAP<soapconfbackend>` |deprecated|   ✔         Proxy backend to be used in conjunction with another
-                                                      configuration backend. \ **Can be used to secure another backend**
-                                                      for remote servers.
-:doc:`REST<restconfbackend>` |new|          ✔         Proxy backend to be used in conjunction with another configuration
-                                                      backend. \ **Can be used to secure another backend** for
-                                                      remote servers.
-:doc:`Local<localconfbackend>` |new|                  Use only lemonldap-ng.ini parameters.
-=========================================== ========= ====================================================================
+===================================================== ========= ====================================================================
+Backend                                               Shareable Comment
+===================================================== ========= ====================================================================
+:doc:`File (JSON)<fileconfbackend>`                             Not shareable between servers except
+                                                                if used in conjunction with :doc:`REST<restconfbackend>`
+                                                                or with a shared file system (NFS,...).
+                                                                Selected by default during installation.
+:doc:`YAML<yamlconfbackend>` |new|                              Same as :doc:`File<fileconfbackend>` but in YAML format
+                                                                instead of JSON
+:doc:`SQL (CDBI/RDBI)<sqlconfbackend>`                ✔         **Recommended for large-scale systems**. Prefer CDBI.
+:doc:`LDAP<ldapconfbackend>`                          ✔
+:doc:`MongoDB<mongodbconfbackend>` |deprecated|       ✔
+:doc:`SOAP<soapconfbackend>` |deprecated|             ✔         Proxy backend to be used in conjunction with another
+                                                                configuration backend. \ **Can be used to secure another backend**
+                                                                for remote servers.
+:doc:`REST<restconfbackend>` |new|                    ✔         Proxy backend to be used in conjunction with another configuration
+                                                                backend. \ **Can be used to secure another backend** for
+                                                                remote servers.
+:doc:`Local<localconfbackend>` |new|                            Use only lemonldap-ng.ini parameters.
+===================================================== ========= ====================================================================
 
 
 .. tip::
@@ -402,7 +404,7 @@ Backend                                                          Shareable :ref:
 :doc:`Browseable MySQL<browseablemysqlsessionbackend>`           ✔         ✔                                                ✔                                                    ✔                  Recommended for those who prefer MySQL
 :doc:`Browseable LDAP<browseableldapsessionbackend>`             ✔         ✔                                                ✔                                                    ✔
 :doc:`Redis<nosqlsessionbackend>`                                ✔         ✔                                                ✔                                                    ✔                  The fastest. Must be secured by network access control.
-:doc:`MongoDB<mongodbsessionbackend>`                            ✔         ✔                                                ✔                                                    ✔                  Must be secured by network access control.
+:doc:`MongoDB<mongodbsessionbackend>` |deprecated|               ✔         ✔                                                ✔                                                    ✔                  Must be secured by network access control.
 :doc:`SQL<sqlsessionbackend>`                                    ✔         ✔                                                ✔                                                    ✔                  Unoptimized for :doc:`session explorer<features>` and :doc:`single session<features>` features.
 :doc:`REST<restsessionbackend>` |new|                            ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
 :doc:`SOAP<soapsessionbackend>`  |deprecated|                    ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
@@ -426,6 +428,7 @@ Applications protection
 -  :doc:`Form replay<formreplay>`
 -  :doc:`Custom Handlers<customhandlers>`
 -  :doc:`WebServices / API<webserviceprotection>`
+-  :doc:`WebSocket Applications<websocketapplications>`
 
 Well known compatible applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -575,6 +578,9 @@ by your language code):
 .. [3]
    :doc:`Radius second factor<radius2f>` is available with LLNG ≥ 2.0.6
 
+.. [4]
+   :doc:`Password second factor<password2f>` is available with LLNG ≥ 2.0.16
+
 .. [5]
    :doc:`Check DevOps file plugin<checkdevops>` are available with LLNG ≥
    2.0.12
@@ -623,6 +629,9 @@ by your language code):
 
 .. [17]
    :doc:`OAuth2 Handler<oauth2handler>` is available with LLNG ≥ 2.0.4
+
+.. [18]
+   When configured as an additional second factor, see :ref:`sfextraregister`
 
 .. |image0| image:: /icons/kthememgr.png
 .. |image1| image:: /icons/warehause.png
