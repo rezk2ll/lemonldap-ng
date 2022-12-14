@@ -6,6 +6,9 @@ use IO::String;
 use DBI;
 use Digest::SHA;
 
+require 't/test-lib.pm';
+my $maintests = 10;
+
 # Hook SHA512 function into all new DBI connections
 {
     my $old_connect = \&DBI::connect;
@@ -30,11 +33,12 @@ use Digest::SHA;
                     Digest::SHA->new(512)->add( pack( 'H*', $p ) )->digest );
             }
         );
-        
+
         $connection->sqlite_create_function(
-            'encrypth', 2,
+            'encrypth',
+            2,
             sub {
-                my $p = shift;
+                my $p    = shift;
                 my $hash = shift;
                 return
                   unpack( 'H*',
@@ -46,10 +50,7 @@ use Digest::SHA;
     }
 }
 
-require 't/test-lib.pm';
-
 my $res;
-my $maintests = 7;
 
 my $userdb = tempdb();
 
@@ -140,36 +141,40 @@ SKIP: {
     expectOK($res);
     $id = expectCookie($res);
 
-    #    # Could be used when we are able to change algorithm
-    #    # for new passwords after these tests to ssha256
+    $client->p->conf->{dbiDynamicHashNewPasswordScheme} = 'encrypt6';
 
-    #    # Try to modify password
-    #    ok(
-    #        $res = $client->_post(
-    #            '/',
-    #            IO::String->new(
-    #'oldpassword=secret4&newpassword=secret5&confirmpassword=secret5'
-    #            ),
-    #            cookie => "lemonldap=$id",
-    #            accept => 'application/json',
-    #            length => 63
-    #        ),
-    #        'Change password'
-    #    );
-    #    expectOK($res);
-    #    $client->logout($id);
-    #
-    #    # Try to authenticate against new salted unix password
-    #    ok(
-    #        $res = $client->_post(
-    #            '/', IO::String->new('user=jenny&password=secret5'),
-    #            length => 27
-    #        ),
-    #        'Authentication against newly-modified unix password'
-    #    );
-    #    expectOK($res);
-    #    $id = expectCookie($res);
-    #
+    # Try to modify password
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new(
+'oldpassword=secret4&newpassword=secret5&confirmpassword=secret5'
+            ),
+            cookie => "lemonldap=$id",
+            accept => 'application/json',
+            length => 63
+        ),
+        'Change password'
+    );
+    expectOK($res);
+    $client->logout($id);
+
+    my $sth = $dbh->prepare("SELECT password FROM users WHERE user='jenny';");
+    $sth->execute();
+    my $row = $sth->fetchrow_array;
+    ok( $row =~ /^\$6/, 'Verify that password is hashed with correct scheme' );
+
+    # Try to authenticate against new salted unix password
+    ok(
+        $res = $client->_post(
+            '/', IO::String->new('user=jenny&password=secret5'),
+            length => 27
+        ),
+        'Authentication against newly-modified unix password'
+    );
+    expectOK($res);
+    $id = expectCookie($res);
+
     $client->logout($id);
 
     # Try to authenticate against salted password
@@ -182,6 +187,8 @@ SKIP: {
     );
     expectOK($res);
     $id = expectCookie($res);
+
+    $client->p->conf->{dbiDynamicHashNewPasswordScheme} = 'ssha256';
 
     # Try to modify password
     ok(
