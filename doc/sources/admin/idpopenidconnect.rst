@@ -301,7 +301,8 @@ Options
       identifier (``sub``). Default value is ``whatToTrace``.
    -  **Additional audiences** (since version ``2.0.8``): You can
       specify a space-separated list of audiences that will be added to the
-      ID Token audiences
+      ID Token audiences, and possibly the access token audiences if the
+      access token format is set to JWT
 
 -  **Security**
 
