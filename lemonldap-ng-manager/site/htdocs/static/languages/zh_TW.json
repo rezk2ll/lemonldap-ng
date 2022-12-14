@@ -154,6 +154,7 @@
 "casAttr":"CAS 登入",
 "casAttributes":"CAS 已匯出屬性",
 "casAuthnLevel":"驗證等級",
+"casBackChannelSingleLogout":"Back-channel logout",
 "casParams":"CAS 參數",
 "casServiceMetadata":"CAS 服務",
 "casSrv":"CAS 伺服器",

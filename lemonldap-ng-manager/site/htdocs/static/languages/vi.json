@@ -154,6 +154,7 @@
 "casAttr":"Đăng nhập CAS ",
 "casAttributes":"Thuộc tính CAS đã được xuất",
 "casAuthnLevel":"Mức xác thực",
+"casBackChannelSingleLogout":"Back-channel logout",
 "casParams":"Tham số CAS",
 "casServiceMetadata":"Dịch vụ CAS",
 "casSrv":"CAS Server",

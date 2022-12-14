@@ -154,6 +154,7 @@
 "casAttr":"تسجيل الدخول كاس",
 "casAttributes":"السمات المصدرة لي كاس",
 "casAuthnLevel":"مستوى إثبات الهوية",
+"casBackChannelSingleLogout":"Back-channel logout",
 "casParams":"معايير  كاس",
 "casServiceMetadata":"خدمة كاس",
 "casSrv":"خادم كاس",

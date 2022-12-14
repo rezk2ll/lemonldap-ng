@@ -154,6 +154,7 @@
 "casAttr":"Login CAS",
 "casAttributes":"Atributos exportados CAS",
 "casAuthnLevel":"Nivel de autentificación",
+"casBackChannelSingleLogout":"Back-channel logout",
 "casParams":"Parámetros CAS",
 "casServiceMetadata":"Servicio CAS",
 "casSrv":"Servidor CAS",

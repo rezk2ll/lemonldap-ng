@@ -154,6 +154,7 @@
 "casAttr":"CAS 登录",
 "casAttributes":"CAS 声明的attributes",
 "casAuthnLevel":"认证级别",
+"casBackChannelSingleLogout":"Back-channel logout",
 "casParams":"CAS 参数",
 "casServiceMetadata":"CAS 服務",
 "casSrv":"CAS 服务器",

@@ -154,6 +154,7 @@
 "casAttr":"Login CAS",
 "casAttributes":"Wyeksportowane atrybuty CAS",
 "casAuthnLevel":"Poziom uwierzytelnienia",
+"casBackChannelSingleLogout":"Back-channel logout",
 "casParams":"Parametry CAS",
 "casServiceMetadata":"Usługa CAS",
 "casSrv":"Serwer CAS",

@@ -154,6 +154,7 @@
 "casAttr":"CAS login",
 "casAttributes":"CAS exported attributes",
 "casAuthnLevel":"Authentication level",
+"casBackChannelSingleLogout":"Back-channel logout",
 "casParams":"CAS parameters",
 "casServiceMetadata":"CAS Service",
 "casSrv":"CAS Server",

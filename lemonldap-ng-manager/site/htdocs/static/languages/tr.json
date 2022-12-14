@@ -154,6 +154,7 @@
 "casAttr":"CAS girişi",
 "casAttributes":"Dışa aktarılan CAS nitelikleri",
 "casAuthnLevel":"Doğrulama seviyesi",
+"casBackChannelSingleLogout":"Back-channel logout",
 "casParams":"CAS parametreleri",
 "casServiceMetadata":"CAS Servisi",
 "casSrv":"CAS Sunucusu",

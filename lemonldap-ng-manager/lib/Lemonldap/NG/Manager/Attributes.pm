@@ -773,6 +773,10 @@ sub attributes {
             'default' => 1,
             'type'    => 'int'
         },
+        'casBackChannelSingleLogout' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'casSrvMetaDataExportedVars' => {
             'default' => {
                 'cn'   => 'cn',
