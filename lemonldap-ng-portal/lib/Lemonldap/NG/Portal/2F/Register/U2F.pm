@@ -37,10 +37,6 @@ sub run {
         'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 )
       unless $user;
 
-    # Check if U2F key can be updated
-    my $msg = $self->canUpdateSfa( $req, $action );
-    return $self->p->sendError( $req, $msg, 400 ) if $msg;
-
     if ( $action eq 'register' ) {
 
         # Read existing 2FDevices
@@ -140,7 +136,7 @@ sub run {
 
                 push @{$_2fDevices},
                   {
-                    type       => 'U2F',
+                    type       => $self->type,
                     name       => $keyName,
                     _userKey   => encode_base64url( $userKey, '' ),
                     _keyHandle => $keyHandle,
@@ -253,8 +249,8 @@ sub run {
     elsif ( $action eq 'delete' ) {
 
         # Check if unregistration is allowed
-        return $self->p->sendError( $req, 'notAuthorized', 200 )
-          unless $self->conf->{u2fUserCanRemoveKey};
+        return $self->p->sendError( $req, 'notAuthorized', 400 )
+          unless $self->userCanRemove;
 
         my $epoch = $req->param('epoch')
           or return $self->p->sendError( $req, '"epoch" parameter is missing',
@@ -280,7 +276,7 @@ sub run {
 
         # Delete U2F device
         @$_2fDevices = map {
-            if ( $_->{epoch} eq $epoch and $_->{type} eq "U2F" ) {
+            if ( $_->{epoch} eq $epoch and $_->{type} eq $self->type ) {
                 $keyName = $_->{name};
                 ();
             }
@@ -340,7 +336,7 @@ sub loadUser {
     # Reading existing U2F keys
     foreach (@$_2fDevices) {
         $self->logger->debug("Looking for registered U2F key(s)...");
-        if ( $_->{type} eq 'U2F' ) {
+        if ( $_->{type} eq $self->type ) {
             unless ( $_->{_userKey} and $_->{_keyHandle} ) {
                 $self->logger->error(
 'Missing required U2F attributes in storage ($session->{_2fDevices})'

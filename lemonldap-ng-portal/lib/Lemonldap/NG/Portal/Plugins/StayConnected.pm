@@ -192,8 +192,8 @@ sub check {
                             $req->user($uid);
                             my @steps =
                               grep {
-                                !ref $_
-                                  and $_ !~ /^(?:extractFormInfo|authenticate)$/
+                                ref $_
+                                  or $_ !~ /^(?:extractFormInfo|authenticate)$/
                               } @{ $req->steps };
                             $req->steps( \@steps );
                             $self->userLogger->notice(
@@ -206,8 +206,8 @@ sub check {
                                 $req->user($uid);
                                 my @steps =
                                   grep {
-                                    !ref $_
-                                      and $_ !~
+                                    ref $_
+                                      or $_ !~
                                       /^(?:extractFormInfo|authenticate)$/
                                   } @{ $req->steps };
                                 $req->steps( \@steps );

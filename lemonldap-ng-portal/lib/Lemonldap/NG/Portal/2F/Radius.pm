@@ -46,8 +46,6 @@ sub init {
         )
       );
 
-    $self->prefix( $self->conf->{sfPrefix} )
-      if ( $self->conf->{sfPrefix} );
     return $self->SUPER::init();
 }
 

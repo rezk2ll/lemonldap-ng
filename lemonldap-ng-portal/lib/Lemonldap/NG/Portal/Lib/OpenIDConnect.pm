@@ -8,8 +8,9 @@ package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 use strict;
 use Crypt::OpenSSL::Bignum;
 use Crypt::OpenSSL::RSA;
+use Crypt::OpenSSL::X509;
 use Digest::SHA
-  qw/hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64 sha256 sha384
+  qw/sha1 hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64 sha256 sha384
   sha512 sha256_base64 sha384_base64 sha512_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
@@ -19,9 +20,11 @@ use Lemonldap::NG::Common::JWT
 use MIME::Base64
   qw/encode_base64 decode_base64 encode_base64url decode_base64url/;
 use Scalar::Util qw/looks_like_number/;
+use URI;
+use URI::QueryParam;
 use Mouse;
 
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT);
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
 
 our $VERSION = '2.0.15';
 
@@ -30,7 +33,7 @@ use constant PROFILE => [
     qw/name family_name given_name middle_name nickname preferred_username
       profile picture website gender birthdate zoneinfo locale updated_at/
 ];
-use constant EMAIL   => [qw/email email_verified/];
+use constant EMAIL => [qw/email email_verified/];
 use constant ADDRESS =>
   [qw/formatted street_address locality region postal_code country/];
 use constant PHONE => [qw/phone_number phone_number_verified/];
@@ -395,7 +398,119 @@ sub buildAuthorizationCodeAuthnRequest {
     return $authn_uri;
 }
 
+sub isResponseModeAllowed {
+    my ( $self, $flow, $response_mode ) = @_;
+
+    # Query encoding can only be used for authorization code flow
+    # cf oauth-v2-multiple-response-types-1_0.html
+    if ( $response_mode and $response_mode eq "query" ) {
+        return ( $flow eq "authorizationcode" );
+    }
+
+    # Fragment or Form Post are OK for all types
+    # cf oauth-v2-form-post-response-mode-1_0.html
+    return 1;
+}
+
+# Build OpenID Connect response
+# This method does not check if the response mode is allowed for the current
+# grant type. Use isResponseModeAllowed for that
+sub sendOidcResponse {
+    my ( $self, $req, $flow, $response_mode, $redirect_uri, $response_params )
+      = @_;
+
+    $response_mode //= $self->getDefaultResponseModeForFlow($flow);
+
+    if ( $response_mode eq "query" ) {
+        return $self->sendQueryResponse( $req, $redirect_uri,
+            $response_params );
+    }
+    elsif ( $response_mode eq "fragment" ) {
+        return $self->sendFragmentResponse( $req, $redirect_uri,
+            $response_params );
+    }
+    elsif ( $response_mode eq "form_post" ) {
+        return $self->sendFormPostResponse( $req, $redirect_uri,
+            $response_params );
+    }
+    else {
+        $self->logger->error("Unknown response_mode $response_mode");
+        return PE_ERROR;
+    }
+}
+
+sub getDefaultResponseModeForFlow {
+    my ( $self, $flow ) = @_;
+    my %def_flows = (
+        authorizationcode => "query",
+        implicit          => "fragment",
+        hybrid            => "fragment",
+    );
+    return $def_flows{$flow};
+}
+
+sub sendQueryResponse {
+    my ( $self, $req, $redirect_uri, $response_params ) = @_;
+    my $response_uri =
+      $self->getQueryResponse( $redirect_uri, $response_params );
+    return $self->_redirectToUrl( $req, $response_uri );
+}
+
+sub sendFragmentResponse {
+    my ( $self, $req, $redirect_uri, $response_params ) = @_;
+    my $response_uri =
+      $self->getFragmentResponse( $redirect_uri, $response_params );
+    return $self->_redirectToUrl( $req, $response_uri );
+}
+
+sub getQueryResponse {
+    my ( $self, $redirect_uri, $response_params ) = @_;
+    my $uri = URI->new($redirect_uri);
+    for ( keys %$response_params ) {
+        $uri->query_param( $_, $response_params->{$_} );
+    }
+    return $uri;
+}
+
+sub getFragmentResponse {
+    my ( $self, $redirect_uri, $response_params ) = @_;
+    my $uri = URI->new($redirect_uri);
+
+   # Use a temporary URL so we can use QueryParam features to build the fragment
+    my $tmp = URI->new;
+    $tmp->query( $uri->fragment );
+    for ( keys %$response_params ) {
+        $tmp->query_param( $_, $response_params->{$_} );
+    }
+
+    $uri->fragment( $tmp->query );
+
+    return $uri;
+}
+
+sub sendFormPostResponse {
+    my ( $self, $req, $redirect_uri, $response_params ) = @_;
+
+    $self->p->clearHiddenFormValue($req);
+    $req->postUrl($redirect_uri);
+    $req->postFields($response_params);
+    $req->steps( ['autoPost'] );
+    return PE_OK;
+}
+
+sub _redirectToUrl {
+    my ( $self, $req, $response_url ) = @_;
+
+    # We must clear hidden form fields saved from the request (#2085)
+    $self->p->clearHiddenFormValue($req);
+    $self->logger->debug("Redirect user to $response_url");
+    $req->urldc($response_url);
+
+    return PE_REDIRECT;
+}
+
 # Build Authentication Response URI for Authorization Code Flow
+# DEPRECATED, remove in 3.0, use sendOidcResponse instead
 # @param redirect_uri Redirect URI
 # @param code Code
 # @param state State
@@ -404,19 +519,18 @@ sub buildAuthorizationCodeAuthnRequest {
 sub buildAuthorizationCodeAuthnResponse {
     my ( $self, $redirect_uri, $code, $state, $session_state ) = @_;
 
-    my $response_url =
-        $redirect_uri
-      . ( $redirect_uri =~ /\?/ ? '&' : '?' )
-      . build_urlencoded(
-        code => $code,
-        ( $state         ? ( state         => $state )         : () ),
-        ( $session_state ? ( session_state => $session_state ) : () )
-      );
-
-    return $response_url;
+    return $self->getQueryResponse(
+        $redirect_uri,
+        {
+            code => $code,
+            ( $state         ? ( state         => $state )         : () ),
+            ( $session_state ? ( session_state => $session_state ) : () )
+        }
+    );
 }
 
 # Build Authentication Response URI for Implicit Flow
+# DEPRECATED, remove in 3.0, use sendOidcResponse instead
 # @param redirect_uri Redirect URI
 # @param access_token Access token
 # @param id_token ID token
@@ -429,23 +543,25 @@ sub buildImplicitAuthnResponse {
         $state, $session_state, $scope )
       = @_;
 
-    my $response_url = "$redirect_uri#"
-      . build_urlencoded(
-        id_token => $id_token,
-        (
-            $access_token
-            ? ( token_type => 'bearer', access_token => $access_token )
-            : ()
-        ),
-        ( $expires_in    ? ( expires_in    => $expires_in )    : () ),
-        ( $state         ? ( state         => $state )         : () ),
-        ( $scope         ? ( scope         => $scope )         : () ),
-        ( $session_state ? ( session_state => $session_state ) : () )
-      );
-    return $response_url;
+    return $self->getFragmentResponse(
+        $redirect_uri,
+        {
+            id_token => $id_token,
+            (
+                $access_token
+                ? ( token_type => 'bearer', access_token => $access_token )
+                : ()
+            ),
+            ( $expires_in    ? ( expires_in    => $expires_in )    : () ),
+            ( $state         ? ( state         => $state )         : () ),
+            ( $scope         ? ( scope         => $scope )         : () ),
+            ( $session_state ? ( session_state => $session_state ) : () )
+        }
+    );
 }
 
 # Build Authentication Response URI for Hybrid Flow
+# DEPRECATED, remove in 3.0, use sendOidcResponse instead
 # @param redirect_uri Redirect URI
 # @param code Code
 # @param access_token Access token
@@ -460,24 +576,25 @@ sub buildHybridAuthnResponse {
         $expires_in, $state,        $session_state, $scope
     ) = @_;
 
-    my $response_url = "$redirect_uri#"
-      . build_urlencoded(
-        code => $code,
-        (
-            $access_token
-            ? ( token_type => 'bearer', access_token => $access_token )
-            : ()
-        ),
-        (
-            $id_token ? ( id_token => $id_token )
-            : ()
-        ),
-        ( $expires_in    ? ( expires_in    => $expires_in )    : () ),
-        ( $state         ? ( state         => $state )         : () ),
-        ( $scope         ? ( scope         => $scope )         : () ),
-        ( $session_state ? ( session_state => $session_state ) : () )
-      );
-    return $response_url;
+    return $self->getFragmentResponse(
+        $redirect_uri,
+        {
+            code => $code,
+            (
+                $access_token
+                ? ( token_type => 'bearer', access_token => $access_token )
+                : ()
+            ),
+            (
+                $id_token ? ( id_token => $id_token )
+                : ()
+            ),
+            ( $expires_in    ? ( expires_in    => $expires_in )    : () ),
+            ( $state         ? ( state         => $state )         : () ),
+            ( $scope         ? ( scope         => $scope )         : () ),
+            ( $session_state ? ( session_state => $session_state ) : () )
+        }
+    );
 }
 
 sub getAccessTokenFromTokenEndpoint {
@@ -1554,6 +1671,20 @@ sub returnBearerError {
     return $res;
 }
 
+sub invalidClientResponse {
+    my ( $self, $req ) = @_;
+    if ( $req->authorization ) {
+        my ($method) = $req->authorization =~ qw/^(\w+) /;
+        if ($method) {
+            $req->respHeaders( [ 'WWW-Authenticate' => $method ] );
+            return $self->sendOIDCError( $req, 'invalid_client', 401 );
+        }
+    }
+    else {
+        return $self->sendOIDCError( $req, 'invalid_client', 400 );
+    }
+}
+
 sub checkEndPointAuthenticationCredentials {
     my ( $self, $req ) = @_;
 
@@ -2064,13 +2195,36 @@ sub getIDTokenSub {
 sub key2jwks {
     my ( $self, $key ) = @_;
 
-    my $rsa_pub = Crypt::OpenSSL::RSA->new_public_key($key);
+    my $rsa_pub = Crypt::OpenSSL::RSA->new_private_key($key);
     my @params  = $rsa_pub->get_key_parameters();
 
     return {
         n => encode_base64url( $params[0]->to_bin(), "" ),
         e => encode_base64url( $params[1]->to_bin(), "" ),
     };
+}
+
+# Return X.509 data if public key is a certificate
+# @param key public key or certificate
+# @return HashRef of JWK attributes
+sub getCertInfo {
+    my ( $self, $key ) = @_;
+
+    if ( $key =~ /CERTIFICATE/ ) {
+        my $x509 = Crypt::OpenSSL::X509->new_from_string( $key,
+            Crypt::OpenSSL::X509::FORMAT_PEM );
+        my $der  = $x509->as_string(Crypt::OpenSSL::X509::FORMAT_ASN1);
+        my $hash = sha1($der);
+        return {
+            # Caution, x5c is B64, x5t is B64URL, this is not a mistake
+            x5c => [ encode_base64( $der, '' ) ],
+            x5t => encode_base64url($hash),
+        };
+
+    }
+    else {
+        return {};
+    }
 }
 
 # Build Logout Request URI
@@ -2082,9 +2236,9 @@ sub key2jwks {
 sub buildLogoutRequest {
     my ( $self, $redirect_uri, @args ) = @_;
 
-    my @tab = (qw(id_token_hint post_logout_redirect_uri state));
+    my @tab = (qw(id_token_hint post_logout_redirect_uri state client_id));
     my @prms;
-    for ( my $i = 0 ; $i < 3 ; $i++ ) {
+    for ( my $i = 0 ; $i < @tab ; $i++ ) {
         push @prms, $tab[$i], $args[$i]
           if defined( $args[$i] );
     }

@@ -65,7 +65,13 @@ for my $lang (@langs) {
             delete $jsonObj->{$key};
         }
         else {
-            $jsonObj->{$key} = ( $lang eq 'fr.json' ? $frText : $enText );
+            my $text = ($lang eq 'fr.json' ? $frText : $enText);
+            if ($text =~ /^\$(.*)/) {
+                die "\$$1 not found" unless $jsonObj->{$1};
+                $jsonObj->{$key} = $jsonObj->{$1};
+            } else {
+                $jsonObj->{$key} = $text;
+            }
         }
     }
     $content = $json->encode($jsonObj);
@@ -81,6 +87,7 @@ sub usage {
     print STDERR <<EOT;
 Usage:
 $0 <option> key enText <frText>
+$0 <option> key '\$otherkey'
 
 Options:
   --portal  -p: add entry in portal translation instead of manager

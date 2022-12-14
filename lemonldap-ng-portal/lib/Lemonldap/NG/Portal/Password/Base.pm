@@ -102,7 +102,7 @@ sub _modifyPassword {
     my $res = $self->modifyPassword( $req, $req->data->{newpassword} );
     if ( $res == PE_PASSWORD_OK ) {
 
-        $self->p->processHook(
+        my $hook_result = $self->p->processHook(
             $req, 'passwordAfterChange', $req->user,
             $req->data->{newpassword},
             $req->data->{oldpassword}
@@ -137,7 +137,7 @@ sub _modifyPassword {
         $req->{passwordWasChanged} = 1;
 
         #  Continue process if password change is ok
-        return PE_PASSWORD_OK;
+        return ( $hook_result != PE_OK ) ? $hook_result : PE_PASSWORD_OK;
     }
     return $res;
 }

@@ -290,8 +290,8 @@ sub _delete {
     my ( $self, $req, $user ) = @_;
 
     # Check if unregistration is allowed
-    return $self->p->sendError( $req, 'notAuthorized', 200 )
-      unless $self->conf->{webauthn2fUserCanRemoveKey};
+    return $self->p->sendError( $req, 'notAuthorized', 400 )
+      unless $self->userCanRemove;
 
     my $epoch = $req->param('epoch')
       or
@@ -313,10 +313,6 @@ sub run {
     return $self->p->sendError( $req,
         'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 )
       unless $user;
-
-    # Check if U2F key can be updated
-    my $msg = $self->canUpdateSfa( $req, $action );
-    return $self->p->sendError( $req, $msg, 400 ) if $msg;
 
     if ( $action eq 'registrationchallenge' ) {
         return $self->_registrationchallenge( $req, $user );

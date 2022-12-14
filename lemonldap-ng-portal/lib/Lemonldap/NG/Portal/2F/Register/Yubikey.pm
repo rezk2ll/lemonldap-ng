@@ -16,6 +16,7 @@ extends 'Lemonldap::NG::Portal::2F::Register::Base';
 # INITIALIZATION
 
 has prefix   => ( is => 'rw', default => 'yubikey' );
+has type     => ( is => 'rw', default => 'UBK' );
 has template => ( is => 'ro', default => 'yubikey2fregister' );
 has welcome  => ( is => 'ro', default => 'clickOnYubikey' );
 has logo     => ( is => 'rw', default => 'yubikey.png' );
@@ -29,17 +30,6 @@ sub run {
     return $self->p->sendError( $req,
         'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 )
       unless $user;
-
-    # Check if UBK key can be updated
-    my $msg = $self->canUpdateSfa( $req, $action );
-    return $self->p->sendHtml(
-        $req, 'error',
-        params => {
-            MAIN_LOGO       => $self->conf->{portalMainLogo},
-            RAW_ERROR       => 'notAuthorizedAuthLevel',
-            AUTH_ERROR_TYPE => 'warning',
-        }
-    ) if $msg;
 
     if ( $action eq 'register' ) {
         my $otp     = $req->param('otp');
@@ -120,7 +110,7 @@ sub run {
 
             push @{$_2fDevices},
               {
-                type     => 'UBK',
+                type     => $self->type,
                 name     => $UBKName,
                 _yubikey => $key,
                 epoch    => $epoch
@@ -158,7 +148,7 @@ sub run {
 
         # Check if unregistration is allowed
         return $self->p->sendError( $req, 'notAuthorized', 400 )
-          unless $self->conf->{yubikey2fUserCanRemoveKey};
+          unless $self->userCanRemove;
 
         my $epoch = $req->param('epoch')
           or return $self->p->sendError( $req, '"epoch" parameter is missing',

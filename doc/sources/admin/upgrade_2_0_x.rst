@@ -26,6 +26,75 @@ Known regressions in the latest released version
 
 None
 
+2.0.16
+------
+
+Change in error messages for issuers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The error messages for the following situations have been changed:
+
+.. csv-table::
+   :header: "Situation", "Translation code (lemonldap-ng.ini)", "Translation code (lang.json)", "New error message"
+   :delim: ;
+   :widths: auto
+
+   An authentication request has been made to an unknown CAS application;error_107;PE107;This application is not known
+   An authentication request has been made to an unknown SAML service provider;error_107;PE107;This application is not known
+   An authentication request has been made to an unknown OIDC relying party;error_107;PE107;This application is not known
+   User was not allowed to access a CAS application;error_84;PE84;You're not authorized to access to this host
+
+Users who wish to adjust error messages in these situations should update their translation files
+
+
+Improve the use of multiple 2FA types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Changes in custom 2F::Register:: modules
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* Users who use their own ``Lemonldap::NG::Portal::2F::Register::`` modules
+  must now inherit from ``Lemonldap::NG::Portal::2F::Register::Base``
+
+* The `canUpdateSfa` function has been moved into the 2FA Engine and should not
+  be called by your registration module anymore
+
+
+Changes in templates
+^^^^^^^^^^^^^^^^^^^^
+
+The default ``skin.min.js`` file has been updated in this release, be sure to copy ``skin.min.js`` from ``bootstrap`` into your custom theme.
+
+Due to some internal changes in the way registrable second factors are handled, it is recommended to update your custom `2fregisters.tpl`
+
+.. code:: diff
+
+    @@ -32,7 +32,14 @@
+                 <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
+                 <td>
+                   <TMPL_IF NAME="delAllowed">
+    -                <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger" role="button" data-toggle="modal" data-target="#remove2fModal">
+    +                <span
+    +                    device='<TMPL_VAR NAME="type">'
+    +                    epoch='<TMPL_VAR NAME="epoch">'
+    +                    prefix='<TMPL_VAR NAME="prefix">'
+    +                    class="btn btn-danger"
+    +                    role="button"
+    +                    data-toggle="modal"
+    +                    data-target="#remove2fModal">
+                       <span class="fa fa-minus-circle"></span>
+                       <span trspan="unregister">Unregister</span>
+                        </span>
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
+Change in ``passwordAfterChange`` hook behavior
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you wrote a custom plugin using the ``passwordAfterChange`` hook, return
+codes other than ``PE_OK`` will now be displayed by the portal, instead of
+being ignored.
+
 2.0.15
 ------
 
@@ -552,14 +621,16 @@ No change is required if you are using the default ``bootstrap`` theme.
 2FA manager
 ^^^^^^^^^^^
 
-In ``2fregisters.tpl`` you need to add the ``remove2f`` class to the button that triggers second factor removal:
+If you use a custom theme, even if you did not modify ``2fregisters.tpl``, you need to copy ``skin.min.js`` from the ``htdocs/static/bootstrap/js`` folder to your custom theme's ``js`` folder.
+
+If you modified ``2fregisters.tpl`` you need to add the ``remove2f`` class to the button that triggers second factor removal:
 
 .. code-block:: diff
 
    - <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger" role="button">
    + <span device='<TMPL_VAR NAME="type">' epoch='<TMPL_VAR NAME="epoch">' class="btn btn-danger remove2f" role="button">
 
-Or, better yet, integrate the changes in ``2fregisters.tpl`` and ``skin.min.js`` into your custom theme to benefit from the `new 2F removal confirmation dialog <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2438>`__
+Or, better yet, integrate the changes in ``2fregisters.tpl`` into your custom theme to benefit from the `new 2F removal confirmation dialog <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2438>`__
 
 Checkboxes
 ^^^^^^^^^^

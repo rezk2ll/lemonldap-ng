@@ -121,7 +121,7 @@ ok(
     $res = $client->_get(
         '/',
         cookie => "lemonldap=$id",
-        query  => 'url=' . encodeUrl('http://sub.cda.example.llng/'),
+        query  => 'url=' . encodeUrl('http://sub-domain.cda.example.llng/'),
         accept => 'text/html',
     ),
     'CDA request to subdomain'
@@ -129,14 +129,14 @@ ok(
 count(1);
 
 my ($querytosub) = expectRedirection( $res,
-    qr#^http://sub.cda.example.llng/\?(lemonldapcda=.*)$# );
+    qr#^http://sub-domain.cda.example.llng/\?(lemonldapcda=.*)$# );
 
 # Check that %.oneonly.llng rejects subdomains
 ok(
     $res = $client->_get(
         '/',
         cookie => "lemonldap=$id",
-        query  => 'url=' . encodeUrl('http://sub.cda.oneonly.llng/'),
+        query  => 'url=' . encodeUrl('http://sub-domain.cda.oneonly.llng/'),
         accept => 'text/html',
     ),
     'CDA request to subdomain'
@@ -159,9 +159,9 @@ count(1);
 my ($querytoone) =
   expectRedirection( $res, qr#^http://cda.oneonly.llng/\?(lemonldapcda=.*)$# );
 
-validate_cda( $client, $querytosub, 'sub.cda.example.llng', 'dwho' );
-validate_cda( $client, $query,      'cda.example.llng',     'dwho' );
-validate_cda( $client, $querytoone, 'cda.oneonly.llng',     'dwho' );
+validate_cda( $client, $querytosub, 'sub-domain.cda.example.llng', 'dwho' );
+validate_cda( $client, $query,      'cda.example.llng',            'dwho' );
+validate_cda( $client, $querytoone, 'cda.oneonly.llng',            'dwho' );
 
 clean_sessions();
 

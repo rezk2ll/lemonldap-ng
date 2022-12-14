@@ -20,7 +20,7 @@ Required parameters
 Name                     Comment                           Example
 **ldapServer**           URI of the server                 ldap://localhost
 **ldapConfBase**         DN of sessions branch             ou=sessions,dc=example,dc=com
-**ldapBindDN**           Connection login                  cn=admin,dc=example,dc=password
+**ldapBindDN**           Connection login                  cn=admin,dc=example,dc=com
 **ldapBindPassword**     Connection password               secret
 **ldapRaw**              Binary attributes                 (?i:^jpegPhoto|;binary)
 **Index**                Fields to index                   refer to :ref:`fieldstoindex`

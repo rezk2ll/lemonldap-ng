@@ -91,7 +91,7 @@ is(
 $lmConf->{samlSPMetaDataOptions}->{$sp}
   ->{samlSPMetaDataOptionsCheckSSOMessageSignature} = 0;
 $lmConf->{samlIDPMetaDataOptions}->{$idp}
-  ->{samlIDPMetaDataOptionsAllowProxiedAuthn} = 1;
+  ->{samlIDPMetaDataOptionsAllowLoginFromIDP} = 1;
 ( $spCounters, $idpCounters ) = transform_config( $importConf, $lmConf, $xml );
 
 # Check statistics
@@ -126,7 +126,7 @@ is(
 );
 is(
     $lmConf->{samlIDPMetaDataOptions}->{$idp}
-      ->{samlIDPMetaDataOptionsAllowProxiedAuthn},
+      ->{samlIDPMetaDataOptionsAllowLoginFromIDP},
     0, "Configuration was updated"
 );
 

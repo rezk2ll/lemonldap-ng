@@ -3,6 +3,48 @@ use MIME::Base64;
 use Test::More;
 use strict;
 use IO::String;
+use DBI;
+use Digest::SHA;
+
+# Hook SHA512 function into all new DBI connections
+{
+    my $old_connect = \&DBI::connect;
+    *DBI::connect = sub {
+        my $connection = $old_connect->(@_) or return;
+
+        $connection->sqlite_create_function(
+            'sha256', 1,
+            sub {
+                my $p = shift;
+                return
+                  unpack( 'H*',
+                    Digest::SHA->new(256)->add( pack( 'H*', $p ) )->digest );
+            }
+        );
+        $connection->sqlite_create_function(
+            'sha512', 1,
+            sub {
+                my $p = shift;
+                return
+                  unpack( 'H*',
+                    Digest::SHA->new(512)->add( pack( 'H*', $p ) )->digest );
+            }
+        );
+        
+        $connection->sqlite_create_function(
+            'encrypth', 2,
+            sub {
+                my $p = shift;
+                my $hash = shift;
+                return
+                  unpack( 'H*',
+                    crypt( pack( 'H*', $p ), pack( 'H*', $hash ) ) );
+            }
+        );
+
+        return $connection;
+    }
+}
 
 require 't/test-lib.pm';
 
@@ -17,89 +59,6 @@ SKIP: {
     if ($@) {
         skip 'DBI/DBD::SQLite not found', $maintests;
     }
-    eval q`
-    no warnings 'redefine';
-
-    sub Lemonldap::NG::Portal::Lib::DBI::hash_password_from_database {
-
-        # Remark: database function must get hexadecimal input
-        # and send back hexadecimal output
-        my $self     = shift;
-        my $dbh      = shift;
-        my $dbmethod = shift;
-        my $dbsalt   = shift;
-        my $password = shift;
-
-        # Create functions
-        use Digest::SHA;
-        $dbh->sqlite_create_function(
-            'sha256', 1,
-            sub {
-                my $p = shift;
-                return
-                  unpack( 'H*',
-                    Digest::SHA->new(256)->add( pack( 'H*', $p ) )->digest );
-            }
-        );
-        $dbh->sqlite_create_function(
-            'sha512', 1,
-            sub {
-                my $p = shift;
-                return
-                  unpack( 'H*',
-                    Digest::SHA->new(512)->add( pack( 'H*', $p ) )->digest );
-            }
-        );
-        
-        $dbh->sqlite_create_function(
-            'encrypth', 2,
-            sub {
-                my $p = shift;
-                my $hash = shift;
-                return
-                  unpack( 'H*',
-                    crypt( pack( 'H*', $p ), pack( 'H*', $hash ) ) );
-            }
-        );
-
-        # convert password to hexa
-        my $passwordh = unpack "H*", $password;
-
-        my @rows = ();
-        eval {
-            my $sth = $dbh->prepare("SELECT $dbmethod('$passwordh$dbsalt')");
-            $sth->execute();
-            @rows = $sth->fetchrow_array();
-        };
-        if ($@) {
-            $self->logger->error(
-                "DBI error while hashing with '$dbmethod' hash function: $@");
-            $self->userLogger->warn("Unable to check password");
-            return "";
-        }
-
-        if ( @rows == 1 ) {
-            $self->logger->debug(
-"Successfully hashed password with $dbmethod hash function in database"
-            );
-
-            # convert salt to binary
-            my $dbsaltb = pack 'H*', $dbsalt;
-
-            # convert result to binary
-            my $res = pack 'H*', $rows[0];
-
-            return encode_base64( $res . $dbsaltb, '' );
-        }
-        else {
-            $self->userLogger->warn(
-                "Unable to check password with '$dbmethod'");
-            return "";
-        }
-
-        # Return encode_base64(SQL_METHOD(password + salt) + salt)
-    }
-`;
 
     my $dbh = DBI->connect("dbi:SQLite:dbname=$userdb");
 

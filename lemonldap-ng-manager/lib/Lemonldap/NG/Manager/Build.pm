@@ -705,9 +705,9 @@ sub scanTree {
                 push @cnodesKeys, $leaf;
             }
 
-    # issue 2439
-    # FIXME: in future versions, oidcOPMetaDataJSON and samlIDPMetaDataXML should
-    # behave the same
+   # issue 2439
+   # FIXME: in future versions, oidcOPMetaDataJSON and samlIDPMetaDataXML should
+   # behave the same
             if ( $leaf =~ /^oidcOPMetaData(?:JSON|JWKS)$/ ) {
                 push @simpleHashKeys, $leaf;
             }
