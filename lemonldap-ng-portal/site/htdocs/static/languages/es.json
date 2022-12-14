@@ -13,7 +13,7 @@
 "PE106":"Error during authentication with OpenID Provider",
 "PE107":"This application is not known",
 "PE108":"Unauthorized URL",
-"PE109":"Not a protected URL",
+"PE109":"Not a protected or trusted URL",
 "PE2":"Los campos \"usuario\" y \"password\" deben tener contenido",
 "PE20":"No password backend defined",
 "PE21":"Su cuenta está bloqueada",

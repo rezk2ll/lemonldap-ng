@@ -13,7 +13,7 @@
 "PE106":"Błąd podczas uwierzytelniania przy użyciu dostawcy OpenID",
 "PE107":"This application is not known",
 "PE108":"Unauthorized URL",
-"PE109":"Not a protected URL",
+"PE109":"Not a protected or trusted URL",
 "PE2":"Nazwa użytkownika i hasło muszą być wypełnione",
 "PE20":"Brak zdefiniowanego zaplecza hasła",
 "PE21":"Twoje konto jest zablokowane",

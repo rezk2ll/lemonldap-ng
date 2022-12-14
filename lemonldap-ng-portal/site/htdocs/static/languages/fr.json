@@ -13,7 +13,7 @@
 "PE106":"Erreur pendant l'authentification auprès du fournisseur OpenID",
 "PE107":"Cette application n'est pas reconnue",
 "PE108":"URL non authorisée",
-"PE109":"Cette URL n'est pas protégée",
+"PE109":"Cette URL n'est pas protégée ou de confiance",
 "PE2":"Identifiant ou mot de passe non renseigné",
 "PE20":"Base des mots de passe non définie",
 "PE21":"Votre compte est bloqué",

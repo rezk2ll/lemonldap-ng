@@ -159,7 +159,7 @@ ok(
     'Query SP for logout'
 );
 count(1);
-expectPortalError( $res, 107, "Unauthorized URL" );
+expectPortalError( $res, 108, "Unauthorized URL" );
 
 # Logout initiated by CAS, try with valid service URL
 ok(

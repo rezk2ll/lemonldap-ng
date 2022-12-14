@@ -200,7 +200,7 @@ ok(
 );
 
 count(2);
-expectPortalError( $res, 107, "Unauthorized URL" );
+expectPortalError( $res, 108, "Unauthorized URL" );
 
 clean_sessions();
 done_testing( count() );

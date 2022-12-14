@@ -68,7 +68,7 @@ ok(
 );
 count(1);
 
-expectPortalError( $res, 108, "Untrusted URL denied by portal" );
+expectPortalError( $res, 109, "Untrusted URL denied by portal" );
 
 # Handler part
 use_ok('Lemonldap::NG::Handler::Server');

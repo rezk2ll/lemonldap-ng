@@ -143,7 +143,7 @@ ok(
 );
 count(1);
 
-expectPortalError( $res, 108, "Subdomain CDA request not allowed by wildcard" );
+expectPortalError( $res, 109, "Subdomain CDA request not allowed by wildcard" );
 
 # Check that %.oneonly.llng allows one-level domains
 ok(

@@ -32,7 +32,7 @@ ok(
     ),
     'Get Menu'
 );
-expectPortalError( $res, 108, 'Rejected with PE_UNPROTECTEDURL' );
+expectPortalError( $res, 109, 'Rejected with PE_UNPROTECTEDURL' );
 ok( $res->[2]->[0] =~ m%<span id="languages"></span>%, ' Language icons found' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(3);
