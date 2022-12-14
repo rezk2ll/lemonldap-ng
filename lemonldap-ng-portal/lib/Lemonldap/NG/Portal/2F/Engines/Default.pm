@@ -544,6 +544,7 @@ sub _displayRegister {
     my ( $self, $req, $prefix ) = @_;
 
     $self->p->importHandlerData($req);
+
     # After verifying rule:
     #  - display template if $prefix
     #  - else display choice template
@@ -621,7 +622,7 @@ sub _displayRegister {
                 # Populate additional info for template engine
                 $_->{prefix}     = $prefix;
                 $_->{label}      = $module->label;
-                $_->{delAllowed} = $self->isDelAllowed($module);
+                $_->{delAllowed} = $self->isDelAllowed( $req, $reg_mod_info );
 
                 # Display upgrade button
                 $displayUpgBtn ||= $module->authnLevel
@@ -655,12 +656,14 @@ sub _displayRegister {
 }
 
 sub isDelAllowed {
-    my ( $self, $module ) = @_;
-    return ( $self->isRegistrationEnabled($module) && $module->userCanRemove );
+    my ( $self, $req, $reg_mod_info ) = @_;
+    return ( $self->isRegistrationEnabled( $req, $reg_mod_info )
+          && $reg_mod_info->{m}->userCanRemove );
 }
 
 sub isRegistrationEnabled {
-    my ( $self, $module ) = @_;
+    my ( $self, $req, $reg_mod_info ) = @_;
+    my $module = $reg_mod_info->{m};
     my $prefix = $module->prefix;
 
     # Extra modules require special processing
@@ -668,8 +671,9 @@ sub isRegistrationEnabled {
         return 1;
     }
     else {
+        my $rule = $reg_mod_info->{r};
         return $self->conf->{ $prefix . '2fActivation' }
-          && $self->conf->{ $prefix . '2fSelfRegistration' };
+          && $rule->( $req, $req->userData );
     }
 }
 
@@ -785,7 +789,8 @@ sub canUpdateSfa {
         if (
             $req->userData->{
                 "$self->{conf}->{contextSwitchingPrefix}_session_id"}
-            && !$self->conf->{contextSwitchingAllowed2fModifications} )
+            && !$self->conf->{contextSwitchingAllowed2fModifications}
+          )
         {
             $self->userLogger->warn(
 "ContextSwitching in progress! $user is not allowed to update 2FA."
