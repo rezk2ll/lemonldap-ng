@@ -9,7 +9,7 @@ use URI;
 use Carp;
 with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
 has rp_id    => ( is => 'rw', lazy => 1, builder => "_build_rp_id" );
 has origin   => ( is => 'rw', lazy => 1, builder => "_build_origin" );
@@ -93,10 +93,13 @@ sub validateCredential {
     my $client_data_json_b64   = $credential->{response}->{clientDataJSON};
     my $attestation_object_b64 = $credential->{response}->{attestationObject};
     my $requested_uv =
-      $registration_options->{authenticatorSelection}->{userVerification} || "";
-    my $challenge_b64        = $registration_options->{challenge};
-    my $token_binding_id_b64 = encode_base64url(
-        $req->headers->header('Sec-Provided-Token-Binding-ID') );
+      $registration_options->{authenticatorSelection}->{userVerification} || '';
+    my $challenge_b64 = $registration_options->{challenge};
+    my $token_binding_id_b64 =
+      $req->headers->header('Sec-Provided-Token-Binding-ID')
+      ? encode_base64url(
+        $req->headers->header('Sec-Provided-Token-Binding-ID') )
+      : '';
 
     return $self->verifier->validate_registration(
         challenge_b64          => $challenge_b64,
@@ -163,8 +166,11 @@ sub validateAssertion {
     my $extension_results      = $credential->{clientExtensionResults};
     my $requested_uv           = $signature_options->{userVerification} || "";
 
-    my $token_binding_id_b64 = encode_base64url(
-        $req->headers->header('Sec-Provided-Token-Binding-ID') );
+    my $token_binding_id_b64 =
+      $req->headers->header('Sec-Provided-Token-Binding-ID')
+      ? encode_base64url(
+        $req->headers->header('Sec-Provided-Token-Binding-ID') )
+      : '';
 
     my $validation_result = $self->verifier->validate_assertion(
         challenge_b64          => $signature_options->{challenge},
