@@ -35,7 +35,7 @@ my $maintests = 10;
         );
 
         $connection->sqlite_create_function(
-            'encrypth',
+            'unixcrypth',
             2,
             sub {
                 my $p    = shift;
@@ -98,7 +98,7 @@ SKIP: {
                 dbiDynamicHashEnabled            => 1,
                 dbiDynamicHashValidSchemes       => 'sha sha256 sha512',
                 dbiDynamicHashValidSaltedSchemes =>
-                  'ssha ssha256 ssha512 encrypt6',
+                  'ssha ssha256 ssha512 unixcrypt6',
                 dbiDynamicHashNewPasswordScheme => 'ssha256',
                 passwordDB                      => 'DBI',
                 portalRequireOldPassword        => 1,
@@ -141,7 +141,7 @@ SKIP: {
     expectOK($res);
     $id = expectCookie($res);
 
-    $client->p->conf->{dbiDynamicHashNewPasswordScheme} = 'encrypt6';
+    $client->p->conf->{dbiDynamicHashNewPasswordScheme} = 'unixcrypt6';
 
     # Try to modify password
     ok(
