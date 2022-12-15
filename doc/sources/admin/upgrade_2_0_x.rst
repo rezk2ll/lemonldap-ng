@@ -29,8 +29,8 @@ None
 2.0.16
 ------
 
-Change in error messages for issuers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Change in error messages
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 The error messages for the following situations have been changed:
 
@@ -43,6 +43,9 @@ The error messages for the following situations have been changed:
    An authentication request has been made to an unknown SAML service provider;error_107;PE107;This application is not known
    An authentication request has been made to an unknown OIDC relying party;error_107;PE107;This application is not known
    User was not allowed to access a CAS application;error_84;PE84;You're not authorized to access to this host
+   An unauthorized logout URL was specified during logout from a CAS application;error_108;PE108;Unauthorized URL
+   An unauthorized Redirect URI was used during an OIDC login;error_108;PE108;Unauthorized URL
+   The provided url= parameter does not correspond to a protected URL;error_109;PE109;Not a protected or trusted URL
 
 Users who wish to adjust error messages in these situations should update their translation files
 
