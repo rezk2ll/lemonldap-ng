@@ -12,6 +12,8 @@
 "PE105":"Arquivo não encontrado",
 "PE106":"Erro durante a autenticação com o provedor OpenID",
 "PE107":"This application is not known",
+"PE108":"Unauthorized URL",
+"PE109":"Not a protected or trusted URL",
 "PE2":"Os campos de usuário e senha devem ser preenchidos",
 "PE20":"Não há backend de senhas definido",
 "PE21":"A sua conta está bloqueada",

@@ -8,12 +8,12 @@ use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
-  PE_BADURL
   PE_CONFIRM
   PE_REDIRECT
   PE_LOGOUT_OK
   PE_PASSWORD_OK
   PE_BADCREDENTIALS
+  PE_UNAUTHORIZEDURL
   PE_UNAUTHORIZEDPARTNER
   PE_UNKNOWNPARTNER
   PE_OIDC_SERVICE_NOT_ALLOWED
@@ -299,7 +299,7 @@ sub run {
                 unless ($redirect_uri_allowed) {
                     $self->userLogger->error(
                         "Redirect URI $redirect_uri not allowed");
-                    return PE_BADURL;
+                    return PE_UNAUTHORIZEDURL;
                 }
             }
 
@@ -1081,7 +1081,7 @@ sub run {
                     unless ($redirect_uri_allowed) {
                         $self->logger->error(
                             "$post_logout_redirect_uri is not allowed");
-                        return PE_BADURL;
+                        return PE_UNAUTHORIZEDURL;
                     }
 
                     # Build Response

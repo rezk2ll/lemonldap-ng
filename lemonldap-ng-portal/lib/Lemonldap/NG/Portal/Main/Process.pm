@@ -179,11 +179,11 @@ sub controlUrl {
             and !$self->isTrustedUrl($vhost) )
         {
             $self->userLogger->error(
-                    "URL contains a non protected host (param: "
+                    "URL contains an unprotected host (param: "
                   . ( $req->param('logout') ? 'HTTP Referer' : 'urldc' )
                   . " | value: $tmp | alias: $vhost)" );
             delete $req->{urldc};
-            return PE_BADURL;
+            return PE_UNPROTECTEDURL;
         }
 
         $req->env->{urldc} = $req->{urldc};

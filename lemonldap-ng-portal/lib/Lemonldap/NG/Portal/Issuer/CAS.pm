@@ -6,19 +6,19 @@ use URI;
 use POSIX qw(strftime);
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_CAS_SERVICE_NOT_ALLOWED
+  URIRE
+  PE_OK
   PE_INFO
   PE_ERROR
   PE_LOGOUT_OK
-  PE_OK
-  PE_BADURL
   PE_SENDRESPONSE
-  PE_UNAUTHORIZEDPARTNER
   PE_UNKNOWNPARTNER
-  URIRE
+  PE_UNAUTHORIZEDURL
+  PE_UNAUTHORIZEDPARTNER
+  PE_CAS_SERVICE_NOT_ALLOWED
 );
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::CAS';
@@ -382,7 +382,7 @@ sub run {
                 $self->userLogger->error(
                         "Untrusted service URL $logout_service"
                       . "specified for CAS Logout" );
-                return PE_BADURL;
+                return PE_UNAUTHORIZEDURL;
             }
         }
 

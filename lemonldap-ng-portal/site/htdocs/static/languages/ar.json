@@ -12,6 +12,8 @@
 "PE105":"File not found",
 "PE106":"Error during authentication with OpenID Provider",
 "PE107":"This application is not known",
+"PE108":"Unauthorized URL",
+"PE109":"Not a protected or trusted URL",
 "PE2":"حقول المستخدم وكلمة المرور يجب ملؤهم",
 "PE20":"No password backend defined",
 "PE21":"حسابك مقفل",

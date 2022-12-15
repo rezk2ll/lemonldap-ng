@@ -12,6 +12,8 @@
 "PE105":"Tiedostoa ei löydy",
 "PE106":"Virhe tunnistauduttaessa OpenID-palveluntarjoajalle",
 "PE107":"Tämä sovellus ei ole tunnettu.",
+"PE108":"Unauthorized URL",
+"PE109":"Not a protected or trusted URL",
 "PE2":"Käyttäjänimi- ja salasanakentät pitää täyttää",
 "PE20":"Salasanataustaosioita ei ole määritetty",
 "PE21":"Käyttäjätilisi on lukittu",

@@ -12,6 +12,8 @@
 "PE105":"קובץ לא נמצא",
 "PE106":"שגיאה במהלך אימות מול ספק OpenID",
 "PE107":"This application is not known",
+"PE108":"Unauthorized URL",
+"PE109":"Not a protected or trusted URL",
 "PE2":"יש למלא את שדות המשתמש והסיסמה",
 "PE20":"לא צוין מנגנון סיסמאות",
 "PE21":"החשבון שלך נעול",
