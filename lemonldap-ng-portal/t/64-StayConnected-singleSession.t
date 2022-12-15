@@ -68,9 +68,7 @@ sub try_connect_with_persistent_cookie {
     );
     count(1);
     expectOK($res);
-    diag "MAX auth tried";
     if ( $res->[2]->[0] =~ qr/Register browser/ ) {
-        diag "MAX found register form";
         my ( $host, $url, $query ) =
           expectForm( $res, '#', undef, 'fg', 'token' );
 
