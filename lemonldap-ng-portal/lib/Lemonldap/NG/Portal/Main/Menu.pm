@@ -34,6 +34,7 @@ has menuModules => (
     }
 );
 
+has noApp         => ( is => 'rw', default => sub { 0 } );
 has specific      => ( is => 'rw', default => sub { {} } );
 has sfManagerRule => ( is => 'rw', default => sub { 1 } );
 has imgPath       => (
@@ -74,6 +75,9 @@ sub params {
 
     # Modules to display
     $res{DISPLAY_MODULES} = $self->displayModules($req);
+
+    # Display noApp message
+    $res{NO_APP_ALLOWED} = $self->noApp;
 
     # Force password tab in case of password error
     if (
@@ -177,6 +181,8 @@ sub displayModules {
             my $moduleHash = { $module->[0] => 1 };
             if ( $module->[0] eq 'Appslist' ) {
                 $moduleHash->{'APPSLIST_LOOP'} = $self->appslist($req);
+                $self->noApp(1)
+                  unless scalar @{ $moduleHash->{'APPSLIST_LOOP'} };
             }
             elsif ( $module->[0] eq 'LoginHistory' ) {
                 $moduleHash->{'SUCCESS_LOGIN'} =

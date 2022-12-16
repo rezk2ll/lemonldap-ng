@@ -227,6 +227,7 @@
 "newMessages":"رسالة جديدة (رسائل)",
 "newPassword":"كلمة مرور جديدة",
 "newPwdSentTo":"تم إرسال تأكيد إلى عنوان بريدك الإلكتروني.",
+"noAppAllowed":"None appplication allowed!",
 "noHistory":"هذا هو أول اتصال، مرحبا بك!",
 "noNotification":"None accepted notification found",
 "noTOTPFound":"No TOTP found",

@@ -227,6 +227,7 @@
 "newMessages":"Yeni mesaj(lar)",
 "newPassword":"Yeni parola",
 "newPwdSentTo":"E-posta adresinize bir onay gönderildi.",
+"noAppAllowed":"None appplication allowed!",
 "noHistory":"Bu sizin ilk bağlantınız, hoş geldiniz!",
 "noNotification":"Kabul edilen bildirim bulunamadı",
 "noTOTPFound":"TOTP bulunamadi",

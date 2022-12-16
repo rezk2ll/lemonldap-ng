@@ -227,6 +227,7 @@
 "newMessages":"新消息",
 "newPassword":"新密码",
 "newPwdSentTo":"确认邮件已发送至您的邮箱",
+"noAppAllowed":"None appplication allowed!",
 "noHistory":"欢迎，这是您的首次登陆",
 "noNotification":"找不到未接受的通知",
 "noTOTPFound":"找不到 TOTP",

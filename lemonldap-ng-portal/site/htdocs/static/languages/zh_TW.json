@@ -227,6 +227,7 @@
 "newMessages":"新訊息",
 "newPassword":"新密碼",
 "newPwdSentTo":"確認已傳送到您的電子郵件地址。",
+"noAppAllowed":"None appplication allowed!",
 "noHistory":"這是您的第一次連線，歡迎！",
 "noNotification":"找不到未接受的通知",
 "noTOTPFound":"找不到 TOTP",

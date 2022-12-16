@@ -227,6 +227,7 @@
 "newMessages":"הודעות חדשות",
 "newPassword":"סיסמה חדשה",
 "newPwdSentTo":"נשלח אימות לכתובת הדוא״ל שלך.",
+"noAppAllowed":"None appplication allowed!",
 "noHistory":"זה החיבור הראשון שלך, ברוך בואך!",
 "noNotification":"לא נמצאו התראות שאושרו",
 "noTOTPFound":"לא נמצא TOTP",

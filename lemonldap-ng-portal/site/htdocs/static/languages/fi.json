@@ -227,6 +227,7 @@
 "newMessages":"Uusia viestejä",
 "newPassword":"Uusi salasana",
 "newPwdSentTo":"Vahvistusviesti on lähetetty sähköpostiisi.",
+"noAppAllowed":"None appplication allowed!",
 "noHistory":"Tämä on ensimmäinen kirjautumisesi, tervetuloa!",
 "noNotification":"Yhtään hyväksyttyä ilmoitusta ei löydy",
 "noTOTPFound":"TOTP-tunnistusvälineitä ei löydy",

@@ -227,6 +227,7 @@
 "newMessages":"Nuovo(i) messaggio(i)",
 "newPassword":"Nuova password",
 "newPwdSentTo":"Una conferma è stata inviata all'indirizzo di posta elettronica.",
+"noAppAllowed":"None appplication allowed!",
 "noHistory":"Questa è la tua prima connessione, benvenuto!",
 "noNotification":"None accepted notification found",
 "noTOTPFound":"Nessun TOTP trovato",
