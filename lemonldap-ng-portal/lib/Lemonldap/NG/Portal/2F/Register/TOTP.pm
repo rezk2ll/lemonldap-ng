@@ -5,7 +5,7 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
 extends qw(
   Lemonldap::NG::Portal::2F::Register::Base
@@ -66,7 +66,7 @@ sub run {
 
      # Set default name if empty, check characters and truncate name if too long
         $TOTPName ||= $epoch;
-        unless ( $TOTPName =~ /^[\w]+$/ ) {
+        unless ( $TOTPName =~ /^[\w\s-]+$/ ) {
             $self->userLogger->error('TOTP name with bad character(s)');
             return $self->p->sendError( $req, 'badName', 200 );
         }
@@ -102,7 +102,7 @@ sub run {
         my $secret = '';
 
         # Reading existing 2FDevices
-        $self->logger->debug("Looking for 2F Devices...");
+        $self->logger->debug("Looking for 2F devices...");
         my $_2fDevices;
         if ( $req->userData->{_2fDevices} ) {
             $_2fDevices = eval {

@@ -6,7 +6,7 @@ use Mouse;
 use JSON qw(from_json to_json);
 use MIME::Base64 qw(encode_base64url decode_base64url);
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
 extends qw(
   Lemonldap::NG::Portal::2F::Register::Base
@@ -126,7 +126,7 @@ sub run {
 
      # Set default name if empty, check characters and truncate name if too long
                 $keyName ||= $epoch;
-                unless ( $keyName =~ /^[\w]+$/ ) {
+                unless ( $keyName =~ /^[\w\s-]+$/ ) {
                     $self->userLogger->error('U2F name with bad character(s)');
                     return $self->p->sendError( $req, 'badName', 200 );
                 }
@@ -257,7 +257,7 @@ sub run {
             400 );
 
         # Read existing 2FDevices
-        $self->logger->debug("Looking for 2F Devices...");
+        $self->logger->debug("Looking for 2F devices...");
         my ( $_2fDevices, $keyName );
         if ( $req->userData->{_2fDevices} ) {
             $_2fDevices = eval {

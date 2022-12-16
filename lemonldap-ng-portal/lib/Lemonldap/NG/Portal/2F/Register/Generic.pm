@@ -8,12 +8,9 @@ use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::Crypto;
 use Lemonldap::NG::Portal::Main::Constants 'PE_OK';
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
-extends qw(
-  Lemonldap::NG::Portal::2F::Register::Base
-);
-
+extends 'Lemonldap::NG::Portal::2F::Register::Base';
 with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
@@ -100,7 +97,7 @@ sub run {
         my $epoch       = time();
 
      # Set default name if empty, check characters and truncate name if too long
-        unless ( $genericname =~ /^[\w]+$/ ) {
+        unless ( $genericname =~ /^[\w\s-]+$/ ) {
             $self->userLogger->error('Generic 2F name with bad character(s)');
             return $self->p->sendError( $req, 'badName', 200 );
         }
@@ -121,7 +118,7 @@ sub run {
         # Now generic is verified, let's store it in persistent data
 
         # Reading existing 2FDevices
-        $self->logger->debug("Looking for 2F Devices...");
+        $self->logger->debug("Looking for 2F devices...");
 
         my @generics_devices =
           $self->find2fDevicesByType( $req, $req->userData, $self->prefix );

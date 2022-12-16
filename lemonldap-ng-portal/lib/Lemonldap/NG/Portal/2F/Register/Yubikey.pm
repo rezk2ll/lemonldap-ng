@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
 extends 'Lemonldap::NG::Portal::2F::Register::Base';
 
@@ -38,7 +38,7 @@ sub run {
 
      # Set default name if empty, check characters and truncate name if too long
         $UBKName ||= $epoch;
-        unless ( $UBKName =~ /^[\w]+$/ ) {
+        unless ( $UBKName =~ /^[\w\s-]+$/ ) {
             $self->userLogger->error('Yubikey name with bad character(s)');
             return $self->p->sendError( $req, 'badName', 200 );
         }
@@ -51,7 +51,7 @@ sub run {
             my $key = substr( $otp, 0, $self->conf->{yubikey2fPublicIDSize} );
 
             # Read existing 2FDevices
-            $self->logger->debug("Looking for 2F Devices...");
+            $self->logger->debug("Looking for 2F devices...");
             my $_2fDevices;
             if ( $req->userData->{_2fDevices} ) {
                 $_2fDevices = eval {
