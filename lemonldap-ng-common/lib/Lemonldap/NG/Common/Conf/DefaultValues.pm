@@ -266,6 +266,8 @@ sub defaultValues {
         'portalDisplayLogout'           => 1,
         'portalDisplayOidcConsents'     =>
           '$_oidcConsents && $_oidcConsents =~ /\\w+/',
+        'portalDisplayOrder' =>
+          'Appslist ChangePassword LoginHistory OidcConsents Logout',
         'portalDisplayRefreshMyRights' => 1,
         'portalDisplayRegister'        => 1,
         'portalErrorOnExpiredSession'  => 1,

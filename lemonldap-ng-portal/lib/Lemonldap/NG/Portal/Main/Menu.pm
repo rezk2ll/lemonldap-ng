@@ -19,14 +19,16 @@ has menuModules => (
     builder => sub {
         my $conf = $_[0]->{conf};
         my @res;
-        foreach (qw(Appslist ChangePassword LoginHistory OidcConsents Logout)) {
-            my $cond  = $conf->{"portalDisplay$_"} // 1;
-            my $order = $conf->{"portalDisplayOrder$_"} || 0;
+        my %hash;
+        my @modules = grep { !$hash{$_}++ } split /[,\s]+/,
+          $conf->{portalDisplayOrder};
+        foreach (@modules) {
+            my $cond = $conf->{"portalDisplay$_"} // 1;
             $_[0]->p->logger->debug("Evaluate condition $cond for module $_");
             my $tmp =
               $_[0]->{p}
               ->HANDLER->buildSub( $_[0]->{p}->HANDLER->substitute($cond) );
-            push @res, [ $_, $tmp, $order ] if $tmp;
+            push @res, [ $_, $tmp ] if $tmp;
         }
         return \@res;
     }
@@ -172,12 +174,9 @@ sub displayModules {
     foreach my $module ( @{ $self->menuModules } ) {
         $self->logger->debug("Check if $module->[0] has to be displayed");
         if ( $module->[1]->( $req, $req->userData ) ) {
-            $self->logger->debug("Module: $module->[0] / Order: $module->[2]");
-            my $moduleHash = { $module->[0] => 1, order => $module->[2] };
+            my $moduleHash = { $module->[0] => 1 };
             if ( $module->[0] eq 'Appslist' ) {
-                my $appslist = $self->appslist($req);
-                $moduleHash->{'APPSLIST_LOOP'} = $appslist;
-                $moduleHash->{'Appslist'}      = 0 unless scalar @{$appslist};
+                $moduleHash->{'APPSLIST_LOOP'} = $self->appslist($req);
             }
             elsif ( $module->[0] eq 'LoginHistory' ) {
                 $moduleHash->{'SUCCESS_LOGIN'} =
@@ -196,8 +195,6 @@ sub displayModules {
             push @$displayModules, $moduleHash;
         }
     }
-    @$displayModules =
-      sort { $a->{'order'} <=> $b->{'order'} } @$displayModules;
 
     return $displayModules;
 }

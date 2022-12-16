@@ -1282,10 +1282,7 @@ sub attributes {
             default       => 1,
             documentation => 'Display login history tab in portal',
         },
-        portalDisplayOrderLoginHistory => {
-            type          => 'int',
-            documentation => 'Display order of login history tab in portal',
-        },
+
         successLoginNumber => {
             default       => 5,
             type          => 'int',
@@ -1298,27 +1295,15 @@ sub attributes {
             default       => 1,
             documentation => 'Display applications tab in portal',
         },
-        portalDisplayOrderAppslist => {
-            type          => 'int',
-            documentation => 'Display order of applications tab in portal',
-        },
         portalDisplayChangePassword => {
             type          => 'boolOrExpr',
             default       => '$_auth =~ /^(LDAP|DBI|Demo)$/',
             documentation => 'Display password tab in portal',
         },
-        portalDisplayOrderChangePassword => {
-            type          => 'int',
-            documentation => 'Display order of password tab in portal',
-        },
         portalDisplayLogout => {
             type          => 'boolOrExpr',
             default       => 1,
             documentation => 'Display logout tab in portal',
-        },
-        portalDisplayOrderLogout => {
-            type          => 'int',
-            documentation => 'Display order of logout tab in portal',
         },
         portalDisplayCertificateResetByMail => {
             type          => 'bool',
@@ -1336,19 +1321,15 @@ sub attributes {
             type          => 'bool',
             documentation => 'Display reset password button in portal',
         },
-        passwordResetAllowedRetries => {
-            default       => 3,
-            type          => 'int',
-            documentation => 'Maximum number of retries to reset password',
-        },
         portalDisplayOidcConsents => {
             type          => 'boolOrExpr',
             default       => '$_oidcConsents && $_oidcConsents =~ /\w+/',
-            documentation => 'Display OIDC consent tab in portal',
+            documentation => 'Display OIDC consents tab in portal',
         },
-        portalDisplayOrderOidcConsents => {
-            type          => 'int',
-            documentation => 'Display OIDC consent tab in portal',
+        portalDisplayOrder => {
+            type          => 'text',
+            default       => 'Appslist ChangePassword LoginHistory OidcConsents Logout',
+            documentation => 'List for ordering tabs in portal',
         },
         portalDisplayGeneratePassword => {
             default       => 1,
@@ -1365,6 +1346,11 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Allow to display password in login form',
+        },
+        passwordResetAllowedRetries => {
+            default       => 3,
+            type          => 'int',
+            documentation => 'Maximum number of retries to reset password',
         },
 
         # Cookies

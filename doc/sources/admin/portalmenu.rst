@@ -13,10 +13,11 @@ Menu modules
 LemonLDAP::NG portal menu proposes 5 modules:
 
 -  **Application list**: display categories and applications allowed for the user
--  **Login history**: display user's last logins and last failed logins
--  **Password change**: form to change the password
+-  **Login history**: display user's last logins and failed logins
+-  **Password change**: form to change password
 -  **OIDC consents**: display user's OpenId Connect consents
 -  **Logout**: logout button
+-  **Display order**: list used for sorting modules (default: Appslist ChangePassword LoginHistory OidcConsents Logout)
 
 Each module can be activated through a rule, using user session
 information. These rules can be set through Manager:

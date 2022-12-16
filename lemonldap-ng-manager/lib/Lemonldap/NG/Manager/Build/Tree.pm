@@ -33,46 +33,14 @@ sub tree {
                             nodes => [ {
                                     title => 'portalModules',
                                     help  => 'portalmenu.html#menu-modules',
-                                    nodes => [ {
-                                            title => 'appslist',
-                                            form => 'simpleInputContainer',
-                                            nodes => [
-                                                'portalDisplayAppslist',
-                                                'portalDisplayOrderAppslist'
-                                            ]
-                                        },
-                                        {
-                                            title => 'loginHistory',
-                                            form => 'simpleInputContainer',
-                                            nodes => [
-                                                'portalDisplayLoginHistory',
-                                                'portalDisplayOrderLoginHistory'
-                                            ]
-                                        },
-                                        {
-                                            title => 'changePassword',
-                                            form => 'simpleInputContainer',
-                                            nodes => [
-                                                'portalDisplayChangePassword',
-'portalDisplayOrderChangePassword'
-                                            ]
-                                        },
-                                        {
-                                            title => 'oidcConsents',
-                                            form => 'simpleInputContainer',
-                                            nodes => [
-                                                'portalDisplayOidcConsents',
-                                                'portalDisplayOrderOidcConsents'
-                                            ]
-                                        },
-                                        {
-                                            title => 'logout',
-                                            form  => 'simpleInputContainer',
-                                            nodes => [
-                                                'portalDisplayLogout',
-                                                'portalDisplayOrderLogout'
-                                            ]
-                                        }
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'portalDisplayAppslist',
+                                        'portalDisplayLoginHistory',
+                                        'portalDisplayChangePassword',
+                                        'portalDisplayOidcConsents',
+                                        'portalDisplayLogout',
+                                        'portalDisplayOrder'
                                     ]
                                 },
                                 'applicationList'
@@ -169,10 +137,7 @@ sub tree {
                       'start.html#authentication-users-and-password-databases',
                     form  => 'authParams',
                     nodes => [
-                        'authentication',
-                        'userDB',
-                        'passwordDB',
-                        'registerDB'
+                        'authentication', 'userDB', 'passwordDB', 'registerDB'
                     ],
                     nodes_cond => [ {
                             title => 'adParams',
@@ -184,10 +149,8 @@ sub tree {
                             title => 'choiceParams',
                             help  => 'authchoice.html',
                             nodes => [
-                                'authChoiceParam',
-                                'authChoiceModules',
-                                'authChoiceAuthBasic',
-                                'authChoiceFindUser'
+                                'authChoiceParam',     'authChoiceModules',
+                                'authChoiceAuthBasic', 'authChoiceFindUser'
                             ]
                         },
                         {
@@ -273,10 +236,8 @@ sub tree {
                             title => 'facebookParams',
                             help  => 'authfacebook.html',
                             nodes => [
-                                'facebookAuthnLevel',
-                                'facebookExportedVars',
-                                'facebookAppId',
-                                'facebookAppSecret',
+                                'facebookAuthnLevel', 'facebookExportedVars',
+                                'facebookAppId',      'facebookAppSecret',
                                 'facebookUserField'
                             ]
                         },
@@ -285,10 +246,8 @@ sub tree {
                             form  => 'simpleInputContainer',
                             help  => 'authkerberos.html',
                             nodes => [
-                                'krbAuthnLevel',
-                                'krbKeytab',
-                                'krbByJs',
-                                'krbRemoveDomain',
+                                'krbAuthnLevel', 'krbKeytab',
+                                'krbByJs',       'krbRemoveDomain',
                                 'krbAllowedDomains',
                             ]
                         },
@@ -359,12 +318,9 @@ sub tree {
                             help  => 'authlinkedin.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'linkedInAuthnLevel',
-                                'linkedInClientID',
-                                'linkedInClientSecret',
-                                'linkedInFields',
-                                'linkedInUserField',
-                                'linkedInScope'
+                                'linkedInAuthnLevel',   'linkedInClientID',
+                                'linkedInClientSecret', 'linkedInFields',
+                                'linkedInUserField',    'linkedInScope'
                             ]
                         },
                         {
@@ -372,10 +328,8 @@ sub tree {
                             help  => 'authgithub.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'githubAuthnLevel',
-                                'githubClientID',
-                                'githubClientSecret',
-                                'githubUserField',
+                                'githubAuthnLevel',   'githubClientID',
+                                'githubClientSecret', 'githubUserField',
                                 'githubScope'
                             ]
                         },
@@ -394,10 +348,8 @@ sub tree {
                             title => 'openidParams',
                             help  => 'authopenid.html',
                             nodes => [
-                                'openIdAuthnLevel',
-                                'openIdExportedVars',
-                                'openIdSecret',
-                                'openIdIDPList'
+                                'openIdAuthnLevel', 'openIdExportedVars',
+                                'openIdSecret',     'openIdIDPList'
                             ]
                         },
                         {
@@ -447,8 +399,7 @@ sub tree {
                             help  => 'authradius.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'radiusAuthnLevel',
-                                'radiusSecret',
+                                'radiusAuthnLevel', 'radiusSecret',
                                 'radiusServer'
                             ]
                         },
@@ -457,10 +408,8 @@ sub tree {
                             help  => 'authrest.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'restAuthnLevel',
-                                'restAuthUrl',
-                                'restUserDBUrl',
-                                'restPwdConfirmUrl',
+                                'restAuthnLevel', 'restAuthUrl',
+                                'restUserDBUrl',  'restPwdConfirmUrl',
                                 'restPwdModifyUrl'
                             ]
                         },
@@ -478,12 +427,9 @@ sub tree {
                             title => 'slaveParams',
                             help  => 'authslave.html',
                             nodes => [
-                                'slaveAuthnLevel',
-                                'slaveUserHeader',
-                                'slaveMasterIP',
-                                'slaveHeaderName',
-                                'slaveHeaderContent',
-                                'slaveDisplayLogo',
+                                'slaveAuthnLevel',    'slaveUserHeader',
+                                'slaveMasterIP',      'slaveHeaderName',
+                                'slaveHeaderContent', 'slaveDisplayLogo',
                                 'slaveExportedVars',
                             ]
                         },
@@ -491,12 +437,9 @@ sub tree {
                             title => 'sslParams',
                             help  => 'authssl.html',
                             nodes => [
-                                'SSLAuthnLevel',
-                                'SSLVar',
-                                'SSLIssuerVar',
-                                'SSLVarIf',
-                                'sslByAjax',
-                                'sslHost',
+                                'SSLAuthnLevel', 'SSLVar',
+                                'SSLIssuerVar',  'SSLVarIf',
+                                'sslByAjax',     'sslHost',
                             ]
                         },
                         {
@@ -504,10 +447,8 @@ sub tree {
                             help  => 'authtwitter.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'twitterAuthnLevel',
-                                'twitterKey',
-                                'twitterSecret',
-                                'twitterAppName',
+                                'twitterAuthnLevel', 'twitterKey',
+                                'twitterSecret',     'twitterAppName',
                                 'twitterUserField'
                             ]
                         },
@@ -515,8 +456,7 @@ sub tree {
                             title => 'webidParams',
                             help  => 'authwebid.html',
                             nodes => [
-                                'webIDAuthnLevel',
-                                'webIDExportedVars',
+                                'webIDAuthnLevel', 'webIDExportedVars',
                                 'webIDWhitelist'
                             ]
                         },
@@ -524,12 +464,9 @@ sub tree {
                             title => 'customParams',
                             help  => 'authcustom.html',
                             nodes => [
-                                'customAuth',
-                                'customUserDB',
-                                'customPassword',
-                                'customRegister',
-                                'customResetCertByMail',
-                                'customAddParams',
+                                'customAuth',            'customUserDB',
+                                'customPassword',        'customRegister',
+                                'customResetCertByMail', 'customAddParams',
                             ]
                         },
                     ],
@@ -543,8 +480,7 @@ sub tree {
                             help  => 'idpsaml.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'issuerDBSAMLActivation',
-                                'issuerDBSAMLPath',
+                                'issuerDBSAMLActivation', 'issuerDBSAMLPath',
                                 'issuerDBSAMLRule'
                             ]
                         },
@@ -553,8 +489,7 @@ sub tree {
                             help  => 'idpcas.html#enabling-cas',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'issuerDBCASActivation',
-                                'issuerDBCASPath',
+                                'issuerDBCASActivation', 'issuerDBCASPath',
                                 'issuerDBCASRule',
                             ]
                         },
@@ -630,12 +565,9 @@ sub tree {
                     help  => 'ssocookie.html',
                     form  => 'simpleInputContainer',
                     nodes => [
-                        'cookieName',
-                        '*domain',
-                        'cda',
-                        'securedCookie',
-                        'httpOnly',
-                        'cookieExpiration',
+                        'cookieName', '*domain',
+                        'cda',        'securedCookie',
+                        'httpOnly',   'cookieExpiration',
                         'sameSite',
                     ]
                 },
@@ -663,10 +595,8 @@ sub tree {
                             title => 'multipleSessions',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'singleSession',
-                                'singleIP',
-                                'singleUserByIP',
-                                'notifyDeleted',
+                                'singleSession',  'singleIP',
+                                'singleUserByIP', 'notifyDeleted',
                                 'notifyOther'
                             ]
                         },
