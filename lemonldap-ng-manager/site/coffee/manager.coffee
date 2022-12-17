@@ -486,7 +486,7 @@ llapp.controller 'TreeCtrl', [
 			_getAll($scope.currentNode).then ->
 				while cs.$modelValue.title != "#{type}s"
 					cs = cs.$parentNodeScope
-				t = JSON.parse JSON.stringify($scope.currentNode).replace(new RegExp(idkey, 'g'), 'new__' + name)
+				t = JSON.parse JSON.stringify($scope.currentNode).replace(/[*]/g, '').replace(new RegExp(idkey, 'g'), 'new__' + name)
 				t.id = "#{type}s/new__#{name}"
 				t.title = name
 				cs.$modelValue.nodes.push(t)
