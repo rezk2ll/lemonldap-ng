@@ -18,7 +18,7 @@ has prefix   => ( is => 'rw', default => 'totp' );
 has template => ( is => 'ro', default => 'totp2fregister' );
 has welcome  => ( is => 'ro', default => 'yourNewTotpKey' );
 has logo     => ( is => 'rw', default => 'totp.png' );
-has ott => (
+has ott      => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
@@ -61,23 +61,15 @@ sub run {
 
         # Now check TOTP code to verify that user has a valid TOTP app
         my $code     = $req->param('code');
-        my $TOTPName = $req->param('TOTPName');
-        my $epoch    = time();
-
-     # Set default name if empty, check characters and truncate name if too long
-        $TOTPName ||= $epoch;
-        unless ( $TOTPName =~ /^[\w\s-]+$/ ) {
-            $self->userLogger->error('TOTP name with bad character(s)');
-            return $self->p->sendError( $req, 'badName', 200 );
-        }
-        $TOTPName =
-          substr( $TOTPName, 0, $self->conf->{max2FDevicesNameLength} );
-        $self->logger->debug("TOTP name: $TOTPName");
+        my $TOTPName = $req->param('TOTPName') || 'MyTOTP';
 
         unless ($code) {
             $self->userLogger->info('TOTP registration: empty validation form');
             return $self->p->sendError( $req, 'missingCode', 200 );
         }
+
+        $TOTPName = $self->setNameSfa( $req, $TOTPName, 'TOTP' );
+        return $self->p->sendError( $req, 'badName', 200 ) unless $TOTPName;
 
         my $r = $self->verifyCode(
             $self->conf->{totp2fInterval},
@@ -122,7 +114,7 @@ sub run {
         # Reading existing TOTP
         my @totp2f = grep { $_->{type} eq $self->type } @$_2fDevices;
         unless (@totp2f) {
-            $self->logger->debug("No TOTP Device found");
+            $self->logger->debug("No TOTP device found");
 
             # Set default value
             push @totp2f, { _secret => '' };
@@ -159,10 +151,10 @@ sub run {
         # Store TOTP secret
         push @keep,
           {
+            _secret => $storable_secret,
             type    => $self->type,
             name    => $TOTPName,
-            _secret => $storable_secret,
-            epoch   => $epoch
+            epoch   => time()
           };
         $self->logger->debug(
             "Append 2F Device: { type => 'TOTP', name => $TOTPName }");

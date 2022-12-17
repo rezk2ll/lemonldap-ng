@@ -89,28 +89,18 @@ sub run {
 
     # Verification that user has a valid generic
     if ( $action eq 'verify' ) {
-
         my $generic     = $req->param('generic');
         my $genericname = $req->param('genericname') || "MyDevice";
         my $genericcode = $req->param('genericcode');
         my $tokenid     = $req->param("token");
-        my $epoch       = time();
 
-     # Set default name if empty, check characters and truncate name if too long
-        unless ( $genericname =~ /^[\w\s-]+$/ ) {
-            $self->userLogger->error('Generic 2F name with bad character(s)');
-            return $self->p->sendError( $req, 'badName', 200 );
-        }
-        $genericname =
-          substr( $genericname, 0, $self->conf->{max2FDevicesNameLength} );
-        $self->logger->debug("Generic 2F name: $genericname");
+        $genericname = $self->setNameSfa( $req, $genericname, 'Generic 2F' );
+        return $self->p->sendError( $req, 'badName', 200 ) unless $genericname;
 
         # Verify code
         my $token = $self->ott->getToken( $tokenid, 1 );
-
         my $res = $self->verificationModule->verify_supplied_code( $req, $token,
             $genericcode );
-
         unless ( $res == PE_OK ) {
             return $self->p->sendError( $req, "PE$res", 400 );
         }
@@ -143,10 +133,10 @@ sub run {
                 $req,
                 $req->userData,
                 {
-                    "name"     => "$genericname",
-                    "type"     => $self->prefix,
-                    "epoch"    => "$epoch",
-                    "_generic" => "$generic"
+                    _generic => $generic,
+                    name     => $genericname,
+                    type     => $self->prefix,
+                    epoch    => time()
                 }
             )
           )

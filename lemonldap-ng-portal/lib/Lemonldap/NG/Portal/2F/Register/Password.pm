@@ -64,7 +64,6 @@ sub run {
         # Check Password
         my $password       = $req->param('password');
         my $passwordverify = $req->param('passwordverify');
-        my $epoch          = time();
 
         unless ( $password and $passwordverify ) {
             $self->userLogger->info(
@@ -113,10 +112,10 @@ sub run {
                 $req,
                 $req->userData,
                 {
-                    "name"    => "password",
-                    "type"    => $self->type,
-                    "epoch"   => "$epoch",
-                    "_secret" => "$secret"
+                    _secret => $secret,
+                    name    => 'password',
+                    type    => $self->type,
+                    epoch   => time()
                 }
             )
           )

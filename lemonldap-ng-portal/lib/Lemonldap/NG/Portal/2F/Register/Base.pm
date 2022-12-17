@@ -4,7 +4,7 @@ package Lemonldap::NG::Portal::2F::Register::Base;
 use strict;
 use Mouse;
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -53,7 +53,21 @@ sub canUpdateSfa {
           . "::canUpdateSfa is deprecated,"
           . " this check is now performed by the 2F Engine,"
           . " you can remove it from your custom module" );
+
     return;
+}
+
+# Set default name if empty, check characters and truncate name if too long
+sub setNameSfa {
+    my ( $self, $req, $name, $type ) = @_;
+    unless ( $name =~ /^[\w\s-]+$/ ) {
+        $self->userLogger->error("$type name with bad character(s)");
+        return undef;
+    }
+    $name = substr( $name, 0, $self->conf->{max2FDevicesNameLength} );
+    $self->logger->debug("$type name: $name");
+
+    return $name;
 }
 
 1;

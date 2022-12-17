@@ -100,7 +100,7 @@ sub run {
             if ( $keyHandle and $userKey ) {
 
                 # Read existing 2FDevices
-                $self->logger->debug("Looking for 2F Devices...");
+                $self->logger->debug("Looking for 2F devices...");
                 my $_2fDevices;
                 if ( $req->userData->{_2fDevices} ) {
                     $_2fDevices = eval {
@@ -121,26 +121,18 @@ sub run {
                     $_2fDevices = [];
                 }
 
-                my $keyName = $req->param('keyName');
-                my $epoch   = time();
-
-     # Set default name if empty, check characters and truncate name if too long
-                $keyName ||= $epoch;
-                unless ( $keyName =~ /^[\w\s-]+$/ ) {
-                    $self->userLogger->error('U2F name with bad character(s)');
-                    return $self->p->sendError( $req, 'badName', 200 );
-                }
-                $keyName =
-                  substr( $keyName, 0, $self->conf->{max2FDevicesNameLength} );
-                $self->logger->debug("Key name: $keyName");
+                my $keyName = $req->param('keyName') || 'MyU2F';
+                $keyName = $self->setNameSfa( $req, $keyName, 'U2F' );
+                return $self->p->sendError( $req, 'badName', 200 )
+                  unless $keyName;
 
                 push @{$_2fDevices},
                   {
-                    type       => $self->type,
-                    name       => $keyName,
                     _userKey   => encode_base64url( $userKey, '' ),
                     _keyHandle => $keyHandle,
-                    epoch      => $epoch
+                    type       => $self->type,
+                    name       => $keyName,
+                    epoch      => time()
                   };
                 $self->logger->debug(
                     "Append 2F Device: { type => 'U2F', name => $keyName }");

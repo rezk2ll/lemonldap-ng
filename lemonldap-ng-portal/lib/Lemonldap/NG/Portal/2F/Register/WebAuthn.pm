@@ -18,7 +18,7 @@ has prefix   => ( is => 'rw', default => 'webauthn' );
 has template => ( is => 'ro', default => 'webauthn2fregister' );
 has welcome  => ( is => 'ro', default => 'webauthn2fWelcome' );
 has logo     => ( is => 'rw', default => 'webauthn.png' );
-has ott => (
+has ott      => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
@@ -184,29 +184,21 @@ sub _registration {
         return $self->p->sendError( $req, 'webauthnAlreadyRegistered', 400 );
     }
 
-    my $keyName = $req->param('keyName');
-    my $epoch   = time();
-
-    # Set default name if empty, check characters and truncate name if too long
-    $keyName ||= $epoch;
-    unless ( $keyName =~ /^[\w\s-]+$/ ) {
-        $self->userLogger->error('WebAuthn name with bad character(s)');
-        return $self->p->sendError( $req, 'badName', 200 );
-    }
-    $keyName = substr( $keyName, 0, $self->conf->{max2FDevicesNameLength} );
-    $self->logger->debug("Key name: $keyName");
+    my $keyName = $req->param('keyName') || 'MyKey';
+    $keyName = $self->setNameSfa( $req, $keyName, 'WebAuthn' );
+    return $self->p->sendError( $req, 'badName', 200 ) unless $keyName;
 
     if (
         $self->add2fDevice(
             $req,
             $req->userData,
             {
-                type                 => $self->type,
-                name                 => $keyName,
                 _credentialId        => $credential_id,
                 _credentialPublicKey => $credential_pubkey,
                 _signCount           => $signature_count,
-                epoch                => $epoch
+                type                 => $self->type,
+                name                 => $keyName,
+                epoch                => time()
             }
         )
       )
