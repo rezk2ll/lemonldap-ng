@@ -17,7 +17,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
 # INITIALIZATION
 
@@ -227,14 +227,14 @@ sub checkPasswordQuality {
 # This method should be called when resetting the password
 # in order to call the password hook
 sub setNewPassword {
-    my ( $self, $req, $pwd, $useMail ) = @_;
+    my ( $self, $req, $pwd, $useMail, $resetByREST ) = @_;
 
     my $hook_result =
       $self->p->processHook( $req, 'passwordBeforeChange', $req->user, $pwd );
     return $hook_result if ( $hook_result != PE_OK );
 
     # Delegate to subclass
-    my $mod_result = $self->modifyPassword( $req, $pwd, $useMail );
+    my $mod_result = $self->modifyPassword( $req, $pwd, $useMail, $resetByREST );
 
     if ( $mod_result == PE_PASSWORD_OK ) {
         $hook_result =

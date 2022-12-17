@@ -13,7 +13,7 @@ extends qw(
   Lemonldap::NG::Portal::Password::Base
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.0.16';
 
 sub init {
     my ($self) = @_;
@@ -42,7 +42,7 @@ sub confirm {
 }
 
 sub modifyPassword {
-    my ( $self, $req, $pwd, $useMail ) = @_;
+    my ( $self, $req, $pwd, $useMail, $resetByREST ) = @_;
     my $res = eval {
         $self->restCall(
             $self->conf->{restPwdModifyUrl},

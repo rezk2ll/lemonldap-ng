@@ -13,7 +13,7 @@ extends qw(
 
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
 sub init {
     my ($self) = @_;
@@ -27,7 +27,7 @@ sub confirm {
 }
 
 sub modifyPassword {
-    my ( $self, $req, $pwd, $useMail ) = @_;
+    my ( $self, $req, $pwd, $useMail, $resetByREST ) = @_;
 
     my $userCol     = $useMail ? $self->mailField : $self->pivot;
     my $passwordCol = $self->conf->{dbiAuthPasswordCol};

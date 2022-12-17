@@ -14,7 +14,7 @@ extends qw(
   Lemonldap::NG::Portal::Password::Base
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
 sub init {
     my ($self) = @_;
@@ -28,7 +28,7 @@ sub confirm {
 }
 
 sub modifyPassword {
-    my ( $self, $req, $pwd, $useMail ) = @_;
+    my ( $self, $req, $pwd, $useMail, $resetByREST ) = @_;
 
     # If the password change is done in a different backend,
     # we need to reload the correct DN
@@ -46,7 +46,7 @@ sub modifyPassword {
         ? $self->requireOldPwdRule->( $req, $req->userData )
         : $self->requireOldPwdRule->( $req, $req->sessionInfo )
     );
-    $requireOldPassword = 0 if $useMail;
+    $requireOldPassword = 0 if ($useMail || $resetByREST);
 
     # Ensure connection is valid
     $self->bind;
