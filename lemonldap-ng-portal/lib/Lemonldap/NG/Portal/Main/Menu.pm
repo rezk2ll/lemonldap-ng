@@ -18,16 +18,15 @@ has menuModules => (
     lazy    => 1,
     builder => sub {
         my $conf = $_[0]->{conf};
-        my @res;
-        my %hash;
+        my ( @res, %hash );
         my @modules = grep { !$hash{$_}++ } split /[,\s]+/,
           $conf->{portalDisplayOrder};
         foreach (@modules) {
             my $cond = $conf->{"portalDisplay$_"} // 1;
             $_[0]->p->logger->debug("Evaluate condition $cond for module $_");
             my $tmp =
-              $_[0]->{p}
-              ->HANDLER->buildSub( $_[0]->{p}->HANDLER->substitute($cond) );
+              $_[0]
+              ->p->HANDLER->buildSub( $_[0]->p->HANDLER->substitute($cond) );
             push @res, [ $_, $tmp ] if $tmp;
         }
         return \@res;
@@ -41,8 +40,8 @@ has imgPath       => (
     is      => 'rw',
     lazy    => 1,
     builder => sub {
-        return $_[0]->{conf}->{impgPath}
-          || $_[0]->{conf}->{staticPrefix} . '/logos';
+        return $_[0]->conf->{impgPath}
+          || $_[0]->conf->{staticPrefix} . '/logos';
     }
 );
 
@@ -68,10 +67,10 @@ sub init {
 #  - AUTH_ERROR_TYPE
 sub params {
     my ( $self, $req ) = @_;
-    $self->{conf}->{imgPath} ||= $self->{staticPrefix};
+    $self->conf->{imgPath} ||= $self->{staticPrefix};
     my %res;
     my @defaultTabs = (qw/appslist password logout loginHistory oidcConsents/);
-    my @customTabs  = split( /,\s*/, $self->{conf}->{customMenuTabs} || '' );
+    my @customTabs  = split /[,\s]+/, $self->conf->{customMenuTabs} || '';
 
     # Modules to display
     $res{DISPLAY_MODULES} = $self->displayModules($req);
@@ -108,9 +107,7 @@ sub params {
         # Get the tab URL parameter
 
         my $tab = $req->param("tab");
-        if ( defined $tab
-            and grep ( /^$tab$/, ( @defaultTabs, @customTabs ) ) )
-        {
+        if ( defined $tab and grep /^$tab$/, ( @defaultTabs, @customTabs ) ) {
             $self->logger->debug( "Select menu tab "
                   . $req->param("tab")
                   . "from GET parameter" );
