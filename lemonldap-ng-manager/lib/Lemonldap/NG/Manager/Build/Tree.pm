@@ -402,7 +402,8 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'radiusAuthnLevel', 'radiusSecret',
-                                'radiusServer',     'radiusExportedVars'
+                                'radiusServer',     'radiusExportedVars',
+                                'radiusDictionaryFile'
                             ]
                         },
                         {

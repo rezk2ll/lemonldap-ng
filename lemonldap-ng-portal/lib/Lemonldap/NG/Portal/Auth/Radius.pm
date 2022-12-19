@@ -46,18 +46,21 @@ has sessionKeys => (
 
 sub initRadius {
 
-    # required to be able to resolve names and values
-    # default to /etc/raddb/dictionary ( same as Authen::Radius library ).
-    my $dictionary_file = '/etc/raddb/dictionary';
-    if ( -f $dictionary_file ) {
-        Authen::Radius->load_dictionary($dictionary_file);
-    }
-    else {
-        # log an error, avoid server error if missing.
-        $_[0]->logger->error(
-"Radius library resolution of attribute names requires to set a dictionary in "
-              . $dictionary_file
-              . ", this file was not found." );
+    my $dictionary_file =  $_[0]->conf->{radiusDictionaryFile};
+    if ( $dictionary_file )
+    {
+        # required to be able to resolve names and values
+        # default to /etc/raddb/dictionary ( same as Authen::Radius library ).
+        if ( -f $dictionary_file ) {
+            Authen::Radius->load_dictionary($dictionary_file);
+        }
+        else {
+            # log an error, avoid server error if missing.
+            $_[0]->logger->error(
+                "Radius library resolution of attribute names requires to set a dictionary in "
+                . $dictionary_file
+                . ", this file was not found." );
+        }
     }
     $_[0]->radius(
         Authen::Radius->new(
@@ -96,7 +99,7 @@ sub authenticate {
         $self->setSecurity($req);
         return PE_BADCREDENTIALS;
     }
-    $self->logger->info("Radius auth OK");
+    $self->logger->debug("Radius auth OK");
 
 # in case of a valid response $self->radius->{'attributes'} is filled with response attributes
     $req->data->{_radiusAttributes} = [ $self->radius->get_attributes() ];

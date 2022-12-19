@@ -3799,6 +3799,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => { },
             documentation => 'RADIUS exported variables',
         },
+        radiusDictionaryFile => {
+            type          => 'text'
+        },
 
         # REST
         restAuthUrl       => { type => 'url' },
