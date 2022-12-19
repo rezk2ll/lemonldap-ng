@@ -51,6 +51,7 @@ sub processHook {
     my $err = PE_OK;
     for my $sub ( @{ $self->hook->{$hookName} } ) {
         if ( ref $sub eq 'CODE' ) {
+            # If return code is not PE_OK (0), stop processing
             last if ( $err = $sub->( $req, @args ) );
         }
         else {
@@ -58,8 +59,14 @@ sub processHook {
         }
     }
     if ( $err != PE_OK ) {
-        $self->logger->warn(
-            "Hook $hookName returned " . portalConsts->{$err} );
+        my $msg = "Hook $hookName returned " . portalConsts->{$err};
+        if ( $err > 0 ) {
+            $self->logger->warn($msg);
+        }
+        else {
+            # <0 error codes are normal in some use cases
+            $self->logger->debug($msg);
+        }
     }
     return $err;
 }
