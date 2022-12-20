@@ -59,9 +59,6 @@ Then, go in ``Radius parameters``:
 -  **Exported variables**: radius attributes stored in user session at
    authentication time. key is name in user session and value is
    attribute name in radius dictionary.
+-  **Dictionary**: radius dictionary file ex: /etc/freeradius/3.0/dictionary.
+   This is mandatory to handle attributes as names.
 
-.. warning::
-
-   Exported variables radius attribute names require to load radius dictionary.
-   Authen::Radius library requires at least /etc/raddb/dictionary to be
-   filled.

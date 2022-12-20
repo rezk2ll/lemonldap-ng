@@ -859,6 +859,7 @@
 "radius2fTimeout":"Authentication timeout",
 "radius2fUsernameSessionKey":"Session key containing login",
 "radiusAuthnLevel":"דרגת אימות",
+"radiusDictionaryFile":"Dictionary",
 "radiusExportedVars":"משתנים מיוצאים",
 "radiusParams":"משתני Radius",
 "radiusSecret":"סוד משותף",

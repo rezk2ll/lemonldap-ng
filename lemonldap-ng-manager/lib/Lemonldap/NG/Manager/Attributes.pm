@@ -3087,6 +3087,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 3,
             'type'    => 'int'
         },
+        'radiusDictionaryFile' => {
+            'type' => 'text'
+        },
         'radiusExportedVars' => {
             'default'    => {},
             'keyMsgFail' => '__badVariableName__',

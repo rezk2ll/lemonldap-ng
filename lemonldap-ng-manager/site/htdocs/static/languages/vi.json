@@ -859,6 +859,7 @@
 "radius2fTimeout":"Authentication timeout",
 "radius2fUsernameSessionKey":"Session key containing login",
 "radiusAuthnLevel":"Mức xác thực",
+"radiusDictionaryFile":"Dictionary",
 "radiusExportedVars":"Biến đã được xuất",
 "radiusParams":"Tham số Radius",
 "radiusSecret":"Bí mật đã được chia sẻ",
