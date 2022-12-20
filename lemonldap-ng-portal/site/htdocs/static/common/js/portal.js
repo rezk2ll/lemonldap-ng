@@ -691,13 +691,15 @@ LemonLDAP::NG Portal jQuery scripts
       document.body.scrollTop = 0;
       return document.documentElement.scrollTop = 0;
     });
-    return $(window).on('scroll', function() {
+    $(window).on('scroll', function() {
       if (datas['scrollTop'] && (document.body.scrollTop > Math.abs(datas['scrollTop']) || document.documentElement.scrollTop > Math.abs(datas['scrollTop']))) {
         return $('#btn-back-to-top').css("display", "block");
       } else {
         return $('#btn-back-to-top').css("display", "none");
       }
     });
+    $(document).trigger("portalLoaded");
+    return true;
   });
 
 }).call(this);
