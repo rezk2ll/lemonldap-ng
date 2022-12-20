@@ -97,6 +97,21 @@ configuration (for example, access by IP range):
        Require ip 192.168.2.0/24
    </Location>
 
+Nginx
+~~~~~
+
+Sessions REST end points access must be allowed in Nginx portal
+configuration (for example, access by IP range):
+
+.. code-block:: nginx
+
+    # REST/SOAP functions for sessions access (disabled by default)
+    location ~ ^/index.psgi/sessions {
+      fastcgi_pass llng_portal_upstream;
+      allow 192.168.2.0/24
+      deny all;
+    }
+
 Real session backend
 ~~~~~~~~~~~~~~~~~~~~
 
