@@ -33,8 +33,7 @@ sub run {
 
     if ( $action eq 'register' ) {
         my $otp     = $req->param('otp');
-        my $UBKName = $req->param('UBKName') || 'MyYubikey';
-        $UBKName = $self->setNameSfa( $req, $UBKName, 'Yubikey' );
+        my $UBKName = $self->checkNameSfa( $req, 'Yubikey', $req->param('UBKName') );
         return $self->p->sendError( $req, 'badName', 200 ) unless $UBKName;
 
         if ( $otp
@@ -58,7 +57,7 @@ sub run {
             }
 
             else {
-                $self->logger->debug("No 2F Device found");
+                $self->logger->debug("No 2F device found");
                 $_2fDevices = [];
             }
 
@@ -151,7 +150,7 @@ sub run {
             }
         }
         else {
-            $self->logger->debug("No 2F Device found");
+            $self->logger->debug("No 2F device found");
             $_2fDevices = [];
         }
 

@@ -53,7 +53,7 @@ sub run {
             }
         }
         else {
-            $self->logger->debug("No 2F Device found");
+            $self->logger->debug("No 2F device found");
             $_2fDevices = [];
         }
 
@@ -117,12 +117,11 @@ sub run {
                     }
                 }
                 else {
-                    $self->logger->debug("No 2F Device found");
+                    $self->logger->debug("No 2F device found");
                     $_2fDevices = [];
                 }
 
-                my $keyName = $req->param('keyName') || 'MyU2F';
-                $keyName = $self->setNameSfa( $req, $keyName, 'U2F' );
+                my $keyName = $self->checkNameSfa( $req, 'U2F', $req->param('keyName') );
                 return $self->p->sendError( $req, 'badName', 200 )
                   unless $keyName;
 
@@ -262,7 +261,7 @@ sub run {
             }
         }
         else {
-            $self->logger->debug("No 2F Device found");
+            $self->logger->debug("No 2F device found");
             $_2fDevices = [];
         }
 
@@ -304,10 +303,9 @@ sub run {
 
 sub loadUser {
     my ( $self, $req ) = @_;
-    $self->logger->debug("Loading user U2F Devices...");
 
     # Read existing 2FDevices
-    $self->logger->debug("Looking for 2F Devices...");
+    $self->logger->debug("Looking for 2F devices...");
     my ( $kh, $uk, $_2fDevices );
     my @u2fs = ();
 
@@ -321,7 +319,7 @@ sub loadUser {
         }
     }
     else {
-        $self->logger->debug("No 2F Device found");
+        $self->logger->debug("No 2F device found");
         $_2fDevices = [];
     }
 

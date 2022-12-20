@@ -57,12 +57,14 @@ sub canUpdateSfa {
     return;
 }
 
-# Set default name if empty, check characters and truncate name if too long
-sub setNameSfa {
-    my ( $self, $req, $name, $type ) = @_;
+# Check characters and truncate name if too long
+sub checkNameSfa {
+    my ( $self, $req, $type, $name ) = @_;
+    
+    $name ||= "My$type";
     unless ( $name =~ /^[\w\s-]+$/ ) {
         $self->userLogger->error("$type name with bad character(s)");
-        return undef;
+        return;
     }
     $name = substr( $name, 0, $self->conf->{max2FDevicesNameLength} );
     $self->logger->debug("$type name: $name");

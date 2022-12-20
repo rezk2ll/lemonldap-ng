@@ -61,14 +61,12 @@ sub run {
 
         # Now check TOTP code to verify that user has a valid TOTP app
         my $code     = $req->param('code');
-        my $TOTPName = $req->param('TOTPName') || 'MyTOTP';
-
         unless ($code) {
             $self->userLogger->info('TOTP registration: empty validation form');
             return $self->p->sendError( $req, 'missingCode', 200 );
         }
 
-        $TOTPName = $self->setNameSfa( $req, $TOTPName, 'TOTP' );
+        my $TOTPName = $self->checkNameSfa( $req, 'TOTP', $req->param('TOTPName') );
         return $self->p->sendError( $req, 'badName', 200 ) unless $TOTPName;
 
         my $r = $self->verifyCode(
@@ -107,7 +105,7 @@ sub run {
             }
         }
         else {
-            $self->logger->debug("No 2F Device found");
+            $self->logger->debug("No 2F device found");
             $_2fDevices = [];
         }
 
@@ -175,7 +173,7 @@ sub run {
         my $secret = '';
 
         # Read existing 2FDevices
-        $self->logger->debug("Looking for 2F Devices...");
+        $self->logger->debug("Looking for 2F devices...");
         my $_2fDevices;
         if ( $req->userData->{_2fDevices} ) {
             $_2fDevices = eval {
@@ -189,7 +187,7 @@ sub run {
         }
 
         else {
-            $self->logger->debug("No 2F Device found");
+            $self->logger->debug("No 2F device found");
             $_2fDevices = [];
         }
 
@@ -268,7 +266,7 @@ sub run {
             }
         }
         else {
-            $self->logger->debug("No 2F Device found");
+            $self->logger->debug("No 2F device found");
             $_2fDevices = [];
         }
 

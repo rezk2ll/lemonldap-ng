@@ -90,11 +90,9 @@ sub run {
     # Verification that user has a valid generic
     if ( $action eq 'verify' ) {
         my $generic     = $req->param('generic');
-        my $genericname = $req->param('genericname') || "MyDevice";
-        my $genericcode = $req->param('genericcode');
         my $tokenid     = $req->param("token");
-
-        $genericname = $self->setNameSfa( $req, $genericname, 'Generic 2F' );
+        my $genericcode = $req->param('genericcode');
+        my $genericname = $self->checkNameSfa( $req, 'Generic2F', $req->param('genericname') );
         return $self->p->sendError( $req, 'badName', 200 ) unless $genericname;
 
         # Verify code

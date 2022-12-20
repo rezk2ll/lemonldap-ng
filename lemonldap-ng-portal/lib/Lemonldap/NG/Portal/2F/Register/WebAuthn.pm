@@ -101,7 +101,6 @@ sub _registrationchallenge {
 
     my $displayName      = $req->userData->{ $self->displayname_attr } || $user;
     my $userVerification = $self->conf->{webauthn2fUserVerification};
-
     my $request = {
         rp => {
             name => $self->rpName,
@@ -144,14 +143,14 @@ sub _registration {
     my $registration_options = ( $state_data->{registration_options} );
     return $self->p->sendError( $req,
         'Registration options missing from state data', 400 )
-      unless ($registration_options);
+      unless $registration_options;
 
     # Data required for WebAuthn verification
     my $credential_json = $req->param('credential');
     $self->logger->debug("Get registered credential data $credential_json");
 
     return $self->p->sendError( $req, 'Missing credential parameter', 400 )
-      unless ($credential_json);
+      unless $credential_json;
 
     my $validation = eval {
         $self->validateCredential( $req, $registration_options,
@@ -165,27 +164,17 @@ sub _registration {
     my $credential_id     = $validation->{credential_id};
     my $credential_pubkey = $validation->{credential_pubkey};
     my $signature_count   = $validation->{signature_count};
+    $self->logger->debug( "Registering new credential: \n"
+          . "ID: $credential_id\n"
+          . "Public key: $credential_pubkey\n"
+          . "Signature count: $signature_count" );
 
-    $self->logger->debug( "Registering new credential : \n" . "ID: "
-          . $credential_id . "\n"
-          . "Public key "
-          . $credential_pubkey . "\n"
-          . "Signature count "
-          . $signature_count
-          . "\n" );
+    return $self->p->sendError( $req, 'webauthnAlreadyRegistered', 400 )
+      if $self->find2fDevicesByKey( $req, $req->userData, $self->type,
+        "_credentialId", $credential_id );
 
-    if (
-        $self->find2fDevicesByKey(
-            $req, $req->userData, $self->type,
-            "_credentialId", $credential_id
-        )
-      )
-    {
-        return $self->p->sendError( $req, 'webauthnAlreadyRegistered', 400 );
-    }
-
-    my $keyName = $req->param('keyName') || 'MyKey';
-    $keyName = $self->setNameSfa( $req, $keyName, 'WebAuthn' );
+    my $keyName =
+      $self->checkNameSfa( $req, 'WebAuthn', $req->param('keyName') );
     return $self->p->sendError( $req, 'badName', 200 ) unless $keyName;
 
     if (
@@ -211,7 +200,6 @@ sub _registration {
     else {
         return $self->p->sendError( $req, 'Server Error', 500 );
     }
-
 }
 
 sub _verificationchallenge {
@@ -220,10 +208,8 @@ sub _verificationchallenge {
     $self->logger->debug('Verification challenge req');
 
     my $request = $self->generateChallenge( $req, $req->userData );
-
-    unless ($request) {
-        return $self->p->sendError( $req, "No registered devices", 400 );
-    }
+    return $self->p->sendError( $req, "No registered devices", 400 )
+      unless ($request);
 
     # Request is persisted on the server
     my $token = $self->ott->createToken( {
@@ -242,7 +228,7 @@ sub _verification {
     my $credential_json = $req->param('credential');
 
     return $self->p->sendError( $req, 'Missing credential parameter', 400 )
-      unless ($credential_json);
+      unless $credential_json;
 
     my $state_id = $req->param('state_id');
     unless ($state_id) {
@@ -330,7 +316,6 @@ sub run {
         $self->logger->error("Unknown WebAuthn action -> $action");
         return $self->p->sendError( $req, 'unknownAction', 400 );
     }
-
 }
 
 1;
