@@ -40,3 +40,21 @@ Sample code:
                 console.log( "Removed MFA of type" + info.type );
                 // Your code here
     });
+
+portalLoaded
+~~~~~~~~~~~~
+.. versionadded:: 2.0.16
+
+This even is triggered after the main portal javascript has run
+
+Sample code:
+
+.. code:: javascript
+
+
+    $(document).on( "portalLoaded", { }, function( event, info ) {
+            // Make sure DOM is ready as well
+            $( document ).ready(function() {
+                    console.log("Portal loaded and DOM ready");
+            });
+    });

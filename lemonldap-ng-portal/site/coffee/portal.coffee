@@ -598,4 +598,7 @@ $(window).on 'load', () ->
 		if datas['scrollTop'] && (document.body.scrollTop > Math.abs(datas['scrollTop']) || document.documentElement.scrollTop > Math.abs(datas['scrollTop']))
 			$('#btn-back-to-top').css("display","block")
 		else
-    		$('#btn-back-to-top').css("display","none")
+			$('#btn-back-to-top').css("display","none")
+
+	$(document).trigger "portalLoaded"
+	true

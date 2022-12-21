@@ -33,17 +33,8 @@ sub run {
 
     if ( $action eq 'register' ) {
         my $otp     = $req->param('otp');
-        my $UBKName = $req->param('UBKName');
-        my $epoch   = time();
-
-     # Set default name if empty, check characters and truncate name if too long
-        $UBKName ||= $epoch;
-        unless ( $UBKName =~ /^[\w\s-]+$/ ) {
-            $self->userLogger->error('Yubikey name with bad character(s)');
-            return $self->p->sendError( $req, 'badName', 200 );
-        }
-        $UBKName = substr( $UBKName, 0, $self->conf->{max2FDevicesNameLength} );
-        $self->logger->debug("Yubikey name: $UBKName");
+        my $UBKName = $self->checkNameSfa( $req, 'Yubikey', $req->param('UBKName') );
+        return $self->p->sendError( $req, 'badName', 200 ) unless $UBKName;
 
         if ( $otp
             and length($otp) > $self->conf->{yubikey2fPublicIDSize} )
@@ -66,21 +57,12 @@ sub run {
             }
 
             else {
-                $self->logger->debug("No 2F Device found");
+                $self->logger->debug("No 2F device found");
                 $_2fDevices = [];
             }
 
             # Search if the Yubikey is already registered
-            my $SameUBKFound = 0;
-            foreach (@$_2fDevices) {
-                $self->logger->debug("Reading Yubikeys...");
-                if ( $_->{_yubikey} eq $key ) {
-                    $SameUBKFound = 1;
-                    last;
-                }
-            }
-
-            if ($SameUBKFound) {
+            if ( grep { $_->{_yubikey} eq $key } @$_2fDevices ) {
                 $self->userLogger->error("Yubikey already registered!");
                 return $self->p->sendHtml(
                     $req, 'error',
@@ -110,10 +92,10 @@ sub run {
 
             push @{$_2fDevices},
               {
+                _yubikey => $key,
                 type     => $self->type,
                 name     => $UBKName,
-                _yubikey => $key,
-                epoch    => $epoch
+                epoch    => time()
               };
             $self->logger->debug(
                 "Append 2F Device: { type => 'UBK', name => $UBKName }");
@@ -168,7 +150,7 @@ sub run {
             }
         }
         else {
-            $self->logger->debug("No 2F Device found");
+            $self->logger->debug("No 2F device found");
             $_2fDevices = [];
         }
 

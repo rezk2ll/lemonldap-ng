@@ -56,3 +56,9 @@ Then, go in ``Radius parameters``:
    Radius server
 -  **Server hostname**: this is the hostname or IP address of the Radius
    server
+-  **Exported variables**: radius attributes stored in user session at
+   authentication time. key is name in user session and value is
+   attribute name in radius dictionary.
+-  **Dictionary**: radius dictionary file ex: /etc/freeradius/3.0/dictionary.
+   This is mandatory to handle attributes as names.
+

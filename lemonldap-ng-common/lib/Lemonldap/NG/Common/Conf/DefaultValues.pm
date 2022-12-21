@@ -283,6 +283,7 @@ sub defaultValues {
         'radius2fActivation'           => 0,
         'radius2fTimeout'              => 20,
         'radiusAuthnLevel'             => 3,
+        'radiusExportedVars'           => {},
         'randomPasswordRegexp'         => '[A-Z]{3}[a-z]{5}.\\d{2}',
         'redirectFormMethod'           => 'get',
         'registerDB'                   => 'Null',
