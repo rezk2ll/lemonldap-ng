@@ -504,7 +504,7 @@ sub changePwd {
     $req->user( $req->{sessionInfo}->{_user} );
     my $result =
       $self->p->_passwordDB->setNewPassword( $req,
-        $req->data->{newpassword}, 1, 0 );
+        $req->data->{newpassword}, 1 );
     $req->{user} = undef;
 
     # Mail token can be used only one time, delete the session if all is ok

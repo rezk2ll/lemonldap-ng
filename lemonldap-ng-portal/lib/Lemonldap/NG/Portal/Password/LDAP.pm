@@ -28,13 +28,12 @@ sub confirm {
 }
 
 sub modifyPassword {
-    my ( $self, $req, $pwd, $useMail, $resetByREST ) = @_;
-    my $dn;
-    my $requireOldPassword;
+    my ( $self, $req, $pwd, %args ) = @_;
+    my ( $dn, $requireOldPassword );
 
     # If the password change is done in a different backend,
     # we need to reload the correct DN
-    $self->getUser( $req, useMail => $useMail )
+    $self->getUser( $req, useMail => $args{useMail} )
       if $self->conf->{ldapGetUserBeforePasswordChange};
 
     if ( $req->data->{dn} ) {
@@ -53,7 +52,7 @@ sub modifyPassword {
         $self->logger->error('"dn" is not set, aborting password modification');
         return PE_ERROR;
     }
-    $requireOldPassword = 0 if ($useMail || $resetByREST);
+    $requireOldPassword = 0 if $args{passwordReset};
 
     # Ensure connection is valid
     $self->bind;

@@ -26,10 +26,10 @@ sub confirm {
 }
 
 sub modifyPassword {
-    my ( $self, $req, @args ) = @_;
+    my ( $self, $req, $pwd, %args ) = @_;
     $self->checkChoice($req) or return PE_ERROR;
     return $req->data->{enabledMods2}->[0]
-      ->modifyPassword( $req, @args);
+      ->modifyPassword( $req, $pwd, %args);
 }
 
 1;

@@ -72,8 +72,8 @@ sub confirm {
 }
 
 sub modifyPassword {
-    my ( $self, $req, @args ) = @_;
-    return $self->delegate( $req, "modifyPassword", @args );
+    my ( $self, $req, $pwd, %args ) = @_;
+    return $self->delegate( $req, "modifyPassword", $pwd, %args );
 }
 
 1;

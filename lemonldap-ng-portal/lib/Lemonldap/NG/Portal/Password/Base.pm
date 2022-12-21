@@ -227,14 +227,16 @@ sub checkPasswordQuality {
 # This method should be called when resetting the password
 # in order to call the password hook
 sub setNewPassword {
-    my ( $self, $req, $pwd, $useMail, $resetByREST ) = @_;
-
+    my ( $self, $req, $pwd, $useMail ) = @_;
+    my %args;
     my $hook_result =
       $self->p->processHook( $req, 'passwordBeforeChange', $req->user, $pwd );
     return $hook_result if ( $hook_result != PE_OK );
 
     # Delegate to subclass
-    my $mod_result = $self->modifyPassword( $req, $pwd, $useMail, $resetByREST );
+    $args{useMail}     = $useMail;
+    $args{passwordReset} = 1;
+    my $mod_result = $self->modifyPassword( $req, $pwd, %args );
 
     if ( $mod_result == PE_PASSWORD_OK ) {
         $hook_result =
