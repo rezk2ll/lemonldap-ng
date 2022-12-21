@@ -878,6 +878,8 @@
 "radius2fTimeout":"Authentication timeout",
 "radius2fUsernameSessionKey":"Session key containing login",
 "radiusAuthnLevel":"Authentication level",
+"radiusDictionaryFile":"Dictionary",
+"radiusExportedVars":"Exported variables",
 "radiusParams":"Radius parameters",
 "radiusSecret":"Shared secret",
 "radiusServer":"Server hostname",

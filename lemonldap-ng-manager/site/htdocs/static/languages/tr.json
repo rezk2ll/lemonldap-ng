@@ -878,6 +878,8 @@
 "radius2fTimeout":"Doğrulama zaman aşımı",
 "radius2fUsernameSessionKey":"Oturum anahtarı giriş içerir",
 "radiusAuthnLevel":"Doğrulama seviyesi",
+"radiusDictionaryFile":"Dictionary",
+"radiusExportedVars":"Dışa aktarılan değişkenler",
 "radiusParams":"Radius parametreleri",
 "radiusSecret":"Paylaşılan sır",
 "radiusServer":"Sunucu konak adı",

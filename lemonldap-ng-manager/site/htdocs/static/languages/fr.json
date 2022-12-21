@@ -878,6 +878,8 @@
 "radius2fTimeout":"Délai maximum d'authentification",
 "radius2fUsernameSessionKey":"Clef de session contenant le login",
 "radiusAuthnLevel":"Niveau d'authentification",
+"radiusDictionaryFile":"Dictionnaire",
+"radiusExportedVars":"Variables exportées",
 "radiusParams":"Paramètres Radius",
 "radiusSecret":"Secret partagé",
 "radiusServer":"Nom d'hôte du serveur",

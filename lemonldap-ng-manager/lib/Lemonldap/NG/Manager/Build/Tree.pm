@@ -397,10 +397,10 @@ sub tree {
                         {
                             title => 'radiusParams',
                             help  => 'authradius.html',
-                            form  => 'simpleInputContainer',
                             nodes => [
                                 'radiusAuthnLevel', 'radiusSecret',
-                                'radiusServer'
+                                'radiusServer',     'radiusExportedVars',
+                                'radiusDictionaryFile',
                             ]
                         },
                         {
