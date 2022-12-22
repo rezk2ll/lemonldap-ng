@@ -1144,6 +1144,18 @@ function templates(tpl,key) {
             "type" : "bool"
          },
          {
+            "_nodes" : [
+               {
+                  "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsFederationEntityID",
+                  "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsFederationEntityID",
+                  "title" : "samlIDPMetaDataOptionsFederationEntityID"
+               }
+            ],
+            "id" : "samlIDPMetaDataOptionsFederation",
+            "title" : "samlIDPMetaDataOptionsFederation",
+            "type" : "simpleInputContainer"
+         },
+         {
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsComment",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsComment",
             "title" : "samlIDPMetaDataOptionsComment",
@@ -1407,6 +1419,56 @@ function templates(tpl,key) {
             ],
             "id" : "samlSPMetaDataOptionsSecurity",
             "title" : "samlSPMetaDataOptionsSecurity",
+            "type" : "simpleInputContainer"
+         },
+         {
+            "_nodes" : [
+               {
+                  "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsFederationEntityID",
+                  "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsFederationEntityID",
+                  "title" : "samlSPMetaDataOptionsFederationEntityID"
+               },
+               {
+                  "default" : "",
+                  "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsFederationOptionalAttributes",
+                  "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsFederationOptionalAttributes",
+                  "select" : [
+                     {
+                        "k" : "",
+                        "v" : "keep"
+                     },
+                     {
+                        "k" : "ignore",
+                        "v" : "ignore"
+                     }
+                  ],
+                  "title" : "samlSPMetaDataOptionsFederationOptionalAttributes",
+                  "type" : "select"
+               },
+               {
+                  "default" : "",
+                  "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsFederationRequiredAttributes",
+                  "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsFederationRequiredAttributes",
+                  "select" : [
+                     {
+                        "k" : "",
+                        "v" : "keep"
+                     },
+                     {
+                        "k" : "optional",
+                        "v" : "makeoptional"
+                     },
+                     {
+                        "k" : "ignore",
+                        "v" : "ignore"
+                     }
+                  ],
+                  "title" : "samlSPMetaDataOptionsFederationRequiredAttributes",
+                  "type" : "select"
+               }
+            ],
+            "id" : "samlSPMetaDataOptionsFederation",
+            "title" : "samlSPMetaDataOptionsFederation",
             "type" : "simpleInputContainer"
          },
          {

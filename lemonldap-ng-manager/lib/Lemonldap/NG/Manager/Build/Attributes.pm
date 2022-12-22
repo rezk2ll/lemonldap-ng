@@ -2955,6 +2955,10 @@ sub attributes {
             type          => 'bool',
             documentation => 'SAML Discovery Protocol Is Passive',
         },
+        samlFederationFiles => {
+            type          => 'text',
+            documentation => 'Path to SAML Federation Metadata',
+        },
         samlRelayStateTimeout => {
             type          => 'int',
             default       => 600,
@@ -3049,36 +3053,14 @@ sub attributes {
         },
         samlIDPMetaDataXML => {
             type => 'file',
-            test => sub {
-                my $v = shift;
-                return 1 unless ( $v and %$v );
-                my @msg;
-                my $res = 1;
-                my %entityIds;
-                foreach my $idpId ( keys %$v ) {
-                    unless ( $v->{$idpId}->{samlIDPMetaDataXML} =~
-                        /entityID="(.+?)"/si )
-                    {
-                        push @msg, "$idpId SAML metadata has no EntityID";
-                        $res = 0;
-                        next;
-                    }
-                    my $eid = $1;
-                    if ( defined $entityIds{$eid} ) {
-                        push @msg,
-"$idpId and $entityIds{$eid} have the same SAML EntityID";
-                        $res = 0;
-                        next;
-                    }
-                    $entityIds{$eid} = $idpId;
-                }
-                return ( $res, join( ', ', @msg ) );
-            },
         },
         samlIDPMetaDataOptions => {
             type       => 'keyTextContainer',
             keyTest    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
             keyMsgFail => '__badMetadataName__',
+        },
+        samlIDPMetaDataOptionsFederationEntityID => {
+            type => 'text',
         },
         samlIDPMetaDataOptionsNameIDFormat => {
             type   => 'select',
@@ -3230,6 +3212,25 @@ sub attributes {
             type       => 'keyTextContainer',
             keyTest    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
             keyMsgFail => '__badMetadataName__',
+        },
+        samlSPMetaDataOptionsFederationEntityID => {
+            type => 'text',
+        },
+        samlSPMetaDataOptionsFederationOptionalAttributes => {
+            type   => 'select',
+            select => [
+                { k => '', v => 'keep' }, { k => 'ignore', v => 'ignore' },
+            ],
+            default => '',
+        },
+        samlSPMetaDataOptionsFederationRequiredAttributes => {
+            type   => 'select',
+            select => [
+                { k => '',         v => 'keep' },
+                { k => 'optional', v => 'makeoptional' },
+                { k => 'ignore',   v => 'ignore' },
+            ],
+            default => '',
         },
         samlSPSSODescriptorAuthnRequestsSigned => {
             default       => 1,
@@ -4417,7 +4418,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcServiceIgnoreScopeForClaims => {
             type          => 'bool',
             default       => 0,
-            documentation => 'OpenID Connect release all attributes even when not allowed by scope',
+            documentation =>
+'OpenID Connect release all attributes even when not allowed by scope',
         },
         oidcServiceAllowAuthorizationCodeFlow => {
             type          => 'bool',
