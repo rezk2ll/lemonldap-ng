@@ -13,8 +13,15 @@ them.
 This documentation explains how to interconnect LemonLDAP::NG and
 NextCloud using SAML 2.0 protocol.
 
-Pre-requisites
---------------
+Requirements
+------------
+
+Make sure you have :doc:`set up LemonLDAP::NG a SAML IDP <../samlservice>`
+
+.. warning::
+   Nextcloud requires your public SAML Signature key to be in `BEGIN CERTIFICATE`
+   format, if this is not the case, you need to :ref:`convert your SAML key to
+   a certificate<samlservice-convert-certificate>`)
 
 .. _nextcloud-1:
 
@@ -41,19 +48,18 @@ software <https://docs.nextcloud.com/server/stable/admin_manual/installation/ind
 You also need to enable the "SAML authentication" plugin in your
 NextCloud. <code> + Apps -> Not enabled -> SAML authentication</code>
 
-LL:NG
-~~~~~
+NextCloud, SAML 2.0 configuration
+---------------------------------
 
-You need to enable SAML 2.0 issuer module in LL:NG:
+Configuration of SAML 2.0 in NextCloud is pretty straightforward.
 
-::
 
-   "General Parameters -> Issuer modules -> SAML -> Activation"
+You need to install for Application 'SSO & SAML authentication' that is documented here
+<https://apps.nextcloud.com/apps/user_saml>
 
-|image1|
 
 Create Certificate of Service provider for Nextcloud
-____________________________________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You will need private key and public key within a certificate to
 identify your SP in LL:NG Idp.
@@ -82,13 +88,8 @@ It is recommended to use nextcloud hostname for Common Name.
 Please note that once you have copied those in following process it is recommended to remove private
 key file from your system.
 
-NextCloud, SAML 2.0 configuration
----------------------------------
-
-Configuration of SAML 2.0 in NextCloud is pretty straightforward.
-
-You need to install for Application 'SSO & SAML authentication' that is documented here
-<https://apps.nextcloud.com/apps/user_saml>
+Configure Service provider within Nextcloud
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -128,8 +129,6 @@ instead public key so you can obtain pem encoded certificate directly
 by Copy/Paste of certificate field in the "Public X.509 certificate of
 the IdP" field of your NextCloud.
 
-For older versions you new to create a certificate see below
-
 You can now download your metadata xml file.
 
 
@@ -159,29 +158,6 @@ You are now good to go, and you can add the application in
 :doc:`your menu<../portalmenu>` and
 :doc:`your virtual hosts<../configvhost>`.
 
-
-LL:NG Older version with Public Key
------------------------------------
-
-For older version of LL:NG, we need a few steps to generate our LL:NG certificate
-(unless you already have one). You first need to create a pair of keys in LL:NG:
-
-::
-
-   SAML 2 Service -> Security Parameters -> Signature
-
-and click "New keys" |image6|
-
-Take the private key in a private.key file, and run the following:
-
-::
-
-   openssl req -new -key private.key -out cert.csr
-   openssl x509 -req -days 3650 -in cert.csr -signkey private.key -out cert.pem
-
-Copy/Paste the content of your new cert.pem in the "Public X.509
-certificate of the IdP" field of your NextCloud.
-
 Your fields should look like this: |image6|
 
 .. |image0| image:: /applications/nextcloud-logo.png
@@ -196,5 +172,5 @@ Your fields should look like this: |image6|
    :class: align-center
 .. |image5| image:: /applications/nextcloud_service_exportedattributes.png
    :class: align-center
-.. |image6| image:: /applications/nextcloud_key_pair.png
+.. |image6| image:: /applications/nextcloud_certificate_keys.png
    :class: align-center
