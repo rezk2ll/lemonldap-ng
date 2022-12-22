@@ -133,6 +133,7 @@ Application                                                       Configuration 
 .. image:: applications/logo-publik.png                           :doc:`Publik<applications/publik>`                                                          ✔
 .. image:: applications/phpldapadmin_logo.png                     :doc:`phpLDAPAdmin<applications/phpldapadmin>`       ✔
 .. image:: applications/redmine_logo.png                          :doc:`Redmine<applications/redmine>`                                                        ✔
+.. image:: applications/rocketchat-logo.png                       :doc:`Rocketchat<applications/rocketchat>`                                             ✔
 .. image:: applications/roundcube_logo.png                        :doc:`Roundcube<applications/roundcube>`             ✔
 .. image:: applications/salesforce-logo.jpg                       :doc:`SalesForce<applications/salesforce>`                                             ✔
 .. image:: applications/SAPLogo.gif                               :doc:`SAP<applications/sap>`                         ✔                                 ✔
