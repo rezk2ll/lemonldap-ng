@@ -1521,6 +1521,9 @@ sub getIDP {
         $self->logger->debug("IDP $idp selected from idp URL Parameter");
     }
 
+    # Lazy load IDP
+    $self->lazy_load_entityid($idp);
+
     # Case 6: auto select IDP if only one IDP defined
     if ( scalar keys %{ $self->idpList } == 1 ) {
         ($idp) = keys %{ $self->idpList };
