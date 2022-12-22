@@ -735,6 +735,7 @@
 "oidcServiceDynamicRegistrationExportedVars":"Wyeksportowane zmienne",
 "oidcServiceDynamicRegistrationExtraClaims":"Dodatkowe roszczenia",
 "oidcServiceIDTokenExpiration":"Token identyfikacyjny",
+"oidcServiceIgnoreScopeForClaims":"Always send exported attributes",
 "oidcServiceKeyIdSig":"Identyfikator klucza podpisu",
 "oidcServiceMetaData":"Usługa OpenID Connect",
 "oidcServiceMetaDataAuthnContext":"Kontekst uwierzytelnienia",

@@ -735,6 +735,7 @@
 "oidcServiceDynamicRegistrationExportedVars":"Exported vars",
 "oidcServiceDynamicRegistrationExtraClaims":"Xác nhận bổ sung",
 "oidcServiceIDTokenExpiration":"ID Token",
+"oidcServiceIgnoreScopeForClaims":"Always send exported attributes",
 "oidcServiceKeyIdSig":"Khóa ID chính",
 "oidcServiceMetaData":"Dịch vụ Kết nối OpenID",
 "oidcServiceMetaDataAuthnContext":"Ngữ cảnh xác thực",

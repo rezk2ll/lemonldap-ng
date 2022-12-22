@@ -735,6 +735,7 @@
 "oidcServiceDynamicRegistrationExportedVars":"Exported vars",
 "oidcServiceDynamicRegistrationExtraClaims":"Extra claims",
 "oidcServiceIDTokenExpiration":"אסימון זיהוי",
+"oidcServiceIgnoreScopeForClaims":"Always send exported attributes",
 "oidcServiceKeyIdSig":"Signing key ID",
 "oidcServiceMetaData":"שירות OpenID Connect",
 "oidcServiceMetaDataAuthnContext":"הקשר אימות",

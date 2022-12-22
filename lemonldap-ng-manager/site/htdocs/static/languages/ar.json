@@ -735,6 +735,7 @@
 "oidcServiceDynamicRegistrationExportedVars":"Exported vars",
 "oidcServiceDynamicRegistrationExtraClaims":"ادعاءات إضافي",
 "oidcServiceIDTokenExpiration":"هوية التوكن",
+"oidcServiceIgnoreScopeForClaims":"Always send exported attributes",
 "oidcServiceKeyIdSig":"توقيع على هوية المفتاح ",
 "oidcServiceMetaData":"خدمة أوبين أيدي كونيكت",
 "oidcServiceMetaDataAuthnContext":"سياق إثبات الهوية",

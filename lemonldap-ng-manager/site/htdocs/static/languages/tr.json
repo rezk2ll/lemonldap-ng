@@ -735,6 +735,7 @@
 "oidcServiceDynamicRegistrationExportedVars":"Dışa aktarılan değişkenler",
 "oidcServiceDynamicRegistrationExtraClaims":"Ekstra haklar",
 "oidcServiceIDTokenExpiration":"ID Jetonu",
+"oidcServiceIgnoreScopeForClaims":"Always send exported attributes",
 "oidcServiceKeyIdSig":"Anahtar ID imzalama",
 "oidcServiceMetaData":"OpenID Connect Servisi",
 "oidcServiceMetaDataAuthnContext":"Doğrulama bağlamı",

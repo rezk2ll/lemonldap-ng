@@ -735,6 +735,7 @@
 "oidcServiceDynamicRegistrationExportedVars":"Exported vars",
 "oidcServiceDynamicRegistrationExtraClaims":"Richieste supplementari",
 "oidcServiceIDTokenExpiration":"ID Token",
+"oidcServiceIgnoreScopeForClaims":"Always send exported attributes",
 "oidcServiceKeyIdSig":"ID del codice di accesso",
 "oidcServiceMetaData":"Servizio di OpenID Connect",
 "oidcServiceMetaDataAuthnContext":"Contesto di autenticazione",

@@ -735,6 +735,7 @@
 "oidcServiceDynamicRegistrationExportedVars":"Exported vars",
 "oidcServiceDynamicRegistrationExtraClaims":"額外的聲明",
 "oidcServiceIDTokenExpiration":"ID 令牌",
+"oidcServiceIgnoreScopeForClaims":"Always send exported attributes",
 "oidcServiceKeyIdSig":"簽署金鑰 ID",
 "oidcServiceMetaData":"OpenID 連線服務",
 "oidcServiceMetaDataAuthnContext":"驗證內容",

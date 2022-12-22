@@ -735,6 +735,7 @@
 "oidcServiceDynamicRegistrationExportedVars":"Exported vars",
 "oidcServiceDynamicRegistrationExtraClaims":"Extra claims",
 "oidcServiceIDTokenExpiration":"ID ficha",
+"oidcServiceIgnoreScopeForClaims":"Always send exported attributes",
 "oidcServiceKeyIdSig":"ID de la clave firmante",
 "oidcServiceMetaData":"OpenID Connect Service",
 "oidcServiceMetaDataAuthnContext":"Contexto de autentificación",
