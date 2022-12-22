@@ -22,7 +22,7 @@ my $code  = codeAuthorize(
     $op, $idpId,
     {
         response_type => "code",
-        scope         => "openid profile email",
+        scope         => "openid profile email address",
         client_id     => "rpid",
         state         => "af0ifjsldkj",
         redirect_uri  => "http://rp.com/"
@@ -47,6 +47,7 @@ ok(
 my $userinfo = expectJSON( getUserinfo( $op, $access_token ) );
 is( $userinfo->{family_name}, 'Accents',      'Correct macro value' );
 is( $userinfo->{sub},         'customfrench', 'Sub macro correctly evaluated' );
+is( $userinfo->{address}->{locality}, 'Someplace', 'Complex claim' );
 
 clean_sessions();
 done_testing();
@@ -65,7 +66,8 @@ sub op {
                     rp => {
                         email       => "mail",
                         family_name => "extract_sn",
-                        name        => "cn"
+                        name        => "cn",
+                        locality    => "locality",
                     }
                 },
                 oidcServiceAllowHybridFlow            => 1,
@@ -75,6 +77,7 @@ sub op {
                     rp => {
                         extract_sn => '(split(/\s/, $cn))[1]',
                         custom_sub => '"custom".$uid',
+                        locality   => 'Someplace',
                     }
                 },
                 oidcRPMetaDataOptions => {

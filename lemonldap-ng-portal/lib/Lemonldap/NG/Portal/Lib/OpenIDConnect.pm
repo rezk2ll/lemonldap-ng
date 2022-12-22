@@ -40,6 +40,14 @@ use constant ADDRESS =>
 use constant PHONE => [qw/phone_number phone_number_verified/];
 
 use constant OIDC_SCOPES => [qw/openid profile email address phone/];
+use constant COMPLEX_CLAIM => {
+    formatted      => "address",
+    street_address => "address",
+    locality       => "address",
+    region         => "address",
+    postal_code    => "address",
+    country        => "address",
+};
 
 # PROPERTIES
 
@@ -1933,15 +1941,16 @@ sub buildUserInfoResponseFromData {
                   $self->_formatValue( $session_value, $type, $array,
                     $attribute, $req->user );
 
-             # From this point on, do NOT touch $session_value or you will break
-             # the variable's type.
+                # From this point on, do NOT touch $session_value
+                # or you will break the variable's type.
 
                 # Only release claim if it has a value
                 if ( defined $session_value ) {
 
-                    # Address is a JSON object
-                    if ( $claim eq "address" ) {
-                        $userinfo_response->{address}->{$attribute} =
+                    # If this attribute is a standardized subkey (address)
+                    if ( COMPLEX_CLAIM->{$attribute} ) {
+                        my $superkey = COMPLEX_CLAIM->{$attribute};
+                        $userinfo_response->{$superkey}->{$attribute} =
                           $session_value;
                     }
                     else {
