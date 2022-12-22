@@ -22,7 +22,7 @@ Rocket.Chat
 
 Assuming you already have a rocketchat setup.
 
-Installing rocketchat chat software is documented here : <https://docs.rocket.chat/quick-start/deploying-rocket.chat>`.
+Installing rocketchat chat software is documented on the `official Rocket.Chat documentation <https://docs.rocket.chat/quick-start/deploying-rocket.chat>`__.
 
 
 Rocket.Chat, SAML 2.0 configuration
@@ -64,8 +64,8 @@ key file from your system.
 Configure SAML within RocketChat
 ________________________________
 
-SAML authentication that is documented here
-<https://docs.rocket.chat/guides/administration/admin-panel/settings/saml/rocket.chat-server-settings>
+SAML authentication that is documented on the `official Rocket.Chat SAML documentation
+<https://docs.rocket.chat/guides/administration/admin-panel/settings/saml/rocket.chat-server-settings>`__
 
 Select a **Custom Provider** name that does not contain spaces. It will be
 used as part of metadata url **Custom Issuer** and as name of SAML service
