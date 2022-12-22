@@ -91,12 +91,47 @@ Due to some internal changes in the way registrable second factors are handled, 
 
 If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
 
+For plugin developpers
+~~~~~~~~~~~~~~~~~~~~~~
+
 Change in ``passwordAfterChange`` hook behavior
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you wrote a custom plugin using the ``passwordAfterChange`` hook, return
 codes other than ``PE_OK`` will now be displayed by the portal, instead of
 being ignored.
+
+Change in ``modifyPassword`` method
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``modifyPassword`` method now takes a hash of arguments to specify extra behavior
+
+Before:
+
+.. code:: perl
+
+    # Method definition
+    sub modifyPassword {
+         my ( $self, $req, $pwd, $useMail ) = @_;
+         ...
+    }
+
+    # Method call
+    $self->p->_passwordDB->modifyPassword($req, $pwd, $useMail);
+
+After:
+
+.. code:: perl
+
+    # Method definition
+    sub modifyPassword {
+        my ( $self, $req, $pwd, %args ) = @_;
+        my $useMail = $args{useMail};
+        ...
+    }
+
+    # Method call
+    $self->p->_passwordDB->modifyPassword($req, $pwd, useMail => $useMail);
 
 2.0.15
 ------
