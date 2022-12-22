@@ -13,8 +13,15 @@ them.
 This documentation explains how to interconnect LemonLDAP::NG and
 NextCloud using SAML 2.0 protocol.
 
-Pre-requisites
---------------
+Requirements
+------------
+
+Make sure you have :doc:`set up LemonLDAP::NG a SAML IDP <../samlservice>`
+
+.. warning::
+   Nextcloud requires your public SAML Signature key to be in `BEGIN CERTIFICATE`
+   format, if this is not the case, you need to :ref:`convert your SAML key to
+   a certificate<samlservice-convert-certificate>`)
 
 .. _nextcloud-1:
 
@@ -22,7 +29,7 @@ NextCloud
 ~~~~~~~~~
 
 You need to `install the
-software <https://docs.nextcloud.com/server/10/admin_manual/installation/index.html>`__.
+software <https://docs.nextcloud.com/server/stable/admin_manual/installation/index.html>`__.
 
 
 .. tip::
@@ -41,30 +48,71 @@ software <https://docs.nextcloud.com/server/10/admin_manual/installation/index.h
 You also need to enable the "SAML authentication" plugin in your
 NextCloud. <code> + Apps -> Not enabled -> SAML authentication</code>
 
-LL:NG
-~~~~~
-
-You need to enable SAML 2.0 issuer module in LL:NG:
-
-::
-
-   "General Parameters -> Issuer modules -> SAML -> Activation"
-
-|image1|
-
 NextCloud, SAML 2.0 configuration
 ---------------------------------
 
 Configuration of SAML 2.0 in NextCloud is pretty straightforward.
 
+
+You need to install for Application 'SSO & SAML authentication' that is documented here
+<https://apps.nextcloud.com/apps/user_saml>
+
+
+Create Certificate of Service provider for Nextcloud
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You will need private key and public key within a certificate to
+identify your SP in LL:NG Idp.
+
+Select a host with a secure filesystem as a secure random source since private keys are generated.
+
+To create a private key and self-sign a certificate for its public key
+
+please adapt to your country/state
+
+It is recommended to use nextcloud hostname for Common Name.
+
 ::
 
-   Administration -> SAML authentication
+   certname=nextcloud_saml
+   openssl req -new -newkey rsa:4096 -keyout $certname.key -nodes -out $certname.pem -x509 -days 3650
+
+   Country Name (2 letter code) [AU]:BTN
+   State or Province Name (full name) [Some-State]:North
+   Locality Name (eg, city) []:Thimphou
+   Organization Name (eg, company) [Internet Widgits Pty Ltd]:NGO
+   Organizational Unit Name (eg, section) []:
+   Common Name (e.g. server FQDN or YOUR name) []:nextcloud.example.com
+   Email Address []:
+
+Please note that once you have copied those in following process it is recommended to remove private
+key file from your system.
+
+Configure Service provider within Nextcloud
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+   Administration -> SSO & SAML authentication
 
 You will find the following fields:
 
+-  **Allow the use of multiple user back-ends (e.g. LDAP)**
+   Activate it during configuration, remove it later only once a saml
+   user with administration rights can login.
+
 -  **Attribute to map the UID to**: Identity attribute provided by your
    LL:NG that will be used as UID in NextCloud.
+-  **Optional display name of the identity provider**: choose a name
+   meaningfull to identify this nextcloud app without spaces to use
+   it in LL:NG too.
+-  **Service Provider Data**:
+
+   - **Name ID format**: select Email Address
+   - **X509 certificate of Service provider**: a Certificate you have
+     created previously for this purpose
+   - **Private key of the Service provider**: private key corresponding
+     to public key within certificate of Service provider.
 -  **Identity Provider Data**:
 
    -  **Identifier of the IdP entity**: SAML Metadata URL of your LL:NG
@@ -73,30 +121,16 @@ You will find the following fields:
    -  **URL Location of the IdP where the SP will send the SLO
       Request**: SingleLogOut URL of your LL:NG
    -  **Public X.509 certificate of the IdP**: Certificate of your LL:NG
-      (see below for instructions)
-
-We need a few steps to generate our LL:NG certificate (unless you
-already have one). You first need to create a pair of SSH Keys in LL:NG:
-
-::
-
-   SAML 2 Service -> Security Parameters -> Signature
-
-and click "New keys" |image2|
-
-Take the private key in a private.key file, and run the following:
-
-::
-
-   openssl req -new -key private.key -out cert.csr
-   openssl x509 -req -days 3650 -in cert.csr -signkey private.key -out cert.pem
-
-Copy/Paste the content of your new cert.pem in the "Public X.509
-certificate of the IdP" field of your NextCloud.
 
 Your fields should look like this: |image3|
 
+Recent versions of LL:NG are already configured to use Certificates
+instead public key so you can obtain pem encoded certificate directly
+by Copy/Paste of certificate field in the "Public X.509 certificate of
+the IdP" field of your NextCloud.
+
 You can now download your metadata xml file.
+
 
 LL:NG, SAML 2.0 Service Provider configuration
 ----------------------------------------------
@@ -104,7 +138,7 @@ LL:NG, SAML 2.0 Service Provider configuration
 We now have to define a service provider (e.g our nextcloud) in LL:NG.
 
 Go to "SAML service providers", click on "Add SAML SP" and name it as
-you want (example : 'NextCloud')
+you want (example : 'NextCloud') ( was 'NGOSSO' in previous screenshoot )
 
 In the new subtree 'NextCloud', open 'Metadata' and paste the content of
 your previously downloaded file (or upload the file)
@@ -115,11 +149,16 @@ Now go in "Exported attributes" and add, at least, the 'uid'
 
 |image5|
 
+You might need to add 'mail' to fill expected NameID from NextCloud or
+to configure explicit 'uid' NameID mapping in **Force NameID session key**.
+
 Don't forget to save your configuration.
 
 You are now good to go, and you can add the application in
 :doc:`your menu<../portalmenu>` and
 :doc:`your virtual hosts<../configvhost>`.
+
+Your fields should look like this: |image6|
 
 .. |image0| image:: /applications/nextcloud-logo.png
    :class: align-center
@@ -133,4 +172,5 @@ You are now good to go, and you can add the application in
    :class: align-center
 .. |image5| image:: /applications/nextcloud_service_exportedattributes.png
    :class: align-center
-
+.. |image6| image:: /applications/nextcloud_certificate_keys.png
+   :class: align-center
