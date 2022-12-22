@@ -140,6 +140,7 @@ lib/Lemonldap/NG/Portal/Plugins/Refresh.pm
 lib/Lemonldap/NG/Portal/Plugins/Register.pm
 lib/Lemonldap/NG/Portal/Plugins/RememberAuthChoice.pm
 lib/Lemonldap/NG/Portal/Plugins/RESTServer.pm
+lib/Lemonldap/NG/Portal/Plugins/SamlFederation.pm
 lib/Lemonldap/NG/Portal/Plugins/SingleSession.pm
 lib/Lemonldap/NG/Portal/Plugins/SOAPServer.pm
 lib/Lemonldap/NG/Portal/Plugins/Status.pm
