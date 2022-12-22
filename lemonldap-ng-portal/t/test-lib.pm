@@ -725,7 +725,7 @@ Encode URL like the handler would, see ::Handler::Main
 
 sub encodeUrl {
     my ($url) = @_;
-    return uri_escape( encode_base64( $url, '' ) );
+    return encode_base64( $url, '' );
 }
 
 =head2 LLNG::Manager::Test Class
