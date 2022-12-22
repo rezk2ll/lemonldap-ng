@@ -54,7 +54,16 @@ Security
    - Standard OIDC scopes (``openid`` ``profile`` ``email`` ``address`` ``phone``)
    - Scopes declared in :ref:`Scope values content <oidcextraclaims>`
    - Scopes declared in :ref:`Scope Rules <oidcscoperules>` (if they match the rule)
+-  **Only allow declared scopes**: By default, LL::NG will grant all requested scopes.
+   When this option is enabled, LL::NG will only grant:
 
+   - Standard OIDC scopes (``openid`` ``profile`` ``email`` ``address`` ``phone``)
+   - Scopes declared in :ref:`Scope values content <oidcextraclaims>`
+   - Scopes declared in :ref:`Scope Rules <oidcscoperules>` (if they match the rule)
+
+-  **Always send exported attributes**: By default, LL::NG will release all
+   exported attributes to RPs. When this option is disabled, only attributes
+   allowed by a scope can be transmitted
 
 .. _x5c:
 

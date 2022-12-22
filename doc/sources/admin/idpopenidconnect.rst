@@ -160,10 +160,7 @@ You can then set this RP configuration.
 Exported attributes
 ^^^^^^^^^^^^^^^^^^^
 
-.. warning::
-
-   By default, only `standard OpenID Connect claims <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__
-   are exposed to applications. If you want to add non-standard attributes, you have to create a new scope in the *Scope values content* section and your application must request it.
+.. versionchanged:: In 2.0.16, all exported attributes are always sent by default. In previous versions, you had to declare them in **Options**/**Scope**/**Scope Values content** too
 
 For each OpenID Connect attribute you want to expose to applications, you can define:
 
@@ -187,7 +184,16 @@ For each OpenID Connect attribute you want to expose to applications, you can de
 Scope values content
 ^^^^^^^^^^^^^^^^^^^^
 
-By default, the following scope-to-attributes are mapped by LL::NG:
+When the **Ignore scope when exporting attributes** option is disabled in **OpenID
+Connect Service**, attributes can only be released if they are part of a scope.
+
+By default, only `standard OpenID Connect claims <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__
+are exposed to applications. If you want to add non-standard attributes, you
+have to create a new scope in the *Scope values content* section and your
+application must request that scope.
+
+
+By default, the following scope-to-attributes are already mapped by LL::NG:
 
 .. csv-table::
    :header: "Scope value", "Attribute list"
@@ -218,9 +224,8 @@ be able to read the ``company`` and ``position`` attributes from the UserInfo en
 .. important::
 
     Your custom attributes will only be visible if the application requests the
-    corresponding scope value
-
-
+    corresponding scope value, or if you use a Scope Rule to always enable that
+    scope.
 
 
 .. _oidcscoperules:
