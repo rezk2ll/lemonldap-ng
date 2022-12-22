@@ -54,8 +54,7 @@ NextCloud, SAML 2.0 configuration
 Configuration of SAML 2.0 in NextCloud is pretty straightforward.
 
 
-You need to install for Application 'SSO & SAML authentication' that is documented here
-<https://apps.nextcloud.com/apps/user_saml>
+You need to install for `Application 'SSO & SAML authentication' <https://apps.nextcloud.com/apps/user_saml>`__
 
 
 Create Certificate of Service provider for Nextcloud
