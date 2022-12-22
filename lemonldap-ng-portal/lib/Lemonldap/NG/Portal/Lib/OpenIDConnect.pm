@@ -1887,6 +1887,51 @@ sub buildUserInfoResponse {
         $session->data );
 }
 
+sub _addAttributeToResponse {
+    my ( $self, $req, $data, $userinfo_response, $rp, $attribute ) = @_;
+    my @attrConf = split /;/,
+      ( $self->conf->{oidcRPMetaDataExportedVars}->{$rp}->{$attribute} || "" );
+    my $session_key = $attrConf[0];
+    if ($session_key) {
+        my $type  = $attrConf[1] || 'string';
+        my $array = $attrConf[2] || 'auto';
+
+        my $session_value;
+
+        # Lookup attribute in macros first
+        if ( $self->spMacros->{$rp}->{$session_key} ) {
+            $session_value =
+              $self->spMacros->{$rp}->{$session_key}->( $req, $data );
+
+            # If not found, search in session
+        }
+        else {
+            $session_value = $data->{$session_key};
+        }
+
+        # Handle empty values, arrays, type, etc.
+        $session_value =
+          $self->_formatValue( $session_value, $type, $array,
+            $attribute, $req->user );
+
+        # From this point on, do NOT touch $session_value
+        # or you will break the variable's type.
+
+        # Only release claim if it has a value
+        if ( defined $session_value ) {
+
+            # If this attribute is a standardized subkey (address)
+            if ( COMPLEX_CLAIM->{$attribute} ) {
+                my $superkey = COMPLEX_CLAIM->{$attribute};
+                $userinfo_response->{$superkey}->{$attribute} = $session_value;
+            }
+            else {
+                $userinfo_response->{$attribute} = $session_value;
+            }
+        }
+    }
+}
+
 # Return Hash of UserInfo data
 # @param scope OIDC scope
 # @param rp Internal Relying Party identifier
@@ -1908,55 +1953,26 @@ sub buildUserInfoResponseFromData {
 
     $userinfo_response->{sub} = $user_id;
 
-    # Parse scope and return allowed attributes
-    foreach my $claim ( split( /\s/, $scope ) ) {
-        next if ( $claim eq "openid" );
-        $self->logger->debug("Get attributes linked to claim $claim");
-        my $list = $self->getAttributesListFromClaim( $rp, $claim );
-        next unless $list;
-        foreach my $attribute (@$list) {
-            my @attrConf = split /;/,
-              ( $self->conf->{oidcRPMetaDataExportedVars}->{$rp}->{$attribute}
-                  || "" );
-            my $session_key = $attrConf[0];
-            if ($session_key) {
-                my $type  = $attrConf[1] || 'string';
-                my $array = $attrConf[2] || 'auto';
+    # By default, release all exported attributes
+    if ( $self->conf->{oidcServiceIgnoreScopeForClaims} ) {
+        for my $attribute (
+            keys %{ $self->conf->{oidcRPMetaDataExportedVars}->{$rp} || {} } )
+        {
+            $self->_addAttributeToResponse( $req, $data, $userinfo_response,
+                $rp, $attribute );
+        }
 
-                my $session_value;
-
-                # Lookup attribute in macros first
-                if ( $self->spMacros->{$rp}->{$session_key} ) {
-                    $session_value =
-                      $self->spMacros->{$rp}->{$session_key}->( $req, $data );
-
-                    # If not found, search in session
-                }
-                else {
-                    $session_value = $data->{$session_key};
-                }
-
-                # Handle empty values, arrays, type, etc.
-                $session_value =
-                  $self->_formatValue( $session_value, $type, $array,
-                    $attribute, $req->user );
-
-                # From this point on, do NOT touch $session_value
-                # or you will break the variable's type.
-
-                # Only release claim if it has a value
-                if ( defined $session_value ) {
-
-                    # If this attribute is a standardized subkey (address)
-                    if ( COMPLEX_CLAIM->{$attribute} ) {
-                        my $superkey = COMPLEX_CLAIM->{$attribute};
-                        $userinfo_response->{$superkey}->{$attribute} =
-                          $session_value;
-                    }
-                    else {
-                        $userinfo_response->{$attribute} = $session_value;
-                    }
-                }
+        # Else, iterate through scopes to find allowed attributes
+    }
+    else {
+        foreach my $claim ( split( /\s/, $scope ) ) {
+            next if ( $claim eq "openid" );
+            $self->logger->debug("Get attributes linked to claim $claim");
+            my $list = $self->getAttributesListFromClaim( $rp, $claim );
+            next unless $list;
+            foreach my $attribute (@$list) {
+                $self->_addAttributeToResponse( $req, $data,
+                    $userinfo_response, $rp, $attribute );
             }
         }
     }
