@@ -742,22 +742,37 @@ sub canUpdateSfa {
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
     my $msg;
 
-    # Test action
-    if ( $module && $action && $action eq 'delete' ) {
+    # Test actions
+    if ( $module && $action ) {
         my $prefix     = $module->prefix;
         my $authnLevel = $module->authnLevel;
-        $self->logger->debug("$user request to delete ${prefix}2f device");
-        if (   $authnLevel
-            && $req->userData->{authenticationLevel} < $authnLevel )
-        {
-            $self->userLogger->warn(
+        $self->logger->debug("$user request to $action ${prefix}2f device");
+
+        if ( $action eq 'delete' ) {
+            $self->logger->debug("$user request to $action ${prefix}2f device");
+            if (   $authnLevel
+                && $req->userData->{authenticationLevel} < $authnLevel )
+            {
+                $self->userLogger->warn(
 "$user request to delete ${prefix}2f device rejected due to insufficient authentication level!"
-            );
-            $self->logger->debug(
+                );
+                $self->logger->debug(
 "authLevel: $req->{userData}->{authenticationLevel} < requiredLevel: "
-                  . $authnLevel );
-            $msg = 'notAuthorizedAuthLevel';
+                      . $authnLevel );
+                $msg = 'notAuthorizedAuthLevel';
+            }
         }
+
+        elsif ( $action =~ /^(?:register|verify|registration(?:challenge)?)$/ ) {
+            $self->logger->debug("**************************");
+        }
+
+        else
+        {
+            $self->userLogger->error('Unknown action');
+            $self->logger->debug("Unknown action: $action with ${prefix}2f");
+        }
+
     }
 
     # Test if Impersonation is in progress
