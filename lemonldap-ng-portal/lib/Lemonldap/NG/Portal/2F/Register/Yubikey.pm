@@ -32,8 +32,9 @@ sub run {
       unless $user;
 
     if ( $action eq 'register' ) {
-        my $otp     = $req->param('otp');
-        my $UBKName = $self->checkNameSfa( $req, 'Yubikey', $req->param('UBKName') );
+        my $otp = $req->param('otp');
+        my $UBKName =
+          $self->checkNameSfa( $req, $self->type, $req->param('UBKName') );
         return $self->p->sendError( $req, 'badName', 200 ) unless $UBKName;
 
         if ( $otp
@@ -67,7 +68,6 @@ sub run {
                 return $self->p->sendHtml(
                     $req, 'error',
                     params => {
-                        MAIN_LOGO       => $self->conf->{portalMainLogo},
                         RAW_ERROR       => 'yourKeyIsAlreadyRegistered',
                         AUTH_ERROR_TYPE => 'warning',
                     }
@@ -83,7 +83,6 @@ sub run {
                 return $self->p->sendHtml(
                     $req, 'error',
                     params => {
-                        MAIN_LOGO       => $self->conf->{portalMainLogo},
                         RAW_ERROR       => 'maxNumberof2FDevicesReached',
                         AUTH_ERROR_TYPE => 'warning',
                     }
@@ -107,7 +106,6 @@ sub run {
             return $self->p->sendHtml(
                 $req, 'error',
                 params => {
-                    MAIN_LOGO       => $self->conf->{portalMainLogo},
                     RAW_ERROR       => 'yourKeyIsRegistered',
                     AUTH_ERROR_TYPE => 'positive',
                 }
@@ -118,7 +116,6 @@ sub run {
             return $self->p->sendHtml(
                 $req, 'error',
                 params => {
-                    MAIN_LOGO       => $self->conf->{portalMainLogo},
                     AUTH_ERROR      => PE_FORMEMPTY,
                     AUTH_ERROR_TYPE => 'positive',
                 }

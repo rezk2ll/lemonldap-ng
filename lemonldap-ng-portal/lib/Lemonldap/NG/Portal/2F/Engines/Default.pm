@@ -445,9 +445,6 @@ sub run {
         $req,
         '2fchoice',
         params => {
-            MAIN_LOGO     => $self->conf->{portalMainLogo},
-            SKIN          => $self->p->getSkin($req),
-            LANGS         => $self->conf->{showLanguages},
             CHECKLOGINS   => $checkLogins,
             STAYCONNECTED => $stayconnected,
             TOKEN         => $token,
@@ -559,10 +556,8 @@ sub _displayRegister {
             $req,
             $m->{m}->template,
             params => {
-                MAIN_LOGO        => $self->conf->{portalMainLogo},
                 PREFIX           => $prefix,
                 "PREFIX_$prefix" => 1,
-                LANGS            => $self->conf->{showLanguages},
                 MSG   => $self->canUpdateSfa($req) || $m->{m}->welcome,
                 ALERT => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
             }
@@ -639,9 +634,6 @@ sub _displayRegister {
         $req,
         '2fregisters',
         params => {
-            MAIN_LOGO    => $self->conf->{portalMainLogo},
-            SKIN         => $self->p->getSkin($req),
-            LANGS        => $self->conf->{showLanguages},
             MODULES      => \@am,
             SFDEVICES    => $_2fDevices,
             ACTION       => $action,
@@ -680,6 +672,7 @@ sub isRegistrationEnabled {
 # Check rule and display
 sub register {
     my ( $self, $req, $prefix, @args ) = @_;
+    my @am;
 
     # After verifying rule:
     #   - call register run method if $prefix
@@ -688,32 +681,30 @@ sub register {
         my ($m) =
           grep { $_->{m}->prefix eq $prefix } @{ $self->sfRModules };
         unless ($m) {
-            return $self->p->sendError( $req,
-                'Inexistent register module', 400 );
+            return $self->p->sendError( $req, 'Unknown register module', 400 );
         }
         unless ( $m->{r}->( $req, $req->userData ) ) {
-            $self->userLogger->error("$prefix 2F registration refused");
-            return $self->p->sendError( $req, 'Registration refused', 403 );
+            $self->userLogger->error("${prefix}2F registration not allowed");
+            return $self->p->sendError( $req,
+                "${prefix}2F registration not allowed", 403 );
         }
+
         my $can_update_error = $self->canUpdateSfa( $req, $m->{m}, @args );
-        if ($can_update_error) {
-            return $self->sendError( $req, $can_update_error, 400 );
-        }
-        else {
-            return $m->{m}->run( $req, @args );
-        }
+        return $can_update_error
+          ? $self->sendError( $req, $can_update_error, 400 )
+          : $m->{m}->run( $req, @args );
     }
-    my @am;
-    foreach my $m ( @{ $self->sfRModules } ) {
+
+    foreach ( @{ $self->sfRModules } ) {
         $self->logger->debug(
-            'Looking if ' . $m->{m}->prefix . '2F register is available' );
-        if ( $m->{r}->( $req, $req->userData ) ) {
+            'Looking if ' . $_->{m}->prefix . '2F register is available' );
+        if ( $_->{r}->( $req, $req->userData ) ) {
             $self->logger->debug(' -> OK');
-            my $name = $m->{m}->prefix;
+            my $name = $_->{m}->prefix;
             push @am,
               {
                 name => $name,
-                logo => $m->{m}->logo,
+                logo => $_->{m}->logo,
                 url  => "/2fregisters/$name"
               };
         }
@@ -735,12 +726,12 @@ sub restoreSession {
 sub searchForAuthorized2Fmodules {
     my ( $self, $req ) = @_;
     my @am;
-    foreach my $m ( @{ $self->sfModules } ) {
+    foreach ( @{ $self->sfModules } ) {
         $self->logger->debug(
-            'Looking if ' . $m->{m}->prefix . '2F is available' );
-        if ( $m->{r}->( $req, $req->sessionInfo ) ) {
+            'Looking if ' . $_->{m}->prefix . '2F is available' );
+        if ( $_->{r}->( $req, $req->sessionInfo ) ) {
             $self->logger->debug(' -> OK');
-            push @am, $m->{m};
+            push @am, $_->{m};
         }
     }
     return @am;
@@ -749,7 +740,7 @@ sub searchForAuthorized2Fmodules {
 sub canUpdateSfa {
     my ( $self, $req, $module, $action ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
-    my $msg  = undef;
+    my $msg;
 
     # Test action
     if ( $module && $action && $action eq 'delete' ) {
@@ -769,7 +760,7 @@ sub canUpdateSfa {
         }
     }
 
-    # Test if impersonation is in progress
+    # Test if Impersonation is in progress
     if ( !$msg && $self->conf->{impersonationRule} ) {
         $self->logger->debug('Impersonation plugin is enabled');
         if (   $req->userData->{"$self->{conf}->{impersonationPrefix}_user"}
@@ -777,28 +768,27 @@ sub canUpdateSfa {
             $req->userData->{_user} )
         {
             $self->userLogger->warn(
-                "Impersonation in progress! $user is not allowed to update 2FA."
+                "Impersonation in progress! $user is not allowed to update SFA."
             );
             $msg = 'notAuthorized';
         }
     }
 
-    # Test if contextSwitching is in progress
+    # Test if ContextSwitching is in progress
     if ( !$msg && $self->conf->{contextSwitchingRule} ) {
         $self->logger->debug('ContextSwitching plugin is enabled');
         if (
             $req->userData->{
                 "$self->{conf}->{contextSwitchingPrefix}_session_id"}
-            && !$self->conf->{contextSwitchingAllowed2fModifications}
-          )
+            && !$self->conf->{contextSwitchingAllowed2fModifications} )
         {
             $self->userLogger->warn(
-"ContextSwitching in progress! $user is not allowed to update 2FA."
+"ContextSwitching in progress! $user is not allowed to update SFA."
             );
             $msg = 'notAuthorized';
         }
     }
-    $self->logger->debug("$user is allowed to update 2FA") unless $msg;
+    $self->logger->debug("$user is allowed to update SFA") unless $msg;
     return $msg;
 }
 
