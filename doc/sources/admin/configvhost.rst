@@ -1,7 +1,7 @@
 Manage virtual hosts
 ====================
 
-LemonLDAP::NG configuration is build around Apache or Nginx virtual
+LemonLDAP::NG configuration is built around Apache or Nginx virtual
 hosts. Each virtual host is a protected resource, with access rules,
 headers, POST data and options.
 
@@ -12,8 +12,7 @@ To protect a virtual host in Apache, the LemonLDAP::NG Handler must be
 activated (see
 :ref:`Apache global configuration<configlocation-apache>`).
 
-Then you can take any virtual host, and simply add this line to protect
-it:
+Then you can take any virtual host, and just add this line to protect it:
 
 .. code-block:: apache
 
@@ -99,8 +98,7 @@ Same with remote server configured with the same host name:
 Add a floating menu
 ~~~~~~~~~~~~~~~~~~~
 
-A little floating menu can be added to application with this simple
-Apache configuration:
+A small floating menu can be added to application with this simple Apache configuration:
 
 .. code-block:: apache
 
@@ -457,9 +455,8 @@ A virtual host contains:
 Wildcards in hostnames
 ----------------------
 
-A wildcard can be used in virtualhost name (not in
-aliases !): ``*.example.com`` matches all hostnames that belong to
-``example.com`` domain.
+A wildcard can be used in virtualhost name (not in aliases !):
+``*.example.com`` matches all hostnames that belong to ``example.com`` domain.
 
 .. versionchanged:: 2.0.9
    You can now use wildcards of the form ``test-*.example.com`` or
@@ -544,7 +541,7 @@ Some options are available:
    This option can be overridden with ``uwsgi_param/fastcgi_param RULES_URL`` parameter.
 -  **ServiceToken timeout**: by default, ServiceToken is just valid during 30
    seconds. This TTL can be customized for each virtual host.
--  **Comment**: Can be used for setting comment.
+-  **Comment**: can be used for setting comment.
 
 
 .. attention::
@@ -596,7 +593,7 @@ Some options are available:
 
 "Port" and "HTTPS" options are used to build redirection URL *(when user
 is not logged, or for CDA requests)*. By default, default values are
-used. These options are only here to override default values.
+used. These options are for overriding default values.
 
 .. |image0| image:: /documentation/new.png
    :width: 35px
