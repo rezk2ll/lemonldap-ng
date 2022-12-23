@@ -12,11 +12,10 @@ extends 'Lemonldap::NG::Portal::2F::Register::Base';
 with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
-
+has logo     => ( is => 'rw', default => 'password.png' );
 has prefix   => ( is => 'rw', default => 'password' );
 has template => ( is => 'ro', default => 'password2fregister' );
 has welcome  => ( is => 'ro', default => 'PE71' );
-has logo     => ( is => 'rw', default => 'password.png' );
 has ott      => (
     is      => 'rw',
     lazy    => 1,
@@ -67,42 +66,42 @@ sub run {
 
         unless ( $password and $passwordverify ) {
             $self->userLogger->info(
-                'Password 2F registration: empty validation form');
+                $self->prefix . "2f: registration -> empty validation form" );
             return $self->p->sendError( $req, 'missingPassword', 200 );
         }
 
         # Invalid try is returned with a 200 code. Javascript will read error
         # and propose to retry
         if ( $password ne $passwordverify ) {
-            $self->userLogger->notice(
-"Password 2F registration: password verification failed for $user"
+            $self->userLogger->notice( $self->prefix
+                  . "2f: registration -> password verification failed for $user"
             );
             return $self->p->sendError( $req, 'PE34', 200 );
         }
-        $self->logger->debug('Password 2F verified');
+        $self->logger->debug( $self->prefix . '2f: code verified' );
 
         # Now password is verified, let's store it in persistent data
         my $secret = $self->crypto->encrypt($password);
 
-        # Reading existing 2FDevices
-        $self->logger->debug("Looking for 2F devices...");
-
-        my @passwords_devices =
+        # Reading existing 2F passwords
+        my @password2f =
           $self->find2fDevicesByType( $req, $req->userData, $self->type );
 
         # Delete previous password if any
-        if (@passwords_devices) {
-            unless (
+        if (@password2f) {
+            if (
                 $self->del2fDevices(
-                    $req, $req->userData, \@passwords_devices
+                    $req, $req->userData, \@password2f
                 )
               )
             {
-                $self->logger->error("Unable to delete old password");
-                return $self->p->sendError( $req, 'serverError', 500 );
+                $self->logger->debug(
+                    $self->prefix . "2f: old password(s) deleted" );
             }
             else {
-                $self->logger->debug("Old password deleted");
+                $self->logger->error(
+                    $self->prefix . "2f: unable to delete old password(s)" );
+                return $self->p->sendError( $req, 'serverError' );
             }
         }
 
@@ -120,8 +119,8 @@ sub run {
             )
           )
         {
-            $self->userLogger->notice(
-                "Registration of password succeeds for $user");
+            $self->userLogger->notice( $self->prefix
+                  . "2f: registration of password succeeds for $user" );
             return [
                 200,
                 [
@@ -132,8 +131,9 @@ sub run {
             ];
         }
         else {
-            $self->logger->debug("Unable to add password");
-            return $self->p->sendError( $req, 'serverError', 500 );
+            $self->logger->debug(
+                $self->prefix . "2f: unable to add password" );
+            return $self->p->sendError( $req, 'serverError' );
         }
     }
     elsif ( $action eq 'delete' ) {
@@ -143,11 +143,12 @@ sub run {
           unless $self->conf->{password2fUserCanRemoveKey};
 
         my $epoch = $req->param('epoch')
-          or return $self->p->sendError( $req, '"epoch" parameter is missing',
-            400 );
+          or return $self->p->sendError( $req,
+            $self->prefix . '2f: "epoch" parameter is missing', 400 );
 
         if ( $self->del2fDevice( $req, $req->userData, $self->type, $epoch ) ) {
-            $self->userLogger->notice("Password 2F deleted for $user");
+            $self->userLogger->notice(
+                $self->prefix . "2f: password deleted for $user" );
             return [
                 200,
                 [
@@ -159,7 +160,7 @@ sub run {
         }
     }
     else {
-        $self->logger->error("Unknown Password 2F action -> $action");
+        $self->logger->error( $self->prefix . "2f: unknown action ($action)" );
         return $self->p->sendError( $req, 'unknownAction', 400 );
     }
 }

@@ -169,7 +169,7 @@ sub init {
             p => $prefix,
             m => $m,
             r => $rule,
-            t => $prefix,
+            t => $prefix
           };
 
         # Push register module

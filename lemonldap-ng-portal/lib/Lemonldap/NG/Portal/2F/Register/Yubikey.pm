@@ -12,14 +12,14 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 our $VERSION = '2.0.16';
 
 extends 'Lemonldap::NG::Portal::2F::Register::Base';
+with 'Lemonldap::NG::Portal::Lib::WebAuthn';
 
 # INITIALIZATION
-
-has prefix   => ( is => 'rw', default => 'yubikey' );
+has logo     => ( is => 'rw', default => 'yubikey.png' );
 has type     => ( is => 'rw', default => 'UBK' );
+has prefix   => ( is => 'rw', default => 'yubikey' );
 has template => ( is => 'ro', default => 'yubikey2fregister' );
 has welcome  => ( is => 'ro', default => 'clickOnYubikey' );
-has logo     => ( is => 'rw', default => 'yubikey.png' );
 
 # RUNNING METHODS
 
@@ -27,8 +27,7 @@ has logo     => ( is => 'rw', default => 'yubikey.png' );
 sub run {
     my ( $self, $req, $action ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
-    return $self->p->sendError( $req,
-        'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 )
+    return $self->p->sendError( $req, 'PE82', 400 )
       unless $user;
 
     if ( $action eq 'register' ) {
@@ -42,29 +41,13 @@ sub run {
         {
             my $key = substr( $otp, 0, $self->conf->{yubikey2fPublicIDSize} );
 
-            # Read existing 2FDevices
-            $self->logger->debug("Looking for 2F devices...");
-            my $_2fDevices;
-            if ( $req->userData->{_2fDevices} ) {
-                $_2fDevices = eval {
-                    from_json( $req->userData->{_2fDevices},
-                        { allow_nonref => 1 } );
-                };
-                if ($@) {
-                    $self->logger->error("Corrupted session (_2fDevices): $@");
-                    return $self->p->sendError( $req, "Corrupted session",
-                        500 );
-                }
-            }
-
-            else {
-                $self->logger->debug("No 2F device found");
-                $_2fDevices = [];
-            }
+            # Read existing 2F device(s)
+            my @alldevices = $self->find2fDevicesByType( $req, $req->userData );
 
             # Search if the Yubikey is already registered
-            if ( grep { $_->{_yubikey} eq $key } @$_2fDevices ) {
-                $self->userLogger->error("Yubikey already registered!");
+            if ( grep { $_->{_yubikey} eq $key } @alldevices ) {
+                $self->userLogger->error(
+                    $self->prefix . '2f: device already registered!' );
                 return $self->p->sendHtml(
                     $req, 'error',
                     params => {
@@ -74,45 +57,46 @@ sub run {
                 );
             }
 
-            # Check if user can register one more device
-            my $size    = @$_2fDevices;
-            my $maxSize = $self->conf->{max2FDevices};
-            $self->logger->debug("Registered 2F Device(s): $size / $maxSize");
-            if ( $size >= $maxSize ) {
-                $self->userLogger->warn("Max number of 2F devices is reached");
-                return $self->p->sendHtml(
-                    $req, 'error',
-                    params => {
-                        RAW_ERROR       => 'maxNumberof2FDevicesReached',
-                        AUTH_ERROR_TYPE => 'warning',
-                    }
-                );
-            }
-
-            push @{$_2fDevices},
-              {
-                _yubikey => $key,
-                type     => $self->type,
-                name     => $UBKName,
-                epoch    => time()
-              };
-            $self->logger->debug(
-                "Append 2F Device: { type => 'UBK', name => $UBKName }");
-            $self->p->updatePersistentSession( $req,
-                { _2fDevices => to_json($_2fDevices) } );
-            $self->userLogger->notice(
-                "Yubikey registration of $UBKName succeeds for $user");
-
             return $self->p->sendHtml(
                 $req, 'error',
                 params => {
-                    RAW_ERROR       => 'yourKeyIsRegistered',
-                    AUTH_ERROR_TYPE => 'positive',
+                    RAW_ERROR       => 'maxNumberof2FDevicesReached',
+                    AUTH_ERROR_TYPE => 'warning',
                 }
-            );
+            ) unless $self->canRegisterSfa(@alldevices);
+
+            if (
+                $self->add2fDevice(
+                    $req,
+                    $req->userData,
+                    {
+                        _yubikey => $key,
+                        type     => $self->type,
+                        name     => $UBKName,
+                        epoch    => time()
+                    }
+                )
+              )
+            {
+                $self->userLogger->notice( $self->prefix
+                      . "2f: registration of device $UBKName succeeds for $user"
+                );
+                return $self->p->sendHtml(
+                    $req, 'error',
+                    params => {
+                        RAW_ERROR       => 'yourKeyIsRegistered',
+                        AUTH_ERROR_TYPE => 'positive',
+                    }
+                );
+            }
+            else {
+                $self->logger->debug(
+                    $self->prefix . "2f: unable to add device" );
+                return $self->p->sendError( $req, 'serverError' );
+            }
         }
         else {
-            $self->userLogger->error('Yubikey 2F: no code or name');
+            $self->userLogger->error( $self->prefix . "2f: no code provided" );
             return $self->p->sendHtml(
                 $req, 'error',
                 params => {
@@ -130,40 +114,11 @@ sub run {
           unless $self->userCanRemove;
 
         my $epoch = $req->param('epoch')
-          or return $self->p->sendError( $req, '"epoch" parameter is missing',
-            400 );
-
-        # Read existing 2FDevices
-        $self->logger->debug("Looking for 2F Devices...");
-        my ( $_2fDevices, $UBKName );
-        if ( $req->userData->{_2fDevices} ) {
-            $_2fDevices = eval {
-                from_json( $req->userData->{_2fDevices},
-                    { allow_nonref => 1 } );
-            };
-            if ($@) {
-                $self->logger->error("Corrupted session (_2fDevices): $@");
-                return $self->p->sendError( $req, "Corrupted session", 500 );
-            }
-        }
-        else {
-            $self->logger->debug("No 2F device found");
-            $_2fDevices = [];
-        }
-
-        # Delete Yubikey device
-        @$_2fDevices = map {
-            if ( $_->{epoch} eq $epoch ) { $UBKName = $_->{name}; () }
-            else                         { $_ }
-        } @$_2fDevices;
-        if ($UBKName) {
-            $self->logger->debug(
-"Delete 2F Device: { type => 'UBK', epoch => $epoch, name => $UBKName }"
-            );
-            $self->p->updatePersistentSession( $req,
-                { _2fDevices => to_json($_2fDevices) } );
+          or return $self->p->sendError( $req,
+            $self->prefix . '2f: "epoch" parameter is missing', 400 );
+        if ( $self->del2fDevice( $req, $req->userData, $self->type, $epoch ) ) {
             $self->userLogger->notice(
-                "Yubikey $UBKName unregistration succeeds for $user");
+                $self->prefix . "2f: device deleted for $user" );
             return [
                 200,
                 [
@@ -173,12 +128,11 @@ sub run {
                 ['{"result":1}']
             ];
         }
-        else {
-            $self->p->sendError( $req, '2FDeviceNotFound', 400 );
-        }
+        $self->logger->error( $self->prefix . "2f: device not found" );
+        return $self->p->sendError( $req, '2FDeviceNotFound', 400 );
     }
     else {
-        $self->logger->error("Unknown Yubikey action -> $action");
+        $self->logger->error( $self->prefix . "2f: unknown action ($action)" );
         return $self->p->sendError( $req, 'unknownAction', 400 );
     }
 }
