@@ -93,8 +93,6 @@ sub run {
             $req,
             'u2fcheck',
             params => {
-                MAIN_LOGO     => $self->conf->{portalMainLogo},
-                SKIN          => $self->p->getSkin($req),
                 DATA          => $data,
                 TOKEN         => $token,
                 CHECKLOGINS   => $checkLogins,
@@ -181,11 +179,9 @@ sub fail {
             $req,
             'u2fcheck',
             params => {
-                MAIN_LOGO       => $self->conf->{portalMainLogo},
                 AUTH_ERROR      => $req->error,
                 AUTH_ERROR_TYPE => $req->error_type,
                 AUTH_ERROR_ROLE => $req->error_role,
-                SKIN            => $self->p->getSkin($req),
                 FAILED          => 1
             }
         )

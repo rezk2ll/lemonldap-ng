@@ -57,8 +57,6 @@ sub run {
     $self->logger->debug("UTOTP: stayconnected set") if $stayconnected;
 
     my %tplPrms = (
-        MAIN_LOGO     => $self->conf->{portalMainLogo},
-        SKIN          => $self->p->getSkin($req),
         TOKEN         => $token,
         CHECKLOGINS   => $checkLogins,
         STAYCONNECTED => $stayconnected
