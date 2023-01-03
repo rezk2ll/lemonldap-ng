@@ -32,7 +32,7 @@ Configuration of SAML 2.0 in Rocket.Chat is pretty straightforward once certific
 
 
 Create Certificate of Service provider for Rocket.Chat
-______________________________________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You will need private key and public key within a certificate to
 identify your SP in LL:NG Idp.
@@ -62,7 +62,7 @@ Please note that once you have copied those in following process it is recommend
 key file from your system.
 
 Configure SAML within RocketChat
-________________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 SAML authentication that is documented on the `official Rocket.Chat SAML documentation
 <https://docs.rocket.chat/guides/administration/admin-panel/settings/saml/rocket.chat-server-settings>`__
