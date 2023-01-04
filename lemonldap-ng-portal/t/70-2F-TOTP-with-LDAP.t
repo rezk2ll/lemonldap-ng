@@ -30,7 +30,7 @@ SKIP: {
                 authentication         => 'LDAP',
                 userDB                 => 'Same',
                 passwordDB             => 'LDAP',
-                ldapServer             => 'ldap://127.0.0.1:19389/',
+                ldapServer             => $main::slapd_url,
                 ldapBase               => 'ou=users,dc=example,dc=com',
                 ldapGroupBase          => 'ou=groups,dc=example,dc=com',
                 managerDn              => 'cn=admin,dc=example,dc=com',
@@ -154,8 +154,6 @@ SKIP: {
     $client->logout($id);
 }
 count($maintests);
-
 clean_sessions();
-
 done_testing( count() );
 

@@ -68,8 +68,6 @@ sub run {
         $req,
         'webauthn2fcheck',
         params => {
-            MAIN_LOGO     => $self->conf->{portalMainLogo},
-            SKIN          => $self->p->getSkin($req),
             DATA          => to_json( { request => $request } ),
             TOKEN         => $token,
             CHECKLOGINS   => $checkLogins,

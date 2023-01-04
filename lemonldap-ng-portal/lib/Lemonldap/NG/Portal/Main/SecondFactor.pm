@@ -137,8 +137,7 @@ sub _verify {
     if ($res) {
         $req->noLoginDisplay(1);
         $req->authResult(PE_BADCREDENTIALS);
-        return $self->p->do( $req,
-            [ sub { $self->p->storeHistory(@_) }, sub { $res } ] );
+        return $self->p->do( $req, [ 'storeHistory', sub { $res } ] );
     }
 
     # Else restore session

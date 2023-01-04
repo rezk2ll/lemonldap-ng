@@ -276,33 +276,6 @@ If you use custom templates, you should update ``login.tpl``
     +          <p class="form-control">
     +            <label id="globalrememberauthchoiceLabel" for="globalrememberauthchoice" trspan="rememberChoice">Remember my choice</label>
     +          </p>
-    ...skipping...
-                   </div>
-     
-    +              <!-- Remember my authentication choice for this module -->
-    +              <TMPL_IF NAME="REMEMBERAUTHCHOICE">
-    +                <input type="hidden" id="rememberauthchoice" name="rememberauthchoice" value="<TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">true</TMPL_IF>" />
-    +              </TMPL_IF>
-    +
-                 </TMPL_IF>
-     
-               </form>
-    @@ -104,6 +115,34 @@
-     
-         </div> <!-- end authMenu -->
-     
-    +    <TMPL_IF NAME="REMEMBERAUTHCHOICE">
-    +    <div class="input-group col-md-6 offset-md-3">
-    +
-    +      <!-- Global checkbox for remembering the authentication choice for all modules -->
-    +      <div id="globalrememberauthchoicecontainer" class="input-group-prepend input-group">
-    +        <div class="input-group-text">
-    +          <input type="checkbox" id="globalrememberauthchoice" name="globalrememberauthchoice" aria-describedby="globalrememberauthchoiceLabel" <TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">checked</TMPL_IF> />
-    +          <input id="rememberCookieName" name="rememberCookieName" type="hidden" value="<TMPL_VAR NAME="REMEMBERAUTHCHOICECOOKIENAME">">
-    +        </div>
-    +          <p class="form-control">
-    +            <label id="globalrememberauthchoiceLabel" for="globalrememberauthchoice" trspan="rememberChoice">Remember my choice</label>
-    +          </p>
     +      </div>
     +
     +      <!-- Timer + stop button for triggering the remembered authentication choice -->
