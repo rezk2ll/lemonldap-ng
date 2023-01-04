@@ -12,7 +12,7 @@ extends qw(
   Lemonldap::NG::Portal::2F::Register::Base
   Lemonldap::NG::Portal::Lib::U2F
 );
-with 'Lemonldap::NG::Portal::Lib::WebAuthn';
+with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
 has logo     => ( is => 'rw', default => 'u2f.png' );

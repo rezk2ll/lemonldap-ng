@@ -11,7 +11,7 @@ extends qw(
   Lemonldap::NG::Portal::2F::Register::Base
   Lemonldap::NG::Common::TOTP
 );
-with 'Lemonldap::NG::Portal::Lib::WebAuthn';
+with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
 has logo     => ( is => 'rw', default => 'totp.png' );

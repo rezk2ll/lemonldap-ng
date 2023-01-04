@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 our $VERSION = '2.0.16';
 
 extends 'Lemonldap::NG::Portal::2F::Register::Base';
-with 'Lemonldap::NG::Portal::Lib::WebAuthn';
+with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
 has logo     => ( is => 'rw', default => 'yubikey.png' );
