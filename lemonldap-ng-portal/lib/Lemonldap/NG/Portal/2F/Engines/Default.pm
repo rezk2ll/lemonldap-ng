@@ -26,7 +26,10 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
-with 'Lemonldap::NG::Portal::Lib::OverConf';
+with qw(
+  Lemonldap::NG::Portal::Lib::OverConf
+  Lemonldap::NG::Portal::Lib::2fDevices
+);
 
 # INITIALIZATION
 
@@ -300,23 +303,13 @@ sub run {
     }
 
     # Remove expired 2F devices
-    my $session = $req->sessionInfo;
-    if ( $session->{_2fDevices} ) {
-        $self->logger->debug("Loading 2F devices...");
-
-        # Read existing 2FDevices
-        my $_2fDevices =
-          eval { from_json( $session->{_2fDevices}, { allow_nonref => 1 } ); };
-        if ($@) {
-            $self->logger->error("Bad encoding in _2fDevices: $@");
-            return PE_ERROR;
-        }
-        $self->logger->debug(" -> 2F Device(s) found");
+    my $session    = $req->sessionInfo;
+    my $_2fDevices = $self->get2fDevices( $req, $session );
+    if ( scalar @$_2fDevices ) {
+        my ( $removed, $name, $now, @expired2fDevices );
 
         $self->logger->debug("Looking for expired 2F device(s)...");
-        my $removed = 0;
-        my $name    = '';
-        my $now     = time();
+        $now = time();
         foreach my $device (@$_2fDevices) {
             my $type = lc( $device->{type} );
             $type =~ s/2f$//i;
@@ -327,7 +320,7 @@ sub run {
 "Remove $device->{type} -> $device->{name} / $device->{epoch}"
                 );
                 $self->userLogger->info("Remove expired $device->{type}");
-                $device->{type} = 'EXPIRED';
+                push @expired2fDevices, $device;
                 $name .= "$device->{name}; ";
                 $removed++;
             }
@@ -339,14 +332,12 @@ sub run {
 "Found $removed EXPIRED 2F device(s) => Update persistent session"
             );
             $self->userLogger->notice(
-                " -> $removed expired 2F device(s) removed ($name)");
-            @$_2fDevices =
-              map { $_->{type} =~ /\bEXPIRED\b/ ? () : $_ } @$_2fDevices;
-            $self->p->updatePersistentSession( $req,
-                { _2fDevices => to_json($_2fDevices) } );
+                " -> $removed expired 2F device(s) will be removed ($name)");
 
             # Display message if required
-            if ( $self->sfMsgRule->( $req, $req->sessionInfo ) ) {
+            if (   $self->del2fDevices( $req, $session, \@expired2fDevices )
+                && $self->sfMsgRule->( $req, $req->sessionInfo ) )
+            {
                 my $uid  = $req->user;
                 my $date = strftime "%Y-%m-%d", localtime;
                 my $ref  = $self->conf->{sfRemovedNotifRef} || 'RemoveSF';

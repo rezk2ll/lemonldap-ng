@@ -15,9 +15,10 @@ extends 'Lemonldap::NG::Portal::2F::Register::Base';
 with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
-has logo     => ( is => 'rw', default => 'yubikey.png' );
+
 has type     => ( is => 'rw', default => 'UBK' );
 has prefix   => ( is => 'rw', default => 'yubikey' );
+has logo     => ( is => 'rw', default => 'yubikey.png' );
 has template => ( is => 'ro', default => 'yubikey2fregister' );
 has welcome  => ( is => 'ro', default => 'clickOnYubikey' );
 

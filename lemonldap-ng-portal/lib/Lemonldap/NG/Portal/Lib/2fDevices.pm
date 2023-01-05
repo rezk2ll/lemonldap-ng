@@ -250,8 +250,9 @@ Returns an arrayref of all registrable devices, or undef if an error occured
 
 sub get2fDevices {
     my ( $self, $req, $info ) = @_;
-
     my $_2fDevices;
+
+    $self->logger->debug("Looking for 2F devices...");
     if ( $info->{_2fDevices} ) {
         $_2fDevices =
           eval { from_json( $info->{_2fDevices}, { allow_nonref => 1 } ); };
@@ -290,8 +291,6 @@ Returns an array of all matching devices
 
 sub find2fDevicesByType {
     my ( $self, $req, $info, $type ) = @_;
-
-    $self->logger->debug("Looking for 2F devices...");
     my $_2fDevices = $self->get2fDevices( $req, $info );
     return                unless $_2fDevices;
     return @{$_2fDevices} unless $type;

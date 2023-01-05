@@ -22,8 +22,8 @@ with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
 
-has prefix => ( is => 'ro', default => 'yubikey' );
 has type   => ( is => 'rw', default => 'UBK' );
+has prefix => ( is => 'ro', default => 'yubikey' );
 has logo   => ( is => 'rw', default => 'yubikey.png' );
 has yubi   => ( is => 'rw' );
 

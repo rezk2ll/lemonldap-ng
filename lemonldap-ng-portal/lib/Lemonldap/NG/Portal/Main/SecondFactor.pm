@@ -3,10 +3,10 @@ package Lemonldap::NG::Portal::Main::SecondFactor;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_SENDRESPONSE
   PE_OK
   PE_ERROR
   PE_NOTOKEN
+  PE_SENDRESPONSE
   PE_TOKENEXPIRED
   PE_BADCREDENTIALS
 );
@@ -32,10 +32,10 @@ has ott => (
     }
 );
 
-has prefix  => ( is => 'rw' );
-has logo    => ( is => 'rw', default => '2f.png' );
-has label   => ( is => 'rw' );
-has noRoute => ( is => 'ro' );
+has prefix     => ( is => 'rw' );
+has logo       => ( is => 'rw', default => '2f.png' );
+has label      => ( is => 'rw' );
+has noRoute    => ( is => 'ro' );
 has authnLevel => (
     is      => 'rw',
     lazy    => 1,
@@ -58,12 +58,12 @@ sub init {
     my ($self) = @_;
 
     # Set logo if overridden
-    $self->logo( $self->conf->{ $self->prefix . "2fLogo" } )
-      if ( $self->conf->{ $self->prefix . "2fLogo" } );
+    $self->logo( $self->conf->{ $self->prefix . '2fLogo' } )
+      if $self->conf->{ $self->prefix . '2fLogo' };
 
     # Set label if provided, translation files will be used otherwise
-    $self->label( $self->conf->{ $self->prefix . "2fLabel" } )
-      if ( $self->conf->{ $self->prefix . "2fLabel" } );
+    $self->label( $self->conf->{ $self->prefix . '2fLabel' } )
+      if $self->conf->{ $self->prefix . '2fLabel' };
 
     unless ( $self->noRoute ) {
         $self->logger->debug( 'Adding ' . $self->prefix . '2fcheck routes' );
@@ -97,8 +97,6 @@ sub _redirect {
 
 sub _verify {
     my ( $self, $req ) = @_;
-    my $checkLogins = $req->param('checkLogins');
-    $self->logger->debug("checkLogins set") if ($checkLogins);
 
     # Check token
     my $token;
