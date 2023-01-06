@@ -84,7 +84,7 @@ sub init {
             ['GET']
         );
     }
-    1;
+    return 1;
 }
 
 sub _redirect {
@@ -274,7 +274,7 @@ L<Lemonldap::NG::Portal> second factor plugins.
       my ( $self, $req, $session ) = @_;
       # Use $req->param('field') to get POST responses
       ...
-      if($result eq $goodResult) {
+      if ($result eq $goodResult) {
         return PE_OK;
       }
       else {

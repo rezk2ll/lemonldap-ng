@@ -23,7 +23,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NO_SECOND_FACTORS
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 with qw(
@@ -40,7 +40,6 @@ with qw(
 # t => type of record in _2fDevices
 has sfModules  => ( is => 'rw', default => sub { [] } );
 has sfRModules => ( is => 'rw', default => sub { [] } );
-
 has sfReq     => ( is => 'rw' );
 has sfMsgRule => ( is => 'rw' );
 
@@ -218,7 +217,7 @@ sub init {
         )
       )
     {
-        $self->error( 'Error in sfRequired rule'
+        $self->error( 'Error in sfRequired rule: '
               . $self->p->HANDLER->tsv->{jail}->error );
         return 0;
     }
@@ -233,7 +232,7 @@ sub init {
         )
       )
     {
-        $self->error( 'Error in sfRemovedMsg rule'
+        $self->error( 'Error in sfRemovedMsg rule: '
               . $self->p->HANDLER->tsv->{jail}->error );
         return 0;
     }
@@ -272,8 +271,8 @@ sub run {
     my $forceUpgrade  = $req->param('forceUpgrade');
     my $stayconnected = $req->param('stayconnected');
     my $spoofId       = $req->param('spoofId') || '';
-    $self->logger->debug("2F checkLogins set")  if $checkLogins;
-    $self->logger->debug("2F forceUpgrade set") if $forceUpgrade;
+    $self->logger->debug("2F checkLogins is set")  if $checkLogins;
+    $self->logger->debug("2F forceUpgrade is set") if $forceUpgrade;
 
     # Skip 2F unless a module has been registered
     unless ( @{ $self->sfModules } ) {
@@ -463,7 +462,7 @@ sub run {
 sub display2fRegisters {
     my ( $self, $req, $session ) = @_;
     foreach my $m ( @{ $self->sfRModules } ) {
-        return 1 if ( $m->{r}->( $req, $session ) );
+        return 1 if $m->{r}->( $req, $session );
     }
     return 0;
 }
@@ -499,7 +498,7 @@ sub _choice {
         if ( $m->{m}->prefix eq $ch ) {
             $self->userLogger->info( 'Second factor '
                   . $m->{m}->prefix
-                  . '2F selected for '
+                  . '2f selected for '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
             # New token
@@ -558,7 +557,7 @@ sub _displayRegister {
     my @am;
     foreach my $m ( @{ $self->sfRModules } ) {
         $self->logger->debug(
-            'Looking if ' . $m->{m}->prefix . '2F register is available' );
+            'Looking if ' . $m->{m}->prefix . '2f register is available' );
         if ( $m->{r}->( $req, $req->userData ) ) {
             push @am,
               {
@@ -596,8 +595,7 @@ sub _displayRegister {
       );
 
    # Parse second factors to display delete button if allowed and upgrade button
-    my $displayUpgBtn = 0;
-    my $action        = '';
+    my ( $displayUpgBtn, $action ) = ( 0, '' );
     foreach my $reg_mod_info ( @{ $self->sfRModules } ) {
         my $type   = $reg_mod_info->{t};
         my $prefix = $reg_mod_info->{p};
@@ -671,9 +669,8 @@ sub register {
     if ($prefix) {
         my ($m) =
           grep { $_->{m}->prefix eq $prefix } @{ $self->sfRModules };
-        unless ($m) {
-            return $self->p->sendError( $req, 'Unknown register module', 400 );
-        }
+        return $self->p->sendError( $req, 'Unknown register module', 400 )
+          unless $m;
         unless ( $m->{r}->( $req, $req->userData ) ) {
             $self->userLogger->error("${prefix}2F registration not allowed");
             return $self->p->sendError( $req,
@@ -785,10 +782,10 @@ sub canUpdateSfa {
 
 sub findRegisterModuleFor {
     my ( $self, $mod ) = @_;
-    if ( $mod->isa("Lemonldap::NG::Portal::Lib::Code2F") ) {
-        return "::2F::Register::Generic";
-    }
-    return;
+
+    return $mod->isa("Lemonldap::NG::Portal::Lib::Code2F")
+      ? "::2F::Register::Generic"
+      : undef;
 }
 
 1;
