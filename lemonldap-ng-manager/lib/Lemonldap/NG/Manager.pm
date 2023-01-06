@@ -126,6 +126,7 @@ sub init {
         'notifications' => 'bell',
         '2ndFA'         => 'wrench',
         'viewer'        => 'eye-open',
+        'api'           => 'flash'
     };
 
     $self->links( [] );
