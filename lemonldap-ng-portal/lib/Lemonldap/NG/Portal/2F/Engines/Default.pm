@@ -737,6 +737,17 @@ sub searchForAuthorized2Fmodules {
     return @am;
 }
 
+sub authorized2FmodulesAuthnLevel {
+    my ( $self, @am ) = @_;
+    my %am;
+    foreach ( @am ) {
+        $self->logger->debug(
+            'Looking for ' . $_->{m}->prefix . '2f authnLevel' );
+        $am{$_->{m}->prefix} = $self->conf->{$_->{m}->prefix . '2fAuthnLevel'};
+    }
+    return %am;
+}
+
 sub canUpdateSfa {
     my ( $self, $req, $module, $action ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
