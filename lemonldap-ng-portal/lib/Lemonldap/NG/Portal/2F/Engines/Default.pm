@@ -40,8 +40,8 @@ with qw(
 # t => type of record in _2fDevices
 has sfModules  => ( is => 'rw', default => sub { [] } );
 has sfRModules => ( is => 'rw', default => sub { [] } );
-has sfReq     => ( is => 'rw' );
-has sfMsgRule => ( is => 'rw' );
+has sfReq      => ( is => 'rw' );
+has sfMsgRule  => ( is => 'rw' );
 
 has ott => (
     is      => 'rw',
@@ -529,6 +529,8 @@ sub _redirect {
 
 sub _displayRegister {
     my ( $self, $req, $prefix ) = @_;
+    my $_2fDevices = [];
+    my @am;
 
     $self->p->importHandlerData($req);
 
@@ -554,7 +556,6 @@ sub _displayRegister {
         );
     }
 
-    my @am;
     foreach my $m ( @{ $self->sfRModules } ) {
         $self->logger->debug(
             'Looking if ' . $m->{m}->prefix . '2f register is available' );
@@ -570,20 +571,11 @@ sub _displayRegister {
     }
 
     # Retrieve user all second factors
-    my $_2fDevices = [];
-    unless ( $self->canUpdateSfa($req) ) {
-        $_2fDevices = $req->userData->{_2fDevices}
-          ? eval {
-            from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
-          }
-          : undef;
-        unless ($_2fDevices) {
-            $self->logger->debug("None 2F device found");
-            $_2fDevices = [];
-        }
+    if ( $self->canUpdateSfa($req) ) {
+        $self->userLogger->warn("Do not display 2F devices!");
     }
     else {
-        $self->userLogger->warn("Do not display 2F devices!");
+        $_2fDevices = $self->get2fDevices( $req, $req->userData );
     }
 
     # If only one 2F is available, redirect to it
