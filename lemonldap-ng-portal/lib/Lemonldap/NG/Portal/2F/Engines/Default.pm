@@ -40,8 +40,8 @@ with qw(
 # t => type of record in _2fDevices
 has sfModules  => ( is => 'rw', default => sub { [] } );
 has sfRModules => ( is => 'rw', default => sub { [] } );
-has sfReq     => ( is => 'rw' );
-has sfMsgRule => ( is => 'rw' );
+has sfReq      => ( is => 'rw' );
+has sfMsgRule  => ( is => 'rw' );
 
 has ott => (
     is      => 'rw',
@@ -716,7 +716,7 @@ sub searchForAuthorized2Fmodules {
     my @am;
     foreach ( @{ $self->sfModules } ) {
         $self->logger->debug(
-            'Looking if ' . $_->{m}->prefix . '2F is available' );
+            'Looking if ' . $_->{m}->prefix . '2f is available' );
         if ( $_->{r}->( $req, $req->sessionInfo ) ) {
             $self->logger->debug(' -> OK');
             push @am, $_->{m};
@@ -725,21 +725,12 @@ sub searchForAuthorized2Fmodules {
     return @am;
 }
 
-sub authorized2FmodulesAuthnLevel {
-    my ( $self, @am ) = @_;
-    my %am;
-    foreach ( @am ) {
-        $self->logger->debug(
-            'Looking for ' . $_->{m}->prefix . '2f authnLevel' );
-        $am{$_->{m}->prefix} = $self->conf->{$_->{m}->prefix . '2fAuthnLevel'};
-    }
-    return %am;
-}
-
 sub canUpdateSfa {
     my ( $self, $req, $module, $action ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
-    my $msg;
+    my ( $msg, $mode );
+
+    $self->logger->debug("$user can update SFA?");
 
     # Test actions
     if ( $module && $action ) {
@@ -748,61 +739,64 @@ sub canUpdateSfa {
         $self->logger->debug("$user request to $action ${prefix}2f device");
 
         if ( $action eq 'delete' ) {
-            $self->logger->debug("$user request to $action ${prefix}2f device");
-            if (   $authnLevel
-                && $req->userData->{authenticationLevel} < $authnLevel )
-            {
-                $self->userLogger->warn(
-"$user request to delete ${prefix}2f device rejected due to insufficient authentication level!"
-                );
-                $self->logger->debug(
-"authLevel: $req->{userData}->{authenticationLevel} < requiredLevel: "
-                      . $authnLevel );
-                $msg = 'notAuthorizedAuthLevel';
-            }
+            $msg = 'notAuthorizedAuthLevel'
+              if ( $authnLevel
+                && $req->userData->{authenticationLevel} < $authnLevel );
         }
-
-        elsif ( $action =~ /^(?:register|verify|registration(?:challenge)?)$/ ) {
+        if ( $action =~ /^(?:register|registration(?:challenge)?)$/ ) {
             $self->logger->debug("**************************");
+            my @am = $self->searchForAuthorized2Fmodules($req);
+            my $_2fDevices = $self->get2fDevices( $req, $req->userData );
+
+            # $msg = 'notAuthorizedAuthLevel'
+            #   if ( $authnLevel
+            #     && $req->userData->{authenticationLevel} < $authnLevel );
         }
-
-        else
-        {
-            $self->userLogger->error('Unknown action');
-            $self->logger->debug("Unknown action: $action with ${prefix}2f");
-        }
-
-    }
-
-    # Test if Impersonation is in progress
-    if ( !$msg && $self->conf->{impersonationRule} ) {
-        $self->logger->debug('Impersonation plugin is enabled');
-        if (   $req->userData->{"$self->{conf}->{impersonationPrefix}_user"}
-            && $req->userData->{"$self->{conf}->{impersonationPrefix}_user"} ne
-            $req->userData->{_user} )
-        {
+        if ($msg) {
             $self->userLogger->warn(
-                "Impersonation in progress! $user is not allowed to update SFA."
+"$user request to $action ${prefix}2f device rejected due to insufficient authentication level!"
             );
-            $msg = 'notAuthorized';
+            $self->logger->debug(
+"authLevel: $req->{userData}->{authenticationLevel} < requiredLevel ($authnLevel)"
+            );
         }
     }
 
-    # Test if ContextSwitching is in progress
-    if ( !$msg && $self->conf->{contextSwitchingRule} ) {
-        $self->logger->debug('ContextSwitching plugin is enabled');
-        if (
-            $req->userData->{
-                "$self->{conf}->{contextSwitchingPrefix}_session_id"}
-            && !$self->conf->{contextSwitchingAllowed2fModifications} )
-        {
+    unless ($msg) {
+
+        # Test if Impersonation is in progress
+        if ( $self->conf->{impersonationRule} ) {
+            $self->logger->debug('Impersonation plugin is enabled');
+            $mode = 'Impersonation';
+            $msg  = 'notAuthorized'
+              if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_user"}
+                && $req->userData->{"$self->{conf}->{impersonationPrefix}_user"}
+                ne $req->userData->{_user} );
+        }
+
+        # Test if ContextSwitching is in progress
+        if ( $self->conf->{contextSwitchingRule} ) {
+            $self->logger->debug('ContextSwitching plugin is enabled');
+            $mode = 'ContextSwitching';
+            $msg  = 'notAuthorized'
+              if (
+                $req->userData->{
+                    "$self->{conf}->{contextSwitchingPrefix}_session_id"}
+                && !$self->conf->{contextSwitchingAllowed2fModifications} );
+
+        }
+        if ($msg) {
             $self->userLogger->warn(
-"ContextSwitching in progress! $user is not allowed to update SFA."
+                "$mode in progress! $user is not allowed to update SFA");
+            $self->logger->debug(
+"$user is NOT allowed to update SFA because $mode is in progress"
             );
-            $msg = 'notAuthorized';
+        }
+        else {
+            $self->logger->debug("$user is allowed to update SFA");
         }
     }
-    $self->logger->debug("$user is allowed to update SFA") unless $msg;
+
     return $msg;
 }
 
