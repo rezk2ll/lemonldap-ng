@@ -91,12 +91,47 @@ Due to some internal changes in the way registrable second factors are handled, 
 
 If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
 
+For plugin developpers
+~~~~~~~~~~~~~~~~~~~~~~
+
 Change in ``passwordAfterChange`` hook behavior
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you wrote a custom plugin using the ``passwordAfterChange`` hook, return
 codes other than ``PE_OK`` will now be displayed by the portal, instead of
 being ignored.
+
+Change in ``modifyPassword`` method
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``modifyPassword`` method now takes a hash of arguments to specify extra behavior
+
+Before:
+
+.. code:: perl
+
+    # Method definition
+    sub modifyPassword {
+         my ( $self, $req, $pwd, $useMail ) = @_;
+         ...
+    }
+
+    # Method call
+    $self->p->_passwordDB->modifyPassword($req, $pwd, $useMail);
+
+After:
+
+.. code:: perl
+
+    # Method definition
+    sub modifyPassword {
+        my ( $self, $req, $pwd, %args ) = @_;
+        my $useMail = $args{useMail};
+        ...
+    }
+
+    # Method call
+    $self->p->_passwordDB->modifyPassword($req, $pwd, useMail => $useMail);
 
 2.0.15
 ------
@@ -215,33 +250,6 @@ If you use custom templates, you should update ``login.tpl``
                  <TMPL_IF NAME="gpgform">
     @@ -92,6 +98,11 @@
      
-                   </div>
-     
-    +              <!-- Remember my authentication choice for this module -->
-    +              <TMPL_IF NAME="REMEMBERAUTHCHOICE">
-    +                <input type="hidden" id="rememberauthchoice" name="rememberauthchoice" value="<TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">true</TMPL_IF>" />
-    +              </TMPL_IF>
-    +
-                 </TMPL_IF>
-     
-               </form>
-    @@ -104,6 +115,34 @@
-     
-         </div> <!-- end authMenu -->
-     
-    +    <TMPL_IF NAME="REMEMBERAUTHCHOICE">
-    +    <div class="input-group col-md-6 offset-md-3">
-    +
-    +      <!-- Global checkbox for remembering the authentication choice for all modules -->
-    +      <div id="globalrememberauthchoicecontainer" class="input-group-prepend input-group">
-    +        <div class="input-group-text">
-    +          <input type="checkbox" id="globalrememberauthchoice" name="globalrememberauthchoice" aria-describedby="globalrememberauthchoiceLabel" <TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">checked</TMPL_IF> />
-    +          <input id="rememberCookieName" name="rememberCookieName" type="hidden" value="<TMPL_VAR NAME="REMEMBERAUTHCHOICECOOKIENAME">">
-    +        </div>
-    +          <p class="form-control">
-    +            <label id="globalrememberauthchoiceLabel" for="globalrememberauthchoice" trspan="rememberChoice">Remember my choice</label>
-    +          </p>
-    ...skipping...
                    </div>
      
     +              <!-- Remember my authentication choice for this module -->

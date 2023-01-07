@@ -65,4 +65,4 @@ Available backends
    PgJSON Backend (recommended) <pgjsonsessionbackend>
    browseablemysqlsessionbackend
    browseableldapsessionbackend
-   nosqlsessionbackend
+   redissessionbackend

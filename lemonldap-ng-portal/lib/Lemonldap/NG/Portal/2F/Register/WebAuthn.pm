@@ -13,11 +13,10 @@ extends 'Lemonldap::NG::Portal::2F::Register::Base';
 with 'Lemonldap::NG::Portal::Lib::WebAuthn';
 
 # INITIALIZATION
-
+has logo     => ( is => 'rw', default => 'webauthn.png' );
 has prefix   => ( is => 'rw', default => 'webauthn' );
 has template => ( is => 'ro', default => 'webauthn2fregister' );
 has welcome  => ( is => 'ro', default => 'webauthn2fWelcome' );
-has logo     => ( is => 'rw', default => 'webauthn.png' );
 has ott      => (
     is      => 'ro',
     lazy    => 1,
@@ -79,15 +78,10 @@ sub _generate_user_handle {
 
 sub _registrationchallenge {
     my ( $self, $req, $user ) = @_;
-
     my @alldevices = $self->find2fDevicesByType( $req, $req->userData );
-    my $size       = @alldevices;
-    my $maxSize    = $self->conf->{max2FDevices};
-    $self->logger->debug("Registered 2F Device(s): $size / $maxSize");
-    if ( $size >= $maxSize ) {
-        $self->userLogger->warn("Max number of 2F devices is reached");
-        return $self->p->sendError( $req, 'maxNumberof2FDevicesReached', 400 );
-    }
+
+    return $self->p->sendError( $req, 'maxNumberof2FDevicesReached', 400 )
+      unless $self->canRegisterSfa(@alldevices);
 
     my $challenge_base64 = encode_base64url( Crypt::URandom::urandom(32) );
 
@@ -101,7 +95,7 @@ sub _registrationchallenge {
 
     my $displayName      = $req->userData->{ $self->displayname_attr } || $user;
     my $userVerification = $self->conf->{webauthn2fUserVerification};
-    my $request = {
+    my $request          = {
         rp => {
             name => $self->rpName,
         },
@@ -131,13 +125,13 @@ sub _registration {
     # Recover creation parameters, including challenge
     my $state_id = $req->param('state_id');
     unless ($state_id) {
-        $self->logger->error("Could not find state ID in WebAuthn response");
+        $self->logger->error("Could not find state ID in $self->prefix response");
         return $self->p->sendError( $req, 'Invalid response', 400 );
     }
     my $state_data;
     unless ( $state_data = $self->ott->getToken($state_id) ) {
         $self->logger->error(
-            "Expired or invalid state ID in WebAuthn response: $state_id");
+            "Expired or invalid state ID in $self->prefix response: $state_id");
         return $self->p->sendError( $req, 'PE82', 400 );
     }
     my $registration_options = ( $state_data->{registration_options} );
@@ -174,7 +168,7 @@ sub _registration {
         "_credentialId", $credential_id );
 
     my $keyName =
-      $self->checkNameSfa( $req, 'WebAuthn', $req->param('keyName') );
+      $self->checkNameSfa( $req, $self->type, $req->param('keyName') );
     return $self->p->sendError( $req, 'badName', 200 ) unless $keyName;
 
     if (
@@ -193,11 +187,11 @@ sub _registration {
       )
     {
         $self->userLogger->notice(
-            "Webauthn key registration of $keyName succeeds for $user");
-
+            "$self->prefix key registration of $keyName succeeds for $user");
         return $self->p->sendJSONresponse( $req, { result => 1 } );
     }
     else {
+        $self->logger->debug("Unable to add $self->prefix");
         return $self->p->sendError( $req, 'Server Error', 500 );
     }
 }
@@ -233,7 +227,7 @@ sub _verification {
     my $state_id = $req->param('state_id');
     unless ($state_id) {
         $self->logger->error(
-            "Could not find state ID in WebAuthn response: $credential_json");
+            "Could not find state ID in $self->prefix response: $credential_json");
         return $self->p->sendError( $req, 'Invalid response', 400 );
     }
 
@@ -241,12 +235,11 @@ sub _verification {
     my $state_data;
     unless ( $state_data = $self->ott->getToken($state_id) ) {
         $self->logger->error(
-            "Expired or invalid state ID in WebAuthn response: $state_id");
+            "Expired or invalid state ID in $self->prefix response: $state_id");
         return $self->p->sendError( $req, 'PE82', 400 );
     }
 
     my $signature_options = ( $state_data->{authentication_options} );
-
     my $validation_result = eval {
         $self->validateAssertion( $req, $req->userData, $signature_options,
             $credential_json );
@@ -275,12 +268,9 @@ sub _delete {
       or
       return $self->p->sendError( $req, '"epoch" parameter is missing', 400 );
 
-    if ( $self->del2fDevice( $req, $req->userData, $self->type, $epoch ) ) {
-        return $self->p->sendJSONresponse( $req, { result => 1 } );
-    }
-    else {
-        return $self->p->sendError( $req, '2FDeviceNotFound', 400 );
-    }
+    return $self->del2fDevice( $req, $req->userData, $self->type, $epoch )
+      ? $self->p->sendJSONresponse( $req, { result => 1 } )
+      : $self->p->sendError( $req, '2FDeviceNotFound', 400 );
 }
 
 # Main method
@@ -313,7 +303,7 @@ sub run {
     }
 
     else {
-        $self->logger->error("Unknown WebAuthn action -> $action");
+        $self->logger->error("Unknown $self->prefix action -> $action");
         return $self->p->sendError( $req, 'unknownAction', 400 );
     }
 }

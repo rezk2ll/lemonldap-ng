@@ -12,13 +12,13 @@ extends qw(
   Lemonldap::NG::Portal::2F::Register::Base
   Lemonldap::NG::Portal::Lib::U2F
 );
+with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
-
+has logo     => ( is => 'rw', default => 'u2f.png' );
 has prefix   => ( is => 'rw', default => 'u' );
 has template => ( is => 'ro', default => 'u2fregister' );
 has welcome  => ( is => 'ro', default => 'u2fWelcome' );
-has logo     => ( is => 'rw', default => 'u2f.png' );
 
 sub init {
     my ($self) = @_;
@@ -32,43 +32,21 @@ sub init {
 sub run {
     my ( $self, $req, $action ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
-
-    return $self->p->sendError( $req,
-        'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 )
+    return $self->p->sendError( $req, 'PE82', 400 )
       unless $user;
 
     if ( $action eq 'register' ) {
 
-        # Read existing 2FDevices
-        $self->logger->debug("Looking for 2F Devices...");
-        my $_2fDevices;
-        if ( $req->userData->{_2fDevices} ) {
-            $_2fDevices = eval {
-                from_json( $req->userData->{_2fDevices},
-                    { allow_nonref => 1 } );
-            };
-            if ($@) {
-                $self->logger->error("Corrupted session (_2fDevices): $@");
-                return $self->p->sendError( $req, "Corrupted session", 500 );
-            }
-        }
-        else {
-            $self->logger->debug("No 2F device found");
-            $_2fDevices = [];
-        }
+        # Read existing 2F device(s)
+        my @alldevices = $self->find2fDevicesByType( $req, $req->userData );
 
         # Check if user can register one more 2F device
-        my $size    = @$_2fDevices;
-        my $maxSize = $self->conf->{max2FDevices};
-        $self->logger->debug("Registered 2F Device(s): $size / $maxSize");
-        if ( $size >= $maxSize ) {
-            $self->userLogger->warn("Max number of 2F devices is reached");
-            return $self->p->sendError( $req, 'maxNumberof2FDevicesReached',
-                400 );
-        }
+        return $self->p->sendError( $req, 'maxNumberof2FDevicesReached', 400 )
+          unless $self->canRegisterSfa(@alldevices);
 
         my $challenge = $self->crypter->registrationChallenge;
-        $self->logger->debug("Register challenge: $challenge");
+        $self->logger->debug(
+            $self->prefix . "2f: registration challenge ($challenge)" );
         return [
             200,
             [
@@ -81,82 +59,72 @@ sub run {
 
     elsif ( $action eq 'registration' ) {
         my ( $resp, $challenge );
-        $self->logger->debug('Registration response');
+        $self->logger->debug( $self->prefix . '2f: registration response' );
         return $self->p->sendError( $req, 'Missing registration parameter',
             400 )
           unless ( $resp = $req->param('registration')
             and $challenge = $req->param('challenge') );
 
-        $self->logger->debug("Get registration data $resp");
-        $self->logger->debug("Get challenge $challenge");
+        $self->logger->debug( $self->prefix
+              . "2f: get registration data ($resp)\nget challenge ($challenge)"
+        );
         eval { $challenge = from_json($challenge)->{challenge} };
         if ($@) {
-            $self->userLogger->error("Bad challenge: $@");
+            $self->userLogger->error(
+                $self->prefix . "2f: bad challenge ($@)" );
             return $self->p->sendError( $req, 'Bad challenge', 400 );
         }
         my $c = $self->crypter;
         if ( $c->setChallenge($challenge) ) {
             my ( $keyHandle, $userKey ) = $c->registrationVerify($resp);
             if ( $keyHandle and $userKey ) {
-
-                # Read existing 2FDevices
-                $self->logger->debug("Looking for 2F devices...");
-                my $_2fDevices;
-                if ( $req->userData->{_2fDevices} ) {
-                    $_2fDevices = eval {
-                        from_json(
-                            $req->userData->{_2fDevices},
-                            { allow_nonref => 1 }
-                        );
-                    };
-                    if ($@) {
-                        $self->logger->error(
-                            "Corrupted session (_2fDevices): $@");
-                        return $self->p->sendError( $req, "Corrupted session",
-                            500 );
-                    }
-                }
-                else {
-                    $self->logger->debug("No 2F device found");
-                    $_2fDevices = [];
-                }
-
-                my $keyName = $self->checkNameSfa( $req, 'U2F', $req->param('keyName') );
+                my $keyName =
+                  $self->checkNameSfa( $req, $self->type,
+                    $req->param('keyName') );
                 return $self->p->sendError( $req, 'badName', 200 )
                   unless $keyName;
-
-                push @{$_2fDevices},
-                  {
-                    _userKey   => encode_base64url( $userKey, '' ),
-                    _keyHandle => $keyHandle,
-                    type       => $self->type,
-                    name       => $keyName,
-                    epoch      => time()
-                  };
-                $self->logger->debug(
-                    "Append 2F Device: { type => 'U2F', name => $keyName }");
-                $self->p->updatePersistentSession( $req,
-                    { _2fDevices => to_json($_2fDevices) } );
-                $self->userLogger->notice(
-                    "U2F key registration of $keyName succeeds for $user");
-
-                return [
-                    200,
-                    [
-                        'Content-Type'   => 'application/json',
-                        'Content-Length' => 12,
-                    ],
-                    ['{"result":1}']
-                ];
+                if (
+                    $self->add2fDevice(
+                        $req,
+                        $req->userData,
+                        {
+                            _userKey   => encode_base64url( $userKey, '' ),
+                            _keyHandle => $keyHandle,
+                            type       => $self->type,
+                            name       => $keyName,
+                            epoch      => time()
+                        }
+                    )
+                  )
+                {
+                    $self->userLogger->notice( $self->prefix
+                          . "2f: registration of device $keyName succeeds for $user"
+                    );
+                    return [
+                        200,
+                        [
+                            'Content-Type'   => 'application/json',
+                            'Content-Length' => 12,
+                        ],
+                        ['{"result":1}']
+                    ];
+                }
+                else {
+                    $self->logger->debug(
+                        $self->prefix . "2f: unable to add device" );
+                    return $self->p->sendError( $req, 'serverError' );
+                }
             }
         }
         my $err = Crypt::U2F::Server::Simple::lastError();
-        $self->userLogger->warn("U2F Registration failed: $err");
+        $self->userLogger->warn(
+            $self->prefix . "2f: registration failed ($err)" );
         return $self->p->sendError( $req, $err, 200 );
     }
 
     elsif ( $action eq 'verify' ) {
-        $self->logger->debug('Verification challenge req');
+        $self->logger->debug(
+            $self->prefix . '2f: verification challenge request' );
         my ( $err, $error ) = $self->loadUser($req);
 
         return $self->p->sendError( $req, "U2F error: $error", 200 )
@@ -184,7 +152,6 @@ sub run {
                 registeredKeys => \@rk
             }
         );
-
         return [
             200,
             [
@@ -196,21 +163,22 @@ sub run {
     }
 
     elsif ( $action eq 'signature' ) {
-        $self->logger->debug('Verification response');
+        $self->logger->debug( $self->prefix . '2f: verification response' );
         my ( $challenge, $resp, $crypter );
         return $self->p->sendError( $req, 'Missing signature parameter', 400 )
           unless ( $challenge = $req->param('challenge')
             and $resp = $req->param('signature') );
 
         my ( $err, $error ) = $self->loadUser($req);
-        return $self->p->sendError( $req, "U2F loading error: $error", 500 )
+        return $self->p->sendError( $req, "U2F loading error: $error" )
           if ( $err == -1 );
         return $self->p->sendError( $req, "noU2FKeyFound" ) if ( $err == 0 );
 
-        $self->logger->debug("Get verify response $resp");
+        $self->logger->debug(
+            $self->prefix . "2f: get verify response ($resp)" );
         my $data = eval { JSON::from_json($resp) };
         if ($@) {
-            $self->logger->error("U2F response error: $@");
+            $self->logger->error( $self->prefix . "2f: response error ($@)" );
             return $self->p->sendError( $req, "U2FAnswerError" );
         }
 
@@ -219,7 +187,7 @@ sub run {
           @{ $req->data->{crypter} };
 
         unless ($crypter) {
-            $self->userLogger->error("Unregistered U2F key");
+            $self->logger->debug( $self->prefix . '2f: device not found' );
             return $self->p->sendError( $req, "U2FKeyUnregistered" );
         }
 
@@ -244,43 +212,11 @@ sub run {
           unless $self->userCanRemove;
 
         my $epoch = $req->param('epoch')
-          or return $self->p->sendError( $req, '"epoch" parameter is missing',
-            400 );
-
-        # Read existing 2FDevices
-        $self->logger->debug("Looking for 2F devices...");
-        my ( $_2fDevices, $keyName );
-        if ( $req->userData->{_2fDevices} ) {
-            $_2fDevices = eval {
-                from_json( $req->userData->{_2fDevices},
-                    { allow_nonref => 1 } );
-            };
-            if ($@) {
-                $self->logger->error("Corrupted session (_2fDevices): $@");
-                return $self->p->sendError( $req, "Corrupted session", 500 );
-            }
-        }
-        else {
-            $self->logger->debug("No 2F device found");
-            $_2fDevices = [];
-        }
-
-        # Delete U2F device
-        @$_2fDevices = map {
-            if ( $_->{epoch} eq $epoch and $_->{type} eq $self->type ) {
-                $keyName = $_->{name};
-                ();
-            }
-            else { $_ }
-        } @$_2fDevices;
-        if ($keyName) {
-            $self->logger->debug(
-"Delete 2F Device: { type => 'U2F', epoch => $epoch, name => $keyName }"
-            );
-            $self->p->updatePersistentSession( $req,
-                { _2fDevices => to_json($_2fDevices) } );
+          or return $self->p->sendError( $req,
+            $self->prefix . '2f: "epoch" parameter is missing', 400 );
+        if ( $self->del2fDevice( $req, $req->userData, $self->type, $epoch ) ) {
             $self->userLogger->notice(
-                "U2F key $keyName unregistration succeeds for $user");
+                $self->prefix . "2f: device deleted for $user" );
             return [
                 200,
                 [
@@ -290,60 +226,24 @@ sub run {
                 ['{"result":1}']
             ];
         }
-        else {
-            $self->p->sendError( $req, '2FDeviceNotFound', 400 );
-        }
-    }
-    else {
-        $self->logger->error("Unknown U2F action -> $action");
-        return $self->p->sendError( $req, 'unknownAction', 400 );
+        $self->logger->error( $self->prefix . '2f: device not found' );
+        return $self->p->sendError( $req, '2FDeviceNotFound', 400 );
     }
 
+    else {
+        $self->logger->error( $self->prefix . "2f: unknown action ($action)" );
+        return $self->p->sendError( $req, 'unknownAction', 400 );
+    }
 }
 
 sub loadUser {
     my ( $self, $req ) = @_;
+    my ( $kh, $uk, @crypters );
 
     # Read existing 2FDevices
-    $self->logger->debug("Looking for 2F devices...");
-    my ( $kh, $uk, $_2fDevices );
-    my @u2fs = ();
-
-    if ( $req->userData->{_2fDevices} ) {
-        $_2fDevices = eval {
-            from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
-        };
-        if ($@) {
-            $self->logger->error("Corrupted session (_2fDevices): $@");
-            return $self->p->sendError( $req, "Corrupted session", 500 );
-        }
-    }
-    else {
-        $self->logger->debug("No 2F device found");
-        $_2fDevices = [];
-    }
-
-    # Reading existing U2F keys
-    foreach (@$_2fDevices) {
-        $self->logger->debug("Looking for registered U2F key(s)...");
-        if ( $_->{type} eq $self->type ) {
-            unless ( $_->{_userKey} and $_->{_keyHandle} ) {
-                $self->logger->error(
-'Missing required U2F attributes in storage ($session->{_2fDevices})'
-                );
-                next;
-            }
-            $self->logger->debug( "Found U2F key -> _userKey = "
-                  . $_->{_userKey}
-                  . "/ _keyHandle = "
-                  . $_->{_keyHandle} );
-            $_->{_userKey} = decode_base64url( $_->{_userKey} );
-            push @u2fs, $_;
-        }
-    }
+    my @u2fs = $self->find2fDevicesByType( $req, $req->userData, $self->type );
 
     # Manage multi u2f keys
-    my @crypters;
     if (@u2fs) {
         foreach (@u2fs) {
             $kh = $_->{_keyHandle};
@@ -364,7 +264,7 @@ sub loadUser {
         return 1;
     }
     else {
-        $self->userLogger->info("U2F : user not registered");
+        $self->userLogger->info( $self->prefix . '2f: user not registered' );
         return 0;
     }
 }
