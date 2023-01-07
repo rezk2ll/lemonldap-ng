@@ -704,12 +704,13 @@ sub restoreSession {
 }
 
 sub searchForAuthorized2Fmodules {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, $session ) = @_;
+    $session ||= $req->sessionInfo;
     my @am;
     foreach ( @{ $self->sfModules } ) {
         $self->logger->debug(
             'Looking if ' . $_->{m}->prefix . '2f is available' );
-        if ( $_->{r}->( $req, $req->sessionInfo ) ) {
+        if ( $_->{r}->( $req, $session ) ) {
             $self->logger->debug(' -> OK');
             push @am, $_->{m};
         }
@@ -726,30 +727,35 @@ sub canUpdateSfa {
 
     # Test actions
     if ( $module && $action ) {
-        my $prefix     = $module->prefix;
-        my $authnLevel = $module->authnLevel;
+        my $prefix        = $module->prefix;
+        my $requiredLevel = $module->authnLevel;
         $self->logger->debug("$user request to $action ${prefix}2f device");
 
         if ( $action eq 'delete' ) {
             $msg = 'notAuthorizedAuthLevel'
-              if ( $authnLevel
-                && $req->userData->{authenticationLevel} < $authnLevel );
+              if ( $requiredLevel
+                && $req->userData->{authenticationLevel} < $requiredLevel );
         }
         if ( $action =~ /^(?:register|registration(?:challenge)?)$/ ) {
-            $self->logger->debug("**************************");
-            my @am = $self->searchForAuthorized2Fmodules($req);
+            $requiredLevel = $req->userData->{authenticationLevel};
+            my @am =
+              $self->searchForAuthorized2Fmodules( $req, $req->userData );
             my $_2fDevices = $self->get2fDevices( $req, $req->userData );
-
-            # $msg = 'notAuthorizedAuthLevel'
-            #   if ( $authnLevel
-            #     && $req->userData->{authenticationLevel} < $authnLevel );
+            my %authnLevel = map { $_->type => $_->authnLevel } @am;
+            foreach (@$_2fDevices) {
+                $requiredLevel = $authnLevel{ $_->{type} }
+                  if ( $authnLevel{ $_->{type} }
+                    && $authnLevel{ $_->{type} } > $requiredLevel );
+            }
+            $msg = 'notAuthorizedAuthLevel'
+              if ( $req->userData->{authenticationLevel} < $requiredLevel );
         }
         if ($msg) {
             $self->userLogger->warn(
 "$user request to $action ${prefix}2f device rejected due to insufficient authentication level!"
             );
             $self->logger->debug(
-"authLevel: $req->{userData}->{authenticationLevel} < requiredLevel ($authnLevel)"
+"authLevel: $req->{userData}->{authenticationLevel} < requiredLevel ($requiredLevel)"
             );
         }
     }
