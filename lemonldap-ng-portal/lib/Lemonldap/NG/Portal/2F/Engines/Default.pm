@@ -721,14 +721,13 @@ sub searchForAuthorized2Fmodules {
 sub canUpdateSfa {
     my ( $self, $req, $module, $action ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
-    my ( $msg, $mode );
-
-    $self->logger->debug("$user can update SFA?");
+    my $prefix = '';
+    my $msg;
 
     # Test actions
     if ( $module && $action ) {
-        my $prefix        = $module->prefix;
         my $requiredLevel = $module->authnLevel;
+        $prefix        = $module->prefix;
         $self->logger->debug("$user request to $action ${prefix}2f device");
 
         if ( $action eq 'delete' ) {
@@ -736,7 +735,7 @@ sub canUpdateSfa {
               if ( $requiredLevel
                 && $req->userData->{authenticationLevel} < $requiredLevel );
         }
-        if ( $action =~ /^(?:register|registration(?:challenge)?)$/ ) {
+        if ( $action =~ /^regist/ ) {
             $requiredLevel = $req->userData->{authenticationLevel};
             my @am =
               $self->searchForAuthorized2Fmodules( $req, $req->userData );
@@ -755,17 +754,19 @@ sub canUpdateSfa {
 "$user request to $action ${prefix}2f device rejected due to insufficient authentication level!"
             );
             $self->logger->debug(
-"authLevel: $req->{userData}->{authenticationLevel} < requiredLevel ($requiredLevel)"
+"authnLevel: $req->{userData}->{authenticationLevel} < requiredLevel: $requiredLevel"
             );
         }
     }
 
     unless ($msg) {
+        my $module;
+        $action ||= 'update';
 
         # Test if Impersonation is in progress
         if ( $self->conf->{impersonationRule} ) {
             $self->logger->debug('Impersonation plugin is enabled');
-            $mode = 'Impersonation';
+            $module = 'Impersonation';
             $msg  = 'notAuthorized'
               if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_user"}
                 && $req->userData->{"$self->{conf}->{impersonationPrefix}_user"}
@@ -775,7 +776,7 @@ sub canUpdateSfa {
         # Test if ContextSwitching is in progress
         if ( $self->conf->{contextSwitchingRule} ) {
             $self->logger->debug('ContextSwitching plugin is enabled');
-            $mode = 'ContextSwitching';
+            $module = 'ContextSwitching';
             $msg  = 'notAuthorized'
               if (
                 $req->userData->{
@@ -785,13 +786,15 @@ sub canUpdateSfa {
         }
         if ($msg) {
             $self->userLogger->warn(
-                "$mode in progress! $user is not allowed to update SFA");
+"$module in progress! $user is not allowed to $action ${prefix}2f device"
+            );
             $self->logger->debug(
-"$user is NOT allowed to update SFA because $mode is in progress"
+"$user is NOT allowed to $action ${prefix}2f device because $module is in progress"
             );
         }
         else {
-            $self->logger->debug("$user is allowed to update SFA");
+            $self->logger->debug(
+                "$user is allowed to $action ${prefix}2f device");
         }
     }
 
