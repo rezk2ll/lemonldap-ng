@@ -23,10 +23,13 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NO_SECOND_FACTORS
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
-with 'Lemonldap::NG::Portal::Lib::OverConf';
+with qw(
+  Lemonldap::NG::Portal::Lib::OverConf
+  Lemonldap::NG::Portal::Lib::2fDevices
+);
 
 # INITIALIZATION
 
@@ -37,9 +40,8 @@ with 'Lemonldap::NG::Portal::Lib::OverConf';
 # t => type of record in _2fDevices
 has sfModules  => ( is => 'rw', default => sub { [] } );
 has sfRModules => ( is => 'rw', default => sub { [] } );
-
-has sfReq     => ( is => 'rw' );
-has sfMsgRule => ( is => 'rw' );
+has sfReq      => ( is => 'rw' );
+has sfMsgRule  => ( is => 'rw' );
 
 has ott => (
     is      => 'rw',
@@ -169,7 +171,7 @@ sub init {
             p => $prefix,
             m => $m,
             r => $rule,
-            t => $prefix,
+            t => $prefix
           };
 
         # Push register module
@@ -215,7 +217,7 @@ sub init {
         )
       )
     {
-        $self->error( 'Error in sfRequired rule'
+        $self->error( 'Error in sfRequired rule: '
               . $self->p->HANDLER->tsv->{jail}->error );
         return 0;
     }
@@ -230,7 +232,7 @@ sub init {
         )
       )
     {
-        $self->error( 'Error in sfRemovedMsg rule'
+        $self->error( 'Error in sfRemovedMsg rule: '
               . $self->p->HANDLER->tsv->{jail}->error );
         return 0;
     }
@@ -269,8 +271,8 @@ sub run {
     my $forceUpgrade  = $req->param('forceUpgrade');
     my $stayconnected = $req->param('stayconnected');
     my $spoofId       = $req->param('spoofId') || '';
-    $self->logger->debug("2F checkLogins set")  if $checkLogins;
-    $self->logger->debug("2F forceUpgrade set") if $forceUpgrade;
+    $self->logger->debug("2F checkLogins is set")  if $checkLogins;
+    $self->logger->debug("2F forceUpgrade is set") if $forceUpgrade;
 
     # Skip 2F unless a module has been registered
     unless ( @{ $self->sfModules } ) {
@@ -300,23 +302,13 @@ sub run {
     }
 
     # Remove expired 2F devices
-    my $session = $req->sessionInfo;
-    if ( $session->{_2fDevices} ) {
-        $self->logger->debug("Loading 2F devices...");
-
-        # Read existing 2FDevices
-        my $_2fDevices =
-          eval { from_json( $session->{_2fDevices}, { allow_nonref => 1 } ); };
-        if ($@) {
-            $self->logger->error("Bad encoding in _2fDevices: $@");
-            return PE_ERROR;
-        }
-        $self->logger->debug(" -> 2F Device(s) found");
+    my $session    = $req->sessionInfo;
+    my $_2fDevices = $self->get2fDevices( $req, $session );
+    if ( scalar @$_2fDevices ) {
+        my ( $removed, $name, $now, @expired2fDevices );
 
         $self->logger->debug("Looking for expired 2F device(s)...");
-        my $removed = 0;
-        my $name    = '';
-        my $now     = time();
+        $now = time();
         foreach my $device (@$_2fDevices) {
             my $type = lc( $device->{type} );
             $type =~ s/2f$//i;
@@ -327,7 +319,7 @@ sub run {
 "Remove $device->{type} -> $device->{name} / $device->{epoch}"
                 );
                 $self->userLogger->info("Remove expired $device->{type}");
-                $device->{type} = 'EXPIRED';
+                push @expired2fDevices, $device;
                 $name .= "$device->{name}; ";
                 $removed++;
             }
@@ -339,14 +331,12 @@ sub run {
 "Found $removed EXPIRED 2F device(s) => Update persistent session"
             );
             $self->userLogger->notice(
-                " -> $removed expired 2F device(s) removed ($name)");
-            @$_2fDevices =
-              map { $_->{type} =~ /\bEXPIRED\b/ ? () : $_ } @$_2fDevices;
-            $self->p->updatePersistentSession( $req,
-                { _2fDevices => to_json($_2fDevices) } );
+                " -> $removed expired 2F device(s) will be removed ($name)");
 
             # Display message if required
-            if ( $self->sfMsgRule->( $req, $req->sessionInfo ) ) {
+            if (   $self->del2fDevices( $req, $session, \@expired2fDevices )
+                && $self->sfMsgRule->( $req, $req->sessionInfo ) )
+            {
                 my $uid  = $req->user;
                 my $date = strftime "%Y-%m-%d", localtime;
                 my $ref  = $self->conf->{sfRemovedNotifRef} || 'RemoveSF';
@@ -472,7 +462,7 @@ sub run {
 sub display2fRegisters {
     my ( $self, $req, $session ) = @_;
     foreach my $m ( @{ $self->sfRModules } ) {
-        return 1 if ( $m->{r}->( $req, $session ) );
+        return 1 if $m->{r}->( $req, $session );
     }
     return 0;
 }
@@ -508,7 +498,7 @@ sub _choice {
         if ( $m->{m}->prefix eq $ch ) {
             $self->userLogger->info( 'Second factor '
                   . $m->{m}->prefix
-                  . '2F selected for '
+                  . '2f selected for '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
             # New token
@@ -539,6 +529,8 @@ sub _redirect {
 
 sub _displayRegister {
     my ( $self, $req, $prefix ) = @_;
+    my $_2fDevices = [];
+    my @am;
 
     $self->p->importHandlerData($req);
 
@@ -564,10 +556,9 @@ sub _displayRegister {
         );
     }
 
-    my @am;
     foreach my $m ( @{ $self->sfRModules } ) {
         $self->logger->debug(
-            'Looking if ' . $m->{m}->prefix . '2F register is available' );
+            'Looking if ' . $m->{m}->prefix . '2f register is available' );
         if ( $m->{r}->( $req, $req->userData ) ) {
             push @am,
               {
@@ -580,20 +571,11 @@ sub _displayRegister {
     }
 
     # Retrieve user all second factors
-    my $_2fDevices = [];
-    unless ( $self->canUpdateSfa($req) ) {
-        $_2fDevices = $req->userData->{_2fDevices}
-          ? eval {
-            from_json( $req->userData->{_2fDevices}, { allow_nonref => 1 } );
-          }
-          : undef;
-        unless ($_2fDevices) {
-            $self->logger->debug("None 2F device found");
-            $_2fDevices = [];
-        }
+    if ( $self->canUpdateSfa($req) ) {
+        $self->userLogger->warn("Do not display 2F devices!");
     }
     else {
-        $self->userLogger->warn("Do not display 2F devices!");
+        $_2fDevices = $self->get2fDevices( $req, $req->userData );
     }
 
     # If only one 2F is available, redirect to it
@@ -605,8 +587,7 @@ sub _displayRegister {
       );
 
    # Parse second factors to display delete button if allowed and upgrade button
-    my $displayUpgBtn = 0;
-    my $action        = '';
+    my ( $displayUpgBtn, $action ) = ( 0, '' );
     foreach my $reg_mod_info ( @{ $self->sfRModules } ) {
         my $type   = $reg_mod_info->{t};
         my $prefix = $reg_mod_info->{p};
@@ -680,9 +661,8 @@ sub register {
     if ($prefix) {
         my ($m) =
           grep { $_->{m}->prefix eq $prefix } @{ $self->sfRModules };
-        unless ($m) {
-            return $self->p->sendError( $req, 'Unknown register module', 400 );
-        }
+        return $self->p->sendError( $req, 'Unknown register module', 400 )
+          unless $m;
         unless ( $m->{r}->( $req, $req->userData ) ) {
             $self->userLogger->error("${prefix}2F registration not allowed");
             return $self->p->sendError( $req,
@@ -794,10 +774,10 @@ sub canUpdateSfa {
 
 sub findRegisterModuleFor {
     my ( $self, $mod ) = @_;
-    if ( $mod->isa("Lemonldap::NG::Portal::Lib::Code2F") ) {
-        return "::2F::Register::Generic";
-    }
-    return;
+
+    return $mod->isa("Lemonldap::NG::Portal::Lib::Code2F")
+      ? "::2F::Register::Generic"
+      : undef;
 }
 
 1;

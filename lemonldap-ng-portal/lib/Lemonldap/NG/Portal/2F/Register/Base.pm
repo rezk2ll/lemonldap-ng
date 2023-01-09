@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::2F::Register::Base;
 
 use strict;
 use Mouse;
+use JSON qw(from_json to_json);
 
 our $VERSION = '2.0.16';
 
@@ -28,19 +29,19 @@ sub init {
 
     # Set logo if overridden
     $self->logo( $self->conf->{ $self->prefix . "2fLogo" } )
-      if ( $self->conf->{ $self->prefix . "2fLogo" } );
+      if $self->conf->{ $self->prefix . "2fLogo" };
 
     # Set label if provided, translation files will be used otherwise
     $self->label( $self->conf->{ $self->prefix . "2fLabel" } )
-      if ( $self->conf->{ $self->prefix . "2fLabel" } );
+      if $self->conf->{ $self->prefix . "2fLabel" };
 
     $self->authnLevel( $self->conf->{ $self->prefix . "2fAuthnLevel" } )
-      if ( $self->conf->{ $self->prefix . "2fAuthnLevel" } );
+      if $self->conf->{ $self->prefix . "2fAuthnLevel" };
 
     # Set whether the user can remove this registration
     $self->userCanRemove(
         $self->conf->{ $self->prefix . '2fUserCanRemoveKey' } )
-      if ( $self->conf->{ $self->prefix . '2fUserCanRemoveKey' } );
+      if $self->conf->{ $self->prefix . '2fUserCanRemoveKey' };
 
     return 1;
 }
@@ -57,19 +58,32 @@ sub canUpdateSfa {
     return;
 }
 
-# Check characters and truncate name if too long
+# Check characters and truncate SFA name if too long
 sub checkNameSfa {
     my ( $self, $req, $type, $name ) = @_;
-    
+
     $name ||= "My$type";
     unless ( $name =~ /^[\w\s-]+$/ ) {
         $self->userLogger->error("$type name with bad character(s)");
         return;
     }
     $name = substr( $name, 0, $self->conf->{max2FDevicesNameLength} );
-    $self->logger->debug("$type name: $name");
+    $self->logger->debug("Return $type name: $name");
 
     return $name;
+}
+
+# Check if user can register a SFA
+sub checkMaximumSfaCount {
+    my ( $self, @sfaDevices ) = @_;
+    my $size    = @sfaDevices;
+    my $maxSize = $self->conf->{max2FDevices};
+
+    $self->logger->debug("Registered 2F device(s): $size / $maxSize");
+    $self->userLogger->warn("Max number of 2F devices is reached")
+      if ( $size >= $maxSize );
+
+    return $maxSize - $size;
 }
 
 1;

@@ -15,12 +15,14 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.16';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor';
+with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
 
+has type   => ( is => 'rw', default => 'UBK' );
 has prefix => ( is => 'ro', default => 'yubikey' );
 has logo   => ( is => 'rw', default => 'yubikey.png' );
 has yubi   => ( is => 'rw' );
@@ -40,7 +42,7 @@ sub init {
         # If self registration is enabled, detect if user has registered its
         # key
         if ( $self->conf->{yubikey2fSelfRegistration} ) {
-            push @newrules, '$_2fDevices && $_2fDevices =~ /"type":\s*"UBK"/s';
+            push @newrules, 'has2f("UBK")';
         }
 
         # If Yubikey looked up from an attribute, test attribute's presence
@@ -53,14 +55,16 @@ sub init {
         if (@newrules) {
             my $rule = join( " || ", @newrules );
             $self->conf->{yubikey2fActivation} = $rule;
-            $self->logger->debug("Yubikey activation rule: $rule");
+            $self->logger->debug(
+                $self->prefix . "2f: activation rule -> $rule" );
         }
     }
 
     unless ($self->conf->{yubikey2fClientID}
         and $self->conf->{yubikey2fSecretKey} )
     {
-        $self->error('Missing mandatory parameters (Client ID and secret key)');
+        $self->error( $self->prefix
+              . '2f: missing mandatory parameters (client ID or secret key)' );
         return 0;
     }
 
@@ -85,80 +89,59 @@ sub init {
 }
 
 sub _findYubikey {
-    my ( $self, $req, $sessionInfo ) = @_;
-    my ( $yubikey, $_2fDevices );
+    my ( $self, $req, $session ) = @_;
+    my ( $yubikey, @ubk2f );
 
     # First, lookup from session attribute
     if ( $self->conf->{yubikey2fFromSessionAttribute} ) {
         my $attr = $self->conf->{yubikey2fFromSessionAttribute};
-        $yubikey = $sessionInfo->{$attr};
+        $yubikey = $session->{$attr};
     }
 
     # If we didn't find a key, lookup psession
-    if ( !$yubikey and $sessionInfo->{_2fDevices} ) {
-        $self->logger->debug("Loading 2F Devices...");
-
-        # Read existing 2FDevices
-        $_2fDevices = eval {
-            from_json( $sessionInfo->{_2fDevices}, { allow_nonref => 1 } );
-        };
-        if ($@) {
-            $self->logger->error("Bad encoding in _2fDevices: $@");
-            return PE_ERROR;
-        }
-        $self->logger->debug("2F Device(s) found");
-        $self->logger->debug("Reading Yubikey...");
-
+    if ( !$yubikey and $session->{_2fDevices} ) {
+        @ubk2f = $self->find2fDevicesByType( $req, $session, $self->type );
         if ( my $code = $req->param('code') ) {
             $yubikey = $_->{_yubikey} foreach grep {
-                ( $_->{type} eq 'UBK' )
-                  and ( $_->{_yubikey} eq
-                    substr( $code, 0, $self->conf->{yubikey2fPublicIDSize} ) )
-            } @$_2fDevices;
+                $_->{_yubikey} eq
+                  substr( $code, 0, $self->conf->{yubikey2fPublicIDSize} )
+            } @ubk2f;
         }
         else {
-            $yubikey = $_->{_yubikey}
-              foreach grep { $_->{type} eq 'UBK' } @$_2fDevices;
+            $yubikey = $_->{_yubikey} foreach @ubk2f;
         }
     }
 
     return $yubikey || '';
-
 }
 
 sub run {
     my ( $self, $req, $token, $_2fDevices ) = @_;
-
-    my $checkLogins = $req->param('checkLogins');
-    $self->logger->debug("Yubikey; checkLogins set") if $checkLogins;
-
-    my $stayconnected = $req->param('stayconnected');
-    $self->logger->debug("Yubikey: stayconnected set") if $stayconnected;
-
     my $yubikey = $self->_findYubikey( $req, $req->sessionInfo );
-
     unless ($yubikey) {
-        $self->userLogger->warn( 'User '
+        $self->userLogger->warn( $self->prefix
+              . '2f: user '
               . $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
-              . ' has no Yubikey registered' );
+              . ' has no device registered' );
         return PE_BADOTP;
     }
-    $self->logger->debug("Found Yubikey : $yubikey");
+    $self->logger->debug( $self->prefix . "2f: found $yubikey" );
 
     # Prepare form
+    my ( $checkLogins, $stayconnected ) = $self->getFormParams($req);
     my $tmp = $self->p->sendHtml(
         $req,
         'ext2fcheck',
         params => {
             TOKEN         => $token,
             TARGET        => '/yubikey2fcheck?skin=' . $self->p->getSkin($req),
-            INPUTLOGO     => 'yubikey.png',
+            INPUTLOGO     => $self->logo,
             LEGEND        => 'clickOnYubikey',
             CHECKLOGINS   => $checkLogins,
             STAYCONNECTED => $stayconnected
         }
     );
-    $self->logger->debug("Display Yubikey form");
+    $self->logger->debug( $self->prefix . '2f: display form' );
 
     $req->response($tmp);
     return PE_SENDRESPONSE;
@@ -168,26 +151,25 @@ sub verify {
     my ( $self, $req, $session ) = @_;
     my $code;
     unless ( $code = $req->param('code') ) {
-        $self->userLogger->error('Yubikey 2F: no code');
+        $self->userLogger->error( $self->prefix . '2f: no code provided' );
         return PE_FORMEMPTY;
     }
 
     # Verify OTP
     my $yubikey = $self->_findYubikey( $req, $session );
-
     if (
         index( $yubikey,
             substr( $code, 0, $self->conf->{yubikey2fPublicIDSize} ) ) == -1
       )
     {
-        $self->userLogger->warn('Yubikey not registered');
+        $self->userLogger->warn( $self->prefix . '2f: device not registered' );
         return PE_BADOTP;
     }
 
-    $self->logger->debug(
-        "Validating $code of yubikey $yubikey against external API");
+    $self->logger->debug( $self->prefix
+          . "2f: validating $code of $yubikey against external API" );
     if ( $self->yubi->otp($code) ne 'OK' ) {
-        $self->userLogger->warn('Yubikey verification failed');
+        $self->userLogger->warn( $self->prefix . '2f: verification failed' );
         return PE_BADOTP;
     }
     return PE_OK;
