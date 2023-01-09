@@ -549,6 +549,7 @@ t/04-language-selection.t
 t/10-AuthCustom.t
 t/19-Auth-Null.t
 t/20-Auth-and-password-DBI-dynamic-hash.t
+t/20-Auth-and-password-DBI-encrypt.t
 t/20-Auth-and-password-DBI.t
 t/20-Auth-DBI-utf8.t
 t/21-Auth-and-password-LDAP.t
@@ -755,6 +756,7 @@ t/62-SingleSession.t
 t/62-UpgradeSession-disabled.t
 t/62-UpgradeSession.t
 t/63-History.t
+t/64-StayConnected-singleSession.t
 t/64-StayConnected-with-2F-and-History.t
 t/64-StayConnected-with-History.t
 t/64-StayConnected-with-rule.t
@@ -809,6 +811,7 @@ t/68-Impersonation-with-UnrestrictedUser.t
 t/68-Impersonation.t
 t/70-2F-Password.t
 t/70-2F-TOTP-8-with-global-storage.t
+t/70-2F-TOTP-and-U2F-with-authnLevels-and-UpgradeOnly.t
 t/70-2F-TOTP-and-U2F-with-TTL-and-JSON.t
 t/70-2F-TOTP-encryption.t
 t/70-2F-TOTP-with-History-and-Refresh.t
