@@ -25,8 +25,8 @@ with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
 
-has prefix  => ( is => 'ro', default => 'totp' );
-has logo    => ( is => 'rw', default => 'totp.png' );
+has prefix => ( is => 'ro', default => 'totp' );
+has logo   => ( is => 'rw', default => 'totp.png' );
 
 sub init {
     my ($self) = @_;

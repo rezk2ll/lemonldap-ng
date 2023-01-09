@@ -64,7 +64,7 @@ sub run {
                     RAW_ERROR       => 'maxNumberof2FDevicesReached',
                     AUTH_ERROR_TYPE => 'warning',
                 }
-            ) unless $self->canRegisterSfa(@alldevices);
+            ) unless $self->checkMaximumSfaCount(@alldevices);
 
             if (
                 $self->add2fDevice(

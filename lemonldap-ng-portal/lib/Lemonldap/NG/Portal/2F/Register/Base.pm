@@ -74,7 +74,7 @@ sub checkNameSfa {
 }
 
 # Check if user can register a SFA
-sub canRegisterSfa {
+sub checkMaximumSfaCount {
     my ( $self, @sfaDevices ) = @_;
     my $size    = @sfaDevices;
     my $maxSize = $self->conf->{max2FDevices};

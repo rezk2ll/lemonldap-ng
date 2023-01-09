@@ -42,7 +42,7 @@ sub run {
 
         # Check if user can register one more 2F device
         return $self->p->sendError( $req, 'maxNumberof2FDevicesReached', 400 )
-          unless $self->canRegisterSfa(@alldevices);
+          unless $self->checkMaximumSfaCount(@alldevices);
 
         my $challenge = $self->crypter->registrationChallenge;
         $self->logger->debug(
@@ -194,7 +194,7 @@ sub run {
         if ( not $crypter->setChallenge($challenge) ) {
             $self->logger->error(
                 $@ ? $@ : Crypt::U2F::Server::Simple::lastError() );
-            return $self->p->sendError( $req, "U2FServerError" );
+            return $self->p->sendError( $req, 'serverError' );
         }
 
         my $res = ( $crypter->authenticationVerify($resp) ? 1 : 0 );

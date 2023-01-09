@@ -14,6 +14,7 @@ extends qw(
 with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
+
 has logo     => ( is => 'rw', default => 'totp.png' );
 has prefix   => ( is => 'rw', default => 'totp' );
 has template => ( is => 'ro', default => 'totp2fregister' );
@@ -77,46 +78,25 @@ sub run {
             $self->conf->{totp2fDigits},
             $token->{_totp2fSecret}, $code
         );
-        if ( $r == -1 ) {
-            return $self->p->sendError( $req, 'serverError' );
-        }
+        return $self->p->sendError( $req, 'serverError' ) if $r == -1;
 
         # Invalid try is returned with a 200 code. Javascript will read error
         # and propose to retry
-        elsif ( $r == 0 ) {
+        if ( $r == 0 ) {
             $self->userLogger->notice(
                 $self->prefix . "2f: registration -> invalid code for $user" );
             return $self->p->sendError( $req, 'badCode', 200 );
         }
+
         $self->logger->debug( $self->prefix . '2f: code verified' );
 
-        # Read existing TOTP
+        # Test if a TOTP is already registered
         my @totp2f =
           $self->find2fDevicesByType( $req, $req->userData, $self->type );
+        return $self->p->sendError( $req, 'totpExistingKey', 200 )
+          if scalar @totp2f;
 
-        # Test previous TOTP if any and delete
-        if (@totp2f) {
-            my $secret = '';
-            $self->logger->debug(
-                $self->prefix . '2f: read existing secret...' );
-            $secret = $_->{_secret} foreach (@totp2f);
-            return $self->p->sendError( $req, 'totpExistingKey', 200 )
-              if $secret;
-
-            if ( $self->del2fDevices( $req, $req->userData, \@totp2f ) ) {
-                $self->logger->debug(
-                    $self->prefix . "2f: old password(s) deleted" );
-            }
-            else {
-                $self->logger->error(
-                    $self->prefix . "2f: unable to delete old password(s)" );
-                return $self->p->sendError( $req, 'serverError' );
-            }
-        }
-        else {
-            $self->logger->debug( $self->prefix . '2f: no device found' );
-        }
-
+        $self->logger->debug( $self->prefix . '2f: no secret found' );
         my $storable_secret =
           $self->get_storable_secret( $token->{_totp2fSecret} );
         unless ($storable_secret) {
