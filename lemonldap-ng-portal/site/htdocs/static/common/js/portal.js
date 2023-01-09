@@ -559,28 +559,28 @@ LemonLDAP::NG Portal jQuery scripts
     if (datas['enablePasswordDisplay']) {
       field = '';
       if (datas['dontStorePassword']) {
-        $(".toggle-password").mousedown(function() {
+        $(".toggle-password").on('mousedown touchstart', function() {
           field = $(this).attr('id');
           field = field.replace(/^toggle_/, '');
           console.log('Display', field);
           $(this).toggleClass("fa-eye fa-eye-slash");
           return $("input[name=" + field + "]").attr('class', 'form-control');
         });
-        $(".toggle-password").mouseup(function() {
+        $(".toggle-password").on('mouseup touchend', function() {
           $(this).toggleClass("fa-eye fa-eye-slash");
           if ($("input[name=" + field + "]").get(0).value) {
             return $("input[name=" + field + "]").attr('class', 'form-control key');
           }
         });
       } else {
-        $(".toggle-password").mousedown(function() {
+        $(".toggle-password").on('mousedown touchstart', function() {
           field = $(this).attr('id');
           field = field.replace(/^toggle_/, '');
           console.log('Display', field);
           $(this).toggleClass("fa-eye fa-eye-slash");
           return $("input[name=" + field + "]").attr("type", "text");
         });
-        $(".toggle-password").mouseup(function() {
+        $(".toggle-password").on('mouseup touchend', function() {
           $(this).toggleClass("fa-eye fa-eye-slash");
           return $("input[name=" + field + "]").attr("type", "password");
         });

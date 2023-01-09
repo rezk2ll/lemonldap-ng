@@ -490,23 +490,23 @@ $(window).on 'load', () ->
 	if datas['enablePasswordDisplay']
 		field = ''
 		if datas['dontStorePassword']
-			$(".toggle-password").mousedown () ->
+			$(".toggle-password").on 'mousedown touchstart', () ->
 				field = $(this).attr 'id'
 				field = field.replace /^toggle_/, ''
 				console.log 'Display', field
 				$(this).toggleClass("fa-eye fa-eye-slash")
 				$("input[name=#{field}]").attr('class', 'form-control')
-			$(".toggle-password").mouseup () ->
+			$(".toggle-password").on 'mouseup touchend', () ->
 				$(this).toggleClass("fa-eye fa-eye-slash")
 				$("input[name=#{field}]").attr('class', 'form-control key') if $("input[name=#{field}]").get(0).value
 		else
-			$(".toggle-password").mousedown () ->
+			$(".toggle-password").on 'mousedown touchstart', () ->
 				field = $(this).attr 'id'
 				field = field.replace /^toggle_/, ''
 				console.log 'Display', field
 				$(this).toggleClass("fa-eye fa-eye-slash")
 				$("input[name=#{field}]").attr("type", "text")
-			$(".toggle-password").mouseup () ->
+			$(".toggle-password").on 'mouseup touchend', () ->
 				$(this).toggleClass("fa-eye fa-eye-slash")
 				$("input[name=#{field}]").attr("type", "password")
 
