@@ -6,7 +6,7 @@ persistent sessions.
 
 LL::NG Portal provides REST end points for sessions management:
 
--  GET /sessions/<type>/<session-id> : get session datas
+-  GET /sessions/<type>/<session-id> : get session data
 -  GET /sessions/<type>/<session-id>/<key> : get a session key value
 -  GET /sessions/<type>/<session-id>/[k1,k2] : get some keys value
 -  POST /sessions/<type> : create a session
@@ -15,7 +15,7 @@ LL::NG Portal provides REST end points for sessions management:
 
 Sessions for connected users (used by :doc:`LLNG Proxy<authproxy>`):
 
--  GET /session/my/<type> : get session datas
+-  GET /session/my/<type> : get session data
 -  GET /session/my/<type>/key : get session key
 -  DELETE /session/my : ask for logout
 -  DELETE /sessions/my : ask for global logout (if GlobalLogout plugin is on)
@@ -96,6 +96,21 @@ configuration (for example, access by IP range):
    <Location /index.fcgi/sessions>
        Require ip 192.168.2.0/24
    </Location>
+
+Nginx
+~~~~~
+
+Sessions REST end points access must be allowed in Nginx portal
+configuration (for example, access by IP range):
+
+.. code-block:: nginx
+
+    # REST/SOAP functions for sessions access (disabled by default)
+    location ~ ^/index.psgi/sessions {
+      fastcgi_pass llng_portal_upstream;
+      allow 192.168.2.0/24
+      deny all;
+    }
 
 Real session backend
 ~~~~~~~~~~~~~~~~~~~~

@@ -39,8 +39,11 @@ The FastCGI server reads also ``LLTYPE`` parameter in FastCGI requests
 (see portal-nginx.conf or manager-nginx.conf) to choose which module is
 called:
 
--  ``cgi`` for the portal (or any CGI: it works like PHP-FPM for Perl !)
+-  ``cgi`` to run .cgi scripts in FastCGI compatibility mode
+-  ``psgi`` ro run .psgi scripts under FastCGI
 -  ``manager`` for the manager
+-  ``handler`` for the handler
+-  ``portal`` for the portal
 -  ``status`` to see statistics (if enabled)
 
 if ``LLTYPE`` is set to another value or not set, FastCGI server works

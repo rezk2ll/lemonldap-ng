@@ -159,7 +159,7 @@ To define keys, you can:
 Converting a RSA public key to a certificate
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If your application complains about the lack of certificate in SAML Metadatas, and you generated a public RSA key instead of a certificate in a previous version of LemonLDAP::NG, you can convert the public key into a certificate without changing the private key.
+If your application complains about the lack of certificate in SAML Metadata, and you generated a public RSA key instead of a certificate in a previous version of LemonLDAP::NG, you can convert the public key into a certificate without changing the private key.
 
 Save the private key in a file, and use the ``openssl`` commands to
 issue a self-signed certificate:

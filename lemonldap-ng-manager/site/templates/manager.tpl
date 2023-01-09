@@ -1,6 +1,9 @@
 <TMPL_INCLUDE NAME="header.tpl">
-
-  <title>LemonLDAP::NG Manager</title>
+  <TMPL_IF NAME="INSTANCE_NAME">
+    <title><TMPL_VAR NAME="INSTANCE_NAME"> Manager</title>
+  <TMPL_ELSE>
+    <title>LemonLDAP::NG Manager</title>
+  </TMPL_IF>
   <link rel="prefetch" href="<TMPL_VAR NAME="STATIC_PREFIX">forms/home.html" />
   <link rel="prefetch" href="<TMPL_VAR NAME="STATIC_PREFIX">struct.json" />
 </head>
@@ -61,7 +64,7 @@
       <div id="bottom" ng-if="showH" class="hidden-xs">
         <div class="panel panel-default">
           <div class="panel-body">
-            <iframe id="helpframe" width="100%" height="100%" ng-src="{{translate('/doc/')+'pages/documentation/current/'+helpUrl}}" frameborder="0"></iframe>
+            <iframe id="helpframe" width="100%" height="100%" ng-src="{{'<TMPL_VAR NAME="DOC_PREFIX">/pages/documentation/current/'+helpUrl}}" frameborder="0"></iframe>
           </div>
         </div> 
       </div>

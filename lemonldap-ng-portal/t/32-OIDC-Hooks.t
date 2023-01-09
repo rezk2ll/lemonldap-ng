@@ -58,7 +58,7 @@ my $op = LLNG::Manager::Test->new( {
                 }
             },
             oidcServicePrivateKeySig => oidc_key_op_private_sig,
-            oidcServicePublicKeySig  => oidc_key_op_public_sig,
+            oidcServicePublicKeySig  => oidc_cert_op_public_sig,
             customPlugins            => 't::OidcHookPlugin',
         }
     }
@@ -135,6 +135,7 @@ $res = $op->_post(
 $json = expectJSON($res);
 is( $json->{userinfo_hook}, 1, "Found hooked claim in Userinfo token" );
 is( $json->{_auth}, "Demo",    "Found session variable in Userinfo token" );
+like( $json->{_scope}, qr/\bopenid\b/, "Scopes are visible in hook" );
 
 expectJWT( $token, access_token_hook => 1 );
 
@@ -171,7 +172,7 @@ expectJWT( $token,
       "openid profile email my_hooked_scope myscope refreshed_online_french" );
 
 ## Test Offline refresh hook
-$code = authorize(
+$code = codeAuthorize(
     $op, $idpId,
     {
         response_type => 'code',

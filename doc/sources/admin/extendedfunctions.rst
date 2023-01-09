@@ -18,12 +18,12 @@ This is also true for:
 
 Inside this jail, you can access to:
 
-* all session values and CGI environment variables (through `$ENV{<HTTP_NAME>}`)
+* All session values and CGI environment variables (through `$ENV{<HTTP_NAME>}`)
 * Core Perl subroutines (split, pop, map, etc.)
 * :doc:`Custom functions<customfunctions>`
 * The `encode_base64 <http://perldoc.perl.org/MIME/Base64.html>`__ subroutine
 * Information about current request
-* Extended functions:
+* Extended functions except basic, iso2unicode and unicode2iso:
 
   * basic_
   * checkDate_
@@ -36,9 +36,11 @@ Inside this jail, you can access to:
   * inGroup_ (|new| in version 2.0.8)
   * isInNet6_
   * iso2unicode_
+  * iso2unicodeSafe_ (|new| in version 2.0.15)
   * listMatch_ (|new| in version 2.0.7)
   * token_
   * unicode2iso_
+  * unicode2isoSafe_ (|new| in version 2.0.15)
   * varIsInUri_ (|new| in version 2.0.7)
 
 
@@ -53,48 +55,71 @@ Inside this jail, you can access to:
 Extended Functions List
 -----------------------
 
-date
-~~~~
+basic
+~~~~~
 
-Returns the date, in format YYYYMMDDHHMMSS, local time by default, GMT
-by calling ``date(1)``
+.. attention::
 
-::
+    This function is not compliant with the :doc:`Safe jail<safejail>`,
+    you will have to disable the jail to use it.
 
-    For example: date(1) lt '19551018080000'
-  
-dateToTime
-~~~~~~~~~~
+This function builds the ``Authorization`` HTTP header employed in
+:doc:`HTTP Basic authentication scheme<applications/authbasic>`. It will
+convert `user` and `password` parameters from UTF-8 to ISO-8859-1.
 
-.. versionadded:: 2.0.12
+Functions parameters:
 
-Converts a string date into epoch time.
-
-The date format is the LDAP date syntax, for example for the 1st March
-2009 (GMT):
-
-::
-
-    20090301000000Z
-
-The date may end with a differential timezone that is interpreted to 
-adjust the epoch time, for example for the 1st March 2009 (+0100):
-
-::
-
-    20090301000000+0100
+-  **user**
+-  **password**
 
 Simple usage example:
 
 ::
 
-    dateToTime($ssoStartDate) lt dateToTime(date(1))
+   basic($uid,$_password)
+
+checkDate
+~~~~~~~~~
+
+This function checks date of current request, and compare it to
+a start date and an end date. It returns 1 if this matches, 0 else.
+
+
+The date format corresponds to LDAP date syntax, for example for the 1st of March
+2009 (GMT)
+
+::
+
+   20090301000000Z
+
+|new| Since version 2.0.12, the date may end with a differential timezone, 
+for example for the 1st of March 2009 (+0100):
+
+::
+
+    20090301000000+0100
+
+
+Functions parameters:
+
+-  **start**: Start date (GMT unless, |new| since version 2.0.12, a
+   differential timezone is included)
+-  **end**: End date (GMT unless, |new| since version 2.0.12, a
+   differential timezone is included)
+-  **default_access** (optional): Which result to return if **start** and
+   **end** dates are empty
+
+Simple usage example:
+
+::
+
+   checkDate($ssoStartDate, $ssoEndDate)
 
 checkLogonHours
 ~~~~~~~~~~~~~~~
 
-This function will check the day and the hour of current request, and
-compare it to allowed days and hours. It returns 1 if this match, 0
+This function checks the day and the hour of current request, and
+compare it to allowed days and hours. It returns 1 if matches, 0
 else. By default, the allowed days and hours is an hexadecimal
 value, representing each hour of the week. A day has 24 hours, and a
 week 7 days, so the value contains 168 bits, converted into 42
@@ -112,12 +137,12 @@ For example, for a full access, excepted week-end:
     You can use the binary value from the logonHours attribute of Active
     Directory, or create a custom attribute in your LDAP schema.
 
-Functions parameters:
+Function parameters:
 
--  **logon_hours**: string representing allowed logon hours (GMT)
+-  **logon_hours**: String representing allowed logon hours (GMT)
 -  **syntax** (optional): ``hexadecimal`` (default) or ``octetstring``
--  **time_correction** (optional): hours to add or to subtract
--  **default_access** (optional): what result to return if
+-  **time_correction** (optional): Hours to add or to subtract
+-  **default_access** (optional): Which result to return if
    **logon_hours** is empty
 
 Simple usage example:
@@ -156,113 +181,58 @@ rejected. You can allow these users instead of reject them:
 
    checkLogonHours($ssoLogonHours, '', '', '1')
 
+date
+~~~~
 
-checkDate
-~~~~~~~~~
-
-This function will check the date of current request, and compare it to
-a start date and an end date. It returns 1 if this match, 0 else.
-
-
-The date format is the LDAP date syntax, for example for the 1st of March
-2009 (GMT)
+Returns the date, in format YYYYMMDDHHMMSS, local time by default, GMT
+by calling ``date(1)``
 
 ::
 
-   20090301000000Z
+    For example: date(1) lt '19551018080000'
 
-|new| Since version 2.0.12, the date may end with a differential timezone, 
-for example for the 1st of March 2009 (+0100):
+dateToTime
+~~~~~~~~~~
+
+.. versionadded:: 2.0.12
+
+Used for converting a string date into epoch time.
+
+The date format is the LDAP date syntax, for example for the 1st March
+2009 (GMT):
+
+::
+
+    20090301000000Z
+
+The date may end with a differential timezone that is interpreted to 
+adjust the epoch time, for example for the 1st March 2009 (+0100):
 
 ::
 
     20090301000000+0100
 
-
-Functions parameters:
-
--  **start**: Start date (GMT unless, |new| since version 2.0.12, a
-   differential timezone is included)
--  **end**: End date (GMT unless, |new| since version 2.0.12, a
-   differential timezone is included)
--  **default_access** (optional): what result to return if **start** and
-   **end** are empty
-
 Simple usage example:
 
 ::
 
-   checkDate($ssoStartDate, $ssoEndDate)
+    dateToTime($ssoStartDate) lt dateToTime(date(1))
 
+encrypt
+~~~~~~~
 
-basic
-~~~~~
+.. tip::
 
-.. attention::
+    Since version 2.0, this function is now compliant with
+    :doc:`Safe jail<safejail>`.
 
-    This function is not compliant with
-    :doc:`Safe jail<safejail>`, you will need to disable the jail to use
-    it.
-
-This function builds the ``Authorization`` HTTP header used in
-:doc:`HTTP Basic authentication scheme<applications/authbasic>`. It will
-force conversion from UTF-8 to ISO-8859-1 of user and password data.
-
-Functions parameters:
-
--  **user**
--  **password**
-
-Simple usage example:
+This function uses the secret key of LL::NG configuration to crypt a data.
+This can be used for anonymizing identifier given to the protected
+application.
 
 ::
 
-   basic($uid,$_password)
-
-
-unicode2iso
-~~~~~~~~~~~
-
-
-.. attention::
-
-    This function is not compliant with
-    :doc:`Safe jail<safejail>`, you will need to disable the jail to use
-    it.
-
-This function convert a string from UTF-8 to ISO-8859-1.
-
-Functions parameters:
-
--  **string**
-
-Simple usage example:
-
-::
-
-   unicode2iso($name)
-
-iso2unicode
-~~~~~~~~~~~
-
-
-.. attention::
-
-    This function is not compliant with
-    :doc:`Safe jail<safejail>`, you will need to disable the jail to use
-    it.
-
-This function convert a string from ISO-8859-1 to UTF-8.
-
-Functions parameters:
-
--  **string**
-
-Simple usage example:
-
-::
-
-   iso2unicode($name)
+   encrypt($_whatToTrace)
 
 groupMatch
 ~~~~~~~~~~
@@ -290,11 +260,12 @@ has2f
 
 .. versionadded:: 2.0.10
 
-This function tests if the current user has registered a second factor. The following types are supported:
+This function tests if the current user has registered a second factor. The following types are supported out of the box:
 
 * :doc:`TOTP<totp2f>`
 * :doc:`U2F<u2f>`
 * :doc:`UBK<yubikey2f>`
+* :doc:`WebAuthn<webauthn2f>`
 
 Example::
 
@@ -315,6 +286,71 @@ Example::
    Before version 2.0.10, you need to use the following syntax ::
 
       $_2fDevices =~ /"type":\s*"TOTP"/s
+
+inGroup
+~~~~~~~
+
+.. versionadded:: 2.0.8
+
+This function lets you test if the user is in a given group. It is
+case-insensitive.
+
+Usage example:
+
+::
+
+   inGroup('admins')
+
+   inGroup('test users')
+
+The function returns 1 if the user belongs to the given group, and 0 if
+they don't.
+
+isInNet6
+~~~~~~~~
+
+Function to check if an IPv6 address is in a subnet. Example *check if
+IP address is local*:
+
+.. code-block:: perl
+
+   isInNet6($ipAddr, 'fe80::/10')
+
+iso2unicode
+~~~~~~~~~~~
+
+.. attention::
+
+    This function is not compliant with :doc:`Safe jail<safejail>`.
+    You will have to disable the jail to use it.
+
+This function converts a string from ISO-8859-1 to UTF-8.
+
+Function parameter:
+
+-  **string**
+
+Simple usage example:
+
+::
+
+   iso2unicode($name)
+
+iso2unicodeSafe
+~~~~~~~~~~~~~~~
+
+This function converts a string from ISO-8859-1 to UTF-8
+but it is not as portable as the original one.
+
+Functions parameters:
+
+-  **string**
+
+Simple usage example:
+
+::
+
+   iso2unicodeSafe($name)
 
 .. _listMatch:
 
@@ -346,42 +382,6 @@ Simple usage example:
 The function returns 1 if the value was found, and 0 if it was not
 found.
 
-inGroup
-~~~~~~~
-
-.. versionadded:: 2.0.8
-
-This function lets you test if the user is in a given group. It is
-case-insensitive.
-
-Usage example:
-
-::
-
-   inGroup('admins')
-
-   inGroup('test users')
-
-The function returns 1 if the user belongs to the given group, and 0 if
-they don't.
-
-encrypt
-~~~~~~~
-
-
-.. tip::
-
-    Since version 2.0, this function is now compliant with
-    :doc:`Safe jail<safejail>`.
-
-This function uses the secret key of LLNG configuration to crypt a data.
-This can be used for anonymizing identifier given to the protected
-application.
-
-::
-
-   encrypt($_whatToTrace)
-
 token
 ~~~~~
 
@@ -391,16 +391,6 @@ This function generates token used for
 ::
 
    token($_session_id,'webapp1.example.com','webapp2.example.com')
-
-isInNet6
-~~~~~~~~
-
-Function to check if an IPv6 address is in a subnet. Example *check if
-IP address is local*:
-
-.. code-block:: perl
-
-   isInNet6($ipAddr, 'fe80::/10')
 
 varIsInUri
 ~~~~~~~~~~
@@ -433,3 +423,39 @@ Example *check if $uid is in /check-auth/ URI*:
    :width: 35px
 .. |image1| image:: /documentation/new.png
    :width: 35px
+
+unicode2iso
+~~~~~~~~~~~
+
+.. attention::
+
+    This function is not compliant with :doc:`Safe jail<safejail>`.
+    You will have to disable the jail to use it.
+
+This function convert a string from UTF-8 to ISO-8859-1.
+
+Function parameter:
+
+-  **string**
+
+Simple usage example:
+
+::
+
+   unicode2iso($name)
+
+unicode2isoSafe
+~~~~~~~~~~~~~~~
+
+This function convert a string from UTF-8 to ISO-8859-1
+but it is not as portable as the original one.
+
+Function parameter:
+
+-  **string**
+
+Simple usage example:
+
+::
+
+   unicode2isoSafe($name)

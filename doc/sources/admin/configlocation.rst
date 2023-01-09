@@ -128,6 +128,21 @@ configuration.
        instanceName = LLNG_Demo
 
 
+.. tip::
+
+
+    It is possible to use environment variable placeholders anywhere in
+    configuration. Those placeholders will be replaced by each LLNG component
+    using environment variables set locally.
+    The format is: ``%SERVERENV:VariableName%``.
+    To enable this feature, you must edit ``lemonldap-ng.ini`` to set
+    ``useServerEnv`` value in [configuration] section:
+
+    .. code:: ini
+
+       [configuration]
+       useServerEnv = 1
+
 
 Manager API
 -----------

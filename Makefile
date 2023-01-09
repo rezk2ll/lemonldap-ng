@@ -15,7 +15,8 @@ DESTDIR=
 USEDEBIANLIBS=no
 PROD=$(USEDEBIANLIBS)
 USEEXTERNALLIBS=no
-PARA=$(shell perl -000 -e 'print ( "$(MAKEFLAGS)" =~ /-j(\d+)/ ? "j$1:c" : "")')
+PARA=$(shell perl -000 -e 'print ( "$(MAKEFLAGS)" =~ /-j(\d+)/ ? "j$$1:c" : "")')
+PARAXARGS=$(shell perl -000 -e 'print ( "$(MAKEFLAGS)" =~ /-j(\d+)/ ? "-P $$1" : "")')
 
 # Perl options
 #PERLOPTIONS="INSTALLDIRS=vendor"
@@ -65,6 +66,7 @@ MANAGERSITEDIR=$(MANAGERDIR)/htdocs
 MANAGERAPIDIR=$(MANAGERDIR)/api
 MANAGERSTATICDIR=$(MANAGERSITEDIR)/static
 MANAGERRELATIVESTATICDIR=/static
+MANAGERRELATIVEDOCDIR=/doc
 MANAGERTEMPLATESDIR=$(MANAGERSITEDIR)/templates
 DOCDIR=$(DOCUMENTROOT)
 DEFDOCDIR=$(DOCUMENTROOT)/doc
@@ -475,6 +477,7 @@ e2e-tests/conf/apache2.pid: start_web_server
 
 start_web_server:	all prepare_test_server
 	# Clean old server if launched
+	mkdir -p e2e-tests/conf
 	@if test "$(TESTBACKEND)" = "DBI"; then \
 		echo 'create table lmConfig (cfgNum int, data text);'|sqlite3 e2e-tests/conf/config.db; \
 		echo 'create table sessions (id text, a_session text, LastUpdated int);'|sqlite3 e2e-tests/conf/sessions.db; \
@@ -805,6 +808,7 @@ install_manager_site:	install_conf_dir
 	@rm -rf $$(find ${RMANAGERSTATICDIR} \
 		$(RMANAGERTEMPLATESDIR) $(RCONFDIR) -type d -name .svn)
 	@$(PERL) -i -pe 's#__MANAGERSTATICDIR__#$(MANAGERRELATIVESTATICDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
+	@$(PERL) -i -pe 's#__MANAGERDOCDIR__#$(MANAGERRELATIVEDOCDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 	@$(PERL) -i -pe 's#__MANAGERTEMPLATESDIR__#$(MANAGERTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 
 install_portal_site:	install_conf_dir
@@ -1165,14 +1169,9 @@ test-diff:
 
 tidy: clean
 	@if perltidy -v|grep v20220217 >/dev/null; then \
-		for f in `find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \)`; do \
-			echo -n $$f; \
-			perltidy -se -b $$f; \
-			echo; \
-		done; \
+		find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \) -print0 | xargs -t -0 $(PARAXARGS) -n10 perltidy -se -b -bext=/ ;\
 	else echo "Wrong perltidy version, please install Perl::Tidy@20220217" ; exit 1 ;\
 	fi
-	find lemon*/ -name '*.bak' -delete
 	$(MAKE) json
 
 tidy-js: clean

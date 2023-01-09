@@ -79,8 +79,7 @@ Macros and groups are stored in session database. Local macros is a
 special feature of handler that permit one to have macros useable localy
 only. Those macros are calculated only at the first usage and stored in
 the local session cache (only for this server) and only if the user
-access to the related applications. This avoid to have to many datas
-stored.
+access to the related applications. This avoid to have to many data stored.
 
 .. code-block:: perl
 
@@ -241,7 +240,6 @@ Apache::Session::\ **Browseable::Postgres**                            Unlogged 
 Apache::Session::\ **Browseable::PgJSON**                              Unlogged table, json field   9.25                0.0091     **0.108** [2]_      0.0247                                **0.0035**          **0.0029**
 Apache::Session::\ **Browseable::PgJSON**                              Unlogged table, jsonb field  9.25                0.0091     **0.105** [2]_      **0.0126**                            **0.0034**          **0.0029**
 Apache::Session::\ **Browseable::PgHstore**                            Unlogged table, hstore field 9.62                0.0111     **0.105** [2]_      **0.0125**                            **0.0033**          **0.0029**
-Apache::Session::\ **Redis**                                                                        **2.13**            **0.0033** 1.158               0.0623                                0.0570              0.0550
 Apache::Session::\ **Browseable::Redis**                                                            **2.36**            **0.0033** 1.154               0.0643                                0.1048              **0.0024**
 ====================================================================== ============================ =================== ========== =================== ===================================== =================== =============
 

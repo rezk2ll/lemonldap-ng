@@ -25,13 +25,15 @@ values unless you have a specific need to change them.
 -  **User Info**
 -  **JWKS**
 -  **Registration**
+-  **Introspection**
 -  **End of session**
 -  **Check Session**
-
+-  **Front-Channel URI**
+-  **Back-Channel URI**
 
 .. tip::
 
-    These endpoints are published inside JSON metadata.
+    These endpoints are published in JSON metadata.
 
 Authentication context
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -52,6 +54,30 @@ Security
    - Standard OIDC scopes (``openid`` ``profile`` ``email`` ``address`` ``phone``)
    - Scopes declared in :ref:`Scope values content <oidcextraclaims>`
    - Scopes declared in :ref:`Scope Rules <oidcscoperules>` (if they match the rule)
+
+
+.. _x5c:
+
+.. versionchanged:: 2.0.16
+
+    In order to increase compatibility with some applications, LemonLDAP::NG
+    encapsulates the OIDC signing key in a certificate.
+
+    If you generated your OIDC keys on an older version of LemonLDAP::NG, and
+    some application complains that the JWKS document is missing a `x5c` key,
+    you can upgrade your OIDC signing key in the following manner ::
+
+        # Extract the OIDC signing key
+        lemonldap-ng-cli  get oidcServicePrivateKeySig | sed 's/^oidcServicePrivateKeySig = //' > oidc.key
+
+        # Generate a certificate
+        openssl req -x509 -key oidc.key -out oidc.pem -sha256 -days 7000 -subj="/CN=$(hostname -f)"
+
+        # Import the new certificate
+        lemonldap-ng-cli set oidcServicePublicKeySig "$(cat oidc.pem)"
+
+        # Remove temporary files
+        rm oidc.key oidc.pem
 
 Timeouts
 ~~~~~~~~

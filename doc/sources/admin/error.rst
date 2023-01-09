@@ -14,7 +14,7 @@ Lemonldap::NG::Common
 
    Warning: key is not defined, set it in the manager !
 
-→ LemonLDAP::NG uses a key to crypt/decrypt some datas. You have to set
+→ LemonLDAP::NG uses a key to crypt/decrypt some data. You have to set
 its value in Manager. This message is displayed only when you upgrade
 from a version older than 1.0
 

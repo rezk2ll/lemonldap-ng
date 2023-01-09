@@ -40,7 +40,7 @@ sub process {
         }
     }
     $self->logger->debug( "Returned " . $self->_formatProcessResult($err) )
-      if ($err);
+      if $err;
     return $err;
 }
 
@@ -51,6 +51,7 @@ sub processHook {
     my $err = PE_OK;
     for my $sub ( @{ $self->hook->{$hookName} } ) {
         if ( ref $sub eq 'CODE' ) {
+            # If return code is not PE_OK (0), stop processing
             last if ( $err = $sub->( $req, @args ) );
         }
         else {
@@ -58,8 +59,14 @@ sub processHook {
         }
     }
     if ( $err != PE_OK ) {
-        $self->logger->warn(
-            "Hook $hookName returned " . portalConsts->{$err} );
+        my $msg = "Hook $hookName returned " . portalConsts->{$err};
+        if ( $err > 0 ) {
+            $self->logger->warn($msg);
+        }
+        else {
+            # <0 error codes are normal in some use cases
+            $self->logger->debug($msg);
+        }
     }
     return $err;
 }
@@ -79,7 +86,7 @@ sub _formatProcessResult {
 sub restoreArgs {
     my ( $self, $req ) = @_;
     $req->mustRedirect(1);
-    PE_OK;
+    return PE_OK;
 }
 
 sub importHandlerData {
@@ -87,7 +94,7 @@ sub importHandlerData {
     $req->{sessionInfo} = $req->userData;
     $req->id( $req->sessionInfo->{_session_id} );
     $req->user( $req->sessionInfo->{ $self->conf->{whatToTrace} } );
-    PE_OK;
+    return PE_OK;
 }
 
 # Verify url and confirm parameter
@@ -179,11 +186,11 @@ sub controlUrl {
             and !$self->isTrustedUrl($vhost) )
         {
             $self->userLogger->error(
-                    "URL contains a non protected host (param: "
+                    "URL contains an unprotected host (param: "
                   . ( $req->param('logout') ? 'HTTP Referer' : 'urldc' )
                   . " | value: $tmp | alias: $vhost)" );
             delete $req->{urldc};
-            return PE_BADURL;
+            return PE_UNPROTECTEDURL;
         }
 
         $req->env->{urldc} = $req->{urldc};
@@ -191,7 +198,7 @@ sub controlUrl {
         $req->data->{_url} = $req->pdata->{_url} =
           encode_base64( $req->{urldc}, '' );    # Avoid \n or \r
     }
-    PE_OK;
+    return PE_OK;
 }
 
 sub checkLogout {
@@ -200,7 +207,7 @@ sub checkLogout {
         $req->steps(
             [ @{ $self->beforeLogout }, 'authLogout', 'deleteSession' ] );
     }
-    PE_OK;
+    return PE_OK;
 }
 
 sub checkUnauthLogout {
@@ -221,7 +228,7 @@ sub checkUnauthLogout {
         );
         $req->steps( [ sub { PE_LOGOUT_OK } ] );
     }
-    PE_OK;
+    return PE_OK;
 }
 
 sub authLogout {
@@ -297,20 +304,20 @@ sub deleteSession {
         # Redirect on logout page if no other target defined
         if ( !$req->urldc and !$req->postUrl ) {
             $self->logger->debug('No other target defined, redirect on logout');
-            $req->urldc( $req->script_name . "?logout=1" );
+            $req->urldc( $self->buildUrl( { logout => 1 } ) );
         }
     }
     $req->userData( {} );
 
     # Redirect or Post if asked by authLogout
-    if ( $req->urldc and $req->urldc ne $self->conf->{portal} ) {
-        $req->steps( [] );
-        return PE_REDIRECT;
-    }
-
     if ( $req->postUrl ) {
         $req->steps( ['autoPost'] );
         return PE_OK;
+    }
+
+    if ( $req->urldc and $req->urldc ne $self->conf->{portal} ) {
+        $req->steps( [] );
+        return PE_REDIRECT;
     }
 
     # If logout redirects to another URL, just remove next steps for the
@@ -461,7 +468,6 @@ sub setSessionInfo {
 
     # Call UserDB setSessionInfo
     return $self->_userDB->setSessionInfo($req);
-    PE_OK;
 }
 
 sub setMacros {
@@ -470,7 +476,7 @@ sub setMacros {
         $req->{sessionInfo}->{$_} =
           $self->_macros->{$_}->( $req, $req->sessionInfo );
     }
-    PE_OK;
+    return PE_OK;
 }
 
 sub setGroups {
@@ -488,7 +494,6 @@ sub setPersistentSessionInfo {
         return PE_OK unless ( $key and length($key) );
 
         my $persistentSession = $self->getPersistentSession($key);
-
         if ($persistentSession) {
             $self->logger->debug("Persistent session found for $key");
             foreach my $k ( keys %{ $persistentSession->data } ) {
@@ -500,7 +505,7 @@ sub setPersistentSessionInfo {
             }
         }
     }
-    PE_OK;
+    return PE_OK;
 }
 
 sub setLocalGroups {
@@ -520,7 +525,7 @@ sub setLocalGroups {
         $req->{sessionInfo}->{groups} =~
           s/^$self->{conf}->{multiValuesSeparator}//o;
     }
-    PE_OK;
+    return PE_OK;
 }
 
 sub store {
@@ -547,11 +552,10 @@ sub store {
     foreach my $k ( keys %{ $req->{sessionInfo} } ) {
         next unless defined $req->{sessionInfo}->{$k};
         my $displayValue = $req->{sessionInfo}->{$k};
-        if (    $self->conf->{hiddenAttributes}
-            and $self->conf->{hiddenAttributes} =~ /\b$k\b/ )
-        {
-            $displayValue = '****';
-        }
+        $displayValue = '****'
+          if (  $self->conf->{hiddenAttributes}
+            and $self->conf->{hiddenAttributes} =~ /\b$k\b/ );
+
         $self->logger->debug("Store $displayValue in session key $k");
         $self->_dump($displayValue) if ref($displayValue);
         $infos->{$k} = $req->{sessionInfo}->{$k};
@@ -563,7 +567,7 @@ sub store {
         force => $req->{force},
         info  => $infos
     );
-    return PE_APACHESESSIONERROR unless ($session);
+    return PE_APACHESESSIONERROR unless $session;
 
     # Update current request
     $req->id( $session->id );
@@ -582,7 +586,7 @@ sub store {
               . $req->{sessionInfo}->{_httpSession} );
     }
     $req->refresh(0);
-    PE_OK;
+    return PE_OK;
 }
 
 sub buildCookie {
@@ -616,7 +620,7 @@ sub buildCookie {
           . $ref->{ $self->conf->{whatToTrace} }
           . " successfully authenticated at level $ref->{authenticationLevel}"
     );
-    PE_OK;
+    return PE_OK;
 }
 
 sub secondFactor {
@@ -629,7 +633,7 @@ sub storeHistory {
     if ( $self->conf->{loginHistoryEnabled} ) {
         $self->registerLogin($req);
     }
-    PE_OK;
+    return PE_OK;
 }
 
 1;

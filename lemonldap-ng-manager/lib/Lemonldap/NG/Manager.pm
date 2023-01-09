@@ -17,7 +17,7 @@ use JSON;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15.1';
 
 extends qw(
   Lemonldap::NG::Handler::PSGI::Router
@@ -126,6 +126,7 @@ sub init {
         'notifications' => 'bell',
         '2ndFA'         => 'wrench',
         'viewer'        => 'eye-open',
+        'api'           => 'flash'
     };
 
     $self->links( [] );
@@ -167,7 +168,11 @@ sub tplParams {
     my $res = eval {
         $self->hLoadedPlugins->{viewer}->brwRule->( $req, $req->{userData} );
     } || 0;
-    return ( VERSION => $VERSION, ALLOWBROWSER => $res );
+    return (
+        VERSION      => $VERSION,
+        ALLOWBROWSER => $res,
+        DOC_PREFIX   => ( $self->{docPrefix} || '/doc' ),
+    );
 }
 
 sub javascript {

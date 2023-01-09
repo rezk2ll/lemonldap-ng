@@ -1,5 +1,5 @@
-SSL
-===
+Mutual TLS Authentication
+=========================
 
 ============== ===== ========
 Authentication Users Password
@@ -10,24 +10,42 @@ Authentication Users Password
 Presentation
 ------------
 
-LL::NG uses `Apache SSL
-module <http://httpd.apache.org/docs/current/mod/mod_ssl.html>`__, like
-any other :doc:`Apache authentication module<authapache>`, with extra
-features:
+LemonLDAP::NG can be configured to authenticate users through client TLS
+certificates, this is called Mutual TLS Authentication (mTLS). This is most
+commonly used to perform authentication with smartcards.
 
--  Choice of any certificate attribute as user main login
--  Allow no certificate to chain with other authentication methods
+In this configuration, the actual validation is performed by the web server
+(Apache/Nginx), and LemonLDAP::NG only receives the username extracted by the
+webserver from the user's certificate.
 
-Configuration (as the only authentication module)
--------------------------------------------------
+There are two possible setups:
 
-By default, SSL is required before the portal is displayed (handled by
-webserver). If you want to display a button to connect to LLNG
-(compatible with :doc:`Combination<authcombination>`), you can
-activate "SSL by Ajax request" in the manager.
+* In the most usual setup, LemonLDAP::NG must be configured to use the
+  :doc:`Authentication choice <authchoice>` module.
+  The main portal VHost (`auth.example.com`) does not require client
+  certificates. A secondary VHost is configured to require client certificates,
+  and an AJAX request is performed from the portal to obtain the user identity.
 
-With Apache
-~~~~~~~~~~~
+  .. figure:: mtls-choice.png
+     :alt: Using mTLS authentication with a secondary VHost
+
+     This setup is required when combining mTLS authentication with other
+     authentication methods (such as passwords)
+
+
+* In a simpler, but rarely used setup, LemonLDAP::NG is configured to use the
+  SSL Authentication module for all authentication attempts, in this case, the
+  main VHost must be configured to require client certificates, which means no
+  other authentication method can be used.
+
+
+Web server configuration
+-------------------------
+
+Whether you configure the regular portal VHost to require SSL, or enable a secondary portal VHost, you need to configure your webserver to require client certificates, and transmit an environment variable to the LemonLDAP::NG application.
+
+Apache
+~~~~~~
 
 Enable SSL in Apache
 ^^^^^^^^^^^^^^^^^^^^
@@ -89,7 +107,7 @@ If you specify port in virtual host, then declare SSL port:
 Apache portal SSL configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Edit the portal virtual host to enable SSL double authentication:
+Edit the portal virtual host or your secondary vhost to enable SSL double authentication:
 
 .. code-block:: apache
 
@@ -181,7 +199,6 @@ Nginx SSL Virtual Host example with uWSGI
      #index index.psgi;
      location / {
        try_files $uri $uri/ =404;
-       add_header Strict-Transport-Security "max-age=15768000";
      }
    }
 
@@ -194,7 +211,41 @@ Nginx SSL Virtual Host example with uWSGI
     $ssl_client_s_dn_legacy and $ssl_client_i_dn_legacy variables.
 
 Configuration of LemonLDAP::NG
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
+
+Using mTLS as an alternative authentication method
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you enable this feature, you must configure 2 portal virtual hosts:
+
+-  the main *(which corresponds to portal URL)* with
+   ``SSLVerifyClient none``
+
+-  the second (eg. `mtls.example.com`) with ``SSLVerifyClient optional`` (``ssl_verify_client optional`` with Nginx)
+
+Configure your :doc:`Choice <authchoice>` module, then in `SSL Options`, set
+
+* `Ajax SSL URL` to https://mtls.example.com/authssl
+
+Finally, in `General Parameters` > `Advanced Parameters` > `Security` > `Content Security Policy`,
+
+add ``https://mtls.lemontest.lxd`` to `Ajax destinations`
+
+.. note::
+
+    To avoid a bad/expired token during session upgrading (Reauthentication)
+    if URLs are served by different load balancers, you can force Upgrade
+    tokens to be stored into Global Storage by editing ``lemonldap-ng.ini``
+    in section [portal]:
+
+    .. code:: ini
+
+       [portal]
+       forceGlobalStorageUpgradeOTT = 1
+
+
+Configuring LemonLDAP::NG with mTLS authentication only
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In Manager, go in ``General Parameters`` > ``Authentication modules``
 and choose SSL for authentication.
@@ -210,6 +261,32 @@ Then, go in ``SSL parameters``:
 -  **Authentication level**: authentication level for this module
 -  **Extracted certificate field**: field of the certificate affected to
    $user internal variable
+
+Extracting the username attribute
+---------------------------------
+
+The `Extracted certificate field` must be set to the Apache/Nginx
+environment variable containing the username attribute.
+
+See the `mod_ssl
+documentation <https://httpd.apache.org/docs/current/en/mod/mod_ssl.html>`__
+for a list of supported variables names.
+
+If your webserver configuration allows multiple CAs, you may configure a
+different environment variable for each CA.
+
+In the `Conditional extracted certificate field`, add a line for each
+CA.
+
+-  key: the CA subject DN (will be printed in debug logs)
+-  value: the variable containing the username when using certificates
+   emitted by this CA
+
+You can use the `Issuer environment variable` setting to change which variable
+the CA subject DN is extracted from
+
+Optional topics
+-----------------
 
 Auto reloading SSL Certificates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -330,94 +407,3 @@ connexion reset:
    keepalive_timeout 0 0;
    add_header 'Connection' 'close';
    ssl_session_timeout 1s;
-
-
-.. danger::
-
-    It is incompatible with authentication combination because
-    of Apache parameter "SSLVerifyClient", which must have the value
-    "require". To enable SSL with :doc:`Combination<authcombination>`, use
-    "SSL by Ajax"
-
-Configuration (for Combination/Choice)
---------------------------------------
-
-If you enable this feature, you must configure 2 portal virtual hosts:
-
--  the main *(which corresponds to portal URL)* with
-   ``SSLVerifyClient none``
--  the second with ``SSLVerifyClient require`` and a
-   ``Header set Allow-Control-Allow-Origin https://portal-main-url``
-
-then declare the second URL in SSL options in the Manager. That's all !
-Then you can chain it in a :doc:`combination<authcombination>`.
-
-.. note::
-
-
-    With :doc:`choice<authchoice>`, the second URL should be also declared
-    in module URL parameter to redirect user to Portal menu.
-
-.. note::
-
-
-    Ajax authentication request can be sent to an another URL than Portal
-    URL.
-
-    To avoid a persistent loop between Portal and a redirection URL (pdata
-    is not removed because domains mismatch), you have to set pdata cookie
-    domain by editing ``lemonldap-ng.ini`` in section [portal]:
-
-    .. code:: ini
-
-       [portal]
-       pdataDomain = example.com
-
-    To avoid a bad/expired token during session upgrading (Reauthentication)
-    if URLs are served by different load balancers, you can force Upgrade
-    tokens to be stored into Global Storage by editing ``lemonldap-ng.ini``
-    in section [portal]:
-
-    .. code:: ini
-
-       [portal]
-       forceGlobalStorageUpgradeOTT = 1
-
-
-.. attention::
-
-    **Content Security Policy** may prevent to
-    submit Ajax Request. To avoid security warning,
-
-    Go to :
-    ``General Parameters > Advanced Parameters > Security > Content security policy``
-
-    and set :
-
-    **Default value** => 'self' "Ajax request URL"
-
-    **Form destinations** => 'self' "Ajax request URL"
-
-    **Ajax destinations** => 'self' "Ajax request URL"
-
-    **Script source** => 'self' "Ajax request URL"
-
-Extracting the username attribute
----------------------------------
-
-The "Extracted certificate field" must be set to the Apache/Nginx
-environment variable containing the username attribute.
-
-See the `mod_ssl
-documentation <https://httpd.apache.org/docs/current/en/mod/mod_ssl.html>`__
-for a list of supported variables names.
-
-If your webserver configuration allows multiple CAs, you may configure a
-different environment variable for each CA.
-
-In the "Conditional extracted certificate field", add a line for each
-CA.
-
--  key: the CA subject DN (will be printed in debug logs)
--  value: the variable containing the username when using certificates
-   emitted by this CA

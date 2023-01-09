@@ -871,7 +871,8 @@ sub _scanNodes {
                         my $tmp;
                         $tmp->{$_} = $node->{data}->{$_}
                           foreach (qw(type rule logo level label));
-                        $tmp->{over} = {};
+                        $tmp->{register} = $node->{data}->{register} ? 1 : 0;
+                        $tmp->{over}     = {};
                         foreach ( @{ $node->{data}->{over} } ) {
                             $tmp->{over}->{ $_->[0] } = $_->[1];
                         }

@@ -157,22 +157,29 @@ These options override service signature options (see
 :ref:`SAML service configuration<samlservice-general-options>`).
 
 -  **Signature method**: the algorithm used to sign messages sent to this service
--  **Sign SSO message**
+-  **Sign SSO message**: Sign SSO message
 -  **Check SSO message signature**: "On" means that LemonLDAP::NG will verify
    signatures if IDP and SP metadata require it. "Off" will disable signature
    verification entirely.
--  **Sign SLO message**
+-  **Sign SLO message**: Sign SLO message
 -  **Check SLO message signature**
 
 Security
 ''''''''
 
--  **Encryption mode**: set the encryption mode for this SP (None,
-   NameID or Assertion).
--  **Enable use of IDP initiated URL**: set to ``On`` to enable IDP
-   Initiated URL on this SP.
--  **Authentication Level**: required authentication level to access this SP
--  **Access Rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this SP
+-  **Encryption mode**: set the encryption mode for this SP (None, NameID or Assertion).
+-  **Enable use of IDP initiated URL**: set to ``On`` to enable IDP Initiated URL on this SP.
+-  **Authentication level**: required authentication level to access this SP
+-  **Access rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this SP
+
+Comment: set a comment
+''''''''''''''''''''''
+
+Macros
+^^^^^^
+
+You can define here macros that will be only evaluated for this service,
+and not registered in the session of the user.
 
 Extra variables
 ^^^^^^^^^^^^^^^
@@ -189,8 +196,7 @@ The following environment variables are available in SAML access rules and macro
 IDP Initiated mode
 ^^^^^^^^^^^^^^^^^^
 
-The IDP Initiated URL is the SSO SAML URL with GET
-parameters:
+The IDP Initiated URL is the SSO SAML URL with GET parameters:
 
 - ``IDPInitiated``: ``1``
 - One of:
@@ -206,12 +212,6 @@ http://auth.example.com/saml/singleSignOn?IDPInitiated=1&spConfKey=simplesamlphp
   - ``spDest``: URL of Service Provider's AssertionConsumerService
 
 The URL specified in ``spDest`` *must* be present in the Service Provider metadata registered in LemonLDAP::NG. This is only useful if your Service Provider is reachable over multiple URLs.
-
-Macros
-^^^^^^
-
-You can define here macros that will be only evaluated for this service,
-and not registered in the session of the user.
 
 Known issues
 ------------

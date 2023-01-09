@@ -10,7 +10,7 @@ package Lemonldap::NG::Common::Logger::Sentry;
 use strict;
 use Sentry::Raven;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 sub new {
     my $self   = bless {}, shift;

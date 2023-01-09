@@ -11,18 +11,14 @@
 # initialization and available directly in $scope array. Example: '*portal'
 # implies that portal value is available in $scope.portal
 #
-# All other ideas have to be set in Manager/Build/Attributes.pm !
+# All other ideas have to be set in Manager/Build/Attributes.pm!
 
-# DON'T FORGET TO RUN "make json" AFTER EACH CHANGE
+# DO NOT FORGET TO RUN "make json" AFTER EACH CHANGE
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.16';
 
-# TODO: Missing:
-#  * activeTimer
-#  * confirmFormMethod
-#  * redirectFormMethod
 sub tree {
     return [ {
             title => 'generalParameters',
@@ -36,13 +32,15 @@ sub tree {
                             help  => 'portalmenu.html',
                             nodes => [ {
                                     title => 'portalModules',
+                                    help  => 'portalmenu.html#menu-modules',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'portalDisplayLogout',
-                                        'portalDisplayChangePassword',
                                         'portalDisplayAppslist',
                                         'portalDisplayLoginHistory',
+                                        'portalDisplayChangePassword',
                                         'portalDisplayOidcConsents',
+                                        'portalDisplayLogout',
+                                        'portalDisplayOrder'
                                     ]
                                 },
                                 'applicationList'
@@ -399,10 +397,10 @@ sub tree {
                         {
                             title => 'radiusParams',
                             help  => 'authradius.html',
-                            form  => 'simpleInputContainer',
                             nodes => [
                                 'radiusAuthnLevel', 'radiusSecret',
-                                'radiusServer'
+                                'radiusServer',     'radiusExportedVars',
+                                'radiusDictionaryFile',
                             ]
                         },
                         {
@@ -440,8 +438,8 @@ sub tree {
                             help  => 'authssl.html',
                             nodes => [
                                 'SSLAuthnLevel', 'SSLVar',
-                                'SSLVarIf',      'sslByAjax',
-                                'sslHost',
+                                'SSLIssuerVar',  'SSLVarIf',
+                                'sslByAjax',     'sslHost',
                             ]
                         },
                         {
@@ -633,7 +631,8 @@ sub tree {
                                 'stayConnected',
                                 'stayConnectedBypassFG',
                                 'stayConnectedTimeout',
-                                'stayConnectedCookieName'
+                                'stayConnectedCookieName',
+                                'stayConnectedSingleSession',
                             ],
                         },
                         {
@@ -870,6 +869,18 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'rememberAuthChoice',
+                            help  => 'rememberauthchoice.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'rememberAuthChoiceRule',
+                                'rememberCookieName',
+                                'rememberCookieTimeout',
+                                'rememberDefaultChecked',
+                                'rememberTimer',
+                            ]
+                        },
+                        {
                             title => 'decryptValue',
                             help  => 'decryptvalue.html',
                             form  => 'simpleInputContainer',
@@ -892,6 +903,20 @@ sub tree {
                         'sfOnlyUpgrade',
                         'sfLoginTimeout',
                         'sfRegisterTimeout',
+                        {
+                            title => 'password2f',
+                            help  => 'password2f.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'password2fActivation',
+                                'password2fSelfRegistration',
+                                'password2fAuthnLevel',
+                                'password2fLabel',
+                                'password2fLogo',
+                                'password2fUserCanRemoveKey',
+                                'password2fTTL',
+                            ]
+                        },
                         {
                             title => 'utotp2f',
                             help  => 'utotp2f.html',
@@ -956,11 +981,11 @@ sub tree {
                             help  => 'mail2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'mail2fActivation', 'mail2fCodeRegex',
-                                'mail2fTimeout',    'mail2fSubject',
-                                'mail2fBody',       'mail2fSessionKey',
-                                'mail2fAuthnLevel', 'mail2fLabel',
-                                'mail2fLogo'
+                                'mail2fActivation',     'mail2fCodeRegex',
+                                'mail2fTimeout',        'mail2fSubject',
+                                'mail2fBody',           'mail2fSessionKey',
+                                'mail2fResendInterval', 'mail2fAuthnLevel',
+                                'mail2fLabel',          'mail2fLogo'
                             ]
                         },
                         {
@@ -968,10 +993,10 @@ sub tree {
                             help  => 'external2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'ext2fActivation',  'ext2fCodeActivation',
-                                'ext2FSendCommand', 'ext2FValidateCommand',
-                                'ext2fAuthnLevel',  'ext2fLabel',
-                                'ext2fLogo'
+                                'ext2fActivation',     'ext2fCodeActivation',
+                                'ext2FSendCommand',    'ext2FValidateCommand',
+                                'ext2fResendInterval', 'ext2fAuthnLevel',
+                                'ext2fLabel',          'ext2fLogo',
                             ]
                         },
                         {
@@ -994,10 +1019,16 @@ sub tree {
                             help  => 'rest2f.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'rest2fActivation', 'rest2fInitUrl',
-                                'rest2fInitArgs',   'rest2fVerifyUrl',
-                                'rest2fVerifyArgs', 'rest2fAuthnLevel',
-                                'rest2fLabel',      'rest2fLogo'
+                                'rest2fActivation',
+                                'rest2fCodeActivation',
+                                'rest2fInitUrl',
+                                'rest2fInitArgs',
+                                'rest2fVerifyUrl',
+                                'rest2fVerifyArgs',
+                                'rest2fResendInterval',
+                                'rest2fAuthnLevel',
+                                'rest2fLabel',
+                                'rest2fLogo'
                             ]
                         },
                         {
@@ -1074,6 +1105,7 @@ sub tree {
                                 'requireToken',
                                 'formTimeout',
                                 'tokenUseGlobalStorage',
+                                'strictTransportSecurityMax_Age',
                                 {
                                     title => 'CrowdSecPlugin',
                                     help  => 'crowdsec.html',
@@ -1231,8 +1263,8 @@ sub tree {
                     nodes => [
                         'samlAuthnContextMapPassword',
                         'samlAuthnContextMapPasswordProtectedTransport',
-                        'samlAuthnContextMapTLSClient',
-                        'samlAuthnContextMapKerberos'
+                        'samlAuthnContextMapKerberos',
+                        'samlAuthnContextMapTLSClient'
                     ]
                 },
                 {
@@ -1388,7 +1420,7 @@ sub tree {
                     title => 'oidcServiceMetaDataSecurity',
                     nodes => [ {
                             title => 'oidcServiceMetaDataKeys',
-                            form  => 'RSAKeyNoPassword',
+                            form  => 'RSACertKeyNoPassword',
                             group => [
                                 'oidcServicePrivateKeySig',
                                 'oidcServicePublicKeySig',
@@ -1403,6 +1435,7 @@ sub tree {
                 },
                 {
                     title => 'oidcServiceMetaDataTimeouts',
+                    form  => 'simpleInputContainer',
                     nodes => [
                         'oidcServiceAuthorizationCodeExpiration',
                         'oidcServiceIDTokenExpiration',
@@ -1426,6 +1459,7 @@ sub tree {
                 'casAccessControlPolicy',
                 'casStrictMatching',
                 'casTicketExpiration',
+                'casBackChannelSingleLogout',
                 'casStorage',
                 'casStorageOptions',
                 'casAttributes',

@@ -8,7 +8,7 @@ Sessions database
    filesessionbackend
    sqlsessionbackend
    ldapsessionbackend
-   nosqlsessionbackend
+   redissessionbackend
    mongodbsessionbackend
    browseablesessionbackend
    restsessionbackend

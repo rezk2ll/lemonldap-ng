@@ -15,6 +15,7 @@ has speChars                 => ( is => 'rw' );
 has skinRules                => ( is => 'rw' );
 has stayConnected            => ( is => 'rw', default => sub { 0 } );
 has requireOldPwd            => ( is => 'rw', default => sub { 1 } );
+has rememberAuthChoice       => ( is => 'rw', default => sub { 0 } );
 has passwordPolicyActivation => ( is => 'rw', default => sub { 0 } );
 
 sub displayInit {
@@ -57,6 +58,14 @@ sub displayInit {
         $self->logger->error("Bad passwordPolicyActivation rule: $error");
     }
     $self->passwordPolicyActivation($rule);
+    $rule =
+      HANDLER->buildSub(
+        HANDLER->substitute( $self->conf->{rememberAuthChoiceRule} ) );
+    unless ($rule) {
+        my $error = HANDLER->tsv->{jail}->error || 'Unable to compile rule';
+        $self->logger->error("Bad rememberAuthChoiceRule rule: $error");
+    }
+    $self->rememberAuthChoice($rule);
 
     my $speChars =
       $self->conf->{passwordPolicySpecialChar} eq '__ALL__'
@@ -400,6 +409,16 @@ sub display {
                 : ()
             ),
             (
+                $self->rememberAuthChoice->( $req, $req->sessionInfo )
+                ? ( REMEMBERAUTHCHOICE => 1 )
+                : ()
+            ),
+            REMEMBERAUTHCHOICEDEFAULTCHECKED =>
+              $self->conf->{rememberDefaultChecked} // 0,
+            REMEMBERAUTHCHOICECOOKIENAME => $self->conf->{rememberCookieName}
+              // 'llngrememberauthchoice',
+            REMEMBERAUTHCHOICETIMER => $self->conf->{rememberTimer} // 5,
+            (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
                 : ()
@@ -663,7 +682,6 @@ sub buildHiddenForm {
 
 # Return skin name
 # @return skin name
-# TODO: create property for skinRule
 sub getSkin {
     my ( $self, $req ) = @_;
     my $skin = $self->conf->{portalSkin};
@@ -673,12 +691,17 @@ sub getSkin {
     $req->{sessionInfo}->{ipAddr} ||= $req->address;
 
     # Load specific skin from skinRules
-    foreach my $rule ( @{ $self->{skinRules} } ) {
+    foreach my $rule ( @{ $self->skinRules } ) {
         if ( $rule->[1]->( $req, $req->sessionInfo ) ) {
-            if ( -d $self->conf->{templateDir} . '/' . $rule->[0] ) {
+            my $directory = $self->conf->{templateDir} . '/' . $rule->[0];
+            if ( -d $directory ) {
                 $skin = $rule->[0];
                 $self->logger->debug("Skin $skin selected from skin rule");
                 last;
+            }
+            else {
+                $self->logger->warn( "Skin $rule->[0] was not selected "
+                      . "because $directory does not exist" );
             }
         }
     }
@@ -746,8 +769,12 @@ sub mkSessionArray {
                         user   => $session->{user},
                         utime  => $session->{_utime},
                         ip     => $session->{ipAddr},
-                        values => [ map { { v => $session->{$_} } } @fields ],
-                        error  => $session->{error},
+                        values => [
+                            map {
+                                { v => $session->{$_}, k => $_, "k_$_" => 1 }
+                            } @fields
+                        ],
+                        error        => $session->{error},
                         displayUser  => $displayUser,
                         displayError => $displayError,
                     }

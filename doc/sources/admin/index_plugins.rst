@@ -31,3 +31,4 @@ Plugins
    restauthuserpwdbackend
    soapservices
    stayconnected
+   rememberauthchoice

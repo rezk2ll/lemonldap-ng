@@ -1,9 +1,13 @@
-Yubikey Second Factor
-=====================
+Yubico OTP Second Factor
+========================
 
-A `Yubikey <http://www.yubico.com/yubikey>`__ is a small material token
-manufactured by `Yubico <http://www.yubico.com>`__. It sends an OTP,
-which is validated via Yubico server.
+Yubico OTP is a type of One-Time-Password authentication based on a
+keyboard-emulating hardware device (Yubikey). OTPs are validated against an
+external server, either on the cloud or on premices.
+
+|deprecated| Almost all Yubikeys sold by Yubico now support :doc:`FIDO2 <webauthn2f>`.
+You are encouraged to use this type of second factor instead, since it is
+compatible with a much broader range of devices, and also more secure.
 
 Prerequisites and dependencies
 ------------------------------
@@ -50,9 +54,9 @@ In the manager (second factors), you just have to enable it:
 
     If you want to use a custom rule for "activation" and
     want to keep self-registration, you must include this in your rule:
-    ``$_2fDevices =~ /"type":\s*"UBK"/s``, else Yubikey will be required
-    even if users are not registered. This is automatically done when
-    "activation" is simply set to "on".
+    ``has2f('UBK')``, else Yubico OTP will be required even if users are not
+    registered. This is automatically done when "activation" is simply set to
+    "on".
 
 Provisioning
 ------------
@@ -71,3 +75,5 @@ Enrollment
 
 If you have enabled self registration, users can register their U2F keys
 using https://portal/2fregisters
+
+.. |deprecated| image:: /documentation/deprecated.png

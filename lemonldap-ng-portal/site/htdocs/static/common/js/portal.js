@@ -135,7 +135,7 @@ LemonLDAP::NG Portal jQuery scripts
   setKey = function(key, val, success, error) {
     return $.ajax({
       type: "GET",
-      url: datas['scriptname'] + '/mysession/?gettoken',
+      url: scriptname + 'mysession/?gettoken',
       dataType: 'json',
       error: error,
       success: function(data) {
@@ -146,7 +146,7 @@ LemonLDAP::NG Portal jQuery scripts
         d[key] = val;
         return $.ajax({
           type: "PUT",
-          url: datas['scriptname'] + '/mysession/persistent',
+          url: scriptname + 'mysession/persistent',
           dataType: 'json',
           data: d,
           success: success,
@@ -159,13 +159,13 @@ LemonLDAP::NG Portal jQuery scripts
   delKey = function(key, sub, success, error) {
     return $.ajax({
       type: "GET",
-      url: datas['scriptname'] + '/mysession/?gettoken',
+      url: scriptname + 'mysession/?gettoken',
       dataType: 'json',
       error: error,
       success: function(data) {
         return $.ajax({
           type: "DELETE",
-          url: datas['scriptname'] + "/mysession/persistent/" + key + "?sub=" + sub + "&token=" + data.token,
+          url: scriptname + "mysession/persistent/" + key + "?sub=" + sub + "&token=" + data.token,
           dataType: 'json',
           success: success,
           error: error
@@ -207,7 +207,7 @@ LemonLDAP::NG Portal jQuery scripts
   ping = function() {
     return $.ajax({
       type: "POST",
-      url: datas['scriptname'],
+      url: scriptname,
       data: {
         ping: 1
       },
@@ -545,6 +545,17 @@ LemonLDAP::NG Portal jQuery scripts
     if ((window.datas.ppolicy != null) && $('#newpassword').length) {
       $('#reset').change(togglecheckpassword);
     }
+    $(".localeDate").each(function() {
+      var s;
+      s = new Date($(this).attr("val") * 1000);
+      return $(this).text(s.toLocaleString());
+    });
+    $('.oidcConsent').on('click', function() {
+      return removeOidcConsent($(this).attr('partner'));
+    });
+    if (datas['pingInterval'] && datas['pingInterval'] > 0) {
+      window.setTimeout(ping, datas['pingInterval']);
+    }
     if (datas['enablePasswordDisplay']) {
       field = '';
       if (datas['dontStorePassword']) {
@@ -575,16 +586,25 @@ LemonLDAP::NG Portal jQuery scripts
         });
       }
     }
-    if (datas['pingInterval'] && datas['pingInterval'] > 0) {
-      window.setTimeout(ping, datas['pingInterval']);
-    }
-    $(".localeDate").each(function() {
-      var s;
-      s = new Date($(this).attr("val") * 1000);
-      return $(this).text(s.toLocaleString());
-    });
-    $('.oidcConsent').on('click', function() {
-      return removeOidcConsent($(this).attr('partner'));
+    $('#reset').change(function() {
+      var checked, ref3, ref4, ref5, ref6, ref7;
+      checked = $(this).prop('checked');
+      console.log('Reset is checked', checked);
+      if (checked === true) {
+        $('#newpasswords').hide();
+        $('#newpassword').removeAttr('required');
+        $('#confirmpassword').removeAttr('required');
+        return (ref3 = $('#confirmpassword').get(0)) != null ? ref3.setCustomValidity('') : void 0;
+      } else {
+        $('#newpasswords').show();
+        $('#newpassword').attr('required', true);
+        $('#confirmpassword').attr('required', true);
+        if (((ref4 = $('#confirmpassword').get(0)) != null ? ref4.value : void 0) === ((ref5 = $('#newpassword').get(0)) != null ? ref5.value : void 0)) {
+          return (ref6 = $('#confirmpassword').get(0)) != null ? ref6.setCustomValidity('') : void 0;
+        } else {
+          return (ref7 = $('#confirmpassword').get(0)) != null ? ref7.setCustomValidity(translate('PE34')) : void 0;
+        }
+      }
     });
     $('#passwordfield').on('input', function() {
       if ($('#passwordfield').get(0).value && datas['dontStorePassword']) {
@@ -671,13 +691,15 @@ LemonLDAP::NG Portal jQuery scripts
       document.body.scrollTop = 0;
       return document.documentElement.scrollTop = 0;
     });
-    return $(window).on('scroll', function() {
+    $(window).on('scroll', function() {
       if (datas['scrollTop'] && (document.body.scrollTop > Math.abs(datas['scrollTop']) || document.documentElement.scrollTop > Math.abs(datas['scrollTop']))) {
         return $('#btn-back-to-top').css("display", "block");
       } else {
         return $('#btn-back-to-top').css("display", "none");
       }
     });
+    $(document).trigger("portalLoaded");
+    return true;
   });
 
 }).call(this);

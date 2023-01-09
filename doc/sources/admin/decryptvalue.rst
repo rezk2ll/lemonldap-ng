@@ -24,7 +24,7 @@ DecryptValue plugin can be allowed or denied for specific users.
     The ciphered value is the first parameter passed to custom functions.
 
     The ``Encryption key`` is passed to custom funtions as second parameter
-    (see :ref:`Security settings<security-configure-security-settings>)`.
+    (see :ref:`Security settings<security-configure-security-settings>`).
 
     Custom functions must be defined into
     ``My::Plugin`` and set:

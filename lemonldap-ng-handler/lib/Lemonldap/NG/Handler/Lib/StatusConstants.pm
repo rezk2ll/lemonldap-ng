@@ -4,7 +4,7 @@ package Lemonldap::NG::Handler::Lib::StatusConstants;
 use strict;
 use Exporter 'import';
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 sub portalConsts {
     return {
@@ -23,6 +23,9 @@ sub portalConsts {
         '104' => 'PE_BAD_DEVOPS_FILE',
         '105' => 'PE_FILENOTFOUND',
         '106' => 'PE_OIDC_AUTH_ERROR',
+        '107' => 'PE_UNKNOWNPARTNER',
+        '108' => 'PE_UNAUTHORIZEDURL',
+        '109' => 'PE_UNPROTECTEDURL',
         '2'   => 'PE_FORMEMPTY',
         '20'  => 'PE_NO_PASSWORD_BE',
         '21'  => 'PE_PP_ACCOUNT_LOCKED',

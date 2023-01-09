@@ -3,14 +3,15 @@ package Lemonldap::NG::Portal::Main::SecondFactor;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_SENDRESPONSE
   PE_OK
+  PE_ERROR
   PE_NOTOKEN
+  PE_SENDRESPONSE
   PE_TOKENEXPIRED
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.16';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -31,10 +32,10 @@ has ott => (
     }
 );
 
-has prefix  => ( is => 'rw' );
-has logo    => ( is => 'rw', default => '2f.png' );
-has label   => ( is => 'rw' );
-has noRoute => ( is => 'ro' );
+has prefix     => ( is => 'rw' );
+has logo       => ( is => 'rw', default => '2f.png' );
+has label      => ( is => 'rw' );
+has noRoute    => ( is => 'ro' );
 has authnLevel => (
     is      => 'rw',
     lazy    => 1,
@@ -43,16 +44,26 @@ has authnLevel => (
     }
 );
 
+# 'type' field of stored _2fDevices
+# Defaults to the last component of the package name
+# But can be overriden by sfExtra
+has type => (
+    is      => 'rw',
+    default => sub {
+        ( split( '::', ref( $_[0] ) ) )[-1];
+    }
+);
+
 sub init {
     my ($self) = @_;
 
     # Set logo if overridden
-    $self->logo( $self->conf->{ $self->prefix . "2fLogo" } )
-      if ( $self->conf->{ $self->prefix . "2fLogo" } );
+    $self->logo( $self->conf->{ $self->prefix . '2fLogo' } )
+      if $self->conf->{ $self->prefix . '2fLogo' };
 
     # Set label if provided, translation files will be used otherwise
-    $self->label( $self->conf->{ $self->prefix . "2fLabel" } )
-      if ( $self->conf->{ $self->prefix . "2fLabel" } );
+    $self->label( $self->conf->{ $self->prefix . '2fLabel' } )
+      if $self->conf->{ $self->prefix . '2fLabel' };
 
     unless ( $self->noRoute ) {
         $self->logger->debug( 'Adding ' . $self->prefix . '2fcheck routes' );
@@ -73,7 +84,7 @@ sub init {
             ['GET']
         );
     }
-    1;
+    return 1;
 }
 
 sub _redirect {
@@ -86,8 +97,6 @@ sub _redirect {
 
 sub _verify {
     my ( $self, $req ) = @_;
-    my $checkLogins = $req->param('checkLogins');
-    $self->logger->debug("checkLogins set") if ($checkLogins);
 
     # Check token
     my $token;
@@ -101,8 +110,13 @@ sub _verify {
     my $session;
     unless ( $session = $self->ott->getToken($token) ) {
         $self->userLogger->info('Token expired');
-        $self->setSecurity($req);
+        $req->noLoginDisplay(1);
         return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+    }
+    unless ( $session->{_2fRealSession} ) {
+        $self->logger->error("Invalid 2FA session token");
+        $req->noLoginDisplay(1);
+        return $self->p->do( $req, [ sub { PE_ERROR } ] );
     }
 
     # Launch second factor verification
@@ -115,19 +129,19 @@ sub _verify {
     $req->id( delete $req->sessionInfo->{_2fRealSession} );
     $req->urldc( delete $req->sessionInfo->{_2fUrldc} );
     $req->{sessionInfo}->{_utime} = delete $req->{sessionInfo}->{_2fUtime};
+    $req->{sessionInfo}->{_2f}    = $self->prefix;
 
     # Case error
     if ($res) {
         $req->noLoginDisplay(1);
         $req->authResult(PE_BADCREDENTIALS);
-        return $self->p->do( $req,
-            [ sub { $self->p->storeHistory(@_) }, sub { $res } ] );
+        return $self->p->do( $req, [ 'storeHistory', sub { $res } ] );
     }
 
     # Else restore session
     $req->mustRedirect(1);
     $self->userLogger->notice( $self->prefix
-          . '2F verification for '
+          . '2f verification for '
           . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
     if ( my $l = $self->authnLevel ) {
@@ -135,9 +149,9 @@ sub _verify {
             "Update sessionInfo with new authenticationLevel: $l");
         $req->sessionInfo->{authenticationLevel} = $l;
 
-        # Compute macros & groups with new authenticationLevel
-        $self->logger->debug("Compute macros and groups...");
-        $req->steps( [ $self->p->groupsAndMacros, 'setLocalGroups' ] );
+        # Compute macros & local groups again with new authenticationLevel
+        $self->logger->debug("Compute macros and local groups...");
+        $req->steps( [ 'setMacros', 'setLocalGroups' ] );
         if ( my $error = $self->p->process($req) ) {
             $self->logger->debug("SFA: Process returned error: $error");
             $req->error($error);
@@ -260,7 +274,7 @@ L<Lemonldap::NG::Portal> second factor plugins.
       my ( $self, $req, $session ) = @_;
       # Use $req->param('field') to get POST responses
       ...
-      if($result eq $goodResult) {
+      if ($result eq $goodResult) {
         return PE_OK;
       }
       else {

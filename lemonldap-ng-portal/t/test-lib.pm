@@ -57,6 +57,7 @@ use strict;
 use Data::Dumper;
 use File::Find;
 use JSON;
+use XML::LibXML;
 use LWP::UserAgent;
 use Time::Fake;
 use URI::Escape;
@@ -238,6 +239,7 @@ matching strings are returned. Example:
 =cut
 
 sub expectRedirection {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $location ) = @_;
     ok( $res->[0] == 302, ' Get redirection' )
       or explain( $res->[0], 302 );
@@ -266,6 +268,8 @@ TODO: verify javascript
 =cut
 
 sub expectAutoPost {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+
     my @r      = expectForm(@_);
     my $method = pop @r;
     ok( $method =~ /^post$/i, ' Method is POST' ) or explain( $method, 'POST' );
@@ -297,6 +301,7 @@ in $query
 =cut
 
 sub expectForm {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $hostRe, $uriRe, @requiredFields ) = @_;
     expectOK($res);
     count(1);
@@ -372,6 +377,7 @@ Verify that result has a C<Lm-Remote-User> header and value is $user
 =cut
 
 sub expectAuthenticatedAs {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $user ) = @_;
     is( getHeader( $res, 'Lm-Remote-User' ), $user, "Authenticated as $user" );
     count(1);
@@ -384,7 +390,21 @@ Verify that the session contains attributes with these values
 =cut
 
 sub expectSessionAttributes {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $app, $id, %attributes ) = @_;
+
+    my $res = getSessionAttributes( $app, $id );
+
+    for my $attr ( keys %attributes ) {
+        is( $res->{$attr}, $attributes{$attr},
+            "Session has correct value for $attr" );
+        count(1);
+    }
+}
+
+sub getSessionAttributes {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ( $app, $id ) = @_;
     my $res;
     ok(
         $res = $app->_get("/sessions/global/$id"),
@@ -395,11 +415,8 @@ sub expectSessionAttributes {
     ok( $res = eval { from_json( $res->[2]->[0] ) },
         "Deserialize session content" );
     count(1);
-    for my $attr ( keys %attributes ) {
-        is( $res->{$attr}, $attributes{$attr},
-            "Session has correct value for $attr" );
-        count(1);
-    }
+
+    return $res;
 }
 
 =head4 expectOK($res)
@@ -409,6 +426,7 @@ Verify that returned code is 200
 =cut
 
 sub expectOK {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ($res) = @_;
     ok( $res->[0] == 200, ' HTTP code is 200' ) or explain( $res, 200 );
     count(1);
@@ -421,6 +439,7 @@ Verify that the HTTP response contains valid JSON and returns the corresponding 
 =cut
 
 sub expectJSON {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ($res) = @_;
     is( $res->[0], 200, ' HTTP code is 200' ) or explain( $res, 200 );
     my %hdr = @{ $res->[1] };
@@ -441,6 +460,7 @@ Verify that returned code is 403.
 =cut
 
 sub expectForbidden {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ($res) = @_;
     ok( $res->[0] == 403, ' HTTP code is 403' ) or explain( $res->[0], 403 );
     count(1);
@@ -454,6 +474,7 @@ Verify that returned code is 400. Note that it works only for Ajax request
 =cut
 
 sub expectBadRequest {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ($res) = @_;
     ok( $res->[0] == 400, ' HTTP code is 400' ) or explain( $res->[0], 400 );
     count(1);
@@ -465,10 +486,14 @@ Verify that an error is displayed on the portal
 =cut
 
 sub expectPortalError {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $errnum, $message ) = @_;
-    $errnum ||= 9;
-    like( $res->[2]->[0], qr/<span trmsg="$errnum">/, $message );
-    count(1);
+    $errnum  ||= 9;
+    $message ||= "Expected portal error code";
+    my ($error) = $res->[2]->[0] =~ qr/<span trmsg="(\d+)">/;
+    ok( $error, "$message: code found on page" ) or explain $res->[2]->[0];
+    is( $error, $errnum, $message );
+    count(2);
 }
 
 =head4 expectReject( $res, $status, $code )
@@ -479,6 +504,7 @@ C<error:"$code">.  Note that it works only for Ajax request (see below).
 =cut
 
 sub expectReject {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $status, $code ) = @_;
     $status ||= 401;
     cmp_ok( $res->[0], '==', $status, " Response status is $status" );
@@ -502,6 +528,7 @@ its value.
 =cut
 
 sub expectCookie {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $cookieName ) = @_;
     $cookieName ||= 'lemonldap';
     my $cookies = getCookies($res);
@@ -521,6 +548,7 @@ Check if the pdata cookie exists and returns its deserialized value.
 =cut
 
 sub expectPdata {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ($res) = @_;
     my $val = expectCookie( $res, "lemonldappdata" );
     ok( $val, "Pdata is not empty" );
@@ -538,6 +566,7 @@ Verify that C<Content-Security-Policy> header allows one to connect to $host.
 =cut
 
 sub exceptCspFormOK {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $host ) = @_;
     return 1 unless ($host);
     my $csp = getHeader( $res, 'Content-Security-Policy' );
@@ -560,6 +589,7 @@ sub exceptCspFormOK {
 }
 
 sub expectCspChildOK {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $res, $host ) = @_;
     return 1 unless ($host);
     my $csp = getHeader( $res, 'Content-Security-Policy' );
@@ -567,6 +597,17 @@ sub expectCspChildOK {
     count(1);
     like( $csp, qr/child-src[^;]*\Q$host\E/, "Found $host in CSP child-src" );
     count(1);
+}
+
+sub getHtmlElement {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ( $res, $xpath ) = @_;
+
+    # Use recover to ignore parsing errors
+    my $doc =
+      XML::LibXML->new->load_html( string => $res->[2]->[0], recover => 2 );
+
+    return $doc->findnodes($xpath);
 }
 
 =head4 getCookies($res)
@@ -650,6 +691,7 @@ Registers a new LLNG instance
 =cut
 
 sub register {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $type, $constructor ) = @_;
     my $obj;
     @Lemonldap::NG::Handler::Main::_onReload = ();
@@ -694,6 +736,7 @@ package LLNG::Manager::Test;
 
 use strict;
 use Mouse;
+use IO::String;
 
 extends 'Lemonldap::NG::Common::PSGI::Cli::Lib';
 
@@ -793,6 +836,7 @@ has p => ( is => 'rw' );
 
 =cut
 
+has accept => ( is => 'rw', default => 'application/json, text/plain, */*' );
 has confFailure => ( is => 'rw' );
 
 has ini => (
@@ -856,6 +900,35 @@ has ini => (
 
 =head3 Methods
 
+=head4 login($client, $uid, $getParams)
+Do a simple login using the Demo backend
+=cut
+
+sub login {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ( $self, $uid, $getParams ) = @_;
+    my $res;
+    $getParams ||= {};
+
+    my $query = main::buildForm( {
+            user     => $uid,
+            password => $uid,
+            %$getParams,
+        }
+    );
+    main::ok(
+        $res = $self->_post(
+            '/',
+            IO::String->new($query),
+            length => length($query),
+        ),
+        'Auth query'
+    );
+    main::expectOK($res);
+    my $id = main::expectCookie($res);
+    return $id;
+}
+
 =head4 logout($id)
 
 Launch a C</?logout=1> request an test:
@@ -873,6 +946,7 @@ Launch a C</?logout=1> request an test:
 =cut
 
 sub logout {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $self, $id, $cookieName ) = @_;
     my $res;
     $cookieName ||= 'lemonldap';
@@ -934,9 +1008,14 @@ to test content I<(to launch a C<expectForm()> for example)>.
 
 sub _get {
     my ( $self, $path, %args ) = @_;
+
+    # Automatically serialize query if given as HASHREF
+    if ( ref( $args{query} ) eq "HASH" ) {
+        $args{query} = main::buildForm( $args{query} );
+    }
+
     my $res = $self->app->( {
-            'HTTP_ACCEPT' => $args{accept}
-              || 'application/json, text/plain, */*',
+            'HTTP_ACCEPT'          => $args{accept} // $self->accept,
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
             ( $args{cookie} ? ( HTTP_COOKIE => $args{cookie} ) : () ),
@@ -985,11 +1064,24 @@ Example with IO::String:
 
 sub _post {
     my ( $self, $path, $body, %args ) = @_;
+
+    # If $body is a HASHREF, serialize as string
+    if ( ref($body) eq "HASH" ) {
+        $body = main::buildForm($body);
+    }
+
+    # If $body is a string, wrap in IO::Handle
+    unless ( ref($body) ) {
+        $args{length} = length($body);
+
+        # We must force a string copy here to avoid circular references
+        $body = IO::String->new("$body");
+    }
+
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
     my $res = $self->app->( {
-            'HTTP_ACCEPT' => $args{accept}
-              || 'application/json, text/plain, */*',
+            'HTTP_ACCEPT'          => $args{accept} // $self->accept,
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
             ( $args{cookie} ? ( HTTP_COOKIE => $args{cookie} ) : () ),
@@ -1017,8 +1109,8 @@ sub _post {
             ( $args{custom} ? %{ $args{custom} } : () ),
             'psgix.input.buffered' => 0,
             'psgi.input'           => $body,
-            'CONTENT_LENGTH' => $args{length} // scalar( ( stat $body )[7] ),
-            'CONTENT_TYPE'   => $args{type}
+            'CONTENT_LENGTH'       => $args{length},
+            'CONTENT_TYPE'         => $args{type}
               || 'application/x-www-form-urlencoded',
         }
     );

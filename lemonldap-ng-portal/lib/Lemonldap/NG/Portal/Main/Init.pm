@@ -8,7 +8,7 @@
 #                  of lemonldap-ng.ini) and underlying handler configuration
 package Lemonldap::NG::Portal::Main::Init;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -412,8 +412,8 @@ sub reloadConf {
 
             # Handle wildcards
             if ( $vhost =~ /[\%\*]/ ) {
-                $expr =~ s/\\\*/[A-Za-z0-9\.]\*/;
-                $expr =~ s/\\\%/[A-Za-z0-9]\*/;
+                $expr =~ s/\\\*/[A-Za-z0-9\-\.]\*/;
+                $expr =~ s/\\\%/[A-Za-z0-9\-]\*/;
             }
             $re->add($expr);
             $self->logger->debug("Vhost $vhost added in trusted domains");

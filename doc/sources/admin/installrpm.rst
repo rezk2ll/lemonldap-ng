@@ -9,7 +9,7 @@ Installation on Red Hat/CentOS
 List of pacakges
 ----------------
 
-LemonLDAP::NG provides packages for Red Hat/Centos 7:
+LemonLDAP::NG provides packages for RHEL (and derivatives) 7/8/9:
 
 - ``lemonldap-ng``: metapackage, contains no file but dependencies on other
   packages
@@ -30,6 +30,7 @@ LemonLDAP::NG provides packages for Red Hat/Centos 7:
 - ``perl-Lemonldap-NG-Handler``: CPAN - Handler modules
 - ``perl-Lemonldap-NG-Manager``: CPAN - Manager modules
 - ``perl-Lemonldap-NG-Portal``: CPAN - Portal modules
+- ``perl-Lemonldap-NG-SSOaaS-Apache-Client``: SSOaaS client module
 
 
 .. danger::
@@ -46,7 +47,7 @@ LemonLDAP::NG provides packages for Red Hat/Centos 7:
 Prerequisites
 -------------
 
-LemonLDAP::NG has dependencies which are not in base RHEL repositories
+LemonLDAP::NG has dependencies which are not in base RHEL repositories.
 
 You need to enable `EPEL repositories <https://docs.fedoraproject.org/en-US/epel/#Quickstart>`__ before installing.
 

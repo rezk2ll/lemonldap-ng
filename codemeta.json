@@ -1,0 +1,91 @@
+{
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+    "@type": "SoftwareSourceCode",
+    "license": "https://spdx.org/licenses/GPL-2.0-or-later",
+    "codeRepository": "https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng",
+    "contIntegration": "https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/pipelines",
+    "dateCreated": "2004-01-01",
+    "datePublished": "2010-12-06",
+    "dateModified": "2022-09-15",
+    "downloadUrl": "https://lemonldap-ng.org/download.html",
+    "issueTracker": "https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues",
+    "name": "LemonLDAP::NG",
+    "version": "2.0.15.1",
+    "description": "LemonLDAP::NG is a complete and modular Web-SSO system that can run with reverse-proxies or directly on application webservers. It can be used in conjunction with OpenID-Connect, CAS and SAML systems as identity or service provider. It can also be used as proxy between those federation systems.\n\nIt manages both authentication and authorization and provides headers for accounting. So you can have a full AAA protection. Authorizations are built by associating a regular expression and a rule. Regular expression is applied on the requested URL and the rule calculates if the user is authorized.",
+    "applicationCategory": "WebSSO",
+    "developmentStatus": "active",
+    "keywords": [
+        "2FA",
+        "sso",
+        "ldap",
+        "authentication",
+        "authorization",
+        "cas",
+        "saml",
+        "openid connect",
+        "access management",
+        "security"
+    ],
+    "programmingLanguage": [
+        "Perl",
+        "Javascript"
+    ],
+    "operatingSystem": [
+        "Linux"
+    ],
+    "author": [
+        {
+            "@type": "Person",
+            "givenName": "Xavier",
+            "familyName": "Guimard",
+            "email": "yadd@debian.org"
+        },
+        {
+            "@type": "Person",
+            "givenName": "Clément",
+            "familyName": "Oudot",
+            "email": "clement@oodo.net"
+        },
+        {
+            "@type": "Person",
+            "@id": "https://orcid.org/0000-0001-5215-9046",
+            "givenName": "Christophe",
+            "familyName": "Maudoux",
+            "email": "christophe.maudoux@cnam.fr",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "Cnam/Cedric - ROC Team"
+            }
+        },
+        {
+            "@type": "Person",
+            "givenName": "Maxime",
+            "familyName": "Besson",
+            "email": "maxime.besson@worteks.com"
+        }
+    ],
+    "contributor": [
+        {
+            "@type": "Person",
+            "givenName": "David",
+            "familyName": "Coutadeur"
+        },
+        {
+            "@type": "Person",
+            "givenName": "Alexandre",
+            "familyName": "Karim"
+        },
+        {
+            "@type": "Person",
+            "givenName": "Xavier",
+            "familyName": "Bachelot",
+            "email": "xavier@bachelot.org"
+        },
+        {
+            "@type": "Person",
+            "givenName": "Soisik",
+            "familyName": "Froger",
+            "email": "soisik.froger@worteks.com"
+        }
+    ]
+}

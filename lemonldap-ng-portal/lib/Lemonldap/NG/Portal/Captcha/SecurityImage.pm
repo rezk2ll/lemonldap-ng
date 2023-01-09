@@ -5,7 +5,7 @@ use Mouse;
 use MIME::Base64;
 use GD::SecurityImage use_magick => 1;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 

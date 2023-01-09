@@ -4,7 +4,7 @@ Adaptative Authentication Level
 Presentation
 ------------
 
-A user obtain an authentication level depending on which authentication
+A user reaches an authentication level depending on which authentication
 module was used, and eventually which second factor module.
 
 This plugin allows to adapt this authentication level depending on
@@ -23,7 +23,7 @@ they would then not be forced to use 2FA to access the strategic application.
 Configuration
 -------------
 
-This plugin is enabled when at least one rule is defind.
+This plugin is enabled when at least one rule is defined.
 
 To configure rules, go in ``General Parameters`` > ``Plugins`` >
 ``Adapative Authentication Level``.

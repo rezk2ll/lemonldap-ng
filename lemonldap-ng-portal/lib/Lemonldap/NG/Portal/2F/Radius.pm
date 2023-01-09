@@ -46,8 +46,6 @@ sub init {
         )
       );
 
-    $self->prefix( $self->conf->{sfPrefix} )
-      if ( $self->conf->{sfPrefix} );
     return $self->SUPER::init();
 }
 
@@ -65,8 +63,6 @@ sub run {
         $req,
         'ext2fcheck',
         params => {
-            MAIN_LOGO => $self->conf->{portalMainLogo},
-            SKIN      => $self->p->getSkin($req),
             TOKEN     => $token,
             PREFIX    => $self->prefix,
             TARGET    => '/'

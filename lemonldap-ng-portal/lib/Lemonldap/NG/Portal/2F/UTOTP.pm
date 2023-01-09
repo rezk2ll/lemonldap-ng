@@ -6,9 +6,10 @@ use JSON qw(from_json to_json);
 use Lemonldap::NG::Portal::Main::Constants qw(
 );
 
-our $VERSION = '2.0.8';
+our $VERSION = '2.0.16';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor';
+with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
 
@@ -26,16 +27,9 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 sub init {
     my ($self) = @_;
-    if ( (
-               $self->conf->{totp2fSelfRegistration}
-            or $self->conf->{u2fSelfRegistration}
-        )
-        and $self->conf->{utotp2fActivation} eq '1'
-      )
-    {
-        $self->conf->{utotp2fActivation} =
-          '$_2fDevices && $_2fDevices =~ /"type":\s*"(?:TOTP|U2F)"/s';
-    }
+    $self->conf->{utotp2fActivation} = 'has2f("TOTP") or has2f("U2F")'
+      if $self->conf->{utotp2fActivation} eq '1';
+
     foreach (qw(U2F TOTP)) {
 
         # Arg "noRoute" is set for sub 2F modules to avoid enabling direct
@@ -55,17 +49,10 @@ sub init {
 
 sub run {
     my ( $self, $req, $token ) = @_;
-    $self->logger->debug('Generate TOTP form');
+    $self->logger->debug( $self->prefix . '2f: generate form' );
 
-    my $checkLogins = $req->param('checkLogins');
-    $self->logger->debug("UTOTP: checkLogins set") if $checkLogins;
-
-    my $stayconnected = $req->param('stayconnected');
-    $self->logger->debug("UTOTP: stayconnected set") if $stayconnected;
-
+    my ( $checkLogins, $stayconnected ) = $self->getFormParams($req);
     my %tplPrms = (
-        MAIN_LOGO     => $self->conf->{portalMainLogo},
-        SKIN          => $self->p->getSkin($req),
         TOKEN         => $token,
         CHECKLOGINS   => $checkLogins,
         STAYCONNECTED => $stayconnected
@@ -73,7 +60,7 @@ sub run {
 
     if ( my $res = $self->u2f->loadUser( $req, $req->sessionInfo ) ) {
         if ( $res > 0 ) {
-            $self->logger->debug('U2F key is registered');
+            $self->logger->debug('u2f: key is registered');
 
             # Get a challenge (from first key)
             my $data = eval {
@@ -82,7 +69,9 @@ sub run {
             };
 
             if ($@) {
-                $self->logger->error( Crypt::U2F::Server::u2fclib_getError() );
+                $self->logger->error( 'u2f: error ('
+                      . Crypt::U2F::Server::u2fclib_getError()
+                      . ')' );
                 return PE_ERROR;
             }
 
@@ -107,7 +96,7 @@ sub run {
 
     # Prepare form
     my $tmp = $self->p->sendHtml( $req, 'utotp2fcheck', params => \%tplPrms, );
-    $self->logger->debug("Prepare U2F-or-TOTP 2F verification");
+    $self->logger->debug( $self->prefix . '2f: prepare verification' );
 
     $req->response($tmp);
     return PE_SENDRESPONSE;
@@ -117,12 +106,12 @@ sub verify {
     my ( $self, $req, $session ) = @_;
     my ($r1);
     if ( $req->param('signature') ) {
-        $self->logger->debug('UTOTP: U2F response detected');
+        $self->logger->debug( $self->prefix . '2f: U2F response detected' );
         my $r1 = $self->u2f->verify( $req, $session );
         return PE_OK if ( $r1 == PE_OK );
     }
     if ( $req->param('code') ) {
-        $self->logger->debug('UTOTP: TOTP response detected');
+        $self->logger->debug( $self->prefix . '2f: TOTP response detected' );
         return $self->totp->verify( $req, $session );
     }
     return ( $r1 ? $r1 : PE_FORMEMPTY );

@@ -11,9 +11,11 @@ my $res;
 
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel      => 'error',
-            useSafeJail   => 1,
-            portalFavicon => 'common/llng.ico'
+            logLevel                       => 'error',
+            portal                         => 'https://auth.example.com/',
+            useSafeJail                    => 1,
+            strictTransportSecurityMax_Age => '1977',
+            portalFavicon                  => 'common/llng.ico'
         }
     }
 );
@@ -33,8 +35,10 @@ ok(
     ),
     'Get Menu'
 );
-ok( $res->[2]->[0] =~ /<span trmsg="37">/, 'Rejected with PE_BADURL' )
-  or print STDERR Dumper( $res->[2]->[0] );
+expectPortalError( $res, 109, 'Rejected with PE_UNPROTECTEDURL' );
+ok( getHeader( $res, 'Strict-Transport-Security' ) =~ /^max-age=1977$/,
+    'Strict-Transport-Security is set' )
+  or explain( $res->[1], 'Content-Type => application/xml' );
 ok( $res->[2]->[0] =~ m%<span id="languages"></span>%, ' Language icons found' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ m%link href="/static/common/llng.ico%,

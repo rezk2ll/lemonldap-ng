@@ -38,7 +38,10 @@ sub newLdap {
     my $self = $_[0];
     my $ldap;
 
-    # Build object and test LDAP connexion
+    # Build object and test LDAP connection
+    $self->logger->debug(
+        "Try to build new LDAP connection with: $self->{conf}->{ldapServer}");
+
     return undef
       unless (
         $ldap = Lemonldap::NG::Portal::Lib::Net::LDAP->new(

@@ -1,20 +1,18 @@
 # Launch Kerberos request
 
 $(document).ready ->
-	$.ajax (if window.location.href.match /\/upgradesession/ then window.location.href else portal )+ '?kerberos=1',
+	$.ajax portal + 'authkrb',
 		dataType: 'json'
 		# Called if browser can't find Kerberos ticket, will display
 		# PE_BADCREDENTIALS
 		statusCode:
 			401: () ->
 				$('#lform').submit()
-		# If request succeed cookie is set, posting form to get redirection
-		# or menu
+		# Remove upgrading flag, if set
 		success: (data) ->
-            if window.location.href.match /\/upgradesession/
-                document.location = portal
-            else
-                $('#lform').submit()
+			if data.ajax_auth_token
+				$('#lform').find('input[name="ajax_auth_token"]').attr("value", data.ajax_auth_token)
+			$('#lform').submit()
 		# Case else, will display PE_BADCREDENTIALS or fallback to next auth
 		# backend
 		error: () ->

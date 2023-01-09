@@ -116,7 +116,7 @@ setKey = (key,val,success,error) ->
 	# First request to get token
 	$.ajax
 		type: "GET"
-		url: datas['scriptname'] + '/mysession/?gettoken'
+		url: scriptname + 'mysession/?gettoken'
 		dataType: 'json'
 		error: error
 		# On success, value is set
@@ -126,7 +126,7 @@ setKey = (key,val,success,error) ->
 			d[key] = val
 			$.ajax
 				type: "PUT"
-				url: datas['scriptname'] + '/mysession/persistent'
+				url: scriptname + 'mysession/persistent'
 				dataType: 'json'
 				data: d
 				success: success
@@ -135,14 +135,14 @@ setKey = (key,val,success,error) ->
 delKey = (key,sub,success,error) ->
 	$.ajax
 		type: "GET"
-		url: datas['scriptname'] + '/mysession/?gettoken'
+		url: scriptname + 'mysession/?gettoken'
 		dataType: 'json'
 		error: error
 		# On success, value is set
 		success: (data) ->
 			$.ajax
 				type: "DELETE"
-				url: "#{datas['scriptname']}/mysession/persistent/#{key}?sub=#{sub}&token=#{data.token}"
+				url: "#{scriptname}mysession/persistent/#{key}?sub=#{sub}&token=#{data.token}"
 				dataType: 'json'
 				success: success
 				error: error
@@ -199,7 +199,7 @@ isHiddenFormValueSet = (option) ->
 ping = ->
 	$.ajax
 		type: "POST"
-		url: datas['scriptname']
+		url: scriptname
 		data:
 			ping: 1
 		dataType: 'json'
@@ -228,21 +228,6 @@ setCookie = (name, value, samesite, exdays) ->
 	d = new Date()
 	d.setTime d.getTime() + exdays*86400000
 	document.cookie = "#{name}=#{value}; expires=#{d.toUTCString()}; path=/; SameSite=#{samesite}"
-
-# Function to change password using Ajax (instead of POST)
-# NOT USED FOR NOW
-#changePwd = (event) ->
-#	event.preventDefault()
-#	$.ajax
-#		type: 'POST'
-#		url: datas['scriptname']
-#		dataType: 'json'
-#		data:
-#			oldpassword: $('#oldpassword').val()
-#			newpassword: $('#newpassword').val()
-#			confirmpassword: $('#confirmpassword').val()
-#		success: (data) ->
-#			console.log "R", data
 
 # Initialization
 datas = {}
@@ -489,6 +474,18 @@ $(window).on 'load', () ->
 	if window.datas.ppolicy? and $('#newpassword').length
 		$('#reset').change togglecheckpassword
 
+	# Set local dates (used to display history)
+	$(".localeDate").each ->
+		s = new Date($(this).attr("val")*1000)
+		$(this).text s.toLocaleString()
+
+	$('.oidcConsent').on 'click', () ->
+		removeOidcConsent $(this).attr 'partner'
+
+	# Ping if asked
+	if datas['pingInterval'] and datas['pingInterval'] > 0
+		window.setTimeout ping, datas['pingInterval']
+
 	# Functions to show/hide display password button
 	if datas['enablePasswordDisplay']
 		field = ''
@@ -513,17 +510,23 @@ $(window).on 'load', () ->
 				$(this).toggleClass("fa-eye fa-eye-slash")
 				$("input[name=#{field}]").attr("type", "password")
 
-	# Ping if asked
-	if datas['pingInterval'] and datas['pingInterval'] > 0
-		window.setTimeout ping, datas['pingInterval']
-
-	# Set local dates (used to display history)
-	$(".localeDate").each ->
-		s = new Date($(this).attr("val")*1000)
-		$(this).text s.toLocaleString()
-
-	$('.oidcConsent').on 'click', () ->
-		removeOidcConsent $(this).attr 'partner'
+	# Functions to show/hide newpassword inputs
+	$('#reset').change () ->
+		checked = $(this).prop('checked')
+		console.log 'Reset is checked', checked
+		if checked == true
+			$('#newpasswords').hide()
+			$('#newpassword').removeAttr('required')
+			$('#confirmpassword').removeAttr('required')
+			$('#confirmpassword').get(0)?.setCustomValidity('')
+		else
+			$('#newpasswords').show()
+			$('#newpassword').attr('required', true)
+			$('#confirmpassword').attr('required', true)
+			if $('#confirmpassword').get(0)?.value == $('#newpassword').get(0)?.value
+				$('#confirmpassword').get(0)?.setCustomValidity('')
+			else
+				$('#confirmpassword').get(0)?.setCustomValidity(translate('PE34'))
 
 	# Functions to show/hide placeholder password inputs
 	$('#passwordfield').on 'input', () ->
@@ -595,4 +598,7 @@ $(window).on 'load', () ->
 		if datas['scrollTop'] && (document.body.scrollTop > Math.abs(datas['scrollTop']) || document.documentElement.scrollTop > Math.abs(datas['scrollTop']))
 			$('#btn-back-to-top').css("display","block")
 		else
-    		$('#btn-back-to-top').css("display","none")
+			$('#btn-back-to-top').css("display","none")
+
+	$(document).trigger "portalLoaded"
+	true

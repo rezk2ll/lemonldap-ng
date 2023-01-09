@@ -31,7 +31,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_MAILCONFIRMATION_ALREADY_SENT
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.0.15';
 
 extends qw(
   Lemonldap::NG::Portal::Lib::SMTP
@@ -213,9 +213,9 @@ sub _certificateReset {
 
     # Search user in database
     $req->steps( [
-            'getUser',                  'setSessionInfo',
-            'setMacros',                'setGroups',
-            'setPersistentSessionInfo', 'setLocalGroups'
+            'getUser',                 'setSessionInfo',
+            $self->p->groupsAndMacros, 'setPersistentSessionInfo',
+            'setLocalGroups'
         ]
     );
     if ( my $error = $self->p->process( $req, useMail => $searchByMail ) ) {

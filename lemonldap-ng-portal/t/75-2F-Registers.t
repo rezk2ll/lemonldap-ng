@@ -5,7 +5,7 @@ use Data::Dumper;
 use MIME::Base64;
 
 require 't/test-lib.pm';
-my $maintests = 77;
+my $maintests = 78;
 
 SKIP: {
     eval { require Convert::Base32 };
@@ -26,6 +26,8 @@ SKIP: {
                 totp2fSelfRegistration  => 1,
                 totp2fActivation        => 1,
                 totp2fAuthnLevel        => 1,
+                totp2fLogo              => 'mytotp.png',
+                totp2fLabel             => 'My TOTP',
                 u2fSelfRegistration     => 1,
                 u2fActivation           => 1,
                 u2fAuthnLevel           => 5,
@@ -165,8 +167,10 @@ SKIP: {
     );
     ok( $res->[2]->[0] =~ /2fregistration\.(?:min\.)?js/,
         'Found 2f registration js' );
-    ok( $res->[2]->[0] =~ qr%<img src="/static/bootstrap/totp.png".*?/>%,
-        'Found totp.png' )
+    ok( $res->[2]->[0] =~ qr%<img src="/static/bootstrap/mytotp.png".*?/>%,
+        'Found custom totp logo' )
+      or print STDERR Dumper( $res->[2]->[0] );
+    ok( $res->[2]->[0] =~ qr%<p>My TOTP</p>%, 'Found custom totp label' )
       or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ qr%<img src="/static/bootstrap/u2f.png".*?/>%,
         'Found u2f.png' )
@@ -290,10 +294,9 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
       or print STDERR Dumper($res);
 
     # Two 2F devices must be registered
-    my @sf = map m%<span device=\'(TOTP|U2F)\' epoch=\'\d{10}\'%g,
+    my @sf = map m%<span\s*device=\'(TOTP|U2F)\'\s*epoch=\'\d{10}\'%mg,
       $res->[2]->[0];
-    ok( scalar @sf == 2, 'Two 2F devices found' )
-      or print STDERR Dumper($res);
+    is( scalar @sf, 2, 'Two 2F devices found' );
     ok( $sf[0] eq 'TOTP', 'TOTP device found' ) or print STDERR Dumper( \@sf );
     ok( $sf[1] eq 'U2F',  'U2F device found' )  or print STDERR Dumper( \@sf );
     ok( $res->[2]->[0] =~ qr%<td class="align-middle">myTOTP</td>%,
@@ -301,7 +304,8 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
       or print STDERR Dumper($res);
 
     # Unregister TOTP
-    ok( $res->[2]->[0] =~ qr%TOTP.*epoch.*(\d{10})%m, "TOTP epoch $1 found" )
+    ok( $res->[2]->[0] =~ m%<span\s*device=\'TOTP\'\s*epoch=\'(\d{10})\'%m,
+        "TOTP epoch $1 found" )
       or print STDERR Dumper( $res->[2]->[0] );
     ok(
         $res = $client->_post(
@@ -338,13 +342,15 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
       or print STDERR Dumper($res);
 
     # One 2F device must be registered
-    @sf = map m%<span device=\'(TOTP|U2F)\' epoch=\'\d{10}\'%g, $res->[2]->[0];
+    @sf = map m%<span\s*device=\'(TOTP|U2F)\'\s*epoch=\'\d{10}\'%mg,
+      $res->[2]->[0];
     ok( scalar @sf == 1, 'One 2F device found' )
       or print STDERR Dumper($res);
     ok( $sf[0] eq 'U2F', 'U2F device found' ) or print STDERR Dumper( \@sf );
 
     # Try to unregister the U2F key
-    ok( $res->[2]->[0] =~ qr%U2F.*epoch.*(\d{10})%m, "U2F key epoch $1 found" )
+    ok( $res->[2]->[0] =~ m%<span\s*device=\'U2F\'\s*epoch=\'(\d{10})\'%m,
+        "U2F epoch $1 found" )
       or print STDERR Dumper( $res->[2]->[0] );
     ok(
         $res = $client->_post(
@@ -453,12 +459,13 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     );
 
     # Just U2F device left
-    @sf = map m%<span device=\'U2F\' epoch=\'\d{10}\'%g, $res->[2]->[0];
+    @sf = map m%<span\s*device=\'U2F'\s*epoch=\'\d{10}\'%mg, $res->[2]->[0];
     ok( scalar @sf == 1, 'U2F device found' )
       or print STDERR Dumper($res);
 
     # Try to unregister the U2F key
-    ok( $res->[2]->[0] =~ qr%U2F.*epoch.*(\d{10})%m, "U2F key epoch $1 found" )
+    ok( $res->[2]->[0] =~ m%<span\s*device=\'U2F\'\s*epoch=\'(\d{10})\'%m,
+        "U2F epoch $1 found" )
       or print STDERR Dumper( $res->[2]->[0] );
     ok(
         $res = $client->_post(

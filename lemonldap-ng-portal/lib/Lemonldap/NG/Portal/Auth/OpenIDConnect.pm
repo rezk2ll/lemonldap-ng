@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Auth::OpenIDConnect;
 use strict;
 use Mouse;
 use MIME::Base64 qw/encode_base64 decode_base64/;
+use Scalar::Util qw/looks_like_number/;
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
@@ -10,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OIDC_AUTH_ERROR
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth
@@ -47,6 +48,8 @@ sub init {
           ->{oidcOPMetaDataOptionsDisplayName};
         my $icon = $self->conf->{oidcOPMetaDataOptions}->{$_}
           ->{oidcOPMetaDataOptionsIcon};
+        my $tooltip = $self->conf->{oidcOPMetaDataOptions}->{$_}
+          ->{oidcOPMetaDataOptionsTooltip} || $name;
         my $order = $self->conf->{oidcOPMetaDataOptions}->{$_}
           ->{oidcOPMetaDataOptionsSortNumber} // 0;
         my $img_src;
@@ -58,14 +61,13 @@ sub init {
               : $portalPath . $self->p->staticPrefix . "/common/" . $icon;
         }
 
-        push @list,
-          {
+        push @list, {
             val   => $_,
             name  => $name,
+            title => $tooltip,
             icon  => $img_src,
-            class => "openidconnect",
             order => $order
-          };
+        };
     }
     $self->addRouteFromConf(
         'Unauth',
@@ -159,11 +161,19 @@ sub extractFormInfo {
             $self->logger->debug("Token response is valid");
         }
 
-        my $access_token = $token_response->{access_token};
-        my $id_token     = $token_response->{id_token};
+        my $access_token  = $token_response->{access_token};
+        my $expires_in    = $token_response->{expires_in};
+        my $id_token      = $token_response->{id_token};
+        my $refresh_token = $token_response->{refresh_token};
+
+        undef $expires_in unless looks_like_number($expires_in);
 
         $self->logger->debug("Access token: $access_token");
+        $self->logger->debug(
+            "Access token expires in: " . ( $expires_in || "<unknown>" ) );
         $self->logger->debug("ID token: $id_token");
+        $self->logger->debug(
+            "Refresh token: " . ( $refresh_token || "<none>" ) );
 
         # Verify JWT signature
         if ( $self->conf->{oidcOPMetaDataOptions}->{$op}
@@ -219,8 +229,15 @@ sub extractFormInfo {
         my $user_id = $id_token_payload_hash->{sub};
 
         # Remember tokens
-        $req->data->{access_token} = $access_token;
-        $req->data->{id_token}     = $id_token;
+        $req->data->{access_token}  = $access_token;
+        $req->data->{refresh_token} = $refresh_token if $refresh_token;
+        $req->data->{id_token}      = $id_token;
+
+        # If access token TTL is given save expiration date
+        # (with security margin)
+        if ($expires_in) {
+            $req->data->{access_token_eol} = time + ( $expires_in * 0.9 );
+        }
 
         $self->logger->debug( "Found user_id: " . $user_id );
         $req->user($user_id);
@@ -303,6 +320,16 @@ sub setAuthSessionInfo {
     $req->{sessionInfo}->{_oidc_access_token} =
       $req->data->{access_token};
 
+    if ( $req->data->{refresh_token} ) {
+        $req->{sessionInfo}->{_oidc_refresh_token} =
+          $req->data->{refresh_token};
+    }
+
+    if ( $req->data->{access_token_eol} ) {
+        $req->{sessionInfo}->{_oidc_access_token_eol} =
+          $req->data->{access_token_eol};
+    }
+
     # Keep ID Token in session
     my $store_IDToken = $self->conf->{oidcOPMetaDataOptions}->{$op}
       ->{oidcOPMetaDataOptionsStoreIDToken};
@@ -326,12 +353,16 @@ sub authLogout {
     my $endsession_endpoint =
       $self->oidcOPList->{$op}->{conf}->{end_session_endpoint};
 
+    my $client_id =
+      $self->conf->{oidcOPMetaDataOptions}->{$op}
+      ->{oidcOPMetaDataOptionsClientID};
+
     if ($endsession_endpoint) {
         my $logout_url = $self->conf->{portal} . '?logout=1';
         $req->urldc(
             $self->buildLogoutRequest(
                 $endsession_endpoint, $req->{sessionInfo}->{_oidc_id_token},
-                $logout_url
+                $logout_url, undef, $client_id,
             )
         );
 

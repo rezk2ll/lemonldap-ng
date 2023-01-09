@@ -1,7 +1,7 @@
 Manage virtual hosts
 ====================
 
-LemonLDAP::NG configuration is build around Apache or Nginx virtual
+LemonLDAP::NG configuration is built around Apache or Nginx virtual
 hosts. Each virtual host is a protected resource, with access rules,
 headers, POST data and options.
 
@@ -12,8 +12,7 @@ To protect a virtual host in Apache, the LemonLDAP::NG Handler must be
 activated (see
 :ref:`Apache global configuration<configlocation-apache>`).
 
-Then you can take any virtual host, and simply add this line to protect
-it:
+Then you can take any virtual host, and just add this line to protect it:
 
 .. code-block:: apache
 
@@ -99,8 +98,7 @@ Same with remote server configured with the same host name:
 Add a floating menu
 ~~~~~~~~~~~~~~~~~~~
 
-A little floating menu can be added to application with this simple
-Apache configuration:
+A small floating menu can be added to application with this simple Apache configuration:
 
 .. code-block:: apache
 
@@ -139,7 +137,7 @@ Then you can take any virtual host and modify it:
        include /etc/nginx/fastcgi_params;
        fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
 
-       # Drop post datas
+       # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
 
@@ -215,7 +213,7 @@ Example of a protected virtual host for a local application:
        internal;
        include /etc/nginx/fastcgi_params;
        fastcgi_pass /path/to/llng-fastcgi-server.sock;
-       # Drop post datas
+       # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
        # Keep original hostname
@@ -276,7 +274,7 @@ Reverse-Proxy
        internal;
        include /etc/nginx/fastcgi_params;
        fastcgi_pass /path/to/llng-fastcgi-server.sock;
-       # Drop post datas
+       # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
        # Keep original hostname
@@ -454,6 +452,27 @@ A virtual host contains:
 -  POST data: use form replay
 -  Options: redirection port, protocol, Handler type, aliases,required authentication level,...
 
+Wildcards in hostnames
+----------------------
+
+A wildcard can be used in virtualhost name (not in aliases !):
+``*.example.com`` matches all hostnames that belong to ``example.com`` domain.
+
+.. versionchanged:: 2.0.9
+   You can now use wildcards of the form ``test-*.example.com`` or
+   ``test-%.example.com``. The ``%`` wilcard doesn't match subdomains.
+
+Even if a wildcard exists, if a VirtualHost is explicitly declared, this
+rule will be applied. Example with precedence order for test.sub.example.com:
+
+#. test.sub.example.com
+#. test%.sub.example.com
+#. test*.sub.example.com
+#. %.sub.example.com
+#. \*.sub.example.com
+#. \*.example.com (``%.example.com`` does not match
+   test.sub.example.com)
+
 Access rules and HTTP headers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -498,7 +517,7 @@ Options
 Some options are available:
 
 -  **Port**: used to build redirection URL *(when user is not logged, or for
-   CDA requests)*
+   CDA requests)*, -1 means the handler builds the URL with the incoming port, as seen by the webserver
 -  **HTTPS**: used to build redirection URL
 -  **Maintenance mode**: reject all requests with a maintenance message
 -  **Aliases**: list of aliases for this virtual host *(avoid to rewrite
@@ -507,21 +526,22 @@ Some options are available:
    Provide a comma separated parameters list with custom function path and args.
    Args can be vars or session attributes, macros, ...
    By example: My::accessToTrace, Doctor, Who, _whatToTrace
+-  **Required authentication level**: this option avoids to reject user with
+   a rule based on ``$authenticationLevel``. When user has not got the
+   required level, he is redirected to an upgrade page in the portal.
+   This default level is required for ALL locations relative to this virtual host.
+   It can be overrided for each locations.
 -  **Type**: handler type (:ref:`Main<presentation-kinematics>`,
    :doc:`AuthBasic<authbasichandler>`,
    :doc:`ServiceToken<servertoserver>`,
    :doc:`DevOps<devopshandler>`,
    :doc:`DevOpsST<devopssthandler>`,
    :doc:`OAuth2<oauth2handler>`,...)
--  **Required authentication level**: this option avoids to reject user with
-   a rule based on ``$_authenticationLevel``. When user has not got the
-   required level, he is redirected to an upgrade page in the portal.
-   This default level is required for ALL locations relative to this virtual host.
-   It can be overrided for each locations.
 -  **DevOps rules file URL**: option to define URL to retreive DevOps rules file.
    This option can be overridden with ``uwsgi_param/fastcgi_param RULES_URL`` parameter.
 -  **ServiceToken timeout**: by default, ServiceToken is just valid during 30
    seconds. This TTL can be customized for each virtual host.
+-  **Comment**: can be used for setting comment.
 
 
 .. attention::
@@ -573,4 +593,7 @@ Some options are available:
 
 "Port" and "HTTPS" options are used to build redirection URL *(when user
 is not logged, or for CDA requests)*. By default, default values are
-used. These options are only here to override default values.
+used. These options are for overriding default values.
+
+.. |image0| image:: /documentation/new.png
+   :width: 35px

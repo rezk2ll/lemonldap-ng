@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Main::Auth;
 use strict;
 use Mouse;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 

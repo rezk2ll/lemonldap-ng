@@ -153,7 +153,7 @@ sub confirm {
     else {
 
         # Go to portal
-        $self->logger->debug("Upgrade session failed -> Go to Portal");
+        $self->logger->debug("Upgrade session did not trigger -> Go to Portal");
         $req->mustRedirect(1);
         return $self->p->do( $req, [ sub { PE_OK } ] );
     }

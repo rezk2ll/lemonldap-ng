@@ -17,7 +17,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
 # INITIALIZATION
 
@@ -102,7 +102,7 @@ sub _modifyPassword {
     my $res = $self->modifyPassword( $req, $req->data->{newpassword} );
     if ( $res == PE_PASSWORD_OK ) {
 
-        $self->p->processHook(
+        my $hook_result = $self->p->processHook(
             $req, 'passwordAfterChange', $req->user,
             $req->data->{newpassword},
             $req->data->{oldpassword}
@@ -137,7 +137,7 @@ sub _modifyPassword {
         $req->{passwordWasChanged} = 1;
 
         #  Continue process if password change is ok
-        return PE_PASSWORD_OK;
+        return ( $hook_result != PE_OK ) ? $hook_result : PE_PASSWORD_OK;
     }
     return $res;
 }
@@ -228,13 +228,15 @@ sub checkPasswordQuality {
 # in order to call the password hook
 sub setNewPassword {
     my ( $self, $req, $pwd, $useMail ) = @_;
-
+    my %args;
     my $hook_result =
       $self->p->processHook( $req, 'passwordBeforeChange', $req->user, $pwd );
     return $hook_result if ( $hook_result != PE_OK );
 
     # Delegate to subclass
-    my $mod_result = $self->modifyPassword( $req, $pwd, $useMail );
+    $args{useMail}     = $useMail;
+    $args{passwordReset} = 1;
+    my $mod_result = $self->modifyPassword( $req, $pwd, %args );
 
     if ( $mod_result == PE_PASSWORD_OK ) {
         $hook_result =

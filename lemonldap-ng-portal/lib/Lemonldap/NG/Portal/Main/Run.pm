@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.15.1';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -203,8 +203,27 @@ sub refresh {
     $req->user( $data{_user} || $data{ $self->conf->{whatToTrace} } );
     $req->id( $data{_session_id} );
     foreach ( keys %data ) {
-        delete $data{$_}
-          unless ( /^_/ or /^(?:startTime|authenticationLevel)$/ );
+
+        # Variables that start with _ are kept accross refresh
+        if (/^_/) {
+
+            # But not OIDC tokens, which can be refreshed
+            delete $data{$_}
+              if (
+/^(_oidc_access_token|_oidc_refresh_token|_oidc_access_token_eol)$/
+              );
+        }
+
+        # Other variables should be refreshed
+        else {
+            # But not these two
+            if (/^(?:startTime|authenticationLevel)$/) {
+                next;
+            }
+            else {
+                delete $data{$_};
+            }
+        }
     }
     $data{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
     $self->logger->debug(
@@ -279,19 +298,15 @@ sub do {
     # Update status
     if ( my $p = $self->HANDLER->tsv->{statusPipe} ) {
         $p->print( ( $req->user ? $req->user : $req->address ) . ' => '
-              . $req->uri
+              . $req->{env}->{REQUEST_URI}
               . " $err\n" );
     }
 
     # Update history
-    if ( $err == PE_SENDRESPONSE ) {
-        return $req->response;
-    }
+    return $req->response if $err == PE_SENDRESPONSE;
 
     # Remove userData if authentication fails
-    if ( $err == PE_BADCREDENTIALS or $err == PE_BADOTP ) {
-        $req->userData( {} );
-    }
+    $req->userData( {} ) if ( $err == PE_BADCREDENTIALS or $err == PE_BADOTP );
 
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
         $self->logger->debug('Processing to JSON response');
@@ -320,7 +335,15 @@ sub do {
         elsif ( $err > 0 and $err != PE_PASSWORD_OK and $err != PE_LOGOUT_OK ) {
             return $self->sendJSONresponse(
                 $req,
-                { result => 0, error => $err },
+                {
+                    result => 0,
+                    error  => $err,
+                    (
+                        $err == PE_NOTIFICATION && $req->id
+                        ? ( ciphered_id => $req->id )
+                        : ()
+                    )
+                },
                 code => 400
             );
         }
@@ -406,18 +429,17 @@ sub autoRedirect {
     # Redirection should be made if urldc defined
     if ( $req->{urldc} ) {
         $self->logger->debug("Building redirection to $req->{urldc}");
+        if (    $req->{pdata}->{_url}
+            and $req->{pdata}->{_url} eq encode_base64( $req->{urldc}, '' ) )
+        {
+            $self->logger->info("Force cleaning pdata");
+            delete $req->{pdata}->{_url};
+        }
         if ( $self->_jsRedirect->( $req, $req->sessionInfo ) ) {
             $req->error(PE_REDIRECT);
             $req->data->{redirectFormMethod} = "get";
         }
         else {
-            if (    $req->{pdata}->{_url}
-                and $req->{pdata}->{_url} eq encode_base64( $req->{urldc}, '' )
-              )
-            {
-                $self->logger->info("Force cleaning pdata");
-                delete $req->{pdata}->{_url};
-            }
             return [ 302, [ Location => $req->{urldc}, $req->spliceHdrs ], [] ];
         }
     }
@@ -849,11 +871,58 @@ sub _dump {
     return;
 }
 
+# Warning: this function returns a JSON string
+sub getTrOver {
+    my ( $self, $req, $templateDir ) = @_;
+
+    $templateDir //= $self->conf->{templateDir} . '/' . $self->getSkin($req);
+
+    unless ( $self->trOverCache->{$templateDir} ) {
+
+        # Override messages
+        my $trOverMessages = JSON::from_json( $self->trOver );
+
+        opendir( DIR, $templateDir );
+        my @langfiles = grep( /\.json$/, readdir(DIR) );
+        close(DIR);
+
+        foreach my $file (@langfiles) {
+            my ($lang) = ( $file =~ /^(\w+)\.json/ );
+            $self->logger->debug("Use $file to override messages");
+            if ( open my $json, "<", $templateDir . "/" . $file ) {
+                my $trdata;
+                eval {
+                    local $/ = undef;
+                    $trdata = JSON::from_json(<$json>);
+                };
+                if ($@) {
+                    $self->logger->warn("Ignoring $file because of error: $@");
+                }
+                if ( ref($trdata) eq "HASH" ) {
+                    for my $msg ( keys %$trdata ) {
+
+                        # lemonldap-ng.ini has priority
+                        $trOverMessages->{$lang}->{$msg} //= $trdata->{$msg};
+                    }
+                }
+            }
+            else {
+                $self->logger->error("Unable to read $file");
+            }
+        }
+
+        $self->trOverCache->{$templateDir} = JSON::to_json($trOverMessages);
+    }
+
+    return $self->trOverCache->{$templateDir};
+}
+
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
 
     my $templateDir = $self->conf->{templateDir} . '/' . $self->getSkin($req);
-    $self->templateDir( [ $templateDir, @{ $self->templateDir } ] );
+    my $defaultTemplateDir = $self->conf->{templateDir} . '/bootstrap';
+    $self->templateDir( [ $templateDir, $defaultTemplateDir ] );
 
     # Check template
     $args{templateDir} = $templateDir;
@@ -865,29 +934,7 @@ sub sendHtml {
         $self->logger->debug("-> Trying to load $tmpl");
     }
 
-    # Override messages
-    my $trOverMessages = JSON::from_json( $self->trOver );
-
-    unless ( $self->trOverCache->{$templateDir} ) {
-        opendir( DIR, $templateDir );
-        my @langfiles = grep( /\.json$/, readdir(DIR) );
-        close(DIR);
-
-        foreach my $file (@langfiles) {
-            my ($lang) = ( $file =~ /^(\w+)\.json/ );
-            $self->logger->debug("Use $file to override messages");
-            if ( open my $json, "<", $templateDir . "/" . $file ) {
-                local $/ = undef;
-                $trOverMessages->{$lang} = JSON::from_json(<$json>);
-            }
-            else {
-                $self->logger->error("Unable to read $file");
-            }
-        }
-
-        $self->trOverCache->{$templateDir} = JSON::to_json($trOverMessages);
-    }
-    $args{params}->{TROVER} = $self->trOverCache->{$templateDir};
+    $args{params}->{TROVER} = $self->getTrOver( $req, $templateDir );
 
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },
@@ -899,21 +946,32 @@ sub sendHtml {
 
     $self->setCorsHeaderFromConfig($res);
 
+    if (    $self->conf->{strictTransportSecurityMax_Age}
+        and $self->conf->{portal} =~ /^https:/ )
+    {
+        push @{ $res->[1] },
+          'Strict-Transport-Security' =>
+          "max-age=$self->{conf}->{strictTransportSecurityMax_Age}";
+        $self->logger->debug(
+"Set Strict-Transport-Security with: $self->{conf}->{strictTransportSecurityMax_Age}"
+        );
+    }
+
     # Set authorized URL for POST
     my $csp = $self->csp . "form-action " . $self->conf->{cspFormAction};
     if ( my $url = $req->urldc ) {
-        $self->logger->debug("Required urldc : $url");
+        $self->logger->debug("Required urldc: $url");
         $url =~ URIRE;
         $url = $2 . '://' . $3 . ( $4 ? ":$4" : '' );
-        $self->logger->debug("Set CSP form-action with urldc : $url");
+        $self->logger->debug("Set CSP form-action with urldc: $url");
         $csp .= " $url";
     }
     my $url = $args{params}->{URL};
     if ( defined $url ) {
-        $self->logger->debug("Required Params URL : $url");
+        $self->logger->debug("Required Params URL: $url");
         if ( $url =~ URIRE ) {
             $url = $2 . '://' . $3 . ( $4 ? ":$4" : '' );
-            $self->logger->debug("Set CSP form-action with Params URL : $url");
+            $self->logger->debug("Set CSP form-action with Params URL: $url");
             $csp .= " $url";
         }
     }
@@ -934,7 +992,6 @@ sub sendHtml {
     {
         $self->logger->debug(
             "Add SAML Discovery Protocol URL in CSP form-action");
-
         $csp .= " " . $self->conf->{samlDiscoveryProtocolURL};
     }
     $csp .= ';';
@@ -972,7 +1029,7 @@ sub sendHtml {
 
     # Set CSP header
     push @{ $res->[1] }, 'Content-Security-Policy' => $csp;
-    $self->logger->debug("Apply following CSP : $csp");
+    $self->logger->debug("Apply following CSP: $csp");
     return $res;
 }
 
@@ -1214,7 +1271,7 @@ sub setCorsHeaderFromConfig {
     if ( $self->conf->{corsEnabled} ) {
         my @cors = split /;/, $self->cors;
         push @{ $response->[1] }, @cors;
-        $self->logger->debug('Apply following CORS policy :');
+        $self->logger->debug('Apply following CORS policy:');
         $self->logger->debug(" $_") for @cors;
     }
 }

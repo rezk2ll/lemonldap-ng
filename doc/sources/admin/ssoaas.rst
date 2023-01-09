@@ -47,9 +47,9 @@ Two different kinds of architecture are existing to do this:
     Some requests can be dropped by the central FastCGI/uWSGI server.
 
     Example below with an uWSGI server to prevent Load Balancer health check requests
-    being forwarded to the central DevOps Handler:
+    being forwarded to the central DevOps Handler ::
 
-    ```route-remote-addr = ^127\.0\.0\.25[34]$ break: 403 Forbidden for IP ${REMOTE_ADDR}```
+        route-remote-addr = ^127\.0\.0\.25[34]$ break: 403 Forbidden for IP ${REMOTE_ADDR}
 
 
 Example of a Central FastCGI architecture:
@@ -90,7 +90,7 @@ requesting a Central uWSGI server (Nginx only):
        fastcgi_pass 10.1.2.3:9090;
        fastcgi_param VHOSTTYPE DevOps;
 
-       # Drop post datas
+       # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
 
@@ -300,7 +300,7 @@ directory.
        # Force handler type:
        fastcgi_param VHOSTTYPE DevOps;
 
-       # Drop post datas
+       # Drop post data
        fastcgi_pass_request_body  off;
        fastcgi_param CONTENT_LENGTH "";
 

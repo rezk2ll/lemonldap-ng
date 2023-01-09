@@ -44,7 +44,7 @@ For example:
 
    curl \
      -H "Authorization: Bearer a74d504ec9e784785e70a1da2b95d1d2" \
-     https://auth.example.ccom/oauth2/userinfo | json_pp
+     https://auth.example.com/oauth2/userinfo | json_pp
 
 .. code-block:: javascript
 
