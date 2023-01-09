@@ -126,8 +126,8 @@ sub _registration {
     # Recover creation parameters, including challenge
     my $state_id = $req->param('state_id');
     unless ($state_id) {
-        $self->logger->error( $self->prefix
-              . "2f: could not find state ID in $self->prefix response" );
+        $self->logger->error(
+            $self->prefix . "2f: could not find state ID in response" );
         return $self->p->sendError( $req, 'Invalid response', 400 );
     }
     my $state_data;
@@ -244,9 +244,8 @@ sub _verification {
     # Recover challenge
     my $state_data;
     unless ( $state_data = $self->ott->getToken($state_id) ) {
-        $self->logger->error(
-"$self->prefix . 2f: expired or invalid state ID in response ($state_id)"
-        );
+        $self->logger->error( $self->prefix
+              . "2f: expired or invalid state ID in response ($state_id)" );
         return $self->p->sendError( $req, 'PE82', 400 );
     }
 
