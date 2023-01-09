@@ -29,6 +29,13 @@ None
 2.0.16
 ------
 
+Security
+~~~~~~~~
+
+Behaviour change in 2FA registration to avoid adding device without testing current authentication level.
+(see `issue 2803 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2803>`__)
+User must log in by using its higher available 2FA to register a new one.
+
 Change in error messages
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
