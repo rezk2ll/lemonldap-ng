@@ -163,7 +163,7 @@ can't directly write this rule: this is done in 2 steps:
 
 -  use this combination rule: ``[SSL,LDAP] or [LDAP]``
 -  enable U2F with this rule: ``$_auth eq "LDAP"`` or
-   ``$_authenticationLevel < 4`` *(and adapt U2F authentication level)*
+   ``$authenticationLevel < 4`` *(and adapt U2F authentication level)*
 
 Now if you want to authenticate users either by LDAP or LDAP+U2F *(to
 have 2 different authentication level)*, 2 possibilities:

@@ -527,7 +527,7 @@ Some options are available:
    Args can be vars or session attributes, macros, ...
    By example: My::accessToTrace, Doctor, Who, _whatToTrace
 -  **Required authentication level**: this option avoids to reject user with
-   a rule based on ``$_authenticationLevel``. When user has not got the
+   a rule based on ``$authenticationLevel``. When user has not got the
    required level, he is redirected to an upgrade page in the portal.
    This default level is required for ALL locations relative to this virtual host.
    It can be overrided for each locations.
