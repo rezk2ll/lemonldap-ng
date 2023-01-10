@@ -63,9 +63,9 @@ sub run {
         $req,
         'ext2fcheck',
         params => {
-            TOKEN     => $token,
-            PREFIX    => $self->prefix,
-            TARGET    => '/'
+            TOKEN  => $token,
+            PREFIX => $self->prefix,
+            TARGET => '/'
               . $self->prefix
               . '2fcheck?skin='
               . $self->p->getSkin($req),

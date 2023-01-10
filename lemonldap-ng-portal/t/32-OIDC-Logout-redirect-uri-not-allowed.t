@@ -171,7 +171,7 @@ ok(
     qr#http://auth.op.com(/oauth2/logout)\?(post_logout_redirect_uri=.+)$# );
 count(1);
 
-like($query, qr/client_id=rpid/, "Found client ID in logout request");
+like( $query, qr/client_id=rpid/, "Found client ID in logout request" );
 count(1);
 
 # Push logout to OP

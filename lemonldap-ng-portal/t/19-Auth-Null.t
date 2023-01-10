@@ -13,7 +13,7 @@ my $client = LLNG::Manager::Test->new( {
             authentication => 'Null',
             userDB         => 'Same',
             scrollTop      => 100,
-            locationRules => {
+            locationRules  => {
                 'test1.example.com' => {
                     default => 'deny',
                 },
@@ -32,7 +32,8 @@ ok( $res->[2]->[0] =~ m%id="btn-back-to-top"%, 'scrollTop button found' )
   or print STDERR Dumper( $res->[2]->[0] );
 ok( $res->[2]->[0] =~ m%<div id="appslist">%, 'appsList found' )
   or print STDERR Dumper( $res->[2]->[0] );
-ok( $res->[2]->[0] =~ m%<span trspan="noAppAllowed">%, 'noAppAllowed message found' )
+ok( $res->[2]->[0] =~ m%<span trspan="noAppAllowed">%,
+    'noAppAllowed message found' )
   or print STDERR Dumper( $res->[2]->[0] );
 count(5);
 expectOK($res);

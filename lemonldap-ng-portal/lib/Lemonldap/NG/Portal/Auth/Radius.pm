@@ -46,9 +46,9 @@ has sessionKeys => (
 
 sub initRadius {
 
-    my $dictionary_file =  $_[0]->conf->{radiusDictionaryFile};
-    if ( $dictionary_file )
-    {
+    my $dictionary_file = $_[0]->conf->{radiusDictionaryFile};
+    if ($dictionary_file) {
+
         # required to be able to resolve names and values
         # default to /etc/raddb/dictionary ( same as Authen::Radius library ).
         if ( -f $dictionary_file ) {
@@ -57,9 +57,9 @@ sub initRadius {
         else {
             # log an error, avoid server error if missing.
             $_[0]->logger->error(
-                "Radius library resolution of attribute names requires to set a dictionary in "
-                . $dictionary_file
-                . ", this file was not found." );
+"Radius library resolution of attribute names requires to set a dictionary in "
+                  . $dictionary_file
+                  . ", this file was not found." );
         }
     }
     $_[0]->radius(

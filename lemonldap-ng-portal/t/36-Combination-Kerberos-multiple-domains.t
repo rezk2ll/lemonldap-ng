@@ -24,7 +24,8 @@ SKIP: {
     my $dbh = DBI->connect("dbi:SQLite:dbname=$userdb");
     $dbh->do('CREATE TABLE users_dom1 (user text,password text,name text)');
     $dbh->do('CREATE TABLE users_dom2 (user text,password text,name text)');
-    $dbh->do("INSERT INTO users_dom1 VALUES ('hford','harrison','Harrison Ford')");
+    $dbh->do(
+        "INSERT INTO users_dom1 VALUES ('hford','harrison','Harrison Ford')");
     $dbh->do("INSERT INTO users_dom2 VALUES ('hford','henry','Henry Ford')");
 
     my $client = LLNG::Manager::Test->new( {

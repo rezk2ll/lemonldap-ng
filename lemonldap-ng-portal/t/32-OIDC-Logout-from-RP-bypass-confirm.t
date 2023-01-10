@@ -180,7 +180,7 @@ count(1);
 ( $url, $query ) =
   expectRedirection( $res, qr#^http://auth.op.com(/.*)\?(.*)$# );
 
-like ($query, qr/id_token_hint=/, "Found ID Token hint");
+like( $query, qr/id_token_hint=/, "Found ID Token hint" );
 count(1);
 
 switch ('op');

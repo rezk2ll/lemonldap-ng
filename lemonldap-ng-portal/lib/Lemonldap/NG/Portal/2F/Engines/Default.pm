@@ -720,14 +720,14 @@ sub searchForAuthorized2Fmodules {
 
 sub canUpdateSfa {
     my ( $self, $req, $module, $action ) = @_;
-    my $user = $req->userData->{ $self->conf->{whatToTrace} };
+    my $user   = $req->userData->{ $self->conf->{whatToTrace} };
     my $prefix = '';
     my $msg;
 
     # Test actions
     if ( $module && $action ) {
         my $requiredLevel = $module->authnLevel;
-        $prefix        = $module->prefix;
+        $prefix = $module->prefix;
         $self->logger->debug("$user request to $action ${prefix}2f device");
 
         if ( $action eq 'delete' ) {
@@ -767,7 +767,7 @@ sub canUpdateSfa {
         if ( $self->conf->{impersonationRule} ) {
             $self->logger->debug('Impersonation plugin is enabled');
             $module = 'Impersonation';
-            $msg  = 'notAuthorized'
+            $msg    = 'notAuthorized'
               if ( $req->userData->{"$self->{conf}->{impersonationPrefix}_user"}
                 && $req->userData->{"$self->{conf}->{impersonationPrefix}_user"}
                 ne $req->userData->{_user} );
@@ -777,11 +777,12 @@ sub canUpdateSfa {
         if ( $self->conf->{contextSwitchingRule} ) {
             $self->logger->debug('ContextSwitching plugin is enabled');
             $module = 'ContextSwitching';
-            $msg  = 'notAuthorized'
+            $msg    = 'notAuthorized'
               if (
                 $req->userData->{
                     "$self->{conf}->{contextSwitchingPrefix}_session_id"}
-                && !$self->conf->{contextSwitchingAllowed2fModifications} );
+                && !$self->conf->{contextSwitchingAllowed2fModifications}
+              );
 
         }
         if ($msg) {

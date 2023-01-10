@@ -392,7 +392,7 @@ sub run {
         # Delete local session
         if ( my $session = $self->p->getApacheSession($session_id) ) {
             if ( $self->conf->{casBackChannelSingleLogout} ) {
-                $self->_send_back_channel_LogoutRequests($session->data);
+                $self->_send_back_channel_LogoutRequests( $session->data );
             }
 
             unless ( $self->p->_deleteSession( $req, $session ) ) {
@@ -497,7 +497,7 @@ sub logout {
     $self->deleteCasSecondarySessions($session_id) if ($session_id);
 
     if ( $self->conf->{casBackChannelSingleLogout} ) {
-        $self->_send_back_channel_LogoutRequests($req->sessionInfo);
+        $self->_send_back_channel_LogoutRequests( $req->sessionInfo );
     }
 
     return PE_OK;
@@ -614,7 +614,8 @@ sub validate {
     $self->deleteCasSession($casServiceSession);
 
     if ( $self->conf->{casBackChannelSingleLogout} ) {
-        $self->_save_ticket_for_single_logout($localSession, $service, $req->param('ticket'));
+        $self->_save_ticket_for_single_logout( $localSession, $service,
+            $req->param('ticket') );
     }
 
     my $h =
@@ -939,7 +940,8 @@ sub _validate2 {
     $self->deleteCasSession($casServiceSession);
 
     if ( $self->conf->{casBackChannelSingleLogout} ) {
-        $self->_save_ticket_for_single_logout($localSession, $service, $req->param('ticket'));
+        $self->_save_ticket_for_single_logout( $localSession, $service,
+            $req->param('ticket') );
     }
 
     my $h =
@@ -980,11 +982,11 @@ sub getUsernameForApp {
 sub _save_ticket_for_single_logout {
     my ( $self, $localSession, $service, $ticket ) = @_;
 
-    $self->logger->debug( "Saving service $service ticket $ticket for SLO");
+    $self->logger->debug("Saving service $service ticket $ticket for SLO");
 
     my $service2ticket = $localSession->data->{cas_tickets_for_SLO} || {};
     $service2ticket->{$service} = $ticket;
-    $localSession->update({ cas_tickets_for_SLO => $service2ticket });
+    $localSession->update( { cas_tickets_for_SLO => $service2ticket } );
 }
 
 sub _send_back_channel_LogoutRequests {
@@ -992,25 +994,31 @@ sub _send_back_channel_LogoutRequests {
 
     my $service2ticket = $sessionData->{cas_tickets_for_SLO} or return;
 
-    foreach my $service (keys %$service2ticket) {
+    foreach my $service ( keys %$service2ticket ) {
         my $ticket = $service2ticket->{$service};
-        $self->logger->debug("Sending back-channel LogoutRequest to $service (ticket $ticket)");
+        $self->logger->debug(
+            "Sending back-channel LogoutRequest to $service (ticket $ticket)");
 
         my $now = strftime( "%Y-%m-%dT%TZ", gmtime() );
+
         # NB: $ticket is a good enough random ID :-)
         # NB: although it looks alike SAML, the CAS SLO protocol is specific
         my $logoutRequest =
-            qq{<samlp:LogoutRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" ID="$ticket" Version="2.0" IssueInstant="$now">
+qq{<samlp:LogoutRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" ID="$ticket" Version="2.0" IssueInstant="$now">
                 <saml:NameID xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">\@NOT_USED\@</saml:NameID>
                 <samlp:SessionIndex>$ticket</samlp:SessionIndex>
             </samlp:LogoutRequest>};
 
-        # Apereo CAS is doing async requests by defaut. But doing it synchronously with a timeout should do it
+# Apereo CAS is doing async requests by defaut. But doing it synchronously with a timeout should do it
         my $response = $self->ua->post(
             $service,
             { logoutRequest => $logoutRequest },
-            "Content-Type" => 'application/x-www-form-urlencoded' );
-        $self->logger->debug("Sending back-channel LogoutRequest to $service: result (" . $response->message . ")" . "\n$logoutRequest");
+            "Content-Type" => 'application/x-www-form-urlencoded'
+        );
+        $self->logger->debug(
+                "Sending back-channel LogoutRequest to $service: result ("
+              . $response->message . ")"
+              . "\n$logoutRequest" );
     }
 }
 

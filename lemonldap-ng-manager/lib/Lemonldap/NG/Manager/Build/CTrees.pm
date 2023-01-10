@@ -180,7 +180,7 @@ sub cTrees {
                             'oidcOPMetaDataOptionsUseNonce'
                         ]
                     },
-                'oidcOPMetaDataOptionsComment'
+                    'oidcOPMetaDataOptionsComment'
                 ]
             },
             {

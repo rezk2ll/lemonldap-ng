@@ -16,7 +16,7 @@ has logo     => ( is => 'rw', default => 'password.png' );
 has prefix   => ( is => 'rw', default => 'password' );
 has template => ( is => 'ro', default => 'password2fregister' );
 has welcome  => ( is => 'ro', default => 'PE71' );
-has ott      => (
+has ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
@@ -89,12 +89,7 @@ sub run {
 
         # Delete previous password if any
         if (@password2f) {
-            if (
-                $self->del2fDevices(
-                    $req, $req->userData, \@password2f
-                )
-              )
-            {
+            if ( $self->del2fDevices( $req, $req->userData, \@password2f ) ) {
                 $self->logger->debug(
                     $self->prefix . "2f: old password(s) deleted" );
             }

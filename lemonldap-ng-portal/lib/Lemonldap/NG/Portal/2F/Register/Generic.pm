@@ -106,10 +106,7 @@ sub run {
 
         # Delete previous generic if any
         if (@generic2f) {
-            if (
-                $self->del2fDevices( $req, $req->userData, \@generic2f )
-              )
-            {
+            if ( $self->del2fDevices( $req, $req->userData, \@generic2f ) ) {
                 $self->logger->debug(
                     $self->prefix . "2f: old device(s) deleted" );
             }
@@ -146,8 +143,7 @@ sub run {
             ];
         }
         else {
-            $self->logger->debug(
-                $self->prefix . "2f: unable to add device" );
+            $self->logger->debug( $self->prefix . "2f: unable to add device" );
             return $self->p->sendError( $req, 'serverError' );
         }
     }

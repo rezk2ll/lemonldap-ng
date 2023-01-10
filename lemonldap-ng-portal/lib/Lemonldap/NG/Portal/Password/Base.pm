@@ -234,7 +234,7 @@ sub setNewPassword {
     return $hook_result if ( $hook_result != PE_OK );
 
     # Delegate to subclass
-    $args{useMail}     = $useMail;
+    $args{useMail}       = $useMail;
     $args{passwordReset} = 1;
     my $mod_result = $self->modifyPassword( $req, $pwd, %args );
 

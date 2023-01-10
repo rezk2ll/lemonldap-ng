@@ -18,7 +18,7 @@ has logo     => ( is => 'rw', default => 'webauthn.png' );
 has prefix   => ( is => 'rw', default => 'webauthn' );
 has template => ( is => 'ro', default => 'webauthn2fregister' );
 has welcome  => ( is => 'ro', default => 'webauthn2fWelcome' );
-has ott      => (
+has ott => (
     is      => 'ro',
     lazy    => 1,
     default => sub {

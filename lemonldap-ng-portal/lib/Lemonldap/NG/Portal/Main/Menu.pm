@@ -36,7 +36,7 @@ has menuModules => (
 has noApp         => ( is => 'rw', default => sub { 0 } );
 has specific      => ( is => 'rw', default => sub { {} } );
 has sfManagerRule => ( is => 'rw', default => sub { 1 } );
-has imgPath       => (
+has imgPath => (
     is      => 'rw',
     lazy    => 1,
     builder => sub {

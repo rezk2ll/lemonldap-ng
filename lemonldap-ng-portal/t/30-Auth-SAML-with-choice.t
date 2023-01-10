@@ -65,7 +65,8 @@ SKIP: {
       or print STDERR Dumper( \@idp );
     ok( $idp[2] eq 'auth.idp3.com', '3rd = idp3' )
       or print STDERR Dumper( \@idp );
-    ok( $idp[3] eq 'auth.idp.com', '4th = idp' ) or print STDERR Dumper( \@idp );
+    ok( $idp[3] eq 'auth.idp.com', '4th = idp' )
+      or print STDERR Dumper( \@idp );
 
     ok(
         $res->[2]->[0] =~

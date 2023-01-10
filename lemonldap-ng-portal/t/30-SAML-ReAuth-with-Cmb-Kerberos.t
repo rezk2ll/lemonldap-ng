@@ -99,7 +99,8 @@ SKIP: {
     $pdata = 'lemonldappdata=' . expectCookie( $res, 'lemonldappdata' );
 
     ( $host, $tmp, $query ) =
-      expectForm( $res, '#', undef, 'upgrading', 'url', 'kerberos', 'ajax_auth_token' );
+      expectForm( $res, '#', undef, 'upgrading', 'url', 'kerberos',
+        'ajax_auth_token' );
 
     # JS code should call /authkrb
     ok(

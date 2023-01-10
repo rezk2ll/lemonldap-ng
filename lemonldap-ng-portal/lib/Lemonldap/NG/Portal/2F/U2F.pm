@@ -116,7 +116,8 @@ sub verify {
             return $self->fail($req);
         }
 
-        $self->logger->debug( $self->prefix . "2f: get challenge ($challenge)" );
+        $self->logger->debug(
+            $self->prefix . "2f: get challenge ($challenge)" );
 
         unless ( $session->{__ch} and $session->{__ch} eq $challenge ) {
             $self->userLogger->error( $self->prefix

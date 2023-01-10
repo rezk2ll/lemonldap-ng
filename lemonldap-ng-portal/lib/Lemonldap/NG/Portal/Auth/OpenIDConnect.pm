@@ -61,13 +61,14 @@ sub init {
               : $portalPath . $self->p->staticPrefix . "/common/" . $icon;
         }
 
-        push @list, {
+        push @list,
+          {
             val   => $_,
             name  => $name,
             title => $tooltip,
             icon  => $img_src,
             order => $order
-        };
+          };
     }
     $self->addRouteFromConf(
         'Unauth',

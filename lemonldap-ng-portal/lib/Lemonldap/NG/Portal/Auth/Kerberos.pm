@@ -22,7 +22,7 @@ has AjaxInitScript => ( is => 'rw', default => '' );
 has Name           => ( is => 'ro', default => 'Kerberos' );
 
 # Override _Ajax InitCmd
-has InitCmd        => (
+has InitCmd => (
     is      => 'ro',
     default =>
 q@$self->p->setHiddenFormValue( $req, kerberos => 0, '', 0 );$self->p->setHiddenFormValue( $req, ajax_auth_token => 0, '', 0 )@

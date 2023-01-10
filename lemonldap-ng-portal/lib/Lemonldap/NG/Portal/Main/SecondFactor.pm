@@ -32,10 +32,10 @@ has ott => (
     }
 );
 
-has prefix     => ( is => 'rw' );
-has logo       => ( is => 'rw', default => '2f.png' );
-has label      => ( is => 'rw' );
-has noRoute    => ( is => 'ro' );
+has prefix  => ( is => 'rw' );
+has logo    => ( is => 'rw', default => '2f.png' );
+has label   => ( is => 'rw' );
+has noRoute => ( is => 'ro' );
 has authnLevel => (
     is      => 'rw',
     lazy    => 1,

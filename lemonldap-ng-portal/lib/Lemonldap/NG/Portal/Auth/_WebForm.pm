@@ -195,7 +195,7 @@ sub getFormParams {
     $self->logger->debug( $self->prefix . '2f: stayconnected set' )
       if $stayconnected;
 
-    return ($checkLogins, $stayconnected);
+    return ( $checkLogins, $stayconnected );
 }
 
 1;

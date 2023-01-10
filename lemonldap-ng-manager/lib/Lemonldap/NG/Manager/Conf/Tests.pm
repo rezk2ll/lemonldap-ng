@@ -688,6 +688,7 @@ sub tests {
             return 1 unless ( defined $conf->{issuersTimeout} );
             return ( 0, "Issuers token TTL must be higher than 30s" )
               unless ( $conf->{issuersTimeout} > 30 );
+
             # because of issue #2186
             return ( 1, "Issuers token TTL should not be higher than 10mn" )
               if ( $conf->{issuersTimeout} > 600 );

@@ -51,6 +51,7 @@ sub processHook {
     my $err = PE_OK;
     for my $sub ( @{ $self->hook->{$hookName} } ) {
         if ( ref $sub eq 'CODE' ) {
+
             # If return code is not PE_OK (0), stop processing
             last if ( $err = $sub->( $req, @args ) );
         }

@@ -28,8 +28,7 @@ sub confirm {
 sub modifyPassword {
     my ( $self, $req, $pwd, %args ) = @_;
     $self->checkChoice($req) or return PE_ERROR;
-    return $req->data->{enabledMods2}->[0]
-      ->modifyPassword( $req, $pwd, %args);
+    return $req->data->{enabledMods2}->[0]->modifyPassword( $req, $pwd, %args );
 }
 
 1;

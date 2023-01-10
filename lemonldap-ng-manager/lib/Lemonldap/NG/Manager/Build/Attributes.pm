@@ -1327,8 +1327,9 @@ sub attributes {
             documentation => 'Display OIDC consents tab in portal',
         },
         portalDisplayOrder => {
-            type          => 'text',
-            default       => 'Appslist ChangePassword LoginHistory OidcConsents Logout',
+            type    => 'text',
+            default =>
+              'Appslist ChangePassword LoginHistory OidcConsents Logout',
             documentation => 'List for ordering tabs in portal',
         },
         portalDisplayGeneratePassword => {
@@ -3866,14 +3867,16 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         radiusServer => { type => 'text' },
 
         radiusExportedVars => {
-            type          => 'keyTextContainer',
+            type => 'keyTextContainer',
+
             # session key name
-            keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            keyMsgFail    => '__badVariableName__',
+            keyTest    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            keyMsgFail => '__badVariableName__',
+
             # radius attribue name (from discitonary)
             test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             msgFail       => '__badValue__',
-            default       => { },
+            default       => {},
             documentation => 'RADIUS exported variables',
         },
         radiusDictionaryFile => { type => 'text' },

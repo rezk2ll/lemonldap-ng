@@ -33,7 +33,7 @@ sub modifyPassword {
     my $table       = $self->conf->{dbiAuthTable};
     my $dynamicHash = $self->conf->{dbiDynamicHashEnabled} || 0;
     my $passwordsql;
-    
+
     if ( $dynamicHash == 1 ) {
 
         # Dynamic password hashes
