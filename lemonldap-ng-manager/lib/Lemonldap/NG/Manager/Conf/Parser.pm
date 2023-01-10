@@ -359,8 +359,12 @@ sub _scanNodes {
                         $self->set( $target, $key, $leaf->{title},
                             $leaf->{data} );
                     }
+                    elsif ( !@$subNodes ) {
+                        hdebug("  $target: no subnodes");
+                        $self->confChanged(1);
+                    }
                     else {
-                        hdebug("  $target: looking for subnodes");
+                        hdebug("  $target: scanning subnodes");
                         $self->_scanNodes($subNodes);
                     }
                 }
@@ -433,8 +437,12 @@ sub _scanNodes {
                         }
                         $self->set( $target, $key, $leaf->{title}, $tmp );
                     }
+                    elsif ( !@$subNodes ) {
+                        hdebug("  $target: no subnodes");
+                        $self->confChanged(1);
+                    }
                     else {
-                        hdebug("  $target: looking for subnodes");
+                        hdebug("  $target: scanning subnodes");
                         $self->_scanNodes($subNodes);
                     }
                 }
@@ -453,8 +461,12 @@ sub _scanNodes {
                         $self->set( $target, $key, $leaf->{title},
                             $leaf->{data} );
                     }
+                    elsif ( !@$subNodes ) {
+                        hdebug("  $target: no subnodes");
+                        $self->confChanged(1);
+                    }
                     else {
-                        hdebug("  $target: looking for subnodes");
+                        hdebug("  $target: scanning subnodes");
                         $self->_scanNodes($subNodes);
                     }
                 }
@@ -472,8 +484,12 @@ sub _scanNodes {
                             $self->set( $target, $key, $leaf->{title},
                                 $leaf->{data} );
                         }
+                        elsif ( !@$subNodes ) {
+                            hdebug("  $target: no subnodes");
+                            $self->confChanged(1);
+                        }
                         else {
-                            hdebug("  $target: looking for subnodes");
+                            hdebug("  $target: scanning subnodes");
                             $self->_scanNodes($subNodes);
                         }
                     }
@@ -524,8 +540,12 @@ sub _scanNodes {
                         $self->set( $target, $key, $leaf->{title},
                             $leaf->{data} );
                     }
+                    elsif ( !@$subNodes ) {
+                        hdebug("  $target: no subnodes");
+                        $self->confChanged(1);
+                    }
                     else {
-                        hdebug("  $target: looking for subnodes");
+                        hdebug("  $target: scanning subnodes");
                         $self->_scanNodes($subNodes);
                     }
                 }
@@ -543,8 +563,12 @@ sub _scanNodes {
                             $self->set( $target, $key, $leaf->{title},
                                 $leaf->{data} );
                         }
+                        elsif ( !@$subNodes ) {
+                            hdebug("  $target: no subnodes");
+                            $self->confChanged(1);
+                        }
                         else {
-                            hdebug("  $target: looking for subnodes");
+                            hdebug("  $target: scanning subnodes");
                             $self->_scanNodes($subNodes);
                         }
                     }
