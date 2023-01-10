@@ -1304,12 +1304,26 @@ sub loadTemplate {
 # Content-Security-Polity header
 sub cspGetHost {
     my ( $self, $url ) = @_;
-    my $uri = $url // "";
+    return unless $url;
+    my $uri = $url;
     unless ( $uri->isa("URI") ) {
         $uri = URI->new($uri);
     }
-    return (
-        $uri->scheme . "://" . ( $uri->_port ? $uri->host_port : $uri->host ) );
+    my $scheme = $uri->scheme || "";
+    if ( $scheme =~ /^https?/ ) {
+        return (
+            $scheme . "://"
+              . (
+                ( $uri->port == $uri->default_port )
+                ? $uri->host
+                : $uri->host_port
+              )
+        );
+    }
+    elsif ($scheme) {
+        return ( $scheme . ":" );
+    }
+    return;
 }
 
 sub buildUrl {
