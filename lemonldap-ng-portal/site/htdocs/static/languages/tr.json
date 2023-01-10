@@ -218,7 +218,7 @@
 "mailSent2":"E-posta adresinize bir mesaj gönderildi.",
 "maintenanceMode":"Bu uygulama şuan bakımda, lütfen daha sonra bağlanmayı deneyin",
 "mandatoryField":"* Zorunlu alan",
-"maxNumberof2FDevicesReached":"Maksimum 2F cihaz sayısına ulaşıldı!",
+"maxNumberOf2FDevicesReached":"Maksimum 2F cihaz sayısına ulaşıldı!",
 "missingCode":"Kod eksik",
 "missingPassword":"Password was not entered",
 "myNotification":"Kabul edilen bildirimim",

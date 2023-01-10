@@ -53,10 +53,6 @@ sub run {
     return $self->p->sendError( $req, 'PE82', 400 )
       unless $user;
 
-    # Check if Password 2F can be updated
-    my $msg = $self->canUpdateSfa( $req, $action );
-    return $self->p->sendError( $req, $msg, 400 ) if $msg;
-
     # Verification that user has a valid password
     if ( $action eq 'verify' ) {
 

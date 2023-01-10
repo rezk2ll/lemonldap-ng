@@ -73,17 +73,4 @@ sub checkNameSfa {
     return $name;
 }
 
-# Check if user can register a SFA
-sub checkMaximumSfaCount {
-    my ( $self, @sfaDevices ) = @_;
-    my $size    = @sfaDevices;
-    my $maxSize = $self->conf->{max2FDevices};
-
-    $self->logger->debug("Registered 2F device(s): $size / $maxSize");
-    $self->userLogger->warn("Max number of 2F devices is reached")
-      if ( $size >= $maxSize );
-
-    return $maxSize - $size;
-}
-
 1;

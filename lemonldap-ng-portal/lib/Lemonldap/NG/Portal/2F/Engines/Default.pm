@@ -720,9 +720,9 @@ sub searchForAuthorized2Fmodules {
 
 sub canUpdateSfa {
     my ( $self, $req, $module, $action ) = @_;
-    my $user   = $req->userData->{ $self->conf->{whatToTrace} };
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
+    my ( $sfaDevices, $msg );
     my $prefix = '';
-    my $msg;
 
     # Test actions
     if ( $module && $action ) {
@@ -736,26 +736,38 @@ sub canUpdateSfa {
                 && $req->userData->{authenticationLevel} < $requiredLevel );
         }
         if ( $action =~ /^regist/ ) {
-            $requiredLevel = $req->userData->{authenticationLevel};
-            my @am =
-              $self->searchForAuthorized2Fmodules( $req, $req->userData );
             my $_2fDevices = $self->get2fDevices( $req, $req->userData );
-            my %authnLevel = map { $_->type => $_->authnLevel } @am;
-            foreach (@$_2fDevices) {
-                $requiredLevel = $authnLevel{ $_->{type} }
-                  if ( $authnLevel{ $_->{type} }
-                    && $authnLevel{ $_->{type} } > $requiredLevel );
+            if ( $sfaDevices = $self->checkMaximumSfaCount($_2fDevices) ) {
+                $requiredLevel = $req->userData->{authenticationLevel};
+                my @am =
+                  $self->searchForAuthorized2Fmodules( $req, $req->userData );
+
+                my %authnLevel = map { $_->type => $_->authnLevel } @am;
+                foreach (@$_2fDevices) {
+                    $requiredLevel = $authnLevel{ $_->{type} }
+                      if ( $authnLevel{ $_->{type} }
+                        && $authnLevel{ $_->{type} } > $requiredLevel );
+                }
+                $msg = 'notAuthorizedAuthLevel'
+                  if ( $req->userData->{authenticationLevel} < $requiredLevel );
             }
-            $msg = 'notAuthorizedAuthLevel'
-              if ( $req->userData->{authenticationLevel} < $requiredLevel );
+            else {
+                $msg = 'maxNumberOf2FDevicesReached';
+            }
         }
         if ($msg) {
-            $self->userLogger->warn(
+            if ($sfaDevices) {
+                $self->userLogger->warn(
 "$user request to $action ${prefix}2f device rejected due to insufficient authentication level!"
-            );
-            $self->logger->debug(
+                );
+                $self->logger->debug(
 "authnLevel: $req->{userData}->{authenticationLevel} < requiredLevel: $requiredLevel"
-            );
+                );
+            }
+            else {
+                $self->logger->debug(
+                    "maxNumberOf2FDevices for $user");
+            }
         }
     }
 
@@ -808,6 +820,19 @@ sub findRegisterModuleFor {
     return $mod->isa("Lemonldap::NG::Portal::Lib::Code2F")
       ? "::2F::Register::Generic"
       : undef;
+}
+
+# Check if user can register a SFA
+sub checkMaximumSfaCount {
+    my ( $self, $sfaDevices ) = @_;
+    my $size    = @$sfaDevices;
+    my $maxSize = $self->conf->{max2FDevices};
+
+    $self->logger->debug("Registered 2F device(s): $size / $maxSize");
+    $self->userLogger->warn("Max number of 2F devices is reached")
+      if ( $size >= $maxSize );
+
+    return $maxSize - $size;
 }
 
 1;

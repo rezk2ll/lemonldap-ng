@@ -218,7 +218,7 @@
 "mailSent2":"Eine Nachricht wurde an deine E-Mail Adresse gesendet.",
 "maintenanceMode":"Diese Anwendung ist in Wartung, bitte versuche später eine Verbindung herzustellen",
 "mandatoryField":"* Mandatory field",
-"maxNumberof2FDevicesReached":"Maximum number of 2F devices reached!",
+"maxNumberOf2FDevicesReached":"Maximum number of 2F devices reached!",
 "missingCode":"Code fehlt",
 "missingPassword":"Password was not entered",
 "myNotification":"My accepted notification",

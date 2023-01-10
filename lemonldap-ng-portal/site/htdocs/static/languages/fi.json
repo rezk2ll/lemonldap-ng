@@ -218,7 +218,7 @@
 "mailSent2":"Viesti on lähetetty sähköpostiisi.",
 "maintenanceMode":"Tätä sovellusta ylläpidetään, ole hyvä ja yritä myöhemmin uudelleen",
 "mandatoryField":"* Pakollinen kenttä",
-"maxNumberof2FDevicesReached":"2:sen vaiheen tunnistusvälineiden enimmäismäärä saavutettiin!",
+"maxNumberOf2FDevicesReached":"2:sen vaiheen tunnistusvälineiden enimmäismäärä saavutettiin!",
 "missingCode":"Koodi puuttuu",
 "missingPassword":"Salasanaa ei annettu",
 "myNotification":"Hyväksymäni ilmoitus",

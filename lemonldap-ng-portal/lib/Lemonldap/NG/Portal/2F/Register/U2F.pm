@@ -39,11 +39,6 @@ sub run {
 
         # Read existing 2F device(s)
         my @alldevices = $self->find2fDevicesByType( $req, $req->userData );
-
-        # Check if user can register one more 2F device
-        return $self->p->sendError( $req, 'maxNumberof2FDevicesReached', 400 )
-          unless $self->checkMaximumSfaCount(@alldevices);
-
         my $challenge = $self->crypter->registrationChallenge;
         $self->logger->debug(
             $self->prefix . "2f: registration challenge ($challenge)" );

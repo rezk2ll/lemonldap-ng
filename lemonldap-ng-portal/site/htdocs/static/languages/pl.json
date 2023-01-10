@@ -218,7 +218,7 @@
 "mailSent2":"Wiadomość została wysłana na Twój adres e-mail.",
 "maintenanceMode":"Ta aplikacja jest w trakcie prac serwisowych, spróbuj połączyć się później",
 "mandatoryField":"* Pole obowiązkowe",
-"maxNumberof2FDevicesReached":"Osiągnięto maksymalną liczbę urządzeń 2F!",
+"maxNumberOf2FDevicesReached":"Osiągnięto maksymalną liczbę urządzeń 2F!",
 "missingCode":"Brakuje kodu",
 "missingPassword":"Password was not entered",
 "myNotification":"Moje zaakceptowane powiadomienie",

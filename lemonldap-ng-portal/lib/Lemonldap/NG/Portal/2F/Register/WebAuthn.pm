@@ -80,10 +80,6 @@ sub _generate_user_handle {
 sub _registrationchallenge {
     my ( $self, $req, $user ) = @_;
     my @alldevices = $self->find2fDevicesByType( $req, $req->userData );
-
-    return $self->p->sendError( $req, 'maxNumberof2FDevicesReached', 400 )
-      unless $self->checkMaximumSfaCount(@alldevices);
-
     my $challenge_base64 = encode_base64url( Crypt::URandom::urandom(32) );
 
     # Challenge is persisted on the server
