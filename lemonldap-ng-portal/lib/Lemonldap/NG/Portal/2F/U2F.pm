@@ -42,7 +42,7 @@ sub init {
       unless ( $self->Lemonldap::NG::Portal::Main::SecondFactor::init()
         and $self->Lemonldap::NG::Portal::Lib::U2F::init() );
 
-    1;
+    return 1;
 }
 
 # RUNNING METHODS
@@ -85,7 +85,7 @@ sub run {
         );
 
         # Prepare form
-        my ( $checkLogins, $stayconnected ) = $self->getFormParams($req);
+        my ( $checkLogins, $stayConnected ) = $self->getFormParams($req);
         my $tmp = $self->p->sendHtml(
             $req,
             'u2fcheck',
@@ -93,7 +93,7 @@ sub run {
                 DATA          => $data,
                 TOKEN         => $token,
                 CHECKLOGINS   => $checkLogins,
-                STAYCONNECTED => $stayconnected
+                STAYCONNECTED => $stayConnected
             }
         );
 

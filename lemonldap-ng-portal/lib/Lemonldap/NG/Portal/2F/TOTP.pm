@@ -46,14 +46,14 @@ sub run {
     $self->logger->debug( $self->prefix . '2f: generate form' );
 
     # Prepare form
-    my ( $checkLogins, $stayconnected ) = $self->getFormParams($req);
+    my ( $checkLogins, $stayConnected ) = $self->getFormParams($req);
     my $tmp = $self->p->sendHtml(
         $req,
         'totp2fcheck',
         params => {
             TOKEN         => $token,
             CHECKLOGINS   => $checkLogins,
-            STAYCONNECTED => $stayconnected
+            STAYCONNECTED => $stayConnected
         }
     );
     $self->logger->debug( $self->prefix . '2f: prepare verification' );

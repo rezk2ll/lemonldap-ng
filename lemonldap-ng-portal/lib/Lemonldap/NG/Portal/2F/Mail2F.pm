@@ -7,11 +7,11 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
   PE_BADOTP
   PE_FORMEMPTY
-  PE_SENDRESPONSE
   PE_MUSTHAVEMAIL
+  PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.0.16';
 
 extends qw(
   Lemonldap::NG::Portal::Lib::Code2F
@@ -64,7 +64,8 @@ sub init {
     my ($self) = @_;
 
     unless ( $self->sessionKey ) {
-        $self->error("Missing session key parameter, aborting");
+        $self->error(
+            $self->prefix . '2f: missing session key parameter, aborting' );
         return 0;
     }
 
@@ -78,7 +79,8 @@ sub run {
     if ( !$self->is_registrable ) {
         my $dest = $req->{sessionInfo}->{ $self->sessionKey };
         unless ($dest) {
-            $self->logger->error( "Could not find mail attribute for login "
+            $self->logger->error( $self->prefix
+                  . '2f: could not find mail attribute for login '
                   . $req->{sessionInfo}->{_user} );
             return PE_MUSTHAVEMAIL;
         }
@@ -90,11 +92,11 @@ sub run {
 
 sub sendCode {
     my ( $self, $req, $sessionInfo, $code ) = @_;
-
     my $dest = $sessionInfo->{ $self->sessionKey };
 
     if ( !$dest ) {
-        $self->logger->error('Unable to find email recipient');
+        $self->logger->error(
+            $self->prefix . '2f: unable to find email recipient' );
         return 0;
     }
 
@@ -128,16 +130,15 @@ sub sendCode {
             $req,
             'mail_2fcode',
             filter => $tr,
-            params => {
-                code => $code,
-            },
+            params => { code => $code }
         );
         $html = 1;
     }
 
     # Send mail
     unless ( $self->send_mail( $dest, $subject, $body, $html ) ) {
-        $self->logger->error( 'Unable to send 2F code mail to ' . $dest );
+        $self->logger->error(
+            $self->prefix . "2f: unable to send code to $dest" );
         return 0;
     }
     return 1;
@@ -146,7 +147,7 @@ sub sendCode {
 sub verify_external {
     my ( $self, $req, $session, $usercode ) = @_;
     $self->logger->error(
-        "Error in Mail2F: verify_external is not supposed to be invoked");
+        $self->prefix . '2f: verify_external is not supposed to be invoked' );
     return PE_ERROR;
 }
 

@@ -51,11 +51,11 @@ sub run {
     my ( $self, $req, $token ) = @_;
     $self->logger->debug( $self->prefix . '2f: generate form' );
 
-    my ( $checkLogins, $stayconnected ) = $self->getFormParams($req);
+    my ( $checkLogins, $stayConnected ) = $self->getFormParams($req);
     my %tplPrms = (
         TOKEN         => $token,
         CHECKLOGINS   => $checkLogins,
-        STAYCONNECTED => $stayconnected
+        STAYCONNECTED => $stayConnected
     );
 
     if ( my $res = $self->u2f->loadUser( $req, $req->sessionInfo ) ) {
@@ -114,7 +114,7 @@ sub verify {
         $self->logger->debug( $self->prefix . '2f: TOTP response detected' );
         return $self->totp->verify( $req, $session );
     }
-    return ( $r1 ? $r1 : PE_FORMEMPTY );
+    return $r1 ? $r1 : PE_FORMEMPTY;
 }
 
 1;

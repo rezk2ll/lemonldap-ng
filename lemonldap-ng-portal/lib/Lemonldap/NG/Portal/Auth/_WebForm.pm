@@ -191,11 +191,11 @@ sub getFormParams {
     $self->logger->debug( $self->prefix . '2f: checkLogins set' )
       if $checkLogins;
 
-    my $stayconnected = $req->param('stayconnected');
-    $self->logger->debug( $self->prefix . '2f: stayconnected set' )
-      if $stayconnected;
+    my $stayConnected = $req->param('stayconnected');
+    $self->logger->debug( $self->prefix . '2f: stayConnected set' )
+      if $stayConnected;
 
-    return ( $checkLogins, $stayconnected );
+    return ( $checkLogins, $stayConnected );
 }
 
 1;

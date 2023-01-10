@@ -29,9 +29,11 @@ has yubi   => ( is => 'rw' );
 
 sub init {
     my ($self) = @_;
+
     eval { require Auth::Yubikey_WebClient };
     if ($@) {
-        $self->logger->error($@);
+        $self->logger->error("Can't load Yubikey_WebClient  library: $@");
+        $self->error("Can't load Yubikey_WebClient library: $@");
         return 0;
     }
 
@@ -39,11 +41,10 @@ sub init {
     if ( $self->conf->{yubikey2fActivation} eq '1' ) {
         my @newrules;
 
-        # If self registration is enabled, detect if user has registered its
-        # key
-        if ( $self->conf->{yubikey2fSelfRegistration} ) {
-            push @newrules, 'has2f("UBK")';
-        }
+        # If self registration is enabled,
+        # detect if user has registered its key
+        push @newrules, 'has2f("UBK")'
+          if $self->conf->{yubikey2fSelfRegistration};
 
         # If Yubikey looked up from an attribute, test attribute's presence
         if ( $self->conf->{yubikey2fFromSessionAttribute} ) {
@@ -116,7 +117,7 @@ sub _findYubikey {
 }
 
 sub run {
-    my ( $self, $req, $token, $_2fDevices ) = @_;
+    my ( $self, $req, $token ) = @_;
     my $yubikey = $self->_findYubikey( $req, $req->sessionInfo );
     unless ($yubikey) {
         $self->userLogger->warn( $self->prefix
@@ -128,7 +129,7 @@ sub run {
     $self->logger->debug( $self->prefix . "2f: found $yubikey" );
 
     # Prepare form
-    my ( $checkLogins, $stayconnected ) = $self->getFormParams($req);
+    my ( $checkLogins, $stayConnected ) = $self->getFormParams($req);
     my $tmp = $self->p->sendHtml(
         $req,
         'ext2fcheck',
@@ -138,7 +139,7 @@ sub run {
             INPUTLOGO     => $self->logo,
             LEGEND        => 'clickOnYubikey',
             CHECKLOGINS   => $checkLogins,
-            STAYCONNECTED => $stayconnected
+            STAYCONNECTED => $stayConnected
         }
     );
     $self->logger->debug( $self->prefix . '2f: display form' );
