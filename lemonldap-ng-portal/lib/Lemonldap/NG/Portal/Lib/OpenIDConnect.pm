@@ -66,6 +66,8 @@ has ott => (
     lazy    => 1,
     default => sub {
         my $ott = $_[0]->{p}->loadModule('::Lib::OneTimeToken');
+        $ott->timeout( $_[0]->conf->{oidcRPStateTimeout}
+              || $_[0]->conf->{timeout} );
         return $ott;
     }
 );
@@ -1328,21 +1330,13 @@ sub storeState {
     # check if there are data to store
     my $infos;
     foreach (@data) {
-        $infos->{$_}        = $req->{$_}       if $req->{$_};
-        $infos->{"data_$_"} = $req->data->{$_} if $req->data->{$_};
+        $infos->{state}->{$_}        = $req->{$_}       if $req->{$_};
+        $infos->{state}->{"data_$_"} = $req->data->{$_} if $req->data->{$_};
     }
     return unless ($infos);
 
     # Session type
     $infos->{_type} = "state";
-
-    # Set _utime for session autoremove
-    # Use default session timeout and relayState session timeout to compute it
-    my $time         = time();
-    my $timeout      = $self->conf->{timeout};
-    my $stateTimeout = $self->conf->{oidcRPStateTimeout} || $timeout;
-
-    $infos->{_utime} = $time + ( $stateTimeout - $timeout );
 
     # Create state session and store infos
     return $self->ott->createToken($infos);
@@ -1358,13 +1352,12 @@ sub extractState {
     my $stateSession = $self->ott->getToken($state);
 
     return 0 unless $stateSession;
+    return 0 unless $stateSession->{_type} eq "state";
+    return 0 unless $stateSession->{state};
 
     # Push values in $self
-    foreach ( keys %{$stateSession} ) {
-        next
-          if $_ =~
-/^(?:_type|_session_id|_session_kind|_utime|tokenTimeoutTimestamp|tokenSessionStartTimestamp)$/;
-        my $tmp = $stateSession->{$_};
+    foreach ( keys %{ $stateSession->{state} } ) {
+        my $tmp = $stateSession->{state}->{$_};
         if (s/^data_//) {
             $req->data->{$_} = $tmp;
         }
