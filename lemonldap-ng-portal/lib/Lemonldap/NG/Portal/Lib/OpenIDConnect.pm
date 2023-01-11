@@ -1363,7 +1363,7 @@ sub extractState {
     foreach ( keys %{$stateSession} ) {
         next
           if $_ =~
-/^(?:type|_session_id|_session_kind|_utime|tokenTimeoutTimestamp|tokenSessionStartTimestamp)$/;
+/^(?:_type|_session_id|_session_kind|_utime|tokenTimeoutTimestamp|tokenSessionStartTimestamp)$/;
         my $tmp = $stateSession->{$_};
         if (s/^data_//) {
             $req->data->{$_} = $tmp;
