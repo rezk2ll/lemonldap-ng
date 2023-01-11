@@ -131,7 +131,9 @@ sub _resend {
     {
 
         # Resend code and update last retry
-        return PE_ERROR unless $self->sendCode( $req, $session, $code );
+        unless ($self->sendCode( $req, $session, $code )){
+            return $self->p->do( $req, [ sub { PE_ERROR } ] );
+        };
         $self->ott->updateToken( $token, __lastRetry => time );
     }
     else {

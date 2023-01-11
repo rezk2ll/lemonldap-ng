@@ -70,16 +70,22 @@ sub init {
             order => $order
           };
     }
-    $self->addRouteFromConf(
-        'Unauth',
-        oidcServiceMetaDataFrontChannelURI => 'alreadyLoggedOut',
-        oidcServiceMetaDataBackChannelURI  => 'backLogout',
-    );
-    $self->addRouteFromConf(
-        'Auth',
-        oidcServiceMetaDataFrontChannelURI => 'frontLogout',
-        oidcServiceMetaDataBackChannelURI  => 'backLogout',
-    );
+
+    # If this module has already been loaded,
+    # skip routes to avoid a warning in conf
+    if ( !$self->p->loadedModules->{ ref($self) } ) {
+        $self->addRouteFromConf(
+            'Unauth',
+            oidcServiceMetaDataFrontChannelURI => 'alreadyLoggedOut',
+            oidcServiceMetaDataBackChannelURI  => 'backLogout',
+        );
+        $self->addRouteFromConf(
+            'Auth',
+            oidcServiceMetaDataFrontChannelURI => 'frontLogout',
+            oidcServiceMetaDataBackChannelURI  => 'backLogout',
+        );
+    }
+
     @list =
       sort {
              $a->{order} <=> $b->{order}
@@ -398,10 +404,14 @@ sub alreadyLoggedOut {
 
 sub frontLogout {
     my ( $self, $req ) = @_;
+    return $self->p->sendError( $req,
+        'Front Channel logout is not implemented', 501 );
 }
 
 sub backLogout {
     my ( $self, $req ) = @_;
+    return $self->p->sendError( $req, 'Back Channel logout is not implemented',
+        501 );
 }
 
 1;
