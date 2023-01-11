@@ -23,6 +23,7 @@ use Scalar::Util qw/looks_like_number/;
 use URI;
 use URI::QueryParam;
 use Mouse;
+use Crypt::URandom;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
 
@@ -327,7 +328,7 @@ sub getCallbackUri {
 # @param state State
 # return String Authentication Request URI
 sub buildAuthorizationCodeAuthnRequest {
-    my ( $self, $req, $op, $state ) = @_;
+    my ( $self, $req, $op, $state, $nonce ) = @_;
 
     my $authorize_uri =
       $self->oidcOPList->{$op}->{conf}->{authorization_endpoint};
@@ -344,9 +345,6 @@ sub buildAuthorizationCodeAuthnRequest {
       ->{oidcOPMetaDataOptionsClientID};
     my $scope =
       $self->conf->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsScope};
-    my $use_nonce =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsUseNonce};
     my $response_type = "code";
     my $redirect_uri  = $self->getCallbackUri($req);
     my $display =
@@ -364,9 +362,6 @@ sub buildAuthorizationCodeAuthnRequest {
     my $acr_values =
       $self->conf->{oidcOPMetaDataOptions}->{$op}
       ->{oidcOPMetaDataOptionsAcrValues};
-
-    my $nonce;
-    $nonce = $self->ott->createToken if ($use_nonce);
 
     my $authorize_request_params = {
         response_type => $response_type,
@@ -712,7 +707,7 @@ sub checkTokenResponseValidity {
 # Check validity of ID Token
 # return boolean 1 if the token is valid, 0 else
 sub checkIDTokenValidity {
-    my ( $self, $op, $id_token ) = @_;
+    my ( $self, $op, $id_token, $state_nonce ) = @_;
 
     my $client_id =
       $self->conf->{oidcOPMetaDataOptions}->{$op}
@@ -777,15 +772,17 @@ sub checkIDTokenValidity {
 
     # Check nonce
     if ($use_nonce) {
-        my $nonce = $id_token->{nonce};
-        unless ($nonce) {
+        my $id_token_nonce = $id_token->{nonce};
+        unless ($id_token_nonce) {
             $self->logger->error("Nonce was not returned by OP $op");
             return 0;
         }
         else {
             # Get nonce session
-            unless ( $self->ott->getToken($nonce) ) {
-                $self->logger->error("Nonce $nonce verification failed");
+            unless ( $id_token_nonce eq $state_nonce ) {
+                $self->logger->error(
+"Nonce $id_token_nonce verification failed, expected $state_nonce"
+                );
                 return 0;
             }
         }
@@ -2400,6 +2397,11 @@ sub getUserIDForRP {
     return $self->spMacros->{$rp}->{$user_id_attribute}
       ? $self->spMacros->{$rp}->{$user_id_attribute}->( $req, $data )
       : $data->{$user_id_attribute};
+}
+
+sub generateNonce {
+    my ($self) = @_;
+    return encode_base64url( Crypt::URandom::urandom(16) );
 }
 
 1;

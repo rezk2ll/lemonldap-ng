@@ -224,7 +224,12 @@ sub extractFormInfo {
         }
 
         # Check validity of ID Token
-        unless ( $self->checkIDTokenValidity( $op, $id_token_payload_hash ) ) {
+        unless (
+            $self->checkIDTokenValidity(
+                $op, $id_token_payload_hash, $req->data->{_oidcNonce}
+            )
+          )
+        {
             $self->userLogger->error('ID Token not valid');
             return PE_OIDC_AUTH_ERROR;
         }
@@ -294,12 +299,21 @@ sub extractFormInfo {
     # AuthN Request
     $self->logger->debug("Build OpenIDConnect AuthN Request");
 
+    my $nonce;
+    if ( $self->conf->{oidcOPMetaDataOptions}->{$op}
+        ->{oidcOPMetaDataOptionsUseNonce} )
+    {
+        $nonce = $self->generateNonce();
+        $req->data->{_oidcNonce} = $nonce;
+    }
+
     # Save state
-    my $state = $self->storeState( $req, qw/urldc checkLogins _oidcOPCurrent/ );
+    my $state = $self->storeState( $req,
+        qw/urldc checkLogins _oidcOPCurrent _oidcNonce/ );
 
     # Authorization Code Flow
     my $authorization_request_uri =
-      $self->buildAuthorizationCodeAuthnRequest( $req, $op, $state );
+      $self->buildAuthorizationCodeAuthnRequest( $req, $op, $state, $nonce );
     unless ($authorization_request_uri) {
         return PE_OIDC_AUTH_ERROR;
     }
