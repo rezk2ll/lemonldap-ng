@@ -735,13 +735,13 @@ sub canUpdateSfa {
               if ( $requiredLevel
                 && $req->userData->{authenticationLevel} < $requiredLevel );
         }
-        if ( $action =~ /^regist/ ) {
+        if ( $action =~ /^(regist|verify)/ ) {
             my $_2fDevices = $self->get2fDevices( $req, $req->userData );
             if ( $sfaDevices = $self->checkMaximumSfaCount($_2fDevices) ) {
+                $self->logger->debug("$user is allowed to $action ${prefix}2f device ($sfaDevices left)");
                 $requiredLevel = $req->userData->{authenticationLevel};
                 my @am =
                   $self->searchForAuthorized2Fmodules( $req, $req->userData );
-
                 my %authnLevel = map { $_->type => $_->authnLevel } @am;
                 foreach (@$_2fDevices) {
                     $requiredLevel = $authnLevel{ $_->{type} }
@@ -766,7 +766,7 @@ sub canUpdateSfa {
             }
             else {
                 $self->logger->debug(
-                    "maxNumberOf2FDevices for $user");
+                    "maxNumberOf2FDevices for $user is reached");
             }
         }
     }
