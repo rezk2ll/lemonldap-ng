@@ -717,6 +717,7 @@
 "oidcRPMetaDataOptionsRefreshToken":"使用重新整理權杖",
 "oidcRPMetaDataOptionsRequirePKCE":"需要 PKCE",
 "oidcRPMetaDataOptionsRule":"存取規則",
+"oidcRPMetaDataOptionsScopes":"範圍",
 "oidcRPMetaDataOptionsTimeouts":"逾時",
 "oidcRPMetaDataOptionsUserIDAttr":"使用者屬性",
 "oidcRPMetaDataOptionsUserInfoSignAlg":"UserInfo response format",

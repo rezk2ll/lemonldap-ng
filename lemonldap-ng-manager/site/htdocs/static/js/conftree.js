@@ -420,6 +420,37 @@ function templates(tpl,key) {
   case 'oidcRPMetaDataNode':
     return [
    {
+      "_nodes" : [
+         {
+            "default" : 0,
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsPublic",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsPublic",
+            "title" : "oidcRPMetaDataOptionsPublic",
+            "type" : "bool"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsClientID",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsClientID",
+            "title" : "oidcRPMetaDataOptionsClientID"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsClientSecret",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsClientSecret",
+            "title" : "oidcRPMetaDataOptionsClientSecret",
+            "type" : "password"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRedirectUris",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRedirectUris",
+            "title" : "oidcRPMetaDataOptionsRedirectUris"
+         }
+      ],
+      "help" : "idpopenidconnect.html#basic-options",
+      "id" : "oidcRPMetaDataOptionsBasic",
+      "title" : "oidcRPMetaDataOptionsBasic",
+      "type" : "simpleInputContainer"
+   },
+   {
       "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars",
       "default" : [
          {
@@ -453,67 +484,13 @@ function templates(tpl,key) {
             "type" : "oidcAttribute"
          }
       ],
-      "help" : "idpopenidconnect.html#oidcexportedattr",
+      "help" : "idpopenidconnect.html#exported-attributes",
       "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars",
       "title" : "oidcRPMetaDataExportedVars",
       "type" : "oidcAttributeContainer"
    },
    {
-      "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
-      "default" : [],
-      "help" : "idpopenidconnect.html#oidcextraclaims",
-      "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
-      "title" : "oidcRPMetaDataOptionsExtraClaims",
-      "type" : "keyTextContainer"
-   },
-   {
-      "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataScopeRules",
-      "default" : [],
-      "help" : "idpopenidconnect.html#scope-rules",
-      "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataScopeRules",
-      "title" : "oidcRPMetaDataScopeRules",
-      "type" : "keyTextContainer"
-   },
-   {
-      "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
-      "default" : [],
-      "help" : "exportedvars.html#extend-variables-using-macros-and-groups",
-      "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
-      "title" : "oidcRPMetaDataMacros",
-      "type" : "keyTextContainer"
-   },
-   {
       "_nodes" : [
-         {
-            "_nodes" : [
-               {
-                  "default" : 0,
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsPublic",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsPublic",
-                  "title" : "oidcRPMetaDataOptionsPublic",
-                  "type" : "bool"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsClientID",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsClientID",
-                  "title" : "oidcRPMetaDataOptionsClientID"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsClientSecret",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsClientSecret",
-                  "title" : "oidcRPMetaDataOptionsClientSecret",
-                  "type" : "password"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRedirectUris",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRedirectUris",
-                  "title" : "oidcRPMetaDataOptionsRedirectUris"
-               }
-            ],
-            "id" : "oidcRPMetaDataOptionsBasic",
-            "title" : "oidcRPMetaDataOptionsBasic",
-            "type" : "simpleInputContainer"
-         },
          {
             "_nodes" : [
                {
@@ -565,6 +542,28 @@ function templates(tpl,key) {
             "id" : "oidcRPMetaDataOptionsAdvanced",
             "title" : "oidcRPMetaDataOptionsAdvanced",
             "type" : "simpleInputContainer"
+         },
+         {
+            "_nodes" : [
+               {
+                  "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
+                  "default" : [],
+                  "help" : "idpopenidconnect.html#oidcextraclaims",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
+                  "title" : "oidcRPMetaDataOptionsExtraClaims",
+                  "type" : "keyTextContainer"
+               },
+               {
+                  "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataScopeRules",
+                  "default" : [],
+                  "help" : "idpopenidconnect.html#scope-rules",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataScopeRules",
+                  "title" : "oidcRPMetaDataScopeRules",
+                  "type" : "keyTextContainer"
+               }
+            ],
+            "id" : "oidcRPMetaDataOptionsScopes",
+            "title" : "oidcRPMetaDataOptionsScopes"
          },
          {
             "_nodes" : [
@@ -796,6 +795,14 @@ function templates(tpl,key) {
       "help" : "idpopenidconnect.html#options",
       "id" : "oidcRPMetaDataOptions",
       "title" : "oidcRPMetaDataOptions"
+   },
+   {
+      "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
+      "default" : [],
+      "help" : "exportedvars.html#extend-variables-using-macros-and-groups",
+      "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataMacros",
+      "title" : "oidcRPMetaDataMacros",
+      "type" : "keyTextContainer"
    },
    {
       "_nodes" : [

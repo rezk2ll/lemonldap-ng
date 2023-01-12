@@ -717,6 +717,7 @@
 "oidcRPMetaDataOptionsRefreshToken":"Yeni jetonları kullan",
 "oidcRPMetaDataOptionsRequirePKCE":"PKCE gerektir",
 "oidcRPMetaDataOptionsRule":"Erişim kuralı",
+"oidcRPMetaDataOptionsScopes":"Kapsam",
 "oidcRPMetaDataOptionsTimeouts":"Zaman aşımları",
 "oidcRPMetaDataOptionsUserIDAttr":"Kullanıcı niteliği",
 "oidcRPMetaDataOptionsUserInfoSignAlg":"UserInfo yanıt formatı",

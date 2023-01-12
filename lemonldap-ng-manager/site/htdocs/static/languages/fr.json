@@ -717,6 +717,7 @@
 "oidcRPMetaDataOptionsRefreshToken":"Utiliser les jetons de renouvellement",
 "oidcRPMetaDataOptionsRequirePKCE":"PKCE requis",
 "oidcRPMetaDataOptionsRule":"Règle d'accès",
+"oidcRPMetaDataOptionsScopes":"Scope",
 "oidcRPMetaDataOptionsTimeouts":"Expiration",
 "oidcRPMetaDataOptionsUserIDAttr":"Attribut de l'utilisateur",
 "oidcRPMetaDataOptionsUserInfoSignAlg":"Format de réponse Userinfo",

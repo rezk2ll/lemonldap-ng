@@ -717,6 +717,7 @@
 "oidcRPMetaDataOptionsRefreshToken":"להשתמש באסימוני רענון",
 "oidcRPMetaDataOptionsRequirePKCE":"לדרוש PKCE",
 "oidcRPMetaDataOptionsRule":"כלל גישה",
+"oidcRPMetaDataOptionsScopes":"היקף",
 "oidcRPMetaDataOptionsTimeouts":"Timeouts",
 "oidcRPMetaDataOptionsUserIDAttr":"מאפיין משתמש",
 "oidcRPMetaDataOptionsUserInfoSignAlg":"UserInfo response format",

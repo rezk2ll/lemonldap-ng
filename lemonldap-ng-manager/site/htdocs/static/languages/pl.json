@@ -717,6 +717,7 @@
 "oidcRPMetaDataOptionsRefreshToken":"Użyj tokenów odświeżających",
 "oidcRPMetaDataOptionsRequirePKCE":"Wymagaj PKCE",
 "oidcRPMetaDataOptionsRule":"Reguła dostępu",
+"oidcRPMetaDataOptionsScopes":"Zakres",
 "oidcRPMetaDataOptionsTimeouts":"Limit czasu",
 "oidcRPMetaDataOptionsUserIDAttr":"Atrybut użytkownika",
 "oidcRPMetaDataOptionsUserInfoSignAlg":"Format odpowiedzi UserInfo",

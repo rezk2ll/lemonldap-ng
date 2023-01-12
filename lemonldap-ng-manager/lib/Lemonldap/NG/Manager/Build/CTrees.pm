@@ -195,25 +195,22 @@ sub cTrees {
                 ]
             },
         ],
-        oidcRPMetaDataNode => [
+        oidcRPMetaDataNode => [ {
+                title => 'oidcRPMetaDataOptionsBasic',
+                help  => 'idpopenidconnect.html#basic-options',
+                form  => 'simpleInputContainer',
+                nodes => [
+                    'oidcRPMetaDataOptionsPublic',
+                    'oidcRPMetaDataOptionsClientID',
+                    'oidcRPMetaDataOptionsClientSecret',
+                    'oidcRPMetaDataOptionsRedirectUris'
+                ]
+            },
             'oidcRPMetaDataExportedVars',
-            'oidcRPMetaDataOptionsExtraClaims',
-            'oidcRPMetaDataScopeRules',
-            'oidcRPMetaDataMacros',
             {
                 title => 'oidcRPMetaDataOptions',
                 help  => 'idpopenidconnect.html#options',
                 nodes => [ {
-                        title => 'oidcRPMetaDataOptionsBasic',
-                        form  => 'simpleInputContainer',
-                        nodes => [
-                            'oidcRPMetaDataOptionsPublic',
-                            'oidcRPMetaDataOptionsClientID',
-                            'oidcRPMetaDataOptionsClientSecret',
-                            'oidcRPMetaDataOptionsRedirectUris'
-                        ]
-                    },
-                    {
                         title => 'oidcRPMetaDataOptionsAdvanced',
                         form  => 'simpleInputContainer',
                         nodes => [
@@ -224,6 +221,13 @@ sub cTrees {
                             'oidcRPMetaDataOptionsRefreshToken',
                             'oidcRPMetaDataOptionsUserIDAttr',
                             'oidcRPMetaDataOptionsAdditionalAudiences',
+                        ]
+                    },
+                    {
+                        title => 'oidcRPMetaDataOptionsScopes',
+                        nodes => [
+                            'oidcRPMetaDataOptionsExtraClaims',
+                            'oidcRPMetaDataScopeRules',
                         ]
                     },
                     {
@@ -265,6 +269,7 @@ sub cTrees {
                     'oidcRPMetaDataOptionsComment'
                 ]
             },
+            'oidcRPMetaDataMacros',
             {
                 title => 'oidcRPMetaDataOptionsDisplay',
                 form  => 'simpleInputContainer',

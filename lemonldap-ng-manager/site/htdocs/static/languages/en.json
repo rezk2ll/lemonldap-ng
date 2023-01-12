@@ -717,6 +717,7 @@
 "oidcRPMetaDataOptionsRefreshToken":"Use refresh tokens",
 "oidcRPMetaDataOptionsRequirePKCE":"Require PKCE",
 "oidcRPMetaDataOptionsRule":"Access rule",
+"oidcRPMetaDataOptionsScopes":"Scope",
 "oidcRPMetaDataOptionsTimeouts":"Timeouts",
 "oidcRPMetaDataOptionsUserIDAttr":"User attribute",
 "oidcRPMetaDataOptionsUserInfoSignAlg":"UserInfo response format",

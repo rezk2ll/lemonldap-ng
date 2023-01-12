@@ -4552,7 +4552,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
 
         # OpenID Connect relying parties
         oidcRPMetaDataExportedVars => {
-            help    => 'idpopenidconnect.html#oidcexportedattr',
+            help    => 'idpopenidconnect.html#exported-attributes',
             type    => 'oidcAttributeContainer',
             keyTest => qr/\w/,
             test    => qr/\w/,

@@ -717,6 +717,7 @@
 "oidcRPMetaDataOptionsRefreshToken":"Use refresh tokens",
 "oidcRPMetaDataOptionsRequirePKCE":"Require PKCE",
 "oidcRPMetaDataOptionsRule":"Quy tắc truy cập",
+"oidcRPMetaDataOptionsScopes":"Phạm vi",
 "oidcRPMetaDataOptionsTimeouts":"Timeouts",
 "oidcRPMetaDataOptionsUserIDAttr":"thuộc tính người dùng",
 "oidcRPMetaDataOptionsUserInfoSignAlg":"UserInfo response format",

@@ -157,6 +157,18 @@ You can then set this RP configuration.
 
 .. _oidcexportedattr:
 
+Basic options
+^^^^^^^^^^^^^
+
+-  **Public client** (since version ``2.0.4``): Set this RP as public
+   client, so authentication is not needed on tokens endpoint. Set this for
+   mobile apps or native Javascript apps.
+-  **Client ID**: Client ID for this RP
+-  **Client secret**: Client secret for this RP (can be used for
+   symmetric signature)
+-  **Allowed redirection addresses for login**: Space-separated list of redirect
+   addresses allowed for this RP
+
 Exported attributes
 ^^^^^^^^^^^^^^^^^^^
 
@@ -178,6 +190,104 @@ For each OpenID Connect attribute you want to expose to applications, you can de
 
     The specific ``sub`` attribute is not defined here, but in ``User attribute`` parameter (see below).
 
+Options
+^^^^^^^
+
+-  **Advanced**
+
+   -  **Bypass consent**: Enable if you never want to display the scope
+      sharing consent screen (consent will be accepted by default).
+      Bypassing the consent is **not** compliant with OpenID Connect
+      standard.
+   -  **Force claims to be returned in ID Token**: This options will
+      make user attributes from the requested scope appear as ID Token claims
+   -  **Use JWT format for Access Token** (since version ``2.0.12``): When
+      using this option, Access Tokens will use the JWT format, which means they
+      can be verified by external OAuth2.0 resource servers without using the
+      Introspection or UserInfo endpoint.
+   -  **Release claims in Access Token** (since version ``2.0.12``): If Access
+      Tokens are in JWT format, this option lets you release the claims defined
+      in the *Extra Claims* section inside the Access Token itself
+   -  **Use refresh tokens** (since version ``2.0.7``): If this option
+      is enabled, LL::NG will issue a Refresh Token that can be used
+      to obtain new access tokens as long as the user session is still
+      valid
+   -  **User attribute**: Session field that will be used as main
+      identifier (``sub``). Default value is ``whatToTrace``.
+   -  **Additional audiences** (since version ``2.0.8``): You can
+      specify a space-separated list of audiences that will be added to the
+      ID Token audiences, and possibly the access token audiences if the
+      access token format is set to JWT
+
+-  **Scope**
+
+   -  **Scope values content**: see :ref:`oidcextraclaims` below
+   -  **Scope rules**: see :ref:`oidcscoperules` below
+
+-  **Security**
+
+   -  **ID Token signature algorithm**: Select one of the available public key
+      (RSXXX) or HMAC (HSXXX) based signature algorithms
+   -  **Access Token signature algorithm** (since version ``2.0.12``): Select
+      one of the available public key signature algorithms
+   -  **Userinfo response format** (since version ``2.0.12``): By default,
+      UserInfo is returned as a simple JSON object. You can also choose to
+      return it as a JWT, using one of the available signature algorithms.
+   -  **Require PKCE** (since version ``2.0.4``): A code challenge is
+      required at Tokens endpoint (see :rfc:`7636`)
+   -  **Allow offline access** (since version ``2.0.7``): After enabling
+      this feature, an application may request the **offline_access**
+      scope, and will obtain a Refresh Token that persists even after
+      the user has logged off. See
+      https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
+      for details. These offline sessions can be administered through
+      the Session Browser.
+   -  **Allow OAuth2.0 Password Grant** (since version ``2.0.8``): Allow the use of
+      the :ref:`Resource Owner Password Credentials Grant <resource-owner-password-grant>` by this client.
+      This feature only works if you have configured a form-based authentication module.
+   -  **Allow OAuth2.0 Client Credentials Grant** (since version ``2.0.11``): Allow the use of the
+      :ref:`Client Credentials Grant <client-credentials-grant>` by this client.
+   -  **Authentication level**: Required authentication level to access this application
+   -  **Access rule**: Lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
+
+-  **Timeouts**
+
+   -  **Authorization Codes** *(default: one minute)*: Expiration time of
+      Authorization Codes, when using the Authorization Code flow.
+   -  **ID Tokens** *(default: one hour)*: Expiration time of ID Tokens.
+   -  **Access Tokens** *(default: one hour)*: Expiration time
+      of Access Tokens.
+   -  **Offline sessions** *(default: one month)*: Lifetime of the
+      refresh token obtained with the **offline_access** scope.
+      This parameter only applies if offline sessions are enabled.
+
+-  **Logout**
+
+   -  **Bypass confirm**: Bypass logout confirmation when logout is initiated
+      by relaying party
+   -  **Session required**: Whether to send the Session ID in the logout request
+   -  **Type**: Type of logout to perform (only Front-Channel is implemented for now)
+   -  **URL**: Specify the relying party's logout URL
+   -  **Allowed redirection addresses for logout**: A space-separated list of
+      URLs that this client can redirect the user to once the logout is done
+      (through ``post_logout_redirect_uri``)
+
+-  **Comment**: set a comment
+
+Macros
+^^^^^^
+
+You can define here macros that will be only evaluated for this service,
+and not registered in the user's session.
+
+
+Display
+^^^^^^^
+
+-  **Display name**: Name of the RP application
+-  **Logo**: Logo of the RP application
+
+.. |beta| image:: /documentation/beta.png
 
 .. _oidcextraclaims:
 
@@ -263,110 +373,6 @@ Examples:
 * ``write``: ``$requested and inGroup('writers')``
 
   * the ``write`` scope will be granted if the user is a member of the ``writers`` group, but only if the application requested it.
-
-Macros
-^^^^^^
-
-You can define here macros that will be only evaluated for this service,
-and not registered in the user's session.
-
-Options
-^^^^^^^
-
--  **Basic**
-
-   -  **Public client** (since version ``2.0.4``): Set this RP as public
-      client, so authentication is not needed on tokens endpoint
-   -  **Client ID**: Client ID for this RP
-   -  **Client secret**: Client secret for this RP (can be used for
-      symmetric signature)
-   -  **Allowed redirection addresses for login**: Space-separated list of redirect
-      addresses allowed for this RP
-
--  **Advanced**
-
-   -  **Bypass consent**: Enable if you never want to display the scope
-      sharing consent screen (consent will be accepted by default).
-      Bypassing the consent is **not** compliant with OpenID Connect
-      standard.
-   -  **Force claims to be returned in ID Token**: This options will
-      make user attributes from the requested scope appear as ID Token claims
-   -  **Use JWT format for Access Token** (since version ``2.0.12``): When
-      using this option, Access Tokens will use the JWT format, which means they
-      can be verified by external OAuth2.0 resource servers without using the
-      Introspection or UserInfo endpoint.
-   -  **Release claims in Access Token** (since version ``2.0.12``): If Access
-      Tokens are in JWT format, this option lets you release the claims defined
-      in the *Extra Claims* section inside the Access Token itself
-   -  **Use refresh tokens** (since version ``2.0.7``): If this option
-      is enabled, LL::NG will issue a Refresh Token that can be used
-      to obtain new access tokens as long as the user session is still
-      valid
-   -  **User attribute**: Session field that will be used as main
-      identifier (``sub``). Default value is ``whatToTrace``.
-   -  **Additional audiences** (since version ``2.0.8``): You can
-      specify a space-separated list of audiences that will be added to the
-      ID Token audiences, and possibly the access token audiences if the
-      access token format is set to JWT
-
--  **Security**
-
-   -  **ID Token signature algorithm**: Select one of the available public key
-      (RSXXX) or HMAC (HSXXX) based signature algorithms
-   -  **Access Token signature algorithm** (since version ``2.0.12``): Select
-      one of the available public key signature algorithms
-   -  **Userinfo response format** (since version ``2.0.12``): By default,
-      UserInfo is returned as a simple JSON object. You can also choose to
-      return it as a JWT, using one of the available signature algorithms.
-   -  **Require PKCE** (since version ``2.0.4``): A code challenge is
-      required at Tokens endpoint (see :rfc:`7636`)
-   -  **Allow offline access** (since version ``2.0.7``): After enabling
-      this feature, an application may request the **offline_access**
-      scope, and will obtain a Refresh Token that persists even after
-      the user has logged off. See
-      https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
-      for details. These offline sessions can be administered through
-      the Session Browser.
-   -  **Allow OAuth2.0 Password Grant** (since version ``2.0.8``): Allow the use of
-      the :ref:`Resource Owner Password Credentials Grant <resource-owner-password-grant>` by this client.
-      This feature only works if you have configured a form-based authentication module.
-   -  **Allow OAuth2.0 Client Credentials Grant** (since version ``2.0.11``): Allow the use of the
-      :ref:`Client Credentials Grant <client-credentials-grant>` by this client.
-   -  **Authentication level**: Required authentication level to access this application
-   -  **Access rule**: Lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
-
--  **Timeouts**
-
-   -  **Authorization Codes** *(default: one minute)*: Expiration time of
-      Authorization Codes, when using the Authorization Code flow.
-   -  **ID Tokens** *(default: one hour)*: Expiration time of ID Tokens.
-   -  **Access Tokens** *(default: one hour)*: Expiration time
-      of Access Tokens.
-   -  **Offline sessions** *(default: one month)*: Lifetime of the
-      refresh token obtained with the **offline_access** scope.
-      This parameter only applies if offline sessions are enabled.
-
--  **Logout**
-
-   -  **Bypass confirm**: Bypass logout confirmation when logout is initiated
-      by relaying party
-   -  **Session required**: Whether to send the Session ID in the logout request
-   -  **Type**: Type of logout to perform (only Front-Channel is implemented for now)
-   -  **URL**: Specify the relying party's logout URL
-   -  **Allowed redirection addresses for logout**: A space-separated list of
-      URLs that this client can redirect the user to once the logout is done
-      (through ``post_logout_redirect_uri``)
-
--  **Comment**: set a comment
-
-Display
-^^^^^^^
-
--  **Display name**: Name of the RP application
--  **Logo**: Logo of the RP application
-
-.. |beta| image:: /documentation/beta.png
-
 
 Access rule extra variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
