@@ -46,6 +46,13 @@ translatePage = (lang) ->
 			msg = translate "PE#{$(this).attr 'trmsg'}"
 			if msg.match /_hide_/
 				$(this).parent().hide()
+		$("[trattribute]").each ->
+			trattributes = $(this).attr('trattribute').trim().split(/\s+/)
+			for trattribute in trattributes
+				[attribute, value] = trattribute.split(':')
+				if attribute and value
+					$(this).attr attribute, translate(value)
+			true
 		$("[trplaceholder]").each ->
 			tmp = translate($(this).attr('trplaceholder'))
 			$(this).attr 'placeholder', tmp

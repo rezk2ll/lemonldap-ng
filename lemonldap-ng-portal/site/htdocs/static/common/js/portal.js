@@ -60,6 +60,18 @@ LemonLDAP::NG Portal jQuery scripts
           return $(this).parent().hide();
         }
       });
+      $("[trattribute]").each(function() {
+        var attribute, l, len1, ref2, trattribute, trattributes, value;
+        trattributes = $(this).attr('trattribute').trim().split(/\s+/);
+        for (l = 0, len1 = trattributes.length; l < len1; l++) {
+          trattribute = trattributes[l];
+          ref2 = trattribute.split(':'), attribute = ref2[0], value = ref2[1];
+          if (attribute && value) {
+            $(this).attr(attribute, translate(value));
+          }
+        }
+        return true;
+      });
       $("[trplaceholder]").each(function() {
         var tmp;
         tmp = translate($(this).attr('trplaceholder'));
