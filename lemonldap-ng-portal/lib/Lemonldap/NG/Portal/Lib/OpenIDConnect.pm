@@ -1785,13 +1785,19 @@ sub getEndPointAccessToken {
     return $access_token;
 }
 
+# DEPRECATED, remove in 3.0, use getAttributeListFromScopeValue instead
+sub getAttributesListFromClaim {
+    my ( $self, $rp, $scope_value ) = @_;
+    return $self->getAttributesListFromScopeValue( $rp, $scope_value );
+}
+
 # Return list of attributes authorized for a claim
 # @param rp RP name
 # @param claim Claim
 # @return arrayref attributes list
-sub getAttributesListFromClaim {
-    my ( $self, $rp, $claim ) = @_;
-    return $self->rpAttributes->{$rp}->{$claim};
+sub getAttributesListFromScopeValue {
+    my ( $self, $rp, $scope_value ) = @_;
+    return $self->rpAttributes->{$rp}->{$scope_value};
 }
 
 # Return granted scopes for this request
@@ -1965,10 +1971,14 @@ sub buildUserInfoResponseFromData {
         # Else, iterate through scopes to find allowed attributes
     }
     else {
-        foreach my $claim ( split( /\s/, $scope ) ) {
-            next if ( $claim eq "openid" );
-            $self->logger->debug("Get attributes linked to claim $claim");
-            my $list = $self->getAttributesListFromClaim( $rp, $claim );
+        foreach my $scope_value ( split( /\s/, $scope ) ) {
+            next if ( $scope_value eq "openid" );
+            $self->logger->debug(
+                "Get attributes linked to scope value $scope_value");
+            my $list =
+              $self->getAttributesListFromScopeValue( $rp, $scope_value );
+            $self->logger->debug(
+                "-> found attributes: " . join( " ", @{ $list || [] } ) );
             next unless $list;
             foreach my $attribute (@$list) {
                 $self->_addAttributeToResponse( $req, $data,
