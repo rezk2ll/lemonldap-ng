@@ -62,7 +62,7 @@ has ua => (
     }
 );
 
-has ott => (
+has state_ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
@@ -1336,7 +1336,7 @@ sub storeState {
     $infos->{_type} = "state";
 
     # Create state session and store infos
-    return $self->ott->createToken($infos);
+    return $self->state_ott->createToken($infos);
 }
 
 # Extract state information into $self
@@ -1346,7 +1346,7 @@ sub extractState {
     return 0 unless $state;
 
     # Open state session
-    my $stateSession = $self->ott->getToken($state);
+    my $stateSession = $self->state_ott->getToken($state);
 
     return 0 unless $stateSession;
     return 0 unless $stateSession->{_type} eq "state";
