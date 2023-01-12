@@ -248,6 +248,9 @@ You can find additional documentation on the syntax of template files in the
 Messages
 ~~~~~~~~
 
+Changing messages
+-----------------
+
 Messages are defined in source code. If they really do not suit you,
 override them! You just need to know the ID of the message (look at
 Portal/Main/Constants.pm).
@@ -287,7 +290,9 @@ For example ``templates/myskin/en.json``:
 .. code-block:: javascript
 
    {
-   "PE9":"Please authenticate!"
+     "PE9":"Please authenticate!",
+     "lastLogins": "Previous authentications",
+     "myMessage": "My custom message, in english"
    }
 
 You can also create a file called ``all.json`` to override messages in
@@ -295,6 +300,24 @@ all languages.
 
 .. versionchanged:: 2.0.15
    Translations in lemonldap-ng.ini now take priority over translations from skin files
+
+Adding messages in your templates
+---------------------------------
+
+You can use the ``trspan`` HTML attribute to replace the content of a tag by an internationalized string ::
+
+    <span trspan="myMessage">This will be replaced by the translation of myMessage</span>
+
+
+.. versionadded:: 2.0.16
+
+    You can now also replace HTML attributes with translated messages
+
+    .. code ::
+
+        <img src="http://xxx" trattribute="alt:myMessage data-description:myMessage"></img>
+
+    In this example, the ``alt=`` and ``data-description=`` attributes will be replaced by the translation of ``myMessage``
 
 Menu tabs
 ~~~~~~~~~
