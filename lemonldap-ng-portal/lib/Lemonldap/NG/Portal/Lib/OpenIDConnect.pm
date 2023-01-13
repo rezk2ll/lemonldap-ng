@@ -23,6 +23,7 @@ use Scalar::Util qw/looks_like_number/;
 use URI;
 use URI::QueryParam;
 use Mouse;
+use Crypt::URandom;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
 
@@ -39,6 +40,14 @@ use constant ADDRESS =>
 use constant PHONE => [qw/phone_number phone_number_verified/];
 
 use constant OIDC_SCOPES => [qw/openid profile email address phone/];
+use constant COMPLEX_CLAIM => {
+    formatted      => "address",
+    street_address => "address",
+    locality       => "address",
+    region         => "address",
+    postal_code    => "address",
+    country        => "address",
+};
 
 # PROPERTIES
 
@@ -61,11 +70,13 @@ has ua => (
     }
 );
 
-has ott => (
+has state_ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
         my $ott = $_[0]->{p}->loadModule('::Lib::OneTimeToken');
+        $ott->timeout( $_[0]->conf->{oidcRPStateTimeout}
+              || $_[0]->conf->{timeout} );
         return $ott;
     }
 );
@@ -325,7 +336,7 @@ sub getCallbackUri {
 # @param state State
 # return String Authentication Request URI
 sub buildAuthorizationCodeAuthnRequest {
-    my ( $self, $req, $op, $state ) = @_;
+    my ( $self, $req, $op, $state, $nonce ) = @_;
 
     my $authorize_uri =
       $self->oidcOPList->{$op}->{conf}->{authorization_endpoint};
@@ -342,9 +353,6 @@ sub buildAuthorizationCodeAuthnRequest {
       ->{oidcOPMetaDataOptionsClientID};
     my $scope =
       $self->conf->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsScope};
-    my $use_nonce =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsUseNonce};
     my $response_type = "code";
     my $redirect_uri  = $self->getCallbackUri($req);
     my $display =
@@ -362,9 +370,6 @@ sub buildAuthorizationCodeAuthnRequest {
     my $acr_values =
       $self->conf->{oidcOPMetaDataOptions}->{$op}
       ->{oidcOPMetaDataOptionsAcrValues};
-
-    my $nonce;
-    $nonce = $self->ott->createToken if ($use_nonce);
 
     my $authorize_request_params = {
         response_type => $response_type,
@@ -710,7 +715,7 @@ sub checkTokenResponseValidity {
 # Check validity of ID Token
 # return boolean 1 if the token is valid, 0 else
 sub checkIDTokenValidity {
-    my ( $self, $op, $id_token ) = @_;
+    my ( $self, $op, $id_token, $state_nonce ) = @_;
 
     my $client_id =
       $self->conf->{oidcOPMetaDataOptions}->{$op}
@@ -775,15 +780,17 @@ sub checkIDTokenValidity {
 
     # Check nonce
     if ($use_nonce) {
-        my $nonce = $id_token->{nonce};
-        unless ($nonce) {
+        my $id_token_nonce = $id_token->{nonce};
+        unless ($id_token_nonce) {
             $self->logger->error("Nonce was not returned by OP $op");
             return 0;
         }
         else {
             # Get nonce session
-            unless ( $self->ott->getToken($nonce) ) {
-                $self->logger->error("Nonce $nonce verification failed");
+            unless ( $id_token_nonce eq $state_nonce ) {
+                $self->logger->error(
+"Nonce $id_token_nonce verification failed, expected $state_nonce"
+                );
                 return 0;
             }
         }
@@ -1328,24 +1335,16 @@ sub storeState {
     # check if there are data to store
     my $infos;
     foreach (@data) {
-        $infos->{$_}        = $req->{$_}       if $req->{$_};
-        $infos->{"data_$_"} = $req->data->{$_} if $req->data->{$_};
+        $infos->{state}->{$_}        = $req->{$_}       if $req->{$_};
+        $infos->{state}->{"data_$_"} = $req->data->{$_} if $req->data->{$_};
     }
     return unless ($infos);
 
     # Session type
     $infos->{_type} = "state";
 
-    # Set _utime for session autoremove
-    # Use default session timeout and relayState session timeout to compute it
-    my $time         = time();
-    my $timeout      = $self->conf->{timeout};
-    my $stateTimeout = $self->conf->{oidcRPStateTimeout} || $timeout;
-
-    $infos->{_utime} = $time + ( $stateTimeout - $timeout );
-
     # Create state session and store infos
-    return $self->ott->createToken($infos);
+    return $self->state_ott->createToken($infos);
 }
 
 # Extract state information into $self
@@ -1355,16 +1354,15 @@ sub extractState {
     return 0 unless $state;
 
     # Open state session
-    my $stateSession = $self->ott->getToken($state);
+    my $stateSession = $self->state_ott->getToken($state);
 
     return 0 unless $stateSession;
+    return 0 unless $stateSession->{_type} eq "state";
+    return 0 unless $stateSession->{state};
 
     # Push values in $self
-    foreach ( keys %{$stateSession} ) {
-        next
-          if $_ =~
-/^(?:_type|_session_id|_session_kind|_utime|tokenTimeoutTimestamp|tokenSessionStartTimestamp)$/;
-        my $tmp = $stateSession->{$_};
+    foreach ( keys %{ $stateSession->{state} } ) {
+        my $tmp = $stateSession->{state}->{$_};
         if (s/^data_//) {
             $req->data->{$_} = $tmp;
         }
@@ -1787,13 +1785,19 @@ sub getEndPointAccessToken {
     return $access_token;
 }
 
+# DEPRECATED, remove in 3.0, use getAttributeListFromScopeValue instead
+sub getAttributesListFromClaim {
+    my ( $self, $rp, $scope_value ) = @_;
+    return $self->getAttributesListFromScopeValue( $rp, $scope_value );
+}
+
 # Return list of attributes authorized for a claim
 # @param rp RP name
 # @param claim Claim
 # @return arrayref attributes list
-sub getAttributesListFromClaim {
-    my ( $self, $rp, $claim ) = @_;
-    return $self->rpAttributes->{$rp}->{$claim};
+sub getAttributesListFromScopeValue {
+    my ( $self, $rp, $scope_value ) = @_;
+    return $self->rpAttributes->{$rp}->{$scope_value};
 }
 
 # Return granted scopes for this request
@@ -1889,6 +1893,51 @@ sub buildUserInfoResponse {
         $session->data );
 }
 
+sub _addAttributeToResponse {
+    my ( $self, $req, $data, $userinfo_response, $rp, $attribute ) = @_;
+    my @attrConf = split /;/,
+      ( $self->conf->{oidcRPMetaDataExportedVars}->{$rp}->{$attribute} || "" );
+    my $session_key = $attrConf[0];
+    if ($session_key) {
+        my $type  = $attrConf[1] || 'string';
+        my $array = $attrConf[2] || 'auto';
+
+        my $session_value;
+
+        # Lookup attribute in macros first
+        if ( $self->spMacros->{$rp}->{$session_key} ) {
+            $session_value =
+              $self->spMacros->{$rp}->{$session_key}->( $req, $data );
+
+            # If not found, search in session
+        }
+        else {
+            $session_value = $data->{$session_key};
+        }
+
+        # Handle empty values, arrays, type, etc.
+        $session_value =
+          $self->_formatValue( $session_value, $type, $array,
+            $attribute, $req->user );
+
+        # From this point on, do NOT touch $session_value
+        # or you will break the variable's type.
+
+        # Only release claim if it has a value
+        if ( defined $session_value ) {
+
+            # If this attribute is a standardized subkey (address)
+            if ( COMPLEX_CLAIM->{$attribute} ) {
+                my $superkey = COMPLEX_CLAIM->{$attribute};
+                $userinfo_response->{$superkey}->{$attribute} = $session_value;
+            }
+            else {
+                $userinfo_response->{$attribute} = $session_value;
+            }
+        }
+    }
+}
+
 # Return Hash of UserInfo data
 # @param scope OIDC scope
 # @param rp Internal Relying Party identifier
@@ -1910,54 +1959,30 @@ sub buildUserInfoResponseFromData {
 
     $userinfo_response->{sub} = $user_id;
 
-    # Parse scope and return allowed attributes
-    foreach my $claim ( split( /\s/, $scope ) ) {
-        next if ( $claim eq "openid" );
-        $self->logger->debug("Get attributes linked to claim $claim");
-        my $list = $self->getAttributesListFromClaim( $rp, $claim );
-        next unless $list;
-        foreach my $attribute (@$list) {
-            my @attrConf = split /;/,
-              ( $self->conf->{oidcRPMetaDataExportedVars}->{$rp}->{$attribute}
-                  || "" );
-            my $session_key = $attrConf[0];
-            if ($session_key) {
-                my $type  = $attrConf[1] || 'string';
-                my $array = $attrConf[2] || 'auto';
+    # By default, release all exported attributes
+    if ( $self->conf->{oidcServiceIgnoreScopeForClaims} ) {
+        for my $attribute (
+            keys %{ $self->conf->{oidcRPMetaDataExportedVars}->{$rp} || {} } )
+        {
+            $self->_addAttributeToResponse( $req, $data, $userinfo_response,
+                $rp, $attribute );
+        }
 
-                my $session_value;
-
-                # Lookup attribute in macros first
-                if ( $self->spMacros->{$rp}->{$session_key} ) {
-                    $session_value =
-                      $self->spMacros->{$rp}->{$session_key}->( $req, $data );
-
-                    # If not found, search in session
-                }
-                else {
-                    $session_value = $data->{$session_key};
-                }
-
-                # Handle empty values, arrays, type, etc.
-                $session_value =
-                  $self->_formatValue( $session_value, $type, $array,
-                    $attribute, $req->user );
-
-             # From this point on, do NOT touch $session_value or you will break
-             # the variable's type.
-
-                # Only release claim if it has a value
-                if ( defined $session_value ) {
-
-                    # Address is a JSON object
-                    if ( $claim eq "address" ) {
-                        $userinfo_response->{address}->{$attribute} =
-                          $session_value;
-                    }
-                    else {
-                        $userinfo_response->{$attribute} = $session_value;
-                    }
-                }
+        # Else, iterate through scopes to find allowed attributes
+    }
+    else {
+        foreach my $scope_value ( split( /\s/, $scope ) ) {
+            next if ( $scope_value eq "openid" );
+            $self->logger->debug(
+                "Get attributes linked to scope value $scope_value");
+            my $list =
+              $self->getAttributesListFromScopeValue( $rp, $scope_value );
+            $self->logger->debug(
+                "-> found attributes: " . join( " ", @{ $list || [] } ) );
+            next unless $list;
+            foreach my $attribute (@$list) {
+                $self->_addAttributeToResponse( $req, $data,
+                    $userinfo_response, $rp, $attribute );
             }
         }
     }
@@ -2407,6 +2432,11 @@ sub getUserIDForRP {
     return $self->spMacros->{$rp}->{$user_id_attribute}
       ? $self->spMacros->{$rp}->{$user_id_attribute}->( $req, $data )
       : $data->{$user_id_attribute};
+}
+
+sub generateNonce {
+    my ($self) = @_;
+    return encode_base64url( Crypt::URandom::urandom(16) );
 }
 
 1;

@@ -346,7 +346,11 @@ SKIP: {
         ok(
             $res = $sp->_get(
                 '/',
-                query  => 'logout&url=' . encodeUrl("http://test1.example.com"),
+                query => buildForm( {
+                        logout => 1,
+                        url    => encodeUrl("http://test1.example.com")
+                    }
+                ),
                 cookie => "lemonldap=$spId",
                 accept => 'text/html'
             ),

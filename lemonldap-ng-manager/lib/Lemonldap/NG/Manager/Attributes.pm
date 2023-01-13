@@ -2632,6 +2632,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 3600,
             'type'    => 'int'
         },
+        'oidcServiceIgnoreScopeForClaims' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'oidcServiceKeyIdSig' => {
             'type' => 'text'
         },

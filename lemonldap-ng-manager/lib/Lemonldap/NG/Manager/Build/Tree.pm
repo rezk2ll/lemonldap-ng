@@ -1431,6 +1431,7 @@ sub tree {
                         'oidcServiceAllowImplicitFlow',
                         'oidcServiceAllowHybridFlow',
                         'oidcServiceAllowOnlyDeclaredScopes',
+                        'oidcServiceIgnoreScopeForClaims',
                     ],
                 },
                 {

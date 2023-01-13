@@ -8,6 +8,7 @@ use strict;
 use MIME::Base64;
 use POSIX qw(strftime);
 use Lemonldap::NG::Portal::Main::Constants qw(portalConsts);
+use URI;
 
 # Main method
 # -----------
@@ -169,7 +170,15 @@ sub controlUrl {
             delete $req->{urldc};
             return PE_BADURL;
         }
-        my ( $proto, $vhost, $appuri ) = ( $2, $3, $5 );
+        my ( $proto, $vhost, $appuri );
+        if ($tmp) {
+            my $u = URI->new($tmp);
+            if ( $u->scheme =~ /^https?$/ ) {
+                $proto  = $u->scheme;
+                $vhost  = $u->host if $u->can("host");
+                $appuri = $u->path_query;
+            }
+        }
 
         # Try to resolve alias
         my $originalVhost = $self->HANDLER->resolveAlias($vhost);

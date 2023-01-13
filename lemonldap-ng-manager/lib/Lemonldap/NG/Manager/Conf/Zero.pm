@@ -196,6 +196,7 @@ sub zeroConf {
             'cache_root'         => "$cacheDir",
             'cache_depth'        => 3,
         },
+        "oidcServiceIgnoreScopeForClaims" => 1,
     };
 }
 

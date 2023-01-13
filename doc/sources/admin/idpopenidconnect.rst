@@ -157,13 +157,22 @@ You can then set this RP configuration.
 
 .. _oidcexportedattr:
 
+Basic options
+^^^^^^^^^^^^^
+
+-  **Public client** (since version ``2.0.4``): Set this RP as public
+   client, so authentication is not needed on tokens endpoint. Set this for
+   mobile apps or native Javascript apps.
+-  **Client ID**: Client ID for this RP
+-  **Client secret**: Client secret for this RP (can be used for
+   symmetric signature)
+-  **Allowed redirection addresses for login**: Space-separated list of redirect
+   addresses allowed for this RP
+
 Exported attributes
 ^^^^^^^^^^^^^^^^^^^
 
-.. warning::
-
-   By default, only `standard OpenID Connect claims <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__
-   are exposed to applications. If you want to add non-standard attributes, you have to create a new scope in the *Scope values content* section and your application must request it.
+.. versionchanged:: In 2.0.16, all exported attributes are always sent by default. In previous versions, you had to declare them in **Options**/**Scope**/**Scope Values content** too
 
 For each OpenID Connect attribute you want to expose to applications, you can define:
 
@@ -181,102 +190,8 @@ For each OpenID Connect attribute you want to expose to applications, you can de
 
     The specific ``sub`` attribute is not defined here, but in ``User attribute`` parameter (see below).
 
-
-.. _oidcextraclaims:
-
-Scope values content
-^^^^^^^^^^^^^^^^^^^^
-
-By default, the following scope-to-attributes are mapped by LL::NG:
-
-.. csv-table::
-   :header: "Scope value", "Attribute list"
-   :delim: ;
-   :widths: auto
-
-   profile; name family_name given_name middle_name nickname preferred_username profile picture website gender birthdate zoneinfo locale updated_at
-   email; email email_verified
-   address; street_address locality region postal_code country
-   phone; phone_number phone_number_verified
-
-If you want to expose custom attributes to OpenID Connect clients,
-you have to declare them in a new scope in this section.
-
-Add your additional scope as **Key**, and a space-separated list of
-attributes as **Value**:
-
--  `employment_info` => `position company`
-
-In this example, an OpenID Connect client (RP) requesting for the ``employment_info`` scope will
-be able to read the ``company`` and ``position`` attributes from the UserInfo endpoint.
-
-.. important::
-
-    Any attribute defined in this section must be mapped to a
-    LL::NG session variable in **Exported Attributes** section
-
-.. important::
-
-    Your custom attributes will only be visible if the application requests the
-    corresponding scope value
-
-
-
-
-.. _oidcscoperules:
-
-Scope rules
-^^^^^^^^^^^
-
-.. versionadded:: 2.0.12
-
-|beta| This feature may change in a future version in a way that breaks
-compatibility with existing configuration.
-
-By default, LL::NG grants all scopes requested by the application, as
-long as the user consents to them.
-
-This configuration screen allows you to change that behavior by attaching
-:ref:`a rule<rules>` to a particular scope.
-
-* If the rule evaluates to true, the scope is added to the current request,
-  even if it was not requested by the application
-* If the rule evaluates to false, the scope is removed from the current request
-* Scopes which are not declared in the "Scope rules" list are left untouched
-
-When writing scope rules, you can use the special ``$requested`` variable. This
-variables evaluates to `true` within a scope rule when the corresponding scope
-has been requested by the application. You can use this variable in a dynamic
-rule when you only want to add a scope when the application requested it.
-
-Examples:
-
-* ``read``: ``inGroup('readers')``
-
-  * the ``read`` scope will be granted if the user is a member of the ``readers`` group even if the application did not request it.
-
-* ``write``: ``$requested and inGroup('writers')``
-
-  * the ``write`` scope will be granted if the user is a member of the ``writers`` group, but only if the application requested it.
-
-Macros
-^^^^^^
-
-You can define here macros that will be only evaluated for this service,
-and not registered in the user's session.
-
 Options
 ^^^^^^^
-
--  **Basic**
-
-   -  **Public client** (since version ``2.0.4``): Set this RP as public
-      client, so authentication is not needed on tokens endpoint
-   -  **Client ID**: Client ID for this RP
-   -  **Client secret**: Client secret for this RP (can be used for
-      symmetric signature)
-   -  **Allowed redirection addresses for login**: Space-separated list of redirect
-      addresses allowed for this RP
 
 -  **Advanced**
 
@@ -303,6 +218,11 @@ Options
       specify a space-separated list of audiences that will be added to the
       ID Token audiences, and possibly the access token audiences if the
       access token format is set to JWT
+
+-  **Scope**
+
+   -  **Scope values content**: see :ref:`oidcextraclaims` below
+   -  **Scope rules**: see :ref:`oidcscoperules` below
 
 -  **Security**
 
@@ -354,6 +274,13 @@ Options
 
 -  **Comment**: set a comment
 
+Macros
+^^^^^^
+
+You can define here macros that will be only evaluated for this service,
+and not registered in the user's session.
+
+
 Display
 ^^^^^^^
 
@@ -362,6 +289,90 @@ Display
 
 .. |beta| image:: /documentation/beta.png
 
+.. _oidcextraclaims:
+
+Scope values content
+^^^^^^^^^^^^^^^^^^^^
+
+When the **Ignore scope when exporting attributes** option is disabled in **OpenID
+Connect Service**, attributes can only be released if they are part of a scope.
+
+By default, only `standard OpenID Connect claims <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__
+are exposed to applications. If you want to add non-standard attributes, you
+have to create a new scope in the *Scope values content* section and your
+application must request that scope.
+
+
+By default, the following scope-to-attributes are already mapped by LL::NG:
+
+.. csv-table::
+   :header: "Scope value", "Attribute list"
+   :delim: ;
+   :widths: auto
+
+   profile; name family_name given_name middle_name nickname preferred_username profile picture website gender birthdate zoneinfo locale updated_at
+   email; email email_verified
+   address; street_address locality region postal_code country
+   phone; phone_number phone_number_verified
+
+If you want to expose custom attributes to OpenID Connect clients,
+you have to declare them in a new scope in this section.
+
+Add your additional scope as **Key**, and a space-separated list of
+attributes as **Value**:
+
+-  `employment_info` => `position company`
+
+In this example, an OpenID Connect client (RP) requesting for the ``employment_info`` scope will
+be able to read the ``company`` and ``position`` attributes from the UserInfo endpoint.
+
+.. important::
+
+    Any attribute defined in this section must be mapped to a
+    LL::NG session variable in **Exported Attributes** section
+
+.. important::
+
+    Your custom attributes will only be visible if the application requests the
+    corresponding scope value, or if you use a Scope Rule to always enable that
+    scope.
+
+
+.. _oidcscoperules:
+
+Scope rules
+^^^^^^^^^^^
+
+.. versionadded:: 2.0.12
+
+|beta| This feature may change in a future version in a way that breaks
+compatibility with existing configuration.
+
+By default, LL::NG grants all scopes requested by the application, as
+long as the user consents to them.
+
+This configuration screen allows you to change that behavior by attaching
+:ref:`a rule<rules>` to a particular scope.
+
+* If the rule evaluates to true, the scope is added to the current request,
+  even if it was not requested by the application
+* If the rule evaluates to false, the scope is removed from the current request
+* Scopes which are not declared in the "Scope rules" list are left untouched
+
+When writing scope rules, you can use the special ``$requested`` variable. This
+variables evaluates to `true` within a scope rule when the corresponding scope
+has been requested by the application. You can use this variable in a dynamic
+rule when you only want to add a scope when the application requested it.
+
+Examples:
+
+* ``read``: ``inGroup('readers')``
+
+  * the ``read`` scope will be granted if the user is a member of the ``readers`` group even if the application did not request it.
+
+* ``write``: ``$requested and inGroup('writers')``
+
+  * the ``write`` scope will be granted if the user is a member of the ``writers`` group, but only if the application requested it.
 
 Access rule extra variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^

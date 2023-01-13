@@ -153,6 +153,7 @@
    "notificationStorageOptions" : {
       "dirName" : "__NOTIFICATIONDIR__"
    },
+   "oidcServiceIgnoreScopeForClaims" : 1,
    "passwordDB" : "Demo",
    "persistentStorage" : "Apache::Session::File",
    "persistentStorageOptions" : {

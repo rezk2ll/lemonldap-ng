@@ -4414,6 +4414,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 0,
             documentation => 'OpenID Connect allow only declared scopes',
         },
+        oidcServiceIgnoreScopeForClaims => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'OpenID Connect release all attributes even when not allowed by scope',
+        },
         oidcServiceAllowAuthorizationCodeFlow => {
             type          => 'bool',
             default       => 1,
@@ -4547,7 +4552,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
 
         # OpenID Connect relying parties
         oidcRPMetaDataExportedVars => {
-            help    => 'idpopenidconnect.html#oidcexportedattr',
+            help    => 'idpopenidconnect.html#exported-attributes',
             type    => 'oidcAttributeContainer',
             keyTest => qr/\w/,
             test    => qr/\w/,

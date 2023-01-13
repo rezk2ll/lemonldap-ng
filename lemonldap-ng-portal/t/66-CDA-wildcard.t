@@ -91,7 +91,7 @@ my $client = LLNG::Manager::Test->new( {
 ok(
     $res = $client->_get(
         '/',
-        query  => 'url=' . encodeUrl('http://cda.example.llng/'),
+        query  => buildForm( { url => encodeUrl('http://cda.example.llng/') } ),
         accept => 'text/html',
     ),
     'Unauth CDA request'
@@ -121,7 +121,9 @@ ok(
     $res = $client->_get(
         '/',
         cookie => "lemonldap=$id",
-        query  => 'url=' . encodeUrl('http://sub-domain.cda.example.llng/'),
+        query  => buildForm(
+            { url => encodeUrl('http://sub-domain.cda.example.llng/') }
+        ),
         accept => 'text/html',
     ),
     'CDA request to subdomain'
@@ -136,7 +138,9 @@ ok(
     $res = $client->_get(
         '/',
         cookie => "lemonldap=$id",
-        query  => 'url=' . encodeUrl('http://sub-domain.cda.oneonly.llng/'),
+        query  => buildForm(
+            { url => encodeUrl('http://sub-domain.cda.oneonly.llng/') }
+        ),
         accept => 'text/html',
     ),
     'CDA request to subdomain'
@@ -150,7 +154,7 @@ ok(
     $res = $client->_get(
         '/',
         cookie => "lemonldap=$id",
-        query  => 'url=' . encodeUrl('http://cda.oneonly.llng/'),
+        query  => buildForm( { url => encodeUrl('http://cda.oneonly.llng/') } ),
         accept => 'text/html',
     ),
     'CDA request to one-level wildcard'
