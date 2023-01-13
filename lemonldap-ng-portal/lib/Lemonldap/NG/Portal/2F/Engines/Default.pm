@@ -801,7 +801,7 @@ sub findRegisterModuleFor {
       : undef;
 }
 
-# Check if user can register a SFA
+# Check if user can register one more SFA
 sub checkMaximumSfaCount {
     my ( $self, $req, $_2fDevices ) = @_;
     my $user    = $req->userData->{ $self->conf->{whatToTrace} };
@@ -816,7 +816,7 @@ sub checkMaximumSfaCount {
     return 1;
 }
 
-# Check if user can register a SFA
+# Check if user's authentication is sufficient to register a SFA
 sub checkAuthenticationLevel {
     my ( $self, $req, $_2fDevices ) = @_;
     my $user          = $req->userData->{ $self->conf->{whatToTrace} };
