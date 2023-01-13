@@ -1307,7 +1307,7 @@ sub cspGetHost {
     my ( $self, $url ) = @_;
     return unless $url;
     my $uri = $url;
-    unless ( $uri->isa("URI") ) {
+    unless (blessed($uri) && $uri->isa("URI") ) {
         $uri = URI->new($uri);
     }
     my $scheme = $uri->scheme || "";
