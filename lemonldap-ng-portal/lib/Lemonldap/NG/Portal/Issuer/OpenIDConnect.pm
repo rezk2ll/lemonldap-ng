@@ -18,6 +18,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_UNKNOWNPARTNER
   PE_OIDC_SERVICE_NOT_ALLOWED
   PE_FIRSTACCESS
+  PE_SENDRESPONSE
 );
 use String::Random qw/random_string/;
 
@@ -1155,6 +1156,11 @@ sub token {
         return $self->_handleClientCredentialsGrant( $req, $rp );
     }
 
+    # OAuth2.0 Token Exchange
+    elsif ( $grant_type eq 'urn:ietf:params:oauth:grant-type:token-exchange' ) {
+        return $self->_handleTokenExchange( $req, $rp );
+    }
+
     # Unknown or unspecified grant type
     else {
         $self->userLogger->error(
@@ -1251,6 +1257,19 @@ sub _handleClientCredentialsGrant {
 
     $self->logger->debug("Send token response");
     return $self->p->sendJSONresponse( $req, $token_response );
+}
+
+# OAuth 2.0 Token Exchange - RFC8693
+sub _handleTokenExchange {
+    my ( $self, $req, $rp ) = @_;
+
+    my $h = $self->p->processHook( $req, 'oidcGotTokenExchange', $rp );
+    if ( $h == PE_SENDRESPONSE ) {
+        return $req->response;
+    }
+
+    $self->logger->error("Unsupported OAuth 2.0 Token Exchange request");
+    return $self->sendOIDCError( $req, 'invalid_request', 400 );
 }
 
 sub _handlePasswordGrant {
