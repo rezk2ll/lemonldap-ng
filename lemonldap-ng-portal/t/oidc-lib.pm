@@ -108,6 +108,27 @@ sub codeAuthorize {
     return $code;
 }
 
+sub tokenExchange {
+    my ( $op, $clientid, %params ) = @_;
+    my $query = buildForm( {
+            grant_type => 'urn:ietf:params:oauth:grant-type:token-exchange',
+            %params
+        }
+    );
+
+    my $res = $op->_post(
+        "/oauth2/token",
+        IO::String->new($query),
+        accept => 'application/json',
+        length => length($query),
+        custom => {
+            HTTP_AUTHORIZATION => "Basic "
+              . encode_base64("$clientid:$clientid"),
+        },
+    );
+    return $res;
+}
+
 sub codeGrant {
     my ( $op, $clientid, $code, $redirect_uri ) = @_;
     my $query = buildForm( {
