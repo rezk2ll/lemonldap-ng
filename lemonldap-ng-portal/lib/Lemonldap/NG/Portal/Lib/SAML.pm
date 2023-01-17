@@ -302,8 +302,8 @@ sub load_idp_metadata {
     $self->idpList->{$entityID}->{name}    = $name;
 
     # Set encryption mode
-    my $encryption_mode = $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
-      ->{samlIDPMetaDataOptionsEncryptionMode} || "none";
+    my $encryption_mode =
+      $options->{samlIDPMetaDataOptionsEncryptionMode} || "none";
     my $lasso_encryption_mode = $self->getEncryptionMode($encryption_mode);
 
     unless (
@@ -322,8 +322,7 @@ sub load_idp_metadata {
         "Set encryption mode $encryption_mode on IDP $idpConfKey");
 
     # Set signature method if overridden
-    my $signature_method = $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
-      ->{samlIDPMetaDataOptionsSignatureMethod};
+    my $signature_method = $options->{samlIDPMetaDataOptionsSignatureMethod};
     if ($signature_method) {
         my $lasso_signature_method =
           $self->getSignatureMethod($signature_method);
@@ -496,8 +495,8 @@ sub load_sp_metadata {
     $self->spList->{$entityID}->{name}    = $name;
 
     # Set encryption mode
-    my $encryption_mode = $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
-      ->{samlSPMetaDataOptionsEncryptionMode} || "none";
+    my $encryption_mode =
+      $options->{samlSPMetaDataOptionsEncryptionMode} || "none";
     my $lasso_encryption_mode = $self->getEncryptionMode($encryption_mode);
 
     unless (
@@ -515,8 +514,7 @@ sub load_sp_metadata {
         "Set encryption mode $encryption_mode on SP $spConfKey");
 
     # Set signature method if overridden
-    my $signature_method = $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
-      ->{samlSPMetaDataOptionsSignatureMethod};
+    my $signature_method = $options->{samlSPMetaDataOptionsSignatureMethod};
     if ($signature_method) {
         my $lasso_signature_method =
           $self->getSignatureMethod($signature_method);
@@ -2680,7 +2678,7 @@ sub sendLogoutRequestToProvider {
 
     # Signature
     my $signSLOMessage =
-      $self->conf->{ 'saml' . $type . 'MetaDataOptions' }->{$confKey}
+      $self->{ lc($type) . 'Options' }->{$providerID}
       ->{ 'saml' . $type . 'MetaDataOptionsSignSLOMessage' };
 
     if ( $signSLOMessage == 0 ) {
