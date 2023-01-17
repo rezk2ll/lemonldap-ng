@@ -15,6 +15,7 @@ Mini Howtos
    federationproxy
    header_remote_user_conversion
    renater
+   samlfederation
    behindproxyminihowto
    useoutgoingproxy
    testopenidconnect
