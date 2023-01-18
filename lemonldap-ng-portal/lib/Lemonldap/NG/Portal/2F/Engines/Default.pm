@@ -740,7 +740,12 @@ sub canUpdateSfa {
             if ( !$self->checkMaximumSfaCount( $req, $_2fDevices ) ) {
                 $msg = 'maxNumberOf2FDevicesReached';
             }
-            elsif ( !$self->checkAuthenticationLevel( $req, $_2fDevices ) ) {
+            elsif (
+                !$self->checkMaxAvailableAuthenticationLevel(
+                    $req, $_2fDevices
+                )
+              )
+            {
                 $msg = 'notAuthorizedAuthLevel';
             }
             else {
@@ -817,7 +822,7 @@ sub checkMaximumSfaCount {
 }
 
 # Check if user's authentication is sufficient to register a SFA
-sub checkAuthenticationLevel {
+sub checkMaxAvailableAuthenticationLevel {
     my ( $self, $req, $_2fDevices ) = @_;
     my $user          = $req->userData->{ $self->conf->{whatToTrace} };
     my $requiredLevel = my $authnLevel = $req->userData->{authenticationLevel};
