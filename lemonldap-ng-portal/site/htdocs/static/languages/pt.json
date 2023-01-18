@@ -218,7 +218,7 @@
 "mailSent2":"Uma mensagem foi enviada para o seu endereço de e-mail.",
 "maintenanceMode":"Este aplicativo está em manutenção. Por favor, tente conectar mais tarde",
 "mandatoryField":"* Campo obrigatório",
-"maxNumberof2FDevicesReached":"Número máximo de dispositivos 2F atingido!",
+"maxNumberOf2FDevicesReached":"Número máximo de dispositivos 2F atingido!",
 "missingCode":"Falta o código",
 "missingPassword":"Password was not entered",
 "myNotification":"Minha notificação aceita",

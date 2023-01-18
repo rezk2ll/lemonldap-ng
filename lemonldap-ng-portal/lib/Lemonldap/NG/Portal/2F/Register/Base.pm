@@ -3,7 +3,6 @@ package Lemonldap::NG::Portal::2F::Register::Base;
 
 use strict;
 use Mouse;
-use JSON qw(from_json to_json);
 
 our $VERSION = '2.0.16';
 
@@ -71,19 +70,6 @@ sub checkNameSfa {
     $self->logger->debug("Return $type name: $name");
 
     return $name;
-}
-
-# Check if user can register a SFA
-sub checkMaximumSfaCount {
-    my ( $self, @sfaDevices ) = @_;
-    my $size    = @sfaDevices;
-    my $maxSize = $self->conf->{max2FDevices};
-
-    $self->logger->debug("Registered 2F device(s): $size / $maxSize");
-    $self->userLogger->warn("Max number of 2F devices is reached")
-      if ( $size >= $maxSize );
-
-    return $maxSize - $size;
 }
 
 1;

@@ -58,14 +58,6 @@ sub run {
                 );
             }
 
-            return $self->p->sendHtml(
-                $req, 'error',
-                params => {
-                    RAW_ERROR       => 'maxNumberof2FDevicesReached',
-                    AUTH_ERROR_TYPE => 'warning',
-                }
-            ) unless $self->checkMaximumSfaCount(@alldevices);
-
             if (
                 $self->add2fDevice(
                     $req,

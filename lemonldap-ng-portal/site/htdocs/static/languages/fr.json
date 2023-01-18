@@ -218,7 +218,7 @@
 "mailSent2":"Un message a été envoyé à votre adresse mail.",
 "maintenanceMode":"Cette application est en maintenance, merci de réessayer plus tard",
 "mandatoryField":"* Champ obligatoire",
-"maxNumberof2FDevicesReached":"Nombre maximum de seconds facteurs atteint !",
+"maxNumberOf2FDevicesReached":"Nombre maximum de seconds facteurs atteint !",
 "missingCode":"Code manquant",
 "missingPassword":"Le mot de passe n'a pas été renseigné",
 "myNotification":"Ma notification acceptée",

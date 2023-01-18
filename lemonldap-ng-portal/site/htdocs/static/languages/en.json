@@ -218,7 +218,7 @@
 "mailSent2":"A message has been sent to your mail address.",
 "maintenanceMode":"This application is in maintenance, please try to connect later",
 "mandatoryField":"* Mandatory field",
-"maxNumberof2FDevicesReached":"Maximum number of 2F devices reached!",
+"maxNumberOf2FDevicesReached":"Maximum number of 2F devices reached!",
 "missingCode":"Code is missing",
 "missingPassword":"Password was not entered",
 "myNotification":"My accepted notification",

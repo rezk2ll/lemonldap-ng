@@ -3,7 +3,7 @@ use strict;
 use IO::String;
 
 require 't/test-lib.pm';
-my $maintests = 56;
+my $maintests = 62;
 
 SKIP: {
     eval {
@@ -26,7 +26,9 @@ SKIP: {
                 totp2fAuthnLevel       => 3,
                 u2fSelfRegistration    => 1,
                 u2fActivation          => 1,
-                u2fAuthnLevel          => 4
+                u2fAuthnLevel          => 4,
+                max2FDevices           => 3,
+                handlerInternalCache   => 5
             }
         }
     );
@@ -76,7 +78,7 @@ SKIP: {
     ok( $code = Lemonldap::NG::Common::TOTP::_code( undef, $key, 0, 30, 6 ),
         'Code' );
     ok( $code =~ /^\d{6}$/, 'Code contains 6 digits' );
-    my $s = "code=$code&token=$token&TOTPName=MyTOTp";
+    my $s = "code=$code&token=$token&TOTPName=MyTOTP";
     ok(
         $res = $client->_post(
             '/2fregisters/totp/verify',
@@ -89,7 +91,9 @@ SKIP: {
     eval { $res = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), 'Content is JSON' )
       or explain( $res->[2]->[0], 'JSON content' );
-    ok( $res->{result} == 1, 'Key is registered' );
+    ok( $res->{result} == 1, 'TOTP is registered' );
+
+    Time::Fake->offset("+10s");
 
     # Try to register U2F (higher level SFA)
     ok(
@@ -117,7 +121,7 @@ SKIP: {
     eval { $data = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), ' Content is JSON' )
       or explain( [ $@, $res->[2] ], 'JSON content' );
-    ok( ( $data->{error} eq 'notAuthorizedAuthLevel' ), ' AuthLevel error' )
+    ok( ( $data->{error} eq 'notAuthorizedAuthLevel' ), 'AuthLevel error' )
       or explain( $data, 'authLevel' );
 
     # Try to upgrade from 2fManager
@@ -177,6 +181,8 @@ SKIP: {
     ok( $authLevel[0]->{value} == 3, 'AuthenticationLevel == 3' )
       or explain( $authLevel[0]->{value}, 'AuthenticationLevel value == 3' );
 
+    Time::Fake->offset("+20s");
+
     # Try to register U2F (higher level SFA)
     # --------------------------------------
     ok(
@@ -197,7 +203,7 @@ SKIP: {
             cookie => "lemonldap=$id",
             length => 0
         ),
-        'Try to get registration challenge -> rejected'
+        'Try to get registration challenge'
     );
     eval { $data = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), ' Content is JSON' )
@@ -263,6 +269,8 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     ok( $data->{result} == 1, 'Key is registered' )
       or explain( $data, '"result":1' );
 
+    Time::Fake->offset("+30s");
+
     # Try to register U2F (higher level SFA)
     # --------------------------------------
     ok(
@@ -322,6 +330,17 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
     );
 
     # POST U2F
+    ( $host, $url, $query ) = expectForm( $res, undef, '/2fchoice', 'token' );
+    $query .= '&sf=u';
+    ok(
+        $res = $client->_post(
+            '/2fchoice',
+            IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'Post U2F choice'
+    );
     ( $host, $url, $query ) = expectForm( $res, undef, '/u2fcheck', 'token' );
 
     # Get challenge
@@ -385,6 +404,8 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
         );
     }
 
+    Time::Fake->offset("+40s");
+
     # Try to register U2F (higher level SFA)
     # --------------------------------------
     ok(
@@ -405,7 +426,7 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
             cookie => "lemonldap=$id",
             length => 0
         ),
-        'Try to get registration challenge -> rejected'
+        'Try to get registration challenge'
     );
     eval { $data = JSON::from_json( $res->[2]->[0] ) };
     ok( not($@), ' Content is JSON' )
@@ -470,6 +491,37 @@ JjTJecOOS+88fK8qL1TrYv5rapIdqUI7aQ==
       or explain( [ $@, $res->[2] ], 'JSON content' );
     ok( $data->{result} == 1, 'Key is registered' )
       or explain( $data, '"result":1' );
+
+    # Try to register U2F (more than max)
+    # -----------------------------------
+    ok(
+        $res = $client->_get(
+            '/2fregisters/u',
+            cookie => "lemonldap=$id",
+            accept => 'text/html'
+        ),
+        'Form registration'
+    );
+    ok( $res->[2]->[0] =~ /u2fregistration\.(?:min\.)?js/, 'Found U2F js' );
+
+    # Ajax registration request
+    ok(
+        $res = $client->_post(
+            '/2fregisters/u/register', IO::String->new(''),
+            accept => 'application/json',
+            cookie => "lemonldap=$id",
+            length => 0
+        ),
+        'Try to get registration challenge -> rejected'
+    );
+    expectBadRequest($res);
+    eval { $data = JSON::from_json( $res->[2]->[0] ) };
+    ok( not($@), ' Content is JSON' )
+      or explain( [ $@, $res->[2] ], 'JSON content' );
+    ok( ( $data->{error} eq 'maxNumberOf2FDevicesReached' ),
+        'NumberOf2FDevices error' )
+      or explain( $data, 'maxNumberOf2FDevices' );
+
     $client->logout($id);
 }
 count($maintests);

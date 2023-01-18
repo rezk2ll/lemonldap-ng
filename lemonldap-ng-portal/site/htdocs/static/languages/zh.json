@@ -218,7 +218,7 @@
 "mailSent2":"已经发送一封邮件到您的邮箱",
 "maintenanceMode":"程序维护中，请稍后再尝试连接。",
 "mandatoryField":"* Mandatory field",
-"maxNumberof2FDevicesReached":"已達到雙因素驗證裝置的最大數量了！",
+"maxNumberOf2FDevicesReached":"已達到雙因素驗證裝置的最大數量了！",
 "missingCode":"代碼遺失",
 "missingPassword":"Password was not entered",
 "myNotification":"我已接受的通知",
