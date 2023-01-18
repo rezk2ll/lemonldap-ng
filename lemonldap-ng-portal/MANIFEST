@@ -140,6 +140,7 @@ lib/Lemonldap/NG/Portal/Plugins/Refresh.pm
 lib/Lemonldap/NG/Portal/Plugins/Register.pm
 lib/Lemonldap/NG/Portal/Plugins/RememberAuthChoice.pm
 lib/Lemonldap/NG/Portal/Plugins/RESTServer.pm
+lib/Lemonldap/NG/Portal/Plugins/SamlFederation.pm
 lib/Lemonldap/NG/Portal/Plugins/SingleSession.pm
 lib/Lemonldap/NG/Portal/Plugins/SOAPServer.pm
 lib/Lemonldap/NG/Portal/Plugins/Status.pm
@@ -579,6 +580,7 @@ t/29-AuthGPG.t
 t/29-AuthSSL.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO.t
+t/30-Auth-and-issuer-SAML-Federation.t
 t/30-Auth-and-issuer-SAML-Metadata.t
 t/30-Auth-and-issuer-SAML-NameID.t
 t/30-Auth-and-issuer-SAML-POST-IdP-initiated.t
@@ -592,6 +594,7 @@ t/30-Auth-and-issuer-SAML-Redirect.t
 t/30-Auth-ResolutionRule.t
 t/30-Auth-SAML-with-choice.t
 t/30-CDC.t
+t/30-SAML-Federation-Config.t
 t/30-SAML-Head-to-Tail-POST.t
 t/30-SAML-Macros.t
 t/30-SAML-POST-Logout-when-expired.t
@@ -874,6 +877,8 @@ t/lib/Lemonldap/NG/Handler/Test.pm
 t/lib/Lemonldap/NG/Portal/Auth/LDAPPolicy.pm
 t/lib/Lemonldap/NG/Portal/Custom.pm
 t/lmConf-1.json
+t/main-idps-renater-metadata.xml
+t/main-sps-renater-metadata.xml
 t/oidc-lib.pm
 t/OidcHookPlugin.pm
 t/PasswordHookPlugin.pm

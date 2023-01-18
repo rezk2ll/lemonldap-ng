@@ -88,6 +88,11 @@ sub cTrees {
                     'samlIDPMetaDataOptionsAllowLoginFromIDP',
                     'samlIDPMetaDataOptionsRequestedAuthnContext',
                     'samlIDPMetaDataOptionsRelayStateURL',
+                    {
+                        title => 'samlIDPMetaDataOptionsFederation',
+                        form  => 'simpleInputContainer',
+                        nodes => [ 'samlIDPMetaDataOptionsFederationEntityID', ]
+                    },
                     'samlIDPMetaDataOptionsComment'
                 ],
             },
@@ -140,6 +145,15 @@ sub cTrees {
                             'samlSPMetaDataOptionsEnableIDPInitiatedURL',
                             'samlSPMetaDataOptionsAuthnLevel',
                             'samlSPMetaDataOptionsRule',
+                        ]
+                    },
+                    {
+                        title => 'samlSPMetaDataOptionsFederation',
+                        form  => 'simpleInputContainer',
+                        nodes => [
+                            'samlSPMetaDataOptionsFederationEntityID',
+                            'samlSPMetaDataOptionsFederationOptionalAttributes',
+                            'samlSPMetaDataOptionsFederationRequiredAttributes',
                         ]
                     },
                     'samlSPMetaDataOptionsComment'

@@ -437,6 +437,8 @@ customize it:
    this case, you can fill here the IDP entityID, for example:
    ``https://auth.example.com/saml/metadata/idp``.
 
+-  **Federation**: see :doc:`samlfederation`
+
 .. _samlservice-saml-sessions-module-name-and-options:
 
 SAML sessions module name and options

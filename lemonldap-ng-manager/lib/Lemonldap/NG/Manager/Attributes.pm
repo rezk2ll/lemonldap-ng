@@ -3449,6 +3449,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => '#PORTAL#/saml/metadata',
             'type'    => 'text'
         },
+        'samlFederationFiles' => {
+            'type' => 'text'
+        },
         'samlIDPMetaDataExportedAttributes' => {
             'default'    => {},
             'keyMsgFail' => '__badMetadataName__',
@@ -3511,6 +3514,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 }
             ],
             'type' => 'select'
+        },
+        'samlIDPMetaDataOptionsFederationEntityID' => {
+            'type' => 'text'
         },
         'samlIDPMetaDataOptionsForceAuthn' => {
             'default' => 0,
@@ -3694,31 +3700,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'text'
         },
         'samlIDPMetaDataXML' => {
-            'test' => sub {
-                my $v = shift();
-                return 1 unless $v and %$v;
-                my @msg;
-                my $res = 1;
-                my %entityIds;
-                foreach my $idpId ( keys %$v ) {
-                    unless ( $v->{$idpId}{'samlIDPMetaDataXML'} =~
-                        /entityID="(.+?)"/is )
-                    {
-                        push @msg, "$idpId SAML metadata has no EntityID";
-                        $res = 0;
-                        next;
-                    }
-                    my $eid = $1;
-                    if ( defined $entityIds{$eid} ) {
-                        push @msg,
-"$idpId and $entityIds{$eid} have the same SAML EntityID";
-                        $res = 0;
-                        next;
-                    }
-                    $entityIds{$eid} = $idpId;
-                }
-                return $res, join( ', ', @msg );
-            },
             'type' => 'file'
         },
         'samlIDPSSODescriptorArtifactResolutionServiceArtifact' => {
@@ -3906,6 +3887,39 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 {
                     'k' => 'assertion',
                     'v' => 'Assertion'
+                }
+            ],
+            'type' => 'select'
+        },
+        'samlSPMetaDataOptionsFederationEntityID' => {
+            'type' => 'text'
+        },
+        'samlSPMetaDataOptionsFederationOptionalAttributes' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => 'keep'
+                },
+                {
+                    'k' => 'ignore',
+                    'v' => 'ignore'
+                }
+            ],
+            'type' => 'select'
+        },
+        'samlSPMetaDataOptionsFederationRequiredAttributes' => {
+            'default' => '',
+            'select'  => [ {
+                    'k' => '',
+                    'v' => 'keep'
+                },
+                {
+                    'k' => 'optional',
+                    'v' => 'makeoptional'
+                },
+                {
+                    'k' => 'ignore',
+                    'v' => 'ignore'
                 }
             ],
             'type' => 'select'

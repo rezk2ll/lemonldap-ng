@@ -36,9 +36,10 @@ our @pList = (
     newLocationWarning                  => '::Plugins::NewLocationWarning',
     adaptativeAuthenticationLevelRules  =>
       '::Plugins::AdaptativeAuthenticationLevel',
-    refreshSessions  => '::Plugins::Refresh',
-    crowdsec         => '::Plugins::CrowdSec',
-    globalLogoutRule => '::Plugins::GlobalLogout',
+    refreshSessions       => '::Plugins::Refresh',
+    crowdsec              => '::Plugins::CrowdSec',
+    globalLogoutRule      => '::Plugins::GlobalLogout',
+    samlFederationFiles => '::Plugins::SamlFederation',
 );
 
 ##@method list enabledPlugins
