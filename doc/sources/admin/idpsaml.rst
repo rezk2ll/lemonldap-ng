@@ -172,6 +172,11 @@ Security
 -  **Authentication level**: required authentication level to access this SP
 -  **Access rule**: lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this SP
 
+Federation
+''''''''''
+
+See :doc:`samlfederation`
+
 Comment: set a comment
 ''''''''''''''''''''''
 

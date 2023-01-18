@@ -186,6 +186,7 @@ Authentication request
 -  **Allow URL as RelayState**: set to On if the RelayState value sent
    by IDP is the URL where the user must be redirected after
    authentication
+-  **Federation**: see :doc:`samlfederation`
 -  **Comment**: set a comment
 
 

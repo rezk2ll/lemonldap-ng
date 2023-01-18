@@ -1371,6 +1371,11 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'samlFederation',
+                            form  => 'simpleInputContainer',
+                            nodes => [ 'samlFederationFiles', ]
+                        },
+                        {
                             title => 'samlDiscoveryProtocol',
                             form  => 'simpleInputContainer',
                             nodes => [

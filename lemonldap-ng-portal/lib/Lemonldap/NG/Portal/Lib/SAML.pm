@@ -302,8 +302,8 @@ sub load_idp_metadata {
     $self->idpList->{$entityID}->{name}    = $name;
 
     # Set encryption mode
-    my $encryption_mode = $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
-      ->{samlIDPMetaDataOptionsEncryptionMode} || "none";
+    my $encryption_mode =
+      $options->{samlIDPMetaDataOptionsEncryptionMode} || "none";
     my $lasso_encryption_mode = $self->getEncryptionMode($encryption_mode);
 
     unless (
@@ -322,8 +322,7 @@ sub load_idp_metadata {
         "Set encryption mode $encryption_mode on IDP $idpConfKey");
 
     # Set signature method if overridden
-    my $signature_method = $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
-      ->{samlIDPMetaDataOptionsSignatureMethod};
+    my $signature_method = $options->{samlIDPMetaDataOptionsSignatureMethod};
     if ($signature_method) {
         my $lasso_signature_method =
           $self->getSignatureMethod($signature_method);
@@ -496,8 +495,8 @@ sub load_sp_metadata {
     $self->spList->{$entityID}->{name}    = $name;
 
     # Set encryption mode
-    my $encryption_mode = $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
-      ->{samlSPMetaDataOptionsEncryptionMode} || "none";
+    my $encryption_mode =
+      $options->{samlSPMetaDataOptionsEncryptionMode} || "none";
     my $lasso_encryption_mode = $self->getEncryptionMode($encryption_mode);
 
     unless (
@@ -515,8 +514,7 @@ sub load_sp_metadata {
         "Set encryption mode $encryption_mode on SP $spConfKey");
 
     # Set signature method if overridden
-    my $signature_method = $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
-      ->{samlSPMetaDataOptionsSignatureMethod};
+    my $signature_method = $options->{samlSPMetaDataOptionsSignatureMethod};
     if ($signature_method) {
         my $lasso_signature_method =
           $self->getSignatureMethod($signature_method);
@@ -537,6 +535,53 @@ sub load_sp_metadata {
             "Set signature method $signature_method on SP $spConfKey");
     }
 }
+
+sub lazy_load_message {
+    my ( $self, $message ) = @_;
+    return unless $message;
+    my $entityID = Lasso::profile_get_issuer($message);
+    if ($entityID) {
+        $self->logger->debug("Found entityID $entityID in message");
+        return $self->lazy_load_entityid($entityID);
+    }
+}
+
+sub lazy_load_entityid {
+    my ( $self, $entityID ) = @_;
+    return unless $entityID;
+    my $provider = $self->lassoServer->get_provider($entityID);
+    unless ($provider) {
+        $self->logger->debug("Lazy loading provider $entityID");
+
+        $self->lazy_load_metadata($entityID);
+    }
+}
+
+sub lazy_load_metadata {
+    my ( $self, $entityID ) = @_;
+
+    my $config = {};
+    $self->p->processHook( {}, 'getSamlConfig', $entityID, $config );
+
+    if ( $config->{sp_metadata} ) {
+        return $self->load_sp_metadata(
+            $config->{sp_confKey}, $config->{sp_metadata},
+            $entityID,             $config->{sp_attributes},
+            $config->{sp_options}, $config->{sp_macros},
+        );
+    }
+
+    if ( $config->{idp_metadata} ) {
+        return $self->load_idp_metadata(
+            $config->{idp_confKey}, $config->{idp_metadata},
+            $entityID,              $config->{idp_attributes},
+            $config->{idp_options}
+        );
+    }
+}
+
+# This method returns the configuration info for the given provider
+# Returns a hashref or undef
 
 # Check SAML requests and responses
 sub checkMessage {
@@ -1161,6 +1206,8 @@ sub buildAuthnRequestMsg {
 sub processAuthnRequestMsg {
     my ( $self, $login, $request, $level ) = @_;
 
+    $self->lazy_load_message($request);
+
     eval { Lasso::Login::process_authn_request_msg( $login, $request ); };
 
     return $self->checkLassoError( $@, $level );
@@ -1173,6 +1220,8 @@ sub processAuthnRequestMsg {
 # @return result, Lasso error code
 sub processAuthnRequestMsgWithError {
     my ( $self, $login, $request, $level ) = @_;
+
+    $self->lazy_load_message($request);
 
     eval { Lasso::Login::process_authn_request_msg( $login, $request ); };
 
@@ -1254,6 +1303,8 @@ sub buildAssertion {
 # @return result
 sub processAuthnResponseMsg {
     my ( $self, $login, $response ) = @_;
+
+    $self->lazy_load_message($response);
 
     eval { Lasso::Login::process_authn_response_msg( $login, $response ); };
 
@@ -1759,6 +1810,8 @@ sub addUnauthRouteFromMetaDataURL {
 sub processLogoutResponseMsg {
     my ( $self, $logout, $response ) = @_;
 
+    $self->lazy_load_message($response);
+
     eval { Lasso::Logout::process_response_msg( $logout, $response ); };
 
     return $self->checkLassoError($@);
@@ -1771,6 +1824,8 @@ sub processLogoutResponseMsg {
 # @return result
 sub processLogoutRequestMsg {
     my ( $self, $logout, $request ) = @_;
+
+    $self->lazy_load_message($request);
 
     # Process the request
     eval { Lasso::Logout::process_request_msg( $logout, $request ); };
@@ -2654,6 +2709,9 @@ sub sendLogoutRequestToProvider {
         return ( 0, undef, undef );
     }
 
+    # Lazy load provider
+    $self->lazy_load_entityid($providerID);
+
     my $type = defined $self->spList->{$providerID} ? "SP" : "IDP";
 
     # Find EntityID in spList or idpList
@@ -2680,7 +2738,7 @@ sub sendLogoutRequestToProvider {
 
     # Signature
     my $signSLOMessage =
-      $self->conf->{ 'saml' . $type . 'MetaDataOptions' }->{$confKey}
+      $self->{ lc($type) . 'Options' }->{$providerID}
       ->{ 'saml' . $type . 'MetaDataOptionsSignSLOMessage' };
 
     if ( $signSLOMessage == 0 ) {

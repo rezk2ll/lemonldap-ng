@@ -357,22 +357,19 @@ sub tests {
             my $res = 1;
             my %entityIds;
             foreach my $idpId ( keys %{ $conf->{samlIDPMetaDataXML} } ) {
-                unless (
+                if (
                     $conf->{samlIDPMetaDataXML}->{$idpId}->{samlIDPMetaDataXML}
                     =~ /entityID=(['"])(.+?)\1/si )
                 {
-                    push @msg, "$idpId SAML metadata has no EntityID";
-                    $res = 0;
-                    next;
+                    my $eid = $2;
+                    if ( defined $entityIds{$eid} ) {
+                        push @msg,
+"$idpId and $entityIds{$eid} have the same SAML EntityID";
+                        $res = 0;
+                        next;
+                    }
+                    $entityIds{$eid} = $idpId;
                 }
-                my $eid = $2;
-                if ( defined $entityIds{$eid} ) {
-                    push @msg,
-                      "$idpId and $entityIds{$eid} have the same SAML EntityID";
-                    $res = 0;
-                    next;
-                }
-                $entityIds{$eid} = $idpId;
             }
             return ( $res, join( ', ', @msg ) );
         },
@@ -384,22 +381,19 @@ sub tests {
             my $res = 1;
             my %entityIds;
             foreach my $spId ( keys %{ $conf->{samlSPMetaDataXML} } ) {
-                unless (
+                if (
                     $conf->{samlSPMetaDataXML}->{$spId}->{samlSPMetaDataXML} =~
                     /entityID=(['"])(.+?)\1/si )
                 {
-                    push @msg, "$spId SAML metadata has no EntityID";
-                    $res = 0;
-                    next;
+                    my $eid = $2;
+                    if ( defined $entityIds{$eid} ) {
+                        push @msg,
+"$spId and $entityIds{$eid} have the same SAML EntityID";
+                        $res = 0;
+                        next;
+                    }
+                    $entityIds{$eid} = $spId;
                 }
-                my $eid = $2;
-                if ( defined $entityIds{$eid} ) {
-                    push @msg,
-                      "$spId and $entityIds{$eid} have the same SAML EntityID";
-                    $res = 0;
-                    next;
-                }
-                $entityIds{$eid} = $spId;
             }
             return ( $res, join( ', ', @msg ) );
         },

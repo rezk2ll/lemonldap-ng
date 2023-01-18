@@ -234,6 +234,80 @@ Sample code::
    }
 
 
+oidcGotTokenExchange
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.16
+
+This hook is triggered when LemonLDAP::NG handles an OAuth 2.0 Token Exchange request.
+
+It allows you to implement your own custom Token Exchange flow.
+
+You can look for parameters in ``$req``. If you find a combination of parameters that you support, set ``$req->response`` and return ``PE_SENDRESPONSE``. Else, return ``PE_OK`` to continue or ``PE_ERROR`` to fail.
+
+
+Sample code::
+
+    use constant hook => { oidcGotTokenExchange => 'tokenExchange', };
+
+    sub tokenExchange {
+        my ( $self, $req, $rp ) = @_;
+        my $subject_token = $req->param('subject_token');
+        my $subject_token_type = $req->param('subject_token_type');
+
+        if ( #... ) {
+            $req->response(
+                $self->p->sendJSONresponse(
+                    $req,
+                    {
+                        access_token => ...,
+                        issued_token_type => ...,
+                        token_type => ...,
+                    }
+                )
+            );
+            return PE_SENDRESPONSE;
+        }
+        return PE_OK;
+    }
+
+SAML service hooks
+------------------
+
+getSamlConfig
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.0.16
+
+This hook is triggered when an entityID that is not registered in SAML
+configuration (IDP or SP) is trying to communicate with LemonLDAP::NG
+
+You can use this hook to inject configuration on-demand
+
+Sample code::
+
+   use constant hook => {
+      getSamlConfig => 'getConfFromDB',
+   };
+
+   sub getConfFromDB {
+       my ( $self, $req, $entityID, $config ) = @_;
+
+       # Lookup $entityID in some DB
+
+       return {
+           sp_metadata => #XML metadata
+           sp_confKey => #configuration key
+           sp_attributes => #hashref of exported attributes
+           sp_options => #hashref of options
+           sp_macros => #hashref of macros
+
+           idp_metadata => #XML metadata
+           idp_attributes => #hashref of exported attributes
+           idp_options => #hashref of options
+       };
+   }
+
 SAML Issuer hooks
 -----------------
 

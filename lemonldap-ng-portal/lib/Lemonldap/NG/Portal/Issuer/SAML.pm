@@ -332,6 +332,8 @@ sub run {
                     }
                 }
                 else {
+                    $self->lazy_load_entityid($idp_initiated_sp);
+
                     unless ( defined $self->spList->{$idp_initiated_sp} ) {
                         $self->userLogger->error(
                             "SP $idp_initiated_sp not known");

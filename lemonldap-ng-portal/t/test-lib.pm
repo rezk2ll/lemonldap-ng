@@ -308,7 +308,7 @@ sub expectForm {
     if (
         ok(
             $res->[2]->[0] =~
-m@<form.+?action="(?:(?:http://([^/]+))?(/.*?)?|(#))".+method="(post|get)"@is,
+m@<form.+?action="(?:(?:https?://([^/]+))?(/.*?)?|(#))".+method="(post|get)"@is,
             ' Page contains a form'
         )
       )
