@@ -51,7 +51,7 @@ Add a new platform
 LLNG provides 3 platforms:
 
 -  ApacheMP2
--  FastCGI server *(Nginx is build from there)*
+-  FastCGI server *(Nginx is built from there)*
 -  Auto-protected PSGI
 
 If you want to add another, you must write:

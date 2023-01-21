@@ -87,7 +87,7 @@ Portal
 LLNG portal now embeds the following features:
 
 -  `CSRF <https://en.wikipedia.org/wiki/Cross-site_request_forgery>`__
-   protection *(Cross-Site Request Forgery)*: a token is build for each
+   protection *(Cross-Site Request Forgery)*: a token is built for each
    form. To disable it, set '​require Token for forms' ​to Off *(portal
    security parameters in the manager)*. Token timeout can be defined
    via manager (default to 120 seconds)

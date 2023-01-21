@@ -146,7 +146,7 @@ Security
 LLNG portal now embeds the following features:
 
 -  `CSRF <https://en.wikipedia.org/wiki/Cross-site_request_forgery>`__
-   protection *(Cross-Site Request Forgery)*: a token is build for each
+   protection *(Cross-Site Request Forgery)*: a token is built for each
    form. To disable it, set requireToken to 0 *(portal security
    parameters in the manager)*
 -  `Content-Security-Policy <https://en.wikipedia.org/wiki/Content_Security_Policy>`__
