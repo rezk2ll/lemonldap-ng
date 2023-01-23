@@ -345,6 +345,7 @@
 "webAuthnBrowserFailed":"Browser failed to obtain WebAuthn credential",
 "webAuthnBrowserInProgress":"WebAuthn authentication in progress. Please follow your browser's instructions",
 "webAuthnFailed":"WebAuthn authentication failed",
+"webAuthnNoDevice":"No WebAuthn device available for this account",
 "webAuthnRegisterFailed":"WebAuthn registration failed",
 "webAuthnRegisterInProgress":"WebAuthn registration in progress. Please follow your browser's instructions",
 "webAuthnRequired":"WebAuthn authentication required",

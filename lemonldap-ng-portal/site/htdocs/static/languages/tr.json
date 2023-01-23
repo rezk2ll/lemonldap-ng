@@ -345,6 +345,7 @@
 "webAuthnBrowserFailed":"Tarayıcı WebAuthn kimlik bilgilerini alamadı",
 "webAuthnBrowserInProgress":"WebAuthn kimlik doğrulaması işleniyor. Lütfen tarayıcınızın talimatlarını takip edin",
 "webAuthnFailed":"WebAuthn kimlik doğrulaması başarısız",
+"webAuthnNoDevice":"No WebAuthn device available for this account",
 "webAuthnRegisterFailed":"WebAuthn kaydı başarısız",
 "webAuthnRegisterInProgress":"WebAuthn kaydı işleniyor. Lütfen tarayıcınızın talimatlarını takip edin",
 "webAuthnRequired":"WebAuthn kimlik doğrulaması gerekli",

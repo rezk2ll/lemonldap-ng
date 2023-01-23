@@ -345,6 +345,7 @@
 "webAuthnBrowserFailed":"הדפדפן כשל במשיכת פרטי האימות עם Webauthn",
 "webAuthnBrowserInProgress":"מתבצע אימות עם Webauthn. נא לעקוב אחר הנחיות הדפדפן שלך.",
 "webAuthnFailed":"אימות ה־WebAuthn נכשל",
+"webAuthnNoDevice":"No WebAuthn device available for this account",
 "webAuthnRegisterFailed":"רישום ה־WebAuthn נכשל",
 "webAuthnRegisterInProgress":"רישום ה־WebAuthn מתבצע כעת. נא לעקוב אחר הנחיות הדפדפן שלך",
 "webAuthnRequired":"נדרש אימות WebAuthn",

@@ -345,6 +345,7 @@
 "webAuthnBrowserFailed":"Le navigateur n'a pas pu obtenir d'assertion WebAuthn",
 "webAuthnBrowserInProgress":"Authentification WebAuthn en cours, veuillez suivre les instructions de votre navigateur",
 "webAuthnFailed":"L'authentification WebAuthn a échoué",
+"webAuthnNoDevice":"Aucun périphérique WebAuthn n'est disponible",
 "webAuthnRegisterFailed":"L'enregistrement WebAuthn a échoué",
 "webAuthnRegisterInProgress":"Enregistrement WebAuthn en cours, veuillez suivre les instructions de votre navigateur",
 "webAuthnRequired":"Authentification WebAuthn nécessaire",

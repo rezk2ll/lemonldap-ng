@@ -345,6 +345,7 @@
 "webAuthnBrowserFailed":"Selain ei onnistunut hankkimaan WebAuthn-pääsytietoa",
 "webAuthnBrowserInProgress":"WebAuthn-tunnistautuminen käynnissä. Ole hyvä ja seuraa selaimesi ohjeita",
 "webAuthnFailed":"WebAuthn-tunnistautuminen epäonnistui",
+"webAuthnNoDevice":"No WebAuthn device available for this account",
 "webAuthnRegisterFailed":"WebAuthn-rekisteröinti epäonnistui",
 "webAuthnRegisterInProgress":"WebAuthn-rekisteröinti käynnissä. Ole hyvä ja seuraa selaimesi ohjeita",
 "webAuthnRequired":"Tarvitaan WebAuthn-tunnistautuminen",

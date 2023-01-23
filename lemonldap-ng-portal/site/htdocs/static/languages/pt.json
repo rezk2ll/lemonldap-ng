@@ -345,6 +345,7 @@
 "webAuthnBrowserFailed":"O Navegador falhou ao tentar obter a credencial WebAuthn",
 "webAuthnBrowserInProgress":"Autenticação WebAuthn em progresso. Por favor siga as instruções do seu navegador",
 "webAuthnFailed":"Autenticação WebAuthn falhou",
+"webAuthnNoDevice":"No WebAuthn device available for this account",
 "webAuthnRegisterFailed":"Registro WebAuthn falhou",
 "webAuthnRegisterInProgress":"Cadastro WebAuthn em progresso. Por favor siga as instruções do seu navegador",
 "webAuthnRequired":"Requerida autenticação WebAuthn",

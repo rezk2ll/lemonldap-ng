@@ -345,6 +345,7 @@
 "webAuthnBrowserFailed":"Przeglądarka nie uzyskała poświadczeń WebAuthn",
 "webAuthnBrowserInProgress":"Trwa uwierzytelnianie WebAuthn. Postępuj zgodnie z instrukcjami przeglądarki",
 "webAuthnFailed":"Uwierzytelnianie WebAuthn nie powiodło się",
+"webAuthnNoDevice":"No WebAuthn device available for this account",
 "webAuthnRegisterFailed":"Rejestracja WebAuthn nie powiodła się",
 "webAuthnRegisterInProgress":"Trwa rejestracja WebAuthn. Postępuj zgodnie z instrukcjami przeglądarki",
 "webAuthnRequired":"Wymagane uwierzytelnianie WebAuthn",

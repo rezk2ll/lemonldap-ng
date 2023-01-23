@@ -79,7 +79,7 @@ sub _generate_user_handle {
 
 sub _registrationchallenge {
     my ( $self, $req, $user ) = @_;
-    my @alldevices = $self->find2fDevicesByType( $req, $req->userData );
+    my @alldevices       = $self->find2fDevicesByType( $req, $req->userData );
     my $challenge_base64 = encode_base64url( Crypt::URandom::urandom(32) );
 
     # Challenge is persisted on the server
@@ -124,7 +124,7 @@ sub _registration {
     unless ($state_id) {
         $self->logger->error(
             $self->prefix . "2f: could not find state ID in response" );
-        return $self->p->sendError( $req, 'Invalid response', 400 );
+        return $self->p->sendError( $req, 'webAuthnRegisterFailed', 400 );
     }
     my $state_data;
     unless ( $state_data = $self->ott->getToken($state_id) ) {
@@ -133,19 +133,22 @@ sub _registration {
         return $self->p->sendError( $req, 'PE82', 400 );
     }
     my $registration_options = ( $state_data->{registration_options} );
-    return $self->p->sendError( $req,
-        $self->prefix . '2f: registration options missing from state data',
-        400 )
-      unless $registration_options;
+    unless ($registration_options) {
+        $self->logger->error( $self->prefix
+              . '2f: registration options missing from state data' );
+        return $self->p->sendError( $req, 'webAuthnRegisterFailed', 400 );
+    }
 
     # Data required for WebAuthn verification
     my $credential_json = $req->param('credential');
     $self->logger->debug(
         $self->prefix . "2f: get registered credential data $credential_json" );
 
-    return $self->p->sendError( $req,
-        $self->prefix . '2f: missing credential parameter', 400 )
-      unless $credential_json;
+    unless ($credential_json) {
+        $self->logger->error(
+            $self->prefix . '2f: missing credential parameter' );
+        return $self->p->sendError( $req, 'webAuthnRegisterFailed', 400 );
+    }
 
     my $validation = eval {
         $self->validateCredential( $req, $registration_options,
@@ -194,7 +197,7 @@ sub _registration {
         return $self->p->sendJSONresponse( $req, { result => 1 } );
     }
     else {
-        $self->logger->debug( $self->prefix . '2f: unable to add device' );
+        $self->logger->error( $self->prefix . '2f: unable to add device' );
         return $self->p->sendError( $req, 'serverError' );
     }
 }
@@ -205,9 +208,11 @@ sub _verificationchallenge {
     $self->logger->debug( $self->prefix . '2f: verification challenge req' );
 
     my $request = $self->generateChallenge( $req, $req->userData );
-    return $self->p->sendError( $req,
-        $self->prefix . '2f: no registered device', 400 )
-      unless ($request);
+
+    unless ($request) {
+        $self->logger->error( $self->prefix . '2f: no registered device' );
+        return $self->p->sendError( $req, 'webAuthnNoDevice', 500 );
+    }
 
     # Request is persisted on the server
     my $token = $self->ott->createToken( {
@@ -226,15 +231,17 @@ sub _verification {
 
     my $credential_json = $req->param('credential');
 
-    return $self->p->sendError( $req,
-        $self->prefix . '2f: missing credential parameter', 400 )
-      unless $credential_json;
+    unless ($credential_json) {
+        $self->logger->error(
+            $self->prefix . '2f: missing credential parameter' );
+        return $self->p->sendError( $req, 'webAuthnFailed', 400 );
+    }
 
     my $state_id = $req->param('state_id');
     unless ($state_id) {
         $self->logger->error( $self->prefix
               . "2f: could not find state ID in response ($credential_json)" );
-        return $self->p->sendError( $req, 'Invalid response', 400 );
+        return $self->p->sendError( $req, 'webAuthnFailed', 400 );
     }
 
     # Recover challenge
@@ -271,9 +278,12 @@ sub _delete {
     return $self->p->sendError( $req, 'notAuthorized', 400 )
       unless $self->userCanRemove;
 
-    my $epoch = $req->param('epoch')
-      or return $self->p->sendError( $req,
-        $self->prefix . '2f: "epoch" parameter is missing', 400 );
+    my $epoch = $req->param('epoch');
+    unless ($epoch) {
+        $self->logger->error(
+            $self->prefix . '2f: "epoch" parameter is missing' );
+        return $self->p->sendError( $req, '2FDeviceNotFound', 400 );
+    }
 
     return $self->del2fDevice( $req, $req->userData, $self->type, $epoch )
       ? $self->p->sendJSONresponse( $req, { result => 1 } )
@@ -285,9 +295,11 @@ sub run {
     my ( $self, $req, $action ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
 
-    return $self->p->sendError( $req,
-        'No ' . $self->conf->{whatToTrace} . ' found in user data', 500 )
-      unless $user;
+    unless ($user) {
+        $self->logger->error(
+            'No ' . $self->conf->{whatToTrace} . ' found in user data' );
+        return $self->p->sendError( $req, 'serverError', 500 );
+    }
 
     if ( $action eq 'registrationchallenge' ) {
         return $self->_registrationchallenge( $req, $user );
