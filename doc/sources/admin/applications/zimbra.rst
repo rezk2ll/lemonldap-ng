@@ -15,7 +15,7 @@ clients like Outlook and Thunderbird. Zimbra also features archiving and
 discovery for compliance. Zimbra can be deployed on-premises or as a
 hosted email solution.
 
-Zimbra can be connected with `SAML protocol<../idpsaml>`__ which is the
+Zimbra can be connected with `SAML protocol <../idpsaml>`__ which is the
 recommended way, but this requires Zimbra Network Edition.
 
 Zimbra can also use a specific `preauthentication
