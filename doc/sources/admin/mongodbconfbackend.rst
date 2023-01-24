@@ -1,10 +1,14 @@
-MongoDB configuration backends
-==============================
+MongoDB configuration backend (deprecated)
+==========================================
 
 `MongoDB <https://www.mongodb.org/>`__ is a NoSQL database that can be
 used both for storing configuration and
 :doc:`sessions<mongodbsessionbackend>`. You need to install Perl MongoDB
 module to be able to use this backend.
+
+.. tip::
+
+   `MongoDB has officially deprecated the Perl driver <https://www.mongodb.com/blog/post/the-mongodb-perl-driver-is-being-deprecated>`__, so we advice to choose another backend
 
 For Debian, you can install mongodb module with:
 

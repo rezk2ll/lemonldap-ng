@@ -46,6 +46,13 @@ translatePage = (lang) ->
 			msg = translate "PE#{$(this).attr 'trmsg'}"
 			if msg.match /_hide_/
 				$(this).parent().hide()
+		$("[trattribute]").each ->
+			trattributes = $(this).attr('trattribute').trim().split(/\s+/)
+			for trattribute in trattributes
+				[attribute, value] = trattribute.split(':')
+				if attribute and value
+					$(this).attr attribute, translate(value)
+			true
 		$("[trplaceholder]").each ->
 			tmp = translate($(this).attr('trplaceholder'))
 			$(this).attr 'placeholder', tmp
@@ -474,34 +481,6 @@ $(window).on 'load', () ->
 	if window.datas.ppolicy? and $('#newpassword').length
 		$('#reset').change togglecheckpassword
 
-	# Functions to show/hide display password button
-	if datas['enablePasswordDisplay']
-		field = ''
-		if datas['dontStorePassword']
-			$(".toggle-password").mousedown () ->
-				field = $(this).attr 'id'
-				field = field.replace /^toggle_/, ''
-				console.log 'Display', field
-				$(this).toggleClass("fa-eye fa-eye-slash")
-				$("input[name=#{field}]").attr('class', 'form-control')
-			$(".toggle-password").mouseup () ->
-				$(this).toggleClass("fa-eye fa-eye-slash")
-				$("input[name=#{field}]").attr('class', 'form-control key') if $("input[name=#{field}]").get(0).value
-		else
-			$(".toggle-password").mousedown () ->
-				field = $(this).attr 'id'
-				field = field.replace /^toggle_/, ''
-				console.log 'Display', field
-				$(this).toggleClass("fa-eye fa-eye-slash")
-				$("input[name=#{field}]").attr("type", "text")
-			$(".toggle-password").mouseup () ->
-				$(this).toggleClass("fa-eye fa-eye-slash")
-				$("input[name=#{field}]").attr("type", "password")
-
-	# Ping if asked
-	if datas['pingInterval'] and datas['pingInterval'] > 0
-		window.setTimeout ping, datas['pingInterval']
-
 	# Set local dates (used to display history)
 	$(".localeDate").each ->
 		s = new Date($(this).attr("val")*1000)
@@ -509,6 +488,52 @@ $(window).on 'load', () ->
 
 	$('.oidcConsent').on 'click', () ->
 		removeOidcConsent $(this).attr 'partner'
+
+	# Ping if asked
+	if datas['pingInterval'] and datas['pingInterval'] > 0
+		window.setTimeout ping, datas['pingInterval']
+
+	# Functions to show/hide display password button
+	if datas['enablePasswordDisplay']
+		field = ''
+		if datas['dontStorePassword']
+			$(".toggle-password").on 'mousedown touchstart', () ->
+				field = $(this).attr 'id'
+				field = field.replace /^toggle_/, ''
+				console.log 'Display', field
+				$(this).toggleClass("fa-eye fa-eye-slash")
+				$("input[name=#{field}]").attr('class', 'form-control')
+			$(".toggle-password").on 'mouseup touchend', () ->
+				$(this).toggleClass("fa-eye fa-eye-slash")
+				$("input[name=#{field}]").attr('class', 'form-control key') if $("input[name=#{field}]").get(0).value
+		else
+			$(".toggle-password").on 'mousedown touchstart', () ->
+				field = $(this).attr 'id'
+				field = field.replace /^toggle_/, ''
+				console.log 'Display', field
+				$(this).toggleClass("fa-eye fa-eye-slash")
+				$("input[name=#{field}]").attr("type", "text")
+			$(".toggle-password").on 'mouseup touchend', () ->
+				$(this).toggleClass("fa-eye fa-eye-slash")
+				$("input[name=#{field}]").attr("type", "password")
+
+	# Functions to show/hide newpassword inputs
+	$('#reset').change () ->
+		checked = $(this).prop('checked')
+		console.log 'Reset is checked', checked
+		if checked == true
+			$('#newpasswords').hide()
+			$('#newpassword').removeAttr('required')
+			$('#confirmpassword').removeAttr('required')
+			$('#confirmpassword').get(0)?.setCustomValidity('')
+		else
+			$('#newpasswords').show()
+			$('#newpassword').attr('required', true)
+			$('#confirmpassword').attr('required', true)
+			if $('#confirmpassword').get(0)?.value == $('#newpassword').get(0)?.value
+				$('#confirmpassword').get(0)?.setCustomValidity('')
+			else
+				$('#confirmpassword').get(0)?.setCustomValidity(translate('PE34'))
 
 	# Functions to show/hide placeholder password inputs
 	$('#passwordfield').on 'input', () ->
@@ -580,4 +605,7 @@ $(window).on 'load', () ->
 		if datas['scrollTop'] && (document.body.scrollTop > Math.abs(datas['scrollTop']) || document.documentElement.scrollTop > Math.abs(datas['scrollTop']))
 			$('#btn-back-to-top').css("display","block")
 		else
-    		$('#btn-back-to-top').css("display","none")
+			$('#btn-back-to-top').css("display","none")
+
+	$(document).trigger "portalLoaded"
+	true

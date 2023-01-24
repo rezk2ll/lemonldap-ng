@@ -53,7 +53,7 @@ Then, go in ``OpenID parameters``:
 
 -  **Authentication level**: authentication level for this module.
 -  **Secret token**: used to check integrity of OpenID response.
--  **Authorizated domain**:
+-  **Authorized domain**:
 
    -  **List type**: choose white list to define allowed domains or
       black list to define forbidden domains

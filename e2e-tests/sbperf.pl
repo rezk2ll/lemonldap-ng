@@ -66,7 +66,6 @@ my @legend = (
     'Apache::Session::Browseable::PgJSON'      => 'PgJSON',
     'Apache::Session::Browseable::PgJSONB'     => 'PgJSONB',
     'Apache::Session::Browseable::PgHstore'    => 'PgHstore',
-    'Apache::Session::Redis'                   => 'Redis',
     'Apache::Session::Browseable::Redis'       => 'BRedis',
 );
 
@@ -88,10 +87,6 @@ my $tests = {
           )
         : ()
     ),
-    Redis => {
-        globalStorage        => 'Apache::Session::Browseable::Redis',
-        globalStorageOptions => {},
-    },
     BRedis => {
         globalStorage        => 'Apache::Session::Browseable::Redis',
         globalStorageOptions => {

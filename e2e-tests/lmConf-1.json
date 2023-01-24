@@ -42,7 +42,7 @@
           "description": "Explore WebSSO notifications",
           "display": "auto",
           "logo": "database.png",
-          "name": "Notifications explorer",
+          "name": "Notifications Explorer",
           "uri": "http://manager.example.com:__port__/notifications.html"
         },
         "type": "application"
@@ -52,7 +52,7 @@
           "description": "Explore WebSSO sessions",
           "display": "auto",
           "logo": "database.png",
-          "name": "Sessions explorer",
+          "name": "Sessions Explorer",
           "uri": "http://manager.example.com:__port__/sessions.html"
         },
         "type": "application"
@@ -62,7 +62,7 @@
           "description": "Explore WebSSO 2FA sessions",
           "display": "auto",
           "logo": "database.png",
-          "name": "2FA Sessions explorer",
+          "name": "2FA Sessions Explorer",
           "uri": "http://manager.example.com:__port__/2ndfa.html"
         },
         "type": "application"
@@ -87,7 +87,7 @@
           "display": "on",
           "logo": "network.png",
           "name": "Official Website",
-          "uri": "http://lemonldap-ng.org/"
+          "uri": "https://lemonldap-ng.org/"
         },
         "type": "application"
       },

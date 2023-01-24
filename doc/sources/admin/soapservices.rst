@@ -1,14 +1,14 @@
 SOAP services (deprecated)
 ==========================
 
-LL::NG portal provide a SOAP server that can be enable to give
+LL::NG portal provides a SOAP server that can be enable to give
 configuration and/or session. These features can be enabled using the
 manager.
 
 Portal SOAP services
 --------------------
 
-SOAP functions are not accessible by network by default. SOAP functions
+SOAP functions are not accessible over network by default. SOAP functions
 are protected by Web Server, you can change this in
 :ref:`portal configuration<configlocation-portal>`.
 
@@ -21,7 +21,7 @@ are protected by Web Server, you can change this in
    -  **isAuthorizedURI(cookieValue,url)**: check if user is granted to
       access to the function
    -  **getMenuApplications(cookieValue)**: return a list of
-      authorizated applications (based on menu calculation)
+      authorized applications (based on menu calculation)
 
 -  Read/Write functions (index.pl/adminSessions paths):
 
@@ -52,5 +52,5 @@ are protected by Web Server, you can change this in
 WSDL
 ----
 
-You can enable WSDL server in the manager. It will deliver WSDL file
+You can enable WSDL server in the manager. It will provide WSDL file
 (/portal.wsdl).

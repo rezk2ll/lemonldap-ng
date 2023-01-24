@@ -76,7 +76,7 @@ You can use the ``lemonldap-ng-sessions`` tool to search, update or delete sessi
 
 -  LLNG Portal provides a simple tool to delete a session:
    ``llngDeleteSession``. To use it, simply give it the user identifier
-   *(wildcard are authorizated)*:
+   *(wildcard are authorized)*:
 
 .. code-block:: shell
 

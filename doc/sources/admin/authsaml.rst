@@ -108,6 +108,59 @@ For each attribute, you can set:
 
 |image1|
 
+Session
+^^^^^^^
+
+-  **Adapt session lifetime**: Session lifetime will be adapted from
+   ``SessionNotOnOrAfter`` value found in authentication response. It
+   means that if the IDP propose to close session earlier than the
+   default LemonLDAP::NG timeout, the session \_utime will be modified
+   so that session is erased at the date indicated by the IDP.
+-  **Force UTF-8**: This will force UTF-8 conversion of attributes
+   values collected from IDP.
+-  **Store SAML Token**: Allows one to keep SAML token (assertion)
+   inside user session. Don't enable it unless you need to replay this
+   token on an application.
+-  **Attribute containing user identifier**: Set the value of SAML
+   attribute ("Name") that should be used as user main identifier
+   ($user). If empty, the NameID content is used.
+
+Signature
+^^^^^^^^^
+
+These options override service signature options (see
+:ref:`SAML service configuration<samlservice-general-options>`).
+
+-  **Signature method**: Signature method for requests sent to this provider
+-  **Sign SSO message**: Sign SSO message
+-  **Check SSO message signature**: Check SSO message signature
+-  **Sign SLO message**: Sign SLO message
+-  **Check SLO message signature**: Check SLO message signature
+
+Binding
+^^^^^^^
+
+-  **SSO binding**: Force binding to use for SSO (http-redirect,
+   http-post, etc.)
+-  **SLO binding**: Force binding to use for SLO (http-redirect,
+   http-post, etc.)
+
+
+.. note::
+
+    If no binding is defined, the default binding in IDP metadata
+    will be used.
+
+Security
+^^^^^^^^
+
+-  **Encryption mode**: Set the encryption mode for this IDP (None,
+   NameID or Assertion).
+-  **Check time conditions**: Set to Off to disable time conditions
+   checking on authentication responses.
+-  **Check audience conditions**: Set to Off to disable audience
+   conditions checking on authentication responses.
+
 Options
 ^^^^^^^
 
@@ -121,10 +174,6 @@ Authentication request
    request
 -  **Passive authentication**: set IsPassive flag in authentication
    request
--  **Allow proxied authentication**: allow an authentication response to
-   be issued from another IDP that the one we register (proxy IDP). If
-   you disallow this, you should also disallow direct login form IDP,
-   because proxy restriction is set in authentication requests.
 -  **Allow login from IDP**: allow a user to connect directly from an
    IDP link. In this case, authentication is not a response to an issued
    authentication request, and we have less control on conditions.
@@ -134,69 +183,19 @@ Authentication request
    level (see
    :ref:`how configure the mapping<samlservice-authentication-contexts>`),
    that you can check to allow or deny session creation.
--  **Allow URL as RelayState**: Set to On if the RelayState value sent
+-  **Allow URL as RelayState**: set to On if the RelayState value sent
    by IDP is the URL where the user must be redirected after
-   authentication.
+   authentication
+-  **Federation**: see :doc:`samlfederation`
+-  **Comment**: set a comment
 
-Session
-'''''''
-
--  **Adapt session lifetime**: session lifetime will be adapted from
-   ``SessionNotOnOrAfter`` value found in authentication response. It
-   means that if the IDP propose to close session earlier than the
-   default LemonLDAP::NG timeout, the session \_utime will be modified
-   so that session is erased at the date indicated by the IDP.
--  **Force UTF-8**: this will force UTF-8 conversion of attributes
-   values collected from IDP.
--  **Store SAML Token**: allows one to keep SAML token (assertion)
-   inside user session. Don't enable it unless you need to replay this
-   token on an application.
--  **Attribute containing user identifier**: set the value of SAML
-   attribute ("Name") that should be used as user main identifier
-   ($user). If empty, the NameID content is used.
-
-Signature
-'''''''''
-
-These options override service signature options (see
-:ref:`SAML service configuration<samlservice-general-options>`).
-
--  **Signature method**: signature method for requests sent to this provider
--  **Sign SSO message**: sign SSO message
--  **Check SSO message signature**: check SSO message signature
--  **Sign SLO message**: sign SLO message
--  **Check SLO message signature**: check SLO message signature
-
-Binding
-'''''''
-
--  **SSO binding**: force binding to use for SSO (http-redirect,
-   http-post, etc.)
--  **SLO binding**: force binding to use for SLO (http-redirect,
-   http-post, etc.)
-
-
-.. note::
-
-    If no binding is defined, the default binding in IDP metadata
-    will be used.
-
-Security
-''''''''
-
--  **Encryption mode**: set the encryption mode for this IDP (None,
-   NameID or Assertion).
--  **Check time conditions**: set to Off to disable time conditions
-   checking on authentication responses.
--  **Check audience conditions**: set to Off to disable audience
-   conditions checking on authentication responses.
 
 Display
-'''''''
+^^^^^^^
 
 Used only if at least 2 SAML Identity Providers are declared
 
--  **Display name**: Name of the IDP
+-  **Name**: Name of the IDP
 -  **Logo**: Logo of the IDP
 
 .. tip::
@@ -206,7 +205,8 @@ Used only if at least 2 SAML Identity Providers are declared
     icon file name directly in the field and copy the logo file in portal
     icons directory
 
--  **Resolution Rule**: rule that will be applied to preselect an IDP
+-  **Tooltip**: Information displayed on mouse over the button
+-  **Resolution rule**: Rule that will be applied to preselect an IDP
    for a user. You have access to all environment variable *(like user
    IP address)* and all session keys.
 
@@ -221,10 +221,9 @@ To preselect this IDP when the ``MY_IDP`` :doc:`choice <authchoice>` is selected
 
     $_choice eq "MY_IDP"
 
--  **Order**: Number used for sorting IDP display
+-  **Order**: Used for sorting IDP
 
 .. |image0| image:: /documentation/manager-saml-metadata.png
    :class: align-center
 .. |image1| image:: /documentation/manager-saml-attributes.png
    :class: align-center
-

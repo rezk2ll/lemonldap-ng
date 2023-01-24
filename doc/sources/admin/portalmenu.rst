@@ -1,7 +1,6 @@
 Portal menu
 ===========
 
-
 .. note::
 
     The menu is displayed if authentication is successful.
@@ -11,14 +10,14 @@ Portal menu
 Menu modules
 ------------
 
-LemonLDAP::NG portal menu has 4 modules:
+LemonLDAP::NG portal menu proposes 5 modules:
 
--  **Application list**: display categories and applications allowed for
-   the user
--  **Password change**: form to change the password
--  **Login history**: display user's last logins and last failed logins
--  **OIDC Consents**: display user's OpenId Connect consents
+-  **Application list**: display categories and applications allowed for the user
+-  **Login history**: display user's last logins and failed logins
+-  **Password change**: form to change password
+-  **OIDC consents**: display user's OpenId Connect consents
 -  **Logout**: logout button
+-  **Display order**: list used for sorting modules (default: Appslist ChangePassword LoginHistory OidcConsents Logout)
 
 Each module can be activated through a rule, using user session
 information. These rules can be set through Manager:
@@ -32,17 +31,19 @@ user authenticated through LDAP or DBI:
 
    $_auth eq LDAP or $_auth eq DBI
 
+You can sort menu tabs by setting the module order option for each module.
+
 .. _portalmenu-categories-and-applications:
 
 Categories and applications
 ---------------------------
 
-:doc:`Configuring the virtual hosts<configvhost>` is not sufficient to
-display an application in the menu. Indeed, a virtual host can serve
+:doc:`Configuring the virtual hosts<configvhost>` is not enough to
+display an application in applications menu. Indeed, a virtual host can serve
 several applications (http://vhost.example.com/appli1,
 http://vhost.example.com/appli2).
 
-In Manager, you can configure categories and applications in
+In Manager, you can configure categories and applications by using
 ``General Parameters`` > ``Portal`` > ``Menu`` >
 ``Categories and applications``.
 
@@ -57,10 +58,10 @@ Application parameters:
 -  **Logo**: file name to use as logo
 -  **Display application**:
 
-   -  **Enabled**: always display
-   -  **Disabled**: never display
-   -  **Automatic**: display only if the user can access it
-   -  **Special rule**: specify a :ref:`rule<rules>`
+   -  **Enabled**: always displayed
+   -  **Disabled**: never displayed
+   -  **Automatic**: displayed only if the user can access it
+   -  **Special rule**: define a :ref:`rule<rules>`
       or "sp: <name>" where "name" is the key name of the service
       provider, the corresponding rule will be applied *(available for
       CAS, SAML or OpenID-Connect)*
@@ -68,8 +69,7 @@ Application parameters:
 
 .. tip::
 
-    Categories and applications are displayed in alphabetical
-    order.
+    Categories and applications are displayed in alphabetical order.
 
 |image1|
 

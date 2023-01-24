@@ -5,7 +5,7 @@ Section: perl
 Priority: optional
 Build-Depends: debhelper (>= 10),
                po-debconf
-Build-Depends-Indep: gsfonts <!nocheck>,
+Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libapache-session-perl <!nocheck>,
                      libauth-yubikey-webclient-perl <!nocheck>,
                      libauthen-oath-perl <!nocheck>,
@@ -39,6 +39,7 @@ Build-Depends-Indep: gsfonts <!nocheck>,
                      liblasso-perl <!nocheck>,
                      libmime-tools-perl <!nocheck>,
                      libmouse-perl <!nocheck>,
+                     libclass-xsaccessor-perl <!nocheck>,
                      libnet-cidr-lite-perl <!nocheck>,
                      libnet-ldap-perl <!nocheck>,
                      libio-socket-timeout-perl <!nocheck>,
@@ -99,6 +100,7 @@ Architecture: all
 Section: doc
 Depends: ${misc:Depends}
 Pre-Depends: ${misc:Pre-Depends}
+Multi-Arch: foreign
 Description: Lemonldap::NG Web-SSO system documentation
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
@@ -123,6 +125,7 @@ Depends: ${misc:Depends},
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          libplack-perl
 Recommends: libhttp-parser-xs-perl,
+            libnginx-mod-http-lua,
             nginx-extras | nginx
 Pre-Depends: ${misc:Pre-Depends}
 Description: Lemonldap::NG FastCGI server
@@ -145,6 +148,7 @@ Section: web
 Depends: ${misc:Depends},
          ${perl:Depends}
 Breaks: liblemonldap-ng-handler-perl (<< 2.0.14~)
+Multi-Arch: foreign
 Description: Lemonldap::NG SSOaaS client for Apache
  Lemonldap::NG is a complete Web-SSO system that provides a SSO-as-a-Service
  system, natively usable with Nginx. Lemonldap::NG::SSOaaS::Apache::Client
@@ -219,6 +223,7 @@ Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
          debconf,
+         perl-doc,
          libapache-session-perl,
          libcache-cache-perl,
          libconfig-inifiles-perl,
@@ -230,6 +235,7 @@ Depends: ${misc:Depends},
          libjson-perl,
          libjson-xs-perl,
          libmouse-perl,
+         libclass-xsaccessor-perl,
          libplack-perl,
          liburi-perl,
          libwww-perl
@@ -301,7 +307,7 @@ Depends: ${misc:Depends},
          libregexp-assemble-perl,
          liblist-moreutils-perl,
          libemail-date-format-perl
-Recommends: gsfonts,
+Recommends: fonts-urw-base35 | gsfonts,
             libauthen-webauthn-perl,
             libcrypt-openssl-bignum-perl,
             libconvert-base32-perl,
@@ -342,5 +348,5 @@ Description: Lemonldap::NG authentication portal part
  Lemonldap::NG::Portal provides the authentication portal.
  .
  You may have to install some suggested packages depending on plugins you
- enabled. For example, libgd-securityimage-perl and gsfonts are needed if you
- want to use Captcha, libcrypt-u2f-server-perl for U2F features,...
+ enabled. For example, libgd-securityimage-perl and fonts-urw-base35 are needed
+ if you want to use Captcha, libcrypt-u2f-server-perl for U2F features,...

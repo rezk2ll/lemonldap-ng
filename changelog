@@ -1,3 +1,10 @@
+lemonldap-ng (2.0.15.1) jammy; urgency=medium
+
+  * Bugs:
+    * #2796: "Internal Server Error" during MFA flow when using LDAP as UserDB in 2.0.15
+
+ -- Clément <clem.oudot@gmail.com>  Thu, 15 Sep 2022 15:58:47 +0200
+
 lemonldap-ng (2.0.15) jammy; urgency=medium
 
   * Bugs:
@@ -24,7 +31,6 @@ lemonldap-ng (2.0.15) jammy; urgency=medium
 
   * New features:
     * #2491: Use environment variables placeholder in lemonldap json configuration
-    * #2684: Get the geolocation of the user
     * #2713: handle refresh tokens in Auth::OpenIDConnect
     * #2737: remember previous authentication choice
     * #2763: Install LL::NG on EL9

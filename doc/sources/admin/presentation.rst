@@ -32,7 +32,6 @@ Main components
 Databases
 ~~~~~~~~~
 
-
 .. attention::
 
     We call "database" a backend where we can read or write a data.
@@ -125,9 +124,9 @@ This duration can be set in the manager's Configuration tab (General Parameters 
 .. attention::
 
     -  Handlers have a session cache, with a default lifetime of 10 minutes.
-       So for Handlers located on different physical servers than the Portal, a user
-       with an expired session can still be authorized until the cache expires.
-    -  Sessions are deleted by a scheduled task. Don't forget to install cron files!
+       So for Handlers embedded by different physical servers than the Portal, a user
+       with an expired session can still be authorized until the cache expiration.
+    -  Sessions are deleted by a scheduled task. Do not forget to install cron files!
 
 
 
@@ -168,7 +167,7 @@ Authentication
 ~~~~~~~~~~~~~~
 
 If a user is not authenticated and attempts to connect to an area
-protected by a LemonLDAP::NG compatible Handler, he is redirected to a
+protected by a LemonLDAP::NG compatible Handler, he is redirected to the
 portal.
 
 Authentication process main steps are:

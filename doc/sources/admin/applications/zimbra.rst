@@ -15,20 +15,83 @@ clients like Outlook and Thunderbird. Zimbra also features archiving and
 discovery for compliance. Zimbra can be deployed on-premises or as a
 hosted email solution.
 
-Zimbra use a specific `preauthentication
+Zimbra can be connected with `SAML protocol<../idpsaml>`__ which is the
+recommended way, but this requires Zimbra Network Edition.
+
+Zimbra can also use a specific `preauthentication
 protocol <http://wiki.zimbra.com/index.php?title=Preauth>`__ to provide
 SSO on its application. This protocol is implemented in an LL::NG
-specific Handler.
+specific Handler and is available in Zimbra Open Source Edition.
 
+SAML
+----
 
-.. tip::
+On LemonLDAP::NG side
+~~~~~~~~~~~~~~~~~~~~~
 
-    Zimbra can also be connected to LL::NG via
-    :doc:`SAML protocol<../idpsaml>` (see `Zimbra
-    blog <http://blog.zimbra.com/blog/archives/2010/06/using-saml-assertions-to-access-zimbra.html>`__).
+Create a new SAML SP and use this metadata content:
 
-Configuration
--------------
+.. code-block:: xml
+
+    <?xml version="1.0"?>
+        <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+            validUntil="2020-02-28T09:33:56Z"
+            cacheDuration="PT604800S"
+            entityID="https://zimbrasaml.example.com/service/extension/samlreceiver">
+        <md:SPSSODescriptor AuthnRequestsSigned="true" WantAssertionsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
+        <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+            Location="https://zimbrasaml.example.com/service/extension/samlreceiver"
+            index="1" />
+        </md:SPSSODescriptor>
+    </md:EntityDescriptor>
+
+Replace ``zimbrasaml.example.com`` by your ZimbraPublicHostname.
+
+Enable IDP SSO Initiated option.
+
+Create ``Email`` exported attribute, which must return the user email.
+
+Export the SAML signature certificate in a file, for example ``lemonsaml.cert`` that must be copied on Zimbra server.
+
+On Zimbra side
+~~~~~~~~~~~~~~
+
+Copy the SAML plugin (available only with Zimbra NE):
+
+.. code-block:: console
+
+   mkdir /opt/zimbra/lib/ext/saml
+   cp /opt/zimbra/extensions-network-extra/saml/samlextn.jar /opt/zimbra/lib/ext/saml/samlextn.jar
+
+Import certificate:
+
+.. code-block:: console
+
+   su - zimbra
+   cat /tmp/lemonsaml.crt |xargs -0 zmprov md exampledomain.com zimbraMyoneloginSamlSigningCert
+
+Configure SAML properties:
+
+.. code-block:: console
+
+   zmprov mcf zimbraCsrfRefererCheckEnabled FALSE
+   zmprov md exampledomain.com zimbraWebClientLoginURL "https://auth.example.com/saml/singleSignOn?IDPInitiated=1&sp=https://zimbrasaml.example.com/service/extension/samlreceiver"
+   zmprov md exampledomain.com zimbraWebClientLogoutURL "https://auth.example.com/saml/singleLogout"
+   zmmailboxdctl restar
+
+To check for errors:
+
+.. code-block:: console
+
+   tail -f /opt/zimbra/log/zmmailboxd.ou
+
+Zimbra PreAuth Handler
+----------------------
+
+.. note::
+
+    This method is no more recommended.
 
 The integration with LL::NG is the following:
 
