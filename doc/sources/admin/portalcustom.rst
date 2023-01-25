@@ -414,7 +414,9 @@ Password Policy
 -  **Minimal upper characters**: leave 0 to bypass the check
 -  **Minimal digit characters**: leave 0 to bypass the check
 -  **Minimal special characters**: leave 0 to bypass the check
--  **Allowed special characters**: set '__ALL__' value to allow ALL special characters. A blank value forbids ALL special characters (Note that ``_`` is not a special character)
+-  **Allowed special characters**: list of allowed special characters. Set the ``__ALL__`` value to allow ALL special characters.
+   A blank value forbids ALL special characters (note that ``_`` is not a special character). The ``space`` character can not be
+   specified at the begin or at the end of the list to prevent trimming.  
 
 .. _portalcustom-other-parameters:
 
