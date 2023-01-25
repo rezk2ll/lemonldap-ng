@@ -6,7 +6,7 @@ This plugin use GeoIP database and browser detection module to get city, country
 Required dependencies
 ---------------------
 
-You need to install the following Perl modules: ``HTTP::BrowserDetect``, ``GeoIP2``, ``List::MoreUtils``.
+You need to install the following Perl modules: ``HTTP::BrowserDetect``, ``GeoIP2``.
 
 GeoIP database
 --------------
