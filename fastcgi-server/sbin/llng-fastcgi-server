@@ -51,10 +51,14 @@ GetOptions(
 my $class = (
       $sourceServer eq 'nginx'   ? 'Lemonldap::NG::Handler::Server::Nginx'
     : $sourceServer eq 'traefik' ? 'Lemonldap::NG::Handler::Server::Traefik'
-    :                              die("Unknown server $sourceServer")
+    :                              $sourceServer
 );
 eval "require $class";
-die $@ if $@;
+if ($@) {
+    die $@ if $class != $sourceServer;
+    print STDERR "Unable to load custom class $class:\n$@";
+    exit 1;
+}
 
 if ($group) {
     my $grp = getgrnam($group) or die "Can't change gid to $group";

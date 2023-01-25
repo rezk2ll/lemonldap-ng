@@ -13,7 +13,7 @@ binding on 127.0.0.1:8183
 
 ::
 
-   cd /usr/share/lemonldap-ng/llng-server SOURCE_SERVER=traefik /sbin/uwsgi \
+   cd /usr/share/lemonldap-ng/llng-server && SOURCE_SERVER=traefik /sbin/uwsgi \
      --plugin psgi \
      --psgi llng-server.psgi \
      --master \
