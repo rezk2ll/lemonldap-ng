@@ -5,22 +5,37 @@ use lib 'lemonldap-ng-handler/blib/lib';
 use lib 'lemonldap-ng-portal/blib/lib';
 use lib 'lemonldap-ng-manager/blib/lib';
 
+our (
+  $sourceServer
+);
+
+$sourceServer ||= $ENV{SOURCE_SERVER} || 'nginx';
+my $class = (
+      $sourceServer eq 'nginx'   ? 'Lemonldap::NG::Handler::Server::Nginx'
+    : $sourceServer eq 'traefik' ? 'Lemonldap::NG::Handler::Server::Traefik'
+    :                              die("Unknown server $sourceServer")
+);
+
 my %builder = (
     handler => sub {
-        require Lemonldap::NG::Handler::Server::Nginx;
-        return Lemonldap::NG::Handler::Server::Nginx->run( {} );
+        eval "require $class";
+        return $class->run( {} );
     },
     reload => sub {
-        require Lemonldap::NG::Handler::Server::Nginx;
-        return Lemonldap::NG::Handler::Server::Nginx->reload();
+        eval "require $class";
+        return $class->reload();
     },
     status => sub {
-        require Lemonldap::NG::Handler::Server::Nginx;
-        return Lemonldap::NG::Handler::Server::Nginx->status();
+        eval "require $class";
+        return $class->status();
     },
     manager => sub {
         require Lemonldap::NG::Manager;
         return Lemonldap::NG::Manager->run( {} );
+    },
+    portal => sub {
+        require Lemonldap::NG::Portal;
+        return Lemonldap::NG::Portal->run( {} );
     },
     cgi => sub {
         require CGI::Emulate::PSGI;
@@ -35,6 +50,12 @@ my %builder = (
     },
     psgi => sub {
         return sub {
+
+            # Fix PATH_INFO when using Nginx with default uwsgi_params
+            # See #2031
+            ( $_[0]->{PATH_INFO} ) =
+              $_[0]->{REQUEST_URI} =~ /^(?:\Q$_[0]->{SCRIPT_NAME}\E)?([^?]*)/;
+
             my $script = $_[0]->{SCRIPT_FILENAME};
             return $_apps{$script}->(@_) if ( $_apps{$script} );
             $_apps{$script} = do $script;
@@ -42,7 +63,7 @@ my %builder = (
                 die "Unable to load $_[0]->{SCRIPT_FILENAME}";
             }
             return $_apps{$script}->(@_);
-          }
+        }
     },
 );
 
