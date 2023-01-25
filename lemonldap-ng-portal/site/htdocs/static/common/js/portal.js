@@ -466,6 +466,7 @@ LemonLDAP::NG Portal jQuery scripts
       }
       if (window.datas.ppolicy.allowedspechar) {
         nonwhitespechar = window.datas.ppolicy.allowedspechar.replace(/\s/g, '');
+        nonwhitespechar = nonwhitespechar.replace(/_space_/g, ' ');
         hasforbidden = false;
         i = 0;
         len = password.length;
@@ -484,6 +485,7 @@ LemonLDAP::NG Portal jQuery scripts
       if (window.datas.ppolicy.minspechar > 0 && window.datas.ppolicy.allowedspechar) {
         numspechar = 0;
         nonwhitespechar = window.datas.ppolicy.allowedspechar.replace(/\s/g, '');
+        nonwhitespechar = nonwhitespechar.replace(/_space_/g, ' ');
         i = 0;
         while (i < password.length) {
           if (nonwhitespechar.indexOf(password.charAt(i)) >= 0) {

@@ -185,7 +185,6 @@ sub checkPasswordQuality {
 
     ### Special characters policy
     my $speChars = $self->conf->{passwordPolicySpecialChar};
-    $speChars =~ s/\s+//g;
 
     ## Min special characters
     # Just number of special characters must be checked
@@ -198,7 +197,7 @@ sub checkPasswordQuality {
         return PE_OK;
     }
 
-    # Number of special characters must be checked
+    # Check number of special characters
     if ( $self->conf->{passwordPolicyMinSpeChar} && $speChars ) {
         my $test = $password;
         my $spe  = $test =~ s/[\Q$speChars\E]//g;
