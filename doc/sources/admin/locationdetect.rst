@@ -48,7 +48,10 @@ When plugin is enabled, new informations will be stored in session:
 
 * ``_location_detect_env_ua``: User Agent information
 * ``_location_detect_env_ip``: GeoIP information
+* ``_location_detect_env_display``: Both User Agent and GeoIP information
 
 To see them in :doc:`login history<loginhistory>`, you can add them to the list of session data to store.
 
 You can also use these information in 2FA rules, access rules, adaptive authentication rules...
+
+For example, to use these information in the :doc:`new location warning plugin<newlocationwarning>`, use ``_location_detect_env`` for ``newLocationWarningLocationAttribute`` and ``_location_detect_env_display`` for ``newLocationWarningLocationDisplayAttribute``.
