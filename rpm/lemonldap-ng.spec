@@ -104,13 +104,15 @@ BuildRequires:  perl(feature)
 BuildRequires:  perl(fields)
 BuildRequires:  perl(File::Temp)
 BuildRequires:  perl(GD::SecurityImage)
+%if 0%{?fedora}%{?el9}
 BuildRequires:  perl(GeoIP2)
+%endif
 BuildRequires:  perl(Getopt::Long)
 BuildRequires:  perl(Getopt::Std)
 BuildRequires:  perl(GSSAPI)
 BuildRequires:  perl(Hash::Merge::Simple)
 BuildRequires:  perl(HTML::Template)
-%if ! 0%{?el8}
+%if 0%{?fedora}%{?el9}
 BuildRequires:  perl(HTTP::BrowserDetect)
 %endif
 BuildRequires:  perl(HTTP::Headers)
