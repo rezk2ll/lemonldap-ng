@@ -17,12 +17,13 @@ SKIP: {
     my $client = LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel                    => 'error',
-                authentication              => 'Demo',
-                userDB                      => 'Same',
-                locationDetect              => 1,
-                locationDetectGeoIpDatabase => 't/geoip/test.mmdb',
-                restSessionServer           => 1,
+                logLevel                     => 'error',
+                authentication               => 'Demo',
+                userDB                       => 'Same',
+                locationDetect               => 1,
+                locationDetectGeoIpDatabase  => 't/geoip/test.mmdb',
+                locationDetectGeoIpLanguages => 'en, fr',
+                restSessionServer            => 1,
                 exportedAttr => '+ mail uid _session_id _location_detect_env'
             }
         }

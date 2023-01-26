@@ -25,10 +25,14 @@ sub init {
         }
     );
 
+    my @languages = split( /,\s*/,
+             $self->conf->{locationDetectGeoIpLanguages}
+          || $self->conf->{languages} );
+
     $self->reader(
         GeoIP2::Database::Reader->new(
             file    => $self->conf->{locationDetectGeoIpDatabase},
-            locales => [ 'en', 'fr', ]
+            locales => \@languages
         )
     );
     $self->ipDetail( $self->conf->{locationDetectIpDetail} || "city" );
