@@ -56,7 +56,7 @@ module <http://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html>`__:
 
 .. attention::
 
-    You have to disable default Manager protection in ``lemonldap-ng.ini `` file
+    You have to disable default Manager protection in ``lemonldap-ng.ini`` file
     to rely only on web server by commenting relative line:
 
     .. code:: ini
@@ -75,7 +75,7 @@ LL::NG based protection
     Before enabling Manager protection by LL::NG, you must have configured
     how users authenticate on Portal, and test that you can log in.
     Else, you will lock access to Manager and will not be able to access it anymore.
-    In that case, you have to set protection to ``none`` in ``lemonldap-ng.ini `` file.
+    In that case, you have to set protection to ``none`` in ``lemonldap-ng.ini`` file.
 
 By default, you will have a manager virtual host define in configuration.
 If not Go to Manager, and declare Manager as a new
