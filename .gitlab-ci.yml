@@ -34,12 +34,14 @@ build_buster:
   extends: .debian_build_job
   image: buildpkg/debian:buster
   script:
+    - apt update
     - apt install -y libgeoip2-perl libhttp-browserdetect-perl
 
 build_bullseye:
   extends: .debian_build_job
   image: buildpkg/debian:bullseye
   script:
+    - apt update
     - apt install -y libgeoip2-perl libhttp-browserdetect-perl
 
 #build_xenial:
