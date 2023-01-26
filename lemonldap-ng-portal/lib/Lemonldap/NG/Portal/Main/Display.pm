@@ -70,7 +70,7 @@ sub displayInit {
     my $speChars =
       $self->conf->{passwordPolicySpecialChar} eq '__ALL__'
       ? ''
-      : join ' ', map s/\s/_space_/r, split '',
+      : join ' ', map s/\s/<space>/r, split '',
       $self->conf->{passwordPolicySpecialChar};
     $self->speChars($speChars);
 
