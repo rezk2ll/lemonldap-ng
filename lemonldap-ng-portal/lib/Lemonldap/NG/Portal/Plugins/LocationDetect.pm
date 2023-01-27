@@ -8,9 +8,6 @@ extends qw(
   Lemonldap::NG::Portal::Lib::SMTP
 );
 
-use HTTP::BrowserDetect;
-use GeoIP2::Database::Reader;
-
 has reader   => ( is => 'rw' );
 has ipDetail => ( is => 'rw' );
 has uaDetail => ( is => 'rw' );
@@ -19,6 +16,17 @@ use constant betweenAuthAndData => 'storeEnvironment';
 sub init {
     my ($self) = @_;
 
+    eval { use HTTP::BrowserDetect; };
+    if ($@) {
+        $self->logger->error("Can't load HTTP::BrowserDetect: $@");
+        return 0;
+    }
+
+    eval { use GeoIP2::Database::Reader; };
+    if ($@) {
+        $self->logger->error("Can't load use GeoIP2::Database::Reader: $@");
+        return 0;
+    }
     $self->addSessionDataToRemember( {
             # This field will be hidden from the user
             _location_detect_env => '__hidden__',
