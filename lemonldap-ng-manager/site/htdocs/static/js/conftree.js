@@ -1587,6 +1587,10 @@ function templates(tpl,key) {
                   "v" : "DevOpsST"
                },
                {
+                  "k" : "DevOpsCDA",
+                  "v" : "DevOpsCDA"
+               },
+               {
                   "k" : "Main",
                   "v" : "Main"
                },
