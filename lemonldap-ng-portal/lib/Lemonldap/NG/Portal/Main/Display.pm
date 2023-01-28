@@ -36,6 +36,7 @@ sub displayInit {
             }
         }
     }
+
     my $rule = HANDLER->buildSub(
         HANDLER->substitute( $self->conf->{portalRequireOldPassword} ) );
     unless ($rule) {
@@ -43,6 +44,7 @@ sub displayInit {
         $self->logger->error("Bad requireOldPwd rule: $error");
     }
     $self->requireOldPwd($rule);
+
     $rule =
       HANDLER->buildSub( HANDLER->substitute( $self->conf->{stayConnected} ) );
     unless ($rule) {
@@ -50,6 +52,7 @@ sub displayInit {
         $self->logger->error("Bad stayConnected rule: $error");
     }
     $self->stayConnected($rule);
+
     $rule =
       HANDLER->buildSub(
         HANDLER->substitute( $self->conf->{passwordPolicyActivation} ) );
@@ -58,6 +61,7 @@ sub displayInit {
         $self->logger->error("Bad passwordPolicyActivation rule: $error");
     }
     $self->passwordPolicyActivation($rule);
+
     $rule =
       HANDLER->buildSub(
         HANDLER->substitute( $self->conf->{rememberAuthChoiceRule} ) );
@@ -67,21 +71,18 @@ sub displayInit {
     }
     $self->rememberAuthChoice($rule);
 
-    my $speChars =
-      $self->conf->{passwordPolicySpecialChar} eq '__ALL__'
-      ? ''
-      : join ' ', map s/\s/<space>/r, split '',
+    my %speChars = $self->conf->{passwordPolicySpecialChar} eq '__ALL__'
+      ? ()    # Dedup
+      : map { ( s/\s+/<space>/r => 1 ) } split '',
       $self->conf->{passwordPolicySpecialChar};
-    $self->speChars($speChars);
+    $self->speChars( join q{ }, sort keys %speChars );
 
-    my $isPP =
-         $self->conf->{passwordPolicyMinSize}
-      || $self->conf->{passwordPolicyMinLower}
-      || $self->conf->{passwordPolicyMinUpper}
-      || $self->conf->{passwordPolicyMinDigit}
-      || $self->conf->{passwordPolicyMinSpeChar}
-      || $speChars;
-    $self->isPP($isPP);
+    $self->isPP( $self->speChars
+          || $self->conf->{passwordPolicyMinSize}
+          || $self->conf->{passwordPolicyMinLower}
+          || $self->conf->{passwordPolicyMinUpper}
+          || $self->conf->{passwordPolicyMinDigit}
+          || $self->conf->{passwordPolicyMinSpeChar} );
 }
 
 # Call portal process and set template parameters
