@@ -3,6 +3,7 @@ package Lemonldap::NG::Common::Session::REST;
 use strict;
 use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
+use Lemonldap::NG::Common::Util qw/display2F/;
 use JSON qw(from_json to_json);
 
 our $VERSION = '2.0.15';
@@ -46,7 +47,7 @@ sub hAttr {
 sub delSession {
     my ( $self, $req ) = @_;
     my $type = $req->params('sessionType');
-    my $mod = $self->getMod($req)
+    my $mod  = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
     my $id = $req->params('sessionId')
       or return $self->sendError( $req, 'sessionId is missing', 400 );
@@ -181,9 +182,16 @@ sub delete2F {
         $self->logger->debug(
             "Searching for 2F device to delete -> $type / $epoch ...");
         if ( defined $element->{type} && defined $element->{epoch} ) {
-            push @keep, $element
-              unless ( ( $element->{type} eq $type )
-                and ( $element->{epoch} eq $epoch ) );
+            if (    ( $element->{type} eq $type )
+                and ( $element->{epoch} eq $epoch ) )
+            {
+                my $uid = $session->data->{_session_uid};
+                $self->userLogger->notice(
+                    "2FA deletion for $uid: " . display2F($element) );
+            }
+            else {
+                push @keep, $element;
+            }
         }
         else {
             $self->logger->error("Corrupted _2fDevice");
