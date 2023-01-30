@@ -2484,6 +2484,11 @@ sub attributes {
             type          => 'text',
             documentation => 'Path to GeoIP database',
         },
+        locationDetectGeoIpLanguages => {
+            default       => 'en, fr',
+            type          => 'text',
+            documentation => 'Languages for GeoIP database',
+        },
         locationDetectIpDetail => {
             type          => 'text',
             documentation => 'Information requested for IP',

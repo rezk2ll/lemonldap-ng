@@ -1950,6 +1950,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'locationDetectGeoIpDatabase' => {
             'type' => 'text'
         },
+        'locationDetectGeoIpLanguages' => {
+            'default' => 'en, fr',
+            'type'    => 'text'
+        },
         'locationDetectIpDetail' => {
             'type' => 'text'
         },

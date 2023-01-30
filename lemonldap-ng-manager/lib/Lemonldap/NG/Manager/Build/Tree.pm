@@ -887,6 +887,7 @@ sub tree {
                             nodes => [
                                 'locationDetect',
                                 'locationDetectGeoIpDatabase',
+                                'locationDetectGeoIpLanguages',
                                 'locationDetectIpDetail',
                                 'locationDetectUaDetail'
                             ]
