@@ -29,6 +29,7 @@ Types are:
 -  :doc:`CDA<cda>`
 -  :doc:`DevOps<devopshandler>`
 -  :doc:`DevOps+ServiceToken<devopssthandler>`
+-  :doc:`DevOps+CDA<devopscdahandler>`
 -  :doc:`OAuth2<oauth2handler>`
 -  :doc:`SecureToken<securetoken>` *(not available for PSGI)*
 -  :doc:`Service Token<servertoserver>` *(server to server)*

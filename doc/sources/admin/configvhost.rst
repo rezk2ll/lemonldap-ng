@@ -536,6 +536,7 @@ Some options are available:
    :doc:`ServiceToken<servertoserver>`,
    :doc:`DevOps<devopshandler>`,
    :doc:`DevOpsST<devopssthandler>`,
+   :doc:`DevOpsCDA<devopscdahandler>`,
    :doc:`OAuth2<oauth2handler>`,...)
 -  **DevOps rules file URL**: option to define URL to retreive DevOps rules file.
    This option can be overridden with ``uwsgi_param/fastcgi_param RULES_URL`` parameter.

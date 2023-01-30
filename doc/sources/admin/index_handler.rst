@@ -12,3 +12,4 @@ Handlers
    servertoserver
    devopshandler
    devopssthandler
+   devopscdahandler
