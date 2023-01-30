@@ -4620,6 +4620,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
                     'v' => 'DevOpsST'
                 },
                 {
+                    'k' => 'DevOpsCDA',
+                    'v' => 'DevOpsCDA'
+                },
+                {
                     'k' => 'Main',
                     'v' => 'Main'
                 },

@@ -37,6 +37,15 @@ The %ENV hash provides:
 
 See also :doc:`extended functions<extendedfunctions>`.
 
+.. tip::
+
+    You can use %ENV hash or $env hash ref. Both syntaxes are available
+    for compatibity. 
+
+    ::
+
+       %ENV{REMOTE_ADDR} and $env->{REMOTE_ADDR} are similar.
+
 .. _rules:
 
 Rules
@@ -160,8 +169,8 @@ Goal                          Header name  Header value
 ============================= ============ =======================
 Give the uid (for accounting) Auth-User    $uid
 Give a static value           Some-Thing   "static-value"
-Give display name             Display-Name $givenName." ".$surName
-Give a non ascii data         Display-Name
+Give display name             Display-Name "$givenName $surName"
+Give a non ASCII data         Display-Name
 ============================= ============ =======================
 
 As described in
@@ -171,11 +180,11 @@ use macros, local macros,...
 
 .. attention::
 
-    -  Since many HTTP servers refuse non ascii headers, it is recommended
+    -  Since many HTTP servers refuse non ASCII headers, it is recommended
        to use encode_base64() function to transmit those headers
     -  Do not forget to add an empty string as second argument to
        encode_base64 function to avoid a "newline" characters insertion in
-       result
+       result: ``encode_base64($string, '')``
     -  Header names must contain only letters and "-" character.
        With Nginx, you can bypass this restriction by using
        ``underscores_in_headers on;`` directive
