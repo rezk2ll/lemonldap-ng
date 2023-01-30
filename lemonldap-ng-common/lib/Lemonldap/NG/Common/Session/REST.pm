@@ -45,18 +45,19 @@ sub hAttr {
 
 sub delSession {
     my ( $self, $req ) = @_;
+    my $type = $req->params('sessionType');
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
     my $id = $req->params('sessionId')
       or return $self->sendError( $req, 'sessionId is missing', 400 );
     my $session = $self->getApacheSession( $mod, $id );
-    $self->logger->debug("Delete session : $id");
     $session->remove;
     Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
 
     if ( $session->error ) {
         return $self->sendError( $req, $session->error, 200 );
     }
+    $self->userLogger->notice("Deleted $type session : $id");
     return $self->sendJSONresponse( $req, { result => 1 } );
 }
 
