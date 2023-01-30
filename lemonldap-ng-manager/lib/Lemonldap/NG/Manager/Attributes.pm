@@ -1943,6 +1943,23 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'localStorageOptions' => {
             'type' => 'keyTextContainer'
         },
+        'locationDetect' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'locationDetectGeoIpDatabase' => {
+            'type' => 'text'
+        },
+        'locationDetectGeoIpLanguages' => {
+            'default' => 'en, fr',
+            'type'    => 'text'
+        },
+        'locationDetectIpDetail' => {
+            'type' => 'text'
+        },
+        'locationDetectUaDetail' => {
+            'type' => 'text'
+        },
         'locationRules' => {
             'default' => {
                 'default' => 'deny'
@@ -4605,6 +4622,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
                 {
                     'k' => 'DevOpsST',
                     'v' => 'DevOpsST'
+                },
+                {
+                    'k' => 'DevOpsCDA',
+                    'v' => 'DevOpsCDA'
                 },
                 {
                     'k' => 'Main',

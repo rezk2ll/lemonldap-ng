@@ -28,21 +28,23 @@ Select **Main** handler type to protect WebApp1 and append a header containing:
 
 .. code-block:: perl
 
-   token( $_session_id, 'webapp2.example.com', 'webapp3.example.com', 'serviceHeader1=webapp1.example.com', "testHeader=$uid" )
+   token($_session_id, 'test.example.com', '/^webapp[23]\.example\.c/', 'serviceHeader1=webapp1.example.com', "testHeader=$uid")
 
-WebApp1 can read this header and use it in its requests by setting the
-``X-LLNG-TOKEN`` header. The token is built by using the ``token`` extended
-with session ID and authorized virtualhosts list parameters. A Service Token is valide
-for the specified virtual hosts only and during 30 seconds by default. It can also be
-used for sending service headers (headerName1=headerValue1) to requested
-apps. Can be useful to send the origin host by example. Service headers are
-sent to ALL requested applications.
+WebApp1 can retrieve this header and use it in its requests to query other server(s) by setting
+the ``X-LLNG-TOKEN`` header. The ServiceToken is built by using the ``token`` extended function.
+This function takes a list of parameters:
+-  session ID that must be the first one: ``$_session_id``
+-  virtual hosts authorized to be requested by WebApp1
+   It can be some strings defining VHosts explicitly or regular expressions that must start and end with a slash ``/`` character.
+-  ServiceHeaders that will be sent to requested apps. A ServiceHeader is defined like this: ``headerName1=headerValue1``
 
-You can set Service Token TTL by editing virtualHost options in Manager
-for each requested virtualHost.
 
-You can also set ServiceToken default timeout (30 seconds) by editing
-``lemonldap-ng.ini`` in section [handler]:
+A ServiceToken is only valide for the authorized virtual hosts and during a restricted time period (30 seconds by default).
+It can also be used for sending ServiceHeaders (headerName1=headerValue1) to requested apps. A ServiceHeader can be useful
+to send the source host by example. ServiceHeaders are sent to ALL requested applications.
+You can define ServiceToken TTL by setting relative option for each requested virtualHost in Manager.
+
+You can also set ServiceToken default timeout (30 seconds) by editing ``lemonldap-ng.ini`` in section [handler]:
 
 .. code-block:: ini
 
@@ -52,7 +54,7 @@ You can also set ServiceToken default timeout (30 seconds) by editing
 
 .. note::
 
-    Service token timeout can be set for each virtual hosts.
+    ServiceToken timeout can be set for each virtual hosts.
 
 Webapp2 handler configuration
 -----------------------------
@@ -62,3 +64,9 @@ user and server connections. And that's all!
 
 .. |Kinematic| image:: documentation/server_to_server.png
 
+
+If you want to protect only a virtualHost part (location), keep handler type on "Main"
+and set type in your configuration file:
+
+-  Apache: just use ``PerlSetVar VHOSTTYPE ServiceToken`` directive
+-  Nginx: create another FastCGI parameter with ``fastcgi_param VHOSTTYPE ServiceToken;``

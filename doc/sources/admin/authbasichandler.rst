@@ -30,8 +30,8 @@ Virtual host
 You just have to set "Type: AuthBasic" in the virtualHost options in the
 manager.
 
-If you want to protect only a virtualHost part, keep type on "Main" and
-set type in your configuration file:
+If you want to protect only a virtualHost part (location), keep type on "Main"
+and set type in your configuration file:
 
 -  Apache: use simply a ``PerlSetVar VHOSTTYPE AuthBasic``
 -  Nginx: create another FastCGI with a

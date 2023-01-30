@@ -2474,6 +2474,30 @@ sub attributes {
             flags         => 'p',
         },
 
+        # LocationDetect plugin
+        locationDetect => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable LocationDetect plugin',
+        },
+        locationDetectGeoIpDatabase => {
+            type          => 'text',
+            documentation => 'Path to GeoIP database',
+        },
+        locationDetectGeoIpLanguages => {
+            default       => 'en, fr',
+            type          => 'text',
+            documentation => 'Languages for GeoIP database',
+        },
+        locationDetectIpDetail => {
+            type          => 'text',
+            documentation => 'Information requested for IP',
+        },
+        locationDetectUaDetail => {
+            type          => 'text',
+            documentation => 'Information requested for User Agent',
+        },
+
         ## Virtualhosts
 
         # Fake attribute: used by manager REST API to agglomerate all other
@@ -2564,6 +2588,7 @@ sub attributes {
                 { k => 'CDA',           v => 'CDA' },
                 { k => 'DevOps',        v => 'DevOps' },
                 { k => 'DevOpsST',      v => 'DevOpsST' },
+                { k => 'DevOpsCDA',     v => 'DevOpsCDA' },
                 { k => 'Main',          v => 'Main' },
                 { k => 'OAuth2',        v => 'OAuth2' },
                 { k => 'SecureToken',   v => 'SecureToken' },

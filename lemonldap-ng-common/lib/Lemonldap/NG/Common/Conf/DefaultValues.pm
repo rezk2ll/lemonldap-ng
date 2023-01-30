@@ -172,7 +172,8 @@ sub defaultValues {
             'directory_umask'    => '007',
             'namespace'          => 'lemonldap-ng-sessions'
         },
-        'locationRules' => {
+        'locationDetectGeoIpLanguages' => 'en, fr',
+        'locationRules'                => {
             'default' => 'deny'
         },
         'logoutServices'            => {},
