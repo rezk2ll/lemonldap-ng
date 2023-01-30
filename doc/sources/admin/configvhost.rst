@@ -122,6 +122,14 @@ Pages where this menu is displayed can be restricted, for example:
 Nginx configuration
 -------------------
 
+.. attention::
+
+    When using Nginx Handler, LUA support is needed to send headers declared in global configuration.
+    As LUA support in Nginx was dropped in many distributions, either use OpenResty, either configure
+    manually headers in Nginx configuration.
+
+    LUA is not needed for Portal and Manager configuration.
+
 To protect a virtual host in Nginx, the LemonLDAP::NG FastCGI server
 must be launched (see
 :doc:`LemonLDAP::NG FastCGI server<fastcgiserver>`).
