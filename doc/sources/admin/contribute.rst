@@ -193,6 +193,35 @@ Other commands
      make manifest # to update manifest
      make tidy # to magnify perl files (perl best pratices)
 
+Add a translation key
+^^^^^^^^^^^^^^^^^^^^^
+
+If you need to create a new parameter in Manager or add a new message in Portal, you must add a key in JSON languages files.
+
+To ease this process, use the script ``scripts/addTrKey`` provided in the sources:
+
+::
+
+    $ scripts/addTrEntry
+    Usage:
+    scripts/addTrEntry <option> key enText <frText>
+    scripts/addTrEntry <option> key '$otherkey'
+
+    Options:
+      --portal  -p: add entry in portal translation instead of manager
+      --modify  -m: modify an existing entry
+      --delete  -d: delete an existing key
+      --reorder -r: reorder files
+      --help   -h: display this
+
+
+For example:
+
+::
+
+    $ scripts/addTrEntry MyNewParameter 'A new parameter' 'Un nouveau paramètre'
+
+
 Documentation
 ^^^^^^^^^^^^^
 
