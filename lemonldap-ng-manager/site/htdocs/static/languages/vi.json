@@ -526,6 +526,7 @@
 "localSessionStorageOptions":"Tùy chọn mô-đun bộ nhớ cache",
 "locationDetect":"Enable plugin",
 "locationDetectGeoIpDatabase":"Path to GeoIP database",
+"locationDetectGeoIpLanguages":"Languages for GeoIP database",
 "locationDetectIpDetail":"Information requested for IP",
 "locationDetectPlugin":"Location detection",
 "locationDetectUaDetail":"Information requested for User Agent",

@@ -526,6 +526,7 @@
 "localSessionStorageOptions":"Paramètres du module de cache",
 "locationDetect":"Activer le greffon",
 "locationDetectGeoIpDatabase":"Chemin vers la base GeoIP",
+"locationDetectGeoIpLanguages":"Langues pour la base GeoIP",
 "locationDetectIpDetail":"Information demandée pour l'IP",
 "locationDetectPlugin":"Détection de localisation",
 "locationDetectUaDetail":"Information demandée pour le User Agent",
