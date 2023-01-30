@@ -1,5 +1,5 @@
-Secure Token Handler
-====================
+SecureToken Handler
+===================
 
 Presentation
 ------------

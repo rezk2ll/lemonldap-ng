@@ -38,6 +38,7 @@ This function takes a list of parameters:
    It can be some strings defining VHosts explicitly or regular expressions that must start and end with a slash ``/`` character.
 -  ServiceHeaders that will be sent to requested apps. A ServiceHeader is defined like this: ``headerName1=headerValue1``
 
+
 A ServiceToken is only valide for the authorized virtual hosts and during a restricted time period (30 seconds by default).
 It can also be used for sending ServiceHeaders (headerName1=headerValue1) to requested apps. A ServiceHeader can be useful
 to send the source host by example. ServiceHeaders are sent to ALL requested applications.

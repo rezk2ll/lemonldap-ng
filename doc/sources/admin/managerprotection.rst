@@ -2,21 +2,20 @@ Manager protection
 ==================
 
 When installing LL::NG, the Manager can only be accessed with the demo
-account ``dwho``. This How To explains how change this default behavior
+account ``dwho``. This 'How To' describes how change this default behavior
 to protect Manager with other rules.
 
-Apache based protection
------------------------
+Web server based protection
+---------------------------
 
 
 .. tip::
 
-    Apache based protection allow one to be independent from
-    WebSSO, so Manager will always be reachable even if WebSSO configuration
-    is corrupted.
+    Web server based protection allows one to be independent from WebSSO,
+    so Manager will be always reachable even if WebSSO configuration is corrupted.
 
-The configuration can be changed in ``etc/manager-apache2.conf``, for
-example to restrict the IP allowed to access the Manager:
+The configuration can be changed in ``etc/manager-apache2.conf`` or
+``etc/manager-nginx.conf``. For example to restrict the IP allowed to access the Manager:
 
 .. code-block:: apache
 
@@ -26,6 +25,7 @@ example to restrict the IP allowed to access the Manager:
            Allow from 127.0.0.0/8 192.168.100.0/32
            Options +ExecCGI
        </Directory>
+
 
 But you will rather prefer to use an Apache authentication module, like
 for example `LDAP authentication
@@ -46,10 +46,18 @@ module <http://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html>`__:
        </Directory>
 
 
+.. code-block:: nginx
+
+       location /usr/local/lemonldap-ng/htdocs/manager/ {
+           allow 127.0.0.0/8;
+           allow 192.168.100.0/32;
+           deny all;
+       }
+
 .. attention::
 
-    You need to disable default Manager protection in
-    lemonldap-ng.ini to rely only on Apache:
+    You have to disable default Manager protection in ``lemonldap-ng.ini`` file
+    to rely only on web server by commenting relative line:
 
     .. code:: ini
 
@@ -64,42 +72,37 @@ LL::NG based protection
 
 .. danger::
 
-    Before enabling Manager protection by LL::NG, you must
-    have configured how users authenticate on Portal, and test that you can
-    log in without difficulties. Else, you will lock access to Manager and
-    will never access it anymore.
+    Before enabling Manager protection by LL::NG, you must have configured
+    how users authenticate on Portal, and test that you can log in.
+    Else, you will lock access to Manager and will not be able to access it anymore.
+    In that case, you have to set protection to ``none`` in ``lemonldap-ng.ini`` file.
 
-By default, you will have a manager virtual host define in
-configuration. If not Go on Manager, and declare Manager as a new
-:ref:`virtual host<configvhost-lemonldapng-configuration>`, for example
-``manager.example.com``. You can then set the access rule. No headers
-are needed.
+By default, you will have a manager virtual host define in configuration.
+If not Go to Manager, and declare Manager as a new
+:ref:`virtual host<configvhost-lemonldapng-configuration>`,
+for example ``manager.example.com``. Then you can then set an access rule.
+No headers are required.
 
-The default rule is:
+Default rule is:
 
 .. code-block:: perl
 
    $uid eq "dwho"
 
 You have to change it to match your admin user (or use other conditions
-like group membership, or any other rule based on a session variable).
-
+like group membership, or any other rule based on session variables).
 Save the configuration and exit the Manager.
+Further accesses to the Manager will be protected by LL::NG.
 
-
-.. tip::
-
-    The next time you will access Manager, it will be through
-    LL::NG.
-
-Enable protection on Manager, by editing ``lemonldap-ng.ini``:
+Manager protection mode can be modified by editing ``lemonldap-ng.ini``:
 
 .. code-block:: ini
 
    [manager]
    protection = manager
 
-You can also adapt Apache access control:
+
+You also have to adapt your web server access control:
 
 .. code-block:: apache
 
@@ -109,7 +112,13 @@ You can also adapt Apache access control:
            Options +ExecCGI
        </Directory>
 
-Restart Apache and try to log on Manager. You should be redirected to
+.. code-block:: nginx
+
+       location /usr/local/lemonldap-ng/htdocs/manager/ {
+           allow all;
+       }
+
+Restart your web server and try to log in to the Manager. You should be redirected to
 LL::NG Portal.
 
 You can then add the Manager as
@@ -119,6 +128,19 @@ You can then add the Manager as
 .. tip::
 
     If for an obscure reason, the WebSSO is not working and you
-    want to access the Manager, remove the protection in
-    ``lemonldap-ng.ini``. Add an Apache access control to avoid other
-    access.
+    want to access the Manager, remove the protection in ``lemonldap-ng.ini`` file.
+    and set an access control to avoid other accesses.
+
+
+Override Portal links in Manager drop-down menu
+-----------------------------------------------
+
+In some particular use cases, for example if an external Manager is protected by
+an another internal LL::NG instance, you should have to override the 'Go to Portal'
+or 'Logout' links proposed in the external Manager drop-down menu.
+To do this, you can override external configuration by editing ``lemonldap-ng.ini`` file.
+
+.. code-block:: ini
+
+   [manager]
+   customPortalUrl = http://external-portal.internal.com

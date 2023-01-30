@@ -148,6 +148,7 @@ sub init {
         : $conf->{portal}
       )
     {
+        $portal = $self->customPortalUrl || $portal;
         push @{ $self->menuLinks },
           {
             target => $portal,

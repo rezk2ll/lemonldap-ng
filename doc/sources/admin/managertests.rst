@@ -1,7 +1,7 @@
 Ignore some manager tests
 =========================
 
-Each time you save a configuration, Manager launch a lot of tests:
+Each time you save a configuration, Manager launch a serie of tests:
 
 -  unit tests for each key: they are declared in
    Lemonldap::NG::Manager::Attributes *(source
@@ -10,7 +10,7 @@ Each time you save a configuration, Manager launch a lot of tests:
 
 In some case *(conf overridden in INI file,...)*, you may have to ignore
 some of them. You just have to list them *(space separated)* in a
-special key in ``lemonldap-ng.ini``, section ``[Manager]``:
+special key in ``lemonldap-ng.ini``, ``[Manager]`` section:
 
 -  ``skippedUnitTests`` for unit tests
 -  ``skippedGlobalTests`` for global tests
