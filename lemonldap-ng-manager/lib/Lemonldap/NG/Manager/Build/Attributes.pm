@@ -2564,6 +2564,7 @@ sub attributes {
                 { k => 'CDA',           v => 'CDA' },
                 { k => 'DevOps',        v => 'DevOps' },
                 { k => 'DevOpsST',      v => 'DevOpsST' },
+                { k => 'DevOpsCDA',     v => 'DevOpsCDA' },
                 { k => 'Main',          v => 'Main' },
                 { k => 'OAuth2',        v => 'OAuth2' },
                 { k => 'SecureToken',   v => 'SecureToken' },
