@@ -881,6 +881,19 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'locationDetectPlugin',
+                            help  => 'locationdetect.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'locationDetect',
+                                'locationDetectGeoIpDatabase',
+                                'locationDetectGeoIpLanguages',
+                                'locationDetectIpDetail',
+                                'locationDetectUaDetail'
+                            ]
+                        },
+
+                        {
                             title => 'decryptValue',
                             help  => 'decryptvalue.html',
                             form  => 'simpleInputContainer',
@@ -1272,8 +1285,7 @@ sub tree {
                     help  => 'samlservice.html#organization',
                     form  => 'simpleInputContainer',
                     nodes => [
-                        'samlOrganizationDisplayName',
-                        'samlOrganizationName',
+                        'samlOrganizationDisplayName', 'samlOrganizationName',
                         'samlOrganizationURL'
                     ]
                 },

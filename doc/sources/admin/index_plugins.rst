@@ -32,3 +32,4 @@ Plugins
    soapservices
    stayconnected
    rememberauthchoice
+   locationdetect
