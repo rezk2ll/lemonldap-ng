@@ -26,6 +26,7 @@ SMTPServer                                              SMTP Server             
 SMTPTLS                                                 TLS protocol to use with SMTP                                                        ✔
 SMTPTLSOpts                                             TLS/SSL options for SMTP                                                             ✔
 SSLAuthnLevel                                           SSL authentication level                                                             ✔
+SSLIssuerVar                                                                                                                                 ✔
 SSLVar                                                                                                                                       ✔
 SSLVarIf                                                                                                                                     ✔
 activeTimer                                             Enable timers on portal pages                                                        ✔
@@ -60,6 +61,7 @@ casAppMetaDataOptions                                   Root of CAS app options 
 casAttr                                                 Pivot attribute for CAS                                                              ✔
 casAttributes                                           CAS exported attributes                                                              ✔
 casAuthnLevel                                           CAS authentication level                                                             ✔
+casBackChannelSingleLogout                              Enable CAS (Back-Channel) Single Logout                                              ✔
 casSrvMetaDataOptions                                   Root of CAS server options                                                           ✔                      [1]
 casStorage                                              Apache::Session module to store CAS user data                                        ✔
 casStorageOptions                                       Apache::Session module parameters                                                    ✔
@@ -362,6 +364,7 @@ oidcServiceAuthorizationCodeExpiration                  OpenID Connect global co
 oidcServiceDynamicRegistrationExportedVars              OpenID Connect exported variables for dynamic registration                           ✔
 oidcServiceDynamicRegistrationExtraClaims               OpenID Connect extra claims for dynamic registration                                 ✔
 oidcServiceIDTokenExpiration                            OpenID Connect global ID token TTL                                                   ✔
+oidcServiceIgnoreScopeForClaims                         OpenID Connect release all attributes even when not allowed by scope                 ✔
 oidcServiceKeyIdSig                                     OpenID Connect Signature Key ID                                                      ✔
 oidcServiceMetaDataAuthnContext                         OpenID Connect Authentication Context Class Ref                                      ✔
 oidcServiceMetaDataAuthorizeURI                         OpenID Connect authorizaton endpoint                                                 ✔
@@ -399,6 +402,13 @@ openIdSreg_postcode                                                             
 openIdSreg_timezone                                     OpenID SREG timezone session parameter                                               ✔
 pamAuthnLevel                                           PAM authentication level                                                             ✔
 pamService                                              PAM service                                                                          ✔
+password2fActivation                                    Password2F activation                                                                ✔
+password2fAuthnLevel                                    Authentication level for users authentified by Password2F                            ✔
+password2fLabel                                         Portal label for Password2F                                                          ✔
+password2fLogo                                          Custom logo for Password 2F                                                          ✔
+password2fSelfRegistration                              Password2F self registration activation                                              ✔
+password2fTTL                                           Password2F device time to live                                                       ✔
+password2fUserCanRemoveKey                              Authorize users to remove existing Password2F secret                                 ✔
 passwordDB                                              Password module                                                                      ✔
 passwordPolicyActivation                                Enable password policy                                                               ✔
 passwordPolicyMinDigit                                  Password policy: minimal digit characters                                            ✔
@@ -423,7 +433,8 @@ portalDisplayChangePassword                             Display password tab in 
 portalDisplayGeneratePassword                           Display password generate box in reset password form                                 ✔
 portalDisplayLoginHistory                               Display login history tab in portal                                                  ✔
 portalDisplayLogout                                     Display logout tab in portal                                                         ✔
-portalDisplayOidcConsents                               Display OIDC consent tab in portal                                                   ✔
+portalDisplayOidcConsents                               Display OIDC consents tab in portal                                                  ✔
+portalDisplayOrder                                      List for ordering tabs in portal                                                     ✔
 portalDisplayPasswordPolicy                             Display policy in password form                                                      ✔
 portalDisplayRefreshMyRights                            Display link to refresh the user session                                             ✔
 portalDisplayRegister                                   Display register button in portal                                                    ✔
@@ -461,6 +472,8 @@ radius2fServer                                                                  
 radius2fTimeout                                         Radius 2f verification timeout                                                       ✔
 radius2fUsernameSessionKey                              Session key used as Radius login                                                     ✔
 radiusAuthnLevel                                        Radius authentication level                                                          ✔
+radiusDictionaryFile                                                                                                                         ✔
+radiusExportedVars                                      RADIUS exported variables                                                            ✔
 radiusSecret                                                                                                                                 ✔
 radiusServer                                                                                                                                 ✔
 randomPasswordRegexp                                    Regular expression to create a random password                                       ✔
@@ -522,6 +535,7 @@ samlDiscoveryProtocolIsPassive                          SAML Discovery Protocol 
 samlDiscoveryProtocolPolicy                             SAML Discovery Protocol Policy                                                       ✔
 samlDiscoveryProtocolURL                                SAML Discovery Protocol EndPoint URL                                                 ✔
 samlEntityID                                            SAML service entityID                                                                ✔
+samlFederationFiles                                     Path to SAML Federation Metadata                                                     ✔
 samlIDPMetaDataOptions                                                                                                                       ✔                      [1]
 samlIDPSSODescriptorArtifactResolutionServiceArtifact   SAML IDP artifact resolution service                                                 ✔
 samlIDPSSODescriptorSingleLogoutServiceHTTPPost         SAML IDP SLO HTTP POST                                                               ✔
@@ -606,6 +620,7 @@ status                                                  Status daemon activation
 stayConnected                                           Stay connected activation rule                                                       ✔
 stayConnectedBypassFG                                   Disable fingerprint checkng                                                          ✔
 stayConnectedCookieName                                 Name of the stayConnected plugin cookie                                              ✔
+stayConnectedSingleSession                              Allow only one permanent session per user                                            ✔
 stayConnectedTimeout                                    StayConnected persistent connexion session timeout                                                  ✔
 storePassword                                           Store password in session                                                            ✔
 strictTransportSecurityMax_Age                          Max-age for Strict-Transport-Security                                                ✔
