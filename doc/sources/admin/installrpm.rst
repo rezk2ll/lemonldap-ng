@@ -35,8 +35,8 @@ LemonLDAP::NG provides packages for RHEL (and derivatives) 7/8/9:
 
 .. danger::
 
-    The package lemonldap-ng-nginx requires the nginx
-    community package. If you use openrestry or Nginx plus, you must ignore
+    The package lemonldap-ng-nginx requires the Nginx
+    community package. If you use OpenResty or Nginx plus, you must ignore
     this dependency. To do this, download the package and install it with:
 
     ::
