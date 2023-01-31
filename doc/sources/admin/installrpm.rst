@@ -53,6 +53,8 @@ You need to enable `EPEL repositories <https://docs.fedoraproject.org/en-US/epel
 
 On RHEL8 and derivatives, you also also need to enable the PowerTools repository in ``/etc/yum.repos.d``.
 
+On OracleLinux, the corresponding repo is called Oracle Linux 8 CodeReady Builder.
+
 Get the packages
 ----------------
 
