@@ -396,7 +396,7 @@ $(window).on 'load', () ->
 		false
 
 	# Password policy
-	checkpassword = (password) ->
+	checkpassword = (password,e) ->
 		result = true
 		if window.datas.ppolicy.minsize > 0
 			result = false if setDanger( password.length >= window.datas.ppolicy.minsize, 'ppolicy-minsize-feedback' )
@@ -409,6 +409,39 @@ $(window).on 'load', () ->
 		if window.datas.ppolicy.mindigit > 0
 			digit = password.match(/[0-9]/g)
 			result = false if setDanger( digit and digit.length >= window.datas.ppolicy.mindigit, 'ppolicy-mindigit-feedback')
+
+		# if checkHIBP is enabled
+		if $('#ppolicy-checkhibp-feedback').length > 0
+			# don't check HIBP at each keyup, but only when input focuses out
+			if e == "focusout"
+				newpasswordVal = $( "#newpassword" ).val()
+				if( newpasswordVal.length >= 5 )
+					$.ajax
+						dataType: "json"
+						url: "/checkhibp?password=" + btoa(newpasswordVal)
+						context: document.body
+						success: (data) ->
+							code = data.code
+							msg = data.message
+							if code != undefined
+								if parseInt(code) == 0
+									# password ok
+									result = false if setDanger( true, 'ppolicy-checkhibp-feedback' )
+								else if parseInt(code) == 2
+									# password compromised
+									result = false if setDanger( false, 'ppolicy-checkhibp-feedback' )
+								else
+									# unexpected error
+									console.log 'checkhibp: backend error: ', msg
+									result = false if setDanger( false, 'ppolicy-checkhibp-feedback' )
+						error: (j, status, err) ->
+							console.log 'checkhibp: frontend error: ', err  if err
+							res = JSON.parse j.responseText if j
+							if res and res.error
+								console.log 'checkhibp: returned error: ', res
+			# password compromised by default
+			else
+				result = false if setDanger( false, 'ppolicy-checkhibp-feedback' )
 
 		if window.datas.ppolicy.allowedspechar
 			nonwhitespechar = window.datas.ppolicy.allowedspechar.replace(/\s/g, '')
@@ -456,6 +489,10 @@ $(window).on 'load', () ->
 
 		$('#newpassword').keyup (e) ->
 			checkpassword e.target.value
+			return
+
+		$('#newpassword').focusout (e) ->
+			checkpassword e.target.value, "focusout"
 			return
 
 	# If generating password, disable policy check

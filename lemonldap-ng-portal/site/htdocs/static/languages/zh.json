@@ -253,6 +253,7 @@
 "otherSessions":"其他作用中的工作階段",
 "password":"密码",
 "password2f":"密码",
+"passwordCompromised":"Not found in a compromised password database",
 "passwordPolicy":"請遵守以下政策：",
 "passwordPolicyMinDigit":"最少數字字元：",
 "passwordPolicyMinLower":"最少小寫字母：",

@@ -121,6 +121,7 @@ lib/Lemonldap/NG/Portal/Plugins/BruteForceProtection.pm
 lib/Lemonldap/NG/Portal/Plugins/CDA.pm
 lib/Lemonldap/NG/Portal/Plugins/CertificateResetByMail.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckDevOps.pm
+lib/Lemonldap/NG/Portal/Plugins/CheckHIBP.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckState.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckUser.pm
 lib/Lemonldap/NG/Portal/Plugins/ContextSwitching.pm

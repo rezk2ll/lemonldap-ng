@@ -540,6 +540,24 @@ sub attributes {
             documentation => 'Check if session attributes exist',
             flags         => 'p',
         },
+        checkHIBP => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable check HIBP',
+            flags         => 'p',
+        },
+        checkHIBPURL => {
+            default       => 'https://api.pwnedpasswords.com/range/',
+            type          => 'text',
+            documentation => 'URL of Have I Been Pwned API',
+            flags         => 'p',
+        },
+        checkHIBPRequired => {
+            default       => 1,
+            type          => 'bool',
+            documentation => 'Require HIBP check to pass',
+            flags         => 'p',
+        },
         checkUser => {
             default       => 0,
             type          => 'bool',

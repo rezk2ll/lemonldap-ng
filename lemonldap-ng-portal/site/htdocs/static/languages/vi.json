@@ -253,6 +253,7 @@
 "otherSessions":"Các phiên hoạt động khác",
 "password":"Mật khẩu",
 "password2f":"Mật khẩu",
+"passwordCompromised":"Not found in a compromised password database",
 "passwordPolicy":"Please respect the following policy:",
 "passwordPolicyMinDigit":"Minimal digit characters:",
 "passwordPolicyMinLower":"Minimal lower characters:",
