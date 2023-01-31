@@ -832,6 +832,16 @@ sub tree {
                             ],
                         },
                         {
+                            title => 'HIBPcheck',
+                            help  => 'checkhibp.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'checkHIBP',
+                                'checkHIBPURL',
+                                'checkHIBPRequired'
+                            ],
+                        },
+                        {
                             title => 'impersonation',
                             help  => 'impersonation.html',
                             form  => 'simpleInputContainer',

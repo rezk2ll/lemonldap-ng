@@ -253,6 +253,7 @@
 "otherSessions":"Otras sesiones activas",
 "password":"Contraseña",
 "password2f":"Contraseña",
+"passwordCompromised":"Not found in a compromised password database",
 "passwordPolicy":"Por favor respete la siguiente política de seguridad:",
 "passwordPolicyMinDigit":"Dígitos, como mínimo:",
 "passwordPolicyMinLower":"Minúsculas, como mínimo:",

@@ -253,6 +253,7 @@
 "otherSessions":"Diğer aktif oturumlar",
 "password":"Parola",
 "password2f":"Parola",
+"passwordCompromised":"Not found in a compromised password database",
 "passwordPolicy":"Lütfen aşağıdaki ilkeye uyun:",
 "passwordPolicyMinDigit":"Minimum rakam karakter sayısı:",
 "passwordPolicyMinLower":"Minimum küçük harf karakter sayısı:",

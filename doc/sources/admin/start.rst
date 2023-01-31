@@ -310,6 +310,7 @@ Name                                                                 Description
 :doc:`Stay connected<stayconnected>` |new|                           Enable persistent connection on same browser
 :doc:`Remember auth choice<rememberauthchoice>` |new|                Remember user last authentication choice
 Upgrade session |new|                                                This plugin explains to an already authenticated user that a higher authentication level is required to access the URL instead of reject him
+:doc:`Check HIBP<checkhibp>` [19]_ |new|                             Check Have I Been Pwned plugin
 ==================================================================== ============================================================================================================================================
 
 Handlers
@@ -634,6 +635,10 @@ by your language code):
 
 .. [18]
    When configured as an additional second factor, see :ref:`sfextraregister`
+
+.. [19]
+   :doc:`Check HIBP plugin<checkhibp>` are available with LLNG ≥
+   2.0.16
 
 .. |image0| image:: /icons/kthememgr.png
 .. |image1| image:: /icons/warehause.png

@@ -253,6 +253,7 @@
 "otherSessions":"הפעלות פעילות נוספות",
 "password":"סיסמה",
 "password2f":"סיסמה",
+"passwordCompromised":"Not found in a compromised password database",
 "passwordPolicy":"נא לכבד את המדיניות הבאה:",
 "passwordPolicyMinDigit":"כמות מזערית של ספרות:",
 "passwordPolicyMinLower":"כמות מזערית של אותיות קטנות:",

@@ -610,6 +610,7 @@ sub display {
         DISPLAY_MAILSENT        => 0,
         DISPLAY_PASSWORD_FORM   => 0,
         ENABLE_PASSWORD_DISPLAY => $self->conf->{portalEnablePasswordDisplay},
+        ENABLE_CHECKHIBP        => $self->conf->{checkHIBP},
         DONT_STORE_PASSWORD     => $self->conf->{browsersDontStorePassword},
         DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy} && $isPP,
         PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},

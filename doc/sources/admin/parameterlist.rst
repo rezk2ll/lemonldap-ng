@@ -86,6 +86,9 @@ checkDevOps                                             Enable check DevOps     
 checkDevOpsCheckSessionAttributes                       Check if session attributes exist                                                    ✔
 checkDevOpsDisplayNormalizedHeaders                     Display normalized headers                                                           ✔
 checkDevOpsDownload                                     Enable check DevOps download field                                                   ✔
+checkHIBP                                               Enable check on "Have I Been Pwned?" API                                             ✔
+checkHIBPURL                                            URL of "Have I Been Pwned?" API                                                      ✔
+checkHIBPRequired                                       Require HIBP check to pass                                                           ✔
 checkState                                              Enable CheckState plugin                                                             ✔
 checkStateSecret                                        Secret token for CheckState plugin                                                   ✔
 checkTime                                               Timeout to check new configuration in local cache                                    ✔      ✔               ✔

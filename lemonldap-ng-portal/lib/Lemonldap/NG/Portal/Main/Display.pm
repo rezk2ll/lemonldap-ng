@@ -265,6 +265,7 @@ sub display {
             PPOLICY_NOPOLICY        => !$self->isPP(),
             ENABLE_PASSWORD_DISPLAY =>
               $self->conf->{portalEnablePasswordDisplay},
+            ENABLE_CHECKHIBP => $self->conf->{checkHIBP},
             DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy},
             PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
             PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
@@ -409,6 +410,7 @@ sub display {
               || $self->conf->{proxyAuthServiceImpersonation},
             ENABLE_PASSWORD_DISPLAY =>
               $self->conf->{portalEnablePasswordDisplay},
+            ENABLE_CHECKHIBP => $self->conf->{checkHIBP},
             (
                 $self->stayConnected->( $req, $req->sessionInfo )
                 ? ( STAYCONNECTED => 1 )
@@ -499,6 +501,7 @@ sub display {
                 PPOLICY_NOPOLICY    => !$self->isPP(),
                 ENABLE_PASSWORD_DISPLAY =>
                   $self->conf->{portalEnablePasswordDisplay},
+                ENABLE_CHECKHIBP => $self->conf->{checkHIBP},
                 DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy},
                 PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
                 PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},

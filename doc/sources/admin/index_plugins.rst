@@ -9,6 +9,7 @@ Plugins
    bruteforceprotection
    cda
    checkdevops
+   checkhibp
    checkstate
    checkuser
    crowdsec
