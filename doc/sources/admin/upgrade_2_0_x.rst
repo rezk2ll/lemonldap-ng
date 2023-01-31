@@ -102,6 +102,13 @@ To have the new tooltip feature on IDP choice screen, update your custom `idpcho
 
 For the message box in menu when no applications are allowed, update your custom `menu.tpl` (see `commit <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/commit/d6aa04291f74a92a04177ded34ac416caf0c78a2>`__)
 
+For the new password policy balcklist feature, update your custom `passwordpolicy.tpl` (see `commit <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/merge_requests/318/diffs?commit_id=a1a6c2b84b9d5852d4561709d8c78f4b836cbacb#25b8124a904b66761e518050b617b093ca6ea929>`__)
+
+New template files that should be linked or copied in your custom theme:
+* `generic2fregister.tpl`
+* `password2fcheck.tpl`
+* `password2fregister.tpl`
+
 If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
 
 For plugin developpers
