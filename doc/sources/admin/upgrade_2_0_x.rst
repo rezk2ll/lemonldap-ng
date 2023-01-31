@@ -96,6 +96,12 @@ Due to some internal changes in the way registrable second factors are handled, 
                        <span trspan="unregister">Unregister</span>
                         </span>
 
+To fix behavior of checkbox "generate my password" in password reset screen, update your custom `mail.tpl` (see `commit <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/commit/7875d3c762649aa401c16e8546f2a81a24c9019a>`__)
+
+To have the new tooltip feature on IDP choice screen, update your custom `idpchoice.tpl` (see `commit <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/commit/15508470b6285a08e178f914fc3c828489f47e47#9b667b5f99a71a2740979a69f8baa66120a6471e>`__)
+
+For the message box in menu when no applications are allowed, update your custom `menu.tpl` (see `commit <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/commit/d6aa04291f74a92a04177ded34ac416caf0c78a2>`__)
+
 If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
 
 For plugin developpers
