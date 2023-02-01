@@ -133,6 +133,7 @@ lib/Lemonldap/NG/Portal/Plugins/GlobalLogout.pm
 lib/Lemonldap/NG/Portal/Plugins/GrantSession.pm
 lib/Lemonldap/NG/Portal/Plugins/History.pm
 lib/Lemonldap/NG/Portal/Plugins/Impersonation.pm
+lib/Lemonldap/NG/Portal/Plugins/LocationDetect.pm
 lib/Lemonldap/NG/Portal/Plugins/MailPasswordReset.pm
 lib/Lemonldap/NG/Portal/Plugins/NewLocationWarning.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
@@ -539,6 +540,7 @@ t/01-Reject-Hashes-in-URL.t
 t/01-Unauth-Logout.t
 t/01-WebAuthn-Registration.t
 t/01-WebAuthn.t
+t/02-Password-Demo-checkHIBP.t
 t/02-Password-Demo-Hook.t
 t/02-Password-Demo-Local-noPpolicy.t
 t/02-Password-Demo-Local-Ppolicy.t
@@ -639,6 +641,7 @@ t/32-CAS-Proxy.t
 t/32-CAS-Security.t
 t/32-OIDC-ClaimTypes.t
 t/32-OIDC-ClientCredentials-Grant.t
+t/32-OIDC-Code-Flow-Mobile.t
 t/32-OIDC-Code-Flow-with-2F-UpgradeOnly.t
 t/32-OIDC-Code-Flow-with-2F.t
 t/32-OIDC-Grant-Type-OAuth2-Handler-Rules.t
@@ -655,6 +658,7 @@ t/32-OIDC-Refresh-Token.t
 t/32-OIDC-Register.t
 t/32-OIDC-Response-Modes.t
 t/32-OIDC-RP-rule.t
+t/32-OIDC-Token-Exchange.t
 t/32-OIDC-Token-Introspection.t
 t/32-OIDC-Token-Security.t
 t/33-Auth-and-issuer-OpenID2.t
@@ -749,6 +753,7 @@ t/61-CrowdSec-warn.t
 t/61-CrowdSec.t
 t/61-ForceAuthn.t
 t/61-GrantSession.t
+t/61-LocationDetect.t
 t/61-NewLocationWarning-Custom.t
 t/61-NewLocationWarning.t
 t/61-Session-ActivityTimeout.t
@@ -864,6 +869,7 @@ t/AfterDataCustomPlugin.pm
 t/CaptchaOldApi.pm
 t/CasHookPlugin.pm
 t/Custom.pm
+t/geoip/test.mmdb
 t/gpghome/key.asc
 t/gpghome/openpgp-revocs.d/9482CEFB055809CBAFE6D71AAB2D5542891D1677.rev
 t/gpghome/private-keys-v1.d/A076B0E7DB141A919271EE8B581CDFA8DA42F333.key
