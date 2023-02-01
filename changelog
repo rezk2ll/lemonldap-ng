@@ -1,3 +1,76 @@
+lemonldap-ng (2.0.16) jammy; urgency=medium
+
+  * Bugs:
+    * #2798: Can't locate Net/SSLeay.pm
+    * #2799: Auth::SAML logout not performed when using a logout_sso $URL rule when using HTTP-POST binding
+    * #2801: Auth::SAML generates invalid SAML requests by default
+    * #2802: CDA does not work with wildcard vhosts containing a dash
+    * #2803: [Security:low] Adding registrable 2F does not test the current authn level
+    * #2806: SingleSession/StayConnected does not run other plugins (such as SingleSession) after login
+    * #2807: Result of passwordAfterChange hook not used
+    * #2809: portalSkinRules do not allow special characters in skin name
+    * #2816: Redirection loop with jsRedirect
+    * #2817: CrowdSec plugin broken: "URL must be absolute
+    * #2832: [Security:medium] Redirection URL validation bypass using credentials in URL
+    * #2835: We can't duplicate a virtual host with a wildcard
+    * #2839: Advanced sessions functions broken with Apache::Session::Redis
+    * #2840: password toggle visibility on mobile does not work
+    * #2841: Using Auth::OpenIDConnect twice in Auth::Choice leads to route redefined warning
+    * #2842: Cannot hook storeHistory method after 2FA failure
+    * #2845: "No change detected" when removing the last exported attribute/macro/scope, etc
+    * #2846: Incorrect handling of custom schemes when auto-setting CSP form-action (with jsRedirect=1)
+    * #2854: Confusing error message when trying to verify webauthn credential while there is no available credential
+    * #2859: Password policy does not work with underscore
+
+  * New features:
+    * #2174: Support OIDC response_mode=form_post option
+    * #2652: Integrate Pwned Passwords API from haveibeenpwned.com
+    * #2684: Get the geolocation of the user
+    * #2731: Handle SAML federations as a single configuration object
+    * #2734: 2FA passphrase (low security level)
+    * #2795: Generic 2FA register module
+    * #2805: Support Traefik forwardAuth
+    * #2819: Read attributes in Radius module
+    * #2836: Implement basic SLO for CAS applications
+
+  * Improvements:
+    * #2415: Append a field to set a comment for each IdP or SP
+    * #2588: "Bad URL" should be clarified
+    * #2631: Change error message when SAML provider is unknown
+    * #2778: Plugin authenticated routes don't have $req->sessionInfo by default
+    * #2792: Rework AJAX-based authentication to enable 2FA, notifications, etc
+    * #2808: Append a comment box into VHost options
+    * #2814: --help on  /usr/share/lemonldap-ng/bin/lemonldap-ng-sessions displays source code if perl-doc is missing
+    * #2815: Simplify OIDC claims configuration
+    * #2821: Inconsistent behavior among issuers when app is unknown or unauthorized
+    * #2823: Append an option to define tooltip box with CAS, SAML and OIdC IDP
+    * #2824: Add more attributes on the OpenID JWKS endpoints (alg, x5c, x5t)
+    * #2826: Automatic password generation won't proceed without filling the new password text boxes
+    * #2827: StayConnected: add a single session option
+    * #2828: StayConnected: invalidate long-lived session on logout
+    * #2830: Allow more characters in 2FA device names
+    * #2831: Send client_id in logout request sent by OIDC RP
+    * #2833: Display a message if none application is allowed
+    * #2834: Append an option to sort tabs in portal menu
+    * #2838: Allow custom implementations of OAuth 2.0 Token Exchange
+    * #2848: Allow generic translation of HTML attributes
+    * #2849: Allow to define ServiceToken scope with RegExp
+    * #2855: Append an option to override manager drop-down menu links
+    * #2857: Improve password policy definition and display
+
+  * Templates:
+    * #2734: 2FA passphrase (low security level)
+    * #2795: Generic 2FA register module
+    * #2823: Append an option to define tooltip box with CAS, SAML and OIdC IDP
+    * #2826: Automatic password generation won't proceed without filling the new password text boxes
+    * #2833: Display a message if none application is allowed
+    * #2844: Use instance name to build SPA title
+
+  * WebServer Confs:
+    * #2786: provide nginx integration that doesn't use Lua
+
+ -- Clément <clem.oudot@gmail.com>  Wed, 01 Feb 2023 10:49:47 +0100
+
 lemonldap-ng (2.0.15.1) jammy; urgency=medium
 
   * Bugs:
