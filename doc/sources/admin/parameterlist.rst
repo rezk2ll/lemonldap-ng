@@ -86,9 +86,9 @@ checkDevOps                                             Enable check DevOps     
 checkDevOpsCheckSessionAttributes                       Check if session attributes exist                                                    ✔
 checkDevOpsDisplayNormalizedHeaders                     Display normalized headers                                                           ✔
 checkDevOpsDownload                                     Enable check DevOps download field                                                   ✔
-checkHIBP                                               Enable check on "Have I Been Pwned?" API                                             ✔
-checkHIBPURL                                            URL of "Have I Been Pwned?" API                                                      ✔
-checkHIBPRequired                                       Require HIBP check to pass                                                           ✔
+checkHIBP                                               Enable check HIBP                                                                    ✔                      ✔
+checkHIBPRequired                                       Require HIBP check to pass                                                           ✔                      ✔
+checkHIBPURL                                            URL of Have I Been Pwned API                                                         ✔                      ✔
 checkState                                              Enable CheckState plugin                                                             ✔
 checkStateSecret                                        Secret token for CheckState plugin                                                   ✔
 checkTime                                               Timeout to check new configuration in local cache                                    ✔      ✔               ✔
@@ -290,6 +290,11 @@ localSessionStorage                                     Local sessions cache mod
 localSessionStorageOptions                              Sessions cache module options                                                        ✔
 localStorage                                            Local cache                                                                          ✔      ✔       ✔       ✔
 localStorageOptions                                     Local cache parameters                                                               ✔      ✔       ✔       ✔
+locationDetect                                          Enable LocationDetect plugin                                                         ✔
+locationDetectGeoIpDatabase                             Path to GeoIP database                                                               ✔
+locationDetectGeoIpLanguages                            Languages for GeoIP database                                                         ✔
+locationDetectIpDetail                                  Information requested for IP                                                         ✔
+locationDetectUaDetail                                  Information requested for User Agent                                                 ✔
 log4perlConfFile                                        Log4Perl logger configuration file                                                   ✔      ✔       ✔       ✔
 logLevel                                                Log level, must be set in .ini                                                       ✔      ✔       ✔       ✔
 logger                                                  technical logger                                                                     ✔      ✔       ✔       ✔
