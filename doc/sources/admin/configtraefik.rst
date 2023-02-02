@@ -6,7 +6,7 @@ FastCGI server
 
 For now, Traefik does not support FastCGI, so it can't be used with the
 default provided llng-fastcgi-server. It can work with the PSGI server,
-if it exposes an HTTP socket. See :doc:Advanced PSGI usage<psgi>.
+if it exposes an HTTP socket. See :doc:`Advanced PSGI usage<psgi>`.
 
 For example, to use the Traefik handler with uWSGI, exposing an HTTP socket
 binding on 127.0.0.1:8183
