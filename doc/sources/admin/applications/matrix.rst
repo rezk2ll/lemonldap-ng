@@ -29,7 +29,7 @@ See `The official Synapse documentation <https://matrix-org.github.io/synapse/la
           - "email"
         user_mapping_provider:
           config:
-            localpart_template: "{{ user.preferred_username }}}"
+            localpart_template: "{{ user.preferred_username }}"
             # TO BE FILLED: If your users have names in LemonLDAP::NG and you want those in Synapse, this should be replaced with user.name|capitalize or any valid filter.
             display_name_template: "{{ user.preferred_username|capitalize }}"
 
