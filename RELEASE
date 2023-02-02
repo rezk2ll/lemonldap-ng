@@ -27,7 +27,7 @@ Before release
 - Build confTree, JS & doc
   $ make json
   $ make minify
-  $ make documentatio;
+  $ make documentation
 
 - Update languages (needs a Transifex token)
   $ ./scripts/download_translations
