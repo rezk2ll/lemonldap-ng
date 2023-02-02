@@ -33,13 +33,12 @@ Select **Main** handler type to protect WebApp1 and append a header containing:
 WebApp1 can retrieve this header and use it in its requests to query other server(s) by setting
 the ``X-LLNG-TOKEN`` header. The ServiceToken is built by using the ``token`` extended function.
 This function takes a list of parameters:
+
 -  session ID that must be the first one: ``$_session_id``
--  virtual hosts authorized to be requested by WebApp1
-   It can be some strings defining VHosts explicitly or regular expressions that must start and end with a slash ``/`` character.
+-  virtual hosts authorized to be requested by WebApp1. It can be some strings defining VHosts explicitly or regular expressions that must start and end with a slash ``/`` character.
 -  ServiceHeaders that will be sent to requested apps. A ServiceHeader is defined like this: ``headerName1=headerValue1``
 
-
-A ServiceToken is only valide for the authorized virtual hosts and during a restricted time period (30 seconds by default).
+A ServiceToken is only valid for the authorized virtual hosts and during a restricted time period (30 seconds by default).
 It can also be used for sending ServiceHeaders (headerName1=headerValue1) to requested apps. A ServiceHeader can be useful
 to send the source host by example. ServiceHeaders are sent to ALL requested applications.
 You can define ServiceToken TTL by setting relative option for each requested virtualHost in Manager.

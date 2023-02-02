@@ -1,5 +1,5 @@
 Deploy Traefik configuration
-==========================
+============================
 
 FastCGI server
 --------------
