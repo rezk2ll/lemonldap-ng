@@ -11,7 +11,7 @@ Main settings:
    (optional)
 -  **Hidden attributes**: session attributes never displayed or sent
 
-LemonLDAP::NG provides 5 levels of error and has two kind of logs:
+LemonLDAP::NG provides 5 levels of error and has two kinds of logs:
 
 -  technical logs
 -  user actions logs
@@ -49,9 +49,9 @@ choose between:
 You can also modify these values in each lemonldap-ng.ini section to
 have different values for portal, manager and handlers.
 
-Therefore, LLNG provides a username that can be used by webservers in
-their access log. To configure the user identifier to write into access
-logs, go into Manager, ``General Parameters`` > ``Logging`` >
+Therefore, LLNG provides a username that can be used by web servers in
+their access logs. To configure the user identifier to write into access
+logs, go to Manager, ``General Parameters`` > ``Logging`` >
 ``REMOTE_USER``.
 
 User log samples
@@ -59,8 +59,8 @@ User log samples
 
 .. note::
 
-    The user name set in user log messages is configured with `whatToTrace` parameter, except
-    for messages corresponding to failed authentification, whe the user name logged is the
+    The user name set in user log messages is set with `whatToTrace` parameter, except
+    for messages corresponding to failed authentifications, when the user name logged is the
     login used by the user.
 
 Authentication:
@@ -130,7 +130,7 @@ Access to a Get application whose vhost configuration key is ``host.example.com`
 Default loggers
 ---------------
 
--  Apache handlers use by default Apache2 logger. This logger can't be
+-  Apache handlers use by default Apache2 logger. This logger can not be
    used for other LLNG components
 -  Except when launched by LLNG FastCGI server *(used by Nginx)*, Portal
    and Manager use Std logger by default
@@ -143,23 +143,23 @@ Technical log levels
 ~~~~~~~~~~~~~~~~~~~~
 
 -  **error** is used for problems that must be reported to administrator
-   and needs an action. In this case, some feature may not work
--  **warn** is used for problems that doesn't block LLNG features but
+   and needs an action. In this case, some features may not work
+-  **warn** is used for problems that do not block LLNG features but
    should be solved
--  **notice** is used for actions that must be kept in logs
--  **info** display some technical information
--  **debug** produce a lot a debugging logs
+-  **notice** is used for actions that must be logged
+-  **info** displays some technical information
+-  **debug** generates lot of debugging logs
 
 Log levels for user actions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  **error** is used to log bad user actions that looks malicious
--  **warn** is used to log some errors like "bad password"
--  **notice** is used for actions that must be kept in logs for
-   accounting (connections, logout)
--  **info** display some useful information like handler authorizations
-   (at least 1 for each HTTP hit)
--  **debug** isn't used
+-  **error** is used for logging bad user actions that seem malicious
+-  **warn** is used for logging some errors like "bad password"
+-  **notice** is used for actions that must be logged for
+   accounting (connections, logout and so on)
+-  **info** displays some useful information like handler authorizations
+   (at least one for each HTTP hit)
+-  **debug** not relevant
 
 Logger configuration
 --------------------
@@ -203,7 +203,7 @@ You can also override options. Default values:
 Log4perl
 ~~~~~~~~
 
-You can indicate the Log4perl configuration file and the classes to use.
+You can define the Log4perl configuration file and classes to use.
 Default values:
 
 .. code-block:: ini
@@ -254,7 +254,7 @@ You just have to give your DSN:
 Dispatch
 ~~~~~~~~
 
-Use it to use more than one logger. Example:
+Use it to enable more than one logger. Example:
 
 .. code-block:: ini
 
@@ -270,9 +270,8 @@ Use it to use more than one logger. Example:
 
 .. attention::
 
-    At least ``logDispatchError`` (or
-    ``userLogDispatchError`` for user logs) must be defined. All sub level
-    will be dispatched on it, until another lever is declared. In the above
-    example, Sentry collects ``error`` and ``warn`` levels and all user
-    actions, while syslog stores technical ``notice``, ``info`` and
-    ``debug`` logs.
+    At least ``logDispatchError`` (or     ``userLogDispatchError`` for user logs)
+    must be defined. All sub level will be dispatched on it,
+    until another lever is declared. In the above example,
+    Sentry collects ``error`` and ``warn`` levels and all user
+    actions, while syslog stores technical ``notice``, ``info`` and ``debug`` logs.

@@ -438,8 +438,8 @@ LemonLDAP::NG Portal jQuery scripts
       }
       return false;
     };
-    checkpassword = function(password) {
-      var digit, hasforbidden, i, len, lower, nonwhitespechar, numspechar, ref3, ref4, result, upper;
+    checkpassword = function(password, e) {
+      var digit, hasforbidden, i, len, lower, newpasswordVal, nonwhitespechar, numspechar, ref3, ref4, result, upper;
       result = true;
       if (window.datas.ppolicy.minsize > 0) {
         if (setDanger(password.length >= window.datas.ppolicy.minsize, 'ppolicy-minsize-feedback')) {
@@ -462,6 +462,55 @@ LemonLDAP::NG Portal jQuery scripts
         digit = password.match(/[0-9]/g);
         if (setDanger(digit && digit.length >= window.datas.ppolicy.mindigit, 'ppolicy-mindigit-feedback')) {
           result = false;
+        }
+      }
+      if ($('#ppolicy-checkhibp-feedback').length > 0) {
+        if (e === "focusout") {
+          newpasswordVal = $("#newpassword").val();
+          if (newpasswordVal.length >= 5) {
+            $.ajax({
+              dataType: "json",
+              url: "/checkhibp?password=" + btoa(newpasswordVal),
+              context: document.body,
+              success: function(data) {
+                var code, msg;
+                code = data.code;
+                msg = data.message;
+                if (code !== void 0) {
+                  if (parseInt(code) === 0) {
+                    if (setDanger(true, 'ppolicy-checkhibp-feedback')) {
+                      return result = false;
+                    }
+                  } else if (parseInt(code) === 2) {
+                    if (setDanger(false, 'ppolicy-checkhibp-feedback')) {
+                      return result = false;
+                    }
+                  } else {
+                    console.log('checkhibp: backend error: ', msg);
+                    if (setDanger(false, 'ppolicy-checkhibp-feedback')) {
+                      return result = false;
+                    }
+                  }
+                }
+              },
+              error: function(j, status, err) {
+                var res;
+                if (err) {
+                  console.log('checkhibp: frontend error: ', err);
+                }
+                if (j) {
+                  res = JSON.parse(j.responseText);
+                }
+                if (res && res.error) {
+                  return console.log('checkhibp: returned error: ', res);
+                }
+              }
+            });
+          }
+        } else {
+          if (setDanger(false, 'ppolicy-checkhibp-feedback')) {
+            result = false;
+          }
         }
       }
       if (window.datas.ppolicy.allowedspechar) {
@@ -526,6 +575,9 @@ LemonLDAP::NG Portal jQuery scripts
       checkpassword('');
       $('#newpassword').keyup(function(e) {
         checkpassword(e.target.value);
+      });
+      $('#newpassword').focusout(function(e) {
+        checkpassword(e.target.value, "focusout");
       });
     }
     togglecheckpassword = function(e) {
