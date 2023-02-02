@@ -27,3 +27,4 @@ Advanced features
    managertests
    rules_examples
    parameterlist
+   configtraefik

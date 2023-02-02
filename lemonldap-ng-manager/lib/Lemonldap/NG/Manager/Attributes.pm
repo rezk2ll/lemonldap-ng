@@ -910,6 +910,18 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 1,
             'type'    => 'bool'
         },
+        'checkHIBP' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'checkHIBPRequired' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'checkHIBPURL' => {
+            'default' => 'https://api.pwnedpasswords.com/range/',
+            'type'    => 'text'
+        },
         'checkState' => {
             'default' => 0,
             'type'    => 'bool'
