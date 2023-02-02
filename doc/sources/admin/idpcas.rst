@@ -65,6 +65,8 @@ Then go in ``CAS Service`` to define:
    and Proxy tickets are valid after being generated. For compatibility, the
    default value of ``0`` means they are valid for the entire session duration.
    But the CAS spefications recommends ``300`` (5 minutes).
+-  **Back-channel logout**: (since *2.0.16*) enable CAS back-channel logout,
+   which will send SLO requests to CAS applications.
 -  **CAS session module name and options**: choose a specific module if
    you do not want to mix CAS sessions and normal sessions (see
    :ref:`why<samlservice-saml-sessions-module-name-and-options>`).
