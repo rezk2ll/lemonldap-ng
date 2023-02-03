@@ -2,9 +2,9 @@ package Lemonldap::NG::Portal::Auth::OpenIDConnect;
 
 use strict;
 use Mouse;
-use MIME::Base64 qw/encode_base64 decode_base64/;
-use Scalar::Util qw/looks_like_number/;
-use Lemonldap::NG::Common::JWT qw(getJWTPayload);
+use MIME::Base64                           qw/encode_base64 decode_base64/;
+use Scalar::Util                           qw/looks_like_number/;
+use Lemonldap::NG::Common::JWT             qw(getJWTPayload);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_IDPCHOICE
@@ -24,6 +24,9 @@ has opList => ( is => 'rw', isa => 'ArrayRef', default => sub { [] } );
 has path => ( is => 'rw', default => 'oauth2' );
 
 use constant sessionKind => 'OIDC';
+
+use constant BACKCHANNEL_EVENTSKEY =>
+  'http://schemas.openid.net/event/backchannel-logout';
 
 # INITIALIZATION
 
@@ -422,10 +425,121 @@ sub frontLogout {
         'Front Channel logout is not implemented', 501 );
 }
 
+# Implements https://openid.net/specs/openid-connect-backchannel-1_0.html
 sub backLogout {
     my ( $self, $req ) = @_;
-    return $self->p->sendError( $req, 'Back Channel logout is not implemented',
-        501 );
+    my $logName = 'OIDC BC Logout';
+
+    # REQUIRED CHECKS
+
+    # Back channel requires POST
+    return $self->p->sendError( $req, 'Only POST allowed', 400 )
+      if $req->method ne 'POST';
+
+    # Back channel requires logout_token
+    my $content = $req->body_parameters;
+    return $self->p->sendError( $req, 'logout_token not found', 400 )
+      unless $content and $content->{logout_token};
+
+    # Decode token
+    my $logoutToken = $self->decodeTokenResponse( $content->{logout_token} )
+      or $self->p->sendError( $req, 'Could not decode logout token', 400 );
+    my $payload = getJWTPayload($logoutToken);
+
+    # TODO: validate "alg" header => prohibit "none" value
+
+    # Required fields
+    foreach (qw(iss aud iat jti events)) {
+        return $self->p->sendError( $req, "Missing $_", 400 )
+          unless $payload->{$_};
+    }
+    return $self->p->sendError( $req, 'Missing sub/sid', 400 )
+      unless $payload->{sub} or $payload->{sid};
+
+    # Get iss and found related OP
+    my $op;
+    foreach ( keys %{ $self->oidcOPList } ) {
+        if ( $self->oidcOPList->{$_}->{conf}->{issuer} eq $payload->{iss} ) {
+            $op = $_;
+            last;
+        }
+    }
+    return $self->p->sendError( $req, 'Issuer not found', 400 ) unless $op;
+
+    # Verify signature
+    return $self->p->sendError( $req, 'Bad signature', 400 )
+      unless $self->verifyJWTSignature( $logoutToken, $op );
+
+    # Verify audience
+    return $self->p->error( $req, 'Bad aud', 400 )
+      unless ref $payload->{aud} eq 'ARRAY';
+    return $self->p->error( $req, 'Client ID not found in audience array', 400 )
+      unless grep {
+        $_ eq $self->conf->{oidcOPMetaDataOptions}->{$op}
+          ->{oidcOPMetaDataOptionsClientID}
+      } @{ $payload->{aud} };
+
+    # Verify iat
+    return $self->p->error( $req, 'Token too old', 400 )
+      unless $payload->{iat} +
+      $self->conf->{oidcOPMetaDataOptions}->{$op}
+      ->{oidcOPMetaDataOptionsIDTokenMaxAge} > time;
+
+    # Verify events
+    return $self->p->error( $req, 'Bad events', 400 )
+      unless ref $payload->{events} eq 'HASH'
+      and $payload->{events}->{ BACKCHANNEL_EVENTSKEY() }
+      and ref $payload->{events}->{ BACKCHANNEL_EVENTSKEY() } eq 'HASH';
+
+    # Verify nonce
+    return $self->p->error( $req, 'Bad request', 400 ) if $payload->{nonce};
+
+    # Now request is valid, even if session isn't found, response will be 200
+
+    # Find session
+    my $uid = $payload->{sub};
+    my $sid = $payload->{sid};
+    unless ($uid) {
+        $self->logger->error("Use of sid without sub isn't yet implemented");
+    }
+    else {
+        my %store = %{ $self->conf->{globalStorageOptions} };
+        $store{backend} = $self->conf->{globalStorage};
+        my $oidcSessions =
+          Lemonldap::NG::Common::Apache::Session->searchOn( \%store,
+            '_user', $uid );
+        my @userSessions =
+          grep { $oidcSessions->{$_}->{_oidc_OP} eq $op; } keys %$oidcSessions;
+        if (@userSessions) {
+            if ($#userSessions) {
+                $self->logger->warn(
+"$logName: more than one link found between $uid and $op, cleanong all"
+                );
+            }
+            foreach (@userSessions) {
+                if ( my $as = $self->p->getApacheSession($_) ) {
+                    if ( $self->p->_deleteSession( $req, $as, 1 ) ) {
+                        $self->logger->debug(
+                            "$logName: session $_ deleted from global storage");
+                    }
+                    else {
+                        $self->logger->error(
+                            "$logName: unable to delete session $_");
+                        $self->logger->error( $as->error );
+                    }
+                }
+                else {
+                    $self->logger->info(
+                        "$logName: session $_ for user $uid already deleted");
+                }
+            }
+        }
+        else {
+            $self->logger->warn("$logName: no session found for $uid");
+        }
+    }
+
+    return [ 200, [], [] ];
 }
 
 1;
