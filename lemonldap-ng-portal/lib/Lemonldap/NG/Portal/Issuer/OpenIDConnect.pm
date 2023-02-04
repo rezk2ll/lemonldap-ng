@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON qw(from_json to_json);
+use JSON                       qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -2284,27 +2284,27 @@ sub metadata {
             issuer => $issuer,
 
             # Endpoints
+            authorization_endpoint => $baseUrl . $authorize_uri,
             token_endpoint         => $baseUrl . $token_uri,
             userinfo_endpoint      => $baseUrl . $userinfo_uri,
             jwks_uri               => $baseUrl . $jwks_uri,
-            authorization_endpoint => $baseUrl . $authorize_uri,
-            end_session_endpoint   => $baseUrl . $endsession_uri,
-
-            #check_session_iframe   => $baseUrl . $checksession_uri,
-            introspection_endpoint => $baseUrl . $introspection_uri,
-
             (
                 $self->conf->{oidcServiceAllowDynamicRegistration}
                 ? ( registration_endpoint => $baseUrl . $registration_uri )
                 : ()
             ),
+            end_session_endpoint => $baseUrl . $endsession_uri,
+
+            #check_session_iframe   => $baseUrl . $checksession_uri,
+            introspection_endpoint => $baseUrl . $introspection_uri,
 
             # Scopes
             scopes_supported => [qw/openid profile email address phone/],
-            response_types_supported              => $response_types,
-            grant_types_supported                 => $grant_types,
-            acr_values_supported                  => \@acr,
-            subject_types_supported               => ["public"],
+            response_types_supported => $response_types,
+            response_modes_supported => [ "query", "fragment", "form_post", ],
+            grant_types_supported    => $grant_types,
+            acr_values_supported     => \@acr,
+            subject_types_supported  => ["public"],
             token_endpoint_auth_methods_supported =>
               [qw/client_secret_post client_secret_basic/],
             introspection_endpoint_auth_methods_supported =>
@@ -2313,24 +2313,24 @@ sub metadata {
             request_parameter_supported      => JSON::true,
             request_uri_parameter_supported  => JSON::true,
             require_request_uri_registration => JSON::false,
-            response_modes_supported => [ "query", "fragment", "form_post", ],
 
             # Algorithms
             id_token_signing_alg_values_supported =>
               [qw/none HS256 HS384 HS512 RS256 RS384 RS512/],
+
+            # id_token_encryption_alg_values_supported
+            # id_token_encryption_enc_values_supported
             userinfo_signing_alg_values_supported =>
               [qw/none HS256 HS384 HS512 RS256 RS384 RS512/],
+
+            # userinfo_encryption_alg_values_supported
+            # userinfo_encryption_enc_values_supported
 
             # PKCE
             code_challenge_methods_supported => [qw/plain S256/],
         }
     );
 
-    # id_token_encryption_alg_values_supported
-    # id_token_encryption_enc_values_supported
-
-    # userinfo_encryption_alg_values_supported
-    # userinfo_encryption_enc_values_supported
     # request_object_signing_alg_values_supported
     # request_object_encryption_alg_values_supported
     # request_object_encryption_enc_values_supported
