@@ -3261,9 +3261,8 @@ sub attributes {
         },
         samlSPMetaDataOptionsFederationOptionalAttributes => {
             type   => 'select',
-            select => [
-                { k => '', v => 'keep' }, { k => 'ignore', v => 'ignore' },
-            ],
+            select =>
+              [ { k => '', v => 'keep' }, { k => 'ignore', v => 'ignore' }, ],
             default => '',
         },
         samlSPMetaDataOptionsFederationRequiredAttributes => {
@@ -4423,7 +4422,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcServiceMetaDataBackChannelURI => {
             type          => 'text',
             default       => 'blogout',
-            documentation => 'OpenID Connect Front-Channel logout endpoint',
+            documentation => 'OpenID Connect Back-Channel logout endpoint',
         },
         oidcServiceMetaDataFrontChannelURI => {
             type          => 'text',
