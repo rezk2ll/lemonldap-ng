@@ -2293,11 +2293,6 @@ sub metadata {
             #check_session_iframe   => $baseUrl . $checksession_uri,
             introspection_endpoint => $baseUrl . $introspection_uri,
 
-            # Logout capabilities
-            backchannel_logout_supported          => JSON::false,
-            backchannel_logout_session_supported  => JSON::false,
-            frontchannel_logout_supported         => JSON::true,
-            frontchannel_logout_session_supported => JSON::true,
             (
                 $self->conf->{oidcServiceAllowDynamicRegistration}
                 ? ( registration_endpoint => $baseUrl . $registration_uri )
