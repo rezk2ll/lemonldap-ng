@@ -1347,7 +1347,7 @@ sub storeState {
     return $self->state_ott->createToken($infos);
 }
 
-# Extract state information into $self
+# Extract state information into $req
 sub extractState {
     my ( $self, $req, $state ) = @_;
 
