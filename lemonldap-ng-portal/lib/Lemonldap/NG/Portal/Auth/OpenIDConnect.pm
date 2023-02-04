@@ -9,6 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_IDPCHOICE
   PE_OIDC_AUTH_ERROR
+  PE_SENDRESPONSE
 );
 
 our $VERSION = '2.0.16';
@@ -20,8 +21,9 @@ extends qw(
 
 # INTERFACE
 
-has opList => ( is => 'rw', isa => 'ArrayRef', default => sub { [] } );
-has path => ( is => 'rw', default => 'oauth2' );
+has opList      => ( is => 'rw', isa     => 'ArrayRef', default => sub { [] } );
+has path        => ( is => 'rw', default => 'oauth2' );
+has endpointsRe => ( is => 'rw' );
 
 use constant sessionKind => 'OIDC';
 
@@ -71,14 +73,26 @@ sub init {
           };
     }
 
+    my $portal = $self->conf->{portal};
+    my $re     = '^/' . $self->path . '/(?:' . join(
+        '|',
+        map {
+            my $s = $self->conf->{$_};
+            $s =~ s/^$portal\/*//;
+            $s =~ s/#PORTAL#\/*//;
+            $s
+        } ( qw(
+              oidcServiceMetaDataFrontChannelURI
+              oidcServiceMetaDataBackChannelURI
+            )
+        )
+    ) . ')(?:/.*)?$';
+
+    $self->endpointsRe(qr/$re/);
+
     # If this module has already been loaded,
     # skip routes to avoid a warning in conf
     if ( !$self->p->loadedModules->{ ref($self) } ) {
-        $self->addRouteFromConf(
-            'Unauth',
-            oidcServiceMetaDataFrontChannelURI => 'alreadyLoggedOut',
-            oidcServiceMetaDataBackChannelURI  => 'backLogout',
-        );
         $self->addRouteFromConf(
             'Auth',
             oidcServiceMetaDataFrontChannelURI => 'frontLogout',
@@ -100,6 +114,20 @@ sub init {
 
 sub extractFormInfo {
     my ( $self, $req ) = @_;
+    if ( $req->uri =~ $self->endpointsRe ) {
+        my $path = $req->uri;
+        my $tmp  = $self->path;
+        $path =~ s#^/*\Q$tmp\E/*##o;
+        $path =~ s#/.*$##;
+        if ( $path eq $self->conf->{oidcServiceMetaDataBackChannelURI} ) {
+            $req->response( $self->backLogout($req) );
+            return PE_SENDRESPONSE;
+        }
+        elsif ( $path eq $self->conf->{oidcServiceMetaDataFrontChannelURI} ) {
+            $req->response( $self->alreadyLoggedOut($req) );
+            return PE_SENDRESPONSE;
+        }
+    }
 
     # Check callback
     if ( $req->param( $self->conf->{oidcRPCallbackGetParam} ) ) {
@@ -439,9 +467,10 @@ sub backLogout {
       unless $content and $content->{logout_token};
 
     # Decode token
-    my $logoutToken = $self->decodeTokenResponse( $content->{logout_token} )
-      or $self->p->sendError( $req, 'Could not decode logout token', 400 );
-    my $payload = getJWTPayload($logoutToken);
+    my $logoutToken = $content->{logout_token};
+    my $payload     = getJWTPayload($logoutToken)
+      or
+      return $self->p->sendError( $req, 'Could not decode logout token', 400 );
 
     # TODO: validate "alg" header => prohibit "none" value
 
@@ -479,14 +508,14 @@ sub backLogout {
     # Verify iat
     return $self->p->error( $req, 'Token too old', 400 )
       unless $payload->{iat} +
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsIDTokenMaxAge} > time;
+      ( $self->conf->{oidcOPMetaDataOptions}->{$op}
+          ->{oidcOPMetaDataOptionsIDTokenMaxAge} // 30 ) > time;
 
     # Verify events
     return $self->p->error( $req, 'Bad events', 400 )
       unless ref $payload->{events} eq 'HASH'
-      and $payload->{events}->{ BACKCHANNEL_EVENTSKEY() }
-      and ref $payload->{events}->{ BACKCHANNEL_EVENTSKEY() } eq 'HASH';
+      and $payload->{events}->{ $self->BACKCHANNEL_EVENTSKEY() }
+      and ref $payload->{events}->{ $self->BACKCHANNEL_EVENTSKEY() } eq 'HASH';
 
     # Verify nonce
     return $self->p->error( $req, 'Bad request', 400 ) if $payload->{nonce};
@@ -506,7 +535,10 @@ sub backLogout {
           Lemonldap::NG::Common::Apache::Session->searchOn( \%store,
             '_user', $uid );
         my @userSessions =
-          grep { $oidcSessions->{$_}->{_oidc_OP} eq $op; } keys %$oidcSessions;
+          grep {
+                  $oidcSessions->{$_}->{_oidc_OP}
+              and $oidcSessions->{$_}->{_oidc_OP} eq $op;
+          } keys %$oidcSessions;
         if (@userSessions) {
             if ($#userSessions) {
                 $self->logger->warn(
