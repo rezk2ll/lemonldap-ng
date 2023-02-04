@@ -1213,20 +1213,8 @@ sub updateRefreshToken {
 sub updateToken {
     my ( $self, $id, $infos ) = @_;
 
-    my %storage = (
-        storageModule        => $self->conf->{oidcStorage},
-        storageModuleOptions => $self->conf->{oidcStorageOptions},
-    );
-
-    unless ( $storage{storageModule} ) {
-        %storage = (
-            storageModule        => $self->conf->{globalStorage},
-            storageModuleOptions => $self->conf->{globalStorageOptions},
-        );
-    }
-
     my $oidcSession = Lemonldap::NG::Common::Session->new( {
-            %storage,
+            $self->_storeOpts(),
             cacheModule        => $self->conf->{localSessionStorage},
             cacheModuleOptions => $self->conf->{localSessionStorageOptions},
             id                 => $id,
@@ -1248,22 +1236,11 @@ sub updateToken {
 # @return Lemonldap::NG::Common::Session object
 sub getOpenIDConnectSession {
     my ( $self, $id, $type, $ttl, $info ) = @_;
-    my %storage = (
-        storageModule        => $self->conf->{oidcStorage},
-        storageModuleOptions => $self->conf->{oidcStorageOptions},
-    );
 
     $ttl ||= $self->conf->{timeout};
 
-    unless ( $storage{storageModule} ) {
-        %storage = (
-            storageModule        => $self->conf->{globalStorage},
-            storageModuleOptions => $self->conf->{globalStorageOptions},
-        );
-    }
-
     my $oidcSession = Lemonldap::NG::Common::Session->new( {
-            %storage,
+            $self->_storeOpts(),
             cacheModule        => $self->conf->{localSessionStorage},
             cacheModuleOptions => $self->conf->{localSessionStorageOptions},
             id                 => $id,
@@ -2432,6 +2409,22 @@ sub getUserIDForRP {
     return $self->spMacros->{$rp}->{$user_id_attribute}
       ? $self->spMacros->{$rp}->{$user_id_attribute}->( $req, $data )
       : $data->{$user_id_attribute};
+}
+
+# Return storage options
+sub _storeOpts {
+    my ($self) = @_;
+    my $storage =
+      $self->conf->{oidcStorage}
+      ? {
+        storageModule        => $self->conf->{oidcStorage},
+        storageModuleOptions => $self->conf->{oidcStorageOptions},
+      }
+      : {
+        storageModule        => $self->conf->{globalStorage},
+        storageModuleOptions => $self->conf->{globalStorageOptions},
+      };
+    return %$storage;
 }
 
 sub generateNonce {
