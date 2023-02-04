@@ -2210,6 +2210,8 @@ sub logout {
                 return PE_ERROR;
             }
             if ( my $url = $rpConf->{oidcRPMetaDataOptionsLogoutUrl} ) {
+
+                # FRONT CHANNEL
                 if ( $rpConf->{oidcRPMetaDataOptionsLogoutType} eq 'front' ) {
                     if ( $rpConf->{oidcRPMetaDataOptionsLogoutSessionRequired} )
                     {
@@ -2224,8 +2226,31 @@ sub logout {
                     $req->info( qq'<iframe src="$url" class="noborder">'
                           . '</iframe>' );
                 }
-                else {
-                    # TODO #1194
+
+                # BACK CHANNEL
+                elsif ( $rpConf->{oidcRPMetaDataOptionsLogoutType} eq 'back' ) {
+
+                    # Logout token must contain:
+                    #  - iss: issuer identifier
+                    #  - sub: subject id (user id)
+                    #  OR/AND
+                    #  - sid: OP session id given to the RP
+                    #  - aud: audience
+                    #  - iat: issue at time
+                    #  - jti: JWT token id
+                    #  - events: should be :
+                    #   { 'http://schemas.openid.net/event/backchannel-logout"
+                    #     => {} } # or a JSON object
+                    #
+                    # Logout token should be send using a POST request:
+                    #
+                    #   POST /backChannelUri HTTP/1.1
+                    #   Host: rp
+                    #   Content-Type: application/x-www-form-urlencoded
+                    #
+                    #   logout_token=<JWT value>
+                    #
+                    # RP response should be 200 (204 accepted) or 400 for errors
                 }
             }
         }
