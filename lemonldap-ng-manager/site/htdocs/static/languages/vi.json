@@ -720,6 +720,7 @@
 "oidcRPMetaDataOptionsIcon":"Logo",
 "oidcRPMetaDataOptionsLogoutBypassConfirm":"Bypass confirm",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"Phiên yêu cầu",
+"oidcRPMetaDataOptionsLogoutSessionSupported":"Session supported (back channel)",
 "oidcRPMetaDataOptionsLogoutType":"Loại",
 "oidcRPMetaDataOptionsLogoutUrl":"URL",
 "oidcRPMetaDataOptionsOfflineSessionExpiration":"Offline sessions",

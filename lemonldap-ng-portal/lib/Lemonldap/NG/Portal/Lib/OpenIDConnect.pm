@@ -1003,6 +1003,10 @@ sub decodeJSON {
 
     eval { $json_hash = from_json( $json, { allow_nonref => 1 } ); };
     return undef if ($@);
+    unless ( ref $json_hash ) {
+        $self->logger->error("Wanted a JSON object, got: $json_hash");
+        return undef;
+    }
 
     return $json_hash;
 }

@@ -720,6 +720,7 @@
 "oidcRPMetaDataOptionsIcon":"Logo",
 "oidcRPMetaDataOptionsLogoutBypassConfirm":"Bypass confirm",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"Session required",
+"oidcRPMetaDataOptionsLogoutSessionSupported":"Session supported (back channel)",
 "oidcRPMetaDataOptionsLogoutType":"Type",
 "oidcRPMetaDataOptionsLogoutUrl":"URL",
 "oidcRPMetaDataOptionsOfflineSessionExpiration":"Offline sessions",

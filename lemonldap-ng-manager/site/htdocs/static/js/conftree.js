@@ -758,6 +758,13 @@ function templates(tpl,key) {
                   "type" : "bool"
                },
                {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutSessionSupported",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutSessionSupported",
+                  "title" : "oidcRPMetaDataOptionsLogoutSessionSupported",
+                  "type" : "bool"
+               },
+               {
                   "default" : "front",
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutType",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutType",
@@ -765,6 +772,10 @@ function templates(tpl,key) {
                      {
                         "k" : "front",
                         "v" : "Front Channel"
+                     },
+                     {
+                        "k" : "back",
+                        "v" : "Back Channel"
                      }
                   ],
                   "title" : "oidcRPMetaDataOptionsLogoutType",

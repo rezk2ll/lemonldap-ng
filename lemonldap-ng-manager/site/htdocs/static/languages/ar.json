@@ -720,6 +720,7 @@
 "oidcRPMetaDataOptionsIcon":"شعار",
 "oidcRPMetaDataOptionsLogoutBypassConfirm":"Bypass confirm",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"جلسة مطلوب",
+"oidcRPMetaDataOptionsLogoutSessionSupported":"Session supported (back channel)",
 "oidcRPMetaDataOptionsLogoutType":"نوع",
 "oidcRPMetaDataOptionsLogoutUrl":"يو آر إل",
 "oidcRPMetaDataOptionsOfflineSessionExpiration":"Offline sessions",

@@ -2004,7 +2004,8 @@ sub registration {
 
     $self->logger->debug("Client metadata received: $client_metadata_json");
 
-    my $client_metadata = $self->decodeClientMetadata($client_metadata_json);
+    my $client_metadata = $self->decodeClientMetadata($client_metadata_json)
+      or return $self->p->sendError( $req, 'invalid_client_metadata', 400 );
     my $registration_response = {};
 
     # Check redirect_uris
@@ -2029,7 +2030,13 @@ sub registration {
       $client_metadata->{id_token_signed_response_alg} || "RS256";
     my $userinfo_signed_response_alg =
       $client_metadata->{userinfo_signed_response_alg};
-    my $redirect_uris = $client_metadata->{redirect_uris};
+    my $redirect_uris          = $client_metadata->{redirect_uris};
+    my $backchannel_logout_uri = $client_metadata->{backchannel_logout_uri};
+    my $backchannel_logout_session_supported =
+      $client_metadata->{backchannel_logout_session_supported};
+    my $frontchannel_logout_uri = $client_metadata->{backchannel_logout_uri};
+    my $frontchannel_logout_session_required =
+      $client_metadata->{frontchannel_logout_session_required};
 
     # Register RP in global configuration
     my $conf = $self->confAcc->getConf( { raw => 1, noCache => 1 } );
@@ -2054,6 +2061,25 @@ sub registration {
     $conf->{oidcRPMetaDataOptions}->{$rp}
       ->{oidcRPMetaDataOptionsUserInfoSignAlg} = $userinfo_signed_response_alg
       if defined $userinfo_signed_response_alg;
+
+    if ($frontchannel_logout_uri) {
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutType}
+          = 'front';
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutUrl}
+          = $frontchannel_logout_uri;
+        $conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsLogoutSessionRequired} =
+          $frontchannel_logout_session_required;
+    }
+    elsif ($backchannel_logout_uri) {
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutType}
+          = 'back';
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutUrl}
+          = $backchannel_logout_uri;
+        $conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsLogoutSessionSupported} =
+          $backchannel_logout_session_supported;
+    }
 
     # Exported Vars
     if (
