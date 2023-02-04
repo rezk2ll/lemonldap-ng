@@ -25,9 +25,6 @@ has path => ( is => 'rw', default => 'oauth2' );
 
 use constant sessionKind => 'OIDC';
 
-use constant BACKCHANNEL_EVENTSKEY =>
-  'http://schemas.openid.net/event/backchannel-logout';
-
 # INITIALIZATION
 
 sub init {

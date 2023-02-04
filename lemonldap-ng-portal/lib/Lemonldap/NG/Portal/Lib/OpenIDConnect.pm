@@ -29,6 +29,9 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
 
 our $VERSION = '2.0.15';
 
+use constant BACKCHANNEL_EVENTSKEY =>
+  'http://schemas.openid.net/event/backchannel-logout';
+
 # OpenID Connect standard claims
 use constant PROFILE => [
     qw/name family_name given_name middle_name nickname preferred_username

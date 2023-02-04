@@ -2251,6 +2251,35 @@ sub logout {
                     #   logout_token=<JWT value>
                     #
                     # RP response should be 200 (204 accepted) or 400 for errors
+                    my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
+                      ->{oidcRPMetaDataOptionsAccessTokenSignAlg} || "RS256";
+                    $self->logger->debug(
+                        "Access Token signature algorithm: $alg");
+                    my $userId =
+                      $self->getUserIDForRP( $req, $rp, $req->userData );
+                    my $logoutToken = {
+                        iss => $self->iss,
+                        sub => $userId,
+                        aud => $self->getAudiences($rp),
+                        iat => time,
+
+                        # Random string: no response expected from RP
+                        jti => join( "",
+                            map { [ "0" .. "9", 'A' .. 'Z' ]->[ rand 36 ] }
+                              1 .. 8 ),
+                        events => { $self->BACKCHANNEL_EVENTSKEY => {} },
+                    };
+                    my $jwt  = $self->createJWT( $logoutToken, $alg, $rp );
+                    my $resp = $self->ua->post(
+                        $url,
+                        { logout_token => $jwt },
+                        'Content-Type' => 'application/x-www-form-urlencoded',
+                    );
+                    $resp->is_error
+                      ? $self->logger->warn(
+                        "OIDC back channel: unable to unlog $userId from $rp")
+                      : $self->logger->info(
+                        "OIDC back channel: user $userId unlogged from $rp");
                 }
             }
         }
