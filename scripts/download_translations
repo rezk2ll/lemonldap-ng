@@ -2,7 +2,7 @@
 
 FILES=`ls lemonldap-ng-manager/site/htdocs/static/languages/* \
         lemonldap-ng-portal/site/htdocs/static/languages/* \
-        lemonldap-ng-portal/site/templates/common/mail/*|grep -v en.json`
+        lemonldap-ng-portal/site/templates/common/mail/*|grep -v en.json|grep -v fr.json`
 
 touch -a -m -t 200001181205.09 $FILES
 
@@ -12,3 +12,6 @@ for file in $FILES; do
 	js_beautify -s=1 -w $file
 	perl -i -pe 's/^ //;s/": "/":"/' $file
 done
+git checkout lemonldap-ng-manager/site/htdocs/static/languages/fr.json \
+	lemonldap-ng-portal/site/htdocs/static/languages/fr.json \
+	lemonldap-ng-portal/site/templates/common/mail/fr.json
