@@ -12,7 +12,7 @@
 "PE105":"Dosya bulunamadı",
 "PE106":"OpenID Sağlayıcı ile kimlik doğrulama sırasında hata",
 "PE107":"Bu uygulama bilinmiyor",
-"PE108":"Unauthorized URL",
+"PE108":"Yetkisiz URL",
 "PE109":"Not a protected or trusted URL",
 "PE2":"Kullanıcı adı ve parola alanları doldurulmalı",
 "PE20":"Parola back-end'i tanımlanmadı",
