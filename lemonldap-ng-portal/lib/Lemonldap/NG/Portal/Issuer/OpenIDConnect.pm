@@ -2488,6 +2488,7 @@ sub _generateIDToken {
         acr       => $id_token_acr,  # Authentication Context Class Reference
         azp       => $client_id,     # Authorized party, this is used for logout
                                      # TODO amr
+        sid       => $self->getSidFromSession( $rp, $sessionInfo ), # Session id
     };
 
     for ( keys %{$extra_claims} ) {

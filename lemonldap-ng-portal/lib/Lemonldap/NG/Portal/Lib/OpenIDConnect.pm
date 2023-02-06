@@ -1115,6 +1115,7 @@ sub makeJWT {
         iat       => time,                        # Issued time
         jti       => $id,                         # Access Token session ID
         scope     => $scope,                      # Scope
+        sid       => $self->getSidFromSession( $rp, $sessionInfo ), # Session id
     };
 
     my $claims =
@@ -2430,6 +2431,26 @@ sub _storeOpts {
 sub generateNonce {
     my ($self) = @_;
     return encode_base64url( Crypt::URandom::urandom(16) );
+}
+
+sub getSidFromSession {
+    my ( $self, $rp, $sessionInfo ) = @_;
+    return $self->conf->{cipher}
+      ->encrypt( $sessionInfo->{_session_id} . ':' . $rp );
+}
+
+sub getSessionIdFromSid {
+    my ( $self, $sid, $rp ) = @_;
+    my $str = $self->conf->{cipher}->decrypt($sid);
+    unless ( $str and $str =~ /^(?<id>.*?):(?<rp>.*)$/ ) {
+        $self->logger->error("Invalid sid: $sid");
+        return undef;
+    }
+    if ( $rp and $rp ne $+{rp} ) {
+        $self->logger->error( "RP id mismatch in sid: $rp != " . $+{rp} );
+        return undef;
+    }
+    return $+{id};
 }
 
 1;
