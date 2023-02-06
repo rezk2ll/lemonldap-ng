@@ -301,11 +301,12 @@ sub _buildApplicationHash {
     my $applications;
 
     # Get application items
-    my $appname = $apphash->{options}->{name} || $appid;
-    my $appuri  = $apphash->{options}->{uri}  || "";
-    my $appdesc = $apphash->{options}->{description};
-    my $applogo = $apphash->{options}->{logo};
-    my $apptip  = $apphash->{options}->{tooltip} || $appname;
+    my $appname      = $apphash->{options}->{name} || $appid;
+    my $appuri       = $apphash->{options}->{uri}  || "";
+    my $appdesc      = $apphash->{options}->{description};
+    my $applogo      = $apphash->{options}->{logo};
+    my $applogo_icon = ( $apphash->{options}->{logo} =~ /\./ ? 0 : 1 );
+    my $apptip       = $apphash->{options}->{tooltip} || $appname;
 
     # Detect sub applications
     my $subapphash;
@@ -333,13 +334,14 @@ sub _buildApplicationHash {
     }
 
     my $applicationHash = {
-        application => 1,
-        appname     => $appname,
-        appuri      => $appuri,
-        appdesc     => $appdesc,
-        applogo     => $applogo,
-        appid       => $appid,
-        apptip      => $apptip,
+        application  => 1,
+        appname      => $appname,
+        appuri       => $appuri,
+        appdesc      => $appdesc,
+        applogo      => $applogo,
+        applogo_icon => $applogo_icon,
+        appid        => $appid,
+        apptip       => $apptip,
     };
     $applicationHash->{applications} = $applications if $applications;
     return $applicationHash;
