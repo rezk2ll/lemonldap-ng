@@ -2187,12 +2187,12 @@ sub logout {
                 if ( $rpConf->{oidcRPMetaDataOptionsLogoutType} eq 'front' ) {
                     if ( $rpConf->{oidcRPMetaDataOptionsLogoutSessionRequired} )
                     {
-                        my $user_id = $self->getUserIDForRP( $req, $rp,
-                            $req->{sessionInfo} );
                         $url .= ( $url =~ /\?/ ? '&' : '?' )
                           . build_urlencoded(
                             iss => $self->iss,
-                            sid => $user_id
+                            sid => $self->getSidFromSession(
+                                $rp, $req->{sessionInfo}
+                            )
                           );
                     }
                     $req->info( qq'<iframe src="$url" class="noborder">'
