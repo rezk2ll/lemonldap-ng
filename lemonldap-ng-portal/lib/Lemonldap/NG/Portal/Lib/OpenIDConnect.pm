@@ -1126,7 +1126,8 @@ sub makeJWT {
         ->{oidcRPMetaDataOptionsAccessTokenClaims} )
     {
         foreach ( keys %$claims ) {
-            $access_token_payload->{$_} = $claims->{$_};
+            $access_token_payload->{$_} = $claims->{$_}
+              unless $access_token_payload->{$_};
         }
     }
     else {
