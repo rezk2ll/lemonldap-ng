@@ -2187,12 +2187,12 @@ sub logout {
                 if ( $rpConf->{oidcRPMetaDataOptionsLogoutType} eq 'front' ) {
                     if ( $rpConf->{oidcRPMetaDataOptionsLogoutSessionRequired} )
                     {
-                        my $user_id = $self->getUserIDForRP( $req, $rp,
-                            $req->{sessionInfo} );
                         $url .= ( $url =~ /\?/ ? '&' : '?' )
                           . build_urlencoded(
                             iss => $self->iss,
-                            sid => $user_id
+                            sid => $self->getSidFromSession(
+                                $rp, $req->{sessionInfo}
+                            )
                           );
                     }
                     $req->info( qq'<iframe src="$url" class="noborder">'
@@ -2309,7 +2309,7 @@ sub metadata {
               [qw/client_secret_post client_secret_basic/],
             introspection_endpoint_auth_methods_supported =>
               [qw/client_secret_post client_secret_basic/],
-            claims_supported                 => [qw/sub iss auth_time acr/],
+            claims_supported                 => [qw/sub iss auth_time acr sid/],
             request_parameter_supported      => JSON::true,
             request_uri_parameter_supported  => JSON::true,
             require_request_uri_registration => JSON::false,
@@ -2338,7 +2338,6 @@ sub metadata {
     # token_endpoint_auth_signing_alg_values_supported
     # display_values_supported
     # claim_types_supported
-    # RECOMMENDED # claims_supported
     # service_documentation
     # claims_locales_supported
     # ui_locales_supported
@@ -2488,11 +2487,12 @@ sub _generateIDToken {
         acr       => $id_token_acr,  # Authentication Context Class Reference
         azp       => $client_id,     # Authorized party, this is used for logout
                                      # TODO amr
+        sid       => $self->getSidFromSession( $rp, $sessionInfo ), # Session id
     };
 
     for ( keys %{$extra_claims} ) {
         $id_token_payload_hash->{$_} = $extra_claims->{$_}
-          if $extra_claims->{$_};
+          if $extra_claims->{$_} and not $id_token_payload_hash->{$_};
     }
 
     # Decided by response_type or forced in RP config
@@ -2504,7 +2504,7 @@ sub _generateIDToken {
 
         foreach ( keys %$claims ) {
             $id_token_payload_hash->{$_} = $claims->{$_}
-              unless ( $_ eq "sub" );
+              unless ( $_ eq "sub" or $_ eq "sid" );
         }
     }
 
