@@ -192,8 +192,6 @@ sub _registration {
         )
       )
     {
-        $self->userLogger->notice(
-            $self->prefix . "2f: registration of $keyName succeeds for $user" );
         return $self->p->sendJSONresponse( $req, { result => 1 } );
     }
     else {

@@ -92,9 +92,6 @@ sub run {
                     )
                   )
                 {
-                    $self->userLogger->notice( $self->prefix
-                          . "2f: registration of device $keyName succeeds for $user"
-                    );
                     return [
                         200,
                         [
@@ -210,8 +207,6 @@ sub run {
           or return $self->p->sendError( $req,
             $self->prefix . '2f: "epoch" parameter is missing', 400 );
         if ( $self->del2fDevice( $req, $req->userData, $self->type, $epoch ) ) {
-            $self->userLogger->notice(
-                $self->prefix . "2f: device deleted for $user" );
             return [
                 200,
                 [
