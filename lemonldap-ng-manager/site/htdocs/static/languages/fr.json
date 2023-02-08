@@ -1,5 +1,6 @@
 {
 "2faSessions":"Explorateur sessions 2ndFA",
+"2fid":"Identifiant",
 "2ndFA":"Seconds Facteurs",
 "ADPwdExpireWarning":"Avertissement avant expiration du mot de passe",
 "ADPwdMaxAge":"Age maximal du mot de passe",

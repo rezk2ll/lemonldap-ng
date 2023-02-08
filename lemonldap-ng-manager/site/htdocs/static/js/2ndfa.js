@@ -207,7 +207,7 @@
                   array = JSON.parse(session[attr]);
                   if (array.length > 0) {
                     subres.push({
-                      title: "type",
+                      title: "2fid",
                       value: "name",
                       epoch: "date"
                     });
@@ -226,7 +226,7 @@
                         }
                       }
                       subres.push({
-                        title: title,
+                        title: '[' + title + ']' + epoch,
                         value: name,
                         epoch: epoch,
                         sfrow: true
