@@ -7,7 +7,7 @@ use MIME::Base64 qw(encode_base64);
 
 our $VERSION   = '2.0.14';
 our @ISA       = qw(Exporter);
-our @EXPORT_OK = qw(getSameSite getPSessionID genId2F);
+our @EXPORT_OK = qw(getSameSite getPSessionID genId2F display2F);
 
 sub getPSessionID {
     my ($uid) = @_;
@@ -18,6 +18,11 @@ sub genId2F {
     my ($device) = @_;
     return encode_base64( "$device->{epoch}::$device->{type}::$device->{name}",
         "" );
+}
+
+sub display2F {
+    my ($device) = @_;
+    return sprintf( "[%s]%s", $device->{type}, $device->{epoch} );
 }
 
 sub getSameSite {
