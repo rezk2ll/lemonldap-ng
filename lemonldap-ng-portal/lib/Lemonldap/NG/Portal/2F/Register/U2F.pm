@@ -39,7 +39,7 @@ sub run {
 
         # Read existing 2F device(s)
         my @alldevices = $self->find2fDevicesByType( $req, $req->userData );
-        my $challenge = $self->crypter->registrationChallenge;
+        my $challenge  = $self->crypter->registrationChallenge;
         $self->logger->debug(
             $self->prefix . "2f: registration challenge ($challenge)" );
         return [

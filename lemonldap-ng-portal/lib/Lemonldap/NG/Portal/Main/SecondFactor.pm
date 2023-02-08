@@ -141,7 +141,7 @@ sub _verify {
     # Else restore session
     $req->mustRedirect(1);
     $self->userLogger->notice( $self->prefix
-          . '2f verification for '
+          . '2f verification succeeded for '
           . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
     if ( my $l = $self->authnLevel ) {
