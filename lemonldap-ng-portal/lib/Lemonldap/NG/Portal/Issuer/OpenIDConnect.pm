@@ -2269,6 +2269,12 @@ sub logout {
                               1 .. 8 ),
                         events => { $self->BACKCHANNEL_EVENTSKEY => {} },
                     };
+                    if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
+                        ->{oidcRPMetaDataOptionsLogoutSessionSupported} )
+                    {
+                        $logoutToken->{sid} =
+                          $self->getSidFromSession( $rp, $req->{sessionInfo} );
+                    }
                     my $jwt  = $self->createJWT( $logoutToken, $alg, $rp );
                     my $resp = $self->ua->post(
                         $url,

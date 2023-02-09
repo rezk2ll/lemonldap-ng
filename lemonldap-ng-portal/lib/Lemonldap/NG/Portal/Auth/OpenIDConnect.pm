@@ -273,6 +273,10 @@ sub extractFormInfo {
         $req->data->{refresh_token} = $refresh_token if $refresh_token;
         $req->data->{id_token}      = $id_token;
 
+        # Remember sid claim if given
+        $req->data->{op_sid} = $id_token_payload_hash->{sid}
+          if $id_token_payload_hash->{sid};
+
         # If access token TTL is given save expiration date
         # (with security margin)
         if ($expires_in) {
@@ -377,6 +381,10 @@ sub setAuthSessionInfo {
     if ( $req->data->{access_token_eol} ) {
         $req->{sessionInfo}->{_oidc_access_token_eol} =
           $req->data->{access_token_eol};
+    }
+
+    if ( $req->data->{op_sid} ) {
+        $req->{sessionInfo}->{_oidc_sid} = $req->data->{op_sid};
     }
 
     # Keep ID Token in session
@@ -523,49 +531,53 @@ sub backLogout {
     # Now request is valid, even if session isn't found, response will be 200
 
     # Find session
-    my $uid = $payload->{sub};
-    my $sid = $payload->{sid};
-    unless ($uid) {
-        $self->logger->error("Use of sid without sub isn't yet implemented");
+    my $uid   = $payload->{sub};
+    my $sid   = $payload->{sid};
+    my %store = %{ $self->conf->{globalStorageOptions} };
+    $store{backend} = $self->conf->{globalStorage};
+    my @userSessions;
+    if ($sid) {
+        my $oidcSessions =
+          Lemonldap::NG::Common::Apache::Session->searchOn( \%store,
+            '_oidc_sid', $sid );
+        @userSessions = keys %$oidcSessions;
     }
     else {
-        my %store = %{ $self->conf->{globalStorageOptions} };
-        $store{backend} = $self->conf->{globalStorage};
         my $oidcSessions =
           Lemonldap::NG::Common::Apache::Session->searchOn( \%store,
             '_user', $uid );
-        my @userSessions =
+        @userSessions =
           grep {
                   $oidcSessions->{$_}->{_oidc_OP}
               and $oidcSessions->{$_}->{_oidc_OP} eq $op;
           } keys %$oidcSessions;
-        if (@userSessions) {
-            if ($#userSessions) {
-                $self->logger->warn(
+    }
+    if (@userSessions) {
+        if ($#userSessions) {
+            $self->logger->warn(
 "$logName: more than one link found between $uid and $op, cleanong all"
-                );
-            }
-            foreach (@userSessions) {
-                if ( my $as = $self->p->getApacheSession($_) ) {
-                    if ( $self->p->_deleteSession( $req, $as, 1 ) ) {
-                        $self->logger->debug(
-                            "$logName: session $_ deleted from global storage");
-                    }
-                    else {
-                        $self->logger->error(
-                            "$logName: unable to delete session $_");
-                        $self->logger->error( $as->error );
-                    }
+            );
+        }
+        foreach (@userSessions) {
+            if ( my $as = $self->p->getApacheSession($_) ) {
+                if ( $self->p->_deleteSession( $req, $as, 1 ) ) {
+                    $self->logger->debug(
+                        "$logName: session $_ deleted from global storage");
                 }
                 else {
-                    $self->logger->info(
-                        "$logName: session $_ for user $uid already deleted");
+                    $self->logger->error(
+                        "$logName: unable to delete session $_");
+                    $self->logger->error( $as->error );
                 }
             }
+            else {
+                $self->logger->info(
+                    "$logName: session $_ for user $uid already deleted");
+            }
         }
-        else {
-            $self->logger->warn("$logName: no session found for $uid");
-        }
+    }
+    else {
+        $self->logger->warn("$logName: no session found for $uid");
     }
 
     return [ 200, [], [] ];
