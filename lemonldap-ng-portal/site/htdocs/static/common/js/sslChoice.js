@@ -2,8 +2,9 @@
 (function() {
   var sendUrl, tryssl;
 
-  tryssl = function() {
-    var path;
+  tryssl = function(myevent) {
+    var form, path;
+    form = $(myevent.currentTarget).closest('form');
     path = window.location.pathname;
     console.log('path -> ', path);
     console.log('Call URL -> ', window.datas.sslHost);
@@ -14,17 +15,17 @@
       },
       success: function(data) {
         if (data.ajax_auth_token) {
-          $('#lformSSL').find('input[name="ajax_auth_token"]').attr("value", data.ajax_auth_token);
+          form.find('input[name="ajax_auth_token"]').attr("value", data.ajax_auth_token);
         }
-        sendUrl(path);
+        sendUrl(form, path);
         return console.log('Success -> ', data);
       },
       error: function(result) {
         if (result.status === 0) {
-          sendUrl(path);
+          sendUrl(form, path);
         }
         if (result.responseJSON && 'error' in result.responseJSON && result.responseJSON.error === "9") {
-          sendUrl(path);
+          sendUrl(form, path);
         }
         if (result.responseJSON && 'html' in result.responseJSON) {
           $('#errormsg').html(result.responseJSON.html);
@@ -36,21 +37,24 @@
     return false;
   };
 
-  sendUrl = function(path) {
+  sendUrl = function(form, path) {
     var form_url;
-    form_url = $('#lformSSL').attr('action');
+    form_url = form.attr('action');
     if (form_url.match(/^#$/)) {
       form_url = path;
     } else {
       form_url = form_url + path;
     }
     console.log('form action URL -> ', form_url);
-    $('#lformSSL').attr('action', form_url);
-    return $('#lformSSL').submit();
+    form.attr('action', form_url);
+    return form.submit();
   };
 
   $(document).ready(function() {
-    return $('.sslclick').on('click', tryssl);
+    if (!window._ssl_js_done) {
+      window._ssl_js_done = true;
+      return $('.sslclick').on('click', tryssl);
+    }
   });
 
 }).call(this);
