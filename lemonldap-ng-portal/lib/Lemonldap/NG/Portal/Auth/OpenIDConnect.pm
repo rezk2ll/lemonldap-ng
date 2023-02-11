@@ -404,6 +404,8 @@ sub setAuthSessionInfo {
 sub authLogout {
     my ( $self, $req ) = @_;
 
+    return PE_OK if $req->data->{oidcSkipLogout};
+
     my $op = $req->{sessionInfo}->{_oidc_OP};
 
     # Find endession endpoint
@@ -454,8 +456,43 @@ sub alreadyLoggedOut {
 
 sub frontLogout {
     my ( $self, $req ) = @_;
-    return $self->p->sendError( $req,
-        'Front Channel logout is not implemented', 501 );
+
+    # No double disconnect
+    $req->data->{oidcSkipLogout} = 1;
+
+    # Response should be displayed in an iframe
+    $req->frame(1);
+
+    # TODO check iss and sid
+    my $iss        = $req->param('iss');
+    my $sid        = $req->param('sid');
+    my $badRequest = 0;
+    unless ( $iss and $sid ) {
+        $self->userLogger->error(
+            'OIDC Front-Channel-Logout called without sid and iss');
+        $badRequest++;
+    }
+    else {
+        unless ( $req->userData->{_oidc_sid} and $req->userData->{_oidc_OP} ) {
+            $self->logger->error(
+                "OIDC Front-Channel-Logout: key _oidc_sid not stored in session"
+            );
+            $badRequest++;
+        }
+        else {
+            if ( $sid ne $req->userData->{_oidc_sid} ) {
+                $self->userLogger->error(
+                    'OIDC Front-Channel-Logout: sid mismatch');
+                $badRequest++;
+            }
+        }
+    }
+    if ($badRequest) {
+        return $self->p->sendError( $req, 'Bad OIDC Logout Request', 200 );
+    }
+    return $self->p->do( $req,
+        [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ],
+    );
 }
 
 # Implements https://openid.net/specs/openid-connect-backchannel-1_0.html
