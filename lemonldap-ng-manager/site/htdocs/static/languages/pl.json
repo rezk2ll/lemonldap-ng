@@ -6,7 +6,7 @@
 "AuthLDAPFilter":"Filtr uwierzytelnienia",
 "Configuration":"Konfiguracja",
 "CrowdSecPlugin":"CrowdSec Bouncer",
-"HIBPcheck":"check HIBP API",
+"HIBPcheck":"Check HIBP API",
 "LDAPFilter":"Domyślny filtr",
 "OpenIDConnect":"OpenID Connect",
 "OptionalTitle":"Opcjonalny tytuł",

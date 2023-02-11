@@ -6,7 +6,7 @@
 "AuthLDAPFilter":"Bộ lọc xác thực",
 "Configuration":"Cấu hình",
 "CrowdSecPlugin":"CrowdSec Bouncer",
-"HIBPcheck":"check HIBP API",
+"HIBPcheck":"Check HIBP API",
 "LDAPFilter":"Bộ lọc mặc định",
 "OpenIDConnect":"Kết nối OpenID ",
 "OptionalTitle":"Tiêu đề tùy chọn",

@@ -6,7 +6,7 @@
 "AuthLDAPFilter":"Doğrulama filtresi",
 "Configuration":"Yapılandırma",
 "CrowdSecPlugin":"CrowdSec Bouncer",
-"HIBPcheck":"check HIBP API",
+"HIBPcheck":"Check HIBP API",
 "LDAPFilter":"Varsayılan filtre",
 "OpenIDConnect":"OpenID Connect",
 "OptionalTitle":"İsteğe bağlı başlık",

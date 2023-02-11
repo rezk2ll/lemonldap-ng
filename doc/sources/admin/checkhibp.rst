@@ -19,7 +19,7 @@ You have to enable the :doc:`local password policy <portalcustom>` in ``General 
 - **Display policy in password form**: on
 
 
-Then enable the checkHIBP plugin in ``General Parameters > Plugins > check HIBP API``:
+Then enable the checkHIBP plugin in ``General Parameters > Advanced parameters > Security > Check HIBP API``:
 
 -  **Activation**: Enable / Disable this plugin
 -  **Have I Been Pwned URL**: URL of I have been pwned API (default to ``https://api.pwnedpasswords.com/range/``)
@@ -28,7 +28,7 @@ Then enable the checkHIBP plugin in ``General Parameters > Plugins > check HIBP 
 Usage
 -----
 
-When enabled, ``/checkhibp`` route is added to LemonLDAP API
+When enabled, ``/checkhibp`` route is added to LemonLDAP API.
 It will check new user passwords on Have I Been Pwned API and
 display a warning message if it is compromised.
 
