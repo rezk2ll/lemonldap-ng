@@ -6,7 +6,7 @@
 "AuthLDAPFilter":"فلتر إثبات الهوية",
 "Configuration":"تضبيط",
 "CrowdSecPlugin":"CrowdSec Bouncer",
-"HIBPcheck":"check HIBP API",
+"HIBPcheck":"Check HIBP API",
 "LDAPFilter":"فلتر الاعْتيادي",
 "OpenIDConnect":"أوبين أيدي كونيكت",
 "OptionalTitle":"عنوان الخيارات",

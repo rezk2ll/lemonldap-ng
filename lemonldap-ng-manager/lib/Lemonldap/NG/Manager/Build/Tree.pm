@@ -832,16 +832,6 @@ sub tree {
                             ],
                         },
                         {
-                            title => 'HIBPcheck',
-                            help  => 'checkhibp.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'checkHIBP',
-                                'checkHIBPURL',
-                                'checkHIBPRequired'
-                            ],
-                        },
-                        {
                             title => 'impersonation',
                             help  => 'impersonation.html',
                             form  => 'simpleInputContainer',
@@ -1136,6 +1126,15 @@ sub tree {
                                     nodes => [
                                         'crowdsec',    'crowdsecAction',
                                         'crowdsecUrl', 'crowdsecKey',
+                                    ],
+                                },
+                                {
+                                    title => 'HIBPcheck',
+                                    help  => 'checkhibp.html',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'checkHIBP', 'checkHIBPURL',
+                                        'checkHIBPRequired'
                                     ],
                                 },
                                 {

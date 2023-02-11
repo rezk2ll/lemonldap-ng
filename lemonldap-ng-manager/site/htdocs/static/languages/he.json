@@ -6,7 +6,7 @@
 "AuthLDAPFilter":"מסנן אימות",
 "Configuration":"הגדרות",
 "CrowdSecPlugin":"CrowdSec Bouncer",
-"HIBPcheck":"check HIBP API",
+"HIBPcheck":"Check HIBP API",
 "LDAPFilter":"מסנן בררת מחדל",
 "OpenIDConnect":"OpenID Connect",
 "OptionalTitle":"כותרת כרשות",
