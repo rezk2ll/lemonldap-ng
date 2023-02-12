@@ -467,6 +467,8 @@ sub frontLogout {
     my $iss        = $req->param('iss');
     my $sid        = $req->param('sid');
     my $badRequest = 0;
+
+    # LLNG requires sid and iss
     unless ( $iss and $sid ) {
         $self->userLogger->error(
             'OIDC Front-Channel-Logout called without sid and iss');
