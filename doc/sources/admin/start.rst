@@ -233,10 +233,14 @@ Protocol                                                              Service Pr
 :doc:`Get parameters provider<issuerdbget>` *(for poor applications)*                  ✔
 ===================================================================== ================ =================
 
+Options
+^^^^^^^
+
+Issuers timeout: Delay for issuers for submitting their authentication requests
+
 
 .. tip::
 
-    * Issuers timeout : Delay for issuers to submit their authentication requests
     * To avoid a bad/expired token and lose redirection to the SP protected
       application after authentication if IdP URLs are served by different load
       balancers, you can force Issuer tokens to be stored into Global Storage
