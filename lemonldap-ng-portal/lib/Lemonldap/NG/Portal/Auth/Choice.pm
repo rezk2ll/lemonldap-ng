@@ -24,30 +24,29 @@ sub _authCancel {
 
 sub extractFormInfo {
     my ( $self, $req ) = @_;
-    unless ( $self->checkChoice($req) ) {
-        $self->logger->debug("Initializing Auth modules...");
-        foreach my $mod ( values %{ $self->modules } ) {
-            if ( $mod->{AjaxInitScript} ) {
-                $self->logger->debug(
-                    'Append ' . $mod->{Name} . ' init/script' )
-                  if $mod->{Name};
-                $req->data->{customScript} .= $mod->AjaxInitScript;
-            }
-            if ( $mod->{InitCmd} ) {
-                $self->logger->debug(
-                    'Launch ' . $mod->{Name} . ' init command' )
-                  if $mod->{Name};
-                my $res = eval( $mod->{InitCmd} );
-                if ($@) {
-                    $self->logger("Auth error: $@");
-                    return PE_ERROR;
-                }
+
+    $self->logger->debug("Initializing Auth modules...");
+    foreach my $mod ( values %{ $self->modules } ) {
+        if ( $mod->{AjaxInitScript} ) {
+            $self->logger->debug( 'Append ' . $mod->{Name} . ' init/script' )
+              if $mod->{Name};
+            $req->data->{customScript} .= $mod->AjaxInitScript;
+        }
+        if ( $mod->{InitCmd} ) {
+            $self->logger->debug( 'Launch ' . $mod->{Name} . ' init command' )
+              if $mod->{Name};
+            my $res = eval( $mod->{InitCmd} );
+            if ($@) {
+                $self->logger("Auth error: $@");
+                return PE_ERROR;
             }
         }
+    }
+
+    $self->logger->debug( "Send init/script -> " . $req->data->{customScript} )
+      if $req->data->{customScript};
+    unless ( $self->checkChoice($req) ) {
         $self->setSecurity($req);
-        $self->logger->debug(
-            "Send init/script -> " . $req->data->{customScript} )
-          if $req->data->{customScript};
         return PE_FIRSTACCESS;
     }
 
