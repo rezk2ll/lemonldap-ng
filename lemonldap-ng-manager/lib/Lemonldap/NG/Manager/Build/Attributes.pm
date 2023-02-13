@@ -2481,12 +2481,9 @@ sub attributes {
 
         # Adaptative Authentication Level plugin
         adaptativeAuthenticationLevelRules => {
-            type    => 'keyTextContainer',
-            keyTest => sub {
-                eval { qr/$_[0]/ };
-                return $@ ? 0 : 1;
-            },
-            keyMsgFail    => '__badRegexp__',
+            type          => 'keyTextContainer',
+            'keyTest'     => sub { return perlExpr(@_) },
+            'test'        => sub { 1 },
             help          => "adaptativeauthenticationlevel.html",
             documentation => 'Adaptative authentication level rules',
             flags         => 'p',

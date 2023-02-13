@@ -270,14 +270,11 @@ sub attributes {
             'type'    => 'bool'
         },
         'adaptativeAuthenticationLevelRules' => {
-            'keyMsgFail' => '__badRegexp__',
-            'keyTest'    => sub {
-                eval {
-                    do {
-                        qr/$_[0]/;
-                    }
-                };
-                return $@ ? 0 : 1;
+            'keyTest' => sub {
+                return perlExpr(@_);
+            },
+            'test' => sub {
+                1;
             },
             'type' => 'keyTextContainer'
         },
