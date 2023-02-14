@@ -798,7 +798,7 @@ sub checkIDTokenValidity {
 
     # Check acr
     my $acr = $id_token->{acr};
-    if ( defined $acr_values ) {
+    if ( $acr_values ) {
         unless ($acr) {
             $self->logger->error("ACR was not returned by OP $op");
             return 0;
