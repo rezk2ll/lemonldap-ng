@@ -621,6 +621,13 @@ t/31-Auth-and-issuer-CAS-proxied.t
 t/31-Auth-and-issuer-CAS-with-choice-and-cancel.t
 t/31-Auth-and-issuer-CAS-with-choice.t
 t/31-Auth-and-issuer-CAS-XSS-on-logout.t
+t/31-CAS-10.t
+t/31-CAS-Gateway.t
+t/31-CAS-Hooks.t
+t/31-CAS-Macros.t
+t/31-CAS-Prefix.t
+t/31-CAS-Proxy.t
+t/31-CAS-Security.t
 t/32-Auth-and-issuer-OIDC-authorization_code-jwt-userinfo.t
 t/32-Auth-and-issuer-OIDC-authorization_code-OP-logout.t
 t/32-Auth-and-issuer-OIDC-authorization_code-public_client.t
@@ -632,13 +639,6 @@ t/32-Auth-and-issuer-OIDC-hybrid.t
 t/32-Auth-and-issuer-OIDC-implicit-no-token.t
 t/32-Auth-and-issuer-OIDC-implicit.t
 t/32-Auth-and-issuer-OIDC-sorted.t
-t/32-CAS-10.t
-t/32-CAS-Gateway.t
-t/32-CAS-Hooks.t
-t/32-CAS-Macros.t
-t/32-CAS-Prefix.t
-t/32-CAS-Proxy.t
-t/32-CAS-Security.t
 t/32-OIDC-ClaimTypes.t
 t/32-OIDC-ClientCredentials-Grant.t
 t/32-OIDC-Code-Flow-Mobile.t
