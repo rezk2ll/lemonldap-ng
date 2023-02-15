@@ -46,6 +46,10 @@ with the following parameters:
     * **Allowed redirection addresses**: ``[synapse public baseurl]/_synapse/client/oidc/callback``
 * **Options/Security**
    * **ID Token signature algorithm**:: ``RS256``
+* **Options/Logout**
+   * **Type**: 'Back Channel'
+   * **URL**: ``[synapse public baseurl]/_synapse/client/oidc/backchannel_logout``
+   * **Session Supported**: ``On``
 * **Exported Attributes**
    * ``preferred_username``: ``uid``
 
