@@ -27,6 +27,7 @@ See `The official Synapse documentation <https://matrix-org.github.io/synapse/la
           - "openid"
           - "profile"
           - "email"
+        user_profile_method: "userinfo_endpoint" # Required if you see "localpart" error in Matrix logs
         user_mapping_provider:
           config:
             localpart_template: "{{ user.preferred_username }}"
