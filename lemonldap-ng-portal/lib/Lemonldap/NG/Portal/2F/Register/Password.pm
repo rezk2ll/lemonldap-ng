@@ -110,8 +110,6 @@ sub run {
             )
           )
         {
-            $self->userLogger->notice( $self->prefix
-                  . "2f: registration of password succeeds for $user" );
             return [
                 200,
                 [
