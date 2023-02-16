@@ -86,7 +86,7 @@ sub init {
               oidcServiceMetaDataBackChannelURI
             )
         )
-    ) . ')(?:/.*)?$';
+    ) . ')(?:[\?/].*)?$';
 
     $self->endpointsRe(qr/$re/);
 
