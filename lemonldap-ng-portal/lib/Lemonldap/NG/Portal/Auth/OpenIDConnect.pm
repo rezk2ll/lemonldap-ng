@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.0.17';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth
@@ -124,7 +124,7 @@ sub extractFormInfo {
             return PE_SENDRESPONSE;
         }
         elsif ( $path eq $self->conf->{oidcServiceMetaDataFrontChannelURI} ) {
-            $req->response( $self->alreadyLoggedOut($req) );
+            $req->response( $self->searchAndLogout($req) );
             return PE_SENDRESPONSE;
         }
     }
@@ -438,20 +438,12 @@ sub getDisplayType {
     return "logo";
 }
 
-sub alreadyLoggedOut {
+sub searchAndLogout {
     my ( $self, $req ) = @_;
     $self->userLogger->info(
-        'Front-channel logout request for an already logged out user');
-    my $img = $self->conf->{staticPrefix} . '/common/icons/ok.png';
-
-    # No need to protect this frame
-    $req->frame(1);
-    my $frame = qq'<html><body><img src="$img"></body></html>';
-    return [
-        200,
-        [ 'Content-Type' => 'text/html', 'Content-Length' => length($frame) ],
-        [$frame]
-    ];
+        'Front-channel logout request called without cookie');
+    $req->data->{frontLogoutSearch} = 1;
+    return $self->frontLogout($req);
 }
 
 sub frontLogout {
@@ -467,6 +459,18 @@ sub frontLogout {
     my $iss        = $req->param('iss');
     my $sid        = $req->param('sid');
     my $badRequest = 0;
+    my $logName    = 'OIDC FC Logout';
+
+    my $img      = $self->conf->{staticPrefix} . '/common/icons/ok.png';
+    my $frame    = qq'<html><body><img src="$img"></body></html>';
+    my $response = [
+        200,
+        [
+            'Content-Type'   => 'text/html',
+            'Content-Length' => length($frame)
+        ],
+        [$frame]
+    ];
 
     # LLNG requires sid and iss
     unless ( $iss and $sid ) {
@@ -474,11 +478,32 @@ sub frontLogout {
             'OIDC Front-Channel-Logout called without sid and iss');
         $badRequest++;
     }
+    elsif ( $req->data->{frontLogoutSearch} ) {
+        my %store = %{ $self->conf->{globalStorageOptions} };
+        $store{backend} = $self->conf->{globalStorage};
+        my $oidcSessions =
+          Lemonldap::NG::Common::Apache::Session->searchOn( \%store,
+            '_oidc_sid', $sid );
+        my @sessionToDelete = keys %$oidcSessions;
+        foreach (@sessionToDelete) {
+            if ( my $as = $self->p->getApacheSession($_) ) {
+                if ( $self->p->_deleteSession( $req, $as, 1 ) ) {
+                    $self->logger->debug(
+                        "$logName: session $_ deleted from global storage");
+                }
+                else {
+                    $self->logger->error(
+                        "$logName: unable to delete session $_");
+                    $self->logger->error( $as->error );
+                }
+            }
+        }
+        return $response;
+    }
     else {
         unless ( $req->userData->{_oidc_sid} and $req->userData->{_oidc_OP} ) {
             $self->logger->error(
-                "OIDC Front-Channel-Logout: key _oidc_sid not stored in session"
-            );
+                "$logName: key _oidc_sid not stored in session");
             $badRequest++;
         }
         else {
@@ -492,8 +517,17 @@ sub frontLogout {
     if ($badRequest) {
         return $self->p->sendError( $req, 'Bad OIDC Logout Request', 200 );
     }
-    return $self->p->do( $req,
-        [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ],
+    return $self->p->do(
+        $req,
+        [
+            @{ $self->p->beforeLogout },
+            'authLogout',
+            'deleteSession',
+            sub {
+                $req->response($response);
+                return PE_SENDRESPONSE;
+            }
+        ]
     );
 }
 
