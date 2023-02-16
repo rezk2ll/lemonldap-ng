@@ -13,7 +13,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Common::Module';
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.16.1';
 
 # PROPERTIES
 
@@ -104,10 +104,8 @@ sub _buildFilter {
     $self->{p}->logger->debug("LDAP transformed filter: $filter");
     $filter = "sub{my(\$req)=\$_[0];return \"$filter\";}";
     my $res = eval $filter;
-
-    if ($@) {
-        $self->error("Unable to build fiter: $@");
-    }
+    $self->error("Unable to build fiter: $@") if ($@);
+    
     return $res;
 }
 
@@ -143,7 +141,8 @@ sub getUser {
     );
     if ( $mesg->code() != 0 ) {
         $self->logger->error(
-            'LDAP Search error ' . $mesg->code . ": " . $mesg->error );
+            'LDAP Search error ' . $mesg->code . ': ' . $mesg->error );
+        eval { $self->p->_authentication->setSecurity($req) };
         return PE_LDAPERROR;
     }
     if ( $mesg->count() > 1 ) {
@@ -155,7 +154,7 @@ sub getUser {
         $self->userLogger->warn(
                 "$req->{user} was not found in LDAP directory ("
               . $req->address
-              . ")" );
+              . ')' );
         eval { $self->p->_authentication->setSecurity($req) };
         return PE_BADCREDENTIALS;
     }
@@ -214,7 +213,7 @@ sub findUser {
         'LDAP UserDB number of result(s): ' . $mesg->count() );
     if ( $mesg->count() ) {
         my $rank = int( rand( $mesg->count() ) );
-        $self->logger->debug("Demo UserDB random rank: $rank");
+        $self->logger->debug("LDAP UserDB random rank: $rank");
         my $entry =
           ( $mesg->entry($rank)->dn() =~ /\b(?:uid|sAMAccountName)\x3d(.+?),/ )
           [0] || '';
@@ -231,13 +230,13 @@ sub findUser {
 sub validateLdap {
     my ($self) = @_;
     local $SIG{'PIPE'} = sub {
-        $self->logger->info("Reconnecting to LDAP server due to broken socket");
+        $self->logger->info('Reconnecting to LDAP server due to broken socket');
     };
 
     unless ($self->ldap
         and $self->ldap->root_dse( attrs => ['supportedLDAPVersion'] ) )
     {
-        $self->ldap->DESTROY if ( $self->ldap );
+        $self->ldap->DESTROY if $self->ldap;
         $self->ldap( $self->newLdap );
     }
 }
