@@ -47,13 +47,21 @@ around 'init' => sub {
     my $orig = shift;
     my $self = shift;
 
-    $self->addUnauthRoute(
-        ( 'auth' . $self->auth_id ) => '_auth_route',
-        ['GET']
-    );
+    # If this module has already been loaded,
+    # skip routes to avoid a warning in conf
+    if ( !$self->p->loadedModules->{ ref($self) } ) {
 
-    # Used for session upgrade/reauthn
-    $self->addAuthRoute( ( 'auth' . $self->auth_id ) => 'auth_route', ['GET'] );
+        $self->addUnauthRoute(
+            ( 'auth' . $self->auth_id ) => '_auth_route',
+            ['GET']
+        );
+
+        # Used for session upgrade/reauthn
+        $self->addAuthRoute(
+            ( 'auth' . $self->auth_id ) => 'auth_route',
+            ['GET']
+        );
+    }
 
     return $self->$orig();
 };
