@@ -21,7 +21,7 @@
 "SSLAuthnLevel":"דרגת אימות",
 "SSLIssuerVar":"משתנה סביבה מנפיק",
 "SSLVar":"שדה אישור שחולץ",
-"SSLVarIf":"Conditional extracted certificate field",
+"SSLVarIf":"שדה אישור שחולץ בהתניה",
 "Same":"אותו דבר",
 "_auth":"אימות",
 "_authChoice":"בחירת אימות",
