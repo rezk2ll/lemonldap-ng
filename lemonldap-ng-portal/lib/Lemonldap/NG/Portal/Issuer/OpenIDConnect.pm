@@ -2032,8 +2032,8 @@ sub registration {
       $client_metadata->{userinfo_signed_response_alg};
     my $redirect_uris          = $client_metadata->{redirect_uris};
     my $backchannel_logout_uri = $client_metadata->{backchannel_logout_uri};
-    my $backchannel_logout_session_supported =
-      $client_metadata->{backchannel_logout_session_supported};
+    my $backchannel_logout_session_required =
+      $client_metadata->{backchannel_logout_session_required};
     my $frontchannel_logout_uri = $client_metadata->{backchannel_logout_uri};
     my $frontchannel_logout_session_required =
       $client_metadata->{frontchannel_logout_session_required};
@@ -2078,7 +2078,7 @@ sub registration {
           = $backchannel_logout_uri;
         $conf->{oidcRPMetaDataOptions}->{$rp}
           ->{oidcRPMetaDataOptionsLogoutSessionSupported} =
-          $backchannel_logout_session_supported;
+          $backchannel_logout_session_required;
     }
 
     # Exported Vars
