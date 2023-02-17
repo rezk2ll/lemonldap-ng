@@ -223,7 +223,6 @@ Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
          debconf,
-         perl-doc,
          libapache-session-perl,
          libcache-cache-perl,
          libconfig-inifiles-perl,
@@ -245,7 +244,8 @@ Recommends: libapache-session-browseable-perl,
             libdbi-perl,
             libhttp-parser-xs-perl,
             liblwp-protocol-https-perl,
-            libstring-random-perl
+            libstring-random-perl,
+            perl-doc
 Suggests: libconvert-base32-perl,
           libnet-ldap-perl,
           libsoap-lite-perl,
