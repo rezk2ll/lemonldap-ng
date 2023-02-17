@@ -115,7 +115,7 @@ sub init {
 sub extractFormInfo {
     my ( $self, $req ) = @_;
     if ( $req->uri =~ $self->endpointsRe ) {
-        my $path = $req->uri;
+        my $path = $req->path;
         my $tmp  = $self->path;
         $path =~ s#^/*\Q$tmp\E/*##o;
         $path =~ s#/.*$##;
