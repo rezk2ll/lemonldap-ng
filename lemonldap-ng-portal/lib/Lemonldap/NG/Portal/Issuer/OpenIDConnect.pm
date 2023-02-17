@@ -2004,7 +2004,8 @@ sub registration {
 
     $self->logger->debug("Client metadata received: $client_metadata_json");
 
-    my $client_metadata = $self->decodeClientMetadata($client_metadata_json);
+    my $client_metadata = $self->decodeClientMetadata($client_metadata_json)
+      or return $self->p->sendError( $req, 'invalid_client_metadata', 400 );
     my $registration_response = {};
 
     # Check redirect_uris
@@ -2029,7 +2030,13 @@ sub registration {
       $client_metadata->{id_token_signed_response_alg} || "RS256";
     my $userinfo_signed_response_alg =
       $client_metadata->{userinfo_signed_response_alg};
-    my $redirect_uris = $client_metadata->{redirect_uris};
+    my $redirect_uris          = $client_metadata->{redirect_uris};
+    my $backchannel_logout_uri = $client_metadata->{backchannel_logout_uri};
+    my $backchannel_logout_session_required =
+      $client_metadata->{backchannel_logout_session_required};
+    my $frontchannel_logout_uri = $client_metadata->{backchannel_logout_uri};
+    my $frontchannel_logout_session_required =
+      $client_metadata->{frontchannel_logout_session_required};
 
     # Register RP in global configuration
     my $conf = $self->confAcc->getConf( { raw => 1, noCache => 1 } );
@@ -2054,6 +2061,25 @@ sub registration {
     $conf->{oidcRPMetaDataOptions}->{$rp}
       ->{oidcRPMetaDataOptionsUserInfoSignAlg} = $userinfo_signed_response_alg
       if defined $userinfo_signed_response_alg;
+
+    if ($frontchannel_logout_uri) {
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutType}
+          = 'front';
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutUrl}
+          = $frontchannel_logout_uri;
+        $conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsLogoutSessionRequired} =
+          $frontchannel_logout_session_required;
+    }
+    elsif ($backchannel_logout_uri) {
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutType}
+          = 'back';
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutUrl}
+          = $backchannel_logout_uri;
+        $conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsLogoutSessionRequired} =
+          $backchannel_logout_session_required;
+    }
 
     # Exported Vars
     if (
@@ -2184,6 +2210,8 @@ sub logout {
                 return PE_ERROR;
             }
             if ( my $url = $rpConf->{oidcRPMetaDataOptionsLogoutUrl} ) {
+
+                # FRONT CHANNEL
                 if ( $rpConf->{oidcRPMetaDataOptionsLogoutType} eq 'front' ) {
                     if ( $rpConf->{oidcRPMetaDataOptionsLogoutSessionRequired} )
                     {
@@ -2198,8 +2226,66 @@ sub logout {
                     $req->info( qq'<iframe src="$url" class="noborder">'
                           . '</iframe>' );
                 }
-                else {
-                    # TODO #1194
+
+                # BACK CHANNEL
+                elsif ( $rpConf->{oidcRPMetaDataOptionsLogoutType} eq 'back' ) {
+
+                    # Logout token must contain:
+                    #  - iss: issuer identifier
+                    #  - sub: subject id (user id)
+                    #  OR/AND
+                    #  - sid: OP session id given to the RP
+                    #  - aud: audience
+                    #  - iat: issue at time
+                    #  - jti: JWT token id
+                    #  - events: should be :
+                    #   { 'http://schemas.openid.net/event/backchannel-logout"
+                    #     => {} } # or a JSON object
+                    #
+                    # Logout token should be send using a POST request:
+                    #
+                    #   POST /backChannelUri HTTP/1.1
+                    #   Host: rp
+                    #   Content-Type: application/x-www-form-urlencoded
+                    #
+                    #   logout_token=<JWT value>
+                    #
+                    # RP response should be 200 (204 accepted) or 400 for errors
+                    my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
+                      ->{oidcRPMetaDataOptionsAccessTokenSignAlg} || "RS256";
+                    $self->logger->debug(
+                        "Access Token signature algorithm: $alg");
+                    my $userId =
+                      $self->getUserIDForRP( $req, $rp, $req->userData );
+                    my $logoutToken = {
+                        iss => $self->iss,
+                        sub => $userId,
+                        aud => $self->getAudiences($rp),
+                        iat => time,
+
+                        # Random string: no response expected from RP
+                        jti => join( "",
+                            map { [ "0" .. "9", 'A' .. 'Z' ]->[ rand 36 ] }
+                              1 .. 8 ),
+                        events => { $self->BACKCHANNEL_EVENTSKEY => {} },
+                    };
+                    if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
+                        ->{oidcRPMetaDataOptionsLogoutSessionRequired} )
+                    {
+                        $logoutToken->{sid} =
+                          $self->getSidFromSession( $rp, $req->{sessionInfo} );
+                    }
+                    my $jwt  = $self->createJWT( $logoutToken, $alg, $rp );
+                    my $resp = $self->ua->post(
+                        $url,
+                        { logout_token => $jwt },
+                        'Content-Type' => 'application/x-www-form-urlencoded',
+                    );
+                    $resp->is_error
+                      ? $self->logger->warn(
+                        "OIDC back channel: unable to unlog $userId from $rp")
+                      : $self->logger->info(
+                        "OIDC back channel: user $userId unlogged from $rp");
                 }
             }
         }

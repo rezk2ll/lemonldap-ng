@@ -2530,6 +2530,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'select'  => [ {
                     'k' => 'front',
                     'v' => 'Front Channel'
+                },
+                {
+                    'k' => 'back',
+                    'v' => 'Back Channel'
                 }
             ],
             'type' => 'select'

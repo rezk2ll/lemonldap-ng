@@ -29,6 +29,9 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
 
 our $VERSION = '2.0.15';
 
+use constant BACKCHANNEL_EVENTSKEY =>
+  'http://schemas.openid.net/event/backchannel-logout';
+
 # OpenID Connect standard claims
 use constant PROFILE => [
     qw/name family_name given_name middle_name nickname preferred_username
@@ -1003,6 +1006,10 @@ sub decodeJSON {
 
     eval { $json_hash = from_json( $json, { allow_nonref => 1 } ); };
     return undef if ($@);
+    unless ( ref $json_hash ) {
+        $self->logger->error("Wanted a JSON object, got: $json_hash");
+        return undef;
+    }
 
     return $json_hash;
 }

@@ -4680,9 +4680,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type   => 'select',
             select => [
                 { k => 'front', v => 'Front Channel' },
-
-                #TODO #1194
-                # { k => 'back',  v => 'Back Channel' },
+                { k => 'back',  v => 'Back Channel' },
             ],
             default       => 'front',
             documentation => 'Logout type',
@@ -4690,7 +4688,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsLogoutSessionRequired => {
             type          => 'bool',
             default       => 0,
-            documentation => 'Session required for logout',
+            documentation => 'Session required for back/front channel logout',
         },
         oidcRPMetaDataOptionsPublic => {
             type          => 'bool',
