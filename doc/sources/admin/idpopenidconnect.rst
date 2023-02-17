@@ -267,9 +267,7 @@ Options
    -  **Bypass confirm**: Bypass logout confirmation when logout is initiated
       by relaying party
    -  **Session required**: Whether to send the Session ID *(sid)* in the logout
-      request *(Front Channel Logout only)*
-   -  **Session supported**: Whether to send the Session ID *(sid)* in the logout
-      request *(Back Channel Logout only)*
+      request *(Front and Back Channel)*
    -  **Type**: Type of logout to perform
    -  **URL**: Specify the relying party's logout URL
    -  **Allowed redirection addresses for logout**: A space-separated list of
