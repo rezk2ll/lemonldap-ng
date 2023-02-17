@@ -275,7 +275,6 @@ sub cTrees {
                         nodes => [
                             'oidcRPMetaDataOptionsLogoutBypassConfirm',
                             'oidcRPMetaDataOptionsLogoutSessionRequired',
-                            'oidcRPMetaDataOptionsLogoutSessionSupported',
                             'oidcRPMetaDataOptionsLogoutType',
                             'oidcRPMetaDataOptionsLogoutUrl',
                             'oidcRPMetaDataOptionsPostLogoutRedirectUris',

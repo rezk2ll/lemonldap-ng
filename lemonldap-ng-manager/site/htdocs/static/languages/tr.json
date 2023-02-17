@@ -720,7 +720,6 @@
 "oidcRPMetaDataOptionsIcon":"Logo",
 "oidcRPMetaDataOptionsLogoutBypassConfirm":"Doğrulamayı geç",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"Oturum gerekli",
-"oidcRPMetaDataOptionsLogoutSessionSupported":"Session supported (back channel)",
 "oidcRPMetaDataOptionsLogoutType":"Tür",
 "oidcRPMetaDataOptionsLogoutUrl":"URL",
 "oidcRPMetaDataOptionsOfflineSessionExpiration":"Çevrimdışı oturumlar",

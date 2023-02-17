@@ -720,7 +720,6 @@
 "oidcRPMetaDataOptionsIcon":"圖示",
 "oidcRPMetaDataOptionsLogoutBypassConfirm":"Bypass confirm",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"需要工作階段",
-"oidcRPMetaDataOptionsLogoutSessionSupported":"Session supported (back channel)",
 "oidcRPMetaDataOptionsLogoutType":"類型",
 "oidcRPMetaDataOptionsLogoutUrl":"URL",
 "oidcRPMetaDataOptionsOfflineSessionExpiration":"離線工作階段",

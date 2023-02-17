@@ -4688,12 +4688,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsLogoutSessionRequired => {
             type          => 'bool',
             default       => 0,
-            documentation => 'Session required for front channel logout',
-        },
-        oidcRPMetaDataOptionsLogoutSessionSupported => {
-            type          => 'bool',
-            default       => 0,
-            documentation => 'Session supported for back channel logout',
+            documentation => 'Session required for back/front channel logout',
         },
         oidcRPMetaDataOptionsPublic => {
             type          => 'bool',

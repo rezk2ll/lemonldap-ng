@@ -2077,7 +2077,7 @@ sub registration {
         $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutUrl}
           = $backchannel_logout_uri;
         $conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsLogoutSessionSupported} =
+          ->{oidcRPMetaDataOptionsLogoutSessionRequired} =
           $backchannel_logout_session_required;
     }
 
@@ -2270,7 +2270,7 @@ sub logout {
                         events => { $self->BACKCHANNEL_EVENTSKEY => {} },
                     };
                     if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
-                        ->{oidcRPMetaDataOptionsLogoutSessionSupported} )
+                        ->{oidcRPMetaDataOptionsLogoutSessionRequired} )
                     {
                         $logoutToken->{sid} =
                           $self->getSidFromSession( $rp, $req->{sessionInfo} );

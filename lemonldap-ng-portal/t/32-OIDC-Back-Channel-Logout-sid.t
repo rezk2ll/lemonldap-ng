@@ -212,8 +212,7 @@ sub op {
                         oidcRPMetaDataOptionsLogoutUrl             =>
                           'http://auth.rp.com/oauth2/blogout',
                         oidcRPMetaDataOptionsLogoutType             => 'back',
-                        oidcRPMetaDataOptionsLogoutSessionRequired  => 0,
-                        oidcRPMetaDataOptionsLogoutSessionSupported => 1,
+                        oidcRPMetaDataOptionsLogoutSessionRequired  => 1,
                     }
                 },
                 oidcOPMetaDataOptions           => {},

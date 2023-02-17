@@ -720,7 +720,6 @@
 "oidcRPMetaDataOptionsIcon":"לוגו",
 "oidcRPMetaDataOptionsLogoutBypassConfirm":"Bypass confirm",
 "oidcRPMetaDataOptionsLogoutSessionRequired":"נדרשת הפעלה",
-"oidcRPMetaDataOptionsLogoutSessionSupported":"Session supported (back channel)",
 "oidcRPMetaDataOptionsLogoutType":"סוג",
 "oidcRPMetaDataOptionsLogoutUrl":"כתובת",
 "oidcRPMetaDataOptionsOfflineSessionExpiration":"הפעלות בלתי מקוונות",
