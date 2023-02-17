@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.0.17';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth
@@ -86,7 +86,7 @@ sub init {
               oidcServiceMetaDataBackChannelURI
             )
         )
-    ) . ')(?:/.*)?$';
+    ) . ')(?:[\?/].*)?$';
 
     $self->endpointsRe(qr/$re/);
 
@@ -115,7 +115,7 @@ sub init {
 sub extractFormInfo {
     my ( $self, $req ) = @_;
     if ( $req->uri =~ $self->endpointsRe ) {
-        my $path = $req->uri;
+        my $path = $req->path;
         my $tmp  = $self->path;
         $path =~ s#^/*\Q$tmp\E/*##o;
         $path =~ s#/.*$##;
@@ -124,7 +124,7 @@ sub extractFormInfo {
             return PE_SENDRESPONSE;
         }
         elsif ( $path eq $self->conf->{oidcServiceMetaDataFrontChannelURI} ) {
-            $req->response( $self->alreadyLoggedOut($req) );
+            $req->response( $self->searchAndLogout($req) );
             return PE_SENDRESPONSE;
         }
     }
@@ -404,6 +404,8 @@ sub setAuthSessionInfo {
 sub authLogout {
     my ( $self, $req ) = @_;
 
+    return PE_OK if $req->data->{oidcSkipLogout};
+
     my $op = $req->{sessionInfo}->{_oidc_OP};
 
     # Find endession endpoint
@@ -436,26 +438,97 @@ sub getDisplayType {
     return "logo";
 }
 
-sub alreadyLoggedOut {
+sub searchAndLogout {
     my ( $self, $req ) = @_;
     $self->userLogger->info(
-        'Front-channel logout request for an already logged out user');
-    my $img = $self->conf->{staticPrefix} . '/common/icons/ok.png';
-
-    # No need to protect this frame
-    $req->frame(1);
-    my $frame = qq'<html><body><img src="$img"></body></html>';
-    return [
-        200,
-        [ 'Content-Type' => 'text/html', 'Content-Length' => length($frame) ],
-        [$frame]
-    ];
+        'Front-channel logout request called without cookie');
+    $req->data->{frontLogoutSearch} = 1;
+    return $self->frontLogout($req);
 }
 
 sub frontLogout {
     my ( $self, $req ) = @_;
-    return $self->p->sendError( $req,
-        'Front Channel logout is not implemented', 501 );
+
+    # No double disconnect
+    $req->data->{oidcSkipLogout} = 1;
+
+    # Response should be displayed in an iframe
+    $req->frame(1);
+
+    # TODO check iss and sid
+    my $iss        = $req->param('iss');
+    my $sid        = $req->param('sid');
+    my $badRequest = 0;
+    my $logName    = 'OIDC FC Logout';
+
+    my $img      = $self->conf->{staticPrefix} . '/common/icons/ok.png';
+    my $frame    = qq'<html><body><img src="$img"></body></html>';
+    my $response = [
+        200,
+        [
+            'Content-Type'   => 'text/html',
+            'Content-Length' => length($frame)
+        ],
+        [$frame]
+    ];
+
+    # LLNG requires sid and iss
+    unless ( $iss and $sid ) {
+        $self->userLogger->error(
+            'OIDC Front-Channel-Logout called without sid and iss');
+        $badRequest++;
+    }
+    elsif ( $req->data->{frontLogoutSearch} ) {
+        my %store = %{ $self->conf->{globalStorageOptions} };
+        $store{backend} = $self->conf->{globalStorage};
+        my $oidcSessions =
+          Lemonldap::NG::Common::Apache::Session->searchOn( \%store,
+            '_oidc_sid', $sid );
+        my @sessionToDelete = keys %$oidcSessions;
+        foreach (@sessionToDelete) {
+            if ( my $as = $self->p->getApacheSession($_) ) {
+                if ( $self->p->_deleteSession( $req, $as, 1 ) ) {
+                    $self->logger->debug(
+                        "$logName: session $_ deleted from global storage");
+                }
+                else {
+                    $self->logger->error(
+                        "$logName: unable to delete session $_");
+                    $self->logger->error( $as->error );
+                }
+            }
+        }
+        return $response;
+    }
+    else {
+        unless ( $req->userData->{_oidc_sid} and $req->userData->{_oidc_OP} ) {
+            $self->logger->error(
+                "$logName: key _oidc_sid not stored in session");
+            $badRequest++;
+        }
+        else {
+            if ( $sid ne $req->userData->{_oidc_sid} ) {
+                $self->userLogger->error(
+                    'OIDC Front-Channel-Logout: sid mismatch');
+                $badRequest++;
+            }
+        }
+    }
+    if ($badRequest) {
+        return $self->p->sendError( $req, 'Bad OIDC Logout Request', 200 );
+    }
+    return $self->p->do(
+        $req,
+        [
+            @{ $self->p->beforeLogout },
+            'authLogout',
+            'deleteSession',
+            sub {
+                $req->response($response);
+                return PE_SENDRESPONSE;
+            }
+        ]
+    );
 }
 
 # Implements https://openid.net/specs/openid-connect-backchannel-1_0.html

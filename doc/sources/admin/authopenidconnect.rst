@@ -29,6 +29,9 @@ As an RP, LL::NG supports many OpenID Connect features:
 -  ID Token validation
 -  Get UserInfo as JSON or as JWT
 -  Logout on EndSession endpoint
+-  `Back Channel Logout <https://openid.net/specs/openid-connect-backchannel-1_0.html>`__
+-  `Front Channel Logout <https://openid.net/specs/openid-connect-frontchannel-1_0.html>`__
+-  `RP-Initiated Logout <https://openid.net/specs/openid-connect-rpinitiated-1_0.html>`__
 
 You can use this authentication module to link your LL::NG server to any
 OpenID Connect Provider. Here are some examples, with their specific
@@ -125,12 +128,22 @@ For example:
 
 -  https://auth.example.com/?openidconnectcallback=1
 
-
 .. attention::
 
     If you use the :doc:`choice backend<authchoice>`,
     you need to set SameSite cookie value to "Lax" or "None".
     See :doc:`SSO cookie parameters<ssocookie>`
+
+You may also be prompted for lougout type. LL::NG supports both *back* and
+*front* channels. Its default logout urls are:
+
+- https://<portal>/oauth2/flogout for the Front Channel
+- https://<portal>/oauth2/blogout for the Back Channel
+
+.. attention::
+
+    Front Channel use requires "iss" and "sid" parameters in requests (See
+    `frontchannel_logout_session_required <https://openid.net/specs/openid-connect-frontchannel-1_0.html#RPLogout>`__)
 
 After registration, the OP must give you a *Client ID* and a *Client
 secret* required to configure the OP in LL::NG.

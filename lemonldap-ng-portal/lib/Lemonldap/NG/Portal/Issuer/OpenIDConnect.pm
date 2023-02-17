@@ -2414,6 +2414,12 @@ sub metadata {
 
             # PKCE
             code_challenge_methods_supported => [qw/plain S256/],
+
+            # Logout supported methods
+            frontchannel_logout_supported         => JSON::true,
+            frontchannel_logout_session_supported => JSON::true,
+            backchannel_logout_supported          => JSON::true,
+            backchannel_logout_session_supported  => JSON::true,
         }
     );
 
