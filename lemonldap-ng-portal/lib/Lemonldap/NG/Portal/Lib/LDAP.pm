@@ -105,7 +105,7 @@ sub _buildFilter {
     $filter = "sub{my(\$req)=\$_[0];return \"$filter\";}";
     my $res = eval $filter;
     $self->error("Unable to build fiter: $@") if ($@);
-    
+
     return $res;
 }
 
@@ -125,8 +125,14 @@ sub getUser {
     my ( $self, $req, %args ) = @_;
 
     $self->validateLdap;
-    return PE_LDAPCONNECTFAILED unless $self->ldap;
-    return PE_LDAPERROR         unless $self->bind();
+    unless ( $self->ldap ) {
+        eval { $self->p->_authentication->setSecurity($req) };
+        return PE_LDAPCONNECTFAILED;
+    }
+    unless ( $self->bind() ) {
+        eval { $self->p->_authentication->setSecurity($req) };
+        return PE_LDAPERROR;
+    }
 
     my $mesg = $self->ldap->search(
         base   => $self->conf->{ldapBase},
