@@ -1,9 +1,7 @@
-use warnings;
-use warnings;
-
 # Verify that all attributes are positionned in tree and that all leaf
 # correspond to an attribute. Verify also that attributes and leafs are uniq
 
+use warnings;
 use strict;
 use Test::More;
 use Data::Dumper;

@@ -1,8 +1,6 @@
-use warnings;
-use warnings;
-
 # Test 2ndFA manager API
 
+use warnings;
 use Test::More;
 use JSON;
 use strict;

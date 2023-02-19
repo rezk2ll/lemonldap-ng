@@ -1,9 +1,7 @@
-use warnings;
-use warnings;
-
 # Verify that a modified configuration can be saved and that all changes are
 # detected
 
+use warnings;
 use Test::More;
 use strict;
 use JSON;

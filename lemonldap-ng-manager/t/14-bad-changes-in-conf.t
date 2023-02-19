@@ -1,8 +1,6 @@
-use warnings;
-use warnings;
-
 # Verify that bad changes are detected
 
+use warnings;
 use Test::More;
 use strict;
 use JSON;
