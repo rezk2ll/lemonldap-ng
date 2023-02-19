@@ -66,7 +66,7 @@ SKIP: {
     ok( $token = $1, ' Token value is defined' );
     ok( $res->[2]->[0] =~ m#value="dwho" trplaceholder="login"#,
         ' Login found' );
-    ok( $res->[2]->[0] =~ m#<span trmsg="7">#, ' Error found' );
+    ok( $res->[2]->[0] =~ m#<span trmsg="6">#, ' Error found' );
     ok( $res->[2]->[0] =~ m#<img id="captcha" src="data:image/png;base64#,
         ' Captcha image inserted' )
       or
