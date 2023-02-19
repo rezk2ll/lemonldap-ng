@@ -1,3 +1,6 @@
+use warnings;
+use warnings;
+
 # Verify that a modified configuration can be saved and that all changes are
 # detected
 
@@ -26,7 +29,7 @@ ok( $resBody->{result} == 1, "JSON response contains \"result:1\"" )
   or print STDERR Dumper($resBody);
 ok(
     $resBody->{details}->{__warnings__}
-      and @{ $resBody->{details}->{__warnings__} } == 2,
+      && @{ $resBody->{details}->{__warnings__} } == 2,
     'JSON response contains 2 warnings'
 ) or print STDERR Dumper($resBody);
 
@@ -40,7 +43,7 @@ foreach my $i ( 0 .. 1 ) {
 
 ok(
     $resBody->{details}->{__changes__}
-      and @{ $resBody->{details}->{__changes__} } == 24,
+      && @{ $resBody->{details}->{__changes__} } == 24,
     'JSON response contains 24 changes'
 ) or print STDERR Dumper($resBody);
 ok( $resBody->{details}->{__changes__}->[23]->{confCompacted} == 1,
@@ -119,7 +122,8 @@ done_testing( count() );
 `rm -rf t/sessions`;
 
 sub changes {
-    return [ {
+    return [
+        {
             'key' => 'portal',
             'new' => 'http://auth2.example.com/',
             'old' => 'http://auth.example.com/'

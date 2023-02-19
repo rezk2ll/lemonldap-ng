@@ -1,3 +1,6 @@
+use warnings;
+use warnings;
+
 # Test Providers API
 
 use Test::More;

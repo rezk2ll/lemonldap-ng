@@ -1,3 +1,6 @@
+use warnings;
+use warnings;
+
 # Verify that languages translation cover all `trspan`
 
 use Test::More;

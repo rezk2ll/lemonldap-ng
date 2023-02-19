@@ -1,3 +1,6 @@
+use warnings;
+use warnings;
+
 # Verify that an unmodified configuration is rejected
 
 use Data::Dumper;

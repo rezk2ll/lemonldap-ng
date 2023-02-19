@@ -1,3 +1,6 @@
+use warnings;
+use warnings;
+
 # Test for https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2493
 
 use strict;
@@ -31,7 +34,8 @@ SKIP: {
     use_ok('Lemonldap::NG::Common::Conf');
     my $h;
     ok(
-        $h = new Lemonldap::NG::Common::Conf( {
+        $h = new Lemonldap::NG::Common::Conf(
+            {
                 type        => 'RDBI',
                 dbiChain    => "DBI:SQLite:dbname=$file",
                 dbiUser     => '',
@@ -63,8 +67,8 @@ SKIP: {
     Lemonldap::NG::Manager::Cli->run(@args);
     my $res = $dbh->selectrow_hashref(
         "SELECT * FROM lmConfig WHERE field='ldapSetPassword'");
-    ok( $res,                          'Key inserted' );
-    ok( $res and $res->{value} == '0', 'Value is 0' );
+    ok( $res,                         'Key inserted' );
+    ok( $res && $res->{value} == '0', 'Value is 0' );
 }
 
 eval { unlink $file };

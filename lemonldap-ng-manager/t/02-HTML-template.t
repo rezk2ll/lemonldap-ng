@@ -1,3 +1,6 @@
+use warnings;
+use warnings;
+
 # Verify just that '/' requests returns HTML and some elements
 
 use Test::More;

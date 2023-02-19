@@ -1,3 +1,6 @@
+use warnings;
+use warnings;
+
 # Check that HTML forms exists for all types of parameter and that no HTML
 # forms are unused
 

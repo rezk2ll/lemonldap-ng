@@ -1,3 +1,6 @@
+use warnings;
+use warnings;
+
 # Test notifications explorer API
 
 use strict;
