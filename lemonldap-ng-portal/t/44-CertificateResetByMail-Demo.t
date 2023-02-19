@@ -1,5 +1,4 @@
-#!/usr/bin/perl
-
+use warnings;
 use Test::More;
 use strict;
 use IO::String;
@@ -29,7 +28,8 @@ use DateTime::Format::RFC3339;';
 
     }
 
-    my $client = LLNG::Manager::Test->new( {
+    my $client = LLNG::Manager::Test->new(
+        {
             ini => {
                 logLevel              => 'error',
                 useSafeJail           => 1,
@@ -88,8 +88,8 @@ use DateTime::Format::RFC3339;';
     ok( $res->[2]->[0] =~ /certif/s, ' Ask for a new certificate file' );
 
     #print STDERR Dumper($query);
-    my %inputs   = split( /[=&]/, $query );
-    my %querytab = split( /[=&]/, $querymail );
+    my %inputs   = split /=/, (grep /^token=.+/, split /&/, $query)[0];
+    my %querytab = split /[=&]/, $querymail;
 
     # Create the certificate  file
     my $cert = "-----BEGIN CERTIFICATE-----
@@ -118,8 +118,10 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
     print {$FH2} "$cert";
     close $FH2;
 
-    $res = $client->app->( {
-            'plack.request.query' => bless( {
+    $res = $client->app->(
+        {
+            'plack.request.query' => bless(
+                {
                     'skin'       => $querytab{'skin'},
                     'mail_token' => $querytab{'mail_token'}
                 },
@@ -134,7 +136,8 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
             'REQUEST_SCHEME'       => 'http',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
 
-            'plack.request.merged' => bless( {
+            'plack.request.merged' => bless(
+                {
                     'skin'       => $querytab{'skin'},
                     'mail_token' => $querytab{'mail_token'},
                     'url'        => '',
@@ -149,9 +152,12 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
             'HTTP_UPGRADE_INSECURE_REQUESTS' => '1',
             'CONTENT_TYPE'                   =>
 'multipart/form-data; boundary=----WebKitFormBoundarybabRY9u6K9tERoLr',
-            'plack.request.upload' => bless( {
-                    'certif' => bless( {
-                            'headers' => bless( {
+            'plack.request.upload' => bless(
+                {
+                    'certif' => bless(
+                        {
+                            'headers' => bless(
+                                {
                                     'content-disposition' =>
 'form-data; name="certif"; filename="user.pem"',
                                     'content-type' =>
@@ -173,7 +179,8 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
                 'Hash::MultiValue'
             ),
             'psgi.streaming'     => 1,
-            'plack.request.body' => bless( {
+            'plack.request.body' => bless(
+                {
                     'skin'  => 'bootstrap',
                     'url'   => '',
                     'token' => $inputs{'token'}
@@ -249,7 +256,7 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
     ok( $res->[2]->[0] =~ /certif/s, ' Ask for a new certificate file' );
 
     #print STDERR Dumper($query);
-    %inputs   = split( /[=&]/, $query );
+    %inputs   = split /=/, (grep /^token=.+/, split /&/, $query)[0];
     %querytab = split( /[=&]/, $querymail );
 
     # Create the certificate  file
@@ -259,8 +266,10 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
     print {$FH2} "$cert";
     close $FH2;
 
-    $res = $client->app->( {
-            'plack.request.query' => bless( {
+    $res = $client->app->(
+        {
+            'plack.request.query' => bless(
+                {
                     'skin'       => $querytab{'skin'},
                     'mail_token' => $querytab{'mail_token'}
                 },
@@ -275,7 +284,8 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
             'REQUEST_SCHEME'       => 'http',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
 
-            'plack.request.merged' => bless( {
+            'plack.request.merged' => bless(
+                {
                     'skin'       => $querytab{'skin'},
                     'mail_token' => $querytab{'mail_token'},
                     'url'        => '',
@@ -290,9 +300,12 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
             'HTTP_UPGRADE_INSECURE_REQUESTS' => '1',
             'CONTENT_TYPE'                   =>
 'multipart/form-data; boundary=----WebKitFormBoundarybabRY9u6K9tERoLr',
-            'plack.request.upload' => bless( {
-                    'certif' => bless( {
-                            'headers' => bless( {
+            'plack.request.upload' => bless(
+                {
+                    'certif' => bless(
+                        {
+                            'headers' => bless(
+                                {
                                     'content-disposition' =>
 'form-data; name="certif"; filename="user.pem"',
                                     'content-type' =>
@@ -314,7 +327,8 @@ lkRrWfQftwmLyNIu3HfSgXlgAZS30ymfbzBU
                 'Hash::MultiValue'
             ),
             'psgi.streaming'     => 1,
-            'plack.request.body' => bless( {
+            'plack.request.body' => bless(
+                {
                     'skin'  => 'bootstrap',
                     'url'   => '',
                     'token' => $inputs{'token'}

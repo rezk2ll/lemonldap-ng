@@ -1,3 +1,4 @@
+use warnings;
 use lib 'inc';
 use Test::More;
 use strict;
@@ -223,7 +224,8 @@ done_testing( count() );
 
 sub issuer {
     my ( $res_nif, $force_attr ) = @_;
-    return LLNG::Manager::Test->new( {
+    return LLNG::Manager::Test->new(
+        {
             ini => {
                 logLevel               => $debug,
                 domain                 => 'idp.com',
@@ -280,7 +282,8 @@ sub issuer {
 
 sub sp {
     my ($req_nif) = @_;
-    return LLNG::Manager::Test->new( {
+    return LLNG::Manager::Test->new(
+        {
             ini => {
                 logLevel                          => $debug,
                 domain                            => 'sp.com',

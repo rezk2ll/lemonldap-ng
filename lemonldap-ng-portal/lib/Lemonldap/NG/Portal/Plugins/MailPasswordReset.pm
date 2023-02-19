@@ -448,7 +448,7 @@ sub changePwd {
             $pwdRegEx = "[A-Z]{$uppers}[a-z]{$lowers}\\d{$digits}";
             $pwdRegEx .=
               $self->conf->{passwordPolicySpecialChar} eq '__ALL__'
-              ? qq[\W{$chars}]
+              ? '\W{$chars}'
               : "[$self->{conf}->{passwordPolicySpecialChar}]{$chars}";
             $self->logger->debug("Generated password RegEx: $pwdRegEx");
         }
