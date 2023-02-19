@@ -1,8 +1,6 @@
-use warnings;
-use warnings;
-
 # Test 2F API
 
+use warnings;
 use Test::More;
 use strict;
 use JSON;

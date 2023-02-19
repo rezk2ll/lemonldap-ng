@@ -1,12 +1,10 @@
-use warnings;
-use warnings;
-
 # Test REST API with valid and invalid requests.
 # Check also metadatas request (root of a conf)
 
 use Test::More;
 use JSON;
 use strict;
+use warnings;
 
 require 't/test-lib.pm';
 my $struct = 'site/htdocs/static/struct.json';

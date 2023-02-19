@@ -1,8 +1,6 @@
-use warnings;
-use warnings;
-
 # Verify that all attributes owns a test
 
+use warnings;
 use Test::More;
 use strict;
 use Lemonldap::NG::Common::Conf::ReConstants;

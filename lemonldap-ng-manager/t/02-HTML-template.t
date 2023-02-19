@@ -1,10 +1,8 @@
-use warnings;
-use warnings;
-
 # Verify just that '/' requests returns HTML and some elements
 
 use Test::More;
 use strict;
+use warnings;
 
 require 't/test-lib.pm';
 

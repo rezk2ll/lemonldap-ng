@@ -1,12 +1,10 @@
-use warnings;
-use warnings;
-
 # Check that HTML forms exists for all types of parameter and that no HTML
 # forms are unused
 
 use Test::More;
 use Data::Dumper;
 use strict;
+use warnings;
 
 my $formDir = 'site/htdocs/static/forms';
 

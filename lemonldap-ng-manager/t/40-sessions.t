@@ -1,8 +1,6 @@
-use warnings;
-use warnings;
-
 # Test sessions explorer API
 
+use warnings;
 use Test::More;
 use JSON;
 use strict;
