@@ -1,3 +1,6 @@
+use warnings;
+use warnings;
+
 # Verify that bas changes are detected
 
 use Test::More;

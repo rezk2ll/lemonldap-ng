@@ -1,3 +1,6 @@
+use warnings;
+use warnings;
+
 # Test Providers API
 
 use Test::More;
@@ -127,10 +130,10 @@ sub checkGet {
     my $key  = from_json( $res->[2]->[0] );
     for (@path) {
         if ( ref($key) eq 'ARRAY' ) {
-            $key = $key->[$_];
+            $key = $key->[$_] || '';
         }
         else {
-            $key = $key->{$_};
+            $key = $key->{$_} || '';
         }
     }
     ok(

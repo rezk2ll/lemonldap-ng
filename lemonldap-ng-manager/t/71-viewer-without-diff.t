@@ -1,3 +1,6 @@
+use warnings;
+use warnings;
+
 # Test viewer API
 
 use Test::More;

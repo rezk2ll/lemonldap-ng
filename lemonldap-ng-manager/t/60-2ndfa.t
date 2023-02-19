@@ -1,3 +1,6 @@
+use warnings;
+use warnings;
+
 # Test 2ndFA manager API
 
 use Test::More;
@@ -13,7 +16,8 @@ sub newSession {
     my ( $uid, $ip, $kind, $sfaDevices ) = splice @_;
     my $tmp;
     ok(
-        $tmp = Lemonldap::NG::Common::Session->new( {
+        $tmp = Lemonldap::NG::Common::Session->new(
+            {
                 storageModule        => 'Apache::Session::File',
                 storageModuleOptions => {
                     Directory      => 't/sessions',
@@ -26,7 +30,8 @@ sub newSession {
         'Sessions module'
     );
     count(1);
-    $tmp->update( {
+    $tmp->update(
+        {
             ipAddr        => $ip,
             _whatToTrace  => $uid,
             uid           => $uid,
@@ -50,7 +55,8 @@ $ids[0] = newSession( 'dwho', '127.10.0.1', 'SSO', $sfaDevices );
 
 # Peristent sesssions
 $ids[1] = newSession( 'msmith', '127.10.0.1', 'Persistent', $sfaDevices );
-$sfaDevices = [ {
+$sfaDevices = [
+    {
         "name"       => "MyU2FKey",
         "type"       => "U2F",
         "_userKey"   => "123456",
@@ -65,7 +71,8 @@ $sfaDevices = [ {
     }
 ];
 $ids[2] = newSession( 'rtyler', '127.10.0.1', 'Persistent', $sfaDevices );
-$sfaDevices = [ {
+$sfaDevices = [
+    {
         "name"       => "MyU2FKey",
         "type"       => "U2F",
         "_userKey"   => "123456",
@@ -86,7 +93,8 @@ $sfaDevices = [ {
     }
 ];
 $ids[3] = newSession( 'dwho', '127.10.0.1', 'Persistent', $sfaDevices );
-$sfaDevices = [ {
+$sfaDevices = [
+    {
         "name"       => "MyU2FKey",
         "type"       => "U2F",
         "_userKey"   => "123456",
@@ -101,7 +109,8 @@ $sfaDevices = [ {
     }
 ];
 $ids[4] = newSession( 'davros', '127.10.0.1', 'Persistent', $sfaDevices );
-$sfaDevices = [ {
+$sfaDevices = [
+    {
         "name"       => "MyU2FKey",
         "type"       => "U2F",
         "_userKey"   => "123456",
@@ -121,7 +130,8 @@ count(2);
 # Single Persistent sessions access
 for ( my $i = 1 ; $i < 6 ; $i++ ) {
     $res = &client->jsonResponse("/sessions/persistent/$ids[$i]");
-    ok( (
+    ok(
+        (
                   $res->{uid}
               and $res->{uid} =~ /^(?:dwho|rtyler|msmith|davros|tof)$/
         ),

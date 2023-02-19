@@ -1,3 +1,6 @@
+use warnings;
+use warnings;
+
 # Test viewer API
 
 use Test::More;
@@ -27,7 +30,7 @@ $res = &client->jsonResponse('/view/1/portalDisplayLogout');
 ok( $res->{value} eq '_Hidden_', 'Key is hidden' )
   or explain( $res, 'value => "_Hidden_"' );
 $res = &client->jsonResponse('/view/1/samlIDPMetaDataNodes');
-ok( ref($res) eq 'HASH' and $res->{value} eq '_Hidden_', 'Key is hidden' )
+ok( ref($res) eq 'HASH' && $res->{value} eq '_Hidden_', 'Key is hidden' )
   or explain( $res, 'value => "_Hidden_"' );
 count(2);
 

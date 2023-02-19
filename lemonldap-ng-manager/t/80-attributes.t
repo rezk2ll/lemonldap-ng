@@ -1,3 +1,6 @@
+use warnings;
+use warnings;
+
 # Verify that all attributes are positionned in tree and that all leaf
 # correspond to an attribute. Verify also that attributes and leafs are uniq
 
@@ -160,7 +163,8 @@ sub scanTree {
             ok( $name =~ /^\w+$/,       "Name is a string" );
 
             # Nodes must have leafs or subnodes
-            ok( (
+            ok(
+                (
                          exists( $leaf->{nodes} )
                       or exists( $leaf->{nodes_cond} )
                       or exists( $leaf->{group} )

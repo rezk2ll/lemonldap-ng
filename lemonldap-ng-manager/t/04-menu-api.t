@@ -1,3 +1,6 @@
+use warnings;
+use warnings;
+
 # Test Providers API
 
 use Test::More;
@@ -81,6 +84,7 @@ sub add {
     my ( $test, $type, $obj ) = splice @_;
     my $j = $_json->encode($obj);
     my $res;
+    $type ||= '';
 
     #diag Dumper($j);
     ok(

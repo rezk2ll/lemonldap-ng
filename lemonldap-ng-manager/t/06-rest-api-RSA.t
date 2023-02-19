@@ -1,3 +1,6 @@
+use warnings;
+use warnings;
+
 # Test RSA key generation
 
 use Test::More;
