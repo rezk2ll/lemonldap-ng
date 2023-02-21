@@ -623,6 +623,7 @@ sub tree {
                         'upgradeSession',
                         'refreshSessions',
                         'adaptativeAuthenticationLevelRules',
+                        'autoSigninRules',
                         {
                             title => 'stayConnect',
                             help  => 'stayconnected.html',
@@ -634,6 +635,36 @@ sub tree {
                                 'stayConnectedCookieName',
                                 'stayConnectedSingleSession',
                             ],
+                        },
+                        {
+                            title => 'rememberAuthChoice',
+                            help  => 'rememberauthchoice.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'rememberAuthChoiceRule',
+                                'rememberCookieName',
+                                'rememberCookieTimeout',
+                                'rememberDefaultChecked',
+                                'rememberTimer',
+                            ]
+                        },
+                        {
+                            title => 'locationDetectPlugin',
+                            help  => 'locationdetect.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'locationDetect',
+                                'locationDetectGeoIpDatabase',
+                                'locationDetectGeoIpLanguages',
+                                'locationDetectIpDetail',
+                                'locationDetectUaDetail'
+                            ]
+                        },
+                        {
+                            title => 'stateCheck',
+                            help  => 'checkstate.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [ 'checkState', 'checkStateSecret', ],
                         },
                         {
                             title => 'portalServers',
@@ -774,27 +805,6 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'autoSignin',
-                            help  => 'autosignin.html',
-                            nodes => ['autoSigninRules'],
-                        },
-                        {
-                            title => 'globalLogout',
-                            help  => 'globallogout.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'globalLogoutRule',
-                                'globalLogoutTimer',
-                                'globalLogoutCustomParam'
-                            ],
-                        },
-                        {
-                            title => 'stateCheck',
-                            help  => 'checkstate.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [ 'checkState', 'checkStateSecret', ],
-                        },
-                        {
                             title => 'checkUsers',
                             help  => 'checkuser.html',
                             nodes => [
@@ -845,18 +855,6 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'findUsers',
-                            help  => 'finduser.html',
-                            nodes => [
-                                'findUser',
-                                'findUserWildcard',
-                                'findUserControl',
-                                'restFindUserDBUrl',
-                                'findUserSearchingAttributes',
-                                'findUserExcludingAttributes'
-                            ]
-                        },
-                        {
                             title => 'contextSwitching',
                             help  => 'contextswitching.html',
                             form  => 'simpleInputContainer',
@@ -869,30 +867,27 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'rememberAuthChoice',
-                            help  => 'rememberauthchoice.html',
-                            form  => 'simpleInputContainer',
+                            title => 'findUsers',
+                            help  => 'finduser.html',
                             nodes => [
-                                'rememberAuthChoiceRule',
-                                'rememberCookieName',
-                                'rememberCookieTimeout',
-                                'rememberDefaultChecked',
-                                'rememberTimer',
+                                'findUser',
+                                'findUserWildcard',
+                                'findUserControl',
+                                'restFindUserDBUrl',
+                                'findUserSearchingAttributes',
+                                'findUserExcludingAttributes'
                             ]
                         },
                         {
-                            title => 'locationDetectPlugin',
-                            help  => 'locationdetect.html',
+                            title => 'globalLogout',
+                            help  => 'globallogout.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'locationDetect',
-                                'locationDetectGeoIpDatabase',
-                                'locationDetectGeoIpLanguages',
-                                'locationDetectIpDetail',
-                                'locationDetectUaDetail'
-                            ]
+                                'globalLogoutRule',
+                                'globalLogoutTimer',
+                                'globalLogoutCustomParam'
+                            ],
                         },
-
                         {
                             title => 'decryptValue',
                             help  => 'decryptvalue.html',
@@ -1294,7 +1289,8 @@ sub tree {
                     help  => 'samlservice.html#organization',
                     form  => 'simpleInputContainer',
                     nodes => [
-                        'samlOrganizationDisplayName', 'samlOrganizationName',
+                        'samlOrganizationDisplayName',
+                        'samlOrganizationName',
                         'samlOrganizationURL'
                     ]
                 },

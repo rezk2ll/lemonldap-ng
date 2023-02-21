@@ -823,6 +823,7 @@ sub attributes {
         },
         refreshSessions => {
             type          => 'bool',
+            help          => "refreshsessionapi.html",
             documentation => 'Refresh sessions plugin',
         },
         forceGlobalStorageIssuerOTT => {
@@ -2476,20 +2477,19 @@ sub attributes {
         # AutoSignin
         autoSigninRules => {
             type          => 'keyTextContainer',
+            keyTest       => sub { return perlExpr(@_) },
+            test          => sub { 1 },
+            help          => 'autosignin.html',
             documentation => 'List of auto signin rules',
         },
 
-        # Adaptative Authentication Level plugin
+        # Adaptative Authentication Level
         adaptativeAuthenticationLevelRules => {
             type    => 'keyTextContainer',
-            keyTest => sub {
-                eval { qr/$_[0]/ };
-                return $@ ? 0 : 1;
-            },
-            keyMsgFail    => '__badRegexp__',
+            keyTest       => sub { return perlExpr(@_) },
+            test          => sub { 1 },
             help          => "adaptativeauthenticationlevel.html",
             documentation => 'Adaptative authentication level rules',
-            flags         => 'p',
         },
 
         # LocationDetect plugin
@@ -3261,9 +3261,8 @@ sub attributes {
         },
         samlSPMetaDataOptionsFederationOptionalAttributes => {
             type   => 'select',
-            select => [
-                { k => '', v => 'keep' }, { k => 'ignore', v => 'ignore' },
-            ],
+            select =>
+              [ { k => '', v => 'keep' }, { k => 'ignore', v => 'ignore' }, ],
             default => '',
         },
         samlSPMetaDataOptionsFederationRequiredAttributes => {

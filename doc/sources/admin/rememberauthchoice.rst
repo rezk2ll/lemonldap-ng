@@ -1,5 +1,5 @@
-Remember auth choice plugin
-===========================
+Remember authentication choice plugin
+=====================================
 
 This plugin enables automatic authentication, based upon the last user authentication choice.
 
