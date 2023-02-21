@@ -32,5 +32,5 @@ Plugins
    restservices
    soapservices
    status
-   stayconected
+   stayconnected
    viewer

@@ -306,7 +306,6 @@ Name                                                                 Description
 :doc:`Find user<finduser>`  [12]_\ |new|                             Search for user account
 :doc:`NewLocationWarning<newlocationwarning>`  [13]_\ |new|          Send an email when user sign in from a new location 
 :doc:`Notifications system<notifications>`                           Display a message during log in process 
-:doc:`Persistent connection<persistentconnection>`                   Enable persistent connection on same browser
 :doc:`Portal status<status>`                                         Experimental portal status page
 :doc:`Public pages<public_pages>`                                    Enable public pages system
 :doc:`Refresh session API<refreshsessionapi>`  [14]_                 Plugin that provides an API to refresh a user session
@@ -315,6 +314,7 @@ Name                                                                 Description
 :doc:`Remember auth choice<rememberauthchoice>` [20]_\ |new|         Remember user last authentication choice
 :doc:`REST services<restservices>`                                   REST server for :doc:`Proxy<authproxy>`
 :doc:`SOAP services<soapservices>` |deprecated|                      SOAP server for :doc:`Proxy<authproxy>`
+:doc:`Stay connected<stayconnected>`                                 Enable persistent connection on same browser
 Upgrade session                                                      This plugin explains to an already authenticated user that a higher authentication level is required to access the URL instead of reject him
 ==================================================================== ============================================================================================================================================
 
