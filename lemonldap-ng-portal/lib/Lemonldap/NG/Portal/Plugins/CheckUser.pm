@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::Plugins::CheckUser;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Common::Util qw(isHiddenAttr);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NOTOKEN
   PE_TOKENEXPIRED
@@ -9,7 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.17';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -41,14 +42,9 @@ has idRule                       => ( is => 'rw', default => sub { 1 } );
 has sorted                       => ( is => 'rw', default => sub { 0 } );
 has merged                       => ( is => 'rw', default => '' );
 
-sub hAttr {
-    $_[0]->{conf}->{checkUserHiddenAttributes} . ' '
-      . $_[0]->{conf}->{hiddenAttributes};
-}
-
 sub persistentAttrs {
     $_[0]->{conf}->{persistentSessionAttributes}
-      || '_loginHistory _2fDevices notification_';
+      || '_loginHistory _2fDevices notification_ _oidcConsents';
 }
 
 sub init {
@@ -574,15 +570,15 @@ sub _headers {
 sub _createArray {
     my ( $self, $req, $attrs, $userData ) = @_;
     my $array_attrs = [];
+    my @hidden = split /[,\s]+/, $self->conf->{checkUserHiddenAttributes};
 
-    foreach my $k ( sort keys %$attrs ) {
+    foreach ( sort keys %$attrs ) {
         push @$array_attrs,
-          { key => $k, value => $attrs->{$k} }
-          unless ( (
-                $self->hAttr =~ /\b$k\b/
+          { key => $_, value => $attrs->{$_} }
+          unless ( ( isHiddenAttr( $self->conf, $_, @hidden )
                 && !$self->displayHiddenAttributesRule->( $req, $userData )
             )
-            || (   !$attrs->{$k}
+            || (   !$attrs->{$_}
                 && !$self->displayEmptyValuesRule->( $req, $userData ) )
           );
     }

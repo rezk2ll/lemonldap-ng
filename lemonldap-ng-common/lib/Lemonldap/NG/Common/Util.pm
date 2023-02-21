@@ -5,9 +5,9 @@ use strict;
 use Digest::MD5;
 use MIME::Base64 qw(encode_base64);
 
-our $VERSION   = '2.0.14';
+our $VERSION   = '2.17';
 our @ISA       = qw(Exporter);
-our @EXPORT_OK = qw(getSameSite getPSessionID genId2F);
+our @EXPORT_OK = qw(getSameSite getPSessionID genId2F isHiddenAttr);
 
 sub getPSessionID {
     my ($uid) = @_;
@@ -18,6 +18,16 @@ sub genId2F {
     my ($device) = @_;
     return encode_base64( "$device->{epoch}::$device->{type}::$device->{name}",
         "" );
+}
+
+sub isHiddenAttr {
+    my ( $conf, $attr, @hidden ) = @_;
+    return unless ( $conf && $attr );
+    my %hiddenAttributes =
+      map { $_ => 1 } ( split( /[,\s]+/, $conf->{hiddenAttributes} ), @hidden );
+    return $hiddenAttributes{$attr}
+      || ( $conf->{hiddenAttributesRegExp}
+        && $attr =~ $conf->{hiddenAttributesRegexp} );
 }
 
 sub getSameSite {
@@ -61,6 +71,10 @@ This method computes the psession ID from the user login
 =head3 genId2F($device)
 
 This method computes the unique ID of each 2F device, for use with the API and CLI
+
+=head3 isHiddenAttr( $conf, $attr, @hidden )
+
+This method tests if the attribute is hidden
 
 =head3 getSameSite($conf)
 

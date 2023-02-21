@@ -2,10 +2,11 @@ package Lemonldap::NG::Common::Session::REST;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Common::Util qw(isHiddenAttr);
 use Lemonldap::NG::Common::Conf::Constants;
 use JSON qw(from_json to_json);
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.17';
 
 has sessionTypes => ( is => 'rw' );
 
@@ -31,10 +32,6 @@ sub setTypes {
     $self->{sessionTypes}->{offline}->{options} =
       $self->{sessionTypes}->{$offlinebackend}->{options};
     $self->{sessionTypes}->{offline}->{kind} = "OIDCI";
-}
-
-sub separator {
-    $_[0]->{multiValuesSeparator} || $_[0]->conf->{multiValuesSeparator};
 }
 
 sub hAttr {
@@ -215,9 +212,8 @@ sub _session {
 
     my %session = %{ $apacheSession->data };
     unless ($raw) {
-        foreach my $k ( keys %session ) {
-            $session{$k} = '**********'
-              if ( $self->hAttr =~ /\b$k\b/ );
+        foreach ( keys %session ) {
+            $session{$_} = '******' if isHiddenAttr( $self->conf, $_ );
         }
     }
 

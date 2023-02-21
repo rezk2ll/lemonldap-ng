@@ -15,7 +15,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_REGISTERFORMEMPTY
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.17';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -189,12 +189,18 @@ sub parse {
         # Removed hidden session attributes
         foreach my $v ( split /[,\s]+/, $self->conf->{hiddenAttributes} ) {
             foreach ( keys %{ $json->{headers} } ) {
-                if ( $json->{headers}->{$_} =~ /\$$v/ ) {
+                if (
+                    $json->{headers}->{$_} =~ /\$$v/
+                    || (   $self->conf->{hiddenAttributesRegexp}
+                        && $json->{headers}->{$_} =~
+                        $self->conf->{hiddenAttributesRegexp} )
+                  )
+                {
                     delete $json->{headers}->{$_};
                     my $user = $req->userData->{ $self->conf->{whatToTrace} };
                     $self->userLogger->warn(
-"CheckDevOps: $user tried to retrieve hidden attribute '$v'"
-                    );
+"CheckDevOps: $user tried to retrieve a hidden attribute -> "
+                          . $json->{headers}->{$_} );
                 }
             }
         }

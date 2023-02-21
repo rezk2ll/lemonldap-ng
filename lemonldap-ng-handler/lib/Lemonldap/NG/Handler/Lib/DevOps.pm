@@ -4,7 +4,7 @@ use strict;
 use Lemonldap::NG::Common::UserAgent;
 use JSON qw(from_json);
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.17';
 our $_ua;
 
 sub ua {
@@ -97,8 +97,18 @@ q"I refuse to compile 'rules.json' when useSafeJail isn't activated! Yes I know,
     # Removed hidden session attributes
     foreach my $v ( split /[,\s]+/, $class->tsv->{hiddenAttributes} ) {
         foreach ( keys %{ $json->{headers} } ) {
-            delete $json->{headers}->{$_}
-              if $json->{headers}->{$_} eq '$' . $v;
+            if (
+                $json->{headers}->{$_} =~ /\$$v/
+                || (   $class->tsv->{hiddenAttributesRegexp}
+                    && $json->{headers}->{$_} =~
+                    $class->tsv->{hiddenAttributesRegexp} )
+              )
+            {
+                delete $json->{headers}->{$_};
+                $class->userLogger->warn(
+"DevOps handler: $vhost tried to retrieve a hidden attribute -> "
+                      . $json->{headers}->{$_} );
+            }
         }
     }
 

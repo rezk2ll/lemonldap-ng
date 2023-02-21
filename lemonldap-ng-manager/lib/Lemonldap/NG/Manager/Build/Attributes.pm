@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.17';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -1066,6 +1066,10 @@ sub attributes {
             type          => 'text',
             default       => '_password, _2fDevices',
             documentation => 'Name of attributes to hide in logs',
+        },        
+        hiddenAttributesRegexp => {
+            type          => 'pcre',
+            documentation => 'Regular expression to hide attributes',
         },
         displaySessionId => {
             type          => 'bool',
@@ -1074,7 +1078,7 @@ sub attributes {
         },
         persistentSessionAttributes => {
             type          => 'text',
-            default       => '_loginHistory _2fDevices notification_',
+            default       => '_loginHistory _2fDevices _oidcConsents notification_',
             documentation => 'Persistent session attributes to hide',
         },
         key => {
