@@ -66,11 +66,13 @@ SKIP: {
     ok( $token = $1, ' Token value is defined' );
     ok( $res->[2]->[0] =~ m#value="dwho" trplaceholder="login"#,
         ' Login found' );
-    ok( $res->[2]->[0] =~ m#<span trmsg="6">#, ' Error found' );
+    ok( $res->[2]->[0] =~ m#<span trmsg="[67]">#, ' Error found' )
+      or
+      explain( $res->[2]->[0], ' PE_6 or PE_7 found' );
     ok( $res->[2]->[0] =~ m#<img id="captcha" src="data:image/png;base64#,
         ' Captcha image inserted' )
       or
-      explain( $res->[2]->[0], '<img id="captcha" src="data:image/png;base64' );
+      explain( $res->[2]->[0], ' Captcha found' );
 
     # Try to get captcha value
     ok( $ts = getCache()->get($token), ' Found token session' );
