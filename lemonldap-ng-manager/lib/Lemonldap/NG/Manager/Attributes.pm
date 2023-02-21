@@ -631,6 +631,12 @@ sub attributes {
             'type' => 'text'
         },
         'autoSigninRules' => {
+            'keyTest' => sub {
+                return perlExpr(@_);
+            },
+            'test' => sub {
+                1;
+            },
             'type' => 'keyTextContainer'
         },
         'available2F' => {

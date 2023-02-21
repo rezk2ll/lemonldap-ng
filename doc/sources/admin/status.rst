@@ -1,14 +1,11 @@
-Status pages
-============
+Portal status (experimental)
+============================
 
-Portal Status (experimental)
-----------------------------
-
-The Portal displays in JSON format its activity. It can provide a view
+The Portal status page displays in JSON format its activity. It can provide a view
 of all returned codes.
 
-Configuration
-~~~~~~~~~~~~~
+Plugin configuration
+~~~~~~~~~~~~~~~~~~~~
 
 -  Ordered List ItemSet ``portalStatus = 1`` in lemonldap-ng.ini file
    (section ``[Portal]``)

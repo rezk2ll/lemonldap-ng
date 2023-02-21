@@ -285,36 +285,37 @@ Plugins
 ==================================================================== ============================================================================================================================================
 Name                                                                 Description
 ==================================================================== ============================================================================================================================================
-:doc:`Auto Signin<autosignin>` |new|                                 Auto Signin Addon
-:doc:`Brute Force protection<bruteforceprotection>` |new|            User must wait to log in after some failed login attempts
+:doc:`Adaptative authentication<adaptativeauthenticationlevel>`      Rules to modulate authentication level
+:doc:`Auto Signin<autosignin>`                                       Sign-in automatically
+:doc:`Brute Force protection<bruteforceprotection>`                  User must wait to log in after some failed login attempts
 :doc:`CDA<cda>`                                                      Cross Domain Authentication
 :doc:`Check DevOps<checkdevops>` [5]_ |new|                          Check DevOps handler file plugin
+:doc:`Check HIBP<checkhibp>` [19]_ |new|                             Check Have I Been Pwned plugin
 :doc:`Check state<checkstate>` |new|                                 Check state plugin (test page)
-:doc:`Check user<checkuser>`  [6]_ |new|                             Check access rights, transmitted headers and session attibutes for a specific user and URL
-:doc:`Configuration viewer<viewer>` |new|                            Edit WebSSO configuration in Read Only mode
-:doc:`Context switching<contextswitching>`  [7]_\ |new|              Switch context other users
+:doc:`Check user<checkuser>`  [6]_                                   Check access rights, transmitted headers and session attibutes for a specific user and URL
+:doc:`Configuration viewer<viewer>`                                  Edit WebSSO configuration in Read Only mode
+:doc:`Context switching<contextswitching>`  [7]_\                    Switch context other users
 :doc:`CrowdSec<crowdsec>`  [8]_\ |new|                               CrowdSec bouncer
 :doc:`Custom<plugincustom>`                                          Write a custom plugin
 :doc:`Decrypt value<decryptvalue>`  [9]_\                            Decrypt ciphered values
 :doc:`Display login history<loginhistory>`                           Display Success/Fails logins
-:doc:`Force Authentication<forcereauthn>`                            Force authentication to access to Portal
-:doc:`Global Logout<globallogout>`  [10]_                            Suggest to close all opened sessions at logout
-:doc:`Grant Sessions<grantsession>`                                  Rules to apply before allowing a user to open a session
-:doc:`Impersonation<impersonation>`  [11]_\ |new|                    Allow users to use another identity
+:doc:`Force authentication<forcereauthn>`                            Force authentication to access to Portal
+:doc:`Global logout<globallogout>`  [10]_                            Suggest to close all opened sessions at logout
+:doc:`Grant sessions<grantsession>`                                  Rules to apply before allowing a user to open a session
+:doc:`Impersonation<impersonation>`  [11]_\                          Allow users to use another identity
 :doc:`Find user<finduser>`  [12]_\ |new|                             Search for user account
-:doc:`NewLocationWarning<newlocationwarning>`  [13]_\ |beta|         Send an email when user sign in from a new location 
+:doc:`NewLocationWarning<newlocationwarning>`  [13]_\ |new|          Send an email when user sign in from a new location 
 :doc:`Notifications system<notifications>`                           Display a message during log in process 
-:doc:`Portal Status<status>`                                         Experimental portal status page
+:doc:`Persistent connection<persistentconnection>`                   Enable persistent connection on same browser
+:doc:`Portal status<status>`                                         Experimental portal status page
 :doc:`Public pages<public_pages>`                                    Enable public pages system
 :doc:`Refresh session API<refreshsessionapi>`  [14]_                 Plugin that provides an API to refresh a user session
-:doc:`Reset password by mail<resetpassword>`                         Send a mail to reset its password
 :doc:`Reset certificate by mail<resetcertificate>`  [15]_\ |new|     Allow users to reset their certificate
-:doc:`REST services<restservices>` |new|                             REST server for :doc:`Proxy<authproxy>`
+:doc:`Reset password by mail<resetpassword>`                         Send a mail to reset its password
+:doc:`Remember auth choice<rememberauthchoice>` [20]_\ |new|         Remember user last authentication choice
+:doc:`REST services<restservices>`                                   REST server for :doc:`Proxy<authproxy>`
 :doc:`SOAP services<soapservices>` |deprecated|                      SOAP server for :doc:`Proxy<authproxy>`
-:doc:`Stay connected<stayconnected>` |new|                           Enable persistent connection on same browser
-:doc:`Remember auth choice<rememberauthchoice>` |new|                Remember user last authentication choice
-Upgrade session |new|                                                This plugin explains to an already authenticated user that a higher authentication level is required to access the URL instead of reject him
-:doc:`Check HIBP<checkhibp>` [19]_ |new|                             Check Have I Been Pwned plugin
+Upgrade session                                                      This plugin explains to an already authenticated user that a higher authentication level is required to access the URL instead of reject him
 ==================================================================== ============================================================================================================================================
 
 Handlers
@@ -589,7 +590,7 @@ by your language code):
    :doc:`Password second factor<password2f>` is available with LLNG ≥ 2.0.16
 
 .. [5]
-   :doc:`Check DevOps file plugin<checkdevops>` are available with LLNG ≥
+   :doc:`Check DevOps file plugin<checkdevops>` is available with LLNG ≥
    2.0.12
 
 .. [6]
@@ -641,8 +642,12 @@ by your language code):
    When configured as an additional second factor, see :ref:`sfextraregister`
 
 .. [19]
-   :doc:`Check HIBP plugin<checkhibp>` are available with LLNG ≥
+   :doc:`Check HIBP plugin<checkhibp>` is available with LLNG ≥
    2.0.16
+
+.. [20]
+   :doc:`Remember AuthChoice plugin<rememberauthchoice>` is available with LLNG ≥
+   2.0.15
 
 .. |image0| image:: /icons/kthememgr.png
 .. |image1| image:: /icons/warehause.png

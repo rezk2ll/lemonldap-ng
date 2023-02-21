@@ -1,5 +1,5 @@
-Auto Signin Addon
-=================
+Auto signin plugin
+==================
 
 Auto-Signin plugin provides an easy way to bypass authentication process
 based on rules. For example, a TV can be automatically authenticated by
@@ -20,4 +20,4 @@ dwho           ''$env->{REMOTE_ADDR} eq '192.168.42.42' ''
 
 .. attention::
 
-    Username must be defined in users database.
+    Username must be defined in users database

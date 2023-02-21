@@ -1,4 +1,4 @@
-Reset password by mail
+Password reset by mail
 ======================
 
 Presentation

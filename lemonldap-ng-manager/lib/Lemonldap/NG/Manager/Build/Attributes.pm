@@ -823,6 +823,7 @@ sub attributes {
         },
         refreshSessions => {
             type          => 'bool',
+            help          => "refreshsessionapi.html",
             documentation => 'Refresh sessions plugin',
         },
         forceGlobalStorageIssuerOTT => {
@@ -2476,17 +2477,19 @@ sub attributes {
         # AutoSignin
         autoSigninRules => {
             type          => 'keyTextContainer',
+            keyTest       => sub { return perlExpr(@_) },
+            test          => sub { 1 },
+            help          => 'autosignin.html',
             documentation => 'List of auto signin rules',
         },
 
-        # Adaptative Authentication Level plugin
+        # Adaptative Authentication Level
         adaptativeAuthenticationLevelRules => {
             type          => 'keyTextContainer',
             'keyTest'     => sub { return perlExpr(@_) },
             'test'        => sub { 1 },
             help          => "adaptativeauthenticationlevel.html",
             documentation => 'Adaptative authentication level rules',
-            flags         => 'p',
         },
 
         # LocationDetect plugin
