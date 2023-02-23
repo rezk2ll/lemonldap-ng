@@ -48,6 +48,10 @@ build_focal:
   extends: .debian_build_job
   image: buildpkg/ubuntu:focal
 
+build_jammy:
+  extends: .debian_build_job
+  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/ubuntu:jammy
+
 build_centos_7:
   extends: .build_job
   image: buildpkg/centos:7
@@ -71,6 +75,18 @@ build_centos_8:
      - make dist
      - ci-build-pkg
 
+build_rocky_9:
+  extends: .build_job
+  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/rockylinux:9
+  script:
+     - yum-config-manager --enable crb
+     - yum-config-manager --enable appstream
+     - yum -y install epel-release
+     - yum -y install systemd
+     - scripts/ci-install-lasso-centos
+     - make dist
+     - ci-build-pkg
+
 sign:
   image: buildpkg/debian:bullseye
   stage: sign
@@ -83,7 +99,6 @@ sign:
   dependencies:
     - build_buster
     - build_bullseye
-#    - build_xenial
     - build_bionic
     - build_centos_7
     - build_centos_8
