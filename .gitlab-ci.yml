@@ -14,6 +14,8 @@
   script:
      - apt-get update --allow-releaseinfo-change && apt-get -y dist-upgrade
      - DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata
+     - DEBIAN_FRONTEND=noninteractive apt install -y libgeoip2-perl || true
+     - DEBIAN_FRONTEND=noninteractive apt install -y libhttp-browserdetect-perl || true
      - ci-build-pkg
   before_script:
      - env | grep ^CI_
@@ -33,25 +35,18 @@ before_script:
 build_buster:
   extends: .debian_build_job
   image: buildpkg/debian:buster
-  script:
-    - apt update
-    - apt install -y libgeoip2-perl libhttp-browserdetect-perl
 
 build_bullseye:
   extends: .debian_build_job
   image: buildpkg/debian:bullseye
-  script:
-    - apt update
-    - apt install -y libgeoip2-perl libhttp-browserdetect-perl
-
-#build_xenial:
-#  extends: .debian_build_job
-#  image: buildpkg/ubuntu:xenial
-#  <<: *job_build
 
 build_bionic:
   extends: .debian_build_job
   image: buildpkg/ubuntu:bionic
+
+build_focal:
+  extends: .debian_build_job
+  image: buildpkg/ubuntu:focal
 
 build_centos_7:
   extends: .build_job
