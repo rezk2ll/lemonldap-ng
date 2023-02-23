@@ -409,6 +409,7 @@
 "hashkey":"Clave",
 "headers":"Cabeceras HTTP",
 "hiddenAttributes":"Atributos ocultos",
+"hiddenAttributesRegexp":"Regexp to hide attributes",
 "hide":"Ocultar",
 "hideHelp":"Ocultar ayuda",
 "hideOldPassword":"Ocultar contraseña antigua",

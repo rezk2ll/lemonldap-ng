@@ -409,6 +409,7 @@
 "hashkey":"المفتاح",
 "headers":"هيدر إتش تي تي بي ",
 "hiddenAttributes":"السمات المخفية",
+"hiddenAttributesRegexp":"Regexp to hide attributes",
 "hide":"إخفاء",
 "hideHelp":"إخفاء المساعدة",
 "hideOldPassword":"إخفاء كلمة المرور القديمة",

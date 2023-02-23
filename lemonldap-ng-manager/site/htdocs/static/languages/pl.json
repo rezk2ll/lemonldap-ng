@@ -409,6 +409,7 @@
 "hashkey":"Klucz",
 "headers":"Nagłówki HTTP",
 "hiddenAttributes":"Ukryte atrybuty",
+"hiddenAttributesRegexp":"Regexp to hide attributes",
 "hide":"Ukryj",
 "hideHelp":"Ukryj pomoc",
 "hideOldPassword":"Ukryj stare hasło",

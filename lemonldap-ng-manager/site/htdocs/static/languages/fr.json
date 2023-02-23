@@ -409,6 +409,7 @@
 "hashkey":"Clef",
 "headers":"En-têtes HTTP",
 "hiddenAttributes":"Attributs masqués",
+"hiddenAttributesRegexp":"Expression régulière pour masquer des attributs",
 "hide":"Masquer",
 "hideHelp":"Masquer l'aide",
 "hideOldPassword":"Masquer l'ancien mot de passe",

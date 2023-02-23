@@ -409,6 +409,7 @@
 "hashkey":"金鑰",
 "headers":"HTTP 標頭",
 "hiddenAttributes":"隱藏屬性",
+"hiddenAttributesRegexp":"Regexp to hide attributes",
 "hide":"隐藏",
 "hideHelp":"隐藏帮助",
 "hideOldPassword":"隐藏旧密码",

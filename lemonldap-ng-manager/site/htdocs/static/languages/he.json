@@ -409,6 +409,7 @@
 "hashkey":"מפתח",
 "headers":"כותרות HTTP",
 "hiddenAttributes":"תכונות נסתרות",
+"hiddenAttributesRegexp":"Regexp to hide attributes",
 "hide":"הסתרה",
 "hideHelp":"הסתרת העזרה",
 "hideOldPassword":"הסתרת הסיסמה הישנה",
