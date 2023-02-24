@@ -84,6 +84,10 @@ This method computes the psession ID from the user login
 
 This method computes the unique ID of each 2F device, for use with the API and CLI
 
+=head3 display2F($device)
+
+This method formats device name for logging purpose
+
 =head3 isHiddenAttr( $conf, $attr, @hidden )
 
 This method tests if the attribute is hidden
