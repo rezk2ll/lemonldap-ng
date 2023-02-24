@@ -34,7 +34,7 @@ sub isHiddenAttr {
       : ();
     my $regex =
       keys %hiddenAttributes
-      ? '(?:' . join( '|', keys %hiddenAttributes ) . ')'
+      ? '\b(?:' . join( '|', keys %hiddenAttributes ) . ')\b'
       : '';
     return
          $hiddenAttributes{$attr}
