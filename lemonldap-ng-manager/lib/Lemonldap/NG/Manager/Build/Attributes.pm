@@ -1064,12 +1064,12 @@ sub attributes {
         },
         hiddenAttributes => {
             type          => 'text',
-            default       => '_password, _2fDevices',
+            default       => '_password _2fDevices',
             documentation => 'Name of attributes to hide in logs',
         },        
         hiddenAttributesRegexp => {
             type          => 'pcre',
-            default       => '^(?:_\w+|notification_)',
+            default       => '^_oidcConsents',
             documentation => 'Regular expression to hide attributes',
         },
         displaySessionId => {

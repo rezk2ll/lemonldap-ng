@@ -1570,11 +1570,11 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
             'type'    => 'int'
         },
         'hiddenAttributes' => {
-            'default' => '_password, _2fDevices',
+            'default' => '_password _2fDevices',
             'type'    => 'text'
         },
         'hiddenAttributesRegexp' => {
-            'default' => '^(?:_\\w+|notification_)',
+            'default' => '^_oidcConsents',
             'type'    => 'pcre'
         },
         'hideOldPassword' => {
