@@ -203,7 +203,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							array = JSON.parse(session[attr])
 							if array.length > 0
 								subres.push
-									title: "type"
+									title: "2fid"
 									value: "name"
 									epoch: "date"
 								for sfDevice in array
@@ -215,7 +215,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 										if key == 'epoch'
 											epoch = value
 									subres.push
-										title: title
+										title: '[' + title + ']' + epoch
 										value: name
 										epoch: epoch
 										sfrow: true

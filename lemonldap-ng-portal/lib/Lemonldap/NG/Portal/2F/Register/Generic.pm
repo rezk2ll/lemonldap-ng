@@ -131,8 +131,6 @@ sub run {
             )
           )
         {
-            $self->userLogger->notice( $self->prefix
-                  . "2f: registration of $genericname succeeds for $user" );
             return [
                 200,
                 [
@@ -160,8 +158,6 @@ sub run {
 
         if ( $self->del2fDevice( $req, $req->userData, $self->prefix, $epoch ) )
         {
-            $self->userLogger->notice(
-                $self->prefix . "2f: device deleted for $user" );
             return [
                 200,
                 [

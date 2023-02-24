@@ -1,34 +1,4 @@
 #!/bin/bash
 
-if [ -e ~/.transifex.key ]; then
-	echo "## portal.json"
-	curl -i -L --user api:`cat ~/.transifex.key` \
-		-F file=@lemonldap-ng-portal/site/htdocs/static/languages/en.json \
-		-X PUT https://www.transifex.com/api/2/project/lemonldapng/resource/portaljson/content/
-	curl -i -L --user api:`cat ~/.transifex.key` \
-		-F file=@lemonldap-ng-portal/site/htdocs/static/languages/fr.json \
-		-X PUT https://www.transifex.com/api/2/project/lemonldapng/resource/portaljson/translation/fr/
-	echo
-
-	echo "## manager.json"
-	curl -i -L --user api:`cat ~/.transifex.key` \
-		-F file=@lemonldap-ng-manager/site/htdocs/static/languages/en.json \
-		-X PUT https://www.transifex.com/api/2/project/lemonldapng/resource/managerjson/content/
-	curl -i -L --user api:`cat ~/.transifex.key` \
-		-F file=@lemonldap-ng-manager/site/htdocs/static/languages/fr.json \
-		-X PUT https://www.transifex.com/api/2/project/lemonldapng/resource/managerjson/translation/fr/
-	echo
-
-	echo "## portal mail.json"
-	curl -i -L --user api:`cat ~/.transifex.key` \
-		-F file=@lemonldap-ng-portal/site/templates/common/mail/en.json \
-		-X PUT https://www.transifex.com/api/2/project/lemonldapng/resource/mailjson_1/content/
-	curl -i -L --user api:`cat ~/.transifex.key` \
-		-F file=@lemonldap-ng-portal/site/templates/common/mail/fr.json \
-		-X PUT https://www.transifex.com/api/2/project/lemonldapng/resource/mailjson_1/translation/fr/
-	echo
-
-else
-	echo "No ~/.transifex.key file found, exiting" >&2
-	exit 1
-fi
+tx push
+tx push -t -l fr

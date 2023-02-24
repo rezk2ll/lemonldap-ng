@@ -851,6 +851,12 @@ has ini => (
         foreach my $k ( keys %$defaultIni ) {
             $ini->{$k} //= $defaultIni->{$k};
         }
+        if ($ENV{DEBUG}) {
+            $ini->{logLevel} = 'debug';
+        }
+        if ($ENV{LLNGLOGLEVEL}) {
+            $ini->{logLevel} = $ENV{LLNGLOGLEVEL};
+        }
         $self->{ini} = $ini;
         main::ok( $self->{p} = $self->class->new(), 'Portal object' );
         main::count(1);

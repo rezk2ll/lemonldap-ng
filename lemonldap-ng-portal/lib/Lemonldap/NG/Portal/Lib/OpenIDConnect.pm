@@ -29,6 +29,9 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
 
 our $VERSION = '2.0.15';
 
+use constant BACKCHANNEL_EVENTSKEY =>
+  'http://schemas.openid.net/event/backchannel-logout';
+
 # OpenID Connect standard claims
 use constant PROFILE => [
     qw/name family_name given_name middle_name nickname preferred_username
@@ -742,7 +745,7 @@ sub checkIDTokenValidity {
     # Check audience
     if ( ref $id_token->{aud} ) {
         my @audience = @{ $id_token->{aud} };
-        unless ( grep $_ eq $client_id, @audience ) {
+        unless ( grep { $_ eq $client_id } @audience ) {
             $self->logger->error("Client ID not found in audience array");
             return 0;
         }
@@ -798,7 +801,7 @@ sub checkIDTokenValidity {
 
     # Check acr
     my $acr = $id_token->{acr};
-    if ( defined $acr_values ) {
+    if ( $acr_values ) {
         unless ($acr) {
             $self->logger->error("ACR was not returned by OP $op");
             return 0;
@@ -1003,6 +1006,10 @@ sub decodeJSON {
 
     eval { $json_hash = from_json( $json, { allow_nonref => 1 } ); };
     return undef if ($@);
+    unless ( ref $json_hash ) {
+        $self->logger->error("Wanted a JSON object, got: $json_hash");
+        return undef;
+    }
 
     return $json_hash;
 }
@@ -1115,6 +1122,7 @@ sub makeJWT {
         iat       => time,                        # Issued time
         jti       => $id,                         # Access Token session ID
         scope     => $scope,                      # Scope
+        sid       => $self->getSidFromSession( $rp, $sessionInfo ), # Session id
     };
 
     my $claims =
@@ -1125,7 +1133,8 @@ sub makeJWT {
         ->{oidcRPMetaDataOptionsAccessTokenClaims} )
     {
         foreach ( keys %$claims ) {
-            $access_token_payload->{$_} = $claims->{$_};
+            $access_token_payload->{$_} = $claims->{$_}
+              unless $access_token_payload->{$_};
         }
     }
     else {
@@ -1213,20 +1222,8 @@ sub updateRefreshToken {
 sub updateToken {
     my ( $self, $id, $infos ) = @_;
 
-    my %storage = (
-        storageModule        => $self->conf->{oidcStorage},
-        storageModuleOptions => $self->conf->{oidcStorageOptions},
-    );
-
-    unless ( $storage{storageModule} ) {
-        %storage = (
-            storageModule        => $self->conf->{globalStorage},
-            storageModuleOptions => $self->conf->{globalStorageOptions},
-        );
-    }
-
     my $oidcSession = Lemonldap::NG::Common::Session->new( {
-            %storage,
+            $self->_storeOpts(),
             cacheModule        => $self->conf->{localSessionStorage},
             cacheModuleOptions => $self->conf->{localSessionStorageOptions},
             id                 => $id,
@@ -1248,22 +1245,11 @@ sub updateToken {
 # @return Lemonldap::NG::Common::Session object
 sub getOpenIDConnectSession {
     my ( $self, $id, $type, $ttl, $info ) = @_;
-    my %storage = (
-        storageModule        => $self->conf->{oidcStorage},
-        storageModuleOptions => $self->conf->{oidcStorageOptions},
-    );
 
     $ttl ||= $self->conf->{timeout};
 
-    unless ( $storage{storageModule} ) {
-        %storage = (
-            storageModule        => $self->conf->{globalStorage},
-            storageModuleOptions => $self->conf->{globalStorageOptions},
-        );
-    }
-
     my $oidcSession = Lemonldap::NG::Common::Session->new( {
-            %storage,
+            $self->_storeOpts(),
             cacheModule        => $self->conf->{localSessionStorage},
             cacheModuleOptions => $self->conf->{localSessionStorageOptions},
             id                 => $id,
@@ -1347,7 +1333,7 @@ sub storeState {
     return $self->state_ott->createToken($infos);
 }
 
-# Extract state information into $self
+# Extract state information into $req
 sub extractState {
     my ( $self, $req, $state ) = @_;
 
@@ -2434,9 +2420,30 @@ sub getUserIDForRP {
       : $data->{$user_id_attribute};
 }
 
+# Return storage options
+sub _storeOpts {
+    my ($self) = @_;
+    my $storage =
+      $self->conf->{oidcStorage}
+      ? {
+        storageModule        => $self->conf->{oidcStorage},
+        storageModuleOptions => $self->conf->{oidcStorageOptions},
+      }
+      : {
+        storageModule        => $self->conf->{globalStorage},
+        storageModuleOptions => $self->conf->{globalStorageOptions},
+      };
+    return %$storage;
+}
+
 sub generateNonce {
     my ($self) = @_;
     return encode_base64url( Crypt::URandom::urandom(16) );
+}
+
+sub getSidFromSession {
+    my ( $self, $rp, $sessionInfo ) = @_;
+    return Digest::SHA::hmac_sha256_base64($sessionInfo->{_session_id} . ':' . $rp );
 }
 
 1;

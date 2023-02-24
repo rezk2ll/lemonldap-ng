@@ -1,6 +1,6 @@
 Source: lemonldap-ng
 Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
-Uploaders: Xavier Guimard <yadd@debian.org>
+Uploaders: Yadd <yadd@debian.org>
 Section: perl
 Priority: optional
 Build-Depends: debhelper (>= 10),
@@ -11,6 +11,7 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libauthen-oath-perl <!nocheck>,
                      libauthen-radius-perl <!nocheck>,
                      libcache-cache-perl <!nocheck>,
+                     libclass-xsaccessor-perl <!nocheck>,
                      libclone-perl <!nocheck>,
                      libconfig-inifiles-perl <!nocheck>,
                      libconvert-base32-perl <!nocheck>,
@@ -31,23 +32,22 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libhash-merge-simple-perl <!nocheck>,
                      libhtml-template-perl <!nocheck>,
                      libimage-magick-perl <!nocheck>,
-                     libio-string-perl <!nocheck>,
+                     libio-string-perl,
                      libipc-run-perl <!nocheck>,
                      liblist-moreutils-perl <!nocheck>,
-                     libjson-perl <!nocheck>,
+                     libjson-perl,
                      libjson-xs-perl <!nocheck>,
                      liblasso-perl <!nocheck>,
                      libmime-tools-perl <!nocheck>,
-                     libmouse-perl <!nocheck>,
-                     libclass-xsaccessor-perl <!nocheck>,
+                     libmouse-perl,
                      libnet-cidr-lite-perl <!nocheck>,
                      libnet-ldap-perl <!nocheck>,
                      libio-socket-timeout-perl <!nocheck>,
                      libnet-openid-consumer-perl <!nocheck>,
                      libnet-openid-server-perl <!nocheck>,
                      libplack-perl <!nocheck>,
-                     libregexp-assemble-perl <!nocheck>,
-                     libregexp-common-perl <!nocheck>,
+                     libregexp-assemble-perl,
+                     libregexp-common-perl,
                      libsoap-lite-perl <!nocheck>,
                      libstring-random-perl <!nocheck>,
                      libtest-mockobject-perl <!nocheck>,
@@ -66,7 +66,7 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      python3-sphinx,
                      python3-sphinx-bootstrap-theme,
                      perl
-Standards-Version: 4.6.1
+Standards-Version: 4.6.2
 Vcs-Browser: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng
 Vcs-Git: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng.git
 Homepage: https://lemonldap-ng.org/
@@ -223,7 +223,6 @@ Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
          debconf,
-         perl-doc,
          libapache-session-perl,
          libcache-cache-perl,
          libconfig-inifiles-perl,
@@ -245,7 +244,8 @@ Recommends: libapache-session-browseable-perl,
             libdbi-perl,
             libhttp-parser-xs-perl,
             liblwp-protocol-https-perl,
-            libstring-random-perl
+            libstring-random-perl,
+            perl-doc
 Suggests: libconvert-base32-perl,
           libnet-ldap-perl,
           libsoap-lite-perl,

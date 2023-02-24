@@ -765,6 +765,10 @@ function templates(tpl,key) {
                      {
                         "k" : "front",
                         "v" : "Front Channel"
+                     },
+                     {
+                        "k" : "back",
+                        "v" : "Back Channel"
                      }
                   ],
                   "title" : "oidcRPMetaDataOptionsLogoutType",

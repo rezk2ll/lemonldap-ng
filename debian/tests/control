@@ -1,3 +1,14 @@
+# FastCGI server
+Tests: fastcgiserver
+Depends: @
+ , libfcgi-client-perl
+ , libstring-random-perl
+ , libemail-sender-perl
+ , libmime-tools-perl
+ , libgd-securityimage-perl
+ , libimage-magick-perl
+Restrictions: allow-stderr, needs-root
+
 # debian/tests/runner launch pkg-perl-autopkgtest tests for each library
 Test-Command: ./debian/tests/runner build-deps lemonldap-ng-common
 Depends: liblemonldap-ng-common-perl, @builddeps@, pkg-perl-autopkgtest
@@ -44,6 +55,7 @@ Depends: @, @builddeps@, pkg-perl-autopkgtest
  , libauthen-pam-perl, libauthen-radius-perl
  , libweb-id-perl, libio-socket-timeout-perl
  , libdatetime-format-rfc3339-perl
+ , libhttp-browserdetect-perl
 Restrictions: superficial
 Features: test-name=runtime-deps-and-recommends
 

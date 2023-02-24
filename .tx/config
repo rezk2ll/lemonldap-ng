@@ -1,0 +1,24 @@
+[main]
+host = https://www.transifex.com
+
+[o:lemonldapng:p:lemonldapng:r:mailjson_1]
+file_filter   = lemonldap-ng-portal/site/templates/common/mail/<lang>.json
+source_file   = lemonldap-ng-portal/site/templates/common/mail/en.json
+type          = KEYVALUEJSON
+minimum_perc  = 0
+resource_name = mail.json
+
+[o:lemonldapng:p:lemonldapng:r:managerjson]
+file_filter   = lemonldap-ng-manager/site/htdocs/static/languages/<lang>.json
+source_file   = lemonldap-ng-manager/site/htdocs/static/languages/en.json
+type          = KEYVALUEJSON
+minimum_perc  = 0
+resource_name = manager.json
+
+[o:lemonldapng:p:lemonldapng:r:portaljson]
+file_filter   = lemonldap-ng-portal/site/htdocs/static/languages/<lang>.json
+source_file   = lemonldap-ng-portal/site/htdocs/static/languages/en.json
+type          = KEYVALUEJSON
+minimum_perc  = 0
+resource_name = portal.json
+

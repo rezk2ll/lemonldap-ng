@@ -1,5 +1,6 @@
 {
 "2faSessions":"2ndFA sessions explorer",
+"2fid":"Identifier",
 "2ndFA":"Second Factors",
 "ADPwdExpireWarning":"Password expire warning",
 "ADPwdMaxAge":"Password max age",
@@ -72,7 +73,6 @@
 "applicationList":"Categories and applications",
 "applyResult":"Apply result",
 "appsInThisCat":"Applications in this category",
-"appslist":"Applications list",
 "array":"Array",
 "attributeName":"Attribute name",
 "attributesAndMacros":"Attributes and Macros",
@@ -192,7 +192,6 @@
 "certificateResetByMailValidityDelay":"Minimum duration before expiration",
 "cfgLog":"Summary",
 "cfgVersion":"Configuration version",
-"changePassword":"Password change",
 "checkDevOps":"Activation",
 "checkDevOpsCheckSessionAttributes":"Check session attributes",
 "checkDevOpsDisplayNormalizedHeaders":"Display normalized headers",
