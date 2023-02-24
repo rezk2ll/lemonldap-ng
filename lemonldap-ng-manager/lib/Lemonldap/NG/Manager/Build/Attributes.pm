@@ -1069,6 +1069,7 @@ sub attributes {
         },        
         hiddenAttributesRegexp => {
             type          => 'pcre',
+            default       => '^(?:_\w+|notification_)',
             documentation => 'Regular expression to hide attributes',
         },
         displaySessionId => {

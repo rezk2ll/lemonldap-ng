@@ -1574,7 +1574,8 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
             'type'    => 'text'
         },
         'hiddenAttributesRegexp' => {
-            'type' => 'pcre'
+            'default' => '^(?:_\\w+|notification_)',
+            'type'    => 'pcre'
         },
         'hideOldPassword' => {
             'default' => 0,

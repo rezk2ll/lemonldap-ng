@@ -210,10 +210,9 @@ sub defaultValuesInit {
         cookieExpiration        cookieName         customFunctions
         securedCookie           timeout            timeoutActivity
         timeoutActivityInterval useRedirectOnError useRedirectOnForbidden
-        useSafeJail             whatToTrace        handlerInternalCache
+        useSafeJail  httpOnly   whatToTrace        handlerInternalCache
         handlerServiceTokenTTL  customToTrace      lwpOpts lwpSslOpts
-        authChoiceAuthBasic     authChoiceParam    hiddenAttributes
-        hiddenAttributesRegexp  upgradeSession     httpOnly
+        authChoiceAuthBasic     authChoiceParam    upgradeSession
         )
       );
 

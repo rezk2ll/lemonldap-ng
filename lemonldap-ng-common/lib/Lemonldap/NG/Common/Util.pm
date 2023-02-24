@@ -22,12 +22,20 @@ sub genId2F {
 
 sub isHiddenAttr {
     my ( $conf, $attr, @hidden ) = @_;
-    return unless ( $conf && $attr );
     my %hiddenAttributes =
-      map { $_ => 1 } ( split( /[,\s]+/, $conf->{hiddenAttributes} ), @hidden );
-    return $hiddenAttributes{$attr}
-      || ( $conf->{hiddenAttributesRegExp}
-        && $attr =~ $conf->{hiddenAttributesRegexp} );
+      $conf->{hiddenAttributes}
+      ? map { $_ => 1 }
+      ( split( /[,\s]+/, $conf->{hiddenAttributes} ), @hidden )
+      : ();
+    my $regex =
+      keys %hiddenAttributes
+      ? '(?:' . join( '|', keys %hiddenAttributes ) . ')'
+      : '';
+    return
+         $hiddenAttributes{$attr}
+      || ( $regex && $attr =~ /$regex/o )
+      || ( $conf->{hiddenAttributesRegexp}
+        && $attr =~ /$conf->{hiddenAttributesRegexp}/o );
 }
 
 sub getSameSite {

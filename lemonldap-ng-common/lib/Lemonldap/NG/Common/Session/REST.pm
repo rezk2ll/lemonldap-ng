@@ -34,10 +34,6 @@ sub setTypes {
     $self->{sessionTypes}->{offline}->{kind} = "OIDCI";
 }
 
-sub hAttr {
-    $_[0]->{hiddenAttributes} || $_[0]->conf->{hiddenAttributes};
-}
-
 ### SEE LEMONLDAP::NG::COMMON::SESSION FOR AVAILABLE FUNCTIONS
 
 sub delSession {
@@ -152,7 +148,7 @@ sub delete2F {
         400 );
 
     # Try to load 2F Device(s) from session
-    $self->logger->debug("Looking for 2F Device(s) ...");
+    $self->logger->debug("Looking for 2F Device(s)...");
     my $_2fDevices;
     if ( $session->data->{_2fDevices} ) {
         $_2fDevices = eval {
@@ -169,13 +165,13 @@ sub delete2F {
     }
 
     # Delete 2F device
-    $self->logger->debug("Reading 2F device(s) ...");
+    $self->logger->debug("Reading 2F device(s)...");
     my @keep = ();
     while (@$_2fDevices) {
         my $element = shift @$_2fDevices;
 
         $self->logger->debug(
-            "Searching for 2F device to delete -> $type / $epoch ...");
+            "Looking for 2F device to delete -> $type / $epoch");
         if ( defined $element->{type} && defined $element->{epoch} ) {
             push @keep, $element
               unless ( ( $element->{type} eq $type )
@@ -187,9 +183,9 @@ sub delete2F {
     }
 
     # Update session
-    $self->logger->debug("Saving 2F Devices ...");
+    $self->logger->debug("Saving 2F Devices");
     $session->data->{_2fDevices} = to_json( \@keep );
-    $self->logger->debug("Updating session ...");
+    $self->logger->debug("Updating session");
     $session->update( \%{ $session->data } );
 
     Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
