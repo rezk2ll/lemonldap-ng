@@ -408,6 +408,7 @@
 "hashkey":"Chave",
 "headers":"Cabeçalhos HTTP",
 "hiddenAttributes":"Atributos escondidos",
+"hiddenAttributesRegexp":"Regexp to hide attributes",
 "hide":"Esconder",
 "hideHelp":"Esconder ajuda",
 "hideOldPassword":"Esconder senha antiga",
