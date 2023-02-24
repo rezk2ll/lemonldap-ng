@@ -23,6 +23,7 @@ sub genId2F {
 sub display2F {
     my ($device) = @_;
     return sprintf( "[%s]%s", $device->{type}, $device->{epoch} );
+}
 
 sub isHiddenAttr {
     my ( $conf, $attr, @hidden ) = @_;
