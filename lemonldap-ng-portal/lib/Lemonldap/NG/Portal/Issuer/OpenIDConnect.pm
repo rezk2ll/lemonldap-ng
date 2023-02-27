@@ -360,29 +360,6 @@ sub run {
                 return $self->reAuth($req);
             }
 
-            my $max_age         = $oidc_request->{'max_age'};
-            my $_lastAuthnUTime = $req->{sessionInfo}->{_lastAuthnUTime};
-            if ( $max_age && time > $_lastAuthnUTime + $max_age ) {
-                $self->logger->debug(
-"Reauthentication forced because authentication time ($_lastAuthnUTime) is too old (>$max_age s)"
-                );
-                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
-                return $self->reAuth($req);
-            }
-
-            # Check if we have sufficient auth level
-            my $authenticationLevel =
-              $req->{sessionInfo}->{authenticationLevel} || 0;
-            if ( $authenticationLevel < $spAuthnLevel ) {
-                $self->logger->debug(
-                        "Insufficient authentication level for service $rp"
-                      . " (has: $authenticationLevel, want: $spAuthnLevel)" );
-
-                # Reauth with sp auth level as target
-                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
-                return $self->upgradeAuth($req);
-            }
-
             # Check scope validity
             # We use a slightly more relaxed version of
             # https://tools.ietf.org/html/rfc6749#appendix-A.4
@@ -449,6 +426,29 @@ sub run {
                     $self->logger->debug(
                         "ID Token hint sub $sub matches current user");
                 }
+            }
+
+            my $max_age         = $oidc_request->{'max_age'};
+            my $_lastAuthnUTime = $req->{sessionInfo}->{_lastAuthnUTime};
+            if ( $max_age && time > $_lastAuthnUTime + $max_age ) {
+                $self->logger->debug(
+"Reauthentication forced because authentication time ($_lastAuthnUTime) is too old (>$max_age s)"
+                );
+                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
+                return $self->reAuth($req);
+            }
+
+            # Check if we have sufficient auth level
+            my $authenticationLevel =
+              $req->{sessionInfo}->{authenticationLevel} || 0;
+            if ( $authenticationLevel < $spAuthnLevel ) {
+                $self->logger->debug(
+                        "Insufficient authentication level for service $rp"
+                      . " (has: $authenticationLevel, want: $spAuthnLevel)" );
+
+                # Reauth with sp auth level as target
+                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
+                return $self->upgradeAuth($req);
             }
 
             # Compute scopes
