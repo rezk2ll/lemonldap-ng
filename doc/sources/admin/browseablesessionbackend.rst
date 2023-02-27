@@ -28,7 +28,7 @@ List of fields to index by session type
    * - Session Type
      - Fields to index
    * - Sessions (global) [1]_
-     - \_whatToTrace \_session_kind \_utime ipAddr \_httpSessionType user mail \_session_uid
+     - \_whatToTrace \_session_kind \_utime ipAddr \_httpSessionType _user mail \_session_uid
    * - Persistent sessions
      - \_session\_kind \_httpSessionType \_session\_uid ipAddr \_whatToTrace
    * - CAS sessions
@@ -39,7 +39,7 @@ List of fields to index by session type
      - \_session_kind \_utime
 
 .. [1]
-   - ``user`` is used by :doc:`resetpassword`.
+   - ``_user`` is used by :doc:`resetpassword`.
    - ``mail`` is used by :doc:`register`.
    - ``_session_uid`` is used by :doc:`stayconnected`.
 
