@@ -32,7 +32,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PP_INSUFFICIENT_PASSWORD_QUALITY
 );
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.17.0';
 
 extends qw(
   Lemonldap::NG::Portal::Lib::SMTP

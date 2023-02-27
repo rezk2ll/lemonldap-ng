@@ -5,7 +5,7 @@ use strict;
 use Digest::MD5;
 use MIME::Base64 qw(encode_base64);
 
-our $VERSION   = '2.0.14';
+our $VERSION   = '2.17.0';
 our @ISA       = qw(Exporter);
 our @EXPORT_OK = qw(getSameSite getPSessionID genId2F display2F);
 

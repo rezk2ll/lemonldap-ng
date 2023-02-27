@@ -27,7 +27,7 @@ use JSON;
 
 requires qw(p conf logger);
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.17.0';
 
 =item update2fDevice
 
