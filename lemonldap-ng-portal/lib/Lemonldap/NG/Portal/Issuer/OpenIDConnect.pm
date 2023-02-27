@@ -1011,8 +1011,11 @@ sub run {
                 # trivial to bypass
                 my $payload = getJWTPayload($id_token_hint);
                 my $azp     = $payload->{azp};
+                my $sid     = $payload->{sid};
+                my $sub     = $payload->{sub};
 
                 # Check bypassConfirm parameter for rp using audience
+                my $rp;
                 foreach ( keys %{ $self->conf->{oidcRPMetaDataOptions} } ) {
                     my $logout_rp = $_;
                     my $rpid =
@@ -1027,9 +1030,34 @@ sub run {
                         $self->logger->debug(
                             "Bypass logout confirm for RP $logout_rp")
                           if $bypassConfirm;
+                        $rp = $logout_rp;
                         last;
                     }
                 }
+
+                unless ($rp) {
+                    $self->userLogger->error(
+                        "ID Token hint azp doesn't match any known RP");
+                    $bypassConfirm = 0;
+                }
+
+                my $user_id =
+                  $self->getUserIDForRP( $req, $rp, $req->{sessionInfo} );
+                unless ( $sub eq $user_id ) {
+                    $self->userLogger->error(
+                        "ID Token hint sub $sub does not match user $user_id");
+                    $bypassConfirm = 0;
+                }
+                else {
+                    if ( $self->getSidFromSession( $rp, $req->{sessionInfo} ) ne
+                        $sid )
+                    {
+                        $self->userLogger->error(
+                            "ID Token hint `sid` does not match user session");
+                        $bypassConfirm = 0;
+                    }
+                }
+
             }
 
             # Ask consent for logout
