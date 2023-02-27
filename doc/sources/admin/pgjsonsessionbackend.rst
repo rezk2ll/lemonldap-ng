@@ -38,7 +38,7 @@ Create the following tables. You may skip the session types you are not going to
    CREATE INDEX i_s__utime           ON sessions ((cast (a_session ->> '_utime' as bigint)));
    CREATE INDEX i_s_ipAddr           ON sessions ((a_session ->> 'ipAddr'));
    CREATE INDEX i_s__httpSessionType ON sessions ((a_session ->> '_httpSessionType'));
-   CREATE INDEX i_s_user             ON sessions ((a_session ->> '_user'));
+   CREATE INDEX i_s_user             ON sessions ((a_session ->> 'user'));
 
 
    CREATE TABLE psessions (
