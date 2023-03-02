@@ -6,6 +6,7 @@ use utf8;
 use Mouse;
 
 use Lemonldap::NG::Manager::Api::2F;
+use Lemonldap::NG::Manager::Api::History;
 use Lemonldap::NG::Manager::Api::Misc;
 use Lemonldap::NG::Manager::Api::Providers::OidcRp;
 use Lemonldap::NG::Manager::Api::Providers::SamlSp;
@@ -102,6 +103,9 @@ sub init {
                             ':appConfKey' => 'getMenuApp'
                         }
                     },
+                },
+                history => {
+                    ':uid' => 'getHistory',
                 },
             },
         },
