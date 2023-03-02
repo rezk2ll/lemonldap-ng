@@ -944,6 +944,8 @@ sub sendHtml {
 
     $args{params}->{TROVER} = $self->getTrOver( $req, $templateDir );
 
+    $self->processHook( $req, 'sendHtml', \$template, \%args );
+
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },
       'X-XSS-Protection'       => '1; mode=block',
@@ -1313,6 +1315,8 @@ sub setCorsHeaderFromConfig {
 # Temlate loader
 sub loadTemplate {
     my ( $self, $req, $name, %prm ) = @_;
+
+    $self->processHook( $req, 'sendHtml', \$name, \%prm );
     $name .= '.tpl';
     my $tpl = HTML::Template->new(
         filename => $name,
