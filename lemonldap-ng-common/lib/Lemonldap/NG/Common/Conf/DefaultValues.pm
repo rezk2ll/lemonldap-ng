@@ -116,7 +116,6 @@ sub defaultValues {
         'handlerInternalCache'          => 15,
         'handlerServiceTokenTTL'        => 30,
         'hiddenAttributes'              => '_password _2fDevices',
-        'hiddenAttributesRegexp'        => '^_oidcConsents',
         'httpOnly'                      => 1,
         'https'                         => -1,
         'impersonationHiddenAttributes' => '_2fDevices, _loginHistory',

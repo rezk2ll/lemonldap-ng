@@ -1573,10 +1573,6 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
             'default' => '_password _2fDevices',
             'type'    => 'text'
         },
-        'hiddenAttributesRegexp' => {
-            'default' => '^_oidcConsents',
-            'type'    => 'pcre'
-        },
         'hideOldPassword' => {
             'default' => 0,
             'type'    => 'bool'

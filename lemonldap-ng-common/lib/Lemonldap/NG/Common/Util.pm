@@ -26,21 +26,33 @@ sub display2F {
 }
 
 sub isHiddenAttr {
-    my ( $conf, $attr, @hidden ) = @_;
-    my %hiddenAttributes =
-      $conf->{hiddenAttributes}
-      ? map { $_ => 1 }
-      ( split( /[,\s]+/, $conf->{hiddenAttributes} ), @hidden )
-      : ();
+    my ( $conf, $attr, @extra_hidden_attributes ) = @_;
+    my ( @regexps, $match );
+
+    my %hiddenAttributes = map { $_ => 1 } grep {
+        if (m#^/(.+)?/$#) {
+            push @regexps, qr/$1/;
+            0;
+        }
+        else {
+            1;
+        }
+    } ( split( /[,\s]+/, $conf->{hiddenAttributes} ),
+        @extra_hidden_attributes );
+
     my $regex =
       keys %hiddenAttributes
       ? '\b(?:' . join( '|', keys %hiddenAttributes ) . ')\b'
       : '';
+
+    foreach (@regexps) {
+        $match++ if $attr =~ $_;
+    }
+
     return
-         $hiddenAttributes{$attr}
-      || ( $regex && $attr =~ /$regex/o )
-      || ( $conf->{hiddenAttributesRegexp}
-        && $attr =~ /$conf->{hiddenAttributesRegexp}/o );
+         $match
+      || $hiddenAttributes{$attr}
+      || ( $regex && $attr =~ /$regex/o );
 }
 
 sub getSameSite {
@@ -89,9 +101,10 @@ This method computes the unique ID of each 2F device, for use with the API and C
 
 This method formats device name for logging purpose
 
-=head3 isHiddenAttr( $conf, $attr, @hidden )
+=head3 isHiddenAttr( $conf, $attr, @extra_hidden_attributes )
 
-This method tests if the attribute is hidden
+This method tests if the attribute is hidden.
+@extra_hidden_attributes is an array of additional attributes to hide.
 
 =head3 getSameSite($conf)
 

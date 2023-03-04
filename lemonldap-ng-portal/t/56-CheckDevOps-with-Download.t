@@ -34,8 +34,7 @@ my $client = LLNG::Manager::Test->new( {
             checkDevOps                       => 1,
             checkDevOpsDownload               => 1,
             checkDevOpsCheckSessionAttributes => 0,
-            hiddenAttributes                  => 'mail',
-            hiddenAttributesRegexp            => '^uidd?'
+            hiddenAttributes                  => 'mail , /^uidd?/',
         }
     }
 );

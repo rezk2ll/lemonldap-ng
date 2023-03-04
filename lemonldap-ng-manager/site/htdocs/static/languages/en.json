@@ -408,7 +408,6 @@
 "hashkey":"Key",
 "headers":"HTTP Headers",
 "hiddenAttributes":"Hidden attributes",
-"hiddenAttributesRegexp":"Regexp to hide attributes",
 "hide":"Hide",
 "hideHelp":"Hide help",
 "hideOldPassword":"Hide old password",

@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.17';
+our $VERSION = '2.17.0';
 
 sub tree {
     return [ {
@@ -557,10 +557,8 @@ sub tree {
                     title => 'logParams',
                     help  => 'logs.html',
                     form  => 'simpleInputContainer',
-                    nodes => [
-                        'whatToTrace',      'customToTrace',
-                        'hiddenAttributes', 'hiddenAttributesRegexp'
-                    ]
+                    nodes =>
+                      [ 'whatToTrace', 'customToTrace', 'hiddenAttributes' ]
                 },
                 {
                     title => 'cookieParams',

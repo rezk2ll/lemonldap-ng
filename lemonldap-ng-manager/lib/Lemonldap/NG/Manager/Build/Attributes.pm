@@ -1067,11 +1067,6 @@ sub attributes {
             default       => '_password _2fDevices',
             documentation => 'Name of attributes to hide in logs',
         },        
-        hiddenAttributesRegexp => {
-            type          => 'pcre',
-            default       => '^_oidcConsents',
-            documentation => 'Regular expression to hide attributes',
-        },
         displaySessionId => {
             type          => 'bool',
             default       => 1,

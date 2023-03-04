@@ -408,7 +408,6 @@
 "hashkey":"Khóa",
 "headers":"Tiêu đề HTTP",
 "hiddenAttributes":"Thuộc tính ẩn",
-"hiddenAttributesRegexp":"Regexp to hide attributes",
 "hide":"Ẩn",
 "hideHelp":"Ẩn trợ giúp",
 "hideOldPassword":"Ẩn mật khẩu cũ",

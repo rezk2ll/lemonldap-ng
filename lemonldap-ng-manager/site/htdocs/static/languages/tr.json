@@ -408,7 +408,6 @@
 "hashkey":"Anahtar",
 "headers":"HTTP Başlıkları",
 "hiddenAttributes":"Gizli nitelikler",
-"hiddenAttributesRegexp":"Regexp to hide attributes",
 "hide":"Gizle",
 "hideHelp":"Yardımı gizle",
 "hideOldPassword":"Eski parolayı gizle",

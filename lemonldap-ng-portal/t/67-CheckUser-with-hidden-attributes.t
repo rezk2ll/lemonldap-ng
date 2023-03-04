@@ -12,7 +12,7 @@ my $client = LLNG::Manager::Test->new( {
             authentication                   => 'Demo',
             userDB                           => 'Same',
             checkUser                        => 1,
-            hiddenAttributesRegexp           => 'hGrou|Level',
+            hiddenAttributes                 => ' /hGrou|Level/  ',
             checkUserDisplayHiddenAttributes => '$uid eq "dwho"'
         }
     }
