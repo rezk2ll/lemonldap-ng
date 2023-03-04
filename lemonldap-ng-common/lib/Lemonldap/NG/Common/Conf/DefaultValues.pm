@@ -115,7 +115,7 @@ sub defaultValues {
         'groups'                        => {},
         'handlerInternalCache'          => 15,
         'handlerServiceTokenTTL'        => 30,
-        'hiddenAttributes'              => '_password, _2fDevices',
+        'hiddenAttributes'              => '_password _2fDevices',
         'httpOnly'                      => 1,
         'https'                         => -1,
         'impersonationHiddenAttributes' => '_2fDevices, _loginHistory',
@@ -257,7 +257,7 @@ sub defaultValues {
         'passwordPolicySpecialChar'           => '__ALL__',
         'passwordResetAllowedRetries'         => 3,
         'persistentSessionAttributes'         =>
-          '_loginHistory _2fDevices notification_',
+          '_loginHistory _2fDevices _oidcConsents notification_',
         'port'                          => -1,
         'portal'                        => 'http://auth.example.com/',
         'portalAntiFrame'               => 1,

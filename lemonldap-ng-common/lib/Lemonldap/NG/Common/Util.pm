@@ -7,7 +7,7 @@ use MIME::Base64 qw(encode_base64);
 
 our $VERSION   = '2.17.0';
 our @ISA       = qw(Exporter);
-our @EXPORT_OK = qw(getSameSite getPSessionID genId2F display2F);
+our @EXPORT_OK = qw(getSameSite getPSessionID genId2F display2F isHiddenAttr);
 
 sub getPSessionID {
     my ($uid) = @_;
@@ -23,6 +23,36 @@ sub genId2F {
 sub display2F {
     my ($device) = @_;
     return sprintf( "[%s]%s", $device->{type}, $device->{epoch} );
+}
+
+sub isHiddenAttr {
+    my ( $conf, $attr, @extra_hidden_attributes ) = @_;
+    my ( @regexps, $match );
+
+    my %hiddenAttributes = map { $_ => 1 } grep {
+        if (m#^/(.+)?/$#) {
+            push @regexps, qr/$1/;
+            0;
+        }
+        else {
+            1;
+        }
+    } ( split( /[,\s]+/, $conf->{hiddenAttributes} ),
+        @extra_hidden_attributes );
+
+    my $regex =
+      keys %hiddenAttributes
+      ? '\b(?:' . join( '|', keys %hiddenAttributes ) . ')\b'
+      : '';
+
+    foreach (@regexps) {
+        $match++ if $attr =~ $_;
+    }
+
+    return
+         $match
+      || $hiddenAttributes{$attr}
+      || ( $regex && $attr =~ /$regex/o );
 }
 
 sub getSameSite {
@@ -66,6 +96,15 @@ This method computes the psession ID from the user login
 =head3 genId2F($device)
 
 This method computes the unique ID of each 2F device, for use with the API and CLI
+
+=head3 display2F($device)
+
+This method formats device name for logging purpose
+
+=head3 isHiddenAttr( $conf, $attr, @extra_hidden_attributes )
+
+This method tests if the attribute is hidden.
+@extra_hidden_attributes is an array of additional attributes to hide.
 
 =head3 getSameSite($conf)
 

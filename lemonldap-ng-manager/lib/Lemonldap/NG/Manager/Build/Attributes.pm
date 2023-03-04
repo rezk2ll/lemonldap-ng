@@ -1064,9 +1064,9 @@ sub attributes {
         },
         hiddenAttributes => {
             type          => 'text',
-            default       => '_password, _2fDevices',
+            default       => '_password _2fDevices',
             documentation => 'Name of attributes to hide in logs',
-        },
+        },        
         displaySessionId => {
             type          => 'bool',
             default       => 1,
@@ -1074,7 +1074,7 @@ sub attributes {
         },
         persistentSessionAttributes => {
             type          => 'text',
-            default       => '_loginHistory _2fDevices notification_',
+            default       => '_loginHistory _2fDevices _oidcConsents notification_',
             documentation => 'Persistent session attributes to hide',
         },
         key => {
@@ -2486,8 +2486,8 @@ sub attributes {
         # Adaptative Authentication Level
         adaptativeAuthenticationLevelRules => {
             type          => 'keyTextContainer',
-            'keyTest'     => sub { return perlExpr(@_) },
-            'test'        => sub { 1 },
+            keyTest       => sub { return perlExpr(@_) },
+            test          => sub { 1 },
             help          => "adaptativeauthenticationlevel.html",
             documentation => 'Adaptative authentication level rules',
         },

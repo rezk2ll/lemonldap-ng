@@ -9,7 +9,17 @@ Main settings:
 -  **REMOTE_USER**: session attribute used for logging user access
 -  **REMOTE_CUSTOM**: can be used for logging an another user attribute or a macro
    (optional)
--  **Hidden attributes**: session attributes never displayed or sent
+-  **Hidden attributes**: session attributes never displayed or sent.
+
+.. versionchanged:: 2.17.0
+
+   Since version 2.17.0 hidden attributes parameter supports regular expressions.
+   You can hide attributes by listing them or by providing one or more regexps.
+   By example: ``_password, _session_id, /^notification_/ /^real\d+$/  _oidcConsents``
+
+.. attention::
+
+    Regexp must start and end with a slash ``/`` character.
 
 LemonLDAP::NG provides 5 levels of error and has two kinds of logs:
 
