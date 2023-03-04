@@ -22,6 +22,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
+our $VERSION = '2.17.0';
+
 has resend_interval => (
     is      => 'rw',
     lazy    => 1,
@@ -44,8 +46,6 @@ has is_registrable => (
 );
 
 has random => ( is => 'rw' );
-
-our $VERSION = '2.0.15';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor';
 with 'Lemonldap::NG::Portal::Lib::2fDevices';

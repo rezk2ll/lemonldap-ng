@@ -243,7 +243,9 @@ Protocol
 -  **Max age**: Value of max_age parameter (example: 3600)
 -  **UI locales**: Value of ui_locales parameter (example: en-GB en
    fr-FR fr)
--  **ACR values**: Value acr_values parameters (example: loa-1)
+-  **ACR values**: Space-separated list of acceptable ACR values (example:
+   'loa-2 loa-3'). Authentication will fail if the OpenID Provider does not
+   supply one of the values listed here in the ID Token.
 -  **Token endpoint authentication method**: choice between
    ``client_secret_post`` and ``client_secret_basic``
 -  **Check JWT signature**: Set to 0 to disable JWT signature

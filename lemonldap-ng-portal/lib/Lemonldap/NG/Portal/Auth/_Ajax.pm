@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
 );
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.17.0';
 
 # addUnauthRoute/addAuthRoute are provided by deriving your plugin from
 # 'Lemonldap::NG::Portal::Main::Auth' or 'Lemonldap::NG::Portal::Main::Plugin'

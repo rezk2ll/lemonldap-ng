@@ -22,7 +22,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use String::Random qw/random_string/;
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.17.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Issuer
@@ -360,29 +360,6 @@ sub run {
                 return $self->reAuth($req);
             }
 
-            my $max_age         = $oidc_request->{'max_age'};
-            my $_lastAuthnUTime = $req->{sessionInfo}->{_lastAuthnUTime};
-            if ( $max_age && time > $_lastAuthnUTime + $max_age ) {
-                $self->logger->debug(
-"Reauthentication forced because authentication time ($_lastAuthnUTime) is too old (>$max_age s)"
-                );
-                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
-                return $self->reAuth($req);
-            }
-
-            # Check if we have sufficient auth level
-            my $authenticationLevel =
-              $req->{sessionInfo}->{authenticationLevel} || 0;
-            if ( $authenticationLevel < $spAuthnLevel ) {
-                $self->logger->debug(
-                        "Insufficient authentication level for service $rp"
-                      . " (has: $authenticationLevel, want: $spAuthnLevel)" );
-
-                # Reauth with sp auth level as target
-                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
-                return $self->upgradeAuth($req);
-            }
-
             # Check scope validity
             # We use a slightly more relaxed version of
             # https://tools.ietf.org/html/rfc6749#appendix-A.4
@@ -449,6 +426,29 @@ sub run {
                     $self->logger->debug(
                         "ID Token hint sub $sub matches current user");
                 }
+            }
+
+            my $max_age         = $oidc_request->{'max_age'};
+            my $_lastAuthnUTime = $req->{sessionInfo}->{_lastAuthnUTime};
+            if ( $max_age && time > $_lastAuthnUTime + $max_age ) {
+                $self->logger->debug(
+"Reauthentication forced because authentication time ($_lastAuthnUTime) is too old (>$max_age s)"
+                );
+                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
+                return $self->reAuth($req);
+            }
+
+            # Check if we have sufficient auth level
+            my $authenticationLevel =
+              $req->{sessionInfo}->{authenticationLevel} || 0;
+            if ( $authenticationLevel < $spAuthnLevel ) {
+                $self->logger->debug(
+                        "Insufficient authentication level for service $rp"
+                      . " (has: $authenticationLevel, want: $spAuthnLevel)" );
+
+                # Reauth with sp auth level as target
+                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
+                return $self->upgradeAuth($req);
             }
 
             # Compute scopes
@@ -1011,8 +1011,11 @@ sub run {
                 # trivial to bypass
                 my $payload = getJWTPayload($id_token_hint);
                 my $azp     = $payload->{azp};
+                my $sid     = $payload->{sid};
+                my $sub     = $payload->{sub};
 
                 # Check bypassConfirm parameter for rp using audience
+                my $rp;
                 foreach ( keys %{ $self->conf->{oidcRPMetaDataOptions} } ) {
                     my $logout_rp = $_;
                     my $rpid =
@@ -1027,9 +1030,34 @@ sub run {
                         $self->logger->debug(
                             "Bypass logout confirm for RP $logout_rp")
                           if $bypassConfirm;
+                        $rp = $logout_rp;
                         last;
                     }
                 }
+
+                unless ($rp) {
+                    $self->userLogger->error(
+                        "ID Token hint azp doesn't match any known RP");
+                    $bypassConfirm = 0;
+                }
+
+                my $user_id =
+                  $self->getUserIDForRP( $req, $rp, $req->{sessionInfo} );
+                unless ( $sub eq $user_id ) {
+                    $self->userLogger->error(
+                        "ID Token hint sub $sub does not match user $user_id");
+                    $bypassConfirm = 0;
+                }
+                else {
+                    if ( $self->getSidFromSession( $rp, $req->{sessionInfo} ) ne
+                        $sid )
+                    {
+                        $self->userLogger->error(
+                            "ID Token hint `sid` does not match user session");
+                        $bypassConfirm = 0;
+                    }
+                }
+
             }
 
             # Ask consent for logout

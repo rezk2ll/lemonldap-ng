@@ -491,7 +491,8 @@ sub rp {
                     op => {
                         oidcOPMetaDataOptionsCheckJWTSignature => 1,
                         oidcOPMetaDataOptionsJWKSTimeout       => 0,
-                        oidcOPMetaDataOptionsClientSecret      => "rpsecret",
+                        oidcOPMetaDataOptionsAcrValues => "loa-32 customacr-1",
+                        oidcOPMetaDataOptionsClientSecret => "rpsecret",
                         oidcOPMetaDataOptionsScope => "openid profile email",
                         oidcOPMetaDataOptionsStoreIDToken     => 0,
                         oidcOPMetaDataOptionsMaxAge           => 30,

@@ -5,7 +5,7 @@ The Portal status page displays in JSON format its activity. It can provide a vi
 of all returned codes.
 
 Plugin configuration
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 -  Ordered List ItemSet ``portalStatus = 1`` in lemonldap-ng.ini file
    (section ``[Portal]``)
