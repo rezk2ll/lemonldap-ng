@@ -180,7 +180,6 @@
 "casTicketExpiration":"Temporary ticket lifetime",
 "categoryName":"Tên thể loại",
 "cda":"Nhiều tên miền",
-"certificateMailContent":"Nội dung thư",
 "certificateResetByMailCeaAttribute":" Certificate Exact Assertion attribute name",
 "certificateResetByMailCertificateAttribute":" Certificate binary content attribute name",
 "certificateResetByMailManagement":"Certificate management",

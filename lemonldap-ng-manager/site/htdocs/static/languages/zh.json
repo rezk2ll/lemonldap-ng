@@ -180,7 +180,6 @@
 "casTicketExpiration":"Temporary ticket lifetime",
 "categoryName":"分类名称",
 "cda":"多域名",
-"certificateMailContent":"邮件内容",
 "certificateResetByMailCeaAttribute":"憑證確切聲明屬性名稱",
 "certificateResetByMailCertificateAttribute":"憑證二進位內容屬性名稱",
 "certificateResetByMailManagement":"憑證管理",

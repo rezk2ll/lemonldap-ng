@@ -180,7 +180,6 @@
 "casTicketExpiration":"Temporary ticket lifetime",
 "categoryName":"اسم الفئة",
 "cda":"نطاقات متعددة",
-"certificateMailContent":"محتوى البريد",
 "certificateResetByMailCeaAttribute":" Certificate Exact Assertion attribute name",
 "certificateResetByMailCertificateAttribute":" Certificate binary content attribute name",
 "certificateResetByMailManagement":"Certificate management",

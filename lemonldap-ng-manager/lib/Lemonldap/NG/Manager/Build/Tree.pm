@@ -769,7 +769,7 @@ sub tree {
                             title => 'certificateResetByMailManagement',
                             help  => 'resetcertificate.html',
                             nodes => [ {
-                                    title => 'certificateMailContent',
+                                    title => 'mailContent',
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'certificateResetByMailStep1Subject',
@@ -778,7 +778,6 @@ sub tree {
                                         'certificateResetByMailStep2Body'
                                     ]
                                 },
-
                                 {
                                     title => 'mailOther',
                                     form  => 'simpleInputContainer',
@@ -794,14 +793,22 @@ sub tree {
                         {
                             title => 'register',
                             help  => 'register.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'registerUrl',
-                                'registerTimeout',
-                                'registerConfirmSubject',
-                                'registerConfirmBody',
-                                'registerDoneSubject',
-                                'registerDoneBody'
+                            nodes => [ {
+                                    title => 'mailContent',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'registerConfirmSubject',
+                                        'registerConfirmBody',
+                                        'registerDoneSubject',
+                                        'registerDoneBody'
+                                    ]
+                                },
+                                {
+                                    title => 'mailOther',
+                                    form  => 'simpleInputContainer',
+                                    nodes =>
+                                      [ 'registerUrl', 'registerTimeout' ]
+                                }
                             ]
                         },
                         {
@@ -1289,8 +1296,7 @@ sub tree {
                     help  => 'samlservice.html#organization',
                     form  => 'simpleInputContainer',
                     nodes => [
-                        'samlOrganizationDisplayName',
-                        'samlOrganizationName',
+                        'samlOrganizationDisplayName', 'samlOrganizationName',
                         'samlOrganizationURL'
                     ]
                 },
@@ -1478,14 +1484,10 @@ sub tree {
             title => 'casServiceMetadata',
             help  => 'idpcas.html#configuring-the-cas-service',
             nodes => [
-                'casAttr',
-                'casAccessControlPolicy',
-                'casStrictMatching',
-                'casTicketExpiration',
-                'casBackChannelSingleLogout',
-                'casStorage',
-                'casStorageOptions',
-                'casAttributes',
+                'casAttr',                    'casAccessControlPolicy',
+                'casStrictMatching',          'casTicketExpiration',
+                'casBackChannelSingleLogout', 'casStorage',
+                'casStorageOptions',          'casAttributes',
             ]
         },
         'casSrvMetaDataNodes',
