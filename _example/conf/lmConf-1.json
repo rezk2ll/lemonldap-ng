@@ -87,7 +87,7 @@
    "cfgAuthor" : "The LemonLDAP::NG team",
    "cfgDate" : "1627287638",
    "cfgNum" : 1,
-   "cfgVersion" : "2.0.16",
+   "cfgVersion" : "2.16.1",
    "cookieName" : "lemonldap",
    "demoExportedVars" : {
       "cn" : "cn",
@@ -147,7 +147,6 @@
       "UA" : "$ENV{HTTP_USER_AGENT}",
       "_whatToTrace" : "$_auth eq 'SAML' ? lc($_user.'@'.$_idpConfKey) : $_auth eq 'OpenIDConnect' ? lc($_user.'@'.$_oidc_OP) : lc($_user)"
    },
-   "mailUrl" : "http://auth.__DNSDOMAIN__/resetpwd",
    "notification" : 1,
    "notificationStorage" : "File",
    "notificationStorageOptions" : {
@@ -164,7 +163,6 @@
    "portalSkin" : "bootstrap",
    "portalSkinBackground" : "1280px-Cedar_Breaks_National_Monument_partially.jpg",
    "registerDB" : "Demo",
-   "registerUrl" : "http://auth.__DNSDOMAIN__/register",
    "reloadUrls" : {
       "localhost" : "http://reload.__DNSDOMAIN__/reload"
    },
