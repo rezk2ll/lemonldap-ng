@@ -1570,8 +1570,12 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
             'type'    => 'int'
         },
         'hiddenAttributes' => {
-            'default' => '_password, _2fDevices',
+            'default' => '_password _2fDevices',
             'type'    => 'text'
+        },
+        'hiddenAttributesRegexp' => {
+            'default' => '^_oidcConsents',
+            'type'    => 'pcre'
         },
         'hideOldPassword' => {
             'default' => 0,
@@ -2923,7 +2927,7 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
             'type' => 'text'
         },
         'persistentSessionAttributes' => {
-            'default' => '_loginHistory _2fDevices notification_',
+            'default' => '_loginHistory _2fDevices _oidcConsents notification_',
             'type'    => 'text'
         },
         'persistentStorage' => {
