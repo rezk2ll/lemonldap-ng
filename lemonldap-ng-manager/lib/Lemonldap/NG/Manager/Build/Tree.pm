@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.16.1';
 
 sub tree {
     return [ {
@@ -66,8 +66,7 @@ sub tree {
                                         'portalCheckLogins',
                                         'portalDisplayRegister',
                                         'portalDisplayCertificateResetByMail',
-                                        'portalDisplayResetPassword',
-                                        'passwordResetAllowedRetries'
+                                        'portalDisplayResetPassword'
                                     ]
                                 },
                                 {
@@ -759,8 +758,9 @@ sub tree {
                                     nodes => [
                                         'mailUrl',
                                         'mailTimeout',
+                                        'passwordResetAllowedRetries',
                                         'portalDisplayGeneratePassword',
-                                        'randomPasswordRegexp',
+                                        'randomPasswordRegexp'
                                     ]
                                 }
                             ]
