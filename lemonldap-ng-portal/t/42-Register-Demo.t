@@ -19,8 +19,7 @@ SKIP: {
         skip 'Missing dependencies', $maintests;
     }
 
-    my $client = LLNG::Manager::Test->new(
-        {
+    my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel                 => 'error',
                 useSafeJail              => 1,
@@ -29,6 +28,7 @@ SKIP: {
                 userDB                   => 'Same',
                 registerDB               => 'Demo',
                 registerConfirmSubject   => 'Demonstration',
+                registerUrl              => 'http://other.example.com/account',
                 captcha_register_enabled => 0,
             }
         }
@@ -59,7 +59,7 @@ SKIP: {
     $subject = subject();
     ok( $subject eq 'Demonstration', 'Found subject' )
       or explain( $subject, 'Custom subject' );
-    ok( $mail =~ m#a href="http://auth.example.com/register\?(.+?)"#,
+    ok( $mail =~ m#a href="http://other\.example\.com/account\?(.+?)"#,
         'Found register token' )
       or explain( $mail, 'Confirm body' );
     $query = $1;

@@ -40,12 +40,10 @@ Configuration
 **Requirements**
 
 -  You have to activate the 'password reset' button in the login page.
-Go in Manager, ``General Parameters`` » ``Portal`` » ``Customization`` »
-``Buttons on login page`` » ``Reset password``
+   Go in Manager, ``General Parameters`` » ``Portal`` » ``Customization`` » ``Buttons on login page`` » ``Reset password``.
+   See :ref:`portal customization<portalcustom-other-parameters>`.
 
-See :ref:`portal customization<portalcustom-other-parameters>`.
-
--  The SMTP server must be setup, see :doc:`SMTP server setup<smtp>`.
+-  The SMTP server must be setup. See :doc:`SMTP server setup<smtp>`.
 
 **Manager Configuration**
 
@@ -53,11 +51,11 @@ Go in Manager, ``General Parameters`` » ``Plugins`` » ``Password management``:
 
 -  **Mail content:**
 
-   -  **Success mail subject**: Subject of mail sent when password is changed (default: [LemonLDAP::NG] Your new password)
-   -  **Success mail content** (optional): Content of mail sent when password is changed
-   -  **Confirmation mail subject**: Subject of mail sent when password
+   -  **Success mail subject**: subject of mail sent when password is changed (default: [LemonLDAP::NG] Your new password)
+   -  **Success mail content** (optional): content of mail sent when password is changed
+   -  **Confirmation mail subject**: subject of mail sent when password
       change is asked (default: [LemonLDAP::NG] Password reset confirmation)
-   -  **Confirmation mail content** (optional): Content of mail sent when password change is asked
+   -  **Confirmation mail content** (optional): content of mail sent when password change is asked
 
 
 .. attention::
@@ -72,15 +70,14 @@ Go in Manager, ``General Parameters`` » ``Plugins`` » ``Password management``:
 
 -  **Other:**
 
-   -  **Page URL**: URL of password reset page (default:
-      [PORTAL]/resetpwd)
+   -  **Reset password page URL**: URL of password reset page (default: [PORTAL]/resetpwd)
    -  **Validity time of a password reset request**: number of seconds
       for password reset request validity. During this period, user can
-      ask the confirmation mail to be resent (default: session timeout
-      value)
+      ask the confirmation mail to be resent (default: session timeout value)
+   -  **Max reset password retries**: number of retries allowed for resetting password
    -  **Display generate password box**: display a checkbox to allow
       user to generate a new password instead of choosing one (default:
       disabled)
-   -  **Regexp for password generation**: Regular expression used to generate the password. Set a blank value to use
+   -  **Regexp for password generation**: regular expression used to generate the password. Set a blank value to use
       password policy if enabled or default regexp will be employed: [A-Z]{3}[a-z]{5}.\d{2}
 

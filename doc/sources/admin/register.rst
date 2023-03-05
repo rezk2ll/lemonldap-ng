@@ -21,12 +21,11 @@ Configuration
 **Requirements**
 
 -  You have to activate the 'create a new account' linbuttonk in the login page.
+   Go in Manager, ``General Parameters`` » ``Portal`` » ``Customization`` » ``Buttons on login page`` » ``Register new account``.
+   See :ref:`portal customization<portalcustom-other-parameters>`.
 
-Go in Manager, ``General Parameters`` » ``Portal`` » ``Customization`` »
-``Buttons on login page`` » ``Register new account``
+-  The SMTP server must be setup. See :doc:`SMTP server setup<smtp>`.
 
-
-See :ref:`portal customization<portalcustom-other-parameters>`.
 
 **Manager Configuration**
 
@@ -34,16 +33,16 @@ Go in ``General Parameters`` » ``Plugins`` » ``Register new account``:
 
 -  **Mail content:**
 
-   -  **Confirmation mail subject**: Subject of the email containing the confirmation link
-   -  **Confirmation mail content**: Content of the confirmation email sent to the user. If blank, the ``mail_register_confirm`` HTML template will be used. Confirmation link is stored in the ``$url`` variable
-   -  **Credentials mail subject**: Subject of the email providing login and password
-   -  **Credentials mail content**: Content of the credentials email sent to the user. If blank, the ``mail_register_done`` HTML template will be used. Login and generated password are stored in the corresponding ``$login`` and ``$password`` variables.
+   -  **Confirmation mail subject**: subject of the email containing the confirmation link
+   -  **Confirmation mail content**: content of the confirmation email sent to the user. If blank, the ``mail_register_confirm`` HTML template will be used. Confirmation link is stored in the ``$url`` variable
+   -  **Credentials mail subject**: subject of the email providing login and password
+   -  **Credentials mail content**: content of the credentials email sent to the user. If blank, the ``mail_register_done`` HTML template will be used. Login and generated password are stored in the corresponding ``$login`` and ``$password`` variables.
 
 
 -  **Other:**
 
-   -  **Page URL**: URL of register page
-   -  **Validity time of a register request**: Duration in seconds of a new account request. The request will be deleted after this time if user do not click on the link.
+   -  **Register page URL**: URL of register page (default: [PORTAL]/register)
+   -  **Validity time of a register request**: duration in seconds of a new account request. The request will be invalidated after this delay if user does not click on the link.
 
 
 .. note::

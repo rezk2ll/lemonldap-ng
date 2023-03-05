@@ -382,7 +382,6 @@ This node allows one to enable/disable buttons on the login page:
    :doc:`reset your password page<resetpassword>` (for password based
    authentication backends). Number of allowed retries can be set (3
    times by default)
--  **Max reset password retries**: number of retries allowed for resetting password
 
 Password management
 -------------------
