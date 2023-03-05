@@ -52,7 +52,7 @@ sub isHiddenAttr {
     return
          $match
       || $hiddenAttributes{$attr}
-      || ( $regex && $attr =~ /$regex/o );
+      || ( $regex && $attr =~ m#$regex#o );
 }
 
 sub getSameSite {
