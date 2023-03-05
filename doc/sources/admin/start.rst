@@ -299,11 +299,11 @@ Name                                                                 Description
 :doc:`Custom<plugincustom>`                                          Write a custom plugin
 :doc:`Decrypt value<decryptvalue>`  [9]_\                            Decrypt ciphered values
 :doc:`Display login history<loginhistory>`                           Display Success/Fails logins
+:doc:`Find user<finduser>`  [12]_\ |new|                             Search for user account
 :doc:`Force authentication<forcereauthn>`                            Force authentication to access to Portal
 :doc:`Global logout<globallogout>`  [10]_                            Suggest to close all opened sessions at logout
 :doc:`Grant sessions<grantsession>`                                  Rules to apply before allowing a user to open a session
 :doc:`Impersonation<impersonation>`  [11]_\                          Allow users to use another identity
-:doc:`Find user<finduser>`  [12]_\ |new|                             Search for user account
 :doc:`NewLocationWarning<newlocationwarning>`  [13]_\ |new|          Send an email when user sign in from a new location 
 :doc:`Notifications system<notifications>`                           Display a message during log in process 
 :doc:`Portal status<status>`                                         Experimental portal status page

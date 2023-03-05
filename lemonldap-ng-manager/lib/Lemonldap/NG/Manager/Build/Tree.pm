@@ -618,47 +618,9 @@ sub tree {
                     title => 'plugins',
                     help  => 'start.html#plugins',
                     nodes => [
-                        'portalStatus',
                         'upgradeSession',
                         'refreshSessions',
-                        'adaptativeAuthenticationLevelRules',
-                        'autoSigninRules',
-                        {
-                            title => 'stayConnect',
-                            help  => 'stayconnected.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'stayConnected',
-                                'stayConnectedBypassFG',
-                                'stayConnectedTimeout',
-                                'stayConnectedCookieName',
-                                'stayConnectedSingleSession',
-                            ],
-                        },
-                        {
-                            title => 'rememberAuthChoice',
-                            help  => 'rememberauthchoice.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'rememberAuthChoiceRule',
-                                'rememberCookieName',
-                                'rememberCookieTimeout',
-                                'rememberDefaultChecked',
-                                'rememberTimer',
-                            ]
-                        },
-                        {
-                            title => 'locationDetectPlugin',
-                            help  => 'locationdetect.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'locationDetect',
-                                'locationDetectGeoIpDatabase',
-                                'locationDetectGeoIpLanguages',
-                                'locationDetectIpDetail',
-                                'locationDetectUaDetail'
-                            ]
-                        },
+                        'portalStatus',
                         {
                             title => 'stateCheck',
                             help  => 'checkstate.html',
@@ -697,46 +659,24 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'loginHistory',
-                            help  => 'loginhistory.html',
-                            nodes => [
-                                'loginHistoryEnabled',
-                                'successLoginNumber',
-                                'failedLoginNumber',
-                                'sessionDataToRemember'
-                            ]
-                        },
-                        {
-                            title => 'notifications',
-                            help  => 'notifications.html',
-                            nodes => [
-                                'notification',
-                                'notificationsExplorer',
-                                'notificationWildcard',
-                                'oldNotifFormat',
-                                'notificationXSLTfile',
-                                'notificationStorage',
-                                'notificationStorageOptions',
-                                {
-                                    title => 'serverNotification',
-                                    help  =>
-                                      'notifications.html#notification-server',
+                            title => 'register',
+                            help  => 'register.html',
+                            nodes => [ {
+                                    title => 'mailContent',
+                                    form  => 'simpleInputContainer',
                                     nodes => [
-                                        'notificationServer',
-                                        'notificationDefaultCond',
-                                        'notificationServerSentAttributes',
-                                        {
-                                            title =>
-                                              'notificationServerMethods',
-                                            form  => 'simpleInputContainer',
-                                            nodes => [
-                                                'notificationServerPOST',
-                                                'notificationServerGET',
-                                                'notificationServerDELETE',
-                                            ]
-                                        },
+                                        'registerConfirmSubject',
+                                        'registerConfirmBody',
+                                        'registerDoneSubject',
+                                        'registerDoneBody'
                                     ]
                                 },
+                                {
+                                    title => 'mailOther',
+                                    form  => 'simpleInputContainer',
+                                    nodes =>
+                                      [ 'registerUrl', 'registerTimeout' ]
+                                }
                             ]
                         },
                         {
@@ -790,25 +730,85 @@ sub tree {
                                 }
                             ]
                         },
+                        'adaptativeAuthenticationLevelRules',
+                        'autoSigninRules',
                         {
-                            title => 'register',
-                            help  => 'register.html',
-                            nodes => [ {
-                                    title => 'mailContent',
-                                    form  => 'simpleInputContainer',
+                            title => 'stayConnect',
+                            help  => 'stayconnected.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'stayConnected',
+                                'stayConnectedBypassFG',
+                                'stayConnectedTimeout',
+                                'stayConnectedCookieName',
+                                'stayConnectedSingleSession',
+                            ],
+                        },
+                        {
+                            title => 'rememberAuthChoice',
+                            help  => 'rememberauthchoice.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'rememberAuthChoiceRule',
+                                'rememberCookieName',
+                                'rememberCookieTimeout',
+                                'rememberDefaultChecked',
+                                'rememberTimer',
+                            ]
+                        },
+                        {
+                            title => 'locationDetectPlugin',
+                            help  => 'locationdetect.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'locationDetect',
+                                'locationDetectGeoIpDatabase',
+                                'locationDetectGeoIpLanguages',
+                                'locationDetectIpDetail',
+                                'locationDetectUaDetail'
+                            ]
+                        },
+                        {
+                            title => 'loginHistory',
+                            help  => 'loginhistory.html',
+                            nodes => [
+                                'loginHistoryEnabled',
+                                'successLoginNumber',
+                                'failedLoginNumber',
+                                'sessionDataToRemember'
+                            ]
+                        },
+                        {
+                            title => 'notifications',
+                            help  => 'notifications.html',
+                            nodes => [
+                                'notification',
+                                'notificationsExplorer',
+                                'notificationWildcard',
+                                'oldNotifFormat',
+                                'notificationXSLTfile',
+                                'notificationStorage',
+                                'notificationStorageOptions',
+                                {
+                                    title => 'serverNotification',
+                                    help  =>
+                                      'notifications.html#notification-server',
                                     nodes => [
-                                        'registerConfirmSubject',
-                                        'registerConfirmBody',
-                                        'registerDoneSubject',
-                                        'registerDoneBody'
+                                        'notificationServer',
+                                        'notificationDefaultCond',
+                                        'notificationServerSentAttributes',
+                                        {
+                                            title =>
+                                              'notificationServerMethods',
+                                            form  => 'simpleInputContainer',
+                                            nodes => [
+                                                'notificationServerPOST',
+                                                'notificationServerGET',
+                                                'notificationServerDELETE',
+                                            ]
+                                        },
                                     ]
                                 },
-                                {
-                                    title => 'mailOther',
-                                    form  => 'simpleInputContainer',
-                                    nodes =>
-                                      [ 'registerUrl', 'registerTimeout' ]
-                                }
                             ]
                         },
                         {
@@ -919,20 +919,6 @@ sub tree {
                         'sfLoginTimeout',
                         'sfRegisterTimeout',
                         {
-                            title => 'password2f',
-                            help  => 'password2f.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'password2fActivation',
-                                'password2fSelfRegistration',
-                                'password2fAuthnLevel',
-                                'password2fLabel',
-                                'password2fLogo',
-                                'password2fUserCanRemoveKey',
-                                'password2fTTL',
-                            ]
-                        },
-                        {
                             title => 'utotp2f',
                             help  => 'utotp2f.html',
                             form  => 'simpleInputContainer',
@@ -972,6 +958,22 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'webauthn2f',
+                            help  => 'webauthn2f.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'webauthn2fActivation',
+                                'webauthn2fSelfRegistration',
+                                'webauthn2fUserVerification',
+                                'webauthn2fUserCanRemoveKey',
+                                'webauthnRpName',
+                                'webauthnDisplayNameAttr',
+                                'webauthn2fAuthnLevel',
+                                'webauthn2fLabel',
+                                'webauthn2fLogo',
+                            ]
+                        },
+                        {
                             title => 'yubikey2f',
                             help  => 'yubikey2f.html',
                             form  => 'simpleInputContainer',
@@ -990,6 +992,20 @@ sub tree {
                                 'yubikey2fLogo',
                                 'yubikey2fTTL'
                             ],
+                        },
+                        {
+                            title => 'password2f',
+                            help  => 'password2f.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'password2fActivation',
+                                'password2fSelfRegistration',
+                                'password2fAuthnLevel',
+                                'password2fLabel',
+                                'password2fLogo',
+                                'password2fUserCanRemoveKey',
+                                'password2fTTL',
+                            ]
                         },
                         {
                             title => 'mail2f',
@@ -1044,22 +1060,6 @@ sub tree {
                                 'rest2fAuthnLevel',
                                 'rest2fLabel',
                                 'rest2fLogo'
-                            ]
-                        },
-                        {
-                            title => 'webauthn2f',
-                            help  => 'webauthn2f.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'webauthn2fActivation',
-                                'webauthn2fSelfRegistration',
-                                'webauthn2fUserVerification',
-                                'webauthn2fUserCanRemoveKey',
-                                'webauthnRpName',
-                                'webauthnDisplayNameAttr',
-                                'webauthn2fAuthnLevel',
-                                'webauthn2fLabel',
-                                'webauthn2fLogo',
                             ]
                         },
                         'sfExtra',

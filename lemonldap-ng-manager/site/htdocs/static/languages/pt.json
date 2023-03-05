@@ -525,7 +525,7 @@
 "loadedConfiguration":"Configuração carregada",
 "localSessionStorage":"Módulo de cache",
 "localSessionStorageOptions":"Opções do módulo de cache",
-"locationDetect":"Habilitar plugin",
+"locationDetect":"Activation",
 "locationDetectGeoIpDatabase":"Caminho para o banco de dados GeoIP",
 "locationDetectGeoIpLanguages":"Idiomas para o banco de dados GeoIP",
 "locationDetectIpDetail":"Informação requisitada para o IP",

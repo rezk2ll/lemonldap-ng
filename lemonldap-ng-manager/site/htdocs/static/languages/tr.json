@@ -525,7 +525,7 @@
 "loadedConfiguration":"Yüklenen yapılandırma",
 "localSessionStorage":"Önbellek modülü",
 "localSessionStorageOptions":"Önbellek modülü seçenekleri",
-"locationDetect":"Enable plugin",
+"locationDetect":"Activation",
 "locationDetectGeoIpDatabase":"Path to GeoIP database",
 "locationDetectGeoIpLanguages":"Languages for GeoIP database",
 "locationDetectIpDetail":"Information requested for IP",
