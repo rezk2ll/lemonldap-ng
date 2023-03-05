@@ -526,7 +526,7 @@
 "loadedConfiguration":"加载的配置",
 "localSessionStorage":"快取模組",
 "localSessionStorageOptions":"快取模組選項",
-"locationDetect":"Enable plugin",
+"locationDetect":"Activation",
 "locationDetectGeoIpDatabase":"Path to GeoIP database",
 "locationDetectGeoIpLanguages":"Languages for GeoIP database",
 "locationDetectIpDetail":"Information requested for IP",
