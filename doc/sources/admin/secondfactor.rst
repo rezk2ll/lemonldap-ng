@@ -16,18 +16,19 @@ completing authentication module with 2FA:
 
 Second factors that can be registered by the user:
 
--  :doc:`TOTP<totp2f>` *(to use with* `FreeOTP <https://freeotp.github.io/>`__\ *,*\ `Google-Authenticator <https://en.wikipedia.org/wiki/Google_Authenticator>`__\ *,…)*
+-  :doc:`Password<password2f>` *(Self-register password stored in persistent sessions)*
+-  :doc:`TOTP<totp2f>` *(To use with* `FreeOTP <https://freeotp.github.io/>`__\ *,*\ `Google-Authenticator <https://en.wikipedia.org/wiki/Google_Authenticator>`__\ *,…)*
 -  :doc:`WebAuthn<webauthn2f>` *(Web Authentication API)*
 -  :doc:`Yubico OTP<yubikey2f>` *(Legacy OTP method from Yubico)*
 -  :doc:`U2F tokens<u2f>` |deprecated|
--  :doc:`U2F-or-TOTP<utotp2f>` *(enable both U2F and TOTP)* |deprecated|
+-  :doc:`TOTP-or-U2F<utotp2f>` *(Enable both TOTP and U2F)* |deprecated|
 
 Second factors that rely on external systems:
 
 -  :doc:`E-Mail 2F<mail2f>` *(Send a code to an email address)*
--  :doc:`External 2F<external2f>` *(to call an external command)*
--  :doc:`REST<rest2f>` *(Remote REST app)*
+-  :doc:`External 2F<external2f>` *(To call an external command)*
 -  :doc:`RADIUS<radius2f>` *(Remote RADIUS server)*
+-  :doc:`REST<rest2f>` *(Remote REST app)*
 
 .. |deprecated| image:: /documentation/deprecated.png
    :alt: deprecated
