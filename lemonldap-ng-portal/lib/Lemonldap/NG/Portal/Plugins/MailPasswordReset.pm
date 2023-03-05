@@ -42,6 +42,18 @@ extends qw(
 
 # PROPERTIES
 
+# Reset URL to set in mail
+has resetUrl => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        my $self = $_[0];
+        my $p    = $self->conf->{portal};
+        $p =~ s#/*$##;
+        return $self->conf->{mailUrl} ? $self->conf->{mailUrl} : "$p/resetpwd";
+    }
+);
+
 # Mail timeout token generator
 # Form timout token generator (used even if requireToken is not set)
 has ott => (
@@ -50,7 +62,8 @@ has ott => (
     default => sub {
         my $ott =
           $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        $ott->timeout( $_[0]->conf->{formTimeout} );
+        $ott->cache(0);
+        $ott->timeout( $_[0]->conf->{formTimeout} || $_[0]->conf->{timeout} );
         return $ott;
     }
 );
@@ -308,7 +321,7 @@ sub _reset {
         my $req_url = $req->data->{_url};
         my $skin    = $self->p->getSkin($req);
         my $url =
-          $self->conf->{mailUrl} . '?'
+          $self->resetUrl . '?'
           . build_urlencoded(
             mail_token => $req->{id},
             skin       => $skin,

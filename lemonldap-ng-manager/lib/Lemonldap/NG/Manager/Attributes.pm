@@ -871,8 +871,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'text'
         },
         'certificateResetByMailURL' => {
-            'default' => 'http://auth.example.com/certificateReset',
-            'type'    => 'url'
+            'type' => 'url'
         },
         'certificateResetByMailValidityDelay' => {
             'default' => 0,
@@ -923,7 +922,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'checkHIBPURL' => {
             'default' => 'https://api.pwnedpasswords.com/range/',
-            'type'    => 'text'
+            'type'    => 'url'
         },
         'checkState' => {
             'default' => 0,
@@ -2109,8 +2108,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'int'
         },
         'mailUrl' => {
-            'default' => 'http://auth.example.com/resetpwd',
-            'type'    => 'url'
+            'type' => 'url'
         },
         'maintenance' => {
             'default' => 0,
@@ -3257,8 +3255,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'int'
         },
         'registerUrl' => {
-            'default' => 'http://auth.example.com/register',
-            'type'    => 'text'
+            'type' => 'url'
         },
         'reloadTimeout' => {
             'default' => 5,
@@ -4788,7 +4785,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type' => 'int'
         },
         'yubikey2fUrl' => {
-            'type' => 'text'
+            'type' => 'url'
         },
         'yubikey2fUserCanRemoveKey' => {
             'default' => 1,

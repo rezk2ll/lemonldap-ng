@@ -34,8 +34,6 @@ sub defaultValues {
         'certificateResetByMailCeaAttribute'         => 'description',
         'certificateResetByMailCertificateAttribute' =>
           'userCertificate;binary',
-        'certificateResetByMailURL' =>
-          'http://auth.example.com/certificateReset',
         'certificateResetByMailValidityDelay' => 0,
         'checkDevOpsCheckSessionAttributes'   => 1,
         'checkDevOpsDisplayNormalizedHeaders' => 1,
@@ -186,7 +184,6 @@ sub defaultValues {
         'mailFrom'                  => 'noreply@example.com',
         'mailSessionKey'            => 'mail',
         'mailTimeout'               => 0,
-        'mailUrl'                   => 'http://auth.example.com/resetpwd',
         'managerDn'                 => '',
         'managerPassword'           => '',
         'max2FDevices'              => 10,
@@ -291,7 +288,6 @@ sub defaultValues {
         'redirectFormMethod'           => 'get',
         'registerDB'                   => 'Null',
         'registerTimeout'              => 0,
-        'registerUrl'                  => 'http://auth.example.com/register',
         'reloadTimeout'                => 5,
         'rememberAuthChoiceRule'       => 0,
         'rememberCookieName'           => 'llngrememberauthchoice',

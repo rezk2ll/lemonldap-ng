@@ -180,7 +180,6 @@
 "casTicketExpiration":"Temporary ticket lifetime",
 "categoryName":"Nombre de categoría",
 "cda":"Dominios múltiples",
-"certificateMailContent":"Contenido de correo",
 "certificateResetByMailCeaAttribute":" Certificate Exact Assertion attribute name",
 "certificateResetByMailCertificateAttribute":" Certificate binary content attribute name",
 "certificateResetByMailManagement":"Gestión de certificado",

@@ -548,7 +548,7 @@ sub attributes {
         },
         checkHIBPURL => {
             default       => 'https://api.pwnedpasswords.com/range/',
-            type          => 'text',
+            type          => 'url',
             documentation => 'URL of Have I Been Pwned API',
             flags         => 'p',
         },
@@ -1854,7 +1854,6 @@ sub attributes {
 
         mailUrl => {
             type          => 'url',
-            default       => 'http://auth.example.com/resetpwd',
             documentation => 'URL of password reset page',
         },
 
@@ -1885,7 +1884,6 @@ sub attributes {
         },
         certificateResetByMailURL => {
             type          => 'url',
-            default       => 'http://auth.example.com/certificateReset',
             documentation => 'URL of certificate reset page',
         },
         certificateResetByMailValidityDelay => {
@@ -1916,8 +1914,7 @@ sub attributes {
             documentation => 'Register session timeout',
         },
         registerUrl => {
-            type          => 'text',
-            default       => 'http://auth.example.com/register',
+            type          => 'url',
             documentation => 'URL of register page',
         },
         registerDB => {
@@ -2306,7 +2303,7 @@ sub attributes {
             documentation => 'Yubico nonce',
         },
         yubikey2fUrl => {
-            type          => 'text',
+            type          => 'url',
             documentation => 'Yubico server',
         },
         yubikey2fPublicIDSize => {
