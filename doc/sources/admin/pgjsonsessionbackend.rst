@@ -28,7 +28,7 @@ Create the following tables. You may skip the session types you are not going to
 
 ::
 
-   CREATE TABLE sessions (
+   CREATE UNLOGGED TABLE sessions (
        id varchar(64) not null primary key,
        a_session jsonb
    );
@@ -52,7 +52,7 @@ Create the following tables. You may skip the session types you are not going to
    CREATE INDEX i_p__whatToTrace     ON psessions ((a_session ->> '_whatToTrace'));
 
 
-   CREATE TABLE samlsessions (
+   CREATE UNLOGGED TABLE samlsessions (
        id varchar(64) not null primary key,
        a_session jsonb
    );
@@ -64,14 +64,14 @@ Create the following tables. You may skip the session types you are not going to
    CREATE INDEX i_a__art_id       ON samlsessions ((a_session ->> '_art_id'));
    CREATE INDEX i_a__saml_id      ON samlsessions ((a_session ->> '_saml_id'));
 
-   CREATE TABLE oidcsessions (
+   CREATE UNLOGGED TABLE oidcsessions (
        id varchar(64) not null primary key,
        a_session jsonb
    );
    CREATE INDEX i_o__session_kind ON oidcsessions ((a_session ->> '_session_kind'));
    CREATE INDEX i_o__utime        ON oidcsessions ((cast(a_session ->> '_utime' as bigint )));
 
-   CREATE TABLE cassessions (
+   CREATE UNLOGGED TABLE cassessions (
        id varchar(64) not null primary key,
        a_session jsonb
    );
