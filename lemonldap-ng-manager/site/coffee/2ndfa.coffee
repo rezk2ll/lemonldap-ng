@@ -205,17 +205,19 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 								subres.push
 									title: "2fid"
 									value: "name"
+									type:  "type"
 									epoch: "date"
 								for sfDevice in array
 									for key, value of sfDevice
 										if key == 'type'
-											title = value
+											type = value
 										if key == 'name'
 											name = value
 										if key == 'epoch'
 											epoch = value
 									subres.push
-										title: '[' + title + ']' + epoch
+										title: '[' + type + ']' + epoch
+										type: type
 										value: name
 										epoch: epoch
 										sfrow: true
