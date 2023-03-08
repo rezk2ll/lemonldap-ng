@@ -512,6 +512,8 @@ install -D -m 0644 %{modulename}.pp.bz2 \
 %endif
 
 %check
+# This test requires network, use "--with network_tests" to execute it
+%{?!_with_network_tests:rm lemonldap-ng-portal/t/02-Password-Demo-checkHIBP.t}
 sed -i 's:^dirName.*:dirName = %{buildroot}%{lm_vardir}/conf:' \
     %{buildroot}%{lm_storagefile}
 make %{?_smp_mflags} test \
