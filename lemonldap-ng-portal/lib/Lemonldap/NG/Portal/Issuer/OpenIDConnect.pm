@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON                       qw(from_json to_json);
+use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -272,7 +272,7 @@ sub run {
             }
 
             # Check if this RP is authorized
-            if ( my $rule = $self->spRules->{$rp} ) {
+            if ( my $rule = $self->rpRules->{$rp} ) {
                 my $ruleVariables =
                   { %{ $req->sessionInfo || {} }, _oidc_grant_type => $flow };
                 unless ( $rule->( $req, $ruleVariables ) ) {
@@ -1164,8 +1164,7 @@ sub token {
     # Resource Owner Password Credenials
     elsif ( $grant_type eq 'password' ) {
         unless (
-            $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsAllowPasswordGrant}
-          )
+            $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAllowPasswordGrant} )
         {
             $self->logger->warn(
                 "Access to grant_type=password, is not allowed for RP $rp");
@@ -1176,7 +1175,7 @@ sub token {
 
     # Resource Owner Password Credenials
     elsif ( $grant_type eq 'client_credentials' ) {
-        unless ( $self->oidcRPList->{$rp}
+        unless ( $self->rpOptions->{$rp}
             ->{oidcRPMetaDataOptionsAllowClientCredentialsGrant} )
         {
             $self->logger->warn(
@@ -1209,12 +1208,12 @@ sub _handleClientCredentialsGrant {
 
     # The client credentials grant type MUST only be used by confidential
     # clients.
-    if ( $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsPublic} ) {
+    if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsPublic} ) {
         $self->logger->error(
             "Client Credentials grant cannot be used on public clients");
         return $self->sendOIDCError( $req, 'unauthorized_client', 400 );
     }
-    my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
+    my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
 
     # Populate minimal session info
     my $req_scope = $req->param('scope') || '';
@@ -1240,7 +1239,7 @@ sub _handleClientCredentialsGrant {
     return $self->sendOIDCError( $req, 'server_error', 500 ) if ( $h != PE_OK );
 
     # Run rule against session info
-    if ( my $rule = $self->spRules->{$rp} ) {
+    if ( my $rule = $self->rpRules->{$rp} ) {
         my $ruleVariables =
           { %{ $infos || {} }, _oidc_grant_type => "clientcredentials", };
         unless ( $rule->( $req, $ruleVariables ) ) {
@@ -1304,7 +1303,7 @@ sub _handleTokenExchange {
 
 sub _handlePasswordGrant {
     my ( $self, $req, $rp ) = @_;
-    my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
+    my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
     my $req_scope = $req->param('scope') || '';
     my $username  = $req->param('username');
     my $password  = $req->param('password');
@@ -1354,7 +1353,7 @@ sub _handlePasswordGrant {
       unless ( $result == PE_OK and $req->id and $req->user );
 
     ## Make sure the current user is allowed to use this RP
-    if ( my $rule = $self->spRules->{$rp} ) {
+    if ( my $rule = $self->rpRules->{$rp} ) {
         my $ruleVariables =
           { %{ $req->sessionInfo || {} }, _oidc_grant_type => "password", };
         unless ( $rule->( $req, $ruleVariables ) ) {
@@ -1473,7 +1472,7 @@ sub _handlePasswordGrant {
 
 sub _handleAuthorizationCodeGrant {
     my ( $self, $req, $rp ) = @_;
-    my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
+    my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
     my $code      = $req->param('code');
 
     unless ($code) {
@@ -1675,7 +1674,7 @@ sub _handleAuthorizationCodeGrant {
 
 sub _handleRefreshTokenGrant {
     my ( $self, $req, $rp ) = @_;
-    my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
+    my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
     my $refresh_token = $req->param('refresh_token');
 
     unless ($refresh_token) {
@@ -1972,7 +1971,7 @@ sub introspection {
             $response->{scope} = $oidcSession->{data}->{scope}
               if $oidcSession->{data}->{scope};
             $response->{client_id} =
-              $self->oidcRPList->{ $oidcSession->{data}->{rp} }
+              $self->rpOptions->{ $oidcSession->{data}->{rp} }
               ->{oidcRPMetaDataOptionsClientID}
               if $oidcSession->{data}->{rp};
             $response->{iss} = $self->iss;
@@ -2356,8 +2355,8 @@ sub metadata {
     # If one of the RPs has password grant enabled
     if (
         grep {
-            $self->oidcRPList->{$_}->{oidcRPMetaDataOptionsAllowPasswordGrant}
-        } keys %{ $self->oidcRPList }
+            $self->rpOptions->{$_}->{oidcRPMetaDataOptionsAllowPasswordGrant}
+        } keys %{ $self->rpOptions }
       )
     {
         push( @$grant_types, "password" );
@@ -2366,9 +2365,9 @@ sub metadata {
     # If one of the RPs has client credentials grant enabled
     if (
         grep {
-            $self->oidcRPList->{$_}
+            $self->rpOptions->{$_}
               ->{oidcRPMetaDataOptionsAllowClientCredentialsGrant}
-        } keys %{ $self->oidcRPList }
+        } keys %{ $self->rpOptions }
       )
     {
         push( @$grant_types, "client_credentials" );
@@ -2376,8 +2375,8 @@ sub metadata {
 
     # If one of the RPs has refresh tokens enabled
     if (
-        grep { $self->oidcRPList->{$_}->{oidcRPMetaDataOptionsRefreshToken} }
-        keys %{ $self->oidcRPList }
+        grep { $self->rpOptions->{$_}->{oidcRPMetaDataOptionsRefreshToken} }
+        keys %{ $self->rpOptions }
       )
     {
         push( @$grant_types, "refresh_token" );
@@ -2574,7 +2573,7 @@ sub _generateIDToken {
         $extra_claims )
       = @_;
 
-    my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
+    my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
 
     my $id_token_exp =
       $self->conf->{oidcRPMetaDataOptions}->{$rp}

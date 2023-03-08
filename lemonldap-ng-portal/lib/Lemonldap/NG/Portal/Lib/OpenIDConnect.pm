@@ -55,13 +55,22 @@ use constant COMPLEX_CLAIM => {
 
 # PROPERTIES
 
-has oidcOPList   => ( is => 'rw', default => sub { {} }, );
-has oidcRPList   => ( is => 'rw', default => sub { {} }, );
-has rpAttributes => ( is => 'rw', default => sub { {} }, );
+has opAttributes => ( is => 'rw', default => sub { {} } );
+has opMetadata   => ( is => 'rw', default => sub { {} }, );
+has opOptions    => ( is => 'rw', default => sub { {} }, );
 has opRules      => ( is => 'rw', default => sub { {} } );
-has spRules      => ( is => 'rw', default => sub { {} } );
-has spMacros     => ( is => 'rw', default => sub { {} } );
-has spScopeRules => ( is => 'rw', default => sub { {} } );
+has rpAttributes => ( is => 'rw', default => sub { {} }, );
+has rpMacros     => ( is => 'rw', default => sub { {} } );
+has rpOptions    => ( is => 'rw', default => sub { {} }, );
+has rpRules      => ( is => 'rw', default => sub { {} } );
+has rpScopeRules => ( is => 'rw', default => sub { {} } );
+
+# Deprecated names, remove in 3.0
+*oidcOPList   = *opMetadata;
+*oidcRPList   = *rpOptions;
+*spMacros     = *rpMacros;
+*spRules      = *rpRules;
+*spScopeRules = *rpScopeRules;
 
 # return LWP::UserAgent object
 has ua => (
@@ -108,8 +117,8 @@ sub loadOPs {
         my $op_conf =
           $self->decodeJSON( $self->conf->{oidcOPMetaDataJSON}->{$_} );
         if ($op_conf) {
-            $self->oidcOPList->{$_}->{conf} = $op_conf;
-            $self->oidcOPList->{$_}->{jwks} =
+            $self->opMetadata->{$_}->{conf} = $op_conf;
+            $self->opMetadata->{$_}->{jwks} =
               $self->decodeJSON( $self->conf->{oidcOPMetaDataJWKS}->{$_} );
         }
         else {
@@ -119,6 +128,9 @@ sub loadOPs {
 
     # Set rule
     foreach ( keys %{ $self->conf->{oidcOPMetaDataOptions} } ) {
+        $self->opAttributes->{$_} =
+          $self->conf->{oidcOPMetaDataExportedVars}->{$_};
+        $self->opOptions->{$_} = $self->conf->{oidcOPMetaDataOptions}->{$_};
         my $cond = $self->conf->{oidcOPMetaDataOptions}->{$_}
           ->{oidcOPMetaDataOptionsResolutionRule};
         if ( length $cond ) {
@@ -152,7 +164,7 @@ sub loadRPs {
         my $valid = 1;
 
         # Handle attributes
-        my $attributes = {
+        my $scope_values = {
             profile => PROFILE,
             email   => EMAIL,
             address => ADDRESS,
@@ -164,10 +176,10 @@ sub loadRPs {
           $self->conf->{oidcRPMetaDataOptionsExtraClaims}->{$rp};
 
         if ($extraClaims) {
-            foreach my $claim ( keys %$extraClaims ) {
-                $self->logger->debug("Using extra claim $claim for $rp");
-                my @extraAttributes = split( /\s/, $extraClaims->{$claim} );
-                $attributes->{$claim} = \@extraAttributes;
+            foreach my $scope ( keys %$extraClaims ) {
+                $self->logger->debug("Processing scope value $scope for $rp");
+                my @extraAttributes = split( /\s/, $extraClaims->{$scope} );
+                $scope_values->{$scope} = \@extraAttributes;
             }
         }
 
@@ -223,12 +235,14 @@ sub loadRPs {
         if ($valid) {
 
             # Register RP
-            $self->oidcRPList->{$rp} =
+            $self->rpOptions->{$rp} =
               $self->conf->{oidcRPMetaDataOptions}->{$rp};
-            $self->rpAttributes->{$rp} = $attributes;
-            $self->spMacros->{$rp}     = $compiledMacros;
-            $self->spScopeRules->{$rp} = $compiledScopes;
-            $self->spRules->{$rp}      = $rule;
+            $self->rpAttributes->{$rp} =
+              $self->conf->{oidcRPMetaDataExportedVars}->{$rp};
+            $self->rpScopes->{$rp}     = $scope_values;
+            $self->rpMacros->{$rp}     = $compiledMacros;
+            $self->rpScopeRules->{$rp} = $compiledScopes;
+            $self->rpRules->{$rp}      = $rule;
         }
         else {
             $self->logger->error(
@@ -261,7 +275,7 @@ sub refreshJWKSdata {
         my $jwksTimeout =
           $self->conf->{oidcOPMetaDataOptions}->{$_}
           ->{oidcOPMetaDataOptionsJWKSTimeout};
-        my $jwksUri = $self->oidcOPList->{$_}->{conf}->{jwks_uri};
+        my $jwksUri = $self->opMetadata->{$_}->{conf}->{jwks_uri};
 
         unless ($jwksTimeout) {
             $self->logger->debug(
@@ -274,7 +288,7 @@ sub refreshJWKSdata {
             next;
         }
 
-        if ( $self->oidcOPList->{$_}->{jwks}->{time} + $jwksTimeout > time ) {
+        if ( $self->opMetadata->{$_}->{jwks}->{time} + $jwksTimeout > time ) {
             $self->logger->debug("JWKS data still valid for $_, skipping...");
             next;
         }
@@ -293,8 +307,8 @@ sub refreshJWKSdata {
 
         my $content = $self->decodeJSON( $response->decoded_content );
 
-        $self->oidcOPList->{$_}->{jwks} = $content;
-        $self->oidcOPList->{$_}->{jwks}->{time} = time;
+        $self->opMetadata->{$_}->{jwks} = $content;
+        $self->opMetadata->{$_}->{jwks}->{time} = time;
 
     }
     return 1;
@@ -307,9 +321,9 @@ sub getRP {
     my ( $self, $client_id ) = @_;
     my $rp;
 
-    foreach ( keys %{ $self->oidcRPList } ) {
+    foreach ( keys %{ $self->rpOptions } ) {
         if ( $client_id eq
-            $self->oidcRPList->{$_}->{oidcRPMetaDataOptionsClientID} )
+            $self->rpOptions->{$_}->{oidcRPMetaDataOptionsClientID} )
         {
             $rp = $_;
             last;
@@ -343,7 +357,7 @@ sub buildAuthorizationCodeAuthnRequest {
     my ( $self, $req, $op, $state, $nonce ) = @_;
 
     my $authorize_uri =
-      $self->oidcOPList->{$op}->{conf}->{authorization_endpoint};
+      $self->opMetadata->{$op}->{conf}->{authorization_endpoint};
 
     unless ($authorize_uri) {
         $self->logger->error(
@@ -618,7 +632,7 @@ sub getAccessTokenFromTokenEndpoint {
       $self->conf->{oidcOPMetaDataOptions}->{$op}
       ->{oidcOPMetaDataOptionsClientSecret};
     my $access_token_uri =
-      $self->oidcOPList->{$op}->{conf}->{token_endpoint};
+      $self->opMetadata->{$op}->{conf}->{token_endpoint};
 
     unless ($access_token_uri) {
         $self->logger->error(
@@ -738,7 +752,7 @@ sub checkIDTokenValidity {
       ->{oidcOPMetaDataOptionsUseNonce};
 
     # Check issuer
-    unless ( $id_token->{iss} eq $self->oidcOPList->{$op}->{conf}->{issuer} ) {
+    unless ( $id_token->{iss} eq $self->opMetadata->{$op}->{conf}->{issuer} ) {
         $self->logger->error("Issuer mismatch");
         return 0;
     }
@@ -966,7 +980,7 @@ sub getUserInfo {
     my ( $self, $op, $access_token ) = @_;
 
     my $userinfo_uri =
-      $self->oidcOPList->{$op}->{conf}->{userinfo_endpoint};
+      $self->opMetadata->{$op}->{conf}->{userinfo_endpoint};
 
     unless ($userinfo_uri) {
         $self->logger->error("UserInfo URI not found in $op configuration");
@@ -1113,7 +1127,7 @@ sub makeJWT {
       ->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
     $exp += time;
-    my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
+    my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
 
     my $access_token_payload = {
         iss       => $self->iss,                  # Issuer Identifier
@@ -1442,13 +1456,13 @@ sub verifyJWTSignature {
         }
 
         # The public key is needed
-        unless ( $self->oidcOPList->{$op}->{jwks} ) {
+        unless ( $self->opMetadata->{$op}->{jwks} ) {
             $self->logger->error(
                 "Cannot verify $alg signature: no JWKS data found");
             return 0;
         }
 
-        my $keys = $self->oidcOPList->{$op}->{jwks}->{keys};
+        my $keys = $self->opMetadata->{$op}->{jwks}->{keys};
         my $key_hash;
 
         # Find Key ID associated with signature
@@ -1784,7 +1798,7 @@ sub getAttributesListFromClaim {
 # @return arrayref attributes list
 sub getAttributesListFromScopeValue {
     my ( $self, $rp, $scope_value ) = @_;
-    return $self->rpAttributes->{$rp}->{$scope_value};
+    return $self->rpScopes->{$rp}->{$scope_value};
 }
 
 # Return granted scopes for this request
@@ -1799,7 +1813,7 @@ sub getScope {
     # Clean up unknown scopes
     if ( $self->conf->{oidcServiceAllowOnlyDeclaredScopes} ) {
         my @known_scopes = (
-            keys( %{ $self->spScopeRules->{$rp} || {} } ),
+            keys( %{ $self->rpScopeRules->{$rp} || {} } ),
             @{ OIDC_SCOPES() },
             keys(
                 %{
@@ -1821,10 +1835,10 @@ sub getScope {
     }
 
     # If this RP has dynamic scopes
-    if ( $self->spScopeRules->{$rp} ) {
+    if ( $self->rpScopeRules->{$rp} ) {
 
         # Add dynamic scopes
-        for my $dynamicScope ( keys %{ $self->spScopeRules->{$rp} } ) {
+        for my $dynamicScope ( keys %{ $self->rpScopeRules->{$rp} } ) {
 
             # Set a magic "$requested" variable that contains true if the
             # scope was requested by the application
@@ -1832,7 +1846,7 @@ sub getScope {
             my $attributes = { %{ $req->userData }, requested => $requested };
 
             # If scope is granted by the rule
-            if ( $self->spScopeRules->{$rp}->{$dynamicScope}
+            if ( $self->rpScopeRules->{$rp}->{$dynamicScope}
                 ->( $req, $attributes ) )
             {
                 # Add to list
@@ -1883,7 +1897,7 @@ sub buildUserInfoResponse {
 sub _addAttributeToResponse {
     my ( $self, $req, $data, $userinfo_response, $rp, $attribute ) = @_;
     my @attrConf = split /;/,
-      ( $self->conf->{oidcRPMetaDataExportedVars}->{$rp}->{$attribute} || "" );
+      ( $self->rpAttributes->{$rp}->{$attribute} || "" );
     my $session_key = $attrConf[0];
     if ($session_key) {
         my $type  = $attrConf[1] || 'string';
@@ -1892,9 +1906,9 @@ sub _addAttributeToResponse {
         my $session_value;
 
         # Lookup attribute in macros first
-        if ( $self->spMacros->{$rp}->{$session_key} ) {
+        if ( $self->rpMacros->{$rp}->{$session_key} ) {
             $session_value =
-              $self->spMacros->{$rp}->{$session_key}->( $req, $data );
+              $self->rpMacros->{$rp}->{$session_key}->( $req, $data );
 
             # If not found, search in session
         }
@@ -1936,7 +1950,7 @@ sub buildUserInfoResponseFromData {
 
     my $data = {
         %{$session_data},
-        _clientId => $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID},
+        _clientId => $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID},
         _clientConfKey => $rp,
         _scope         => $scope,
     };
@@ -1948,9 +1962,7 @@ sub buildUserInfoResponseFromData {
 
     # By default, release all exported attributes
     if ( $self->conf->{oidcServiceIgnoreScopeForClaims} ) {
-        for my $attribute (
-            keys %{ $self->conf->{oidcRPMetaDataExportedVars}->{$rp} || {} } )
-        {
+        for my $attribute ( keys %{ $self->rpAttributes->{$rp} || {} } ) {
             $self->_addAttributeToResponse( $req, $data, $userinfo_response,
                 $rp, $attribute );
         }
@@ -2402,9 +2414,9 @@ sub force_id_claims {
 sub getAudiences {
     my ( $self, $rp ) = @_;
 
-    my $client_id = $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsClientID};
+    my $client_id    = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
     my @addAudiences = split /\s+/,
-      ( $self->oidcRPList->{$rp}->{oidcRPMetaDataOptionsAdditionalAudiences}
+      ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAdditionalAudiences}
           || '' );
 
     my $result = [$client_id];
@@ -2425,8 +2437,8 @@ sub getUserIDForRP {
 
     # If the main attribute is a SP macro, resolve it
     # else, get it directly from session data
-    return $self->spMacros->{$rp}->{$user_id_attribute}
-      ? $self->spMacros->{$rp}->{$user_id_attribute}->( $req, $data )
+    return $self->rpMacros->{$rp}->{$user_id_attribute}
+      ? $self->rpMacros->{$rp}->{$user_id_attribute}->( $req, $data )
       : $data->{$user_id_attribute};
 }
 
@@ -2453,7 +2465,8 @@ sub generateNonce {
 
 sub getSidFromSession {
     my ( $self, $rp, $sessionInfo ) = @_;
-    return Digest::SHA::hmac_sha256_base64($sessionInfo->{_session_id} . ':' . $rp );
+    return Digest::SHA::hmac_sha256_base64(
+        $sessionInfo->{_session_id} . ':' . $rp );
 }
 
 1;

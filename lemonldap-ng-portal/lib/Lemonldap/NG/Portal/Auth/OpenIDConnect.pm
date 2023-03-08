@@ -2,9 +2,9 @@ package Lemonldap::NG::Portal::Auth::OpenIDConnect;
 
 use strict;
 use Mouse;
-use MIME::Base64                           qw/encode_base64 decode_base64/;
-use Scalar::Util                           qw/looks_like_number/;
-use Lemonldap::NG::Common::JWT             qw(getJWTPayload);
+use MIME::Base64 qw/encode_base64 decode_base64/;
+use Scalar::Util qw/looks_like_number/;
+use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_IDPCHOICE
@@ -33,7 +33,7 @@ sub init {
     my $self = shift;
 
     return 0 unless ( $self->loadOPs and $self->refreshJWKSdata );
-    my @tab = ( sort keys %{ $self->oidcOPList } );
+    my @tab = ( sort keys %{ $self->opMetadata } );
     unless (@tab) {
         $self->logger->error("No OP configured");
         return 0;
@@ -406,7 +406,7 @@ sub authLogout {
 
     # Find endession endpoint
     my $endsession_endpoint =
-      $self->oidcOPList->{$op}->{conf}->{end_session_endpoint};
+      $self->opMetadata->{$op}->{conf}->{end_session_endpoint};
 
     my $client_id =
       $self->conf->{oidcOPMetaDataOptions}->{$op}
@@ -561,8 +561,8 @@ sub backLogout {
 
     # Get iss and found related OP
     my $op;
-    foreach ( keys %{ $self->oidcOPList } ) {
-        if ( $self->oidcOPList->{$_}->{conf}->{issuer} eq $payload->{iss} ) {
+    foreach ( keys %{ $self->opMetadata } ) {
+        if ( $self->opMetadata->{$_}->{conf}->{issuer} eq $payload->{iss} ) {
             $op = $_;
             last;
         }
