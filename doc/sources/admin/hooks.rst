@@ -282,9 +282,8 @@ getSamlConfig
 This hook is triggered when an entityID that is not registered in SAML
 configuration (IDP or SP) is trying to communicate with LemonLDAP::NG
 
-You can use this hook to inject configuration on-demand
-
-Sample code::
+You can use this hook to inject configuration on-demand. Update `$config` with
+the IDP or SP information::
 
    use constant hook => {
       getSamlConfig => 'getConfFromDB',
@@ -295,7 +294,8 @@ Sample code::
 
        # Lookup $entityID in some DB
 
-       return {
+       # Update the provided $config reference
+       %$config = (
            sp_metadata => #XML metadata
            sp_confKey => #configuration key
            sp_attributes => #hashref of exported attributes
@@ -305,7 +305,9 @@ Sample code::
            idp_metadata => #XML metadata
            idp_attributes => #hashref of exported attributes
            idp_options => #hashref of options
-       };
+       );
+
+       return PE_OK;
    }
 
 SAML Issuer hooks
