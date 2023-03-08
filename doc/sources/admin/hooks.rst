@@ -85,7 +85,7 @@ oidcGenerateUserInfoResponse
 
 .. versionadded:: 2.0.10
 
-This hook is triggered when LemonLDAP::NG is about to send a UserInfo response to a relying party on the `/oauth2/userinfo` endpoint.
+This hook is triggered when LemonLDAP::NG is about to send a UserInfo response to a relying party on the `/oauth2/userinfo` endpoint, or to compute a list of claims to be added in an ID or Access Token.
 
 The hook's parameter is a hash containing all the claims that are about to be released.
 
