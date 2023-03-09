@@ -43,17 +43,13 @@ sub init {
 
     foreach (@tab) {
         my $name = $_;
-        $name =
-          $self->conf->{oidcOPMetaDataOptions}->{$_}
-          ->{oidcOPMetaDataOptionsDisplayName}
-          if $self->conf->{oidcOPMetaDataOptions}->{$_}
-          ->{oidcOPMetaDataOptionsDisplayName};
-        my $icon = $self->conf->{oidcOPMetaDataOptions}->{$_}
-          ->{oidcOPMetaDataOptionsIcon};
-        my $tooltip = $self->conf->{oidcOPMetaDataOptions}->{$_}
-          ->{oidcOPMetaDataOptionsTooltip} || $name;
-        my $order = $self->conf->{oidcOPMetaDataOptions}->{$_}
-          ->{oidcOPMetaDataOptionsSortNumber} // 0;
+        $name = $self->opOptions->{$_}->{oidcOPMetaDataOptionsDisplayName}
+          if $self->opOptions->{$_}->{oidcOPMetaDataOptionsDisplayName};
+        my $icon = $self->opOptions->{$_}->{oidcOPMetaDataOptionsIcon};
+        my $tooltip =
+          $self->opOptions->{$_}->{oidcOPMetaDataOptionsTooltip} || $name;
+        my $order = $self->opOptions->{$_}->{oidcOPMetaDataOptionsSortNumber}
+          // 0;
         my $img_src;
 
         if ($icon) {
@@ -207,8 +203,7 @@ sub extractFormInfo {
             "Refresh token: " . ( $refresh_token || "<none>" ) );
 
         # Verify JWT signature
-        if ( $self->conf->{oidcOPMetaDataOptions}->{$op}
-            ->{oidcOPMetaDataOptionsCheckJWTSignature} )
+        if ( $self->opOptions->{$op}->{oidcOPMetaDataOptionsCheckJWTSignature} )
         {
             unless ( $self->verifyJWTSignature( $id_token, $op ) ) {
                 $self->logger->error("JWT signature verification failed");
@@ -328,9 +323,7 @@ sub extractFormInfo {
     $self->logger->debug("Build OpenIDConnect AuthN Request");
 
     my $nonce;
-    if ( $self->conf->{oidcOPMetaDataOptions}->{$op}
-        ->{oidcOPMetaDataOptionsUseNonce} )
-    {
+    if ( $self->opOptions->{$op}->{oidcOPMetaDataOptionsUseNonce} ) {
         $nonce = $self->generateNonce();
         $req->data->{_oidcNonce} = $nonce;
     }
@@ -384,8 +377,8 @@ sub setAuthSessionInfo {
     }
 
     # Keep ID Token in session
-    my $store_IDToken = $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsStoreIDToken};
+    my $store_IDToken =
+      $self->opOptions->{$op}->{oidcOPMetaDataOptionsStoreIDToken};
     if ($store_IDToken) {
         $self->logger->debug("Store ID Token in session");
         $req->{sessionInfo}->{_oidc_id_token} = $req->data->{id_token};
@@ -408,9 +401,7 @@ sub authLogout {
     my $endsession_endpoint =
       $self->opMetadata->{$op}->{conf}->{end_session_endpoint};
 
-    my $client_id =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsClientID};
+    my $client_id = $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientID};
 
     if ($endsession_endpoint) {
         my $logout_url = $self->conf->{portal} . '?logout=1';
@@ -577,16 +568,15 @@ sub backLogout {
     return $self->p->error( $req, 'Bad aud', 400 )
       unless ref $payload->{aud} eq 'ARRAY';
     return $self->p->error( $req, 'Client ID not found in audience array', 400 )
-      unless grep {
-        $_ eq $self->conf->{oidcOPMetaDataOptions}->{$op}
-          ->{oidcOPMetaDataOptionsClientID}
-      } @{ $payload->{aud} };
+      unless
+      grep { $_ eq $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientID} }
+      @{ $payload->{aud} };
 
     # Verify iat
     return $self->p->error( $req, 'Token too old', 400 )
       unless $payload->{iat} +
-      ( $self->conf->{oidcOPMetaDataOptions}->{$op}
-          ->{oidcOPMetaDataOptionsIDTokenMaxAge} // 30 ) > time;
+      ( $self->opOptions->{$op}->{oidcOPMetaDataOptionsIDTokenMaxAge} // 30 ) >
+      time;
 
     # Verify events
     return $self->p->error( $req, 'Bad events', 400 )

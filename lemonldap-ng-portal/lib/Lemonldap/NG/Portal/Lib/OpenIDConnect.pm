@@ -43,7 +43,13 @@ use constant ADDRESS =>
   [qw/formatted street_address locality region postal_code country/];
 use constant PHONE => [qw/phone_number phone_number_verified/];
 
-use constant OIDC_SCOPES => [qw/openid profile email address phone/];
+use constant DEFAULT_SCOPES => {
+    profile => PROFILE,
+    email   => EMAIL,
+    address => ADDRESS,
+    phone   => PHONE,
+};
+
 use constant COMPLEX_CLAIM => {
     formatted      => "address",
     street_address => "address",
@@ -63,6 +69,7 @@ has rpAttributes => ( is => 'rw', default => sub { {} }, );
 has rpMacros     => ( is => 'rw', default => sub { {} } );
 has rpOptions    => ( is => 'rw', default => sub { {} }, );
 has rpRules      => ( is => 'rw', default => sub { {} } );
+has rpScopes     => ( is => 'rw', default => sub { {} } );
 has rpScopeRules => ( is => 'rw', default => sub { {} } );
 
 # Deprecated names, remove in 3.0
@@ -131,8 +138,8 @@ sub loadOPs {
         $self->opAttributes->{$_} =
           $self->conf->{oidcOPMetaDataExportedVars}->{$_};
         $self->opOptions->{$_} = $self->conf->{oidcOPMetaDataOptions}->{$_};
-        my $cond = $self->conf->{oidcOPMetaDataOptions}->{$_}
-          ->{oidcOPMetaDataOptionsResolutionRule};
+        my $cond =
+          $self->opOptions->{$_}->{oidcOPMetaDataOptionsResolutionRule};
         if ( length $cond ) {
             my $rule_sub =
               $self->p->buildRule( $cond, "OIDC provider resolution" );
@@ -163,13 +170,9 @@ sub loadRPs {
     foreach my $rp ( keys %{ $self->conf->{oidcRPMetaDataOptions} || {} } ) {
         my $valid = 1;
 
-        # Handle attributes
-        my $scope_values = {
-            profile => PROFILE,
-            email   => EMAIL,
-            address => ADDRESS,
-            phone   => PHONE,
-        };
+        # Handle scopes
+        # this HAS to be a deep copy of the DEFAULT_SCOPES hashref!
+        my $scope_values = { %{ DEFAULT_SCOPES() } };
 
         # Additional claims
         my $extraClaims =
@@ -215,14 +218,14 @@ sub loadRPs {
         }
 
         # Load per-RP dynamic scopes
-        my $scopes         = $self->conf->{oidcRPMetaDataScopeRules}->{$rp};
-        my $compiledScopes = {};
-        for my $scopeName ( keys %{$scopes} ) {
-            my $scopeRule = $scopes->{$scopeName};
+        my $scope_rules = $self->conf->{oidcRPMetaDataScopeRules}->{$rp};
+        my $compiled_scope_rules = {};
+        for my $scopeName ( keys %{$scope_rules} ) {
+            my $scopeRule = $scope_rules->{$scopeName};
             if ( length $scopeRule ) {
                 $scopeRule = $self->p->HANDLER->substitute($scopeRule);
                 if ( $scopeRule = $self->p->HANDLER->buildSub($scopeRule) ) {
-                    $compiledScopes->{$scopeName} = $scopeRule;
+                    $compiled_scope_rules->{$scopeName} = $scopeRule;
                 }
                 else {
                     $self->logger->error(
@@ -241,7 +244,7 @@ sub loadRPs {
               $self->conf->{oidcRPMetaDataExportedVars}->{$rp};
             $self->rpScopes->{$rp}     = $scope_values;
             $self->rpMacros->{$rp}     = $compiledMacros;
-            $self->rpScopeRules->{$rp} = $compiledScopes;
+            $self->rpScopeRules->{$rp} = $compiled_scope_rules;
             $self->rpRules->{$rp}      = $rule;
         }
         else {
@@ -273,8 +276,7 @@ sub refreshJWKSdata {
         # 2/ jwks_uri defined in metadata
 
         my $jwksTimeout =
-          $self->conf->{oidcOPMetaDataOptions}->{$_}
-          ->{oidcOPMetaDataOptionsJWKSTimeout};
+          $self->opOptions->{$_}->{oidcOPMetaDataOptionsJWKSTimeout};
         my $jwksUri = $self->opMetadata->{$_}->{conf}->{jwks_uri};
 
         unless ($jwksTimeout) {
@@ -366,28 +368,15 @@ sub buildAuthorizationCodeAuthnRequest {
         );
         return undef;
     }
-    my $client_id =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsClientID};
-    my $scope =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsScope};
+    my $client_id = $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientID};
+    my $scope     = $self->opOptions->{$op}->{oidcOPMetaDataOptionsScope};
     my $response_type = "code";
     my $redirect_uri  = $self->getCallbackUri($req);
-    my $display =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsDisplay};
-    my $prompt =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsPrompt};
-    my $max_age =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsMaxAge};
-    my $ui_locales =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsUiLocales};
-    my $acr_values =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsAcrValues};
+    my $display       = $self->opOptions->{$op}->{oidcOPMetaDataOptionsDisplay};
+    my $prompt        = $self->opOptions->{$op}->{oidcOPMetaDataOptionsPrompt};
+    my $max_age       = $self->opOptions->{$op}->{oidcOPMetaDataOptionsMaxAge};
+    my $ui_locales = $self->opOptions->{$op}->{oidcOPMetaDataOptionsUiLocales};
+    my $acr_values = $self->opOptions->{$op}->{oidcOPMetaDataOptionsAcrValues};
 
     my $authorize_request_params = {
         response_type => $response_type,
@@ -625,12 +614,9 @@ sub getAccessTokenFromTokenEndpoint {
 
     $grant_options ||= {};
 
-    my $client_id =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsClientID};
+    my $client_id = $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientID};
     my $client_secret =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsClientSecret};
+      $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientSecret};
     my $access_token_uri =
       $self->opMetadata->{$op}->{conf}->{token_endpoint};
 
@@ -643,8 +629,7 @@ sub getAccessTokenFromTokenEndpoint {
     }
 
     my $auth_method =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsTokenEndpointAuthMethod}
+      $self->opOptions->{$op}->{oidcOPMetaDataOptionsTokenEndpointAuthMethod}
       || 'client_secret_post';
 
     unless ( $auth_method =~ /^client_secret_(basic|post)$/o ) {
@@ -735,21 +720,12 @@ sub checkTokenResponseValidity {
 sub checkIDTokenValidity {
     my ( $self, $op, $id_token, $state_nonce ) = @_;
 
-    my $client_id =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsClientID};
-    my $acr_values =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsAcrValues};
-    my $max_age =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsMaxAge};
+    my $client_id  = $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientID};
+    my $acr_values = $self->opOptions->{$op}->{oidcOPMetaDataOptionsAcrValues};
+    my $max_age    = $self->opOptions->{$op}->{oidcOPMetaDataOptionsMaxAge};
     my $id_token_max_age =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsIDTokenMaxAge};
-    my $use_nonce =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsUseNonce};
+      $self->opOptions->{$op}->{oidcOPMetaDataOptionsIDTokenMaxAge};
+    my $use_nonce = $self->opOptions->{$op}->{oidcOPMetaDataOptionsUseNonce};
 
     # Check issuer
     unless ( $id_token->{iss} eq $self->opMetadata->{$op}->{conf}->{issuer} ) {
@@ -1051,7 +1027,7 @@ sub newAuthorizationCode {
     return $self->getOpenIDConnectSession(
         undef,
         "authorization_code",
-        $self->conf->{oidcRPMetaDataOptions}->{$rp}
+        $self->rpOptions->{$rp}
           ->{oidcRPMetaDataOptionsAuthorizationCodeExpiration}
           || $self->conf->{oidcServiceAuthorizationCodeExpiration},
         ,
@@ -1090,8 +1066,7 @@ sub newAccessToken {
     my $session = $self->getOpenIDConnectSession(
         undef,
         "access_token",
-        $self->conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsAccessTokenExpiration}
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
           || $self->conf->{oidcServiceAccessTokenExpiration},
         $at_info,
     );
@@ -1115,16 +1090,14 @@ sub newAccessToken {
 
 sub _wantJWT {
     my ( $self, $rp ) = @_;
-    return $self->conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsAccessTokenJWT};
+    return $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenJWT};
 }
 
 sub makeJWT {
     my ( $self, $req, $rp, $scope, $id, $sessionInfo ) = @_;
 
     my $exp =
-      $self->conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsAccessTokenExpiration}
+         $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
     $exp += time;
     my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
@@ -1144,9 +1117,7 @@ sub makeJWT {
       $self->buildUserInfoResponseFromData( $req, $scope, $rp, $sessionInfo );
 
     # Release claims, or only sub
-    if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
-        ->{oidcRPMetaDataOptionsAccessTokenClaims} )
-    {
+    if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenClaims} ) {
         foreach ( keys %$claims ) {
             $access_token_payload->{$_} = $claims->{$_}
               unless $access_token_payload->{$_};
@@ -1162,8 +1133,8 @@ sub makeJWT {
     return undef if ( $h != PE_OK );
 
     # Get signature algorithm
-    my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsAccessTokenSignAlg} || "RS256";
+    my $alg = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenSignAlg}
+      || "RS256";
     $self->logger->debug("Access Token signature algorithm: $alg");
 
     my $jwt = $self->createJWT( $access_token_payload, $alg, $rp, "at+JWT" );
@@ -1210,8 +1181,8 @@ sub newRefreshToken {
     my ( $self, $rp, $info, $offline ) = @_;
     my $ttl =
       $offline
-      ? ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsOfflineSessionExpiration}
+      ? (
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsOfflineSessionExpiration}
           || $self->conf->{oidcServiceOfflineSessionExpiration} )
       : $self->conf->{timeout};
 
@@ -1414,12 +1385,10 @@ sub verifyJWTSignature {
         # Check signature with client secret
         my $client_secret;
         $client_secret =
-          $self->conf->{oidcOPMetaDataOptions}->{$op}
-          ->{oidcOPMetaDataOptionsClientSecret}
+          $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientSecret}
           if ($op);
         $client_secret =
-          $self->conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsClientSecret}
+          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret}
           if ($rp);
 
         my $digest;
@@ -1711,9 +1680,7 @@ sub checkEndPointAuthenticationCredentials {
     }
 
     # Check client_secret
-    if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
-        ->{oidcRPMetaDataOptionsPublic} )
-    {
+    if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsPublic} ) {
         $self->logger->debug(
             "Relying Party $rp is public, do not check client secret");
     }
@@ -1724,8 +1691,8 @@ sub checkEndPointAuthenticationCredentials {
             );
             return undef;
         }
-        unless ( $client_secret eq $self->conf->{oidcRPMetaDataOptions}->{$rp}
-            ->{oidcRPMetaDataOptionsClientSecret} )
+        unless ( $client_secret eq
+            $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret} )
         {
             $self->logger->error("Wrong credentials for $rp");
             return undef;
@@ -1814,12 +1781,7 @@ sub getScope {
     if ( $self->conf->{oidcServiceAllowOnlyDeclaredScopes} ) {
         my @known_scopes = (
             keys( %{ $self->rpScopeRules->{$rp} || {} } ),
-            @{ OIDC_SCOPES() },
-            keys(
-                %{
-                    $self->conf->{oidcRPMetaDataOptionsExtraClaims}->{$rp} || {}
-                }
-            )
+            "openid", keys( %{ $self->rpScopes->{$rp} || {} } )
         );
         my @scope_values_tmp;
         for my $scope_value (@scope_values) {
@@ -2102,8 +2064,7 @@ sub createJWT {
 
         # Sign with client secret
         my $client_secret =
-          $self->conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsClientSecret};
+          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret};
         unless ($client_secret) {
             $self->logger->error(
                 "Algorithm $alg needs a Client Secret to sign JWT");
@@ -2178,8 +2139,7 @@ sub createIDToken {
     my ( $self, $req, $payload, $rp ) = @_;
 
     # Get signature algorithm
-    my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsIDTokenSignAlg};
+    my $alg = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIDTokenSignAlg};
     $self->logger->debug("ID Token signature algorithm: $alg");
 
     my $h = $self->p->processHook( $req, 'oidcGenerateIDToken', $payload, $rp );
@@ -2401,8 +2361,7 @@ sub validatePKCEChallenge {
 
 sub force_id_claims {
     my ( $self, $rp ) = @_;
-    return $self->conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsIDTokenForceClaims};
+    return $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIDTokenForceClaims};
 }
 
 # https://openid.net/specs/openid-connect-core-1_0.html#IDToken
@@ -2431,8 +2390,7 @@ sub getUserIDForRP {
     my ( $self, $req, $rp, $data ) = @_;
 
     my $user_id_attribute =
-      $self->conf->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsUserIDAttr}
+         $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsUserIDAttr}
       || $self->conf->{whatToTrace};
 
     # If the main attribute is a SP macro, resolve it
