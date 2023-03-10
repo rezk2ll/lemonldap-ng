@@ -72,8 +72,8 @@ Type ``about:config`` in a tab and search for ``trusted``. Then edit the
 property ``network.negotiate-auth.trusted-uris`` and set value
 ``example.com``.
 
-Internet Explorer
-^^^^^^^^^^^^^^^^^
+Internet Explorer / Edge / Chrome
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Add ``https://auth.example.com`` as trusted site.
 
