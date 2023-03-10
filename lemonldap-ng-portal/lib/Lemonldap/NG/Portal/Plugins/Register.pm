@@ -37,7 +37,7 @@ has registerModule => ( is => 'rw' );
 
 # Register URL to set in mail
 has registerUrl => (
-    is      => 'rw',
+    is      => 'ro',
     lazy    => 1,
     default => sub {
         my $self = $_[0];

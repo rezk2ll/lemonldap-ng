@@ -18,7 +18,7 @@ has requireOldPwd            => ( is => 'rw', default => sub { 1 } );
 has rememberAuthChoice       => ( is => 'rw', default => sub { 0 } );
 has passwordPolicyActivation => ( is => 'rw', default => sub { 0 } );
 has passwordResetUrl => (
-    is      => 'rw',
+    is      => 'ro',
     lazy    => 1,
     default => sub {
         my $self = $_[0];
@@ -28,7 +28,7 @@ has passwordResetUrl => (
     }
 );
 has certificateResetUrl => (
-    is      => 'rw',
+    is      => 'ro',
     lazy    => 1,
     default => sub {
         my $self = $_[0];
@@ -40,7 +40,7 @@ has certificateResetUrl => (
     }
 );
 has registerUrl => (
-    is      => 'rw',
+    is      => 'ro',
     lazy    => 1,
     default => sub {
         my $self = $_[0];
