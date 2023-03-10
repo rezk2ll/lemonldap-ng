@@ -6,6 +6,8 @@ use IO::String;
 require 't/test-lib.pm';
 my $maintests = 16;
 
+no warnings 'once';
+
 SKIP: {
     eval { require Convert::Base32; require Crypt::U2F::Server::Simple; };
     if ($@) {

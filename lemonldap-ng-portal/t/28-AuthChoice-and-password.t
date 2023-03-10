@@ -10,6 +10,8 @@ my $maintests = 10;
 
 my $userdb = tempdb();
 
+no warnings 'once';
+
 SKIP: {
     eval { require DBI; require DBD::SQLite; };
     if ($@) {

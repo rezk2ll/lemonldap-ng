@@ -10,6 +10,8 @@ my $res;
 my $json;
 my $maintests = 24;
 
+no warnings 'once';
+
 SKIP: {
     skip 'LLNGTESTLDAP is not set', $maintests unless ( $ENV{LLNGTESTLDAP} );
     require 't/test-ldap.pm';

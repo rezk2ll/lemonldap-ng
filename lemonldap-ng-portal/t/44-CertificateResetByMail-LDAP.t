@@ -19,6 +19,8 @@ BEGIN {
 my ( $res, $user );
 my $maintests = 12;
 
+no warnings 'once';
+
 SKIP: {
     eval
 'require Email::Sender::Simple; use GD::SecurityImage; use Image::Magick; use Net::SSLeay;

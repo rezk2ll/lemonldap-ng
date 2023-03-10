@@ -9,6 +9,8 @@ use JSON qw/from_json to_json/;
 require 't/test-lib.pm';
 require 't/test-yubikey.pm';
 
+no warnings 'once';
+
 SKIP: {
     eval "use Auth::Yubikey_WebClient";
     if ($@) {

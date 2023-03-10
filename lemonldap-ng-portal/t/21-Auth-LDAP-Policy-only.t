@@ -10,6 +10,8 @@ use lib 't/lib';
 my $res;
 my $maintests = 32;
 
+no warnings 'once';
+
 SKIP: {
     skip( 'LLNGTESTLDAP is not set', $maintests ) unless ( $ENV{LLNGTESTLDAP} );
     require 't/test-ldap.pm';
