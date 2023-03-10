@@ -44,7 +44,7 @@ extends qw(
 
 # Reset URL to set in mail
 has resetUrl => (
-    is      => 'rw',
+    is      => 'ro',
     lazy    => 1,
     default => sub {
         my $self = $_[0];

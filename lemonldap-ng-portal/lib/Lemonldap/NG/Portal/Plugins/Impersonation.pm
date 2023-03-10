@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_IMPERSONATION_SERVICE_NOT_ALLOWED
 );
 
-our $VERSION = '2.17';
+our $VERSION = '2.17.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -29,6 +29,16 @@ has ott => ( is => 'rw' );
 
 # Captcha generator
 has captcha => ( is => 'rw' );
+
+# Prefix used for renaming session attributes
+has prefix => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        my $self = $_[0];
+        return $self->conf->{impersonationPrefix};
+    }
+);
 
 sub init {
     my ($self) = @_;
@@ -119,7 +129,7 @@ sub run {
         if ( $self->{conf}->{impersonationSkipEmptyValues} ) {
             next unless defined $req->{sessionInfo}->{$k};
         }
-        my $spk = "$self->{conf}->{impersonationPrefix}$k";
+        my $spk = $self->prefix . $k;
         unless ( isHiddenAttr( $self->conf, $k, @hidden )
             || $k =~ /^(?:_imp|token|_type)\w*\b/ )
         {
@@ -146,8 +156,8 @@ sub run {
     $spoofSession->{hGroups} ||= {};
     if ( $self->{conf}->{impersonationMergeSSOgroups} ) {
         $self->userLogger->warn("MERGING SSO groups and hGroups...");
-        my $spg       = "$self->{conf}->{impersonationPrefix}groups";
-        my $sphg      = "$self->{conf}->{impersonationPrefix}hGroups";
+        my $spg       = $self->prefix . 'groups';
+        my $sphg      = $self->prefix . 'hGroups';
         my $separator = $self->{conf}->{multiValuesSeparator};
 
         ## GROUPS

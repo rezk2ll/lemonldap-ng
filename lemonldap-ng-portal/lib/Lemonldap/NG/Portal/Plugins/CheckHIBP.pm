@@ -128,8 +128,8 @@ sub _checkHIBP {
     my $response = $self->ua->request($reqAPI);
 
     my $debugstr =
-        'checkHIBP: requesting ['
-      . $reqAPI->as_string . '] : '
+        'checkHIBP: requesting '
+      . $reqAPI->as_string
       . $response->status_line;
 
     $self->logger->debug($debugstr);

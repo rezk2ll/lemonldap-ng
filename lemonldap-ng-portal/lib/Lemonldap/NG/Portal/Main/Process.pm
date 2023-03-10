@@ -1,6 +1,6 @@
 package Lemonldap::NG::Portal::Main::Process;
 
-our $VERSION = '2.17';
+our $VERSION = '2.17.0';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -563,7 +563,7 @@ sub store {
     foreach my $k ( keys %{ $req->{sessionInfo} } ) {
         next unless defined $req->{sessionInfo}->{$k};
         my $displayValue = $req->{sessionInfo}->{$k};
-        $displayValue = '****' if ( isHiddenAttr( $self->conf, $k ) );
+        $displayValue = '****' if isHiddenAttr( $self->conf, $k );
         $self->logger->debug("Store $displayValue in session key $k");
         $self->_dump($displayValue) if ref($displayValue);
         $infos->{$k} = $req->{sessionInfo}->{$k};
