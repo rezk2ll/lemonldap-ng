@@ -16,6 +16,8 @@ my $mailSend  = 0;
 
 my $mail2 = 0;
 
+no warnings 'once';
+
 SKIP: {
     eval
       'require Email::Sender::Simple;use GD::SecurityImage;use Image::Magick;';

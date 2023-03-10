@@ -6,6 +6,8 @@ use Data::Dumper;
 
 require 't/test-lib.pm';
 
+no warnings 'once';
+
 # used by sendCode to store result. Use a random name so multiple tests using
 # sendCode can run in paralell.
 # (Change this value when copying this test!)

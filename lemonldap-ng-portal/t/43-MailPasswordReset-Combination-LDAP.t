@@ -3,6 +3,8 @@ use Test::More;
 use strict;
 use IO::String;
 
+no warnings 'once';
+
 BEGIN {
     eval {
         require 't/test-lib.pm';

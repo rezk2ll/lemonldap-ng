@@ -6,6 +6,8 @@ use IO::String;
 require 't/test-lib.pm';
 my $maintests = 21;
 
+no warnings 'once';
+
 SKIP: {
     eval {
         require Convert::Base32;

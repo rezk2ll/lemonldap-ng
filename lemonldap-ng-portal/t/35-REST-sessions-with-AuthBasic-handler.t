@@ -7,6 +7,8 @@ use JSON;
 use MIME::Base64;
 use Test::More;
 
+no warnings 'once';
+
 our $debug = 'error';
 my ( $p, $res, $spId );
 $| = 1;
