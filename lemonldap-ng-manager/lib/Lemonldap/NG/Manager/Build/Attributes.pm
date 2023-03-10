@@ -1061,6 +1061,12 @@ sub attributes {
             documentation => 'Syslog logger user-actions facility',
             flags         => 'hmp',
         },
+        syslogSockOptions => {
+            type          => 'keyTextContainer',
+            documentation => 'Option to send to setlogsock()',
+            flags         => 'hmp',
+            keyTest       => qr/^(?:type|path|timeout|host|port)$/,
+        },
 
         # Manager or PSGI protected apps
         protection => {
