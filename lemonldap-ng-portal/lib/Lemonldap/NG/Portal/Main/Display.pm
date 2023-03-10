@@ -608,7 +608,16 @@ sub display {
                     DISPLAY_FINDUSER     => scalar @$fields,
                     MANDATORY            => $mandatory,
                     FIELDS               => $fields,
-                    SPOOFID              => $slogin
+                    SPOOFID              => $slogin,
+
+                    # Hidden inputs and custom scripts may have been modified
+                    # by _buildAuthLoop so we need to update them
+                    HIDDEN_INPUTS => $self->buildHiddenForm($req),
+                    (
+                        $req->data->{customScript}
+                        ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
+                        : ()
+                    ),
                 );
             }
 
