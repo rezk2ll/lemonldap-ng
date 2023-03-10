@@ -11,7 +11,7 @@ identifier depending on allowed searching attributes and excluded values.
 Configuration
 -------------
 
-Just enable it in the Manager (section “plugins”). Then, set searching attributes used for selecting accounts and randomly suggest one of them in login form. Excluding attributes can also be defined to exclude some user accounts and avoid to provide them.
+Just enable it in the Manager (section “plugins”). Then, set searching attributes used for selecting accounts and to randomly suggest one of them in login form. Excluding attributes can also be defined to exclude some user accounts and avoid to provide them.
 
 -  **Parameters**:
 
@@ -19,13 +19,13 @@ Just enable it in the Manager (section “plugins”). Then, set searching attri
    -  **Character used as wildcard**: Character that can be used by users as wildcard. An empty value disable wildcarded search requests
    -  **Parameters control**: Regular expression used for checking searching values syntax
    -  **User accounts URL**: User database URL to search on if REST backend is used. Let it blank to use default user data URL.
-   -  **Searching attributes**: For each attribute, you have to set a key (attribute as defined in UserBD) and a value that will be display in login form (placeholder). A value can be a multivalued list separated by multiValuesSeparator parameter (General Parameters > Advanced parameters > Separator). Attibutes can be sorted by adding ``#_`` before their name (where ``#`` is a number). See note below. 
-   -  **Excluding attributes**: You can defined here attributes used for excluding accounts. Set keys corresponding to UserBD attributes and values to exclude. A value can be a multivalued list separated by multiValuesSeparator parameter (General Parameters > Advanced parameters > Separator)
+   -  **Searching attributes**: For each attribute, you have to set a key (attribute as defined in UserBD) and a value that will be displayed in login form as placeholder. Values can be a multivalued list separated by multiValuesSeparator parameter (`General Parameters > Advanced parameters > Separator`). Attibutes can be sorted by adding a ``X_`` before their name where ``X`` is a number. See note below. 
+   -  **Excluding attributes**: You can defined here attributes used for excluding accounts. Set keys corresponding to UserBD attributes and values to exclude. Values can be a multivalued list separated by multiValuesSeparator parameter
 
 .. note::
 
-   By default, simple searching attributes are mandatory to restrict the number of entries to return. To set an attribute as optional,
-   you can use the following syntax ::
+   By default, simple searching attributes are mandatory to restrict the number of returned entries. To set an attribute as optional,
+   you can use the following syntax::
 
          uid##1  =>  UID
 
@@ -33,16 +33,16 @@ Just enable it in the Manager (section “plugins”). Then, set searching attri
 
    You can provide a 'multiValuesSeparator' separated list of allowed searching values that will be displayed as an HTML <select> list ::
 
-         attribute#placeholder[#empty] => value1; placeholder1; value2; placeholder2
+         format = attribute#placeholder[#empty] -> value1; placeholder1; value2; placeholder2
 
    For example ::
 
-         uid#Identity   => dwho; Dr Who; rtyler; Rose Tyler; msmith; Mr Smith
+         format = uid#Identity     like `dwho; Dr Who; rtyler; Rose Tyler; msmith; Mr Smith`
 
-         uid#Identity#1 => dwho; Dr Who; rtyler; Rose Tyler (allow empty value)
+         format = uid#Identity#1   like `dwho; Dr Who; rtyler; Rose Tyler (allow empty value)`
 
-         1_uid#Identity#1 => 2_dwho; Dr Who; 1_rtyler; Rose Tyler; dalek; Dalek 
-         (The attributes will be sorted by number, those without a number will appear at the end of the list)
+         format = 1_uid#Identity#1 like `2_dwho; Dr Who; 1_rtyler; Rose Tyler; dalek; Dalek`
+         (Attributes will be sorted by number, those without number will be appended at the end of the list)
 
 
 .. attention::
