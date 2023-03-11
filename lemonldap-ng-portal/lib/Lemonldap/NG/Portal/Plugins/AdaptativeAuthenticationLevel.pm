@@ -2,11 +2,9 @@ package Lemonldap::NG::Portal::Plugins::AdaptativeAuthenticationLevel;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-);
+use Lemonldap::NG::Portal::Main::Constants 'PE_OK';
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.16.1';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -37,9 +35,9 @@ sub init {
 sub adaptAuthenticationLevel {
     my ( $self, $sub, $req ) = @_;
 
-    my $userid = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+    my $userid = $req->sessionInfo->{ $self->conf->{whatToTrace} }
+      || $req->sessionInfo->{uid};
     $self->logger->debug("Check adaptative authentication rules for $userid");
-
     my $authenticationLevel = $req->sessionInfo->{authenticationLevel};
     $self->logger->debug(
         "Current authentication level for $userid is $authenticationLevel");
@@ -70,6 +68,18 @@ sub adaptAuthenticationLevel {
     if ( $authenticationLevel ne $updatedAuthenticationLevel ) {
         $self->logger->debug("Authentication level has changed for $userid");
         $req->sessionInfo->{authenticationLevel} = $updatedAuthenticationLevel;
+
+        # Compute groups & macros again with new authenticationLevel
+        my $steps = $req->steps;
+        $req->steps(
+            [ 'setSessionInfo', $self->p->groupsAndMacros, 'setLocalGroups' ] );
+        if ( my $error = $self->p->process($req) ) {
+            $self->logger->debug("AdaptativeAuthenticationLevel: Process returned error ($error)");
+            return $req->error($error);
+        }
+
+        # Continue previous process
+        $req->steps($steps);
     }
 
     return $sub->($req);
