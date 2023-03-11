@@ -74,7 +74,7 @@ sub adaptAuthenticationLevel {
         $req->steps(
             [ 'setSessionInfo', $self->p->groupsAndMacros, 'setLocalGroups' ] );
         if ( my $error = $self->p->process($req) ) {
-            $self->logger->debug("AdaptativeAuthenticationLevel: Process returned error ($error)");
+            $self->logger->debug("AdaptativeAuthenticationLevel: process returned error ($error)");
             return $req->error($error);
         }
 
