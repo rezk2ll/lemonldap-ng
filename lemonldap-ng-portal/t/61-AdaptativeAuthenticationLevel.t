@@ -10,8 +10,7 @@ BEGIN {
 
 my ( $res, $id, $json );
 
-my $client = LLNG::Manager::Test->new(
-    {
+my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel                           => 'error',
             authentication                     => 'Demo',
@@ -21,7 +20,12 @@ my $client = LLNG::Manager::Test->new(
                 '$uid eq "msmith"' => '=5',
             },
             restSessionServer => 1,
-            exportedAttr      => '+ mail uid _session_id'
+            exportedVars      => {
+                uid => 'uid',
+            },
+            macros => {
+                authLevel => '"Macro_$authenticationLevel"'
+            }
         }
     }
 );
@@ -49,9 +53,14 @@ $json = expectJSON($res);
 
 ok( $json->{uid} eq 'dwho', 'uid found' ) or explain( $json, "uid='dwho'" );
 ok( $json->{authenticationLevel} == 3, 'Authentication level upgraded' );
-ok( scalar keys %$json == 10,          'Ten exported attributes found' )
-  or explain( $json, 'Ten exported attributes' );
-count(3);
+
+####### To be fixed ########
+ok( $json->{authLevel} eq 'Macro_1', 'Macro updated' );
+############################
+
+ok( scalar keys %$json == 10, 'Ten exported attributes found' )
+  or explain( scalar keys %$json, Dumper $json );
+count(4);
 
 ok( $client->logout($id), 'Logout' );
 count(1);

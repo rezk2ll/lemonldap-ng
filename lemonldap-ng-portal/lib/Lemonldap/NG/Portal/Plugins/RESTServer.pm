@@ -66,7 +66,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PASSWORD_OK
 );
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.16.1';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -78,37 +78,36 @@ has configStorage => (
     }
 );
 has exportedAttr => (
-    is      => 'rw',
+    is      => 'ro',
     lazy    => 1,
     default => sub {
+        my %attributes;
         my $conf = $_[0]->{conf};
-        if ( $conf->{exportedAttr} and $conf->{exportedAttr} !~ /^\s*\+/ ) {
-            return '[' . join( ',', split /\s+/, $conf->{exportedAttr} ) . ']';
-        }
-        else {
-            my @attributes = (
-                'authenticationLevel', 'groups',
-                'ipAddr',              '_startTime',
-                '_utime',              '_lastSeen',
-                '_session_id',         '_session_kind',
+        if ( !$conf->{exportedAttr} || $conf->{exportedAttr} =~ /^\s*\+/ ) {
+            my @attributes = qw(
+              _lastSeen  _session_id  _session_kind _startTime _utime
+              authenticationLevel     groups        ipAddr
             );
             if ( my $exportedAttr = $conf->{exportedAttr} ) {
                 $exportedAttr =~ s/^\s*\+\s+//;
-                @attributes = ( @attributes, split( /\s+/, $exportedAttr ) );
-
-                # Convert @attributes into hash to remove duplicates
-                my %attributes = map( { $_ => 1 } @attributes );
-                return '[' . join( ',', keys %attributes ) . ']';
+                @attributes = ( @attributes, split /[,\s]+/, $exportedAttr );
+            }
+            else {
+                @attributes = (
+                    @attributes,
+                    keys %{ $conf->{macros} },
+                    keys %{ $conf->{exportedVars} }
+                );
             }
 
-            # Convert @attributes into hash to remove duplicates
-            my %attributes = map( { $_ => 1 } @attributes );
-            %attributes = (
-                %attributes,
-                %{ $conf->{exportedVars} },
-                %{ $conf->{macros} },
-            );
-            return '[' . join( ',', keys %attributes ) . ']';
+            # Dedup @attributes
+            %attributes = map { $_ => 1 } @attributes;
+            return '[' . join( ',', sort keys %attributes ) . ']';
+        }
+        else {
+            return
+              '['
+              . join( ',', sort split /[,\s]+/, $conf->{exportedAttr} ) . ']';
         }
     }
 );
@@ -433,14 +432,13 @@ sub getMyKey {
     $key ||= '';
     if ($key) {
         $self->logger->debug(
-            "Request to get personal session info -> Key: $key");
+            "REST request to get personal session attribute: $key");
     }
     else {
         my $keys = $self->exportedAttr;
-        $keys =~ s/(?:\[|\])//g;
+        $keys =~ s/\[|\]//g;
         $keys =~ s/,/, /g;
-        $self->logger->debug(
-            "Request to get exported attributes -> Keys: $keys");
+        $self->logger->debug("REST request to get exported attributes: $keys");
     }
 
     return $self->session(
