@@ -53,10 +53,9 @@ $json = expectJSON($res);
 
 ok( $json->{uid} eq 'dwho', 'uid found' ) or explain( $json, "uid='dwho'" );
 ok( $json->{authenticationLevel} == 3, 'Authentication level upgraded' );
-ok( $json->{authLevel} eq 'Macro_3', 'Macro updated' );
 ok( scalar keys %$json == 10, 'Ten exported attributes found' )
   or explain( scalar keys %$json, Dumper $json );
-count(4);
+count(3);
 
 ok( $client->logout($id), 'Logout' );
 count(1);

@@ -68,18 +68,6 @@ sub adaptAuthenticationLevel {
     if ( $authenticationLevel ne $updatedAuthenticationLevel ) {
         $self->logger->debug("Authentication level has changed for $userid");
         $req->sessionInfo->{authenticationLevel} = $updatedAuthenticationLevel;
-
-        # Compute groups & macros again with new authenticationLevel
-        my $steps = $req->steps;
-        $req->steps(
-            [ 'setSessionInfo', $self->p->groupsAndMacros, 'setLocalGroups' ] );
-        if ( my $error = $self->p->process($req) ) {
-            $self->logger->debug("AdaptativeAuthenticationLevel: process returned error ($error)");
-            return $req->error($error);
-        }
-
-        # Continue previous process
-        $req->steps($steps);
     }
 
     return $sub->($req);
