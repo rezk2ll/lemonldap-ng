@@ -2311,7 +2311,8 @@ sub logout {
                     );
                     $resp->is_error
                       ? $self->logger->warn(
-                        "OIDC back channel: unable to unlog $userId from $rp")
+                        "OIDC back channel: unable to unlog $userId from $rp: "
+                          . $resp->status_line )
                       : $self->logger->info(
                         "OIDC back channel: user $userId unlogged from $rp");
                 }
