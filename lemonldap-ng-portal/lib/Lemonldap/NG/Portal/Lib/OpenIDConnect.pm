@@ -2316,6 +2316,11 @@ sub getRequestJWT {
 
 sub addRouteFromConf {
     my ( $self, $type, %subs ) = @_;
+
+    # avoid a warning in logs when route is already defined
+    my $getter = { "Auth" => "authRoutes", "Unauth" => "unAuthRoutes" }->{$type}
+      || "${type}Routes";
+
     my $adder = "add${type}Route";
     foreach ( keys %subs ) {
         my $sub  = $subs{$_};
@@ -2324,6 +2329,10 @@ sub addRouteFromConf {
             $self->logger->error("$_ parameter not defined");
             next;
         }
+
+        # Avoid warning if loading modules twice
+        next if $self->p->$getter->{GET}->{ $self->path }->{$path};
+
         $self->$adder(
             $self->path => { $path => $sub },
             [ 'GET', 'POST' ]

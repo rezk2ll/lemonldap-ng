@@ -90,15 +90,11 @@ sub init {
 
     $self->endpointsRe(qr/$re/);
 
-    # If this module has already been loaded,
-    # skip routes to avoid a warning in conf
-    if ( !$self->p->loadedModules->{ ref($self) } ) {
-        $self->addRouteFromConf(
-            'Auth',
-            oidcServiceMetaDataFrontChannelURI => 'frontLogout',
-            oidcServiceMetaDataBackChannelURI  => 'backLogout',
-        );
-    }
+    $self->addRouteFromConf(
+        'Auth',
+        oidcServiceMetaDataFrontChannelURI => 'frontLogout',
+        oidcServiceMetaDataBackChannelURI  => 'backLogout',
+    );
 
     @list =
       sort {
