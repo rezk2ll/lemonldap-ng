@@ -44,6 +44,9 @@ sub launch {
     eval "require $class";
     die $@ if ($@);
 
+    $class->logger->info(
+        "New request $class " . $req->method . " " . $req->request_uri );
+
     # register the request object to the logging system
     if ( ref( $class->logger ) and $class->logger->can('setRequestObj') ) {
         $class->logger->setRequestObj($req);
