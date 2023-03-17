@@ -239,8 +239,7 @@ sub abort {
     my ( $self, $err ) = @_;
     eval { $self->logger->error($err) };
     return sub {
-        $self->sendError( Lemonldap::NG::Common::PSGI::Request->new( $_[0] ),
-            $err, 500 );
+        $self->sendError( $self->newRequest( $_[0] ), $err, 500 );
     };
 }
 
@@ -336,6 +335,16 @@ sub sendHtml {
 # Main method #
 ###############
 
+sub newRequest {
+    my ( $self, $env ) = @_;
+    my $req = Lemonldap::NG::Common::PSGI::Request->new($env);
+    $self->logger->info( "New request "
+          . ref($self) . " "
+          . $req->method . " "
+          . $req->request_uri );
+    return $req;
+}
+
 sub run {
     my ( $self, $args ) = @_;
     $args //= {};
@@ -349,8 +358,7 @@ sub run {
 sub _run {
     my $self = shift;
     return sub {
-        $self->_logAndHandle(
-            Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
+        $self->_logAndHandle( $self->newRequest( $_[0] ) );
     };
 }
 

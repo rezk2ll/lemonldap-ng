@@ -24,7 +24,7 @@ sub init {
 sub _run {
     my ($self) = @_;
     return sub {
-        my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
+        my $req = $self->newRequest( $_[0] );
         my $res = $self->_logAuthTrace($req);
         push @{ $res->[1] }, $req->spliceHdrs,
           Cookie => ( $req->{Cookie} // '' );

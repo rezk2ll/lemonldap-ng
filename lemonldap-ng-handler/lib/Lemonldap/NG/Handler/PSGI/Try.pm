@@ -84,7 +84,7 @@ sub _run {
     my $self = shift;
 
     return sub {
-        my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
+        my $req = $self->newRequest( $_[0] );
         my $res = $self->_logAuthTrace( $req, 1 );
         if ( $res->[0] < 300 ) {
             $self->routes( $self->authRoutes );
