@@ -2303,6 +2303,8 @@ sub logout {
                         $logoutToken->{sid} =
                           $self->getSidFromSession( $rp, $req->{sessionInfo} );
                     }
+                    $self->logger->debug( "Logout token content: "
+                          . JSON::to_json($logoutToken) );
                     my $jwt  = $self->createJWT( $logoutToken, $alg, $rp );
                     my $resp = $self->ua->post(
                         $url,
