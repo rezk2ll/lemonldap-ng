@@ -248,7 +248,7 @@ SKIP: {
     end_handler();
     clean_sessions();
 }
-done_testing($maintests);
+done_testing();
 
 sub issuer {
     return LLNG::Manager::Test->new( {
