@@ -208,6 +208,43 @@ SKIP: {
         ok( $res->[0] == 401, 'Authentication rejected a second time');
     }
 
+    foreach my $user (qw(rtyler)) {
+        ok(
+            $res = handler(
+                req => [
+                    GET => 'http://test2.example.com/',
+                    [
+                        'Authorization' => 'Basic '
+                          . encode_base64( "$user:$user", '' )
+                    ]
+                ],
+                sub => sub {
+                    my ($res) = @_;
+                    $subtest++;
+                    subtest 'REST request to Portal' => sub {
+                        plan tests => 2;
+                        ok( $res->[0] eq 'POST', 'Get POST request' );
+                        my ( $url, $query ) = split /\?/, $res->[1];
+                        ok(
+                            $res = $p->_post(
+                                $url, IO::String->new( $res->[3] ),
+                                length => length( $res->[3] ),
+                                query  => $query,
+                            ),
+                            'Push request to portal'
+                        );
+                        return $res;
+                    };
+                    return $res;
+                },
+            ),
+            'New AuthBasic request'
+        );
+        ok( $subtest == 2, 'Portal was called a second time' );
+        is( $res->[0], 200,
+            '2FA did not trigger for rtyler because of ENV rule' );
+    }
+
     end_handler();
     clean_sessions();
 }
@@ -216,13 +253,14 @@ done_testing();
 sub issuer {
     return LLNG::Manager::Test->new( {
             ini => {
-                logLevel               => $debug,
-                domain                 => 'idp.com',
-                portal                 => 'http://auth.idp.com',
-                authentication         => 'Demo',
-                userDB                 => 'Same',
-                restSessionServer      => 1,
-                totp2fActivation       => 1,
+                logLevel          => $debug,
+                domain            => 'idp.com',
+                portal            => 'http://auth.idp.com',
+                authentication    => 'Demo',
+                userDB            => 'Same',
+                restSessionServer => 1,
+                totp2fActivation  =>
+                  'has2f("TOTP") and ($uid eq "dwho" or not $ENV{AuthBasic})',
                 totp2fSelfRegistration => 1,
                 totp2fRange            => 2,
                 totp2fAuthnLevel       => 5,

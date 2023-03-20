@@ -313,6 +313,7 @@ sub newAuthSession {
         return $self->p->sendError( $req, 'Bad secret', 403 );
     }
 
+    $req->env->{AuthBasic} = 1;
     $req->{id}    = $id;
     $req->{force} = 1;
     $req->user( $req->param('user') );
