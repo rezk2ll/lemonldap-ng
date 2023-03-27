@@ -26,7 +26,7 @@ Known regressions in the latest released version
 
 None
 
-2.0.16.1
+2.16.1
 --------
 
 AuthBasic now enforces 2FA activation
