@@ -298,7 +298,7 @@ sub newSession {
       unless ($session);
 
     $self->logger->debug(
-        "SOAP request create a new session (" . $session->id . ")" );
+        "REST request create a new session (" . $session->id . ")" );
 
     return $self->p->sendJSONresponse( $req,
         { result => 1, session => $session->data } );
@@ -313,26 +313,29 @@ sub newAuthSession {
         return $self->p->sendError( $req, 'Bad secret', 403 );
     }
 
+    $req->env->{AuthBasic} = 1;
     $req->{id}    = $id;
     $req->{force} = 1;
     $req->user( $req->param('user') );
     $req->data->{password} = $req->param('password');
     $req->steps( [
             @{ $self->p->beforeAuth },
-            qw(getUser extractFormInfo authenticate setAuthSessionInfo),
+            $self->p->authProcess,
             @{ $self->p->betweenAuthAndData },
             $self->p->sessionData,
             @{ $self->p->afterData },
             $self->p->validSession,
-            @{ $self->p->endAuth },
+            @{ $self->p->endAuth }
         ]
     );
     $req->{error} = $self->p->process($req);
     $self->logger->debug(
         "REST authentication result for $req->{user}: code $req->{error}");
 
-    return $self->p->sendError( $req, 'Bad credentials', 401 )
-      if ( $req->error > 0 );
+    if ( $req->error != 0 ) {
+        $self->p->deleteSession($req);
+        return $self->p->sendError( $req, 'Unauthorized', 401 );
+    }
     return $self->session( $req, $id );
 }
 
