@@ -482,7 +482,7 @@ sub _userData {
     $req->steps(
         [ 'setSessionInfo', $self->p->groupsAndMacros, 'setLocalGroups' ] );
     if ( my $error = $self->p->process($req) ) {
-        $self->logger->debug("CheckUser: Process returned error: $error");
+        $self->logger->debug("CheckUser: process returned error ($error)");
         return $req->error($error);
     }
 
