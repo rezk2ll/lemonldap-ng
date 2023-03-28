@@ -50,6 +50,7 @@ sub init {
     return 0 unless ( $self->loadApp );
     $self->addUnauthRoute(
         ( $self->path ) => {
+            samlValidate    => 'samlNotImplemented',
             serviceValidate => 'serviceValidate',
             validate        => 'validate',
             proxyValidate   => 'proxyValidate',
@@ -60,6 +61,13 @@ sub init {
             }
         },
         ['GET']
+    );
+
+    $self->addUnauthRoute(
+        ( $self->path ) => {
+            samlValidate => 'samlNotImplemented',
+        },
+        ['POST']
     );
 
     # Add CAS Services, so we can check service= parameter on logout
@@ -699,6 +707,16 @@ sub proxy {
 sub serviceValidate {
     my ( $self, $req ) = @_;
     return $self->_validate2( 'SERVICE', $req );
+}
+
+sub samlNotImplemented {
+    my ( $self, $req ) = @_;
+    return $self->p->sendError(
+        $req,
+        "The CAS samlValidate endpoint is not implemented. "
+          . "Please use serviceValidate instead",
+        501
+    );
 }
 
 sub proxyValidate {
