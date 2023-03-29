@@ -23,13 +23,15 @@ sub init {
 #
 sub _run {
     my ($self) = @_;
-    return sub {
-        my $req = $self->newRequest( $_[0] );
-        my $res = $self->_logAuthTrace($req);
-        push @{ $res->[1] }, $req->spliceHdrs,
-          Cookie => ( $req->{Cookie} // '' );
-        return $res;
-    };
+    return $self->psgiAdapter(
+        sub {
+            my $req = $_[0];
+            my $res = $self->_logAuthTrace($req);
+            push @{ $res->[1] }, $req->spliceHdrs,
+              Cookie => ( $req->{Cookie} // '' );
+            return $res;
+        }
+    );
 }
 
 ## @method PSGI-Response handler($req)

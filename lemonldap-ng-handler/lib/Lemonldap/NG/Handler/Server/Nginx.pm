@@ -28,16 +28,18 @@ sub init {
 #@return subroutine that will be called to manage FastCGI queries
 sub _run {
     my $self = shift;
-    return sub {
-        my $env = $_[0];
-        my $res = $self->_logAuthTrace( $self->newRequest($env) );
+    return $self->psgiAdapter(
+        sub {
+            my $req = $_[0];
+            my $res = $self->_logAuthTrace($req);
 
-        # Transform 302 responses in 401 since Nginx refuse it
-        if ( $res->[0] == 302 or $res->[0] == 303 ) {
-            $res->[0] = 401;
+            # Transform 302 responses in 401 since Nginx refuse it
+            if ( $res->[0] == 302 or $res->[0] == 303 ) {
+                $res->[0] = 401;
+            }
+            return $res;
         }
-        return $res;
-    };
+    );
 }
 
 ## @method PSGI-Response handler()

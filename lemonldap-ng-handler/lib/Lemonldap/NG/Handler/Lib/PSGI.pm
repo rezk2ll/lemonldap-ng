@@ -49,9 +49,11 @@ sub _run {
 
         # Handle requests
         # Developers, be careful: Only this part is executed at each request
-        return sub {
-            return $self->_logAuthTrace( $self->newRequest( $_[0] ) );
-        };
+        return $self->psgiAdapter(
+            sub {
+                return $self->_logAuthTrace( $_[0] );
+            }
+        );
     }
 
     else {
@@ -65,12 +67,14 @@ sub _run {
         }
 
         # Handle unprotected requests
-        return sub {
-            my $req = $self->newRequest( $_[0] );
-            my $res = $self->_logAndHandle($req);
-            push @{ $res->[1] }, $req->spliceHdrs;
-            return $res;
-        };
+        return $self->psgiAdapter(
+            sub {
+                my $req = $_[0];
+                my $res = $self->_logAndHandle($req);
+                push @{ $res->[1] }, $req->spliceHdrs;
+                return $res;
+            }
+        );
     }
 }
 
@@ -85,11 +89,13 @@ sub status {
         eval { $self->api->checkConf() };
         $self->logger->error($@) if ($@);
     }
-    return sub {
-        my $req = $self->newRequest( $_[0] );
-        $self->api->status($req);
-        return [ 200, [ $req->spliceHdrs ], [ $req->{respBody} ] ];
-    };
+    return $self->psgiAdapter(
+        sub {
+            my $req = $_[0];
+            $self->api->status($req);
+            return [ 200, [ $req->spliceHdrs ], [ $req->{respBody} ] ];
+        }
+    );
 }
 
 sub reload {
@@ -103,11 +109,13 @@ sub reload {
         eval { $self->api->checkConf() };
         $self->logger->error($@) if ($@);
     }
-    return sub {
-        my $req = $self->newRequest( $_[0] );
-        $self->api->reload($req);
-        return [ 200, [ $req->spliceHdrs ], [ $req->{respBody} ] ];
-    };
+    return $self->psgiAdapter(
+        sub {
+            my $req = $_[0];
+            $self->api->reload($req);
+            return [ 200, [ $req->spliceHdrs ], [ $req->{respBody} ] ];
+        }
+    );
 }
 
 sub _logAuthTrace {
