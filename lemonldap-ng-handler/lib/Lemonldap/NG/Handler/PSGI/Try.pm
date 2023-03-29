@@ -86,7 +86,7 @@ sub _run {
     return $self->psgiAdapter(
         sub {
             my $req = $_[0];
-            my $res = $self->_logAuthTrace( $req, 1 );
+            my $res = $self->_authAndTrace( $req, 1 );
             if ( $res->[0] < 300 ) {
                 $self->routes( $self->authRoutes );
                 $req->userData( $self->api->data );
@@ -104,7 +104,7 @@ sub _run {
             else {
                 return $res;
             }
-            $res = $self->_logAndHandle($req);
+            $res = $self->handler($req);
             push @{ $res->[1] }, $req->spliceHdrs;
             return $res;
         }

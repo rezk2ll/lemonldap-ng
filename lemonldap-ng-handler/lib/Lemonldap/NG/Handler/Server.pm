@@ -26,7 +26,7 @@ sub _run {
     return $self->psgiAdapter(
         sub {
             my $req = $_[0];
-            my $res = $self->_logAuthTrace($req);
+            my $res = $self->_authAndTrace($req);
             push @{ $res->[1] }, $req->spliceHdrs,
               Cookie => ( $req->{Cookie} // '' );
             return $res;

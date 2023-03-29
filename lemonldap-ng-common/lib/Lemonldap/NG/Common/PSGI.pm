@@ -351,7 +351,7 @@ sub _run {
     my $self = shift;
     return $self->psgiAdapter(
         sub {
-            $self->_logAndHandle( $_[0] );
+            $self->handler( $_[0] );
         }
     );
 }
@@ -371,16 +371,6 @@ sub psgiAdapter {
 sub logAndRun {
     my ( $self, $req, $sub ) = @_;
 
-    $self->logger->info( "New request "
-          . ref($self) . " "
-          . $req->method . " "
-          . $req->request_uri );
-    return $sub->($req);
-}
-
-sub _logAndHandle {
-    my ( $self, $req ) = @_;
-
     # register the request object to the logging system
     if ( ref( $self->logger ) and $self->logger->can('setRequestObj') ) {
         $self->logger->setRequestObj($req);
@@ -390,8 +380,12 @@ sub _logAndHandle {
         $self->userLogger->setRequestObj($req);
     }
 
-    # Call the handler
-    my $res = $self->handler($req);
+    $self->logger->info( "New request "
+          . ref($self) . " "
+          . $req->method . " "
+          . $req->request_uri );
+
+    my $res = $sub->($req);
 
     # Clear the logging system before the next request
     if ( ref( $self->logger ) and $self->logger->can('clearRequestObj') ) {

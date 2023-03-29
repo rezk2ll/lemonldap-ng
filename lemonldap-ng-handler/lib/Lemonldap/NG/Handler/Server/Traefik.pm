@@ -17,11 +17,11 @@ sub init {
 sub _run {
     my $self = shift;
 
-    # Create regular logAuthTrace PSGI app
+    # Create regular _authAndTrace PSGI app
     my $app = $self->psgiAdapter(
         sub {
             my $req = $_[0];
-            return $self->_logAuthTrace($req);
+            return $self->_authAndTrace($req);
         }
     );
 

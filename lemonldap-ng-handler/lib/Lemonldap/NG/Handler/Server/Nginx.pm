@@ -17,7 +17,7 @@ sub init {
 }
 
 ## @method void _run()
-# Return a subroutine that call _logAuthTrace() and tranform redirection
+# Return a subroutine that call _authAndTrace() and tranform redirection
 # response code from 302 to 401 (not authenticated) ones. This is required
 # because Nginx "auth_request" parameter does not accept it. The Nginx
 # configuration file should transform them back to 302 using:
@@ -31,7 +31,7 @@ sub _run {
     return $self->psgiAdapter(
         sub {
             my $req = $_[0];
-            my $res = $self->_logAuthTrace($req);
+            my $res = $self->_authAndTrace($req);
 
             # Transform 302 responses in 401 since Nginx refuse it
             if ( $res->[0] == 302 or $res->[0] == 303 ) {
