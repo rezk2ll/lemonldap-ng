@@ -465,22 +465,22 @@ function templates(tpl,key) {
          },
          {
             "data" : [
-               "sn",
-               "string",
-               "auto"
-            ],
-            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars/family_name",
-            "title" : "family_name",
-            "type" : "oidcAttribute"
-         },
-         {
-            "data" : [
                "cn",
                "string",
                "auto"
             ],
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars/name",
             "title" : "name",
+            "type" : "oidcAttribute"
+         },
+         {
+            "data" : [
+               "uid",
+               "string",
+               "auto"
+            ],
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars/preferred_username",
+            "title" : "preferred_username",
             "type" : "oidcAttribute"
          }
       ],

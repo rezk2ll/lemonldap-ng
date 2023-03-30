@@ -2383,9 +2383,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'oidcRPMetaDataExportedVars' => {
             'default' => {
-                'email'       => 'mail',
-                'family_name' => 'sn',
-                'name'        => 'cn'
+                'email'              => 'mail',
+                'name'               => 'cn',
+                'preferred_username' => 'uid'
             },
             'keyTest' => qr/\w/,
             'test'    => qr/\w/,

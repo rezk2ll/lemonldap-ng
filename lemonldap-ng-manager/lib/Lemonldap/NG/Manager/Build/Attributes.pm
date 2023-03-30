@@ -4599,7 +4599,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             test    => qr/\w/,
             default => {
                 'name'        => 'cn',
-                'family_name' => 'sn',
+                'preferred_username' => 'uid',
                 'email'       => 'mail',
             }
         },
