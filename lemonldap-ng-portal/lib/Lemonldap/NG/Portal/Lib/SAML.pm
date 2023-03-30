@@ -21,6 +21,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_SLO_ERROR
 );
 
+with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration';
+
 our $VERSION = '2.16.3';
 
 # PROPERTIES
@@ -554,31 +556,37 @@ sub lazy_load_entityid {
     unless ($provider) {
         $self->logger->debug("Lazy loading provider $entityID");
 
-        $self->lazy_load_metadata($entityID);
+        $self->lazy_load_config($entityID);
     }
 }
 
-sub lazy_load_metadata {
+sub load_config {
     my ( $self, $entityID ) = @_;
 
     my $config = {};
     $self->p->processHook( {}, 'getSamlConfig', $entityID, $config );
 
     if ( $config->{sp_metadata} ) {
-        return $self->load_sp_metadata(
+        $self->load_sp_metadata(
             $config->{sp_confKey}, $config->{sp_metadata},
             $entityID,             $config->{sp_attributes},
             $config->{sp_options}, $config->{sp_macros},
         );
+
+        return $config->{ttl};
     }
 
     if ( $config->{idp_metadata} ) {
-        return $self->load_idp_metadata(
+        $self->load_idp_metadata(
             $config->{idp_confKey}, $config->{idp_metadata},
             $entityID,              $config->{idp_attributes},
             $config->{idp_options}
         );
+
+        return $config->{ttl};
     }
+
+    return $config->{ttl};
 }
 
 # This method returns the configuration info for the given provider
