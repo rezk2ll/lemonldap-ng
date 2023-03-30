@@ -69,7 +69,8 @@ ok(
     'checkDate extended function is defined'
 );
 is(
-    $has2f->( {
+    $has2f->(
+        {
             _2fDevices =>
 "[{\"name\":\"MyTOTP\",\"_secret\":\"g5fsxwf4d34biemlojsbbvhgtskrssos\",\"epoch\":1602173208,\"type\":\"TOTP\"}]"
         },
@@ -79,7 +80,8 @@ is(
     "Function works"
 );
 is(
-    $has2f->( {
+    $has2f->(
+        {
             _2fDevices =>
 "[{\"name\":\"MyTOTP\",\"_secret\":\"g5fsxwf4d34biemlojsbbvhgtskrssos\",\"epoch\":1602173208,\"type\":\"TOTP\"}]"
         },
@@ -88,7 +90,8 @@ is(
     "Function works"
 );
 is(
-    $has2f->( {
+    $has2f->(
+        {
             _2fDevices =>
 "[{\"name\":\"MyTOTP\",\"_secret\":\"g5fsxwf4d34biemlojsbbvhgtskrssos\",\"epoch\":1602173208,\"type\":\"TOTP\"}]"
         },

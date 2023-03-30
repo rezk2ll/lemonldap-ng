@@ -92,6 +92,26 @@ sub init {
 
 # RUNNING METHODS
 
+sub initDisplay {
+    my ($self, $req, $module) = @_;
+
+    my $mod = $self->modules->{$module};
+    if ( $mod->{AjaxInitScript} ) {
+        $self->logger->debug( 'Append ' . $mod->{Name} . ' init/script' )
+        if $mod->{Name};
+        $req->data->{customScript} .= $mod->AjaxInitScript;
+    }
+    if ( $mod->{InitCmd} ) {
+        $self->logger->debug( 'Launch ' . $mod->{Name} . ' init command' )
+        if $mod->{Name};
+        my $res = eval( $mod->{InitCmd} );
+        if ($@) {
+            die "Error running InitCmd: $@";
+        }
+    }
+
+}
+
 sub checkChoice {
     my ( $self, $req ) = @_;
     my $name;
@@ -232,6 +252,12 @@ sub _buildAuthLoop {
                     $url .= '#';
                 }
                 $self->logger->debug("Use URL $url");
+
+                eval {
+                    $self->_authentication->initDisplay($req, $_);
+                };
+                $self->logger->info("Unable to initialize choice $_ display: $@") if $@;
+
 
                 # Options to store in the loop
                 my $optionsLoop = {

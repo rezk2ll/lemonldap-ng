@@ -9,7 +9,7 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-our $VERSION = '2.0.15.1';
+our $VERSION = '2.17.0';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -1115,16 +1115,17 @@ sub tplParams {
     }
 
     return (
-        PORTAL_URL => $self->conf->{portal},
-        MAIN_LOGO  => $self->conf->{portalMainLogo},
-        LANGS      => $self->conf->{showLanguages},
-        SCROLL_TOP => $self->conf->{scrollTop},
-        SKIN       => $self->getSkin($req),
-        SKIN_PATH  => $portalPath . "skins",
-        SAMESITE   => getSameSite( $self->conf ),
-        SKIN_BG    => $self->conf->{portalSkinBackground},
-        FAVICON    => $self->conf->{portalFavicon} || 'common/favicon.ico',
-        CUSTOM_CSS => $self->conf->{portalCustomCss},
+        PORTAL_URL   => $self->conf->{portal},
+        MAIN_LOGO    => $self->conf->{portalMainLogo},
+        LANGS        => $self->conf->{showLanguages},
+        SCROLL_TOP   => $self->conf->{scrollTop},
+        SKIN         => $self->getSkin($req),
+        SKIN_PATH    => $portalPath . "skins",
+        SAMESITE     => getSameSite( $self->conf ),
+        COOKIESECURE => ( $self->conf->{securedCookie} ? 1 : 0 ),
+        SKIN_BG      => $self->conf->{portalSkinBackground},
+        FAVICON      => $self->conf->{portalFavicon} || 'common/favicon.ico',
+        CUSTOM_CSS   => $self->conf->{portalCustomCss},
         (
             $self->customParameters
             ? ( %{ $self->customParameters } )

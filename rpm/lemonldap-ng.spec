@@ -34,7 +34,7 @@
 # Main package
 #==============================================================================
 Name:           lemonldap-ng
-Version:        2.0.16
+Version:        2.16.1
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        LemonLDAP-NG WebSSO
 License:        GPLv2+
@@ -122,6 +122,7 @@ BuildRequires:  perl(Image::Magick)
 BuildRequires:  perl(IO::Pipe)
 BuildRequires:  perl(IO::Select)
 BuildRequires:  perl(IO::Socket::INET)
+BuildRequires:  perl(IO::Socket::Timeout)
 BuildRequires:  perl(IO::String)
 BuildRequires:  perl(IPC::Run)
 BuildRequires:  perl(JSON)
@@ -771,6 +772,9 @@ fi
 # Changelog
 #==============================================================================
 %changelog
+* Tue Mar 28 2023 Clement Oudot <clem.oudot@gmail.com> - 2.16.1-1
+- Update to 2.16.1
+
 * Wed Feb 01 2023 Clement Oudot <clem.oudot@gmail.com> - 2.0.16-1
 - Update to 2.0.16
 

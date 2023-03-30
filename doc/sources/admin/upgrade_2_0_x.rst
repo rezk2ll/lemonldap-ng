@@ -57,6 +57,19 @@ If you modified the default ``menu.tpl`` template, you need to update it:
 
 If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
 
+2.16.1
+--------
+
+AuthBasic now enforces 2FA activation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In previous versions of LemonLDAP::NG, a 2FA protected account didn't need to use their second factor when authenticating to an :doc:`AuthBasic handler <authbasichandler>`.
+
+If you are *absolutely sure* that you want 2FA protected accounts to access AuthBasic handlers, which are password only, you can add the following test in your 2FA activation rules ::
+
+    and not $ENV{AuthBasic}
+
+
 2.0.16
 ------
 

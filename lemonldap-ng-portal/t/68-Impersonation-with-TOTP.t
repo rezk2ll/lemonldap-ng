@@ -1,3 +1,4 @@
+use warnings;
 use Test::More;
 use strict;
 use IO::String;
@@ -12,7 +13,8 @@ SKIP: {
     }
     require Lemonldap::NG::Common::TOTP;
     my $res;
-    my $client = LLNG::Manager::Test->new( {
+    my $client = LLNG::Manager::Test->new(
+        {
             ini => {
                 logLevel            => 'error',
                 authentication      => 'Demo',
@@ -23,6 +25,7 @@ SKIP: {
                 requireToken        => 0,
                 checkUser           => 1,
                 impersonationRule   => 1,
+                impersonationHiddenAttributes => 'toto',
                 checkUserDisplayPersistentInfo  => 0,
                 checkUserDisplayEmptyValues     => 0,
                 checkUserDisplayComputedSession => 1,

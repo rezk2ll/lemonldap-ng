@@ -1,3 +1,4 @@
+use warnings;
 use lib 'inc';
 use Test::More;    # skip_all => 'CAS is in rebuild';
 use strict;
@@ -18,7 +19,6 @@ plan skip_all => "Missing dependencies: $@" if ($@);
 
 ok( $issuer = issuer(), 'Issuer portal' );
 count(1);
-switch ('issuer');
 
 ok(
     $res = $issuer->_get(
@@ -64,7 +64,7 @@ my ($query) =
 
 ok(
     $res = $issuer->_get(
-        '/cas/validate',
+        '/cas/p3/serviceValidate',
         query  => 'service=http://auth.sp.com/&' . $query,
         accept => 'text/html'
     ),
@@ -74,28 +74,46 @@ ok(
 expectOK($res);
 count(1);
 
-my @resp = split /\n/, $res->[2]->[0];
-
-ok( $resp[0] eq 'yes', 'Ticket is valid' );
-count(1);
-ok( $resp[1] eq 'french', 'Username is returned' );
-count(1);
+ok( $res->[2]->[0] =~ m#<cas:sn>Accents</cas:sn>#, "Found macro attribute" );
+ok( $res->[2]->[0] =~ m#<cas:user>customfrench</cas:user>#,
+    "Found cas:user macro value" );
+count(2);
 
 clean_sessions();
 done_testing( count() );
 
 sub issuer {
-    return LLNG::Manager::Test->new( {
+    return LLNG::Manager::Test->new(
+        {
             ini => {
-                logLevel               => $debug,
-                domain                 => 'idp.com',
-                portal                 => 'http://auth.idp.com',
-                authentication         => 'Demo',
-                userDB                 => 'Same',
-                issuerDBCASActivation  => 1,
-                casAttr                => 'uid',
-                casAttributes          => { cn => 'cn', uid => 'uid', },
-                casAccessControlPolicy => 'none',
+                logLevel              => $debug,
+                domain                => 'idp.com',
+                portal                => 'http://auth.idp.com',
+                authentication        => 'Demo',
+                userDB                => 'Same',
+                issuerDBCASActivation => 1,
+                casAttr               => 'uid',
+                casAppMetaDataOptions => {
+                    sp => {
+                        casAppMetaDataOptionsService => 'http://auth.sp.com/',
+                        casAppMetaDataOptionsUserAttribute => 'customname',
+                    },
+                },
+                casAppMetaDataExportedVars => {
+                    sp => {
+                        cn   => 'cn',
+                        sn   => 'extracted_sn',
+                        mail => 'mail',
+                        uid  => 'uid',
+                    },
+                },
+                casAppMetaDataMacros => {
+                    sp => {
+                        extracted_sn => '(split(/\s/, $cn))[1]',
+                        customname   => '"custom".$uid',
+                    }
+                },
+                casAccessControlPolicy => 'error',
                 multiValuesSeparator   => ';',
             }
         }

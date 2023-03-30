@@ -27,6 +27,7 @@ See `The official Synapse documentation <https://matrix-org.github.io/synapse/la
           - "openid"
           - "profile"
           - "email"
+        user_profile_method: "userinfo_endpoint" # Required if you see "localpart" error in Matrix logs
         user_mapping_provider:
           config:
             localpart_template: "{{ user.preferred_username }}"
@@ -46,6 +47,10 @@ with the following parameters:
     * **Allowed redirection addresses**: ``[synapse public baseurl]/_synapse/client/oidc/callback``
 * **Options/Security**
    * **ID Token signature algorithm**:: ``RS256``
+* **Options/Logout**
+   * **Type**: 'Back Channel'
+   * **URL**: ``[synapse public baseurl]/_synapse/client/oidc/backchannel_logout``
+   * **Session Supported**: ``On``
 * **Exported Attributes**
    * ``preferred_username``: ``uid``
 

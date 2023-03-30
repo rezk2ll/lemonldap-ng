@@ -1,3 +1,15 @@
+lemonldap-ng (2.16.1) jammy; urgency=medium
+
+  * Bugs:
+    * #2871: Possible bug in manager related to adaptativeAuthenticationLevelRules
+    * #2876: Errors in Manager FR translations
+    * #2877: Captcha in login form is not displayed in case of back-end error
+    * #2879: llnglanguage cookie should set "Secure" flag
+    * #2887: URL parameter for Register and CertificateResetByMail plugins are not taken into account
+    * #2896: [Security][CVE-2023-28862] AuthBasic does not handle failure correctly
+
+ -- Clément <clem.oudot@gmail.com>  Tue, 28 Mar 2023 16:34:54 +0200
+
 lemonldap-ng (2.0.16) jammy; urgency=medium
 
   * Bugs:

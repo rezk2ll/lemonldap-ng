@@ -254,11 +254,20 @@ LemonLDAP::NG Portal jQuery scripts
     return '';
   };
 
-  setCookie = function(name, value, samesite, exdays) {
-    var d;
-    d = new Date();
-    d.setTime(d.getTime() + exdays * 86400000);
-    return document.cookie = name + "=" + value + "; expires=" + (d.toUTCString()) + "; path=/; SameSite=" + samesite;
+  setCookie = function(name, value, exdays) {
+    var cookiestring, d, samesite, secure;
+    samesite = datas['sameSite'];
+    secure = datas['cookieSecure'];
+    cookiestring = name + "=" + value + "; path=/; SameSite=" + samesite;
+    if (exdays) {
+      d = new Date();
+      d.setTime(d.getTime() + exdays * 86400000);
+      cookiestring += "; expires=" + (d.toUTCString());
+    }
+    if (secure) {
+      cookiestring += "; Secure";
+    }
+    return document.cookie = cookiestring;
   };
 
   datas = {};
@@ -410,12 +419,12 @@ LemonLDAP::NG Portal jQuery scripts
       console.log('Selected lang ->', queryLang);
       if (setCookieLang) {
         console.log('Set cookie lang ->', queryLang);
-        setCookie('llnglanguage', queryLang, datas['sameSite']);
+        setCookie('llnglanguage', queryLang, 3650);
       }
       translatePage(queryLang);
     } else {
       console.log('Selected lang ->', lang);
-      setCookie('llnglanguage', lang, datas['sameSite']);
+      setCookie('llnglanguage', lang, 3650);
       translatePage(lang);
     }
     langdiv = '';
@@ -427,7 +436,7 @@ LemonLDAP::NG Portal jQuery scripts
     $('#languages').html(langdiv);
     $('.langicon').on('click', function() {
       lang = $(this).attr('title');
-      setCookie('llnglanguage', lang, datas['sameSite']);
+      setCookie('llnglanguage', lang, 3650);
       return translatePage(lang);
     });
     isAlphaNumeric = function(chr) {

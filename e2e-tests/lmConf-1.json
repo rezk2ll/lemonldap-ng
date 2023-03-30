@@ -180,7 +180,6 @@
       "UA" : "$ENV{HTTP_USER_AGENT}",
     "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : $_auth eq 'OpenIDConnect' ? \"$_user\\@$_oidc_OP\" : \"$_user\""
   },
-  "mailUrl": "http://auth.example.com:__port__/resetpwd",
   "notification": 1,
   "notificationStorage": "File",
   "notificationStorageOptions": {
@@ -213,7 +212,6 @@
     }
   },
   "registerDB": "Demo",
-  "registerUrl": "http://auth.example.com:__port__/register",
   "securedCookie": 0,
   "sessionDataToRemember": {},
   "timeout": 72000,

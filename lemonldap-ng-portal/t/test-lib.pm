@@ -179,7 +179,8 @@ sub count_sessions {
 
 sub getCache {
     require Cache::FileCache;
-    return Cache::FileCache->new( {
+    return Cache::FileCache->new(
+        {
             namespace   => 'lemonldap-ng-session',
             cache_root  => $tmpDir,
             cache_depth => 0,
@@ -198,7 +199,8 @@ sub getSession {
         kind => 'SSO'
     );
 
-    return Lemonldap::NG::Common::Session->new( {
+    return Lemonldap::NG::Common::Session->new(
+        {
             @sessionsOpts, id => $id,
         }
     );
@@ -215,7 +217,8 @@ sub getPSession {
         kind => 'Persistent'
     );
 
-    return Lemonldap::NG::Common::Session->new( {
+    return Lemonldap::NG::Common::Session->new(
+        {
             @sessionsOpts, id => getPSessionID($uid),
         }
     );
@@ -848,6 +851,12 @@ has ini => (
         foreach my $k ( keys %$defaultIni ) {
             $ini->{$k} //= $defaultIni->{$k};
         }
+        if ($ENV{DEBUG}) {
+            $ini->{logLevel} = 'debug';
+        }
+        if ($ENV{LLNGLOGLEVEL}) {
+            $ini->{logLevel} = $ENV{LLNGLOGLEVEL};
+        }
         $self->{ini} = $ini;
         main::ok( $self->{p} = $self->class->new(), 'Portal object' );
         main::count(1);
@@ -910,7 +919,8 @@ sub login {
     my $res;
     $getParams ||= {};
 
-    my $query = main::buildForm( {
+    my $query = main::buildForm(
+        {
             user     => $uid,
             password => $uid,
             %$getParams,
@@ -1014,7 +1024,8 @@ sub _get {
         $args{query} = main::buildForm( $args{query} );
     }
 
-    my $res = $self->app->( {
+    my $res = $self->app->(
+        {
             'HTTP_ACCEPT'          => $args{accept} // $self->accept,
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
@@ -1080,7 +1091,8 @@ sub _post {
 
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
-    my $res = $self->app->( {
+    my $res = $self->app->(
+        {
             'HTTP_ACCEPT'          => $args{accept} // $self->accept,
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',

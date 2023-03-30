@@ -25,14 +25,14 @@ sub init {
     }
     $prms ||= {};
     %$prms = (
-        configStorage       => { type => 'File', dirName => 't' },
-        localSessionStorage => '',
-        logLevel            => 'error',
-        cookieName          => 'lemonldap',
-        securedCookie       => 0,
-        https               => 0,
-        hiddenAttributes    => 'mail cn',
-        logger              => 'Lemonldap::NG::Common::Logger::Std',
+        configStorage          => { type => 'File', dirName => 't' },
+        localSessionStorage    => '',
+        logLevel               => 'error',
+        cookieName             => 'lemonldap',
+        securedCookie          => 0,
+        https                  => 0,
+        hiddenAttributes       => 'cn /^mail/',
+        logger                 => 'Lemonldap::NG::Common::Logger::Std',
         %$prms
     );
     ok(

@@ -1,3 +1,4 @@
+use warnings;
 use Test::More;
 use strict;
 use IO::String;
@@ -11,8 +12,8 @@ my $client = LLNG::Manager::Test->new( {
             authentication                   => 'Demo',
             userDB                           => 'Same',
             checkUser                        => 1,
-            checkUserHiddenAttributes        => 'hGroups, authenticationLevel',
-            checkUserDisplayHiddenAttributes => '$uid eq "dwho"',
+            hiddenAttributes                 => ' /hGrou|Level/  ',
+            checkUserDisplayHiddenAttributes => '$uid eq "dwho"'
         }
     }
 );

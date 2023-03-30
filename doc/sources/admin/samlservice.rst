@@ -71,7 +71,9 @@ Then install lasso and lasso-perl packages:
 
 .. attention::
 
-    Only 64bits package are available.
+    RHEL9 and derivatives (CentOS 9, AlmaLinux 9, Rocky Linux 9) do not provide
+    SHA-1 support for XML document signature. You will not be able to use SHA-1
+    signature on these distributions.
 
 Other
 ^^^^^

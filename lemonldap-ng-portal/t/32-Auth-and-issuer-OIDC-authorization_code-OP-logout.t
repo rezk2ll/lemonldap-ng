@@ -1,3 +1,4 @@
+use warnings;
 use lib 'inc';
 use Test::More;
 use strict;
@@ -34,6 +35,7 @@ LWP::Protocol::PSGI->register(
             fail('  Aborting REST request (external)');
             return [ 500, [], [] ];
         }
+        switch ($host);
         if ( $req->method =~ /^post$/i ) {
             my $s = $req->content;
             ok(
@@ -61,12 +63,13 @@ LWP::Protocol::PSGI->register(
             '  Content is JSON' )
           or explain( $res->[1], 'Content-Type => application/json' );
         count(4);
+        switch ( $host eq 'rp' ? 'op' : 'rp' );
         return $res;
     }
 );
 
 # Initialization
-ok( $op = op(), 'OP portal' );
+$op = register('op',\&op);
 
 ok( $res = $op->_get('/oauth2/jwks'), 'Get JWKS,     endpoint /oauth2/jwks' );
 expectOK($res);
@@ -78,14 +81,12 @@ ok(
 );
 expectOK($res);
 my $metadata = $res->[2]->[0];
-count(3);
+count(2);
 
-switch ('rp');
-&Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-ok( $rp = rp( $jwks, $metadata ), 'RP portal' );
-count(1);
+$rp = register('rp',sub{rp( $jwks, $metadata )});
 
 # Query RP for auth
+switch('rp');
 ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth SP request' );
 count(1);
 my ( $url, $query ) =
@@ -170,9 +171,10 @@ ok(
 );
 count(1);
 expectOK($res);
-ok( $res->[2]->[0] =~ m#<iframe.*?src="http://auth.rp.com/oidc/logout"#,
-    'Found RP logout iframe' );
+ok( $res->[2]->[0] =~ m#<iframe.*?src="http://auth.rp.com/oauth2/flogout\?(.*?)"#,
+    'Found RP logout iframe' ) or explain( $res, '<iframe src="http://auth.rp.com/oauth2/flogout"');
 count(1);
+my $fLogoutQuery = $1;
 
 # Test if logout is done
 ok(
@@ -184,11 +186,40 @@ ok(
 count(1);
 expectReject($res);
 
+switch ('rp');
+
+# Launch font logout request
+ok(
+    $res = $rp->_get(
+        '/oauth2/flogout',
+        query => $fLogoutQuery,
+        cookie => "lemonldap=$spId",
+        accept => 'text/html'
+    ),
+    'Call RP flogout'
+);
+expectOK($res);
+$tmp = expectCookie($res);
+ok( (defined $tmp and $tmp == 0), 'Cookie set to 0' );
+count(2);
+
+ok(
+    $res = $rp->_get(
+        '/',
+        cookie => "lemonldap=$spId",
+        accept => 'text/html'
+    ),
+    'Test if user is reject on RP'
+);
+count(1);
+expectRedirection( $res, qr#http://auth.op.com(/oauth2/authorize)\?(.*)$# );
+
 clean_sessions();
 done_testing( count() );
 
 sub op {
-    return LLNG::Manager::Test->new( {
+    return LLNG::Manager::Test->new(
+        {
             ini => {
                 logLevel                        => $debug,
                 domain                          => 'idp.com',
@@ -217,9 +248,9 @@ sub op {
                         oidcRPMetaDataOptionsUserIDAttr        => "",
                         oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                         oidcRPMetaDataOptionsLogoutUrl             =>
-                          'http://auth.rp.com/oidc/logout',
+                          'http://auth.rp.com/oauth2/flogout',
                         oidcRPMetaDataOptionsLogoutType            => 'front',
-                        oidcRPMetaDataOptionsLogoutSessionRequired => 0,
+                        oidcRPMetaDataOptionsLogoutSessionRequired => 1,
                     }
                 },
                 oidcOPMetaDataOptions           => {},
@@ -241,7 +272,8 @@ sub op {
 
 sub rp {
     my ( $jwks, $metadata ) = @_;
-    return LLNG::Manager::Test->new( {
+    return LLNG::Manager::Test->new(
+        {
             ini => {
                 logLevel                   => $debug,
                 domain                     => 'rp.com',

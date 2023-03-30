@@ -12,25 +12,25 @@ Plugins
    checkhibp
    checkstate
    checkuser
-   crowdsec
-   viewer
    contextswitching
+   crowdsec
    decryptvalue
-   loginhistory
+   finduser
    forcereauthn
    globallogout
    grantsession
    impersonation
-   finduser
+   locationdetect
+   loginhistory
    notifications
-   status
    public_pages
    refreshsessionapi
+   rememberauthchoice
    resetpassword
    resetcertificate
-   restservices
    restauthuserpwdbackend
+   restservices
    soapservices
+   status
    stayconnected
-   rememberauthchoice
-   locationdetect
+   viewer

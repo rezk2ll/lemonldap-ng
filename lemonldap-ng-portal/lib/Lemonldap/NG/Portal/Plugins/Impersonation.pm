@@ -2,13 +2,14 @@ package Lemonldap::NG::Portal::Plugins::Impersonation;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Common::Util qw(isHiddenAttr);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_MALFORMEDUSER
   PE_OK PE_BADCREDENTIALS
   PE_IMPERSONATION_SERVICE_NOT_ALLOWED
 );
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.17.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -29,10 +30,15 @@ has ott => ( is => 'rw' );
 # Captcha generator
 has captcha => ( is => 'rw' );
 
-sub hAttr {
-    $_[0]->{conf}->{impersonationHiddenAttributes} . ' '
-      . $_[0]->{conf}->{hiddenAttributes};
-}
+# Prefix used for renaming session attributes
+has prefix => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        my $self = $_[0];
+        return $self->conf->{impersonationPrefix};
+    }
+);
 
 sub init {
     my ($self) = @_;
@@ -117,12 +123,14 @@ sub run {
     # Fill spoof session
     my ( $realSession, $spoofSession ) = ( {}, {} );
     $self->logger->debug("Rename real attributes...");
+    my @hidden = split /[,\s]+/, $self->conf->{impersonationHiddenAttributes};
+
     foreach my $k ( keys %{ $req->{sessionInfo} } ) {
         if ( $self->{conf}->{impersonationSkipEmptyValues} ) {
             next unless defined $req->{sessionInfo}->{$k};
         }
-        my $spk = "$self->{conf}->{impersonationPrefix}$k";
-        unless ( $self->hAttr =~ /\b$k\b/
+        my $spk = $self->prefix . $k;
+        unless ( isHiddenAttr( $self->conf, $k, @hidden )
             || $k =~ /^(?:_imp|token|_type)\w*\b/ )
         {
             $realSession->{$spk} = $req->{sessionInfo}->{$k};
@@ -148,8 +156,8 @@ sub run {
     $spoofSession->{hGroups} ||= {};
     if ( $self->{conf}->{impersonationMergeSSOgroups} ) {
         $self->userLogger->warn("MERGING SSO groups and hGroups...");
-        my $spg       = "$self->{conf}->{impersonationPrefix}groups";
-        my $sphg      = "$self->{conf}->{impersonationPrefix}hGroups";
+        my $spg       = $self->prefix . 'groups';
+        my $sphg      = $self->prefix . 'hGroups';
         my $separator = $self->{conf}->{multiValuesSeparator};
 
         ## GROUPS

@@ -1,7 +1,7 @@
 Check DevOps plugin
 ===================
 
-This plugin can be used to check the :doc:`DevOps<devopshandler>` file.
+This plugin can be used to check a :doc:`DevOps<devopshandler>` file.
 
 Configuration
 -------------
@@ -56,4 +56,4 @@ access rules and headers:
 
     Be careful to not display secret attributes.
 
-    checkDevOps plugin uses hidden attributes option.
+    checkDevOps plugin takes hidden attributes into account.

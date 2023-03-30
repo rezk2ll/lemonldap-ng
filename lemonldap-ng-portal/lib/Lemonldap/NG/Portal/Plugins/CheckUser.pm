@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::Plugins::CheckUser;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Common::Util qw(isHiddenAttr);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NOTOKEN
   PE_TOKENEXPIRED
@@ -9,7 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.17.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -41,14 +42,19 @@ has idRule                       => ( is => 'rw', default => sub { 1 } );
 has sorted                       => ( is => 'rw', default => sub { 0 } );
 has merged                       => ( is => 'rw', default => '' );
 
-sub hAttr {
-    $_[0]->{conf}->{checkUserHiddenAttributes} . ' '
-      . $_[0]->{conf}->{hiddenAttributes};
-}
+# Prefix used for renaming session attributes during impersonation process
+has prefix => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        my $self = $_[0];
+        return $self->conf->{impersonationPrefix};
+    }
+);
 
 sub persistentAttrs {
     $_[0]->{conf}->{persistentSessionAttributes}
-      || '_loginHistory _2fDevices notification_';
+      || '_loginHistory _2fDevices notification_ _oidcConsents';
 }
 
 sub init {
@@ -326,10 +332,9 @@ sub check {
                 $msg = 'checkUserComputedSession';
                 if ( $self->conf->{impersonationRule} ) {
                     $self->logger->debug("Map real attributes...");
-                    my %realAttrs = map {
-                        ( "$self->{conf}->{impersonationPrefix}$_" =>
-                              $attrs->{$_} )
-                    } keys %$attrs;
+                    my %realAttrs =
+                      map { $self->prefix . $_ => $attrs->{$_} }
+                      keys %$attrs;
                     $attrs = { %$attrs, %realAttrs };
 
                     # Compute groups and macros with real and spoofed attributes
@@ -477,7 +482,7 @@ sub _userData {
     $req->steps(
         [ 'setSessionInfo', $self->p->groupsAndMacros, 'setLocalGroups' ] );
     if ( my $error = $self->p->process($req) ) {
-        $self->logger->debug("CheckUser: Process returned error: $error");
+        $self->logger->debug("CheckUser: process returned error ($error)");
         return $req->error($error);
     }
 
@@ -574,15 +579,15 @@ sub _headers {
 sub _createArray {
     my ( $self, $req, $attrs, $userData ) = @_;
     my $array_attrs = [];
+    my @hidden = split /[,\s]+/, $self->conf->{checkUserHiddenAttributes};
 
-    foreach my $k ( sort keys %$attrs ) {
+    foreach ( sort keys %$attrs ) {
         push @$array_attrs,
-          { key => $k, value => $attrs->{$k} }
-          unless ( (
-                $self->hAttr =~ /\b$k\b/
+          { key => $_, value => $attrs->{$_} }
+          unless ( ( isHiddenAttr( $self->conf, $_, @hidden )
                 && !$self->displayHiddenAttributesRule->( $req, $userData )
             )
-            || (   !$attrs->{$k}
+            || (   !$attrs->{$_}
                 && !$self->displayEmptyValuesRule->( $req, $userData ) )
           );
     }
@@ -625,7 +630,7 @@ sub _dispatchAttributes {
     if ( $self->sorted ) {
         $self->logger->debug('Sort real and spoofed attributes...');
         my ( $realAttrs, $spoofedAttrs ) = ( [], [] );
-        my $prefix = $self->{conf}->{impersonationPrefix};
+        my $prefix = $self->prefix;
         while (@$others) {
             my $element = shift @$others;
             $self->logger->debug( "Processing attribute $element->{key} => "

@@ -1,5 +1,6 @@
 # Test sessions explorer API
 
+use warnings;
 use Test::More;
 use JSON;
 use strict;
@@ -42,7 +43,8 @@ my @ids;
 $ids[0] = newSession( 'dwho',  '127.10.0.1' );
 $ids[1] = newSession( 'dwho2', '127.2.0.2' );
 my $res = &client->jsonResponse("/sessions/global/$ids[0]");
-ok( ( $res->{uid}    and $res->{uid} eq 'dwho' ),          'Uid found' );
+ok( ( $res->{uid} and $res->{uid} eq 'dwho' ), 'Uid found' )
+  or print STDERR Dumper($res);
 ok( ( $res->{ipAddr} and $res->{ipAddr} eq '127.10.0.1' ), 'IP found' );
 count(2);
 

@@ -27,7 +27,10 @@ use Crypt::URandom;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.17.0';
+
+use constant BACKCHANNEL_EVENTSKEY =>
+  'http://schemas.openid.net/event/backchannel-logout';
 
 # OpenID Connect standard claims
 use constant PROFILE => [
@@ -798,12 +801,12 @@ sub checkIDTokenValidity {
 
     # Check acr
     my $acr = $id_token->{acr};
-    if ( defined $acr_values ) {
+    if ($acr_values) {
         unless ($acr) {
             $self->logger->error("ACR was not returned by OP $op");
             return 0;
         }
-        unless ( $acr_values =~ /\b$acr\b/i ) {
+        unless ( grep { $_ eq $acr } split( /[\s,]+/, $acr_values ) ) {
             $self->logger->error(
                 "ACR $acr not listed in request ACR values ($acr_values)");
             return 0;
@@ -1003,6 +1006,10 @@ sub decodeJSON {
 
     eval { $json_hash = from_json( $json, { allow_nonref => 1 } ); };
     return undef if ($@);
+    unless ( ref $json_hash ) {
+        $self->logger->error("Wanted a JSON object, got: $json_hash");
+        return undef;
+    }
 
     return $json_hash;
 }
@@ -2309,6 +2316,11 @@ sub getRequestJWT {
 
 sub addRouteFromConf {
     my ( $self, $type, %subs ) = @_;
+
+    # avoid a warning in logs when route is already defined
+    my $getter = { "Auth" => "authRoutes", "Unauth" => "unAuthRoutes" }->{$type}
+      || "${type}Routes";
+
     my $adder = "add${type}Route";
     foreach ( keys %subs ) {
         my $sub  = $subs{$_};
@@ -2317,6 +2329,10 @@ sub addRouteFromConf {
             $self->logger->error("$_ parameter not defined");
             next;
         }
+
+        # Avoid warning if loading modules twice
+        next if $self->p->$getter->{GET}->{ $self->path }->{$path};
+
         $self->$adder(
             $self->path => { $path => $sub },
             [ 'GET', 'POST' ]
@@ -2436,22 +2452,7 @@ sub generateNonce {
 
 sub getSidFromSession {
     my ( $self, $rp, $sessionInfo ) = @_;
-    return $self->conf->{cipher}
-      ->encrypt( $sessionInfo->{_session_id} . ':' . $rp );
-}
-
-sub getSessionIdFromSid {
-    my ( $self, $sid, $rp ) = @_;
-    my $str = $self->conf->{cipher}->decrypt($sid);
-    unless ( $str and $str =~ /^(?<id>.*?):(?<rp>.*)$/ ) {
-        $self->logger->error("Invalid sid: $sid");
-        return undef;
-    }
-    if ( $rp and $rp ne $+{rp} ) {
-        $self->logger->error( "RP id mismatch in sid: $rp != " . $+{rp} );
-        return undef;
-    }
-    return $+{id};
+    return Digest::SHA::hmac_sha256_base64($sessionInfo->{_session_id} . ':' . $rp );
 }
 
 1;
