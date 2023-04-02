@@ -256,10 +256,8 @@ LemonLDAP::NG Portal jQuery scripts
 
   setCookie = function(name, value, exdays) {
     var cookiestring, d, samesite, secure;
-    d = new Date();
     samesite = datas['sameSite'];
     secure = datas['cookieSecure'];
-    d.setTime(d.getTime() + exdays * 86400000);
     cookiestring = name + "=" + value + "; path=/; SameSite=" + samesite;
     if (exdays) {
       d = new Date();
@@ -426,7 +424,6 @@ LemonLDAP::NG Portal jQuery scripts
       translatePage(queryLang);
     } else {
       console.log('Selected lang ->', lang);
-      setCookie('llnglanguage', lang, 3650);
       translatePage(lang);
     }
     langdiv = '';
