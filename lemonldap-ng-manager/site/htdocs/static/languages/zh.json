@@ -740,7 +740,7 @@
 "oidcServiceAllowImplicitFlow":"內含流程",
 "oidcServiceAllowOffline":"允許離線存取",
 "oidcServiceAllowOnlyDeclaredScopes":"Only allow declared scopes",
-"oidcServiceAuthorizationCodeExpiration":"Authorization Code",
+"oidcServiceAuthorizationCodeExpiration":"Authorization Codes",
 "oidcServiceDynamicRegistration":"Dynamic registration",
 "oidcServiceDynamicRegistrationExportedVars":"Exported vars",
 "oidcServiceDynamicRegistrationExtraClaims":"額外的聲明",

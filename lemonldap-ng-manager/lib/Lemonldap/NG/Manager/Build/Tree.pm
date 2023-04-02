@@ -475,6 +475,15 @@ sub tree {
                     title => 'issuerParams',
                     help  => 'start.html#identity-provider',
                     nodes => [ {
+                            title => 'issuerDBCAS',
+                            help  => 'idpcas.html#enabling-cas',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'issuerDBCASActivation', 'issuerDBCASPath',
+                                'issuerDBCASRule',
+                            ]
+                        },
+                        {
                             title => 'issuerDBSAML',
                             help  => 'idpsaml.html',
                             form  => 'simpleInputContainer',
@@ -484,12 +493,13 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'issuerDBCAS',
-                            help  => 'idpcas.html#enabling-cas',
+                            title => 'issuerDBOpenIDConnect',
+                            help  => 'idpopenidconnect.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'issuerDBCASActivation', 'issuerDBCASPath',
-                                'issuerDBCASRule',
+                                'issuerDBOpenIDConnectActivation',
+                                'issuerDBOpenIDConnectPath',
+                                'issuerDBOpenIDConnectRule',
                             ]
                         },
                         {
@@ -522,16 +532,6 @@ sub tree {
                                         }
                                     ]
                                 }
-                            ]
-                        },
-                        {
-                            title => 'issuerDBOpenIDConnect',
-                            help  => 'idpopenidconnect.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'issuerDBOpenIDConnectActivation',
-                                'issuerDBOpenIDConnectPath',
-                                'issuerDBOpenIDConnectRule',
                             ]
                         },
                         {

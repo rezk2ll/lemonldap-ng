@@ -228,13 +228,12 @@ Protocol                                                              Service Pr
 ===================================================================== ================ =================
 :doc:`CAS 1.0 / 2.0 / 3.0<idpcas>`                                    ✔                ✔
 :doc:`SAML 2.0 / Shibboleth<idpsaml>`                                 ✔                ✔
-:doc:`OpenID 2.0<idpopenid>` *(obsolete)*                             ✔                ✔
 :doc:`OpenID Connect<idpopenidconnect>`                               ✔                ✔
+:doc:`OpenID 2.0<idpopenid>` *(decrepated)*                           ✔                ✔
 :doc:`Get parameters provider<issuerdbget>` *(for poor applications)*                  ✔
 ===================================================================== ================ =================
 
-Options
-^^^^^^^
+*Options*
 
 Issuers timeout: Delay for issuers for submitting their authentication requests
 

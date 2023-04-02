@@ -6,18 +6,18 @@ This plugin can be used to check a :doc:`DevOps<devopshandler>` file.
 Configuration
 -------------
 
-Just enable it in the manager (section “plugins”).
+Just enable it in manager (“plugins” section).
 
 -  **Parameters**:
 
-   -  **Activation**: Enable / Disable this plugin
+   -  **Activation**: enable/disable this plugin
    -  **Download file**: Allow users to download DevOps file from a
       remote server by providing an URL
       (By example: http://myapp.example.com:8080). Plugin will
       try to retrieve remote file by sending a request
       (i.e. http://myapp.example.com:8080/rules.json)
-   -  **Display normalized headers**: Display headers as they are sent
-   -  **Check session attributes**: Check if used attributes are existing
+   -  **Display normalized headers**: display headers as they are sent
+   -  **Check session attributes**: check if used attributes exist
 
 Usage
 -----
@@ -27,8 +27,7 @@ provide an URL to download the ``rules.json`` file.
 
 Example
 ~~~~~~~
-DevOps handler requires a rules.json file to define
-access rules and headers:
+DevOps handler requires a rules.json file to define access rules and headers:
 
 .. code-block:: json
 
@@ -44,8 +43,7 @@ access rules and headers:
 
 .. note::
 
-    This plugin displays ALL user session attributes except
-    the hidden ones.
+    This plugin displays ALL user session attributes except the hidden ones.
 
     You have to restrict access to specific users like DevOps teams
     by setting an access rule like other VirtualHosts.

@@ -230,7 +230,7 @@ Options
       (RSXXX) or HMAC (HSXXX) based signature algorithms
    -  **Access Token signature algorithm** (since version ``2.0.12``): Select
       one of the available public key signature algorithms
-   -  **Userinfo response format** (since version ``2.0.12``): By default,
+   -  **UserInfo response format** (since version ``2.0.12``): By default,
       UserInfo is returned as a simple JSON object. You can also choose to
       return it as a JWT, using one of the available signature algorithms.
    -  **Require PKCE** (since version ``2.0.4``): A code challenge is
