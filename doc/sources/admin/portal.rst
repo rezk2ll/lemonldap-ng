@@ -101,10 +101,11 @@ URL parameters
 
 Some parameters in URL can change the behavior of the portal:
 
+-  **confirm**: Bypass confirmation page (for example: ``confirm=1``)
+-  **llnglanguage**: Force lang used to display the page (for example:
+   ``llnglanguage=fr``)
 -  **logout**: Launch the logout process (for example: ``logout=1``)
 -  **tab**: Preselect a tab (Choice or Menu) (for example:
    ``tab=password``)
--  **llnglanguage**: Force lang used to display the page (for example:
-   ``llnglanguage=fr``)
 -  **setCookieLang**: Update lang cookie to persist the language set
    with ``llnglanguage`` parameter (for example: ``setCookieLang=1``)
