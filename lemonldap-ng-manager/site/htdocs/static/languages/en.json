@@ -213,7 +213,7 @@
 "checkUserIdRule":"Identities use rule",
 "checkUserSearchAttributes":"Attributes used for searching sessions",
 "checkUserUnrestrictedUsersRule":"Unrestricted users rule",
-"checkUsers":"Check SSO profile",
+"checkUsers":"Check user SSO profile",
 "checkXSS":"Check XSS attacks",
 "checkboxes":"Checkboxes",
 "choiceParams":"Choice parameters",
