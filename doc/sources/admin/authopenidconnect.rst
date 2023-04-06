@@ -212,11 +212,11 @@ Options
 Configuration
 """""""""""""
 -  **Configuration endpoint**: URL of OP configuration endpoint
--  **JWKS data timeout**: After this time, LL::NG will do a request
-   to get a fresh version of JWKS data. Set to 0 to disable it
--  **Client ID**: client ID given by OP
--  **Client secret**: client secret given by OP
--  **Store ID token**: Allows one to store the ID Token (JWT) inside
+-  **JWKS data timeout**: After this time, LL::NG will send a request
+   to retrieve a newer version of JWKS data. Set to 0 to disable it
+-  **Client ID**: Client ID provided by OP
+-  **Client secret**: Client secret provided by OP
+-  **Store ID Token**: Allows one to store the ID Token (JWT) inside
    user session. Do not enable it unless you need to replay this token
    on an application, or if you need the id_token_hint parameter when
    using logout.
@@ -228,8 +228,7 @@ Protocol
 -  **Display**: Value of display parameter (example: page)
 -  **Prompt**: Value of prompt parameter (example: consent)
 -  **Max age**: Value of max_age parameter (example: 3600)
--  **UI locales**: Value of ui_locales parameter (example: en-GB en
-   fr-FR fr)
+-  **Locales UI**: Value of ui_locales parameter (example: en-GB en fr-FR fr)
 -  **ACR values**: Value acr_values parameters (example: loa-1)
 -  **Token endpoint authentication method**: choice between
    ``client_secret_post`` and ``client_secret_basic``

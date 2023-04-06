@@ -169,8 +169,8 @@ Basic options
 -  **Allowed redirection addresses for login**: Space-separated list of redirect
    addresses allowed for this RP
 
-Exported attributes
-^^^^^^^^^^^^^^^^^^^
+Exported attributes (claims)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. versionchanged:: In 2.0.16, all exported attributes are sent if **Always send exported attributes** option is enabled in **OpenID Connect Service**. In previous versions, you had to declare them in **Options**/**Scope**/**Scope Values content** too.
 
@@ -182,7 +182,7 @@ For each OpenID Connect attribute you want to expose to applications, you can de
 * **Type**: Attribute data type. By default, it is a string. Choosing integer or boolean will make the attribute appear as the corresponding JSON type.
 * **Array**: Select how multi-valued attributes are processed
 
-  * **Auto**: If the session key contains a single value, it will be released as a JSON number, string or boolean, depending on the previously specified type. If the session key contains multiple values, it will be released as an array of numbers, strings or booleans.
+  * **Automatic**: If the session key contains a single value, it will be released as a JSON number, string or boolean, depending on the previously specified type. If the session key contains multiple values, it will be released as an array of numbers, strings or booleans.
   * **Always**: Return an array even if the attribute only contains one value
   * **Never**: If the session key contains a single value, it will be released as a JSON number, string or boolean. If the session key contains multiple values, it will be released as a single string with a separator character.
 
@@ -218,7 +218,7 @@ Options
    -  **Additional audiences** (since version ``2.0.8``): You can
       specify a space-separated list of audiences that will be added to the
       ID Token audiences, and possibly the access token audiences if the
-      access token format is set to JWT
+      access token format is JWT
 
 -  **Scope**
 
@@ -285,7 +285,7 @@ and not registered in the user's session.
 Display
 ^^^^^^^
 
--  **Display name**: Name of the RP application
+-  **Name**: Name of the RP application
 -  **Logo**: Logo of the RP application
 
 .. |beta| image:: /documentation/beta.png

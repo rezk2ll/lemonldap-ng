@@ -40,15 +40,13 @@ Authentication context
 
 You can associate here an authentication context to an authentication level.
 
-Dynamic Registration
+Dynamic registration
 ~~~~~~~~~~~~~~~~~~~~
 
+If **Dynamic registration** is enabled, you can configure **Exported vars** and **Extra claims** options 
+to define attributes and extra claims released when a new relying party is registered through ``/oauth2/register`` endpoint.
+
 -  **Activation**: Set to 1 to allow clients to register themselves
-
-If **Dynamic Registration** is enabled, you can configure the following
-options to define attributes and extra claims released when a new relying
-party is registered through ``/oauth2/register`` endpoint:
-
 -  **Exported vars**
 -  **Extra claims**
 
@@ -63,9 +61,9 @@ Security
 
 -  **Keys**: Define public/private key pair for asymmetric signature. A JWKS
    ``kid`` (Key ID) is automatically derived when new keys are generated.
--  **Authorization Code flow**: Set to 1 to allow Authorization Code flow
--  **Implicit flow**: Set to 1 to allow Implicit flow
--  **Hybrid flow**: Set to 1 to allow Hybrid flow
+-  **Authorization Code Flow**: Set to 1 to allow Authorization Code flow
+-  **Implicit Flow**: Set to 1 to allow Implicit flow
+-  **Hybrid Flow**: Set to 1 to allow Hybrid flow
 -  **Always send exported attributes**: By default, LL::NG will release all
    exported attributes to RPs. When this option is disabled, only attributes
    allowed by a scope can be transmitted
