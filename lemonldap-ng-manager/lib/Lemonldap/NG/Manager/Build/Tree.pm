@@ -1421,6 +1421,7 @@ sub tree {
                 'oidcServiceMetaDataIssuer',
                 {
                     title => 'oidcServiceMetaDataEndPoints',
+                    help  => 'openidconnectservice.html#endpoints',
                     form  => 'simpleInputContainer',
                     nodes => [
                         'oidcServiceMetaDataAuthorizeURI',
@@ -1438,6 +1439,7 @@ sub tree {
                 'oidcServiceMetaDataAuthnContext',
                 {
                     title => "oidcServiceDynamicRegistration",
+                    help  => 'openidconnectservice.html#dynamic-registration',
                     nodes => [
                         'oidcServiceAllowDynamicRegistration',
                         'oidcServiceDynamicRegistrationExportedVars',
@@ -1446,6 +1448,7 @@ sub tree {
                 },
                 {
                     title => 'oidcServiceMetaDataSecurity',
+                    help  => 'openidconnectservice.html#security',
                     nodes => [ {
                             title => 'oidcServiceMetaDataKeys',
                             form  => 'RSACertKeyNoPassword',
@@ -1458,12 +1461,13 @@ sub tree {
                         'oidcServiceAllowAuthorizationCodeFlow',
                         'oidcServiceAllowImplicitFlow',
                         'oidcServiceAllowHybridFlow',
-                        'oidcServiceAllowOnlyDeclaredScopes',
                         'oidcServiceIgnoreScopeForClaims',
+                        'oidcServiceAllowOnlyDeclaredScopes',
                     ],
                 },
                 {
                     title => 'oidcServiceMetaDataTimeouts',
+                    help  => 'openidconnectservice.html#timeouts',
                     form  => 'simpleInputContainer',
                     nodes => [
                         'oidcServiceAuthorizationCodeExpiration',
@@ -1474,6 +1478,7 @@ sub tree {
                 },
                 {
                     title => "oidcServiceMetaDataSessions",
+                    help  => 'openidconnectservice.html#sessions',
                     nodes => [ 'oidcStorage', 'oidcStorageOptions' ],
                 },
             ]
