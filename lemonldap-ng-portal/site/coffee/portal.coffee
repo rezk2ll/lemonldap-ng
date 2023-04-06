@@ -384,7 +384,7 @@ $(window).on 'load', () ->
 		translatePage(queryLang)
 	else
 		console.log 'Selected lang ->', lang
-		setCookie 'llnglanguage', lang, 3650
+	#	setCookie 'llnglanguage', lang, 3650 (Fix #2899)
 		translatePage(lang)
 
 	# Build language icons

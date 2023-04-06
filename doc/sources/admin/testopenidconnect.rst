@@ -71,7 +71,7 @@ Required parameters:
 
 .. code-block:: shell
 
-   curl -X POST -d grant_type=authorization_code -d 'redirect_uri=http://localhost' -d code=294b0facd91a0fa92762edc48d18369e99c330ba2b8fb05ab2c45999fcef6e17 -u 'private:tardis' 'https://oidctest.wsweet.org/oauth2/token' | json_pp
+   curl -s -X POST -d grant_type=authorization_code -d 'redirect_uri=http://localhost' -d code=294b0facd91a0fa92762edc48d18369e99c330ba2b8fb05ab2c45999fcef6e17 -u 'private:tardis' 'https://oidctest.wsweet.org/oauth2/token' | json_pp
 
 The JSON response looks like this:
 
@@ -90,6 +90,10 @@ The access token will be used for the last step, to retrieve information about t
 The ID Token is a JWT (JSON Web Token) and can be parsed easily, as this is the concatenation of 3 JSON strings encoded in base 64: `base64(header).base64(payload).base64(signature)`.
 
 Decoding the payload gives:
+
+.. code-block:: shell
+
+   echo 'eyJhdXRoX3RpbWUiOjE2MTQxNjAwMDYsImlhdCI6MTYxNDE2MzIxOCwiaXNzIjoiaHR0cHM6Ly9vaWRjdGVzdC53c3dlZXQub3JnLyIsImF0X2hhc2giOiJIVGswOVNjSjRObEFua3k5SGFFX2VRIiwiYWNyIjoibG9hLTIiLCJleHAiOjE2MTQxNjY4MTgsInN1YiI6ImR3aG8iLCJhenAiOiJwcml2YXRlIiwiYXVkIjpbInByaXZhdGUiXX0=' | base64 -d | json_pp
 
 .. code-block:: javascript
 
@@ -117,7 +121,7 @@ Required parameters:
 
 .. code-block:: shell
 
-   curl -H 'Authorization: Bearer a88b8dde538719e55c3cb8fbd14d06ed77853c685a62abf6ecb88d86228a9c64' 'https://oidctest.wsweet.org/oauth2/userinfo' | json_pp
+   curl -s -H 'Authorization: Bearer a88b8dde538719e55c3cb8fbd14d06ed77853c685a62abf6ecb88d86228a9c64' 'https://oidctest.wsweet.org/oauth2/userinfo' | json_pp
 
 JSON response:
 
@@ -141,7 +145,7 @@ Required parameters:
 
 .. code-block:: shell
 
-   curl -u private:tardis -X POST -d 'token=a88b8dde538719e55c3cb8fbd14d06ed77853c685a62abf6ecb88d86228a9c64' 'https://oidctest.wsweet.org/oauth2/introspect' | json_pp
+   curl -s -u private:tardis -X POST -d 'token=a88b8dde538719e55c3cb8fbd14d06ed77853c685a62abf6ecb88d86228a9c64' 'https://oidctest.wsweet.org/oauth2/introspect' | json_pp
 
 JSON response:
 
@@ -168,7 +172,7 @@ Required parameters:
 
 .. code-block:: shell
 
-   curl -X POST -d grant_type=refresh_token -d refresh_token=19434440ed4da2803e8ba9d91cb2eabd5b8bd12af2609429bda03ed487e6ef57 -u 'private:tardis' 'https://oidctest.wsweet.org/oauth2/token' | json_pp
+   curl -s -X POST -d grant_type=refresh_token -d refresh_token=19434440ed4da2803e8ba9d91cb2eabd5b8bd12af2609429bda03ed487e6ef57 -u 'private:tardis' 'https://oidctest.wsweet.org/oauth2/token' | json_pp
 
 JSON response:
 

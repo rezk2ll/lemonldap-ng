@@ -424,7 +424,6 @@ LemonLDAP::NG Portal jQuery scripts
       translatePage(queryLang);
     } else {
       console.log('Selected lang ->', lang);
-      setCookie('llnglanguage', lang, 3650);
       translatePage(lang);
     }
     langdiv = '';

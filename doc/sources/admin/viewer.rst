@@ -39,11 +39,11 @@ Parameters are set in ``lemonldap-ng.ini`` file, section [manager]:
     In Manager: \* Declare a Virtual Host : manager.example.com \* Set an
     access rule for each enabled module :
 
-    #. Configuration : ^/(.*?\.(fcgi|psgi)/)?(manager\.html|confs|$) = $uid
+    #. Configuration : ^/(.*?\.(fcgi|psgi)/)?(manager\.html|confs) = $uid
        eq 'dwho'
     #. Notifications : ^/(.*?\.(fcgi|psgi)/)?notifications = $uid eq 'dwho'
     #. Sessions : ^/(.*?\.(fcgi|psgi)/)?sessions = $uid eq 'dwho'
-    #. Viewer : ^/(.*?\.(fcgi|psgi)/)?viewer = $uid =~ /\b(?:dwho|rtyler)\b/
+    #. Viewer : ^/(.*?\.(fcgi|psgi)/)?view = $uid =~ /\b(?:dwho|rtyler)\b/
     #. Default : $uid =~ /\b(?:dwho|rtyler)\b/
 
 
