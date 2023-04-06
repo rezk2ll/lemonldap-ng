@@ -294,14 +294,14 @@ Display
 Scope values content
 ^^^^^^^^^^^^^^^^^^^^
 
-When the **Ignore scope when exporting attributes** option is disabled in **OpenID
+When the **Always send exported attributes** option is disabled in **OpenID
 Connect Service**, attributes can only be released if they are part of a scope.
 
-By default, only `standard OpenID Connect claims <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__
-are exposed to applications. If you want to add non-standard attributes, you
-have to create a new scope in the *Scope values content* section and your
+In this case, only `standard OpenID Connect claims
+<http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__ are
+exposed to applications. If you want to add non-standard attributes, you have
+to create a new scope in the *Scope values content* section and your
 application must request that scope.
-
 
 By default, the following scope-to-attributes are already mapped by LL::NG:
 
