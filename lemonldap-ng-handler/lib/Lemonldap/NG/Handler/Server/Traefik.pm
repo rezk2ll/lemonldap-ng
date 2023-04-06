@@ -17,11 +17,10 @@ sub init {
 sub _run {
     my $self = shift;
     return sub {
-        my $req = $_[0];
-        $req->{HTTP_HOST}   = $req->{HTTP_X_FORWARDED_HOST};
-        $req->{REQUEST_URI} = $req->{HTTP_X_FORWARDED_URI};
-        return $self->_logAuthTrace(
-            Lemonldap::NG::Common::PSGI::Request->new($req) );
+        my $env = $_[0];
+        $env->{HTTP_HOST}   = $env->{HTTP_X_FORWARDED_HOST};
+        $env->{REQUEST_URI} = $env->{HTTP_X_FORWARDED_URI};
+        return $self->_logAuthTrace( $self->newRequest($env) );
     }
 }
 

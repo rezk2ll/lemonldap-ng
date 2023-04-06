@@ -50,8 +50,7 @@ sub _run {
         # Handle requests
         # Developers, be careful: Only this part is executed at each request
         return sub {
-            return $self->_logAuthTrace(
-                Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
+            return $self->_logAuthTrace( $self->newRequest( $_[0] ) );
         };
     }
 
@@ -67,7 +66,7 @@ sub _run {
 
         # Handle unprotected requests
         return sub {
-            my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
+            my $req = $self->newRequest( $_[0] );
             my $res = $self->_logAndHandle($req);
             push @{ $res->[1] }, $req->spliceHdrs;
             return $res;
@@ -87,7 +86,7 @@ sub status {
         $self->logger->error($@) if ($@);
     }
     return sub {
-        my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
+        my $req = $self->newRequest( $_[0] );
         $self->api->status($req);
         return [ 200, [ $req->spliceHdrs ], [ $req->{respBody} ] ];
     };
@@ -105,7 +104,7 @@ sub reload {
         $self->logger->error($@) if ($@);
     }
     return sub {
-        my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
+        my $req = $self->newRequest( $_[0] );
         $self->api->reload($req);
         return [ 200, [ $req->spliceHdrs ], [ $req->{respBody} ] ];
     };

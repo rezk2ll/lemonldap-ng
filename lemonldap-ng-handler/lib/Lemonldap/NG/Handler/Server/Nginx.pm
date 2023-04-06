@@ -29,10 +29,8 @@ sub init {
 sub _run {
     my $self = shift;
     return sub {
-        my $req = $_[0];
-        $self->logger->debug('New request');
-        my $res = $self->_logAuthTrace(
-            Lemonldap::NG::Common::PSGI::Request->new($req) );
+        my $env = $_[0];
+        my $res = $self->_logAuthTrace( $self->newRequest($env) );
 
         # Transform 302 responses in 401 since Nginx refuse it
         if ( $res->[0] == 302 or $res->[0] == 303 ) {

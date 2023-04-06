@@ -241,7 +241,7 @@ sub run {
     else {
 
         # Redirect user to the portal
-        $class->logger->info("No cookie found")
+        $class->logger->debug("No cookie found")
           unless ($id);
 
         # if the cookie was fetched, a log is sent by retrieveSession()
