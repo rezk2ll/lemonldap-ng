@@ -172,7 +172,8 @@ Basic options
 Exported attributes
 ^^^^^^^^^^^^^^^^^^^
 
-.. versionchanged:: In 2.0.16, all exported attributes are always sent by default. In previous versions, you had to declare them in **Options**/**Scope**/**Scope Values content** too
+.. versionchanged:: In 2.0.16, all exported attributes are sent if **Always send exported attributes** option is enabled in **OpenID Connect Service**. In previous versions, you had to declare them in **Options**/**Scope**/**Scope Values content** too.
+
 
 For each OpenID Connect attribute you want to expose to applications, you can define:
 
@@ -294,8 +295,11 @@ Display
 Scope values content
 ^^^^^^^^^^^^^^^^^^^^
 
-When the **Always send exported attributes** option is disabled in **OpenID
-Connect Service**, attributes can only be released if they are part of a scope.
+When the **Always send exported attributes** option is disabled in **OpenID Connect Service**,
+attributes can only be released if they are part of a scope.
+
+By default, LL::NG will grant all requested scopes except if **Only allow declared scopes** option
+is enabled in **OpenID Connect Service**. 
 
 In this case, only `standard OpenID Connect claims
 <http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims>`__ are

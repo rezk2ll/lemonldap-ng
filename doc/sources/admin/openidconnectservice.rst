@@ -40,6 +40,24 @@ Authentication context
 
 You can associate here an authentication context to an authentication level.
 
+Dynamic Registration
+~~~~~~~~~~~~~~~~~~~~
+
+-  **Activation**: Set to 1 to allow clients to register themselves
+
+If **Dynamic Registration** is enabled, you can configure the following
+options to define attributes and extra claims released when a new relying
+party is registered through ``/oauth2/register`` endpoint:
+
+-  **Exported vars**
+-  **Extra claims**
+
+.. warning::
+    Dynamic Registration can be a security risk because a new configuration
+    will be created in the backend for each registration request.
+    You can restrict this by protecting the WebServer registration endpoint
+    with an authentication module, and give credentials to clients.
+
 Security
 ~~~~~~~~
 
@@ -48,16 +66,15 @@ Security
 -  **Authorization Code flow**: Set to 1 to allow Authorization Code flow
 -  **Implicit flow**: Set to 1 to allow Implicit flow
 -  **Hybrid flow**: Set to 1 to allow Hybrid flow
+-  **Always send exported attributes**: By default, LL::NG will release all
+   exported attributes to RPs. When this option is disabled, only attributes
+   allowed by a scope can be transmitted
 -  **Only allow declared scopes**: By default, LL::NG will grant all requested scopes.
    When this option is enabled, LL::NG will only grant:
 
    - Standard OIDC scopes (``openid`` ``profile`` ``email`` ``address`` ``phone``)
    - Scopes declared in :ref:`Scope values content <oidcextraclaims>`
    - Scopes declared in :ref:`Scope Rules <oidcscoperules>` (if they match the rule)
-
--  **Always send exported attributes**: By default, LL::NG will release all
-   exported attributes to RPs. When this option is disabled, only attributes
-   allowed by a scope can be transmitted
 
 .. _x5c:
 
@@ -100,24 +117,6 @@ Sessions
 
 Best pratice is to use a separate sessions storage for OpenID Connect
 sessions, else they will be stored in main sessions storage.
-
-Dynamic Registration
-~~~~~~~~~~~~~~~~~~~~
-
--  **Activation**: Set to 1 to allow clients to register themselves
-
-If **Dynamic Registration** is enabled, you can configure the following
-options to define attributes and extra claims released when a new relying
-party is registered through ``/oauth2/register`` endpoint:
-
--  **Exported vars**
--  **Extra claims**
-
-.. warning::
-    Dynamic Registration can be a security risk because a new configuration
-    will be created in the backend for each registration request.
-    You can restrict this by protecting the WebServer registration endpoint
-    with an authentication module, and give credentials to clients.
 
 Keys rotation script
 --------------------
