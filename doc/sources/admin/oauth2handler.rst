@@ -63,11 +63,13 @@ use ::
 Configuration
 -------------
 
-Protect you virtual host like any other virtual host with the standard
-Handler.
+Protect you virtual host like any other virtual host with the standard Handler.
 
-Define access rules and headers. Then in ``Options`` > ``Type``, choose
-``OAuth2``.
+Define access rules and headers. Then in ``Options`` > ``Type``, choose ``OAuth2``.
+
+.. note::
+
+    OAuth2 handler inherits from Main handler. So it is able to manage both SSO cookie and OAuth2 Access Token.
 
 Reference
 ---------
