@@ -556,7 +556,7 @@ sub lazy_load_entityid {
     unless ($provider) {
         $self->logger->debug("Lazy loading provider $entityID");
 
-        $self->lazy_load_config($entityID);
+        return $self->lazy_load_config($entityID);
     }
 }
 
@@ -566,27 +566,29 @@ sub load_config {
     my $config = {};
     $self->p->processHook( {}, 'getSamlConfig', $entityID, $config );
 
+    my $info;
     if ( $config->{sp_metadata} ) {
+        $info->{sp_confKey} = $config->{sp_confKey};
         $self->load_sp_metadata(
             $config->{sp_confKey}, $config->{sp_metadata},
             $entityID,             $config->{sp_attributes},
             $config->{sp_options}, $config->{sp_macros},
         );
 
-        return $config->{ttl};
     }
 
     if ( $config->{idp_metadata} ) {
+        $info->{idp_confKey} = $config->{idp_confKey};
         $self->load_idp_metadata(
             $config->{idp_confKey}, $config->{idp_metadata},
             $entityID,              $config->{idp_attributes},
             $config->{idp_options}
         );
-
-        return $config->{ttl};
     }
 
-    return $config->{ttl};
+    my $ttl = $config->{ttl};
+    return { ( $ttl ? ( ttl => $ttl ) : () ),
+        ( $info ? ( info => $info ) : () ) };
 }
 
 # This method returns the configuration info for the given provider
