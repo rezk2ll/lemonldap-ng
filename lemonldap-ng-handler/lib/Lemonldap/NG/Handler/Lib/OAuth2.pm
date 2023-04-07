@@ -65,7 +65,7 @@ sub retrieveSession {
         return $data;
     }
     else {
-        $class->logger->info("Session $offlineId can't be retrieved");
+        $class->logger->info("Session $offlineId can not be retrieved");
         $class->logger->info( $session->error );
 
         return 0;
