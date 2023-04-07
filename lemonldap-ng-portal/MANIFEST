@@ -258,6 +258,8 @@ site/htdocs/static/bwr/jquery.cookie/jquery.cookie.min.js.map
 site/htdocs/static/bwr/jquery/dist/jquery.js
 site/htdocs/static/bwr/jquery/dist/jquery.min.js
 site/htdocs/static/bwr/jquery/dist/jquery.min.map
+site/htdocs/static/bwr/jssha/dist/sha1.js
+site/htdocs/static/bwr/jssha/dist/sha1.min.js
 site/htdocs/static/bwr/qrious/dist/qrious.js
 site/htdocs/static/bwr/qrious/dist/qrious.js.map
 site/htdocs/static/bwr/qrious/dist/qrious.min.js
@@ -736,6 +738,7 @@ t/44-CertificateResetByMail-LDAP.t
 t/50-IssuerGet.t
 t/56-CheckDevOps-with-Download.t
 t/56-CheckDevOps.t
+t/57-GlobalLogout-with-Confirmation.t
 t/57-GlobalLogout-with-Double-cookies-Single-session.t
 t/57-GlobalLogout-with-Double-cookies.t
 t/57-GlobalLogout-without-Timer.t
