@@ -13,7 +13,7 @@ GeoIP database
 
 Create an account on `<https://www.maxmind.com/en/home>`__ and put credentials in ``/etc/GeoIP.conf``:
 
-.. code-block::
+.. code-block:: shell
 
     # Enter your account ID and license key below. These are available from
     # https://www.maxmind.com/en/my_license_key. If you are only using free
