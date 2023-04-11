@@ -108,7 +108,7 @@ is(
     "Function works"
 );
 
-$sub  = "sub { return(";
+$sub  = "sub { return()";
 $code = $jail->jail_reval($sub);
 ok( ( not defined($code) ), 'Syntax error yields undef result' );
 like(
