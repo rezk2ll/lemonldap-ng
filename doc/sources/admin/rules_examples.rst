@@ -68,6 +68,13 @@ attribute you see there can be used in a rule!
 
    $authenticationLevel >= 3
 
+-  Filtering on IP subnet
+
+::
+
+   # since 2.17
+   inSubnet('192.168.0.0/16')
+
 -  Filtering on Authentication method
 
 ::
@@ -100,7 +107,11 @@ Using environment variables
 
 ::
 
+   # Before 2.17
    $env->{REMOTE_ADDR} =~ /^10\./
+
+   # Since 2.17
+   inSubnet('10.0.0.0/8')
 
 -  Comparing requested URI
 

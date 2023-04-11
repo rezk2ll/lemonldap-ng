@@ -665,6 +665,9 @@ sub substitute {
     # handle has2f
     $expr =~ s/\bhas2f\(([^),]*)\)/has2f_internal(\$s,$1)/g;
 
+    # handle inSubnet
+    $expr =~ s/\binSubnet\(([^)]*)\)/ipInSubnet(\$r->{env}->{REMOTE_ADDR},$1)/g;
+
     return $expr;
 }
 
