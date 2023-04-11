@@ -42,7 +42,7 @@ The OIDC provide will return the code in the location header, so we just output 
 
 .. code-block:: shell
 
-   curl -s -D - -o /dev/null -b lemonldap=0640f95827111f00ba7ad5863ba819fe46cfbcecdb18ce525836369fb4c8350b 'https://oidctest.wsweet.org/oauth2/authorize?response_type=code&client_id=private&scope=openid+profile+email&redirect_uri=http://localhost' | grep '^location'
+   curl -s -D - -o /dev/null -b lemonldap=0640f95827111f00ba7ad5863ba819fe46cfbcecdb18ce525836369fb4c8350b 'https://oidctest.wsweet.org/oauth2/authorize?response_type=code&client_id=private&scope=openid+profile+email&redirect_uri=http://localhost' | grep -i '^location'
 
 The value of the location header is:
 

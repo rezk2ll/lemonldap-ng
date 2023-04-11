@@ -8,7 +8,7 @@ secret between the user (in :doc:`SSO cookie<ssocookie>`) and the
 To configure sessions, go in Manager, ``General Parameters`` »
 ``Sessions``:
 
--  **Store user password in session data**: see
+-  **Store user password in session**: see
    :doc:`password store documentation<passwordstore>`
 -  **Display session identifier**: should the session ID be displayed in the manager's session explorer. The session ID is a sensitive information that should only be shown to highly trusted administrators
 -  **Sessions timeout**: maximum lifetime of a session. Old sessions are
@@ -25,7 +25,7 @@ To configure sessions, go in Manager, ``General Parameters`` »
 
 -  **Opening conditions**: rules which are evaluated before granting
    session, see :doc:`Grant Session plugin documentation<grantsession>`
--  **Sessions Storage**: you can define here which session backend to
+-  **Sessions storage**: you can define here which session backend to
    use, with the backend options. See
    :ref:`sessions database configuration<start-sessions-database>` to
    know which modules you can use. Here are some global options that you

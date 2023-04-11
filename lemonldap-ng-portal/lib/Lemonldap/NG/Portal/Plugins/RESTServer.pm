@@ -18,16 +18,14 @@
 #   * DELETE /sessions/my                        : ask for global logout (if GlobalLogout plugin is on)
 #
 # - Authentication
-#   * POST /sessions/<type>/<session-id>?auth    : authenticate with a fixed
-#                                                  sessionId
+#   * POST /sessions/<type>/<session-id>?auth    : authenticate with a fixed sessionId
 #   * Note that the "getCookie" method (authentification via SOAP) exists for
 #      REST requests directly by using '/' path : the portal recognize REST
 #      calls and generate JSON response instead of web page.
 #
 # - Configuration (if restConfigServer is on)
 #   * GET /config/latest                          : get the last config metadata
-#   * GET /config/<cfgNum>                        : get the metadata for config
-#                                                  n° <cfgNum>
+#   * GET /config/<cfgNum>                        : get the metadata for config n° <cfgNum>
 #   * GET /config/<latest|cfgNum>/<key>           : get conf key value
 #   * GET /config/<latest|cfgNum>?full            : get the full configuration
 #   where <type> is the session type ("global" for SSO session or "persistent")

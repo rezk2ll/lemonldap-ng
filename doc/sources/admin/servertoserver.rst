@@ -58,8 +58,11 @@ You can also set ServiceToken default timeout (30 seconds) by editing ``lemonlda
 Webapp2 handler configuration
 -----------------------------
 
-Change handler type to **ServiceToken**. So it is able to manage both
-user and server connections. And that's all!
+Change handler type to **ServiceToken**. And that's all!
+
+.. note::
+
+    ServiceToken handler inherits from Main handler. So it is able to manage both user and server connections.
 
 .. |Kinematic| image:: documentation/server_to_server.png
 

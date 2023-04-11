@@ -128,6 +128,7 @@ For example:
 
 -  https://auth.example.com/?openidconnectcallback=1
 
+
 .. attention::
 
     If you use the :doc:`choice backend<authchoice>`,
@@ -144,7 +145,6 @@ You may also be prompted for lougout type. LL::NG supports both *back* and
 
     Front Channel use requires "iss" and "sid" parameters in requests (See
     `frontchannel_logout_session_required <https://openid.net/specs/openid-connect-frontchannel-1_0.html#RPLogout>`__)
-
 After registration, the OP must give you a *Client ID* and a *Client
 secret* required to configure the OP in LL::NG.
 
@@ -241,8 +241,7 @@ Protocol
 -  **Display**: Value of display parameter (example: page)
 -  **Prompt**: Value of prompt parameter (example: consent)
 -  **Max age**: Value of max_age parameter (example: 3600)
--  **UI locales**: Value of ui_locales parameter (example: en-GB en
-   fr-FR fr)
+-  **Locales UI**: Value of ui_locales parameter (example: en-GB en fr-FR fr)
 -  **ACR values**: Space-separated list of acceptable ACR values (example:
    'loa-2 loa-3'). Authentication will fail if the OpenID Provider does not
    supply one of the values listed here in the ID Token.

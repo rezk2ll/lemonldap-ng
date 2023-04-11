@@ -288,8 +288,8 @@ Name                                                                 Description
 :doc:`Auto Signin<autosignin>`                                       Sign-in automatically
 :doc:`Brute Force protection<bruteforceprotection>`                  User must wait to log in after some failed login attempts
 :doc:`CDA<cda>`                                                      Cross Domain Authentication
-:doc:`Check DevOps<checkdevops>` [5]_ |new|                          Check DevOps handler file plugin
-:doc:`Check HIBP<checkhibp>` [19]_ |new|                             Check Have I Been Pwned plugin
+:doc:`Check DevOps<checkdevops>` [5]_ |new|                          Check DevOps handler file
+:doc:`Check HIBP<checkhibp>` [19]_ |new|                             Check Have I Been Pwned
 :doc:`Check state<checkstate>` |new|                                 Check state plugin (test page)
 :doc:`Check user<checkuser>`  [6]_                                   Check access rights, transmitted headers and session attibutes for a specific user and URL
 :doc:`Configuration viewer<viewer>`                                  Edit WebSSO configuration in Read Only mode

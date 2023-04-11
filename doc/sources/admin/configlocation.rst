@@ -648,9 +648,9 @@ LemonLDAP::NG configuration can be managed in a local file with `INI
 format <http://en.wikipedia.org/wiki/INI_file>`__. This file is called
 ``lemonldap-ng.ini`` and has the following sections:
 
+-  **all**: parameters for all modules
 -  **configuration**: where configuration is stored
 -  **apply**: reload URL for distant Hanlders
--  **all**: parameters for all modules
 -  **portal**: parameters only for Portal
 -  **manager**: parameters only for Manager
 -  **handler**: parameters only for Handler
