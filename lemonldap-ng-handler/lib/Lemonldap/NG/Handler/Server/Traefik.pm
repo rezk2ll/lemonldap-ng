@@ -16,11 +16,21 @@ sub init {
 
 sub _run {
     my $self = shift;
+
+    # Create regular _authAndTrace PSGI app
+    my $app = $self->psgiAdapter(
+        sub {
+            my $req = $_[0];
+            return $self->_authAndTrace($req);
+        }
+    );
+
+    # Middleware to set correct values for Traefik
     return sub {
         my $env = $_[0];
         $env->{HTTP_HOST}   = $env->{HTTP_X_FORWARDED_HOST};
         $env->{REQUEST_URI} = $env->{HTTP_X_FORWARDED_URI};
-        return $self->_logAuthTrace( $self->newRequest($env) );
+        return $app->($env);
     }
 }
 

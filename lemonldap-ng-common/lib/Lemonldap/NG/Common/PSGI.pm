@@ -238,9 +238,11 @@ sub sendRawHtml {
 sub abort {
     my ( $self, $err ) = @_;
     eval { $self->logger->error($err) };
-    return sub {
-        $self->sendError( $self->newRequest( $_[0] ), $err, 500 );
-    };
+    return $self->psgiAdapter(
+        sub {
+            $self->sendError( $_[0], $err, 500 );
+        }
+    );
 }
 
 sub _mustBeDefined {
@@ -335,16 +337,6 @@ sub sendHtml {
 # Main method #
 ###############
 
-sub newRequest {
-    my ( $self, $env ) = @_;
-    my $req = Lemonldap::NG::Common::PSGI::Request->new($env);
-    $self->logger->info( "New request "
-          . ref($self) . " "
-          . $req->method . " "
-          . $req->request_uri );
-    return $req;
-}
-
 sub run {
     my ( $self, $args ) = @_;
     $args //= {};
@@ -357,13 +349,27 @@ sub run {
 
 sub _run {
     my $self = shift;
-    return sub {
-        $self->_logAndHandle( $self->newRequest( $_[0] ) );
-    };
+    return $self->psgiAdapter(
+        sub {
+            $self->handler( $_[0] );
+        }
+    );
 }
 
-sub _logAndHandle {
-    my ( $self, $req ) = @_;
+# This method turns a sub that takes a Lemonldap::NG::Common::PSGI::Request
+# obect and returns a PSGI response into a proper PSGI method.
+sub psgiAdapter {
+    my ( $self, $sub ) = @_;
+    return sub {
+        my $env = shift;
+        my $req = Lemonldap::NG::Common::PSGI::Request->new($env);
+        return $self->logAndRun( $req, $sub );
+    }
+}
+
+# This method sets up LemonLDAP::NG logging for the current request
+sub logAndRun {
+    my ( $self, $req, $sub ) = @_;
 
     # register the request object to the logging system
     if ( ref( $self->logger ) and $self->logger->can('setRequestObj') ) {
@@ -374,8 +380,12 @@ sub _logAndHandle {
         $self->userLogger->setRequestObj($req);
     }
 
-    # Call the handler
-    my $res = $self->handler($req);
+    $self->logger->info( "New request "
+          . ref($self) . " "
+          . $req->method . " "
+          . $req->request_uri );
+
+    my $res = $sub->($req);
 
     # Clear the logging system before the next request
     if ( ref( $self->logger ) and $self->logger->can('clearRequestObj') ) {
