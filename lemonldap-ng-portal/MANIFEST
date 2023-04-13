@@ -533,6 +533,7 @@ site/templates/common/oidc_checksession.tpl
 site/templates/common/registerBrowser.tpl
 site/templates/common/script.tpl
 t/01-AuthDemo.t
+t/01-BuildRule.t
 t/01-BuildUrl.t
 t/01-CSP-and-CORS-headers.t
 t/01-EnablePasswordDisplay.t
