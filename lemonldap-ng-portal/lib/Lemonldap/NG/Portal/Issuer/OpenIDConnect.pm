@@ -30,6 +30,8 @@ extends qw(
   Lemonldap::NG::Portal::Lib::OpenIDConnect
 );
 
+with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration';
+
 # INTERFACE
 
 sub beforeAuth { 'exportRequestParameters' }
@@ -91,8 +93,7 @@ sub init {
 
     # Initialize RP list
     return 0
-      unless ( $self->Lemonldap::NG::Portal::Main::Issuer::init()
-        and $self->loadRPs );
+      unless $self->Lemonldap::NG::Portal::Main::Issuer::init();
 
     # Manage RP requests
     $self->addRouteFromConf(
@@ -135,6 +136,62 @@ sub init {
       ) . ')';
     $self->ssoMatchUrl(qr/$m/);
     return 1;
+}
+
+# CONFIGURATION LOADING
+
+# Get Relying Party corresponding to a Client ID
+# This will lazy-load the corresponding config from either LLNG configuration
+# or from a plugin.
+# @param client_id Client ID
+# @return String result
+sub getRP {
+    my ( $self, $client_id ) = @_;
+    my $rp;
+    my $result = $self->lazy_load_config($client_id);
+    return $result->{confKey};
+}
+
+# Handles configuration loading of RPs
+# this method is called by the LazyLoadedConfiguration role
+sub load_config {
+    my ( $self, $client_id ) = @_;
+
+    my @confKeys = grep {
+        $self->conf->{oidcRPMetaDataOptions}->{$_}
+          ->{oidcRPMetaDataOptionsClientID} eq $client_id
+    } keys %{ $self->conf->{oidcRPMetaDataOptions} || {} };
+
+    # Found this client_id in configuration,
+    # load it permanently (until next conf reload)
+    if (@confKeys) {
+        my $confKey = $confKeys[0];
+        $self->logger->debug("Loading $client_id from LLNG config $confKey");
+        $self->load_rp_from_llng_conf($confKey);
+        return { info => { confKey => $confKey } };
+    }
+
+    # Not found in config, try to load from hook
+    my $config = {};
+    $self->p->processHook( {}, 'getOidcRpConfig', $client_id, $config );
+
+    my $info;
+    if ( $config->{confKey} ) {
+
+        $self->logger->debug("Loading $config->{confKey} from getOidcRpConfig hook");
+        $info = { confKey => $config->{confKey} };
+
+        # Make sure Client ID is correctly set in options
+        $config->{options}->{oidcRPMetaDataOptionsClientID} = $client_id;
+        $self->load_rp(%$config);
+
+    }
+
+    # You can set a negative TTL in getOidcRPConfig hook even if you don't find
+    # anything to avoid doing too many lookups
+    my $ttl = $config->{ttl};
+    return { ( $ttl ? ( ttl => $ttl ) : () ),
+        ( $info ? ( info => $info ) : () ) };
 }
 
 # RUNNING METHODS
@@ -2115,9 +2172,6 @@ sub registration {
     }
 
     if ( $self->confAcc->saveConf($conf) > 0 ) {
-
-        # Reload RP list
-        $self->loadRPs();
 
         # Send registration response
         $registration_response->{'client_id'}            = $client_id;
