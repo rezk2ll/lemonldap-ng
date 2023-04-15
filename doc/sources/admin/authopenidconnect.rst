@@ -145,6 +145,7 @@ You may also be prompted for lougout type. LL::NG supports both *back* and
 
     Front Channel use requires "iss" and "sid" parameters in requests (See
     `frontchannel_logout_session_required <https://openid.net/specs/openid-connect-frontchannel-1_0.html#RPLogout>`__)
+
 After registration, the OP must give you a *Client ID* and a *Client
 secret* required to configure the OP in LL::NG.
 
