@@ -7,8 +7,7 @@ The Portal is the main component of LL::NG. It provides many features:
 
    -  Web based for normal users:
 
-      -  using own database (:doc:`LDAP<authldap>`, :doc:`SQL<authdbi>`,
-         ...)
+      -  using own database (:doc:`LDAP<authldap>`, :doc:`SQL<authdbi>`, ...)
       -  using web server authentication system (used for
          :doc:`SSL<authssl>`, :doc:`Kerberos<authapache>`,
          :doc:`HTTP basic authentication<authapache>`, ...)
@@ -19,7 +18,7 @@ The Portal is the main component of LL::NG. It provides many features:
          :doc:`rules<authmulti>`, ...)
 
    -  :doc:`SOAP based<soapservices>` and
-      :doc:`REST based<restservices>` for client-server software,
+      :doc:`REST based<restservices>` for client-server software,
       specific development, ...
 
 -  **Identity provider**: LL::NG is able to provide identity service
@@ -54,18 +53,18 @@ The Portal is the main component of LL::NG. It provides many features:
    if found in the notification database
 -  Second factors management
 
-Functioning
------------
+How it works
+------------
 
 LL::NG portal is a modular component. It needs 4 modules to work:
 
 -  :ref:`Authentication<start-authentication-users-and-password-databases>`:
-   how check user credentials
+   how to check user credentials
 -  :ref:`User database<start-authentication-users-and-password-databases>`:
-   where collect user information
+   where to collect user information
 -  :ref:`Password database<start-authentication-users-and-password-databases>`:
-   where change password
--  :ref:`Identity provider<start-identity-provider>`: how forward user
+   where to change password
+-  :ref:`Identity provider<start-identity-provider>`: how to forward user
    identity
 
 
@@ -76,7 +75,7 @@ LL::NG portal is a modular component. It needs 4 modules to work:
 Kinematics
 ----------
 
-#. Check if URL asked is valid
+#. Check if requested URL is valid
 #. Check if user is already authenticated
 
    -  If not authenticated (or authentication is forced), try to find
@@ -99,13 +98,11 @@ Kinematics
 URL parameters
 --------------
 
-Some parameters in URL can change the behavior of the portal:
+Some parameters in URL can change Portal behaviour:
 
 -  **confirm**: Bypass confirmation page (for example: ``confirm=1``)
--  **llnglanguage**: Force lang used to display the page (for example:
-   ``llnglanguage=fr``)
--  **logout**: Launch the logout process (for example: ``logout=1``)
--  **tab**: Preselect a tab (Choice or Menu) (for example:
-   ``tab=password``)
--  **setCookieLang**: Update lang cookie to persist the language set
-   with ``llnglanguage`` parameter (for example: ``setCookieLang=1``)
+-  **llnglanguage**: Force lang used to display the page (for example: ``llnglanguage=fr``)
+-  **logout**: Launch logout process (for example: ``logout=1``)
+-  **tab**: Preselect a tab (Choice or Menu) (for example: ``tab=password``)
+-  **setCookieLang**: Update lang cookie to keep language set with ``llnglanguage`` parameter
+   (for example: ``setCookieLang=1``)
