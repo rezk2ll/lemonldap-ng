@@ -70,11 +70,13 @@ Name                Comment                                  Example
 =================== ======================================== ==================================================
 **user**            Username to use for auth basic mechanism
 **password**        Password to use for auth basic mechanism
+**realm**           auth basic realm name
 =================== ======================================== ==================================================
 
-`user` and `password` parameters are only used if the entry point `index.fcgi/sessions/global`
+`user`, `password` and `realm` parameters are only used if the entry point `index.fcgi/sessions/global`
 is protected by a basic authentication. Thus, handlers will make requests to the Portal
-using these parameters.
+using these parameters. `realm` must match the `auth_basic` (Nginx) or
+`AuthType` (Apache) setting in your web server.
 
 
 .. attention::

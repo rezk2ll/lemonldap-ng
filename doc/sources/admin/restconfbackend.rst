@@ -72,12 +72,13 @@ You can also add some other parameters
 
 .. code-block:: ini
 
-   User         = lemonldap
-   Password     = mypassword
+   user         = lemonldap
+   password     = mypassword
+   realm        = myrealm
    # LWP::UserAgent parameters
    proxyOptions = { timeout => 5 }
 
-`User` and `Password` parameters are only used if the entry point `index.fcgi/config`
-is protected by a basic authentication. Thus, handlers will make requests to the portal
-using these parameters.
-
+`user`, `password` and `realm` parameters are only used if the entry point
+`index.fcgi/config` is protected by a basic authentication. Thus, handlers will
+make requests to the portal using these parameters. `realm` must match the
+`auth_basic` (Nginx) or `AuthType` (Apache) setting in your web server.
