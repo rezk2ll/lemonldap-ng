@@ -556,7 +556,7 @@ To develop a portal plugin, see manpages:
 To add a new language:
 
 -  Join us on
-   https://www.transifex.com/lemonldapng/lemonldapng/dashboard/
+   https://app.transifex.com/lemonldapng/lemonldapng/dashboard/
 -  translate the 3 files
 -  then we will append them in sources.
 
