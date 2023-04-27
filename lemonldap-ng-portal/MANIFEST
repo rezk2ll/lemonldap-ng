@@ -636,6 +636,8 @@ t/31-CAS-10.t
 t/31-CAS-Gateway.t
 t/31-CAS-Hooks.t
 t/31-CAS-jsRedirect.t
+t/31-CAS-Logout-propagate-OIDC.t
+t/31-CAS-Logout.t
 t/31-CAS-Macros.t
 t/31-CAS-Prefix.t
 t/31-CAS-Proxy.t
