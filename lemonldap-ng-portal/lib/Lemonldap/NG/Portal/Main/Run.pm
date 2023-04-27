@@ -1042,6 +1042,30 @@ sub sendHtml {
     return $res;
 }
 
+sub imgok {
+    my ( $self, $req, ) = @_;
+    return $self->sendImage( $req, 'icons/ok.png' );
+}
+
+sub imgnok {
+    my ( $self, $req, ) = @_;
+    return $self->sendImage( $req, 'icons/warning.png' );
+}
+
+sub sendImage {
+    my ( $self, $req,, $img ) = @_;
+    return [
+        302,
+        [
+                'Location' => $self->conf->{portal}
+              . $self->staticPrefix
+              . '/common/'
+              . $img,
+        ],
+        [],
+    ];
+}
+
 sub sendCss {
     my ( $self, $req ) = @_;
     my $s = '/* LL::NG Portal CSS */';
