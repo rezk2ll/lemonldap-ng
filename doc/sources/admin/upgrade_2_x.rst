@@ -27,6 +27,35 @@ Known regressions in the latest released version
 Some regressions have been found on OpenID Connect signature management
 and on configuration reload. Upgrade to 2.18.1 to fix them.
 
+2.19.0
+------
+
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can skip this entire section if you use the default ``bootstrap`` theme or if your custo theme only uses ``custom*.tpl`` templates.
+
+TOTP registration
+^^^^^^^^^^^^^^^^^
+
+The TOTP registration now offers a ``otpauth://`` url that can automatically open your TOTP application when viewed on mobile. Apply the following patch to ``totp2fregister.tpl`` to use this new feature::
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/totp2fregister.tpl b/lemonldap-ng-portal/site/templates/bootstrap/totp2fregister.tpl
+    index 506a83481..a14e61d31 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/totp2fregister.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/totp2fregister.tpl
+    @@ -11,8 +11,8 @@
+             <div class="col-md-6 text-center">
+               <div >
+                 <p>&#x2460; <span trspan="totpQrCode"></span></p>
+    -            <canvas id="qr"></canvas>
+    -
+    +            <p><a class="otpauth-url" href=""><canvas id="qr"></canvas></a></p>
+    +            <p><span trspan="totpOrTouch"></span></p>
+                 <p><span trspan="totpSecretKey"></span></p>
+                 <tt id="secret"></tt>
+               </div>
+
 2.18.0
 ------
 
