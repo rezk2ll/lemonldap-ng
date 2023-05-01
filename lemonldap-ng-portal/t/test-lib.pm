@@ -928,6 +928,7 @@ sub login {
         ),
         'Auth query'
     );
+    main::count(1);
     main::expectOK($res);
     my $id = main::expectCookie($res);
     return $id;
