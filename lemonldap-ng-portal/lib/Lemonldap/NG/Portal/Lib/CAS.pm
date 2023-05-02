@@ -534,10 +534,7 @@ sub retrievePT {
 sub getCasApp {
     my ( $self, $uri_param ) = @_;
 
-    my $uri      = URI->new($uri_param);
-    my $hostname = $uri->authority;
-    my $uriCanon = $uri->canonical;
-    return undef unless $hostname;
+    my $uri = URI->new($uri_param)->canonical;
 
     my $prefixConfKey;
     my $longestCandidate = "";
@@ -551,21 +548,20 @@ sub getCasApp {
             )
           )
         {
-            my $candidateUri   = URI->new($appservice);
-            my $candidateHost  = $candidateUri->authority;
-            my $candidateCanon = $candidateUri->canonical;
+            my $candidate = URI->new($appservice)->canonical;
+            if ( $self->matchFull( $candidate, $uri ) ) {
 
-            # Try to match prefix, remembering the longest match found
-            if ( index( $uriCanon, $candidateCanon ) == 0 ) {
-                if ( length($longestCandidate) < length($candidateCanon) ) {
-                    $longestCandidate = $candidateCanon;
+                # Remembering the longest match found
+                if ( length($longestCandidate) < length($candidate) ) {
+                    $longestCandidate = $candidate->as_string;
                     $prefixConfKey    = $app;
                 }
             }
 
-            # Try to match host, only if strict matching is disabled
-            unless ( $self->conf->{casStrictMatching} ) {
-                $hostnameConfKey = $app if ( $hostname eq $candidateHost );
+            if ( not $self->conf->{casStrictMatching}
+                and $self->matchHost( $candidate, $uri ) )
+            {
+                $hostnameConfKey = $app;
             }
         }
     }
@@ -577,6 +573,33 @@ sub getCasApp {
           . "This will be deprecated in a future version" )
       if $hostnameConfKey;
     return $hostnameConfKey;
+}
+
+sub matchFull {
+    my ( $self, $candidate, $uri ) = @_;
+    if ( $candidate->can('authority') and $uri->can('authority') ) {
+        return (  $candidate->scheme eq $uri->scheme
+              and $candidate->authority eq $uri->authority
+              and index( $uri->as_string, $candidate->as_string ) == 0 );
+    }
+    else {
+        return $candidate->eq($uri);
+    }
+
+}
+
+sub matchHost {
+    my ( $self, $candidate, $uri ) = @_;
+
+    my $hostname =
+      ( $uri->can('authority') ? $uri->authority : $uri->as_string );
+    my $candidateHost = (
+          $candidate->can('authority')
+        ? $candidate->authority
+        : $candidate->as_string
+    );
+
+    return ( $hostname eq $candidateHost );
 }
 
 # This method returns the host part of the given URL

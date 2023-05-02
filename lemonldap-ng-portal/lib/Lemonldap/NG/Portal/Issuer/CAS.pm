@@ -207,10 +207,6 @@ sub run {
             return PE_OK;
         }
 
-        unless ( $service =~ m#^(https?://[^/]+)(/.*)?$# ) {
-            $self->logger->error("Bad service $service");
-            return PE_ERROR;
-        }
         my ( $host, $uri ) = ( $1, $2 );
         my $app = $self->getCasApp($service);
 
