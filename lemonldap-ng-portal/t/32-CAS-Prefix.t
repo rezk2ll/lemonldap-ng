@@ -9,6 +9,7 @@ use MIME::Base64;
 
 BEGIN {
     require 't/test-lib.pm';
+    require 't/cas-lib.pm';
 }
 
 my $debug = 'error';
@@ -17,112 +18,114 @@ my ( $issuer, $res );
 eval { require XML::Simple };
 plan skip_all => "Missing dependencies: $@" if ($@);
 
-# Login
-ok( $issuer = issuer(), 'Issuer portal' );
-count(1);
-my $s  = "user=dwho&password=dwho";
-my $id = expectCookie(
-    $issuer->_post(
-        '/',
-        IO::String->new($s),
-        accept => 'text/html',
-        length => length($s),
-    )
-);
+subtest "Test CAS service matching without strict mode" => sub {
 
-# Service 1, will be matched by URI
-ok(
-    $res = $issuer->_get(
-        '/cas/login',
-        query  => 'service=http://auth.sp.com/srv1/index.php',
-        accept => 'text/html',
-        cookie => "lemonldap=$id",
-    ),
-    'Query CAS server'
-);
-count(1);
-expectRedirection( $res,
-    qr#^http://auth.sp.com/srv1/index.php\?(ticket=[^&]+)$# );
+    # Login
+    ok( $issuer = issuer(), 'Issuer portal' );
+    my $id = $issuer->login("dwho");
 
-# Service 2, will be matched by hostname
-ok(
-    $res = $issuer->_get(
-        '/cas/login',
-        query  => 'service=http://auth.other.com/srv2',
-        accept => 'text/html',
-        cookie => "lemonldap=$id",
-    ),
-    'Query CAS server'
-);
-count(1);
-expectRedirection( $res, qr#^http://auth.other.com/srv2\?(ticket=[^&]+)$# );
+    ok( $issuer->casGetTicket( $id, 'http://auth.sp.com/srv1/index.php' ),
+        "Service 1 is matched by URI" );
+    expectPortalError( $issuer->casLogin( $id, 'http://auth.sp.com/srv0' ),
+        84, "Service is matched by hostname to denied catch-all" );
+    ok( $issuer->casGetTicket( $id, 'http://auth.other.com/srv2' ),
+        "Service 2 is matched by hostname" );
+    ok(
+        $issuer->casGetTicket( $id, 'http://auth.sp.com/srv4/index.php' ),
+        "Service defined with multiple URLs is matched by URI"
+    );
+};
 
-# Service defined with multiple URLs, will be matched by URI
-ok(
-    $res = $issuer->_get(
-        '/cas/login',
-        query  => 'service=http://auth.sp.com/srv4/index.php',
-        accept => 'text/html',
-        cookie => "lemonldap=$id",
-    ),
-    'Query CAS server'
-);
-count(1);
-expectRedirection( $res,
-    qr#^http://auth.sp.com/srv4/index.php\?(ticket=[^&]+)$# );
+subtest "Test CAS service matching with strict mode" => sub {
+    ok( $issuer = issuer(1), 'Issuer portal' );
+    my $id = $issuer->login("dwho");
 
-# New test with StrictMatching
-ok( $issuer = issuer(1), 'Issuer portal' );
-count(1);
+    ok( $issuer->casGetTicket( $id, 'http://auth.sp.com/srv1/index.php' ),
+        "Service 1 is matched by URI" );
+    expectPortalError( $issuer->casLogin( $id, 'http://auth.sp.com/srv0' ),
+        84, "Service non-existing suffix matched by shorter URI" );
+    expectPortalError( $issuer->casLogin( $id, 'http://auth.other.com/srv2' ),
+        107, "Service is not matched by hostname" );
+    ok(
+        $issuer->casGetTicket( $id, 'http://auth.sp.com/srv4/index.php' ),
+        "Service defined with multiple URLs is matched by URI"
+    );
+};
 
-# Service 1, will be matched by URI
-ok(
-    $res = $issuer->_get(
-        '/cas/login',
-        query  => 'service=http://auth.sp.com/srv1/index.php',
-        accept => 'text/html',
-        cookie => "lemonldap=$id",
-    ),
-    'Query CAS server'
-);
-count(1);
-expectRedirection( $res,
-    qr#^http://auth.sp.com/srv1/index.php\?(ticket=[^&]+)$# );
+subtest "Unit test matchFull method" => sub {
+    my $cas = $issuer->p->loadedModules->{'Lemonldap::NG::Portal::Issuer::CAS'};
+    my @matchFull = (
+        [ "http://test.com/xxx",    "http://test.com/xxx",     1 ],
+        [ "http://test.com/xxx",    "http://test.com/xxx/yyy", 1 ],
+        [ "http://test.com/xxx",    "http://test.com/xxxyyy",  1 ],
+        [ "http://test.com:80/xxx", "http://test.com/xxx",     1 ],
+        [ "http://test.com/xxx",    "http://test.comm/xxx",    0 ],
+        [ "http://test.com/xxx",    "http://test.com/yyy",     0 ],
+        [ "https://test.com/xxx",   "http://test.com/xxx",     0 ],
+        [ "http://test.com/xxx",    "https://test.com/xxx",    0 ],
+        [ "http://test.com/xxx",    "https://test.com/xxx",    0 ],
+        [ "http://test.com",        "http://test.com/xxx",     1 ],
+        [ "http://test.com",        "http://test.com",         1 ],
+        [ "http://test.com",        "http://test.comm",        0 ],
+        [ "urn:test",               "urn:test",                1 ],
+        [ "urn:test",               "urn:test2",               0 ],
+        [ "urn:test2",              "urn:test",                0 ],
+    );
 
-# Service 2, will now fail
-ok(
-    $res = $issuer->_get(
-        '/cas/login',
-        query  => 'service=http://auth.other.com/srv2',
-        accept => 'text/html',
-        cookie => "lemonldap=$id",
-    ),
-    'Query CAS server'
-);
-count(1);
-expectPortalError( $res, 107 );
+    for (@matchFull) {
+        is(
+            $cas->matchFull(
+                URI->new( $_->[0] )->canonical,
+                URI->new( $_->[1] )->canonical,
+              )
+              || 0,
+            $_->[2],
+            "Trying to match service URI "
+              . $_->[1]
+              . " against candidate "
+              . $_->[0]
+        );
+    }
+};
 
-# Service defined with multiple URLs, will be matched by URI
-ok(
-    $res = $issuer->_get(
-        '/cas/login',
-        query  => 'service=http://auth.sp.com/srv4/index.php',
-        accept => 'text/html',
-        cookie => "lemonldap=$id",
-    ),
-    'Query CAS server'
-);
-count(1);
-expectRedirection( $res,
-    qr#^http://auth.sp.com/srv4/index.php\?(ticket=[^&]+)$# );
+subtest "Unit test matchHost method" => sub {
+    my $cas = $issuer->p->loadedModules->{'Lemonldap::NG::Portal::Issuer::CAS'};
+    my @matchHost = (
+        [ "http://test.com/xxx",     "http://test.com/yyy",     1 ],
+        [ "https://test.com/xxx",    "http://test.com/yyy",     1 ],
+        [ "http://test.com/xxx",     "https://test.com/yyy",    1 ],
+        [ "http://test.com:80/xxx",  "http://test.com/xxx",     1 ],
+        [ "http://test.com/xxx",     "http://test2.com/yyy",    0 ],
+        [ "http://test.com/xxx",     "http://www.test.com/yyy", 0 ],
+        [ "http://test.com/xxx",     "http://test.com.fr/yyy",  0 ],
+        [ "http://www.test.com/xxx", "http://test.com/yyy",     0 ],
+        [ "urn:test",                "urn:test",                1 ],
+        [ "urn:test",                "urn:test2",               0 ],
+        [ "urn:test2",               "urn:test",                0 ],
+    );
+
+    for (@matchHost) {
+        is(
+            $cas->matchHost(
+                URI->new( $_->[0] )->canonical,
+                URI->new( $_->[1] )->canonical,
+              )
+              || 0,
+            $_->[2],
+            "Trying to match service URI "
+              . $_->[1]
+              . " against candidate "
+              . $_->[0]
+        );
+    }
+};
 
 clean_sessions();
-done_testing( count() );
+done_testing();
 
 sub issuer {
     my ($strict) = @_;
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel              => $debug,
                 domain                => 'idp.com',
