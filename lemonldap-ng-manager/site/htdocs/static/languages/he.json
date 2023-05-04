@@ -148,6 +148,8 @@
 "casAppMetaDataOptions":"אפשרויות",
 "casAppMetaDataOptionsAuthnLevel":"דרגת אימות",
 "casAppMetaDataOptionsComment":"הערה",
+"casAppMetaDataOptionsDisplay":"תצוגה",
+"casAppMetaDataOptionsDisplayName":"שם",
 "casAppMetaDataOptionsRule":"כלל גישה",
 "casAppMetaDataOptionsService":"כתובת שירות",
 "casAppMetaDataOptionsUserAttribute":"מאפיין משתמש",

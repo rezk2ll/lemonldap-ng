@@ -148,6 +148,8 @@
 "casAppMetaDataOptions":"Opções",
 "casAppMetaDataOptionsAuthnLevel":"Nível de autenticação",
 "casAppMetaDataOptionsComment":"Comentário",
+"casAppMetaDataOptionsDisplay":"Exibir",
+"casAppMetaDataOptionsDisplayName":"Nome",
 "casAppMetaDataOptionsRule":"Regra de acesso",
 "casAppMetaDataOptionsService":"URL do serviço",
 "casAppMetaDataOptionsUserAttribute":"Atributo do usuário",

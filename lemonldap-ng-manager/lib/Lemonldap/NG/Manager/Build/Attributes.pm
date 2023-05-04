@@ -2761,6 +2761,9 @@ sub attributes {
             type          => 'longtext',
             documentation => 'Comment for this CAS application',
         },
+        casAppMetaDataOptionsDisplayName => {
+            type => 'text',
+        },
         casAppMetaDataOptionsRule => {
             type          => 'text',
             test          => sub { return perlExpr(@_) },

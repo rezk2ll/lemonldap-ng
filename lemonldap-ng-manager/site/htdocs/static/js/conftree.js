@@ -71,6 +71,18 @@ function templates(tpl,key) {
       "type" : "simpleInputContainer"
    },
    {
+      "_nodes" : [
+         {
+            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsDisplayName",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsDisplayName",
+            "title" : "casAppMetaDataOptionsDisplayName"
+         }
+      ],
+      "id" : "casAppMetaDataOptionsDisplay",
+      "title" : "casAppMetaDataOptionsDisplay",
+      "type" : "simpleInputContainer"
+   },
+   {
       "cnodes" : tpl+"s/"+key+"/"+"casAppMetaDataMacros",
       "default" : [],
       "help" : "exportedvars.html#extend-variables-using-macros-and-groups",

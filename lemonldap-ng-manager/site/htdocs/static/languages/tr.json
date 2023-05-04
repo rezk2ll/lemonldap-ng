@@ -148,6 +148,8 @@
 "casAppMetaDataOptions":"Seçenekler",
 "casAppMetaDataOptionsAuthnLevel":"Doğrulama seviyesi",
 "casAppMetaDataOptionsComment":"Yorum",
+"casAppMetaDataOptionsDisplay":"Görüntüle",
+"casAppMetaDataOptionsDisplayName":"Ad",
 "casAppMetaDataOptionsRule":"Erişim kuralı",
 "casAppMetaDataOptionsService":"Servis URL'si",
 "casAppMetaDataOptionsUserAttribute":"Kullanıcı niteliği",

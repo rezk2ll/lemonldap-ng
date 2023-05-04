@@ -148,6 +148,8 @@
 "casAppMetaDataOptions":"خيارات",
 "casAppMetaDataOptionsAuthnLevel":"مستوى إثبات الهوية",
 "casAppMetaDataOptionsComment":"تعليق",
+"casAppMetaDataOptionsDisplay":"عرض",
+"casAppMetaDataOptionsDisplayName":"اسم",
 "casAppMetaDataOptionsRule":"قاعدة الدخول",
 "casAppMetaDataOptionsService":"خدمة أل يو أر ل",
 "casAppMetaDataOptionsUserAttribute":"خاصّيّة المستخدم",

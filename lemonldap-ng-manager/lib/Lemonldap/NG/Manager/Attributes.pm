@@ -754,6 +754,9 @@ sub attributes {
         'casAppMetaDataOptionsComment' => {
             'type' => 'longtext'
         },
+        'casAppMetaDataOptionsDisplayName' => {
+            'type' => 'text'
+        },
         'casAppMetaDataOptionsRule' => {
             'test' => sub {
                 return perlExpr(@_);

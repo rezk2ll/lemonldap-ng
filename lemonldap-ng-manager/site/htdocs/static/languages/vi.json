@@ -148,6 +148,8 @@
 "casAppMetaDataOptions":"Tùy chọn",
 "casAppMetaDataOptionsAuthnLevel":"Mức xác thực",
 "casAppMetaDataOptionsComment":"Bình luận",
+"casAppMetaDataOptionsDisplay":"Hiển thị",
+"casAppMetaDataOptionsDisplayName":"Tên",
 "casAppMetaDataOptionsRule":"Quy tắc truy cập",
 "casAppMetaDataOptionsService":"Dịch vụ URL",
 "casAppMetaDataOptionsUserAttribute":"thuộc tính người dùng",

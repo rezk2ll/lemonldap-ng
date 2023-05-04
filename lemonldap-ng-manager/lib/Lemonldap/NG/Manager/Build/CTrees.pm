@@ -339,6 +339,13 @@ sub cTrees {
                     'casAppMetaDataOptionsComment',
                 ]
             },
+            {
+                title => 'casAppMetaDataOptionsDisplay',
+                form  => 'simpleInputContainer',
+                nodes => [
+                    'casAppMetaDataOptionsDisplayName',
+                ],
+            },
             'casAppMetaDataMacros',
         ],
     };

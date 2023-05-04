@@ -148,6 +148,8 @@
 "casAppMetaDataOptions":"選項",
 "casAppMetaDataOptionsAuthnLevel":"驗證等級",
 "casAppMetaDataOptionsComment":"註解",
+"casAppMetaDataOptionsDisplay":"顯示",
+"casAppMetaDataOptionsDisplayName":"名稱",
 "casAppMetaDataOptionsRule":"存取規則",
 "casAppMetaDataOptionsService":"服務 URL",
 "casAppMetaDataOptionsUserAttribute":"使用者屬性",
