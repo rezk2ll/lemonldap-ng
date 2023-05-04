@@ -334,6 +334,7 @@ sub cTrees {
                 nodes => [
                     'casAppMetaDataOptionsService',
                     'casAppMetaDataOptionsUserAttribute',
+                    'casAppMetaDataOptionsLogout',
                     'casAppMetaDataOptionsAuthnLevel',
                     'casAppMetaDataOptionsRule',
                     'casAppMetaDataOptionsComment',

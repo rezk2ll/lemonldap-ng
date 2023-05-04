@@ -150,6 +150,7 @@
 "casAppMetaDataOptionsComment":"Bình luận",
 "casAppMetaDataOptionsDisplay":"Hiển thị",
 "casAppMetaDataOptionsDisplayName":"Tên",
+"casAppMetaDataOptionsLogout":"Đăng xuất",
 "casAppMetaDataOptionsRule":"Quy tắc truy cập",
 "casAppMetaDataOptionsService":"Dịch vụ URL",
 "casAppMetaDataOptionsUserAttribute":"thuộc tính người dùng",

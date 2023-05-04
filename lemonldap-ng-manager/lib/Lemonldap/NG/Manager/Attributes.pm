@@ -757,6 +757,10 @@ sub attributes {
         'casAppMetaDataOptionsDisplayName' => {
             'type' => 'text'
         },
+        'casAppMetaDataOptionsLogout' => {
+            'default' => -1,
+            'type'    => 'trool'
+        },
         'casAppMetaDataOptionsRule' => {
             'test' => sub {
                 return perlExpr(@_);

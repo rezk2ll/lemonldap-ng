@@ -150,6 +150,7 @@
 "casAppMetaDataOptionsComment":"Comentário",
 "casAppMetaDataOptionsDisplay":"Exibir",
 "casAppMetaDataOptionsDisplayName":"Nome",
+"casAppMetaDataOptionsLogout":"Sair",
 "casAppMetaDataOptionsRule":"Regra de acesso",
 "casAppMetaDataOptionsService":"URL do serviço",
 "casAppMetaDataOptionsUserAttribute":"Atributo do usuário",

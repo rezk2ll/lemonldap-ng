@@ -150,6 +150,7 @@
 "casAppMetaDataOptionsComment":"Commentaire",
 "casAppMetaDataOptionsDisplay":"Affichage",
 "casAppMetaDataOptionsDisplayName":"Nom d'affichage",
+"casAppMetaDataOptionsLogout":"Déconnexion",
 "casAppMetaDataOptionsRule":"Règle d'accès",
 "casAppMetaDataOptionsService":"URL du service",
 "casAppMetaDataOptionsUserAttribute":"Attribut de l'utilisateur",

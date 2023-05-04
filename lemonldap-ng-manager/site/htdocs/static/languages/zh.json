@@ -150,6 +150,7 @@
 "casAppMetaDataOptionsComment":"註解",
 "casAppMetaDataOptionsDisplay":"顯示",
 "casAppMetaDataOptionsDisplayName":"名稱",
+"casAppMetaDataOptionsLogout":"注销登录",
 "casAppMetaDataOptionsRule":"存取規則",
 "casAppMetaDataOptionsService":"服務 URL",
 "casAppMetaDataOptionsUserAttribute":"使用者屬性",

@@ -49,6 +49,13 @@ function templates(tpl,key) {
             "title" : "casAppMetaDataOptionsUserAttribute"
          },
          {
+            "default" : -1,
+            "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsLogout",
+            "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsLogout",
+            "title" : "casAppMetaDataOptionsLogout",
+            "type" : "trool"
+         },
+         {
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAuthnLevel",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAuthnLevel",
             "title" : "casAppMetaDataOptionsAuthnLevel",

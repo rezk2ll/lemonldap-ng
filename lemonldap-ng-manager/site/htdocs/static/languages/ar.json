@@ -150,6 +150,7 @@
 "casAppMetaDataOptionsComment":"تعليق",
 "casAppMetaDataOptionsDisplay":"عرض",
 "casAppMetaDataOptionsDisplayName":"اسم",
+"casAppMetaDataOptionsLogout":"تسجيل الخروج",
 "casAppMetaDataOptionsRule":"قاعدة الدخول",
 "casAppMetaDataOptionsService":"خدمة أل يو أر ل",
 "casAppMetaDataOptionsUserAttribute":"خاصّيّة المستخدم",

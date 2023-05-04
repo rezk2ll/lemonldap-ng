@@ -150,6 +150,7 @@
 "casAppMetaDataOptionsComment":"Yorum",
 "casAppMetaDataOptionsDisplay":"Görüntüle",
 "casAppMetaDataOptionsDisplayName":"Ad",
+"casAppMetaDataOptionsLogout":"Çıkış Yap",
 "casAppMetaDataOptionsRule":"Erişim kuralı",
 "casAppMetaDataOptionsService":"Servis URL'si",
 "casAppMetaDataOptionsUserAttribute":"Kullanıcı niteliği",
