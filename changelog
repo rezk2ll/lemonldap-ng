@@ -1,3 +1,26 @@
+lemonldap-ng (2.16.2) jammy; urgency=medium
+
+  * Bugs:
+    * #2852: Allow multiple SSL choices
+    * #2899: When Portal language is configured to follow browser language, change in browser language requires clearing a cookie
+    * #2905: No applications displayed in menu for all users when one of the user has no rights to see them
+    * #2907: Manager customCSS not available with minified files
+    * #2909: Manager viewer uses the wrong endpoints to read conf
+    * #2915: jsRedirect does not preserve GET parameter order
+    * #2926: "Federation not found on login" SAML error when NameID not specified in request
+
+  * Improvements:
+    * #2906: Improve CheckUser display if there is no session data
+    * #2910: OIDC option is missing or not well documented
+    * #2917: Fix doc about REST server protection
+    * #2921: Jquery-UI - Vulnerable version in use
+
+  * Templates:
+    * #2906: Improve CheckUser display if there is no session data
+    * #2907: Manager customCSS not available with minified files
+
+ -- Clément <clem.oudot@gmail.com>  Fri, 12 May 2023 18:50:33 +0200
+
 lemonldap-ng (2.16.1) jammy; urgency=medium
 
   * Bugs:
