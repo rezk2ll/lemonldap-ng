@@ -1,7 +1,7 @@
 # Launch Kerberos request
 
 $(document).ready ->
-	$.ajax portal + 'authkrb',
+	$.ajax "#{portal}authkrb",
 		dataType: 'json'
 		# Called if browser can't find Kerberos ticket, will display
 		# PE_BADCREDENTIALS
