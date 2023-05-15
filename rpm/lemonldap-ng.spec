@@ -29,7 +29,7 @@
 
 Name:           lemonldap-ng
 Version:        2.16.2
-Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
+Release:        %{?pre_release:0.}2%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        Web Single Sign On (SSO) and Access Management
 # Lemonldap-ng itself is GPLv2+
 # Qrious bundled javascript library is GPLv3+
@@ -705,6 +705,20 @@ fi
 
 
 %changelog
+* Mon May 15 2023 Xavier Bachelot <xavier@bachelot.org> - 2.16.2-2
+- Improve Summary:
+- Drop updates-alternatives from %%post
+- Split long line
+- Drop useless comments
+- Add provides for bundled javascript libraries and adapt License tag accordingly
+- Add provides for bundled font and adapt License tag accordingly
+- Make use of %%lm_sharedir instead of plain path
+- Add BR: for uglify-js
+- Move examples to %%_docdir
+- Fix perms on %%lm_vardir/captcha and %%_rundir/llng-fastcgi-server
+- Drop redundant dirs creation and perms change
+- Conditionalize test that needs network access
+
 * Fri May 12 2023 Clement Oudot <clem.oudot@gmail.com> - 2.16.2-1
 - Update to 2.16.2
 
