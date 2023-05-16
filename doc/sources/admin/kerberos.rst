@@ -168,6 +168,10 @@ You have to run this command on Active Directory:
 
 .. attention::
 
+    You must use the UPPERCASE value of the domain name when generating the keytab
+
+.. attention::
+
     The values passed in -crypto and -ptype depend on the
     Active Directory version and the windows version of the workstations.
     You can for example use RC4-HMAC-NT as crypto protocol if DES is not
