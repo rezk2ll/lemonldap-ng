@@ -461,7 +461,7 @@ A virtual host contains:
 -  Options: redirection port, protocol, Handler type, aliases,required authentication level,...
 
 Wildcards in hostnames
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 A wildcard can be used in virtualhost name (not in aliases !):
 ``*.example.com`` matches all hostnames that belong to ``example.com`` domain.
