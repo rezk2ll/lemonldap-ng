@@ -68,7 +68,7 @@ ReverseProxy Mode
 External servers for Nginx
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Nginx supportes natively FastCGI and uWSGI protocoles.
+Nginx supports natively FastCGI and uWSGI protocols.
 
 Therefore, LLNG services can be provided by compatible external servers.
 
