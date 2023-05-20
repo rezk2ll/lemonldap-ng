@@ -27,7 +27,7 @@ Unifying authentications (Identity Federation)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 LL::NG can easily exchange with other authentication systems by using
-SAML, OpenID or CAS protocoles. It may be the backbone of a
+SAML, OpenID or CAS protocols. It may be the backbone of a
 heterogeneous architecture.
 
 LL:NG can be set as Identity provider,
