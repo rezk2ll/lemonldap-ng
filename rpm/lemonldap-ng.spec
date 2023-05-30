@@ -454,16 +454,12 @@ mkdir -p %{buildroot}%{lm_sharedir}/llng-server
 # Note: we do not use the APACHEUSER and APACHEGROUP in make install
 # because it launches a 'chown', which is not permitted if RPM is not
 # built as root
-sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{_sysconfdir}/cron.d/*
-sed -i 's/nobody/%{lm_apacheuser}/' \
-    %{buildroot}%{lm_bindir}/lmConfigEditor
 sed -i 's/nobody/%{lm_apacheuser}/g' \
-    %{buildroot}%{lm_bindir}/lemonldap-ng-sessions
-sed -i 's/nobody/%{lm_apacheuser}/g' \
-    %{buildroot}%{lm_bindir}/lemonldap-ng-cli
-sed -i 's/nobody/%{lm_apacheuser}/g' \
-    %{buildroot}%{lm_bindir}/llngDeleteSession
-sed -i 's/nobody/%{lm_apacheuser}/g' \
+    %{buildroot}%{_sysconfdir}/cron.d/* \
+    %{buildroot}%{lm_bindir}/lmConfigEditor \
+    %{buildroot}%{lm_bindir}/lemonldap-ng-sessions \
+    %{buildroot}%{lm_bindir}/lemonldap-ng-cli \
+    %{buildroot}%{lm_bindir}/llngDeleteSession \
     %{buildroot}%{_sysconfdir}/default/llng-fastcgi-server
 
 # Install httpd conf files
