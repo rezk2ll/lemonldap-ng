@@ -377,12 +377,12 @@ into Lemonldap::NG's SSOaaS service.
 
 
 %build
-make %{?_smp_mflags} configure \
+%make_build configure \
     STORAGECONFFILE=%{lm_storagefile} \
     DATADIR=%{lm_vardir} \
     CACHEDIR=%{lm_cachedir} \
     PERLOPTIONS="INSTALLDIRS=vendor"
-make %{?_smp_mflags}
+%make_build
 
 %if 0%{?with_selinux}
 # SELinux policy (originally from selinux-policy-contrib)
@@ -397,8 +397,7 @@ bzip2 -9 %{modulename}.pp
 
 
 %install
-make %{?_smp_mflags} install \
-    DESTDIR=%{buildroot} \
+%make_install \
     PREFIX=%{lm_prefix} \
     BINDIR=%{lm_bindir} \
     SBINDIR=%{lm_sbindir} \
