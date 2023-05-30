@@ -35,7 +35,7 @@ Summary:        Web Single Sign On (SSO) and Access Management
 # Qrious bundled javascript library is GPLv3+
 # All other bundled javascript libraries are MIT
 # Fontawesome bundled font is OFL
-License:        GPLv2+ and MIT and GPLv3+ and OFL
+License:        GPL-2.0-or-later AND MIT AND GPL-3.0-or-later AND OFL-1.1-RFN
 URL:            https://lemonldap-ng.org
 Source0:        https://release.ow2.org/lemonldap/%{name}-%{version}%{?pre_release:~%{pre_release}}.tar.gz
 BuildArch:      noarch
