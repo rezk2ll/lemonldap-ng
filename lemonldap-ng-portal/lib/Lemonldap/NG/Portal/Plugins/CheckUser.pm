@@ -50,6 +50,7 @@ has prefix => (
         return $self->conf->{impersonationPrefix};
     }
 );
+
 sub hAttr {
     $_[0]->{conf}->{checkUserHiddenAttributes} . ' '
       . $_[0]->{conf}->{hiddenAttributes};
@@ -168,13 +169,17 @@ sub display {
         $self->_createArray( $req, $attrs, $req->userData ) );
 
     my $params = {
-        MSG        => 'checkUser' . $self->merged,
-        ALERTE     => ( $self->merged ? 'alert-warning' : 'alert-info' ),
-        LOGIN      => $req->{userData}->{ $self->conf->{whatToTrace} },
-        HISTORY    => ( @{ $history->[0] } || @{ $history->[1] } ) ? 1 : 0,
-        SUCCESS    => $history->[0],
-        FAILED     => $history->[1],
-        DISPLAY    => ( @{ $array_attrs->[0] } || @{ $array_attrs->[1] } || @{ $array_attrs->[2] } ) ? 1 : 0,
+        MSG     => 'checkUser' . $self->merged,
+        ALERTE  => ( $self->merged ? 'alert-warning' : 'alert-info' ),
+        LOGIN   => $req->{userData}->{ $self->conf->{whatToTrace} },
+        HISTORY => ( @{ $history->[0] } || @{ $history->[1] } ) ? 1 : 0,
+        SUCCESS => $history->[0],
+        FAILED  => $history->[1],
+        DISPLAY => (
+                 @{ $array_attrs->[0] }
+              || @{ $array_attrs->[1] }
+              || @{ $array_attrs->[2] }
+        ) ? 1 : 0,
         ATTRIBUTES => $array_attrs->[2],
         MACROS     => $array_attrs->[1],
         GROUPS     => $array_attrs->[0],
@@ -255,7 +260,7 @@ sub check {
         );
     }
 
-    if ( !$user or $user eq $req->{user} ) {
+    if ( !$user || $req->{user} eq $req->{user} eq $user ) {
         $self->userLogger->info("checkUser requested for himself");
         $self->userLogger->info("Using spoofed SSO groups if exist")
           if $self->conf->{impersonationRule};
@@ -416,11 +421,15 @@ sub check {
         HISTORY     => ( @{ $history->[0] } || @{ $history->[1] } ) ? 1 : 0,
         SUCCESS     => $history->[0],
         FAILED      => $history->[1],
-        DISPLAY    => ( @{ $array_attrs->[0] } || @{ $array_attrs->[1] } || @{ $array_attrs->[2] } ) ? 1 : 0,
-        ATTRIBUTES  => $array_attrs->[2],
-        MACROS      => $array_attrs->[1],
-        GROUPS      => $array_attrs->[0],
-        TOKEN       => (
+        DISPLAY     => (
+                 @{ $array_attrs->[0] }
+              || @{ $array_attrs->[1] }
+              || @{ $array_attrs->[2] }
+        ) ? 1 : 0,
+        ATTRIBUTES => $array_attrs->[2],
+        MACROS     => $array_attrs->[1],
+        GROUPS     => $array_attrs->[0],
+        TOKEN      => (
               $self->ottRule->( $req, {} )
             ? $self->ott->createToken()
             : ''
@@ -457,10 +466,13 @@ sub _userData {
     my $realAuthLevel = $req->userData->{authenticationLevel};
 
     # Compute session
-    my $steps = [
+    my $steps =
+      defined $realAuthLevel
+      ? [
         'getUser',        'setAuthSessionInfo',
-        'setSessionInfo', $self->p->groupsAndMacros,
-    ];
+        'setSessionInfo', $self->p->groupsAndMacros
+      ]
+      : [ 'getUser', 'setSessionInfo', $self->p->groupsAndMacros ];
     $self->conf->{checkUserDisplayPersistentInfo}
       ? push @$steps, 'setPersistentSessionInfo', 'setLocalGroups'
       : push @$steps, 'setLocalGroups';
