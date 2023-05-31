@@ -20,7 +20,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NOTIFICATION
 );
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.16.3';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
