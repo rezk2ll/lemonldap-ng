@@ -95,6 +95,16 @@ my @tests = (
       'https://hacker.com%5C@@test1.example.com/',
     'Good reencoding (2931)',
 
+    # 23 url=https://hacker.com:\@@test1.example.com/
+    'aHR0cHM6Ly9oYWNrZXIuY29tOlxAQHRlc3QxLmV4YW1wbGUuY29tLw==' =>
+      'https://hacker.com:%5C@@test1.example.com/',
+    'Good reencoding (2931)',
+
+    # 24 url='https://hacker.com\anything@test1.example.com/'
+    'aHR0cHM6Ly9oYWNrZXIuY29tXGFueXRoaW5nQHRlc3QxLmV4YW1wbGUuY29tLw==' =>
+      'https://hacker.com%5Canything@test1.example.com/',
+    'Good reencoding (2931)',
+
     # LOGOUT TESTS
     'LOGOUT',
 
