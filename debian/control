@@ -66,7 +66,8 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libtest-leaktrace-perl <!nocheck>,
                      python3-sphinx,
                      python3-sphinx-bootstrap-theme,
-                     perl
+                     perl,
+                     uglifyjs
 Standards-Version: 4.6.2
 Vcs-Browser: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng
 Vcs-Git: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng.git
