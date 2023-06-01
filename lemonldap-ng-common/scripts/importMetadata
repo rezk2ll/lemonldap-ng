@@ -224,9 +224,8 @@ sub _compute_requested_attributes {
     my $result = {};
 
     for my $name ( keys %$requestedAttributes ) {
-        my $attrconf = $requestedAttributes->{$name};
-        my $is_required =
-          $config->{"$entityID"}->{"attribute_required_$name"}
+        my $attrconf    = $requestedAttributes->{$name};
+        my $is_required = $config->{"$entityID"}->{"attribute_required_$name"}
           // $config->{"$entityID"}->{"attribute_required"}
           // $config->{"ALL"}->{"attribute_required_$name"}
           // $config->{"ALL"}->{"attribute_required"} // $attrconf->{required};
@@ -668,7 +667,7 @@ sub main {
         printlog("[INFO] run mod EntityID will be inserted\n");
         $numConf = $conf->saveConf( $lastConf, ( cfgNumFixed => 1 ) );
         printlog("[OK] Configuration $numConf saved\n");
-        unless ($numConf > 0) {
+        unless ( $numConf > 0 ) {
             print "[ERROR] Unable to save configuration\n";
             $exitCode = 1;
         }
