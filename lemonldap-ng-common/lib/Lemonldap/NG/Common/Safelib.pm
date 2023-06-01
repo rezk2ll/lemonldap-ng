@@ -13,7 +13,7 @@ use JSON::XS;
 use Net::CIDR;
 use Date::Parse;
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.17.0';
 
 # Set here all the names of functions that must be available in Safe objects.
 # Note that only functions, not methods, can be written here

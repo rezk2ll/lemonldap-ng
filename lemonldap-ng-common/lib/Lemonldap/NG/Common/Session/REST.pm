@@ -7,7 +7,7 @@ use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Util qw/display2F/;
 use JSON qw(from_json to_json);
 
-our $VERSION = '2.17';
+our $VERSION = '2.17.0';
 
 has sessionTypes => ( is => 'rw' );
 

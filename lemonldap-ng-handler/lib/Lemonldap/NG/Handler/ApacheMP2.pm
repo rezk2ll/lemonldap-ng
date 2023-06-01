@@ -8,7 +8,7 @@ use Lemonldap::NG::Handler::ApacheMP2::Request;
 
 use Lemonldap::NG::Handler::ApacheMP2::Main;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.17.0';
 
 # PUBLIC METHODS
 

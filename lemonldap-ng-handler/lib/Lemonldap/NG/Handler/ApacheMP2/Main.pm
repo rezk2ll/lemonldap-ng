@@ -30,7 +30,7 @@ use constant AUTH_REQUIRED     => Apache2::Const::AUTH_REQUIRED;
 use constant MAINTENANCE       => Apache2::Const::HTTP_SERVICE_UNAVAILABLE;
 use constant BUFF_LEN          => 8192;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.16.3';
 
 # Set default logger
 use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Apache2';

@@ -16,7 +16,7 @@ extends qw(
   Lemonldap::NG::Common::Conf::AccessLib
 );
 
-our $VERSION = '2.17';
+our $VERSION = '2.17.0';
 
 #############################
 # I. INITIALIZATION METHODS #

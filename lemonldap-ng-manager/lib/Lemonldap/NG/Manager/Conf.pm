@@ -24,7 +24,7 @@ extends qw(
   Lemonldap::NG::Common::Conf::RESTServer
 );
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.17.0';
 
 #############################
 # I. INITIALIZATION METHODS #
