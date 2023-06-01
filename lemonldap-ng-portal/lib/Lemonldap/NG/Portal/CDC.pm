@@ -11,7 +11,7 @@ use MIME::Base64;
 use Lemonldap::NG::Common::FormEncode;
 use URI;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.16.3';
 
 extends 'Lemonldap::NG::Common::PSGI';
 

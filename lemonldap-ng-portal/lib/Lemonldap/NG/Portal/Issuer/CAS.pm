@@ -19,7 +19,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use URI;
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.16.3';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::CAS';
