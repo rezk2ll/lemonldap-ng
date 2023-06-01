@@ -41,6 +41,10 @@ SKIP: {
     $saml->lazy_load_metadata($entityID);
     $entityID = "https://www.numistral.fr/shibboleth";
     $saml->lazy_load_metadata($entityID);
+    $entityID =
+"https://monitor.eduroam.org/sp/module.php/saml/sp/metadata.php/default-sp";
+    $saml->lazy_load_metadata($entityID);
+
     is(
         $saml->spList->{'https://podcast.mines-nantes.fr/shibboleth'}
           ->{confKey},
@@ -89,6 +93,13 @@ SKIP: {
         "SP attributes have been imported as configured by policy",
     );
 
+    is(
+        $saml->spAttributes->{
+'https://monitor.eduroam.org/sp/module.php/saml/sp/metadata.php/default-sp'
+        }->{'subjectId'},
+'0;urn:oasis:names:tc:SAML:attribute:subject-id;urn:oasis:names:tc:SAML:2.0:attrname-format:uri;subject-id'
+    );
+
     $saml     = $sp->p->loadedModules->{'Lemonldap::NG::Portal::Auth::SAML'};
     $entityID = "https://idp4.crous-lorraine.fr/idp/shibboleth";
     $saml->lazy_load_metadata($entityID);
@@ -132,8 +143,7 @@ clean_sessions();
 done_testing();
 
 sub issuer {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 samlFederationFiles =>
 "t/main-idps-renater-metadata.xml t/main-sps-renater-metadata.xml",
@@ -206,8 +216,7 @@ sub issuer {
 }
 
 sub sp {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 samlFederationFiles =>
 "t/main-idps-renater-metadata.xml t/main-sps-renater-metadata.xml",
