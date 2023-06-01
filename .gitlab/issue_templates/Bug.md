@@ -1,4 +1,4 @@
-### Concerned version
+### Affected version
 
 Version: %X.X.X
 
