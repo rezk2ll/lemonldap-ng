@@ -489,14 +489,16 @@ sub transform_config {
                         my $required =
                           ( $requestedAttribute->getAttribute("isRequired") =~
                               /true/i ) ? 1 : 0;
-                        $requestedAttributes->{$friendlyname} = {
-                            required      => $required,
-                            name          => $name,
-                            name_format   => $nameformat,
-                            friendly_name => $friendlyname
-                        };
-                        printlog( "Attribute $friendlyname ($name)"
-                              . " requested by SP $entityID\n" );
+                        if ($friendlyname) {
+                            $requestedAttributes->{$friendlyname} = {
+                                required      => $required,
+                                name          => $name,
+                                name_format   => $nameformat,
+                                friendly_name => $friendlyname
+                            };
+                            printlog( "Attribute $friendlyname ($name)"
+                                  . " requested by SP $entityID\n" );
+                        }
                     }
                 }
                 else {
