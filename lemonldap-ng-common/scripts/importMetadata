@@ -370,9 +370,6 @@ sub transform_config {
 
     my $dom = XML::LibXML->load_xml( string => $xml_metadata );
 
-    # Remove extensions
-    foreach ( $dom->findnodes('//md:Extensions') ) { $_->unbindNode; }
-
     # Browse all partners
     foreach my $partner (
         $dom->findnodes('/md:EntitiesDescriptor/md:EntityDescriptor') )
@@ -382,9 +379,29 @@ sub transform_config {
         # Add required XML namespaces
         $partner->setNamespace( "urn:oasis:names:tc:SAML:2.0:metadata",
             "md", 0 );
+        $partner->setNamespace( "urn:oasis:names:tc:SAML:metadata:attribute",
+            "mdattr", 0 );
         $partner->setNamespace( "urn:oasis:names:tc:SAML:2.0:assertion",
             "saml", 0 );
         $partner->setNamespace( "http://www.w3.org/2000/09/xmldsig#", "ds", 0 );
+
+        # Parse subject-id:req extension
+        my $requested_subject_id = "none";
+        if (
+            my $subjectid = $partner->findnodes(
+                    './md:Extensions'
+                  . '/mdattr:EntityAttributes'
+                  . '/saml:Attribute[@Name="urn:oasis:names:tc:SAML:profiles:subject-id:req"]'
+                  . '/saml:AttributeValue[1]'
+                  . '/text()'
+            )->shift()
+          )
+        {
+            $requested_subject_id = $subjectid->toString;
+        }
+
+        # Remove other extensions
+        foreach ( $partner->findnodes('.//md:Extensions') ) { $_->unbindNode; }
 
         # Check IDP or SP
         if ( my $idp = $partner->findnodes('./md:IDPSSODescriptor') ) {
@@ -506,6 +523,17 @@ sub transform_config {
                         cn   => { required => 1, name => 'cn' },
                         uid  => { required => 1, name => 'uid' },
                         mail => { required => 1, name => 'mail' },
+                    };
+                }
+                if (   $requested_subject_id eq "any"
+                    or $requested_subject_id eq "subject-id" )
+                {
+                    $requestedAttributes->{"subjectId"} = {
+                        required => 0,
+                        name => "urn:oasis:names:tc:SAML:attribute:subject-id",
+                        name_format =>
+                          "urn:oasis:names:tc:SAML:2.0:attrname-format:uri",
+                        friendly_name => "subject-id",
                     };
                 }
 

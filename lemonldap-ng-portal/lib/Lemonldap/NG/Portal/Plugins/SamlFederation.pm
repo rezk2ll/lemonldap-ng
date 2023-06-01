@@ -165,9 +165,26 @@ sub get_config_info_from_xml_federation {
 
     # Add required XML namespaces
     $partner->setNamespace( "urn:oasis:names:tc:SAML:2.0:metadata", "md", 0 );
+    $partner->setNamespace( "urn:oasis:names:tc:SAML:metadata:attribute",
+        "mdattr", 0 );
     $partner->setNamespace( "urn:oasis:names:tc:SAML:2.0:assertion",
         "saml", 0 );
     $partner->setNamespace( "http://www.w3.org/2000/09/xmldsig#", "ds", 0 );
+
+    # Parse subject-id:req extension
+    my $requested_subject_id = "none";
+    if (
+        my $subjectid = $partner->findnodes(
+                './md:Extensions'
+              . '/mdattr:EntityAttributes'
+              . '/saml:Attribute[@Name="urn:oasis:names:tc:SAML:profiles:subject-id:req"]'
+              . '/saml:AttributeValue[1]'
+              . '/text()'
+        )->shift()
+      )
+    {
+        $requested_subject_id = $subjectid->toString;
+    }
 
     # Check IDP or SP
     if ( my $idp = $partner->findnodes('./md:IDPSSODescriptor') ) {
@@ -223,12 +240,25 @@ sub get_config_info_from_xml_federation {
                       ( $requestedAttribute->getAttribute("isRequired")
                           || '' =~ /true/i ) ? 1 : 0;
 
-                    $self->logger->debug( "Attribute $friendlyname ($name)"
-                          . " requested by SP $entityID\n" );
+                    if ($friendlyname) {
+                        $self->logger->debug( "Attribute $friendlyname ($name)"
+                              . " requested by SP $entityID\n" );
 
-                    $requestedAttributes->{$friendlyname} =
-                      "$required;$name;$nameformat;$friendlyname";
+                        $requestedAttributes->{$friendlyname} =
+                          "$required;$name;$nameformat;$friendlyname";
+                    }
                 }
+            }
+
+            if (   $requested_subject_id eq "any"
+                or $requested_subject_id eq "subject-id" )
+            {
+                # any or subject-id means that the attribute is required
+                $requestedAttributes->{"subjectId"} = join( ";",
+                    "1",
+                    "urn:oasis:names:tc:SAML:attribute:subject-id",
+                    "urn:oasis:names:tc:SAML:2.0:attrname-format:uri",
+                    "subject-id" );
             }
 
             # Remove AttributeConsumingService node
