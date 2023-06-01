@@ -24,6 +24,7 @@ use URI;
 use URI::QueryParam;
 use Mouse;
 use Crypt::URandom;
+use URI;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
 
@@ -2274,7 +2275,7 @@ sub buildLogoutResponse {
         $response_url .= build_urlencoded( state => $state );
     }
 
-    return $response_url;
+    return URI->new($response_url)->as_string;
 }
 
 # Create session_state parameter

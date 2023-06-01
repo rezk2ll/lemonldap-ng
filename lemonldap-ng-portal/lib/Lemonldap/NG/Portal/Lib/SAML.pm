@@ -2669,7 +2669,7 @@ sub sendLogoutResponseToServiceProvider {
 
         # Redirect user to response URL
         my $slo_url = $logout->msg_url;
-        return [ 302, [ Location => $slo_url ], [] ];
+        return [ 302, [ Location => URI->new($slo_url)->as_string ], [] ];
     }
 
     # HTTP-POST
