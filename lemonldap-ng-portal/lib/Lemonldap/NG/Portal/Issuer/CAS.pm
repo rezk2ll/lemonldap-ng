@@ -17,6 +17,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_UNAUTHORIZEDPARTNER
   PE_CAS_SERVICE_NOT_ALLOWED
 );
+use URI;
 
 our $VERSION = '2.0.15';
 
@@ -101,7 +102,8 @@ sub storeEnvAndCheckGateway {
         if ( $self->_gatewayAllowedRedirect( $req, $service ) ) {
             $self->logger->debug(
                 "Gateway mode requested, redirect without authentication");
-            $req->response( [ 302, [ Location => $service ], [] ] );
+            $req->response(
+                [ 302, [ Location => URI->new($service)->as_string ], [] ] );
             for my $s ( $self->ipath, $self->ipath . 'Path' ) {
                 $self->logger->debug("Removing $s from pdata")
                   if delete $req->pdata->{$s};

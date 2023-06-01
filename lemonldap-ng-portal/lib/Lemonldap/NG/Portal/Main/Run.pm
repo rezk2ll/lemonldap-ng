@@ -440,7 +440,14 @@ sub autoRedirect {
             $req->data->{redirectFormMethod} = "get";
         }
         else {
-            return [ 302, [ Location => $req->{urldc}, $req->spliceHdrs ], [] ];
+            return [
+                302,
+                [
+                    Location => URI->new( $req->{urldc} )->as_string,
+                    $req->spliceHdrs
+                ],
+                []
+            ];
         }
     }
     my ( $tpl, $prms ) = $self->display($req);
@@ -1308,7 +1315,7 @@ sub cspGetHost {
     my ( $self, $url ) = @_;
     return unless $url;
     my $uri = $url;
-    unless (blessed($uri) && $uri->isa("URI") ) {
+    unless ( blessed($uri) && $uri->isa("URI") ) {
         $uri = URI->new($uri);
     }
     my $scheme = $uri->scheme || "";

@@ -9,6 +9,7 @@ use strict;
 
 #use AutoLoader 'AUTOLOAD';
 use MIME::Base64;
+use URI;
 use URI::Escape;
 use Lemonldap::NG::Common::Session;
 
@@ -690,7 +691,7 @@ sub _buildUrl {
     ) ? '' : ":$portString";
     my $url = "http" . ( $_https ? "s" : "" ) . "://$realvhost$portString$s";
     $class->logger->debug("Build URL $url");
-    return $url;
+    return URI->new($url)->as_string;
 }
 
 ## @rmethod protected int isUnprotected()
