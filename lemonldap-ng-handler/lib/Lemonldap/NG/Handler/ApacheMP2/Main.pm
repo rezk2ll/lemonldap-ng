@@ -16,6 +16,7 @@ use Apache2::Filter;
 use APR::Table;
 use Apache2::Const -compile =>
   qw(FORBIDDEN HTTP_UNAUTHORIZED REDIRECT OK DECLINED DONE SERVER_ERROR AUTH_REQUIRED HTTP_SERVICE_UNAVAILABLE);
+use URI;
 use base 'Lemonldap::NG::Handler::Main';
 
 use constant FORBIDDEN         => Apache2::Const::FORBIDDEN;
@@ -166,7 +167,7 @@ sub redirectFilter {
         $f->r->status( $class->REDIRECT );
         $f->r->status_line("303 See Other");
         $f->r->headers_out->unset('Location');
-        $f->r->err_headers_out->set( 'Location' => $url );
+        $f->r->err_headers_out->set( 'Location' => URI->new($url)->as_string );
         $f->ctx(1);
     }
     while ( $f->read( my $buffer, 1024 ) ) {
