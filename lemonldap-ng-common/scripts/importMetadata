@@ -403,6 +403,7 @@ sub transform_config {
                 # Read metadata
                 my $partner_metadata = $partner->toString;
                 $partner_metadata =~ s/\n//g;
+                utf8::encode($partner_metadata);
 
                 # test if IDP entityID is inside the block list
 
@@ -520,6 +521,7 @@ sub transform_config {
                 # Read metadata
                 my $partner_metadata = $partner->toString;
                 $partner_metadata =~ s/\n//g;
+                utf8::encode($partner_metadata);
 
                 # test if IDP entityID is inside the block list
 
