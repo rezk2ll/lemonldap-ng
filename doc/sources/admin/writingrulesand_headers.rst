@@ -44,7 +44,7 @@ See also :doc:`extended functions<extendedfunctions>`.
 
     ::
 
-       %ENV{REMOTE_ADDR} and $env->{REMOTE_ADDR} are similar.
+       $ENV{REMOTE_ADDR} and $env->{REMOTE_ADDR} are similar.
 
 .. _rules:
 
