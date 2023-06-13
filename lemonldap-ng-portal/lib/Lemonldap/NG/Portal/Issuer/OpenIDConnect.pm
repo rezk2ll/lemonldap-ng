@@ -987,9 +987,6 @@ sub run {
                 if ( $oidc_request->{$param} = $req->param($param) ) {
                     $self->logger->debug( "OIDC request parameter $param: "
                           . $oidc_request->{$param} );
-                    $self->p->setHiddenFormValue( $req, $param,
-                        $oidc_request->{$param},
-                        '', 0 );
                 }
             }
 
@@ -1126,6 +1123,12 @@ sub run {
 
             $req->info( $self->loadTemplate( $req, 'oidcLogout' ) );
             $req->data->{activeTimer} = 0;
+
+            while ( my ( $k, $v ) = each %$oidc_request ) {
+                $self->p->setHiddenFormValue( $req, $k, $v,
+                    '', 0 );
+            }
+
             return PE_CONFIRM;
         }
     }
