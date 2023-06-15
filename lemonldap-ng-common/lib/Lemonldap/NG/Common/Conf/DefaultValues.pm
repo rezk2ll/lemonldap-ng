@@ -176,7 +176,10 @@ sub defaultValues {
         'locationRules'                => {
             'default' => 'deny'
         },
-        'logoutServices'            => {},
+        'logoutServices' => {},
+        'lwpOpts'        => {
+            'timeout' => 10
+        },
         'macros'                    => {},
         'mail2fActivation'          => 0,
         'mail2fCodeRegex'           => '\\d{6}',
