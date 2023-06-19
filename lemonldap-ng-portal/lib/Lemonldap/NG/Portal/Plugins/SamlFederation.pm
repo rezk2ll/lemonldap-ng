@@ -102,6 +102,12 @@ sub get_sp_config_from_placeholders {
         }
     }
 
+    # handle eduPersonTargetedID
+    if ( $attributes->{eduPersonTargetedID} ) {
+        delete $attributes->{eduPersonTargetedID};
+        $options->{samlSPMetaDataOptionsNameIDFormat} = 'persistent';
+    }
+
     $config->{sp_confKey}    = $spConfKey;
     $config->{sp_attributes} = $attributes;
     $config->{sp_options}    = $options;
