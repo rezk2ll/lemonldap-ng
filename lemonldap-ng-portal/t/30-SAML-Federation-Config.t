@@ -78,6 +78,13 @@ SKIP: {
 
         "SP attributes have been imported as configured by policy",
     );
+
+    is(
+        $saml->spOptions->{'https://podcast.mines-nantes.fr/shibboleth'}
+          ->{samlSPMetaDataOptionsNameIDFormat},
+        undef, 'default NameID Format'
+    );
+
     is_deeply(
         $saml->spAttributes->{'https://www.numistral.fr/shibboleth'},
         {
@@ -87,6 +94,12 @@ SKIP: {
 '0;urn:oid:0.9.2342.19200300.100.1.3;urn:oasis:names:tc:SAML:2.0:attrname-format:uri;mail'
         },
         "SP attributes have been imported as configured by policy",
+    );
+
+    is(
+        $saml->spOptions->{'https://www.numistral.fr/shibboleth'}
+          ->{samlSPMetaDataOptionsNameIDFormat},
+        'persistent', 'eduPersonTargetedID sets required persistent NameID'
     );
 
     $saml     = $sp->p->loadedModules->{'Lemonldap::NG::Portal::Auth::SAML'};

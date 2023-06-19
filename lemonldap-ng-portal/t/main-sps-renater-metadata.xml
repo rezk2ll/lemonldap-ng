@@ -209,6 +209,7 @@ fsDwhBGpV6YTK/uR07UTqBRQB0MlStBw88D6Ju7oFeHBpA==</ds:X509Certificate>
                 <md:RequestedAttribute NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" Name="urn:oid:1.3.6.1.4.1.5923.1.1.1.6" FriendlyName="eduPersonPrincipalName" isRequired="true"/>
                 <md:RequestedAttribute NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" Name="urn:oid:2.16.840.1.113730.3.1.241" FriendlyName="displayName"/>
                 <md:RequestedAttribute NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" Name="urn:oid:2.5.4.3" FriendlyName="cn"/>
+                <md:RequestedAttribute NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" Name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10" FriendlyName="eduPersonTargetedID" isRequired="true"/>
             </md:AttributeConsumingService>
         </md:SPSSODescriptor>
         <md:Organization>
