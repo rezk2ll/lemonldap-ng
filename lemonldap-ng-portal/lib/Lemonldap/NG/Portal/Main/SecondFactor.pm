@@ -201,7 +201,6 @@ sub _verify {
         [
             @{ $self->p->afterData },
             $self->p->validSession,
-            'rebuildCookies',
             @{ $self->p->endAuth },
             sub { PE_OK }
         ]
