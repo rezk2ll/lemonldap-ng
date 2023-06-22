@@ -82,6 +82,7 @@ lib/Lemonldap/NG/Portal/Lib/OpenID/SREG.pm
 lib/Lemonldap/NG/Portal/Lib/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Lib/OtherSessions.pm
 lib/Lemonldap/NG/Portal/Lib/OverConf.pm
+lib/Lemonldap/NG/Portal/Lib/Radius.pm
 lib/Lemonldap/NG/Portal/Lib/Remote.pm
 lib/Lemonldap/NG/Portal/Lib/REST.pm
 lib/Lemonldap/NG/Portal/Lib/RESTProxy.pm
