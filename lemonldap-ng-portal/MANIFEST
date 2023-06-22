@@ -576,6 +576,7 @@ t/24-AuthApache.t
 t/24-AuthKerberos.t
 t/25-AuthSlave-with-Choice.t
 t/25-AuthSlave-with-Credentials.t
+t/26-AuthRadius-Attributes.t
 t/26-AuthRadius.t
 t/26-AuthRemote.t
 t/27-AuthProxy-with-choice.t
@@ -870,6 +871,7 @@ t/77-2F-Extra.t
 t/77-2F-Mail-SessionKey.t
 t/77-2F-Mail-with-global-storage.t
 t/77-2F-Mail.t
+t/77-2F-Radius.t
 t/78-2F-Upgrade-Many.t
 t/78-2F-Upgrade.t
 t/78-2F-UpgradeOnly-with-forceFlag.t
