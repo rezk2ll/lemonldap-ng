@@ -3156,11 +3156,20 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'radius2fAuthnLevel' => {
             'type' => 'int'
         },
+        'radius2fDictionaryFile' => {
+            'type' => 'text'
+        },
         'radius2fLabel' => {
             'type' => 'text'
         },
         'radius2fLogo' => {
             'type' => 'text'
+        },
+        'radius2fRequestAttributes' => {
+            'default'    => {},
+            'keyMsgFail' => '__badKeyName__',
+            'keyTest'    => qr/^[a-zA-Z0-9_-]*$/,
+            'type'       => 'keyTextContainer'
         },
         'radius2fSecret' => {
             'type' => 'text'
@@ -3188,6 +3197,12 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
             'msgFail'    => '__badValue__',
             'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
+        },
+        'radiusRequestAttributes' => {
+            'default'    => {},
+            'keyMsgFail' => '__badKeyName__',
+            'keyTest'    => qr/^[a-zA-Z0-9_-]*$/,
             'type'       => 'keyTextContainer'
         },
         'radiusSecret' => {

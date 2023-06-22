@@ -2266,6 +2266,16 @@ sub attributes {
             type          => 'text',
             documentation => 'Custom logo for REST 2F',
         },
+        radius2fDictionaryFile    => { type => 'text' },
+        radius2fRequestAttributes => {
+            type => 'keyTextContainer',
+
+            keyTest    => qr/^[a-zA-Z0-9_-]*$/,
+            keyMsgFail => '__badKeyName__',
+
+            default       => {},
+            documentation => 'RADIUS second factor authentication attributes',
+        },
 
         # Yubikey 2FA
         yubikey2fActivation => {
@@ -3920,7 +3930,16 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => {},
             documentation => 'RADIUS exported variables',
         },
-        radiusDictionaryFile => { type => 'text' },
+        radiusDictionaryFile    => { type => 'text' },
+        radiusRequestAttributes => {
+            type => 'keyTextContainer',
+
+            keyTest    => qr/^[a-zA-Z0-9_-]*$/,
+            keyMsgFail => '__badKeyName__',
+
+            default       => {},
+            documentation => 'RADIUS authentication attributes',
+        },
 
         # REST
         restAuthUrl       => { type => 'url' },
