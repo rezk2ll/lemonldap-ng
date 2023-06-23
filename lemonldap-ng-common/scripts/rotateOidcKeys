@@ -46,6 +46,14 @@ print "Key ID generated: " . $keys->{id} . "\n"            if $debug;
 #=============================================================================
 $conf->{cfgAuthor} = 'Key rotation script';
 
+# Store previous key
+if ( $conf->{oidcServicePublicKeySig} and $conf->{oidcServiceKeyIdSig} ) {
+    $conf->{oidcServiceOldPrivateKeySig} = $conf->{oidcServicePrivateKeySig};
+    $conf->{oidcServiceOldPublicKeySig}  = $conf->{oidcServicePublicKeySig};
+    $conf->{oidcServiceOldKeyIdSig}      = $conf->{oidcServiceKeyIdSig};
+}
+
+# Store new key
 $conf->{oidcServicePrivateKeySig} = $keys->{private};
 $conf->{oidcServicePublicKeySig}  = $keys->{public};
 $conf->{oidcServiceKeyIdSig}      = $keys->{id};
