@@ -110,11 +110,11 @@ sub init {
     $self->addRouteFromConf(
         'Auth',
         oidcServiceMetaDataCheckSessionURI  => 'checkSession',
-        oidcServiceMetaDataTokenURI         => 'badAuthRequest',
-        oidcServiceMetaDataUserInfoURI      => 'badAuthRequest',
-        oidcServiceMetaDataJWKSURI          => 'badAuthRequest',
-        oidcServiceMetaDataRegistrationURI  => 'badAuthRequest',
-        oidcServiceMetaDataIntrospectionURI => 'badAuthRequest',
+        oidcServiceMetaDataTokenURI         => 'token',
+        oidcServiceMetaDataUserInfoURI      => 'userInfo',
+        oidcServiceMetaDataJWKSURI          => 'jwks',
+        oidcServiceMetaDataRegistrationURI  => 'registration',
+        oidcServiceMetaDataIntrospectionURI => 'introspection',
     );
 
     # Metadata (.well-known/openid-configuration)
@@ -2217,13 +2217,6 @@ sub checkSession {
             COOKIENAME => $self->conf->{cookieName},
         }
     );
-}
-
-sub badAuthRequest {
-    my ( $self, $req ) = @_;
-    my $desc =
-      "This endpoint is not supposed to be called by authenticated users";
-    return $self->sendOIDCError( $req, 'invalid_request', 400, $desc );
 }
 
 # Nothing to do here
