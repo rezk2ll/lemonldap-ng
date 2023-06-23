@@ -36,7 +36,7 @@ sub init {
 
     foreach my $name ( keys %{ $self->conf->{authChoiceModules} } ) {
         my @mods =
-          split( /[;\|]/, $self->conf->{authChoiceModules}->{$name} );
+          split( /;\s*/, $self->conf->{authChoiceModules}->{$name} );
         my $module = '::'
           . [ 'Auth', 'UserDB', 'Password' ]->[$type] . '::'
           . $mods[$type];
@@ -219,7 +219,7 @@ sub _buildAuthLoop {
 
         # Find modules associated to authChoice
         my ( $auth, $userDB, $passwordDB, $url, $condition ) =
-          split( /[;\|]/, $self->conf->{authChoiceModules}->{$_} );
+          split( /;\s*/, $self->conf->{authChoiceModules}->{$_} );
 
         unless ( $_choiceRules->{$_} ) {
             $self->logger->error("$_ has no rule");
