@@ -1,6 +1,7 @@
 # Launch SSL request
 
-tryssl = () ->
+tryssl = (myevent) ->
+	form = $(myevent.currentTarget).closest 'form';
 	path = window.location.pathname
 	console.log 'path -> ', path
 	console.log 'Call URL -> ', window.datas.sslHost
@@ -13,8 +14,8 @@ tryssl = () ->
 		success: (data) ->
 		    # If we contain a ajax_auth_token, add it to form
 			if data.ajax_auth_token
-				$('#lformSSL').find('input[name="ajax_auth_token"]').attr("value", data.ajax_auth_token)
-			sendUrl path
+				form.find('input[name="ajax_auth_token"]').attr("value", data.ajax_auth_token)
+			sendUrl form,path
 			console.log 'Success -> ', data
 		# Case else, will display PE_BADCREDENTIALS or fallback to next auth
 		# backend
@@ -25,10 +26,10 @@ tryssl = () ->
 				# We couldn't send the request.
 				# if client verification is optional, this means
 				# the certificate was rejected (or some network error)
-				sendUrl path
+				sendUrl form,path
 			# For compatibility with earlier configs, handle PE9 by posting form
 			if result.responseJSON && 'error' of result.responseJSON && result.responseJSON.error == "9"
-				sendUrl path
+				sendUrl form,path
 
 			# If the server sent a html error description, display it
 			if result.responseJSON && 'html' of result.responseJSON
@@ -37,15 +38,18 @@ tryssl = () ->
 			console.log 'Error during AJAX SSL authentication', result
 	false
 
-sendUrl = (path) ->
-	form_url = $('#lformSSL').attr('action')
+sendUrl = (form,path) ->
+	form_url = form.attr('action')
 	if form_url.match /^#$/
 		form_url = path
 	else
 		form_url = form_url + path
 	console.log 'form action URL -> ', form_url
-	$('#lformSSL').attr('action', form_url)
-	$('#lformSSL').submit()
+	form.attr('action', form_url)
+	form.submit()
 
 $(document).ready ->
-	$('.sslclick').on 'click', tryssl
+	# Script may be loaded twice if multiple choices use SSL
+	if !window._ssl_js_done
+		window._ssl_js_done = true
+		$('.sslclick').on 'click', tryssl

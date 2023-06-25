@@ -764,7 +764,11 @@
   "type" : "object",
   "properties" : {
     "service" : {
-      "type" : "array"
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "format" : "uri"
+      }
     },
     "userAttribute" : {
       "type" : "string",
@@ -786,6 +790,29 @@
   "properties" : {
     "error" : {
       "type" : "string"
+    }
+  }
+};
+            defs.HistoryItem = {
+  "required" : [ "date", "result" ],
+  "type" : "object",
+  "properties" : {
+    "date" : {
+      "type" : "string",
+      "description" : "Unix timestamp of the event"
+    },
+    "ipAddr" : {
+      "type" : "string",
+      "description" : "String representation of the IP address"
+    },
+    "result" : {
+      "type" : "string",
+      "description" : "Result of authentication attempt",
+      "enum" : [ "success", "failed" ]
+    },
+    "error" : {
+      "type" : "integer",
+      "description" : "LemonLDAP::NG error code"
     }
   }
 };
@@ -895,7 +922,7 @@
     },
     "accessTokenSignAlg" : {
       "type" : "string",
-      "default" : "HS512",
+      "default" : "RS256",
       "enum" : [ "none", "RS256", "RS384", "RS512" ]
     },
     "userInfoSignAlg" : {
@@ -904,10 +931,10 @@
       "enum" : [ "", "none", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512" ]
     },
     "accessTokenJWT" : {
-      "type" : "bool"
+      "type" : "boolean"
     },
     "accessTokenClaims" : {
-      "type" : "bool"
+      "type" : "boolean"
     },
     "authnLevel" : {
       "type" : "integer"
@@ -1380,6 +1407,13 @@
                     <li data-group="Default" data-name="status" class="">
                       <a href="#api-Default-status">status</a>
                     </li>
+                  <li class="nav-header" data-group="History"><a href="#api-History">API Methods - History</a></li>
+                    <li data-group="History" data-name="getHistory" class="">
+                      <a href="#api-History-getHistory">getHistory</a>
+                    </li>
+                    <li data-group="History" data-name="getHistoryLast" class="">
+                      <a href="#api-History-getHistoryLast">getHistoryLast</a>
+                    </li>
                   <li class="nav-header" data-group="Menuapp"><a href="#api-Menuapp">API Methods - Menuapp</a></li>
                     <li data-group="Menuapp" data-name="addMenuApp" class="">
                       <a href="#api-Menuapp-addMenuApp">addMenuApp</a>
@@ -1478,7 +1512,7 @@
         <div id="header">
           <div id="api-_">
             <h2 id="welcome-to-apidoc">API and SDK Documentation</h2>
-              <div class="app-desc">Version: 2.0.9</div>
+              <div class="app-desc">Version: 2.17</div>
             <hr>
             <div>The Manager API allows an administrator to modify the LemonLDAP::NG configuration programmatically. It is not meant to be accessed by end users. The client libraries mentionned in examples can be generated from doc/sources/manager-api/openapi-spec.yaml</div>
           </div>
@@ -6494,6 +6528,853 @@ except ApiException as e:
                                     </script>
                                   </div>
                                   <input id='responses-status-503-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                  </section>
+                <section id="api-History">
+                  <h1>History</h1>
+                    <div id="api-History-getHistory">
+                      <article id="api-History-getHistory-0" data-group="User" data-name="getHistory" data-version="0">
+                        <div class="pull-left">
+                          <h1>getHistory</h1>
+                          <p>Get the login history for a user</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/history/{uid}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-History-getHistory-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-History-getHistory-0-java">Java</a></li>
+                          <li class=""><a href="#examples-History-getHistory-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-History-getHistory-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-History-getHistory-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-History-getHistory-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-History-getHistory-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-History-getHistory-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-History-getHistory-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-History-getHistory-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-History-getHistory-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-History-getHistory-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/history/{uid}?result="</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-History-getHistory-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.HistoryApi;
+
+import java.io.File;
+import java.util.*;
+
+public class HistoryApiExample {
+
+    public static void main(String[] args) {
+        
+        HistoryApi apiInstance = new HistoryApi();
+        String uid = uid_example; // String | 
+        String result = result_example; // String | 
+        try {
+            array[HistoryItem] result = apiInstance.getHistory(uid, result);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling HistoryApi#getHistory");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-History-getHistory-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.HistoryApi;
+
+public class HistoryApiExample {
+
+    public static void main(String[] args) {
+        HistoryApi apiInstance = new HistoryApi();
+        String uid = uid_example; // String | 
+        String result = result_example; // String | 
+        try {
+            array[HistoryItem] result = apiInstance.getHistory(uid, result);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling HistoryApi#getHistory");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-History-getHistory-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-History-getHistory-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *uid = uid_example; // 
+String *result = result_example; //  (optional)
+
+HistoryApi *apiInstance = [[HistoryApi alloc] init];
+
+// Get the login history for a user
+[apiInstance getHistoryWith:uid
+    result:result
+              completionHandler: ^(array[HistoryItem] output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-History-getHistory-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.HistoryApi()
+var uid = uid_example; // {{String}} 
+var opts = { 
+  'result': result_example // {{String}} 
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.getHistory(uid, opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-History-getHistory-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-History-getHistory-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class getHistoryExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new HistoryApi();
+            var uid = uid_example;  // String | 
+            var result = result_example;  // String |  (optional) 
+
+            try
+            {
+                // Get the login history for a user
+                array[HistoryItem] result = apiInstance.getHistory(uid, result);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling HistoryApi.getHistory: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-History-getHistory-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiHistoryApi();
+$uid = uid_example; // String | 
+$result = result_example; // String | 
+
+try {
+    $result = $api_instance->getHistory($uid, $result);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling HistoryApi->getHistory: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-History-getHistory-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::HistoryApi;
+
+my $api_instance = WWW::SwaggerClient::HistoryApi->new();
+my $uid = uid_example; # String | 
+my $result = result_example; # String | 
+
+eval { 
+    my $result = $api_instance->getHistory(uid => $uid, result => $result);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling HistoryApi->getHistory: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-History-getHistory-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.HistoryApi()
+uid = uid_example # String | 
+result = result_example # String |  (optional)
+
+try: 
+    # Get the login history for a user
+    api_response = api_instance.get_history(uid, result=result)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling HistoryApi->getHistory: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">uid*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_getHistory_uid">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">result</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_getHistory_result">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - List of history entries, sorted by date, from most recent to least recent </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getHistory-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getHistory-200-schema">
+                                  <div id='responses-getHistory-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "List of history entries, sorted by date, from most recent to least recent",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/HistoryItem"
+        },
+        "x-content-type" : "application/json"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getHistory-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getHistory-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getHistory-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getHistory-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getHistory-400-schema">
+                                  <div id='responses-getHistory-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getHistory-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getHistory-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getHistory-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getHistory-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getHistory-404-schema">
+                                  <div id='responses-getHistory-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getHistory-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getHistory-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getHistory-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-History-getHistoryLast">
+                      <article id="api-History-getHistoryLast-0" data-group="User" data-name="getHistoryLast" data-version="0">
+                        <div class="pull-left">
+                          <h1>getHistoryLast</h1>
+                          <p>Get the last history event for a user</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/history/{uid}/last</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-History-getHistoryLast-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-History-getHistoryLast-0-java">Java</a></li>
+                          <li class=""><a href="#examples-History-getHistoryLast-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-History-getHistoryLast-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-History-getHistoryLast-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-History-getHistoryLast-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-History-getHistoryLast-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-History-getHistoryLast-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-History-getHistoryLast-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-History-getHistoryLast-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-History-getHistoryLast-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-History-getHistoryLast-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/history/{uid}/last?result="</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-History-getHistoryLast-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.HistoryApi;
+
+import java.io.File;
+import java.util.*;
+
+public class HistoryApiExample {
+
+    public static void main(String[] args) {
+        
+        HistoryApi apiInstance = new HistoryApi();
+        String uid = uid_example; // String | 
+        String result = result_example; // String | 
+        try {
+            HistoryItem result = apiInstance.getHistoryLast(uid, result);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling HistoryApi#getHistoryLast");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-History-getHistoryLast-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.HistoryApi;
+
+public class HistoryApiExample {
+
+    public static void main(String[] args) {
+        HistoryApi apiInstance = new HistoryApi();
+        String uid = uid_example; // String | 
+        String result = result_example; // String | 
+        try {
+            HistoryItem result = apiInstance.getHistoryLast(uid, result);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling HistoryApi#getHistoryLast");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-History-getHistoryLast-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-History-getHistoryLast-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *uid = uid_example; // 
+String *result = result_example; //  (optional)
+
+HistoryApi *apiInstance = [[HistoryApi alloc] init];
+
+// Get the last history event for a user
+[apiInstance getHistoryLastWith:uid
+    result:result
+              completionHandler: ^(HistoryItem output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-History-getHistoryLast-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.HistoryApi()
+var uid = uid_example; // {{String}} 
+var opts = { 
+  'result': result_example // {{String}} 
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.getHistoryLast(uid, opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-History-getHistoryLast-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-History-getHistoryLast-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class getHistoryLastExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new HistoryApi();
+            var uid = uid_example;  // String | 
+            var result = result_example;  // String |  (optional) 
+
+            try
+            {
+                // Get the last history event for a user
+                HistoryItem result = apiInstance.getHistoryLast(uid, result);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling HistoryApi.getHistoryLast: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-History-getHistoryLast-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiHistoryApi();
+$uid = uid_example; // String | 
+$result = result_example; // String | 
+
+try {
+    $result = $api_instance->getHistoryLast($uid, $result);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling HistoryApi->getHistoryLast: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-History-getHistoryLast-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::HistoryApi;
+
+my $api_instance = WWW::SwaggerClient::HistoryApi->new();
+my $uid = uid_example; # String | 
+my $result = result_example; # String | 
+
+eval { 
+    my $result = $api_instance->getHistoryLast(uid => $uid, result => $result);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling HistoryApi->getHistoryLast: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-History-getHistoryLast-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.HistoryApi()
+uid = uid_example # String | 
+result = result_example # String |  (optional)
+
+try: 
+    # Get the last history event for a user
+    api_response = api_instance.get_history_last(uid, result=result)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling HistoryApi->getHistoryLast: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">uid*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_getHistoryLast_uid">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">result</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_getHistoryLast_result">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - History entry </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getHistoryLast-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getHistoryLast-200-schema">
+                                  <div id='responses-getHistoryLast-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "History entry",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/HistoryItem"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getHistoryLast-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getHistoryLast-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getHistoryLast-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getHistoryLast-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getHistoryLast-400-schema">
+                                  <div id='responses-getHistoryLast-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getHistoryLast-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getHistoryLast-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getHistoryLast-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getHistoryLast-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getHistoryLast-404-schema">
+                                  <div id='responses-getHistoryLast-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getHistoryLast-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getHistoryLast-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getHistoryLast-404-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 

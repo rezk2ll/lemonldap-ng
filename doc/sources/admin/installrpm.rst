@@ -84,7 +84,7 @@ You can add this YUM repository to get recent packages:
     Replace ``stable`` by ``2.0`` to avoid upgrade to next major
     version
 
-You may also need some extras packages, available here:
+You may also need some extras packages for SAML, available here:
 
 ::
 
@@ -130,7 +130,7 @@ If the packages are stored in a yum repository:
    yum install lemonldap-ng
 
    # If you use SELinux
-   yum install lemonldap-ng-selinux
+   yum install lemonldap-ng lemonldap-ng-selinux
 
 You can also use yum on local RPMs file:
 

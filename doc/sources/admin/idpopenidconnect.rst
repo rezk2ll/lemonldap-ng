@@ -27,7 +27,8 @@ As an OP, LL::NG supports many OpenID Connect features:
 -  ID Token signature (HS256/HS384/HS512/RS256/RS384/RS512)
 -  UserInfo endpoint, as JSON or as JWT
 -  Request and Request URI
--  `FrontChannel Logout <https://openid.net/specs/openid-connect-frontchannel-1_0.html>`__
+-  `Back Channel Logout <https://openid.net/specs/openid-connect-backchannel-1_0.html>`__
+-  `Front Channel Logout <https://openid.net/specs/openid-connect-frontchannel-1_0.html>`__
 -  `RP-Initiated Logout <https://openid.net/specs/openid-connect-rpinitiated-1_0.html>`__
 -  PKCE (Since ``2.0.4``) - See :rfc:`7636`
 -  Introspection endpoint (Since ``2.0.6``) - See :rfc:`7662`
@@ -266,8 +267,9 @@ Options
 
    -  **Bypass confirm**: Bypass logout confirmation when logout is initiated
       by relaying party
-   -  **Session required**: Whether to send the Session ID in the logout request
-   -  **Type**: Type of logout to perform (only Front-Channel is implemented for now)
+   -  **Session required**: Whether to send the Session ID *(sid)* in the logout
+      request *(Front and Back Channel)*
+   -  **Type**: Type of logout to perform
    -  **URL**: Specify the relying party's logout URL
    -  **Allowed redirection addresses for logout**: A space-separated list of
       URLs that this client can redirect the user to once the logout is done

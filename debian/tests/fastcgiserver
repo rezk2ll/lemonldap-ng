@@ -1,0 +1,29 @@
+#!/usr/bin/perl
+#
+use IO::Socket::UNIX;
+use FCGI::Client;
+use Test::More tests => 1;
+
+my $sock = IO::Socket::UNIX->new(
+    Type => SOCK_STREAM(),
+    Peer => '/var/run/llng-fastcgi-server/llng-fastcgi.sock',
+);
+my $client = FCGI::Client::Connection->new( sock => $sock );
+my $env    = {
+    HTTP_HOST       => 'auth.example.com',
+    HTTP_ACCEPT     => 'text/html',
+    REMOTE_ADDR     => '127.0.0.1',
+    QUERY_STRING    => '',
+    REQUEST_URI     => '/',
+    PATH_INFO       => '/',
+    SERVER_PORT     => 80,
+    REQUEST_METHOD  => 'GET',
+    LLTYPE          => 'psgi',
+    SCRIPT_FILENAME => '/usr/share/lemonldap-ng/portal/htdocs/index.psgi',
+    'FCGI_ROLE'     => 'RESPONDER',
+};
+
+my ( $stdout, $stderr, $status ) = $client->request($env);
+
+ok( $stdout =~ /^Status: 200 OK/s, 'Portal responded 200' )
+ or diag "STDOUT: $stdout\nSTDERR: $stderr";

@@ -1157,6 +1157,16 @@ documentation:
 			-Dhtml_theme=bootstrap\
 			doc/sources/admin/ doc/pages/documentation/current/ ;\
 	fi
+	#
+	# For the record, to render doc build reproducible, Debian package
+	# includes this:
+	#
+	# # Extract JSON from doc index
+	# cat doc/pages/documentation/current/searchindex.js | perl -pe 's/^.*?(\{.*\}).*?$$/$$1/' >debian/index.json
+	# # Sort JSON, including arrays
+	# jq --compact-output 'walk(if type == "array" then sort else if type == "object" then to_entries | sort_by(.key) | from_entries else . end end)' > debian/searchindex.js <debian/index.json
+	# # Insert new JSON in doc index
+	# perl -000 -i -pe 'BEGIN{open F,"debian/searchindex.js";$$j=<F>;chomp $$j;close F}s/\{.*\}/$$j/' doc/pages/documentation/current/searchindex.js
 
 website_documentation:
 	LLNGSPHINXWEBSITE=1 sphinx-build -b html -d /tmp/doctrees \

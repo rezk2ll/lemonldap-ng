@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.17.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -141,7 +141,7 @@ sub _verify {
     # Else restore session
     $req->mustRedirect(1);
     $self->userLogger->notice( $self->prefix
-          . '2f verification for '
+          . '2f verification succeeded for '
           . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
     if ( my $l = $self->authnLevel ) {
@@ -201,7 +201,6 @@ sub _verify {
         [
             @{ $self->p->afterData },
             $self->p->validSession,
-            'rebuildCookies',
             @{ $self->p->endAuth },
             sub { PE_OK }
         ]

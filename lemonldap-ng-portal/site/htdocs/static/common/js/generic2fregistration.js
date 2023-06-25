@@ -40,7 +40,7 @@ LemonLDAP::NG Generic registration script
     } else {
       return $.ajax({
         type: 'POST',
-        url: portal + ("/2fregisters/" + prefix + "/sendcode"),
+        url: portal + "2fregisters/" + prefix + "/sendcode",
         dataType: 'json',
         data: {
           generic: generic
@@ -75,7 +75,7 @@ LemonLDAP::NG Generic registration script
     } else {
       return $.ajax({
         type: 'POST',
-        url: portal + ("/2fregisters/" + prefix + "/verify"),
+        url: portal + "2fregisters/" + prefix + "/verify",
         dataType: 'json',
         data: {
           generic: generic,

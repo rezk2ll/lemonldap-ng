@@ -35,7 +35,7 @@ You now need to import IDP metadata in LL::NG configuration. Use the
 ``importMetadata`` script that should be installed in
 /usr/share/lemonldap-ng/bin. You need to select the correct metadata
 bundle proposed by Renater:
-https://services.renater.fr/federation/technique/metadata.
+https://services.renater.fr/federation/documentation/generale/metadata/versions-metadata.
 
 For Renater, you need to customize some settings of the script, copy it
 and edit configuration:
@@ -242,7 +242,7 @@ You now need to import SP metadata in LL::NG configuration. Use the
 ``importMetadata`` script that should be installed in
 /usr/share/lemonldap-ng/bin. You need to select the correct metadata
 bundle proposed by Renater:
-https://services.renater.fr/federation/technique/metadata.
+https://services.renater.fr/federation/documentation/generale/metadata/versions-metadata.
 
 For Renater, you may need to customize some settings of the script, copy
 it and edit configuration:

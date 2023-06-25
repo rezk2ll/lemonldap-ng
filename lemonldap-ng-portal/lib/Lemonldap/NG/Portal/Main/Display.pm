@@ -2,7 +2,7 @@
 # Display functions for LemonLDAP::NG Portal
 package Lemonldap::NG::Portal::Main::Display;
 
-our $VERSION = '2.16.1';
+our $VERSION = '2.17.0';
 
 package Lemonldap::NG::Portal::Main;
 use strict;
@@ -608,7 +608,16 @@ sub display {
                     DISPLAY_FINDUSER     => scalar @$fields,
                     MANDATORY            => $mandatory,
                     FIELDS               => $fields,
-                    SPOOFID              => $slogin
+                    SPOOFID              => $slogin,
+
+                    # Hidden inputs and custom scripts may have been modified
+                    # by _buildAuthLoop so we need to update them
+                    HIDDEN_INPUTS => $self->buildHiddenForm($req),
+                    (
+                        $req->data->{customScript}
+                        ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
+                        : ()
+                    ),
                 );
             }
 
@@ -684,30 +693,18 @@ sub staticFile {
 
 sub buildOutgoingHiddenForm {
     my ( $self, $req, $method ) = @_;
-    my @keys = keys %{ $req->{portalHiddenFormValues} };
+    my @extra_keys;
 
     if ( lc $method eq 'get' ) {
-        my $uri          = URI->new( $req->{urldc} );
-        my %query_params = $uri->query_form;
-
-        # Redirection URL contains query string. Before displaying a form,
-        # we must set the query string parameters as form fields so they can
-        # be preserved #2085
-        if (%query_params) {
-            $self->logger->debug(
-"urldc contains query parameters, setting them as hidden form values"
-            );
-            foreach ( keys %query_params ) {
-                $self->setHiddenFormValue( $req, $_, $query_params{$_}, "", 0 );
-            }
-        }
+        my $uri = URI->new( $req->{urldc} );
+        @extra_keys = $uri->query_form;
     }
 
-    return $self->buildHiddenForm($req);
+    return $self->buildHiddenForm( $req, @extra_keys );
 }
 
 sub buildHiddenForm {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, @extra_keys ) = @_;
     my @keys = keys %{ $req->{portalHiddenFormValues} };
     my $val  = '';
 
@@ -719,11 +716,18 @@ sub buildHiddenForm {
             && $self->checkXSSAttack( $_, $req->{portalHiddenFormValues}->{$_} )
           );
 
-        # Build hidden input HTML code
-        # 'id' is removed to avoid warning with Choice
-        #$val .= qq{<input type="hidden" name="$_" id="$_" value="}
         $val .= qq{<input type="hidden" name="$_" value="}
           . $req->{portalHiddenFormValues}->{$_} . '" />';
+    }
+
+    while ( my ( $key, $value ) = splice( @extra_keys, 0, 2 ) ) {
+
+        # Check XSS attacks
+        next
+          if (!$req->data->{safeHiddenFormValues}->{$key}
+            && $self->checkXSSAttack( $key, $value ) );
+
+        $val .= qq{<input type="hidden" name="$key" value="$value" />};
     }
 
     return $val;

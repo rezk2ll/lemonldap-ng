@@ -34,6 +34,8 @@ Inside this jail, you can access to:
   * groupMatch_
   * has2f_ (|new| in version 2.0.10)
   * inGroup_ (|new| in version 2.0.8)
+  * inSubnet_ (|new| in version 2.17)
+  * ipInSubnet_ (|new| in version 2.17)
   * isInNet6_
   * iso2unicode_
   * iso2unicodeSafe_ (|new| in version 2.0.15)
@@ -306,6 +308,25 @@ Usage example:
 The function returns 1 if the user belongs to the given group, and 0 if
 they don't.
 
+inSubnet
+~~~~~~~~
+
+.. versionadded:: 2.17
+
+This function lets you test if the request's IP address (``REMOTE_ADDR``
+environment variable) belongs to a certain subnet. You can give multiple subnets.
+
+Usage example:
+
+::
+
+   inSubnet('127.0.0.0/8')
+
+   inSubnet('10.0.0.0/8', '192.168.0.0/16')
+
+The function returns 1 if the user's IP is in provided subnets, and 0 if
+it is not.
+
 isInNet6
 ~~~~~~~~
 
@@ -315,6 +336,25 @@ IP address is local*:
 .. code-block:: perl
 
    isInNet6($ipAddr, 'fe80::/10')
+
+ipInSubnet
+~~~~~~~~~~
+
+.. versionadded:: 2.17
+
+This function lets you test if the provided IP address belongs to a certain
+subnet. You can give multiple subnets.
+
+Usage example:
+
+::
+
+   ipInSubnet($ENV{REMOTE_ADDR}, '127.0.0.0/8')
+
+   ipInSubnet($ENV{REMOTE_ADDR}, '10.0.0.0/8', '192.168.0.0/16')
+
+The function returns 1 if provided IP is in one of the subnets, and 0 if
+it is not.
 
 iso2unicode
 ~~~~~~~~~~~

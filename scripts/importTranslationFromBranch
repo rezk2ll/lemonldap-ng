@@ -1,0 +1,87 @@
+#!/usr/bin/perl
+
+use strict;
+use Dpkg::IPC;
+use File::Copy;
+use File::Find;
+use File::Path;
+use JSON;
+
+use constant IMPORTTMPDIR => './translationsImport';
+
+our %directories = (
+    'lemonldap-ng-manager/site/htdocs/static/languages' => 'portal',
+    'lemonldap-ng-portal/site/htdocs/static/languages'  => 'manager',
+    'lemonldap-ng-portal/site/templates/common/mail'    => 'mail',
+);
+
+my %list;
+
+my $currentBranch = `git rev-parse --abbrev-ref HEAD`;
+$currentBranch =~ s/[\r\n]//g;
+my $branch = $ARGV[0] || die "Missing branch";
+
+$branch eq $currentBranch && die "Already on branch $branch";
+
+spawn( exec => [ 'git', 'checkout', $branch ], wait_child => 1 );
+
+rmtree(IMPORTTMPDIR);
+mkdir IMPORTTMPDIR;
+
+my $j = JSON->new->canonical->pretty->space_before(0)->space_after(0);
+
+foreach my $dir ( keys %directories ) {
+    our $dstDir = IMPORTTMPDIR . '/' . $directories{$dir};
+    mkdir $dstDir;
+    find(
+        sub {
+            return unless -f;
+            push @{ $list{$dir} }, $File::Find::name;
+        },
+        $dir
+    );
+    foreach ( @{ $list{$dir} } ) {
+        copy $_, $dstDir;
+    }
+}
+
+spawn( exec => [ 'git', 'checkout', $currentBranch ], wait_child => 1 );
+
+foreach my $dir ( keys %directories ) {
+    our $srcDir = IMPORTTMPDIR . '/' . $directories{$dir};
+    my ($ref, $current, $en);
+    {
+        local $/=undef;
+        open my $f, "$dir/en.json";
+        $en = $j->decode(<$f>);
+        close $f;
+    }
+    foreach my $file ( @{ $list{$dir} }) {
+        my $name = $file;
+        $name =~ s#.*/##;
+        next if $name eq 'en.json';
+        {
+            local $/ = undef;
+            open my $f, "$file" or next;
+            $current = $j->decode(<$f>);
+            close $f;
+            open $f, "$srcDir/$name";
+            $ref = $j->decode(<$f>);
+            close $f;
+        }
+        foreach my $k (sort keys %$current) {
+            $current->{$k} = $ref->{$k} // $current->{$k};
+        }
+        my $newContent = $j->encode($current);
+        $newContent =~ s/^\s+//mg;
+        {
+            local $/=undef;
+            print STDERR "$file\n";
+            open my $f, '>', "$file";
+            print $f $newContent;
+            close $f;
+        }
+    }
+}
+
+rmtree(IMPORTTMPDIR);

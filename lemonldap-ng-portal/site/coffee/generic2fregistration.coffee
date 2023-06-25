@@ -28,7 +28,7 @@ verify = ->
 	else
 		$.ajax
 			type: 'POST'
-			url: portal + "/2fregisters/#{prefix}/sendcode"
+			url: "#{portal}2fregisters/#{prefix}/sendcode"
 			dataType: 'json'
 			data:
 				generic: generic
@@ -55,7 +55,7 @@ register = ->
 	else
 		$.ajax
 			type: 'POST'
-			url: portal + "/2fregisters/#{prefix}/verify"
+			url: "#{portal}2fregisters/#{prefix}/verify"
 			dataType: 'json'
 			data:
 				generic: generic

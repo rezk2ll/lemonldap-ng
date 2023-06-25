@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.16.1';
+our $VERSION = '2.17.0';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -1064,7 +1064,7 @@ sub attributes {
         },
         hiddenAttributes => {
             type          => 'text',
-            default       => '_password, _2fDevices',
+            default       => '_password _2fDevices',
             documentation => 'Name of attributes to hide in logs',
         },
         displaySessionId => {
@@ -1073,8 +1073,8 @@ sub attributes {
             documentation => 'Display _session_id with sessions explorer',
         },
         persistentSessionAttributes => {
-            type          => 'text',
-            default       => '_loginHistory _2fDevices notification_',
+            type    => 'text',
+            default => '_loginHistory _2fDevices _oidcConsents notification_',
             documentation => 'Persistent session attributes to hide',
         },
         key => {
@@ -1256,6 +1256,7 @@ sub attributes {
         lwpOpts => {
             type          => 'keyTextContainer',
             documentation => 'Options passed to LWP::UserAgent',
+            default       => { timeout => 10 },
         },
         lwpSslOpts => {
             type          => 'keyTextContainer',
@@ -4419,7 +4420,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcServiceMetaDataBackChannelURI => {
             type          => 'text',
             default       => 'blogout',
-            documentation => 'OpenID Connect Front-Channel logout endpoint',
+            documentation => 'OpenID Connect Back-Channel logout endpoint',
         },
         oidcServiceMetaDataFrontChannelURI => {
             type          => 'text',
@@ -4598,9 +4599,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             keyTest => qr/\w/,
             test    => qr/\w/,
             default => {
-                'name'        => 'cn',
-                'family_name' => 'sn',
-                'email'       => 'mail',
+                'name'               => 'cn',
+                'preferred_username' => 'uid',
+                'email'              => 'mail',
             }
         },
         oidcRPMetaDataOptionsClientID       => { type => 'text', },
@@ -4673,16 +4674,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Bypass logout confirmation'
         },
         oidcRPMetaDataOptionsLogoutUrl => {
-            type          => 'url',
+            type          => 'text',
             documentation => 'Logout URL',
         },
         oidcRPMetaDataOptionsLogoutType => {
             type   => 'select',
             select => [
                 { k => 'front', v => 'Front Channel' },
-
-                #TODO #1194
-                # { k => 'back',  v => 'Back Channel' },
+                { k => 'back',  v => 'Back Channel' },
             ],
             default       => 'front',
             documentation => 'Logout type',
@@ -4690,7 +4689,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsLogoutSessionRequired => {
             type          => 'bool',
             default       => 0,
-            documentation => 'Session required for logout',
+            documentation => 'Session required for back/front channel logout',
         },
         oidcRPMetaDataOptionsPublic => {
             type          => 'bool',

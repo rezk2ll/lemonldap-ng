@@ -253,7 +253,7 @@ $(window).on 'load', () ->
 
 	# Keep the currently selected tab
 	if "datas" of window && "choicetab" of window.datas
-		datas.choicetab = window.datas.choicetab;
+		datas.choicetab = window.datas.choicetab
 
 	# Export datas for other scripts
 	window.datas = datas

@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.17.0';
 
 extends 'Lemonldap::NG::Portal::Main::Auth';
 
@@ -280,6 +280,7 @@ sub _krb_get_user {
     my $client_name;
     $status = $gss_client_name->display($client_name);
     if ($status) {
+        $self->logger->debug("Received Kerberos principal: $client_name");
         return $client_name;
     }
     $self->logger->error('Unable to display KRB client name');

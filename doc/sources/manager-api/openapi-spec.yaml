@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: LemonLDAP::NG Manager API
   description: The Manager API allows an administrator to modify the LemonLDAP::NG configuration programmatically. It is not meant to be accessed by end users. The client libraries mentionned in examples can be generated from doc/sources/manager-api/openapi-spec.yaml
-  version: 2.0.9
+  version: "2.17"
 servers:
   - url: https://manager-api.example.com
 tags:
@@ -12,6 +12,8 @@ tags:
   description: OpenID Connect Relaying Parties
 - name: 2fa
   description: Registered Second Factors
+- name: history
+  description: Login history
 
 paths:
   /api/v1/status:
@@ -23,6 +25,64 @@ paths:
           $ref: '#/components/responses/StatusResponse'
         503:
           $ref: '#/components/responses/StatusResponse'
+
+  /api/v1/history/{uid} :
+    get:
+      summary: Get the login history for a user
+      operationId: getHistory
+      tags:
+      - history
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: result
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+            - success
+            - failed
+            - any
+      responses:
+        200:
+          $ref: '#/components/responses/HistoryList'
+        400:
+          $ref: '#/components/responses/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /api/v1/history/{uid}/last :
+    get:
+      summary: Get the last history event for a user
+      operationId: getHistoryLast
+      tags:
+      - history
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: result
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+            - success
+            - failed
+            - any
+      responses:
+        200:
+          $ref: '#/components/responses/HistoryItem'
+        400:
+          $ref: '#/components/responses/Error'
+        404:
+          $ref: '#/components/responses/NotFound'
 
   /api/v1/providers/saml/sp:
     post:
@@ -1020,6 +1080,27 @@ components:
           enum:
             - ok
             - ko
+    HistoryItem:
+      type: object
+      required:
+      - date
+      - result
+      properties:
+        date:
+         type: string
+         description: "Unix timestamp of the event"
+        ipAddr:
+         type: string
+         description: "String representation of the IP address"
+        result:
+          type: string
+          description: "Result of authentication attempt"
+          enum:
+            - success
+            - failed
+        error:
+          type: integer
+          description: "LemonLDAP::NG error code"
     confKey:
       type: string
       pattern: '^\w[\w\.\-]*$'
@@ -1214,7 +1295,7 @@ components:
             - RS256
             - RS384
             - RS512
-          default: HS512
+          default: RS256
         userInfoSignAlg:
           type: string
           enum:
@@ -1228,9 +1309,9 @@ components:
             - RS512
           default: ""
         accessTokenJWT:
-          type: bool
+          type: boolean
         accessTokenClaims:
-          type: bool
+          type: boolean
         authnLevel:
           type: integer
         rule:
@@ -1400,6 +1481,9 @@ components:
       properties:
         service:
           type: array
+          items:
+            type: string
+            format: "uri"
         userAttribute:
           type: string
           default: none
@@ -1519,6 +1603,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
+    HistoryList:
+      description: List of history entries, sorted by date, from most recent to least recent
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/HistoryItem'
+    HistoryItem:
+      description: History entry
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HistoryItem'
     NoContent:
       description: Successful modification
     Created:

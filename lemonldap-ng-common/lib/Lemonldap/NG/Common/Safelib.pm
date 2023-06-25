@@ -10,16 +10,28 @@ use Encode;
 use MIME::Base64;
 use Lemonldap::NG::Common::IPv6;
 use JSON::XS;
+use Net::CIDR;
 use Date::Parse;
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.17.0';
 
 # Set here all the names of functions that must be available in Safe objects.
 # Note that only functions, not methods, can be written here
 our $functions =
   [
-    qw(&checkLogonHours &date &dateToTime &checkDate &basic &unicode2iso &unicode2isoSafe &iso2unicode &iso2unicodeSafe &groupMatch &isInNet6 &varIsInUri &has2f_internal)
+    qw(&checkLogonHours &date &dateToTime &checkDate &basic &unicode2iso &unicode2isoSafe &iso2unicode &iso2unicodeSafe &groupMatch &isInNet6 &varIsInUri &has2f_internal &ipInSubnet)
   ];
+
+## @function boolean ipInSubnet(string ip, string network, ... )
+# Function to check if an IP is part of a network
+# @param $ip IP address to test
+# @param $network Network in CIDR notation.
+# You can call the function with multiple networks
+# @return 1 true, 0 else
+sub ipInSubnet {
+    my ( $ip, @networks ) = @_;
+    return Net::CIDR::cidrlookup( $ip, @networks );
+}
 
 ## @function boolean checkLogonHours(string logon_hours, string syntax, string time_correction, boolean default_access)
 # Function to check logon hours

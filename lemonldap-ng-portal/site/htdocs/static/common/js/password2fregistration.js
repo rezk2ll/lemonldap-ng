@@ -40,7 +40,7 @@ LemonLDAP::NG Password 2FA registration script
     } else {
       return $.ajax({
         type: 'POST',
-        url: portal + '/2fregisters/password/verify',
+        url: portal + "2fregisters/password/verify",
         dataType: 'json',
         data: {
           password: password,

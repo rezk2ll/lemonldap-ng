@@ -11,26 +11,97 @@ client-server software for creating file hosting services and using
 them.
 
 This documentation explains how to interconnect LemonLDAP::NG and
-NextCloud using SAML 2.0 protocol.
+NextCloud using Open ID Connect or SAML 2.0 protocol.
+
+OpenID Connect
+--------------
 
 Requirements
-------------
+~~~~~~~~~~~~
+
+Your LemonLDAP::NG server must be configured as OpenID Connect provider.
+
+Your NextCloud server must be able to join directly the LemonLDAP::NG server.
+It using SSL, be sure that certificate of LL::NG portal is trusted on NextCloud server.
+
+LemonLDAP::NG
+~~~~~~~~~~~~~
+
+Create a new OpenID Connect RP with these settings:
+
+* Client ID: generate a value
+* Cloent Secret: generate a value
+* Lgoin redirection URL: https://nextcloud.example.com/index.php/apps/oidc_login/oidc
+* Attributes: at least ``email`` and ``name``
+* User attribute: you must set here the identifier that is already used by NextCloud (if you already plugged NextCloud to your LDAP directory).
+  It can be ``entryUUID`` for OpenLDAP or ``objectGUID`` for AD. If this is not correctly configured, a new account will be created instead
+  of using the existing account.
+
+You can also share groups trough OpenID Connect. In this case, create a ``groups`` claim.
+
+Another optional claim is a boolean to let NextCloud know if user is admin or not. You can easily create a macro for this.
+
+NextCloud
+~~~~~~~~~
+
+Install and enable `"OpenID Connect Login" plugin <https://apps.nextcloud.com/apps/oidc_login>`__.
+
+In your ``config.php``, configure OIDC parameters:
+
+.. code-block:: php
+
+  'oidc_login_hide_password_form' => true,
+  'oidc_login_auto_redirect' => true,
+  'oidc_login_redir_fallback' => false,
+  'oidc_login_provider_url' => 'https://auth.example.com',
+  'oidc_login_tls_verify' => true,
+  'oidc_login_client_id' => 'clientid',
+  'oidc_login_client_secret' => 'clientsecret',
+  'oidc_login_disable_registration' => false,
+  'oidc_login_use_id_token' => false,
+  'oidc_login_attributes' =>
+    array (
+    'id' => 'sub',
+    'name' => 'name',
+    'mail' => 'email',
+  ),
+  'oidc_login_scope' => 'openid profile email',
+  'oidc_login_logout_url' => 'https://auth.example.com',
+
+
+For advanced conifguration, with groups and admin claims:
+
+.. code-block:: php
+
+  'oidc_login_attributes' =>
+    array (
+    'id' => 'sub',
+    'name' => 'name',
+    'mail' => 'email',
+    'groups' => 'groups',
+    'is_admin' => 'nextcloud_admin',
+  ),
+  'oidc_create_groups' => true,
+
+
+SAML
+----
+
+Requirements
+~~~~~~~~~~~~
 
 Make sure you have :doc:`set up LemonLDAP::NG a SAML IDP <../samlservice>`
 
 .. warning::
    Nextcloud requires your public SAML Signature key to be in `BEGIN CERTIFICATE`
    format, if this is not the case, you need to :ref:`convert your SAML key to
-   a certificate<samlservice-convert-certificate>`)
+   a certificate<samlservice-convert-certificate>`. Note that recent versions of 
+   LL:NG are already configured to use certificates instead public key.
 
 .. _nextcloud-1:
 
 NextCloud
 ~~~~~~~~~
-
-You need to `install the
-software <https://docs.nextcloud.com/server/stable/admin_manual/installation/index.html>`__.
-
 
 .. tip::
 
@@ -45,29 +116,16 @@ software <https://docs.nextcloud.com/server/stable/admin_manual/installation/ind
        'overwritehost' => 'nextcloud.example.com',
        'overwriteprotocol' => 'https',
 
-You also need to enable the "SAML authentication" plugin in your
-NextCloud. <code> + Apps -> Not enabled -> SAML authentication</code>
+Enable the `"SAML authentication" plugin <https://apps.nextcloud.com/apps/user_saml>`__.
 
-NextCloud, SAML 2.0 configuration
----------------------------------
+Create Certificate of Service Provider for Nextcloud
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Configuration of SAML 2.0 in NextCloud is pretty straightforward.
-
-
-You need to install for `Application 'SSO & SAML authentication' <https://apps.nextcloud.com/apps/user_saml>`__
-
-
-Create Certificate of Service provider for Nextcloud
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You will need private key and public key within a certificate to
-identify your SP in LL:NG Idp.
+You will need private key and public key within a certificate to identify your SP in LL:NG IDP.
 
 Select a host with a secure filesystem as a secure random source since private keys are generated.
 
-To create a private key and self-sign a certificate for its public key
-
-please adapt to your country/state
+To create a private key and self-sign a certificate for its public key please adapt to your country/state.
 
 It is recommended to use nextcloud hostname for Common Name.
 
@@ -88,7 +146,7 @@ Please note that once you have copied those in following process it is recommend
 key file from your system.
 
 Configure Service provider within Nextcloud
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -132,12 +190,12 @@ You can now download your metadata xml file.
 
 
 LL:NG, SAML 2.0 Service Provider configuration
-----------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We now have to define a service provider (e.g our nextcloud) in LL:NG.
 
 Go to "SAML service providers", click on "Add SAML SP" and name it as
-you want (example : 'NextCloud') ( was 'NGOSSO' in previous screenshoot )
+you want (example : 'NextCloud') (was 'NGOSSO' in previous screenshoot)
 
 In the new subtree 'NextCloud', open 'Metadata' and paste the content of
 your previously downloaded file (or upload the file)
@@ -156,8 +214,6 @@ Don't forget to save your configuration.
 You are now good to go, and you can add the application in
 :doc:`your menu<../portalmenu>` and
 :doc:`your virtual hosts<../configvhost>`.
-
-Your fields should look like this: |image6|
 
 .. |image0| image:: /applications/nextcloud-logo.png
    :class: align-center

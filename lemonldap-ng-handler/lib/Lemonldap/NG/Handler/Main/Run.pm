@@ -1,7 +1,7 @@
 # Main running methods file
 package Lemonldap::NG::Handler::Main::Run;
 
-our $VERSION = '2.16.3';
+our $VERSION = '2.17.0';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -242,7 +242,7 @@ sub run {
     else {
 
         # Redirect user to the portal
-        $class->logger->info("No cookie found")
+        $class->logger->debug("No cookie found")
           unless ($id);
 
         # if the cookie was fetched, a log is sent by retrieveSession()

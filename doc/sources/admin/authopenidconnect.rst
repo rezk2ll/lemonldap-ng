@@ -29,6 +29,9 @@ As an RP, LL::NG supports many OpenID Connect features:
 -  ID Token validation
 -  Get UserInfo as JSON or as JWT
 -  Logout on EndSession endpoint
+-  `Back Channel Logout <https://openid.net/specs/openid-connect-backchannel-1_0.html>`__
+-  `Front Channel Logout <https://openid.net/specs/openid-connect-frontchannel-1_0.html>`__
+-  `RP-Initiated Logout <https://openid.net/specs/openid-connect-rpinitiated-1_0.html>`__
 
 You can use this authentication module to link your LL::NG server to any
 OpenID Connect Provider. Here are some examples, with their specific
@@ -132,6 +135,17 @@ For example:
     you need to set SameSite cookie value to "Lax" or "None".
     See :doc:`SSO cookie parameters<ssocookie>`
 
+You may also be prompted for lougout type. LL::NG supports both *back* and
+*front* channels. Its default logout urls are:
+
+- https://<portal>/oauth2/flogout for the Front Channel
+- https://<portal>/oauth2/blogout for the Back Channel
+
+.. attention::
+
+    Front Channel use requires "iss" and "sid" parameters in requests (See
+    `frontchannel_logout_session_required <https://openid.net/specs/openid-connect-frontchannel-1_0.html#RPLogout>`__)
+
 After registration, the OP must give you a *Client ID* and a *Client
 secret* required to configure the OP in LL::NG.
 
@@ -212,11 +226,11 @@ Options
 Configuration
 """""""""""""
 -  **Configuration endpoint**: URL of OP configuration endpoint
--  **JWKS data timeout**: After this time, LL::NG will send a request
-   to retrieve a newer version of JWKS data. Set to 0 to disable it
--  **Client ID**: Client ID provided by OP
--  **Client secret**: Client secret provided by OP
--  **Store ID Token**: Allows one to store the ID Token (JWT) inside
+-  **JWKS data timeout**: After this time, LL::NG will do a request
+   to get a fresh version of JWKS data. Set to 0 to disable it
+-  **Client ID**: client ID given by OP
+-  **Client secret**: client secret given by OP
+-  **Store ID token**: Allows one to store the ID Token (JWT) inside
    user session. Do not enable it unless you need to replay this token
    on an application, or if you need the id_token_hint parameter when
    using logout.
@@ -229,7 +243,9 @@ Protocol
 -  **Prompt**: Value of prompt parameter (example: consent)
 -  **Max age**: Value of max_age parameter (example: 3600)
 -  **Locales UI**: Value of ui_locales parameter (example: en-GB en fr-FR fr)
--  **ACR values**: Value acr_values parameters (example: loa-1)
+-  **ACR values**: Space-separated list of acceptable ACR values (example:
+   'loa-2 loa-3'). Authentication will fail if the OpenID Provider does not
+   supply one of the values listed here in the ID Token.
 -  **Token endpoint authentication method**: choice between
    ``client_secret_post`` and ``client_secret_basic``
 -  **Check JWT signature**: Set to 0 to disable JWT signature

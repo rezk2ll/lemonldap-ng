@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON qw(from_json to_json);
+use JSON                       qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -22,7 +22,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use String::Random qw/random_string/;
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.17.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Issuer
@@ -110,11 +110,11 @@ sub init {
     $self->addRouteFromConf(
         'Auth',
         oidcServiceMetaDataCheckSessionURI  => 'checkSession',
-        oidcServiceMetaDataTokenURI         => 'badAuthRequest',
-        oidcServiceMetaDataUserInfoURI      => 'badAuthRequest',
-        oidcServiceMetaDataJWKSURI          => 'badAuthRequest',
-        oidcServiceMetaDataRegistrationURI  => 'badAuthRequest',
-        oidcServiceMetaDataIntrospectionURI => 'badAuthRequest',
+        oidcServiceMetaDataTokenURI         => 'token',
+        oidcServiceMetaDataUserInfoURI      => 'userInfo',
+        oidcServiceMetaDataJWKSURI          => 'jwks',
+        oidcServiceMetaDataRegistrationURI  => 'registration',
+        oidcServiceMetaDataIntrospectionURI => 'introspection',
     );
 
     # Metadata (.well-known/openid-configuration)
@@ -360,29 +360,6 @@ sub run {
                 return $self->reAuth($req);
             }
 
-            my $max_age         = $oidc_request->{'max_age'};
-            my $_lastAuthnUTime = $req->{sessionInfo}->{_lastAuthnUTime};
-            if ( $max_age && time > $_lastAuthnUTime + $max_age ) {
-                $self->logger->debug(
-"Reauthentication forced because authentication time ($_lastAuthnUTime) is too old (>$max_age s)"
-                );
-                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
-                return $self->reAuth($req);
-            }
-
-            # Check if we have sufficient auth level
-            my $authenticationLevel =
-              $req->{sessionInfo}->{authenticationLevel} || 0;
-            if ( $authenticationLevel < $spAuthnLevel ) {
-                $self->logger->debug(
-                        "Insufficient authentication level for service $rp"
-                      . " (has: $authenticationLevel, want: $spAuthnLevel)" );
-
-                # Reauth with sp auth level as target
-                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
-                return $self->upgradeAuth($req);
-            }
-
             # Check scope validity
             # We use a slightly more relaxed version of
             # https://tools.ietf.org/html/rfc6749#appendix-A.4
@@ -449,6 +426,29 @@ sub run {
                     $self->logger->debug(
                         "ID Token hint sub $sub matches current user");
                 }
+            }
+
+            my $max_age         = $oidc_request->{'max_age'};
+            my $_lastAuthnUTime = $req->{sessionInfo}->{_lastAuthnUTime};
+            if ( $max_age && time > $_lastAuthnUTime + $max_age ) {
+                $self->logger->debug(
+"Reauthentication forced because authentication time ($_lastAuthnUTime) is too old (>$max_age s)"
+                );
+                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
+                return $self->reAuth($req);
+            }
+
+            # Check if we have sufficient auth level
+            my $authenticationLevel =
+              $req->{sessionInfo}->{authenticationLevel} || 0;
+            if ( $authenticationLevel < $spAuthnLevel ) {
+                $self->logger->debug(
+                        "Insufficient authentication level for service $rp"
+                      . " (has: $authenticationLevel, want: $spAuthnLevel)" );
+
+                # Reauth with sp auth level as target
+                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
+                return $self->upgradeAuth($req);
             }
 
             # Compute scopes
@@ -1011,8 +1011,11 @@ sub run {
                 # trivial to bypass
                 my $payload = getJWTPayload($id_token_hint);
                 my $azp     = $payload->{azp};
+                my $sid     = $payload->{sid};
+                my $sub     = $payload->{sub};
 
                 # Check bypassConfirm parameter for rp using audience
+                my $rp;
                 foreach ( keys %{ $self->conf->{oidcRPMetaDataOptions} } ) {
                     my $logout_rp = $_;
                     my $rpid =
@@ -1027,9 +1030,34 @@ sub run {
                         $self->logger->debug(
                             "Bypass logout confirm for RP $logout_rp")
                           if $bypassConfirm;
+                        $rp = $logout_rp;
                         last;
                     }
                 }
+
+                unless ($rp) {
+                    $self->userLogger->error(
+                        "ID Token hint azp doesn't match any known RP");
+                    $bypassConfirm = 0;
+                }
+
+                my $user_id =
+                  $self->getUserIDForRP( $req, $rp, $req->{sessionInfo} );
+                unless ( $sub eq $user_id ) {
+                    $self->userLogger->error(
+                        "ID Token hint sub $sub does not match user $user_id");
+                    $bypassConfirm = 0;
+                }
+                else {
+                    if ( $self->getSidFromSession( $rp, $req->{sessionInfo} ) ne
+                        $sid )
+                    {
+                        $self->userLogger->error(
+                            "ID Token hint `sid` does not match user session");
+                        $bypassConfirm = 0;
+                    }
+                }
+
             }
 
             # Ask consent for logout
@@ -2004,7 +2032,8 @@ sub registration {
 
     $self->logger->debug("Client metadata received: $client_metadata_json");
 
-    my $client_metadata = $self->decodeClientMetadata($client_metadata_json);
+    my $client_metadata = $self->decodeClientMetadata($client_metadata_json)
+      or return $self->p->sendError( $req, 'invalid_client_metadata', 400 );
     my $registration_response = {};
 
     # Check redirect_uris
@@ -2029,7 +2058,13 @@ sub registration {
       $client_metadata->{id_token_signed_response_alg} || "RS256";
     my $userinfo_signed_response_alg =
       $client_metadata->{userinfo_signed_response_alg};
-    my $redirect_uris = $client_metadata->{redirect_uris};
+    my $redirect_uris          = $client_metadata->{redirect_uris};
+    my $backchannel_logout_uri = $client_metadata->{backchannel_logout_uri};
+    my $backchannel_logout_session_required =
+      $client_metadata->{backchannel_logout_session_required};
+    my $frontchannel_logout_uri = $client_metadata->{backchannel_logout_uri};
+    my $frontchannel_logout_session_required =
+      $client_metadata->{frontchannel_logout_session_required};
 
     # Register RP in global configuration
     my $conf = $self->confAcc->getConf( { raw => 1, noCache => 1 } );
@@ -2054,6 +2089,25 @@ sub registration {
     $conf->{oidcRPMetaDataOptions}->{$rp}
       ->{oidcRPMetaDataOptionsUserInfoSignAlg} = $userinfo_signed_response_alg
       if defined $userinfo_signed_response_alg;
+
+    if ($frontchannel_logout_uri) {
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutType}
+          = 'front';
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutUrl}
+          = $frontchannel_logout_uri;
+        $conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsLogoutSessionRequired} =
+          $frontchannel_logout_session_required;
+    }
+    elsif ($backchannel_logout_uri) {
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutType}
+          = 'back';
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsLogoutUrl}
+          = $backchannel_logout_uri;
+        $conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsLogoutSessionRequired} =
+          $backchannel_logout_session_required;
+    }
 
     # Exported Vars
     if (
@@ -2165,13 +2219,6 @@ sub checkSession {
     );
 }
 
-sub badAuthRequest {
-    my ( $self, $req ) = @_;
-    my $desc =
-      "This endpoint is not supposed to be called by authenticated users";
-    return $self->sendOIDCError( $req, 'invalid_request', 400, $desc );
-}
-
 # Nothing to do here
 sub logout {
     my ( $self, $req ) = @_;
@@ -2184,22 +2231,85 @@ sub logout {
                 return PE_ERROR;
             }
             if ( my $url = $rpConf->{oidcRPMetaDataOptionsLogoutUrl} ) {
+
+                # FRONT CHANNEL
                 if ( $rpConf->{oidcRPMetaDataOptionsLogoutType} eq 'front' ) {
                     if ( $rpConf->{oidcRPMetaDataOptionsLogoutSessionRequired} )
                     {
-                        my $user_id = $self->getUserIDForRP( $req, $rp,
-                            $req->{sessionInfo} );
                         $url .= ( $url =~ /\?/ ? '&' : '?' )
                           . build_urlencoded(
                             iss => $self->iss,
-                            sid => $user_id
+                            sid => $self->getSidFromSession(
+                                $rp, $req->{sessionInfo}
+                            )
                           );
                     }
                     $req->info( qq'<iframe src="$url" class="noborder">'
                           . '</iframe>' );
                 }
-                else {
-                    # TODO #1194
+
+                # BACK CHANNEL
+                elsif ( $rpConf->{oidcRPMetaDataOptionsLogoutType} eq 'back' ) {
+
+                    # Logout token must contain:
+                    #  - iss: issuer identifier
+                    #  - sub: subject id (user id)
+                    #  OR/AND
+                    #  - sid: OP session id given to the RP
+                    #  - aud: audience
+                    #  - iat: issue at time
+                    #  - jti: JWT token id
+                    #  - events: should be :
+                    #   { 'http://schemas.openid.net/event/backchannel-logout"
+                    #     => {} } # or a JSON object
+                    #
+                    # Logout token should be send using a POST request:
+                    #
+                    #   POST /backChannelUri HTTP/1.1
+                    #   Host: rp
+                    #   Content-Type: application/x-www-form-urlencoded
+                    #
+                    #   logout_token=<JWT value>
+                    #
+                    # RP response should be 200 (204 accepted) or 400 for errors
+                    my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
+                      ->{oidcRPMetaDataOptionsAccessTokenSignAlg} || "RS256";
+                    $self->logger->debug(
+                        "Access Token signature algorithm: $alg");
+                    my $userId =
+                      $self->getUserIDForRP( $req, $rp, $req->userData );
+                    my $logoutToken = {
+                        iss => $self->iss,
+                        sub => $userId,
+                        aud => $self->getAudiences($rp),
+                        iat => time,
+
+                        # Random string: no response expected from RP
+                        jti => join( "",
+                            map { [ "0" .. "9", 'A' .. 'Z' ]->[ rand 36 ] }
+                              1 .. 8 ),
+                        events => { $self->BACKCHANNEL_EVENTSKEY => {} },
+                    };
+                    if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
+                        ->{oidcRPMetaDataOptionsLogoutSessionRequired} )
+                    {
+                        $logoutToken->{sid} =
+                          $self->getSidFromSession( $rp, $req->{sessionInfo} );
+                    }
+                    $self->logger->debug( "Logout token content: "
+                          . JSON::to_json($logoutToken) );
+                    my $jwt  = $self->createJWT( $logoutToken, $alg, $rp );
+                    my $resp = $self->ua->post(
+                        $url,
+                        { logout_token => $jwt },
+                        'Content-Type' => 'application/x-www-form-urlencoded',
+                    );
+                    $resp->is_error
+                      ? $self->logger->warn(
+                        "OIDC back channel: unable to unlog $userId from $rp: "
+                          . $resp->status_line )
+                      : $self->logger->info(
+                        "OIDC back channel: user $userId unlogged from $rp");
                 }
             }
         }
@@ -2284,58 +2394,59 @@ sub metadata {
             issuer => $issuer,
 
             # Endpoints
+            authorization_endpoint => $baseUrl . $authorize_uri,
             token_endpoint         => $baseUrl . $token_uri,
             userinfo_endpoint      => $baseUrl . $userinfo_uri,
             jwks_uri               => $baseUrl . $jwks_uri,
-            authorization_endpoint => $baseUrl . $authorize_uri,
-            end_session_endpoint   => $baseUrl . $endsession_uri,
-
-            #check_session_iframe   => $baseUrl . $checksession_uri,
-            introspection_endpoint => $baseUrl . $introspection_uri,
-
-            # Logout capabilities
-            backchannel_logout_supported          => JSON::false,
-            backchannel_logout_session_supported  => JSON::false,
-            frontchannel_logout_supported         => JSON::true,
-            frontchannel_logout_session_supported => JSON::true,
             (
                 $self->conf->{oidcServiceAllowDynamicRegistration}
                 ? ( registration_endpoint => $baseUrl . $registration_uri )
                 : ()
             ),
+            end_session_endpoint => $baseUrl . $endsession_uri,
+
+            #check_session_iframe   => $baseUrl . $checksession_uri,
+            introspection_endpoint => $baseUrl . $introspection_uri,
 
             # Scopes
             scopes_supported => [qw/openid profile email address phone/],
-            response_types_supported              => $response_types,
-            grant_types_supported                 => $grant_types,
-            acr_values_supported                  => \@acr,
-            subject_types_supported               => ["public"],
+            response_types_supported => $response_types,
+            response_modes_supported => [ "query", "fragment", "form_post", ],
+            grant_types_supported    => $grant_types,
+            acr_values_supported     => \@acr,
+            subject_types_supported  => ["public"],
             token_endpoint_auth_methods_supported =>
               [qw/client_secret_post client_secret_basic/],
             introspection_endpoint_auth_methods_supported =>
               [qw/client_secret_post client_secret_basic/],
-            claims_supported                 => [qw/sub iss auth_time acr/],
+            claims_supported                 => [qw/sub iss auth_time acr sid/],
             request_parameter_supported      => JSON::true,
             request_uri_parameter_supported  => JSON::true,
             require_request_uri_registration => JSON::false,
-            response_modes_supported => [ "query", "fragment", "form_post", ],
 
             # Algorithms
             id_token_signing_alg_values_supported =>
               [qw/none HS256 HS384 HS512 RS256 RS384 RS512/],
+
+            # id_token_encryption_alg_values_supported
+            # id_token_encryption_enc_values_supported
             userinfo_signing_alg_values_supported =>
               [qw/none HS256 HS384 HS512 RS256 RS384 RS512/],
 
+            # userinfo_encryption_alg_values_supported
+            # userinfo_encryption_enc_values_supported
+
             # PKCE
             code_challenge_methods_supported => [qw/plain S256/],
+
+            # Logout supported methods
+            frontchannel_logout_supported         => JSON::true,
+            frontchannel_logout_session_supported => JSON::true,
+            backchannel_logout_supported          => JSON::true,
+            backchannel_logout_session_supported  => JSON::true,
         }
     );
 
-    # id_token_encryption_alg_values_supported
-    # id_token_encryption_enc_values_supported
-
-    # userinfo_encryption_alg_values_supported
-    # userinfo_encryption_enc_values_supported
     # request_object_signing_alg_values_supported
     # request_object_encryption_alg_values_supported
     # request_object_encryption_enc_values_supported
@@ -2343,7 +2454,6 @@ sub metadata {
     # token_endpoint_auth_signing_alg_values_supported
     # display_values_supported
     # claim_types_supported
-    # RECOMMENDED # claims_supported
     # service_documentation
     # claims_locales_supported
     # ui_locales_supported
@@ -2493,11 +2603,12 @@ sub _generateIDToken {
         acr       => $id_token_acr,  # Authentication Context Class Reference
         azp       => $client_id,     # Authorized party, this is used for logout
                                      # TODO amr
+        sid       => $self->getSidFromSession( $rp, $sessionInfo ), # Session id
     };
 
     for ( keys %{$extra_claims} ) {
         $id_token_payload_hash->{$_} = $extra_claims->{$_}
-          if $extra_claims->{$_};
+          if $extra_claims->{$_} and not $id_token_payload_hash->{$_};
     }
 
     # Decided by response_type or forced in RP config
@@ -2509,7 +2620,7 @@ sub _generateIDToken {
 
         foreach ( keys %$claims ) {
             $id_token_payload_hash->{$_} = $claims->{$_}
-              unless ( $_ eq "sub" );
+              unless ( $_ eq "sub" or $_ eq "sid" );
         }
     }
 

@@ -787,6 +787,10 @@ sub createServer {
       = @_;
     my $server;
 
+    # https://dev.entrouvert.org/issues/51415
+    my $save_env = $ENV{'SSL_CERT_FILE'};
+    $ENV{'SSL_CERT_FILE'} = "/dev/null";
+
     eval {
         $server = Lasso::Server::new_from_buffers( $metadata, $private_key,
             $private_key_password, $certificate );
@@ -797,6 +801,13 @@ sub createServer {
                 $private_key_enc, $private_key_enc_password );
         }
     };
+
+    if ( defined $save_env ) {
+        $ENV{'SSL_CERT_FILE'} = $save_env;
+    }
+    else {
+        delete $ENV{'SSL_CERT_FILE'};
+    }
 
     if ($@) {
         $self->checkLassoError($@);

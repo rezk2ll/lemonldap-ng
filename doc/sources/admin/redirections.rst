@@ -45,23 +45,25 @@ Nginx ``error_page`` directive, to redirect user on a specific page:
 .. code-block:: apache
 
    # Apache: Common error page and security parameters
-   ErrorDocument 403 http://auth.example.com/?lmError=403
-   ErrorDocument 500 http://auth.example.com/?lmError=500
-   ErrorDocument 503 http://auth.example.com/?lmError=503
+   ErrorDocument 403 http://auth.example.com/lmerror/403
+   ErrorDocument 500 http://auth.example.com/lmerror/500
+   ErrorDocument 503 http://auth.example.com/lmerror/503
+
+
+With Nginx, you must add these directives in the `location / {` section:
 
 .. code-block:: nginx
 
    # Nginx: Common error page and security parameters
-   error_page 403 http://auth.example.com/?lmError=403;
-   error_page 500 http://auth.example.com/?lmError=500;
-   error_page 503 http://auth.example.com/?lmError=503;
+   error_page 403 http://auth.example.com/lmerror/403;
+   error_page 500 http://auth.example.com/lmerror/500;
+   error_page 503 http://auth.example.com/lmerror/503;
 
 It is also possible to redirect the user without using
 ``ErrorDocument``: the Handler will not return 403, 500, 503 code, but
 code 302 (REDIRECT).
 
-The user will be redirected on portal URL with error in the ``lmError``
-URL parameter.
+The user will be redirected on portal URL with error in the ``lmerror`` route.
 
 These parameters can be configured in Manager, in ``General Parameters``
 > ``Advanced parameters`` > ``Handler redirections``:

@@ -67,13 +67,13 @@ repositories:
 
 ::
 
-   apt install apt-transport-https
+   apt install apt-transport-https curl gnupg
 
 You will need to trust the `DEB signing key <https://lemonldap-ng.org/_media/rpm-gpg-key-ow2>`__ :
 
 ::
 
-   wget -O - https://lemonldap-ng.org/_media/rpm-gpg-key-ow2 | apt-key add -
+   curl https://lemonldap-ng.org/_media/rpm-gpg-key-ow2 | gpg --dearmor > /usr/share/keyrings/lemonldap-ng-archive-keyring.gpg
 
 Then, add the official LL::NG repository
 
@@ -84,7 +84,7 @@ Then, add the official LL::NG repository
 ::
 
    # LemonLDAP::NG repository
-   deb     https://lemonldap-ng.org/deb 2.0 main
+   deb [arch=amd64 signed-by=/usr/share/keyrings/lemonldap-ng-archive-keyring.gpg] https://lemonldap-ng.org/deb 2.0 main
 
 
 .. tip::

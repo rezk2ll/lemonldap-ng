@@ -8,18 +8,17 @@ Presentation
 automation tool leveraging local IP behavior detection and a
 community-powered IP reputation system.
 
-LL::NG provides a **CrowdSec** bouncer that can reject Crowdsec banned-IP
+LL::NG provides a **CrowdSec** bouncer that can reject CrowdSec banned IP
 requests or just provide an environment variable that can be used in
 another plugin rule. For example, a second factor may be required if user's
-IP is CrowdSec-banned.
+IP is CrowdSec banned.
 
-You can find **CrowdSec** agents in `CrowdSec hub <https://hub.crowdsec.net>`
+You can also find **CrowdSec** agents in `CrowdSec hub <https://hub.crowdsec.net>`__.
 
 Configuration
 -------------
 
-To configure bouncer plugin, go in ``General Parameters`` > ``Plugins`` >
-``CrowdSec``.
+To configure bouncer plugin, go in ``General Parameters`` > ``Advanced Parameters`` > ``Security`` > ``CrowdSec Bouncer``.
 
 You can then configure:
 
