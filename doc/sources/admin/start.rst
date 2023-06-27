@@ -15,12 +15,14 @@ Documentation for LemonLDAP::NG 2.0
    :hidden:
 
    index_presentation
+   index_upgrade
    index_installation
 
 .. toctree::
    :caption: Configuration
    :hidden:
 
+   index_webserver
    index_firststeps
    index_portal
    index_handler
@@ -59,42 +61,19 @@ Presentation
 -  :doc:`Quick start tutorial<quickstart>`
 -  :doc:`Choose a platform<platformsoverview>`
 
+Upgrading
+---------
+
+-  :doc:`Upgrade notes<upgrade>`
+
 Installation
 ------------
 
-Before installation
-~~~~~~~~~~~~~~~~~~~
+-  :doc:`prereq`
 
-|image0|
-
--  :doc:`Prerequisites and dependencies<prereq>`
--  :doc:`Upgrade notes<upgrade>`
-
-.. _installation-1:
-
-Installation
-~~~~~~~~~~~~
-
-|image1|
-
--  :doc:`Installation from the tarball<installtarball>`
 -  :doc:`Installation on Debian/Ubuntu with packages<installdeb>`
 -  :doc:`Installation on RHEL/CentOS with packages<installrpm>`
--  :doc:`Installation on Suse Linux Enterprise Server with packages<installsles>`
 -  :doc:`Run in LemonLDAP::NG in Docker<docker>`
--  :doc:`Node.js handler<nodehandler>` |new|
-
-After installation
-~~~~~~~~~~~~~~~~~~
-
-|image3|
-
--  :doc:`Deploy Nginx configuration<confignginx>` *(recommended
-   configuration)*
--  :doc:`Deploy Traefik configuration<configtraefik>`
--  :doc:`Deploy Apache configuration<configapache>`
--  :doc:`Deploy LemonLDAP::NG on Plack servers family<configplack>`
-   *(Twiggy, Starman, Corona,...)* |new|
 
 
 .. _start-configuration:
@@ -102,8 +81,15 @@ After installation
 Configuration
 -------------
 
-First steps
-~~~~~~~~~~~
+Configuring your Web server
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  :doc:`Deploy Nginx configuration<confignginx>` *(recommended
+   configuration)*
+-  :doc:`Deploy Apache configuration<configapache>`
+
+Basics
+~~~~~~
 
 |image5|
 
@@ -493,6 +479,12 @@ Advanced features
 -  :doc:`Advanced PSGI usage<psgi>`
 -  :doc:`Ignore some manager tests<managertests>`
 -  :doc:`See full parameters list<parameterlist>`
+-  :doc:`Installation from the tarball<installtarball>`
+-  :doc:`Installation on Suse Linux Enterprise Server with packages<installsles>`
+-  :doc:`Deploy Traefik configuration<configtraefik>`
+-  :doc:`Deploy LemonLDAP::NG on Plack servers family<configplack>`
+   *(Twiggy, Starman, Corona,...)* |new|
+-  :doc:`Node.js handler<nodehandler>` |new|
 
 Mini howtos
 -----------
