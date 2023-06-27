@@ -26,6 +26,9 @@ PERLOPTIONS=
 JSCOMPRESS=$(PROD)
 CSSCOMPRESS=$(PROD)
 
+# Perltidy version
+PERLTIDY_VERSION=20220217
+
 # External commands
 PERL=$$(which perl)
 PERLVERSION=`perl -e '$$version = $$^V; $$version =~ s/v//; print $$version'`
@@ -1177,8 +1180,11 @@ test-diff:
 		$(DIFF) $$file `echo $$file|sed -e s/lib/blib\\\/lib/`; \
 	done
 
+tidyversion:
+	@echo $(PERLTIDY_VERSION)
+
 tidy: clean
-	@if perltidy -v|grep v20220217 >/dev/null; then \
+	@if perltidy -v|grep "$(PERLTIDY_VERSION)" >/dev/null; then \
 		find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \) -print0 | xargs -t -0 $(PARAXARGS) -n10 perltidy -se -b -bext=/ ;\
 	else echo "Wrong perltidy version, please install Perl::Tidy@20220217" ; exit 1 ;\
 	fi
