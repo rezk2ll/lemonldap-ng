@@ -245,6 +245,10 @@ For additional information, please read the `Log4Perl documentation <https://met
 * ``%Q{id}``: Session ID of the current user
 * ``%E{ENV_VAR}``: content of the ``ENV_VAR`` variable
 
+.. versionadded:: 2.17
+
+* ``%S{mail}``: content of the ``mail`` session variable
+
 Sentry
 ~~~~~~
 
