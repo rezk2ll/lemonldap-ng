@@ -69,7 +69,7 @@ Set the NameID value to persistent format.
 
 You must use the base64 value of `mS-DS-ConsistencyGuid` attribute. (also known as immutableID)
 
-Note that `-` in variable names may lead to problems. You shoud declare a LDAP mapping immutableid <-> mS-DS-ConsistencyGuid, and then declare a macro : `$immutableb64 = encode_base64( "$immutable", "" )`
+Note that `-` in variable names may lead to problems. You shoud declare a LDAP mapping immutableid <-> mS-DS-ConsistencyGuid, and then declare a macro : `$immutableb64 = encode_base64( "$immutableid", "" )`
 
 
 Create a SAML attribute named IDPEmail which contains the user principal
