@@ -30,11 +30,11 @@ For CentOS/RHEL:
 
    yum install perl-Authen-Radius
 
-In Debian/Ubuntu, install the library through apt-get command
+In Debian/Ubuntu, install the library through apt command
 
 .. code-block:: shell
 
-   apt-get install libauthen-radius-perl
+   apt install libauthen-radius-perl
 
 Configuration
 -------------

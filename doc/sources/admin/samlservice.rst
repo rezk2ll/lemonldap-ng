@@ -54,7 +54,7 @@ You will only need to install liblasso-perl package:
 
 ::
 
-   sudo apt-get install liblasso-perl
+   apt install liblasso-perl
 
 RHEL/CentOS/Fedora
 ^^^^^^^^^^^^^^^^^^
