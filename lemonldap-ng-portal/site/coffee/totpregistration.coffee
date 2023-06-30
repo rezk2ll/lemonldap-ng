@@ -81,8 +81,10 @@ verify = ->
 					else
 						setMsg data.error, 'danger'
 				else
-					$(document).trigger "mfaAdded", [ { "type": "totp" } ]
-					setMsg 'yourKeyIsRegistered', 'success'					
+					e = jQuery.Event( "mfaAdded" )
+					$(document).trigger e, [ { "type": "totp" } ]
+					if !e.isDefaultPrevented()
+						setMsg 'yourKeyIsRegistered', 'success'
 					
 $(document).ready ->
 	getKey()
