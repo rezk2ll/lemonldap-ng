@@ -5,6 +5,21 @@ Some portal functions (such as 2FA registration) are performed by Javascript.
 
 We offer a few custom events that let you react to certain high-level Javascript events
 
+Preventing default behavior
+---------------------------
+
+.. versionadded:: 2.17
+
+Event handlers can stop the default LemonLDAP::NG behavior from executing:
+
+.. code:: javascript
+
+    $(document).on( "sslFailure", { }, function( event ) {
+                event.preventDefault();
+                // Navigate the user to the smartcard help page, etc.
+    });
+
+
 Second factor management
 ------------------------
 

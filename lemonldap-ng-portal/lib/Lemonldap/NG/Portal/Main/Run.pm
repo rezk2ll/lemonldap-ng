@@ -1357,7 +1357,7 @@ sub buildUrl {
         }
     }
     $uri->path_segments(@pathSg);
-    return $uri;
+    return $uri->as_string;
 }
 
 1;
