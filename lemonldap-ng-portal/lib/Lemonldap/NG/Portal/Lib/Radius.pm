@@ -131,10 +131,11 @@ sub _parse_attributes {
 sub check_pwd {
     my ( $self, $req, $sessionInfo, $name, $pwd ) = @_;
 
-    my @attributes = (
-        { Name => 1, Value => $name, Type => 'string' },
-        { Name => 2, Value => $pwd,  Type => 'string' },
-    );
+    my @attributes;
+    push @attributes, { Name => 1, Value => $name, Type => 'string' };
+    if ($pwd) {
+        push @attributes, { Name => 2, Value => $pwd, Type => 'string' };
+    }
 
     while ( my ( $k, $r ) = each %{ $self->req_attributes_rules } ) {
         my $v    = eval { $r->( $req, $sessionInfo ) };
