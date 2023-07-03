@@ -902,6 +902,7 @@
 "radius2fLogo":"Лого",
 "radius2fRequestAttributes":"Access request attributes",
 "radius2fSecret":"Общий секрет",
+"radius2fSendInitialRequest":"Add login validation call",
 "radius2fServer":"Имя хоста сервера",
 "radius2fTimeout":"Время ожидания аутентификации",
 "radius2fUsernameSessionKey":"Ключ сеанса, содержащий логин",

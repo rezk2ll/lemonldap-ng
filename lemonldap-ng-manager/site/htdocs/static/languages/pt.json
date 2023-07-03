@@ -902,6 +902,7 @@
 "radius2fLogo":"Logo",
 "radius2fRequestAttributes":"Atributos de requisição de acesso",
 "radius2fSecret":"Segredo compartilhado",
+"radius2fSendInitialRequest":"Add login validation call",
 "radius2fServer":"Hostname do servidor",
 "radius2fTimeout":"Expiração de autenticação",
 "radius2fUsernameSessionKey":"Chave de sessão contendo o login",

@@ -1045,6 +1045,7 @@ sub tree {
                                 'radius2fTimeout',
                                 'radius2fDictionaryFile',
                                 'radius2fRequestAttributes',
+                                'radius2fSendInitialRequest',
                                 'radius2fAuthnLevel',
                                 'radius2fLabel',
                                 'radius2fLogo'

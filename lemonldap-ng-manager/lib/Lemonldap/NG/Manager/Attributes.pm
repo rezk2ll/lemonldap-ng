@@ -3213,6 +3213,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'radius2fSecret' => {
             'type' => 'text'
         },
+        'radius2fSendInitialRequest' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'radius2fServer' => {
             'type' => 'text'
         },

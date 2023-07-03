@@ -2211,6 +2211,11 @@ sub attributes {
             default       => 20,
             documentation => 'Radius 2f verification timeout',
         },
+        radius2fSendInitialRequest => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Dial in to radius server before displaying form',
+        },
         radius2fAuthnLevel => {
             type          => 'intOrNull',
             documentation =>

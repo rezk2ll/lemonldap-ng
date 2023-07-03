@@ -902,6 +902,7 @@
 "radius2fLogo":"Logo",
 "radius2fRequestAttributes":"Access request attributes",
 "radius2fSecret":"Chia sẻ bí mật",
+"radius2fSendInitialRequest":"Add login validation call",
 "radius2fServer":"Máy chủ lưu trữ",
 "radius2fTimeout":"Hết thời gian xác thực",
 "radius2fUsernameSessionKey":"Khóa phiên chứa thông tin đăng nhập",

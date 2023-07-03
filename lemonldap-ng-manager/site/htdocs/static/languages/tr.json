@@ -902,6 +902,7 @@
 "radius2fLogo":"Logo",
 "radius2fRequestAttributes":"Erişim isteği öznitelikleri",
 "radius2fSecret":"Paylaşılan sır",
+"radius2fSendInitialRequest":"Add login validation call",
 "radius2fServer":"Sunucu konak adı",
 "radius2fTimeout":"Doğrulama zaman aşımı",
 "radius2fUsernameSessionKey":"Oturum anahtarı giriş içerir",
