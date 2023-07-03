@@ -9,13 +9,16 @@ require 't/smtp.pm';
 
 use_ok('Lemonldap::NG::Common::FormEncode');
 
+our $triggered = 0;
+
 my $client = LLNG::Manager::Test->new( {
         ini => {
-            logLevel                  => 'error',
-            radius2fActivation        => 1,
-            authentication            => 'Demo',
-            userDB                    => 'Same',
-            radius2fRequestAttributes => {
+            logLevel                   => 'error',
+            radius2fActivation         => 1,
+            authentication             => 'Demo',
+            userDB                     => 'Same',
+            radius2fSendInitialRequest => 1,
+            radius2fRequestAttributes  => {
                 'NAS-Identifier'  => 'lemonldap',
                 'X-Email-Address' => '$mail',
             }
@@ -33,6 +36,15 @@ no warnings 'redefine';
         $hattr{ $a->{Name} } = $a->{Value};
     }
 
+    if ( exists $hattr{2} ) {
+        is( $main::triggered, 1, "Has been triggered before" );
+        $main::triggered = 0;
+    }
+    else {
+        is( $main::triggered, 0, "Has not been triggered before" );
+        $main::triggered = 1;
+    }
+
     # Expect attributes
     is( $hattr{'NAS-Identifier'},
         'lemonldap', "Found NAS-Identifier attribute" );
@@ -40,7 +52,7 @@ no warnings 'redefine';
         'dwho@badwolf.org', "Found X-Email-Address attribute" );
 
     # Succeed if login == password, return no attributes
-    return { result => ( $hattr{1} eq $hattr{2} ), };
+    return { result => ( defined $hattr{2} and ( $hattr{1} eq $hattr{2} ) ), };
 };
 
 sub runTestWithCode {
