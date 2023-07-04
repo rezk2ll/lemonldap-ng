@@ -148,6 +148,7 @@ sub ssoMatch {
 # run() manages only "authorize" and "logout" endpoints.
 sub run {
     my ( $self, $req, $path ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
 
     # Check activation rule
     unless ( $self->rule->( $req, $req->sessionInfo ) ) {
@@ -1143,6 +1144,7 @@ sub run {
 # Handle token endpoint
 sub token {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect TOKEN URL");
 
     my $rp = $self->checkEndPointAuthenticationCredentials($req);
@@ -1842,6 +1844,7 @@ sub _handleRefreshTokenGrant {
 # Handle userinfo endpoint
 sub userInfo {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect USERINFO URL");
 
     my $access_token = $self->getEndPointAccessToken($req);
@@ -1925,6 +1928,7 @@ sub _getSessionFromAccessTokenData {
 
 sub introspection {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect INTROSPECTION URL");
 
     my $rp = $self->checkEndPointAuthenticationCredentials($req);
@@ -1973,6 +1977,7 @@ sub introspection {
 # Handle jwks endpoint
 sub jwks {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect JWKS URL");
 
     my $jwks = { keys => [] };
@@ -1999,6 +2004,7 @@ sub jwks {
 # Handle register endpoint
 sub registration {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect REGISTRATION URL");
 
     # TODO: check Initial Access Token
@@ -2149,6 +2155,7 @@ sub registration {
 # Handle logout endpoint for unauthenticated users
 sub endSessionDone {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL  detected as an OpenID Connect END SESSION URL");
     $self->logger->debug("User is already logged out");
 
@@ -2195,6 +2202,7 @@ sub endSessionDone {
 # Handle checksession endpoint
 sub checkSession {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect CHECK SESSION URL");
 
     # TODO: access_control_allow_origin => '*'
@@ -2211,6 +2219,7 @@ sub checkSession {
 # Nothing to do here
 sub logout {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     if ( my $s = $req->userData->{_oidcConnectedRP} ) {
         my @rps = grep /\w/, split( ',', $s );
         foreach my $rp (@rps) {
@@ -2310,6 +2319,7 @@ sub logout {
 
 sub metadata {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     my $issuerDBOpenIDConnectPath = $self->conf->{issuerDBOpenIDConnectPath};
     my $authorize_uri     = $self->conf->{oidcServiceMetaDataAuthorizeURI};
     my $token_uri         = $self->conf->{oidcServiceMetaDataTokenURI};

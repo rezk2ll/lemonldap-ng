@@ -657,6 +657,7 @@
 "oidcAttribute":"OIDC Niteliği",
 "oidcAuthnLevel":"Doğrulama seviyesi",
 "oidcConsents":"OpenID Connect izinleri",
+"oidcDropCspHeaders":"Drop CSP headers from OIDC responses",
 "oidcOP":"OpenID Connect Sağlayıcısı",
 "oidcOPMetaDataExportedVars":"Dışa aktarılan nitelikler",
 "oidcOPMetaDataJSON":"Üst veri",

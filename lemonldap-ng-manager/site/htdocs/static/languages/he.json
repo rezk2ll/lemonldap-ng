@@ -657,6 +657,7 @@
 "oidcAttribute":"OIDC Attribute",
 "oidcAuthnLevel":"דרגת אימות",
 "oidcConsents":"הסכמות OpenID Connect",
+"oidcDropCspHeaders":"Drop CSP headers from OIDC responses",
 "oidcOP":"ספק OpenID Connect",
 "oidcOPMetaDataExportedVars":"תכונות שייוצאו",
 "oidcOPMetaDataJSON":"נתוני על",

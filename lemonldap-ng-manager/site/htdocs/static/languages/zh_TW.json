@@ -657,6 +657,7 @@
 "oidcAttribute":"OIDC 屬性",
 "oidcAuthnLevel":"驗證等級",
 "oidcConsents":"OpenID 連線同意",
+"oidcDropCspHeaders":"Drop CSP headers from OIDC responses",
 "oidcOP":"OpenID 連線提供者",
 "oidcOPMetaDataExportedVars":"已匯出的屬性",
 "oidcOPMetaDataJSON":"詮釋資料",
