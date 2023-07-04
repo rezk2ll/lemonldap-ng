@@ -1587,7 +1587,7 @@ sub _handleAuthorizationCodeGrant {
 
         $refresh_token = $refreshTokenSession->id;
 
-        $self->logger->debug("Generated refresh token: $refresh_token");
+        $self->logger->debug("Generated offline refresh token: $refresh_token");
     }
 
     # For online access, if configured
@@ -1614,7 +1614,7 @@ sub _handleAuthorizationCodeGrant {
 
         $refresh_token = $refreshTokenSession->id;
 
-        $self->logger->debug("Generated refresh token: $refresh_token");
+        $self->logger->debug("Generated online refresh token: $refresh_token");
     }
 
     # Compute hash to store in at_hash
