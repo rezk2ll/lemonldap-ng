@@ -57,6 +57,11 @@ Mail second factor".
    the OTP code as password. By default, the attribute designated as
    ``whatToTrace`` is used.
 -  **Authentication timeout** (Optional): Allowed time to perform authentication
+-  **Dictionary**: radius dictionary file ex: /usr/share/freeradius/dictionary
+   This is mandatory if you want to send extra request attributes.
+-  **Request attributes**: a list of additional Radius attributes to send with
+   the Access Request. Key is the radius attribute name in the provided
+   dictionary, value is a perl expression used to populate the attribute value.
 -  **Authentication level** (Optional): if you want to overwrite the
    value sent by your authentication module, you can define here the new
    authentication level. Example: 5
