@@ -665,7 +665,6 @@ sub run {
                 );
             }
 
-            # WIP: Offline access
             my $offline = 0;
             if ( $self->_hasScope( 'offline_access', $scope ) ) {
                 $offline = 1;
@@ -1557,10 +1556,11 @@ sub _handleAuthorizationCodeGrant {
     # For offline access, the refresh token isn't tied to the session ID
     if ( $codeSession->{data}->{offline} ) {
 
-        # We need to remove _sessionType, _sessionid and _utime from the
-        # session data before storing session data in the refresh token
+        # We need to remove _sessionType, _sessionid , _utime and _lastSeen
+        # from the session data before storing session data in the refresh
+        # token
         my %userInfo;
-        for my $userKey ( grep !/^(_session|_utime$)/,
+        for my $userKey ( grep !/^(_session|_utime$|_lastSeen$)/,
             keys %{ $apacheSession->data } )
         {
             $userInfo{$userKey} = $apacheSession->data->{$userKey};
