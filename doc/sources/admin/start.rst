@@ -363,6 +363,7 @@ Backend                                               Shareable Comment
 :doc:`YAML<yamlconfbackend>` |new|                              Same as :doc:`File<fileconfbackend>` but in YAML format
                                                                 instead of JSON
 :doc:`SQL (CDBI/RDBI)<sqlconfbackend>`                ✔         **Recommended for large-scale systems**. Prefer CDBI.
+:doc:`Cassandra<cassandraconfbackend>`                ✔         Via SQL pseudo-driver
 :doc:`LDAP<ldapconfbackend>`                          ✔
 :doc:`MongoDB<mongodbconfbackend>` |deprecated|       ✔
 :doc:`SOAP<soapconfbackend>` |deprecated|             ✔         Proxy backend to be used in conjunction with another
@@ -412,6 +413,7 @@ Backend                                                          Shareable :ref:
 :doc:`Browseable LDAP<browseableldapsessionbackend>`             ✔         ✔                                                ✔                                                    ✔
 :doc:`Redis<redissessionbackend>`                                ✔         ✔                                                ✔                                                    ✔                  The fastest. Must be secured by network access control.
 :doc:`MongoDB<mongodbsessionbackend>` |deprecated|               ✔         ✔                                                ✔                                                    ✔                  Must be secured by network access control.
+:doc:`Cassandra<cassandrasessionbackend>`                        ✔         ✔                                                ✔                                                    ✔                  Another supported NoSQL DB
 :doc:`SQL<sqlsessionbackend>`                                    ✔         ✔                                                ✔                                                    ✔                  Unoptimized for :doc:`session explorer<features>` and :doc:`single session<features>` features.
 :doc:`REST<restsessionbackend>` |new|                            ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
 :doc:`SOAP<soapsessionbackend>`  |deprecated|                    ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.

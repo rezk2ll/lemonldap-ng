@@ -10,6 +10,7 @@ Configuration database
    sqlconfbackend
    ldapconfbackend
    mongodbconfbackend
+   cassandraconfbackend
    soapconfbackend
    restconfbackend
    localconfbackend
