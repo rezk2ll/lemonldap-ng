@@ -269,42 +269,45 @@ sub get_federation {
     my $federation_name;
 
     if ( !$reader ) {
-        $self->logger->debug("Could not open federation metadata at $file");
+        $self->logger->warn("Could not open federation metadata at $file");
+        return;
+    }
+
+    # Find federation name
+    if (
+        $reader->nextElement(
+            "EntitiesDescriptor", "urn:oasis:names:tc:SAML:2.0:metadata"
+        )
+      )
+    {
+        $federation_name = $reader->getAttribute('Name');
+    }
+    else {
+        $self->logger->warn(
+            "Federation metadata $file does not contain an EntitiesDescriptor");
         return;
     }
 
     # To avoid exhausting all memory,
     # we only parse one EntityDescriptor at a time
-    while ( $reader->read ) {
+    while (
+        $reader->nextElement( "EntityDescriptor",
+            "urn:oasis:names:tc:SAML:2.0:metadata" ) > 0
+      )
+    {
 
-        # Skip to the next EntityDescriptor
-        next unless $reader->nodeType == XML_READER_TYPE_ELEMENT;
-        if (   !$federation_name
-            and $reader->localName eq "EntitiesDescriptor"
-            and $reader->namespaceURI eq
-            "urn:oasis:names:tc:SAML:2.0:metadata" )
-        {
-            $federation_name = $reader->getAttribute('Name');
+        my $current_entityID = $reader->getAttribute('entityID');
 
-        }
-        if (    $reader->localName eq "EntityDescriptor"
-            and $reader->namespaceURI eq
-            "urn:oasis:names:tc:SAML:2.0:metadata" )
-        {
+        if ( $current_entityID eq $entityID ) {
 
-            my $current_entityID = $reader->getAttribute('entityID');
+            $self->logger->debug( "Found $entityID in SAML Federation"
+                  . " $federation_name from $file" );
 
-            if ( $current_entityID eq $entityID ) {
-                $self->logger->debug( "Found $entityID in SAML Federation"
-                      . " $federation_name from $file" );
-
-                my $partner = $reader->copyCurrentNode(1);
-                return {
-                    metadata   => $partner,
-                    federation => $federation_name,
-                };
-            }
-            $reader->next;
+            my $partner = $reader->copyCurrentNode(1);
+            return {
+                metadata   => $partner,
+                federation => $federation_name,
+            };
         }
     }
 
