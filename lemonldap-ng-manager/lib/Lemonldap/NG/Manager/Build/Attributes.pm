@@ -4639,7 +4639,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'RS384', v => 'RS384' },
                 { k => 'RS512', v => 'RS512' },
             ],
-            default => 'HS512',
+            default => 'RS256',
         },
         oidcRPMetaDataOptionsIDTokenExpiration  => { type => 'int' },
         oidcRPMetaDataOptionsIDTokenForceClaims =>

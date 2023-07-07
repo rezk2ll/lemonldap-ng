@@ -2492,7 +2492,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsIDTokenSignAlg' => {
-            'default' => 'HS512',
+            'default' => 'RS256',
             'select'  => [ {
                     'k' => 'none',
                     'v' => 'None'
