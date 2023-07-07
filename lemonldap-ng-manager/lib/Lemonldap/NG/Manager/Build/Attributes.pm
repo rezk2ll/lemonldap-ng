@@ -98,6 +98,10 @@ sub types {
             test    => qr/^\-?\d+$/,
             msgFail => '__notAnInteger__',
         },
+        intOrNull => {
+            test    => qr/^\-?\d*$/,
+            msgFail => '__notAnInteger__',
+        },
         bool => {
             test    => qr/^[01]$/,
             msgFail => '__notABoolean__',
@@ -1376,7 +1380,7 @@ sub attributes {
 
         # Cookies
         cookieExpiration => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation => 'Cookie expiration',
             flags         => 'hp',
         },
@@ -1967,7 +1971,7 @@ sub attributes {
             documentation => 'Password2F self registration activation',
         },
         password2fAuthnLevel => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation =>
               'Authentication level for users authentified by Password2F'
         },
@@ -1986,7 +1990,7 @@ sub attributes {
               'Authorize users to remove existing Password2F secret',
         },
         password2fTTL => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation => 'Password2F device time to live ',
         },
 
@@ -2002,7 +2006,7 @@ sub attributes {
             documentation => 'U2F self registration activation',
         },
         u2fAuthnLevel => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation =>
               'Authentication level for users authentified by password+U2F'
         },
@@ -2020,7 +2024,7 @@ sub attributes {
             documentation => 'Authorize users to remove existing U2F key',
         },
         u2fTTL => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation => 'U2F device time to live',
         },
 
@@ -2036,7 +2040,7 @@ sub attributes {
             documentation => 'TOTP self registration activation',
         },
         totp2fAuthnLevel => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation =>
               'Authentication level for users authentified by password+TOTP'
         },
@@ -2073,7 +2077,7 @@ sub attributes {
             documentation => 'Authorize users to remove existing TOTP secret',
         },
         totp2fTTL => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation => 'TOTP device time to live ',
         },
         totp2fEncryptSecret => {
@@ -2089,7 +2093,7 @@ sub attributes {
             documentation => 'UTOTP activation (mixed U2F/TOTP module)',
         },
         utotp2fAuthnLevel => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation =>
 'Authentication level for users authentified by password+(U2F or TOTP)'
         },
@@ -2122,7 +2126,7 @@ sub attributes {
             documentation => 'Regular expression to create a mail OTP code',
         },
         mail2fTimeout => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation => 'Second factor code timeout',
         },
         mail2fResendInterval => {
@@ -2130,7 +2134,7 @@ sub attributes {
             documentation => 'Delay before user is allowed to resend code',
         },
         mail2fAuthnLevel => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation =>
 'Authentication level for users authenticated by Mail second factor'
         },
@@ -2171,7 +2175,7 @@ sub attributes {
             documentation => 'Delay before user is allowed to resend code',
         },
         ext2fAuthnLevel => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation =>
 'Authentication level for users authentified by External second factor'
         },
@@ -2202,7 +2206,7 @@ sub attributes {
             documentation => 'Radius 2f verification timeout',
         },
         radius2fAuthnLevel => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation =>
 'Authentication level for users authenticated by Radius second factor'
         },
@@ -2254,7 +2258,7 @@ sub attributes {
             documentation => 'Delay before user is allowed to resend code',
         },
         rest2fAuthnLevel => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation =>
 'Authentication level for users authentified by REST second factor'
         },
@@ -2289,7 +2293,7 @@ sub attributes {
             documentation => 'Yubikey self registration activation',
         },
         yubikey2fAuthnLevel => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation =>
 'Authentication level for users authentified by Yubikey second factor'
         },
@@ -2333,7 +2337,7 @@ sub attributes {
               'Provision yubikey from the given session variable',
         },
         yubikey2fTTL => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation => 'Yubikey device time to live',
         },
 
@@ -2349,7 +2353,7 @@ sub attributes {
             documentation => 'WebAuthn self registration activation',
         },
         webauthn2fAuthnLevel => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation =>
 'Authentication level for users authentified by WebAuthn second factor'
         },
@@ -2624,7 +2628,7 @@ sub attributes {
             default       => 'Main',
             documentation => 'Handler type',
         },
-        vhostAuthnLevel     => { type => 'int' },
+        vhostAuthnLevel     => { type => 'intOrNull' },
         vhostDevOpsRulesUrl => { type => 'url' },
 
         # SecureToken parameters
@@ -2753,7 +2757,7 @@ sub attributes {
             documentation => 'CAS exported variables',
         },
         casAppMetaDataOptionsAuthnLevel => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation =>
               'Authentication level requires to access to this CAS application',
         },
@@ -3253,7 +3257,7 @@ sub attributes {
         samlIDPMetaDataOptionsDisplayName   => { type => 'text', },
         samlIDPMetaDataOptionsIcon          => { type => 'text', },
         samlIDPMetaDataOptionsTooltip       => { type => 'text', },
-        samlIDPMetaDataOptionsSortNumber    => { type => 'int', },
+        samlIDPMetaDataOptionsSortNumber    => { type => 'intOrNull', },
 
         # SP keys
         samlSPMetaDataExportedAttributes => {
@@ -3415,7 +3419,7 @@ sub attributes {
             default => 1,
         },
         samlSPMetaDataOptionsAuthnLevel => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation =>
               'Authentication level requires to access to this SP',
         },
@@ -3558,11 +3562,11 @@ sub attributes {
             documentation => 'Notification message',
         },
         sfLoginTimeout => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation => 'Timeout for 2F login process',
         },
         sfRegisterTimeout => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation => 'Timeout for 2F registration process',
         },
         available2F => {
@@ -3639,7 +3643,7 @@ sub attributes {
             documentation => 'LDAP exported variables',
         },
         ldapPort => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation => 'LDAP port',
         },
         ldapServer => {
@@ -3871,7 +3875,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Path of CAS server icon',
         },
         casSrvMetaDataOptionsSortNumber => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation => 'Number to sort buttons',
         },
         casSrvMetaDataOptionsResolutionRule => {
@@ -4610,7 +4614,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataOptionsDisplayName   => { type => 'text', },
         oidcOPMetaDataOptionsIcon          => { type => 'text', },
         oidcOPMetaDataOptionsStoreIDToken  => { type => 'bool', default => 0 },
-        oidcOPMetaDataOptionsSortNumber    => { type => 'int', },
+        oidcOPMetaDataOptionsSortNumber    => { type => 'intOrNull', },
         oidcOPMetaDataOptionsTooltip       => { type => 'text', },
         oidcOPMetaDataOptionsComment       => { type => 'longtext', },
         oidcOPMetaDataOptionsResolutionRule => {
@@ -4648,7 +4652,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             default => 'RS256',
         },
-        oidcRPMetaDataOptionsIDTokenExpiration  => { type => 'int' },
+        oidcRPMetaDataOptionsIDTokenExpiration  => { type => 'intOrNull' },
         oidcRPMetaDataOptionsIDTokenForceClaims =>
           { type => 'bool', default => 0 },
         oidcRPMetaDataOptionsAccessTokenSignAlg => {
@@ -4677,13 +4681,15 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsAccessTokenJWT => { type => 'bool', default => 0 },
         oidcRPMetaDataOptionsAccessTokenClaims =>
           { type => 'bool', default => 0 },
-        oidcRPMetaDataOptionsAdditionalAudiences         => { type => 'text' },
-        oidcRPMetaDataOptionsAccessTokenExpiration       => { type => 'int' },
-        oidcRPMetaDataOptionsAuthorizationCodeExpiration => { type => 'int' },
+        oidcRPMetaDataOptionsAdditionalAudiences   => { type => 'text' },
+        oidcRPMetaDataOptionsAccessTokenExpiration => { type => 'intOrNull' },
+        oidcRPMetaDataOptionsAuthorizationCodeExpiration =>
+          { type => 'intOrNull' },
         oidcRPMetaDataOptionsComment                  => { type => 'longtext' },
-        oidcRPMetaDataOptionsOfflineSessionExpiration => { type => 'int' },
-        oidcRPMetaDataOptionsRedirectUris             => { type => 'text', },
-        oidcRPMetaDataOptionsExtraClaims              => {
+        oidcRPMetaDataOptionsOfflineSessionExpiration =>
+          { type => 'intOrNull' },
+        oidcRPMetaDataOptionsRedirectUris => { type => 'text', },
+        oidcRPMetaDataOptionsExtraClaims  => {
             type    => 'keyTextContainer',
             keyTest => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
             default => {},
@@ -4749,7 +4755,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Issue refresh tokens',
         },
         oidcRPMetaDataOptionsAuthnLevel => {
-            type          => 'int',
+            type          => 'intOrNull',
             documentation =>
               'Authentication level requires to access to this RP',
         },
