@@ -689,7 +689,7 @@
   <script>
     // Script section to load models into a JS Var
     var defs = {}
-            defs.CasApp = {
+            defs["CasApp"] = {
   "required" : [ "confKey" ],
   "type" : "object",
   "properties" : {
@@ -715,7 +715,7 @@
     }
   }
 };
-            defs.CasAppReplace = {
+            defs["CasAppReplace"] = {
   "type" : "object",
   "properties" : {
     "macros" : {
@@ -737,7 +737,7 @@
     }
   }
 };
-            defs.CasAppUpdate = {
+            defs["CasAppUpdate"] = {
   "type" : "object",
   "properties" : {
     "macros" : {
@@ -759,7 +759,7 @@
     }
   }
 };
-            defs.casOptions = {
+            defs["casOptions"] = {
   "required" : [ "service" ],
   "type" : "object",
   "properties" : {
@@ -780,11 +780,11 @@
     }
   }
 };
-            defs.confKey = {
+            defs["confKey"] = {
   "pattern" : "^\\w[\\w\\.\\-]*$",
   "type" : "string"
 };
-            defs.Error = {
+            defs["Error"] = {
   "required" : [ "error" ],
   "type" : "object",
   "properties" : {
@@ -793,7 +793,7 @@
     }
   }
 };
-            defs.HistoryItem = {
+            defs["HistoryItem"] = {
   "required" : [ "date", "result" ],
   "type" : "object",
   "properties" : {
@@ -816,7 +816,7 @@
     }
   }
 };
-            defs.MenuApp = {
+            defs["MenuApp"] = {
   "required" : [ "confKey" ],
   "type" : "object",
   "properties" : {
@@ -831,7 +831,7 @@
     }
   }
 };
-            defs.MenuAppOptions = {
+            defs["MenuAppOptions"] = {
   "required" : [ "name" ],
   "type" : "object",
   "properties" : {
@@ -859,7 +859,7 @@
     }
   }
 };
-            defs.MenuAppUpdate = {
+            defs["MenuAppUpdate"] = {
   "type" : "object",
   "properties" : {
     "order" : {
@@ -870,7 +870,7 @@
     }
   }
 };
-            defs.MenuCat = {
+            defs["MenuCat"] = {
   "required" : [ "catname", "confKey" ],
   "type" : "object",
   "properties" : {
@@ -885,11 +885,11 @@
     }
   }
 };
-            defs.menuCatConfKey = {
+            defs["menuCatConfKey"] = {
   "pattern" : "^\\w[\\w\\.\\-]*$",
   "type" : "string"
 };
-            defs.MenuCatUpdate = {
+            defs["MenuCatUpdate"] = {
   "type" : "object",
   "properties" : {
     "catname" : {
@@ -900,7 +900,7 @@
     }
   }
 };
-            defs.OidcOptions = {
+            defs["OidcOptions"] = {
   "type" : "object",
   "properties" : {
     "logoutUrl" : {
@@ -944,7 +944,7 @@
     },
     "IDTokenSignAlg" : {
       "type" : "string",
-      "default" : "HS512",
+      "default" : "RS256",
       "enum" : [ "none", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512" ]
     },
     "refreshToken" : {
@@ -1011,7 +1011,7 @@
     }
   }
 };
-            defs.OidcRp = {
+            defs["OidcRp"] = {
   "required" : [ "clientId", "confKey", "redirectUris" ],
   "type" : "object",
   "properties" : {
@@ -1060,7 +1060,7 @@
     }
   }
 };
-            defs.OidcRpReplace = {
+            defs["OidcRpReplace"] = {
   "required" : [ "clientId", "redirectUris" ],
   "type" : "object",
   "properties" : {
@@ -1098,7 +1098,7 @@
     }
   }
 };
-            defs.OidcRpUpdate = {
+            defs["OidcRpUpdate"] = {
   "type" : "object",
   "properties" : {
     "clientId" : {
@@ -1135,7 +1135,7 @@
     }
   }
 };
-            defs.samlAttribute = {
+            defs["samlAttribute"] = {
   "type" : "object",
   "properties" : {
     "name" : {
@@ -1153,7 +1153,7 @@
     }
   }
 };
-            defs.samlOptions = {
+            defs["samlOptions"] = {
   "type" : "object",
   "properties" : {
     "checkSSOMessageSignature" : {
@@ -1211,7 +1211,7 @@
     }
   }
 };
-            defs.SamlSp = {
+            defs["SamlSp"] = {
   "required" : [ "confKey", "metadata" ],
   "type" : "object",
   "properties" : {
@@ -1239,7 +1239,7 @@
     }
   }
 };
-            defs.SamlSpReplace = {
+            defs["SamlSpReplace"] = {
   "required" : [ "metadata" ],
   "type" : "object",
   "properties" : {
@@ -1264,7 +1264,7 @@
     }
   }
 };
-            defs.SamlSpUpdate = {
+            defs["SamlSpUpdate"] = {
   "type" : "object",
   "properties" : {
     "metadata" : {
@@ -1288,7 +1288,7 @@
     }
   }
 };
-            defs.SecondFactor = {
+            defs["SecondFactor"] = {
   "required" : [ "id", "type" ],
   "type" : "object",
   "properties" : {
@@ -1307,13 +1307,13 @@
     }
   }
 };
-            defs.SecondFactors = {
+            defs["SecondFactors"] = {
   "type" : "array",
   "items" : {
     "$ref" : "#/components/schemas/SecondFactor"
   }
 };
-            defs.Status = {
+            defs["Status"] = {
   "type" : "object",
   "properties" : {
     "name" : {
@@ -1552,7 +1552,10 @@
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Casapp-addcasapp-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST "https://manager-api.example.com/api/v1/providers/cas/app"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/cas/app"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Casapp-addcasapp-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -1908,7 +1911,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Casapp-deleteCasApp-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE "https://manager-api.example.com/api/v1/providers/cas/app/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/cas/app/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Casapp-deleteCasApp-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2249,7 +2254,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Casapp-findCasAppByConfKey-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/providers/cas/app/findByConfKey?pattern="</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/cas/app/findByConfKey?pattern="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Casapp-findCasAppByConfKey-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2595,7 +2602,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Casapp-findCasAppByServiceUrl-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/providers/cas/app/findByServiceUrl?serviceUrl="</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/cas/app/findByServiceUrl?serviceUrl="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Casapp-findCasAppByServiceUrl-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -2985,7 +2994,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Casapp-getCasAppByConfKey-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/providers/cas/app/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/cas/app/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Casapp-getCasAppByConfKey-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3375,7 +3386,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Casapp-replaceCasApp-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT "https://manager-api.example.com/api/v1/providers/cas/app/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/cas/app/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Casapp-replaceCasApp-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -3816,7 +3830,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Casapp-updateCasApp-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X PATCH "https://manager-api.example.com/api/v1/providers/cas/app/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PATCH\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/cas/app/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Casapp-updateCasApp-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4260,7 +4277,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Class2fa-deleteSecondFactors-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE "https://manager-api.example.com/api/v1/secondFactor/{uid}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/secondFactor/{uid}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Class2fa-deleteSecondFactors-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4550,7 +4569,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Class2fa-deleteSecondFactorsById-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE "https://manager-api.example.com/api/v1/secondFactor/{uid}/id/{id}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/secondFactor/{uid}/id/{id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Class2fa-deleteSecondFactorsById-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -4868,7 +4889,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Class2fa-deleteSecondFactorsByType-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE "https://manager-api.example.com/api/v1/secondFactor/{uid}/type/{type}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/secondFactor/{uid}/type/{type}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Class2fa-deleteSecondFactorsByType-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -5186,7 +5209,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Class2fa-getSecondFactors-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/secondFactor/{uid}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/secondFactor/{uid}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Class2fa-getSecondFactors-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -5525,7 +5550,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Class2fa-getSecondFactorsById-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/secondFactor/{uid}/id/{id}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/secondFactor/{uid}/id/{id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Class2fa-getSecondFactorsById-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -5892,7 +5919,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Class2fa-getSecondFactorsByType-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/secondFactor/{uid}/type/{type}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/secondFactor/{uid}/type/{type}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Class2fa-getSecondFactorsByType-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -6262,7 +6291,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Default-status-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/status"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/status"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Default-status-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -6569,7 +6600,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-History-getHistory-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/history/{uid}?result="</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/history/{uid}?result="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-History-getHistory-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -6993,7 +7026,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-History-getHistoryLast-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/history/{uid}/last?result="</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/history/{uid}/last?result="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-History-getHistoryLast-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -7416,7 +7451,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Menuapp-addMenuApp-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST "https://manager-api.example.com/api/v1/menu/app/{cat}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/menu/app/{cat}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Menuapp-addMenuApp-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -7858,7 +7896,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Menuapp-deleteMenuApp-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE "https://manager-api.example.com/api/v1/menu/app/{cat}/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/menu/app/{cat}/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Menuapp-deleteMenuApp-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -8230,7 +8270,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Menuapp-findMenuAppByConfKey-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/menu/app/{cat}/findByConfKey?pattern="</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/menu/app/{cat}/findByConfKey?pattern="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Menuapp-findMenuAppByConfKey-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -8614,7 +8656,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Menuapp-getMenuAppByConfKey-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/menu/app/{cat}/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/menu/app/{cat}/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Menuapp-getMenuAppByConfKey-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -9035,7 +9079,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Menuapp-getMenuApps-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/menu/app/{cat}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/menu/app/{cat}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Menuapp-getMenuApps-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -9429,7 +9475,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Menuapp-replaceMenuApp-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT "https://manager-api.example.com/api/v1/menu/app/{cat}/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/menu/app/{cat}/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Menuapp-replaceMenuApp-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -9901,7 +9950,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Menuapp-updateMenuApp-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X PATCH "https://manager-api.example.com/api/v1/menu/app/{cat}/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PATCH\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/menu/app/{cat}/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Menuapp-updateMenuApp-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -10376,7 +10428,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Menucat-addMenuCat-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST "https://manager-api.example.com/api/v1/menu/cat"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/menu/cat"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Menucat-addMenuCat-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -10732,7 +10787,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Menucat-deleteMenuCat-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE "https://manager-api.example.com/api/v1/menu/cat/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/menu/cat/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Menucat-deleteMenuCat-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -11073,7 +11130,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Menucat-findMenuCatByConfKey-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/menu/cat/findByConfKey?pattern="</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/menu/cat/findByConfKey?pattern="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Menucat-findMenuCatByConfKey-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -11419,7 +11478,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Menucat-getMenuCatByConfKey-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/menu/cat/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/menu/cat/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Menucat-getMenuCatByConfKey-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -11809,7 +11870,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Menucat-replaceMenuCat-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT "https://manager-api.example.com/api/v1/menu/cat/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/menu/cat/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Menucat-replaceMenuCat-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -12250,7 +12314,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Menucat-updateMenuCat-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X PATCH "https://manager-api.example.com/api/v1/menu/cat/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PATCH\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/menu/cat/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Menucat-updateMenuCat-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -12694,7 +12761,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Oidcrp-addoidcrp-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST "https://manager-api.example.com/api/v1/providers/oidc/rp"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/oidc/rp"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Oidcrp-addoidcrp-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -13050,7 +13120,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Oidcrp-deleteOidcRp-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE "https://manager-api.example.com/api/v1/providers/oidc/rp/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/oidc/rp/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Oidcrp-deleteOidcRp-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -13391,7 +13463,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Oidcrp-findOidcRpByClientId-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/providers/oidc/rp/findByClientId?clientId="</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/oidc/rp/findByClientId?clientId="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Oidcrp-findOidcRpByClientId-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -13781,7 +13855,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Oidcrp-findOidcRpByConfKey-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/providers/oidc/rp/findByConfKey?pattern="</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/oidc/rp/findByConfKey?pattern="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Oidcrp-findOidcRpByConfKey-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -14127,7 +14203,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Oidcrp-getOidcRpByConfKey-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/providers/oidc/rp/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/oidc/rp/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Oidcrp-getOidcRpByConfKey-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -14517,7 +14595,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Oidcrp-replaceOidcRp-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT "https://manager-api.example.com/api/v1/providers/oidc/rp/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/oidc/rp/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Oidcrp-replaceOidcRp-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -14958,7 +15039,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Oidcrp-updateOidcRp-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X PATCH "https://manager-api.example.com/api/v1/providers/oidc/rp/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PATCH\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/oidc/rp/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Oidcrp-updateOidcRp-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -15402,7 +15486,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Samlsp-addsamlsp-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST "https://manager-api.example.com/api/v1/providers/saml/sp"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/saml/sp"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Samlsp-addsamlsp-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -15758,7 +15845,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Samlsp-deleteSamlSp-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE "https://manager-api.example.com/api/v1/providers/saml/sp/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/saml/sp/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Samlsp-deleteSamlSp-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -16099,7 +16188,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Samlsp-findSamlSpByConfKey-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/providers/saml/sp/findByConfKey?pattern="</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/saml/sp/findByConfKey?pattern="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Samlsp-findSamlSpByConfKey-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -16445,7 +16536,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Samlsp-findSamlSpByEntityId-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/providers/saml/sp/findByEntityId?entityId="</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/saml/sp/findByEntityId?entityId="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Samlsp-findSamlSpByEntityId-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -16835,7 +16928,9 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Samlsp-getSamlSpByConfKey-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET "https://manager-api.example.com/api/v1/providers/saml/sp/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/providers/saml/sp/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Samlsp-getSamlSpByConfKey-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -17225,7 +17320,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Samlsp-replaceSamlSp-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT "https://manager-api.example.com/api/v1/providers/saml/sp/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/saml/sp/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Samlsp-replaceSamlSp-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -17666,7 +17764,10 @@ except ApiException as e:
 
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Samlsp-updateSamlSp-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X PATCH "https://manager-api.example.com/api/v1/providers/saml/sp/{confKey}"</code></pre>
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PATCH\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/providers/saml/sp/{confKey}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Samlsp-updateSamlSp-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -19171,10 +19272,15 @@ except ApiException as e:
   
       _classCallCheck(this, JSONSchemaView);
   
-      this.schema = schema; //console.log(schema);
+      this.schema = schema;
       this.open = open;
       this.options = options;
       this.isCollapsed = open <= 0;
+  
+      if (this.schema.type == undefined && this.schema.$ref) {
+        const elements = this.schema.$ref.split('/');
+        this.schema = defs[elements.pop()];
+      }
   
       // if schema is an empty object which means any JOSN
       this.isAny = typeof schema === 'object' && !Array.isArray(schema) && !Object.keys(schema).filter(function (k) {
@@ -19184,7 +19290,7 @@ except ApiException as e:
       // Determine if a schema is an array
       this.isArray = !this.isAny && this.schema && this.schema.type === 'array';
   
-      this.isObject = this.schema && (this.schema.type === 'object' || this.schema.properties || this.schema.anyOf || this.schema.oneof || this.schema.allOf);
+      this.isObject = this.schema && (this.schema.type === 'object' || this.schema.properties || this.schema.allOf);
   
       // Determine if a schema is a primitive
       this.isPrimitive = !this.isAny && !this.isArray && !this.isObject;
