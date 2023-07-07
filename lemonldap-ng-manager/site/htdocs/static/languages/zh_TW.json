@@ -822,6 +822,7 @@
 "persistentSessions":"持久工作階段",
 "persistentStorage":"Apache::Session 模組",
 "persistentStorageOptions":"Apache::Session 模組參數",
+"pickFontAwesome":"or input the code of a Font Awesome icon",
 "plugins":"外掛程式",
 "port":"連接埠",
 "portal":"URL",

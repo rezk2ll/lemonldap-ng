@@ -26,6 +26,37 @@ Known regressions in the latest released version
 
 None
 
+2.0.17
+------
+
+Font Awesome application icons
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is now possible to use Font Awesome icons in the application menu.
+
+If you modified the default ``menu.tpl`` template, you need to update it:
+
+.. code:: diff
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/menu.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/menu.tpl
+    @@ -146,9 +146,13 @@
+                             <!-- Logo (optional) -->
+                             <TMPL_IF NAME="applogo">
+                               <div class="col-3">
+    +                          <TMPL_IF NAME="applogo_icon">
+    +                          <span class="applogo fa-3x fa fa-<TMPL_VAR NAME="applogo"> <TMPL_VAR NAME="appid">"></span>
+    +                          <TMPL_ELSE>
+                               <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/apps/<TMPL_VAR NAME="applogo">"
+                                 class="applogo <TMPL_VAR NAME="appid"> img-fluid"
+                                 alt="" />
+    +                          </TMPL_IF>
+                               </div>
+                               <div class="col-9">
+                             <TMPL_ELSE>
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
 2.16.1
 --------
 

@@ -822,6 +822,7 @@
 "persistentSessions":"Sessioni persistenti",
 "persistentStorage":"Modulo Apache::Session",
 "persistentStorageOptions":"Parametri modulo Apache::Session",
+"pickFontAwesome":"or input the code of a Font Awesome icon",
 "plugins":"Plugin",
 "port":"Porta",
 "portal":"URL",

@@ -822,6 +822,7 @@
 "persistentSessions":"Kalıcı oturumlar",
 "persistentStorage":"Apache::Session modülü",
 "persistentStorageOptions":"Apache::Session modül parametreleri",
+"pickFontAwesome":"or input the code of a Font Awesome icon",
 "plugins":"Eklentiler",
 "port":"Port",
 "portal":"URL",
