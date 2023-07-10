@@ -158,8 +158,9 @@ sub relaySpFromInfo {
     my ( $issuer, $res ) = @_;
 
     my @relay_urls =
+      map { $_->to_literal }
       getHtmlElement( $res, '//table[@class="sloState"]//img/@src' )
-      ->to_literal_list;
+      ->get_nodelist;
 
     for my $url (@relay_urls) {
         my $u = URI->new($url);
