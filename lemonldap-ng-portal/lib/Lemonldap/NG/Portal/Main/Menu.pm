@@ -120,6 +120,7 @@ sub params {
     $res{AUTH_ERROR_TYPE} =
       $req->error_type( $res{AUTH_ERROR} = $req->menuError );
     $res{AUTH_ERROR_ROLE} = $req->error_role;
+    $res{ 'AUTH_ERROR_' . $res{AUTH_ERROR} } = 1;
 
 # Display menu 2fRegisters link only if at least a 2F device is registered and rule
     $res{sfaManager} =

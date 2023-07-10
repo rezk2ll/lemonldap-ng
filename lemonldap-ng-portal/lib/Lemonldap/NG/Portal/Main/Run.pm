@@ -317,9 +317,10 @@ sub do {
                     $req,
                     'errormsg',
                     params => {
-                        AUTH_ERROR      => $err,
-                        AUTH_ERROR_TYPE => $req->error_type,
-                        AUTH_ERROR_ROLE => $req->error_role,
+                        AUTH_ERROR               => $err,
+                        ( 'AUTH_ERROR_' . $err ) => 1,
+                        AUTH_ERROR_TYPE          => $req->error_type,
+                        AUTH_ERROR_ROLE          => $req->error_role,
                     }
                 );
             }
