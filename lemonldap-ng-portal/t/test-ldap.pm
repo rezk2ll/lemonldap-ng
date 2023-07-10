@@ -13,6 +13,19 @@ my $slapd_schema_dir;
 our $slapd_url = 'ldapi://' . uri_escape( $main::tmpDir . '/ldap_socket' );
 our $slapd_pid;
 
+sub legacy_openldap {
+    my ($slapd_bin) = @_;
+
+    use IPC::Open3;
+    my $pid    = open3( undef, my $outerr, undef, $slapd_bin, '-V' );
+    my $output = do { local $/; readline $outerr };
+    waitpid $pid, 0;
+    my $exit      = $? >> 8;
+    my $is_legacy = $output =~ /slapd 2\.4/;
+
+    return $is_legacy;
+}
+
 if ( $ENV{LLNGTESTLDAP} ) {
     $slapd_bin        = $ENV{LLNGTESTLDAP_SLAPD_BIN}   || '/usr/sbin/slapd';
     $slapadd_bin      = $ENV{LLNGTESTLDAP_SLAPADD_BIN} || '/usr/sbin/slapadd';
@@ -31,6 +44,13 @@ if ( $ENV{LLNGTESTLDAP} ) {
         "s:__SCHEMA_DIR__:$slapd_schema_dir:",
         "$main::tmpDir/slapd-test.ldif"
     );
+
+    # Remove ppolicy schema on newer OpenLDAP versions
+    system(
+        "/bin/sed",        "-i",
+        "/ppolicy.ldif/d", "$main::tmpDir/slapd-test.ldif"
+    ) unless legacy_openldap($slapd_bin);
+
     system(
         "/bin/sed",                       "-i",
         "s:t/testslapd/:$main::tmpDir/:", "$main::tmpDir/slapd-test.ldif"
