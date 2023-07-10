@@ -55,7 +55,7 @@ Application parameters:
 -  **Description**
 -  **URI**: URL of the application
 -  **Tooltip**: information display on mouse over the button
--  **Logo**: file name to use as logo
+-  **Logo**: file name to use as logo (Since *2.0.17* you can also use a `Font Awesome icon <https://fontawesome.com/v4/icons/>`__ code)
 -  **Display application**:
 
    -  **Enabled**: always displayed

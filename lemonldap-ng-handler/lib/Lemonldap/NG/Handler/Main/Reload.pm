@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::Main::Reload;
 
-our $VERSION = '2.17';
+our $VERSION = '2.17.0';
 
 package Lemonldap::NG::Handler::Main;
 

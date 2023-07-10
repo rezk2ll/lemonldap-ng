@@ -110,11 +110,11 @@ sub init {
     $self->addRouteFromConf(
         'Auth',
         oidcServiceMetaDataCheckSessionURI  => 'checkSession',
-        oidcServiceMetaDataTokenURI         => 'badAuthRequest',
-        oidcServiceMetaDataUserInfoURI      => 'badAuthRequest',
-        oidcServiceMetaDataJWKSURI          => 'badAuthRequest',
-        oidcServiceMetaDataRegistrationURI  => 'badAuthRequest',
-        oidcServiceMetaDataIntrospectionURI => 'badAuthRequest',
+        oidcServiceMetaDataTokenURI         => 'token',
+        oidcServiceMetaDataUserInfoURI      => 'userInfo',
+        oidcServiceMetaDataJWKSURI          => 'jwks',
+        oidcServiceMetaDataRegistrationURI  => 'registration',
+        oidcServiceMetaDataIntrospectionURI => 'introspection',
     );
 
     # Metadata (.well-known/openid-configuration)
@@ -665,7 +665,6 @@ sub run {
                 );
             }
 
-            # WIP: Offline access
             my $offline = 0;
             if ( $self->_hasScope( 'offline_access', $scope ) ) {
                 $offline = 1;
@@ -1557,10 +1556,11 @@ sub _handleAuthorizationCodeGrant {
     # For offline access, the refresh token isn't tied to the session ID
     if ( $codeSession->{data}->{offline} ) {
 
-        # We need to remove _sessionType, _sessionid and _utime from the
-        # session data before storing session data in the refresh token
+        # We need to remove _sessionType, _sessionid , _utime and _lastSeen
+        # from the session data before storing session data in the refresh
+        # token
         my %userInfo;
-        for my $userKey ( grep !/^(_session|_utime$)/,
+        for my $userKey ( grep !/^(_session|_utime$|_lastSeen$)/,
             keys %{ $apacheSession->data } )
         {
             $userInfo{$userKey} = $apacheSession->data->{$userKey};
@@ -1587,7 +1587,7 @@ sub _handleAuthorizationCodeGrant {
 
         $refresh_token = $refreshTokenSession->id;
 
-        $self->logger->debug("Generated refresh token: $refresh_token");
+        $self->logger->debug("Generated offline refresh token: $refresh_token");
     }
 
     # For online access, if configured
@@ -1614,7 +1614,7 @@ sub _handleAuthorizationCodeGrant {
 
         $refresh_token = $refreshTokenSession->id;
 
-        $self->logger->debug("Generated refresh token: $refresh_token");
+        $self->logger->debug("Generated online refresh token: $refresh_token");
     }
 
     # Compute hash to store in at_hash
@@ -2217,13 +2217,6 @@ sub checkSession {
             COOKIENAME => $self->conf->{cookieName},
         }
     );
-}
-
-sub badAuthRequest {
-    my ( $self, $req ) = @_;
-    my $desc =
-      "This endpoint is not supposed to be called by authenticated users";
-    return $self->sendOIDCError( $req, 'invalid_request', 400, $desc );
 }
 
 # Nothing to do here

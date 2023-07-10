@@ -2023,6 +2023,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'keyTextContainer'
         },
         'lwpOpts' => {
+            'default' => {
+                'timeout' => 10
+            },
             'type' => 'keyTextContainer'
         },
         'lwpSslOpts' => {
@@ -2489,7 +2492,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsIDTokenSignAlg' => {
-            'default' => 'HS512',
+            'default' => 'RS256',
             'select'  => [ {
                     'k' => 'none',
                     'v' => 'None'
@@ -2543,7 +2546,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type' => 'select'
         },
         'oidcRPMetaDataOptionsLogoutUrl' => {
-            'type' => 'url'
+            'type' => 'text'
         },
         'oidcRPMetaDataOptionsOfflineSessionExpiration' => {
             'type' => 'int'
@@ -3153,11 +3156,20 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'radius2fAuthnLevel' => {
             'type' => 'int'
         },
+        'radius2fDictionaryFile' => {
+            'type' => 'text'
+        },
         'radius2fLabel' => {
             'type' => 'text'
         },
         'radius2fLogo' => {
             'type' => 'text'
+        },
+        'radius2fRequestAttributes' => {
+            'default'    => {},
+            'keyMsgFail' => '__badKeyName__',
+            'keyTest'    => qr/^[a-zA-Z0-9_-]*$/,
+            'type'       => 'keyTextContainer'
         },
         'radius2fSecret' => {
             'type' => 'text'
@@ -3185,6 +3197,12 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
             'msgFail'    => '__badValue__',
             'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
+        },
+        'radiusRequestAttributes' => {
+            'default'    => {},
+            'keyMsgFail' => '__badKeyName__',
+            'keyTest'    => qr/^[a-zA-Z0-9_-]*$/,
             'type'       => 'keyTextContainer'
         },
         'radiusSecret' => {

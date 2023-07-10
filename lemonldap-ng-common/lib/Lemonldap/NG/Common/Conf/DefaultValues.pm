@@ -176,7 +176,10 @@ sub defaultValues {
         'locationRules'                => {
             'default' => 'deny'
         },
-        'logoutServices'            => {},
+        'logoutServices' => {},
+        'lwpOpts'        => {
+            'timeout' => 10
+        },
         'macros'                    => {},
         'mail2fActivation'          => 0,
         'mail2fCodeRegex'           => '\\d{6}',
@@ -281,9 +284,11 @@ sub defaultValues {
         'proxyAuthnLevel'              => 2,
         'proxyAuthServiceChoiceParam'  => 'lmAuth',
         'radius2fActivation'           => 0,
+        'radius2fRequestAttributes'    => {},
         'radius2fTimeout'              => 20,
         'radiusAuthnLevel'             => 3,
         'radiusExportedVars'           => {},
+        'radiusRequestAttributes'      => {},
         'randomPasswordRegexp'         => '[A-Z]{3}[a-z]{5}.\\d{2}',
         'redirectFormMethod'           => 'get',
         'registerDB'                   => 'Null',

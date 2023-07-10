@@ -109,7 +109,8 @@ sub _verify {
 
     my $session;
     unless ( $session = $self->ott->getToken($token) ) {
-        $self->userLogger->info('Token expired');
+        $self->userLogger->info(
+            'Invalid token during ' . $self->prefix . '2f validation' );
         $req->noLoginDisplay(1);
         return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
     }
@@ -201,7 +202,6 @@ sub _verify {
         [
             @{ $self->p->afterData },
             $self->p->validSession,
-            'rebuildCookies',
             @{ $self->p->endAuth },
             sub { PE_OK }
         ]

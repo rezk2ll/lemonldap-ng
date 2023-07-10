@@ -65,7 +65,12 @@ LemonLDAP::NG
 Create a new SAML Service Provider and import Microsoft metadata from
 https://nexus.microsoftonline-p.com/federationmetadata/saml20/federationmetadata.xml
 
-Set the NameID value to persistent, or any immutable value for the user.
+Set the NameID value to persistent format.
+
+You must use the base64 value of `mS-DS-ConsistencyGuid` attribute. (also known as immutableID)
+
+Note that `-` in variable names may lead to problems. You shoud declare a LDAP mapping immutableid <-> mS-DS-ConsistencyGuid, and then declare a macro : `$immutableb64 = encode_base64( "$immutableid", "" )`
+
 
 Create a SAML attribute named IDPEmail which contains the user principal
 name (UPN).

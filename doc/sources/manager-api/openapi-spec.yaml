@@ -1326,7 +1326,7 @@ components:
             - RS256
             - RS384
             - RS512
-          default: HS512
+          default: RS256
         refreshToken:
           type: boolean
         public:

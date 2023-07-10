@@ -10,11 +10,11 @@ First, make sure you have installed the ``DBD::Pg`` perl module.
 
 On Debian-based distributions ::
 
-   apt install libdbd-pg-perl
+   apt install libdbd-pg-perl libapache-session-browseable-perl
 
 On Fedora-based distributions ::
 
-   yum install 'perl(DBD::Pg)'
+   yum install 'perl(DBD::Pg)' 'perl(Apache::Session::Browseable)'
 
 
 The minimum required version of PostgreSQL is 9.3 with `support for JSON column types <https://www.postgresql.org/docs/9.3/functions-json.html>`__

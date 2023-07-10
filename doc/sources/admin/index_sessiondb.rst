@@ -10,6 +10,7 @@ Sessions database
    ldapsessionbackend
    redissessionbackend
    mongodbsessionbackend
+   cassandrasessionbackend
    browseablesessionbackend
    restsessionbackend
    soapsessionbackend

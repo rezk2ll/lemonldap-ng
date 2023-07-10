@@ -1066,15 +1066,15 @@ sub attributes {
             type          => 'text',
             default       => '_password _2fDevices',
             documentation => 'Name of attributes to hide in logs',
-        },        
+        },
         displaySessionId => {
             type          => 'bool',
             default       => 1,
             documentation => 'Display _session_id with sessions explorer',
         },
         persistentSessionAttributes => {
-            type          => 'text',
-            default       => '_loginHistory _2fDevices _oidcConsents notification_',
+            type    => 'text',
+            default => '_loginHistory _2fDevices _oidcConsents notification_',
             documentation => 'Persistent session attributes to hide',
         },
         key => {
@@ -1256,6 +1256,7 @@ sub attributes {
         lwpOpts => {
             type          => 'keyTextContainer',
             documentation => 'Options passed to LWP::UserAgent',
+            default       => { timeout => 10 },
         },
         lwpSslOpts => {
             type          => 'keyTextContainer',
@@ -2264,6 +2265,16 @@ sub attributes {
         rest2fLogo => {
             type          => 'text',
             documentation => 'Custom logo for REST 2F',
+        },
+        radius2fDictionaryFile    => { type => 'text' },
+        radius2fRequestAttributes => {
+            type => 'keyTextContainer',
+
+            keyTest    => qr/^[a-zA-Z0-9_-]*$/,
+            keyMsgFail => '__badKeyName__',
+
+            default       => {},
+            documentation => 'RADIUS second factor authentication attributes',
         },
 
         # Yubikey 2FA
@@ -3919,7 +3930,16 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => {},
             documentation => 'RADIUS exported variables',
         },
-        radiusDictionaryFile => { type => 'text' },
+        radiusDictionaryFile    => { type => 'text' },
+        radiusRequestAttributes => {
+            type => 'keyTextContainer',
+
+            keyTest    => qr/^[a-zA-Z0-9_-]*$/,
+            keyMsgFail => '__badKeyName__',
+
+            default       => {},
+            documentation => 'RADIUS authentication attributes',
+        },
 
         # REST
         restAuthUrl       => { type => 'url' },
@@ -4598,9 +4618,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             keyTest => qr/\w/,
             test    => qr/\w/,
             default => {
-                'name'        => 'cn',
+                'name'               => 'cn',
                 'preferred_username' => 'uid',
-                'email'       => 'mail',
+                'email'              => 'mail',
             }
         },
         oidcRPMetaDataOptionsClientID       => { type => 'text', },
@@ -4619,7 +4639,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'RS384', v => 'RS384' },
                 { k => 'RS512', v => 'RS512' },
             ],
-            default => 'HS512',
+            default => 'RS256',
         },
         oidcRPMetaDataOptionsIDTokenExpiration  => { type => 'int' },
         oidcRPMetaDataOptionsIDTokenForceClaims =>
@@ -4673,7 +4693,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Bypass logout confirmation'
         },
         oidcRPMetaDataOptionsLogoutUrl => {
-            type          => 'url',
+            type          => 'text',
             documentation => 'Logout URL',
         },
         oidcRPMetaDataOptionsLogoutType => {

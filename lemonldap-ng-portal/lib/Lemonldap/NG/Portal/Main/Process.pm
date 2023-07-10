@@ -145,6 +145,7 @@ sub controlUrl {
                 $req->{urldc} =~ s/[\r\n]//sg;
             }
         }
+        $req->{urldc} = URI->new( $req->{urldc} )->as_string;
 
         # For logout request, test if Referer comes from an authorized site
         my $tmp = (

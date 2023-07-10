@@ -21,7 +21,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_SLO_ERROR
 );
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.16.3';
 
 # PROPERTIES
 
@@ -211,16 +211,17 @@ sub loadService {
         $serviceCertificate
     );
 
+    unless ($server) {
+        $self->logger->error('Unable to create Lasso server');
+        return 0;
+    }
+
     # Signature method
     my $method = $self->conf->{samlServiceSignatureMethod} || 'RSA_SHA1';
     $server->signature_method( $self->getSignatureMethod($method) );
     $self->logger->debug("Set $method as SAML server signature method ");
 
     # Log
-    unless ($server) {
-        $self->logger->error('Unable to create Lasso server');
-        return 0;
-    }
     $self->logger->debug("Service created");
 
     return $server;
@@ -796,7 +797,7 @@ sub createServer {
             $private_key_password, $certificate );
 
         # Set private key for encryption
-        if ($private_key_enc) {
+        if ( $server && $private_key_enc ) {
             Lasso::Server::set_encryption_private_key_with_password( $server,
                 $private_key_enc, $private_key_enc_password );
         }
@@ -2669,7 +2670,7 @@ sub sendLogoutResponseToServiceProvider {
 
         # Redirect user to response URL
         my $slo_url = $logout->msg_url;
-        return [ 302, [ Location => $slo_url ], [] ];
+        return [ 302, [ Location => URI->new($slo_url)->as_string ], [] ];
     }
 
     # HTTP-POST

@@ -82,6 +82,7 @@ lib/Lemonldap/NG/Portal/Lib/OpenID/SREG.pm
 lib/Lemonldap/NG/Portal/Lib/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Lib/OtherSessions.pm
 lib/Lemonldap/NG/Portal/Lib/OverConf.pm
+lib/Lemonldap/NG/Portal/Lib/Radius.pm
 lib/Lemonldap/NG/Portal/Lib/Remote.pm
 lib/Lemonldap/NG/Portal/Lib/REST.pm
 lib/Lemonldap/NG/Portal/Lib/RESTProxy.pm
@@ -292,6 +293,7 @@ site/htdocs/static/common/backgrounds/1280px-BrockenSnowedTrees.jpg
 site/htdocs/static/common/backgrounds/1280px-Cedar_Breaks_National_Monument_partially.jpg
 site/htdocs/static/common/backgrounds/1280px-Parry_Peak_from_Winter_Park.jpg
 site/htdocs/static/common/backgrounds/Aletschgletscher_mit_Pinus_cembra1.jpg
+site/htdocs/static/common/co.png
 site/htdocs/static/common/de.png
 site/htdocs/static/common/en.png
 site/htdocs/static/common/es.png
@@ -410,6 +412,7 @@ site/htdocs/static/common/pl.png
 site/htdocs/static/common/pt.png
 site/htdocs/static/common/pt_BR.png
 site/htdocs/static/common/ro.png
+site/htdocs/static/common/ru.png
 site/htdocs/static/common/tr.png
 site/htdocs/static/common/vi.png
 site/htdocs/static/common/zh.png
@@ -425,6 +428,7 @@ site/htdocs/static/languages/it.json
 site/htdocs/static/languages/pl.json
 site/htdocs/static/languages/pt.json
 site/htdocs/static/languages/pt_BR.json
+site/htdocs/static/languages/ru.json
 site/htdocs/static/languages/tr.json
 site/htdocs/static/languages/vi.json
 site/htdocs/static/languages/zh.json
@@ -502,6 +506,7 @@ site/templates/bootstrap/yubikeyform.tpl
 site/templates/common/bullet_go.png
 site/templates/common/key.png
 site/templates/common/mail/ar.json
+site/templates/common/mail/co.json
 site/templates/common/mail/de.json
 site/templates/common/mail/en.json
 site/templates/common/mail/es.json
@@ -513,6 +518,7 @@ site/templates/common/mail/ms.json
 site/templates/common/mail/pl.json
 site/templates/common/mail/pt.json
 site/templates/common/mail/pt_BR.json
+site/templates/common/mail/ru.json
 site/templates/common/mail/tr.json
 site/templates/common/mail/vi.json
 site/templates/common/mail/zh.json
@@ -570,6 +576,7 @@ t/24-AuthApache.t
 t/24-AuthKerberos.t
 t/25-AuthSlave-with-Choice.t
 t/25-AuthSlave-with-Credentials.t
+t/26-AuthRadius-Attributes.t
 t/26-AuthRadius.t
 t/26-AuthRemote.t
 t/27-AuthProxy-with-choice.t
@@ -588,7 +595,6 @@ t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO.t
 t/30-Auth-and-issuer-SAML-Federation.t
 t/30-Auth-and-issuer-SAML-Metadata.t
-t/30-Auth-and-issuer-SAML-NameID.t
 t/30-Auth-and-issuer-SAML-POST-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-POST-Missing-SLO.t
 t/30-Auth-and-issuer-SAML-POST.t
@@ -603,6 +609,8 @@ t/30-CDC.t
 t/30-SAML-Federation-Config.t
 t/30-SAML-Head-to-Tail-POST.t
 t/30-SAML-Macros.t
+t/30-SAML-NameID-IDP.t
+t/30-SAML-NameID-SP.t
 t/30-SAML-POST-Logout-when-expired.t
 t/30-SAML-POST-Logout-when-removed.t
 t/30-SAML-POST-with-2F-and-Notification.t
@@ -627,6 +635,7 @@ t/31-Auth-and-issuer-CAS-XSS-on-logout.t
 t/31-CAS-10.t
 t/31-CAS-Gateway.t
 t/31-CAS-Hooks.t
+t/31-CAS-jsRedirect.t
 t/31-CAS-Macros.t
 t/31-CAS-Prefix.t
 t/31-CAS-Proxy.t
@@ -657,6 +666,7 @@ t/32-OIDC-Logout-redirect-uri-not-allowed.t
 t/32-OIDC-Macro.t
 t/32-OIDC-Metadata.t
 t/32-OIDC-Offline-Session.t
+t/32-OIDC-Opaque-Token.t
 t/32-OIDC-Password-Grant-with-Bruteforce-and-Choice.t
 t/32-OIDC-Password-Grant.t
 t/32-OIDC-Refresh-Token.t
@@ -682,6 +692,7 @@ t/35-SOAP-sessions-with-SOAP-server.t
 t/36-Combination-Custom.t
 t/36-Combination-Kerberos-multiple-domains.t
 t/36-Combination-Password.t
+t/36-Combination-SSL-Kerberos.t
 t/36-Combination-with-Choice.t
 t/36-Combination-with-over.t
 t/36-Combination-with-token.t
@@ -860,6 +871,7 @@ t/77-2F-Extra.t
 t/77-2F-Mail-SessionKey.t
 t/77-2F-Mail-with-global-storage.t
 t/77-2F-Mail.t
+t/77-2F-Radius.t
 t/78-2F-Upgrade-Many.t
 t/78-2F-Upgrade.t
 t/78-2F-UpgradeOnly-with-forceFlag.t
@@ -875,6 +887,7 @@ t/99-Dont-load-Dumper.t
 t/99-pod.t
 t/AfterDataCustomPlugin.pm
 t/CaptchaOldApi.pm
+t/cas-lib.pm
 t/CasHookPlugin.pm
 t/Custom.pm
 t/geoip/test.mmdb

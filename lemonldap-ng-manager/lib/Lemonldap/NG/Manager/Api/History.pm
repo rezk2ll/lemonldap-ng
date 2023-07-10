@@ -1,7 +1,7 @@
 # Miscenalleous endpoints
 package Lemonldap::NG::Manager::Api::History;
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.17.0';
 
 package Lemonldap::NG::Manager::Api;
 use Lemonldap::NG::Common::Session;

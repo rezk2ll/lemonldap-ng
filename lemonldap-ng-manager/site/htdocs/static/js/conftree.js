@@ -570,7 +570,7 @@ function templates(tpl,key) {
          {
             "_nodes" : [
                {
-                  "default" : "HS512",
+                  "default" : "RS256",
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIDTokenSignAlg",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIDTokenSignAlg",
                   "select" : [
