@@ -26,7 +26,7 @@ Known regressions in the latest released version
 
 None
 
-2.0.17
+2.17
 ------
 
 Font Awesome application icons
