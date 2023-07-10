@@ -41,6 +41,10 @@ SKIP: {
     $saml->lazy_load_metadata($entityID);
     $entityID = "https://www.numistral.fr/shibboleth";
     $saml->lazy_load_metadata($entityID);
+    $entityID =
+"https://monitor.eduroam.org/sp/module.php/saml/sp/metadata.php/default-sp";
+    $saml->lazy_load_metadata($entityID);
+
     is(
         $saml->spList->{'https://podcast.mines-nantes.fr/shibboleth'}
           ->{confKey},
@@ -97,6 +101,13 @@ SKIP: {
     );
 
     is(
+        $saml->spAttributes->{
+'https://monitor.eduroam.org/sp/module.php/saml/sp/metadata.php/default-sp'
+        }->{'subjectId'},
+'0;urn:oasis:names:tc:SAML:attribute:subject-id;urn:oasis:names:tc:SAML:2.0:attrname-format:uri;subject-id'
+    );
+
+    is(
         $saml->spOptions->{'https://www.numistral.fr/shibboleth'}
           ->{samlSPMetaDataOptionsNameIDFormat},
         'persistent', 'eduPersonTargetedID sets required persistent NameID'
@@ -145,8 +156,7 @@ clean_sessions();
 done_testing();
 
 sub issuer {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 samlFederationFiles =>
 "t/main-idps-renater-metadata.xml t/main-sps-renater-metadata.xml",
@@ -219,8 +229,7 @@ sub issuer {
 }
 
 sub sp {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 samlFederationFiles =>
 "t/main-idps-renater-metadata.xml t/main-sps-renater-metadata.xml",

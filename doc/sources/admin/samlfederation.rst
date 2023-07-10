@@ -83,4 +83,40 @@ To do this:
 * Set *Options* » *Federation* » *Entity Identifier* to the entityID of the provider you want to override
 * Set the desired configuration options on this provider
 
+Configure SAML attributes
+=========================
+
+Federation metadata files contains information about attributes required or
+simply requested by federated service providers (SP). In order for those
+attributes to be successfully sent to providers, they must exist in the
+LemonLDAP::NG session, under the same name as the FriendlyName declared in
+metadata.
+
+For example, the following attribute definition::
+
+    <md:RequestedAttribute
+        NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+        Name="urn:oid:0.9.2342.19200300.100.1.1"
+        FriendlyName="uid" isRequired="true"/>
+
+requires an ``uid`` attribute in the session. Make sure you configure your
+exported variables accordingly, and use macros to fill the gaps if needed.
+
+Subject ID
+----------
+
+.. versionadded:: 2.17
+
+Some SAML SPs can now use a ``subject-id`` attribute instead of a NameID or
+``eduPersonTargetedID`` (not supported in LemonLDAP::NG).
+
+In order to provide a ``subject-id`` attribute, you must create a macro with
+
+* Key: ``subjectId``
+* Value: ``subjectid($uid, "scope.edu", "myrandomsalt1")``
+
+The ``subject-id`` attribute will only be sent if the SP metadata contains the
+``urn:oasis:names:tc:SAML:profiles:subject-id:req`` extension with a value of
+``any`` or ``subject-id``
+
 .. |beta| image:: /documentation/beta.png
