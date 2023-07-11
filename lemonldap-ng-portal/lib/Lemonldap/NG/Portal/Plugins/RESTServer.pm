@@ -773,6 +773,10 @@ sub getUser {
 
 sub myApplications {
     my ( $self, $req ) = @_;
+    my $basePath = $self->conf->{portal};
+    $basePath =~ s#/*$#/#;
+    $basePath .= $self->p->{staticPrefix} . '/common/apps/';
+    $basePath =~ s#//+#/#;
     my @appslist = map {
         my @apps = map {
             {
@@ -783,9 +787,7 @@ sub myApplications {
                     (
                         $_->{applogo_icon}
                         ? ( AppIcon => $_->{applogo} )
-                        : (     AppLogo => $self->conf->{portal}
-                              . "static/common/apps/"
-                              . $_->{applogo} )
+                        : ( AppLogo => $basePath . $_->{applogo} )
                     )
                 }
             }
