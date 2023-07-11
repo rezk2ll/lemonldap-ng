@@ -4576,6 +4576,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         oidcOPMetaDataOptionsConfigurationURI => { type => 'url', },
         oidcOPMetaDataOptionsJWKSTimeout  => { type => 'int', default => 0 },
+        oidcOPMetaDataOptionsUserAttribute => { type => 'text' },
         oidcOPMetaDataOptionsClientID     => { type => 'text', },
         oidcOPMetaDataOptionsClientSecret => { type => 'password', },
         oidcOPMetaDataOptionsScope        =>

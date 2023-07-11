@@ -2387,6 +2387,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 1,
             'type'    => 'bool'
         },
+        'oidcOPMetaDataOptionsUserAttribute' => {
+            'type' => 'text'
+        },
         'oidcRPCallbackGetParam' => {
             'default' => 'openidconnectcallback',
             'type'    => 'text'

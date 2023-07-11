@@ -688,6 +688,7 @@
 "oidcOPMetaDataOptionsTooltip":"Tooltip",
 "oidcOPMetaDataOptionsUiLocales":"واجهة المستخدم المحلية",
 "oidcOPMetaDataOptionsUseNonce":"استخدام نونس",
+"oidcOPMetaDataOptionsUserAttribute":"Attribute containing user identifier",
 "oidcOPName":"اسم موفرأوبين أيدي كونيكت",
 "oidcParams":"معاييرأوبين أيدي كونيكت",
 "oidcRP":"الطرف المعتمد  لي أوبين أيدي كونيكت",
