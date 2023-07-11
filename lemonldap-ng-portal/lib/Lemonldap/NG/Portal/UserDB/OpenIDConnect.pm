@@ -78,7 +78,7 @@ sub setSessionInfo {
 
     my %vars = (
         %{ $self->conf->{exportedVars} },
-        %{ $self->conf->{oidcOPMetaDataExportedVars}->{$op} }
+        %{ $self->opAttributes->{$op} }
     );
 
     while ( my ( $k, $v ) = each %vars ) {
