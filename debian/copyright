@@ -25,8 +25,14 @@ License: GPL-2+
 Files: lemonldap-ng-portal/lib/Lemonldap/NG/Portal/Auth/PAM.pm
 Copyright: 2017-2019, Xavier Guimard <x.guimard@free.fr>
 License: GPL-2+
-Comment: idea taken from Authen::Simple::PAM (copyright Christian Hansen
- <chansen@cpan.org>
+Comment: idea taken from Authen::Simple::PAM
+ (copyright Christian Hansen <chansen@cpan.org>)
+
+Files: lemonldap-ng-portal/lib/Lemonldap/NG/Portal/Plugins/SamlFederation.pm
+Copyright: 2023, Worteks <info@worteks.com>
+License: Artistic or GPL-1+
+Comment: contains code from DateTime::Format::Duration::XSD by Smal D A,
+ <mialinx@gmail.com>
 
 Files: lemonldap-ng-portal/inc/LWP/Protocol/PSGI.pm
 Copyright: 2011, Tatsuhiko Miyagawa <miyagawa@bulknews.net>
