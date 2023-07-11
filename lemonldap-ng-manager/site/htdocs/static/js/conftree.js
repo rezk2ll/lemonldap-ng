@@ -59,7 +59,7 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAuthnLevel",
             "id" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsAuthnLevel",
             "title" : "casAppMetaDataOptionsAuthnLevel",
-            "type" : "int"
+            "type" : "intOrNull"
          },
          {
             "get" : tpl+"s/"+key+"/"+"casAppMetaDataOptionsRule",
@@ -193,7 +193,7 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSortNumber",
             "id" : tpl+"s/"+key+"/"+"casSrvMetaDataOptionsSortNumber",
             "title" : "casSrvMetaDataOptionsSortNumber",
-            "type" : "int"
+            "type" : "intOrNull"
          }
       ],
       "id" : "casSrvMetaDataOptionsDisplay",
@@ -433,7 +433,7 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsSortNumber",
             "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsSortNumber",
             "title" : "oidcOPMetaDataOptionsSortNumber",
-            "type" : "int"
+            "type" : "intOrNull"
          }
       ],
       "help" : "authopenidconnect.html#display",
@@ -724,7 +724,7 @@ function templates(tpl,key) {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnLevel",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnLevel",
                   "title" : "oidcRPMetaDataOptionsAuthnLevel",
-                  "type" : "int"
+                  "type" : "intOrNull"
                },
                {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
@@ -742,25 +742,25 @@ function templates(tpl,key) {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthorizationCodeExpiration",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthorizationCodeExpiration",
                   "title" : "oidcRPMetaDataOptionsAuthorizationCodeExpiration",
-                  "type" : "int"
+                  "type" : "intOrNull"
                },
                {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIDTokenExpiration",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIDTokenExpiration",
                   "title" : "oidcRPMetaDataOptionsIDTokenExpiration",
-                  "type" : "int"
+                  "type" : "intOrNull"
                },
                {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenExpiration",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenExpiration",
                   "title" : "oidcRPMetaDataOptionsAccessTokenExpiration",
-                  "type" : "int"
+                  "type" : "intOrNull"
                },
                {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsOfflineSessionExpiration",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsOfflineSessionExpiration",
                   "title" : "oidcRPMetaDataOptionsOfflineSessionExpiration",
-                  "type" : "int"
+                  "type" : "intOrNull"
                }
             ],
             "id" : "oidcRPMetaDataOptionsTimeouts",
@@ -1230,7 +1230,7 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSortNumber",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSortNumber",
             "title" : "samlIDPMetaDataOptionsSortNumber",
-            "type" : "int"
+            "type" : "intOrNull"
          }
       ],
       "help" : "authsaml.html#display",
@@ -1445,7 +1445,7 @@ function templates(tpl,key) {
                   "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsAuthnLevel",
                   "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsAuthnLevel",
                   "title" : "samlSPMetaDataOptionsAuthnLevel",
-                  "type" : "int"
+                  "type" : "intOrNull"
                },
                {
                   "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsRule",
@@ -1599,7 +1599,7 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"vhostAuthnLevel",
             "id" : tpl+"s/"+key+"/"+"vhostAuthnLevel",
             "title" : "vhostAuthnLevel",
-            "type" : "int"
+            "type" : "intOrNull"
          },
          {
             "default" : "Main",
