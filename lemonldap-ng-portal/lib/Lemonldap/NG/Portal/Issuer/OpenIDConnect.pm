@@ -2480,13 +2480,15 @@ sub exportRequestParameters {
 
     if ( $req->param('client_id') ) {
         my $rp = $self->getRP( $req->param('client_id') );
-        $req->env->{"llng_oidc_rp"} = $rp if $rp;
+        if ($rp) {
 
-        # Store target authentication level in pdata
-        my $targetAuthnLevel =
-          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel};
-        $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
-          if $targetAuthnLevel;
+            $req->env->{"llng_oidc_rp"} = $rp;
+            # Store target authentication level in pdata
+            my $targetAuthnLevel =
+              $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel};
+            $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
+              if $targetAuthnLevel;
+          }
     }
 
     return PE_OK;
