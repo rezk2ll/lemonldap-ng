@@ -4481,6 +4481,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             documentation => 'OpenID Connect Signature Key ID',
         },
+        oidcServiceNewPrivateKeySig => { type => 'RSAPrivateKey', },
+        oidcServiceNewPublicKeySig  => { type => 'RSAPublicKeyOrCertificate', },
+        oidcServiceNewKeyIdSig      => {
+            type          => 'text',
+            documentation => 'Future OpenID Connect Signature Key ID',
+        },
         oidcServiceAllowDynamicRegistration => {
             type          => 'bool',
             default       => 0,

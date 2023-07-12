@@ -139,7 +139,7 @@ subtest "JWKS test (certificate)", sub {
             "/oauth2/jwks", accept => 'text/html',
         )
     );
-    my $key = $res->{keys}->[0];
+    my $key = $res->{keys}->[1];
     is( $key->{e}, 'AQAB', 'Correct RSA exponent' );
     is(
         $key->{n},
@@ -158,7 +158,7 @@ subtest "JWKS test (certificate)", sub {
         'Correct certificate thumbprint' );
 
     # Test previous key
-    $key = $res->{keys}->[1];
+    $key = $res->{keys}->[0];
     is( $key->{kid}, 'previousKey', 'Correct previous key ID' );
     $previousPublicKey =~ s/-+.*?-+//g;
     $previousPublicKey =~ s/\n//g;
@@ -174,7 +174,7 @@ subtest "JWKS test (pubkey)", sub {
             "/oauth2/jwks", accept => 'text/html',
         )
     );
-    my $key = $res->{keys}->[0];
+    my $key = $res->{keys}->[1];
     is( $key->{e}, 'AQAB', 'Correct RSA exponent' );
     is(
         $key->{n},

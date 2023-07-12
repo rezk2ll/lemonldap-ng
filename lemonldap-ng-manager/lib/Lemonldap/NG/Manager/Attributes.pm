@@ -2744,6 +2744,15 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 'userinfo',
             'type'    => 'text'
         },
+        'oidcServiceNewKeyIdSig' => {
+            'type' => 'text'
+        },
+        'oidcServiceNewPrivateKeySig' => {
+            'type' => 'RSAPrivateKey'
+        },
+        'oidcServiceNewPublicKeySig' => {
+            'type' => 'RSAPublicKeyOrCertificate'
+        },
         'oidcServiceOfflineSessionExpiration' => {
             'default' => 2592000,
             'type'    => 'int'
