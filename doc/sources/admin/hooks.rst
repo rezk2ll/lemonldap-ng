@@ -716,3 +716,33 @@ Sample code::
        $self->userLogger->info("Password changed for $user: $old -> $password");
        return PE_OK;
    }
+
+Generic hooks
+-------------
+
+sendHtml
+~~~~~~~~
+
+.. versionadded:: 2.17
+
+This hook is called whenever the LemonLDAP::NG portal is about to generate a page using its template engine
+
+The hook's parameters are:
+
+* A reference to the template name (it can be changed by plugins)
+* A reference to the hash of Lemonldap::NG::Common::sendHtml arguments, which
+  includes template parameters and response code
+
+Sample code::
+
+    use constant hook => { sendHtml => 'injectParam', };
+
+    sub injectParam {
+        my ( $self, $req, $tpl, $args ) = @_;
+
+        # Add variable to the "menu.tpl" template
+        if ( $$tpl eq "menu" ) {
+            $args->{params}->{MY_PARAM} = "xx";
+        }
+        return PE_OK;
+    }

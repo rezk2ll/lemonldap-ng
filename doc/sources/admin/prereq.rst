@@ -60,6 +60,7 @@ Core
 -  MIME::Base64
 -  MIME::Entity
 -  Mouse
+-  Net::CIDR
 -  Net::LDAP
 -  Plack
 -  Regexp::Assemble

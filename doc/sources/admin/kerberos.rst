@@ -187,6 +187,8 @@ Change rights on keytab file:
 
    chown apache /etc/lemonldap-ng/auth.keytab
    chmod 600 /etc/lemonldap-ng/auth.keytab
+   # If you use SELinux
+   restorecon /etc/lemonldap-ng/auth.keytab
 
 You can check the validity of the keytab file by trying to request a
 service ticket, and compare the result with the keytab content.

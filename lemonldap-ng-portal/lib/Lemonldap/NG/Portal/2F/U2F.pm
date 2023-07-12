@@ -185,10 +185,11 @@ sub fail {
             $req,
             'u2fcheck',
             params => {
-                AUTH_ERROR      => $req->error,
-                AUTH_ERROR_TYPE => $req->error_type,
-                AUTH_ERROR_ROLE => $req->error_role,
-                FAILED          => 1
+                AUTH_ERROR                      => $req->error,
+                AUTH_ERROR_TYPE                 => $req->error_type,
+                AUTH_ERROR_ROLE                 => $req->error_role,
+                ( 'AUTH_ERROR_' . $req->error ) => 1,
+                FAILED                          => 1
             }
         )
     );

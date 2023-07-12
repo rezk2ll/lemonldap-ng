@@ -480,7 +480,7 @@ sub _choice {
 
     my $session;
     unless ( $session = $self->ott->getToken($token) ) {
-        $self->userLogger->info('Token expired');
+        $self->userLogger->info('Invalid 2F choice form token');
         $req->noLoginDisplay(1);
         return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
     }

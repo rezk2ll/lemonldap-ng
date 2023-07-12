@@ -317,9 +317,10 @@ sub do {
                     $req,
                     'errormsg',
                     params => {
-                        AUTH_ERROR      => $err,
-                        AUTH_ERROR_TYPE => $req->error_type,
-                        AUTH_ERROR_ROLE => $req->error_role,
+                        AUTH_ERROR               => $err,
+                        ( 'AUTH_ERROR_' . $err ) => 1,
+                        AUTH_ERROR_TYPE          => $req->error_type,
+                        AUTH_ERROR_ROLE          => $req->error_role,
                     }
                 );
             }
@@ -943,6 +944,8 @@ sub sendHtml {
 
     $args{params}->{TROVER} = $self->getTrOver( $req, $templateDir );
 
+    $self->processHook( $req, 'sendHtml', \$template, \%args );
+
     my $res = $self->SUPER::sendHtml( $req, $template, %args );
     push @{ $res->[1] },
       'X-XSS-Protection'       => '1; mode=block',
@@ -1039,6 +1042,30 @@ sub sendHtml {
     push @{ $res->[1] }, 'Content-Security-Policy' => $csp;
     $self->logger->debug("Apply following CSP: $csp");
     return $res;
+}
+
+sub imgok {
+    my ( $self, $req, ) = @_;
+    return $self->sendImage( $req, 'icons/ok.png' );
+}
+
+sub imgnok {
+    my ( $self, $req, ) = @_;
+    return $self->sendImage( $req, 'icons/warning.png' );
+}
+
+sub sendImage {
+    my ( $self, $req,, $img ) = @_;
+    return [
+        302,
+        [
+                'Location' => $self->conf->{portal}
+              . $self->staticPrefix
+              . '/common/'
+              . $img,
+        ],
+        [],
+    ];
 }
 
 sub sendCss {
@@ -1288,6 +1315,8 @@ sub setCorsHeaderFromConfig {
 # Temlate loader
 sub loadTemplate {
     my ( $self, $req, $name, %prm ) = @_;
+
+    $self->processHook( $req, 'sendHtml', \$name, \%prm );
     $name .= '.tpl';
     my $tpl = HTML::Template->new(
         filename => $name,
@@ -1357,7 +1386,7 @@ sub buildUrl {
         }
     }
     $uri->path_segments(@pathSg);
-    return $uri;
+    return $uri->as_string;
 }
 
 1;

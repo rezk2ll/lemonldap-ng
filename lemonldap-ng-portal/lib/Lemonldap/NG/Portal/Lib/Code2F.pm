@@ -115,7 +115,8 @@ sub _resend {
 
     # Do not invalidate the token while getting it
     unless ( $session = $self->ott->getToken( $token, 1 ) ) {
-        $self->userLogger->info('Token expired');
+        $self->userLogger->info(
+            'Invalid token during ' . $self->prefix . '2f resend' );
         $self->setSecurity($req);
         return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
     }
