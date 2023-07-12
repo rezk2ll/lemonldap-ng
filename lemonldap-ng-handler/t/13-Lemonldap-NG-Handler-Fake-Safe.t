@@ -5,7 +5,7 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 20;
+use Test::More tests => 24;
 require 't/test.pm';
 BEGIN { use_ok('Lemonldap::NG::Handler::Main::Jail') }
 
@@ -117,4 +117,28 @@ like(
     $jail->error,
     qr/Missing right curly or square bracket/,
     'Found correct error message'
+);
+
+$sub  = "sub { return(subjectid(\@_)) }";
+$code = $jail->jail_reval($sub);
+ok(
+    ( defined($code) and ref($code) eq 'CODE' ),
+    'subjectid extended function is defined'
+);
+is(
+    $code->( "abc", "def" ),
+    "xj4bnp4pahh6uqkbidpf3lrceoyagyndsylxvhfucd7wd4qacwwq\@def",
+    "subjectid works as expected"
+);
+
+is(
+    $code->( "abc", "def", "salt" ),
+    "c2ntukyjo7v64lvr7u4sy2veocrsqhkdt7zs6if25jzqtv7ub3wa\@def",
+    "subjectid works as expected"
+);
+
+is(
+    $code->("abc"),
+    "xj4bnp4pahh6uqkbidpf3lrceoyagyndsylxvhfucd7wd4qacwwq",
+    "subjectid works as expected"
 );

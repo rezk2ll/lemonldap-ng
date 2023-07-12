@@ -40,6 +40,7 @@ Inside this jail, you can access to:
   * iso2unicode_
   * iso2unicodeSafe_ (|new| in version 2.0.15)
   * listMatch_ (|new| in version 2.0.7)
+  * subjectid_ (|new| in version 2.17)
   * token_
   * unicode2iso_
   * unicode2isoSafe_ (|new| in version 2.0.15)
@@ -421,6 +422,38 @@ Simple usage example:
 
 The function returns 1 if the value was found, and 0 if it was not
 found.
+
+.. _subjectid:
+
+subjectid
+~~~~~~~~~
+
+.. versionadded:: 2.17
+
+This function lets you generate an identifier suitable with the requirements of `urn:oasis:names:tc:SAML:profiles:subject-id <https://docs.oasis-open.org/security/saml-subject-id-attr/v1.0/cs01/saml-subject-id-attr-v1.0-cs01.html>`__
+
+It takes an optional salt that makes it suitable for pairwise IDs as well.
+
+.. warning::
+
+    The generated ID will only be as stable as the underlying attribute
+
+Function parameter:
+
+-  **value**: Value to hash
+-  **scope**: DNS suffix to append
+-  **salt**: optional salt to be added at the end of the value before hashing
+
+Simple usage example:
+
+::
+
+   # Generate a subject-id from uid, in a global macro
+   subjectid($uid, "scope.edu", "myglobalsalt")
+
+   # Generate a pairwise-id, in a per-service macro
+   subjectid($uid, "scope.edu", "myservice")
+
 
 token
 ~~~~~

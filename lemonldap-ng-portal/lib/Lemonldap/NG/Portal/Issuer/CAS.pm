@@ -3,7 +3,6 @@ package Lemonldap::NG::Portal::Issuer::CAS;
 use strict;
 use Mouse;
 use URI;
-use POSIX qw(strftime);
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   URIRE
@@ -53,6 +52,7 @@ sub init {
         ( $self->path ) => {
             samlValidate    => 'samlNotImplemented',
             serviceValidate => 'serviceValidate',
+            relayLogout     => 'relayLogout',
             validate        => 'validate',
             proxyValidate   => 'proxyValidate',
             proxy           => 'proxy',
@@ -396,14 +396,12 @@ sub run {
             }
         }
 
-        # Delete linked CAS sessions
-        $self->deleteCasSecondarySessions($session_id);
-
         # Delete local session
         if ( my $session = $self->p->getApacheSession($session_id) ) {
-            if ( $self->conf->{casBackChannelSingleLogout} ) {
-                $self->_send_back_channel_LogoutRequests( $session->data );
-            }
+
+            # This will call Issuer logout methods, incluing our own
+            # TODO: call authLogout and deleteSession instead of duplicating code
+            my $res = $self->p->do( $req, [ @{ $self->p->beforeLogout } ] );
 
             unless ( $self->p->_deleteSession( $req, $session ) ) {
                 $self->logger->error("Fail to delete session $session_id ");
@@ -506,9 +504,7 @@ sub logout {
     # Delete linked CAS sessions
     $self->deleteCasSecondarySessions($session_id) if ($session_id);
 
-    if ( $self->conf->{casBackChannelSingleLogout} ) {
-        $self->_send_back_channel_LogoutRequests( $req->sessionInfo );
-    }
+    $self->_send_back_channel_LogoutRequests( $req, $req->sessionInfo );
 
     return PE_OK;
 }
@@ -623,7 +619,7 @@ sub validate {
     # Return success message
     $self->deleteCasSession($casServiceSession);
 
-    if ( $self->conf->{casBackChannelSingleLogout} ) {
+    if ( $self->isLogoutEnabled($app) ) {
         $self->_save_ticket_for_single_logout( $localSession, $service,
             $req->param('ticket') );
     }
@@ -959,7 +955,7 @@ sub _validate2 {
     # Return success message
     $self->deleteCasSession($casServiceSession);
 
-    if ( $self->conf->{casBackChannelSingleLogout} ) {
+    if ( $self->isLogoutEnabled($app) ) {
         $self->_save_ticket_for_single_logout( $localSession, $service,
             $req->param('ticket') );
     }
@@ -1010,35 +1006,117 @@ sub _save_ticket_for_single_logout {
 }
 
 sub _send_back_channel_LogoutRequests {
-    my ( $self, $sessionData ) = @_;
+    my ( $self, $req, $sessionData ) = @_;
 
     my $service2ticket = $sessionData->{cas_tickets_for_SLO} or return;
 
+    my $content;
     foreach my $service ( keys %$service2ticket ) {
-        my $ticket = $service2ticket->{$service};
-        $self->logger->debug(
-            "Sending back-channel LogoutRequest to $service (ticket $ticket)");
 
-        my $now = strftime( "%Y-%m-%dT%TZ", gmtime() );
+        # Create a new relay session
+        my $relayInfos = {
+            service => $service,
+            ticket  => $service2ticket->{$service},
+            _type   => "relay"
+        };
+        my $relaySession = $self->getCasSession( undef, $relayInfos );
+        my $relayid      = $relaySession->id;
 
-        # NB: $ticket is a good enough random ID :-)
-        # NB: although it looks alike SAML, the CAS SLO protocol is specific
-        my $logoutRequest =
-qq{<samlp:LogoutRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" ID="$ticket" Version="2.0" IssueInstant="$now">
-                <saml:NameID xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">\@NOT_USED\@</saml:NameID>
-                <samlp:SessionIndex>$ticket</samlp:SessionIndex>
-            </samlp:LogoutRequest>};
+        # Build the URL that could be used to play this logout request
+        my $slo_url =
+          $self->p->buildUrl( "cas", "relayLogout", { relay => $relayid } );
 
-# Apereo CAS is doing async requests by defaut. But doing it synchronously with a timeout should do it
-        my $response = $self->ua->post(
-            $service,
-            { logoutRequest => $logoutRequest },
-            "Content-Type" => 'application/x-www-form-urlencoded'
+        my $name = $self->getNameFromService($service);
+
+        # Display information to the user
+        $content .= $self->loadTemplate(
+            $req,
+            'samlSpSoapLogout',
+            params => {
+                imgUrl => $slo_url,
+                name   => $name,
+            }
         );
-        $self->logger->debug(
-                "Sending back-channel LogoutRequest to $service: result ("
-              . $response->message . ")"
-              . "\n$logoutRequest" );
+    }
+
+    # Build Relay URL and display it
+    $req->info(
+        $self->loadTemplate(
+            $req, 'samlSpsLogout', params => { content => $content }
+        )
+    ) if $content;
+}
+
+sub getNameFromService {
+    my ( $self, $service ) = @_;
+
+    my $app = $self->getCasApp($service);
+    if ( $self->casAppList->{$app}->{casAppMetaDataOptionsDisplayName} ) {
+        return $self->casAppList->{$app}->{casAppMetaDataOptionsDisplayName};
+    }
+    return $app;
+}
+
+sub relayLogout {
+    my ( $self, $req ) = @_;
+
+    my $relay = $req->param("relay");
+    unless ($relay) {
+        $self->logger->error("Missing relay parameter");
+        return $self->p->imgnok($req);
+    }
+
+    my $session = $self->getCasSession($relay);
+    unless ($session) {
+        $self->logger->error("CAS session $relay not found");
+        return $self->p->imgnok($req);
+    }
+
+    unless ( $session->data->{_type} eq "relay" ) {
+        $self->logger->error( "CAS session $relay has incorrect type "
+              . $session->data->{_type} );
+        return $self->p->imgnok($req);
+    }
+
+    my $service = $session->data->{service};
+    my $ticket  = $session->data->{ticket};
+    $self->logger->debug(
+        "Sending back-channel LogoutRequest to $service (ticket $ticket)");
+
+    my $logoutRequest = $self->buildLogoutRequest($ticket);
+
+    my $response = $self->ua->post(
+        $service,
+        { logoutRequest => $logoutRequest },
+        "Content-Type" => 'application/x-www-form-urlencoded'
+    );
+    $self->logger->debug(
+            "Sending back-channel LogoutRequest to $service: result ("
+          . $response->message
+          . ")" );
+
+    if ( $response->is_success ) {
+        return $self->p->imgok;
+    }
+    else {
+        return $self->p->imgnok;
+    }
+}
+
+sub isLogoutEnabled {
+    my ( $self, $app ) = @_;
+
+    my $option = -1;
+    if ($app) {
+        $option = $self->casAppList->{$app}->{casAppMetaDataOptionsLogout}
+          // -1;
+    }
+
+    if ( $option == -1 ) {
+        return $self->conf->{casBackChannelSingleLogout} || 0;
+    }
+    else {
+        return $option;
     }
 }
 

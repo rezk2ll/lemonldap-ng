@@ -72,6 +72,7 @@ lib/Lemonldap/NG/Portal/Lib/Choice.pm
 lib/Lemonldap/NG/Portal/Lib/Code2F.pm
 lib/Lemonldap/NG/Portal/Lib/CustomModule.pm
 lib/Lemonldap/NG/Portal/Lib/DBI.pm
+lib/Lemonldap/NG/Portal/Lib/LazyLoadedConfiguration.pm
 lib/Lemonldap/NG/Portal/Lib/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Net/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Notifications/JSON.pm
@@ -82,6 +83,7 @@ lib/Lemonldap/NG/Portal/Lib/OpenID/SREG.pm
 lib/Lemonldap/NG/Portal/Lib/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Lib/OtherSessions.pm
 lib/Lemonldap/NG/Portal/Lib/OverConf.pm
+lib/Lemonldap/NG/Portal/Lib/Radius.pm
 lib/Lemonldap/NG/Portal/Lib/Remote.pm
 lib/Lemonldap/NG/Portal/Lib/REST.pm
 lib/Lemonldap/NG/Portal/Lib/RESTProxy.pm
@@ -554,6 +556,7 @@ t/02-Password-Demo-Local-noPpolicy.t
 t/02-Password-Demo-Local-Ppolicy.t
 t/02-Password-Demo-Local-SpeChars-Ppolicy.t
 t/02-Password-Demo.t
+t/02-SendHtml-Plugin.t
 t/03-ConfTimeout.t
 t/03-SessionTimeout.t
 t/03-XSS-protection.t
@@ -575,6 +578,7 @@ t/24-AuthApache.t
 t/24-AuthKerberos.t
 t/25-AuthSlave-with-Choice.t
 t/25-AuthSlave-with-Credentials.t
+t/26-AuthRadius-Attributes.t
 t/26-AuthRadius.t
 t/26-AuthRemote.t
 t/27-AuthProxy-with-choice.t
@@ -634,6 +638,8 @@ t/31-CAS-10.t
 t/31-CAS-Gateway.t
 t/31-CAS-Hooks.t
 t/31-CAS-jsRedirect.t
+t/31-CAS-Logout-propagate-OIDC.t
+t/31-CAS-Logout.t
 t/31-CAS-Macros.t
 t/31-CAS-Prefix.t
 t/31-CAS-Proxy.t
@@ -869,6 +875,7 @@ t/77-2F-Extra.t
 t/77-2F-Mail-SessionKey.t
 t/77-2F-Mail-with-global-storage.t
 t/77-2F-Mail.t
+t/77-2F-Radius.t
 t/78-2F-Upgrade-Many.t
 t/78-2F-Upgrade.t
 t/78-2F-UpgradeOnly-with-forceFlag.t
@@ -912,6 +919,7 @@ t/README.md
 t/saml-lib.pm
 t/SamlHookPlugin.pm
 t/sendCode.pl
+t/SendHtmlPlugin.pm
 t/sendOTP.pl
 t/separate-handler.pm
 t/sessions/lock/.exists

@@ -70,8 +70,10 @@ register = ->
 					else
 						setMsg data.error, 'danger'
 				else
-					$(document).trigger "mfaAdded", [ { "type": prefix } ]
-					setMsg 'genericRegistered', 'success'
+					e = jQuery.Event( "mfaAdded" )
+					$(document).trigger e, [ { "type": prefix } ]
+					if !e.isDefaultPrevented()
+						setMsg 'genericRegistered', 'success'
 
 # Register "click" events
 $(document).ready ->
