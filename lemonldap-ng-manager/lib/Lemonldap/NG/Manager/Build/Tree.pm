@@ -397,9 +397,12 @@ sub tree {
                             title => 'radiusParams',
                             help  => 'authradius.html',
                             nodes => [
-                                'radiusAuthnLevel', 'radiusSecret',
-                                'radiusServer',     'radiusExportedVars',
+                                'radiusAuthnLevel',
+                                'radiusSecret',
+                                'radiusServer',
+                                'radiusExportedVars',
                                 'radiusDictionaryFile',
+                                'radiusRequestAttributes',
                             ]
                         },
                         {
@@ -1040,6 +1043,8 @@ sub tree {
                                 'radius2fSecret',
                                 'radius2fUsernameSessionKey',
                                 'radius2fTimeout',
+                                'radius2fDictionaryFile',
+                                'radius2fRequestAttributes',
                                 'radius2fAuthnLevel',
                                 'radius2fLabel',
                                 'radius2fLogo'

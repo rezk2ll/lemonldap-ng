@@ -67,12 +67,16 @@ sub types {
         'hostname' => {
             'form'    => 'text',
             'msgFail' => '__badHostname__',
-            'test' =>
+            'test'    =>
 qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))?$/
         },
         'int' => {
             'msgFail' => '__notAnInteger__',
             'test'    => qr/^\-?\d+$/
+        },
+        'intOrNull' => {
+            'msgFail' => '__notAnInteger__',
+            'test'    => qr/^\-?\d*$/
         },
         'keyText' => {
             'keyTest' => qr/^[a-zA-Z0-9_]+$/,
@@ -257,7 +261,7 @@ m[^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9/\+\r\
         'url' => {
             'form'    => 'text',
             'msgFail' => '__badUrl__',
-            'test' =>
+            'test'    =>
 qr/(?:^$|(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?))/
         }
     };
@@ -749,10 +753,17 @@ sub attributes {
             'type' => 'subContainer'
         },
         'casAppMetaDataOptionsAuthnLevel' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'casAppMetaDataOptionsComment' => {
             'type' => 'longtext'
+        },
+        'casAppMetaDataOptionsDisplayName' => {
+            'type' => 'text'
+        },
+        'casAppMetaDataOptionsLogout' => {
+            'default' => -1,
+            'type'    => 'trool'
         },
         'casAppMetaDataOptionsRule' => {
             'test' => sub {
@@ -821,14 +832,14 @@ sub attributes {
             'type'    => 'longtext'
         },
         'casSrvMetaDataOptionsSortNumber' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'casSrvMetaDataOptionsTooltip' => {
             'type' => 'text'
         },
         'casSrvMetaDataOptionsUrl' => {
             'msgFail' => '__badUrl__',
-            'test' =>
+            'test'    =>
 qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
             'type' => 'text'
         },
@@ -1164,7 +1175,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'text'
         },
         'cookieExpiration' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'cookieName' => {
             'default' => 'lemonldap',
@@ -1378,7 +1389,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'domain' => {
             'default' => 'example.com',
             'msgFail' => '__badDomainName__',
-            'test' =>
+            'test'    =>
 qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?))?$/,
             'type' => 'text'
         },
@@ -1412,7 +1423,7 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
             'type'    => 'boolOrExpr'
         },
         'ext2fAuthnLevel' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'ext2fCodeActivation' => {
             'default' => '\\d{6}',
@@ -1524,7 +1535,7 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
         },
         'globalStorageOptions' => {
             'default' => {
-                'Directory' => '/var/lib/lemonldap-ng/sessions/',
+                'Directory'      => '/var/lib/lemonldap-ng/sessions/',
                 'generateModule' =>
                   'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
                 'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
@@ -1649,7 +1660,7 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
         'issuerDBGetParameters' => {
             'default'    => {},
             'keyMsgFail' => '__badHostname__',
-            'keyTest' =>
+            'keyTest'    =>
 qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
             'test' => {
                 'keyMsgFail' => '__badKeyName__',
@@ -1832,7 +1843,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'text'
         },
         'ldapPort' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'ldapPpolicyControl' => {
             'default' => 0,
@@ -2045,7 +2056,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'boolOrExpr'
         },
         'mail2fAuthnLevel' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'mail2fBody' => {
             'type' => 'longtext'
@@ -2070,7 +2081,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type' => 'text'
         },
         'mail2fTimeout' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'mailBody' => {
             'type' => 'longtext'
@@ -2351,7 +2362,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'text'
         },
         'oidcOPMetaDataOptionsSortNumber' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'oidcOPMetaDataOptionsStoreIDToken' => {
             'default' => 0,
@@ -2416,7 +2427,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsAccessTokenExpiration' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'oidcRPMetaDataOptionsAccessTokenJWT' => {
             'default' => 0,
@@ -2455,10 +2466,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsAuthnLevel' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'oidcRPMetaDataOptionsAuthorizationCodeExpiration' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'oidcRPMetaDataOptionsBypassConsent' => {
             'default' => 0,
@@ -2485,14 +2496,14 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type' => 'text'
         },
         'oidcRPMetaDataOptionsIDTokenExpiration' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'oidcRPMetaDataOptionsIDTokenForceClaims' => {
             'default' => 0,
             'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsIDTokenSignAlg' => {
-            'default' => 'HS512',
+            'default' => 'RS256',
             'select'  => [ {
                     'k' => 'none',
                     'v' => 'None'
@@ -2549,7 +2560,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type' => 'text'
         },
         'oidcRPMetaDataOptionsOfflineSessionExpiration' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'oidcRPMetaDataOptionsPostLogoutRedirectUris' => {
             'type' => 'text'
@@ -2823,7 +2834,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'boolOrExpr'
         },
         'password2fAuthnLevel' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'password2fLabel' => {
             'type' => 'text'
@@ -2836,7 +2847,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'boolOrExpr'
         },
         'password2fTTL' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'password2fUserCanRemoveKey' => {
             'default' => 1,
@@ -2919,7 +2930,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'pdataDomain' => {
             'default' => '',
             'msgFail' => '__badDomainName__',
-            'test' =>
+            'test'    =>
 qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?))?$/,
             'type' => 'text'
         },
@@ -2940,7 +2951,7 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
         'portal' => {
             'default' => 'http://auth.example.com/',
             'msgFail' => '__badUrl__',
-            'test' =>
+            'test'    =>
 qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
             'type' => 'url'
         },
@@ -3154,13 +3165,22 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'boolOrExpr'
         },
         'radius2fAuthnLevel' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
+        },
+        'radius2fDictionaryFile' => {
+            'type' => 'text'
         },
         'radius2fLabel' => {
             'type' => 'text'
         },
         'radius2fLogo' => {
             'type' => 'text'
+        },
+        'radius2fRequestAttributes' => {
+            'default'    => {},
+            'keyMsgFail' => '__badKeyName__',
+            'keyTest'    => qr/^[a-zA-Z0-9_-]*$/,
+            'type'       => 'keyTextContainer'
         },
         'radius2fSecret' => {
             'type' => 'text'
@@ -3188,6 +3208,12 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
             'msgFail'    => '__badValue__',
             'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
+        },
+        'radiusRequestAttributes' => {
+            'default'    => {},
+            'keyMsgFail' => '__badKeyName__',
+            'keyTest'    => qr/^[a-zA-Z0-9_-]*$/,
             'type'       => 'keyTextContainer'
         },
         'radiusSecret' => {
@@ -3268,7 +3294,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'keyTest' =>
 qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+))(?::\d+)?$/,
             'msgFail' => '__badUrl__',
-            'test' =>
+            'test'    =>
 qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
             'type' => 'keyTextContainer'
         },
@@ -3323,7 +3349,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'boolOrExpr'
         },
         'rest2fAuthnLevel' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'rest2fCodeActivation' => {
             'type' => 'pcre'
@@ -3448,19 +3474,19 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'samlCommonDomainCookieDomain' => {
             'msgFail' => '__badDomainName__',
-            'test' =>
+            'test'    =>
 qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
             'type' => 'text'
         },
         'samlCommonDomainCookieReader' => {
             'msgFail' => '__badUrl__',
-            'test' =>
+            'test'    =>
 qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
             'type' => 'text'
         },
         'samlCommonDomainCookieWriter' => {
             'msgFail' => '__badUrl__',
-            'test' =>
+            'test'    =>
 qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
             'type' => 'text'
         },
@@ -3477,7 +3503,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'samlDiscoveryProtocolURL' => {
             'msgFail' => '__badUrl__',
-            'test' =>
+            'test'    =>
 qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
             'type' => 'text'
         },
@@ -3702,7 +3728,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'select'
         },
         'samlIDPMetaDataOptionsSortNumber' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'samlIDPMetaDataOptionsSSOBinding' => {
             'default' => '',
@@ -3893,7 +3919,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'       => 'keyTextContainer'
         },
         'samlSPMetaDataOptionsAuthnLevel' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'samlSPMetaDataOptionsCheckSLOMessageSignature' => {
             'default' => 1,
@@ -4194,7 +4220,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'sfExtraContainer'
         },
         'sfLoginTimeout' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'sfManagerRule' => {
             'default' => 1,
@@ -4204,7 +4230,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'bool'
         },
         'sfRegisterTimeout' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'sfRemovedMsgRule' => {
             'default' => 0,
@@ -4296,7 +4322,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'SMTPServer' => {
             'default' => '',
-            'test' =>
+            'test'    =>
 qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+))(?::\d+)?)?$/,
             'type' => 'text'
         },
@@ -4430,7 +4456,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'boolOrExpr'
         },
         'totp2fAuthnLevel' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'totp2fDigits' => {
             'default' => 6,
@@ -4462,7 +4488,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'boolOrExpr'
         },
         'totp2fTTL' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'totp2fUserCanRemoveKey' => {
             'default' => 1,
@@ -4493,7 +4519,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'boolOrExpr'
         },
         'u2fAuthnLevel' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'u2fLabel' => {
             'type' => 'text'
@@ -4506,7 +4532,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'boolOrExpr'
         },
         'u2fTTL' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'u2fUserCanRemoveKey' => {
             'default' => 1,
@@ -4579,7 +4605,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'boolOrExpr'
         },
         'utotp2fAuthnLevel' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'utotp2fLabel' => {
             'type' => 'text'
@@ -4596,7 +4622,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'text'
         },
         'vhostAuthnLevel' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'vhostComment' => {
             'default' => '',
@@ -4689,7 +4715,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'boolOrExpr'
         },
         'webauthn2fAuthnLevel' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'webauthn2fLabel' => {
             'type' => 'text'
@@ -4756,7 +4782,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'boolOrExpr'
         },
         'yubikey2fAuthnLevel' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'yubikey2fClientID' => {
             'type' => 'text'
@@ -4785,7 +4811,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'boolOrExpr'
         },
         'yubikey2fTTL' => {
-            'type' => 'int'
+            'type' => 'intOrNull'
         },
         'yubikey2fUrl' => {
             'type' => 'url'

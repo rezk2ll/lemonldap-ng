@@ -334,10 +334,18 @@ sub cTrees {
                 nodes => [
                     'casAppMetaDataOptionsService',
                     'casAppMetaDataOptionsUserAttribute',
+                    'casAppMetaDataOptionsLogout',
                     'casAppMetaDataOptionsAuthnLevel',
                     'casAppMetaDataOptionsRule',
                     'casAppMetaDataOptionsComment',
                 ]
+            },
+            {
+                title => 'casAppMetaDataOptionsDisplay',
+                form  => 'simpleInputContainer',
+                nodes => [
+                    'casAppMetaDataOptionsDisplayName',
+                ],
             },
             'casAppMetaDataMacros',
         ],

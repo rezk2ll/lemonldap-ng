@@ -156,18 +156,19 @@ sub display {
         $self->logger->debug('Display: confirm detected');
         $skinfile       = 'confirm';
         %templateParams = (
-            AUTH_ERROR      => $req->error,
-            AUTH_ERROR_TYPE => $req->error_type,
-            AUTH_ERROR_ROLE => $req->error_role,
-            AUTH_URL        => $req->{data}->{_url},
-            MSG             => $req->info,
-            HIDDEN_INPUTS   => $self->buildHiddenForm($req),
-            ACTIVE_TIMER    => $req->data->{activeTimer},
-            FORM_ACTION     => $req->data->{confirmFormAction} || "#",
-            FORM_METHOD     => $self->conf->{confirmFormMethod},
-            CHOICE_PARAM    => $self->conf->{authChoiceParam},
-            CHOICE_VALUE    => $req->data->{_authChoice},
-            CHECK_LOGINS    => $self->conf->{portalCheckLogins}
+            AUTH_ERROR                      => $req->error,
+            AUTH_ERROR_TYPE                 => $req->error_type,
+            AUTH_ERROR_ROLE                 => $req->error_role,
+            ( 'AUTH_ERROR_' . $req->error ) => 1,
+            AUTH_URL                        => $req->{data}->{_url},
+            MSG                             => $req->info,
+            HIDDEN_INPUTS                   => $self->buildHiddenForm($req),
+            ACTIVE_TIMER                    => $req->data->{activeTimer},
+            FORM_ACTION  => $req->data->{confirmFormAction} || "#",
+            FORM_METHOD  => $self->conf->{confirmFormMethod},
+            CHOICE_PARAM => $self->conf->{authChoiceParam},
+            CHOICE_VALUE => $req->data->{_authChoice},
+            CHECK_LOGINS => $self->conf->{portalCheckLogins}
               && $req->data->{login},
             ASK_LOGINS        => $req->param('checkLogins')   || 0,
             ASK_STAYCONNECTED => $req->param('stayconnected') || 0,
@@ -186,16 +187,17 @@ sub display {
         $self->logger->debug('Display: IDP choice detected');
         $skinfile       = 'idpchoice';
         %templateParams = (
-            AUTH_ERROR      => $req->error,
-            AUTH_ERROR_TYPE => $req->error_type,
-            AUTH_ERROR_ROLE => $req->error_role,
-            AUTH_URL        => $req->{data}->{_url},
-            HIDDEN_INPUTS   => $self->buildHiddenForm($req),
-            ACTIVE_TIMER    => $req->data->{activeTimer},
-            FORM_METHOD     => $self->conf->{confirmFormMethod},
-            CHOICE_PARAM    => $self->conf->{authChoiceParam},
-            CHOICE_VALUE    => $req->data->{_authChoice},
-            CHECK_LOGINS    => $self->conf->{portalCheckLogins}
+            AUTH_ERROR                      => $req->error,
+            AUTH_ERROR_TYPE                 => $req->error_type,
+            AUTH_ERROR_ROLE                 => $req->error_role,
+            ( 'AUTH_ERROR_' . $req->error ) => 1,
+            AUTH_URL                        => $req->{data}->{_url},
+            HIDDEN_INPUTS                   => $self->buildHiddenForm($req),
+            ACTIVE_TIMER                    => $req->data->{activeTimer},
+            FORM_METHOD                     => $self->conf->{confirmFormMethod},
+            CHOICE_PARAM                    => $self->conf->{authChoiceParam},
+            CHOICE_VALUE                    => $req->data->{_authChoice},
+            CHECK_LOGINS                    => $self->conf->{portalCheckLogins}
               && $req->data->{login},
             ASK_LOGINS        => $req->param('checkLogins')   || 0,
             ASK_STAYCONNECTED => $req->param('stayconnected') || 0,
@@ -219,10 +221,11 @@ sub display {
           for keys %{ $req->{portalHiddenFormValues} // {} };
         $skinfile       = 'info';
         %templateParams = (
-            AUTH_ERROR      => $self->error,
-            AUTH_ERROR_TYPE => $req->error_type,
-            AUTH_ERROR_ROLE => $req->error_role,
-            MSG             => $info,
+            AUTH_ERROR                      => $req->error,
+            AUTH_ERROR_TYPE                 => $req->error_type,
+            AUTH_ERROR_ROLE                 => $req->error_role,
+            ( 'AUTH_ERROR_' . $req->error ) => 1,
+            MSG                             => $info,
             URL           => $req->{urldc} || $self->conf->{portal},  # Fix 2158
             HIDDEN_INPUTS => $self->buildOutgoingHiddenForm( $req, $method ),
             ACTIVE_TIMER  => $req->data->{activeTimer},
@@ -251,11 +254,12 @@ sub display {
         my $id = $req->{sessionInfo}
           ->{ $self->conf->{openIdAttr} || $self->conf->{whatToTrace} };
         %templateParams = (
-            AUTH_ERROR      => $self->error,
-            AUTH_ERROR_TYPE => $req->error_type,
-            AUTH_ERROR_ROLE => $req->error_role,
-            PROVIDERURI     => $p,
-            MSG             => $req->info(),
+            AUTH_ERROR                      => $self->error,
+            AUTH_ERROR_TYPE                 => $req->error_type,
+            AUTH_ERROR_ROLE                 => $req->error_role,
+            ( 'AUTH_ERROR_' . $req->error ) => 1,
+            PROVIDERURI                     => $p,
+            MSG                             => $req->info(),
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -406,10 +410,11 @@ sub display {
     {
         $skinfile       = 'error';
         %templateParams = (
-            AUTH_ERROR      => $req->error,
-            AUTH_ERROR_TYPE => $req->error_type,
-            AUTH_ERROR_ROLE => $req->error_role,
-            LOCKTIME        => $req->lockTime(),
+            AUTH_ERROR                      => $req->error,
+            AUTH_ERROR_TYPE                 => $req->error_type,
+            AUTH_ERROR_ROLE                 => $req->error_role,
+            ( 'AUTH_ERROR_' . $req->error ) => 1,
+            LOCKTIME                        => $req->lockTime(),
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -423,11 +428,12 @@ sub display {
         $skinfile = 'login';
         my $login = $req->user;
         %templateParams = (
-            AUTH_ERROR            => $req->error,
-            AUTH_ERROR_TYPE       => $req->error_type,
-            AUTH_ERROR_ROLE       => $req->error_role,
-            AUTH_URL              => $req->{data}->{_url},
-            LOGIN                 => $login,
+            AUTH_ERROR                      => $req->error,
+            AUTH_ERROR_TYPE                 => $req->error_type,
+            AUTH_ERROR_ROLE                 => $req->error_role,
+            ( 'AUTH_ERROR_' . $req->error ) => 1,
+            AUTH_URL                        => $req->{data}->{_url},
+            LOGIN                           => $login,
             DONT_STORE_PASSWORD   => $self->conf->{browsersDontStorePassword},
             CHECK_LOGINS          => $self->conf->{portalCheckLogins},
             ASK_LOGINS            => $req->param('checkLogins')   || 0,

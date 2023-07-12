@@ -115,11 +115,13 @@ Options
    application. See :ref:`idpcas-url-matching`
 -  **User attribute**: session field that will be used as main
    identifier.
+-  **Logout**: enable back-channel logout to this CAS application
 -  **Authentication Level**: required authentication level to access this
    application
 -  **Access rule**: access rule to enforce on this application. If
    left blank, access will be allowed for everyone.
 -  **Comment**: set a comment
+-  **Name**: name to display during logout
 
 
 .. attention::

@@ -834,6 +834,16 @@ sub tests {
             return ( $res, join( ', ', @msg ) );
         },
 
+        # Test if SAML private and public keys signature keys are set
+        oidcSecretKeys => sub {
+            return 1 unless ( $conf->{issuerDBOpenIDConnectActivation} );
+            return ( 1,
+                'OIDC service private and public keys signature should be set' )
+              unless ( $conf->{oidcServicePrivateKeySig}
+                && $conf->{oidcServicePublicKeySig} );
+            return 1;
+        },
+
         # RS* OIDC algs require a signing key
         oidcRPNeedRSAKey => sub {
             return 1
