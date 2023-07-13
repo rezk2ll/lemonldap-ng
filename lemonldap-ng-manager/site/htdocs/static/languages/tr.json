@@ -688,6 +688,7 @@
 "oidcOPMetaDataOptionsTooltip":"Araç ipucu",
 "oidcOPMetaDataOptionsUiLocales":"Yerel UI",
 "oidcOPMetaDataOptionsUseNonce":"Tek seferlik anahtarı kullan",
+"oidcOPMetaDataOptionsUserAttribute":"Nitelik kullanıcı kimliği içeriyor",
 "oidcOPName":"OpenID Connect Sağlayıcı Adı",
 "oidcParams":"OpenID Connect parametreleri",
 "oidcRP":"OpenID Connect Relying Party",

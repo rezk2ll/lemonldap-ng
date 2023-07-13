@@ -256,8 +256,28 @@ sub extractFormInfo {
             $self->logger->debug('ID Token is valid');
         }
 
-        # Get user id defined in 'sub' field
-        my $user_id = $id_token_payload_hash->{sub};
+        # Get sub from ID token
+        my $id_token_sub = $id_token_payload_hash->{sub};
+        if ( !$id_token_sub ) {
+            $self->logger->error("Could not find sub claim in ID Token");
+            return PE_OIDC_AUTH_ERROR;
+        }
+        my $user_id = $id_token_sub;
+
+        # Get user identifier, if different from sub
+        my $user_claim = $self->conf->{oidcOPMetaDataOptions}->{$op}
+          ->{oidcOPMetaDataOptionsUserAttribute};
+        if ($user_claim) {
+            $user_id = $id_token_payload_hash->{$user_claim};
+            if ( !$user_id ) {
+                $self->logger->error(
+                    "Could not find $user_claim claim in ID Token");
+                return PE_OIDC_AUTH_ERROR;
+            }
+        }
+
+        # Remember ID Token sub
+        $req->data->{id_token_sub} = $id_token_sub;
 
         # Remember tokens
         $req->data->{access_token}  = $access_token;
@@ -374,6 +394,10 @@ sub setAuthSessionInfo {
 
     if ( $req->data->{op_sid} ) {
         $req->{sessionInfo}->{_oidc_sid} = $req->data->{op_sid};
+    }
+
+    if ( $req->data->{id_token_sub} ) {
+        $req->{sessionInfo}->{_oidc_sub} = $req->data->{id_token_sub};
     }
 
     # Keep ID Token in session
@@ -604,7 +628,7 @@ sub backLogout {
     else {
         my $oidcSessions =
           Lemonldap::NG::Common::Apache::Session->searchOn( \%store,
-            '_user', $uid );
+            '_oidc_sub', $uid );
         @userSessions =
           grep {
                   $oidcSessions->{$_}->{_oidc_OP}

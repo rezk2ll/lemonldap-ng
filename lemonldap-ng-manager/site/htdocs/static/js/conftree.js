@@ -281,6 +281,11 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsStoreIDToken",
                   "title" : "oidcOPMetaDataOptionsStoreIDToken",
                   "type" : "bool"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUserAttribute",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUserAttribute",
+                  "title" : "oidcOPMetaDataOptionsUserAttribute"
                }
             ],
             "id" : "oidcOPMetaDataOptionsConfiguration",

@@ -688,6 +688,7 @@
 "oidcOPMetaDataOptionsTooltip":"工具提示",
 "oidcOPMetaDataOptionsUiLocales":"在地化使用者介面",
 "oidcOPMetaDataOptionsUseNonce":"使用隨機數",
+"oidcOPMetaDataOptionsUserAttribute":"包含使用者識別符號的屬性",
 "oidcOPName":"OpenID 連線提供者名稱",
 "oidcParams":"OpenID 連線參數",
 "oidcRP":"OpenID 連線提供方",
