@@ -18,7 +18,7 @@ Prepare the database
 Your database must have a specific table to host sessions. Here are some
 examples for main databases servers.
 
-.. code-block:: cql
+.. code-block::
 
    CREATE KEYSPACE IF NOT EXISTS llng
     WITH REPLICATION = {
@@ -50,8 +50,6 @@ in ``General parameters`` » ``Sessions`` » ``Session storage`` »
 sensitive):
 
 =================== ================================================= =========================================
-Required parameters
-----------------------------------------------------------------------------------------------------------
 Name                Comment                                           Example
 =================== ================================================= =========================================
 **DataSource**      The `DBI <https://metacpan.org/pod/DBI>`__ string dbi:Cassandra:host=10.2.3.1;keyspace=llng
