@@ -2261,6 +2261,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 1,
             'type'    => 'int'
         },
+        'oidcDropCspHeaders' => {
+            'type' => 'bool'
+        },
         'oidcOPMetaDataExportedVars' => {
             'default' => {
                 'cn'   => 'name',

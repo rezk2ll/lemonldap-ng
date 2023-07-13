@@ -1474,6 +1474,7 @@ sub tree {
                         'oidcServiceAllowHybridFlow',
                         'oidcServiceIgnoreScopeForClaims',
                         'oidcServiceAllowOnlyDeclaredScopes',
+                        'oidcDropCspHeaders',
                     ],
                 },
                 {
