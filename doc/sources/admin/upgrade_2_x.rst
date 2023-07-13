@@ -1,5 +1,5 @@
-Upgrade from 2.0.x to 2.0.y
-===========================
+Upgrade from 2.x to 2.y
+=======================
 
 
 Please apply general caution as you would with any software: have
