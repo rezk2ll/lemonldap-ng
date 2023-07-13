@@ -57,7 +57,6 @@ Presentation
 ------------
 
 -  :doc:`Presentation<presentation>`
--  :doc:`Main features<features>`
 -  :doc:`Quick start tutorial<quickstart>`
 -  :doc:`Choose a platform<platformsoverview>`
 
@@ -391,7 +390,7 @@ style modules are usable except for some features.
     generally a good choice.
 
 ================================================================ ========= ================================================ ==================================================== ================== =================================================================================================================================================================================================
-Backend                                                          Shareable :ref:`Session explorer<session-explorer>`        :ref:`Session restrictions<session-restrictions>`    Session expiration Comment
+Backend                                                          Shareable Session explorer                                 Session restrictions                                 Session expiration Comment
 ================================================================ ========= ================================================ ==================================================== ================== =================================================================================================================================================================================================
 :doc:`File<filesessionbackend>`                                            ✔                                                ✔                                                    ✔                  Not shareable between servers except if used in conjunction with :doc:`REST session backend<restsessionbackend>` or with a shared file system (NFS,...). Selected by default during installation.
 :doc:`PgJSON<pgjsonsessionbackend>`                              ✔         ✔                                                ✔                                                    ✔                  **Recommended backend for production installations**
@@ -400,7 +399,7 @@ Backend                                                          Shareable :ref:
 :doc:`Redis<redissessionbackend>`                                ✔         ✔                                                ✔                                                    ✔                  The fastest. Must be secured by network access control.
 :doc:`MongoDB<mongodbsessionbackend>` |deprecated|               ✔         ✔                                                ✔                                                    ✔                  Must be secured by network access control.
 :doc:`Cassandra<cassandrasessionbackend>`                        ✔         ✔                                                ✔                                                    ✔                  Another supported NoSQL DB
-:doc:`SQL<sqlsessionbackend>`                                    ✔         ✔                                                ✔                                                    ✔                  Unoptimized for :doc:`session explorer<features>` and :doc:`single session<features>` features.
+:doc:`SQL<sqlsessionbackend>`                                    ✔         ✔                                                ✔                                                    ✔                  Unoptimized for session explorer and single session features.
 :doc:`REST<restsessionbackend>` |new|                            ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
 :doc:`SOAP<soapsessionbackend>`  |deprecated|                    ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
 ================================================================ ========= ================================================ ==================================================== ================== =================================================================================================================================================================================================
