@@ -89,6 +89,9 @@ checkDevOpsDownload                                     Enable check DevOps down
 checkHIBP                                               Enable check HIBP                                                                    ✔
 checkHIBPRequired                                       Require HIBP check to pass                                                           ✔
 checkHIBPURL                                            URL of Have I Been Pwned API                                                         ✔
+checkEntropy                                            Enable entropy check of the password                                                 ✔
+checkEntropyRequired                                    Require entropy check to pass                                                        ✔
+checkEntropyRequiredLevel                               Minimal level of entropy required for the password                                   ✔
 checkState                                              Enable CheckState plugin                                                             ✔
 checkStateSecret                                        Secret token for CheckState plugin                                                   ✔
 checkTime                                               Timeout to check new configuration in local cache                                    ✔      ✔               ✔

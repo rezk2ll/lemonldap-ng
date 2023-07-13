@@ -255,6 +255,7 @@
 "password":"Пароль",
 "password2f":"Пароль",
 "passwordCompromised":"Не найден в базе скомпрометированных паролей",
+"checkentropyLabel":"Password strength",
 "passwordPolicy":"Пожалуйста, соблюдайте следующую политику:",
 "passwordPolicyMinDigit":"Минимальное количество цифр:",
 "passwordPolicyMinLower":"Минимальное количество строчных букв:",

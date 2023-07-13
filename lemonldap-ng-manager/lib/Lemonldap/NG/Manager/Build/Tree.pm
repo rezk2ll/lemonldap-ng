@@ -1150,6 +1150,16 @@ sub tree {
                                     ],
                                 },
                                 {
+                                    title => 'Entropycheck',
+                                    help  => 'checkentropy.html',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'checkEntropy',
+                                        'checkEntropyRequired',
+                                        'checkEntropyRequiredLevel'
+                                    ],
+                                },
+                                {
                                     title => 'newLocationWarnings',
                                     help  => 'newlocationwarning.html',
                                     form  => 'simpleInputContainer',
