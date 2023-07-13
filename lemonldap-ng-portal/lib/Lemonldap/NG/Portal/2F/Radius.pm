@@ -2,12 +2,14 @@ package Lemonldap::NG::Portal::2F::Radius;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Portal::Lib::Radius;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
   PE_BADOTP
   PE_SENDRESPONSE
   PE_MALFORMEDUSER
+  PE_RADIUSCONNECTFAILED
 );
 
 our $VERSION = '2.0.16';
@@ -15,39 +17,33 @@ our $VERSION = '2.0.16';
 extends 'Lemonldap::NG::Portal::Main::SecondFactor';
 
 # INITIALIZATION
+has modulename => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        return $_[0]->prefix . "2f";
+    }
+);
+
+has radiusLib => ( is => 'rw' );
 
 has prefix => ( is => 'rw', default => 'radius' );
-has radius => ( is => 'rw' );
 
 sub init {
     my ($self) = @_;
-
-    eval { require Authen::Radius };
-    if ($@) {
-        $self->logger->error("Can't load Radius library: $@");
-        $self->error("Can't load Radius library: $@");
-        return 0;
-    }
-
-    foreach (qw(radius2fSecret radius2fServer)) {
-        unless ( $self->conf->{$_} ) {
-            $self->error(
-                $self->prefix . "2f: missing \"$_\" parameter, aborting" );
-            return 0;
-        }
-    }
-
-    $self->error( $self->prefix . '2f: connection to server failed' )
-      unless (
-        $self->radius(
-            Authen::Radius->new(
-                Host    => $self->conf->{radius2fServer},
-                Secret  => $self->conf->{radius2fSecret},
-                TimeOut => $self->conf->{radius2fTimeout}
-            )
+    $self->radiusLib(
+        Lemonldap::NG::Portal::Lib::Radius->new(
+            radius_dictionary => $self->conf->{radius2fDictionaryFile},
+            radius_req_attribute_config =>
+              $self->conf->{radius2fRequestAttributes},
+            radius_secret  => $self->conf->{radius2fSecret},
+            radius_server  => $self->conf->{radius2fServer},
+            radius_timeout => $self->conf->{radius2fTimeout},
+            modulename     => ( $self->prefix . "2f" ),
+            logger         => $self->logger,
+            p              => $self->p,
         )
-      );
-
+    );
     return $self->SUPER::init();
 }
 
@@ -98,14 +94,15 @@ sub verify {
 
     $self->logger->debug(
         $self->prefix . "2f: checking credentials $username:$code" );
-    my $res = $self->radius->check_pwd( $username, $code );
-    unless ( $res == 1 ) {
+
+    my $res = $self->radiusLib->check_pwd( $req, $session, $username, $code );
+    unless ($res) {
+        return PE_RADIUSCONNECTFAILED;
+    }
+    unless ( $res->{result} == 1 ) {
         $self->userLogger->warn( $self->prefix
               . '2f: failed for '
               . $session->{ $self->conf->{whatToTrace} } );
-        $self->logger->warn( $self->prefix
-              . '2f: server replied -> '
-              . $self->radius->get_error );
         return PE_BADOTP;
     }
 

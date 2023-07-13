@@ -2,9 +2,9 @@ package Lemonldap::NG::Portal::Auth::OpenIDConnect;
 
 use strict;
 use Mouse;
-use MIME::Base64                           qw/encode_base64 decode_base64/;
-use Scalar::Util                           qw/looks_like_number/;
-use Lemonldap::NG::Common::JWT             qw(getJWTPayload);
+use MIME::Base64 qw/encode_base64 decode_base64/;
+use Scalar::Util qw/looks_like_number/;
+use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_IDPCHOICE
@@ -33,7 +33,7 @@ sub init {
     my $self = shift;
 
     return 0 unless ( $self->loadOPs and $self->refreshJWKSdata );
-    my @tab = ( sort keys %{ $self->oidcOPList } );
+    my @tab = ( sort keys %{ $self->opMetadata } );
     unless (@tab) {
         $self->logger->error("No OP configured");
         return 0;
@@ -43,17 +43,13 @@ sub init {
 
     foreach (@tab) {
         my $name = $_;
-        $name =
-          $self->conf->{oidcOPMetaDataOptions}->{$_}
-          ->{oidcOPMetaDataOptionsDisplayName}
-          if $self->conf->{oidcOPMetaDataOptions}->{$_}
-          ->{oidcOPMetaDataOptionsDisplayName};
-        my $icon = $self->conf->{oidcOPMetaDataOptions}->{$_}
-          ->{oidcOPMetaDataOptionsIcon};
-        my $tooltip = $self->conf->{oidcOPMetaDataOptions}->{$_}
-          ->{oidcOPMetaDataOptionsTooltip} || $name;
-        my $order = $self->conf->{oidcOPMetaDataOptions}->{$_}
-          ->{oidcOPMetaDataOptionsSortNumber} // 0;
+        $name = $self->opOptions->{$_}->{oidcOPMetaDataOptionsDisplayName}
+          if $self->opOptions->{$_}->{oidcOPMetaDataOptionsDisplayName};
+        my $icon = $self->opOptions->{$_}->{oidcOPMetaDataOptionsIcon};
+        my $tooltip =
+          $self->opOptions->{$_}->{oidcOPMetaDataOptionsTooltip} || $name;
+        my $order = $self->opOptions->{$_}->{oidcOPMetaDataOptionsSortNumber}
+          // 0;
         my $img_src;
 
         if ($icon) {
@@ -207,8 +203,7 @@ sub extractFormInfo {
             "Refresh token: " . ( $refresh_token || "<none>" ) );
 
         # Verify JWT signature
-        if ( $self->conf->{oidcOPMetaDataOptions}->{$op}
-            ->{oidcOPMetaDataOptionsCheckJWTSignature} )
+        if ( $self->opOptions->{$op}->{oidcOPMetaDataOptionsCheckJWTSignature} )
         {
             unless ( $self->verifyJWTSignature( $id_token, $op ) ) {
                 $self->logger->error("JWT signature verification failed");
@@ -261,8 +256,28 @@ sub extractFormInfo {
             $self->logger->debug('ID Token is valid');
         }
 
-        # Get user id defined in 'sub' field
-        my $user_id = $id_token_payload_hash->{sub};
+        # Get sub from ID token
+        my $id_token_sub = $id_token_payload_hash->{sub};
+        if ( !$id_token_sub ) {
+            $self->logger->error("Could not find sub claim in ID Token");
+            return PE_OIDC_AUTH_ERROR;
+        }
+        my $user_id = $id_token_sub;
+
+        # Get user identifier, if different from sub
+        my $user_claim = $self->conf->{oidcOPMetaDataOptions}->{$op}
+          ->{oidcOPMetaDataOptionsUserAttribute};
+        if ($user_claim) {
+            $user_id = $id_token_payload_hash->{$user_claim};
+            if ( !$user_id ) {
+                $self->logger->error(
+                    "Could not find $user_claim claim in ID Token");
+                return PE_OIDC_AUTH_ERROR;
+            }
+        }
+
+        # Remember ID Token sub
+        $req->data->{id_token_sub} = $id_token_sub;
 
         # Remember tokens
         $req->data->{access_token}  = $access_token;
@@ -328,9 +343,7 @@ sub extractFormInfo {
     $self->logger->debug("Build OpenIDConnect AuthN Request");
 
     my $nonce;
-    if ( $self->conf->{oidcOPMetaDataOptions}->{$op}
-        ->{oidcOPMetaDataOptionsUseNonce} )
-    {
+    if ( $self->opOptions->{$op}->{oidcOPMetaDataOptionsUseNonce} ) {
         $nonce = $self->generateNonce();
         $req->data->{_oidcNonce} = $nonce;
     }
@@ -383,9 +396,13 @@ sub setAuthSessionInfo {
         $req->{sessionInfo}->{_oidc_sid} = $req->data->{op_sid};
     }
 
+    if ( $req->data->{id_token_sub} ) {
+        $req->{sessionInfo}->{_oidc_sub} = $req->data->{id_token_sub};
+    }
+
     # Keep ID Token in session
-    my $store_IDToken = $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsStoreIDToken};
+    my $store_IDToken =
+      $self->opOptions->{$op}->{oidcOPMetaDataOptionsStoreIDToken};
     if ($store_IDToken) {
         $self->logger->debug("Store ID Token in session");
         $req->{sessionInfo}->{_oidc_id_token} = $req->data->{id_token};
@@ -406,11 +423,9 @@ sub authLogout {
 
     # Find endession endpoint
     my $endsession_endpoint =
-      $self->oidcOPList->{$op}->{conf}->{end_session_endpoint};
+      $self->opMetadata->{$op}->{conf}->{end_session_endpoint};
 
-    my $client_id =
-      $self->conf->{oidcOPMetaDataOptions}->{$op}
-      ->{oidcOPMetaDataOptionsClientID};
+    my $client_id = $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientID};
 
     if ($endsession_endpoint) {
         my $logout_url = $self->conf->{portal} . '?logout=1';
@@ -561,8 +576,8 @@ sub backLogout {
 
     # Get iss and found related OP
     my $op;
-    foreach ( keys %{ $self->oidcOPList } ) {
-        if ( $self->oidcOPList->{$_}->{conf}->{issuer} eq $payload->{iss} ) {
+    foreach ( keys %{ $self->opMetadata } ) {
+        if ( $self->opMetadata->{$_}->{conf}->{issuer} eq $payload->{iss} ) {
             $op = $_;
             last;
         }
@@ -577,16 +592,15 @@ sub backLogout {
     return $self->p->error( $req, 'Bad aud', 400 )
       unless ref $payload->{aud} eq 'ARRAY';
     return $self->p->error( $req, 'Client ID not found in audience array', 400 )
-      unless grep {
-        $_ eq $self->conf->{oidcOPMetaDataOptions}->{$op}
-          ->{oidcOPMetaDataOptionsClientID}
-      } @{ $payload->{aud} };
+      unless
+      grep { $_ eq $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientID} }
+      @{ $payload->{aud} };
 
     # Verify iat
     return $self->p->error( $req, 'Token too old', 400 )
       unless $payload->{iat} +
-      ( $self->conf->{oidcOPMetaDataOptions}->{$op}
-          ->{oidcOPMetaDataOptionsIDTokenMaxAge} // 30 ) > time;
+      ( $self->opOptions->{$op}->{oidcOPMetaDataOptionsIDTokenMaxAge} // 30 ) >
+      time;
 
     # Verify events
     return $self->p->error( $req, 'Bad events', 400 )
@@ -614,7 +628,7 @@ sub backLogout {
     else {
         my $oidcSessions =
           Lemonldap::NG::Common::Apache::Session->searchOn( \%store,
-            '_user', $uid );
+            '_oidc_sub', $uid );
         @userSessions =
           grep {
                   $oidcSessions->{$_}->{_oidc_OP}

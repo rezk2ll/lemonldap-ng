@@ -85,6 +85,7 @@ LemonLDAP::NG Generic registration script
         },
         error: displayError,
         success: function(data) {
+          var e;
           if (data.error) {
             if (data.error.match(/mailNotSent/)) {
               return setMsg(data.error, 'warning');
@@ -92,12 +93,15 @@ LemonLDAP::NG Generic registration script
               return setMsg(data.error, 'danger');
             }
           } else {
-            $(document).trigger("mfaAdded", [
+            e = jQuery.Event("mfaAdded");
+            $(document).trigger(e, [
               {
                 "type": prefix
               }
             ]);
-            return setMsg('genericRegistered', 'success');
+            if (!e.isDefaultPrevented()) {
+              return setMsg('genericRegistered', 'success');
+            }
           }
         }
       });

@@ -59,6 +59,9 @@ Then, go in ``Radius parameters``:
 -  **Exported variables**: radius attributes stored in user session at
    authentication time. key is name in user session and value is
    attribute name in radius dictionary.
--  **Dictionary**: radius dictionary file ex: /etc/freeradius/3.0/dictionary.
-   This is mandatory to handle attributes as names.
+-  **Dictionary**: radius dictionary file ex: /usr/share/freeradius/dictionary
+   This is mandatory to handle attributes as names or to send request attributes.
+-  **Request attributes**: a list of additional Radius attributes to send with
+   the Access Request. Key is the radius attribute name in the provided
+   dictionary, value is a perl expression used to populate the attribute value.
 

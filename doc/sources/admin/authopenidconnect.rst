@@ -234,6 +234,9 @@ Configuration
    user session. Do not enable it unless you need to replay this token
    on an application, or if you need the id_token_hint parameter when
    using logout.
+-  **Attribute containing user identifier**: Set the value of the ID Token
+   claim that should be used as user main identifier. If empty, the ``sub``
+   claim is used.
 
 Protocol
 """"""""

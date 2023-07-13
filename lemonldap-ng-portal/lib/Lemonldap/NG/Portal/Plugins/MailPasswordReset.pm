@@ -598,16 +598,17 @@ sub display {
     $self->logger->debug( 'Display called with code: ' . $req->error );
 
     my %tplPrm = (
-        AUTH_ERROR      => $req->error,
-        AUTH_ERROR_TYPE => $req->error_type,
-        AUTH_ERROR_ROLE => $req->error_role,
-        AUTH_URL        => $req->data->{_url},
-        CHOICE_VALUE    => $req->{_authChoice},
-        EXPMAILDATE     => $req->data->{expMailDate},
-        EXPMAILTIME     => $req->data->{expMailTime},
-        STARTMAILDATE   => $req->data->{startMailDate},
-        STARTMAILTIME   => $req->data->{startMailTime},
-        MAILALREADYSENT => $req->data->{mailAlreadySent},
+        AUTH_ERROR                      => $req->error,
+        AUTH_ERROR_TYPE                 => $req->error_type,
+        AUTH_ERROR_ROLE                 => $req->error_role,
+        ( 'AUTH_ERROR_' . $req->error ) => 1,
+        AUTH_URL                        => $req->data->{_url},
+        CHOICE_VALUE                    => $req->{_authChoice},
+        EXPMAILDATE                     => $req->data->{expMailDate},
+        EXPMAILTIME                     => $req->data->{expMailTime},
+        STARTMAILDATE                   => $req->data->{startMailDate},
+        STARTMAILTIME                   => $req->data->{startMailTime},
+        MAILALREADYSENT                 => $req->data->{mailAlreadySent},
         (
             $req->data->{customScript}
             ? ( CUSTOM_SCRIPT => $req->data->{customScript} )

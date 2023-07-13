@@ -90,8 +90,9 @@ sub run {
             return $self->p->sendHtml(
                 $req, 'error',
                 params => {
-                    AUTH_ERROR      => PE_FORMEMPTY,
-                    AUTH_ERROR_TYPE => 'positive',
+                    AUTH_ERROR                       => PE_FORMEMPTY,
+                    ( 'AUTH_ERROR_' . PE_FORMEMPTY ) => 1,
+                    AUTH_ERROR_TYPE                  => 'positive',
                 }
             );
         }
