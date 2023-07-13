@@ -24,7 +24,7 @@ password interface).
 .. tip::
 
     If :doc:`LDAP backend<authldap>` is used and LDAP password policy is enabled,
-    'password reset flag is set to true when password is generated. 
+    'password reset' flag is set to true when password is generated. 
     So user is forced to change his password at next connection.
     This feature can be disabled in :doc:`LDAP configuration<authldap>`.
 
