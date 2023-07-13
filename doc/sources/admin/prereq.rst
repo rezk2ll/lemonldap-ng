@@ -67,6 +67,8 @@ components, you can use any PSGI compatible web server instead.
 Nginx is the recommended choice for running a *Handler*. If you are not running
 a *Handler*, you can freely choose your favorite between *Apache* and *Nginx*.
 
+You can find more information at the :doc:`platformsoverview` page.
+
 
 DNS configuration
 -----------------

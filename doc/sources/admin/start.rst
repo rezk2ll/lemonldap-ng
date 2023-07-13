@@ -14,7 +14,7 @@ Documentation for LemonLDAP::NG 2.0
    :caption: Getting started
    :hidden:
 
-   index_presentation
+   presentation
    index_upgrade
    index_installation
 
@@ -58,7 +58,6 @@ Presentation
 
 -  :doc:`Presentation<presentation>`
 -  :doc:`Quick start tutorial<quickstart>`
--  :doc:`Choose a platform<platformsoverview>`
 
 Upgrading
 ---------
