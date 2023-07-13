@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Plugins::SamlFederation;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw( PE_OK);
+use Carp qw(croak);
 use XML::LibXML::Reader;
 
 our $VERSION = '2.0.16';
@@ -10,6 +11,12 @@ our $VERSION = '2.0.16';
 use constant hook => { getSamlConfig => 'getSamlConfig' };
 
 extends qw( Lemonldap::NG::Portal::Main::Plugin );
+
+# TTL for found providers
+has default_ttl => ( is => 'rw', default => '3600' );
+
+# How long before we retry when an entityID was not found
+has default_notfound_ttl => ( is => 'rw', default => '60' );
 
 sub getSamlConfig {
     my ( $self, $req, $entityID, $config ) = @_;
@@ -23,6 +30,9 @@ sub get_config_info_federation {
     my ( $self, $entityID ) = @_;
 
     my $config = $self->get_config_info_from_xml_federation($entityID) || {};
+
+    # Default negative TTL
+    $config->{ttl} ||= $self->default_notfound_ttl;
 
     if ( $config->{sp_metadata} ) {
 
@@ -167,7 +177,8 @@ sub get_config_info_from_xml_federation {
 
     my $partner = $info->{metadata};
 
-    my $result = { federation_name => $info->{federation}, };
+    my $result =
+      { federation_name => $info->{federation}, ttl => $info->{ttl} };
 
     # Add required XML namespaces
     $partner->setNamespace( "urn:oasis:names:tc:SAML:2.0:metadata", "md", 0 );
@@ -303,6 +314,7 @@ sub get_federation {
 
     my $reader = XML::LibXML::Reader->new( location => $file );
     my $federation_name;
+    my $cache_duration;
 
     if ( !$reader ) {
         $self->logger->warn("Could not open federation metadata at $file");
@@ -317,6 +329,9 @@ sub get_federation {
       )
     {
         $federation_name = $reader->getAttribute('Name');
+        $cache_duration =
+        eval { parse_duration( $reader->getAttribute('cacheDuration') ) }
+        || $self->default_ttl;
     }
     else {
         $self->logger->warn(
@@ -333,7 +348,6 @@ sub get_federation {
     {
 
         my $current_entityID = $reader->getAttribute('entityID');
-
         if ( $current_entityID eq $entityID ) {
 
             $self->logger->debug( "Found $entityID in SAML Federation"
@@ -343,6 +357,7 @@ sub get_federation {
             return {
                 metadata   => $partner,
                 federation => $federation_name,
+                ttl        => $cache_duration,
             };
         }
     }
@@ -365,6 +380,45 @@ sub lookup_llng_config {
         }
     }
     return;
+}
+
+# from https://metacpan.org/pod/DateTime::Format::Duration::XSD
+sub parse_duration {
+    my ($xs_duration) = @_;
+    my ( $neg, $year, $mounth, $day, $hour, $min, $sec, $fsec );
+    if (
+        $xs_duration =~ /^(-)?
+                          P
+                          ((\d+)Y)?
+                          ((\d+)M)?
+                          ((\d+)D)?
+                          (
+                          T
+                          ((\d+)H)?
+                          ((\d+)M)?
+                          (((\d+)(\.(\d+))?)S)?
+                          )?
+                         $/x
+      )
+    {
+        ( $neg, $year, $mounth, $day, $hour, $min, $sec, $fsec ) = (
+            $1, $3 || 0, $5 || 0, $7 || 0,
+            $10 || 0, $12 || 0, $15 || 0, $17 || 0
+        );
+        unless ( grep { defined } ( $year, $mounth, $day, $hour, $min, $sec ) )
+        {
+            croak "duration contains no data '$xs_duration'";
+        }
+    }
+    else {
+        croak "duration string does not match standart: '$xs_duration'";
+    }
+    return ( 86400 * 365 * $year +
+          86400 * 30 * $mounth +
+          86400 * $day +
+          3600 * $hour +
+          60 * $min +
+          $sec );
 }
 
 1;

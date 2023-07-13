@@ -21,7 +21,9 @@ sub legacy_openldap {
     my $output = do { local $/; readline $outerr };
     waitpid $pid, 0;
     my $exit      = $? >> 8;
-    my $is_legacy = $output =~ /slapd 2\.4/;
+
+    # Debian slapd 2.4 has an empty string as a version number
+    my $is_legacy = $output =~ /slapd 2\.4/ or $output =~ /slapd  /;
 
     return $is_legacy;
 }

@@ -38,13 +38,12 @@ SKIP: {
     my $saml =
       $issuer->p->loadedModules->{'Lemonldap::NG::Portal::Issuer::SAML'};
     my $entityID = "https://podcast.mines-nantes.fr/shibboleth";
-    $saml->lazy_load_metadata($entityID);
+    $saml->load_config($entityID);
     $entityID = "https://www.numistral.fr/shibboleth";
-    $saml->lazy_load_metadata($entityID);
+    $saml->load_config($entityID);
     $entityID =
 "https://monitor.eduroam.org/sp/module.php/saml/sp/metadata.php/default-sp";
-    $saml->lazy_load_metadata($entityID);
-
+    $saml->load_config($entityID);
     is(
         $saml->spList->{'https://podcast.mines-nantes.fr/shibboleth'}
           ->{confKey},
@@ -115,9 +114,9 @@ SKIP: {
 
     $saml     = $sp->p->loadedModules->{'Lemonldap::NG::Portal::Auth::SAML'};
     $entityID = "https://idp4.crous-lorraine.fr/idp/shibboleth";
-    $saml->lazy_load_metadata($entityID);
+    $saml->load_config($entityID);
     $entityID = "https://auth.centrale-marseille.fr/idp/shibboleth";
-    $saml->lazy_load_metadata($entityID);
+    $saml->load_config($entityID);
     is(
         $saml->idpOptions->{
             'https://auth.centrale-marseille.fr/idp/shibboleth'}
@@ -130,7 +129,7 @@ SKIP: {
           ->{'samlIDPMetaDataOptionsForceUTF8'},
         '0', "IDP option from federation defaults"
     );
-    $saml->lazy_load_metadata("Notfound");
+    $saml->load_config("Notfound");
 
     is_deeply(
         $saml->idpAttributes->{'https://idp4.crous-lorraine.fr/idp/shibboleth'},
