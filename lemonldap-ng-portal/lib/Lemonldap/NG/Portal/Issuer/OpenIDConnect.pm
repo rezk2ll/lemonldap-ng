@@ -1977,7 +1977,7 @@ sub jwks {
 
     my $jwks = { keys => [] };
 
-    foreach my $prefix (qw(oidcServiceOld oidcService oidcServiceNew)) {
+    foreach my $prefix (qw(oidcService oidcServiceOld oidcServiceNew)) {
         my $public_key_sig_or_cert = $self->conf->{ $prefix . 'PublicKeySig' };
         my $private_key_sig        = $self->conf->{ $prefix . 'PrivateKeySig' };
         my $key_id_sig             = $self->conf->{ $prefix . 'KeyIdSig' };
