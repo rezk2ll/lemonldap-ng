@@ -657,6 +657,7 @@
 "oidcAttribute":"Атрибут OIDC",
 "oidcAuthnLevel":"Уровень аутентификации",
 "oidcConsents":"Согласия OpenID Connect",
+"oidcDropCspHeaders":"Drop CSP headers from OIDC responses",
 "oidcOP":"Провайдер OpenID Connect",
 "oidcOPMetaDataExportedVars":"Экспортированные атрибуты",
 "oidcOPMetaDataJSON":"Метаданные",

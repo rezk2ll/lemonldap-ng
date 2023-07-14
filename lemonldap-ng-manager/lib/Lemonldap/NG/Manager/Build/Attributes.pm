@@ -4557,6 +4557,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'keyTextContainer',
             documentation => 'Apache::Session module parameters',
         },
+        oidcDropCspHeaders => {
+            type => 'bool',
+            documentation => 'Drop CORS headers from OIDC issuer responses',
+        },
 
         # OpenID Connect metadata nodes
         oidcOPMetaDataNodes => {
