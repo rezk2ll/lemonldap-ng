@@ -1056,7 +1056,7 @@ sub imgnok {
 }
 
 sub sendImage {
-    my ( $self, $req,, $img ) = @_;
+    my ( $self, $req, $img ) = @_;
     return [
         302,
         [
