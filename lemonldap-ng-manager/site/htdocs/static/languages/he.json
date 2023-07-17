@@ -404,6 +404,7 @@
 "gpgDb":"מסד נתוני GPG",
 "gpgParams":"משתני GPG",
 "grantSessionRules":"תנאי פתיחה",
+"groupLDAPFilter":"Group Filter",
 "groups":"קבוצות",
 "groupsBeforeMacros":"לחשב את הקבוצות לפני תסריטי המאקרו",
 "hGroups":"קבוצות (HashRef)",

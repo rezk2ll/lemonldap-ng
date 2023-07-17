@@ -404,6 +404,7 @@
 "gpgDb":"Base de datos GPS",
 "gpgParams":"Parámetros GPS",
 "grantSessionRules":"Condiciones de apertura",
+"groupLDAPFilter":"Group Filter",
 "groups":"Grupos",
 "groupsBeforeMacros":"Método para formulario de información",
 "hGroups":"Groups (HashRef)",

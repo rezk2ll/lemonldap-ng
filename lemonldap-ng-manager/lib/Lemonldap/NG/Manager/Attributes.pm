@@ -1560,6 +1560,9 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
             },
             'type' => 'grantContainer'
         },
+        'groupLDAPFilter' => {
+            'type' => 'text'
+        },
         'groups' => {
             'default' => {},
             'test'    => sub {

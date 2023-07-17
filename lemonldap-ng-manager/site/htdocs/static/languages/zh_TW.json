@@ -404,6 +404,7 @@
 "gpgDb":"GPG 資料庫",
 "gpgParams":"GPG 參數",
 "grantSessionRules":"開啟條件",
+"groupLDAPFilter":"Group Filter",
 "groups":"群組",
 "groupsBeforeMacros":"在巨集前計算群組",
 "hGroups":"群組 (HashRef)",

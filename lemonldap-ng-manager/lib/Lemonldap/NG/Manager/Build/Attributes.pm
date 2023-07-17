@@ -3720,6 +3720,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             documentation => 'LDAP filter for auth search'
         },
+        groupLDAPFilter => {
+            type          => 'text',
+            documentation => 'LDAP filter for group search'
+        },
         ldapGroupDecodeSearchedValue => {
             default       => 0,
             type          => 'bool',
