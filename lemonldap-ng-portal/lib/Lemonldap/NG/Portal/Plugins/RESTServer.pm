@@ -64,7 +64,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PASSWORD_OK
 );
 
-our $VERSION = '2.16.1';
+our $VERSION = '2.17.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -312,8 +312,8 @@ sub newAuthSession {
     }
 
     $req->env->{AuthBasic} = 1;
-    $req->{id}    = $id;
-    $req->{force} = 1;
+    $req->{id}             = $id;
+    $req->{force}          = 1;
     $req->user( $req->param('user') );
     $req->data->{password} = $req->param('password');
     $req->steps( [
@@ -773,12 +773,22 @@ sub getUser {
 
 sub myApplications {
     my ( $self, $req ) = @_;
+    my $basePath = $self->conf->{portal};
+    $basePath =~ s#/*$#/#;
+    $basePath .= $self->p->{staticPrefix} . '/common/apps/';
+    $basePath =~ s#//+#/#;
     my @appslist = map {
         my @apps = map {
             {
                 $_->{appname} => {
                     AppUri  => $_->{appuri},
-                    AppDesc => $_->{appdesc}
+                    AppDesc => $_->{appdesc},
+                    AppTip  => $_->{apptip},
+                    (
+                        $_->{applogo_icon}
+                        ? ( AppIcon => $_->{applogo} )
+                        : ( AppLogo => $basePath . $_->{applogo} )
+                    )
                 }
             }
         } @{ $_->{applications} };
