@@ -644,6 +644,7 @@ t/31-CAS-Macros.t
 t/31-CAS-Prefix.t
 t/31-CAS-Proxy.t
 t/31-CAS-Security.t
+t/32-Auth-and-issuer-OIDC-authorization_code-different-sub.t
 t/32-Auth-and-issuer-OIDC-authorization_code-jwt-userinfo.t
 t/32-Auth-and-issuer-OIDC-authorization_code-OP-logout.t
 t/32-Auth-and-issuer-OIDC-authorization_code-public_client.t
