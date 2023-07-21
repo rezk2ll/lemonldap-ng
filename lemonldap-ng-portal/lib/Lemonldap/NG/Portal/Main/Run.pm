@@ -1261,6 +1261,7 @@ sub corsPreflight {
 
 sub sendJSONresponse {
     my ( $self, $req, $j, %args ) = @_;
+    $j->{token} = $req->token if $req->token;
     my $res = Lemonldap::NG::Common::PSGI::sendJSONresponse(@_);
 
     # Handle caching
