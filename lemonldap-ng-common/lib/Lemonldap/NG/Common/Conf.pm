@@ -33,6 +33,8 @@ our $iniObj;
 
 our $PlaceHolderRe = '%SERVERENV:(.*?)%';
 
+our $localconf;
+
 BEGIN {
     eval {
         require threads::shared;
@@ -72,7 +74,7 @@ sub new {
         unless ( $self->{type} ) {
 
             # Use local conf to get configStorage and localStorage
-            my $localconf =
+            $localconf =
               $self->getLocalConf( CONFSECTION, $self->{confFile}, 0 );
             if ( defined $localconf ) {
                 %$self = ( %$self, %$localconf );
@@ -232,6 +234,8 @@ sub getConf {
 
     # Create cipher object and replace variable placeholder
     unless ( $args->{raw} ) {
+
+        $res = { %$res, %$localconf };
 
         $self->replacePlaceholders($res) if $self->{useServerEnv};
         eval {

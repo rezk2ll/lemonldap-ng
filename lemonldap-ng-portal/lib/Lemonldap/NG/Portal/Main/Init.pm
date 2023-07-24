@@ -124,6 +124,9 @@ sub init {
             my $lang = $1 || 'all';
             $self->trOver->{$lang}->{$2} = $self->localConfig->{$k};
         }
+        else {
+            $self->conf->{$k} = $self->localConfig->{$k};
+        }
     }
     $self->trOver( JSON::to_json( $self->trOver ) );
 
