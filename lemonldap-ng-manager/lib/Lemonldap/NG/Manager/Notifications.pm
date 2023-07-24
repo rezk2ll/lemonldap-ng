@@ -28,6 +28,7 @@ has notifFormat => ( is => 'rw' );
 #############################
 
 use constant defaultRoute => 'notifications.html';
+use constant icon         => 'bell';
 
 sub init {
     my ( $self, $conf ) = @_;

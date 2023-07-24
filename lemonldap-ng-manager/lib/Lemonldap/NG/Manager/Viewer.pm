@@ -19,6 +19,7 @@ our $VERSION = '2.0.14';
 #############################
 
 use constant defaultRoute => 'viewer.html';
+use constant icon         => 'eye-open';
 
 has ua => ( is => 'rw' );
 

@@ -31,6 +31,7 @@ our $VERSION = '2.17.0';
 #############################
 
 use constant defaultRoute => 'manager.html';
+use constant icon         => 'cog';
 
 sub init {
     my ( $self, $conf ) = @_;
