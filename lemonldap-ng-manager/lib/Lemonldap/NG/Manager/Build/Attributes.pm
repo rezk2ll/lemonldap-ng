@@ -249,6 +249,12 @@ sub attributes {
             default => 600,
             flags   => 'hp',
         },
+        defaultNewKeySize => {
+            type          => 'int',
+            documentation => 'Default size for new RSA key helper',
+            default       => 2048,
+            flags         => 'm',
+        },
         mySessionAuthorizedRWKeys => {
             type          => 'array',
             documentation => 'Alterable session keys by user itself',
@@ -4558,7 +4564,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Apache::Session module parameters',
         },
         oidcDropCspHeaders => {
-            type => 'bool',
+            type          => 'bool',
             documentation => 'Drop CORS headers from OIDC issuer responses',
         },
 
@@ -4595,11 +4601,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             }
         },
         oidcOPMetaDataOptionsConfigurationURI => { type => 'url', },
-        oidcOPMetaDataOptionsJWKSTimeout  => { type => 'int', default => 0 },
+        oidcOPMetaDataOptionsJWKSTimeout   => { type => 'int', default => 0 },
         oidcOPMetaDataOptionsUserAttribute => { type => 'text' },
-        oidcOPMetaDataOptionsClientID     => { type => 'text', },
-        oidcOPMetaDataOptionsClientSecret => { type => 'password', },
-        oidcOPMetaDataOptionsScope        =>
+        oidcOPMetaDataOptionsClientID      => { type => 'text', },
+        oidcOPMetaDataOptionsClientSecret  => { type => 'password', },
+        oidcOPMetaDataOptionsScope         =>
           { type => 'text', default => 'openid profile' },
         oidcOPMetaDataOptionsDisplay => {
             type   => 'select',

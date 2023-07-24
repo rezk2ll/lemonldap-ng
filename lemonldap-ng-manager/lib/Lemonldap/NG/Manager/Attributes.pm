@@ -1366,6 +1366,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'boolOrExpr'
         },
+        'defaultNewKeySize' => {
+            'default' => 2048,
+            'type'    => 'int'
+        },
         'demoExportedVars' => {
             'default' => {
                 'cn'   => 'cn',
