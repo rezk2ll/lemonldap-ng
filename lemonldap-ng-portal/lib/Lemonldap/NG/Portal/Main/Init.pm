@@ -283,7 +283,7 @@ sub reloadConf {
         [ $self->{templateDir}, $self->conf->{templateDir} . '/bootstrap' ] );
 
     $self->{staticPrefix} = $self->conf->{staticPrefix} || '/static';
-    $self->{languages}    = $self->conf->{languages}    || '/';
+    $self->{languages}    = $self->conf->{languages}    || 'en';
 
     # Initialize session DBs
     unless ( $self->conf->{globalStorage} ) {
