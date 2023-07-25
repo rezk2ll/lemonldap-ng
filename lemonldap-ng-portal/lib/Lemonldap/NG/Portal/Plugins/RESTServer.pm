@@ -49,6 +49,9 @@
 #   * GET    /myapplications                               : get my appplications
 #                                                            list
 #
+# - Other (always)
+#   * /languages : get available languages
+#
 # There is no conflict with SOAP server, they can be used together
 
 package Lemonldap::NG::Portal::Plugins::RESTServer;
@@ -57,6 +60,7 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 use MIME::Base64;
+use Lemonldap::NG::Common::Languages;
 use Lemonldap::NG::Portal::Main::Constants qw(
   URIRE
   PE_OK
@@ -245,7 +249,10 @@ sub init {
         ['PUT']
       )
 
-      ->addAuthRoute( myapplications => 'myApplications', ['GET'] );
+      ->addAuthRoute( myapplications => 'myApplications', ['GET'] )
+
+      ->addAuthRoute( languages => 'languages', ['GET'] )
+      ->addUnauthRoute( languages => 'languages', ['GET'] );
 
     extends @parents               if ($add);
     $self->setTypes( $self->conf ) if ( $self->conf->{restSessionServer} );
@@ -797,6 +804,23 @@ sub myApplications {
 
     return $self->p->sendJSONresponse( $req,
         { result => 1, myapplications => \@appslist } );
+}
+
+sub languages {
+    my ( $self, $req ) = @_;
+    return $self->sendJSONresponse(
+        $req,
+        [
+            map {
+                {
+                    code => $_,
+                    name => langName->{$_},
+                    flag => $self->conf->{portal}.$self->p->{staticPrefix} . "/languages/$_.png"
+                }
+            } split /[,;]\s*/,
+            $self->p->{languages}
+        ]
+    );
 }
 
 sub _checkSecret {
