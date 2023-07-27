@@ -149,7 +149,8 @@ sub saveConf {
         eval { Lemonldap::NG::Handler::Main->reload() };
     }
 
-    return ( $self->unlock() ? $tmp : UNKNOWN_ERROR );
+    $self->unlock();
+    return $tmp;
 }
 
 ## @method hashRef getConf(hashRef args)
