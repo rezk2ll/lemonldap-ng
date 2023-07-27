@@ -73,7 +73,7 @@ my %builder = (
 # automatically downgrade UTF8 strings, unlike Apache and FastCGI
 # We can't blame it because PSGI responses are supposed to be byte string, not
 # unicode strings
-# It is disabled by default, and can be enabled in UWSGI config
+# It can be disabled by setting the LLNG_SKIPUTF8DOWNGRADE environment variable
 sub optional_utf8_middleware {
     my $app = shift;
     if ( !$ENV{LLNG_SKIPUTF8DOWNGRADE} ) {
