@@ -20,6 +20,7 @@ our @pList = (
     cda                                 => '::Plugins::CDA',
     notification                        => '::Plugins::Notifications',
     rememberAuthChoiceRule              => '::Plugins::RememberAuthChoice',
+    stayConnected                       => '::Plugins::TrustedBrowser',
     stayConnected                       => '::Plugins::StayConnected',
     portalCheckLogins                   => '::Plugins::History',
     bruteForceProtection                => '::Plugins::BruteForceProtection',
