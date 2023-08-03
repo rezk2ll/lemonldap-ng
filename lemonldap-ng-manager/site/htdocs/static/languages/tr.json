@@ -915,6 +915,7 @@
 "radiusRequestAttributes":"Erişim isteği öznitelikleri",
 "radiusSecret":"Paylaşılan sır",
 "radiusServer":"Sunucu konak adı",
+"radiusTimeout":"Doğrulama zaman aşımı",
 "randomPasswordRegexp":"Parola üretimi için düzenli ifade",
 "readOnlyMode":"Salt-okunur mod",
 "redirectFormMethod":"Yönlendirme formu için metot",

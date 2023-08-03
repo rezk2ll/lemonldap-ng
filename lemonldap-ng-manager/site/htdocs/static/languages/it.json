@@ -915,6 +915,7 @@
 "radiusRequestAttributes":"Access request attributes",
 "radiusSecret":"Segreto condiviso",
 "radiusServer":"Nome host del server",
+"radiusTimeout":"Timeout di autenticazione",
 "randomPasswordRegexp":"Regex per la generazione di password",
 "readOnlyMode":"Modalità di sola lettura",
 "redirectFormMethod":"Metodo per il modulo di reindirizzamento",

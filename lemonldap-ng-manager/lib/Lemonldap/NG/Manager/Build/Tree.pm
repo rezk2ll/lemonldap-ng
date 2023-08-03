@@ -401,6 +401,7 @@ sub tree {
                                 'radiusAuthnLevel',
                                 'radiusSecret',
                                 'radiusServer',
+                                'radiusTimeout',
                                 'radiusExportedVars',
                                 'radiusDictionaryFile',
                                 'radiusRequestAttributes',

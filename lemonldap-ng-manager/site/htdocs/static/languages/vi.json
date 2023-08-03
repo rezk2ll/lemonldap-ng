@@ -915,6 +915,7 @@
 "radiusRequestAttributes":"Access request attributes",
 "radiusSecret":"Bí mật đã được chia sẻ",
 "radiusServer":"Máy chủ lưu trữ",
+"radiusTimeout":"Hết thời gian xác thực",
 "randomPasswordRegexp":"Regexp để tạo mật khẩu",
 "readOnlyMode":"Chế độ chỉ đọc",
 "redirectFormMethod":"Phương pháp chuyển hướng mẫu",

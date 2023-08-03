@@ -3942,6 +3942,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         radiusSecret => { type => 'text' },
         radiusServer => { type => 'text' },
+        radiusTimeout => {
+            type          => 'intOrNull',
+        },
 
         radiusExportedVars => {
             type => 'keyTextContainer',

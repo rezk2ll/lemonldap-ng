@@ -915,6 +915,7 @@
 "radiusRequestAttributes":"Attributs de la requête",
 "radiusSecret":"Secret partagé",
 "radiusServer":"Nom d'hôte du serveur",
+"radiusTimeout":"Délai maximum d'authentification",
 "randomPasswordRegexp":"Expression régulière pour la génération des mots de passe",
 "readOnlyMode":"Mode lecture seule",
 "redirectFormMethod":"Méthode du formulaire de redirection",

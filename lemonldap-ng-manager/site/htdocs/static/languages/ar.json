@@ -915,6 +915,7 @@
 "radiusRequestAttributes":"Access request attributes",
 "radiusSecret":"سر مشترك",
 "radiusServer":"اسم الخادم",
+"radiusTimeout":"Authentication timeout",
 "randomPasswordRegexp":"التعبير النمطي لتوليد كلمة المرور",
 "readOnlyMode":"Read-Only mode",
 "redirectFormMethod":"طريقة إعادة توجيه الإستمارة",

@@ -3262,6 +3262,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'radiusServer' => {
             'type' => 'text'
         },
+        'radiusTimeout' => {
+            'type' => 'intOrNull'
+        },
         'randomPasswordRegexp' => {
             'default' => '[A-Z]{3}[a-z]{5}.\\d{2}',
             'type'    => 'pcre'

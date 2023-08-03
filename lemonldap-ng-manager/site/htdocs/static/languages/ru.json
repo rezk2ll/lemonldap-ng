@@ -915,6 +915,7 @@
 "radiusRequestAttributes":"Атрибуты запроса доступа",
 "radiusSecret":"Общий секрет",
 "radiusServer":"Имя хоста сервера",
+"radiusTimeout":"Время ожидания аутентификации",
 "randomPasswordRegexp":"Regexp для генерации пароля",
 "readOnlyMode":"Режим только для чтения",
 "redirectFormMethod":"Метод для формы перенаправления",

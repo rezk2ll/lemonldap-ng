@@ -915,6 +915,7 @@
 "radiusRequestAttributes":"Access request attributes",
 "radiusSecret":"סוד משותף",
 "radiusServer":"שם המארח של השרת",
+"radiusTimeout":"Authentication timeout",
 "randomPasswordRegexp":"Regexp for password generation",
 "readOnlyMode":"Read-Only mode",
 "redirectFormMethod":"Method for redirect form",
