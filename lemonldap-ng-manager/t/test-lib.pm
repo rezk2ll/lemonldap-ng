@@ -5,19 +5,18 @@ use Data::Dumper;
 
 use_ok('Lemonldap::NG::Manager::Cli::Lib');
 
+# Legacy way to obtain a test Manager client
 our $client;
 
-ok(
-    $client =
-      Lemonldap::NG::Manager::Cli::Lib->new( iniFile => 't/lemonldap-ng.ini' ),
-    'Client object'
-);
-
 sub client {
+    if ( !$client ) {
+        ok( $client = LLNG::Manager::Test->new, 'Client object' );
+        count(1);
+    }
     return $client;
 }
 
-our $count = 2;
+our $count = 1;
 
 sub count {
     my $c = shift;
