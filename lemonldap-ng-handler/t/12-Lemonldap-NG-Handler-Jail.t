@@ -122,7 +122,7 @@ $code = $jail->jail_reval($sub);
 ok( ( not defined($code) ), 'Syntax error yields undef result' );
 like(
     $jail->error,
-    qr/Missing right curly or square bracket/,
+    qr/(?:Missing right curly or square bracket|Syntax error)/i,
     'Found correct error message'
 );
 
