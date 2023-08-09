@@ -18,7 +18,7 @@ Prepare the database
 Your database must have a specific table to host sessions. Here are some
 examples for main databases servers.
 
-.. code-block::
+.. code-block:: text
 
    CREATE KEYSPACE IF NOT EXISTS llng
     WITH REPLICATION = {

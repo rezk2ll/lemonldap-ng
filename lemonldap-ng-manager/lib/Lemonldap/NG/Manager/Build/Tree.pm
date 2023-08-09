@@ -967,8 +967,8 @@ sub tree {
                             nodes => [
                                 'webauthn2fActivation',
                                 'webauthn2fSelfRegistration',
-                                'webauthn2fUserVerification',
                                 'webauthn2fUserCanRemoveKey',
+                                'webauthn2fUserVerification',
                                 'webauthnRpName',
                                 'webauthnDisplayNameAttr',
                                 'webauthn2fAuthnLevel',

@@ -15,7 +15,7 @@ Configuration
 Prepare the database
 ~~~~~~~~~~~~~~~~~~~~
 
-.. code-block:: cql
+.. code-block:: text
 
    CREATE KEYSPACE IF NOT EXISTS llng
     WITH REPLICATION = {
