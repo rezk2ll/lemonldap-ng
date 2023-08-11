@@ -439,7 +439,7 @@ sub forbidden {
 sub hideCookie {
     my ( $class, $req ) = @_;
     $class->logger->debug("removing cookie");
-    my $cookie = $req->env->{HTTP_COOKIE};
+    my $cookie = $req->env->{HTTP_COOKIE} || '';
     $class->logger->debug("Cookies -> $cookie");
     my $cn = $class->tsv->{cookieName};
     $class->logger->debug("CookieName -> $cn");

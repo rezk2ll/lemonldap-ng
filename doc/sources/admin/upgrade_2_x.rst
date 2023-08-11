@@ -1,5 +1,5 @@
-Upgrade from 2.0.x to 2.0.y
-===========================
+Upgrade from 2.x to 2.y
+=======================
 
 
 Please apply general caution as you would with any software: have
@@ -28,6 +28,30 @@ None
 
 2.17
 ------
+
+Possible regression in unicode character handling for UWSGI users
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We fixed an issue that made UWSGI behavior inconsistent with other deployment
+methods (FastCGI, ApacheMP2). As a consequence, you might notice a change in
+the way non-ASCII characters are displayed by LemonLDAP::NG.
+
+If you used workarounds to make non-ASCII characters work in UWSGI, you can
+remove them in this new release.
+
+If you instead wish to restore previous behavior, you can also set the
+following configuration in `/etc/uwsgi/apps-available/llng-server.yaml` :
+
+.. code:: yaml
+
+    uwsgi:
+            # ...
+            env: LLNG_SKIPUTF8DOWNGRADE=1
+
+However, restoring previous behavior is not recommended, as you are likely to run into
+even more encoding bugs in the long run.
+
+
 
 Font Awesome application icons
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

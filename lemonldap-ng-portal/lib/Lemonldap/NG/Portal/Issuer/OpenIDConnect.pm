@@ -148,6 +148,7 @@ sub ssoMatch {
 # run() manages only "authorize" and "logout" endpoints.
 sub run {
     my ( $self, $req, $path ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
 
     # Check activation rule
     unless ( $self->rule->( $req, $req->sessionInfo ) ) {
@@ -1143,6 +1144,7 @@ sub run {
 # Handle token endpoint
 sub token {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect TOKEN URL");
 
     my $rp = $self->checkEndPointAuthenticationCredentials($req);
@@ -1842,6 +1844,7 @@ sub _handleRefreshTokenGrant {
 # Handle userinfo endpoint
 sub userInfo {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect USERINFO URL");
 
     my $access_token = $self->getEndPointAccessToken($req);
@@ -1925,6 +1928,7 @@ sub _getSessionFromAccessTokenData {
 
 sub introspection {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect INTROSPECTION URL");
 
     my $rp = $self->checkEndPointAuthenticationCredentials($req);
@@ -1973,22 +1977,25 @@ sub introspection {
 # Handle jwks endpoint
 sub jwks {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect JWKS URL");
 
     my $jwks = { keys => [] };
 
-    my $public_key_sig_or_cert = $self->conf->{oidcServicePublicKeySig};
-    my $private_key_sig        = $self->conf->{oidcServicePrivateKeySig};
-    my $key_id_sig             = $self->conf->{oidcServiceKeyIdSig};
-    if ($private_key_sig) {
-        my $jwk = {
-            kty => "RSA",
-            use => "sig",
-            ( $key_id_sig ? ( kid => $key_id_sig ) : () ),
-            %{ $self->key2jwks($private_key_sig) },
-            %{ $self->getCertInfo($public_key_sig_or_cert) },
-        };
-        push @{ $jwks->{keys} }, $jwk;
+    foreach my $prefix (qw(oidcService oidcServiceOld oidcServiceNew)) {
+        my $public_key_sig_or_cert = $self->conf->{ $prefix . 'PublicKeySig' };
+        my $private_key_sig        = $self->conf->{ $prefix . 'PrivateKeySig' };
+        my $key_id_sig             = $self->conf->{ $prefix . 'KeyIdSig' };
+        if ($private_key_sig) {
+            my $jwk = {
+                kty => "RSA",
+                use => "sig",
+                ( $key_id_sig ? ( kid => $key_id_sig ) : () ),
+                %{ $self->key2jwks($private_key_sig) },
+                %{ $self->getCertInfo($public_key_sig_or_cert) },
+            };
+            push @{ $jwks->{keys} }, $jwk;
+        }
     }
     $self->logger->debug("Send JWKS response sent");
     return $self->p->sendJSONresponse( $req, $jwks );
@@ -1997,6 +2004,7 @@ sub jwks {
 # Handle register endpoint
 sub registration {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect REGISTRATION URL");
 
     # TODO: check Initial Access Token
@@ -2147,6 +2155,7 @@ sub registration {
 # Handle logout endpoint for unauthenticated users
 sub endSessionDone {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL  detected as an OpenID Connect END SESSION URL");
     $self->logger->debug("User is already logged out");
 
@@ -2193,6 +2202,7 @@ sub endSessionDone {
 # Handle checksession endpoint
 sub checkSession {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect CHECK SESSION URL");
 
     # TODO: access_control_allow_origin => '*'
@@ -2209,6 +2219,7 @@ sub checkSession {
 # Nothing to do here
 sub logout {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     if ( my $s = $req->userData->{_oidcConnectedRP} ) {
         my @rps = grep /\w/, split( ',', $s );
         foreach my $rp (@rps) {
@@ -2308,6 +2319,7 @@ sub logout {
 
 sub metadata {
     my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     my $issuerDBOpenIDConnectPath = $self->conf->{issuerDBOpenIDConnectPath};
     my $authorize_uri     = $self->conf->{oidcServiceMetaDataAuthorizeURI};
     my $token_uri         = $self->conf->{oidcServiceMetaDataTokenURI};
@@ -2480,13 +2492,15 @@ sub exportRequestParameters {
 
     if ( $req->param('client_id') ) {
         my $rp = $self->getRP( $req->param('client_id') );
-        $req->env->{"llng_oidc_rp"} = $rp if $rp;
+        if ($rp) {
 
-        # Store target authentication level in pdata
-        my $targetAuthnLevel =
-          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel};
-        $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
-          if $targetAuthnLevel;
+            $req->env->{"llng_oidc_rp"} = $rp;
+            # Store target authentication level in pdata
+            my $targetAuthnLevel =
+              $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel};
+            $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
+              if $targetAuthnLevel;
+          }
     }
 
     return PE_OK;

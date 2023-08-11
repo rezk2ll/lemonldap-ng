@@ -967,8 +967,8 @@ sub tree {
                             nodes => [
                                 'webauthn2fActivation',
                                 'webauthn2fSelfRegistration',
-                                'webauthn2fUserVerification',
                                 'webauthn2fUserCanRemoveKey',
+                                'webauthn2fUserVerification',
                                 'webauthnRpName',
                                 'webauthnDisplayNameAttr',
                                 'webauthn2fAuthnLevel',
@@ -1045,6 +1045,7 @@ sub tree {
                                 'radius2fTimeout',
                                 'radius2fDictionaryFile',
                                 'radius2fRequestAttributes',
+                                'radius2fSendInitialRequest',
                                 'radius2fAuthnLevel',
                                 'radius2fLabel',
                                 'radius2fLogo'
@@ -1461,6 +1462,12 @@ sub tree {
                                 'oidcServicePrivateKeySig',
                                 'oidcServicePublicKeySig',
                                 'oidcServiceKeyIdSig',
+                                'oidcServiceOldPrivateKeySig',
+                                'oidcServiceOldPublicKeySig',
+                                'oidcServiceOldKeyIdSig',
+                                'oidcServiceNewPrivateKeySig',
+                                'oidcServiceNewPublicKeySig',
+                                'oidcServiceNewKeyIdSig',
                             ],
                         },
                         'oidcServiceAllowAuthorizationCodeFlow',
@@ -1468,6 +1475,7 @@ sub tree {
                         'oidcServiceAllowHybridFlow',
                         'oidcServiceIgnoreScopeForClaims',
                         'oidcServiceAllowOnlyDeclaredScopes',
+                        'oidcDropCspHeaders',
                     ],
                 },
                 {

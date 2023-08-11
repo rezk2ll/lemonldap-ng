@@ -749,7 +749,7 @@ sub certificateHash {
 
     {
         local $/ = undef;    # Slurp mode
-        open CERT, "$file" or die;
+        open CERT, "<", "$file" or die;
         $cert = <CERT>;
         close CERT;
     }

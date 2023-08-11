@@ -94,6 +94,14 @@ site/htdocs/static/bwr/es5-shim/es5-shim.min.js
 site/htdocs/static/bwr/file-saver.js/FileSaver.js
 site/htdocs/static/bwr/file-saver.js/FileSaver.min.js
 site/htdocs/static/bwr/file-saver.js/FileSaver.min.js.map
+site/htdocs/static/bwr/font-awesome/css/font-awesome.css
+site/htdocs/static/bwr/font-awesome/css/font-awesome.css.map
+site/htdocs/static/bwr/font-awesome/css/font-awesome.min.css
+site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.eot
+site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.svg
+site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.ttf
+site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.woff
+site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.woff2
 site/htdocs/static/css/custom.css
 site/htdocs/static/css/custom.min.css
 site/htdocs/static/css/manager.css
@@ -120,6 +128,7 @@ site/htdocs/static/forms/grantContainer.html
 site/htdocs/static/forms/home.html
 site/htdocs/static/forms/homeViewer.html
 site/htdocs/static/forms/int.html
+site/htdocs/static/forms/intOrNull.html
 site/htdocs/static/forms/keyText.html
 site/htdocs/static/forms/keyTextContainer.html
 site/htdocs/static/forms/longtext.html
@@ -280,8 +289,6 @@ t/jsonfiles/15-combination.json
 t/jsonfiles/17-extra2f.json
 t/jsonfiles/70-diff.json
 t/lemonldap-ng-DBI-conf.ini
-t/lemonldap-ng-dbi.ini
-t/lemonldap-ng-noDiff.ini
 t/lemonldap-ng.ini
 t/test-lib.pm
 t/test-merge.json

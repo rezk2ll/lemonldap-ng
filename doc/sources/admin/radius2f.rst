@@ -62,6 +62,10 @@ Mail second factor".
 -  **Request attributes**: a list of additional Radius attributes to send with
    the Access Request. Key is the radius attribute name in the provided
    dictionary, value is a perl expression used to populate the attribute value.
+-  **Add login validation call**: If enabled, send an Access-Request to the
+   Radius server with only the User-Name attribute and no User-Password before
+   displaying the OTP form. This can be used by some Radius implementations to
+   trigger the delivery of the OTP to the user.
 -  **Authentication level** (Optional): if you want to overwrite the
    value sent by your authentication module, you can define here the new
    authentication level. Example: 5

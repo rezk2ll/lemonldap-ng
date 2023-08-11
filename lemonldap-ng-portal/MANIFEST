@@ -556,6 +556,7 @@ t/02-Password-Demo-Local-noPpolicy.t
 t/02-Password-Demo-Local-Ppolicy.t
 t/02-Password-Demo-Local-SpeChars-Ppolicy.t
 t/02-Password-Demo.t
+t/02-SendHtml-Plugin.t
 t/03-ConfTimeout.t
 t/03-SessionTimeout.t
 t/03-XSS-protection.t
@@ -643,6 +644,7 @@ t/31-CAS-Macros.t
 t/31-CAS-Prefix.t
 t/31-CAS-Proxy.t
 t/31-CAS-Security.t
+t/32-Auth-and-issuer-OIDC-authorization_code-different-sub.t
 t/32-Auth-and-issuer-OIDC-authorization_code-jwt-userinfo.t
 t/32-Auth-and-issuer-OIDC-authorization_code-OP-logout.t
 t/32-Auth-and-issuer-OIDC-authorization_code-public_client.t
@@ -687,6 +689,8 @@ t/35-My-session.t
 t/35-REST-auth-password-server.t
 t/35-REST-config-backend.t
 t/35-REST-export-password.t
+t/35-REST-OAuth2-deny.t
+t/35-REST-OAuth2.t
 t/35-REST-sessions-with-AuthBasic-handler-with-2FA.t
 t/35-REST-sessions-with-AuthBasic-handler.t
 t/35-REST-sessions-with-REST-server.t
@@ -918,6 +922,7 @@ t/README.md
 t/saml-lib.pm
 t/SamlHookPlugin.pm
 t/sendCode.pl
+t/SendHtmlPlugin.pm
 t/sendOTP.pl
 t/separate-handler.pm
 t/sessions/lock/.exists

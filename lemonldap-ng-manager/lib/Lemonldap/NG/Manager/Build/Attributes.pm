@@ -249,6 +249,12 @@ sub attributes {
             default => 600,
             flags   => 'hp',
         },
+        defaultNewKeySize => {
+            type          => 'int',
+            documentation => 'Default size for new RSA key helper',
+            default       => 2048,
+            flags         => 'm',
+        },
         mySessionAuthorizedRWKeys => {
             type          => 'array',
             documentation => 'Alterable session keys by user itself',
@@ -2204,6 +2210,11 @@ sub attributes {
             type          => 'int',
             default       => 20,
             documentation => 'Radius 2f verification timeout',
+        },
+        radius2fSendInitialRequest => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Dial in to radius server before displaying form',
         },
         radius2fAuthnLevel => {
             type          => 'intOrNull',
@@ -4469,11 +4480,23 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             },
             documentation => 'OpenID Connect Authentication Context Class Ref',
         },
+        oidcServiceOldPrivateKeySig => { type => 'RSAPrivateKey', },
+        oidcServiceOldPublicKeySig  => { type => 'RSAPublicKeyOrCertificate', },
+        oidcServiceOldKeyIdSig      => {
+            type          => 'text',
+            documentation => 'Previous OpenID Connect Signature Key ID',
+        },
         oidcServicePrivateKeySig => { type => 'RSAPrivateKey', },
         oidcServicePublicKeySig  => { type => 'RSAPublicKeyOrCertificate', },
         oidcServiceKeyIdSig      => {
             type          => 'text',
             documentation => 'OpenID Connect Signature Key ID',
+        },
+        oidcServiceNewPrivateKeySig => { type => 'RSAPrivateKey', },
+        oidcServiceNewPublicKeySig  => { type => 'RSAPublicKeyOrCertificate', },
+        oidcServiceNewKeyIdSig      => {
+            type          => 'text',
+            documentation => 'Future OpenID Connect Signature Key ID',
         },
         oidcServiceAllowDynamicRegistration => {
             type          => 'bool',
@@ -4545,6 +4568,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'keyTextContainer',
             documentation => 'Apache::Session module parameters',
         },
+        oidcDropCspHeaders => {
+            type          => 'bool',
+            documentation => 'Drop CORS headers from OIDC issuer responses',
+        },
 
         # OpenID Connect metadata nodes
         oidcOPMetaDataNodes => {
@@ -4579,10 +4606,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             }
         },
         oidcOPMetaDataOptionsConfigurationURI => { type => 'url', },
-        oidcOPMetaDataOptionsJWKSTimeout  => { type => 'int', default => 0 },
-        oidcOPMetaDataOptionsClientID     => { type => 'text', },
-        oidcOPMetaDataOptionsClientSecret => { type => 'password', },
-        oidcOPMetaDataOptionsScope        =>
+        oidcOPMetaDataOptionsJWKSTimeout   => { type => 'int', default => 0 },
+        oidcOPMetaDataOptionsUserAttribute => { type => 'text' },
+        oidcOPMetaDataOptionsClientID      => { type => 'text', },
+        oidcOPMetaDataOptionsClientSecret  => { type => 'password', },
+        oidcOPMetaDataOptionsScope         =>
           { type => 'text', default => 'openid profile' },
         oidcOPMetaDataOptionsDisplay => {
             type   => 'select',

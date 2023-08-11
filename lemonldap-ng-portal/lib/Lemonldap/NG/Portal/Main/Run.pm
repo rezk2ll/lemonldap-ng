@@ -954,7 +954,7 @@ sub sendHtml {
       'Pragma'        => 'no-cache',                               # HTTP 1.0
       'Expires'       => '0';                                      # Proxies
 
-    $self->setCorsHeaderFromConfig($res);
+    $self->setCorsHeaderFromConfig($res) unless $req->data->{dropCsp};
 
     if (    $self->conf->{strictTransportSecurityMax_Age}
         and $self->conf->{portal} =~ /^https:/ )
@@ -1039,7 +1039,8 @@ sub sendHtml {
     }
 
     # Set CSP header
-    push @{ $res->[1] }, 'Content-Security-Policy' => $csp;
+    push @{ $res->[1] }, 'Content-Security-Policy' => $csp
+      unless $req->data->{dropCsp};
     $self->logger->debug("Apply following CSP: $csp");
     return $res;
 }
@@ -1055,7 +1056,7 @@ sub imgnok {
 }
 
 sub sendImage {
-    my ( $self, $req,, $img ) = @_;
+    my ( $self, $req, $img ) = @_;
     return [
         302,
         [
@@ -1253,13 +1254,14 @@ sub corsPreflight {
     my @headers;
     my $res = [ 204, \@headers, [] ];
 
-    $self->setCorsHeaderFromConfig($res);
+    $self->setCorsHeaderFromConfig($res) unless $req->data->{dropCsp};
 
     return $res;
 }
 
 sub sendJSONresponse {
     my ( $self, $req, $j, %args ) = @_;
+    $j->{token} = $req->token if $req->token;
     my $res = Lemonldap::NG::Common::PSGI::sendJSONresponse(@_);
 
     # Handle caching
@@ -1287,7 +1289,7 @@ sub sendJSONresponse {
 
     }
     else {
-        $self->setCorsHeaderFromConfig($res);
+        $self->setCorsHeaderFromConfig($res) unless $req->data->{dropCsp};
     }
     return $res;
 }
@@ -1296,7 +1298,7 @@ sub sendRawHtml {
     my ($self) = $_[0];
     my $res = Lemonldap::NG::Common::PSGI::sendRawHtml(@_);
 
-    $self->setCorsHeaderFromConfig($res);
+    $self->setCorsHeaderFromConfig($res) unless $_[1]->data->{dropCsp};
 
     return $res;
 }
