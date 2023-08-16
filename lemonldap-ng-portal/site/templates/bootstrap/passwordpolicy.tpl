@@ -34,7 +34,7 @@
     <TMPL_IF NAME="PPOLICY_ALLOWEDSPECHAR">
     <li>
         <i id="ppolicy-allowedspechar-feedback" class="fa fa-li"> </i>
-        <span trspan="passwordPolicySpecialChar">Allowed special characters:</span> <TMPL_VAR NAME="PPOLICY_ALLOWEDSPECHAR">
+        <span trspan="passwordPolicySpecialChar">Allowed special characters:</span> <TMPL_VAR NAME="PPOLICY_ALLOWEDSPECHAR" ESCAPE="html">
     </li>
     </TMPL_IF>
     <TMPL_IF NAME="ENABLE_CHECKHIBP">
