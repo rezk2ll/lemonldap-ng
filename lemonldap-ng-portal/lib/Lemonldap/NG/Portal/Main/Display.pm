@@ -318,7 +318,11 @@ sub display {
             ),
             (
                 $self->conf->{passwordPolicyMinSpeChar} || $self->speChars()
-                ? ( PPOLICY_ALLOWEDSPECHAR => $self->speChars() )
+                ? (
+                    PPOLICY_ALLOWEDSPECHAR      => $self->speChars(),
+                    PPOLICY_ALLOWEDSPECHAR_JSON =>
+                      to_json( $self->speChars(), { allow_nonref => 1 } ),
+                  )
                 : ()
             ),
             (
@@ -556,7 +560,11 @@ sub display {
                 ),
                 (
                     $self->conf->{passwordPolicyMinSpeChar} || $self->speChars()
-                    ? ( PPOLICY_ALLOWEDSPECHAR => $self->speChars() )
+                    ? (
+                        PPOLICY_ALLOWEDSPECHAR      => $self->speChars(),
+                        PPOLICY_ALLOWEDSPECHAR_JSON =>
+                          to_json( $self->speChars(), { allow_nonref => 1 } ),
+                      )
                     : ()
                 ),
             );

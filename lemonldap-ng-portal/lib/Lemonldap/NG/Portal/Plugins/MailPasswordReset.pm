@@ -4,6 +4,7 @@ use strict;
 use Encode;
 use Mouse;
 use POSIX qw(strftime);
+use JSON;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
@@ -631,8 +632,10 @@ sub display {
         PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
         PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
         PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
-        PPOLICY_MINSPECHAR        => $self->conf->{passwordPolicyMinSpeChar},
-        PPOLICY_ALLOWEDSPECHAR    => $speChars,
+        PPOLICY_MINSPECHAR          => $self->conf->{passwordPolicyMinSpeChar},
+        PPOLICY_ALLOWEDSPECHAR      => $speChars,
+        PPOLICY_ALLOWEDSPECHAR_JSON =>
+          to_json( $speChars, { allow_nonref => 1 } ),
         DISPLAY_GENERATE_PASSWORD =>
           $self->conf->{portalDisplayGeneratePassword},
     );
