@@ -34,6 +34,7 @@ has _userDB         => ( is => 'rw' );
 has _passwordDB     => ( is => 'rw' );
 
 has _loadedServices => ( is => 'rw', default => sub { {} } );
+has _loadedPlugins  => ( is => 'rw', default => sub { {} } );
 
 # Legacy
 sub _captcha        { $_[0]->getService('captcha') }
@@ -122,6 +123,7 @@ sub _resetPluginsAndServices {
     my ($self) = @_;
     $self->loadedModules( {} );
     $self->_loadedServices( {} );
+    $self->_loadedPlugins( {} );
     $self->afterSub( {} );
     $self->aroundSub( {} );
     $self->spRules( {} );
@@ -506,9 +508,10 @@ sub loadPlugin {
         require Carp;
         Carp::confess('Calling loadPugin without arg !');
     }
+
     my $obj;
     return 0
-      unless ( $obj = $self->loadModule("$plugin") );
+      unless ( $obj = $self->loadModule($plugin) );
     return $self->findEP( $plugin, $obj );
 }
 
@@ -516,23 +519,45 @@ sub loadPlugin {
 sub findEP {
     my ( $self, $plugin, $obj ) = @_;
 
+    my $module = $plugin =~ /^::/ ? "Lemonldap::NG::Portal$plugin" : $plugin;
+
+    # Register the plugin's instance so that callbacks can be refered by a
+    # serializable string
+    # DEPRECATED: is_only=0 should no longer be supported after LLNG 3.
+    # Corresponding code paths must be removed
+    my $is_only = 1;
+    if ( $self->_loadedPlugins->{$module} ) {
+        $self->logger->debug( "Plugin $module has already been loaded once." );
+        $is_only = 0;
+    }
+    else {
+        $self->_loadedPlugins->{$module} = $obj;
+    }
+
     # Standards entry points
     foreach my $sub (@entryPoints) {
         if ( $obj->can($sub) ) {
-            $self->logger->debug(" Found $sub entry point:");
+            $self->logger->debug(" Found $sub entry point in $module");
             if ( my $callback = $obj->$sub ) {
-                push @{ $self->{$sub} }, sub {
-                    eval {
-                        $obj->logger->debug("Launching ${plugin}::$callback");
+
+                if ($is_only) {
+                    push @{ $self->{$sub} }, "${module}::${callback}";
+                }
+                else {
+                    push @{ $self->{$sub} }, sub {
+                        eval {
+                            $obj->logger->debug(
+                                "Launching ${module}::$callback");
+                        };
+                        $obj->$callback(@_);
                     };
-                    $obj->$callback(@_);
-                };
+                }
                 $self->logger->debug("  -> $callback");
             }
         }
     }
     if ( $obj->can('afterSub') ) {
-        $self->logger->debug("Found afterSub in $plugin");
+        $self->logger->debug("Found afterSub in $module");
         my $h = $obj->afterSub;
         unless ( ref $h and ref($h) eq 'HASH' ) {
             $self->logger->error(
@@ -541,18 +566,23 @@ sub findEP {
         else {
             foreach my $ep ( keys %$h ) {
                 my $callback = $h->{$ep};
-                push @{ $self->afterSub->{$ep} }, sub {
-                    eval {
-                        $obj->logger->debug(
-                            "Launching ${plugin}::$callback afterSub $ep");
+                if ($is_only) {
+                    push @{ $self->afterSub->{$ep} }, "${module}::${callback}";
+                }
+                else {
+                    push @{ $self->afterSub->{$ep} }, sub {
+                        eval {
+                            $obj->logger->debug(
+                                "Launching ${module}::$callback afterSub $ep");
+                        };
+                        $obj->$callback(@_);
                     };
-                    $obj->$callback(@_);
-                };
+                }
             }
         }
     }
     if ( $obj->can('aroundSub') ) {
-        $self->logger->debug("Found aroundSub in $plugin");
+        $self->logger->debug("Found aroundSub in $module");
         my $h = $obj->aroundSub;
         unless ( ref $h and ref($h) eq 'HASH' ) {
             $self->logger->error(
@@ -563,19 +593,19 @@ sub findEP {
                 my $callback    = $h->{$ep};
                 my $previousSub = $self->aroundSub->{$ep} ||= sub {
                     $self->logger->debug(
-                        "$ep launched inside ${plugin}::$callback");
+                        "$ep launched inside ${module}::$callback");
                     $self->$ep(@_);
                 };
                 $self->aroundSub->{$ep} = sub {
                     $self->logger->debug(
-                        "Launching ${plugin}::$callback instead of $ep");
+                        "Launching ${module}::$callback instead of $ep");
                     $obj->$callback( $previousSub, @_ );
                 };
             }
         }
     }
     if ( $obj->can('hook') ) {
-        $self->logger->debug("Found hook in $plugin");
+        $self->logger->debug("Found hook in $module");
         my $h = $obj->hook;
         unless ( ref $h and ref($h) eq 'HASH' ) {
             $self->logger->error('"hook" endpoint must be a hashref, skipped');
@@ -586,7 +616,7 @@ sub findEP {
                 push @{ $self->hook->{$hookname} }, sub {
                     eval {
                         $obj->logger->debug(
-                            "Launching ${plugin}::$callback on hook $hookname");
+                            "Launching ${module}::$callback on hook $hookname");
                     };
                     $obj->$callback(@_);
                 };
@@ -640,7 +670,7 @@ sub findEP {
         }
     }
 
-    $self->logger->debug("Plugin $plugin initialized");
+    $self->logger->debug("Plugin $module initialized");
 
     return $obj;
 }

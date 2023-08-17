@@ -24,6 +24,10 @@ sub process {
     $req->env->{ipAddr} = $req->address;
     my $err    = PE_OK;
     my $nofail = delete $args{nofail};
+    if ( grep { ref $_ eq "CODE" } @{ $req->steps } ) {
+        $self->logger->debug(
+            "Warning: process pipeline contains non-serializable step");
+    }
     while ( my $sub = shift @{ $req->steps } ) {
         $nofail = 1 if $req->data->{nofail};
         if ( ref $sub ) {
@@ -32,6 +36,20 @@ sub process {
             if ($tmp) {
                 $err = $tmp unless $err > 0;
                 last        unless $nofail and $err != PE_SENDRESPONSE;
+            }
+        }
+        elsif ( my ( $plugin, $callback ) = $sub =~ /(.*)::(.*)/ ) {
+            $self->logger->debug("Processing ${plugin}::${callback}");
+            my $plugin = $self->loadedModules->{$plugin};
+            if ( ref($plugin) ) {
+                my $tmp = $plugin->$callback( $req, %args );
+                if ($tmp) {
+                    $err = $tmp unless $err > 0;
+                    last        unless $nofail and $err != PE_SENDRESPONSE;
+                }
+            }
+            else {
+                $self->logger->error("Plugin $plugin is not loaded");
             }
         }
         else {
