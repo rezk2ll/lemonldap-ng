@@ -30,7 +30,16 @@ sub process {
     }
     while ( my $sub = shift @{ $req->steps } ) {
         $nofail = 1 if $req->data->{nofail};
-        if ( ref $sub ) {
+        my @args_array;
+
+        # This lets you transmit arguments by storing
+        # [ "method_name", @args_array ] in steps
+        if ( ref($sub) eq "ARRAY" ) {
+            my $sub_name = shift @$sub;
+            @args_array = @$sub;
+            $sub        = $sub_name;
+        }
+        if ( ref $sub eq "CODE" ) {
             $self->logger->debug("Processing code ref");
             my $tmp = $sub->( $req, %args );
             if ($tmp) {
@@ -42,7 +51,7 @@ sub process {
             $self->logger->debug("Processing ${plugin}::${callback}");
             my $plugin = $self->loadedModules->{$plugin};
             if ( ref($plugin) ) {
-                my $tmp = $plugin->$callback( $req, %args );
+                my $tmp = $plugin->$callback( $req, @args_array, %args );
                 if ($tmp) {
                     $err = $tmp unless $err > 0;
                     last        unless $nofail and $err != PE_SENDRESPONSE;
@@ -55,14 +64,14 @@ sub process {
         else {
             $self->logger->debug("Processing $sub");
             if ( my $as = $self->aroundSub->{$sub} ) {
-                my $tmp = $as->( $req, %args );
+                my $tmp = $as->( $req, @args_array, %args );
                 if ($tmp) {
                     $err = $tmp unless $err > 0;
                     last        unless $nofail and $err != PE_SENDRESPONSE;
                 }
             }
             else {
-                my $tmp = $self->$sub( $req, %args );
+                my $tmp = $self->$sub( $req, @args_array, %args );
                 if ($tmp) {
                     $err = $tmp unless $err > 0;
                     last        unless $nofail and $err != PE_SENDRESPONSE;
