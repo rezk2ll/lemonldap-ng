@@ -52,9 +52,11 @@ However, restoring previous behavior is not recommended, as you are likely to ru
 even more encoding bugs in the long run.
 
 
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Font Awesome application icons
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It is now possible to use Font Awesome icons in the application menu.
 
@@ -80,6 +82,28 @@ If you modified the default ``menu.tpl`` template, you need to update it:
                              <TMPL_ELSE>
 
 If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
+Password policy
+^^^^^^^^^^^^^^^
+
+It is recommended to update your theme's ``passwordpolicy.tpl`` to correctly display special characters in password policies
+
+::
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/passwordpolicy.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/passwordpolicy.tpl
+    @@ -34,7 +34,7 @@
+         <TMPL_IF NAME="PPOLICY_ALLOWEDSPECHAR">
+         <li>
+             <i id="ppolicy-allowedspechar-feedback" class="fa fa-li"> </i>
+    -        <span trspan="passwordPolicySpecialChar">Allowed special characters:</span> <TMPL_VAR NAME="PPOLICY_ALLOWEDSPECHAR">
+    +        <span trspan="passwordPolicySpecialChar">Allowed special characters:</span> <TMPL_VAR NAME="PPOLICY_ALLOWEDSPECHAR" ESCAPE="html">
+         </li>
+         </TMPL_IF>
+         <TMPL_IF NAME="ENABLE_CHECKHIBP">
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
 
 2.16.1
 --------
