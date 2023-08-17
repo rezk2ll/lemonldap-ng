@@ -434,38 +434,7 @@ sub reloadConf {
     }
 
     # Clean $req->pdata after authentication
-    push @{ $self->endAuth }, sub {
-        my $tmp = $_[0]->pdata->{keepPdata} //= [];
-        foreach my $k ( keys %{ $_[0]->pdata } ) {
-            unless ( grep { $_ eq $k } @$tmp ) {
-                $self->logger->debug("Removing $k from pdata");
-                delete $_[0]->pdata->{$k};
-            }
-        }
-        my $user_log    = $_[0]->{sessionInfo}->{ $self->conf->{whatToTrace} };
-        my $auth_module = $_[0]->{sessionInfo}->{_auth};
-        my $ipAddr      = $_[0]->{sessionInfo}->{ipAddr};
-
-        if ($user_log) {
-            $self->auditLog(
-                $_[0],
-                message => (
-                        "User "
-                      . $user_log
-                      . " connected from $auth_module ($ipAddr)"
-                ),
-                code => "LOGIN",
-                user => $user_log,
-            );
-        }
-        if (@$tmp) {
-            $self->logger->debug(
-                'Add ' . join( ',', @$tmp ) . ' in keepPdata' );
-            $_[0]->pdata->{keepPdata} = $tmp;
-        }
-        return PE_OK;
-    };
-
+    push @{ $self->endAuth }, "cleanPdata";
     # Failsafe: allow handler access to portal in case it's missing in conf
     my $default_portal_uri  = URI->new( HANDLER->tsv->{portal}->() );
     my $default_portal_host = eval { $default_portal_uri->host };

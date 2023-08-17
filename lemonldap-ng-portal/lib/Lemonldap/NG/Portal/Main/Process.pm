@@ -270,6 +270,36 @@ sub controlUrl {
     return PE_OK;
 }
 
+sub cleanPdata {
+    my ( $self, $req ) = @_;
+    my $tmp = $req->pdata->{keepPdata} //= [];
+    foreach my $k ( keys %{ $req->pdata } ) {
+        unless ( grep { $_ eq $k } @$tmp ) {
+            $self->logger->debug("Removing $k from pdata");
+            delete $req->pdata->{$k};
+        }
+    }
+    my $user_log    = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
+    my $auth_module = $req->{sessionInfo}->{_auth};
+    my $ipAddr      = $req->{sessionInfo}->{ipAddr};
+
+    if ($user_log) {
+        $self->auditLog(
+            $req,
+            message => (
+                "User " . $user_log . " connected from $auth_module ($ipAddr)"
+            ),
+            code => "LOGIN",
+            user => $user_log,
+        );
+    }
+    if (@$tmp) {
+        $self->logger->debug( 'Add ' . join( ',', @$tmp ) . ' in keepPdata' );
+        $req->pdata->{keepPdata} = $tmp;
+    }
+    return PE_OK;
+}
+
 sub checkLogout {
     my ( $self, $req ) = @_;
     if ( defined $req->param('logout') ) {
@@ -351,7 +381,9 @@ sub deleteSession {
     }
 
     # Collect logout services and build hidden iFrames
-    if ( $req->data->{logoutServices} and %{ $req->data->{logoutServices} } ) {
+    if ( $req->data->{logoutServices}
+        and %{ $req->data->{logoutServices} } )
+    {
 
         $self->logger->debug("Create iFrames to forward logout to services");
 
