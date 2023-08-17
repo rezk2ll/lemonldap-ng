@@ -101,7 +101,7 @@ Your EntityID, often use as metadata URL, by default
 
 .. note::
 
-    The value will be use in metadata main markup:
+    The value will be used in metadata main markup:
 
     .. code:: xml
 
