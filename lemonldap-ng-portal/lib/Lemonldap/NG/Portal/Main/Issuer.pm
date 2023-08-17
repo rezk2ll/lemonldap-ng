@@ -123,17 +123,21 @@ sub _redirect {
             @{ $self->p->endAuth },
             (
                 $restore
-                ? sub {
-
+                ? (
                     # Restore urldc if auth doesn't need to dial with browser
-                    $self->restoreRequest( $_[0], $ir );
-                    $self->cleanPdata( $_[0] );
-                    return $self->run( @_, @path );
-                  }
+                    [ ref($self) . "::resumeProcess", $ir, @path ],
+                  )
                 : ()
             )
         ]
     );
+}
+
+sub resumeProcess {
+    my ( $self, $req, $ir, @path ) = @_;
+    $self->restoreRequest( $req, $ir );
+    $self->cleanPdata($req);
+    return $self->run( $req, @path );
 }
 
 # Case 3: authentified user, launch
@@ -180,12 +184,8 @@ sub _forAuthUser {
     return $self->p->do(
         $req,
         [
-            'importHandlerData',
-            'controlUrl',
-            @{ $self->p->forAuthUser },
-            sub {
-                return $self->run( @_, @path );
-            },
+            'importHandlerData',        'controlUrl',
+            @{ $self->p->forAuthUser }, [ ref($self) . "::run", @path ],
         ]
     );
 }
