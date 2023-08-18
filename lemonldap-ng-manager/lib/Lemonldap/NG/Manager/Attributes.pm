@@ -1366,6 +1366,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'boolOrExpr'
         },
+        'defaultNewKeySize' => {
+            'default' => 2048,
+            'type'    => 'int'
+        },
         'demoExportedVars' => {
             'default' => {
                 'cn'   => 'cn',
@@ -3211,6 +3215,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'radius2fSecret' => {
             'type' => 'text'
+        },
+        'radius2fSendInitialRequest' => {
+            'default' => 0,
+            'type'    => 'bool'
         },
         'radius2fServer' => {
             'type' => 'text'

@@ -76,6 +76,7 @@ sub defaultValues {
         'dbiAuthnLevel'                  => 2,
         'dbiExportedVars'                => {},
         'decryptValueRule'               => 0,
+        'defaultNewKeySize'              => 2048,
         'demoExportedVars'               => {
             'cn'   => 'cn',
             'mail' => 'mail',

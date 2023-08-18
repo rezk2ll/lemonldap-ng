@@ -903,6 +903,7 @@
 "radius2fLogo":"圖示",
 "radius2fRequestAttributes":"Access request attributes",
 "radius2fSecret":"已分享的祕密",
+"radius2fSendInitialRequest":"Add login validation call",
 "radius2fServer":"伺服器主機名稱",
 "radius2fTimeout":"驗證逾時",
 "radius2fUsernameSessionKey":"包含登入的工作階段金鑰",

@@ -29,14 +29,15 @@ Configuration
 ~~~~~~~~~~~~~
 
 - **Activation**: set it to "on"
+- **Self registration**: set it to "on" if users are authorized to
+  register their keys.
+- **Allow user to remove WebAuthn**: If enabled, user can unregister their WebAuthn device.
 - **User verification**: Whether or not LemonLDAP::NG requires the user to
   authenticate to their second factor device. Usually by entering a PIN code.
   *Warning*: The *Required* option is not supported by older U2F security keys.
-- **Self registration**: set it to "on" if users are authorized to
-  register their keys
 - **Relying Party display name**: How the LemonLDAP::NG server will appear in
   the web browser messages displayed to the user
-- **Allow users to remove WebAuthn**: If enabled, users can unregister their WebAuthn device.
+- **User Display Name attribute**: session attribute containing user display name
 - **Authentication level**: you can overwrite here auth level for
   WebAuthn registered users. Leave it blank keeps auth level provided by
   first authentication module *(default: 2 for user/password based

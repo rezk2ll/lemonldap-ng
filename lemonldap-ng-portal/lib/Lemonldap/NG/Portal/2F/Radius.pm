@@ -29,6 +29,14 @@ has radiusLib => ( is => 'rw' );
 
 has prefix => ( is => 'rw', default => 'radius' );
 
+has initial_request => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        return $_[0]->conf->{radius2fSendInitialRequest};
+    }
+);
+
 sub init {
     my ($self) = @_;
     $self->radiusLib(
@@ -50,6 +58,17 @@ sub init {
 sub run {
     my ( $self, $req, $token ) = @_;
     $self->logger->debug( $self->prefix . '2f: generate form' );
+
+    my $session  = $req->sessionInfo;
+    my $username = $session->{ $self->conf->{whatToTrace} };
+    if ( $self->initial_request ) {
+        $self->logger->debug(
+            $self->prefix . "2f: sending empty Access-Request for  $username" );
+        my $res = $self->radiusLib->check_pwd( $req, $session, $username );
+        unless ($res) {
+            return PE_RADIUSCONNECTFAILED;
+        }
+    }
 
     # Prepare form
     my ( $checkLogins, $stayConnected ) = $self->getFormParams($req);

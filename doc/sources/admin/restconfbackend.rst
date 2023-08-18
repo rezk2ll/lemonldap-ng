@@ -80,5 +80,6 @@ You can also add some other parameters
 
 `user`, `password` and `realm` parameters are only used if the entry point
 `index.fcgi/config` is protected by a basic authentication. Thus, handlers will
-make requests to the portal using these parameters. `realm` must match the
-`auth_basic` (Nginx) or `AuthType` (Apache) setting in your web server.
+make requests to the portal using these parameters. `realm` is mandatory if
+basic authentication is used, and it must match the `auth_basic` (Nginx) or
+`AuthType` (Apache) setting in your web server.

@@ -101,7 +101,7 @@ Your EntityID, often use as metadata URL, by default
 
 .. note::
 
-    The value will be use in metadata main markup:
+    The value will be used in metadata main markup:
 
     .. code:: xml
 
@@ -128,13 +128,18 @@ To define keys, you can:
 .. versionchanged:: 2.0.10
 
    A X.509 certificate is now generated instead of a plain public key. It has
-   20 years of validity, and is self signed with the 2048bit RSA key.
+   20 years of validity, and is self signed with the 2048 bit RSA key.
 
 .. tip::
 
     You can enter a password to protect private key with a
     password. It will be prompted if you generate keys, else you can set it
     in the ``Private key password``.
+
+.. tip::
+
+    You can change default key size by inserting ``defaultNewKeySize = 3072``
+    into lemonldap-ng.ini file.
 
 |image1|
 

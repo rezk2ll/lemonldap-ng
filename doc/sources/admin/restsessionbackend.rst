@@ -75,8 +75,9 @@ Name                Comment                                  Example
 
 `user`, `password` and `realm` parameters are only used if the entry point `index.fcgi/sessions/global`
 is protected by a basic authentication. Thus, handlers will make requests to the Portal
-using these parameters. `realm` must match the `auth_basic` (Nginx) or
-`AuthType` (Apache) setting in your web server.
+using these parameters. `realm` is mandatory if basic authentication is used,
+and it must match the `auth_basic` (Nginx) or `AuthType` (Apache) setting in
+your web server.
 
 
 .. attention::

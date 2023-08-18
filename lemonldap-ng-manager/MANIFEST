@@ -289,8 +289,6 @@ t/jsonfiles/15-combination.json
 t/jsonfiles/17-extra2f.json
 t/jsonfiles/70-diff.json
 t/lemonldap-ng-DBI-conf.ini
-t/lemonldap-ng-dbi.ini
-t/lemonldap-ng-noDiff.ini
 t/lemonldap-ng.ini
 t/test-lib.pm
 t/test-merge.json
