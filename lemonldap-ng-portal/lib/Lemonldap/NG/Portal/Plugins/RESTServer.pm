@@ -416,11 +416,16 @@ sub mysession {
           if ( $self->p->checkXSSAttack( 'authorizationfor', $req->urldc ) );
 
         # Split URL
-        $req->urldc =~ URIRE;
-        my ( $host, $uri ) = ( $3 . ( $4 ? ":$4" : '' ), $5 );
-        $uri ||= '/';
-        return $self->p->sendError( $req, "Bad URL $req->{urldc}", 400 )
-          unless ($host);
+        my ( $host, $uri );
+        if ( $req->urldc =~ URIRE ) {
+            ( $host, $uri ) = ( $3 . ( $4 ? ":$4" : '' ), $5 );
+            $uri ||= '/';
+            return $self->p->sendError( $req, "Bad URL $req->{urldc}", 400 )
+              unless ($host);
+        }
+        else {
+            return $self->p->sendError( $req, "Bad URL $req->{urldc}", 400 );
+        }
 
         $self->logger->debug("Looking for authorization for $url");
 

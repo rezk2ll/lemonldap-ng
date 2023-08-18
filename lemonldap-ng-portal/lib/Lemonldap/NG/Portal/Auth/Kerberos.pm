@@ -230,16 +230,21 @@ sub _handle_ajax_response {
 sub _krb_get_user {
     my ( $self, $auth ) = @_;
 
+    my $ticket;
+
     # Case 4: an "Authorization header" has been sent
-    if ( $auth !~ /^Negotiate (.*)$/ ) {
+    if ( $auth =~ /^Negotiate (.*)$/ ) {
+        $ticket = $1;
+    }
+    else {
         $self->userLogger->error('Bad authorization header');
         return;
     }
 
     # Case 5: Kerberos ticket received
-    $self->logger->debug("Kerberos ticket received: $1");
+    $self->logger->debug("Kerberos ticket received: $ticket");
     my $data;
-    eval { $data = MIME::Base64::decode($1) };
+    eval { $data = MIME::Base64::decode($ticket) };
     if ($@) {
         $self->userLogger->error( 'Bad authorization header: ' . $@ );
         return;

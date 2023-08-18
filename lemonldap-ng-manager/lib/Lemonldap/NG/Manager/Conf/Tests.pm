@@ -951,8 +951,7 @@ sub tests {
                   )
                 {
                     $appUrl ||= "";
-                    $appUrl =~ m#^(https?://[^/]+)(/.*)?$#;
-                    my $appHost = $1;
+                    my ($appHost) = $appUrl =~ m#^(https?://[^/]+)(/.*)?$#;
                     unless ($appHost) {
                         push @msg,
                           "$casConfKey CAS Application has no Service URL";
