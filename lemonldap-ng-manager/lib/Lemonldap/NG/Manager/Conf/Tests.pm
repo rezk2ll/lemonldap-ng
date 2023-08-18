@@ -1011,7 +1011,7 @@ sub tests {
             {
                 my $hasPwdBE = 0;
                 foreach ( keys %{ $conf->{authChoiceModules} } ) {
-                    my @mods = split /[;\|]/, $conf->{authChoiceModules}->{$_};
+                    my @mods = split /;\s*/, $conf->{authChoiceModules}->{$_};
                     $hasPwdBE ||= 1 unless $mods[2] eq 'Null';
                 }
                 return ( -1,
