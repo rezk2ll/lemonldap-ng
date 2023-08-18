@@ -404,6 +404,7 @@
 "gpgDb":"cơ sở dữ liệu GPG",
 "gpgParams":"Tham số GPG",
 "grantSessionRules":"Điều kiện mở",
+"groupLDAPFilter":"Group Filter",
 "groups":"Nhóm",
 "groupsBeforeMacros":"Tính toán các nhóm trước macros",
 "hGroups":"Nhóm (HashRef)",

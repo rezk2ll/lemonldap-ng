@@ -404,6 +404,7 @@
 "gpgDb":"GPG database",
 "gpgParams":"GPG parameters",
 "grantSessionRules":"ظروف الافتتاح",
+"groupLDAPFilter":"Group Filter",
 "groups":"المجموعات",
 "groupsBeforeMacros":"Compute groups before macros",
 "hGroups":"المجموعات (هاش ريف)",

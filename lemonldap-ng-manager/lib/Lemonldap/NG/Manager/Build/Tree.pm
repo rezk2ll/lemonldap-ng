@@ -284,6 +284,7 @@ sub tree {
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'ldapGroupBase',
+                                        'groupLDAPFilter',
                                         'ldapGroupObjectClass',
                                         'ldapGroupAttributeName',
                                         'ldapGroupAttributeNameUser',

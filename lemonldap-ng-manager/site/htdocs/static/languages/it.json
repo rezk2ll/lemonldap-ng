@@ -404,6 +404,7 @@
 "gpgDb":"Database GPG",
 "gpgParams":"Parametri GPG",
 "grantSessionRules":"Condizioni di apertura",
+"groupLDAPFilter":"Group Filter",
 "groups":"Gruppi",
 "groupsBeforeMacros":"Compute groups before macros",
 "hGroups":"Gruppi  (HashRef)",

@@ -154,8 +154,12 @@ Groups
 
 -  **Search base**: DN of groups branch. If no value, disable group
    searching.
--  **Object class**: objectClass of the groups (default: groupOfNames).
-   If you are using Active Directory you need to modify this value to ``group``. 
+-  **Group Filter**: LDAP filter for groups, can be used to have several
+   group object classes (for example ``(|(objectClass=groupOfNames)(objectClass=groupOfURLs))``).
+   If this value is empty, the **Object class** parameter is used to build the filter.
+-  **Object class**: objectClass of the groups (default: ``groupOfNames``).
+   If you are using Active Directory you need to modify this value to ``group``.
+   This parameter is ignored if **Group filter** is set.
 -  **Target attribute**: name of the attribute in the groups storing the
    link to the user (default: member).
 -  **User source attribute**: name of the attribute in users entries
