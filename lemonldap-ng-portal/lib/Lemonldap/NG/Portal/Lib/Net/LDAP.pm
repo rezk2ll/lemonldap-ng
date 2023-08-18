@@ -661,7 +661,7 @@ sub searchGroups {
     # Creating search filter
     my $groupSearchFilter = $self->{conf}->{groupLDAPFilter} || "(objectClass=" . $self->{conf}->{ldapGroupObjectClass} . ")";
     my $searchFilter =
-      "(&" . $groupSearchFilter . ")(|";
+      "(&" . $groupSearchFilter . "(|";
     foreach ( split( $self->{conf}->{multiValuesSeparator}, $value ) ) {
         $searchFilter .= "(" . $key . "=" . escape_filter_value($_) . ")";
     }
