@@ -569,6 +569,8 @@ t/20-Auth-and-password-DBI.t
 t/20-Auth-DBI-utf8.t
 t/21-Auth-and-password-LDAP.t
 t/21-Auth-LDAP-attributes.t
+t/21-Auth-LDAP-group-with-group-filter.t
+t/21-Auth-LDAP-group-without-group-filter.t
 t/21-Auth-LDAP-Policy-Combination.t
 t/21-Auth-LDAP-Policy-only.t
 t/21-Auth-LDAP-Policy.t
