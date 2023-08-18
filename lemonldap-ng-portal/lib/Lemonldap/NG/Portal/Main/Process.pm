@@ -434,6 +434,10 @@ sub deleteSession {
         return PE_OK;
     }
 
+    # You can use the _continueLogout variable to continue the current flow
+    # after deleteSession
+    return PE_OK if $req->data->{_continueLogout};
+
     # Else display "error"
     return PE_LOGOUT_OK;
 }

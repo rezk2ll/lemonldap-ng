@@ -807,14 +807,11 @@ sub extractFormInfo {
                         [$slo_body]
                     ]
                 );
+                $req->data->{_continueLogout} = 1;
                 $req->steps( [
                         @{ $self->p->beforeLogout },
-                        sub {
-                            my ($req) = @_;
-                            my $res = $self->p->deleteSession($req);
-                            return (
-                                $res eq PE_LOGOUT_OK ? PE_SENDRESPONSE : $res );
-                        }
+                        'deleteSession',
+                        [ returnPE => PE_SENDRESPONSE ]
                     ]
                 );
 
@@ -960,7 +957,7 @@ sub extractFormInfo {
         return $urlcheck unless ( $urlcheck == PE_OK );
 
         # IDP list
-        my @list       = ();
+        my @list = ();
 
         foreach ( keys %{ $self->idpList } ) {
             my $idpName = $self->{idpList}->{$_}->{name};
