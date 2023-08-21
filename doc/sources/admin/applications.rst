@@ -7,6 +7,7 @@ Applications
    applications/adfs
    applications/alfresco
    applications/apache
+   applications/apache_apisix
    applications/aws
    applications/awx
    applications/bugzilla
@@ -99,6 +100,7 @@ Application                                                       Configuration 
 .. image:: applications/alfresco_logo.png                         :doc:`Alfresco<applications/alfresco>`               ✔                                 ✔
 .. image:: applications/logo_amazon_web_services.jpg              :doc:`Amazon Web Services<applications/aws>`                                           ✔
 .. image:: applications/apache.png                                :doc:`Apache<applications/apache>`                   ✔                             ✔   ✔    ✔
+.. image:: applications/apache_apisix_logo.png                     :doc:`Apache James<applications/apache_apisix                                                 ✔
 .. image:: applications/logo-awx.png                              :doc:`AWX (Ansible Tower)<applications/awx>`                                           ✔
 .. image:: applications/bigbluebutton-logo.png                    :doc:`BigBlueButton<applications/bigbluebutton>`                                            ✔
 .. image:: applications/bugzilla_logo.png                         :doc:`Bugzilla<applications/bugzilla>`               ✔
