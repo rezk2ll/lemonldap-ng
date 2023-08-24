@@ -6,6 +6,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
+  PE_ERROR
   PE_SENDRESPONSE
 );
 
@@ -19,7 +20,6 @@ extends qw(
 
 # INTERFACE
 
-use constant endAuth      => 'newDevice';
 use constant beforeAuth   => 'check';
 use constant beforeLogout => 'logout';
 
@@ -61,7 +61,7 @@ has timeout => (
 
 sub init {
     my ($self) = @_;
-    $self->addAuthRoute( registerbrowser => 'storeBrowser', ['POST'] );
+    $self->addUnauthRoute( registerbrowser => 'storeBrowser', ['POST'] );
 
     # Parse activation rule
     $self->rule(
@@ -77,6 +77,7 @@ sub init {
 # Then ask for browser fingerprint
 sub newDevice {
     my ( $self, $req ) = @_;
+
     my $checkLogins = $req->param('checkLogins');
     $self->logger->debug("StayConnected: checkLogins set") if $checkLogins;
 
@@ -85,8 +86,10 @@ sub newDevice {
     {
         my $totpSecret = $self->newSecret;
         my $token      = $self->ott->createToken( {
-                name       => $req->sessionInfo->{ $self->conf->{whatToTrace} },
-                totpSecret => $totpSecret,
+                name => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+                id   => $req->id,
+                sessionInfo => $req->sessionInfo,
+                totpSecret  => $totpSecret,
                 (
                     $checkLogins
                     ? ( history => $req->sessionInfo->{_loginHistory} )
@@ -120,65 +123,59 @@ sub storeBrowser {
     if ( $self->rule->( $req, $req->sessionInfo ) ) {
         if ( my $token = $req->param('token') ) {
             if ( my $tmp = $self->ott->getToken($token) ) {
-                my $uid = $req->userData->{ $self->conf->{whatToTrace} };
-                if ( $tmp->{name} eq $uid ) {
-                    if ( my $fg = $req->param('fg') ) {
-                        my $isTotp = ( $fg =~ s/^TOTP_// ) ? 1 : 0;
-                        if (
-                            $isTotp
-                            and !$self->verifyCode(
-                                30, 1, 6, $tmp->{totpSecret}, $fg
-                            )
-                          )
-                        {
-                            $self->logger->warn(
-                                "Failed to register device, bad TOTP");
-                        }
-                        else {
-                            my $ps = $self->newConnectionSession( {
-                                    _utime          => time + $self->timeout,
-                                    _session_uid    => $uid,
-                                    _connectedSince => time,
-                                    dataKeep        => $req->data->{dataToKeep},
-                                    (
-                                        $isTotp
-                                        ? ( totpSecret => $tmp->{totpSecret} )
-                                        : ( fingerprint => $fg )
-                                    ),
-                                },
-                            );
-
-                            # Cookie available 30 days by default
-                            $req->addCookie(
-                                $self->p->cookie(
-                                    name    => $self->cookieName,
-                                    value   => $ps->id,
-                                    max_age => $self->timeout,
-                                    secure  => $self->conf->{securedCookie},
-                                )
-                            );
-
-                            $req->sessionInfo->{_loginHistory} = $tmp->{history}
-                              if exists $tmp->{history};
-
-                            # Store connection ID in current session
-                            $self->p->updateSession( $req,
-                                { _stayConnectedSession => $ps->id } );
-                        }
+                $req->sessionInfo( $tmp->{sessionInfo} );
+                $req->id( $tmp->{id} );
+                my $name = $tmp->{name};
+                if ( my $fg = $req->param('fg') ) {
+                    my $isTotp = ( $fg =~ s/^TOTP_// ) ? 1 : 0;
+                    if ( $isTotp
+                        and
+                        !$self->verifyCode( 30, 1, 6, $tmp->{totpSecret}, $fg )
+                      )
+                    {
+                        $self->logger->warn(
+                            "Failed to register device, bad TOTP");
                     }
                     else {
-                        $self->logger->warn(
-                            "Browser did not return fingerprint");
+                        my $ps = $self->newConnectionSession( {
+                                _utime          => time + $self->timeout,
+                                _session_uid    => $name,
+                                _connectedSince => time,
+                                dataKeep        => $req->data->{dataToKeep},
+                                (
+                                    $isTotp
+                                    ? ( totpSecret => $tmp->{totpSecret} )
+                                    : ( fingerprint => $fg )
+                                ),
+                            },
+                        );
+
+                        # Cookie available 30 days by default
+                        $req->addCookie(
+                            $self->p->cookie(
+                                name    => $self->cookieName,
+                                value   => $ps->id,
+                                max_age => $self->timeout,
+                                secure  => $self->conf->{securedCookie},
+                            )
+                        );
+
+                        $req->sessionInfo->{_loginHistory} = $tmp->{history}
+                          if exists $tmp->{history};
+
+                        # Store connection ID in current session
+                        $self->p->updateSession( $req,
+                            { _stayConnectedSession => $ps->id } );
                     }
                 }
                 else {
-                    $self->userLogger->error(
-                        "StayConnected: mismatch UID ($tmp->{name} / $uid)");
+                    $self->logger->warn("Browser did not return fingerprint");
                 }
             }
             else {
                 $self->userLogger->error(
-                    "StayConnected called with an expired token");
+                    "StayConnected called with an invalid token");
+                return $self->p->do( $req, [ sub { PE_ERROR } ] );
             }
         }
         else {
@@ -190,7 +187,8 @@ sub storeBrowser {
     }
 
     # Return persistent connection cookie
-    return $self->p->do( $req, [ @{ $self->p->endAuth }, sub { PE_OK } ] );
+    return $self->p->do( $req,
+        [ 'buildCookie', @{ $self->p->endAuth }, sub { PE_OK } ] );
 }
 
 # Check for:
