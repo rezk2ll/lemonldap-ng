@@ -35,7 +35,6 @@ sub login_create_persistent_cookie_from_scratch {
         'Auth query'
     );
     count(1);
-    my $id = expectCookie($res);
     my ( $host, $url, $query ) =
       expectForm( $res, undef, '/registerbrowser', 'fg', 'token' );
 
@@ -46,12 +45,12 @@ sub login_create_persistent_cookie_from_scratch {
             '/registerbrowser',
             IO::String->new($query),
             length => length($query),
-            cookie => "lemonldap=$id",
             accept => 'text/html',
         ),
         'Post fingerprint'
     );
     count(1);
+    my $id = expectCookie($res);
     expectRedirection( $res, 'http://auth.example.com/' );
     my $cid = expectCookie( $res, 'llngpersistent' );
     return ( $id, $cid );
