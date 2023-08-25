@@ -107,6 +107,11 @@ sub gen_password {
 # @return boolean result
 sub send_mail {
     my ( $self, $mail, $subject, $body, $html ) = @_;
+
+    if ($mail =~ /^\S+\@\S+$/) {
+        $mail = "$mail <$mail>";
+    }
+
     $self->logger->info("send_mail called to send \"$subject\" to $mail");
 
     # Encode the body with the given charset
