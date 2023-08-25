@@ -10,7 +10,8 @@ use Mouse;
 use JSON qw(from_json);
 use MIME::Entity;
 use Email::Sender::Simple qw(sendmail);
-use Email::Date::Format qw(email_date);
+use Email::Date::Format   qw(email_date);
+use HTML::FormatText::WithLinks;
 use Lemonldap::NG::Common::EmailTransport;
 use MIME::Base64;
 use Encode;
@@ -40,6 +41,13 @@ has transport => (
         my $conf = $_[0]->{conf};
         $transport = Lemonldap::NG::Common::EmailTransport->new($conf);
         return $transport;
+    },
+);
+has htmlParser => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        return HTML::FormatText::WithLinks->new;
     },
 );
 
@@ -108,7 +116,7 @@ sub gen_password {
 sub send_mail {
     my ( $self, $mail, $subject, $body, $html ) = @_;
 
-    if ($mail =~ /^\S+\@\S+$/) {
+    if ( $mail =~ /^\S+\@\S+$/ ) {
         $mail = "$mail <$mail>";
     }
 
@@ -154,19 +162,24 @@ sub send_mail {
                     : ()
                 ),
                 Subject => $subject,
-                Type    => 'multipart/related',
+                Type    => 'multipart/alternative',
                 Date    => email_date,
             );
+            $message->attach(
+                Type => 'text/plain; charset=' . $self->charset,
+                Data => $self->htmlParser->parse($body),
+            );
+            my $alternative = $message->attach( Type => 'multipart/related' );
 
             # Attach HTML message
-            $message->attach(
+            $alternative->attach(
                 Type => 'text/html; charset=' . $self->charset,
-                Data => qq{$body},
+                Data => $body,
             );
 
             # Attach included images
             foreach ( keys %cid ) {
-                $message->attach(
+                $alternative->attach(
                     Type => "image/" . ( $cid{$_} =~ m/\.(\w+)/ )[0],
                     Id   => $_,
                     Path => $self->conf->{templateDir} . "/"
