@@ -404,7 +404,7 @@
 "gpgDb":"GPG veritabanı",
 "gpgParams":"GPG parametreleri",
 "grantSessionRules":"Açılış koşulları",
-"groupLDAPFilter":"Group Filter",
+"groupLDAPFilter":"Grup Filtresi",
 "groups":"Gruplar",
 "groupsBeforeMacros":"Grupları makrolardan önce hesapla",
 "hGroups":"Gruplar (HashRef)",
