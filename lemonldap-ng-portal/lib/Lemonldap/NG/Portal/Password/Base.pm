@@ -17,11 +17,20 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.18.0';
 
 # INITIALIZATION
 
 has requireOldPwdRule => ( is => 'rw' );
+
+has crypto => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        my ($self) = @_;
+        Lemonldap::NG::Common::Crypto->new( $self->conf->{key} );
+    }
+);
 
 sub init {
     my ($self) = shift;
@@ -117,11 +126,14 @@ sub _modifyPassword {
 
         # Store new password if asked
         if ( $self->conf->{storePassword} ) {
+            my $passwordToStore = $req->data->{'newpassword'};
             $self->p->updateSession(
                 $req,
                 {
                     _passwordDB => $self->p->getModule( $req, 'password' ),
-                    _password   => $req->data->{newpassword}
+                    _password   => $self->conf->{storePasswordEncrypted}
+                    ? $self->crypto->encrypt($passwordToStore)
+                    : $passwordToStore
                 }
             );
         }

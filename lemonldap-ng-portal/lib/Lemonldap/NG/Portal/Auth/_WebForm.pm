@@ -19,7 +19,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PASSWORDFORMEMPTY
 );
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.18.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth
@@ -37,6 +37,15 @@ has authnLevel => (
 
 has captcha => ( is => 'rw' );
 has ott     => ( is => 'rw' );
+
+has crypto => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        my ($self) = @_;
+        Lemonldap::NG::Common::Crypto->new( $self->conf->{key} );
+    }
+);
 
 # INITIALIZATION
 
@@ -155,8 +164,12 @@ sub setAuthSessionInfo {
     # Store submitted password if set in configuration
     # WARNING: it can be a security hole
     if ( $self->conf->{storePassword} ) {
-        $req->{sessionInfo}->{'_password'} = $req->data->{'newpassword'}
-          || $req->data->{'password'};
+        my $passwordToStore =
+          $req->data->{'newpassword'} || $req->data->{'password'};
+        $req->{sessionInfo}->{'_password'} =
+            $self->conf->{storePasswordEncrypted}
+          ? $self->crypto->encrypt($passwordToStore)
+          : $passwordToStore;
     }
 
     # Store user timezone
