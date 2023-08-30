@@ -28,8 +28,8 @@
 #global pre_release beta1
 
 Name:           lemonldap-ng
-Version:        2.16.2
-Release:        %{?pre_release:0.}2%{?pre_release:.%{pre_release}}%{?dist}
+Version:        2.17.0
+Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        Web Single Sign On (SSO) and Access Management
 # Lemonldap-ng itself is GPLv2+
 # Qrious bundled javascript library is GPLv3+
@@ -700,6 +700,9 @@ fi
 
 
 %changelog
+* Wed Aug 30 2023 Clement Oudot <clem.oudot@gmail.com> - 2.17.0-1
+- Update to 2.17.0
+
 * Mon May 15 2023 Xavier Bachelot <xavier@bachelot.org> - 2.16.2-2
 - Improve Summary:
 - Drop updates-alternatives from %%post
