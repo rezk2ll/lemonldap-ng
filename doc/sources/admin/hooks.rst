@@ -271,6 +271,44 @@ Sample code::
         return PE_OK;
     }
 
+getOidcRpConfig
+~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.17
+
+This hook is triggered when processing a request for a Client ID that is not
+registered as an OIDC RP.
+
+You can use this hook to inject configuration on-demand. Update `$config` with
+the RP configuration ::
+
+   use constant hook => {
+      getOidcRpConfig => 'getRpFromDB',
+   };
+
+   sub getRpFromDB {
+       my ( $self, $req, $client_id, $config ) = @_;
+
+       # Lookup $entityID in some DB
+
+       # Update the provided $config reference
+       %$config = (
+           confKey     => # a unique configuration key
+           attributes  => # hashref of attributes to return
+           options     => # hashref of options
+           macros      => # hashref of macros to compute
+           scopeRules  => # hashref of scope rules
+           extraClaims => # hashref of additional scopes to consider
+       );
+
+       # Set the TTL even if nothing was found in DB to prevent LLNG from
+       # calling the hook too often
+       $config->{ttl} = 3600;
+
+       return PE_OK;
+   }
+
+
 SAML service hooks
 ------------------
 
@@ -306,6 +344,10 @@ the IDP or SP information::
            idp_attributes => #hashref of exported attributes
            idp_options => #hashref of options
        );
+
+       # Set the TTL even if nothing was found in DB to prevent LLNG from
+       # calling the hook too often
+       $config->{ttl} = 3600;
 
        return PE_OK;
    }

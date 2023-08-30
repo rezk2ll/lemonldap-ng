@@ -153,10 +153,13 @@ sub loadOPs {
 }
 
 # Load OpenID Connect Relying Parties
+# DEPRECATED, remove in 3.0, use sendOidcResponse instead
 # @param no_cache Disable cache use
 # @return boolean result
 sub loadRPs {
     my ($self) = @_;
+
+    $self->warning->info("Using loadRPs is deprecated, use getRP instead");
 
     # Check presence of at least one relying party in configuration
     unless ( $self->conf->{oidcRPMetaDataOptions}
@@ -168,91 +171,108 @@ sub loadRPs {
     }
 
     foreach my $rp ( keys %{ $self->conf->{oidcRPMetaDataOptions} || {} } ) {
-        my $valid = 1;
+        $self->load_rp_from_llng_conf($rp);
+    }
+}
 
-        # Handle scopes
-        # this HAS to be a deep copy of the DEFAULT_SCOPES hashref!
-        my $scope_values = { %{ DEFAULT_SCOPES() } };
+# Load a single RP from LLNG configuration
+sub load_rp_from_llng_conf {
+    my ( $self, $rp ) = @_;
 
-        # Additional claims
-        my $extraClaims =
-          $self->conf->{oidcRPMetaDataOptionsExtraClaims}->{$rp};
+    return $self->load_rp(
+        confKey     => $rp,
+        extraClaims => $self->conf->{oidcRPMetaDataOptionsExtraClaims}->{$rp},
+        options     => $self->conf->{oidcRPMetaDataOptions}->{$rp},
+        macros      => $self->conf->{oidcRPMetaDataMacros}->{$rp},
+        scopeRules  => $self->conf->{oidcRPMetaDataScopeRules}->{$rp},
+        attributes  => $self->conf->{oidcRPMetaDataExportedVars}->{$rp},
+    );
+}
 
-        if ($extraClaims) {
-            foreach my $scope ( keys %$extraClaims ) {
-                $self->logger->debug("Processing scope value $scope for $rp");
-                my @extraAttributes = split( /\s/, $extraClaims->{$scope} );
-                $scope_values->{$scope} = \@extraAttributes;
-            }
+sub load_rp {
+    my ( $self, %config ) = @_;
+    my $rp = $config{confKey};
+
+    my $valid = 1;
+
+    # Handle scopes
+    # this HAS to be a deep copy of the DEFAULT_SCOPES hashref!
+    my $scope_values = { %{ DEFAULT_SCOPES() } };
+
+    # Additional claims
+    my $extraClaims = $config{extraClaims};
+
+    if ($extraClaims) {
+        foreach my $scope ( keys %$extraClaims ) {
+            $self->logger->debug("Processing scope value $scope for $rp");
+            my @extraAttributes = split( /\s/, $extraClaims->{$scope} );
+            $scope_values->{$scope} = \@extraAttributes;
         }
+    }
 
-        # Access rule
-        my $rule = $self->conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsRule};
-        if ( length $rule ) {
-            $rule = $self->p->HANDLER->substitute($rule);
-            unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-                $self->logger->error( "Unable to build access rule for RP $rp: "
+    # Access rule
+    my $rule = $config{options}->{oidcRPMetaDataOptionsRule};
+    if ( length $rule ) {
+        $rule = $self->p->HANDLER->substitute($rule);
+        unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
+            $self->logger->error( "Unable to build access rule for RP $rp: "
+                  . $self->p->HANDLER->tsv->{jail}->error );
+            $valid = 0;
+        }
+    }
+
+    # Load per-RP macros
+    my $macros         = $config{macros};
+    my $compiledMacros = {};
+    for my $macroAttr ( keys %{$macros} ) {
+        my $macroRule = $macros->{$macroAttr};
+        if ( length $macroRule ) {
+            $macroRule = $self->p->HANDLER->substitute($macroRule);
+            if ( $macroRule = $self->p->HANDLER->buildSub($macroRule) ) {
+                $compiledMacros->{$macroAttr} = $macroRule;
+            }
+            else {
+                $self->logger->error(
+                    "Unable to build macro $macroAttr for RP $rp:"
                       . $self->p->HANDLER->tsv->{jail}->error );
                 $valid = 0;
             }
         }
+    }
 
-        # Load per-RP macros
-        my $macros         = $self->conf->{oidcRPMetaDataMacros}->{$rp};
-        my $compiledMacros = {};
-        for my $macroAttr ( keys %{$macros} ) {
-            my $macroRule = $macros->{$macroAttr};
-            if ( length $macroRule ) {
-                $macroRule = $self->p->HANDLER->substitute($macroRule);
-                if ( $macroRule = $self->p->HANDLER->buildSub($macroRule) ) {
-                    $compiledMacros->{$macroAttr} = $macroRule;
-                }
-                else {
-                    $self->logger->error(
-                        "Unable to build macro $macroAttr for RP $rp:"
-                          . $self->p->HANDLER->tsv->{jail}->error );
-                    $valid = 0;
-                }
+    # Load per-RP dynamic scopes
+    my $scope_rules          = $config{scopeRules};
+    my $compiled_scope_rules = {};
+    for my $scopeName ( keys %{$scope_rules} ) {
+        my $scopeRule = $scope_rules->{$scopeName};
+        if ( length $scopeRule ) {
+            $scopeRule = $self->p->HANDLER->substitute($scopeRule);
+            if ( $scopeRule = $self->p->HANDLER->buildSub($scopeRule) ) {
+                $compiled_scope_rules->{$scopeName} = $scopeRule;
             }
-        }
-
-        # Load per-RP dynamic scopes
-        my $scope_rules = $self->conf->{oidcRPMetaDataScopeRules}->{$rp};
-        my $compiled_scope_rules = {};
-        for my $scopeName ( keys %{$scope_rules} ) {
-            my $scopeRule = $scope_rules->{$scopeName};
-            if ( length $scopeRule ) {
-                $scopeRule = $self->p->HANDLER->substitute($scopeRule);
-                if ( $scopeRule = $self->p->HANDLER->buildSub($scopeRule) ) {
-                    $compiled_scope_rules->{$scopeName} = $scopeRule;
-                }
-                else {
-                    $self->logger->error(
-                        "Unable to build scope $scopeName for RP $rp:"
-                          . $self->p->HANDLER->tsv->{jail}->error );
-                    $valid = 0;
-                }
+            else {
+                $self->logger->error(
+                    "Unable to build scope $scopeName for RP $rp:"
+                      . $self->p->HANDLER->tsv->{jail}->error );
+                $valid = 0;
             }
-        }
-        if ($valid) {
-
-            # Register RP
-            $self->rpOptions->{$rp} =
-              $self->conf->{oidcRPMetaDataOptions}->{$rp};
-            $self->rpAttributes->{$rp} =
-              $self->conf->{oidcRPMetaDataExportedVars}->{$rp};
-            $self->rpScopes->{$rp}     = $scope_values;
-            $self->rpMacros->{$rp}     = $compiledMacros;
-            $self->rpScopeRules->{$rp} = $compiled_scope_rules;
-            $self->rpRules->{$rp}      = $rule;
-        }
-        else {
-            $self->logger->error(
-                "Relaying Party $rp has errors and will be ignored");
         }
     }
-    return 1;
+    if ($valid) {
+
+        # Register RP
+        $self->rpOptions->{$rp}    = $config{options};
+        $self->rpAttributes->{$rp} = $config{attributes};
+        $self->rpScopes->{$rp}     = $scope_values;
+        $self->rpMacros->{$rp}     = $compiledMacros;
+        $self->rpScopeRules->{$rp} = $compiled_scope_rules;
+        $self->rpRules->{$rp}      = $rule;
+    }
+    else {
+        $self->logger->error(
+            "Relaying Party $rp has errors and will be ignored");
+    }
+    return;
 }
 
 # Refresh JWKS data if needed
@@ -314,24 +334,6 @@ sub refreshJWKSdata {
 
     }
     return 1;
-}
-
-# Get Relying Party corresponding to a Client ID
-# @param client_id Client ID
-# @return String result
-sub getRP {
-    my ( $self, $client_id ) = @_;
-    my $rp;
-
-    foreach ( keys %{ $self->rpOptions } ) {
-        if ( $client_id eq
-            $self->rpOptions->{$_}->{oidcRPMetaDataOptionsClientID} )
-        {
-            $rp = $_;
-            last;
-        }
-    }
-    return $rp;
 }
 
 # Compute callback URI
