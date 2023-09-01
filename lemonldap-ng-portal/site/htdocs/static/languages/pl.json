@@ -177,6 +177,7 @@
 "forgotPwd":"Zapomniałeś hasła?",
 "generatePwd":"Wygeneruj hasło automatycznie",
 "generic":"Informacje kontaktowe",
+"generic2fFormatError":"Your contact information does not match the required format",
 "generic2fwelcome":"Zarejestruj swój drugi czynnik",
 "genericCheckCode":"Kod został przesłany do Ciebie, wprowadź go w poniższym formularzu",
 "genericRegisterCode":"Wprowadź otrzymany kod",

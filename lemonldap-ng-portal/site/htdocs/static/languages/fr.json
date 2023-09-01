@@ -177,6 +177,7 @@
 "forgotPwd":"Mot de passe oublié ?",
 "generatePwd":"Générer le mot de passe automatiquement",
 "generic":"Information de contact",
+"generic2fFormatError":"Vos informations de contact ne correspondent pas au format attendu",
 "generic2fwelcome":"Enregistrez votre second facteur",
 "genericCheckCode":"Un code vous a été transmis, veuillez le saisir dans le formulaire ci-dessous",
 "genericRegisterCode":"Entrez le code obtenu",

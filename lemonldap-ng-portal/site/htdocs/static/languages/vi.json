@@ -177,6 +177,7 @@
 "forgotPwd":"Quên mật khẩu của bạn?",
 "generatePwd":"Tạo mật khẩu tự động",
 "generic":"Thông tin liên lạc",
+"generic2fFormatError":"Your contact information does not match the required format",
 "generic2fwelcome":"Đăng ký yếu tố thứ hai của bạn",
 "genericCheckCode":"Một mã đã được chuyển đến bạn, vui lòng nhập nó vào biểu mẫu bên dưới",
 "genericRegisterCode":"Nhập mã nhận được",

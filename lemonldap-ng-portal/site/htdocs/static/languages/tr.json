@@ -177,6 +177,7 @@
 "forgotPwd":"Parolanızı mı unuttunuz?",
 "generatePwd":"Parolayı otomatik olarak oluştur",
 "generic":"İletişim bilgileri",
+"generic2fFormatError":"Your contact information does not match the required format",
 "generic2fwelcome":"İkinci faktörünüzü kaydedin",
 "genericCheckCode":"Size bir kod iletildi, lütfen aşağıdaki forma girin",
 "genericRegisterCode":"Alınan kodu girin",

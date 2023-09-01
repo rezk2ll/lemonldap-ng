@@ -177,6 +177,7 @@
 "forgotPwd":"忘記您的密碼？",
 "generatePwd":"自動生成密碼",
 "generic":"Contact information",
+"generic2fFormatError":"Your contact information does not match the required format",
 "generic2fwelcome":"Register your second factor",
 "genericCheckCode":"A code has been transmitted to you, please input it in the form below",
 "genericRegisterCode":"Input the received code",
