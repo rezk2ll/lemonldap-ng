@@ -75,7 +75,9 @@ my $client = LLNG::Manager::Test->new(
                 },
                 'home' => {
                     'over' => {
-                        mail2fCodeRegex => '\w{4}',
+                        mail2fCodeRegex           => '\w{4}',
+                        generic2fFormatRegex      => '(?<!@example.com)$',
+                        generic2fFormatErrorLabel => 'invalidDomain',
                     },
                     'logo'     => 'home.jpg',
                     'label'    => "Home Label",
@@ -262,6 +264,42 @@ subtest "Fail to register mail based custom SF as dwho" => sub {
     expectReject( $res, 400, 'PE96' );
     ok( !getPSession('dwho')->data->{_2fDevices},
         "No 2fDevice was registered" );
+};
+
+subtest "Fail regex filter validation" => sub {
+    getPSession('dwho')->remove;
+
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=dwho&password=dwho'),
+            length => 23,
+            accept => 'text/html',
+        ),
+        'Auth query'
+    );
+
+    my $id = expectCookie($res);
+
+    $res = $client->_get(
+        '/2fregisters/home',
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+    );
+
+    # Ajax send mail
+    my $query = buildForm( { generic => 'test@example.com' } );
+    $res = $client->_post(
+        '/2fregisters/home/sendcode',
+        IO::String->new($query),
+        length => length $query,
+        cookie => "lemonldap=$id",
+        accept => 'application/json',
+    );
+
+    $res = expectJSON($res);
+    is( $res->{result} || 0, 0 );
+    is( $res->{error}, 'invalidDomain', "Custom message was found" );
 };
 
 subtest "Register and use rest based custom SF as dwho" => sub {
