@@ -41,6 +41,24 @@ OpenID Connect issuer now implements ``acr_values``
 
 The `acr_values` from OpenID Connect authorization requests can now be used to increase the authentication level required for accessing a service. If after upgrading you start noticing that users are now asked to upgrade their session when trying to access OIDC applications, you should check the `acr_values` requested by you application, and map them to the desired authentication level in `OpenID Connect Service` » `Authentication context`
 
+Cron files moved to systemd timers on Debian
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+On Debian, LemonLDAP::NG now uses systemd timers for maintenance tasks instead
+of ``cron.d`` scripts.
+
+If you need to modify the frequency of execution of your maintenance tasks, you should use a systemd override:
+
+```
+systemd edit liblemonldap-ng-portal-perl.timer
+systemd edit liblemonldap-ng-handler-perl.timer
+```
+
+```
+[Timer]
+OnCalendar=*-*-* *:07:07
+```
+
 2.17.1
 ------
 
@@ -51,7 +69,6 @@ Declaration of OIDC `request_uri` is now required
 A little-know feature of OIDC (*note*: you are probably not using it) allows the OpenID Provider, LemonLDAP::NG in this case, to fetch the Authorization request parameters itself by indicating a `request_uri` parameter.
 
 By default, we now disallow this feature, and require LemonLDAP::NG admins to explicitely allow Request URIs in the configuration (*OpenID Connect Relying Parties* » *Your RP* » *Options* » *Security* » *Allowed URLs for fetching Request Object*). This setting allows wildcards such as ``http://rp.example.com/*``.
-
 
 2.17.0
 ------
