@@ -109,6 +109,9 @@ LLNG portal now embeds the following features:
    by default by the same-origin security policy. You can modify default
    values in the manager *(General parameters » Advanced parameters »
    Security » Cross-Origin Resource Sharing)*
+-  IP filtering: LemonLDAP::NG can use a `CrowdSec server
+   <https://www.crowdsec.net/>`__ to filter connexion using IP reputation
+   from CrowdSec. See :doc:`CrowdSec Bouncer<crowdsec>`
 
 
 .. attention::
