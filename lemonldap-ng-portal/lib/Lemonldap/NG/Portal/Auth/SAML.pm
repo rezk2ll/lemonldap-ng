@@ -1540,8 +1540,13 @@ sub getIDP {
     # Lazy load IDP
     $self->lazy_load_entityid($idp) if $idp;
 
-    # Case 6: auto select IDP if only one IDP defined
-    if ( scalar keys %{ $self->idpList } == 1 ) {
+    # Case 6: auto select IDP if only one IDP defined and WAYF is disabled
+    if (
+        scalar keys %{ $self->idpList } == 1
+        and not( $self->conf->{samlDiscoveryProtocolActivation}
+            and defined $self->conf->{samlDiscoveryProtocolURL} )
+      )
+    {
         ($idp) = keys %{ $self->idpList };
         $self->logger->debug("Selecting the only defined SAML IDP: $idp");
     }
