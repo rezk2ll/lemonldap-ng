@@ -179,7 +179,8 @@ clean_sessions();
 done_testing( count() );
 
 sub op {
-    return LLNG::Manager::Test->new( {
+    return LLNG::Manager::Test->new(
+        {
             ini => {
                 logLevel                        => $debug,
                 domain                          => 'idp.com',
@@ -211,6 +212,8 @@ sub op {
                           'http://auth.rp.com/oauth2/blogout',
                         oidcRPMetaDataOptionsLogoutType            => 'back',
                         oidcRPMetaDataOptionsLogoutSessionRequired => 0,
+                        oidcRPMetaDataOptionsRedirectUris          =>
+                          'http://auth.rp.com?openidconnectcallback=1',
                     }
                 },
                 oidcOPMetaDataOptions           => {},
@@ -232,7 +235,8 @@ sub op {
 
 sub rp {
     my ( $jwks, $metadata ) = @_;
-    return LLNG::Manager::Test->new( {
+    return LLNG::Manager::Test->new(
+        {
             ini => {
                 logLevel                   => $debug,
                 domain                     => 'rp.com',

@@ -51,6 +51,7 @@ my $op = LLNG::Manager::Test->new(
                     oidcRPMetaDataOptionsBypassConsent         => 1,
                     oidcRPMetaDataOptionsRefreshToken          => 1,
                     oidcRPMetaDataOptionsAllowOffline          => 1,
+                    oidcRPMetaDataOptionsRedirectUris => 'http://rp2.com/',
                 },
                 oauth => {
                     oidcRPMetaDataOptionsDisplayName  => "oauth",

@@ -50,6 +50,7 @@ my $portal = LLNG::Manager::Test->new(
                     oidcRPMetaDataOptionsBypassConsent         => 1,
                     oidcRPMetaDataOptionsRefreshToken          => 1,
                     oidcRPMetaDataOptionsIDTokenForceClaims    => 1,
+                    oidcRPMetaDataOptionsRedirectUris          => 'http://test',
                 },
             },
             oidcRPMetaDataScopeRules => {

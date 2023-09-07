@@ -51,6 +51,7 @@ my $op = LLNG::Manager::Test->new(
                     oidcRPMetaDataOptionsUserIDAttr            => "",
                     oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                     oidcRPMetaDataOptionsBypassConsent         => 1,
+                    oidcRPMetaDataOptionsRedirectUris => 'http://rp.com/',
                 },
                 rp2 => {
                     oidcRPMetaDataOptionsDisplayName           => "RP2",
@@ -61,7 +62,8 @@ my $op = LLNG::Manager::Test->new(
                     oidcRPMetaDataOptionsUserIDAttr            => "",
                     oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                     oidcRPMetaDataOptionsBypassConsent         => 1,
-                    oidcRPMetaDataOptionsRule => '$uid eq "dwho"',
+                    oidcRPMetaDataOptionsRule         => '$uid eq "dwho"',
+                    oidcRPMetaDataOptionsRedirectUris => 'http://rp2.com/',
                 }
             },
             oidcOPMetaDataOptions           => {},
@@ -98,7 +100,7 @@ my $idpId = expectCookie($res);
 
 # Try to get code for RP1 with invalide scope name
 $query =
-"response_type=code&scope=openid%20profile%20email%22&client_id=rpid&state=af0ifjsldkj&redirect_uri=http%3A%2F%2Frp2.com%2F";
+"response_type=code&scope=openid%20profile%20email%22&client_id=rpid&state=af0ifjsldkj&redirect_uri=http%3A%2F%2Frp.com%2F";
 ok(
     $res = $op->_get(
         "/oauth2/authorize",
@@ -113,7 +115,7 @@ expectPortalError( $res, 24, "Invalid scope" );
 #
 # Get code for RP1
 $query =
-"response_type=code&scope=openid%20profile%20email&client_id=rpid&state=af0ifjsldkj&redirect_uri=http%3A%2F%2Frp2.com%2F";
+"response_type=code&scope=openid%20profile%20email&client_id=rpid&state=af0ifjsldkj&redirect_uri=http%3A%2F%2Frp.com%2F";
 ok(
     $res = $op->_get(
         "/oauth2/authorize",
@@ -125,7 +127,7 @@ ok(
 );
 count(1);
 
-my ($code) = expectRedirection( $res, qr#http://rp2\.com/.*code=([^\&]*)# );
+my ($code) = expectRedirection( $res, qr#http://rp\.com/.*code=([^\&]*)# );
 
 # Play code on RP2
 $query = buildForm(

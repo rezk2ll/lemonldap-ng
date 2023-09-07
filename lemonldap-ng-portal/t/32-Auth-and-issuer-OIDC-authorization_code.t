@@ -447,7 +447,9 @@ sub op {
                         oidcRPMetaDataOptionsAccessTokenExpiration  => 3600,
                         oidcRPMetaDataOptionsPostLogoutRedirectUris =>
                           "http://auth.rp.com/?logout=1",
-                        oidcRPMetaDataOptionsRule => '$uid eq "french"',
+                        oidcRPMetaDataOptionsRule         => '$uid eq "french"',
+                        oidcRPMetaDataOptionsRedirectUris =>
+                          'http://auth.rp.com/?openidconnectcallback=1',
                     }
                 },
                 oidcOPMetaDataOptions           => {},

@@ -240,6 +240,8 @@ sub op {
                         oidcRPMetaDataOptionsLogoutBypassConfirm    => 0,
                         oidcRPMetaDataOptionsPostLogoutRedirectUris =>
                           "http://auth.rpother.com?logout=1",
+                        oidcRPMetaDataOptionsRedirectUris =>
+                          'http://auth.rp.com?openidconnectcallback=1',
                     }
                 },
                 oidcOPMetaDataOptions           => {},

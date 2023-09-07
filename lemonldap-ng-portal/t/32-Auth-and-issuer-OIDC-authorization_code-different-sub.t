@@ -330,6 +330,8 @@ sub op {
                         oidcRPMetaDataOptionsIDTokenForceClaims     => 1,
                         oidcRPMetaDataOptionsPostLogoutRedirectUris =>
                           "http://auth.rp.com/?logout=1",
+                        oidcRPMetaDataOptionsRedirectUris =>
+                          'http://auth.rp.com/?openidconnectcallback=1',
                     }
                 },
                 oidcOPMetaDataOptions           => {},
