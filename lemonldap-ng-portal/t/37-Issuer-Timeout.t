@@ -178,7 +178,9 @@ sub op {
                         oidcRPMetaDataOptionsAccessTokenExpiration  => 3600,
                         oidcRPMetaDataOptionsBypassConsent          => 1,
                         oidcRPMetaDataOptionsPostLogoutRedirectUris =>
-                          "http://auth.rp.com/?logout=1"
+                          "http://auth.rp.com/?logout=1",
+                        oidcRPMetaDataOptionsRedirectUris =>
+                          'http://rp.example.com/',
                     },
                     rp2 => {
                         oidcRPMetaDataOptionsDisplayName       => "RP",
@@ -191,7 +193,9 @@ sub op {
                         oidcRPMetaDataOptionsAccessTokenExpiration  => 3600,
                         oidcRPMetaDataOptionsBypassConsent          => 1,
                         oidcRPMetaDataOptionsPostLogoutRedirectUris =>
-                          "http://auth.rp2.com/?logout=1"
+                          "http://auth.rp2.com/?logout=1",
+                        oidcRPMetaDataOptionsRedirectUris =>
+                          'http://rp2.example.com/',
                     }
                 },
                 oidcOPMetaDataOptions           => {},

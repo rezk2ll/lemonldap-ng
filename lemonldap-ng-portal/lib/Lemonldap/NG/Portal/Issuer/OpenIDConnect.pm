@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON qw(from_json to_json);
+use JSON                       qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -19,6 +19,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OIDC_SERVICE_NOT_ALLOWED
   PE_FIRSTACCESS
   PE_SENDRESPONSE
+  URIRE
 );
 use String::Random qw/random_string/;
 
@@ -178,7 +179,8 @@ sub load_config {
     my $info;
     if ( $config->{confKey} ) {
 
-        $self->logger->debug("Loading $config->{confKey} from getOidcRpConfig hook");
+        $self->logger->debug(
+            "Loading $config->{confKey} from getOidcRpConfig hook");
         $info = { confKey => $config->{confKey} };
 
         # Make sure Client ID is correctly set in options
@@ -360,6 +362,12 @@ sub run {
                         "Redirect URI $redirect_uri not allowed");
                     return PE_UNAUTHORIZEDURL;
                 }
+            }
+            elsif ($redirect_uri) {
+                $self->logger->error(
+"RP $rp has no RedirectUris, unable to handle accept redirect_uri=$redirect_uri"
+                );
+                return PE_UNAUTHORIZEDURL;
             }
 
             # Check if flow is allowed
@@ -1182,8 +1190,7 @@ sub run {
             $req->data->{activeTimer} = 0;
 
             while ( my ( $k, $v ) = each %$oidc_request ) {
-                $self->p->setHiddenFormValue( $req, $k, $v,
-                    '', 0 );
+                $self->p->setHiddenFormValue( $req, $k, $v, '', 0 );
             }
 
             return PE_CONFIRM;
@@ -1614,8 +1621,10 @@ sub _handleAuthorizationCodeGrant {
         # from the session data before storing session data in the refresh
         # token
         my %userInfo;
-        for my $userKey ( grep !/^(_session|_utime$|_lastSeen$)/,
-            keys %{ $apacheSession->data } )
+        for my $userKey (
+            grep !/^(_session|_utime$|_lastSeen$)/,
+            keys %{ $apacheSession->data }
+          )
         {
             $userInfo{$userKey} = $apacheSession->data->{$userKey};
         }
@@ -2549,12 +2558,13 @@ sub exportRequestParameters {
         if ($rp) {
 
             $req->env->{"llng_oidc_rp"} = $rp;
+
             # Store target authentication level in pdata
             my $targetAuthnLevel =
               $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel};
             $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
               if $targetAuthnLevel;
-          }
+        }
     }
 
     return PE_OK;

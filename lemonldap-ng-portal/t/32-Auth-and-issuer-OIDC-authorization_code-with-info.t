@@ -336,7 +336,9 @@ sub op {
                         oidcRPMetaDataOptionsUserIDAttr        => "",
                         oidcRPMetaDataOptionsAccessTokenExpiration  => 3600,
                         oidcRPMetaDataOptionsPostLogoutRedirectUris =>
-                          "http://auth.rp.com/?logout=1"
+                          "http://auth.rp.com/?logout=1",
+                        oidcRPMetaDataOptionsRedirectUris =>
+                          'http://auth.rp.com/?openidconnectcallback=1',
                     }
                 },
                 oidcOPMetaDataOptions           => {},

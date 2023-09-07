@@ -289,7 +289,9 @@ sub op {
                         oidcRPMetaDataOptionsBypassConsent     => 0,
                         oidcRPMetaDataOptionsClientSecret      => "rpsecret",
                         oidcRPMetaDataOptionsUserIDAttr        => "",
-                        oidcRPMetaDataOptionsAccessTokenExpiration => 3600
+                        oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
+                        oidcRPMetaDataOptionsRedirectUris          =>
+                          'http://auth.proxy.com?openidconnectcallback=1',
                     }
                 },
                 oidcOPMetaDataOptions           => {},

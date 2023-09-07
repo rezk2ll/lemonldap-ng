@@ -69,7 +69,7 @@ LWP::Protocol::PSGI->register(
 );
 
 # Initialization
-$op = register('op',\&op);
+$op = register( 'op', \&op );
 
 ok( $res = $op->_get('/oauth2/jwks'), 'Get JWKS,     endpoint /oauth2/jwks' );
 expectOK($res);
@@ -83,10 +83,10 @@ expectOK($res);
 my $metadata = $res->[2]->[0];
 count(2);
 
-$rp = register('rp',sub{rp( $jwks, $metadata )});
+$rp = register( 'rp', sub { rp( $jwks, $metadata ) } );
 
 # Query RP for auth
-switch('rp');
+switch ('rp');
 ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth SP request' );
 count(1);
 my ( $url, $query ) =
@@ -171,8 +171,11 @@ ok(
 );
 count(1);
 expectOK($res);
-ok( $res->[2]->[0] =~ m#<iframe.*?src="http://auth.rp.com/oauth2/flogout\?(.*?)"#,
-    'Found RP logout iframe' ) or explain( $res, '<iframe src="http://auth.rp.com/oauth2/flogout"');
+ok(
+    $res->[2]->[0] =~
+      m#<iframe.*?src="http://auth.rp.com/oauth2/flogout\?(.*?)"#,
+    'Found RP logout iframe'
+) or explain( $res, '<iframe src="http://auth.rp.com/oauth2/flogout"' );
 count(1);
 my $fLogoutQuery = $1;
 
@@ -192,7 +195,7 @@ switch ('rp');
 ok(
     $res = $rp->_get(
         '/oauth2/flogout',
-        query => $fLogoutQuery,
+        query  => $fLogoutQuery,
         cookie => "lemonldap=$spId",
         accept => 'text/html'
     ),
@@ -200,7 +203,7 @@ ok(
 );
 expectOK($res);
 $tmp = expectCookie($res);
-ok( (defined $tmp and $tmp == 0), 'Cookie set to 0' );
+ok( ( defined $tmp and $tmp == 0 ), 'Cookie set to 0' );
 count(2);
 
 ok(
@@ -251,6 +254,8 @@ sub op {
                           'http://auth.rp.com/oauth2/flogout',
                         oidcRPMetaDataOptionsLogoutType            => 'front',
                         oidcRPMetaDataOptionsLogoutSessionRequired => 1,
+                        oidcRPMetaDataOptionsRedirectUris          =>
+                          'http://auth.rp.com?openidconnectcallback=1',
                     }
                 },
                 oidcOPMetaDataOptions           => {},
