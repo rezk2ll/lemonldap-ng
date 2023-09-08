@@ -120,7 +120,7 @@ sub init {
             my $lang = $1 || 'all';
             $self->trOver->{$lang}->{"PE$2"} = $self->localConfig->{$k};
         }
-        elsif ( $k =~ /msg_(?:(\w+?)_)?(\w+)$/ ) {
+        elsif ( $k =~ /msg_(?:([a-z][a-z](?:_[A-Z][A-Z])?)_)?(\w+)$/ ) {
             my $lang = $1 || 'all';
             $self->trOver->{$lang}->{$2} = $self->localConfig->{$k};
         }
