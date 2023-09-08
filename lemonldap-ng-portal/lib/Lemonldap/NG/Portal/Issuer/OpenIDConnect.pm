@@ -19,7 +19,6 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OIDC_SERVICE_NOT_ALLOWED
   PE_FIRSTACCESS
   PE_SENDRESPONSE
-  URIRE
 );
 use String::Random qw/random_string/;
 
