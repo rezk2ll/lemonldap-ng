@@ -786,9 +786,8 @@ sub getUser {
 sub myApplications {
     my ( $self, $req ) = @_;
     my $basePath = $self->conf->{portal};
-    $basePath =~ s#/*$#/#;
+    $basePath =~ s#/*$##;
     $basePath .= $self->p->{staticPrefix} . '/common/apps/';
-    $basePath =~ s#//+#/#;
     my @appslist = map {
         my @apps = map {
             {
