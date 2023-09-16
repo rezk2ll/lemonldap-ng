@@ -74,14 +74,10 @@ License: CC-3
 Comment: Downloaded from https://www.iconspedia.com/
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/modules/OpenIDConnect.png
+ lemonldap-ng-portal/site/htdocs/static/common/icons/oidc.png
 Copyright: https://www.customicondesign.com
-License: CC-BY-NC-ND-3.0
-Comment: Downloaded from https://www.iconspedia.com/
-
-Files: lemonldap-ng-portal/site/htdocs/static/common/icons/oidc.png
-Copyright: https://www.customicondesign.com
-License: CC-BY-NC-ND-3.0
-Comment: Downloaded from https://www.iconspedia.com/
+License: CC0-1.0
+Comment: Downloaded from https://commons.wikimedia.org/wiki/File:Openid.svg and resized
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Slave.png
 Copyright: Antoine Rosier <antoine.rosier@mon-refuge.fr>
@@ -127,7 +123,7 @@ Comment: This work, "sfa_manager.png", is a derivative of
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/icons/notifsExplorer.png
 Copyright: Various artists
-License: CC-BY-NC-ND-3.0 or GFDL-1.3
+License: CC-BY-NC-ND-3.0
 Comment: downloaded from https://commons.wikimedia.org
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/icons/decryptValue.png
@@ -158,10 +154,33 @@ Files: lemonldap-ng-portal/site/htdocs/static/common/fonts/password.ttf
 Copyright: 2007, the Tap2Play Team, https://git.tap2play.org.au/tap2play/web/tree/dev/fonts
 License: Expat
 
-Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/*
-Copyright: Various artists
-License: CC-BY-NC-ND-3.0 or GFDL-1.3
+Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/1280px-Anse_Source_*
+Copyright: Tobias Alt
+License: CC-BY-4.0
 Comment: downloaded from https://commons.wikimedia.org
+
+Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/1280px-Autumn-clear*
+Copyright: ForestWander <https://www.forestwander.com>
+License: CC-BY-3.0
+Comment: downloaded from https://commons.wikimedia.org
+
+Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/1280px-BrockenSnowedTrees.jpg
+Copyright: Andreas Tille
+License: CC-BY-SA-4.0
+Comment: downloaded from https://commons.wikimedia.org
+
+Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/1280px-Cedar_Breaks_*
+Copyright: Michael Gäbler
+License: CC-BY-3.0
+Comment: downloaded from https://commons.wikimedia.org
+
+Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/1280px-Parry_Peak_*
+Copyright: EpicV27
+License: CC-BY-SA-4.0 or CC-BY-3.0
+
+Files: lemonldap-ng-portal/site/htdocs/static/common/backgrounds/Aletschgletscher_
+Copyright: Jo Simon
+License: CC-BY-SA-4.0
 
 Files: lemonldap-ng-manager/site/htdocs/static/bwr/angular*
 Copyright: 2010-2018, Google, Inc. https://angularjs.org
@@ -1461,14 +1480,6 @@ License: CC-BY-4.0
     Public License constitutes or may be interpreted as a limitation upon, or
     waiver of, any privileges and immunities that apply to the Licensor or You,
     including from the legal processes of any jurisdiction or authority.
-
-License: GFDL-1.3
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU Free Documentation License as published
- by the Free Software Foundation; version 1.3.
- .
- On Debian systems, the complete text of version 1.3 of the GNU Free
- Documentation License can be found in `/usr/share/common-licenses/GFDL-1.3'.
 
 License: GPL-1+
  This program is free software; you can redistribute it and/or modify
