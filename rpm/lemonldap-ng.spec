@@ -488,14 +488,13 @@ mv %{buildroot}%{lm_confdir}/for_etc_hosts .
 
 # Fix shebang and perms
 sed -i -e 's,#!/usr/bin/env plackup,#!/usr/bin/plackup,' \
-    %{buildroot}%{lm_sharedir}/manager/api/api.psgi
-chmod 755 %{buildroot}%{lm_sharedir}/manager/api/api.psgi
-sed -i -e 's,#!/usr/bin/env plackup,#!/usr/bin/plackup,' \
-    %{buildroot}%{lm_sharedir}/manager/htdocs/manager.psgi
-chmod 755 %{buildroot}%{lm_sharedir}/manager/htdocs/manager.psgi
-sed -i -e 's,#!/usr/bin/env plackup,#!/usr/bin/plackup,' \
+    %{buildroot}%{lm_sharedir}/manager/api/api.psgi \
+    %{buildroot}%{lm_sharedir}/manager/htdocs/manager.psgi \
     %{buildroot}%{lm_examplesdir}/manager/manager.psgi
-chmod 755 %{buildroot}%{lm_examplesdir}/manager/manager.psgi
+chmod 755 \
+    %{buildroot}%{lm_sharedir}/manager/api/api.psgi \
+    %{buildroot}%{lm_sharedir}/manager/htdocs/manager.psgi \
+    %{buildroot}%{lm_examplesdir}/manager/manager.psgi
 sed -i -e '1i#!/usr/bin/plackup' \
     %{buildroot}%{lm_examplesdir}/llngapp.psgi
 chmod 644 %{buildroot}%{lm_sharedir}/test/cas.php
