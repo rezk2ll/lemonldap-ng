@@ -888,12 +888,11 @@ sub getPasswordPolicyTemplateVars {
         PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
         (
             $self->conf->{passwordPolicyMinSpeChar}
-              && $self->conf->{passwordPolicySpecialChar}
             ? ( PPOLICY_MINSPECHAR => $self->conf->{passwordPolicyMinSpeChar} )
             : ()
         ),
         (
-            $self->conf->{passwordPolicyMinSpeChar} || $self->speChars()
+            $self->conf->{passwordPolicyMinSpeChar} && $self->speChars()
             ? (
                 PPOLICY_ALLOWEDSPECHAR      => $self->speChars(),
                 PPOLICY_ALLOWEDSPECHAR_JSON =>
@@ -902,6 +901,58 @@ sub getPasswordPolicyTemplateVars {
             : ()
         ),
     };
+}
+
+sub getPpolicyRules {
+    my ($self) = @_;
+    return [ {
+            id        => 'ppolicy-minsize',
+            condition => $self->conf->{passwordPolicyMinSize},
+            value     => $self->conf->{passwordPolicyMinSize},
+            label     => "passwordPolicyMinSize",
+        },
+        {
+            id        => 'ppolicy-minlower',
+            condition => $self->conf->{passwordPolicyMinLower},
+            value     => $self->conf->{passwordPolicyMinLower},
+            label     => "passwordPolicyMinLower",
+        },
+        {
+            id        => 'ppolicy-minupper',
+            condition => $self->conf->{passwordPolicyMinUpper},
+            value     => $self->conf->{passwordPolicyMinUpper},
+            label     => "passwordPolicyMinUpper",
+        },
+        {
+            id        => 'ppolicy-mindigit',
+            condition => $self->conf->{passwordPolicyMinDigit},
+            value     => $self->conf->{passwordPolicyMinDigit},
+            label     => "passwordPolicyMinDigit",
+        },
+        {
+            id        => 'ppolicy-minspechar',
+            condition => (
+                     $self->conf->{passwordPolicyMinSpeChar}
+                  && $self->conf->{passwordPolicySpecialChar}
+            ),
+            value => $self->conf->{passwordPolicyMinSpeChar},
+            label => "passwordPolicyMinSpeChar",
+        },
+        {
+            id        => 'ppolicy-allowedspechar',
+            condition => (
+                $self->conf->{passwordPolicyMinSpeChar} && $self->speChars()
+            ),
+            value => $self->speChars(),
+            label => "passwordPolicySpecialChar",
+        },
+        {
+            id        => 'ppolicy-checkhibp',
+            condition => $self->conf->{checkHIBP},
+            label     => "passwordCompromised",
+        },
+
+    ];
 }
 
 1;

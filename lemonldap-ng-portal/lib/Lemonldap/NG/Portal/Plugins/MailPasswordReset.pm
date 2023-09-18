@@ -614,6 +614,7 @@ sub display {
         ENABLE_PASSWORD_DISPLAY => $self->conf->{portalEnablePasswordDisplay},
         DONT_STORE_PASSWORD     => $self->conf->{browsersDontStorePassword},
         %{ $self->p->getPasswordPolicyTemplateVars },
+        PPOLICY_RULES             => $self->p->getPpolicyRules,
         DISPLAY_GENERATE_PASSWORD =>
           $self->conf->{portalDisplayGeneratePassword},
     );
