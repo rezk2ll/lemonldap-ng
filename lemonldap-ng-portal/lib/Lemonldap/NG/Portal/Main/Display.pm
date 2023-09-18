@@ -300,31 +300,9 @@ sub display {
             PING                    => $self->conf->{portalPingInterval},
             DONT_STORE_PASSWORD     => $self->conf->{browsersDontStorePassword},
             HIDE_OLDPASSWORD        => 0,
-            PPOLICY_NOPOLICY        => !$self->isPP(),
             ENABLE_PASSWORD_DISPLAY =>
               $self->conf->{portalEnablePasswordDisplay},
-            ENABLE_CHECKHIBP => $self->conf->{checkHIBP},
-            DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy},
-            PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
-            PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
-            PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
-            PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
-            (
-                $self->conf->{passwordPolicyMinSpeChar}
-                  && $self->conf->{passwordPolicySpecialChar}
-                ? ( PPOLICY_MINSPECHAR =>
-                      $self->conf->{passwordPolicyMinSpeChar} )
-                : ()
-            ),
-            (
-                $self->conf->{passwordPolicyMinSpeChar} || $self->speChars()
-                ? (
-                    PPOLICY_ALLOWEDSPECHAR      => $self->speChars(),
-                    PPOLICY_ALLOWEDSPECHAR_JSON =>
-                      to_json( $self->speChars(), { allow_nonref => 1 } ),
-                  )
-                : ()
-            ),
+            %{ $self->getPasswordPolicyTemplateVars },
             (
                 $self->requireOldPwd->( $req, $req->userData )
                 ? ( REQUIRE_OLDPASSWORD => 1 )
@@ -454,7 +432,7 @@ sub display {
               || $self->conf->{proxyAuthServiceImpersonation},
             ENABLE_PASSWORD_DISPLAY =>
               $self->conf->{portalEnablePasswordDisplay},
-            ENABLE_CHECKHIBP => $self->conf->{checkHIBP},
+            %{ $self->getPasswordPolicyTemplateVars },
             (
                 $self->stayConnected->( $req, $req->sessionInfo )
                 ? ( STAYCONNECTED => 1 )
@@ -538,35 +516,14 @@ sub display {
                 CHOICE_PARAM          => $self->conf->{authChoiceParam},
                 CHOICE_VALUE          => $req->data->{_authChoice},
                 OLDPASSWORD           => $self->checkXSSAttack( 'oldpassword',
-                    $req->data->{oldpassword} ) ? ''
+                    $req->data->{oldpassword} )
+                ? ''
                 : $req->data->{oldpassword},
                 HIDE_OLDPASSWORD    => $self->conf->{hideOldPassword},
                 DONT_STORE_PASSWORD => $self->conf->{browsersDontStorePassword},
-                PPOLICY_NOPOLICY    => !$self->isPP(),
                 ENABLE_PASSWORD_DISPLAY =>
                   $self->conf->{portalEnablePasswordDisplay},
-                ENABLE_CHECKHIBP => $self->conf->{checkHIBP},
-                DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy},
-                PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
-                PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
-                PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
-                PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
-                (
-                    $self->conf->{passwordPolicyMinSpeChar}
-                      && $self->conf->{passwordPolicySpecialChar}
-                    ? ( PPOLICY_MINSPECHAR =>
-                          $self->conf->{passwordPolicyMinSpeChar} )
-                    : ()
-                ),
-                (
-                    $self->conf->{passwordPolicyMinSpeChar} || $self->speChars()
-                    ? (
-                        PPOLICY_ALLOWEDSPECHAR      => $self->speChars(),
-                        PPOLICY_ALLOWEDSPECHAR_JSON =>
-                          to_json( $self->speChars(), { allow_nonref => 1 } ),
-                      )
-                    : ()
-                ),
+                %{ $self->getPasswordPolicyTemplateVars },
             );
         }
 
@@ -916,6 +873,35 @@ sub mkOidcConsent {
 sub _isExternalUrl {
     my ( $self, $url ) = @_;
     return ( index( $url, $self->conf->{portal} ) < 0 );
+}
+
+sub getPasswordPolicyTemplateVars {
+    my ( $self, $req ) = @_;
+    return {
+        PPOLICY_RULES    => $self->getPpolicyRules,
+        PPOLICY_NOPOLICY => !$self->isPP(),
+        ENABLE_CHECKHIBP => $self->conf->{checkHIBP},
+        DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy},
+        PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
+        PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
+        PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
+        PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
+        (
+            $self->conf->{passwordPolicyMinSpeChar}
+              && $self->conf->{passwordPolicySpecialChar}
+            ? ( PPOLICY_MINSPECHAR => $self->conf->{passwordPolicyMinSpeChar} )
+            : ()
+        ),
+        (
+            $self->conf->{passwordPolicyMinSpeChar} || $self->speChars()
+            ? (
+                PPOLICY_ALLOWEDSPECHAR      => $self->speChars(),
+                PPOLICY_ALLOWEDSPECHAR_JSON =>
+                  to_json( $self->speChars(), { allow_nonref => 1 } ),
+              )
+            : ()
+        ),
+    };
 }
 
 1;
