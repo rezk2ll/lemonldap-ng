@@ -721,6 +721,11 @@ function templates(tpl,key) {
                   "type" : "bool"
                },
                {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequestUris",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequestUris",
+                  "title" : "oidcRPMetaDataOptionsRequestUris"
+               },
+               {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnLevel",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnLevel",
                   "title" : "oidcRPMetaDataOptionsAuthnLevel",

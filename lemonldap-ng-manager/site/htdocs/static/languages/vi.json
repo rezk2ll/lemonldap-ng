@@ -732,6 +732,7 @@
 "oidcRPMetaDataOptionsPublic":"Khách hàng công khai",
 "oidcRPMetaDataOptionsRedirectUris":"Các địa chỉ chuyển hướng được phép để đăng nhập",
 "oidcRPMetaDataOptionsRefreshToken":"Sử dụng mã thông báo làm mới",
+"oidcRPMetaDataOptionsRequestUris":"Allowed URLs for fetching Request Object",
 "oidcRPMetaDataOptionsRequirePKCE":"Yêu cầu PKCE",
 "oidcRPMetaDataOptionsRule":"Quy tắc truy cập",
 "oidcRPMetaDataOptionsScopes":"Phạm vi",

@@ -732,6 +732,7 @@
 "oidcRPMetaDataOptionsPublic":"Public client",
 "oidcRPMetaDataOptionsRedirectUris":"عناوين إعادة التوجيه المسموح بها لتسجيل الدخول",
 "oidcRPMetaDataOptionsRefreshToken":"Use refresh tokens",
+"oidcRPMetaDataOptionsRequestUris":"Allowed URLs for fetching Request Object",
 "oidcRPMetaDataOptionsRequirePKCE":"Require PKCE",
 "oidcRPMetaDataOptionsRule":"قاعدة الدخول",
 "oidcRPMetaDataOptionsScopes":"نطاق",
