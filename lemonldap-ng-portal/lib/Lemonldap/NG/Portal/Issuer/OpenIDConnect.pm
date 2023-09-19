@@ -2157,6 +2157,7 @@ sub registration {
     my $userinfo_signed_response_alg =
       $client_metadata->{userinfo_signed_response_alg};
     my $redirect_uris          = $client_metadata->{redirect_uris};
+    my $request_uris           = $client_metadata->{request_uris};
     my $backchannel_logout_uri = $client_metadata->{backchannel_logout_uri};
     my $backchannel_logout_session_required =
       $client_metadata->{backchannel_logout_session_required};
@@ -2184,6 +2185,9 @@ sub registration {
       = $id_token_signed_response_alg;
     $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsRedirectUris}
       = join( ' ', @$redirect_uris );
+    $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsRequestUris} =
+      join( ' ', @$request_uris )
+      if $request_uris and @$request_uris;
     $conf->{oidcRPMetaDataOptions}->{$rp}
       ->{oidcRPMetaDataOptionsUserInfoSignAlg} = $userinfo_signed_response_alg
       if defined $userinfo_signed_response_alg;
@@ -2237,6 +2241,8 @@ sub registration {
         $registration_response->{'id_token_signed_response_alg'} =
           $id_token_signed_response_alg;
         $registration_response->{'redirect_uris'} = $redirect_uris;
+        $registration_response->{'request_uris'}  = $request_uris
+          if $request_uris and @$request_uris;
         $registration_response->{'userinfo_signed_response_alg'} =
           $userinfo_signed_response_alg
           if defined $userinfo_signed_response_alg;
