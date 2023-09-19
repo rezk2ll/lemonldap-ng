@@ -266,6 +266,19 @@ sub run {
                 return PE_ERROR;
             }
 
+            # Client ID must be provided and cannot come from
+            # request or request_uri
+            unless ( $oidc_request->{'client_id'} ) {
+                $self->logger->error("Client ID is required");
+                return PE_ERROR;
+            }
+
+            # Scope must be provided and cannot come from request or request_uri
+            unless ( $oidc_request->{'scope'} ) {
+                $self->logger->error("Scope is required");
+                return PE_ERROR;
+            }
+
             # Extract request_uri/request parameter
             if ( $oidc_request->{'request_uri'} ) {
                 my $request =
@@ -285,9 +298,19 @@ sub run {
 
                 # Override OIDC parameters by request content
                 foreach ( keys %$request ) {
-                    $self->logger->debug(
-"Override $_ OIDC param by value present in request parameter"
-                    );
+                    $self->logger->debug( "Override $_ OIDC param"
+                          . " by value present in request parameter" );
+
+                    if ( $_ eq "client_id" or $_ eq "response_type" ) {
+                        if ( $oidc_request->{$_} ne $request->{$_} ) {
+                            $self->logger->error( "$_ from request JWT ("
+                                  . $oidc_request->{$_}
+                                  . ") does not match $_ from request URI ("
+                                  . $request->{$_}
+                                  . ")" );
+                            return PE_ERROR;
+                        }
+                    }
                     $oidc_request->{$_} = $request->{$_};
                     $self->p->setHiddenFormValue( $req, $_, $request->{$_}, '',
                         0 );
@@ -297,14 +320,6 @@ sub run {
             # Check all required parameters
             unless ( $oidc_request->{'redirect_uri'} ) {
                 $self->logger->error("Redirect URI is required");
-                return PE_ERROR;
-            }
-            unless ( $oidc_request->{'scope'} ) {
-                $self->logger->error("Scope is required");
-                return PE_ERROR;
-            }
-            unless ( $oidc_request->{'client_id'} ) {
-                $self->logger->error("Client ID is required");
                 return PE_ERROR;
             }
             if ( $flow eq "implicit" and not defined $oidc_request->{'nonce'} )
