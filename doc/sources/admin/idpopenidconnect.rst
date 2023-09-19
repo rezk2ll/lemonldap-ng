@@ -249,6 +249,11 @@ Options
       This feature only works if you have configured a form-based authentication module.
    -  **Allow OAuth2.0 Client Credentials Grant** (since version ``2.0.11``): Allow the use of the
       :ref:`Client Credentials Grant <client-credentials-grant>` by this client.
+   -  **Allowed URLs for fetching Request Object**: (since version ``2.17.1``):
+      which URLs may be called by the portal to fetch the request object (see
+      `request_uri
+      <https://openid.net/specs/openid-connect-core-1_0.html#RequestUriParameter>`__
+      in OIDC specifications). These URLs may use wildcards (``https://app.example.com/*``).
    -  **Authentication level**: Required authentication level to access this application
    -  **Access rule**: Lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
 
