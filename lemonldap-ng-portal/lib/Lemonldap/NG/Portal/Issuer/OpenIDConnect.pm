@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON                       qw(from_json to_json);
+use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -273,61 +273,6 @@ sub run {
                 return PE_ERROR;
             }
 
-            # Scope must be provided and cannot come from request or request_uri
-            unless ( $oidc_request->{'scope'} ) {
-                $self->logger->error("Scope is required");
-                return PE_ERROR;
-            }
-
-            # Extract request_uri/request parameter
-            if ( $oidc_request->{'request_uri'} ) {
-                my $request =
-                  $self->getRequestJWT( $oidc_request->{'request_uri'} );
-
-                if ($request) {
-                    $oidc_request->{'request'} = $request;
-                }
-                else {
-                    $self->logger->error("Error with Request URI resolution");
-                    return PE_ERROR;
-                }
-            }
-
-            if ( $oidc_request->{'request'} ) {
-                my $request = getJWTPayload( $oidc_request->{'request'} );
-
-                # Override OIDC parameters by request content
-                foreach ( keys %$request ) {
-                    $self->logger->debug( "Override $_ OIDC param"
-                          . " by value present in request parameter" );
-
-                    if ( $_ eq "client_id" or $_ eq "response_type" ) {
-                        if ( $oidc_request->{$_} ne $request->{$_} ) {
-                            $self->logger->error( "$_ from request JWT ("
-                                  . $oidc_request->{$_}
-                                  . ") does not match $_ from request URI ("
-                                  . $request->{$_}
-                                  . ")" );
-                            return PE_ERROR;
-                        }
-                    }
-                    $oidc_request->{$_} = $request->{$_};
-                    $self->p->setHiddenFormValue( $req, $_, $request->{$_}, '',
-                        0 );
-                }
-            }
-
-            # Check all required parameters
-            unless ( $oidc_request->{'redirect_uri'} ) {
-                $self->logger->error("Redirect URI is required");
-                return PE_ERROR;
-            }
-            if ( $flow eq "implicit" and not defined $oidc_request->{'nonce'} )
-            {
-                $self->logger->error("Nonce is required for implicit flow");
-                return PE_ERROR;
-            }
-
             # Check client_id
             my $client_id = $oidc_request->{'client_id'};
             $self->logger->debug("Request from client id $client_id");
@@ -343,6 +288,88 @@ sub run {
             }
             else {
                 $self->logger->debug("Client id $client_id matches RP $rp");
+            }
+
+            # Scope must be provided and cannot come from request or request_uri
+            unless ( $oidc_request->{'scope'} ) {
+                $self->logger->error("Scope is required");
+                return PE_ERROR;
+            }
+
+            # Extract request_uri/request parameter
+            if ( my $request_uri = $oidc_request->{'request_uri'} ) {
+                if (
+                    $self->isUriAllowedForRP(
+                        $request_uri,                       $rp,
+                        "oidcRPMetaDataOptionsRequestUris", 1
+                    )
+                  )
+                {
+                    my $request = $self->getRequestJWT($request_uri);
+
+                    if ($request) {
+                        $oidc_request->{'request'} = $request;
+                    }
+                    else {
+                        $self->logger->error(
+                            "Error with Request URI resolution");
+                        return PE_ERROR;
+                    }
+                }
+                else {
+                    $self->logger->error(
+                        "Request URI $request_uri is not allowed for $rp");
+                    return PE_ERROR;
+                }
+            }
+
+            if ( $oidc_request->{'request'} ) {
+                if (
+                    $self->verifyJWTSignature(
+                        $oidc_request->{'request'},
+                        undef, $rp
+                    )
+                  )
+                {
+                    $self->logger->debug("JWT signature request verified");
+                    my $request = getJWTPayload( $oidc_request->{'request'} );
+
+                    # Override OIDC parameters by request content
+                    foreach ( keys %$request ) {
+                        $self->logger->debug( "Override $_ OIDC param"
+                              . " by value present in request parameter" );
+
+                        if ( $_ eq "client_id" or $_ eq "response_type" ) {
+                            if ( $oidc_request->{$_} ne $request->{$_} ) {
+                                $self->logger->error( "$_ from request JWT ("
+                                      . $oidc_request->{$_}
+                                      . ") does not match $_ from request URI ("
+                                      . $request->{$_}
+                                      . ")" );
+                                return PE_ERROR;
+                            }
+                        }
+                        $oidc_request->{$_} = $request->{$_};
+                        $self->p->setHiddenFormValue( $req, $_, $request->{$_},
+                            '', 0 );
+                    }
+                }
+                else {
+                    $self->logger->error(
+                        "JWT signature request can not be verified");
+                    return PE_ERROR;
+                }
+            }
+
+            # Check all required parameters
+            unless ( $oidc_request->{'redirect_uri'} ) {
+                $self->logger->error("Redirect URI is required");
+                return PE_ERROR;
+            }
+            if ( $flow eq "implicit" and not defined $oidc_request->{'nonce'} )
+            {
+                $self->logger->error("Nonce is required for implicit flow");
+                return PE_ERROR;
             }
 
             # Check if this RP is authorized
@@ -449,24 +476,6 @@ sub run {
 
                 #TODO manage standard OAuth request
                 return PE_ERROR;
-            }
-
-            # Check Request JWT signature
-            if ( $oidc_request->{'request'} ) {
-                unless (
-                    $self->verifyJWTSignature(
-                        $oidc_request->{'request'},
-                        undef, $rp
-                    )
-                  )
-                {
-                    $self->logger->error(
-                        "JWT signature request can not be verified");
-                    return PE_ERROR;
-                }
-                else {
-                    $self->logger->debug("JWT signature request verified");
-                }
             }
 
             # Check id_token_hint
@@ -2500,7 +2509,7 @@ sub metadata {
             claims_supported                 => [qw/sub iss auth_time acr sid/],
             request_parameter_supported      => JSON::true,
             request_uri_parameter_supported  => JSON::true,
-            require_request_uri_registration => JSON::false,
+            require_request_uri_registration => JSON::true,
 
             # Algorithms
             id_token_signing_alg_values_supported =>
@@ -2556,19 +2565,7 @@ sub exportRequestParameters {
         }
     }
 
-    # Extract request_uri/request parameter
-    my $request = $req->param('request');
-    if ( $req->param('request_uri') ) {
-        $request = $self->getRequestJWT( $req->param('request_uri') );
-    }
-
-    if ($request) {
-        my $request_data = getJWTPayload($request);
-        foreach ( keys %$request_data ) {
-            $req->env->{ "llng_oidc_" . $_ } = $request_data->{$_};
-        }
-    }
-
+    my $rp;
     if ( $req->param('client_id') ) {
         my $rp = $self->getRP( $req->param('client_id') );
         if ($rp) {
@@ -2580,6 +2577,27 @@ sub exportRequestParameters {
               $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel};
             $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
               if $targetAuthnLevel;
+        }
+    }
+
+    # Extract request_uri/request parameter
+    my $request = $req->param('request');
+    if ( my $request_uri = $req->param('request_uri') ) {
+        if (
+            $rp
+            and $self->isUriAllowedForRP(
+                $request_uri, $rp, 'oidcRPMetaDataOptionsRequestUris', 1
+            )
+          )
+        {
+            $request = $self->getRequestJWT($request_uri);
+        }
+    }
+
+    if ($request) {
+        my $request_data = getJWTPayload($request);
+        foreach ( keys %$request_data ) {
+            $req->env->{ "llng_oidc_" . $_ } = $request_data->{$_};
         }
     }
 
