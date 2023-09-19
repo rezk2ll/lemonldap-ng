@@ -30,8 +30,8 @@ LemonLDAP::NG
 Create a new OpenID Connect RP with these settings:
 
 * Client ID: generate a value
-* Cloent Secret: generate a value
-* Lgoin redirection URL: https://nextcloud.example.com/index.php/apps/oidc_login/oidc
+* Client Secret: generate a value
+* Login redirection URL: https://nextcloud.example.com/index.php/apps/oidc_login/oidc
 * Attributes: at least ``email`` and ``name``
 * User attribute: you must set here the identifier that is already used by NextCloud (if you already plugged NextCloud to your LDAP directory).
   It can be ``entryUUID`` for OpenLDAP or ``objectGUID`` for AD. If this is not correctly configured, a new account will be created instead
