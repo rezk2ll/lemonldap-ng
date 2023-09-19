@@ -348,24 +348,14 @@ sub run {
 
             # Check redirect_uri
             my $redirect_uri = $oidc_request->{'redirect_uri'};
-            my $redirect_uris =
-              $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRedirectUris};
-
-            if ($redirect_uris) {
-                my $redirect_uri_allowed = 0;
-                foreach ( split( /\s+/, $redirect_uris ) ) {
-                    $redirect_uri_allowed = 1 if $redirect_uri eq $_;
-                }
-                unless ($redirect_uri_allowed) {
-                    $self->userLogger->error(
-                        "Redirect URI $redirect_uri not allowed");
-                    return PE_UNAUTHORIZEDURL;
-                }
-            }
-            elsif ($redirect_uri) {
-                $self->logger->error(
-"RP $rp has no RedirectUris, unable to handle accept redirect_uri=$redirect_uri"
-                );
+            if (
+                !$self->isUriAllowedForRP(
+                    $redirect_uri, $rp, 'oidcRPMetaDataOptionsRedirectUris'
+                )
+              )
+            {
+                $self->userLogger->error(
+                    "Redirect URI $redirect_uri not allowed");
                 return PE_UNAUTHORIZEDURL;
             }
 
@@ -1148,26 +1138,13 @@ sub run {
 
                 if ($post_logout_redirect_uri) {
 
-                    # Check redirect URI is allowed
-                    my $redirect_uri_allowed = 0;
-                    foreach ( keys %{ $self->rpOptions } ) {
-                        my $logout_rp = $_;
-                        if ( my $redirect_uris =
-                            $self->rpOptions->{$logout_rp}
-                            ->{oidcRPMetaDataOptionsPostLogoutRedirectUris} )
-                        {
-                            foreach ( split( /\s+/, $redirect_uris ) ) {
-                                if ( $post_logout_redirect_uri eq $_ ) {
-                                    $self->logger->debug(
-"$post_logout_redirect_uri is an allowed logout redirect URI for RP $logout_rp"
-                                    );
-                                    $redirect_uri_allowed = 1;
-                                }
-                            }
-                        }
-                    }
-
-                    unless ($redirect_uri_allowed) {
+                    unless (
+                        $self->findRPFromUri(
+                            $post_logout_redirect_uri,
+                            'oidcRPMetaDataOptionsPostLogoutRedirectUris'
+                        )
+                      )
+                    {
                         $self->logger->error(
                             "$post_logout_redirect_uri is not allowed");
                         return PE_UNAUTHORIZEDURL;
@@ -1202,6 +1179,43 @@ sub run {
         : 'No OIDC endpoint found, aborting'
     );
     return PE_ERROR;
+}
+
+sub findRPFromUri {
+    my ( $self, $uri, $option ) = @_;
+
+    my $found_rp;
+    foreach my $rp ( keys %{ $self->rpOptions } ) {
+        $found_rp = $rp if $self->isUriAllowedForRP( $uri, $rp, $option );
+    }
+    return $found_rp;
+}
+
+sub isUriAllowedForRP {
+    my ( $self, $uri, $rp, $option, $wildcard_allowed ) = @_;
+    my $allowed_uris = $self->rpOptions->{$rp}->{$option} // "";
+
+    my $is_uri_allowed;
+    if ($wildcard_allowed) {
+        $is_uri_allowed = grep { $_ eq $uri } split( /\s+/, $allowed_uris );
+    }
+    else {
+        $is_uri_allowed =
+          grep { _wildcard_match( $_, $uri ) } split( /\s+/, $allowed_uris );
+    }
+    return ( $is_uri_allowed ? 1 : 0 );
+}
+
+sub _wildcard_match {
+    my ( $config_url, $candidate ) = @_;
+
+    # Quote everything
+    my $config_re = $config_url =~ s/(.)/\Q$1/gr;
+
+    # Replace \* by .*
+    $config_re =~ s/\\\*/.*/g;
+
+    return ( $candidate =~ qr/^$config_re$/ ? 1 : 0 );
 }
 
 # Handle token endpoint
@@ -2226,25 +2240,13 @@ sub endSessionDone {
 
     if ($post_logout_redirect_uri) {
 
-        # Check redirect URI is allowed
-        my $redirect_uri_allowed = 0;
-        foreach ( keys %{ $self->rpOptions } ) {
-            my $logout_rp = $_;
-            my $redirect_uris =
-              $self->rpOptions->{$logout_rp}
-              ->{oidcRPMetaDataOptionsPostLogoutRedirectUris};
-
-            foreach ( split( /\s+/, $redirect_uris ) ) {
-                if ( $post_logout_redirect_uri eq $_ ) {
-                    $self->logger->debug(
-"$post_logout_redirect_uri is an allowed logout redirect URI for RP $logout_rp"
-                    );
-                    $redirect_uri_allowed = 1;
-                }
-            }
-        }
-
-        unless ($redirect_uri_allowed) {
+        unless (
+            $self->findRPFromUri(
+                $post_logout_redirect_uri,
+                'oidcRPMetaDataOptionsPostLogoutRedirectUris'
+            )
+          )
+        {
             $self->logger->error("$post_logout_redirect_uri is not allowed");
             return $self->p->login($req);
         }
