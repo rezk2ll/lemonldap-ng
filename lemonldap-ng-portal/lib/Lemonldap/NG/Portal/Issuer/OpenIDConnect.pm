@@ -1221,13 +1221,13 @@ sub isUriAllowedForRP {
 
     my $is_uri_allowed;
     if ($wildcard_allowed) {
-        $is_uri_allowed = grep { $_ eq $uri } split( /\s+/, $allowed_uris );
-    }
-    else {
         $is_uri_allowed =
           grep { _wildcard_match( $_, $uri ) } split( /\s+/, $allowed_uris );
     }
-    return ( $is_uri_allowed ? 1 : 0 );
+    else {
+        $is_uri_allowed = grep { $_ eq $uri } split( /\s+/, $allowed_uris );
+    }
+    return $is_uri_allowed;
 }
 
 sub _wildcard_match {
