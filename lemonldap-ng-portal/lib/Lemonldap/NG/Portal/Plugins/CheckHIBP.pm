@@ -68,6 +68,17 @@ sub init {
         ['GET']
     );
 
+    $self->p->addPasswordPolicyDisplay(
+        'ppolicy-checkhibp',
+        {
+            condition  => $self->conf->{checkHIBP},
+            label      => "passwordCompromised",
+            customHtml =>
+qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/hibp.min.js"></script>',
+            order => 201,
+        }
+    );
+
     return 1;
 }
 
@@ -128,9 +139,7 @@ sub _checkHIBP {
     my $response = $self->ua->request($reqAPI);
 
     my $debugstr =
-        'checkHIBP: requesting '
-      . $reqAPI->as_string
-      . $response->status_line;
+      'checkHIBP: requesting ' . $reqAPI->as_string . $response->status_line;
 
     $self->logger->debug($debugstr);
 

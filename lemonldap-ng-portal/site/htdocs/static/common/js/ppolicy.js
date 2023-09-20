@@ -12,7 +12,7 @@
   };
 
   $(document).on('checkpassword', function(event, context) {
-    var digit, evType, hasforbidden, i, len, lower, newpasswordVal, nonwhitespechar, numspechar, password, report, setResult, upper;
+    var digit, evType, hasforbidden, i, len, lower, nonwhitespechar, numspechar, password, report, setResult, upper;
     password = context.password;
     evType = context.evType;
     setResult = context.setResult;
@@ -37,48 +37,6 @@
     if (window.datas.ppolicy.mindigit > 0) {
       digit = password.match(/[0-9]/g);
       report(digit && digit.length >= window.datas.ppolicy.mindigit, 'ppolicy-mindigit-feedback');
-    }
-    if ($('#ppolicy-checkhibp-feedback').length > 0) {
-      newpasswordVal = $("#newpassword").val();
-      if (newpasswordVal.length >= 5) {
-        if (evType === "focusout") {
-          setResult('ppolicy-checkhibp-feedback', "waiting");
-          $.ajax({
-            dataType: "json",
-            url: "/checkhibp?password=" + btoa(newpasswordVal),
-            context: document.body,
-            success: function(data) {
-              var code, msg;
-              code = data.code;
-              msg = data.message;
-              if (code !== void 0) {
-                if (parseInt(code) === 0) {
-                  return setResult('ppolicy-checkhibp-feedback', "good");
-                } else if (parseInt(code) === 2) {
-                  return setResult('ppolicy-checkhibp-feedback', "bad");
-                } else {
-                  console.log('checkhibp: backend error: ', msg);
-                  return setResult('ppolicy-checkhibp-feedback', "unknown");
-                }
-              }
-            },
-            error: function(j, status, err) {
-              var res;
-              if (err) {
-                console.log('checkhibp: frontend error: ', err);
-              }
-              if (j) {
-                res = JSON.parse(j.responseText);
-              }
-              if (res && res.error) {
-                return console.log('checkhibp: returned error: ', res);
-              }
-            }
-          });
-        }
-      } else {
-        setResult('ppolicy-checkhibp-feedback', "unknown");
-      }
     }
     if (window.datas.ppolicy.allowedspechar) {
       nonwhitespechar = window.datas.ppolicy.allowedspechar.replace(/\s/g, '');
