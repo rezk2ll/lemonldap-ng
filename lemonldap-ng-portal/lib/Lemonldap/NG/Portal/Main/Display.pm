@@ -905,7 +905,7 @@ sub getPasswordPolicyTemplateVars {
 
 sub getPpolicyRules {
     my ($self) = @_;
-    return [ {
+    my $result = [ {
             id        => 'ppolicy-minsize',
             condition => $self->conf->{passwordPolicyMinSize},
             value     => $self->conf->{passwordPolicyMinSize},
@@ -946,13 +946,23 @@ sub getPpolicyRules {
             value => $self->speChars(),
             label => "passwordPolicySpecialChar",
         },
-        {
-            id        => 'ppolicy-checkhibp',
-            condition => $self->conf->{checkHIBP},
-            label     => "passwordCompromised",
-        },
-
     ];
+    while ( my ( $id, $policy ) = each %{ $self->_ppRules } ) {
+        push @$result, { %$policy, id => $id };
+    }
+
+    # Sort ppolicy items by "order" numerically and then by "id" lexically
+    $result = [ sort { $a->{order} <=> $b->{order} || $a->{id} cmp $b->{id} } @$result ];
+
+    # Format data attributes for HTML::Template loop
+    # data => { foo => "bar" } becomes
+    # data => [ { key => "foo", value => "bar" } ]
+    for my $result (@$result) {
+        if (ref($result->{data}) eq "HASH") {
+            $result->{data} = [ map { {key => $_, value => $result->{data}->{$_}} } keys %{$result->{data}} ]
+        }
+    }
+    return $result;
 }
 
 1;

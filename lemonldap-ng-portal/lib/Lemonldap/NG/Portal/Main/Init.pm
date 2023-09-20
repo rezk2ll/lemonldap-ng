@@ -32,6 +32,7 @@ has _passwordDB     => ( is => 'rw' );
 has _sfEngine       => ( is => 'rw' );
 has _captcha        => ( is => 'rw' );
 has _trustedBrowser => ( is => 'rw' );
+has _ppRules        => ( is => 'rw', default => sub { {} } );
 
 has loadedModules => ( is => 'rw' );
 
@@ -641,6 +642,11 @@ sub buildRule {
         $self->logger->error( "Bad" . $ruleDesc . "rule: " . $error );
     }
     return $compiledRule,;
+}
+
+sub addPasswordPolicyDisplay {
+    my ( $self, $id, $options ) = @_;
+    $self->_ppRules->{$id} = {%$options};
 }
 
 1;
