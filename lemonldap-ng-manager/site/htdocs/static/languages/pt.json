@@ -732,6 +732,7 @@
 "oidcRPMetaDataOptionsPublic":"Cliente público",
 "oidcRPMetaDataOptionsRedirectUris":"Endereços de redirecionamento permitidos para o login",
 "oidcRPMetaDataOptionsRefreshToken":"Usar tokens renovados",
+"oidcRPMetaDataOptionsRequestUris":"Allowed URLs for fetching Request Object",
 "oidcRPMetaDataOptionsRequirePKCE":"Exigir PKCE",
 "oidcRPMetaDataOptionsRule":"Regra de acesso",
 "oidcRPMetaDataOptionsScopes":"Escopo",

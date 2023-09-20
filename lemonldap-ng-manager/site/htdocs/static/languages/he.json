@@ -732,6 +732,7 @@
 "oidcRPMetaDataOptionsPublic":"לקוח ציבורי",
 "oidcRPMetaDataOptionsRedirectUris":"Allowed redirection addresses for login",
 "oidcRPMetaDataOptionsRefreshToken":"להשתמש באסימוני רענון",
+"oidcRPMetaDataOptionsRequestUris":"Allowed URLs for fetching Request Object",
 "oidcRPMetaDataOptionsRequirePKCE":"לדרוש PKCE",
 "oidcRPMetaDataOptionsRule":"כלל גישה",
 "oidcRPMetaDataOptionsScopes":"היקף",

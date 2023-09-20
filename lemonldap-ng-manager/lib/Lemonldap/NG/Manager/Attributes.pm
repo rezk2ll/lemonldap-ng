@@ -2589,6 +2589,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 0,
             'type'    => 'bool'
         },
+        'oidcRPMetaDataOptionsRequestUris' => {
+            'type' => 'text'
+        },
         'oidcRPMetaDataOptionsRequirePKCE' => {
             'default' => 0,
             'type'    => 'bool'

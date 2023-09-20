@@ -4721,6 +4721,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsOfflineSessionExpiration =>
           { type => 'intOrNull' },
         oidcRPMetaDataOptionsRedirectUris => { type => 'text', },
+        oidcRPMetaDataOptionsRequestUris => { type => 'text', },
         oidcRPMetaDataOptionsExtraClaims  => {
             type    => 'keyTextContainer',
             keyTest => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,

@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON                       qw(from_json to_json);
+use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -266,50 +266,10 @@ sub run {
                 return PE_ERROR;
             }
 
-            # Extract request_uri/request parameter
-            if ( $oidc_request->{'request_uri'} ) {
-                my $request =
-                  $self->getRequestJWT( $oidc_request->{'request_uri'} );
-
-                if ($request) {
-                    $oidc_request->{'request'} = $request;
-                }
-                else {
-                    $self->logger->error("Error with Request URI resolution");
-                    return PE_ERROR;
-                }
-            }
-
-            if ( $oidc_request->{'request'} ) {
-                my $request = getJWTPayload( $oidc_request->{'request'} );
-
-                # Override OIDC parameters by request content
-                foreach ( keys %$request ) {
-                    $self->logger->debug(
-"Override $_ OIDC param by value present in request parameter"
-                    );
-                    $oidc_request->{$_} = $request->{$_};
-                    $self->p->setHiddenFormValue( $req, $_, $request->{$_}, '',
-                        0 );
-                }
-            }
-
-            # Check all required parameters
-            unless ( $oidc_request->{'redirect_uri'} ) {
-                $self->logger->error("Redirect URI is required");
-                return PE_ERROR;
-            }
-            unless ( $oidc_request->{'scope'} ) {
-                $self->logger->error("Scope is required");
-                return PE_ERROR;
-            }
+            # Client ID must be provided and cannot come from
+            # request or request_uri
             unless ( $oidc_request->{'client_id'} ) {
                 $self->logger->error("Client ID is required");
-                return PE_ERROR;
-            }
-            if ( $flow eq "implicit" and not defined $oidc_request->{'nonce'} )
-            {
-                $self->logger->error("Nonce is required for implicit flow");
                 return PE_ERROR;
             }
 
@@ -330,6 +290,88 @@ sub run {
                 $self->logger->debug("Client id $client_id matches RP $rp");
             }
 
+            # Scope must be provided and cannot come from request or request_uri
+            unless ( $oidc_request->{'scope'} ) {
+                $self->logger->error("Scope is required");
+                return PE_ERROR;
+            }
+
+            # Extract request_uri/request parameter
+            if ( my $request_uri = $oidc_request->{'request_uri'} ) {
+                if (
+                    $self->isUriAllowedForRP(
+                        $request_uri,                       $rp,
+                        "oidcRPMetaDataOptionsRequestUris", 1
+                    )
+                  )
+                {
+                    my $request = $self->getRequestJWT($request_uri);
+
+                    if ($request) {
+                        $oidc_request->{'request'} = $request;
+                    }
+                    else {
+                        $self->logger->error(
+                            "Error with Request URI resolution");
+                        return PE_ERROR;
+                    }
+                }
+                else {
+                    $self->logger->error(
+                        "Request URI $request_uri is not allowed for $rp");
+                    return PE_ERROR;
+                }
+            }
+
+            if ( $oidc_request->{'request'} ) {
+                if (
+                    $self->verifyJWTSignature(
+                        $oidc_request->{'request'},
+                        undef, $rp
+                    )
+                  )
+                {
+                    $self->logger->debug("JWT signature request verified");
+                    my $request = getJWTPayload( $oidc_request->{'request'} );
+
+                    # Override OIDC parameters by request content
+                    foreach ( keys %$request ) {
+                        $self->logger->debug( "Override $_ OIDC param"
+                              . " by value present in request parameter" );
+
+                        if ( $_ eq "client_id" or $_ eq "response_type" ) {
+                            if ( $oidc_request->{$_} ne $request->{$_} ) {
+                                $self->logger->error( "$_ from request JWT ("
+                                      . $oidc_request->{$_}
+                                      . ") does not match $_ from request URI ("
+                                      . $request->{$_}
+                                      . ")" );
+                                return PE_ERROR;
+                            }
+                        }
+                        $oidc_request->{$_} = $request->{$_};
+                        $self->p->setHiddenFormValue( $req, $_, $request->{$_},
+                            '', 0 );
+                    }
+                }
+                else {
+                    $self->logger->error(
+                        "JWT signature request can not be verified");
+                    return PE_ERROR;
+                }
+            }
+
+            # Check all required parameters
+            unless ( $oidc_request->{'redirect_uri'} ) {
+                $self->logger->error("Redirect URI is required");
+                return PE_ERROR;
+            }
+            if ( $flow eq "implicit" and not defined $oidc_request->{'nonce'} )
+            {
+                $self->logger->error("Nonce is required for implicit flow");
+                return PE_ERROR;
+            }
+
             # Check if this RP is authorized
             if ( my $rule = $self->rpRules->{$rp} ) {
                 my $ruleVariables =
@@ -348,24 +390,14 @@ sub run {
 
             # Check redirect_uri
             my $redirect_uri = $oidc_request->{'redirect_uri'};
-            my $redirect_uris =
-              $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRedirectUris};
-
-            if ($redirect_uris) {
-                my $redirect_uri_allowed = 0;
-                foreach ( split( /\s+/, $redirect_uris ) ) {
-                    $redirect_uri_allowed = 1 if $redirect_uri eq $_;
-                }
-                unless ($redirect_uri_allowed) {
-                    $self->userLogger->error(
-                        "Redirect URI $redirect_uri not allowed");
-                    return PE_UNAUTHORIZEDURL;
-                }
-            }
-            elsif ($redirect_uri) {
-                $self->logger->error(
-"RP $rp has no RedirectUris, unable to handle accept redirect_uri=$redirect_uri"
-                );
+            if (
+                !$self->isUriAllowedForRP(
+                    $redirect_uri, $rp, 'oidcRPMetaDataOptionsRedirectUris'
+                )
+              )
+            {
+                $self->userLogger->error(
+                    "Redirect URI $redirect_uri not allowed");
                 return PE_UNAUTHORIZEDURL;
             }
 
@@ -444,24 +476,6 @@ sub run {
 
                 #TODO manage standard OAuth request
                 return PE_ERROR;
-            }
-
-            # Check Request JWT signature
-            if ( $oidc_request->{'request'} ) {
-                unless (
-                    $self->verifyJWTSignature(
-                        $oidc_request->{'request'},
-                        undef, $rp
-                    )
-                  )
-                {
-                    $self->logger->error(
-                        "JWT signature request can not be verified");
-                    return PE_ERROR;
-                }
-                else {
-                    $self->logger->debug("JWT signature request verified");
-                }
             }
 
             # Check id_token_hint
@@ -1148,26 +1162,13 @@ sub run {
 
                 if ($post_logout_redirect_uri) {
 
-                    # Check redirect URI is allowed
-                    my $redirect_uri_allowed = 0;
-                    foreach ( keys %{ $self->rpOptions } ) {
-                        my $logout_rp = $_;
-                        if ( my $redirect_uris =
-                            $self->rpOptions->{$logout_rp}
-                            ->{oidcRPMetaDataOptionsPostLogoutRedirectUris} )
-                        {
-                            foreach ( split( /\s+/, $redirect_uris ) ) {
-                                if ( $post_logout_redirect_uri eq $_ ) {
-                                    $self->logger->debug(
-"$post_logout_redirect_uri is an allowed logout redirect URI for RP $logout_rp"
-                                    );
-                                    $redirect_uri_allowed = 1;
-                                }
-                            }
-                        }
-                    }
-
-                    unless ($redirect_uri_allowed) {
+                    unless (
+                        $self->findRPFromUri(
+                            $post_logout_redirect_uri,
+                            'oidcRPMetaDataOptionsPostLogoutRedirectUris'
+                        )
+                      )
+                    {
                         $self->logger->error(
                             "$post_logout_redirect_uri is not allowed");
                         return PE_UNAUTHORIZEDURL;
@@ -1202,6 +1203,43 @@ sub run {
         : 'No OIDC endpoint found, aborting'
     );
     return PE_ERROR;
+}
+
+sub findRPFromUri {
+    my ( $self, $uri, $option ) = @_;
+
+    my $found_rp;
+    foreach my $rp ( keys %{ $self->rpOptions } ) {
+        $found_rp = $rp if $self->isUriAllowedForRP( $uri, $rp, $option );
+    }
+    return $found_rp;
+}
+
+sub isUriAllowedForRP {
+    my ( $self, $uri, $rp, $option, $wildcard_allowed ) = @_;
+    my $allowed_uris = $self->rpOptions->{$rp}->{$option} // "";
+
+    my $is_uri_allowed;
+    if ($wildcard_allowed) {
+        $is_uri_allowed =
+          grep { _wildcard_match( $_, $uri ) } split( /\s+/, $allowed_uris );
+    }
+    else {
+        $is_uri_allowed = grep { $_ eq $uri } split( /\s+/, $allowed_uris );
+    }
+    return $is_uri_allowed;
+}
+
+sub _wildcard_match {
+    my ( $config_url, $candidate ) = @_;
+
+    # Quote everything
+    my $config_re = $config_url =~ s/(.)/\Q$1/gr;
+
+    # Replace \* by .*
+    $config_re =~ s/\\\*/.*/g;
+
+    return ( $candidate =~ qr/^$config_re$/ ? 1 : 0 );
 }
 
 # Handle token endpoint
@@ -2119,6 +2157,7 @@ sub registration {
     my $userinfo_signed_response_alg =
       $client_metadata->{userinfo_signed_response_alg};
     my $redirect_uris          = $client_metadata->{redirect_uris};
+    my $request_uris           = $client_metadata->{request_uris};
     my $backchannel_logout_uri = $client_metadata->{backchannel_logout_uri};
     my $backchannel_logout_session_required =
       $client_metadata->{backchannel_logout_session_required};
@@ -2146,6 +2185,9 @@ sub registration {
       = $id_token_signed_response_alg;
     $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsRedirectUris}
       = join( ' ', @$redirect_uris );
+    $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsRequestUris} =
+      join( ' ', @$request_uris )
+      if $request_uris and @$request_uris;
     $conf->{oidcRPMetaDataOptions}->{$rp}
       ->{oidcRPMetaDataOptionsUserInfoSignAlg} = $userinfo_signed_response_alg
       if defined $userinfo_signed_response_alg;
@@ -2199,6 +2241,8 @@ sub registration {
         $registration_response->{'id_token_signed_response_alg'} =
           $id_token_signed_response_alg;
         $registration_response->{'redirect_uris'} = $redirect_uris;
+        $registration_response->{'request_uris'}  = $request_uris
+          if $request_uris and @$request_uris;
         $registration_response->{'userinfo_signed_response_alg'} =
           $userinfo_signed_response_alg
           if defined $userinfo_signed_response_alg;
@@ -2226,25 +2270,13 @@ sub endSessionDone {
 
     if ($post_logout_redirect_uri) {
 
-        # Check redirect URI is allowed
-        my $redirect_uri_allowed = 0;
-        foreach ( keys %{ $self->rpOptions } ) {
-            my $logout_rp = $_;
-            my $redirect_uris =
-              $self->rpOptions->{$logout_rp}
-              ->{oidcRPMetaDataOptionsPostLogoutRedirectUris};
-
-            foreach ( split( /\s+/, $redirect_uris ) ) {
-                if ( $post_logout_redirect_uri eq $_ ) {
-                    $self->logger->debug(
-"$post_logout_redirect_uri is an allowed logout redirect URI for RP $logout_rp"
-                    );
-                    $redirect_uri_allowed = 1;
-                }
-            }
-        }
-
-        unless ($redirect_uri_allowed) {
+        unless (
+            $self->findRPFromUri(
+                $post_logout_redirect_uri,
+                'oidcRPMetaDataOptionsPostLogoutRedirectUris'
+            )
+          )
+        {
             $self->logger->error("$post_logout_redirect_uri is not allowed");
             return $self->p->login($req);
         }
@@ -2483,7 +2515,7 @@ sub metadata {
             claims_supported                 => [qw/sub iss auth_time acr sid/],
             request_parameter_supported      => JSON::true,
             request_uri_parameter_supported  => JSON::true,
-            require_request_uri_registration => JSON::false,
+            require_request_uri_registration => JSON::true,
 
             # Algorithms
             id_token_signing_alg_values_supported =>
@@ -2539,19 +2571,7 @@ sub exportRequestParameters {
         }
     }
 
-    # Extract request_uri/request parameter
-    my $request = $req->param('request');
-    if ( $req->param('request_uri') ) {
-        $request = $self->getRequestJWT( $req->param('request_uri') );
-    }
-
-    if ($request) {
-        my $request_data = getJWTPayload($request);
-        foreach ( keys %$request_data ) {
-            $req->env->{ "llng_oidc_" . $_ } = $request_data->{$_};
-        }
-    }
-
+    my $rp;
     if ( $req->param('client_id') ) {
         my $rp = $self->getRP( $req->param('client_id') );
         if ($rp) {
@@ -2563,6 +2583,27 @@ sub exportRequestParameters {
               $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel};
             $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
               if $targetAuthnLevel;
+        }
+    }
+
+    # Extract request_uri/request parameter
+    my $request = $req->param('request');
+    if ( my $request_uri = $req->param('request_uri') ) {
+        if (
+            $rp
+            and $self->isUriAllowedForRP(
+                $request_uri, $rp, 'oidcRPMetaDataOptionsRequestUris', 1
+            )
+          )
+        {
+            $request = $self->getRequestJWT($request_uri);
+        }
+    }
+
+    if ($request) {
+        my $request_data = getJWTPayload($request);
+        foreach ( keys %$request_data ) {
+            $req->env->{ "llng_oidc_" . $_ } = $request_data->{$_};
         }
     }
 
