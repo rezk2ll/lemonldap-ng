@@ -1783,7 +1783,8 @@ sub getScope {
     if ( $self->conf->{oidcServiceAllowOnlyDeclaredScopes} ) {
         my @known_scopes = (
             keys( %{ $self->rpScopeRules->{$rp} || {} } ),
-            "openid", keys( %{ $self->rpScopes->{$rp} || {} } )
+            keys( %{ $self->rpScopes->{$rp} || {} } ),
+            'openid', 'offline_access',
         );
         my @scope_values_tmp;
         for my $scope_value (@scope_values) {
