@@ -732,6 +732,7 @@
 "oidcRPMetaDataOptionsPublic":"Açık istemci",
 "oidcRPMetaDataOptionsRedirectUris":"Giriş için izin verilen yönlendirme adresleri",
 "oidcRPMetaDataOptionsRefreshToken":"Yeni jetonları kullan",
+"oidcRPMetaDataOptionsRequestUris":"Allowed URLs for fetching Request Object",
 "oidcRPMetaDataOptionsRequirePKCE":"PKCE gerektir",
 "oidcRPMetaDataOptionsRule":"Erişim kuralı",
 "oidcRPMetaDataOptionsScopes":"Kapsam",

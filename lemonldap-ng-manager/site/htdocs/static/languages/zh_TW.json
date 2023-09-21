@@ -732,6 +732,7 @@
 "oidcRPMetaDataOptionsPublic":"公開客戶端",
 "oidcRPMetaDataOptionsRedirectUris":"允許登入的重新導向地址",
 "oidcRPMetaDataOptionsRefreshToken":"使用重新整理權杖",
+"oidcRPMetaDataOptionsRequestUris":"Allowed URLs for fetching Request Object",
 "oidcRPMetaDataOptionsRequirePKCE":"需要 PKCE",
 "oidcRPMetaDataOptionsRule":"存取規則",
 "oidcRPMetaDataOptionsScopes":"範圍",
