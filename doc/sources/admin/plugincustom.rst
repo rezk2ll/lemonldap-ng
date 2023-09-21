@@ -160,6 +160,40 @@ Plugins may declare additional session fields to be stored in the :doc:`loginhis
 
 Column names can be translated by :ref:`overriding the corresponding message <intlmessages>`
 
+.. _pluginppolicy:
+
+Password policies
+~~~~~~~~~~~~~~~~~
+
+You can implement custom password policies in your plugins.
+
+In order to do this, implement the :ref:`passwordBeforeChange hook <passwordBeforeChange>`.
+
+If you want to display user feedback, you need to do two additional things
+
+* In you plugin's ``init`` method, declare a HTML control for your policy ::
+
+    $self->p->addPasswordPolicyDisplay(
+        'ppolicy-custom1',
+        {
+            # Activation condition
+            condition => $self->conf->{customPluginsParams}->{myPpolicyEnabled},
+            # Label to show the user
+            label     => "myppolicy",
+            # What value to display in front of the label
+            value     => 1,
+            # Optional key-value HTML data-* elements
+            data => { },
+            # Custom HTML code to inject before the element
+            customHtml => qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/myppolicy.min.js"></script>',
+            # Optional display order, higher goes last
+            order => 100,
+        }
+    );
+
+* Implement a JS check and trigger it on the :ref:`checkpassword event <checkpassword>`
+
+
 Example
 -------
 

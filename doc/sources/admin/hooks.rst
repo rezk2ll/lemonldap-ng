@@ -704,12 +704,16 @@ Password change hooks
 ---------------------
 
 
+.. _passwordBeforeChange:
+
 passwordBeforeChange
 ~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.0.12
 
-This hook is triggered when LemonLDAP::NG is about to change or reset a user's password. Returning an error will cancel the password change operation
+This hook is triggered when LemonLDAP::NG is about to change or reset a user's password.
+Returning an error will cancel the password change operation.
+You can use this hook to implement :ref:`custom password policies <pluginppolicy>`.
 
 The hook's parameters are:
 

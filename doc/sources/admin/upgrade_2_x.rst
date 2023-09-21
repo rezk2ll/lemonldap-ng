@@ -76,6 +76,20 @@ systemd edit liblemonldap-ng-handler-perl.timer
 OnCalendar=*-*-* *:07:07
 ```
 
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can skip this entire section if you use the default ``bootstrap`` theme or if your custo theme only uses ``custom*.tpl`` templates.
+
+Password policy display
+^^^^^^^^^^^^^^^^^^^^^^^
+
+It is recommended to replace your custom theme's ``passwordpolicy.tpl`` by the one that is provided in the ``bootstrap`` theme.
+
+If you use the :doc:`Have I Been Pwned <checkhibp>` plugin, this is a required change because the modifications in 2.18 will break this particular plugin.
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
 2.17.1
 ------
 
@@ -115,6 +129,8 @@ even more encoding bugs in the long run.
 
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can skip this entire section if you use the default ``bootstrap`` theme or if your custo theme only uses ``custom*.tpl`` templates.
 
 Font Awesome application icons
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
