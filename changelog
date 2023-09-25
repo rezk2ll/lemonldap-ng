@@ -1,3 +1,15 @@
+lemonldap-ng (2.17.1) jammy; urgency=medium
+
+  * Bugs:
+    * #2992: WAYF not triggered when using SAML federation plugin + one other provider
+    * #2996: Invalid URL for application logo in myapplications web service
+    * #2998: [Security:low] SSRF vulnerability in OIDC SSO
+    * #3001: Conf::LDAP options in lemonldap-ng.ini overrides Auth options in portal
+    * #3003: [Security:low] Open redirection when OIDC RP isn't configured with redirection uri
+    * #3010: oidcServiceAllowOnlyDeclaredScopes option drop offline_access scope
+
+ -- Clément <clem.oudot@gmail.com>  Mon, 25 Sep 2023 16:46:45 +0200
+
 lemonldap-ng (2.17.0) jammy; urgency=medium
 
   * Bugs:
