@@ -2,7 +2,7 @@ package Lemonldap::NG::Handler::Lib::ServiceToken;
 
 use strict;
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.0.18';
 
 sub fetchId {
     my ( $class, $req ) = @_;
@@ -45,7 +45,7 @@ sub fetchId {
     } @vhosts;
 
     # $_session_id and at least one vhost
-    unless ( @vhosts and $_session_id ) {
+    unless ( $_session_id and ( @vhosts or @vhostRegexp ) ) {
         $class->userLogger->error('Bad service token');
         $class->logger->debug(
             @vhosts ? 'No _session_id found' : 'No VH found' );
@@ -54,7 +54,8 @@ sub fetchId {
 
     # Is vhost listed in token ?
     if ( grep { $_ eq $vhost } @vhosts ) {
-        $class->logger->debug( "$vhost found in VHosts list: " . join ', ', @vhosts );
+        $class->logger->debug( "$vhost found in VHosts list: " . join ', ',
+            @vhosts );
     }
     elsif ( grep { $vhost =~ $_ } @vhostRegexp ) {
         $class->logger->debug( "$vhost matches a VHost regexp: " . join ', ',
