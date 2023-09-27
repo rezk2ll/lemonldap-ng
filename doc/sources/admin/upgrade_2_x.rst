@@ -26,6 +26,17 @@ Known regressions in the latest released version
 
 None
 
+2.18.0
+------
+
+Apache2 handler now uses IP from mod_remoteip
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you use `mod_remoteip <https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html>`__ in your handlers,
+LemonLDAP::NG will now correctly use the IP from ``mod_remoteip`` in
+``$env->{REMOTE_ADDR}``.
+
+
 2.17.1
 ------
 
