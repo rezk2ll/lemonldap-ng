@@ -461,9 +461,15 @@ token
 This function generates token used for
 :doc:`handling server webservice calls<servertoserver>`.
 
-::
+.. code-block:: perl
 
-   token($_session_id,'webapp1.example.com','webapp2.example.com')
+   token($_session_id, 'app1.example.com', 'apptest.example.com', '/^webapp[23]\.example\.com/')
+
+.. attention::
+
+    The colon character is not allowed in regexp.
+
+
 
 varIsInUri
 ~~~~~~~~~~
