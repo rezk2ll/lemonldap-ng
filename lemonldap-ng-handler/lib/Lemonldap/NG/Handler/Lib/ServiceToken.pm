@@ -68,8 +68,10 @@ sub fetchId {
     }
 
     # Is token in good interval ?
-    my $ttl = $class->tsv->{serviceTokenTTL}->{$vhost}
-      || $class->tsv->{handlerServiceTokenTTL};
+    my $ttl =
+      ( $class->tsv->{serviceTokenTTL}->{$vhost} > 0 )
+      ? $class->tsv->{serviceTokenTTL}->{$vhost}
+      : $class->tsv->{handlerServiceTokenTTL};
     my $now = time;
     unless ( $t <= $now and $t > $now - $ttl ) {
         $class->userLogger->warn('Expired service token');
