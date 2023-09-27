@@ -193,8 +193,10 @@ sub defaultValues {
         'max2FDevices'              => 10,
         'max2FDevicesNameLength'    => 20,
         'multiValuesSeparator'      => '; ',
-        'mySessionAuthorizedRWKeys' =>
-          [ '_appsListOrder', '_oidcConnectedRP', '_oidcConsents' ],
+        'mySessionAuthorizedRWKeys' => [
+            '_appsListOrder',      '_oidcConnectedRP',
+            '_oidcConnectedRPIDs', '_oidcConsents'
+        ],
         'newLocationWarningLocationAttribute'        => 'ipAddr',
         'newLocationWarningLocationDisplayAttribute' => '',
         'newLocationWarningMaxValues'                => '0',
