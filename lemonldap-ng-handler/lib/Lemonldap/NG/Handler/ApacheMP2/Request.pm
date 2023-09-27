@@ -17,11 +17,8 @@ sub new {
     my $env      = {
 
         #%ENV,
-        HTTP_HOST   => $r->hostname,
-        REMOTE_ADDR => (
-              $r->connection->can('remote_ip') ? $r->connection->remote_ip
-            : $r->connection->client_ip
-        ),
+        HTTP_HOST         => $r->hostname,
+        REMOTE_ADDR       => $r->useragent_ip,
         QUERY_STRING      => $args,
         REQUEST_URI       => $uri_full,
         PATH_INFO         => '',
