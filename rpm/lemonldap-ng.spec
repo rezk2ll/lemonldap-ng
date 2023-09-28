@@ -570,7 +570,7 @@ fi
 %files
 
 %files conf
-%doc changelog INSTALL README.md AUTHORS CONTRIBUTING.md
+%doc changelog README.md AUTHORS CONTRIBUTING.md
 %doc for_etc_hosts
 %license COPYING LICENSE
 %dir %{lm_confdir}
@@ -609,7 +609,7 @@ fi
 
 %files doc
 %doc %{lm_sharedir}/doc
-%doc changelog INSTALL README.md AUTHORS CONTRIBUTING.md
+%doc changelog README.md AUTHORS CONTRIBUTING.md
 %license COPYING LICENSE
 
 %files handler
