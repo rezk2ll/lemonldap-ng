@@ -405,6 +405,21 @@ sub run {
 
                     return PE_UNKNOWNPARTNER;
                 }
+                elsif ( $lasso_error ==
+                    Lasso::Constants::PROFILE_ERROR_INVALID_PROTOCOLPROFILE )
+                {
+                    $self->logger->error(
+                        "SSO: Fail to process authentication request");
+                    if ( my $ACS =
+                        eval { $login->request->AssertionConsumerServiceURL } )
+                    {
+                        $self->logger->error(
+                                "Requested AssertionConsumerServiceURL $ACS"
+                              . " might be missing from registered metadata" );
+                    }
+
+                    return PE_SAML_SSO_ERROR;
+                }
                 else {
                     $self->logger->error(
                         "SSO: Fail to process authentication request");
