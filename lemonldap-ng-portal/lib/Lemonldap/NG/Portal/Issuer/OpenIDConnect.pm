@@ -1836,6 +1836,7 @@ sub _handleRefreshTokenGrant {
 
         # Lookup attributes and macros for user
         $req->user( $refreshSession->data->{_session_uid} );
+        $req->data->{$_} = $refreshSession->data->{$_} foreach (qw(_choice));
         $req->steps( [
                 'getUser',        @{ $self->p->betweenAuthAndData },
                 'setSessionInfo', $self->p->groupsAndMacros,
