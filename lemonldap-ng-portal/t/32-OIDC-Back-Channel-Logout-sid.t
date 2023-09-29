@@ -141,8 +141,13 @@ ok( $res = $rp->_get( '/', query => $query, accept => 'text/html' ),
 count(1);
 my $spId = expectCookie($res);
 
+
 # Logout initiated by OP
 switch ('op');
+
+# Reset conf to make sure to make sure lazy loading works during logout (#3014)
+$op->p->HANDLER->checkConf(1);
+
 ok(
     $res = $op->_get(
         '/',

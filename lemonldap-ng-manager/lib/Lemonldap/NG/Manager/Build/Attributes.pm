@@ -259,7 +259,7 @@ sub attributes {
             type          => 'array',
             documentation => 'Alterable session keys by user itself',
             default       =>
-              [ '_appsListOrder', '_oidcConnectedRP', '_oidcConsents' ],
+              [ '_appsListOrder', '_oidcConnectedRP', '_oidcConnectedRPIDs', '_oidcConsents' ],
         },
         configStorage => {
             type          => 'text',

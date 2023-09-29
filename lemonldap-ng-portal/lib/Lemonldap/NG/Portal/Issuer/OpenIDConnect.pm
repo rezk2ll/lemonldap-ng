@@ -1755,10 +1755,21 @@ sub _handleAuthorizationCodeGrant {
         ( ( $req_scope ne $scope ) ? ( scope => "$scope" )       : () ),
     };
 
+    my %update;
+
+    # This is kept for compatibility in case some plugins use it
     my $cRP = $apacheSession->data->{_oidcConnectedRP} || '';
-    unless ( $cRP =~ /\b$rp\b/ ) {
-        $self->p->updateSession( $req, { _oidcConnectedRP => "$rp,$cRP" },
-            $apacheSession->id );
+    unless ( grep { $_ eq $rp } split( ",", $cRP ) ) {
+        %update = ( %update, _oidcConnectedRP => "$rp,$cRP" );
+    }
+
+    my $cRPID = $apacheSession->data->{_oidcConnectedRPIDs} || '';
+    unless ( grep { $_ eq $client_id } split( ",", $cRPID ) ) {
+        %update = ( %update, _oidcConnectedRPIDs => "$client_id,$cRPID" );
+    }
+
+    if (%update) {
+        $self->p->updateSession( $req, \%update, $apacheSession->id );
     }
 
     $self->logger->debug("Send token response");
@@ -2310,18 +2321,24 @@ sub checkSession {
     );
 }
 
-# Nothing to do here
 sub logout {
     my ( $self, $req ) = @_;
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
-    if ( my $s = $req->userData->{_oidcConnectedRP} ) {
+    if ( my $s = $req->userData->{_oidcConnectedRPIDs} ) {
         my @rps = grep /\w/, split( ',', $s );
-        foreach my $rp (@rps) {
-            my $rpConf = $self->rpOptions->{$rp};
-            unless ($rpConf) {
-                $self->logger->error("Unknown Relying Party $rp");
-                return PE_ERROR;
+        foreach my $client_id (@rps) {
+            my $rp = $self->getRP($client_id);
+            if ( !$rp ) {
+                $self->logger->warn(
+                    "Cannot find RP configuration for $client_id");
+                next;
             }
+            my $rpConf = $self->rpOptions->{$rp};
+            if ( !$rpConf ) {
+                $self->logger->warn("Cannot find RP options for $client_id");
+                next;
+            }
+            $self->logger->debug("MAXBES LOGOUT $rp");
             if ( my $url = $rpConf->{oidcRPMetaDataOptionsLogoutUrl} ) {
 
                 # FRONT CHANNEL

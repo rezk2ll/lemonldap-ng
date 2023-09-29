@@ -2160,8 +2160,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'authParamsText'
         },
         'mySessionAuthorizedRWKeys' => {
-            'default' =>
-              [ '_appsListOrder', '_oidcConnectedRP', '_oidcConsents' ],
+            'default' => [
+                '_appsListOrder',      '_oidcConnectedRP',
+                '_oidcConnectedRPIDs', '_oidcConsents'
+            ],
             'type' => 'array'
         },
         'newLocationWarning' => {
