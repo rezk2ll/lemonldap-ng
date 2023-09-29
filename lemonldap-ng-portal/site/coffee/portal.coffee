@@ -99,15 +99,6 @@ setOrder = ->
 
 # Function used to remove an OIDC consent
 removeOidcConsent = (partner) ->
-	#r = new RegExp "\b#{partner}\b,?", 'g'
-	#datas['oidcConsents'] = datas['oidcConsents'].replace(r,'').replace(/,$/,'')
-	#setKey '_oidcConnectedRP', datas['oidcConsents']
-	#	# Success
-	#	, () ->
-	#		$("[partner='#{partner}']").hide()
-	#	# Error
-	#	, (j,s,e) ->
-	#		alert "#{s} #{e}"
 	e = (j,s,e) ->
 		alert "#{s} #{e}"
 	delKey "_oidcConsents",partner
