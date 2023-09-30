@@ -440,6 +440,23 @@ sub run {
             my $spAuthnLevel =
               $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel} || 0;
 
+            # RP may increase, but not lower, the requirement set in LLNG conf
+            if ( $oidc_request->{'acr_values'} ) {
+                my $requested_authn_level =
+                  $self->_get_authn_level_from_acr_values(
+                    $oidc_request->{'acr_values'} );
+                if ( $requested_authn_level > $spAuthnLevel ) {
+                    $spAuthnLevel = $requested_authn_level;
+                }
+                else {
+                    $self->logger->info(
+                            "Ignoring requested authentication level "
+                          . $requested_authn_level
+                          . " because it is lower than minimum for this RP: $spAuthnLevel"
+                    );
+                }
+            }
+
             # Check if user needs to be reauthenticated
             my $prompt = $oidc_request->{'prompt'};
             if (
@@ -1228,6 +1245,24 @@ sub isUriAllowedForRP {
         $is_uri_allowed = grep { $_ eq $uri } split( /\s+/, $allowed_uris );
     }
     return $is_uri_allowed;
+}
+
+# Picks the first ACR value from the list that matches a known Authn Context
+sub _get_authn_level_from_acr_values {
+    my ( $self, $acr_values ) = @_;
+    my @acr_values = split( /\s+/, $acr_values );
+    for my $acr_value (@acr_values) {
+        if ( my $level =
+            $self->conf->{oidcServiceMetaDataAuthnContext}->{$acr_value} )
+        {
+            $self->logger->debug(
+                "Authentication level $level selected from ACR value $acr_value"
+            );
+
+            return $level;
+        }
+    }
+    return 0;
 }
 
 sub _wildcard_match {
