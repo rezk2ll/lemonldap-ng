@@ -44,11 +44,11 @@ sub fetchId {
         }
     } @vhosts;
 
-    # $_session_id and at least one vhost
+    # $_session_id and at least one vhost or RegExp
     unless ( $_session_id and ( @vhosts or @vhostRegexp ) ) {
         $class->userLogger->error('Bad service token');
         $class->logger->debug(
-            @vhosts ? 'No _session_id found' : 'No VH found' );
+            $_session_id ? 'No VH or RegExp found' : 'No _session_id found' );
         return 0;
     }
 
@@ -63,7 +63,7 @@ sub fetchId {
     }
     else {
         $class->userLogger->error( "$vhost not allowed in token scope ("
-              . join( ', ', ( @vhostRegexp, @vhosts, ) )
+              . join( ', ', ( @vhostRegexp, @vhosts ) )
               . ')' );
         return 0;
     }
