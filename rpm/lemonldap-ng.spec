@@ -29,7 +29,7 @@
 
 Name:           lemonldap-ng
 Version:        2.17.1
-Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
+Release:        %{?pre_release:0.}2%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        Web Single Sign On (SSO) and Access Management
 # Lemonldap-ng itself is GPLv2+
 # Qrious bundled javascript library is GPLv3+
@@ -699,6 +699,11 @@ fi
 
 
 %changelog
+* Mon Oct 02 2023 Xavier Bachelot <xavier@bachelot.org> - 2.17.1-2
+- Add a dep on SSOaaS version
+- Simplify fix shebang and perms
+- Drop INSTALL from %doc
+
 * Mon Sep 25 2023 Clement Oudot <clem.oudot@gmail.com> - 2.17.1-1
 - Update to 2.17.1
 
