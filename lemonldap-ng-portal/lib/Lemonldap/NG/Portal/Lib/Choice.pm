@@ -121,6 +121,10 @@ sub checkChoice {
         $name = $req->pdata->{_choice};
         $self->logger->debug("Choice $name selected from pdata");
     }
+    elsif ( (defined $req->data->{_authChoice}) or (defined $req->data->{_choice}) ) {
+        $name = $req->data->{_authChoice} || $req->data->{_choice};
+        $self->logger->debug("Choice $name selected from req->data");
+    }
 
     unless ($name) {
 
