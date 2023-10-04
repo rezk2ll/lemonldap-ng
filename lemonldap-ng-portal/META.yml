@@ -4,6 +4,7 @@ author:
   - 'Xavier Guimard <x.guimard@free.fr>, Clement Oudot <clement@oodo.net>, Christophe Maudoux <chrmdx@gmail.com>, Maxime Besson <maxime.besson@worteks.com>'
 build_requires:
   Convert::Base32: '0'
+  Crypt::JWT: '0'
   Email::Sender: '0'
   GD::SecurityImage: '0'
   HTTP::Message: '0'

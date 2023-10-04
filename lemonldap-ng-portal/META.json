@@ -23,6 +23,7 @@
       "build" : {
          "requires" : {
             "Convert::Base32" : "0",
+            "Crypt::JWT" : "0",
             "Email::Sender" : "0",
             "GD::SecurityImage" : "0",
             "HTTP::Message" : "0",
