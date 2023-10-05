@@ -1097,7 +1097,7 @@ sub relayLogout {
     }
     else {
         $self->logger->error(
-            "CAS back-channel logout to $service error: " . $reponse->message );
+            "CAS back-channel logout to $service error: " . $response->message );
         $self->logger->debug( $response->dump );
         return $self->p->imgnok;
     }
