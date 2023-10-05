@@ -2111,6 +2111,54 @@ sub getCertInfo {
     }
 }
 
+### JWKS ENDPOINT
+
+# Keys to display in jwks endpoint:
+#  Signature:
+#   - current, new and old key to permit to clients to verify all JWT emitted
+#     during 3 weeks
+#  Encryption:
+#   - only the current key. Old encryption key is kept to permit to
+#     Auth::OPenIDCOnnect to decrypt all JWE emitted by Issuer but no
+#     need to display any other key
+use constant KEYS_TO_DISPLAY => (
+    [ ''    => 'Sig' ],
+    [ 'Old' => 'Sig' ],
+    [ 'New' => 'Sig' ],
+    [ ''    => 'Enc' ],
+);
+
+sub _buildJwk {
+    my ( $self, $prefix, $type ) = @_;
+    my $publicKeyOrCert = $self->conf->{"oidcService${prefix}PublicKey$type"};
+    my $privateKey      = $self->conf->{"oidcService${prefix}PrivateKey$type"};
+    my $keyId           = $self->conf->{"oidcService${prefix}KeyId$type"};
+    return $privateKey
+      ? {
+        kty => 'RSA',
+        use => lc($type),
+        ( $keyId ? ( kid => $keyId ) : () ),
+        %{ $self->key2jwks($privateKey) },
+        %{ $self->getCertInfo($publicKeyOrCert) },
+      }
+      : ();
+}
+
+# Handle jwks endpoint
+sub jwks {
+    my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
+    $self->logger->debug("URL detected as an OpenID Connect JWKS URL");
+
+    my $jwks = { keys => [] };
+
+    push @{ $jwks->{keys} }, $self->_buildJwk( $_->[0], $_->[1] )
+      foreach (KEYS_TO_DISPLAY);
+
+    $self->logger->debug("Send JWKS response sent");
+    return $self->p->sendJSONresponse( $req, $jwks );
+}
+
 # Build Logout Request URI
 # @param redirect_uri Redirect URI
 # @param id_token_hint ID Token
