@@ -18,7 +18,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use URI;
 
-our $VERSION = '2.16.3';
+our $VERSION = '2.18.0';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::CAS';
@@ -398,8 +398,8 @@ sub run {
         # Delete local session
         if ( my $session = $self->p->getApacheSession($session_id) ) {
 
-            # This will call Issuer logout methods, incluing our own
-            # TODO: call authLogout and deleteSession instead of duplicating code
+           # This will call Issuer logout methods, incluing our own
+           # TODO: call authLogout and deleteSession instead of duplicating code
             my $res = $self->p->do( $req, [ @{ $self->p->beforeLogout } ] );
 
             unless ( $self->p->_deleteSession( $req, $session ) ) {
@@ -1089,15 +1089,16 @@ sub relayLogout {
         { logoutRequest => $logoutRequest },
         "Content-Type" => 'application/x-www-form-urlencoded'
     );
-    $self->logger->debug(
-            "Sending back-channel LogoutRequest to $service: result ("
-          . $response->message
-          . ")" );
+    $self->logger->debug("Sending back-channel LogoutRequest to $service");
 
     if ( $response->is_success ) {
+        $self->logger->debug("CAS back-channel logout to $service OK");
         return $self->p->imgok;
     }
     else {
+        $self->logger->error(
+            "CAS back-channel logout to $service error: " . $reponse->message );
+        $self->logger->debug( $response->dump );
         return $self->p->imgnok;
     }
 }
