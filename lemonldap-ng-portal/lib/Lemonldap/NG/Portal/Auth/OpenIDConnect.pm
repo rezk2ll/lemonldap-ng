@@ -2,9 +2,9 @@ package Lemonldap::NG::Portal::Auth::OpenIDConnect;
 
 use strict;
 use Mouse;
-use MIME::Base64 qw/encode_base64 decode_base64/;
-use Scalar::Util qw/looks_like_number/;
-use Lemonldap::NG::Common::JWT qw(getJWTPayload);
+use MIME::Base64                           qw/encode_base64 decode_base64/;
+use Scalar::Util                           qw/looks_like_number/;
+use Lemonldap::NG::Common::JWT             qw(getJWTPayload);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_IDPCHOICE
@@ -90,7 +90,9 @@ sub init {
         'Auth',
         oidcServiceMetaDataFrontChannelURI => 'frontLogout',
         oidcServiceMetaDataBackChannelURI  => 'backLogout',
+        oidcServiceMetaDataJWKSURI         => 'jwks',
     );
+    $self->addRouteFromConf( 'Unauth', oidcServiceMetaDataJWKSURI => 'jwks', );
 
     @list =
       sort {

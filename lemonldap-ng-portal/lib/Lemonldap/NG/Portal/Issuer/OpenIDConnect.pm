@@ -2119,32 +2119,7 @@ sub introspection {
     return $self->p->sendJSONresponse( $req, $response );
 }
 
-# Handle jwks endpoint
-sub jwks {
-    my ( $self, $req ) = @_;
-    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
-    $self->logger->debug("URL detected as an OpenID Connect JWKS URL");
-
-    my $jwks = { keys => [] };
-
-    foreach my $prefix (qw(oidcService oidcServiceOld oidcServiceNew)) {
-        my $public_key_sig_or_cert = $self->conf->{ $prefix . 'PublicKeySig' };
-        my $private_key_sig        = $self->conf->{ $prefix . 'PrivateKeySig' };
-        my $key_id_sig             = $self->conf->{ $prefix . 'KeyIdSig' };
-        if ($private_key_sig) {
-            my $jwk = {
-                kty => "RSA",
-                use => "sig",
-                ( $key_id_sig ? ( kid => $key_id_sig ) : () ),
-                %{ $self->key2jwks($private_key_sig) },
-                %{ $self->getCertInfo($public_key_sig_or_cert) },
-            };
-            push @{ $jwks->{keys} }, $jwk;
-        }
-    }
-    $self->logger->debug("Send JWKS response sent");
-    return $self->p->sendJSONresponse( $req, $jwks );
-}
+# Endpoint JWKS is implemented in Lib/OpenIDConnect
 
 # Handle register endpoint
 sub registration {
