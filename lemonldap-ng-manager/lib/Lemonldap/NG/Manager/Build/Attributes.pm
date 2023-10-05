@@ -4505,6 +4505,18 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             documentation => 'Future OpenID Connect Signature Key ID',
         },
+        oidcServiceOldPrivateKeyEnc => { type => 'RSAPrivateKey', },
+        oidcServiceOldPublicKeyEnc  => { type => 'RSAPublicKeyOrCertificate', },
+        oidcServiceOldKeyIdEnc      => {
+            type          => 'text',
+            documentation => 'Previous OpenID Connect Encryption Key ID',
+        },
+        oidcServicePrivateKeyEnc => { type => 'RSAPrivateKey', },
+        oidcServicePublicKeyEnc  => { type => 'RSAPublicKeyOrCertificate', },
+        oidcServiceKeyIdEnc      => {
+            type          => 'text',
+            documentation => 'OpenID Connect Encryption Key ID',
+        },
         oidcServiceAllowDynamicRegistration => {
             type          => 'bool',
             default       => 0,
@@ -4824,6 +4836,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             },
             default       => {},
             documentation => 'Scope rules',
+        },
+        oidcRPMetaDataOptionsJwksUri => {
+            type => 'url',
+            help => 'idpopenidconnect.html',
+            documentation => 'Relying party JWKS endpoint (to get encryption keys)',
         },
     };
 }
