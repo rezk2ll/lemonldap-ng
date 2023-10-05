@@ -2550,6 +2550,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             'type' => 'select'
         },
+        'oidcRPMetaDataOptionsJwksUri' => {
+            'type' => 'url'
+        },
         'oidcRPMetaDataOptionsLogoutBypassConfirm' => {
             'default' => 0,
             'type'    => 'bool'
@@ -2702,6 +2705,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 0,
             'type'    => 'bool'
         },
+        'oidcServiceKeyIdEnc' => {
+            'type' => 'text'
+        },
         'oidcServiceKeyIdSig' => {
             'type' => 'text'
         },
@@ -2772,17 +2778,32 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 2592000,
             'type'    => 'int'
         },
+        'oidcServiceOldKeyIdEnc' => {
+            'type' => 'text'
+        },
         'oidcServiceOldKeyIdSig' => {
             'type' => 'text'
+        },
+        'oidcServiceOldPrivateKeyEnc' => {
+            'type' => 'RSAPrivateKey'
         },
         'oidcServiceOldPrivateKeySig' => {
             'type' => 'RSAPrivateKey'
         },
+        'oidcServiceOldPublicKeyEnc' => {
+            'type' => 'RSAPublicKeyOrCertificate'
+        },
         'oidcServiceOldPublicKeySig' => {
             'type' => 'RSAPublicKeyOrCertificate'
         },
+        'oidcServicePrivateKeyEnc' => {
+            'type' => 'RSAPrivateKey'
+        },
         'oidcServicePrivateKeySig' => {
             'type' => 'RSAPrivateKey'
+        },
+        'oidcServicePublicKeyEnc' => {
+            'type' => 'RSAPublicKeyOrCertificate'
         },
         'oidcServicePublicKeySig' => {
             'type' => 'RSAPublicKeyOrCertificate'
