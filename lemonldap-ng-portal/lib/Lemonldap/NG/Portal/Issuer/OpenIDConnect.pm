@@ -2544,8 +2544,10 @@ sub metadata {
             id_token_signing_alg_values_supported =>
               [qw/none HS256 HS384 HS512 RS256 RS384 RS512/],
 
-            # id_token_encryption_alg_values_supported
-            # id_token_encryption_enc_values_supported
+            id_token_encryption_alg_values_supported =>
+              &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_ALG_SUPPORTED,
+            id_token_encryption_enc_values_supported =>
+              &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_SUPPORTED,
             userinfo_signing_alg_values_supported =>
               [qw/none HS256 HS384 HS512 RS256 RS384 RS512/],
 
