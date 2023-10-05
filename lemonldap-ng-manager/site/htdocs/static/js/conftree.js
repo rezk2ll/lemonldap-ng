@@ -735,6 +735,12 @@ function templates(tpl,key) {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
                   "title" : "oidcRPMetaDataOptionsRule"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsJwksUri",
+                  "help" : "idpopenidconnect.html",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsJwksUri",
+                  "title" : "oidcRPMetaDataOptionsJwksUri"
                }
             ],
             "id" : "security",
