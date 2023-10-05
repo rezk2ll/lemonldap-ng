@@ -58,6 +58,17 @@ use constant COMPLEX_CLAIM => {
     country        => "address",
 };
 
+use constant ENC_ALG_SUPPORTED => [qw(
+    RSA-OAEP-256 RSA-OAEP ECDH-ES+A256KW ECDH-ES PBES2-HS512+A256KW A256GCMKW A256KW
+    ECDH-ES+A192KW PBES2-HS384+A192KW A192GCMKW A192KW
+    ECDH-ES+A128KW PBES2-HS256+A128KW A128GCMKW A128KW
+    RSA1_5 dir
+)];
+
+use constant ENC_SUPPORTED => [qw(
+    A256CBC-HS512 A256GCM A192CBC-HS384 A192GCM A128CBC-HS256 A128GCM
+)];
+
 # PROPERTIES
 
 has opAttributes => ( is => 'rw', default => sub { {} } );
@@ -70,6 +81,7 @@ has rpOptions    => ( is => 'rw', default => sub { {} }, );
 has rpRules      => ( is => 'rw', default => sub { {} } );
 has rpScopes     => ( is => 'rw', default => sub { {} } );
 has rpScopeRules => ( is => 'rw', default => sub { {} } );
+has rpEncKey     => ( is => 'rw', default => sub { {} } );
 
 # Deprecated names, remove in 3.0
 *oidcOPList   = *opMetadata;
@@ -255,6 +267,39 @@ sub load_rp {
                       . $self->p->HANDLER->tsv->{jail}->error );
                 $valid = 0;
             }
+        }
+    }
+    if ( $valid and my $url = $config{options}->{oidcRPMetaDataOptionsJwksUri} )
+    {
+        my $resp = $self->ua->get($url);
+        if ( $resp->is_success ) {
+            my $content = $self->decodeJSON( $resp->decoded_content );
+            if ( $content and ref($content) eq 'HASH' and $content->{keys} ) {
+                my %keys;
+                foreach my $key (sort @{$content->{keys}}) {
+                    $keys{$key->{alg}} ||= $key;
+                }
+                foreach my $alg (@{&ENC_ALG_SUPPORTED}) {
+                    if ($keys{$alg}) {
+                        $self->logger->debug("Found encryption key with algorith $alg");
+                        $self->rpEncKey->{$rp} = $keys{$alg};
+                        last;
+                    }
+                }
+                unless( $self->rpEncKey->{$rp} ) {
+                    $self->logger->error("Unable to find a supported encryption key for $rp");
+                    $valid = 0;
+                }
+            }
+            else {
+                $self->logger->error("Invalid response from $url");
+                $valid = 0;
+            }
+        }
+        else {
+            $self->logger->error(
+                "Unable to fetch RP keys from $url: " . $resp->status_line );
+            $valid = 0;
         }
     }
     if ($valid) {
