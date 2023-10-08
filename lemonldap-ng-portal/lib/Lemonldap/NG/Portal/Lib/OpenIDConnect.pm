@@ -281,6 +281,7 @@ sub load_rp {
                 }
                 foreach my $alg (@{&ENC_ALG_SUPPORTED}) {
                     if ($keys{$alg}) {
+                        require Crypt::JWT;
                         $self->logger->debug("Found encryption key with algorith $alg");
                         $self->rpEncKey->{$rp} = $keys{$alg};
                         last;

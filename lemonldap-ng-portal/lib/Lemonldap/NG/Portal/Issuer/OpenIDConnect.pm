@@ -911,6 +911,8 @@ sub run {
                   || $self->conf->{oidcServiceAccessTokenExpiration};
 
                 my $state = $oidc_request->{'state'};
+                $id_token = $self->encryptToken($rp,$id_token);
+                $access_token = $self->encryptToken($rp,$access_token);
                 return $self->sendOidcResponse(
                     $req, $flow,
                     $oidc_request->{'response_mode'},
@@ -2755,6 +2757,14 @@ sub _generateIDToken {
 
     # Create ID Token
     return $self->createIDToken( $req, $id_token_payload_hash, $rp );
+}
+
+sub encryptToken {
+    my ($self,$rp,$token) = @_;
+    if (my $key = $self->rpEncKey->{$rp}) {
+        $token = Crypt::JWT::encode_jwt(payload=>$token, alg => $key->{alg}, key => $key);
+    }
+    return $token;
 }
 
 1;
