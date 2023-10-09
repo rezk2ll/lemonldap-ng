@@ -1470,6 +1470,7 @@ sub tree {
                                 'oidcServiceNewPrivateKeySig',
                                 'oidcServiceNewPublicKeySig',
                                 'oidcServiceNewKeyIdSig',
+                                'oidcServiceEncAlgorithm',
                                 'oidcServicePrivateKeyEnc',
                                 'oidcServicePublicKeyEnc',
                                 'oidcServiceKeyIdEnc',
