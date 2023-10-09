@@ -67,7 +67,7 @@ LWP::Protocol::PSGI->register(
         ok( $res->[0] == 200, '  Response is 200' );
         count(3);
         if ( $url !~ /blogout/ ) {
-            ok( getHeader( $res, 'Content-Type' ) =~ m#^application/json#,
+            ok( getHeader( $res, 'Content-Type' ) =~ m#^application/(?:json|jwt)#,
                 '  Content is JSON' )
               or explain( $res->[1], 'Content-Type => application/json' );
             count(1);
@@ -193,6 +193,7 @@ sub op {
                         oidcRPMetaDataOptionsBypassConsent     => 0,
                         oidcRPMetaDataOptionsClientSecret      => "rpsecret",
                         oidcRPMetaDataOptionsUserIDAttr        => "",
+                        oidcRPMetaDataOptionsUserInfoSignAlg   => 'RS256',
                         oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                         oidcRPMetaDataOptionsLogoutUrl             =>
                           'http://auth.rp.com/oauth2/blogout',
