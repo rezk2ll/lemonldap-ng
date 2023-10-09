@@ -4899,8 +4899,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsEncryptedResponseEnc => {
             type   => 'select',
             select => [
-                { k => '', v => 'None' },
-                ,
+                { k => '',              v => 'None' },
                 { k => 'A256CBC-HS512', v => 'A256CBC-HS512' },
                 { k => 'A256GCM',       v => 'A256GCM' },
                 { k => 'A192CBC-HS384', v => 'A192CBC-HS384' },
