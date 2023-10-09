@@ -258,8 +258,10 @@ sub attributes {
         mySessionAuthorizedRWKeys => {
             type          => 'array',
             documentation => 'Alterable session keys by user itself',
-            default       =>
-              [ '_appsListOrder', '_oidcConnectedRP', '_oidcConnectedRPIDs', '_oidcConsents' ],
+            default       => [
+                '_appsListOrder',      '_oidcConnectedRP',
+                '_oidcConnectedRPIDs', '_oidcConsents'
+            ],
         },
         configStorage => {
             type          => 'text',
@@ -4505,6 +4507,19 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             documentation => 'Future OpenID Connect Signature Key ID',
         },
+        oidcServiceEncAlgorithm => {
+            type   => 'select',
+            select => [
+                { k => 'A256CBC-HS512', v => 'A256CBC-HS512' },
+                { k => 'A256GCM',       v => 'A256GCM' },
+                { k => 'A192CBC-HS384', v => 'A192CBC-HS384' },
+                { k => 'A192GCM',       v => 'A192GCM' },
+                { k => 'A128CBC-HS256', v => 'A128CBC-HS256' },
+                { k => 'A128GCM',       v => 'A128GCM' },
+            ],
+            default       => 'A256GCM',
+            documentation => 'JWT encryption algorithme',
+        },
         oidcServiceOldPrivateKeyEnc => { type => 'RSAPrivateKey', },
         oidcServiceOldPublicKeyEnc  => { type => 'RSAPublicKeyOrCertificate', },
         oidcServiceOldKeyIdEnc      => {
@@ -4699,6 +4714,19 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             default => 'RS256',
         },
+        oidcRPMetaDataOptionsEncAlgorithm => {
+            type   => 'select',
+            select => [
+                { k => '',              v => 'None' },,
+                { k => 'A256CBC-HS512', v => 'A256CBC-HS512' },
+                { k => 'A256GCM',       v => 'A256GCM' },
+                { k => 'A192CBC-HS384', v => 'A192CBC-HS384' },
+                { k => 'A192GCM',       v => 'A192GCM' },
+                { k => 'A128CBC-HS256', v => 'A128CBC-HS256' },
+                { k => 'A128GCM',       v => 'A128GCM' },
+            ],
+            documentation => 'Encryption algorythm for JWE',
+        },
         oidcRPMetaDataOptionsIDTokenExpiration  => { type => 'intOrNull' },
         oidcRPMetaDataOptionsIDTokenForceClaims =>
           { type => 'bool', default => 0 },
@@ -4736,7 +4764,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsOfflineSessionExpiration =>
           { type => 'intOrNull' },
         oidcRPMetaDataOptionsRedirectUris => { type => 'text', },
-        oidcRPMetaDataOptionsRequestUris => { type => 'text', },
+        oidcRPMetaDataOptionsRequestUris  => { type => 'text', },
         oidcRPMetaDataOptionsExtraClaims  => {
             type    => 'keyTextContainer',
             keyTest => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
@@ -4838,9 +4866,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Scope rules',
         },
         oidcRPMetaDataOptionsJwksUri => {
-            type => 'url',
-            help => 'idpopenidconnect.html',
-            documentation => 'Relying party JWKS endpoint (to get encryption keys)',
+            type          => 'url',
+            help          => 'idpopenidconnect.html',
+            documentation =>
+              'Relying party JWKS endpoint (to get encryption keys)',
         },
     };
 }

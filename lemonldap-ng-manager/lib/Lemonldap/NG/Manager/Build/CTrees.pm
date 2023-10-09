@@ -267,6 +267,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsAuthnLevel',
                             'oidcRPMetaDataOptionsRule',
                             'oidcRPMetaDataOptionsJwksUri',
+                            'oidcRPMetaDataOptionsEncAlgorithm',
                         ]
                     },
                     {

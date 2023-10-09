@@ -741,6 +741,42 @@ function templates(tpl,key) {
                   "help" : "idpopenidconnect.html",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsJwksUri",
                   "title" : "oidcRPMetaDataOptionsJwksUri"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsEncAlgorithm",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsEncAlgorithm",
+                  "select" : [
+                     {
+                        "k" : "",
+                        "v" : "None"
+                     },
+                     {
+                        "k" : "A256CBC-HS512",
+                        "v" : "A256CBC-HS512"
+                     },
+                     {
+                        "k" : "A256GCM",
+                        "v" : "A256GCM"
+                     },
+                     {
+                        "k" : "A192CBC-HS384",
+                        "v" : "A192CBC-HS384"
+                     },
+                     {
+                        "k" : "A192GCM",
+                        "v" : "A192GCM"
+                     },
+                     {
+                        "k" : "A128CBC-HS256",
+                        "v" : "A128CBC-HS256"
+                     },
+                     {
+                        "k" : "A128GCM",
+                        "v" : "A128GCM"
+                     }
+                  ],
+                  "title" : "oidcRPMetaDataOptionsEncAlgorithm",
+                  "type" : "select"
                }
             ],
             "id" : "security",
