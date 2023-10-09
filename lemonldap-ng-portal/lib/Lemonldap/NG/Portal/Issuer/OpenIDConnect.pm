@@ -2186,6 +2186,11 @@ sub registration {
     my $frontchannel_logout_uri = $client_metadata->{backchannel_logout_uri};
     my $frontchannel_logout_session_required =
       $client_metadata->{frontchannel_logout_session_required};
+    my $jwksUri = $client_metadata->{jwks_uri};
+    my $encryptedResponseAlg =
+      $client_metadata->{id_token_encrypted_response_alg};
+    my $encryptedResponseEnc =
+      $client_metadata->{id_token_encrypted_response_enc};
 
     # Register RP in global configuration
     my $conf = $self->confAcc->getConf( { raw => 1, noCache => 1 } );
@@ -2232,6 +2237,16 @@ sub registration {
           ->{oidcRPMetaDataOptionsLogoutSessionRequired} =
           $backchannel_logout_session_required;
     }
+    if ( $jwksUri and $encryptedResponseAlg ) {
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsJwksUri} =
+          $jwksUri;
+        $conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsEncryptedResponseAlg} = $encryptedResponseAlg;
+        $conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsEncryptedResponseEnc} = $encryptedResponseEnc;
+    }
+
+    # TODO "jwks" support (when jwks_uri isn't available
 
     # Exported Vars
     if (
@@ -2562,8 +2577,10 @@ sub metadata {
             userinfo_signing_alg_values_supported =>
               [qw/none HS256 HS384 HS512 RS256 RS384 RS512/],
 
-            # userinfo_encryption_alg_values_supported
-            # userinfo_encryption_enc_values_supported
+            userinfo_encryption_alg_values_supported =>
+              &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_ALG_SUPPORTED,
+            userinfo_encryption_enc_values_supported =>
+              &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_SUPPORTED,
 
             # PKCE
             code_challenge_methods_supported => [qw/plain S256/],
@@ -2776,10 +2793,12 @@ sub encryptToken {
     my $tmp = eval {
         Crypt::JWT::encode_jwt(
             payload => $token,
-            alg     => $key->{alg},
-            key     => $key,
-            enc     => $self->rpOptions->{oidcRPMetaDataOptionsEncAlgorithm}
+            alg => $self->rpOptions->{oidcRPMetaDataOptionsEncryptedResponseAlg}
+              || $key->{alg},
+            key => $key,
+            enc => $self->rpOptions->{oidcRPMetaDataOptionsEncryptedResponseEnc}
               || $self->conf->{oidcServiceEncAlgorithm}
+              || 'A128CBC-HS256'
         );
     };
     if ($@) {

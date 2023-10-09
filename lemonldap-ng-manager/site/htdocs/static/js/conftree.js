@@ -743,8 +743,9 @@ function templates(tpl,key) {
                   "title" : "oidcRPMetaDataOptionsJwksUri"
                },
                {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsEncAlgorithm",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsEncAlgorithm",
+                  "default" : "A256GCM",
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsEncryptedResponseEnc",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsEncryptedResponseEnc",
                   "select" : [
                      {
                         "k" : "",
@@ -775,7 +776,79 @@ function templates(tpl,key) {
                         "v" : "A128GCM"
                      }
                   ],
-                  "title" : "oidcRPMetaDataOptionsEncAlgorithm",
+                  "title" : "oidcRPMetaDataOptionsEncryptedResponseEnc",
+                  "type" : "select"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsEncryptedResponseAlg",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsEncryptedResponseAlg",
+                  "select" : [
+                     {
+                        "k" : "A128KW",
+                        "v" : "A128KW"
+                     },
+                     {
+                        "k" : "A192KW",
+                        "v" : "A192KW"
+                     },
+                     {
+                        "k" : "A256KW",
+                        "v" : "A256KW"
+                     },
+                     {
+                        "k" : "A128GCMKW",
+                        "v" : "A128GCMKW"
+                     },
+                     {
+                        "k" : "A192GCMKW",
+                        "v" : "A192GCMKW"
+                     },
+                     {
+                        "k" : "A256GCMKW",
+                        "v" : "A256GCMKW"
+                     },
+                     {
+                        "k" : "PBES2-HS256+A128KW",
+                        "v" : "PBES2-HS256+A128KW"
+                     },
+                     {
+                        "k" : "PBES2-HS384+A192KW",
+                        "v" : "PBES2-HS384+A192KW"
+                     },
+                     {
+                        "k" : "PBES2-HS512+A256KW",
+                        "v" : "PBES2-HS512+A256KW"
+                     },
+                     {
+                        "k" : "RSA-OAEP",
+                        "v" : "RSA-OAEP"
+                     },
+                     {
+                        "k" : "RSA-OAEP-256",
+                        "v" : "RSA-OAEP-256"
+                     },
+                     {
+                        "k" : "RSA1_5",
+                        "v" : "RSA1_5"
+                     },
+                     {
+                        "k" : "ECDH-ES",
+                        "v" : "ECDH-ES"
+                     },
+                     {
+                        "k" : "ECDH-ES+A128KW",
+                        "v" : "ECDH-ES+A128KW"
+                     },
+                     {
+                        "k" : "ECDH-ES+A192KW",
+                        "v" : "ECDH-ES+A192KW"
+                     },
+                     {
+                        "k" : "ECDH-ES+A256KW",
+                        "v" : "ECDH-ES+A256KW"
+                     }
+                  ],
+                  "title" : "oidcRPMetaDataOptionsEncryptedResponseAlg",
                   "type" : "select"
                }
             ],
