@@ -2424,7 +2424,8 @@ sub logout {
                     }
                     $self->logger->debug( "Logout token content: "
                           . JSON::to_json($logoutToken) );
-                    my $jwt  = $self->createJWT( $logoutToken, $alg, $rp );
+                    my $jwt = $self->encryptToken( $rp,
+                        $self->createJWT( $logoutToken, $alg, $rp ) );
                     my $resp = $self->ua->post(
                         $url,
                         { logout_token => $jwt },
