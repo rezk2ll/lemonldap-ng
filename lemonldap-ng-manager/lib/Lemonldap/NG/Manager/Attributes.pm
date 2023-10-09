@@ -2502,6 +2502,38 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcRPMetaDataOptionsDisplayName' => {
             'type' => 'text'
         },
+        'oidcRPMetaDataOptionsEncAlgorithm' => {
+            'select' => [ {
+                    'k' => '',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'A256CBC-HS512',
+                    'v' => 'A256CBC-HS512'
+                },
+                {
+                    'k' => 'A256GCM',
+                    'v' => 'A256GCM'
+                },
+                {
+                    'k' => 'A192CBC-HS384',
+                    'v' => 'A192CBC-HS384'
+                },
+                {
+                    'k' => 'A192GCM',
+                    'v' => 'A192GCM'
+                },
+                {
+                    'k' => 'A128CBC-HS256',
+                    'v' => 'A128CBC-HS256'
+                },
+                {
+                    'k' => 'A128GCM',
+                    'v' => 'A128GCM'
+                }
+            ],
+            'type' => 'select'
+        },
         'oidcRPMetaDataOptionsExtraClaims' => {
             'default' => {},
             'keyTest' => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
@@ -2696,6 +2728,35 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcServiceDynamicRegistrationExtraClaims' => {
             'keyTest' => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
             'type'    => 'keyTextContainer'
+        },
+        'oidcServiceEncAlgorithm' => {
+            'default' => 'A256GCM',
+            'select'  => [ {
+                    'k' => 'A256CBC-HS512',
+                    'v' => 'A256CBC-HS512'
+                },
+                {
+                    'k' => 'A256GCM',
+                    'v' => 'A256GCM'
+                },
+                {
+                    'k' => 'A192CBC-HS384',
+                    'v' => 'A192CBC-HS384'
+                },
+                {
+                    'k' => 'A192GCM',
+                    'v' => 'A192GCM'
+                },
+                {
+                    'k' => 'A128CBC-HS256',
+                    'v' => 'A128CBC-HS256'
+                },
+                {
+                    'k' => 'A128GCM',
+                    'v' => 'A128GCM'
+                }
+            ],
+            'type' => 'select'
         },
         'oidcServiceIDTokenExpiration' => {
             'default' => 3600,
