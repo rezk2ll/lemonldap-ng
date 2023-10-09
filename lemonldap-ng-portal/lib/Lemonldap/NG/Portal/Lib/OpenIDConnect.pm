@@ -58,16 +58,18 @@ use constant COMPLEX_CLAIM => {
     country        => "address",
 };
 
-use constant ENC_ALG_SUPPORTED => [qw(
-    RSA-OAEP-256 RSA-OAEP ECDH-ES+A256KW ECDH-ES PBES2-HS512+A256KW A256GCMKW A256KW
-    ECDH-ES+A192KW PBES2-HS384+A192KW A192GCMKW A192KW
-    ECDH-ES+A128KW PBES2-HS256+A128KW A128GCMKW A128KW
-    RSA1_5 dir
-)];
+use constant ENC_ALG_SUPPORTED => [ qw(
+      RSA-OAEP-256 RSA-OAEP ECDH-ES+A256KW ECDH-ES PBES2-HS512+A256KW A256GCMKW A256KW
+      ECDH-ES+A192KW PBES2-HS384+A192KW A192GCMKW A192KW
+      ECDH-ES+A128KW PBES2-HS256+A128KW A128GCMKW A128KW
+      RSA1_5 dir
+    )
+];
 
-use constant ENC_SUPPORTED => [qw(
-    A256CBC-HS512 A256GCM A192CBC-HS384 A192GCM A128CBC-HS256 A128GCM
-)];
+use constant ENC_SUPPORTED => [ qw(
+      A256CBC-HS512 A256GCM A192CBC-HS384 A192GCM A128CBC-HS256 A128GCM
+    )
+];
 
 # PROPERTIES
 
@@ -276,19 +278,30 @@ sub load_rp {
             my $content = $self->decodeJSON( $resp->decoded_content );
             if ( $content and ref($content) eq 'HASH' and $content->{keys} ) {
                 my %keys;
-                foreach my $key (sort @{$content->{keys}}) {
-                    $keys{$key->{alg}} ||= $key;
+                foreach my $key ( sort @{ $content->{keys} } ) {
+                    next unless $key->{use} eq 'enc';
+                    $key->{alg} = 'RSA-OAEP'
+                      if !$key->{alg} and $key->{kty} eq 'RSA';
+                    if ( $key->{alg} ) {
+                        $keys{ $key->{alg} } ||= $key;
+                    }
+                    else {
+                        $self->logger->warn(
+                            'Unable to find "alg" field in RP key');
+                    }
                 }
-                foreach my $alg (@{&ENC_ALG_SUPPORTED}) {
-                    if ($keys{$alg}) {
+                foreach my $alg ( @{&ENC_ALG_SUPPORTED} ) {
+                    if ( $keys{$alg} ) {
                         require Crypt::JWT;
-                        $self->logger->debug("Found encryption key with algorith $alg");
+                        $self->logger->debug(
+                            "Found encryption key with algorith $alg");
                         $self->rpEncKey->{$rp} = $keys{$alg};
                         last;
                     }
                 }
-                unless( $self->rpEncKey->{$rp} ) {
-                    $self->logger->error("Unable to find a supported encryption key for $rp");
+                unless ( $self->rpEncKey->{$rp} ) {
+                    $self->logger->error(
+                        "Unable to find a supported encryption key for $rp");
                     $valid = 0;
                 }
             }
@@ -1031,7 +1044,8 @@ sub getUserInfo {
         return $self->decodeUserInfo($userinfo_content);
     }
     elsif ( $content_type =~ /jwt/ ) {
-        return $self->decodeJWT( $userinfo_content, $op );
+        my $jwt = $self->decryptJwt($userinfo_content);
+        return $self->decodeJWT( $jwt, $op );
     }
 }
 
@@ -2183,7 +2197,8 @@ sub _buildJwk {
       ? {
         kty => 'RSA',
         use => lc($type),
-        ( $keyId ? ( kid => $keyId ) : () ),
+        ( $type eq 'Enc' ? ( alg => 'RSA-OAEP' ) : () ),
+        ( $keyId         ? ( kid => $keyId )     : () ),
         %{ $self->key2jwks($privateKey) },
         %{ $self->getCertInfo($publicKeyOrCert) },
       }
@@ -2421,6 +2436,44 @@ sub getSidFromSession {
     my ( $self, $rp, $sessionInfo ) = @_;
     return Digest::SHA::hmac_sha256_base64(
         $sessionInfo->{_session_id} . ':' . $rp );
+}
+
+sub decryptJwt {
+    my ( $self, $jwt ) = @_;
+    my @count = split /\./, $jwt;
+    if ( $#count == 4 ) {
+        my $key = $self->conf->{oidcServicePrivateKeyEnc};
+        unless ($key) {
+            $self->logger->error('Receive an encrypted JWT but no key defined');
+            return $jwt;
+        }
+
+        require Crypt::JWT;
+        $self->logger->debug('Try to decrypt JWE token');
+        my $tmp;
+        eval {
+            $tmp = Crypt::JWT::decode_jwt(
+                token => $jwt,
+                key => \$key,
+            );
+        };
+        if ($@) {
+            if ( $key = $self->conf->{oidcServiceOldPrivateKeyEnc} ) {
+                eval {
+                    $tmp = Crypt::JWT::decode_jwt(
+                        token => $jwt,
+                        key => \$key,
+                    );
+                };
+            }
+            if ($@) {
+                $self->logger->error( 'Unable to decrypt JWE: ' . $@ );
+                return undef;
+            }
+        }
+        $jwt = $tmp;
+    }
+    return $jwt;
 }
 
 1;
