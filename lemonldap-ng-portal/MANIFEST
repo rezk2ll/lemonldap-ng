@@ -669,6 +669,7 @@ t/32-OIDC-Grant-Type-OAuth2-Handler-Rules.t
 t/32-OIDC-Grant-Type-Rules.t
 t/32-OIDC-Hook-GetRpConfig.t
 t/32-OIDC-Hooks.t
+t/32-OIDC-JWE.t
 t/32-OIDC-Logout-from-RP-bypass-confirm.t
 t/32-OIDC-Logout-redirect-uri-not-allowed.t
 t/32-OIDC-Macro.t
