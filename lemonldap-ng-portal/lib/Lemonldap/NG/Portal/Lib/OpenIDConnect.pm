@@ -2194,8 +2194,12 @@ sub _buildJwk {
       ? {
         kty => 'RSA',
         use => lc($type),
-        ( $type eq 'Enc' ? ( alg => 'RSA-OAEP' ) : () ),
-        ( $keyId         ? ( kid => $keyId )     : () ),
+        (
+            $type eq 'Enc'
+            ? ( alg => $self->conf->{oidcServiceEncAlgorithmAlg} )
+            : ()
+        ),
+        ( $keyId ? ( kid => $keyId ) : () ),
         %{ $self->key2jwks($privateKey) },
         %{ $self->getCertInfo($publicKeyOrCert) },
       }
@@ -2446,18 +2450,13 @@ sub decryptJwt {
         require Crypt::JWT;
         $self->logger->debug('Try to decrypt JWE token');
         my $tmp;
-        eval {
-            $tmp = Crypt::JWT::decode_jwt(
-                token => $jwt,
-                key => \$key,
-            );
-        };
+        eval { $tmp = Crypt::JWT::decode_jwt( token => $jwt, key => \$key, ); };
         if ($@) {
             if ( $key = $self->conf->{oidcServiceOldPrivateKeyEnc} ) {
                 eval {
                     $tmp = Crypt::JWT::decode_jwt(
                         token => $jwt,
-                        key => \$key,
+                        key   => \$key,
                     );
                 };
             }
