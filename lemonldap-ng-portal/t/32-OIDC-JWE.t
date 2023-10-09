@@ -161,6 +161,46 @@ ok( $res = $rp->_get( '/', query => $query, accept => 'text/html' ),
 count(1);
 my $spId = expectCookie($res);
 
+# Logout initiated by OP
+switch ('op');
+
+# Reset conf to make sure to make sure lazy loading works during logout (#3014)
+$op->p->HANDLER->checkConf(1);
+
+ok(
+    $res = $op->_get(
+        '/',
+        query  => 'logout',
+        cookie => "lemonldap=$idpId",
+        accept => 'text/html'
+    ),
+    'Query OP for logout'
+);
+count(1);
+expectOK($res);
+
+# Test if logout is done
+ok(
+    $res = $op->_get(
+        '/', cookie => "lemonldap=$idpId",
+    ),
+    'Test if user is reject on OP'
+);
+count(1);
+expectReject($res);
+
+switch ('rp');
+ok(
+    $res = $rp->_get(
+        '/',
+        cookie => "lemonldap=$spId",
+        accept => 'text/html'
+    ),
+    'Test if user is reject on RP'
+);
+count(1);
+expectRedirection( $res, qr#http://auth.op.com(/oauth2/authorize)\?(.*)$# );
+
 clean_sessions();
 done_testing( count() );
 
