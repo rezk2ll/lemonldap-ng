@@ -1084,12 +1084,12 @@ sub relayLogout {
 
     my $logoutRequest = $self->buildLogoutRequest($ticket);
 
+    $self->logger->debug("Sending back-channel LogoutRequest to $service");
     my $response = $self->ua->post(
         $service,
         { logoutRequest => $logoutRequest },
         "Content-Type" => 'application/x-www-form-urlencoded'
     );
-    $self->logger->debug("Sending back-channel LogoutRequest to $service");
 
     if ( $response->is_success ) {
         $self->logger->debug("CAS back-channel logout to $service OK");
