@@ -784,42 +784,6 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsEncryptedResponseAlg",
                   "select" : [
                      {
-                        "k" : "A128KW",
-                        "v" : "A128KW"
-                     },
-                     {
-                        "k" : "A192KW",
-                        "v" : "A192KW"
-                     },
-                     {
-                        "k" : "A256KW",
-                        "v" : "A256KW"
-                     },
-                     {
-                        "k" : "A128GCMKW",
-                        "v" : "A128GCMKW"
-                     },
-                     {
-                        "k" : "A192GCMKW",
-                        "v" : "A192GCMKW"
-                     },
-                     {
-                        "k" : "A256GCMKW",
-                        "v" : "A256GCMKW"
-                     },
-                     {
-                        "k" : "PBES2-HS256+A128KW",
-                        "v" : "PBES2-HS256+A128KW"
-                     },
-                     {
-                        "k" : "PBES2-HS384+A192KW",
-                        "v" : "PBES2-HS384+A192KW"
-                     },
-                     {
-                        "k" : "PBES2-HS512+A256KW",
-                        "v" : "PBES2-HS512+A256KW"
-                     },
-                     {
                         "k" : "RSA-OAEP",
                         "v" : "RSA-OAEP"
                      },
