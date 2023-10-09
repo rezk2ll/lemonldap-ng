@@ -2502,8 +2502,77 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcRPMetaDataOptionsDisplayName' => {
             'type' => 'text'
         },
-        'oidcRPMetaDataOptionsEncAlgorithm' => {
+        'oidcRPMetaDataOptionsEncryptedResponseAlg' => {
             'select' => [ {
+                    'k' => 'A128KW',
+                    'v' => 'A128KW'
+                },
+                {
+                    'k' => 'A192KW',
+                    'v' => 'A192KW'
+                },
+                {
+                    'k' => 'A256KW',
+                    'v' => 'A256KW'
+                },
+                {
+                    'k' => 'A128GCMKW',
+                    'v' => 'A128GCMKW'
+                },
+                {
+                    'k' => 'A192GCMKW',
+                    'v' => 'A192GCMKW'
+                },
+                {
+                    'k' => 'A256GCMKW',
+                    'v' => 'A256GCMKW'
+                },
+                {
+                    'k' => 'PBES2-HS256+A128KW',
+                    'v' => 'PBES2-HS256+A128KW'
+                },
+                {
+                    'k' => 'PBES2-HS384+A192KW',
+                    'v' => 'PBES2-HS384+A192KW'
+                },
+                {
+                    'k' => 'PBES2-HS512+A256KW',
+                    'v' => 'PBES2-HS512+A256KW'
+                },
+                {
+                    'k' => 'RSA-OAEP',
+                    'v' => 'RSA-OAEP'
+                },
+                {
+                    'k' => 'RSA-OAEP-256',
+                    'v' => 'RSA-OAEP-256'
+                },
+                {
+                    'k' => 'RSA1_5',
+                    'v' => 'RSA1_5'
+                },
+                {
+                    'k' => 'ECDH-ES',
+                    'v' => 'ECDH-ES'
+                },
+                {
+                    'k' => 'ECDH-ES+A128KW',
+                    'v' => 'ECDH-ES+A128KW'
+                },
+                {
+                    'k' => 'ECDH-ES+A192KW',
+                    'v' => 'ECDH-ES+A192KW'
+                },
+                {
+                    'k' => 'ECDH-ES+A256KW',
+                    'v' => 'ECDH-ES+A256KW'
+                }
+            ],
+            'type' => 'select'
+        },
+        'oidcRPMetaDataOptionsEncryptedResponseEnc' => {
+            'default' => 'A256GCM',
+            'select'  => [ {
                     'k' => '',
                     'v' => 'None'
                 },
@@ -2729,7 +2798,76 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'keyTest' => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
             'type'    => 'keyTextContainer'
         },
-        'oidcServiceEncAlgorithm' => {
+        'oidcServiceEncAlgorithmAlg' => {
+            'default' => 'RSA-OAEP',
+            'select'  => [ {
+                    'k' => 'A128KW',
+                    'v' => 'A128KW'
+                },
+                {
+                    'k' => 'A192KW',
+                    'v' => 'A192KW'
+                },
+                {
+                    'k' => 'A256KW',
+                    'v' => 'A256KW'
+                },
+                {
+                    'k' => 'A128GCMKW',
+                    'v' => 'A128GCMKW'
+                },
+                {
+                    'k' => 'A192GCMKW',
+                    'v' => 'A192GCMKW'
+                },
+                {
+                    'k' => 'A256GCMKW',
+                    'v' => 'A256GCMKW'
+                },
+                {
+                    'k' => 'PBES2-HS256+A128KW',
+                    'v' => 'PBES2-HS256+A128KW'
+                },
+                {
+                    'k' => 'PBES2-HS384+A192KW',
+                    'v' => 'PBES2-HS384+A192KW'
+                },
+                {
+                    'k' => 'PBES2-HS512+A256KW',
+                    'v' => 'PBES2-HS512+A256KW'
+                },
+                {
+                    'k' => 'RSA-OAEP',
+                    'v' => 'RSA-OAEP'
+                },
+                {
+                    'k' => 'RSA-OAEP-256',
+                    'v' => 'RSA-OAEP-256'
+                },
+                {
+                    'k' => 'RSA1_5',
+                    'v' => 'RSA1_5'
+                },
+                {
+                    'k' => 'ECDH-ES',
+                    'v' => 'ECDH-ES'
+                },
+                {
+                    'k' => 'ECDH-ES+A128KW',
+                    'v' => 'ECDH-ES+A128KW'
+                },
+                {
+                    'k' => 'ECDH-ES+A192KW',
+                    'v' => 'ECDH-ES+A192KW'
+                },
+                {
+                    'k' => 'ECDH-ES+A256KW',
+                    'v' => 'ECDH-ES+A256KW'
+                }
+            ],
+            'type' => 'select'
+        },
+        'oidcServiceEncAlgorithmEnc' => {
             'default' => 'A256GCM',
             'select'  => [ {
                     'k' => 'A256CBC-HS512',

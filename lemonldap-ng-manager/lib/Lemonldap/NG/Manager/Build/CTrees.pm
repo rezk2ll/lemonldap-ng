@@ -267,7 +267,8 @@ sub cTrees {
                             'oidcRPMetaDataOptionsAuthnLevel',
                             'oidcRPMetaDataOptionsRule',
                             'oidcRPMetaDataOptionsJwksUri',
-                            'oidcRPMetaDataOptionsEncAlgorithm',
+                            'oidcRPMetaDataOptionsEncryptedResponseEnc',
+                            'oidcRPMetaDataOptionsEncryptedResponseAlg',
                         ]
                     },
                     {
@@ -347,9 +348,7 @@ sub cTrees {
             {
                 title => 'casAppMetaDataOptionsDisplay',
                 form  => 'simpleInputContainer',
-                nodes => [
-                    'casAppMetaDataOptionsDisplayName',
-                ],
+                nodes => [ 'casAppMetaDataOptionsDisplayName', ],
             },
             'casAppMetaDataMacros',
         ],
