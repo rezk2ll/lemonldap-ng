@@ -2042,8 +2042,8 @@ sub userInfo {
         return $self->p->sendJSONresponse( $req, $userinfo_response );
     }
     else {
-        my $userinfo_jwt =
-          $self->createJWT( $userinfo_response, $userinfo_sign_alg, $rp );
+        my $userinfo_jwt = $self->encryptToken( $rp,
+            $self->createJWT( $userinfo_response, $userinfo_sign_alg, $rp ) );
         $self->logger->debug("Return UserInfo as JWT: $userinfo_jwt");
         return [
             200,
@@ -2769,14 +2769,21 @@ sub _generateIDToken {
 
 sub encryptToken {
     my ( $self, $rp, $token ) = @_;
-    if ( my $key = $self->rpEncKey->{$rp} ) {
-        $token = Crypt::JWT::encode_jwt(
+    my $key = $self->rpEncKey->{$rp};
+    return $token unless $key;
+    $self->logger->debug('Encrypt JWT token');
+    my $tmp = eval {
+        Crypt::JWT::encode_jwt(
             payload => $token,
             alg     => $key->{alg},
             key     => $key,
             enc     => $self->rpOptions->{oidcRPMetaDataOptionsEncAlgorithm}
               || $self->conf->{oidcServiceEncAlgorithm}
         );
+    };
+    if ($@) {
+        $self->logger->error("Unable to encrypt token: $@");
+        return undef;
     }
     return $token;
 }
