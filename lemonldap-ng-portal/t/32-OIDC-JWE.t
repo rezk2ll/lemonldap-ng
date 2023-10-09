@@ -67,9 +67,11 @@ LWP::Protocol::PSGI->register(
         ok( $res->[0] == 200, '  Response is 200' );
         count(3);
         if ( $url !~ /blogout/ ) {
-            ok( getHeader( $res, 'Content-Type' ) =~ m#^application/(?:json|jwt)#,
-                '  Content is JSON' )
-              or explain( $res->[1], 'Content-Type => application/json' );
+            ok(
+                getHeader( $res, 'Content-Type' ) =~
+                  m#^application/(?:json|jwt)#,
+                '  Content is JSON'
+            ) or explain( $res->[1], 'Content-Type => application/json' );
             count(1);
         }
         switch ( $host eq 'rp' ? 'op' : 'rp' );
@@ -77,129 +79,143 @@ LWP::Protocol::PSGI->register(
     }
 );
 
-# Initialization
-ok( $op = op(), 'OP portal' );
+SKIP: {
 
-ok( $res = $op->_get('/oauth2/jwks'), 'Get JWKS,     endpoint /oauth2/jwks' );
-expectOK($res);
-my $jwks = $res->[2]->[0];
+    eval { require Crypt::JWT };
+    if ($@) {
+        count(1);
+        skip 'Crypt::JWT unavailable', 1;
+    }
 
-ok(
-    $res = $op->_get('/.well-known/openid-configuration'),
-    'Get metadata, endpoint /.well-known/openid-configuration'
-);
-expectOK($res);
-my $metadata = $res->[2]->[0];
-count(3);
+    # Initialization
+    ok( $op = op(), 'OP portal' );
 
-switch ('rp');
-&Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-ok( $rp = rp( $jwks, $metadata ), 'RP portal' );
-count(1);
+    ok(
+        $res = $op->_get('/oauth2/jwks'),
+        'Get JWKS,     endpoint /oauth2/jwks'
+    );
+    expectOK($res);
+    my $jwks = $res->[2]->[0];
 
-# Verify that RP published its keys
-ok( $res = $rp->_get('/oauth2/jwks'), 'RP publish its keys' );
-my $rpKeys = expectJSON($res);
-my $rpEncKey;
-ok( (
-              ref($rpKeys)
-          and ref( $rpKeys->{keys} ) eq 'ARRAY'
-          and $rpEncKey = $rpKeys->{keys}->[0]
-    ),
-    'Get RP encryption key'
-);
-count(2);
+    ok(
+        $res = $op->_get('/.well-known/openid-configuration'),
+        'Get metadata, endpoint /.well-known/openid-configuration'
+    );
+    expectOK($res);
+    my $metadata = $res->[2]->[0];
+    count(3);
 
-# Query RP for auth
-ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth RP request' );
-count(1);
-my ( $url, $query ) =
-  expectRedirection( $res, qr#http://auth.op.com(/oauth2/authorize)\?(.*)$# );
+    switch ('rp');
+    &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
+    ok( $rp = rp( $jwks, $metadata ), 'RP portal' );
+    count(1);
 
-# Push request to OP
-switch ('op');
-ok( $res = $op->_get( $url, query => $query, accept => 'text/html' ),
-    "Push request to OP,         endpoint $url" );
-count(1);
-expectOK($res);
+    # Verify that RP published its keys
+    ok( $res = $rp->_get('/oauth2/jwks'), 'RP publish its keys' );
+    my $rpKeys = expectJSON($res);
+    my $rpEncKey;
+    ok( (
+                  ref($rpKeys)
+              and ref( $rpKeys->{keys} ) eq 'ARRAY'
+              and $rpEncKey = $rpKeys->{keys}->[0]
+        ),
+        'Get RP encryption key'
+    );
+    count(2);
 
-# Try to authenticate to OP
-$query = "user=french&password=french&$query";
-ok(
-    $res = $op->_post(
-        $url,
-        IO::String->new($query),
-        accept => 'text/html',
-        length => length($query),
-    ),
-    "Post authentication,        endpoint $url"
-);
-count(1);
-my $idpId = expectCookie($res);
-my ( $host, $tmp );
-( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
+    # Query RP for auth
+    ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth RP request' );
+    count(1);
+    my ( $url, $query ) =
+      expectRedirection( $res,
+        qr#http://auth.op.com(/oauth2/authorize)\?(.*)$# );
 
-ok(
-    $res = $op->_post(
-        $url,
-        IO::String->new($query),
-        accept => 'text/html',
-        cookie => "lemonldap=$idpId",
-        length => length($query),
-    ),
-    "Post confirmation,          endpoint $url"
-);
-count(1);
+    # Push request to OP
+    switch ('op');
+    ok( $res = $op->_get( $url, query => $query, accept => 'text/html' ),
+        "Push request to OP,         endpoint $url" );
+    count(1);
+    expectOK($res);
 
-($query) = expectRedirection( $res, qr#^http://auth.rp.com/?\?(.*)$# );
+    # Try to authenticate to OP
+    $query = "user=french&password=french&$query";
+    ok(
+        $res = $op->_post(
+            $url,
+            IO::String->new($query),
+            accept => 'text/html',
+            length => length($query),
+        ),
+        "Post authentication,        endpoint $url"
+    );
+    count(1);
+    my $idpId = expectCookie($res);
+    my ( $host, $tmp );
+    ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
 
-# Push OP response to RP
-switch ('rp');
+    ok(
+        $res = $op->_post(
+            $url,
+            IO::String->new($query),
+            accept => 'text/html',
+            cookie => "lemonldap=$idpId",
+            length => length($query),
+        ),
+        "Post confirmation,          endpoint $url"
+    );
+    count(1);
 
-ok( $res = $rp->_get( '/', query => $query, accept => 'text/html' ),
-    'Call openidconnectcallback on RP' );
-count(1);
-my $spId = expectCookie($res);
+    ($query) = expectRedirection( $res, qr#^http://auth.rp.com/?\?(.*)$# );
 
-# Logout initiated by OP
-switch ('op');
+    # Push OP response to RP
+    switch ('rp');
 
-# Reset conf to make sure to make sure lazy loading works during logout (#3014)
-$op->p->HANDLER->checkConf(1);
+    ok( $res = $rp->_get( '/', query => $query, accept => 'text/html' ),
+        'Call openidconnectcallback on RP' );
+    count(1);
+    my $spId = expectCookie($res);
 
-ok(
-    $res = $op->_get(
-        '/',
-        query  => 'logout',
-        cookie => "lemonldap=$idpId",
-        accept => 'text/html'
-    ),
-    'Query OP for logout'
-);
-count(1);
-expectOK($res);
+    # Logout initiated by OP
+    switch ('op');
 
-# Test if logout is done
-ok(
-    $res = $op->_get(
-        '/', cookie => "lemonldap=$idpId",
-    ),
-    'Test if user is reject on OP'
-);
-count(1);
-expectReject($res);
+ # Reset conf to make sure to make sure lazy loading works during logout (#3014)
+    $op->p->HANDLER->checkConf(1);
 
-switch ('rp');
-ok(
-    $res = $rp->_get(
-        '/',
-        cookie => "lemonldap=$spId",
-        accept => 'text/html'
-    ),
-    'Test if user is reject on RP'
-);
-count(1);
-expectRedirection( $res, qr#http://auth.op.com(/oauth2/authorize)\?(.*)$# );
+    ok(
+        $res = $op->_get(
+            '/',
+            query  => 'logout',
+            cookie => "lemonldap=$idpId",
+            accept => 'text/html'
+        ),
+        'Query OP for logout'
+    );
+
+    count(1);
+    expectOK($res);
+
+    # Test if logout is done
+    ok(
+        $res = $op->_get(
+            '/', cookie => "lemonldap=$idpId",
+        ),
+        'Test if user is reject on OP'
+    );
+    count(1);
+    expectReject($res);
+
+    switch ('rp');
+    ok(
+        $res = $rp->_get(
+            '/',
+            cookie => "lemonldap=$spId",
+            accept => 'text/html'
+        ),
+        'Test if user is reject on RP'
+    );
+    count(1);
+    expectRedirection( $res, qr#http://auth.op.com(/oauth2/authorize)\?(.*)$# );
+}
 
 clean_sessions();
 done_testing( count() );
