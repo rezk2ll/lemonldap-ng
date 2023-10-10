@@ -2445,13 +2445,13 @@ sub decryptJwt {
     my @count = split /\./, $jwt;
     if ( $#count == 4 ) {
         my $key = $self->conf->{oidcServicePrivateKeyEnc};
+        $self->logger->debug("Receive an encrypted JWT: $jwt");
         unless ($key) {
             $self->logger->error('Receive an encrypted JWT but no key defined');
             return $jwt;
         }
 
         require Crypt::JWT;
-        $self->logger->debug('Receive an encrypted JWT');
         my $tmp;
         eval { $tmp = Crypt::JWT::decode_jwt( token => $jwt, key => \$key, ); };
         if ($@) {
@@ -2469,6 +2469,7 @@ sub decryptJwt {
             }
         }
         $jwt = $tmp;
+        $self->logger->debug("Decrypted JWT: $jwt");
     }
     return $jwt;
 }
