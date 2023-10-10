@@ -249,7 +249,7 @@ SKIP: {
             'SAMLRequest' );
     };
 
-    subtest "SP-initiated flow, authorized user" => sub {
+    subtest "SP-initiated flow, authorized user, with redirection" => sub {
 
         my $res;
 
