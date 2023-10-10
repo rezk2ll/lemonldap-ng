@@ -36,6 +36,10 @@ If you use `mod_remoteip <https://httpd.apache.org/docs/2.4/mod/mod_remoteip.htm
 LemonLDAP::NG will now correctly use the IP from ``mod_remoteip`` in
 ``$env->{REMOTE_ADDR}``.
 
+OpenID Connect issuer now implements ``acr_values``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The `acr_values` from OpenID Connect authorization requests can now be used to increase the authentication level required for accessing a service. If after upgrading you start noticing that users are now asked to upgrade their session when trying to access OIDC applications, you should check the `acr_values` requested by you application, and map them to the desired authentication level in `OpenID Connect Service` » `Authentication context`
 
 2.17.1
 ------
