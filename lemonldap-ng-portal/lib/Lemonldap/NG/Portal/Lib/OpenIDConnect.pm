@@ -2451,7 +2451,7 @@ sub decryptJwt {
         }
 
         require Crypt::JWT;
-        $self->logger->debug('Try to decrypt JWE token');
+        $self->logger->debug('Receive an encrypted JWT');
         my $tmp;
         eval { $tmp = Crypt::JWT::decode_jwt( token => $jwt, key => \$key, ); };
         if ($@) {
