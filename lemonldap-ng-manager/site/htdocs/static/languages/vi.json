@@ -776,7 +776,7 @@
 "oidcServiceMetaDataUserInfoURI":"Thông tin người dùng",
 "oidcServiceNewKeyIdSig":"Next signing key ID",
 "oidcServiceNewPrivateKeySig":"Future signing private key",
-"oidcServiceNewPublicKeySig":"Future signing publique key",
+"oidcServiceNewPublicKeySig":"Future signing public key",
 "oidcServiceOfflineSessionExpiration":"phiên ngoại tuyến",
 "oidcServiceOldKeyIdSig":"Previous signing key ID",
 "oidcServiceOldPrivateKeySig":"Previous signing private key",
