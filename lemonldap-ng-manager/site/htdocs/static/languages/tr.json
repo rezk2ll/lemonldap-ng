@@ -776,7 +776,7 @@
 "oidcServiceMetaDataUserInfoURI":"Kullanıcı Bilgisi",
 "oidcServiceNewKeyIdSig":"Sonraki imzalama anahtarı kimliği",
 "oidcServiceNewPrivateKeySig":"Gelecek imzalama özel anahtarı",
-"oidcServiceNewPublicKeySig":"Future signing public key",
+"oidcServiceNewPublicKeySig":"Gelecek imzalama açık anahtarı",
 "oidcServiceOfflineSessionExpiration":"Çevrimdışı oturumlar",
 "oidcServiceOldKeyIdSig":"Önceki imzalama anahtarı kimliği",
 "oidcServiceOldPrivateKeySig":"Önceki imzalama özel anahtarı",

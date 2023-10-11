@@ -776,7 +776,7 @@
 "oidcServiceMetaDataUserInfoURI":"Informação de usuário",
 "oidcServiceNewKeyIdSig":"Próximo ID da chave de assinatura",
 "oidcServiceNewPrivateKeySig":"Chave privada de assinatura futura",
-"oidcServiceNewPublicKeySig":"Future signing public key",
+"oidcServiceNewPublicKeySig":"Chave pública de assinatura futura",
 "oidcServiceOfflineSessionExpiration":"Sessões offline",
 "oidcServiceOldKeyIdSig":"ID da chave de assinatura anterior",
 "oidcServiceOldPrivateKeySig":"Chave privada de assinatura anterior",

@@ -776,7 +776,7 @@
 "oidcServiceMetaDataUserInfoURI":"Информация пользователя",
 "oidcServiceNewKeyIdSig":"Next signing key ID",
 "oidcServiceNewPrivateKeySig":"Будущий закрытый ключ для подписи",
-"oidcServiceNewPublicKeySig":"Future signing public key",
+"oidcServiceNewPublicKeySig":"Будущий открытый ключ для подписи",
 "oidcServiceOfflineSessionExpiration":"Оффлайн-сеансы",
 "oidcServiceOldKeyIdSig":"Previous signing key ID",
 "oidcServiceOldPrivateKeySig":"Предыдущий закрытый ключ подписи",
