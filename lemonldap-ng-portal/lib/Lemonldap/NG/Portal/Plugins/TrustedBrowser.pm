@@ -1,4 +1,26 @@
-# Plugin to enable "stay connected on this device" feature
+# Trusted Browser service
+# This package provides the ability to remember a browser across SSO logins
+# It is meant to be used by multiple features
+# - Auto-login (StayConnected)
+# - 2FA bypass
+#
+# Browser registration is entirely handled by this plugin, and trigger by setting
+# $req->param('stayconnected'), usually by the user clicking a checkbox.
+# Request state is handled automatically during browser registration.
+#
+# Recognition of an already registered browser is not triggered by the plugin
+# itself but by other plugins (StayConnected, 2FA engine).
+# Plugins should call 'mustChallenge' to know if they need to start a TOTP
+# challenge with the web browser. If it is the case, they run 'challenge' to
+# prepare the validation form containing the JS challenge.
+#
+# Plugins must indicate a route for the challenge form to POST to. Plugins must
+# implement that route, and in that route, call 'getKnownBrowserState' to check
+# that the browser really is trusted, and then, continue the current flow.
+#
+# Plugins are responsible for saving the request state and restoring it during
+# the recognition phase.
+#
 
 package Lemonldap::NG::Portal::Plugins::TrustedBrowser;
 
@@ -20,11 +42,9 @@ extends qw(
 
 # INTERFACE
 
-use constant beforeAuth   => 'check';
 use constant beforeLogout => 'logout';
 
 # INITIALIZATION
-has rule => ( is => 'rw', default => sub { 0 } );
 has ott => (
     is      => 'rw',
     lazy    => 1,
@@ -63,50 +83,28 @@ sub init {
     my ($self) = @_;
     $self->addUnauthRoute( registerbrowser => 'storeBrowser', ['POST'] );
 
-    # Parse activation rule
-    $self->rule(
-        $self->p->buildRule( $self->conf->{stayConnected}, 'stayConnected' ) );
-    return 0 unless $self->rule;
-
     return 1;
 }
 
 # RUNNING METHODS
 
-# Registration: detect if user wants to stay connected.
-# Then ask for browser fingerprint
+# This method is called by the portal in standard auth flows
+
 sub newDevice {
     my ( $self, $req ) = @_;
 
-    my $checkLogins = $req->param('checkLogins');
-    $self->logger->debug("StayConnected: checkLogins set") if $checkLogins;
-
-    if (   $req->param('stayconnected')
-        && $self->rule->( $req, $req->sessionInfo ) )
-    {
+    if ( $req->param('stayconnected') ) {
         my $totpSecret = $self->newSecret;
-        my $token      = $self->ott->createToken( {
-                name => $req->sessionInfo->{ $self->conf->{whatToTrace} },
-                id   => $req->id,
-                sessionInfo => $req->sessionInfo,
-                totpSecret  => $totpSecret,
-                (
-                    $checkLogins
-                    ? ( history => $req->sessionInfo->{_loginHistory} )
-                    : ()
-                )
-            }
-        );
+
+        my $state = $self->_getRegisterStateTplParams( $req, $totpSecret );
         $req->response(
             $self->p->sendHtml(
                 $req,
                 '../common/registerBrowser',
                 params => {
-                    URL         => $req->urldc,
-                    TOTPSEC     => $totpSecret,
-                    TOKEN       => $token,
-                    ACTION      => '/registerbrowser',
-                    CHECKLOGINS => $checkLogins
+                    TOTPSEC => $totpSecret,
+                    ACTION  => '/registerbrowser',
+                    %$state,
                 }
             )
         );
@@ -115,166 +113,230 @@ sub newDevice {
     return PE_OK;
 }
 
-# Store data in a long-time session
+# Store TOTP secret + request state into a temporary session
+# and return relevant template parameters
+sub _getRegisterStateTplParams {
+    my ( $self, $req, $totpSecret ) = @_;
+
+    my $checkLogins = $req->param('checkLogins') || 0;
+    my $url         = $req->urldc;
+    my $token       = $self->ott->createToken( {
+            id          => $req->id,
+            sessionInfo => $req->sessionInfo,
+            totpSecret  => $totpSecret,
+        }
+    );
+    my %state = (
+        CHECKLOGINS => $checkLogins,
+        URL         => $url,
+        TOKEN       => $token,
+    );
+    return \%state;
+}
+
+# This method handles the browser response to the registerBrowser JS code
+# and persists the registration
 sub storeBrowser {
     my ( $self, $req ) = @_;
-    $req->urldc( $req->param('url') );
-    $req->mustRedirect(1);
-    if ( $self->rule->( $req, $req->sessionInfo ) ) {
-        if ( my $token = $req->param('token') ) {
-            if ( my $tmp = $self->ott->getToken($token) ) {
-                $req->sessionInfo( $tmp->{sessionInfo} );
-                $req->id( $tmp->{id} );
-                my $name = $tmp->{name};
-                if ( my $fg = $req->param('fg') ) {
-                    my $isTotp = ( $fg =~ s/^TOTP_// ) ? 1 : 0;
-                    if ( $isTotp
-                        and
-                        !$self->verifyCode( 30, 1, 6, $tmp->{totpSecret}, $fg )
-                      )
-                    {
-                        $self->logger->warn(
-                            "Failed to register device, bad TOTP");
-                    }
-                    else {
-                        my $ps = $self->newConnectionSession( {
-                                _utime          => time + $self->timeout,
-                                _session_uid    => $name,
-                                _connectedSince => time,
-                                dataKeep        => $req->data->{dataToKeep},
-                                (
-                                    $isTotp
-                                    ? ( totpSecret => $tmp->{totpSecret} )
-                                    : ( fingerprint => $fg )
-                                ),
-                            },
-                        );
 
-                        # Cookie available 30 days by default
-                        $req->addCookie(
-                            $self->p->cookie(
-                                name    => $self->cookieName,
-                                value   => $ps->id,
-                                max_age => $self->timeout,
-                                secure  => $self->conf->{securedCookie},
-                            )
-                        );
-
-                        $req->sessionInfo->{_loginHistory} = $tmp->{history}
-                          if exists $tmp->{history};
-
-                        # Store connection ID in current session
-                        $self->p->updateSession( $req,
-                            { _stayConnectedSession => $ps->id } );
-                    }
-                }
-                else {
-                    $self->logger->warn("Browser did not return fingerprint");
-                }
+    if ( my $totpSecret = $self->_restoreRegisterState($req) ) {
+        my $name = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+        if ( my $fg = $req->param('fg') ) {
+            my $isTotp = ( $fg =~ s/^TOTP_// ) ? 1 : 0;
+            if ( $isTotp
+                and !$self->verifyCode( 30, 1, 6, $totpSecret, $fg ) )
+            {
+                $self->logger->warn( "Failed to register device, bad TOTP, "
+                      . "device will not be remembered" );
             }
             else {
-                $self->userLogger->error(
-                    "StayConnected called with an invalid token");
-                return $self->p->do( $req, [ sub { PE_ERROR } ] );
+                my $ps = $self->newConnectionSession( { (
+                            _session_uid => $name,
+                            $isTotp
+                            ? ( totpSecret => $totpSecret )
+                            : ( fingerprint => $fg )
+                        ),
+                    },
+                );
+
+                # Cookie available 30 days by default
+                $req->addCookie(
+                    $self->p->cookie(
+                        name    => $self->cookieName,
+                        value   => $ps->id,
+                        max_age => $self->timeout,
+                        secure  => $self->conf->{securedCookie},
+                    )
+                );
+
+                # Store connection ID in current session
+                $self->p->updateSession( $req,
+                    { _stayConnectedSession => $ps->id } );
             }
         }
         else {
-            $self->userLogger->error('StayConnected called without token');
+            $self->logger->warn( "Browser did not return fingerprint, "
+                  . "browser will not be remembered" );
         }
     }
     else {
-        $self->userLogger->error('StayConnected not allowed');
+        $self->userLogger->error(
+            "Cannot restore trusted browser registration state");
+        return $self->p->do( $req, [ sub { PE_ERROR } ] );
     }
 
-    # Return persistent connection cookie
+    # Resume normal login flow
+    $req->mustRedirect(1);
     return $self->p->do( $req,
         [ 'buildCookie', @{ $self->p->endAuth }, sub { PE_OK } ] );
 }
 
-# Check for:
-#  - persistent connection cookie
-#  - valid session
-#  - uniq id is kept
-# Then delete authentication methods from "steps" array.
-sub check {
+sub _restoreRegisterState {
     my ( $self, $req ) = @_;
-    if ( $self->rule->( $req, $req->sessionInfo ) ) {
-        if ( my $cid = $req->cookies->{ $self->cookieName } ) {
-            my $ps = Lemonldap::NG::Common::Session->new(
-                storageModule        => $self->conf->{globalStorage},
-                storageModuleOptions => $self->conf->{globalStorageOptions},
-                kind                 => "SSO",
-                id                   => $cid,
-            );
-            if (    $ps
-                and my $uid = $ps->data->{_session_uid}
-                and time() < $ps->data->{_utime} )
-            {
-                $self->logger->debug('Persistent connection found');
-                if (    my $fg = $req->param('fg')
-                    and my $token = $req->param('token') )
-                {
-                    if ( my $prm = $self->ott->getToken($token) ) {
-                        $req->data->{dataKeep} = $ps->data->{dataKeep};
-                        $self->logger->debug('Persistent connection found');
-                        if ( $self->conf->{stayConnectedBypassFG} ) {
-                            return $self->skipAuthentication( $req, $uid, $cid,
-                                0 );
-                        }
-                        else {
-                            if ( $fg =~ s/^TOTP_// ) {
-                                return $self->skipAuthentication( $req, $uid,
-                                    $cid, 1 )
-                                  if $self->verifyCode( 30, 1, 6,
-                                    $ps->data->{totpSecret}, $fg ) > 0;
-                            }
-                            elsif ( $fg eq $ps->data->{fingerprint} ) {
-                                return $self->skipAuthentication( $req, $uid,
-                                    $cid, 1 );
-                            }
-                            $self->userLogger->warn(
-                                "Fingerprint changed for $uid");
-                            $ps->remove;
-                            $self->logout($req);
-                        }
-                    }
-                    else {
-                        $self->userLogger->notice(
-                            "StayConnected: expired token for $uid");
-                    }
-                }
-                else {
-                    my $token = $self->ott->createToken( $req->parameters );
-                    $req->response(
-                        $self->p->sendHtml(
-                            $req,
-                            '../common/registerBrowser',
-                            params => {
-                                TOKEN  => $token,
-                                ACTION => '#',
-                            }
-                        )
-                    );
-                    return PE_SENDRESPONSE;
-                }
-            }
-            else {
-                $self->userLogger->notice('Persistent connection expired');
-                unless ( $ps->{error} ) {
-                    $self->logger->debug(
-                        'Persistent connection session id = ' . $ps->{id} );
-                    $self->logger->debug(
-                        'Persistent connection session _utime = '
-                          . $ps->data->{_utime} );
-                    $ps->remove;
-                }
-            }
+
+    if ( my $token = $req->param('token') ) {
+        if ( my $saved_state = $self->ott->getToken($token) ) {
+
+            # checkLogins is restored automatically as a request parameter
+            $req->urldc( $req->param('url') );
+            $req->sessionInfo( $saved_state->{sessionInfo} );
+            $req->id( $saved_state->{id} );
+            return $saved_state->{totpSecret};
+        }
+        else {
+            $self->userLogger->error("Invalid trusted browser state token");
         }
     }
     else {
-        $self->userLogger->error('StayConnected not allowed');
+        $self->userLogger->error('Missing trusted browser state token');
     }
-    return PE_OK;
+    return;
+
+}
+
+sub getTrustedBrowserSessionFromReq {
+    my ( $self, $req ) = @_;
+
+    if ( my $cid = $req->cookies->{ $self->cookieName } ) {
+        return $self->getTrustedBrowserSession($cid);
+    }
+    else {
+        $self->logger->debug("No trusted browser cookie was sent");
+    }
+    return;
+}
+
+sub getTrustedBrowserSession {
+    my ( $self, $cid ) = @_;
+    my $ps = Lemonldap::NG::Common::Session->new(
+        storageModule        => $self->conf->{globalStorage},
+        storageModuleOptions => $self->conf->{globalStorageOptions},
+        kind                 => "SSO",
+        id                   => $cid,
+    );
+    if ( $ps->data->{_session_uid} and ( time() < $ps->data->{_utime} ) ) {
+        $self->logger->debug('Persistent connection found');
+        return $ps;
+    }
+    else {
+        $self->userLogger->notice('Persistent connection expired');
+        unless ( $ps->{error} ) {
+            $self->logger->debug(
+                'Persistent connection session id = ' . $ps->{id} );
+            $self->logger->debug( 'Persistent connection session _utime = '
+                  . $ps->data->{_utime} );
+            $ps->remove;
+        }
+    }
+    return;
+}
+
+sub _hasFingerprintParams {
+    my ( $self, $req ) = @_;
+    return ( $req->param('fg') and $req->param('token') );
+}
+
+sub mustChallenge {
+    my ( $self, $req, $expected_user ) = @_;
+
+    my $ps = $self->getTrustedBrowserSessionFromReq($req);
+    if ( $ps and not( $self->_hasFingerprintParams($req) ) ) {
+        if ($expected_user) {
+            return (  $ps->data->{_session_uid}
+                  and $ps->data->{_session_uid} eq $expected_user );
+        }
+        else {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+sub getKnownBrowserState {
+    my ( $self, $req ) = @_;
+
+    my $ps = $self->getTrustedBrowserSessionFromReq($req);
+    if ( $ps and $self->_hasFingerprintParams($req) ) {
+        my $fg    = $req->param('fg');
+        my $token = $req->param('token');
+        my $uid   = $ps->data->{_session_uid};
+
+        my $token_data = $self->ott->getToken($token);
+        return unless $token_data;
+
+        if ( $self->checkFingerprint( $req, $ps, $uid, $fg ) ) {
+            return {
+                _trustedUser          => $uid,
+                _stayConnectedSession => $ps->id,
+                data                  => $token_data,
+            };
+        }
+        else {
+            $self->userLogger->warn("Fingerprint changed for $uid");
+            $ps->remove;
+            $self->logout($req);
+        }
+    }
+    else {
+        $self->logger->debug("No fingerprint or token parameter was sent");
+    }
+    return;
+}
+
+sub checkFingerprint {
+    my ( $self, $req, $ps, $uid, $fg ) = @_;
+    $self->logger->debug('Persistent connection found');
+    if ( $self->conf->{stayConnectedBypassFG} ) {
+        return 1;
+    }
+    else {
+        if ( $fg =~ s/^TOTP_// ) {
+            return 1
+              if (
+                $self->verifyCode( 30, 1, 6, $ps->data->{totpSecret}, $fg ) >
+                0 );
+        }
+        elsif ( $fg eq $ps->data->{fingerprint} ) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+sub challenge {
+    my ( $self, $req, $action, $info ) = @_;
+    my $token = $self->ott->createToken($info);
+    $req->response(
+        $self->p->sendHtml(
+            $req,
+            '../common/registerBrowser',
+            params => {
+                TOKEN  => $token,
+                ACTION => $action,
+            }
+        )
+    );
+    return PE_SENDRESPONSE;
 }
 
 sub logout {
@@ -291,28 +353,13 @@ sub logout {
     # Try to clean stayconnected cookie
     my $cid = $req->sessionInfo->{_stayConnectedSession};
     if ($cid) {
-        my $ps = Lemonldap::NG::Common::Session->new(
-            storageModule        => $self->conf->{globalStorage},
-            storageModuleOptions => $self->conf->{globalStorageOptions},
-            kind                 => "SSO",
-            id                   => $cid,
-        );
+        my $ps = $self->getTrustedBrowserSession($cid);
         if ($ps) {
             $self->logger->debug("Cleaning up StayConnected session $cid");
             $ps->remove;
         }
     }
 
-    return PE_OK;
-}
-
-# Remove authentication steps from the login flow
-sub skipAuthentication {
-    my ( $self, $req, $uid, $cid, $fp ) = @_;
-
-    # FIXME
-    $req->data->{_trustedUser}          = $uid;
-    $req->data->{_stayConnectedSession} = $cid;
     return PE_OK;
 }
 
@@ -324,15 +371,8 @@ sub removeExistingSessions {
       $self->module->searchOn( $self->moduleOpts, '_session_uid', $uid );
 
     foreach ( keys %{ $sessions || {} } ) {
-        if (
-            my $ps = Lemonldap::NG::Common::Session->new(
-                storageModule        => $self->conf->{globalStorage},
-                storageModuleOptions => $self->conf->{globalStorageOptions},
-                kind                 => "SSO",
-                id                   => $_,
-            )
-          )
-        {
+        if ( my $ps = $self->getTrustedBrowserSession($_) ) {
+
             # If this is a StayConnected session, remove it
             $ps->remove if $ps->{data}->{_connectedSince};
             $self->logger->debug("StayConnected removed session $_");
@@ -346,6 +386,8 @@ sub removeExistingSessions {
 sub newConnectionSession {
     my ( $self, $info ) = @_;
 
+    $info ||= {};
+
     # Remove existing sessions
     if ( $self->singleSession ) {
         $self->removeExistingSessions( $info->{_session_uid} );
@@ -355,7 +397,11 @@ sub newConnectionSession {
         storageModule        => $self->conf->{globalStorage},
         storageModuleOptions => $self->conf->{globalStorageOptions},
         kind                 => "SSO",
-        info                 => $info,
+        info                 => {
+            _utime          => time + $self->timeout,
+            _connectedSince => time,
+            %$info,
+        }
     );
 }
 

@@ -17,33 +17,47 @@ extends qw(
 # INTERFACE
 
 use constant beforeAuth => 'check';
+has rule => ( is => 'rw', default => sub { 0 } );
 
 # INITIALIZATION
 sub init {
     my ($self) = @_;
+
+    # Parse activation rule
+    $self->rule(
+        $self->p->buildRule( $self->conf->{stayConnected}, 'stayConnected' ) );
+    return 0 unless $self->rule;
+
     return 1;
 }
 
 # Check for:
-#  - persistent connection cookie
-#  - valid session
-#  - uniq id is kept
-# Then delete authentication methods from "steps" array.
 sub check {
     my ( $self, $req ) = @_;
-    if ( my $uid = $req->data->{_trustedUser} ) {
-        return $self->skipAuthentication($req);
+
+    if ( !$self->rule->( $req, $req->sessionInfo ) ) {
+        $self->logger->debug("Stay Connected not allowed");
+    }
+
+    my $trustedBrowser = $self->p->_trustedBrowser;
+
+    # Run TrustedBrowser challenge
+    if ( $trustedBrowser->mustChallenge($req) ) {
+        return $trustedBrowser->challenge( $req, '#');
+    }
+    elsif ( my $state = $trustedBrowser->getKnownBrowserState($req) ) {
+        return $self->skipAuthentication( $req, $state );
     }
     return PE_OK;
 }
 
 # Remove authentication steps from the login flow
 sub skipAuthentication {
-    my ( $self, $req ) = @_;
-    my $uid = $req->data->{_trustedUser};
+    my ( $self, $req, $state ) = @_;
+    my $uid = $state->{_trustedUser};
     $req->user($uid);
     $req->sessionInfo->{_stayConnectedSession} =
-      $req->data->{_stayConnectedSession};
+      $state->{_stayConnectedSession};
     my @steps =
       grep { ref $_ or $_ !~ /^(?:extractFormInfo|authenticate)$/ }
       @{ $req->steps };
