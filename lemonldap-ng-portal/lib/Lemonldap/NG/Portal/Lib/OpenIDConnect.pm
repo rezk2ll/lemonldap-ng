@@ -11,8 +11,7 @@ use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
 use Crypt::JWT qw(encode_jwt decode_jwt);
 use Digest::SHA
-  qw/sha1 hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64 sha256 sha384
-  sha512 sha256_base64 sha384_base64 sha512_base64/;
+  qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::UserAgent;
@@ -1985,24 +1984,16 @@ sub _forceType {
 sub createJWT {
     my ( $self, $payload, $alg, $rp, $type ) = @_;
 
-    # Payload encoding
-    my $jwt_payload = encode_base64url( to_json($payload), "" );
+    my @keyArg;
 
-    # JWT header
-    my $typ             = $type || "JWT";
-    my $jwt_header_hash = { typ => $typ, alg => $alg };
-    if ( $alg eq "RS256" or $alg eq "RS384" or $alg eq "RS512" ) {
-        $jwt_header_hash->{kid} = $self->conf->{oidcServiceKeyIdSig}
-          if $self->conf->{oidcServiceKeyIdSig};
-    }
-    my $jwt_header = encode_base64url( to_json($jwt_header_hash), "" );
-
-    if ( $alg eq "none" ) {
-
-        return $jwt_header . "." . $jwt_payload;
+    # Set Cript::JWT arguments depending on "alg"
+    #  a) "none"
+    if ( $alg eq 'none' ) {
+        @keyArg = ( allow_none => 1 );
     }
 
-    if ( $alg eq "HS256" or $alg eq "HS384" or $alg eq "HS512" ) {
+    #  b) HMAC algorithms, key is the client secret
+    elsif ( $alg =~ /^HS/ ) {
 
         # Sign with client secret
         my $client_secret =
@@ -2012,65 +2003,33 @@ sub createJWT {
                 "Algorithm $alg needs a Client Secret to sign JWT");
             return;
         }
-
-        my $digest;
-
-        if ( $alg eq "HS256" ) {
-            $digest = hmac_sha256_base64( $jwt_header . "." . $jwt_payload,
-                $client_secret );
-        }
-
-        if ( $alg eq "HS384" ) {
-            $digest = hmac_sha384_base64( $jwt_header . "." . $jwt_payload,
-                $client_secret );
-        }
-
-        if ( $alg eq "HS512" ) {
-            $digest = hmac_sha512_base64( $jwt_header . "." . $jwt_payload,
-                $client_secret );
-        }
-
-        # Convert + and / to get Base64 URL valid (RFC 4648)
-        $digest =~ s/\+/-/g;
-        $digest =~ s/\//_/g;
-        $digest =~ s/=+$//g;
-
-        return $jwt_header . "." . $jwt_payload . "." . $digest;
+        @keyArg = ( key => $client_secret );
     }
 
-    elsif ( $alg eq "RS256" or $alg eq "RS384" or $alg eq "RS512" ) {
-
-        # Get signing private key
+    #  c) asymetric algorithms
+    else {
         my $priv_key = $self->conf->{oidcServicePrivateKeySig};
         unless ($priv_key) {
             $self->logger->error(
                 "Algorithm $alg needs a Private Key to sign JWT");
             return;
         }
-
-        my $rsa_priv = Crypt::OpenSSL::RSA->new_private_key($priv_key);
-
-        if ( $alg eq "RS256" ) {
-            $rsa_priv->use_sha256_hash;
-        }
-
-        if ( $alg eq "RS384" ) {
-            $rsa_priv->use_sha384_hash;
-        }
-
-        if ( $alg eq "RS512" ) {
-            $rsa_priv->use_sha512_hash;
-        }
-
-        my $digest = encode_base64url(
-            $rsa_priv->sign( $jwt_header . "." . $jwt_payload ) );
-
-        return $jwt_header . "." . $jwt_payload . "." . $digest;
+        @keyArg = ( key => \$priv_key, );
     }
 
-    $self->logger->debug("Algorithm $alg not supported to sign JWT");
-
-    return;
+    # Due to Crypt:JWT utf8 bugs, encode payload here
+    my $jwt = eval {
+        encode_jwt(
+            payload => to_json($payload),
+            alg     => $alg,
+            @keyArg,
+        );
+    };
+    if ($@) {
+        $self->logger->error("Unable to build JWT: $@");
+        return;
+    }
+    return $jwt;
 }
 
 # Return ID Token
