@@ -324,15 +324,10 @@ sub run {
             }
 
             if ( $oidc_request->{'request'} ) {
-                if (
-                    $self->verifyJWTSignature(
-                        $oidc_request->{'request'},
-                        undef, $rp
-                    )
-                  )
+                if ( my $request =
+                    $self->decodeJWT( $oidc_request->{'request'}, undef, $rp ) )
                 {
                     $self->logger->debug("JWT signature request verified");
-                    my $request = getJWTPayload( $oidc_request->{'request'} );
 
                     # Override OIDC parameters by request content
                     foreach ( keys %$request ) {
