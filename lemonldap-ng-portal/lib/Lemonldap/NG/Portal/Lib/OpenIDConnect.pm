@@ -9,6 +9,7 @@ use strict;
 use Crypt::OpenSSL::Bignum;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
+use Crypt::JWT qw(encode_jwt decode_jwt);
 use Digest::SHA
   qw/sha1 hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64 sha256 sha384
   sha512 sha256_base64 sha384_base64 sha512_base64/;
@@ -986,8 +987,7 @@ sub getUserInfo {
         return $self->decodeUserInfo($userinfo_content);
     }
     elsif ( $content_type =~ /jwt/ ) {
-        return unless $self->verifyJWTSignature( $userinfo_content, $op );
-        return getJWTPayload($userinfo_content);
+        return $self->decodeJWT( $userinfo_content, $op );
     }
 }
 
@@ -1356,7 +1356,7 @@ sub extractState {
 
 # Check signature of a JWT
 # @return boolean 1 if signature is verified, 0 else
-sub verifyJWTSignature {
+sub decodeJWT {
     my ( $self, $jwt, $op, $rp ) = @_;
 
     $self->logger->debug("Verification of JWT signature: $jwt");
@@ -1378,123 +1378,59 @@ sub verifyJWTSignature {
             $self->logger->debug( "Signature "
                   . $signature
                   . " is present but algorithm is 'none'" );
-            return 0;
+            return;
         }
         $self->logger->debug(
             "JWT algorithm is 'none', signature cannot be verified");
-        return 0;
+        return;
     }
 
-    if ( $alg eq "HS256" or $alg eq "HS384" or $alg eq "HS512" ) {
+   # For now, only OP has JWKS
+   #my $jwks =
+   #  $op ? $self->opMetadata->{$op}->{jwks} : $self->rpMetadata->{$rp}->{jwks};
+    my $jwks = $op ? $self->opMetadata->{$op}->{jwks} : undef;
 
-        # Check signature with client secret
-        my $client_secret;
-        $client_secret =
-          $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientSecret}
-          if ($op);
-        $client_secret =
-          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret}
-          if ($rp);
-
-        my $digest;
-
-        if ( $alg eq "HS256" ) {
-            $digest = hmac_sha256_base64( $signed_data, $client_secret );
-        }
-
-        if ( $alg eq "HS384" ) {
-            $digest = hmac_sha384_base64( $signed_data, $client_secret );
-        }
-
-        if ( $alg eq "HS512" ) {
-            $digest = hmac_sha512_base64( $signed_data, $client_secret );
-        }
-
-        # Convert + and / to get Base64 URL valid (RFC 4648)
-        $digest =~ s/\+/-/g;
-        $digest =~ s/\//_/g;
-
-        unless ( $digest eq $signature ) {
-            $self->logger->debug(
-                "Digest $digest not equal to signature " . $signature );
-            return 0;
-        }
-        return 1;
-    }
-
-    if ( $alg eq "RS256" or $alg eq "RS384" or $alg eq "RS512" ) {
-
-        if ($rp) {
-            $self->logger->debug("Algorithm $alg not supported");
-            return 0;
-        }
-
-        # The public key is needed
-        unless ( $self->opMetadata->{$op}->{jwks} ) {
+    unless ( $alg =~ /^HS/ ) {
+        unless ($jwks) {
             $self->logger->error(
                 "Cannot verify $alg signature: no JWKS data found");
-            return 0;
+            return;
         }
-
-        my $keys = $self->opMetadata->{$op}->{jwks}->{keys};
-        my $key_hash;
-
-        # Find Key ID associated with signature
-        my $kid = $jwt_header->{kid};
-
-        if ($kid) {
-            $self->logger->debug("Search key with id $kid");
-            foreach (@$keys) {
-                if ( $_->{kid} eq $kid ) {
-                    $key_hash = $_;
-                    last;
-                }
-            }
+        unless ($jwks->{keys}
+            and ref( $jwks->{keys} ) eq 'ARRAY'
+            and @{ $jwks->{keys} } )
+        {
+            $self->logger->error('Malformed JWKS, I need {"keys":[..keys..]}');
+            return;
         }
-        else {
-            $key_hash = shift @$keys;
-        }
-
-        unless ($key_hash) {
-            $self->logger->error("No key found in JWKS data");
-            return 0;
-        }
-
-        $self->logger->debug(
-            "Found public key parameter n: " . $key_hash->{n} );
-        $self->logger->debug(
-            "Found public key parameter e: " . $key_hash->{e} );
-
-        # Create public key
-        my $n =
-          Crypt::OpenSSL::Bignum->new_from_bin(
-            decode_base64url( $key_hash->{n} ) );
-        my $e =
-          Crypt::OpenSSL::Bignum->new_from_bin(
-            decode_base64url( $key_hash->{e} ) );
-
-        my $public_key = Crypt::OpenSSL::RSA->new_key_from_parameters( $n, $e );
-
-        if ( $alg eq "RS256" ) {
-            $public_key->use_sha256_hash;
-        }
-
-        if ( $alg eq "RS384" ) {
-            $public_key->use_sha384_hash;
-        }
-
-        if ( $alg eq "RS512" ) {
-            $public_key->use_sha512_hash;
-        }
-
-        return $public_key->verify( $signed_data,
-            decode_base64url($signature) );
     }
 
-    # Other algorithms not managed
-    $self->logger->debug("Algorithm $alg not known");
+    # Choosing keys
+    #  - if algorithm is HS{digits}, the key is the ClientSecret
+    #  - if JWS has a "kti" field in its header, use it (then replace the
+    #    "key" arg of Crypt::JWT by "kti_keys" and give the whole JWKS)
+    #  - else use jwks content
+    my @keyArg =
+      $alg =~ /^HS/
+      ? (
+        key => $op
+        ? $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientSecret}
+        : $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret}
+      )
+      : $jwt_header->{kti} ? ( kti_keys => $jwks )
+      :                      ( key => $jwks->{keys}->[0] );
 
-    return 0;
+    # Crypt::JWT has a bad utf8 decoding, that's why JSON decoding is done here
+    my $content = eval {
+        JSON::from_json(
+            decode_jwt( token => $jwt, @keyArg, decode_payload => 0 ) );
+    };
+    if ($@) {
+        $self->logger->error("Unable to verify JWT: $@");
+        $self->logger->error("Jwt was: $jwt");
+        return;
+    }
+    return $content;
 }
 
 ### HERE
@@ -1786,7 +1722,7 @@ sub getScope {
     if ( $self->conf->{oidcServiceAllowOnlyDeclaredScopes} ) {
         my @known_scopes = (
             keys( %{ $self->rpScopeRules->{$rp} || {} } ),
-            keys( %{ $self->rpScopes->{$rp} || {} } ),
+            keys( %{ $self->rpScopes->{$rp}     || {} } ),
             'openid', 'offline_access',
         );
         my @scope_values_tmp;
