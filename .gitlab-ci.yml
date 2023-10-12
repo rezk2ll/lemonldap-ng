@@ -40,10 +40,6 @@ build_bullseye:
   extends: .debian_build_job
   image: buildpkg/debian:bullseye
 
-build_bionic:
-  extends: .debian_build_job
-  image: buildpkg/ubuntu:bionic
-
 build_focal:
   extends: .debian_build_job
   image: buildpkg/ubuntu:focal
@@ -99,7 +95,6 @@ sign:
   dependencies:
     - build_buster
     - build_bullseye
-    - build_bionic
     - build_centos_7
     - build_centos_8
   artifacts:
