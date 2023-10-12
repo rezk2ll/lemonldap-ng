@@ -203,9 +203,12 @@ sub extractFormInfo {
             "Refresh token: " . ( $refresh_token || "<none>" ) );
 
         # Verify JWT signature
+        my $id_token_payload_hash;
         if ( $self->opOptions->{$op}->{oidcOPMetaDataOptionsCheckJWTSignature} )
         {
-            unless ( $self->verifyJWTSignature( $id_token, $op ) ) {
+            unless ( $id_token_payload_hash =
+                $self->decodeJWT( $id_token, $op ) )
+            {
                 $self->logger->error("JWT signature verification failed");
                 return PE_OIDC_AUTH_ERROR;
             }
@@ -213,9 +216,9 @@ sub extractFormInfo {
         }
         else {
             $self->logger->debug("JWT signature check disabled");
+            $id_token_payload_hash = getJWTPayload($id_token);
         }
 
-        my $id_token_payload_hash = getJWTPayload($id_token);
         unless ( defined $id_token_payload_hash ) {
             $self->logger->error(
                 "Could not decode incoming ID token: $id_token");
@@ -586,7 +589,7 @@ sub backLogout {
 
     # Verify signature
     return $self->p->sendError( $req, 'Bad signature', 400 )
-      unless $self->verifyJWTSignature( $logoutToken, $op );
+      unless $self->decodeJWT( $logoutToken, $op );
 
     # Verify audience
     return $self->p->error( $req, 'Bad aud', 400 )
