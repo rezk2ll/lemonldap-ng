@@ -6,7 +6,6 @@
 package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 
 use strict;
-use Crypt::OpenSSL::Bignum;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
 use Crypt::JWT qw(encode_jwt decode_jwt);
@@ -1404,8 +1403,8 @@ sub decodeJWT {
     # Choosing keys
     #  - if algorithm is HS{digits}, the key is the ClientSecret
     #  - if JWS has a "kti" field in its header, use it (then replace the
-    #    "key" arg of Crypt::JWT by "kti_keys" and give the whole JWKS)
-    #  - else use jwks content
+    #    "key" arg of Crypt::JWT by "kid_keys" and give the whole JWKS)
+    #  - else we try the first available key of jwks document
     my @keyArg =
       $alg =~ /^HS/
       ? (
@@ -1413,10 +1412,10 @@ sub decodeJWT {
         ? $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientSecret}
         : $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret}
       )
-      : $jwt_header->{kti} ? ( kti_keys => $jwks )
+      : $jwt_header->{kti} ? ( kid_keys => $jwks )
       :                      ( key => $jwks->{keys}->[0] );
 
-    # Crypt::JWT has a bad utf8 decoding, that's why JSON decoding is done here
+    # JSON decoding is done here because #2748
     my $content = eval {
         JSON::from_json(
             decode_jwt( token => $jwt, @keyArg, decode_payload => 0 ) );
@@ -2014,7 +2013,7 @@ sub createJWT {
         @keyArg = ( key => \$priv_key, );
     }
 
-    # Due to Crypt:JWT utf8 bugs, encode payload here
+    # Encode payload here due to #2748
     my $jwt = eval {
         encode_jwt(
             payload => to_json($payload),
