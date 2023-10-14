@@ -188,7 +188,7 @@ sub load_config {
 
     }
 
-    # You can set a negative TTL in getOidcRPConfig hook even if you don't find
+    # You can set a negative TTL in getOidcRpConfig hook even if you don't find
     # anything to avoid doing too many lookups
     my $ttl = $config->{ttl};
     return { ( $ttl ? ( ttl => $ttl ) : () ),
