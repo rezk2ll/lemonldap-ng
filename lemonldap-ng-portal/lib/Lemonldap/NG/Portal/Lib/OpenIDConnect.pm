@@ -295,7 +295,6 @@ sub load_rp {
                 }
                 foreach my $alg ( @{&ENC_ALG_SUPPORTED} ) {
                     if ( $keys{$alg} ) {
-                        require Crypt::JWT;
                         $self->logger->debug(
                             "Found encryption key with algorith $alg");
                         $self->rpEncKey->{$rp} = $keys{$alg};
@@ -2451,13 +2450,12 @@ sub decryptJwt {
             return $jwt;
         }
 
-        require Crypt::JWT;
         my $tmp;
-        eval { $tmp = Crypt::JWT::decode_jwt( token => $jwt, key => \$key, ); };
+        eval { $tmp = decode_jwt( token => $jwt, key => \$key, ); };
         if ($@) {
             if ( $key = $self->conf->{oidcServiceOldPrivateKeyEnc} ) {
                 eval {
-                    $tmp = Crypt::JWT::decode_jwt(
+                    $tmp = decode_jwt(
                         token => $jwt,
                         key   => \$key,
                     );
