@@ -2794,10 +2794,10 @@ sub encryptToken {
     my $tmp = eval {
         Crypt::JWT::encode_jwt(
             payload => $token,
-            alg => $self->rpOptions->{oidcRPMetaDataOptionsEncryptedResponseAlg}
+            alg => $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsEncryptedResponseAlg}
               || $key->{alg},
             key => $key,
-            enc => $self->rpOptions->{oidcRPMetaDataOptionsEncryptedResponseEnc}
+            enc => $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsEncryptedResponseEnc}
               || $self->conf->{oidcServiceEncAlgorithm}
               || 'A128CBC-HS256'
         );
