@@ -141,7 +141,6 @@ ok( $res = $rp->_get( '/', query => $query, accept => 'text/html' ),
 count(1);
 my $spId = expectCookie($res);
 
-
 # Logout initiated by OP
 switch ('op');
 
