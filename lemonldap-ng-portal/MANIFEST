@@ -661,6 +661,7 @@ t/32-Auth-and-issuer-OIDC-sorted.t
 t/32-OIDC-Back-Channel-Logout-no-sid.t
 t/32-OIDC-Back-Channel-Logout-sid-EC-keys.t
 t/32-OIDC-Back-Channel-Logout-sid.t
+t/32-OIDC-Back-Channel-Logout-sid-with-JWE-and-EC-keys.t
 t/32-OIDC-ClaimTypes.t
 t/32-OIDC-ClientCredentials-Grant.t
 t/32-OIDC-Code-Flow-Mobile.t

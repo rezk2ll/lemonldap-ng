@@ -2203,7 +2203,7 @@ sub _buildJwk {
     my $keytype         = $self->conf->{"oidcService${prefix}KeyType$type"};
     return $privateKey
       ? {
-        kty => 'RSA',
+        kty => $keytype,
         use => lc($type),
         (
             $type eq 'Enc'
