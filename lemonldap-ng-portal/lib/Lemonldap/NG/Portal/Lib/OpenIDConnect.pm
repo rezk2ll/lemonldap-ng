@@ -1133,7 +1133,7 @@ sub makeJWT {
 
     # Get signature algorithm
     my $alg = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenSignAlg}
-      || ( $self->conf->{oidcServiceKeyType} eq 'EC' ? 'ES256' : 'RS256' );
+      || ( $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256' : 'RS256' );
     $self->logger->debug("Access Token signature algorithm: $alg");
 
     my $jwt = $self->createJWT( $access_token_payload, $alg, $rp, "at+JWT" );
