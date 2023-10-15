@@ -2131,12 +2131,12 @@ sub jwks {
         my $public_key_sig_or_cert = $self->conf->{ $prefix . 'PublicKeySig' };
         my $private_key_sig        = $self->conf->{ $prefix . 'PrivateKeySig' };
         my $key_id_sig             = $self->conf->{ $prefix . 'KeyIdSig' };
+        my $type                   = $self->conf->{ $prefix . 'KeyType' };
         if ($private_key_sig) {
             my $jwk = {
-                kty => "RSA",
                 use => "sig",
                 ( $key_id_sig ? ( kid => $key_id_sig ) : () ),
-                %{ $self->key2jwks($private_key_sig) },
+                %{ $self->key2jwks( $private_key_sig, $type ) },
                 %{ $self->getCertInfo($public_key_sig_or_cert) },
             };
             push @{ $jwks->{keys} }, $jwk;
@@ -2195,7 +2195,8 @@ sub registration {
       $client_metadata->{client_name} || "Self registered client";
     my $logo_uri = $client_metadata->{logo_uri};
     my $id_token_signed_response_alg =
-      $client_metadata->{id_token_signed_response_alg} || "RS256";
+      $client_metadata->{id_token_signed_response_alg}
+      || ( $self->conf->{oidcServiceKeyType} eq 'EC' ? 'ES256' : 'RS256' );
     my $userinfo_signed_response_alg =
       $client_metadata->{userinfo_signed_response_alg};
     my $redirect_uris          = $client_metadata->{redirect_uris};
@@ -2412,8 +2413,14 @@ sub logout {
                     #   logout_token=<JWT value>
                     #
                     # RP response should be 200 (204 accepted) or 400 for errors
-                    my $alg = $self->rpOptions->{$rp}
-                      ->{oidcRPMetaDataOptionsAccessTokenSignAlg} || "RS256";
+                    my $alg =
+                      $self->rpOptions->{$rp}
+                      ->{oidcRPMetaDataOptionsAccessTokenSignAlg}
+                      || (
+                        $self->conf->{oidcServiceKeyType} eq 'EC'
+                        ? 'ES256'
+                        : 'RS256'
+                      );
                     $self->logger->debug(
                         "Access Token signature algorithm: $alg");
                     my $userId =

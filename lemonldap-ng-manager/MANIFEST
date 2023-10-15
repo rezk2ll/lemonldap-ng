@@ -122,6 +122,7 @@ site/htdocs/static/forms/catAndAppList.html
 site/htdocs/static/forms/cmbModule.html
 site/htdocs/static/forms/cmbModuleContainer.html
 site/htdocs/static/forms/doubleHash.html
+site/htdocs/static/forms/EcOrRSACertKeyNoPassword.html
 site/htdocs/static/forms/file.html
 site/htdocs/static/forms/grant.html
 site/htdocs/static/forms/grantContainer.html
@@ -149,7 +150,6 @@ site/htdocs/static/forms/postContainer.html
 site/htdocs/static/forms/README.md
 site/htdocs/static/forms/restore.html
 site/htdocs/static/forms/RSACertKey.html
-site/htdocs/static/forms/RSACertKeyNoPassword.html
 site/htdocs/static/forms/rule.html
 site/htdocs/static/forms/ruleContainer.html
 site/htdocs/static/forms/samlAssertion.html
