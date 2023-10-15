@@ -29,8 +29,8 @@ print "Configuration loaded\n" if $debug;
 # Verify type
 my $type = (
       $conf->{oidcServiceNewPrivateKeySig}
-    ? $conf->{oidcServiceNewKeyType}
-    : $conf->{oidcServiceKeyType}
+    ? $conf->{oidcServiceNewKeyTypeSig}
+    : $conf->{oidcServiceKeyTypeSig}
   )
   || 'RSA';
 
@@ -77,13 +77,13 @@ if ( $conf->{oidcServiceNewKeyIdSig} and $conf->{oidcServiceNewPublicKeySig} ) {
     $conf->{oidcServiceOldPrivateKeySig} = $conf->{oidcServicePrivateKeySig};
     $conf->{oidcServiceOldPublicKeySig}  = $conf->{oidcServicePublicKeySig};
     $conf->{oidcServiceOldKeyIdSig}      = $conf->{oidcServiceKeyIdSig};
-    $conf->{oidcServiceOldKeyType}       = $conf->{oidcServiceKeyType};
+    $conf->{oidcServiceOldKeyTypeSig}    = $conf->{oidcServiceKeyTypeSig};
 
     # Move next key into current one
     $conf->{oidcServicePrivateKeySig} = $conf->{oidcServiceNewPrivateKeySig};
     $conf->{oidcServicePublicKeySig}  = $conf->{oidcServiceNewPublicKeySig};
     $conf->{oidcServiceKeyIdSig}      = $conf->{oidcServiceNewKeyIdSig};
-    $conf->{oidcServiceKeyType}       = $conf->{oidcServiceNewKeyType};
+    $conf->{oidcServiceKeyTypeSig}    = $conf->{oidcServiceNewKeyTypeSig};
 }
 else {
     print STDERR
@@ -94,7 +94,7 @@ else {
 $conf->{oidcServiceNewPrivateKeySig} = $keys->{private};
 $conf->{oidcServiceNewPublicKeySig}  = $keys->{public};
 $conf->{oidcServiceNewKeyIdSig}      = $keys->{id};
-$conf->{oidcServiceNewKeyType}       = $type;
+$conf->{oidcServiceNewKeyTypeSig}    = $type;
 
 ( $lmconf->saveConf($conf) > 0 ) or die $Lemonldap::NG::Common::Conf::msg;
 

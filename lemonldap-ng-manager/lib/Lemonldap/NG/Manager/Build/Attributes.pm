@@ -4533,7 +4533,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             documentation => 'Previous OpenID Connect Signature Key ID',
         },
-        oidcServiceOldKeyType => {
+        oidcServiceOldKeyTypeSig => {
             type   => 'select',
             select => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
             default => 'RSA',
@@ -4545,7 +4545,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             documentation => 'OpenID Connect Signature Key ID',
         },
-        oidcServiceKeyType => {
+        oidcServiceKeyTypeSig => {
             type   => 'select',
             select => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
             default => 'RSA',
@@ -4558,7 +4558,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             documentation => 'Future OpenID Connect Signature Key ID',
         },
-        oidcServiceNewKeyType => {
+        oidcServiceNewKeyTypeSig => {
             type   => 'select',
             select => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
             default => 'RSA',
