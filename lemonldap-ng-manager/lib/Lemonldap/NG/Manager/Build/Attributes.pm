@@ -169,6 +169,26 @@ sub types {
                 );
             },
         },
+        'EcOrRSAPublicKeyOrCertificate' => {
+            'test' => sub {
+                return (
+                    $_[0] =~
+/^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+)?[\r\n]*)?$/s
+                    ? (1)
+                    : ( 1, '__badPemEncoding__' )
+                );
+            },
+        },
+        EcOrRSAPrivateKey => {
+            test => sub {
+                return (
+                    $_[0] =~
+/^(?:(?:\-+\s*BEGIN\s+(?:(?:RSA|EC|ENCRYPTED)\s+)?PRIVATE\s+KEY\s*\-+\r?\n)?(?:Proc-Type:.*\r?\nDEK-Info:.*\r?\n[\r\n]*)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:(?:RSA|EC|ENCRYPTED)\s+)?PRIVATE\s+KEY\s*\-+)?[\r\n]*)?$/s
+                    ? (1)
+                    : ( 1, '__badPemEncoding__' )
+                );
+            },
+        },
 
         authParamsText => {
             test => sub { 1 }
@@ -258,8 +278,10 @@ sub attributes {
         mySessionAuthorizedRWKeys => {
             type          => 'array',
             documentation => 'Alterable session keys by user itself',
-            default       =>
-              [ '_appsListOrder', '_oidcConnectedRP', '_oidcConnectedRPIDs', '_oidcConsents' ],
+            default       => [
+                '_appsListOrder',      '_oidcConnectedRP',
+                '_oidcConnectedRPIDs', '_oidcConsents'
+            ],
         },
         configStorage => {
             type          => 'text',
@@ -3940,10 +3962,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 3,
             documentation => 'Radius authentication level',
         },
-        radiusSecret => { type => 'text' },
-        radiusServer => { type => 'text' },
+        radiusSecret  => { type => 'text' },
+        radiusServer  => { type => 'text' },
         radiusTimeout => {
-            type          => 'intOrNull',
+            type => 'intOrNull',
         },
 
         radiusExportedVars => {
@@ -4487,24 +4509,46 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             },
             documentation => 'OpenID Connect Authentication Context Class Ref',
         },
-        oidcServiceOldPrivateKeySig => { type => 'RSAPrivateKey', },
-        oidcServiceOldPublicKeySig  => { type => 'RSAPublicKeyOrCertificate', },
-        oidcServiceOldKeyIdSig      => {
+
+        # OIDC Keys
+        oidcServiceOldPrivateKeySig => { type => 'EcOrRSAPrivateKey', },
+        oidcServiceOldPublicKeySig  =>
+          { type => 'EcOrRSAPublicKeyOrCertificate', },
+        oidcServiceOldKeyIdSig => {
             type          => 'text',
             documentation => 'Previous OpenID Connect Signature Key ID',
         },
-        oidcServicePrivateKeySig => { type => 'RSAPrivateKey', },
-        oidcServicePublicKeySig  => { type => 'RSAPublicKeyOrCertificate', },
-        oidcServiceKeyIdSig      => {
+        oidcServiceOldKeyType => {
+            type   => 'select',
+            select => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
+            default => 'RSA',
+        },
+
+        oidcServicePrivateKeySig => { type => 'EcOrRSAPrivateKey', },
+        oidcServicePublicKeySig => { type => 'EcOrRSAPublicKeyOrCertificate', },
+        oidcServiceKeyIdSig     => {
             type          => 'text',
             documentation => 'OpenID Connect Signature Key ID',
         },
-        oidcServiceNewPrivateKeySig => { type => 'RSAPrivateKey', },
-        oidcServiceNewPublicKeySig  => { type => 'RSAPublicKeyOrCertificate', },
-        oidcServiceNewKeyIdSig      => {
+        oidcServiceKeyType => {
+            type   => 'select',
+            select => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
+            default => 'RSA',
+        },
+
+        oidcServiceNewPrivateKeySig => { type => 'EcOrRSAPrivateKey', },
+        oidcServiceNewPublicKeySig  =>
+          { type => 'EcOrRSAPublicKeyOrCertificate', },
+        oidcServiceNewKeyIdSig => {
             type          => 'text',
             documentation => 'Future OpenID Connect Signature Key ID',
         },
+        oidcServiceNewKeyType => {
+            type   => 'select',
+            select => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
+            default => 'RSA',
+        },
+
         oidcServiceAllowDynamicRegistration => {
             type          => 'bool',
             default       => 0,
@@ -4724,7 +4768,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsOfflineSessionExpiration =>
           { type => 'intOrNull' },
         oidcRPMetaDataOptionsRedirectUris => { type => 'text', },
-        oidcRPMetaDataOptionsRequestUris => { type => 'text', },
+        oidcRPMetaDataOptionsRequestUris  => { type => 'text', },
         oidcRPMetaDataOptionsExtraClaims  => {
             type    => 'keyTextContainer',
             keyTest => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,
