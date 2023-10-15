@@ -717,6 +717,16 @@ llapp.controller 'TreeCtrl', [
 			, ->
 				console.log('New key cancelled')
 
+		$scope.newEcKeys = ->
+			$scope.waiting = true
+			currentNode = $scope.currentNode
+			$http.post("#{window.confPrefix}/newEcKeys", {"password": ''}).then (response) ->
+				currentNode.data[0].data = response.data.private
+				currentNode.data[1].data = response.data.public
+				currentNode.data[2].data = response.data.hash
+				$scope.waiting = false
+			, readError
+
 		$scope.newCertificateNoPassword = ->
 			$scope.waiting = true
 			currentNode = $scope.currentNode

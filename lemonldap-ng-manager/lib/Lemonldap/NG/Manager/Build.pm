@@ -239,8 +239,7 @@ EOF
     $defaultValues->{locationRules} = $attributes->{locationRules}->{default};
     foreach ( keys %$attributes ) {
         if (    not /(?:MetaData|vhost)/
-            and $attributes->{$_}->{default}
-            and not $reverseScanResult->{$_} )
+            and $attributes->{$_}->{default} )
         {
             $defaultValues->{$_} = $attributes->{$_}->{default};
         }
