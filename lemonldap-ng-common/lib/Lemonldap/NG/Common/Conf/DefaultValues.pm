@@ -219,6 +219,7 @@ sub defaultValues {
         'oidcServiceAllowAuthorizationCodeFlow'  => 1,
         'oidcServiceAuthorizationCodeExpiration' => 60,
         'oidcServiceIDTokenExpiration'           => 3600,
+        'oidcServiceKeyType'                     => 'RSA',
         'oidcServiceMetaDataAuthnContext'        => {
             'loa-1' => 1,
             'loa-2' => 2,
@@ -236,7 +237,9 @@ sub defaultValues {
         'oidcServiceMetaDataRegistrationURI'  => 'register',
         'oidcServiceMetaDataTokenURI'         => 'token',
         'oidcServiceMetaDataUserInfoURI'      => 'userinfo',
+        'oidcServiceNewKeyType'               => 'RSA',
         'oidcServiceOfflineSessionExpiration' => 2592000,
+        'oidcServiceOldKeyType'               => 'RSA',
         'openIdAuthnLevel'                    => 1,
         'openIdExportedVars'                  => {},
         'openIdIDPList'                       => '0;',
