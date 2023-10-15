@@ -57,6 +57,22 @@ use constant COMPLEX_CLAIM => {
     country        => "address",
 };
 
+use constant ENC_ALG_SUPPORTED => [ qw(
+      RSA-OAEP ECDH-ES RSA-OAEP-256
+      ECDH-ES+A256KW
+      ECDH-ES+A192KW
+      ECDH-ES+A128KW
+      RSA1_5
+    )
+];
+
+# Unsupported: A128KW A192KW A256KW A128GCMKW A192GCMKW A256GCMKW PBES2-HS256+A128KW PBES2-HS384+A192KW PBES2-HS512+A256KW
+
+use constant ENC_SUPPORTED => [ qw(
+      A256CBC-HS512 A256GCM A192CBC-HS384 A192GCM A128CBC-HS256 A128GCM
+    )
+];
+
 # PROPERTIES
 
 has opAttributes => ( is => 'rw', default => sub { {} } );
@@ -69,6 +85,7 @@ has rpOptions    => ( is => 'rw', default => sub { {} }, );
 has rpRules      => ( is => 'rw', default => sub { {} } );
 has rpScopes     => ( is => 'rw', default => sub { {} } );
 has rpScopeRules => ( is => 'rw', default => sub { {} } );
+has rpEncKey     => ( is => 'rw', default => sub { {} } );
 
 # Deprecated names, remove in 3.0
 *oidcOPList   = *opMetadata;
@@ -254,6 +271,50 @@ sub load_rp {
                       . $self->p->HANDLER->tsv->{jail}->error );
                 $valid = 0;
             }
+        }
+    }
+    if ( $valid and my $url = $config{options}->{oidcRPMetaDataOptionsJwksUri} )
+    {
+        my $resp = $self->ua->get($url);
+        if ( $resp->is_success ) {
+            my $content = $self->decodeJSON( $resp->decoded_content );
+            if ( $content and ref($content) eq 'HASH' and $content->{keys} ) {
+                my %keys;
+                foreach my $key ( sort @{ $content->{keys} } ) {
+                    next unless $key->{use} eq 'enc';
+                    $key->{alg} = 'RSA-OAEP'
+                      if !$key->{alg} and $key->{kty} eq 'RSA';
+                    if ( $key->{alg} ) {
+                        $keys{ $key->{alg} } ||= $key;
+                    }
+                    else {
+                        $self->logger->warn(
+                            'Unable to find "alg" field in RP key');
+                    }
+                }
+                foreach my $alg ( @{&ENC_ALG_SUPPORTED} ) {
+                    if ( $keys{$alg} ) {
+                        $self->logger->debug(
+                            "Found encryption key with algorith $alg");
+                        $self->rpEncKey->{$rp} = $keys{$alg};
+                        last;
+                    }
+                }
+                unless ( $self->rpEncKey->{$rp} ) {
+                    $self->logger->error(
+                        "Unable to find a supported encryption key for $rp");
+                    $valid = 0;
+                }
+            }
+            else {
+                $self->logger->error("Invalid response from $url");
+                $valid = 0;
+            }
+        }
+        else {
+            $self->logger->error(
+                "Unable to fetch RP keys from $url: " . $resp->status_line );
+            $valid = 0;
         }
     }
     if ($valid) {
@@ -984,7 +1045,8 @@ sub getUserInfo {
         return $self->decodeUserInfo($userinfo_content);
     }
     elsif ( $content_type =~ /jwt/ ) {
-        return $self->decodeJWT( $userinfo_content, $op );
+        my $jwt = $self->decryptJwt($userinfo_content);
+        return $self->decodeJWT( $jwt, $op );
     }
 }
 
@@ -2116,6 +2178,60 @@ sub getCertInfo {
     }
 }
 
+### JWKS ENDPOINT
+
+# Keys to display in jwks endpoint:
+#  Signature:
+#   - current, new and old key to permit to clients to verify all JWT emitted
+#     during 3 weeks
+#  Encryption:
+#   - only the current key. Old encryption key is kept to permit to
+#     Auth::OPenIDCOnnect to decrypt all JWE emitted by Issuer but no
+#     need to display any other key
+use constant KEYS_TO_DISPLAY => (
+    [ ''    => 'Sig' ],
+    [ 'Old' => 'Sig' ],
+    [ 'New' => 'Sig' ],
+    [ ''    => 'Enc' ],
+);
+
+sub _buildJwk {
+    my ( $self, $prefix, $type ) = @_;
+    my $publicKeyOrCert = $self->conf->{"oidcService${prefix}PublicKey$type"};
+    my $privateKey      = $self->conf->{"oidcService${prefix}PrivateKey$type"};
+    my $keyId           = $self->conf->{"oidcService${prefix}KeyId$type"};
+    my $keytype         = $self->conf->{"oidcService${prefix}KeyType$type"};
+    return $privateKey
+      ? {
+        kty => 'RSA',
+        use => lc($type),
+        (
+            $type eq 'Enc'
+            ? ( alg => $self->conf->{oidcServiceEncAlgorithmAlg} )
+            : ()
+        ),
+        ( $keyId ? ( kid => $keyId ) : () ),
+        %{ $self->key2jwks( $privateKey, $keytype ) },
+        %{ $self->getCertInfo($publicKeyOrCert) },
+      }
+      : ();
+}
+
+# Handle jwks endpoint
+sub jwks {
+    my ( $self, $req ) = @_;
+    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
+    $self->logger->debug("URL detected as an OpenID Connect JWKS URL");
+
+    my $jwks = { keys => [] };
+
+    push @{ $jwks->{keys} }, $self->_buildJwk( $_->[0], $_->[1] )
+      foreach (KEYS_TO_DISPLAY);
+
+    $self->logger->debug("Send JWKS response sent");
+    return $self->p->sendJSONresponse( $req, $jwks );
+}
+
 # Build Logout Request URI
 # @param redirect_uri Redirect URI
 # @param id_token_hint ID Token
@@ -2330,6 +2446,34 @@ sub getSidFromSession {
     my ( $self, $rp, $sessionInfo ) = @_;
     return Digest::SHA::hmac_sha256_base64(
         $sessionInfo->{_session_id} . ':' . $rp );
+}
+
+sub decryptJwt {
+    my ( $self, $jwt ) = @_;
+    my @count = split /\./, $jwt;
+    if ( $#count == 4 ) {
+        my $key = $self->conf->{oidcServicePrivateKeyEnc};
+        $self->logger->debug("Receive an encrypted JWT: $jwt");
+        unless ($key) {
+            $self->logger->error('Receive an encrypted JWT but no key defined');
+            return $jwt;
+        }
+
+        my $tmp;
+        eval { $tmp = decode_jwt( token => $jwt, key => \$key, ); };
+        if ($@) {
+            if ( $key = $self->conf->{oidcServiceOldPrivateKeyEnc} ) {
+                eval { $tmp = decode_jwt( token => $jwt, key => \$key, ); };
+            }
+            if ($@) {
+                $self->logger->error( 'Unable to decrypt JWE: ' . $@ );
+                return undef;
+            }
+        }
+        $jwt = $tmp;
+        $self->logger->debug("Decrypted JWT: $jwt");
+    }
+    return $jwt;
 }
 
 1;

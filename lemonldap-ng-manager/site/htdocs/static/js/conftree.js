@@ -735,6 +735,85 @@ function templates(tpl,key) {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
                   "title" : "oidcRPMetaDataOptionsRule"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsJwksUri",
+                  "help" : "idpopenidconnect.html",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsJwksUri",
+                  "title" : "oidcRPMetaDataOptionsJwksUri"
+               },
+               {
+                  "default" : "A256GCM",
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsEncryptedResponseEnc",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsEncryptedResponseEnc",
+                  "select" : [
+                     {
+                        "k" : "",
+                        "v" : "None"
+                     },
+                     {
+                        "k" : "A256CBC-HS512",
+                        "v" : "A256CBC-HS512"
+                     },
+                     {
+                        "k" : "A256GCM",
+                        "v" : "A256GCM"
+                     },
+                     {
+                        "k" : "A192CBC-HS384",
+                        "v" : "A192CBC-HS384"
+                     },
+                     {
+                        "k" : "A192GCM",
+                        "v" : "A192GCM"
+                     },
+                     {
+                        "k" : "A128CBC-HS256",
+                        "v" : "A128CBC-HS256"
+                     },
+                     {
+                        "k" : "A128GCM",
+                        "v" : "A128GCM"
+                     }
+                  ],
+                  "title" : "oidcRPMetaDataOptionsEncryptedResponseEnc",
+                  "type" : "select"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsEncryptedResponseAlg",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsEncryptedResponseAlg",
+                  "select" : [
+                     {
+                        "k" : "RSA-OAEP",
+                        "v" : "RSA-OAEP"
+                     },
+                     {
+                        "k" : "RSA-OAEP-256",
+                        "v" : "RSA-OAEP-256"
+                     },
+                     {
+                        "k" : "RSA1_5",
+                        "v" : "RSA1_5"
+                     },
+                     {
+                        "k" : "ECDH-ES",
+                        "v" : "ECDH-ES"
+                     },
+                     {
+                        "k" : "ECDH-ES+A128KW",
+                        "v" : "ECDH-ES+A128KW"
+                     },
+                     {
+                        "k" : "ECDH-ES+A192KW",
+                        "v" : "ECDH-ES+A192KW"
+                     },
+                     {
+                        "k" : "ECDH-ES+A256KW",
+                        "v" : "ECDH-ES+A256KW"
+                     }
+                  ],
+                  "title" : "oidcRPMetaDataOptionsEncryptedResponseAlg",
+                  "type" : "select"
                }
             ],
             "id" : "security",

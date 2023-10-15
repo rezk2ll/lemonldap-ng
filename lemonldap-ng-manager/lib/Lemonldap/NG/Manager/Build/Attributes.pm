@@ -4519,8 +4519,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Previous OpenID Connect Signature Key ID',
         },
         oidcServiceOldKeyTypeSig => {
-            type   => 'select',
-            select => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
+            type    => 'select',
+            select  => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
             default => 'RSA',
         },
 
@@ -4531,8 +4531,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'OpenID Connect Signature Key ID',
         },
         oidcServiceKeyTypeSig => {
-            type   => 'select',
-            select => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
+            type    => 'select',
+            select  => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
             default => 'RSA',
         },
 
@@ -4544,8 +4544,71 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Future OpenID Connect Signature Key ID',
         },
         oidcServiceNewKeyTypeSig => {
+            type    => 'select',
+            select  => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
+            default => 'RSA',
+        },
+
+        oidcServiceEncAlgorithmAlg => {
             type   => 'select',
-            select => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
+            select => [
+
+                # Symetric encryption not supported
+                #{ k => 'A128KW',             v => 'A128KW' },
+                #{ k => 'A192KW',             v => 'A192KW' },
+                #{ k => 'A256KW',             v => 'A256KW' },
+                #{ k => 'A128GCMKW',          v => 'A128GCMKW' },
+                #{ k => 'A192GCMKW',          v => 'A192GCMKW' },
+                #{ k => 'A256GCMKW',          v => 'A256GCMKW' },
+                #{ k => 'PBES2-HS256+A128KW', v => 'PBES2-HS256+A128KW' },
+                #{ k => 'PBES2-HS384+A192KW', v => 'PBES2-HS384+A192KW' },
+                #{ k => 'PBES2-HS512+A256KW', v => 'PBES2-HS512+A256KW' },
+                { k => 'RSA-OAEP',       v => 'RSA-OAEP' },
+                { k => 'RSA-OAEP-256',   v => 'RSA-OAEP-256' },
+                { k => 'RSA1_5',         v => 'RSA1_5' },
+                { k => 'ECDH-ES',        v => 'ECDH-ES' },
+                { k => 'ECDH-ES+A128KW', v => 'ECDH-ES+A128KW' },
+                { k => 'ECDH-ES+A192KW', v => 'ECDH-ES+A192KW' },
+                { k => 'ECDH-ES+A256KW', v => 'ECDH-ES+A256KW' },
+            ],
+            default       => 'RSA-OAEP',
+            documentation => 'JWT encryption algorithme',
+        },
+        oidcServiceEncAlgorithmEnc => {
+            type   => 'select',
+            select => [
+                { k => 'A256CBC-HS512', v => 'A256CBC-HS512' },
+                { k => 'A256GCM',       v => 'A256GCM' },
+                { k => 'A192CBC-HS384', v => 'A192CBC-HS384' },
+                { k => 'A192GCM',       v => 'A192GCM' },
+                { k => 'A128CBC-HS256', v => 'A128CBC-HS256' },
+                { k => 'A128GCM',       v => 'A128GCM' },
+            ],
+            default       => 'A256GCM',
+            documentation => 'JWT encryption algorithme',
+        },
+
+        oidcServiceOldPrivateKeyEnc => { type => 'RSAPrivateKey', },
+        oidcServiceOldPublicKeyEnc  => { type => 'RSAPublicKeyOrCertificate', },
+        oidcServiceOldKeyIdEnc      => {
+            type          => 'text',
+            documentation => 'Previous OpenID Connect Encryption Key ID',
+        },
+        oidcServiceOldKeyTypeEnc => {
+            type    => 'select',
+            select  => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
+            default => 'RSA',
+        },
+
+        oidcServicePrivateKeyEnc => { type => 'RSAPrivateKey', },
+        oidcServicePublicKeyEnc  => { type => 'RSAPublicKeyOrCertificate', },
+        oidcServiceKeyIdEnc      => {
+            type          => 'text',
+            documentation => 'OpenID Connect Encryption Key ID',
+        },
+        oidcServiceKeyTypeEnc => {
+            type    => 'select',
+            select  => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
             default => 'RSA',
         },
 
@@ -4868,6 +4931,50 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             },
             default       => {},
             documentation => 'Scope rules',
+        },
+        oidcRPMetaDataOptionsJwksUri => {
+            type          => 'url',
+            help          => 'idpopenidconnect.html',
+            documentation =>
+              'Relying party JWKS endpoint (to get encryption keys)',
+        },
+        oidcRPMetaDataOptionsEncryptedResponseEnc => {
+            type   => 'select',
+            select => [
+                { k => '',              v => 'None' },
+                { k => 'A256CBC-HS512', v => 'A256CBC-HS512' },
+                { k => 'A256GCM',       v => 'A256GCM' },
+                { k => 'A192CBC-HS384', v => 'A192CBC-HS384' },
+                { k => 'A192GCM',       v => 'A192GCM' },
+                { k => 'A128CBC-HS256', v => 'A128CBC-HS256' },
+                { k => 'A128GCM',       v => 'A128GCM' },
+            ],
+            default       => 'A256GCM',
+            documentation => '"enc" algorithm for JWE encryption',
+        },
+        oidcRPMetaDataOptionsEncryptedResponseAlg => {
+            type   => 'select',
+            select => [
+
+                # Symetric encryption not supported
+                #{ k => 'A128KW',             v => 'A128KW' },
+                #{ k => 'A192KW',             v => 'A192KW' },
+                #{ k => 'A256KW',             v => 'A256KW' },
+                #{ k => 'A128GCMKW',          v => 'A128GCMKW' },
+                #{ k => 'A192GCMKW',          v => 'A192GCMKW' },
+                #{ k => 'A256GCMKW',          v => 'A256GCMKW' },
+                #{ k => 'PBES2-HS256+A128KW', v => 'PBES2-HS256+A128KW' },
+                #{ k => 'PBES2-HS384+A192KW', v => 'PBES2-HS384+A192KW' },
+                #{ k => 'PBES2-HS512+A256KW', v => 'PBES2-HS512+A256KW' },
+                { k => 'RSA-OAEP',       v => 'RSA-OAEP' },
+                { k => 'RSA-OAEP-256',   v => 'RSA-OAEP-256' },
+                { k => 'RSA1_5',         v => 'RSA1_5' },
+                { k => 'ECDH-ES',        v => 'ECDH-ES' },
+                { k => 'ECDH-ES+A128KW', v => 'ECDH-ES+A128KW' },
+                { k => 'ECDH-ES+A192KW', v => 'ECDH-ES+A192KW' },
+                { k => 'ECDH-ES+A256KW', v => 'ECDH-ES+A256KW' },
+            ],
+            documentation => '"alg" algorithm for JWE encryption',
         },
     };
 }

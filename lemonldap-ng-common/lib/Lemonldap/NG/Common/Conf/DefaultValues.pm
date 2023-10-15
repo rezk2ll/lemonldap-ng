@@ -218,7 +218,10 @@ sub defaultValues {
         'oidcServiceAccessTokenExpiration'       => 3600,
         'oidcServiceAllowAuthorizationCodeFlow'  => 1,
         'oidcServiceAuthorizationCodeExpiration' => 60,
+        'oidcServiceEncAlgorithmAlg'             => 'RSA-OAEP',
+        'oidcServiceEncAlgorithmEnc'             => 'A256GCM',
         'oidcServiceIDTokenExpiration'           => 3600,
+        'oidcServiceKeyTypeEnc'                  => 'RSA',
         'oidcServiceKeyTypeSig'                  => 'RSA',
         'oidcServiceMetaDataAuthnContext'        => {
             'loa-1' => 1,
@@ -239,6 +242,7 @@ sub defaultValues {
         'oidcServiceMetaDataUserInfoURI'      => 'userinfo',
         'oidcServiceNewKeyTypeSig'            => 'RSA',
         'oidcServiceOfflineSessionExpiration' => 2592000,
+        'oidcServiceOldKeyTypeEnc'            => 'RSA',
         'oidcServiceOldKeyTypeSig'            => 'RSA',
         'openIdAuthnLevel'                    => 1,
         'openIdExportedVars'                  => {},
