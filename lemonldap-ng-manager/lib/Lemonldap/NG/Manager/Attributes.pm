@@ -2721,7 +2721,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcServiceKeyIdSig' => {
             'type' => 'text'
         },
-        'oidcServiceKeyType' => {
+        'oidcServiceKeyTypeSig' => {
             'default' => 'RSA',
             'select'  => [ {
                     'k' => 'RSA',
@@ -2791,7 +2791,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcServiceNewKeyIdSig' => {
             'type' => 'text'
         },
-        'oidcServiceNewKeyType' => {
+        'oidcServiceNewKeyTypeSig' => {
             'default' => 'RSA',
             'select'  => [ {
                     'k' => 'RSA',
@@ -2817,7 +2817,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcServiceOldKeyIdSig' => {
             'type' => 'text'
         },
-        'oidcServiceOldKeyType' => {
+        'oidcServiceOldKeyTypeSig' => {
             'default' => 'RSA',
             'select'  => [ {
                     'k' => 'RSA',
