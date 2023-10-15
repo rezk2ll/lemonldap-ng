@@ -2125,7 +2125,7 @@ sub jwks {
         my $public_key_sig_or_cert = $self->conf->{ $prefix . 'PublicKeySig' };
         my $private_key_sig        = $self->conf->{ $prefix . 'PrivateKeySig' };
         my $key_id_sig             = $self->conf->{ $prefix . 'KeyIdSig' };
-        my $type                   = $self->conf->{ $prefix . 'KeyType' };
+        my $type                   = $self->conf->{ $prefix . 'KeyTypeSig' };
         if ($private_key_sig) {
             my $jwk = {
                 use => "sig",
@@ -2190,7 +2190,7 @@ sub registration {
     my $logo_uri = $client_metadata->{logo_uri};
     my $id_token_signed_response_alg =
       $client_metadata->{id_token_signed_response_alg}
-      || ( $self->conf->{oidcServiceKeyType} eq 'EC' ? 'ES256' : 'RS256' );
+      || ( $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256' : 'RS256' );
     my $userinfo_signed_response_alg =
       $client_metadata->{userinfo_signed_response_alg};
     my $redirect_uris          = $client_metadata->{redirect_uris};
@@ -2410,7 +2410,7 @@ sub logout {
                       $self->rpOptions->{$rp}
                       ->{oidcRPMetaDataOptionsAccessTokenSignAlg}
                       || (
-                        $self->conf->{oidcServiceKeyType} eq 'EC'
+                        $self->conf->{oidcServiceKeyTypeSig} eq 'EC'
                         ? 'ES256'
                         : 'RS256'
                       );
