@@ -34,6 +34,7 @@ our @pList = (
     decryptValueRule                    => '::Plugins::DecryptValue',
     findUser                            => '::Plugins::FindUser',
     newLocationWarning                  => '::Plugins::NewLocationWarning',
+    passwordPolicyActivation            => '::Plugins::BasePasswordPolicy',
     checkHIBP                           => '::Plugins::CheckHIBP',
     adaptativeAuthenticationLevelRules  =>
       '::Plugins::AdaptativeAuthenticationLevel',

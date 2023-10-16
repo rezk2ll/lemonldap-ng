@@ -496,10 +496,11 @@ sub changePwd {
     }
 
     # Check password quality if enabled
-    require Lemonldap::NG::Portal::Password::Base;
+    require Lemonldap::NG::Portal::Plugins::BasePasswordPolicy;
     my $cpq =
-      $self->passwordPolicyActivationRule->( $req, $req->sessionInfo )
-      ? $self->Lemonldap::NG::Portal::Password::Base::checkPasswordQuality(
+        $self->passwordPolicyActivationRule->( $req, $req->sessionInfo )
+      ? $self
+      ->Lemonldap::NG::Portal::Plugins::BasePasswordPolicy::checkBasicPolicy(
         $req->data->{newpassword} )
       : PE_OK;
     unless ( $cpq == PE_OK ) {
