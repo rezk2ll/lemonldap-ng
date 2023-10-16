@@ -625,6 +625,34 @@ function templates(tpl,key) {
                      {
                         "k" : "RS512",
                         "v" : "RS512"
+                     },
+                     {
+                        "k" : "PS256",
+                        "v" : "PS256"
+                     },
+                     {
+                        "k" : "PS384",
+                        "v" : "PS384"
+                     },
+                     {
+                        "k" : "PS512",
+                        "v" : "PS512"
+                     },
+                     {
+                        "k" : "ES256",
+                        "v" : "ES256"
+                     },
+                     {
+                        "k" : "ES384",
+                        "v" : "ES384"
+                     },
+                     {
+                        "k" : "ES512",
+                        "v" : "ES512"
+                     },
+                     {
+                        "k" : "EdDSA",
+                        "v" : "EdDSA"
                      }
                   ],
                   "title" : "oidcRPMetaDataOptionsIDTokenSignAlg",
@@ -636,6 +664,18 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenSignAlg",
                   "select" : [
                      {
+                        "k" : "HS256",
+                        "v" : "HS256"
+                     },
+                     {
+                        "k" : "HS384",
+                        "v" : "HS384"
+                     },
+                     {
+                        "k" : "HS512",
+                        "v" : "HS512"
+                     },
+                     {
                         "k" : "RS256",
                         "v" : "RS256"
                      },
@@ -646,6 +686,34 @@ function templates(tpl,key) {
                      {
                         "k" : "RS512",
                         "v" : "RS512"
+                     },
+                     {
+                        "k" : "PS256",
+                        "v" : "PS256"
+                     },
+                     {
+                        "k" : "PS384",
+                        "v" : "PS384"
+                     },
+                     {
+                        "k" : "PS512",
+                        "v" : "PS512"
+                     },
+                     {
+                        "k" : "ES256",
+                        "v" : "ES256"
+                     },
+                     {
+                        "k" : "ES384",
+                        "v" : "ES384"
+                     },
+                     {
+                        "k" : "ES512",
+                        "v" : "ES512"
+                     },
+                     {
+                        "k" : "EdDSA",
+                        "v" : "EdDSA"
                      }
                   ],
                   "title" : "oidcRPMetaDataOptionsAccessTokenSignAlg",
@@ -687,6 +755,34 @@ function templates(tpl,key) {
                      {
                         "k" : "RS512",
                         "v" : "JWT/RS512"
+                     },
+                     {
+                        "k" : "PS256",
+                        "v" : "JWT/PS256"
+                     },
+                     {
+                        "k" : "PS384",
+                        "v" : "JWT/PS384"
+                     },
+                     {
+                        "k" : "PS512",
+                        "v" : "JWT/PS512"
+                     },
+                     {
+                        "k" : "ES256",
+                        "v" : "JWT/ES256"
+                     },
+                     {
+                        "k" : "ES384",
+                        "v" : "JWT/ES384"
+                     },
+                     {
+                        "k" : "ES512",
+                        "v" : "JWT/ES512"
+                     },
+                     {
+                        "k" : "EdDSA",
+                        "v" : "JWT/EdDSA"
                      }
                   ],
                   "title" : "oidcRPMetaDataOptionsUserInfoSignAlg",
