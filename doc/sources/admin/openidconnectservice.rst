@@ -61,6 +61,8 @@ Security
 
 -  **Keys**: Define public/private key pair for asymmetric signature. A JWKS
    ``kid`` (Key ID) is automatically derived when new keys are generated.
+   You have to choose the key type: ``RSA`` or ``EC``. The list of
+   supported algorithms in OIDC metadata will be automatically updated.
 -  **Authorization Code Flow**: Set to 1 to allow Authorization Code flow
 -  **Implicit Flow**: Set to 1 to allow Implicit flow
 -  **Hybrid Flow**: Set to 1 to allow Hybrid flow

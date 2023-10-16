@@ -28,6 +28,7 @@ As an OP, LL::NG supports many OpenID Connect features:
 -  UserInfo endpoint, as JSON or as JWT
 -  Request and Request URI
 -  `Back Channel Logout <https://openid.net/specs/openid-connect-backchannel-1_0.html>`__
+   (Since ``2.17.0``)
 -  `Front Channel Logout <https://openid.net/specs/openid-connect-frontchannel-1_0.html>`__
 -  `RP-Initiated Logout <https://openid.net/specs/openid-connect-rpinitiated-1_0.html>`__
 -  PKCE (Since ``2.0.4``) - See :rfc:`7636`
@@ -36,6 +37,7 @@ As an OP, LL::NG supports many OpenID Connect features:
 -  Refresh Tokens (Since ``2.0.7``)
 -  Optional JWT Access Tokens (Since ``2.0.12``) - See :rfc:`9068`
 -  `Form Post Response Mode <https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html>`__ (Since ``2.0.16``)
+-  Encrypted JWT (Since ``2.18.0``) - See :rfc:`7516`
 
 Configuration
 -------------
@@ -105,7 +107,10 @@ OIDC metadata example:
          "HS512",
          "RS256",
          "RS384",
-         "RS512"
+         "RS512",
+         "PS256",
+         "PS384",
+         "PS512"
       ],
       "id_token_signing_alg_values_supported" : [
          "none",
@@ -114,7 +119,10 @@ OIDC metadata example:
          "HS512",
          "RS256",
          "RS384",
-         "RS512"
+         "RS512",
+         "PS256",
+         "PS384",
+         "PS512"
       ],
       "userinfo_endpoint" : "http://auth.example.com/oauth2/userinfo",
       "request_uri_parameter_supported" : "true",
