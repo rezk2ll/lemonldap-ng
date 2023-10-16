@@ -280,10 +280,13 @@ sub load_rp {
             my $content = $self->decodeJSON( $resp->decoded_content );
             if ( $content and ref($content) eq 'HASH' and $content->{keys} ) {
                 my %keys;
+                my %validKeys;
                 foreach my $key ( sort @{ $content->{keys} } ) {
                     next unless $key->{use} eq 'enc';
                     $key->{alg} = 'RSA-OAEP'
                       if !$key->{alg} and $key->{kty} eq 'RSA';
+                    $key->{alg} = 'ES256'
+                      if !$key->{alg} and $key->{kty} eq 'EC';
                     if ( $key->{alg} ) {
                         $keys{ $key->{alg} } ||= $key;
                     }
@@ -296,14 +299,18 @@ sub load_rp {
                     if ( $keys{$alg} ) {
                         $self->logger->debug(
                             "Found encryption key with algorith $alg");
+                        $validKeys{$alg} = $keys{$alg};
                         $self->rpEncKey->{$rp} = $keys{$alg};
                         last;
                     }
                 }
-                unless ( $self->rpEncKey->{$rp} ) {
+                unless (%validKeys) {
                     $self->logger->error(
                         "Unable to find a supported encryption key for $rp");
                     $valid = 0;
+                }
+                else {
+                    $self->rpEncKey->{$rp} = \%validKeys;
                 }
             }
             else {

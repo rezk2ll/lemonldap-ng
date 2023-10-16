@@ -258,6 +258,37 @@ sub types {
     };
 }
 
+use constant oidcEncAlgorithmEnc => [
+    { k => 'A256CBC-HS512', v => 'A256CBC-HS512' },
+    { k => 'A256GCM',       v => 'A256GCM' },
+    { k => 'A192CBC-HS384', v => 'A192CBC-HS384' },
+    { k => 'A192GCM',       v => 'A192GCM' },
+    { k => 'A128CBC-HS256', v => 'A128CBC-HS256' },
+    { k => 'A128GCM',       v => 'A128GCM' },
+];
+
+use constant oidcEncAlgorithmAlg => [
+
+    # Symetric encryption not supported
+    #{ k => 'A128KW',             v => 'A128KW' },
+    #{ k => 'A192KW',             v => 'A192KW' },
+    #{ k => 'A256KW',             v => 'A256KW' },
+    #{ k => 'A128GCMKW',          v => 'A128GCMKW' },
+    #{ k => 'A192GCMKW',          v => 'A192GCMKW' },
+    #{ k => 'A256GCMKW',          v => 'A256GCMKW' },
+    #{ k => 'PBES2-HS256+A128KW', v => 'PBES2-HS256+A128KW' },
+    #{ k => 'PBES2-HS384+A192KW', v => 'PBES2-HS384+A192KW' },
+    #{ k => 'PBES2-HS512+A256KW', v => 'PBES2-HS512+A256KW' },
+    { k => '',               v => 'None' },
+    { k => 'RSA-OAEP',       v => 'RSA-OAEP' },
+    { k => 'RSA-OAEP-256',   v => 'RSA-OAEP-256' },
+    { k => 'RSA1_5',         v => 'RSA1_5' },
+    { k => 'ECDH-ES',        v => 'ECDH-ES' },
+    { k => 'ECDH-ES+A128KW', v => 'ECDH-ES+A128KW' },
+    { k => 'ECDH-ES+A192KW', v => 'ECDH-ES+A192KW' },
+    { k => 'ECDH-ES+A256KW', v => 'ECDH-ES+A256KW' },
+];
+
 sub attributes {
     return {
 
@@ -4938,43 +4969,49 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation =>
               'Relying party JWKS endpoint (to get encryption keys)',
         },
-        oidcRPMetaDataOptionsEncryptedResponseEnc => {
+        oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg => {
             type   => 'select',
-            select => [
-                { k => '',              v => 'None' },
-                { k => 'A256CBC-HS512', v => 'A256CBC-HS512' },
-                { k => 'A256GCM',       v => 'A256GCM' },
-                { k => 'A192CBC-HS384', v => 'A192CBC-HS384' },
-                { k => 'A192GCM',       v => 'A192GCM' },
-                { k => 'A128CBC-HS256', v => 'A128CBC-HS256' },
-                { k => 'A128GCM',       v => 'A128GCM' },
-            ],
-            default       => 'A256GCM',
-            documentation => '"enc" algorithm for JWE encryption',
+            select => oidcEncAlgorithmAlg,
+            documentation => '"alg" algorithm for access_token encryption',
         },
-        oidcRPMetaDataOptionsEncryptedResponseAlg => {
+        oidcRPMetaDataOptionsAccessTokenEncContentEncAlg => {
             type   => 'select',
-            select => [
-
-                # Symetric encryption not supported
-                #{ k => 'A128KW',             v => 'A128KW' },
-                #{ k => 'A192KW',             v => 'A192KW' },
-                #{ k => 'A256KW',             v => 'A256KW' },
-                #{ k => 'A128GCMKW',          v => 'A128GCMKW' },
-                #{ k => 'A192GCMKW',          v => 'A192GCMKW' },
-                #{ k => 'A256GCMKW',          v => 'A256GCMKW' },
-                #{ k => 'PBES2-HS256+A128KW', v => 'PBES2-HS256+A128KW' },
-                #{ k => 'PBES2-HS384+A192KW', v => 'PBES2-HS384+A192KW' },
-                #{ k => 'PBES2-HS512+A256KW', v => 'PBES2-HS512+A256KW' },
-                { k => 'RSA-OAEP',       v => 'RSA-OAEP' },
-                { k => 'RSA-OAEP-256',   v => 'RSA-OAEP-256' },
-                { k => 'RSA1_5',         v => 'RSA1_5' },
-                { k => 'ECDH-ES',        v => 'ECDH-ES' },
-                { k => 'ECDH-ES+A128KW', v => 'ECDH-ES+A128KW' },
-                { k => 'ECDH-ES+A192KW', v => 'ECDH-ES+A192KW' },
-                { k => 'ECDH-ES+A256KW', v => 'ECDH-ES+A256KW' },
-            ],
-            documentation => '"alg" algorithm for JWE encryption',
+            select => oidcEncAlgorithmEnc,
+            default       => 'A256GCM',
+            documentation => '"enc" algorithm for access_token encryption',
+        },
+        oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg => {
+            type   => 'select',
+            select => oidcEncAlgorithmAlg,
+            documentation => '"alg" algorithm for id_token encryption',
+        },
+        oidcRPMetaDataOptionsIdTokenEncContentEncAlg => {
+            type   => 'select',
+            select => oidcEncAlgorithmEnc,
+            default       => 'A256GCM',
+            documentation => '"enc" algorithm for id_token encryption',
+        },
+        oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg => {
+            type   => 'select',
+            select => oidcEncAlgorithmAlg,
+            documentation => '"alg" algorithm for user_info encryption',
+        },
+        oidcRPMetaDataOptionsUserInfoEncContentEncAlg => {
+            type   => 'select',
+            select => oidcEncAlgorithmEnc,
+            default       => 'A256GCM',
+            documentation => '"enc" algorithm for user_info encryption',
+        },
+        oidcRPMetaDataOptionsLogoutEncKeyMgtAlg => {
+            type   => 'select',
+            select => oidcEncAlgorithmAlg,
+            documentation => '"alg" algorithm for logout token encryption',
+        },
+        oidcRPMetaDataOptionsLogoutEncContentEncAlg => {
+            type   => 'select',
+            select => oidcEncAlgorithmEnc,
+            default       => 'A256GCM',
+            documentation => '"enc" algorithm for logout encryption',
         },
     };
 }

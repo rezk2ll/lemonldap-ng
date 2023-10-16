@@ -239,23 +239,27 @@ sub op {
                 oidcServiceAllowHybridFlow            => 1,
                 oidcServiceAllowImplicitFlow          => 1,
                 oidcServiceAllowAuthorizationCodeFlow => 1,
-                oidcServiceEncAlgorithm               => 'A256GCM',
                 oidcRPMetaDataOptions                 => {
                     rp => {
-                        oidcRPMetaDataOptionsDisplayName       => "RP",
-                        oidcRPMetaDataOptionsIDTokenExpiration => 3600,
-                        oidcRPMetaDataOptionsClientID          => "rpid",
-                        oidcRPMetaDataOptionsIDTokenSignAlg    => "HS512",
-                        oidcRPMetaDataOptionsBypassConsent     => 0,
-                        oidcRPMetaDataOptionsClientSecret      => "rpsecret",
-                        oidcRPMetaDataOptionsUserIDAttr        => "",
-                        oidcRPMetaDataOptionsUserInfoSignAlg   => 'RS256',
+                        oidcRPMetaDataOptionsDisplayName  => "RP",
+                        oidcRPMetaDataOptionsClientID     => "rpid",
+                        oidcRPMetaDataOptionsClientSecret => "rpsecret",
+                        oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg =>
+                          'RSA-OAEP',
+                        oidcRPMetaDataOptionsIDTokenExpiration    => 3600,
+                        oidcRPMetaDataOptionsIDTokenSignAlg       => "HS512",
+                        oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg  => 'RSA-OAEP',
+                        oidcRPMetaDataOptionsBypassConsent        => 0,
+                        oidcRPMetaDataOptionsUserIDAttr           => "",
+                        oidcRPMetaDataOptionsUserInfoSignAlg      => 'RS256',
+                        oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg => 'RSA-OAEP',
                         oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                         oidcRPMetaDataOptionsLogoutUrl             =>
                           'http://auth.rp.com/oauth2/blogout',
                         oidcRPMetaDataOptionsLogoutType            => 'back',
                         oidcRPMetaDataOptionsLogoutSessionRequired => 1,
-                        oidcRPMetaDataOptionsRedirectUris          =>
+                        oidcRPMetaDataOptionsLogoutEncKeyMgtAlg => 'RSA-OAEP',
+                        oidcRPMetaDataOptionsRedirectUris       =>
                           'http://auth.rp.com?openidconnectcallback=1',
                         oidcRPMetaDataOptionsJwksUri =>
                           'http://auth.rp.com/oauth2/jwks',

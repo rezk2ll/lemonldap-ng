@@ -1204,10 +1204,10 @@
     10);
               }
               if (node.type && node.type.match(/^select$/)) {
-                node.data = node.data.toString();
+                node.data = node.data ? node.data.toString() : '';
               // Split SAML types
-              } else if (node.type && node.type.match(/^(saml(Service|Assertion)|blackWhiteList)$/) && !(typeof node.data === 'object')) {
-                node.data = node.data.split(';');
+              } else if (node.type && node.type.match(/^(saml(Service|Assertion)|blackWhiteList)$/) && !(node.data && typeof node.data === 'object')) {
+                node.data = node.data ? node.data.split(';') : [];
               }
               $scope.waiting = false;
               return d.resolve(node.data);

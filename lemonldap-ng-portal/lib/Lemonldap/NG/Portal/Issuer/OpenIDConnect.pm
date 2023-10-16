@@ -911,8 +911,22 @@ sub run {
                   || $self->conf->{oidcServiceAccessTokenExpiration};
 
                 my $state = $oidc_request->{'state'};
-                $id_token     = $self->encryptToken( $rp, $id_token );
-                $access_token = $self->encryptToken( $rp, $access_token );
+                $id_token = $self->encryptToken(
+                    $rp,
+                    $id_token,
+                    $self->rpOptions->{$rp}
+                      ->{oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg},
+                    $self->rpOptions->{$rp}
+                      ->{oidcRPMetaDataOptionsAccessTokenEncContentEncAlg},
+                );
+                $access_token = $self->encryptToken(
+                    $rp,
+                    $access_token,
+                    $self->rpOptions->{$rp}
+                      ->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg},
+                    $self->rpOptions->{$rp}
+                      ->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg},
+                );
                 return $self->sendOidcResponse(
                     $req, $flow,
                     $oidc_request->{'response_mode'},
@@ -1034,8 +1048,22 @@ sub run {
 
                 my $state = $oidc_request->{state};
 
-                $id_token     = $self->encryptToken( $rp, $id_token );
-                $access_token = $self->encryptToken( $rp, $access_token );
+                $id_token = $self->encryptToken(
+                    $rp,
+                    $id_token,
+                    $self->rpOptions->{$rp}
+                      ->{oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg},
+                    $self->rpOptions->{$rp}
+                      ->{oidcRPMetaDataOptionsAccessTokenEncContentEncAlg},
+                );
+                $access_token = $self->encryptToken(
+                    $rp,
+                    $access_token,
+                    $self->rpOptions->{$rp}
+                      ->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg},
+                    $self->rpOptions->{$rp}
+                      ->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg},
+                );
 
                 return $self->sendOidcResponse(
                     $req, $flow,
@@ -1589,8 +1617,19 @@ sub _handlePasswordGrant {
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
 
-    $id_token     = $self->encryptToken( $rp, $id_token );
-    $access_token = $self->encryptToken( $rp, $access_token );
+    $id_token = $self->encryptToken(
+        $rp,
+        $id_token,
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg},
+        $self->rpOptions->{$rp}
+          ->{oidcRPMetaDataOptionsAccessTokenEncContentEncAlg},
+    );
+    $access_token = $self->encryptToken(
+        $rp,
+        $access_token,
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg},
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg},
+    );
     my $token_response = {
         access_token => "$access_token",
         token_type   => 'Bearer',
@@ -1783,8 +1822,19 @@ sub _handleAuthorizationCodeGrant {
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
 
-    $id_token     = $self->encryptToken( $rp, $id_token );
-    $access_token = $self->encryptToken( $rp, $access_token );
+    $id_token = $self->encryptToken(
+        $rp,
+        $id_token,
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg},
+        $self->rpOptions->{$rp}
+          ->{oidcRPMetaDataOptionsAccessTokenEncContentEncAlg},
+    );
+    $access_token = $self->encryptToken(
+        $rp,
+        $access_token,
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg},
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg},
+    );
     my $token_response = {
         access_token => "$access_token",
         token_type   => 'Bearer',
@@ -1982,8 +2032,19 @@ sub _handleRefreshTokenGrant {
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
 
-    $id_token     = $self->encryptToken( $rp, $id_token );
-    $access_token = $self->encryptToken( $rp, $access_token );
+    $id_token = $self->encryptToken(
+        $rp,
+        $id_token,
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg},
+        $self->rpOptions->{$rp}
+          ->{oidcRPMetaDataOptionsAccessTokenEncContentEncAlg},
+    );
+    $access_token = $self->encryptToken(
+        $rp,
+        $access_token,
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg},
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg},
+    );
     my $token_response = {
         access_token => "$access_token",
         token_type   => 'Bearer',
@@ -2046,8 +2107,14 @@ sub userInfo {
         return $self->p->sendJSONresponse( $req, $userinfo_response );
     }
     else {
-        my $userinfo_jwt = $self->encryptToken( $rp,
-            $self->createJWT( $userinfo_response, $userinfo_sign_alg, $rp ) );
+        my $userinfo_jwt = $self->encryptToken(
+            $rp,
+            $self->createJWT( $userinfo_response, $userinfo_sign_alg, $rp ),
+            $self->rpOptions->{$rp}
+              ->{oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg},
+            $self->rpOptions->{$rp}
+              ->{oidcRPMetaDataOptionsUserInfoEncContentEncAlg},
+        );
         $self->logger->debug("Return UserInfo as JWT: $userinfo_jwt");
         return [
             200,
@@ -2198,6 +2265,8 @@ sub registration {
       $client_metadata->{id_token_encrypted_response_alg};
     my $encryptedResponseEnc =
       $client_metadata->{id_token_encrypted_response_enc};
+    my $userInfoEncAlg = $client_metadata->{userinfo_encrypted_response_alg};
+    my $userInfoEncEnc = $client_metadata->{userinfo_encrypted_response_enc};
 
     # Register RP in global configuration
     my $conf = $self->confAcc->getConf( { raw => 1, noCache => 1 } );
@@ -2244,14 +2313,21 @@ sub registration {
           ->{oidcRPMetaDataOptionsLogoutSessionRequired} =
           $backchannel_logout_session_required;
     }
-    if ( $jwksUri and $encryptedResponseAlg ) {
-        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsJwksUri} =
-          $jwksUri;
-        $conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsEncryptedResponseAlg} = $encryptedResponseAlg;
-        $conf->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsEncryptedResponseEnc} = $encryptedResponseEnc;
-    }
+    $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsJwksUri} =
+      $jwksUri
+      if $jwksUri;
+    $conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg} = $encryptedResponseAlg
+      if $encryptedResponseAlg;
+    $conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg} = $encryptedResponseEnc
+      if $encryptedResponseEnc;
+    $conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg} = $userInfoEncAlg
+      if $userInfoEncAlg;
+    $conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsUserInfoEncContentEncAlg} = $userInfoEncEnc
+      if $userInfoEncEnc;
 
     # TODO "jwks" support (when jwks_uri isn't available
 
@@ -2446,8 +2522,14 @@ sub logout {
                     }
                     $self->logger->debug( "Logout token content: "
                           . JSON::to_json($logoutToken) );
-                    my $jwt = $self->encryptToken( $rp,
-                        $self->createJWT( $logoutToken, $alg, $rp ) );
+                    my $jwt = $self->encryptToken(
+                        $rp,
+                        $self->createJWT( $logoutToken, $alg, $rp ),
+                        $self->rpOptions->{$rp}
+                          ->{oidcRPMetaDataOptionsLogoutEncKeyMgtAlg},
+                        $self->rpOptions->{$rp}
+                          ->{oidcRPMetaDataOptionsLogoutEncContentEncAlg},
+                    );
                     my $resp = $self->ua->post(
                         $url,
                         { logout_token => $jwt },
@@ -2800,19 +2882,27 @@ sub _generateIDToken {
 }
 
 sub encryptToken {
-    my ( $self, $rp, $token ) = @_;
-    my $key = $self->rpEncKey->{$rp};
-    return $token unless $key;
+    my ( $self, $rp, $token, $alg, $enc ) = @_;
+    return $token unless $alg;
+    my $keys = $self->rpEncKey->{$rp};
+    unless ($keys) {
+        $self->logger->error(
+            "No key defined for $rp, unable to encrypt tokens");
+        return $token;
+    }
+    my $key = $keys->{$alg};
+    unless ($key) {
+        $self->logger->error(
+            "No compatible key found for $rp with algorithm $alg");
+        return $token;
+    }
     $self->logger->debug('Encrypt JWT token');
     my $tmp = eval {
         Crypt::JWT::encode_jwt(
             payload => $token,
-            alg => $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsEncryptedResponseAlg}
-              || $key->{alg},
-            key => $key,
-            enc => $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsEncryptedResponseEnc}
-              || $self->conf->{oidcServiceEncAlgorithm}
-              || 'A128CBC-HS256'
+            alg     => $alg,
+            key     => $key,
+            enc     => $enc || 'A128CBC-HS256',
         );
     };
     if ($@) {

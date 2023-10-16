@@ -27,7 +27,7 @@ LWP::Protocol::PSGI->register(
             $client = $op;
         }
         elsif ( $host eq 'rp' ) {
-            pass('  Request from OP to RP' );
+            pass('  Request from OP to RP');
             $client = $rp;
         }
         else {
@@ -212,28 +212,30 @@ sub op {
                 oidcServiceAllowHybridFlow            => 1,
                 oidcServiceAllowImplicitFlow          => 1,
                 oidcServiceAllowAuthorizationCodeFlow => 1,
-                oidcServiceEncAlgorithm               => 'A256GCM',
                 oidcRPMetaDataOptions                 => {
                     rp => {
-                        oidcRPMetaDataOptionsDisplayName       => "RP",
-                        oidcRPMetaDataOptionsIDTokenExpiration => 3600,
-                        oidcRPMetaDataOptionsClientID          => "rpid",
-                        oidcRPMetaDataOptionsIDTokenSignAlg    => "ES256",
-                        oidcRPMetaDataOptionsBypassConsent     => 0,
-                        oidcRPMetaDataOptionsClientSecret      => "rpsecret",
-                        oidcRPMetaDataOptionsUserIDAttr        => "",
-                        oidcRPMetaDataOptionsUserInfoSignAlg   => 'ES256',
+                        oidcRPMetaDataOptionsDisplayName  => "RP",
+                        oidcRPMetaDataOptionsClientID     => "rpid",
+                        oidcRPMetaDataOptionsClientSecret => "rpsecret",
+                        oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg =>
+                          'ECDH-ES',
+                        oidcRPMetaDataOptionsIDTokenExpiration     => 3600,
+                        oidcRPMetaDataOptionsIDTokenSignAlg        => "ES256",
+                        oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg   => 'ECDH-ES',
+                        oidcRPMetaDataOptionsBypassConsent         => 0,
+                        oidcRPMetaDataOptionsUserIDAttr            => "",
+                        oidcRPMetaDataOptionsUserInfoSignAlg       => 'ES256',
+                        oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg  => 'ECDH-ES',
                         oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                         oidcRPMetaDataOptionsLogoutUrl             =>
                           'http://auth.rp.com/oauth2/blogout',
                         oidcRPMetaDataOptionsLogoutType            => 'back',
                         oidcRPMetaDataOptionsLogoutSessionRequired => 1,
+                        oidcRPMetaDataOptionsLogoutEncKeyMgtAlg    => 'ECDH-ES',
                         oidcRPMetaDataOptionsRedirectUris          =>
                           'http://auth.rp.com?openidconnectcallback=1',
                         oidcRPMetaDataOptionsJwksUri =>
                           'http://auth.rp.com/oauth2/jwks',
-                        oidcRPMetaDataOptionsEncryptedResponseEnc => 'A256GCM',
-                        oidcRPMetaDataOptionsEncryptedResponseAlg => 'ECDH-ES',
                     }
                 },
                 oidcOPMetaDataOptions           => {},
