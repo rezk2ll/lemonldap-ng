@@ -2110,7 +2110,14 @@ sub createIDToken {
     my $h = $self->p->processHook( $req, 'oidcGenerateIDToken', $payload, $rp );
     return undef if ( $h != PE_OK );
 
-    return $self->createJWT( $payload, $alg, $rp );
+    my $id_token = $self->createJWT( $payload, $alg, $rp );
+    return $self->encryptToken(
+        $rp,
+        $id_token,
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg},
+        $self->rpOptions->{$rp}
+          ->{oidcRPMetaDataOptionsAccessTokenEncContentEncAlg},
+    );
 }
 
 # Return flow type

@@ -911,14 +911,6 @@ sub run {
                   || $self->conf->{oidcServiceAccessTokenExpiration};
 
                 my $state = $oidc_request->{'state'};
-                $id_token = $self->encryptToken(
-                    $rp,
-                    $id_token,
-                    $self->rpOptions->{$rp}
-                      ->{oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg},
-                    $self->rpOptions->{$rp}
-                      ->{oidcRPMetaDataOptionsAccessTokenEncContentEncAlg},
-                );
                 $access_token = $self->encryptToken(
                     $rp,
                     $access_token,
@@ -1048,14 +1040,6 @@ sub run {
 
                 my $state = $oidc_request->{state};
 
-                $id_token = $self->encryptToken(
-                    $rp,
-                    $id_token,
-                    $self->rpOptions->{$rp}
-                      ->{oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg},
-                    $self->rpOptions->{$rp}
-                      ->{oidcRPMetaDataOptionsAccessTokenEncContentEncAlg},
-                );
                 $access_token = $self->encryptToken(
                     $rp,
                     $access_token,
@@ -1617,13 +1601,6 @@ sub _handlePasswordGrant {
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
 
-    $id_token = $self->encryptToken(
-        $rp,
-        $id_token,
-        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg},
-        $self->rpOptions->{$rp}
-          ->{oidcRPMetaDataOptionsAccessTokenEncContentEncAlg},
-    );
     $access_token = $self->encryptToken(
         $rp,
         $access_token,
@@ -1822,13 +1799,6 @@ sub _handleAuthorizationCodeGrant {
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
 
-    $id_token = $self->encryptToken(
-        $rp,
-        $id_token,
-        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg},
-        $self->rpOptions->{$rp}
-          ->{oidcRPMetaDataOptionsAccessTokenEncContentEncAlg},
-    );
     $access_token = $self->encryptToken(
         $rp,
         $access_token,
@@ -2032,13 +2002,6 @@ sub _handleRefreshTokenGrant {
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
 
-    $id_token = $self->encryptToken(
-        $rp,
-        $id_token,
-        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg},
-        $self->rpOptions->{$rp}
-          ->{oidcRPMetaDataOptionsAccessTokenEncContentEncAlg},
-    );
     $access_token = $self->encryptToken(
         $rp,
         $access_token,
