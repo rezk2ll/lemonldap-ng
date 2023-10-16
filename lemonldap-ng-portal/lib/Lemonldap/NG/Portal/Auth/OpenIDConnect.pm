@@ -190,7 +190,7 @@ sub extractFormInfo {
             $self->logger->debug("Token response is valid");
         }
 
-        my $access_token = $self->decryptJwt( $token_response->{access_token} );
+        my $access_token = $token_response->{access_token};
         my $expires_in   = $token_response->{expires_in};
         my $id_token     = $self->decryptJwt( $token_response->{id_token} );
         my $refresh_token = $token_response->{refresh_token};
