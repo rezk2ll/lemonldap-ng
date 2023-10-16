@@ -8,9 +8,8 @@ package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 use strict;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
-use Crypt::JWT qw(encode_jwt decode_jwt);
-use Digest::SHA
-  qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
+use Crypt::JWT  qw(encode_jwt decode_jwt);
+use Digest::SHA qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::UserAgent;
@@ -281,10 +280,13 @@ sub load_rp {
             my $content = $self->decodeJSON( $resp->decoded_content );
             if ( $content and ref($content) eq 'HASH' and $content->{keys} ) {
                 my %keys;
+                my %validKeys;
                 foreach my $key ( sort @{ $content->{keys} } ) {
                     next unless $key->{use} eq 'enc';
                     $key->{alg} = 'RSA-OAEP'
                       if !$key->{alg} and $key->{kty} eq 'RSA';
+                    $key->{alg} = 'ES256'
+                      if !$key->{alg} and $key->{kty} eq 'EC';
                     if ( $key->{alg} ) {
                         $keys{ $key->{alg} } ||= $key;
                     }
@@ -297,14 +299,18 @@ sub load_rp {
                     if ( $keys{$alg} ) {
                         $self->logger->debug(
                             "Found encryption key with algorith $alg");
+                        $validKeys{$alg} = $keys{$alg};
                         $self->rpEncKey->{$rp} = $keys{$alg};
                         last;
                     }
                 }
-                unless ( $self->rpEncKey->{$rp} ) {
+                unless (%validKeys) {
                     $self->logger->error(
                         "Unable to find a supported encryption key for $rp");
                     $valid = 0;
+                }
+                else {
+                    $self->rpEncKey->{$rp} = \%validKeys;
                 }
             }
             else {
@@ -2454,12 +2460,7 @@ sub decryptJwt {
         eval { $tmp = decode_jwt( token => $jwt, key => \$key, ); };
         if ($@) {
             if ( $key = $self->conf->{oidcServiceOldPrivateKeyEnc} ) {
-                eval {
-                    $tmp = decode_jwt(
-                        token => $jwt,
-                        key   => \$key,
-                    );
-                };
+                eval { $tmp = decode_jwt( token => $jwt, key => \$key, ); };
             }
             if ($@) {
                 $self->logger->error( 'Unable to decrypt JWE: ' . $@ );

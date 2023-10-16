@@ -785,10 +785,10 @@ llapp.controller 'TreeCtrl', [
 						if node.type and node.type.match /^int$/
 							node.data = parseInt(node.data, 10)
 						if node.type and node.type.match /^select$/
-							node.data = node.data.toString()
+							node.data = if node.data then node.data.toString() else ''
 						# Split SAML types
-						else if node.type and node.type.match(/^(saml(Service|Assertion)|blackWhiteList)$/) and not (typeof node.data == 'object')
-							node.data = node.data.split ';'
+						else if node.type and node.type.match(/^(saml(Service|Assertion)|blackWhiteList)$/) and not (node.data and typeof node.data == 'object')
+							node.data = if node.data then node.data.split ';' else []
 						$scope.waiting = false
 						d.resolve node.data
 					, (response) ->
