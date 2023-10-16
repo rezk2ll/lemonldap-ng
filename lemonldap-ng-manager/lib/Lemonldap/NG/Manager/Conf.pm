@@ -13,7 +13,6 @@ use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::EmailTransport;
 use Crypt::OpenSSL::RSA;
-use Crypt::PK::ECC;
 use Convert::PEM;
 use Digest::MD5 qw(md5_base64);
 
@@ -169,6 +168,7 @@ sub newRSAKey {
 #@return PSGI JSON response
 sub newEcKeys {
     my ( $self, $req, @others ) = @_;
+    require Crypt::PK::ECC;
     my $ec_key = Crypt::PK::ECC->new();
     $ec_key->generate_key('secp256r1');
 
