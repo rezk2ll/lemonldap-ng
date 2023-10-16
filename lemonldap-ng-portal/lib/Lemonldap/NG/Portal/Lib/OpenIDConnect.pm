@@ -1146,6 +1146,12 @@ sub newAccessToken {
         if ( $self->_wantJWT($rp) ) {
             my $at_jwt =
               $self->makeJWT( $req, $rp, $scope, $session->id, $sessionInfo );
+            $at_jwt = $self->encryptToken(
+                $rp,
+                $at_jwt,
+                $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg},
+                $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg},
+            );
             $at_info->{sha256_hash} = $self->createHash( $at_jwt, 256 );
             $self->updateToken( $session->id, $at_info );
             return $at_jwt;
