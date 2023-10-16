@@ -1143,7 +1143,31 @@ sub tests {
                 }
             }
             return 1;
-        }
+        },
+
+        # OIDC Signature and Encryption tests
+        oidcSigAlgShouldMatchKeyType => sub {
+            for my $key (
+                qw(oidcRPMetaDataOptionsIDTokenSignAlg oidcRPMetaDataOptionsAccessTokenSignAlg oidcRPMetaDataOptionsUserInfoSignAlg)
+              )
+            {
+                foreach my $rp ( keys %{ $conf->{oidcRPMetaDataOptions} } ) {
+                    return ( 0,
+"Signature algorithm shouldn't be ES* if key type is RSA ($key)"
+                      )
+                      if $conf->{oidcRPMetaDataOptions}->{$rp}->{$key}
+                      and $conf->{oidcRPMetaDataOptions}->{$rp}->{$key} =~ /^E/
+                      and $conf->{oidcServiceKeyType} ne 'EC';
+                    return ( 0,
+"Signature algorithm shouldn't be RS* or PS* if key type is EC ($key)"
+                      )
+                      if $conf->{oidcRPMetaDataOptions}->{$rp}->{$key}
+                      and $conf->{oidcRPMetaDataOptions}->{$rp}->{$key} !~ /^E/
+                      and $conf->{oidcServiceKeyType} eq 'EC';
+                }
+            }
+            return 1;
+        },
     };
 }
 
