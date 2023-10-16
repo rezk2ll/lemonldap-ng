@@ -267,8 +267,14 @@ sub cTrees {
                             'oidcRPMetaDataOptionsAuthnLevel',
                             'oidcRPMetaDataOptionsRule',
                             'oidcRPMetaDataOptionsJwksUri',
-                            'oidcRPMetaDataOptionsEncryptedResponseEnc',
-                            'oidcRPMetaDataOptionsEncryptedResponseAlg',
+                            'oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg',
+                            'oidcRPMetaDataOptionsAccessTokenEncContentEncAlg',
+                            'oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg',
+                            'oidcRPMetaDataOptionsIdTokenEncContentEncAlg',
+                            'oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg',
+                            'oidcRPMetaDataOptionsUserInfoEncContentEncAlg',
+                            'oidcRPMetaDataOptionsLogoutEncKeyMgtAlg',
+                            'oidcRPMetaDataOptionsLogoutEncContentEncAlg',
                         ]
                     },
                     {
