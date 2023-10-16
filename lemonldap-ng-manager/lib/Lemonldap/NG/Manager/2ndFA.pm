@@ -22,6 +22,7 @@ our $VERSION = '2.0.10';
 #############################
 
 use constant defaultRoute => '2ndfa.html';
+use constant icon         => 'wrench';
 
 sub init {
     my ( $self, $conf ) = @_;

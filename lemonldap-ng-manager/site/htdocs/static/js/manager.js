@@ -1111,6 +1111,11 @@
     {
           "password": ''
         }).then(function(response) {
+          var i,
+    o;
+          for (i = o = 0; o <= 2; i = ++o) {
+            currentNode.data[i + 3].data = currentNode.data[i].data;
+          }
           currentNode.data[0].data = response.data.private;
           currentNode.data[1].data = response.data.public;
           currentNode.data[2].data = response.data.hash;

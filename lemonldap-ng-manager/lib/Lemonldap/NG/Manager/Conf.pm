@@ -31,6 +31,7 @@ our $VERSION = '2.17.0';
 #############################
 
 use constant defaultRoute => 'manager.html';
+use constant icon         => 'cog';
 
 has defaultNewKeySize => ( is => 'rw', default => 2048, );
 
