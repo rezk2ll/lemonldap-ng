@@ -257,8 +257,14 @@ Options
    -  **Authentication level**: Required authentication level to access this application
    -  **Access rule**: Lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
    -  **JWKS URI**: When Relying-Party require encryption, set here the relying-party endpoint where keys are published
-   -  **"enc" algorithm for tokenencryption**: When Relying-Party require encryption, set here the "enc" algorithm to use
-   -  **"alg" algorithm for tokenencryption**: When Relying-Party require encryption, set here the "alg" algorithm to use
+   -  **Access Token Encryption key management algorithm**: If Relying-Party require access_token encryption, set here the key management algorithm
+   -  **Access Token Encryption content encryption algorithm**: If Relying-Party require access_token encryption, set here the content encryption algorithm
+   -  **ID Token Encryption key management algorithm**: If Relying-Party require id_token encryption, set here the key management algorithm
+   -  **ID Token Encryption content encryption algorithm**: If Relying-Party require id_token encryption, set here the content encryption algorithm
+   -  **User_info Encryption key management algorithm**: If Relying-Party require user_info response encryption, set here the key management algorithm
+   -  **User_info Encryption content encryption algorithm**: If Relying-Party require user_info response encryption, set here the content encryption algorithm
+   -  **Logout Encryption key management algorithm**: If Relying-Party require back-channel-logout token encryption, set here the key management algorithm
+   -  **Logout Encryption content encryption algorithm**: If Relying-Party require back-channel-logout token encryption, set here the content encryption algorithm
 
 -  **Timeouts**
 
