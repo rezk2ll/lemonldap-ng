@@ -911,22 +911,7 @@ sub run {
                   || $self->conf->{oidcServiceAccessTokenExpiration};
 
                 my $state = $oidc_request->{'state'};
-                $id_token = $self->encryptToken(
-                    $rp,
-                    $id_token,
-                    $self->rpOptions->{$rp}
-                      ->{oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg},
-                    $self->rpOptions->{$rp}
-                      ->{oidcRPMetaDataOptionsAccessTokenEncContentEncAlg},
-                );
-                $access_token = $self->encryptToken(
-                    $rp,
-                    $access_token,
-                    $self->rpOptions->{$rp}
-                      ->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg},
-                    $self->rpOptions->{$rp}
-                      ->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg},
-                );
+
                 return $self->sendOidcResponse(
                     $req, $flow,
                     $oidc_request->{'response_mode'},
@@ -1047,23 +1032,6 @@ sub run {
                   || $self->conf->{oidcServiceAccessTokenExpiration};
 
                 my $state = $oidc_request->{state};
-
-                $id_token = $self->encryptToken(
-                    $rp,
-                    $id_token,
-                    $self->rpOptions->{$rp}
-                      ->{oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg},
-                    $self->rpOptions->{$rp}
-                      ->{oidcRPMetaDataOptionsAccessTokenEncContentEncAlg},
-                );
-                $access_token = $self->encryptToken(
-                    $rp,
-                    $access_token,
-                    $self->rpOptions->{$rp}
-                      ->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg},
-                    $self->rpOptions->{$rp}
-                      ->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg},
-                );
 
                 return $self->sendOidcResponse(
                     $req, $flow,
@@ -1617,19 +1585,6 @@ sub _handlePasswordGrant {
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
 
-    $id_token = $self->encryptToken(
-        $rp,
-        $id_token,
-        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg},
-        $self->rpOptions->{$rp}
-          ->{oidcRPMetaDataOptionsAccessTokenEncContentEncAlg},
-    );
-    $access_token = $self->encryptToken(
-        $rp,
-        $access_token,
-        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg},
-        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg},
-    );
     my $token_response = {
         access_token => "$access_token",
         token_type   => 'Bearer',
@@ -1822,19 +1777,6 @@ sub _handleAuthorizationCodeGrant {
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
 
-    $id_token = $self->encryptToken(
-        $rp,
-        $id_token,
-        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg},
-        $self->rpOptions->{$rp}
-          ->{oidcRPMetaDataOptionsAccessTokenEncContentEncAlg},
-    );
-    $access_token = $self->encryptToken(
-        $rp,
-        $access_token,
-        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg},
-        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg},
-    );
     my $token_response = {
         access_token => "$access_token",
         token_type   => 'Bearer',
@@ -2032,19 +1974,6 @@ sub _handleRefreshTokenGrant {
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
 
-    $id_token = $self->encryptToken(
-        $rp,
-        $id_token,
-        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg},
-        $self->rpOptions->{$rp}
-          ->{oidcRPMetaDataOptionsAccessTokenEncContentEncAlg},
-    );
-    $access_token = $self->encryptToken(
-        $rp,
-        $access_token,
-        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg},
-        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg},
-    );
     my $token_response = {
         access_token => "$access_token",
         token_type   => 'Bearer',
