@@ -24,7 +24,7 @@ As an OP, LL::NG supports many OpenID Connect features:
 -  Nonce
 -  `Dynamic registration <https://openid.net/specs/openid-connect-registration-1_0.html>`__
 -  Access Token Hash generation
--  ID Token signature (HS256/HS384/HS512/RS256/RS384/RS512)
+-  ID Token signature (HS256/HS384/HS512 and RS256/RS384/RS512/PS256/PS384/PS512 or ES256/ES256K/ES384/ES512/EdDSA depending on the key type)
 -  UserInfo endpoint, as JSON or as JWT
 -  Request and Request URI
 -  `Back Channel Logout <https://openid.net/specs/openid-connect-backchannel-1_0.html>`__
