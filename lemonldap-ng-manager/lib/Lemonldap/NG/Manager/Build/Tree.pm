@@ -1459,7 +1459,7 @@ sub tree {
                     help  => 'openidconnectservice.html#security',
                     nodes => [ {
                             title => 'oidcServiceMetaDataKeys',
-                            form  => 'EcOrRSACertKeyNoPassword',
+                            form  => 'OidcKey',
                             group => [
                                 'oidcServicePrivateKeySig',
                                 'oidcServicePublicKeySig',
