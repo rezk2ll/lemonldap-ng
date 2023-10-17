@@ -1461,7 +1461,7 @@ sub tree {
                             title => 'oidcServiceMetaDataKeys',
                             nodes => [ {
                                     title => 'oidcServiceMetaDataSigKeys',
-                                    form  => 'EcOrRSACertKeyNoPassword',
+                                    form  => 'OidcKey',
                                     group => [
                                         'oidcServicePrivateKeySig',
                                         'oidcServicePublicKeySig',
@@ -1479,7 +1479,7 @@ sub tree {
                                 },
                                 {
                                     title => 'oidcServiceMetaDataEncKeys',
-                                    form  => 'EcOrRSACertKeyNoPassword',
+                                    form  => 'OidcKey',
                                     group => [
                                         'oidcServicePrivateKeyEnc',
                                         'oidcServicePublicKeyEnc',
