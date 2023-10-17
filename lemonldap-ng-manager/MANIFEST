@@ -122,7 +122,6 @@ site/htdocs/static/forms/catAndAppList.html
 site/htdocs/static/forms/cmbModule.html
 site/htdocs/static/forms/cmbModuleContainer.html
 site/htdocs/static/forms/doubleHash.html
-site/htdocs/static/forms/EcOrRSACertKeyNoPassword.html
 site/htdocs/static/forms/file.html
 site/htdocs/static/forms/grant.html
 site/htdocs/static/forms/grantContainer.html
@@ -138,6 +137,7 @@ site/htdocs/static/forms/menuCat.html
 site/htdocs/static/forms/mini.html
 site/htdocs/static/forms/oidcAttribute.html
 site/htdocs/static/forms/oidcAttributeContainer.html
+site/htdocs/static/forms/OidcKey.html
 site/htdocs/static/forms/oidcOPMetaDataNode.html
 site/htdocs/static/forms/oidcOPMetaDataNodeContainer.html
 site/htdocs/static/forms/oidcRPMetaDataNode.html
