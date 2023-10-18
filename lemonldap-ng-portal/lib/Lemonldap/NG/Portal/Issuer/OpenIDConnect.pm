@@ -2338,7 +2338,6 @@ sub logout {
                 $self->logger->warn("Cannot find RP options for $client_id");
                 next;
             }
-            $self->logger->debug("MAXBES LOGOUT $rp");
             if ( my $url = $rpConf->{oidcRPMetaDataOptionsLogoutUrl} ) {
 
                 # FRONT CHANNEL
