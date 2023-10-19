@@ -189,7 +189,7 @@ sub sendError {
     }
 
     # Handle Ajax responses
-    elsif ( $req->accept =~ /json/ ) {
+    elsif ( ( $req->accept // "" ) =~ /json/ ) {
         return $self->sendJSONresponse( $req, { error => $err },
             code => $code );
     }

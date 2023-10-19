@@ -2761,7 +2761,7 @@ sub sendLogoutRequestToProvider {
     # Signature
     my $signSLOMessage =
       $self->{ lc($type) . 'Options' }->{$providerID}
-      ->{ 'saml' . $type . 'MetaDataOptionsSignSLOMessage' };
+      ->{ 'saml' . $type . 'MetaDataOptionsSignSLOMessage' } // -1;
 
     if ( $signSLOMessage == 0 ) {
         $self->logger->debug("SLO request will not be signed");
