@@ -2286,7 +2286,9 @@ sub getRequestJWT {
     my $response = $self->ua->get($request_uri);
 
     if ( $response->is_error ) {
-        $self->logger->error("Unable to get request JWT on $request_uri");
+        $self->logger->error( "Unable to get request JWT on $request_uri: "
+              . $response->message );
+        $self->logger->debug( $response->content );
         return;
     }
 

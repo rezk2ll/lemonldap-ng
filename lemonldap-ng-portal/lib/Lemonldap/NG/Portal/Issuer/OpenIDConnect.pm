@@ -2442,12 +2442,18 @@ sub logout {
                         { logout_token => $jwt },
                         'Content-Type' => 'application/x-www-form-urlencoded',
                     );
-                    $resp->is_error
-                      ? $self->logger->warn(
-                        "OIDC back channel: unable to unlog $userId from $rp: "
-                          . $resp->status_line )
-                      : $self->logger->info(
-                        "OIDC back channel: user $userId unlogged from $rp");
+                    if ( $resp->is_error ) {
+                        $self->logger->warn(
+                                "OIDC back channel: unable to unlog"
+                              . " $userId from $rp: "
+                              . $resp->message );
+                        $self->logger->debug( $resp->content );
+                    }
+                    else {
+                        $self->logger->info(
+                            "OIDC back channel: user $userId unlogged from $rp"
+                        );
+                    }
                 }
             }
         }
