@@ -87,11 +87,13 @@ requesting a Central uWSGI server (Nginx only):
 
        # Handler directive to declare this VHost as DevOps and
        # Pass authorization requests to central FastCGI server
-       fastcgi_pass 10.1.2.3:9090;
        fastcgi_param VHOSTTYPE DevOps;
+       # or to declare DevOpsST handler
+       # fastcgi_param VHOSTTYPE DevOpsST;
+       fastcgi_pass 10.1.2.3:9090;
 
        # Drop post data
-       fastcgi_pass_request_body  off;
+       fastcgi_pass_request_body off;
        fastcgi_param CONTENT_LENGTH "";
 
        # Keep original request (LL::NG server will receive /lmauth)
@@ -107,8 +109,10 @@ requesting a Central uWSGI server (Nginx only):
        # This URL will be fetched by the Central FastCGI server every 10 mn and
        # then used for compliling access rules and headers relative to this VirtualHost
        # CHECK THAT IT CAN BE REACHED BY THE CENTRAL FASTCGI SERVER
-       # fastcgi_param RULES_URL http://rulesserver/my.json;
        fastcgi_param RULES_URL http://myapp.domain.com/rules.json;
+       # or to use an external rules server
+       # fastcgi_param RULES_URL http://rulesserver/my.json;
+
      }
 
      location /rules.json {
@@ -152,10 +156,11 @@ requesting a Central uWSGI server (Nginx only):
 Apache
 ^^^^^^
 
-LL::NG provides a dedicated FastCGI client. You have to
-install LemonLDAP::NG handler (LL::NG FastCGI client),
-FCGI::Client (Perl FastCGI dependency) and Mod_Perl2 (Apache module
-used for parsing HTTP headers).
+LemonLDAP::NG provides a dedicated FastCGI client (Lemonldap::NG::SSOaaS::Apache::Client) which is an alternative to
+L<Lemonldap::NG::Handler::ApacheMP2> that replaces main handler.
+It calls a remote LemonLDAP::NG FastCGI server to get authentication, authorization and headers.
+You have to install `Lemonldap::NG::SSOaaS::Apache::Client` (LemonLDAP::NG FastCGI client),
+`FCGI::Client` (Perl FastCGI dependency) and `Mod_Perl2` (Apache module used for parsing HTTP headers).
 Then, add this in your apache2.conf web applications or Reverse-Proxies.
 
 
@@ -174,25 +179,28 @@ Then, add this in your apache2.conf web applications or Reverse-Proxies.
        </Location>
        
        <LocationMatch "^/(?!rules.json)">
-         PerlHeaderParserHandler Lemonldap::NG::Handler::ApacheMP2::FCGIClient
+         PerlHeaderParserHandler Lemonldap::NG::SSOaaS::Apache::Client
 
          # Handler directive to declare this VHost as DevOps and
          # Pass authorization requests to Central FastCGI server
          PerlSetVar VHOSTTYPE DevOps
+         # or to declare DevOpsST handler
+         # PerlSetVar VHOSTTYPE DevOpsST
          PerlSetVar LLNG_SERVER 10.1.2.3:9090
 
          # Keep original hostname
          PerlSetVar HOST HTTP_HOST
 
          # Set redirection parameters
-         PerlSetVar PORT_REDIRECT SERVER_PORT
          PerlSetVar HTTPS_REDIRECT HTTPS
+         PerlSetVar PORT_REDIRECT SERVER_PORT
 
-         # This URL will be fetched by the Central FastCGI server every 10 mn and
+         # This URL will be fetched by the Central FastCGI server every 10mn and
          # then used for compliling access rules and headers relative to this VirtualHost
          # CHECK THAT IT CAN BE REACHED BY THE CENTRAL FASTCGI SERVER
-         # PerlSetVar RULES_URL http://rulesserver/my.json
          PerlSetVar RULES_URL http://myapp.domain.com/rules.json
+         # or to use an external rules server
+         # PerlSetVar RULES_URL http://rulesserver/my.json;
        </LocationMatch>
    </VirtualHost>
 

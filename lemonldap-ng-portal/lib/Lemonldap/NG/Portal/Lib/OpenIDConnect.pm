@@ -1124,10 +1124,13 @@ sub getAuthorizationCode {
 sub newAccessToken {
     my ( $self, $req, $rp, $scope, $sessionInfo, $info ) = @_;
 
+    my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
+
     my $at_info = {
 
-        scope => $scope,
-        rp    => $rp,
+        scope     => $scope,
+        rp        => $rp,
+        client_id => $client_id,
         %{$info},
     };
 
@@ -2321,7 +2324,9 @@ sub getRequestJWT {
     my $response = $self->ua->get($request_uri);
 
     if ( $response->is_error ) {
-        $self->logger->error("Unable to get request JWT on $request_uri");
+        $self->logger->error( "Unable to get request JWT on $request_uri: "
+              . $response->message );
+        $self->logger->debug( $response->content );
         return;
     }
 
