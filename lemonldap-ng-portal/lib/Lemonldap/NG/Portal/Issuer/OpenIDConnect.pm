@@ -2114,10 +2114,8 @@ sub introspection {
               $self->getUserIDForRP( $req, $rp, $apacheSession->data );
             $response->{scope} = $oidcSession->{data}->{scope}
               if $oidcSession->{data}->{scope};
-            $response->{client_id} =
-              $self->rpOptions->{ $oidcSession->{data}->{rp} }
-              ->{oidcRPMetaDataOptionsClientID}
-              if $oidcSession->{data}->{rp};
+            $response->{client_id} = $oidcSession->{data}->{client_id}
+              if $oidcSession->{data}->{client_id};
             $response->{iss} = $self->iss;
             $response->{exp} =
               $oidcSession->{data}->{_utime} + $self->conf->{timeout};
