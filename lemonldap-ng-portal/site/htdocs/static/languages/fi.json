@@ -177,7 +177,7 @@
 "forgotPwd":"Unohditko salasanasi?",
 "generatePwd":"Luo salasana automaattisesti",
 "generic":"Yhteystieto",
-"generic2fFormatError":"Your contact information does not match the required format",
+"generic2fFormatError":"Yhteystietosi eivät vastaa vaadittua muotoa",
 "generic2fwelcome":"Rekisteröi toisen vaiheen tunnistusvälineesi",
 "genericCheckCode":"Koodi on lähetetty sinulle, kirjoita se alla olevaan lomakkeeseen",
 "genericRegisterCode":"Anna vastaanotettu koodi",
