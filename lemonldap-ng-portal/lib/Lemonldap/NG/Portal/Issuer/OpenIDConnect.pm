@@ -1094,61 +1094,16 @@ sub run {
             # Check if we can bypass confirm using token_hint
             if ($id_token_hint) {
 
-                $self->logger->debug("Check sub of ID Token $id_token_hint");
-
                 # TODO: we should check JWT signature here to avoid DoS by
                 # logging the user out, however, as long as there is no logout
                 # confirmation when accessing ?logout=1, such a protection is
                 # trivial to bypass
                 my $payload = getJWTPayload($id_token_hint);
-                my $azp     = $payload->{azp};
-                my $sid     = $payload->{sid};
-                my $sub     = $payload->{sub};
-
-                # Check bypassConfirm parameter for rp using audience
                 my $rp;
-                foreach ( keys %{ $self->rpOptions } ) {
-                    my $logout_rp = $_;
-                    my $rpid =
-                      $self->rpOptions->{$logout_rp}
-                      ->{oidcRPMetaDataOptionsClientID};
+                $rp = $self->getRP( $payload->{azp} ) if $payload->{azp};
 
-                    # this works because _generateIDToken always sets azp
-                    if ( $azp and $rpid eq $azp ) {
-                        $bypassConfirm =
-                          $self->rpOptions->{$logout_rp}
-                          ->{oidcRPMetaDataOptionsLogoutBypassConfirm};
-                        $self->logger->debug(
-                            "Bypass logout confirm for RP $logout_rp")
-                          if $bypassConfirm;
-                        $rp = $logout_rp;
-                        last;
-                    }
-                }
-
-                unless ($rp) {
-                    $self->userLogger->error(
-                        "ID Token hint azp doesn't match any known RP");
-                    $bypassConfirm = 0;
-                }
-
-                my $user_id =
-                  $self->getUserIDForRP( $req, $rp, $req->{sessionInfo} );
-                unless ( $sub eq $user_id ) {
-                    $self->userLogger->error(
-                        "ID Token hint sub $sub does not match user $user_id");
-                    $bypassConfirm = 0;
-                }
-                else {
-                    if ( $self->getSidFromSession( $rp, $req->{sessionInfo} ) ne
-                        $sid )
-                    {
-                        $self->userLogger->error(
-                            "ID Token hint `sid` does not match user session");
-                        $bypassConfirm = 0;
-                    }
-                }
-
+                $bypassConfirm =
+                  $self->_check_bypass_confirm( $req, $rp, $payload );
             }
 
             # Ask consent for logout
@@ -1220,6 +1175,42 @@ sub run {
         : 'No OIDC endpoint found, aborting'
     );
     return PE_ERROR;
+}
+
+sub _check_bypass_confirm {
+    my ( $self, $req, $rp, $payload ) = @_;
+
+    unless ($rp) {
+        $self->userLogger->info(
+                "ID Token hint azp doesn't match any known RP,"
+              . " forcing confirmation" );
+        return 0;
+    }
+
+    if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsLogoutBypassConfirm} ) {
+
+        my $sub     = $payload->{sub};
+        my $user_id = $self->getUserIDForRP( $req, $rp, $req->{sessionInfo} );
+        if ( $sub ne $user_id ) {
+            $self->userLogger->info(
+                    "ID Token hint sub $sub does not match user $user_id,"
+                  . " forcing confirmation" );
+            return 0;
+        }
+
+        my $sid = $payload->{sid};
+        if ( $self->getSidFromSession( $rp, $req->{sessionInfo} ) ne $sid ) {
+            $self->userLogger->info(
+                    "ID Token hint `sid` does not match user session,"
+                  . " forcing confirmation" );
+            return 0;
+        }
+        $self->logger->debug("Bypass logout confirm for RP $rp");
+        return 1;
+
+    }
+    return 0;
+
 }
 
 sub findRPFromUri {
