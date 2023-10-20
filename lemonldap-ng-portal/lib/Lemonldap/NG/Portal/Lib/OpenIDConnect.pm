@@ -1058,10 +1058,13 @@ sub getAuthorizationCode {
 sub newAccessToken {
     my ( $self, $req, $rp, $scope, $sessionInfo, $info ) = @_;
 
+    my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
+
     my $at_info = {
 
-        scope => $scope,
-        rp    => $rp,
+        scope     => $scope,
+        rp        => $rp,
+        client_id => $client_id,
         %{$info},
     };
 

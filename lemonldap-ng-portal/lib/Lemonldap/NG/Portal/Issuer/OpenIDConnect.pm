@@ -2021,6 +2021,11 @@ sub userInfo {
     my $rp              = $accessTokenSession->data->{rp};
     my $user_session_id = $accessTokenSession->data->{user_session_id};
 
+    # Make sure $rp has been lazy loaded
+    if ( $accessTokenSession->data->{client_id} ) {
+        $self->getRP( $accessTokenSession->data->{client_id} );
+    }
+
     my $session =
       $self->_getSessionFromAccessTokenData( $accessTokenSession->data );
     unless ($session) {
