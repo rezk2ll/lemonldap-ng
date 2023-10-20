@@ -161,7 +161,7 @@ Install dependencies on your system
 
 .. danger::
 
-    You don't need to install them if you use LL::NG packages.
+    You do not need to install them if you use LL::NG packages.
     With ``apt`` or ``yum``, dependencies will be automatically
     installed.
 

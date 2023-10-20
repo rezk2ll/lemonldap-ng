@@ -93,7 +93,7 @@ HTTP headers to know which user is connected.
 
    curl \
       -H "Authorization: Bearer a74d504ec9e784785e70a1da2b95d1d2" \
-      https://oauth2.example.ccom/rest/myapi
+      https://oauth2.example.com/rest/myapi
 
 .. code-block:: javascript
 
