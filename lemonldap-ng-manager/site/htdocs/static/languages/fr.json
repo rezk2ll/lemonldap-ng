@@ -727,6 +727,7 @@
 "oidcRPMetaDataOptionsIcon":"Logo",
 "oidcRPMetaDataOptionsIdTokenEncContentEncAlg":"Algorithme de chiffrement du contenu pour le chiffrement des id_token",
 "oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg":"Algorithme d'échange de clef pour le chiffrement des id_token",
+"oidcRPMetaDataOptionsJwks":"Données JWKS",
 "oidcRPMetaDataOptionsJwksUri":"URL de publication JWKS",
 "oidcRPMetaDataOptionsLogoutBypassConfirm":"Contourner la confirmation",
 "oidcRPMetaDataOptionsLogoutEncContentEncAlg":"Algorithme de chiffrement du contenu pour le chiffrement des deconnexions",

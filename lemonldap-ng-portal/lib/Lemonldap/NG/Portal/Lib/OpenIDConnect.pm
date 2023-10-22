@@ -273,54 +273,70 @@ sub load_rp {
             }
         }
     }
-    if ( $valid and my $url = $config{options}->{oidcRPMetaDataOptionsJwksUri} )
+    if (
+        $valid
+        and (  $config{options}->{oidcRPMetaDataOptionsJwksUri}
+            or $config{options}->{oidcRPMetaDataOptionsJwks} )
+      )
     {
-        my $resp = $self->ua->get($url);
-        if ( $resp->is_success ) {
-            my $content = $self->decodeJSON( $resp->decoded_content );
-            if ( $content and ref($content) eq 'HASH' and $content->{keys} ) {
-                my %keys;
-                my %validKeys;
-                foreach my $key ( sort @{ $content->{keys} } ) {
-                    next unless $key->{use} eq 'enc';
-                    $key->{alg} = 'RSA-OAEP'
-                      if !$key->{alg} and $key->{kty} eq 'RSA';
-                    $key->{alg} = 'ES256'
-                      if !$key->{alg} and $key->{kty} eq 'EC';
-                    if ( $key->{alg} ) {
-                        $keys{ $key->{alg} } ||= $key;
-                    }
-                    else {
-                        $self->logger->warn(
-                            'Unable to find "alg" field in RP key');
-                    }
-                }
-                foreach my $alg ( @{&ENC_ALG_SUPPORTED} ) {
-                    if ( $keys{$alg} ) {
-                        $self->logger->debug(
-                            "Found encryption key with algorith $alg");
-                        $validKeys{$alg} = $keys{$alg};
-                        $self->rpEncKey->{$rp} = $keys{$alg};
-                        last;
-                    }
-                }
-                unless (%validKeys) {
-                    $self->logger->error(
-                        "Unable to find a supported encryption key for $rp");
-                    $valid = 0;
+        my $jwks = $config{options}->{oidcRPMetaDataOptionsJwks};
+        if ( !$jwks
+            and my $url = $config{options}->{oidcRPMetaDataOptionsJwksUri} )
+        {
+            my $resp = $self->ua->get($url);
+            if ( $resp->is_success ) {
+                my $content = $self->decodeJSON( $resp->decoded_content );
+                if ( $content and ref($content) eq 'HASH' and $content->{keys} )
+                {
+                    $jwks = $content;
                 }
                 else {
-                    $self->rpEncKey->{$rp} = \%validKeys;
+                    $self->logger->error("Invalid response from $url");
+                    $valid = 0;
                 }
             }
             else {
-                $self->logger->error("Invalid response from $url");
+                $self->logger->error( "Unable to fetch RP keys from $url: "
+                      . $resp->status_line );
                 $valid = 0;
             }
         }
+        if ( $jwks and ref($jwks) eq 'HASH' and $jwks->{keys} ) {
+            my %keys;
+            my %validKeys;
+            foreach my $key ( sort @{ $jwks->{keys} } ) {
+                next unless $key->{use} eq 'enc';
+                $key->{alg} = 'RSA-OAEP'
+                  if !$key->{alg} and $key->{kty} eq 'RSA';
+                $key->{alg} = 'ES256'
+                  if !$key->{alg} and $key->{kty} eq 'EC';
+                if ( $key->{alg} ) {
+                    $keys{ $key->{alg} } ||= $key;
+                }
+                else {
+                    $self->logger->warn('Unable to find "alg" field in RP key');
+                }
+            }
+            foreach my $alg ( @{&ENC_ALG_SUPPORTED} ) {
+                if ( $keys{$alg} ) {
+                    $self->logger->debug(
+                        "Found encryption key with algorith $alg");
+                    $validKeys{$alg} = $keys{$alg};
+                    $self->rpEncKey->{$rp} = $keys{$alg};
+                    last;
+                }
+            }
+            unless (%validKeys) {
+                $self->logger->error(
+                    "Unable to find a supported encryption key for $rp");
+                $valid = 0;
+            }
+            else {
+                $self->rpEncKey->{$rp} = \%validKeys;
+            }
+        }
         else {
-            $self->logger->error(
-                "Unable to fetch RP keys from $url: " . $resp->status_line );
+            $self->logger->error('Malformed JWKS document');
             $valid = 0;
         }
     }
@@ -1149,8 +1165,10 @@ sub newAccessToken {
             $at_jwt = $self->encryptToken(
                 $rp,
                 $at_jwt,
-                $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg},
-                $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg},
+                $self->rpOptions->{$rp}
+                  ->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg},
+                $self->rpOptions->{$rp}
+                  ->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg},
             );
             $at_info->{sha256_hash} = $self->createHash( $at_jwt, 256 );
             $self->updateToken( $session->id, $at_info );
