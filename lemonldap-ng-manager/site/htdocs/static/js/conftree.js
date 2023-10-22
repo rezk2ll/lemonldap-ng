@@ -737,12 +737,6 @@ function templates(tpl,key) {
                   "title" : "oidcRPMetaDataOptionsRule"
                },
                {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsJwksUri",
-                  "help" : "idpopenidconnect.html",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsJwksUri",
-                  "title" : "oidcRPMetaDataOptionsJwksUri"
-               },
-               {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg",
                   "select" : [
@@ -1038,6 +1032,24 @@ function templates(tpl,key) {
             "id" : "security",
             "title" : "security",
             "type" : "simpleInputContainer"
+         },
+         {
+            "_nodes" : [
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsJwksUri",
+                  "help" : "idpopenidconnect.html",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsJwksUri",
+                  "title" : "oidcRPMetaDataOptionsJwksUri"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsJwks",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsJwks",
+                  "title" : "oidcRPMetaDataOptionsJwks",
+                  "type" : "file"
+               }
+            ],
+            "id" : "keys",
+            "title" : "keys"
          },
          {
             "_nodes" : [

@@ -266,7 +266,6 @@ sub cTrees {
                             'oidcRPMetaDataOptionsRequestUris',
                             'oidcRPMetaDataOptionsAuthnLevel',
                             'oidcRPMetaDataOptionsRule',
-                            'oidcRPMetaDataOptionsJwksUri',
                             'oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg',
                             'oidcRPMetaDataOptionsAccessTokenEncContentEncAlg',
                             'oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg',
@@ -276,6 +275,13 @@ sub cTrees {
                             'oidcRPMetaDataOptionsLogoutEncKeyMgtAlg',
                             'oidcRPMetaDataOptionsLogoutEncContentEncAlg',
                         ]
+                    },
+                    {
+                        title => 'keys',
+                        nodes => [
+                            'oidcRPMetaDataOptionsJwksUri',
+                            'oidcRPMetaDataOptionsJwks',
+                        ],
                     },
                     {
                         title => 'oidcRPMetaDataOptionsTimeouts',
@@ -298,7 +304,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsPostLogoutRedirectUris',
                         ]
                     },
-                    'oidcRPMetaDataOptionsComment'
+                    'oidcRPMetaDataOptionsComment',
                 ]
             },
             'oidcRPMetaDataMacros',

@@ -2680,6 +2680,12 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             'type' => 'select'
         },
+        'oidcRPMetaDataOptionsJwks' => {
+            'keyTest' => sub {
+                1;
+            },
+            'type' => 'file'
+        },
         'oidcRPMetaDataOptionsJwksUri' => {
             'type' => 'url'
         },
