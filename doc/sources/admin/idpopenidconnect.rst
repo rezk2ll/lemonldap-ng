@@ -264,7 +264,6 @@ Options
       in OIDC specifications). These URLs may use wildcards (``https://app.example.com/*``).
    -  **Authentication level**: Required authentication level to access this application
    -  **Access rule**: Lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
-   -  **JWKS URI**: When Relying-Party require encryption, set here the relying-party endpoint where keys are published
    -  **Access Token Encryption key management algorithm**: If Relying-Party require access_token encryption, set here the key management algorithm
    -  **Access Token Encryption content encryption algorithm**: If Relying-Party require access_token encryption, set here the content encryption algorithm
    -  **ID Token Encryption key management algorithm**: If Relying-Party require id_token encryption, set here the key management algorithm
@@ -273,6 +272,11 @@ Options
    -  **User_info Encryption content encryption algorithm**: If Relying-Party require user_info response encryption, set here the content encryption algorithm
    -  **Logout Encryption key management algorithm**: If Relying-Party require back-channel-logout token encryption, set here the key management algorithm
    -  **Logout Encryption content encryption algorithm**: If Relying-Party require back-channel-logout token encryption, set here the content encryption algorithm
+
+-  **Keys**
+
+   -  **JWKS URI**: When Relying-Party require encryption, set here the relying-party endpoint where keys are published
+   -  **JWKS Data**: Alternative, fix here the relying-party JWKS document
 
 -  **Timeouts**
 

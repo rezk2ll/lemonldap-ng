@@ -728,6 +728,7 @@
 "oidcRPMetaDataOptionsIcon":"Лого",
 "oidcRPMetaDataOptionsIdTokenEncContentEncAlg":"ID Token Encryption content encryption algorithm",
 "oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg":"ID Token Encryption key management alg",
+"oidcRPMetaDataOptionsJwks":"JWKS data",
 "oidcRPMetaDataOptionsJwksUri":"JWKS URL",
 "oidcRPMetaDataOptionsLogoutBypassConfirm":"Обойти подтверждение",
 "oidcRPMetaDataOptionsLogoutEncContentEncAlg":"Logout Encryption content encryption algorithm",
