@@ -270,6 +270,12 @@ sub logout {
 
 sub unauthLogout {
     my ( $self, $req ) = @_;
+    $self->_unauthLogout($req);
+    return $self->do( $req, [ sub { PE_LOGOUT_OK } ] );
+}
+
+sub _unauthLogout {
+    my ( $self, $req ) = @_;
     $self->userLogger->info('Unauthenticated logout request');
     $self->logger->debug('Cleaning pdata');
     $self->logger->debug("Removing $self->{conf}->{cookieName} cookie");
@@ -283,7 +289,6 @@ sub unauthLogout {
             value   => 0
         )
     );
-    return $self->do( $req, [ sub { PE_LOGOUT_OK } ] );
 }
 
 # RUNNING METHODS
