@@ -226,7 +226,7 @@ sub checkUnauthLogout {
     my ( $self, $req ) = @_;
     if ( defined $req->param('logout') ) {
         $self->_unauthLogout($req);
-        $req->steps( [ sub { PE_LOGOUT_OK } ] );
+        $req->steps( [ 'controlUrl', sub { PE_LOGOUT_OK } ] );
     }
     return PE_OK;
 }

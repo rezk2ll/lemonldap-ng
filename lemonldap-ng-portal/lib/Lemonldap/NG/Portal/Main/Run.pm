@@ -271,7 +271,7 @@ sub logout {
 sub unauthLogout {
     my ( $self, $req ) = @_;
     $self->_unauthLogout($req);
-    return $self->do( $req, [ sub { PE_LOGOUT_OK } ] );
+    return $self->do( $req, [ 'controlUrl', sub { PE_LOGOUT_OK } ] );
 }
 
 sub _unauthLogout {
