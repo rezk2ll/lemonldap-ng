@@ -40,7 +40,7 @@ sub sessionData {
 }
 
 sub validSession {
-    qw(storeHistory buildCookie);
+    qw(storeHistory rememberBrowser buildCookie);
 }
 
 # RESPONSE HANDLER
@@ -1387,6 +1387,12 @@ sub buildUrl {
     }
     $uri->path_segments(@pathSg);
     return $uri->as_string;
+}
+
+sub rememberBrowser {
+    my ( $self, $req ) = @_;
+
+    return $self->_trustedBrowser->newDevice($req);
 }
 
 1;
