@@ -120,7 +120,7 @@ sub init {
             my $lang = $1 || 'all';
             $self->trOver->{$lang}->{"PE$2"} = $self->localConfig->{$k};
         }
-        elsif ( $k =~ /msg_(?:(\w+?)_)?(\w+)$/ ) {
+        elsif ( $k =~ /msg_(?:([a-z][a-z](?:_[A-Z][A-Z])?)_)?(\w+)$/ ) {
             my $lang = $1 || 'all';
             $self->trOver->{$lang}->{$2} = $self->localConfig->{$k};
         }
@@ -270,17 +270,6 @@ sub reloadConf {
     }
     $self->cors($cors);
     $self->logger->debug( "Initialized CORS headers : " . $self->cors );
-
-    # Initialize templateDir
-    $self->{templateDir} =
-      $self->conf->{templateDir} . '/' . $self->conf->{portalSkin}
-      if ( $self->conf->{templateDir} and $self->conf->{portalSkin} );
-    unless ( -d $self->{templateDir} ) {
-        $self->error("Template dir $self->{templateDir} doesn't exist");
-        return $self->fail;
-    }
-    $self->templateDir(
-        [ $self->{templateDir}, $self->conf->{templateDir} . '/bootstrap' ] );
 
     $self->{staticPrefix} = $self->conf->{staticPrefix} || '/static';
     $self->{languages}    = $self->conf->{languages}    || 'en';

@@ -1,4 +1,4 @@
 # If file storage is used for sessions, user passord may be stored in this
 # directory, so it must not be readable by all but must be writable by www-data
-liblemonldap-ng-portal-perl: non-standard-dir-perm var/lib/lemonldap-ng/captcha/ 0770 != 0755
-liblemonldap-ng-portal-perl: non-standard-dir-perm var/lib/lemonldap-ng/notifications/ 0770 != 0755
+non-standard-dir-perm var/lib/lemonldap-ng/captcha/ 0770 != 0755
+non-standard-dir-perm var/lib/lemonldap-ng/notifications/ 0770 != 0755

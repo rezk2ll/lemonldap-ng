@@ -284,6 +284,7 @@ sub tree {
                                     form  => 'simpleInputContainer',
                                     nodes => [
                                         'ldapGroupBase',
+                                        'groupLDAPFilter',
                                         'ldapGroupObjectClass',
                                         'ldapGroupAttributeName',
                                         'ldapGroupAttributeNameUser',
@@ -400,6 +401,7 @@ sub tree {
                                 'radiusAuthnLevel',
                                 'radiusSecret',
                                 'radiusServer',
+                                'radiusTimeout',
                                 'radiusExportedVars',
                                 'radiusDictionaryFile',
                                 'radiusRequestAttributes',

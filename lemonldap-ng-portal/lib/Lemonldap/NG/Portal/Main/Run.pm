@@ -928,21 +928,14 @@ sub getTrOver {
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
 
-    my $templateDir = $self->conf->{templateDir} . '/' . $self->getSkin($req);
-    my $defaultTemplateDir = $self->conf->{templateDir} . '/bootstrap';
-    $self->templateDir( [ $templateDir, $defaultTemplateDir ] );
+    my $skin_template_dir =
+      $self->conf->{templateDir} . '/' . $self->getSkin($req);
 
-    # Check template
-    $args{templateDir} = $templateDir;
-    my $tmpl = $args{templateDir} . "/$template.tpl";
-    unless ( -f $tmpl ) {
-        $self->logger->debug("Template $tmpl not found");
-        $args{templateDir} = $self->conf->{templateDir} . '/bootstrap';
-        $tmpl = $args{templateDir} . "/$template.tpl";
-        $self->logger->debug("-> Trying to load $tmpl");
-    }
+    # Look for templates in skin subdirectories instead of templateDir
+    $args{templateDir} =
+      [ $skin_template_dir, $self->templateDir . "/bootstrap" ];
 
-    $args{params}->{TROVER} = $self->getTrOver( $req, $templateDir );
+    $args{params}->{TROVER} = $self->getTrOver( $req, $skin_template_dir );
 
     $self->processHook( $req, 'sendHtml', \$template, \%args );
 

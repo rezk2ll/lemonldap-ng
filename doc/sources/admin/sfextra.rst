@@ -105,3 +105,15 @@ You can also test for a particular second factor type
     <TMPL_IF NAME="PREFIX_homePhone">
     Some info specific to the homePhone 2FA type
     </TMPL_IF>
+
+Regex validation
+~~~~~~~~~~~~~~~~
+
+When using the "registration" option for additional second factors, you might want to specify a validation regexp for the registered value: check that the phone number is properly formatted, that the e-mail address does not use a forbidden domain, etc.
+
+In order to do this, you can define additional overload parameters:
+
+* ``generic2fFormatRegex``: the regexp you want to use
+* ``generic2fFormatErrorLabel``: the message label you want to show the user when this regexp fails. By default, ``generic2fFormatError`` is used.
+
+Don't forget to :ref:`define a human readable translation for this label <intlmessages>`

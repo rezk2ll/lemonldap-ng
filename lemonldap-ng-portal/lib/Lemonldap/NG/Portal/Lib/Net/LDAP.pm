@@ -20,7 +20,7 @@ use Net::LDAP qw(LDAP_PP_PASSWORD_EXPIRED LDAP_PP_ACCOUNT_LOCKED
 
 use utf8;
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.17.0';
 
 # INITIALIZATION
 
@@ -659,8 +659,9 @@ sub searchGroups {
     my $groups = {};
 
     # Creating search filter
+    my $groupSearchFilter = $self->{conf}->{groupLDAPFilter} || "(objectClass=" . $self->{conf}->{ldapGroupObjectClass} . ")";
     my $searchFilter =
-      "(&(objectClass=" . $self->{conf}->{ldapGroupObjectClass} . ")(|";
+      "(&" . $groupSearchFilter . "(|";
     foreach ( split( $self->{conf}->{multiValuesSeparator}, $value ) ) {
         $searchFilter .= "(" . $key . "=" . escape_filter_value($_) . ")";
     }

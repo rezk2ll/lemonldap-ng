@@ -177,6 +177,7 @@
 "forgotPwd":"שכחת את הסיסמה שלך?",
 "generatePwd":"יצירת סיסמה אוטומטית",
 "generic":"פרטי יצירת קשר",
+"generic2fFormatError":"Your contact information does not match the required format",
 "generic2fwelcome":"רישום השלב האימות השני",
 "genericCheckCode":"הועבר אליך קוד. נא למלא אותו בטופס הבא",
 "genericRegisterCode":"נא להקליד את הקוד שהתקבל",

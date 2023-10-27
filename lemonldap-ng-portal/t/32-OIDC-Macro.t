@@ -129,6 +129,7 @@ sub op {
                         oidcRPMetaDataOptionsClientSecret      => "rpid",
                         oidcRPMetaDataOptionsUserIDAttr        => "custom_sub",
                         oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
+                        oidcRPMetaDataOptionsRedirectUris => 'http://rp.com/',
                     }
                 },
                 oidcOPMetaDataOptions           => {},

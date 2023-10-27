@@ -72,7 +72,7 @@ Example
 
 ::
 
-   curl -H "Accept: application/json" -d user=rtyler -d password=rtyler http://auth.example.com/ | json_pp
+   curl -X POST -H "Accept: application/json" -d user=rtyler -d password=rtyler http://auth.example.com/ | json_pp
 
 
 .. attention::
@@ -82,7 +82,7 @@ Example
 
     ::
 
-       curl -H "Accept: application/json" -d name=rtyler --data-urlencode passwd=@31&3+*J http://auth.example.com/ | json_pp
+       curl -X POST -H "Accept: application/json" -d name=rtyler --data-urlencode passwd=@31&3+*J http://auth.example.com/ | json_pp
 
 
 

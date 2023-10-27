@@ -141,8 +141,13 @@ ok( $res = $rp->_get( '/', query => $query, accept => 'text/html' ),
 count(1);
 my $spId = expectCookie($res);
 
+
 # Logout initiated by OP
 switch ('op');
+
+# Reset conf to make sure to make sure lazy loading works during logout (#3014)
+$op->p->HANDLER->checkConf(1);
+
 ok(
     $res = $op->_get(
         '/',
@@ -181,7 +186,8 @@ clean_sessions();
 done_testing( count() );
 
 sub op {
-    return LLNG::Manager::Test->new( {
+    return LLNG::Manager::Test->new(
+        {
             ini => {
                 logLevel                        => $debug,
                 domain                          => 'idp.com',
@@ -211,8 +217,10 @@ sub op {
                         oidcRPMetaDataOptionsAccessTokenExpiration => 3600,
                         oidcRPMetaDataOptionsLogoutUrl             =>
                           'http://auth.rp.com/oauth2/blogout',
-                        oidcRPMetaDataOptionsLogoutType             => 'back',
-                        oidcRPMetaDataOptionsLogoutSessionRequired  => 1,
+                        oidcRPMetaDataOptionsLogoutType            => 'back',
+                        oidcRPMetaDataOptionsLogoutSessionRequired => 1,
+                        oidcRPMetaDataOptionsRedirectUris          =>
+                          'http://auth.rp.com?openidconnectcallback=1',
                     }
                 },
                 oidcOPMetaDataOptions           => {},
@@ -234,7 +242,8 @@ sub op {
 
 sub rp {
     my ( $jwks, $metadata ) = @_;
-    return LLNG::Manager::Test->new( {
+    return LLNG::Manager::Test->new(
+        {
             ini => {
                 logLevel                   => $debug,
                 domain                     => 'rp.com',

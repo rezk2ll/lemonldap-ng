@@ -259,7 +259,7 @@ sub attributes {
             type          => 'array',
             documentation => 'Alterable session keys by user itself',
             default       =>
-              [ '_appsListOrder', '_oidcConnectedRP', '_oidcConsents' ],
+              [ '_appsListOrder', '_oidcConnectedRP', '_oidcConnectedRPIDs', '_oidcConsents' ],
         },
         configStorage => {
             type          => 'text',
@@ -3731,6 +3731,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             documentation => 'LDAP filter for auth search'
         },
+        groupLDAPFilter => {
+            type          => 'text',
+            documentation => 'LDAP filter for group search'
+        },
         ldapGroupDecodeSearchedValue => {
             default       => 0,
             type          => 'bool',
@@ -3938,6 +3942,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         radiusSecret => { type => 'text' },
         radiusServer => { type => 'text' },
+        radiusTimeout => {
+            type          => 'intOrNull',
+        },
 
         radiusExportedVars => {
             type => 'keyTextContainer',
@@ -4717,6 +4724,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsOfflineSessionExpiration =>
           { type => 'intOrNull' },
         oidcRPMetaDataOptionsRedirectUris => { type => 'text', },
+        oidcRPMetaDataOptionsRequestUris => { type => 'text', },
         oidcRPMetaDataOptionsExtraClaims  => {
             type    => 'keyTextContainer',
             keyTest => qr/^[\x21\x23-\x5B\x5D-\x7E]+$/,

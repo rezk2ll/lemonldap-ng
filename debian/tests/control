@@ -51,11 +51,15 @@ Features: test-name=runtime-deps-manager
 # Some portal suggested dependencies are added here
 Test-Command: /usr/share/pkg-perl-autopkgtest/runner runtime-deps-and-recommends
 Depends: @, @builddeps@, pkg-perl-autopkgtest
- , libyaml-perl, liblog-log4perl-perl
- , libauthen-pam-perl, libauthen-radius-perl
- , libweb-id-perl, libio-socket-timeout-perl
+ , libauthen-pam-perl
+ , libauthen-radius-perl
  , libdatetime-format-rfc3339-perl
+ , libgeoip2-perl
  , libhttp-browserdetect-perl
+ , libio-socket-timeout-perl
+ , liblog-log4perl-perl
+ , libweb-id-perl
+ , libyaml-perl
 Restrictions: superficial
 Features: test-name=runtime-deps-and-recommends
 

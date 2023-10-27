@@ -50,7 +50,7 @@ Mail second factor".
 -  **Activation**: Set to ``On`` to activate this module, or use a
    specific rule to select which users may use this type of second
    factor
--  **Server hostname**: The hostname of the Radius server
+-  **Server hostname**: The hostname of the Radius server. Since 2.17 you can specify multiple servers, separated by spaces, for failover.
 -  **Shared secret**: The secret key shared with the Radius server
 -  **Session key containing login** (Optional): When verifying the OTP
    code against the Radius server, use this attribute as the login and

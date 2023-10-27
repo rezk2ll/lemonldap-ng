@@ -36,7 +36,7 @@ sub init {
 
     foreach my $name ( keys %{ $self->conf->{authChoiceModules} } ) {
         my @mods =
-          split( /[;\|]/, $self->conf->{authChoiceModules}->{$name} );
+          split( /;\s*/, $self->conf->{authChoiceModules}->{$name} );
         my $module = '::'
           . [ 'Auth', 'UserDB', 'Password' ]->[$type] . '::'
           . $mods[$type];
@@ -120,6 +120,10 @@ sub checkChoice {
     if ( defined $req->pdata->{_choice} ) {
         $name = $req->pdata->{_choice};
         $self->logger->debug("Choice $name selected from pdata");
+    }
+    elsif ( (defined $req->data->{_authChoice}) or (defined $req->data->{_choice}) ) {
+        $name = $req->data->{_authChoice} || $req->data->{_choice};
+        $self->logger->debug("Choice $name selected from req->data");
     }
 
     unless ($name) {
@@ -219,7 +223,7 @@ sub _buildAuthLoop {
 
         # Find modules associated to authChoice
         my ( $auth, $userDB, $passwordDB, $url, $condition ) =
-          split( /[;\|]/, $self->conf->{authChoiceModules}->{$_} );
+          split( /;\s*/, $self->conf->{authChoiceModules}->{$_} );
 
         unless ( $_choiceRules->{$_} ) {
             $self->logger->error("$_ has no rule");

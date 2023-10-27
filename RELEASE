@@ -35,6 +35,8 @@ Before release
 - Update documentation:
   $ ./scripts/parameters-for-doc.pl > doc/sources/admin/parameterlist.rst
 
+- Close all issues of the milestone and restore visibility on issues which were hidden for security reasons
+
 - Update changelog:
   $ ./scripts/generate-changelog.pl
 
@@ -131,7 +133,7 @@ Spread the word
 ---------------
 
 - News on OW2 projects page: https://projects.ow2.org/bin/view/lemonldap-ng/
-- Twitter account / Facebook page
+- Mastodon / Twitter / Facebook
 - IRC channel subject and OW2 Rocket.Chat channel
 - Mailing lists: lemonldap-ng-users / lemonldap-ng-announces
 - Optional: blogs and news sites (LinuxFR, etc.)

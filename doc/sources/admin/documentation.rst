@@ -77,18 +77,17 @@ Ubuntu
 
    Ubuntu version are included in "universe" branch [8]_, so not really security maintained. Prefer to use our repositories or Debian ones
 
-=========== ============= ================================ ==================================================================== ===========
-Ubuntu dist               LL::NG version                     Secured                                                              Maintenance
-=========== ============= ================================ ==================================================================== ===========
-*12.04*     *Precise*     `1.1.2 </documentation/1.1/>`__  |maybe| No known vulnerability                                       None
-14.04       Trusty        `1.2.5 </documentation/1.2/>`__  |maybe| No known vulnerability                                       None
-16.04       Xenial  [9]_  `1.4.6 </documentation/1.4/>`__  |bad| CVE-2019-12046, CVE-2019-13031                                 None
-18.04       Bionic  [9]_  `1.9.16 </documentation/1.9/>`__ |bad| CVE-2019-12046, CVE-2019-13031, CVE-2020-24660                 None
-20.04       Focal  [9]_   `2.0.7 </documentation/2.0/>`__  |bad| CVE-2020-24660, CVE-2021-35472, CVE-2021-35473, CVE-2021-40874 None
-21.04       Hirsute       `2.0.11 </documentation/2.0/>`__ |bad| CVE-2021-35472, CVE-2021-35473, CVE-2021-40874, CVE-2023-28862 None
-22.04       Jammy         `2.0.13 </documentation/2.0/>`__ |bad| CVE-2021-40874, CVE-2023-28862                                 None
-23.04       Lunar         `2.0.16 </documentation/2.0/>`__ |bad| CVE-2023-28862                                                 None
-=========== ============= ================================ ==================================================================== ===========
+=========== ============= ================================ ==================================================================================== ===========
+Ubuntu dist               LL::NG version                     Secured                                                                            Maintenance
+=========== ============= ================================ ==================================================================================== ===========
+*12.04*     *Precise*     `1.1.2 </documentation/1.1/>`__  |maybe| No known vulnerability                                                       None
+*14.04*     *Trusty*      `1.2.5 </documentation/1.2/>`__  |maybe| No known vulnerability                                                       None
+*16.04*     *Xenial*      `1.4.6 </documentation/1.4/>`__  |bad| CVE-2019-12046, CVE-2019-13031                                                 None
+*18.04*     *Bionic*      `1.9.16 </documentation/1.9/>`__ |bad| CVE-2019-12046, CVE-2019-13031, CVE-2020-24660, CVE-2023-44469                 None
+20.04       Focal  [9]_   `2.0.7 </documentation/2.0/>`__  |bad| CVE-2020-24660, CVE-2021-35472, CVE-2021-35473, CVE-2021-40874, CVE-2023-44469 None
+22.04       Jammy  [9]_   `2.0.13 </documentation/2.0/>`__ |bad| CVE-2021-40874, CVE-2023-28862, CVE-2023-44469                                 None
+23.04       Lunar         `2.0.16 </documentation/2.0/>`__ |bad| CVE-2023-28862, CVE-2023-44469                                                 None
+=========== ============= ================================ ==================================================================================== ===========
 
 Bug report
 ----------

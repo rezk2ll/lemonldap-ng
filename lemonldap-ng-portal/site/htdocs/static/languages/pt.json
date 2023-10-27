@@ -177,6 +177,7 @@
 "forgotPwd":"Esqueceu sua senha?",
 "generatePwd":"Gere a senha automaticamente",
 "generic":"Informações de contato",
+"generic2fFormatError":"Your contact information does not match the required format",
 "generic2fwelcome":"Registre seu segundo fator",
 "genericCheckCode":"Um código foi transmitido para você. Por favor insira-o no formulário abaixo",
 "genericRegisterCode":"Insira o código recebido",

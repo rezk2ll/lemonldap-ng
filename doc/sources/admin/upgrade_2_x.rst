@@ -26,7 +26,34 @@ Known regressions in the latest released version
 
 None
 
-2.17
+2.18.0
+------
+
+Apache2 handler now uses IP from mod_remoteip
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you use `mod_remoteip <https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html>`__ in your handlers,
+LemonLDAP::NG will now correctly use the IP from ``mod_remoteip`` in
+``$env->{REMOTE_ADDR}``.
+
+OpenID Connect issuer now implements ``acr_values``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The `acr_values` from OpenID Connect authorization requests can now be used to increase the authentication level required for accessing a service. If after upgrading you start noticing that users are now asked to upgrade their session when trying to access OIDC applications, you should check the `acr_values` requested by you application, and map them to the desired authentication level in `OpenID Connect Service` » `Authentication context`
+
+2.17.1
+------
+
+Declaration of OIDC `request_uri` is now required
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+A little-know feature of OIDC (*note*: you are probably not using it) allows the OpenID Provider, LemonLDAP::NG in this case, to fetch the Authorization request parameters itself by indicating a `request_uri` parameter.
+
+By default, we now disallow this feature, and require LemonLDAP::NG admins to explicitely allow Request URIs in the configuration (*OpenID Connect Relying Parties* » *Your RP* » *Options* » *Security* » *Allowed URLs for fetching Request Object*). This setting allows wildcards such as ``http://rp.example.com/*``.
+
+
+2.17.0
 ------
 
 Possible regression in unicode character handling for UWSGI users
@@ -52,9 +79,11 @@ However, restoring previous behavior is not recommended, as you are likely to ru
 even more encoding bugs in the long run.
 
 
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Font Awesome application icons
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It is now possible to use Font Awesome icons in the application menu.
 
@@ -80,6 +109,28 @@ If you modified the default ``menu.tpl`` template, you need to update it:
                              <TMPL_ELSE>
 
 If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
+Password policy
+^^^^^^^^^^^^^^^
+
+It is recommended to update your theme's ``passwordpolicy.tpl`` to correctly display special characters in password policies
+
+::
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/passwordpolicy.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/passwordpolicy.tpl
+    @@ -34,7 +34,7 @@
+         <TMPL_IF NAME="PPOLICY_ALLOWEDSPECHAR">
+         <li>
+             <i id="ppolicy-allowedspechar-feedback" class="fa fa-li"> </i>
+    -        <span trspan="passwordPolicySpecialChar">Allowed special characters:</span> <TMPL_VAR NAME="PPOLICY_ALLOWEDSPECHAR">
+    +        <span trspan="passwordPolicySpecialChar">Allowed special characters:</span> <TMPL_VAR NAME="PPOLICY_ALLOWEDSPECHAR" ESCAPE="html">
+         </li>
+         </TMPL_IF>
+         <TMPL_IF NAME="ENABLE_CHECKHIBP">
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
 
 2.16.1
 --------

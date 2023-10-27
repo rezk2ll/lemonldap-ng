@@ -55,7 +55,7 @@ Then, go in ``Radius parameters``:
 -  **Shared secret**: this is the passphrase to use to connect to the
    Radius server
 -  **Server hostname**: this is the hostname or IP address of the Radius
-   server
+   server. Since 2.18.0 you can specify multiple servers, separated by spaces, for failover.
 -  **Exported variables**: radius attributes stored in user session at
    authentication time. key is name in user session and value is
    attribute name in radius dictionary.

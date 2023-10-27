@@ -258,6 +258,7 @@ Man-in-the-Middle                                                      ✔
 Software Exploit                                                       ✔
 :ref:`SSO by-passing<security-reverseproxies>`                         ✔
 :doc:`XSS<safejail>`                                   ✔
+:doc:`IP reputation<crowdsec>`                         ✔               ✔
 ====================================================== =============== ============================
 
 Plugins

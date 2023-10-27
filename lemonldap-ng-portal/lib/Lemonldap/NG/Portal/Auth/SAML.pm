@@ -41,6 +41,9 @@ has catch            => ( is => 'rw' );
 use constant sessionKind => 'SAML';
 use constant lsDump      => '_lassoSessionDump';
 use constant liDump      => '_lassoIdentityDump';
+use constant niDump      => '_lassoNameIdDump';
+use constant sIndex      => '_lassoSessionIndex';
+use constant afterData   => 'authFinish';
 
 sub forAuthUser { 'handleAuthRequests' }
 
@@ -1156,9 +1159,11 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    my $login      = $req->data->{_lassoLogin};
-    my $idp        = $req->data->{_idp};
-    my $idpConfKey = $req->data->{_idpConfKey};
+    my $login          = $req->data->{_lassoLogin};
+    my $idp            = $req->data->{_idp};
+    my $idpConfKey     = $req->data->{_idpConfKey};
+    my $nameIdentifier = $req->data->{_nameID};
+    my $session_index  = $req->data->{_sessionIndex};
 
     # Get SAML assertion
     my $assertion = $self->getAssertion($login);
@@ -1244,6 +1249,9 @@ sub setAuthSessionInfo {
     # Dump Lasso objects in session
     $req->{sessionInfo}->{ $self->lsDump } = $session->dump()  if $session;
     $req->{sessionInfo}->{ $self->liDump } = $identity->dump() if $identity;
+    $req->{sessionInfo}->{ $self->niDump } = $nameIdentifier->dump()
+      if ref($nameIdentifier);
+    $req->{sessionInfo}->{ $self->sIndex } = $session_index if $session_index;
 
     # Keep SAML Token in session
     my $store_samlToken =
@@ -1257,26 +1265,27 @@ sub setAuthSessionInfo {
     }
 
     $req->data->{_lassoLogin} = $login;
-    push @{ $req->steps }, sub { $self->authFinish(@_) };
 
     return PE_OK;
 }
 
-# Inserted in $req->steps by authenticate()
+# Saves the link between IDP-side Session ID/NameID and LLNG session
 sub authFinish {
     my ( $self, $req ) = @_;
-    my %h;
+
+    # Get saved Lasso objects
+    my $nameid        = $req->sessionInfo->{ $self->niDump };
+    my $session_index = $req->sessionInfo->{ $self->sIndex };
+
+    # Auth::SAML was not used for this session
+    return unless ($nameid);
 
     # Real session was stored, get id and utime
     my $id    = $req->{id};
     my $utime = $req->{sessionInfo}->{_utime};
 
-    # Get saved Lasso objects
-    my $nameid        = $req->data->{_nameID};
-    my $session_index = $req->data->{_sessionIndex};
-
     $self->logger->debug( "Store NameID "
-          . $nameid->dump
+          . $nameid
           . ( $session_index ? " and SessionIndex $session_index" : "" )
           . " for session $id" );
 
@@ -1284,7 +1293,7 @@ sub authFinish {
     $infos->{type}          = 'saml';            # Session type
     $infos->{_utime}        = $utime;            # Creation time
     $infos->{_saml_id}      = $id;               # SSO session id
-    $infos->{_nameID}       = $nameid->dump;     # SAML NameID
+    $infos->{_nameID}       = $nameid;           # SAML NameID
     $infos->{_sessionIndex} = $session_index;    # SAML SessionIndex
 
     # Save SAML session
@@ -1540,8 +1549,13 @@ sub getIDP {
     # Lazy load IDP
     $self->lazy_load_entityid($idp) if $idp;
 
-    # Case 6: auto select IDP if only one IDP defined
-    if ( scalar keys %{ $self->idpList } == 1 ) {
+    # Case 6: auto select IDP if only one IDP defined and WAYF is disabled
+    if (
+        scalar keys %{ $self->idpList } == 1
+        and not( $self->conf->{samlDiscoveryProtocolActivation}
+            and defined $self->conf->{samlDiscoveryProtocolURL} )
+      )
+    {
         ($idp) = keys %{ $self->idpList };
         $self->logger->debug("Selecting the only defined SAML IDP: $idp");
     }

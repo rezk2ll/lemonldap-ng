@@ -177,6 +177,7 @@
 "forgotPwd":"Забыли пароль?",
 "generatePwd":"Автоматически сгенерировать пароль",
 "generic":"Контактные данные",
+"generic2fFormatError":"Your contact information does not match the required format",
 "generic2fwelcome":"Зарегистрируйте второй фактор",
 "genericCheckCode":"Вам был направлен код, пожалуйста, введите его в форму ниже",
 "genericRegisterCode":"Введите полученный код",
