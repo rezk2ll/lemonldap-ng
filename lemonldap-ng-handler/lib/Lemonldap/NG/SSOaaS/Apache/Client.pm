@@ -128,10 +128,10 @@ In apache2.conf:
     PerlSetVar LLNG_SERVER 127.0.0.1:9090
     PerlSetVar VHOSTTYPE DevOps
     # or PerlSetVar VHOSTTYPE DevOpsST
-    PerlSetVar RULES_URL http://app.tld/rules.json
     PerlSetVar HOST HTTP_HOST
-    PerlSetVar PORT_REDIRECT SERVER_PORT
     PerlSetVar HTTPS_REDIRECT HTTPS
+    PerlSetVar PORT_REDIRECT SERVER_PORT
+    PerlSetVar RULES_URL http://app.tld/rules.json
     ...
   </VirtualHost>
 

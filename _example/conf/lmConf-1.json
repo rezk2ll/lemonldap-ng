@@ -87,7 +87,7 @@
    "cfgAuthor" : "The LemonLDAP::NG team",
    "cfgDate" : "1627287638",
    "cfgNum" : 1,
-   "cfgVersion" : "2.16.1",
+   "cfgVersion" : "2.18.0",
    "cookieName" : "lemonldap",
    "demoExportedVars" : {
       "cn" : "cn",

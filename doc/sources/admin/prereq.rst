@@ -86,4 +86,3 @@ TLS configuration
 
 For production use, TLS is extremely recommended. You will need X.509
 certificates for at least ``auth.example.com`` and ``manager.example.com``.
-

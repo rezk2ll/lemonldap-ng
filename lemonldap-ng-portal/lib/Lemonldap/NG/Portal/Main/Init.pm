@@ -31,6 +31,7 @@ has _userDB         => ( is => 'rw' );
 has _passwordDB     => ( is => 'rw' );
 has _sfEngine       => ( is => 'rw' );
 has _captcha        => ( is => 'rw' );
+has _trustedBrowser => ( is => 'rw' );
 
 has loadedModules => ( is => 'rw' );
 
@@ -328,6 +329,15 @@ sub reloadConf {
     return $self->fail
       unless $self->{_sfEngine} =
       $self->loadPlugin( $self->conf->{'sfEngine'} );
+
+    # Load trusted browser engine
+    return $self->fail
+      unless $self->_trustedBrowser(
+        $self->loadPlugin(
+            $self->conf->{'trustedBrowserEngine'}
+              || "::Plugins::TrustedBrowser"
+        )
+      );
 
     # Load Captcha module
     return $self->fail
