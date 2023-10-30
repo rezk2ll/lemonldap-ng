@@ -88,7 +88,7 @@ LemonLDAP::NG WebAuthn registration script
                 error: displayError
               });
             }
-          })["catch"](function(error) {
+          }, function(error) {
             e = jQuery.Event("webauthnRegistrationFailure");
             $(document).trigger(e, [error]);
             if (!e.isDefaultPrevented()) {
