@@ -52,6 +52,20 @@ has rpName => (
     }
 );
 
+# Split content of webauthn2fAttestationTrust into an array ref of PEM certificates
+sub _build_trust_anchors {
+    my ($self) = shift;
+    my $pem_data = $self->conf->{webauthn2fAttestationTrust};
+    if ($pem_data) {
+        my @split_certs = $pem_data =~
+          /(-----BEGIN CERTIFICATE-----.*?-----END CERTIFICATE-----)/sg;
+        if ( @split_certs > 0 ) {
+            return \@split_certs;
+        }
+    }
+    return [];
+}
+
 # RUNNING METHODS
 
 # Return a Base64url encoded user handle
@@ -84,6 +98,7 @@ sub _registrationchallenge {
 
     my $displayName      = $req->userData->{ $self->displayname_attr } || $user;
     my $userVerification = $self->conf->{webauthn2fUserVerification};
+    my $attestation      = $self->conf->{webauthn2fAttestation} || "none";
     my $request          = {
         rp => {
             name => $self->rpName,
@@ -94,6 +109,7 @@ sub _registrationchallenge {
             displayName => $displayName,
         },
         challenge              => $challenge_base64,
+        attestation            => $attestation,
         pubKeyCredParams       => [],
         authenticatorSelection => { (
                 $userVerification

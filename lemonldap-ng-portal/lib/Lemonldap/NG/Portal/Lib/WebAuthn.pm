@@ -15,6 +15,16 @@ our $VERSION = '2.17.0';
 has rp_id    => ( is => 'rw', lazy => 1, builder => "_build_rp_id" );
 has origin   => ( is => 'rw', lazy => 1, builder => "_build_origin" );
 has verifier => ( is => 'rw', lazy => 1, builder => "_build_verifier" );
+has trust_anchors => (
+    is      => 'rw',
+    lazy    => 1,
+    isa     => "ArrayRef",
+    builder => "_build_trust_anchors"
+);
+
+sub _build_trust_anchors {
+    return [];
+}
 
 sub _build_verifier {
     my $self = shift;
@@ -107,7 +117,8 @@ sub validateCredential {
         requested_uv           => $requested_uv,
         client_data_json_b64   => $client_data_json_b64,
         attestation_object_b64 => $attestation_object_b64,
-        token_binding_id_b64   => $token_binding_id_b64
+        token_binding_id_b64   => $token_binding_id_b64,
+        trust_anchors          => $self->trust_anchors,
     );
 }
 
