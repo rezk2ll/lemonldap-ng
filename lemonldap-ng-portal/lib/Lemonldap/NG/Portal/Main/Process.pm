@@ -225,20 +225,8 @@ sub checkLogout {
 sub checkUnauthLogout {
     my ( $self, $req ) = @_;
     if ( defined $req->param('logout') ) {
-        $self->userLogger->info('Unauthenticated logout request');
-        $self->logger->debug('Cleaning pdata');
-        $self->logger->debug("Removing $self->{conf}->{cookieName} cookie");
-        $req->pdata( {} );
-        $req->addCookie(
-            $self->cookie(
-                name    => $self->conf->{cookieName},
-                domain  => $self->conf->{domain},
-                secure  => $self->conf->{securedCookie},
-                expires => 'Wed, 21 Oct 2015 00:00:00 GMT',
-                value   => 0
-            )
-        );
-        $req->steps( [ sub { PE_LOGOUT_OK } ] );
+        $self->_unauthLogout($req);
+        $req->steps( [ 'controlUrl', sub { PE_LOGOUT_OK } ] );
     }
     return PE_OK;
 }
