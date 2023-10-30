@@ -1303,6 +1303,8 @@
 "webIDWhitelist":"Белый список WebID",
 "webauthn2f":"WebAuthn",
 "webauthn2fActivation":"Активация",
+"webauthn2fAttestation":"Attestation",
+"webauthn2fAttestationTrust":"Attestation trusted certificates",
 "webauthn2fAuthnLevel":"Уровень аутентификации",
 "webauthn2fLabel":"Метка",
 "webauthn2fLogo":"Лого",

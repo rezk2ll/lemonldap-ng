@@ -971,6 +971,8 @@ sub tree {
                                 'webauthn2fSelfRegistration',
                                 'webauthn2fUserCanRemoveKey',
                                 'webauthn2fUserVerification',
+                                'webauthn2fAttestation',
+                                'webauthn2fAttestationTrust',
                                 'webauthnRpName',
                                 'webauthnDisplayNameAttr',
                                 'webauthn2fAuthnLevel',

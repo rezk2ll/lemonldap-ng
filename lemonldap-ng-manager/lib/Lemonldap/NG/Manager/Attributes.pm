@@ -4757,6 +4757,30 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 0,
             'type'    => 'boolOrExpr'
         },
+        'webauthn2fAttestation' => {
+            'default' => 'none',
+            'select'  => [ {
+                    'k' => 'none',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'direct',
+                    'v' => 'Direct'
+                },
+                {
+                    'k' => 'indirect',
+                    'v' => 'Indirect'
+                },
+                {
+                    'k' => 'enterprise',
+                    'v' => 'Enterprise'
+                }
+            ],
+            'type' => 'select'
+        },
+        'webauthn2fAttestationTrust' => {
+            'type' => 'file'
+        },
         'webauthn2fAuthnLevel' => {
             'type' => 'intOrNull'
         },

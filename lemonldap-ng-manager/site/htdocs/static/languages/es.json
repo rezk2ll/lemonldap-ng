@@ -1303,6 +1303,8 @@
 "webIDWhitelist":"WebID whitelist",
 "webauthn2f":"WebAuthn",
 "webauthn2fActivation":"Activación",
+"webauthn2fAttestation":"Attestation",
+"webauthn2fAttestationTrust":"Attestation trusted certificates",
 "webauthn2fAuthnLevel":"Nivel de autentificación",
 "webauthn2fLabel":"Etiqueta",
 "webauthn2fLogo":"Logotipo",

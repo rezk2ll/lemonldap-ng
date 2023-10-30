@@ -1303,6 +1303,8 @@
 "webIDWhitelist":"WebID white list",
 "webauthn2f":"WebAuthn",
 "webauthn2fActivation":"Kích hoạt",
+"webauthn2fAttestation":"Attestation",
+"webauthn2fAttestationTrust":"Attestation trusted certificates",
 "webauthn2fAuthnLevel":"Mức xác thực",
 "webauthn2fLabel":"Nhãn",
 "webauthn2fLogo":"Logo",

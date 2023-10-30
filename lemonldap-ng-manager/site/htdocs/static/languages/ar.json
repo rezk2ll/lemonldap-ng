@@ -1303,6 +1303,8 @@
 "webIDWhitelist":"القائمة البيضاء للويب آي دي",
 "webauthn2f":"WebAuthn",
 "webauthn2fActivation":"تفعيل",
+"webauthn2fAttestation":"Attestation",
+"webauthn2fAttestationTrust":"Attestation trusted certificates",
 "webauthn2fAuthnLevel":"مستوى إثبات الهوية",
 "webauthn2fLabel":"Label",
 "webauthn2fLogo":"شعار",

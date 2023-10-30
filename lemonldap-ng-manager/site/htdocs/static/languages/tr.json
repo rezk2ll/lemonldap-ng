@@ -1303,6 +1303,8 @@
 "webIDWhitelist":"WebID beyaz listesi",
 "webauthn2f":"WebAuthn",
 "webauthn2fActivation":"Aktivasyon",
+"webauthn2fAttestation":"Attestation",
+"webauthn2fAttestationTrust":"Attestation trusted certificates",
 "webauthn2fAuthnLevel":"Doğrulama seviyesi",
 "webauthn2fLabel":"Etiket",
 "webauthn2fLogo":"Logo",
