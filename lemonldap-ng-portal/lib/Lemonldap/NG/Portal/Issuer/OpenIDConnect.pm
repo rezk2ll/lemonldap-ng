@@ -2520,7 +2520,10 @@ sub metadata {
 
     # If one of the RPs has refresh tokens enabled
     if (
-        grep { $self->rpOptions->{$_}->{oidcRPMetaDataOptionsRefreshToken} }
+        grep {
+                 $self->rpOptions->{$_}->{oidcRPMetaDataOptionsRefreshToken}
+              or $self->rpOptions->{$_}->{oidcRPMetaDataOptionsAllowOffline}
+        }
         keys %{ $self->rpOptions }
       )
     {
