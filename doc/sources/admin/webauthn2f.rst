@@ -35,6 +35,10 @@ Configuration
 - **User verification**: Whether or not LemonLDAP::NG requires the user to
   authenticate to their second factor device. Usually by entering a PIN code.
   *Warning*: The *Required* option is not supported by older U2F security keys.
+- **Attestation**: Type of attestation to request from the authenticator. After
+  enabling this you need to specify a list of trusted certificates
+- **Attestation trusted certificates**: A concatenation of PEM certificates
+  that you trust for attestation
 - **Relying Party display name**: How the LemonLDAP::NG server will appear in
   the web browser messages displayed to the user
 - **User Display Name attribute**: session attribute containing user display name
