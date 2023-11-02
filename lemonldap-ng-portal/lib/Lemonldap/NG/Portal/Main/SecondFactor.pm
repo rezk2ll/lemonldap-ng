@@ -120,6 +120,13 @@ sub _verify {
         return $self->p->do( $req, [ sub { PE_ERROR } ] );
     }
 
+    # Evaluate hook
+    my $h = $self->p->processHook( $req, 'sfBeforeVerify', $self, $session );
+    if ($h != PE_OK) {
+        $req->noLoginDisplay(1);
+        return $self->p->do( $req, [ sub { $h } ] );
+    }
+
     # Launch second factor verification
     my $res = $self->verify( $req, $session );
 
