@@ -178,11 +178,16 @@ sub _registration {
     my $credential_id     = $validation->{credential_id};
     my $credential_pubkey = $validation->{credential_pubkey};
     my $signature_count   = $validation->{signature_count};
-    $self->logger->debug( $self->prefix
+    my $aaguid            = $validation->{attestation_result}->{aaguid};
+    $self->logger->debug(
+            $self->prefix
           . "2f: registering new credential: \n"
-          . "ID: $credential_id\n"
-          . "Public key: $credential_pubkey\n"
-          . "Signature count: $signature_count" );
+          . join( "\n",
+            "ID: $credential_id",
+            "Public key: $credential_pubkey",
+            "Signature count: $signature_count",
+            ( $aaguid ? "AAGUID: $aaguid" : () ) )
+    );
 
     return $self->p->sendError( $req, 'webauthnAlreadyRegistered', 400 )
       if $self->find2fDevicesByKey( $req, $req->userData, $self->type,
@@ -200,9 +205,10 @@ sub _registration {
                 _credentialId        => $credential_id,
                 _credentialPublicKey => $credential_pubkey,
                 _signCount           => $signature_count,
-                type                 => $self->type,
-                name                 => $keyName,
-                epoch                => time()
+                ( $aaguid ? ( _aaguid => $aaguid ) : () ),
+                type  => $self->type,
+                name  => $keyName,
+                epoch => time(),
             }
         )
       )
