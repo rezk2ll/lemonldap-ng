@@ -600,6 +600,7 @@ t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO.t
 t/30-Auth-and-issuer-SAML-Federation.t
 t/30-Auth-and-issuer-SAML-Metadata.t
+t/30-Auth-and-issuer-SAML-POST-Choice-2FA.t
 t/30-Auth-and-issuer-SAML-POST-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-POST-Missing-SLO.t
 t/30-Auth-and-issuer-SAML-POST.t
@@ -674,8 +675,8 @@ t/32-OIDC-Logout-from-RP-bypass-confirm.t
 t/32-OIDC-Logout-redirect-uri-not-allowed.t
 t/32-OIDC-Macro.t
 t/32-OIDC-Metadata.t
-t/32-OIDC-Offline-Session.t
 t/32-OIDC-Offline-Session-with-choice.t
+t/32-OIDC-Offline-Session.t
 t/32-OIDC-Opaque-Token.t
 t/32-OIDC-Password-Grant-with-Bruteforce-and-Choice.t
 t/32-OIDC-Password-Grant.t
@@ -798,6 +799,7 @@ t/62-SingleSession.t
 t/62-UpgradeSession-disabled.t
 t/62-UpgradeSession.t
 t/63-History.t
+t/64-StayConnected-single-connection.t
 t/64-StayConnected-singleSession.t
 t/64-StayConnected-with-2F-and-History.t
 t/64-StayConnected-with-History.t
