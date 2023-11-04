@@ -759,6 +759,39 @@ Sample code::
        return PE_OK;
    }
 
+
+Second factor hooks
+-------------------
+
+sfBeforeVerify
+~~~~~~~~~~~~~~
+
+.. versionadded:: 2.18
+
+This hook is called immediately before LemonLDAP::NG calls the `verify` method
+of each second factor implementation in order to verify the code/response
+submitted by the user. You can use it to run additional checks.
+
+The hook's parameters are:
+* An instance of the 2F module in use
+* A hash of session information
+
+Sample code::
+
+    use constant hook => { sfBeforeVerify => 'ipHasChanged', };
+
+    sub ipHasChanged {
+        my ( $self, $req, $sfa, $session ) = @_;
+        my $prefix = $sfa->prefix;
+
+        if ($req->address ne $session->{ipAddr}) {
+            $self->logger->error("Error when validating $prefix: IP has changed");
+            return PE_ERROR;
+        }
+
+        return PE_OK;
+    }
+
 Generic hooks
 -------------
 
