@@ -473,7 +473,7 @@ sub _choice {
 
     # Restore session
     unless ( $token = $req->param('token') ) {
-        $self->userLogger->error( $self->prefix . ' 2F access without token' );
+        $self->userLogger->error( '2F choice requested without token' );
         $req->mustRedirect(1);
         return $self->p->do( $req, [ sub { PE_NOTOKEN } ] );
     }
