@@ -29,7 +29,7 @@
 
 Name:           lemonldap-ng
 Version:        2.17.1
-Release:        %{?pre_release:0.}2%{?pre_release:.%{pre_release}}%{?dist}
+Release:        %{?pre_release:0.}4%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        Web Single Sign On (SSO) and Access Management
 # Lemonldap-ng itself is GPLv2+
 # Qrious bundled javascript library is GPLv3+
@@ -102,7 +102,7 @@ BuildRequires:  perl(feature)
 BuildRequires:  perl(fields)
 BuildRequires:  perl(File::Temp)
 BuildRequires:  perl(GD::SecurityImage)
-%if 0%{?fedora}%{?el9}
+%if 0%{?fedora}%{?el8}%{?el9}
 BuildRequires:  perl(GeoIP2)
 %endif
 BuildRequires:  perl(Getopt::Long)
@@ -110,7 +110,7 @@ BuildRequires:  perl(Getopt::Std)
 BuildRequires:  perl(GSSAPI)
 BuildRequires:  perl(Hash::Merge::Simple)
 BuildRequires:  perl(HTML::Template)
-%if 0%{?fedora}%{?el9}
+%if 0%{?fedora}%{?el8}%{?el9}
 BuildRequires:  perl(HTTP::BrowserDetect)
 %endif
 BuildRequires:  perl(HTTP::Headers)
@@ -256,7 +256,7 @@ Summary:        LemonLDAP-NG handler
 Requires:       crontabs
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Handler) = %{version}-%{release}
-Requires:       perl(Lemonldap::NG::SSOaaS::Apache::Client) = %{version}-%{release}
+Requires:       perl-Lemonldap-NG-SSOaaS-Apache-Client = %{version}-%{release}
 
 %description handler
 This package deploys the Apache Handler.
@@ -700,6 +700,12 @@ fi
 
 
 %changelog
+* Fri Oct 13 2023 Xavier Bachelot <xavier@bachelot.org> - 2.17.1-4
+- Enable GeoIP2 and HTTP::BrowserDetectfor EL8
+
+* Tue Oct 10 2023 Xavier Bachelot <xavier@bachelot.org> - 2.17.1-3
+- Fix broken dep on SSOaaS module dependency
+
 * Mon Oct 02 2023 Xavier Bachelot <xavier@bachelot.org> - 2.17.1-2
 - Add a dep on SSOaaS version
 - Simplify fix shebang and perms
