@@ -18,7 +18,7 @@ attribute you see there can be used in a rule!
    $uid eq "dwho"
    $uidNumber == 1000
    $cn eq "Doctor Who"
-   $email eq "dwho@badwolf.org"
+   $email eq "dwho\@badwolf.org"
    etc.
 
 
@@ -41,13 +41,15 @@ attribute you see there can be used in a rule!
 
 ::
 
+   # 2.0.8 and higher only
+   inGroup('administrators')
+
+   # older versions
    $groups =~ /\b(?:admins|su)\b/ # admins OR su
    $groups =~ /\badmin_[1-3a]\b/ # admin_1 OR admin_2 OR admin_3 OR admin_a
 
    defined $hGroups->{'administrators'}
 
-   # 2.0.8 and higher only
-   inGroup('administrators')
 
 -  Combining multiple expressions
 
