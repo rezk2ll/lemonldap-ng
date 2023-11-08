@@ -68,7 +68,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PASSWORD_OK
 );
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.17.2';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
