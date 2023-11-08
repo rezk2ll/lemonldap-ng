@@ -25,7 +25,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SENDRESPONSE
 );
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.17.2';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Auth
