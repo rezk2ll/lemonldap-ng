@@ -49,9 +49,9 @@ has resetUrl => (
     lazy    => 1,
     default => sub {
         my $self = $_[0];
-        my $p    = $self->conf->{portal};
-        $p =~ s#/*$##;
-        return $self->conf->{mailUrl} ? $self->conf->{mailUrl} : "$p/resetpwd";
+        return $self->conf->{mailUrl}
+          ? $self->conf->{mailUrl}
+          : $self->p->buildUrl( "resetpwd" );
     }
 );
 

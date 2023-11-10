@@ -39,7 +39,7 @@ sub init {
         return 0;
     }
     my @list       = ();
-    my $portalPath = $self->conf->{portal};
+    my $portalPath = $req->portal;
 
     foreach (@tab) {
         my $name = $_;
@@ -69,7 +69,7 @@ sub init {
           };
     }
 
-    my $portal = $self->conf->{portal};
+    my $portal = $req->portal;
     my $re     = '^/' . $self->path . '/(?:' . join(
         '|',
         map {
@@ -433,7 +433,7 @@ sub authLogout {
     my $client_id = $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientID};
 
     if ($endsession_endpoint) {
-        my $logout_url = $self->conf->{portal} . '?logout=1';
+        my $logout_url = $self->p->buildUrl( $req->portal, { logout => 1 } );
         $req->urldc(
             $self->buildLogoutRequest(
                 $endsession_endpoint, $req->{sessionInfo}->{_oidc_id_token},

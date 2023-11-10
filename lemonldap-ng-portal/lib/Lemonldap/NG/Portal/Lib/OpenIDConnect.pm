@@ -408,11 +408,7 @@ sub getCallbackUri {
 
     my $callback_get_param = $self->conf->{oidcRPCallbackGetParam};
 
-    my $callback_uri = $self->conf->{portal};
-    $callback_uri .=
-      ( $self->conf->{portal} =~ /\?/ )
-      ? '&' . $callback_get_param . '=1'
-      : '?' . $callback_get_param . '=1';
+    my $callback_uri = $self->p->buildUrl( $req->portal, { $callback_get_param => 1 } );
 
     $self->logger->debug("OpenIDConnect Callback URI: $callback_uri");
     return $callback_uri;

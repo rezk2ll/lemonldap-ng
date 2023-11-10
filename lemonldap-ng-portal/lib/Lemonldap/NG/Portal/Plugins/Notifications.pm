@@ -141,7 +141,7 @@ sub checkNotifDuringAuth {
             and $req->env->{PATH_INFO} ne '/' )
         {
             $req->data->{_url} =
-              encode_base64( $self->conf->{portal} . $req->env->{PATH_INFO},
+              encode_base64( $req->portal . $req->env->{PATH_INFO},
                 '' );
         }
 

@@ -90,7 +90,7 @@ sub goToPortal {
     $req->urldc(
         $self->conf->{remotePortal} . '?url='
           . encode_base64(
-            $self->conf->{portal}
+            $req->portal
               . ( $req->query_string ? '?' . $req->query_string : '' ),
             ''
           )

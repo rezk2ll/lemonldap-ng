@@ -66,7 +66,7 @@ has resetUrl => (
     lazy    => 1,
     default => sub {
         my $self = $_[0];
-        my $p    = $self->conf->{portal};
+        my $p    = $self->p->buildUrl;
         $p =~ s#/*$##;
         return $self->conf->{certificateResetByMailURL}
           ? $self->conf->{certificateResetByMailURL}

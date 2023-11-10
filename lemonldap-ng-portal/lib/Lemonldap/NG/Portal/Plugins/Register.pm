@@ -41,11 +41,9 @@ has registerUrl => (
     lazy    => 1,
     default => sub {
         my $self = $_[0];
-        my $p    = $self->conf->{portal};
-        $p =~ s#/*$##;
         return $self->conf->{registerUrl}
           ? $self->conf->{registerUrl}
-          : "$p/register";
+          : $self->p->buildUrl( "register" );
     }
 );
 
@@ -361,15 +359,15 @@ sub _register {
     }
 
     # Build portal url
-    my $url = $self->conf->{portal};
-    $url =~ s#/*$##;
     my $req_url = $req->data->{_url};
     my $skin    = $self->p->getSkin($req);
-    $url .= '/?'
-      . build_urlencoded(
-        skin => $skin,
-        ( $req_url ? ( url => $req_url ) : () ),
-      );
+    my $url     = $self->p->buildUrl(
+        $req->portal,
+        {
+            skin => $skin,
+            ( $req_url ? ( url => $req_url ) : () ),
+        }
+    );
 
     # Build mail content
     my $tr      = $self->translate($req);

@@ -451,6 +451,7 @@ sub reloadConf {
         }
         return PE_OK;
     };
+    # Failsafe: allow handler access to portal in case it's missing in conf
     my $portal = $self->conf->{portal};
     $portal =~ s#^https?://(.*?)(?:[:/].*)?$#$1#;
     HANDLER->tsv->{defaultCondition}->{$portal} ||= sub { 1 };

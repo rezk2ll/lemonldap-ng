@@ -161,7 +161,7 @@ sub fb {
     my $conf = $self->{conf};
     my $fb;
     my $sep = '?';
-    my $ret = $conf->{portal};
+    my $ret = $req->portal;
 
     eval {
         $fb = Net::Facebook::Oauth2->new(

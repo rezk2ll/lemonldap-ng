@@ -38,7 +38,7 @@ sub init {
     }
     $self->srvNumber( scalar @tab );
     my @list;
-    my $portalPath = $self->conf->{portal};
+    my $portalPath = $self->p->buildUrl($req);
 
     foreach (@tab) {
         my $name = $_;
