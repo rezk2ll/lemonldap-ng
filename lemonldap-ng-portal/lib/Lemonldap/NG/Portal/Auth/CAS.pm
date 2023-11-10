@@ -199,7 +199,8 @@ sub extractFormInfo {
         $req->{urldc} = $login_url;
         $req->steps( [] );
         $req->addCookie(
-            $self->p->cookie(
+            $self->p->genCookie(
+                $req,
                 name   => 'llngcasserver',
                 value  => $srv,
                 secure => $self->conf->{securedCookie},

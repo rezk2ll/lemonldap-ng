@@ -393,10 +393,10 @@ sub extractFormInfo {
         and $req->cookies->{ $self->conf->{cookieName} } )
     {
         $req->addCookie(
-            $self->cookie(
+            $self->genCookie(
+                $req,
                 name    => $self->conf->{cookieName},
                 value   => 0,
-                domain  => $self->conf->{domain},
                 secure  => $self->conf->{securedCookie},
                 expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
             )
@@ -613,19 +613,19 @@ sub buildCookie {
     my ( $self, $req ) = @_;
     if ( $req->id ) {
         $req->addCookie(
-            $self->cookie(
+            $self->genCookie(
+                $req,
                 name   => $self->conf->{cookieName},
                 value  => $req->id,
-                domain => $self->conf->{domain},
                 secure => $self->conf->{securedCookie},
             )
         );
         if ( $self->conf->{securedCookie} >= 2 ) {
             $req->addCookie(
-                $self->cookie(
+                $self->genCookie(
+                    $req,
                     name   => $self->conf->{cookieName} . "http",
                     value  => $req->{sessionInfo}->{_httpSession},
-                    domain => $self->conf->{domain},
                     secure => 0,
                 )
             );
@@ -654,6 +654,11 @@ sub storeHistory {
         $self->registerLogin($req);
     }
     return PE_OK;
+}
+
+sub getCookieDomain {
+    my ( $self, $req ) = @_;
+    return $self->conf->{domain};
 }
 
 1;

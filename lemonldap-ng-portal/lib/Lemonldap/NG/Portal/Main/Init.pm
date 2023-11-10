@@ -292,11 +292,9 @@ sub reloadConf {
     }
 
     # Initialize cookie domain
-    unless ( $self->conf->{domain} ) {
-        $self->error('Configuration error: no domain');
-        return $self->fail;
+    if ( $self->conf->{domain} ) {
+        $self->conf->{domain} =~ s/^([^\.])/.$1/;
     }
-    $self->conf->{domain} =~ s/^([^\.])/.$1/;
 
     # Initialize cookie SameSite value
     $self->cookieSameSite( getSameSite( $self->conf ) );
