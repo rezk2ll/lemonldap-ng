@@ -19,6 +19,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OIDC_SERVICE_NOT_ALLOWED
   PE_FIRSTACCESS
   PE_SENDRESPONSE
+  PE_SLO_ERROR
 );
 use String::Random qw/random_string/;
 
@@ -2355,6 +2356,7 @@ sub checkSession {
 sub logout {
     my ( $self, $req ) = @_;
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
+    my $code = PE_OK;
     if ( my $s = $req->userData->{_oidcConnectedRPIDs} ) {
         my @rps = grep /\w/, split( ',', $s );
         foreach my $client_id (@rps) {
@@ -2362,11 +2364,13 @@ sub logout {
             if ( !$rp ) {
                 $self->logger->warn(
                     "Cannot find RP configuration for $client_id");
+                $code = PE_SLO_ERROR;
                 next;
             }
             my $rpConf = $self->rpOptions->{$rp};
             if ( !$rpConf ) {
                 $self->logger->warn("Cannot find RP options for $client_id");
+                $code = PE_SLO_ERROR;
                 next;
             }
             if ( my $url = $rpConf->{oidcRPMetaDataOptionsLogoutUrl} ) {
@@ -2449,6 +2453,7 @@ sub logout {
                               . " $userId from $rp: "
                               . $resp->message );
                         $self->logger->debug( $resp->content );
+                        $code = PE_SLO_ERROR;
                     }
                     else {
                         $self->logger->info(
@@ -2459,7 +2464,7 @@ sub logout {
             }
         }
     }
-    return PE_OK;
+    return $code;
 }
 
 # Internal methods
