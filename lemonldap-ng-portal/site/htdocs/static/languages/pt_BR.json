@@ -54,7 +54,7 @@
 "PE53":"O destino da mensagem SAML não está correto",
 "PE54":"As condições da mensagem SAML não estão respeitadas",
 "PE55":"O logon único iniciado pelo provedor de identidade não está autorizado",
-"PE56":"Ocorreu um erro durante o logout único SAML",
+"PE56":"You've been disconnected but an error occured in another application, you should close your browser",
 "PE57":"Erro no gerenciamento de assinatura de mensagem SAML",
 "PE58":"Ocorreu um erro durante o uso do artefato SAML",
 "PE59":"Erro de comunicação com sessões SAML",

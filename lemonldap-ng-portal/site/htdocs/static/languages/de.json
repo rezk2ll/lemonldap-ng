@@ -54,7 +54,7 @@
 "PE53":"Die Zieladresse der SAML-Nachricht ist nicht korrekt",
 "PE54":"Die Bedingungen der SAML-Nachricht sind nicht erfüllt",
 "PE55":"Die vom Identity Provider initiierte Authentifizierung ist nicht genehmigt",
-"PE56":"Bei der SAML-Abmeldung ist ein Fehler eingetreten",
+"PE56":"You've been disconnected but an error occured in another application, you should close your browser",
 "PE57":"Fehler bei der Verwaltung der Signatur der SAML-Nachricht",
 "PE58":"Bei der Verwendung eines SAML-Artefakts ist ein Fehler eingetreten",
 "PE59":"Kommunikationsfehler mit den SAML-Sitzungen",

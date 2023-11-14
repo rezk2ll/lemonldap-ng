@@ -54,7 +54,7 @@
 "PE53":"Điểm đến của thông điệp SAML không chính xác",
 "PE54":"Điều kiện của thông điệp SAML không đúng ",
 "PE55":"Bộ cung cấp nhận dạng khởi tạo đăng nhập một lần không được chứng thực quyền",
-"PE56":"Đã xảy ra lỗi trong quá trình đăng xuất đơn SAML ",
+"PE56":"You've been disconnected but an error occured in another application, you should close your browser",
 "PE57":"Lỗi trong quản lý chữ ký SAML",
 "PE58":"Đã xảy ra lỗi trong quá trình sử dụng SAML artefact",
 "PE59":"Lỗi truyền thông với các phiên SAML",

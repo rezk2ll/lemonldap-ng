@@ -54,7 +54,7 @@
 "PE53":"SAML-viestin määränpää ei ole oikea",
 "PE54":"SAML-viestin ehdot eivät täyty",
 "PE55":"Identiteetintarjoajan aloittamalle kertakirjautumiselle ei ole annettu lupaa",
-"PE56":"SAML-kertauloskirjautumisen aikana tapahtui virhe",
+"PE56":"You've been disconnected but an error occured in another application, you should close your browser",
 "PE57":"Virhe SAML-viestien allekirjoitusten hallinnassa",
 "PE58":"SAML-artefaktin käytössä tapahtui virhe",
 "PE59":"Yhteysvirhe SAML-istunnoissa",

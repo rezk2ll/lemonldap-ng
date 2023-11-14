@@ -54,7 +54,7 @@
 "PE53":"SAML mesaj hedefi doğru değil",
 "PE54":"SAML mesaj koşullarına uygun değil",
 "PE55":"Kimlik sağlayıcı tarafından başlatılan tek oturum açmaya izin verilmiyor",
-"PE56":"SAML ile çıkış yapılırken bir hata oluştu",
+"PE56":"You've been disconnected but an error occured in another application, you should close your browser",
 "PE57":"SAML mesaj imzası yönetiminde hata",
 "PE58":"SAML artefaktı kullanımı sırasında bir hata oluştu",
 "PE59":"SAML oturumlarıyla iletişim hatası",
