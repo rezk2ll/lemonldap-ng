@@ -28,8 +28,8 @@
 #global pre_release beta1
 
 Name:           lemonldap-ng
-Version:        2.17.1
-Release:        %{?pre_release:0.}4%{?pre_release:.%{pre_release}}%{?dist}
+Version:        2.17.2
+Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        Web Single Sign On (SSO) and Access Management
 # Lemonldap-ng itself is GPLv2+
 # Qrious bundled javascript library is GPLv3+
@@ -700,6 +700,9 @@ fi
 
 
 %changelog
+* Tue Nov 14 2023 Clement Oudot <clem.oudot@gmail.com> - 2.17.2-1
+- Update to 2.17.2
+
 * Fri Oct 13 2023 Xavier Bachelot <xavier@bachelot.org> - 2.17.1-4
 - Enable GeoIP2 and HTTP::BrowserDetectfor EL8
 
