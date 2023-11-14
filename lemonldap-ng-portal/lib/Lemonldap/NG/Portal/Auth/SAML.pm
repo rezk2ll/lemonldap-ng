@@ -19,7 +19,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_IDPSSOINITIATED_NOTALLOWED
   PE_SAML_SESSION_ERROR
   PE_SAML_SIGNATURE_ERROR
-  PE_SAML_SLO_ERROR
+  PE_SLO_ERROR
   PE_SAML_SSO_ERROR
   PE_SAML_UNKNOWN_ENTITY
   PE_SENDRESPONSE
@@ -478,7 +478,7 @@ sub extractFormInfo {
 
             unless ($result) {
                 $self->userLogger->error("Fail to process logout response");
-                return PE_SAML_SLO_ERROR;
+                return PE_SLO_ERROR;
             }
 
             $self->logger->debug("Logout response is valid");
@@ -534,7 +534,7 @@ sub extractFormInfo {
                 # Logout request was already consumed or is expired
                 $self->userLogger->error(
                     "Message $samlID already used or expired");
-                return PE_SAML_SLO_ERROR;
+                return PE_SLO_ERROR;
             }
 
             # If URL in RelayState, different from portal, redirect user
@@ -568,7 +568,7 @@ sub extractFormInfo {
             # Process logout request
             unless ( $self->processLogoutRequestMsg( $logout, $request ) ) {
                 $self->userLogger->error("Fail to process logout request");
-                return PE_SAML_SLO_ERROR;
+                return PE_SLO_ERROR;
             }
 
             $self->logger->debug("Logout request is valid");
@@ -750,7 +750,7 @@ sub extractFormInfo {
             # Logout response
             unless ( $self->buildLogoutResponseMsg($logout) ) {
                 $self->logger->error("Unable to build SLO response");
-                return PE_SAML_SLO_ERROR;
+                return PE_SLO_ERROR;
             }
 
             # Send response depending on request method
@@ -1324,7 +1324,7 @@ sub authLogout {
 
     unless ($session_dump) {
         $self->userLogger->error("Could not get session dump from session");
-        return PE_SAML_SLO_ERROR;
+        return PE_SLO_ERROR;
     }
 
     # IDP HTTP method
@@ -1359,7 +1359,7 @@ sub authLogout {
         $method, $signSLOMessage );
     unless ($logout) {
         $self->logger->error("Could not create logout request");
-        return PE_SAML_SLO_ERROR;
+        return PE_SLO_ERROR;
     }
 
     $self->logger->debug("Logout request created");
@@ -1367,7 +1367,7 @@ sub authLogout {
     # Keep request ID in memory to prevent replay
     unless ( $self->storeReplayProtection( $logout->request()->ID ) ) {
         $self->logger->error("Unable to store Logout request ID");
-        return PE_SAML_SLO_ERROR;
+        return PE_SLO_ERROR;
     }
 
     # Send request depending on request method
@@ -1422,7 +1422,7 @@ sub authLogout {
 
         unless ($response) {
             $self->logger->error("No logout response to SOAP request");
-            return PE_SAML_SLO_ERROR;
+            return PE_SLO_ERROR;
         }
 
         # Create Logout object
@@ -1442,7 +1442,7 @@ sub authLogout {
 
         unless ($result) {
             $self->logger->error("Fail to process logout response");
-            return PE_SAML_SLO_ERROR;
+            return PE_SLO_ERROR;
         }
 
         $self->logger->debug("Logout response is valid");
@@ -1454,14 +1454,14 @@ sub authLogout {
 
             # Logout request was already consumed or is expired
             $self->userLogger->error("Message $samlID already used or expired");
-            return PE_SAML_SLO_ERROR;
+            return PE_SLO_ERROR;
         }
 
         return PE_OK;
     }
     else {
         $self->userLogger->error("Lasso method $method not implemented here");
-        return PE_SAML_SLO_ERROR;
+        return PE_SLO_ERROR;
     }
 }
 

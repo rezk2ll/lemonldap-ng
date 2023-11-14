@@ -18,7 +18,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_REDIRECT
   PE_LOGOUT_OK
-  PE_SAML_SLO_ERROR
+  PE_SLO_ERROR
 );
 
 with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration';
