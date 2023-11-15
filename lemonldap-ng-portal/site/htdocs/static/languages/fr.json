@@ -357,6 +357,7 @@
 "webauthnAlreadyRegistered":"Ce périphérique est déjà enregistré",
 "welcomeOnPortal":"Bienvenue sur votre portail d'authentification sécurisée.",
 "yesResendMail":"Oui, renvoyer le mail",
+"your2faIsRegistered":"Votre second facteur a été enregistré",
 "yourAddress":"Connaître votre adresse",
 "yourApps":"Vos applications",
 "yourEmail":"Connaître votre adresse électronique",

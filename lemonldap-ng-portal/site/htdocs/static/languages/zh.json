@@ -357,6 +357,7 @@
 "webauthnAlreadyRegistered":"This device is already registered",
 "welcomeOnPortal":"欢迎来到您的加密认证 portal",
 "yesResendMail":"好的，重新发送邮件",
+"your2faIsRegistered":"Your second factor has been registered",
 "yourAddress":"知道您的地址",
 "yourApps":"你的应用",
 "yourEmail":"知道您的電子郵件",
