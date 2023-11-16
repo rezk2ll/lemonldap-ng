@@ -730,7 +730,7 @@ sub restoreSession {
             $self->restore2faSessionInfo( $req, $sessionData );
 
             if ( $req->params("continue") ) {
-                return $self->continueLogin($req);
+                return $self->continueLoginAfterRegistration($req);
             }
 
             $req->userData( $req->sessionInfo );
@@ -760,7 +760,7 @@ sub restoreSession {
     return [ 302, [ Location => $self->conf->{portal} ], [] ];
 }
 
-sub continueLogin {
+sub continueLoginAfterRegistration {
     my ( $self, $req ) = @_;
 
     # Check if registration was done
@@ -773,10 +773,17 @@ sub continueLogin {
     $req->mustRedirect(1);
 
     my $prefix = $req->sessionInfo->{_2f};
-    if ( my $l = $req->sessionInfo->{newAuthenticationLevel} ) {
+    my $level  = $req->sessionInfo->{newAuthenticationLevel};
+    return $self->_continueLogin( $req, $prefix, $level );
+}
+
+sub _continueLogin {
+    my ( $self, $req, $prefix, $level ) = @_;
+
+    if ($level) {
         $self->logger->debug(
-            "Update sessionInfo with new authenticationLevel: $l");
-        $req->sessionInfo->{authenticationLevel} = $l;
+            "Update sessionInfo with new authenticationLevel: $level");
+        $req->sessionInfo->{authenticationLevel} = $level;
 
         # Compute macros & local groups again with new authenticationLevel
         $self->logger->debug("Compute macros and local groups...");
@@ -806,7 +813,7 @@ sub continueLogin {
         $self->p->updateSession(
             $req,
             {
-                authenticationLevel => $l,
+                authenticationLevel => $level,
                 groups              => $req->sessionInfo->{groups},
                 hGroups             => $req->sessionInfo->{hGroups},
                 _2f                 => $prefix,
