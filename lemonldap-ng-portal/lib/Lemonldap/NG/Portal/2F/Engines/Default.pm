@@ -19,6 +19,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
   PE_NOTOKEN
   PE_SENDRESPONSE
+  PE_BADCREDENTIALS
   PE_TOKENEXPIRED
   PE_NO_SECOND_FACTORS
 );
@@ -841,6 +842,61 @@ sub _continueLogin {
             sub { PE_OK }
         ]
     );
+}
+
+sub verify {
+    my ( $self, $module, $req ) = @_;
+
+    # Check token
+    my $token;
+    unless ( $token = $req->param('token') ) {
+        $self->userLogger->error(
+            $module->prefix . ' 2F access without token' );
+        eval { $module->setSecurity($req) };
+        $req->mustRedirect(1);
+        return $self->p->do( $req, [ sub { PE_NOTOKEN } ] );
+    }
+
+    my $session;
+    unless ( $session = $self->ott->getToken($token) ) {
+        $self->userLogger->info(
+            'Invalid token during ' . $module->prefix . '2f validation' );
+        $req->noLoginDisplay(1);
+        return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+    }
+    unless ( $session->{_2fRealSession} ) {
+        $self->logger->error("Invalid 2FA session token");
+        $req->noLoginDisplay(1);
+        return $self->p->do( $req, [ sub { PE_ERROR } ] );
+    }
+
+    # Evaluate hook
+    my $h = $self->p->processHook( $req, 'sfBeforeVerify', $module, $session );
+    if ( $h != PE_OK ) {
+        $req->noLoginDisplay(1);
+        return $self->p->do( $req, [ sub { $h } ] );
+    }
+
+    # Launch second factor verification
+    my $res = $module->verify( $req, $session );
+
+    $self->restore2faSessionInfo( $req, $session );
+
+    # Case error
+    if ($res) {
+        $req->noLoginDisplay(1);
+        $req->authResult(PE_BADCREDENTIALS);
+        return $self->p->do( $req, [ 'storeHistory', sub { $res } ] );
+    }
+
+    # Else restore session
+    $req->mustRedirect(1);
+    $self->userLogger->notice( $module->prefix
+          . '2f verification succeeded for '
+          . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+
+    my $level = $module->authnLevel;
+    return $self->_continueLogin( $req, $module->prefix, $module->authnLevel );
 }
 
 sub searchForAuthorized2Fmodules {
