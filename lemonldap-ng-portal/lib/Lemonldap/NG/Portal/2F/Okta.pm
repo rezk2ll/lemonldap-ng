@@ -60,6 +60,15 @@ sub init {
             $self->prefix . '2fchoice' => '_redirect',
             ['GET']
         );
+        $self->logger->debug( 'Adding ' . $self->prefix . '2fwait route' );
+        $self->addUnauthRoute(
+            $self->prefix . '2fwait' => '_waitingFactor',
+            ['POST']
+        );
+        $self->addUnauthRoute(
+            $self->prefix . '2fchoice' => '_redirect',
+            ['GET']
+        );
     }
     return $self->SUPER::init();
 }
@@ -304,7 +313,50 @@ sub _issueFactor {
 
     elsif ( $okta_issue->{factorResult} eq "WAITING" ) {
 
-        #TODO
+        # Simple version - wait on server side
+
+        # Get poll URL
+        my $okta_poll_url = $okta_issue->{_links}->{poll}->{href};
+
+        my $okta_poll_result;
+        my $poll_response;
+        my $poll_content;
+        my $okta_poll_result;
+        for ( my $i = 0 ; $i <= 60 ; $i++ ) {
+
+            $poll_response = $self->ua->get($okta_poll_url);
+            if ( $poll_response->is_error ) {
+                $self->logger->error(
+                    "Unable to get poll response for $okta_userid in Okta:"
+                      . $poll_response->content );
+                last;
+            }
+            $self->logger->debug( "Get poll response for $okta_userid:"
+                  . $poll_response->decoded_content );
+
+            $poll_content =
+              $self->decodeJSON( $poll_response->decoded_content );
+
+            $okta_poll_result = $poll_content->{factorResult};
+
+            unless ( $okta_poll_result eq "WAITING" ) {
+                $self->logger->debug(
+                    "Okta push response received for $okta_userid ");
+                last;
+            }
+
+            sleep 1;
+        }
+
+        if ( $okta_poll_result eq "SUCCESS" ) {
+            $self->logger->debug("Okta push verified for $okta_userid");
+            return $self->p->do( $req, [ sub { PE_OK } ] );
+        }
+        else {
+            return $self->p->do( $req, [ sub { PE_ERROR } ] );
+        }
+
+        #TODO waiting screen with ajax requests
     }
 
     eval { $self->setSecurity($req) };
