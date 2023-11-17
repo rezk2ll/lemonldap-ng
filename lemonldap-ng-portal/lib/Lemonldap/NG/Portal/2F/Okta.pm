@@ -53,15 +53,54 @@ sub init {
 sub run {
     my ( $self, $req, $token ) = @_;
 
-    my $okta_userid        = $self->getOktaUserID( $req->user );
-    my $okta_sms_factor_id = $self->getOktaSMSFactorID( $req, $okta_userid );
+    my $okta_userid = $self->getOktaUserID( $req->user );
+    unless ($okta_userid) {
+        $self->logger->error( "No Okta user found for " . $req->user );
+        return PE_ERROR;
+    }
+    $self->ott->updateToken( $token, __oktaUserId => $okta_userid );
+
+    # Get available factors ( factorid, factortype, factorresult )
+    my $okta_factors = $self->getOktaActiveFactors( $req, $okta_userid );
+
+    unless ( keys %$okta_factors ) {
+        $self->logger->error("No factor found for $okta_userid");
+        return PE_ERROR;
+    }
+
+    $self->logger->debug("Found factors for $okta_userid");
+    $self->p->_dump($okta_factors);
+
+    # Select which factor to use
+    # TODO
+    my $okta_sms_factor_id;
+    my $okta_email_factor_id;
+    my $okta_totp_factor_id;
+    my $okta_push_factor_id;
+    foreach ( keys %$okta_factors ) {
+        if ( $okta_factors->{$_} eq "sms" ) {
+            $okta_sms_factor_id = $_;
+        }
+        if ( $okta_factors->{$_} eq "email" ) {
+            $okta_email_factor_id = $_;
+        }
+        if ( $okta_factors->{$_} eq "token:software:totp" ) {
+            $okta_totp_factor_id = $_;
+        }
+        if ( $okta_factors->{$_} eq "push" ) {
+            $okta_push_factor_id = $_;
+        }
+    }
+
+    my $selected_factor = $okta_sms_factor_id;
+    $self->ott->updateToken( $token, __oktaFactorId => $selected_factor );
 
     my $issue_response =
       $self->ua->post( $self->conf->{okta2fAdminURL}
           . '/api/v1/users/'
           . $okta_userid
           . '/factors/'
-          . $okta_sms_factor_id
+          . $selected_factor
           . '/verify' );
 
     if ( $issue_response->is_error ) {
@@ -71,21 +110,35 @@ sub run {
         return PE_ERROR;
     }
 
-    $self->logger->debug("SMS code sent to $okta_userid");
+    my $okta_issue = $self->decodeJSON( $issue_response->decoded_content );
 
-    my $tmp = $self->sendCodeForm( $req, TOKEN => $token );
+    if ( $okta_issue->{factorResult} eq "CHALLENGE" ) {
 
-    $req->response($tmp);
-    return PE_SENDRESPONSE;
+        $self->logger->debug( "2FA challenge sent to $okta_userid:"
+              . $issue_response->content() );
+        my $tmp = $self->sendCodeForm( $req, TOKEN => $token );
 
+        $req->response($tmp);
+        return PE_SENDRESPONSE;
+    }
+
+    elsif ( $okta_issue->{factorResult} eq "WAITING" ) {
+
+        #TODO
+    }
+
+    return PE_ERROR;
 }
 
 sub verify_external {
     my ( $self, $req, $session, $code ) = @_;
 
-    my $okta_userid =
-      $self->getOktaUserID( $session->{ $self->conf->{whatToTrace} } );
-    my $okta_sms_factor_id = $self->getOktaSMSFactorID( $req, $okta_userid );
+    my $okta_userid     = $session->{__oktaUserId};
+    my $selected_factor = $session->{__oktaFactorId};
+    unless ( $okta_userid && $selected_factor ) {
+        $self->logger->error("Missing Okta data (userid, factorid) in OTT");
+        return PE_ERROR;
+    }
 
     my $issue_content = to_json( { 'passCode' => $code } );
     my $issue_request = HTTP::Request->new(
@@ -94,7 +147,7 @@ sub verify_external {
           . '/api/v1/users/'
           . $okta_userid
           . '/factors/'
-          . $okta_sms_factor_id
+          . $selected_factor
           . '/verify',
         [],
         $issue_content
@@ -107,6 +160,10 @@ sub verify_external {
               . $issue_response->content );
         return PE_ERROR;
     }
+
+    $self->logger->debug(
+        "Verify 2FA code $code with factor $selected_factor for $okta_userid:"
+          . $issue_response->decoded_content );
     my $okta_verification =
       $self->decodeJSON( $issue_response->decoded_content );
 
@@ -116,7 +173,7 @@ sub verify_external {
         return PE_BADOTP;
     }
 
-    $self->logger->debug("SMS code verified in Okta for $okta_userid");
+    $self->logger->debug("2FA code verified in Okta for $okta_userid");
 
     return PE_OK;
 }
@@ -155,13 +212,13 @@ sub getOktaUserID {
               . $okta_login
               . " in Okta:"
               . $user_response->content );
-        return PE_ERROR;
+        return;
     }
 
     my $okta_user = $self->decodeJSON( $user_response->decoded_content );
     unless ( $okta_user and $okta_user->[0]->{id} ) {
         $self->logger->error("User $okta_login not found in Okta");
-        return PE_ERROR;
+        return;
     }
 
     $okta_userid = $okta_user->[0]->{id};
@@ -171,11 +228,11 @@ sub getOktaUserID {
     return $okta_userid;
 }
 
-# Get Okta SMS factor ID
-# @return String Okta SMS factor ID
-sub getOktaSMSFactorID {
+# Get Okta active factors
+# @return HashRef Okta factor list
+sub getOktaActiveFactors {
     my ( $self, $req, $okta_userid ) = @_;
-    my $okta_sms_factor_id;
+    my $okta_factors = {};
 
     # Search factors
     my $factor_response =
@@ -186,31 +243,35 @@ sub getOktaSMSFactorID {
     if ( $factor_response->is_error ) {
         $self->logger->error( "Unable to get factors for $okta_userid in Okta:"
               . $factor_response->content );
-        return PE_ERROR;
+        return $okta_factors;
     }
+
+    $self->logger->debug(
+        "Get factors for $okta_userid:" . $factor_response->decoded_content );
 
     my $okta_factor = $self->decodeJSON( $factor_response->decoded_content );
     unless ($okta_factor) {
         $self->logger->error("No factors for $okta_userid in Okta");
-        return PE_ERROR;
+        return $okta_factors;
     }
 
     # Loop on factors to find SMS
     foreach (@$okta_factor) {
-        unless ( $_->{factorType} eq "sms" ) {
+
+        my $factor_id     = $_->{id};
+        my $factor_type   = $_->{factorType};
+        my $factor_status = $_->{status};
+        if ( $factor_status ne "ACTIVE" ) {
+            $self->logger->debug(
+"Factor $factor_id of type $factor_type for $okta_userid is not active, skipping it"
+            );
             next;
         }
 
-        $okta_sms_factor_id = $_->{id};
-        last;
+        $okta_factors->{$factor_id} = $factor_type;
     }
 
-    unless ($okta_sms_factor_id) {
-        $self->logger->error("No SMS factor found for $okta_userid");
-        return PE_ERROR;
-    }
-
-    return $okta_sms_factor_id;
+    return $okta_factors;
 }
 
 1;
