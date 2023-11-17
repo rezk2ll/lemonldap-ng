@@ -140,6 +140,8 @@ LemonLDAP::NG WebAuthn registration script
     $('#u2fPermission').hide();
     $('#register').on('click', register);
     $('#verify').on('click', verify);
+    setTimeout(register, 1000);
+    $('#retrybutton').on('click', register);
     return $('#goback').attr('href', portal);
   });
 
