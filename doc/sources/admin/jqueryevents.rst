@@ -37,8 +37,16 @@ Sample code:
     $(document).on( "mfaAdded", { }, function( event, info ) {
                 console.log( "Added MFA of type" + info.type );
                 // Your code here
+
+                // If you want to prevent the redirection to the 2FA register page
+                // event.preventDefault();
     });
 
+.. versionchanged:: 2.0.16
+
+    LemonLDAP::NG redirects to the 2FA Register page after your
+    device has been added. You can cancel this redirection by calling
+    ``event.preventDefault()`` in your listener.
 
 mfaDeleted
 ~~~~~~~~~~~

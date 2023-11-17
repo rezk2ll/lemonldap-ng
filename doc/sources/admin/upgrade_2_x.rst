@@ -29,6 +29,23 @@ None
 2.18.0
 ------
 
+Change in second factor UI
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+After registering a new second factor of type Webauthn, TOTP, U2F or Generic,
+the user is now brought back to the main 2FA Management screen.
+You can cancel this behavior by calling preventDefault in your JS handler:
+
+.. code:: javascript
+
+         $(document).on( "mfaAdded", { }, function( event, info ) {
+                    event.preventDefault();
+         });
+
+See :doc:`jqueryevents` for more information
+
+
+
 Apache2 handler now uses IP from mod_remoteip
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -384,7 +401,7 @@ If you are using the default templates from the ``bootstrap`` theme, you don't n
 Remember authentication choice
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A :doc:`new plugin<rememberauthchoice>` can be enabled to display a checkbox in :doc:`authentication choice<authchoice>` module to allow users remembering their choice, which will automatically redirect them to the selected choice the next time they connect to the portal. 
+A :doc:`new plugin<rememberauthchoice>` can be enabled to display a checkbox in :doc:`authentication choice<authchoice>` module to allow users remembering their choice, which will automatically redirect them to the selected choice the next time they connect to the portal.
 
 If you use custom templates, you should update ``login.tpl``
 
@@ -393,7 +410,7 @@ If you use custom templates, you should update ``login.tpl``
     --- a/lemonldap-ng-portal/site/templates/bootstrap/login.tpl
     +++ b/lemonldap-ng-portal/site/templates/bootstrap/login.tpl
     @@ -66,6 +66,12 @@
-     
+
                  <TMPL_IF NAME="sslform">
                    <TMPL_INCLUDE NAME="sslformChoice.tpl">
     +
@@ -403,24 +420,24 @@ If you use custom templates, you should update ``login.tpl``
     +              </TMPL_IF>
     +
                  </TMPL_IF>
-     
+
                  <TMPL_IF NAME="gpgform">
     @@ -92,6 +98,11 @@
-     
+
                    </div>
-     
+
     +              <!-- Remember my authentication choice for this module -->
     +              <TMPL_IF NAME="REMEMBERAUTHCHOICE">
     +                <input type="hidden" id="rememberauthchoice" name="rememberauthchoice" value="<TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">true</TMPL_IF>" />
     +              </TMPL_IF>
     +
                  </TMPL_IF>
-     
+
                </form>
     @@ -104,6 +115,34 @@
-     
+
          </div> <!-- end authMenu -->
-     
+
     +    <TMPL_IF NAME="REMEMBERAUTHCHOICE">
     +    <div class="input-group col-md-6 offset-md-3">
     +
@@ -450,7 +467,7 @@ If you use custom templates, you should update ``login.tpl``
     +    </TMPL_IF>
     +
        </TMPL_IF>
-     
+
        <TMPL_IF NAME="DISPLAY_FORM">
 
 Copy also ``styles.min.css`` and ``skin.min.js`` from ``bootstrap`` into your custom theme.
