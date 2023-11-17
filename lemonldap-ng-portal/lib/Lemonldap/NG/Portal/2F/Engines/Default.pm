@@ -97,6 +97,8 @@ sub init {
                   $self->p->loadPlugin( $i ? "::2F::Register::$_" : "::2F::$_" )
                   or return 0;
 
+                $self->_registerRoutes($m) unless ($i);
+
                 # Rule and prefix may be modified by 2F module, reread them
                 my $rule = $self->conf->{$ap};
                 $prefix = $m->prefix;
@@ -144,6 +146,8 @@ sub init {
                 : ()
             ),
         ) or return 0;
+
+        $self->_registerRoutes($m);
 
         # Rule and prefix may be modified by 2F module, reread them
         my $rule = $self->conf->{sfExtra}->{$extraKey}->{rule} || 1;
@@ -844,8 +848,15 @@ sub _continueLogin {
     );
 }
 
-sub verify {
-    my ( $self, $module, $req ) = @_;
+sub _verify {
+    my ( $self, $prefix, $req ) = @_;
+
+    # Locate the module which handles this prefix
+    my ($m) =
+      grep { $_->{m}->prefix eq $prefix } @{ $self->sfModules };
+    return $self->p->sendError( $req, 'Unknown 2F module', 400 )
+      unless $m;
+    my $module = $m->{m};
 
     # Check token
     my $token;
@@ -1037,6 +1048,36 @@ sub checkMaxAvailableAuthenticationLevel {
         return 0;
     }
     return 1;
+}
+
+sub _registerRoutes {
+    my ( $self, $m ) = @_;
+    unless ( $m->noRoute ) {
+        my $prefix = $m->prefix;
+        $self->logger->debug( 'Adding ' . $prefix . '2fcheck routes' );
+        $self->addAuthRoute(
+            $prefix . '2fcheck' => sub {
+                my $self = shift;
+                return $self->_verify( $prefix, @_ );
+            },
+            ['POST']
+        );
+        $self->addAuthRoute(
+            $prefix . '2fcheck' => '_redirect',
+            ['GET']
+        );
+        $self->addUnauthRoute(
+            $prefix . '2fcheck' => sub {
+                my $self = shift;
+                return $self->_verify( $prefix, @_ );
+            },
+            ['POST']
+        );
+        $self->addUnauthRoute(
+            $prefix . '2fcheck' => '_redirect',
+            ['GET']
+        );
+    }
 }
 
 1;

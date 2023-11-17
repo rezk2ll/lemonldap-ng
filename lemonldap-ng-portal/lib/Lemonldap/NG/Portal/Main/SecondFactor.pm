@@ -65,39 +65,7 @@ sub init {
     $self->label( $self->conf->{ $self->prefix . '2fLabel' } )
       if $self->conf->{ $self->prefix . '2fLabel' };
 
-    unless ( $self->noRoute ) {
-        $self->logger->debug( 'Adding ' . $self->prefix . '2fcheck routes' );
-        $self->addAuthRoute(
-            $self->prefix . '2fcheck' => '_verify',
-            ['POST']
-        );
-        $self->addAuthRoute(
-            $self->prefix . '2fcheck' => '_redirect',
-            ['GET']
-        );
-        $self->addUnauthRoute(
-            $self->prefix . '2fcheck' => '_verify',
-            ['POST']
-        );
-        $self->addUnauthRoute(
-            $self->prefix . '2fcheck' => '_redirect',
-            ['GET']
-        );
-    }
     return 1;
-}
-
-sub _redirect {
-    my ( $self, $req ) = @_;
-    my $arg = $req->env->{QUERY_STRING};
-    return [
-        302, [ Location => $self->conf->{portal} . ( $arg ? "?$arg" : '' ) ], []
-    ];
-}
-
-sub _verify {
-    my ( $self, $req ) = @_;
-    $self->p->_sfEngine->verify( $self, $req );
 }
 
 1;
