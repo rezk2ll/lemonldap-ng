@@ -72,4 +72,12 @@ sub checkNameSfa {
     return $name;
 }
 
+# Update request with newly registered device
+sub markRegistered {
+    my ($self, $req)  = @_;
+    $req->data->{_2fRegistered}                     = 1;
+    $req->userData->{_2f}                           = $self->prefix;
+    $req->userData->{registeredAuthenticationLevel} = $self->authnLevel;
+}
+
 1;
