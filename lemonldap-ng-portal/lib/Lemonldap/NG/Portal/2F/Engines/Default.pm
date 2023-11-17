@@ -545,6 +545,14 @@ sub _displayRegister {
     my ( $self, $req, $prefix ) = @_;
     my $_2fDevices = [];
     my @am;
+    my %tplParams;
+
+    if ( $req->params("continue") ) {
+        %tplParams = (%tplParams,
+            MSG   => 'your2faIsRegistered',
+            ALERT => "positive",
+          );
+    }
 
     $self->p->importHandlerData($req);
 
@@ -637,7 +645,8 @@ sub _displayRegister {
             MSG          => $self->canUpdateSfa($req) || 'choose2f',
             ALERT => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
             SFREGISTERS_URL =>
-              encode_base64( "$self->{conf}->{portal}2fregisters", '' )
+              encode_base64( "$self->{conf}->{portal}2fregisters", '' ),
+            %tplParams,
         }
     );
 }
