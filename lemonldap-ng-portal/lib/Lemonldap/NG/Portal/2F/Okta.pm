@@ -10,7 +10,9 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
   PE_BADOTP
   PE_ERROR
+  PE_NOTOKEN
   PE_SENDRESPONSE
+  PE_TOKENEXPIRED
 );
 
 extends 'Lemonldap::NG::Portal::Lib::Code2F';
@@ -47,6 +49,18 @@ sub init {
     $self->ua->default_headers->header(
         'Authorization' => 'SSWS ' . $self->conf->{okta2fApiKey} );
 
+    # Add Okta factor choice endpoint
+    unless ( $self->noRoute ) {
+        $self->logger->debug( 'Adding ' . $self->prefix . '2fchoice route' );
+        $self->addUnauthRoute(
+            $self->prefix . '2fchoice' => '_issueFactor',
+            ['POST']
+        );
+        $self->addUnauthRoute(
+            $self->prefix . '2fchoice' => '_redirect',
+            ['GET']
+        );
+    }
     return $self->SUPER::init();
 }
 
@@ -60,7 +74,7 @@ sub run {
     }
     $self->ott->updateToken( $token, __oktaUserId => $okta_userid );
 
-    # Get available factors ( factorid, factortype, factorresult )
+    # Get available factors ( factorid, factortype )
     my $okta_factors = $self->getOktaActiveFactors( $req, $okta_userid );
 
     unless ( keys %$okta_factors ) {
@@ -71,63 +85,24 @@ sub run {
     $self->logger->debug("Found factors for $okta_userid");
     $self->p->_dump($okta_factors);
 
-    # Select which factor to use
-    # TODO
-    my $okta_sms_factor_id;
-    my $okta_email_factor_id;
-    my $okta_totp_factor_id;
-    my $okta_push_factor_id;
-    foreach ( keys %$okta_factors ) {
-        if ( $okta_factors->{$_} eq "sms" ) {
-            $okta_sms_factor_id = $_;
+    # More than one factor  has been found, display okta choice
+    $self->logger->debug("Prepare Okta Factor choice");
+    my ( $checkLogins, $stayConnected ) = $self->getFormParams($req);
+    my $res = $self->p->sendHtml(
+        $req,
+        'okta2fchoice',
+        params => {
+            TOKEN         => $token,
+            CHECKLOGINS   => $checkLogins,
+            STAYCONNECTED => $stayConnected,
+            MODULES       => [
+                map { { CODE => $_, LABEL => $okta_factors->{$_} } }
+                sort keys %$okta_factors
+            ],
         }
-        if ( $okta_factors->{$_} eq "email" ) {
-            $okta_email_factor_id = $_;
-        }
-        if ( $okta_factors->{$_} eq "token:software:totp" ) {
-            $okta_totp_factor_id = $_;
-        }
-        if ( $okta_factors->{$_} eq "push" ) {
-            $okta_push_factor_id = $_;
-        }
-    }
-
-    my $selected_factor = $okta_sms_factor_id;
-    $self->ott->updateToken( $token, __oktaFactorId => $selected_factor );
-
-    my $issue_response =
-      $self->ua->post( $self->conf->{okta2fAdminURL}
-          . '/api/v1/users/'
-          . $okta_userid
-          . '/factors/'
-          . $selected_factor
-          . '/verify' );
-
-    if ( $issue_response->is_error ) {
-        $self->logger->error(
-            "Unable to issue factor challenge for $okta_userid in Okta:"
-              . $issue_response->content );
-        return PE_ERROR;
-    }
-
-    my $okta_issue = $self->decodeJSON( $issue_response->decoded_content );
-
-    if ( $okta_issue->{factorResult} eq "CHALLENGE" ) {
-
-        $self->logger->debug( "2FA challenge sent to $okta_userid:"
-              . $issue_response->content() );
-        my $tmp = $self->sendCodeForm( $req, TOKEN => $token );
-
-        $req->response($tmp);
-        return PE_SENDRESPONSE;
-    }
-
-    elsif ( $okta_issue->{factorResult} eq "WAITING" ) {
-
-        #TODO
-    }
-
-    return PE_ERROR;
+    );
+    $req->response($res);
+    return PE_SENDRESPONSE;
 }
 
 sub verify_external {
@@ -272,6 +247,69 @@ sub getOktaActiveFactors {
     }
 
     return $okta_factors;
+}
+
+sub _issueFactor {
+    my ( $self, $req ) = @_;
+
+    # Check token
+    my $token;
+    unless ( $token = $req->param('token') ) {
+        $self->userLogger->error( $self->prefix . ' 2F access without token' );
+        eval { $self->setSecurity($req) };
+        $req->mustRedirect(1);
+        return $self->p->do( $req, [ sub { PE_NOTOKEN } ] );
+    }
+
+    my $session;
+    unless ( $session = $self->ott->getToken( $token, 1 ) ) {
+        $self->userLogger->info(
+            'Invalid token during ' . $self->prefix . '2f choice' );
+        $req->noLoginDisplay(1);
+        return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
+    }
+
+    my $okta_userid     = $session->{__oktaUserId};
+    my $selected_factor = $req->param('sf');
+    $self->ott->updateToken( $token, __oktaFactorId => $selected_factor );
+
+    my $issue_response =
+      $self->ua->post( $self->conf->{okta2fAdminURL}
+          . '/api/v1/users/'
+          . $okta_userid
+          . '/factors/'
+          . $selected_factor
+          . '/verify' );
+
+    if ( $issue_response->is_error ) {
+        $self->logger->error(
+            "Unable to issue factor challenge for $okta_userid in Okta:"
+              . $issue_response->content );
+        eval { $self->setSecurity($req) };
+        $req->mustRedirect(1);
+        return $self->p->do( $req, [ sub { PE_ERROR } ] );
+    }
+
+    my $okta_issue = $self->decodeJSON( $issue_response->decoded_content );
+
+    if ( $okta_issue->{factorResult} eq "CHALLENGE" ) {
+
+        $self->logger->debug( "2FA challenge sent to $okta_userid:"
+              . $issue_response->content() );
+        my $tmp = $self->sendCodeForm( $req, TOKEN => $token );
+
+        $req->response($tmp);
+        return $self->p->do( $req, [ sub { PE_SENDRESPONSE } ] );
+    }
+
+    elsif ( $okta_issue->{factorResult} eq "WAITING" ) {
+
+        #TODO
+    }
+
+    eval { $self->setSecurity($req) };
+    $req->mustRedirect(1);
+    return $self->p->do( $req, [ sub { PE_ERROR } ] );
 }
 
 1;

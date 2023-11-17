@@ -474,6 +474,7 @@ site/templates/bootstrap/notifications.tpl
 site/templates/bootstrap/oidcConsents.tpl
 site/templates/bootstrap/oidcGiveConsent.tpl
 site/templates/bootstrap/oidcLogout.tpl
+site/templates/bootstrap/okta2fchoice.tpl
 site/templates/bootstrap/openid.tpl
 site/templates/bootstrap/openidform.tpl
 site/templates/bootstrap/openIdPol.tpl
