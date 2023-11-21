@@ -906,6 +906,10 @@ sub getPasswordPolicyTemplateVars {
 sub getPpolicyRules {
     my ($self) = @_;
     my $result = [];
+
+    # Avoid useless computation if ppolicy is not displayed
+    return $result if !$self->conf->{portalDisplayPasswordPolicy};
+
     while ( my ( $id, $policy ) = each %{ $self->_ppRules } ) {
         push @$result, { %$policy, id => $id };
     }
