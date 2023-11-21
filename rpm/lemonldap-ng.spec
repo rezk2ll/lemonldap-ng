@@ -256,7 +256,6 @@ Summary:        LemonLDAP-NG handler
 Requires:       crontabs
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Handler) = %{version}-%{release}
-Requires:       perl-Lemonldap-NG-SSOaaS-Apache-Client = %{version}-%{release}
 
 %description handler
 This package deploys the Apache Handler.
