@@ -233,10 +233,6 @@ site/htdocs/static/bwr/bootstrap/dist/css/bootstrap.css
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap.css.map
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap.min.css
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap.min.css.map
-site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.bundle.js
-site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.bundle.js.map
-site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.bundle.min.js
-site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.bundle.min.js.map
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.js
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.js.map
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.min.js
@@ -858,6 +854,7 @@ t/70-2F-TOTP-8-with-global-storage.t
 t/70-2F-TOTP-and-U2F-with-authnLevels-and-UpgradeOnly.t
 t/70-2F-TOTP-and-U2F-with-TTL-and-JSON.t
 t/70-2F-TOTP-encryption.t
+t/70-2F-TOTP-Hook.t
 t/70-2F-TOTP-with-History-and-Refresh.t
 t/70-2F-TOTP-with-LDAP.t
 t/70-2F-TOTP-with-Range.t
@@ -938,6 +935,7 @@ t/sessions/lock/.exists
 t/sessions/saml/lock/.exists
 t/sessions2/6e30af4ffa5689b3e49a104d1b160d316db2b2161a0f45776994eed19dbdc101
 t/sessions2/lock/Apache-Session-6e30af4ffa5689b3e49a104d1b160d316db2b2161a0f45776994eed19dbdc101.lock
+t/sfHookPlugin.pm
 t/smtp.pm
 t/test-ldap.pm
 t/test-lib.pm
