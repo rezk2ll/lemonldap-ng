@@ -315,9 +315,34 @@ Summary:        LemonLDAP-NG authentication portal
 Requires:       crontabs
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Portal) = %{version}-%{release}
+%if 0%{?el7}
+# Fido2
+Requires:       perl(Authen::WebAuthn)
+# Facebook
 Requires:       perl(Net::Facebook::Oauth2)
+# OpenID
 Requires:       perl(Net::OAuth)
 Requires:       perl(Net::OpenID::Consumer)
+# TOTP
+Requires:       perl(Convert::Base32)
+Requires:       perl(Digest::HMAC_SHA1)
+%else
+# Fido2
+Recommends:     perl(Authen::WebAuthn)
+# Location
+Recommends:     perl(GeoIP2)}
+Recommends:     perl(HTTP::BrowserDetect)}
+# SAML
+%{?fedora:Recommends:    perl(Lasso)}
+# Facebook
+Recommends:     perl(Net::Facebook::Oauth2)
+# OpenID
+Recommends:     perl(Net::OAuth)
+Recommends:     perl(Net::OpenID::Consumer)
+# TOTP
+Recommends:     perl(Convert::Base32)
+Recommends:     perl(Digest::HMAC_SHA1)
+%endif
 Provides:       bundled(fontawesome-fonts) = 4.7.0
 Provides:       bundled(js-bootstrap) = 4.5.2
 Provides:       bundled(js-fingerprint2) = 2.1.4
