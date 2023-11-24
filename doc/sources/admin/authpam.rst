@@ -28,11 +28,11 @@ For CentOS/RHEL:
 
    yum install perl-Authen-PAM
 
-In Debian/Ubuntu, install the library through apt-get command
+In Debian/Ubuntu, install the library through APT
 
 .. code-block:: shell
 
-   apt-get install libauthen-pam-perl
+   apt install libauthen-pam-perl
 
 Configuration of LemonLDAP::NG
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

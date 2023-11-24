@@ -27,11 +27,11 @@ Official repository
 ~~~~~~~~~~~~~~~~~~~
 
 If you run Debian stable, testing or unstable, the packages are directly
-installable:
+available:
 
 ::
 
-   apt-get install lemonldap-ng
+   apt install lemonldap-ng
 
 
 .. tip::

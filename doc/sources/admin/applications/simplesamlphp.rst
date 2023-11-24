@@ -23,11 +23,11 @@ simpleSAMLphp
 
 You need to `install the
 software <https://simplesamlphp.org/docs/stable/simplesamlphp-install>`__.
-If using Debian, just do:
+If using Debian, just run:
 
 ::
 
-   apt-get install simplesamlphp
+   apt install simplesamlphp
 
 We suppose that configuration is done in ``/etc/simplesamlphp`` and that
 simpleSAMLphp is accessible at http://localhost/simplesamlphp.

@@ -7,7 +7,6 @@ Presentation
 |image0|
 
 -  :doc:`How it works <presentation>`
--  :doc:`Main features <features>`
 -  :doc:`Quick start tutorial <quickstart>`
 
 Workshops

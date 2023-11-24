@@ -1,13 +1,12 @@
 Presentation
 ============
 
-LemonLDAP::NG is a modular WebSSO (Single Sign On) based on
-Apache::Session modules. It simplifies the build of a protected area
-with a few changes in the application.
+LemonLDAP::NG is a modular WebSSO (Single Sign On) written in Perl.
 
-It manages both authentication and authorization and provides headers
-for accounting. So you can have a full AAA protection for your web space
-as described below.
+It is highly customizable, and can be deployed in many different environments
+and for many different uses. It manages both authentication and authorization
+and provides customizable logging for accounting. So you can have a full AAA
+protection for your applications.
 
 Architecture
 ------------
@@ -24,7 +23,7 @@ Main components
    service (`SAML <http://en.wikipedia.org/wiki/SAML>`__,
    `OpenID <http://en.wikipedia.org/wiki/OpenID>`__,
    `CAS <http://en.wikipedia.org/wiki/Central_Authentication_Service>`__).
-   Futhermore, Portal affordes many other features (see
+   Futhermore, Portal offers many other features (see
    :doc:`portal<portal>` for more)
 -  :doc:`Handler<index_handler>`: used to protect applications which can read HTTP headers
    or environment variables to get user information
@@ -34,22 +33,26 @@ Databases
 
 .. attention::
 
-    We call "database" a backend where we can read or write a data.
-    This can be a file, an LDAP directory, etc...
+    We use "database" as a generic term for backends that are not included with
+    LemonLDAP::NG but that we need in order to provide the SSO service.
+    They can be a LDAP directory, a SQL database server, or even a simple local
+    file.
 
 We split databases in two categories:
 
--  **External databases**: not managed by LemonLDAP::NG, for example
-   user database
--  **Internal databases**: only used by LemonLDAP::NG
+-  **External databases**: are not managed by LemonLDAP::NG. Data is externally
+   provided and LemonLDAP::NG generally just needs to read it.
+-  **Internal databases**: its data is controlled by LemonLDAP::NG
 
 Main
 :ref:`external databases<start-authentication-users-and-password-databases>`
 are:
 
--  **Authentication**: how authenticate users
--  **User**: where collect user data
--  **Password**: where change the password
+-  **Authentication**: how users are authentified (password, certificate, etc.)
+-  **User**: where to find user attributes
+-  **Password**: how user passwords are changed
+-  **Registration**: where new users are created
+-  **Second factors**: how second factors are validated
 
 Main internal databases are:
 
@@ -70,8 +73,8 @@ Kinematics
 
 .. _presentation-login:
 
-Login
-~~~~~
+Handler protection
+~~~~~~~~~~~~~~~~~~
 
 |image1|
 
