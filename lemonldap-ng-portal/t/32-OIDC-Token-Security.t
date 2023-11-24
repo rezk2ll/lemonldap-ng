@@ -153,6 +153,34 @@ subtest "Try to increase the required authn level with acr_values" => sub {
     expectForm( $res, undef, '/upgradesession' );
 };
 
+subtest "acr_values correctly sets target AuthnLevel" => sub {
+    $res = authorize(
+        $op, undef,
+        {
+            response_type => "code",
+            scope         => "openid",
+            client_id     => "rpid",
+            redirect_uri  => "http://rp.com/",
+        }
+    );
+    is( expectPdata($res)->{targetAuthnLevel},
+        2, "No LOA, correct target Authnlevel" );
+
+    $res = authorize(
+        $op, undef,
+        {
+            response_type => "code",
+            scope         => "openid",
+            acr_values    => "unknown loa-4 loa-3",
+            client_id     => "rpid",
+            redirect_uri  => "http://rp.com/",
+        }
+    );
+    is( expectPdata($res)->{targetAuthnLevel},
+        4, "LOA specified, correct target Authnlevel" );
+
+};
+
 subtest "Try to lower the required authn level with acr_values" => sub {
     $res = authorize(
         $op, $idpId,
