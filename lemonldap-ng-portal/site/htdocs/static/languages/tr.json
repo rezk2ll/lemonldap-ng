@@ -357,6 +357,7 @@
 "webauthnAlreadyRegistered":"Bu cihaz zaten kayıtlı",
 "welcomeOnPortal":"Güvenli kimlik doğrulama portalına hoş geldiniz.",
 "yesResendMail":"Evet, tekrar e-posta gönder",
+"your2faIsRegistered":"Your second factor has been registered",
 "yourAddress":"Adresini bil",
 "yourApps":"Uygulamalarınız",
 "yourEmail":"E-postanı bil",

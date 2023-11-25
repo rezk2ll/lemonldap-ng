@@ -14,7 +14,6 @@ LLNG team scripts
 ## Other tools
 * `testConfBackend.pl`: test a new configuration backend
 * `test-perf.pl`: little script to test Portal/Handler performance
-* `totp-client.pl`: TOTP app to replace FreeOTP for TOTP tests
 * `run-ldap`: Launch an LDAP server (port 19389) and stop it when a key is pressed. It uses Portal test LDAP server.
 
 ## Old unmaintained scripts

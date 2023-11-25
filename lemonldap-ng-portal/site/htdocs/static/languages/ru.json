@@ -357,6 +357,7 @@
 "webauthnAlreadyRegistered":"Это устройство уже зарегистрировано",
 "welcomeOnPortal":"Добро пожаловать на защищенный портал аутентификации.",
 "yesResendMail":"Да, отправить письмо еще раз",
+"your2faIsRegistered":"Your second factor has been registered",
 "yourAddress":"Предоставить адрес",
 "yourApps":"Ваши приложения",
 "yourEmail":"Предоставить адрес электронной почты",

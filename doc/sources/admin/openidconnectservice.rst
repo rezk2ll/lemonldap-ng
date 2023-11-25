@@ -88,6 +88,7 @@ Security
    Server, you can set here the default "enc" algorithm to use for JWE encryption
 
 -  **Drop CSP headers from OIDC responses**: Set to 1 to drop all Content Security Policy headers (:ref:`CSP<security-configure-security-settings>`) from OIDC responses
+
 .. _x5c:
 
 .. versionchanged:: 2.0.16

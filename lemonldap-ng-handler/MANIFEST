@@ -11,7 +11,6 @@ lib/Lemonldap/NG/Handler/ApacheMP2/DevOps.pm
 lib/Lemonldap/NG/Handler/ApacheMP2/DevOpsCDA.pm
 lib/Lemonldap/NG/Handler/ApacheMP2/DevOpsST.pm
 lib/Lemonldap/NG/Handler/ApacheMP2/Fail.pm
-lib/Lemonldap/NG/Handler/ApacheMP2/FCGIClient.pm
 lib/Lemonldap/NG/Handler/ApacheMP2/Main.pm
 lib/Lemonldap/NG/Handler/ApacheMP2/Menu.pm
 lib/Lemonldap/NG/Handler/ApacheMP2/OAuth2.pm

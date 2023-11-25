@@ -28,7 +28,7 @@
 #global pre_release beta1
 
 Name:           lemonldap-ng
-Version:        2.17.1
+Version:        2.17.2
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        Web Single Sign On (SSO) and Access Management
 # Lemonldap-ng itself is GPLv2+
@@ -103,7 +103,7 @@ BuildRequires:  perl(feature)
 BuildRequires:  perl(fields)
 BuildRequires:  perl(File::Temp)
 BuildRequires:  perl(GD::SecurityImage)
-%if 0%{?fedora}%{?el9}
+%if 0%{?fedora}%{?el8}%{?el9}
 BuildRequires:  perl(GeoIP2)
 %endif
 BuildRequires:  perl(Getopt::Long)
@@ -111,7 +111,7 @@ BuildRequires:  perl(Getopt::Std)
 BuildRequires:  perl(GSSAPI)
 BuildRequires:  perl(Hash::Merge::Simple)
 BuildRequires:  perl(HTML::Template)
-%if 0%{?fedora}%{?el9}
+%if 0%{?fedora}%{?el8}%{?el9}
 BuildRequires:  perl(HTTP::BrowserDetect)
 %endif
 BuildRequires:  perl(HTTP::Headers)
@@ -257,7 +257,6 @@ Summary:        LemonLDAP-NG handler
 Requires:       crontabs
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Handler) = %{version}-%{release}
-Requires:       perl(Lemonldap::NG::SSOaaS::Apache::Client) = %{version}-%{release}
 
 %description handler
 This package deploys the Apache Handler.
@@ -490,14 +489,13 @@ mv %{buildroot}%{lm_confdir}/for_etc_hosts .
 
 # Fix shebang and perms
 sed -i -e 's,#!/usr/bin/env plackup,#!/usr/bin/plackup,' \
-    %{buildroot}%{lm_sharedir}/manager/api/api.psgi
-chmod 755 %{buildroot}%{lm_sharedir}/manager/api/api.psgi
-sed -i -e 's,#!/usr/bin/env plackup,#!/usr/bin/plackup,' \
-    %{buildroot}%{lm_sharedir}/manager/htdocs/manager.psgi
-chmod 755 %{buildroot}%{lm_sharedir}/manager/htdocs/manager.psgi
-sed -i -e 's,#!/usr/bin/env plackup,#!/usr/bin/plackup,' \
+    %{buildroot}%{lm_sharedir}/manager/api/api.psgi \
+    %{buildroot}%{lm_sharedir}/manager/htdocs/manager.psgi \
     %{buildroot}%{lm_examplesdir}/manager/manager.psgi
-chmod 755 %{buildroot}%{lm_examplesdir}/manager/manager.psgi
+chmod 755 \
+    %{buildroot}%{lm_sharedir}/manager/api/api.psgi \
+    %{buildroot}%{lm_sharedir}/manager/htdocs/manager.psgi \
+    %{buildroot}%{lm_examplesdir}/manager/manager.psgi
 sed -i -e '1i#!/usr/bin/plackup' \
     %{buildroot}%{lm_examplesdir}/llngapp.psgi
 chmod 644 %{buildroot}%{lm_sharedir}/test/cas.php
@@ -573,7 +571,7 @@ fi
 %files
 
 %files conf
-%doc changelog INSTALL README.md AUTHORS CONTRIBUTING.md
+%doc changelog README.md AUTHORS CONTRIBUTING.md
 %doc for_etc_hosts
 %license COPYING LICENSE
 %dir %{lm_confdir}
@@ -612,7 +610,7 @@ fi
 
 %files doc
 %doc %{lm_sharedir}/doc
-%doc changelog INSTALL README.md AUTHORS CONTRIBUTING.md
+%doc changelog README.md AUTHORS CONTRIBUTING.md
 %license COPYING LICENSE
 
 %files handler
@@ -702,6 +700,20 @@ fi
 
 
 %changelog
+* Tue Nov 14 2023 Clement Oudot <clem.oudot@gmail.com> - 2.17.2-1
+- Update to 2.17.2
+
+* Fri Oct 13 2023 Xavier Bachelot <xavier@bachelot.org> - 2.17.1-4
+- Enable GeoIP2 and HTTP::BrowserDetectfor EL8
+
+* Tue Oct 10 2023 Xavier Bachelot <xavier@bachelot.org> - 2.17.1-3
+- Fix broken dep on SSOaaS module dependency
+
+* Mon Oct 02 2023 Xavier Bachelot <xavier@bachelot.org> - 2.17.1-2
+- Add a dep on SSOaaS version
+- Simplify fix shebang and perms
+- Drop INSTALL from %doc
+
 * Mon Sep 25 2023 Clement Oudot <clem.oudot@gmail.com> - 2.17.1-1
 - Update to 2.17.1
 

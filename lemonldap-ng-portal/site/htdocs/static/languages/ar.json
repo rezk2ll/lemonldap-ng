@@ -357,6 +357,7 @@
 "webauthnAlreadyRegistered":"This device is already registered",
 "welcomeOnPortal":"مرحبا بك على بوابة إثبات الهوية الآمنة.",
 "yesResendMail":"نعم، أعد إرسال البريد",
+"your2faIsRegistered":"Your second factor has been registered",
 "yourAddress":"Know your address",
 "yourApps":"التطبيقات الخاصة بك",
 "yourEmail":"Know your email",

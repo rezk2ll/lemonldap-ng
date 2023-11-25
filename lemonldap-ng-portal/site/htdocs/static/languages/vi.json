@@ -357,6 +357,7 @@
 "webauthnAlreadyRegistered":"Thiết bị này đã được đăng ký",
 "welcomeOnPortal":"Chào mừng bạn đến với cổng thông tin xác thực được bảo mật của bạn.",
 "yesResendMail":"Có, gửi lại thư",
+"your2faIsRegistered":"Your second factor has been registered",
 "yourAddress":"Know your address",
 "yourApps":"Ứng dụng của bạn",
 "yourEmail":"Biết email của bạn",

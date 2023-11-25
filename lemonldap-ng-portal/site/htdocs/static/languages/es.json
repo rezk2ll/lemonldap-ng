@@ -357,6 +357,7 @@
 "webauthnAlreadyRegistered":"This device is already registered",
 "welcomeOnPortal":"Bienvenido a su portal de autenticación.",
 "yesResendMail":"Sí, reenviar el e-mail",
+"your2faIsRegistered":"Your second factor has been registered",
 "yourAddress":"Conozca su dirección",
 "yourApps":"Sus aplicaciones",
 "yourEmail":"Conozca su correo",

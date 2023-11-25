@@ -2,8 +2,11 @@ Installation
 ============
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
-   index_beforeinstall
-   index_maininstall
-   index_afterinstall
+   prereq
+   quickstart
+   Download <https://lemonldap-ng.org/download.html>
+   installdeb
+   installrpm
+   docker

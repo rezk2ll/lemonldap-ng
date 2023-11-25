@@ -22,7 +22,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use String::Random qw/random_string/;
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.17.2';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Issuer
@@ -2653,16 +2653,9 @@ sub exportRequestParameters {
 
     my $rp;
     if ( $req->param('client_id') ) {
-        my $rp = $self->getRP( $req->param('client_id') );
+        $rp = $self->getRP( $req->param('client_id') );
         if ($rp) {
-
             $req->env->{"llng_oidc_rp"} = $rp;
-
-            # Store target authentication level in pdata
-            my $targetAuthnLevel =
-              $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel};
-            $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
-              if $targetAuthnLevel;
         }
     }
 
@@ -2685,6 +2678,20 @@ sub exportRequestParameters {
         foreach ( keys %$request_data ) {
             $req->env->{ "llng_oidc_" . $_ } = $request_data->{$_};
         }
+    }
+
+    # Store target authentication level in pdata
+    if ($rp) {
+        my $targetAuthnLevel =
+          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel};
+
+        if ( my $acr_values = $req->env->{'llng_oidc_acr_values'} ) {
+            $targetAuthnLevel =
+              $self->_get_authn_level_from_acr_values($acr_values);
+        }
+
+        $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
+          if $targetAuthnLevel;
     }
 
     return PE_OK;

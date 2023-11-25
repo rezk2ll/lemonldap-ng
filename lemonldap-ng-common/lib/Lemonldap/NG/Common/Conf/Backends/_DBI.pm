@@ -78,28 +78,16 @@ sub _dbh {
 
 sub lock {
     my $self = shift;
-    if ( $self->{dbiChain} =~ /^dbi:(?:MariaDB|mysql):/i ) {
-        my @row = $self->_dbh->selectrow_array("SELECT GET_LOCK('lmconf', 0)");
-        return $row[0] || 0;
-    }
     return 1;
 }
 
 sub isLocked {
     my $self = shift;
-    if ( $self->{dbiChain} =~ /^dbi:(?:MariaDB|mysql):/i ) {
-        my @row = $self->_dbh->selectrow_array("SELECT IS_FREE_LOCK('lmconf')");
-        return $row[0] ? 0 : 1;
-    }
     return 0;
 }
 
 sub unlock {
     my $self = shift;
-    if ( $self->{dbiChain} =~ /^dbi:(?:MariaDB|mysql):/i ) {
-        my @row = $self->_dbh->selectrow_array("SELECT RELEASE_LOCK('lmconf')");
-        return $row[0] || 0;
-    }
     return 1;
 }
 
