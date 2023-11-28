@@ -112,6 +112,12 @@ sub validateCredential {
         $req->headers->header('Sec-Provided-Token-Binding-ID') )
       : '';
 
+    # If Authen::WebAuthn is too old, we can't check attestation
+    my $attestation = $registration_options->{attestation} || "none";
+    if ($attestation ne "none" and $Authen::WebAuthn::VERSION < 0.2) {
+        croak("Authen::WebAuthn version is too old, cannot validate attestation");
+    }
+
     return $self->verifier->validate_registration(
         challenge_b64          => $challenge_b64,
         requested_uv           => $requested_uv,
