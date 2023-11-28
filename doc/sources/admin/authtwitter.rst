@@ -16,9 +16,6 @@ allow applications to reuse its own authentication process (it means, if
 your are connected to Twitter, other applications can trust Twitter and
 let you in).
 
-You need `Net::Twitter <http://search.cpan.org/~mmims/Net-Twitter/>`__
-package, with a very recent version (>3).
-
 You need to register a new application on Twitter to get API key and API
 secret. See `Twitter FAQ <http://dev.twitter.com/pages/api_faq>`__ on
 how to do that:.

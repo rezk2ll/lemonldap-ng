@@ -1329,6 +1329,8 @@
 "webIDWhitelist":"WebID 白名單",
 "webauthn2f":"WebAuthn",
 "webauthn2fActivation":"啟用",
+"webauthn2fAttestation":"Attestation",
+"webauthn2fAttestationTrust":"Attestation trusted certificates",
 "webauthn2fAuthnLevel":"驗證等級",
 "webauthn2fLabel":"標籤",
 "webauthn2fLogo":"圖示",

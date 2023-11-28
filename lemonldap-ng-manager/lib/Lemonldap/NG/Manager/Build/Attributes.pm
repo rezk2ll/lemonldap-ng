@@ -2439,6 +2439,21 @@ sub attributes {
             default       => 'preferred',
             documentation => 'Verify user during registration and login',
         },
+        webauthn2fAttestation => {
+            type   => 'select',
+            select => [
+                { k => 'none', v => 'None' },
+                { k => 'direct',   v => 'Direct' },
+                { k => 'indirect',    v => 'Indirect' },
+                { k => 'enterprise',    v => 'Enterprise' },
+            ],
+            default       => 'none',
+            documentation => 'Ask the authenticator for an attestation',
+        },
+        webauthn2fAttestationTrust => {
+            type          => 'file',
+            documentation => 'Certificate bundle for attestation trust validation',
+        },
         webauthn2fUserCanRemoveKey => {
             type          => 'bool',
             default       => 1,
