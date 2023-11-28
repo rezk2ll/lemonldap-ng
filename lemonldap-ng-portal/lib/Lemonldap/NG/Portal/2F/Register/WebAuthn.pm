@@ -82,14 +82,6 @@ sub _registrationchallenge {
     my @alldevices       = $self->find2fDevicesByType( $req, $req->userData );
     my $challenge_base64 = encode_base64url( Crypt::URandom::urandom(32) );
 
-    # Challenge is persisted on the server
-    my $token = $self->ott->createToken( {
-            registration_options => {
-                challenge => $challenge_base64,
-            }
-        }
-    );
-
     my $displayName      = $req->userData->{ $self->displayname_attr } || $user;
     my $userVerification = $self->conf->{webauthn2fUserVerification};
     my $request          = {
@@ -110,6 +102,13 @@ sub _registrationchallenge {
             )
         }
     };
+
+    # Challenge is persisted on the server
+    my $token = $self->ott->createToken( {
+            registration_options => $request,
+        }
+    );
+
 
     $self->logger->debug( "Register parameters " . to_json($request) );
     return $self->p->sendJSONresponse( $req,
