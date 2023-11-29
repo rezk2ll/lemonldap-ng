@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON                       qw(from_json to_json);
+use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -22,7 +22,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use String::Random qw/random_string/;
 
-our $VERSION = '2.17.2';
+our $VERSION = '2.18.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Issuer
@@ -249,7 +249,13 @@ sub run {
 
             # Detect requested flow
             my $response_type = $oidc_request->{'response_type'};
-            my $flow          = $self->getFlowType($response_type);
+
+            unless ($response_type) {
+                $self->logger->error("No response type provided");
+                return PE_ERROR;
+            }
+
+            my $flow = $self->getFlowType($response_type);
 
             unless ($flow) {
                 $self->logger->error("Unknown response type: $response_type");
