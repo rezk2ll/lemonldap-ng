@@ -6,12 +6,11 @@
 package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 
 use strict;
-use Crypt::OpenSSL::Bignum;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
+use Crypt::JWT qw(encode_jwt decode_jwt);
 use Digest::SHA
-  qw/sha1 hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64 sha256 sha384
-  sha512 sha256_base64 sha384_base64 sha512_base64/;
+  qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::UserAgent;
@@ -28,7 +27,7 @@ use URI;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
 
-our $VERSION = '2.17.2';
+our $VERSION = '2.18.0';
 
 use constant BACKCHANNEL_EVENTSKEY =>
   'http://schemas.openid.net/event/backchannel-logout';
@@ -986,8 +985,7 @@ sub getUserInfo {
         return $self->decodeUserInfo($userinfo_content);
     }
     elsif ( $content_type =~ /jwt/ ) {
-        return unless $self->verifyJWTSignature( $userinfo_content, $op );
-        return getJWTPayload($userinfo_content);
+        return $self->decodeJWT( $userinfo_content, $op );
     }
 }
 
@@ -1356,7 +1354,7 @@ sub extractState {
 
 # Check signature of a JWT
 # @return boolean 1 if signature is verified, 0 else
-sub verifyJWTSignature {
+sub decodeJWT {
     my ( $self, $jwt, $op, $rp ) = @_;
 
     $self->logger->debug("Verification of JWT signature: $jwt");
@@ -1378,123 +1376,59 @@ sub verifyJWTSignature {
             $self->logger->debug( "Signature "
                   . $signature
                   . " is present but algorithm is 'none'" );
-            return 0;
+            return;
         }
         $self->logger->debug(
             "JWT algorithm is 'none', signature cannot be verified");
-        return 0;
+        return;
     }
 
-    if ( $alg eq "HS256" or $alg eq "HS384" or $alg eq "HS512" ) {
+   # For now, only OP has JWKS
+   #my $jwks =
+   #  $op ? $self->opMetadata->{$op}->{jwks} : $self->rpMetadata->{$rp}->{jwks};
+    my $jwks = $op ? $self->opMetadata->{$op}->{jwks} : undef;
 
-        # Check signature with client secret
-        my $client_secret;
-        $client_secret =
-          $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientSecret}
-          if ($op);
-        $client_secret =
-          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret}
-          if ($rp);
-
-        my $digest;
-
-        if ( $alg eq "HS256" ) {
-            $digest = hmac_sha256_base64( $signed_data, $client_secret );
-        }
-
-        if ( $alg eq "HS384" ) {
-            $digest = hmac_sha384_base64( $signed_data, $client_secret );
-        }
-
-        if ( $alg eq "HS512" ) {
-            $digest = hmac_sha512_base64( $signed_data, $client_secret );
-        }
-
-        # Convert + and / to get Base64 URL valid (RFC 4648)
-        $digest =~ s/\+/-/g;
-        $digest =~ s/\//_/g;
-
-        unless ( $digest eq $signature ) {
-            $self->logger->debug(
-                "Digest $digest not equal to signature " . $signature );
-            return 0;
-        }
-        return 1;
-    }
-
-    if ( $alg eq "RS256" or $alg eq "RS384" or $alg eq "RS512" ) {
-
-        if ($rp) {
-            $self->logger->debug("Algorithm $alg not supported");
-            return 0;
-        }
-
-        # The public key is needed
-        unless ( $self->opMetadata->{$op}->{jwks} ) {
+    unless ( $alg =~ /^HS/ ) {
+        unless ($jwks) {
             $self->logger->error(
                 "Cannot verify $alg signature: no JWKS data found");
-            return 0;
+            return;
         }
-
-        my $keys = $self->opMetadata->{$op}->{jwks}->{keys};
-        my $key_hash;
-
-        # Find Key ID associated with signature
-        my $kid = $jwt_header->{kid};
-
-        if ($kid) {
-            $self->logger->debug("Search key with id $kid");
-            foreach (@$keys) {
-                if ( $_->{kid} eq $kid ) {
-                    $key_hash = $_;
-                    last;
-                }
-            }
+        unless ($jwks->{keys}
+            and ref( $jwks->{keys} ) eq 'ARRAY'
+            and @{ $jwks->{keys} } )
+        {
+            $self->logger->error('Malformed JWKS, I need {"keys":[..keys..]}');
+            return;
         }
-        else {
-            $key_hash = shift @$keys;
-        }
-
-        unless ($key_hash) {
-            $self->logger->error("No key found in JWKS data");
-            return 0;
-        }
-
-        $self->logger->debug(
-            "Found public key parameter n: " . $key_hash->{n} );
-        $self->logger->debug(
-            "Found public key parameter e: " . $key_hash->{e} );
-
-        # Create public key
-        my $n =
-          Crypt::OpenSSL::Bignum->new_from_bin(
-            decode_base64url( $key_hash->{n} ) );
-        my $e =
-          Crypt::OpenSSL::Bignum->new_from_bin(
-            decode_base64url( $key_hash->{e} ) );
-
-        my $public_key = Crypt::OpenSSL::RSA->new_key_from_parameters( $n, $e );
-
-        if ( $alg eq "RS256" ) {
-            $public_key->use_sha256_hash;
-        }
-
-        if ( $alg eq "RS384" ) {
-            $public_key->use_sha384_hash;
-        }
-
-        if ( $alg eq "RS512" ) {
-            $public_key->use_sha512_hash;
-        }
-
-        return $public_key->verify( $signed_data,
-            decode_base64url($signature) );
     }
 
-    # Other algorithms not managed
-    $self->logger->debug("Algorithm $alg not known");
+    # Choosing keys
+    #  - if algorithm is HS{digits}, the key is the ClientSecret
+    #  - if JWS has a "kti" field in its header, use it (then replace the
+    #    "key" arg of Crypt::JWT by "kid_keys" and give the whole JWKS)
+    #  - else we try the first available key of jwks document
+    my @keyArg =
+      $alg =~ /^HS/
+      ? (
+        key => $op
+        ? $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientSecret}
+        : $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret}
+      )
+      : $jwt_header->{kti} ? ( kid_keys => $jwks )
+      :                      ( key => $jwks->{keys}->[0] );
 
-    return 0;
+    # JSON decoding is done here because #2748
+    my $content = eval {
+        JSON::from_json(
+            decode_jwt( token => $jwt, @keyArg, decode_payload => 0 ) );
+    };
+    if ($@) {
+        $self->logger->error("Unable to verify JWT: $@");
+        $self->logger->error("Jwt was: $jwt");
+        return;
+    }
+    return $content;
 }
 
 ### HERE
@@ -1786,7 +1720,7 @@ sub getScope {
     if ( $self->conf->{oidcServiceAllowOnlyDeclaredScopes} ) {
         my @known_scopes = (
             keys( %{ $self->rpScopeRules->{$rp} || {} } ),
-            keys( %{ $self->rpScopes->{$rp} || {} } ),
+            keys( %{ $self->rpScopes->{$rp}     || {} } ),
             'openid', 'offline_access',
         );
         my @scope_values_tmp;
@@ -2049,24 +1983,16 @@ sub _forceType {
 sub createJWT {
     my ( $self, $payload, $alg, $rp, $type ) = @_;
 
-    # Payload encoding
-    my $jwt_payload = encode_base64url( to_json($payload), "" );
+    my @keyArg;
 
-    # JWT header
-    my $typ             = $type || "JWT";
-    my $jwt_header_hash = { typ => $typ, alg => $alg };
-    if ( $alg eq "RS256" or $alg eq "RS384" or $alg eq "RS512" ) {
-        $jwt_header_hash->{kid} = $self->conf->{oidcServiceKeyIdSig}
-          if $self->conf->{oidcServiceKeyIdSig};
-    }
-    my $jwt_header = encode_base64url( to_json($jwt_header_hash), "" );
-
-    if ( $alg eq "none" ) {
-
-        return $jwt_header . "." . $jwt_payload;
+    # Set Cript::JWT arguments depending on "alg"
+    #  a) "none"
+    if ( $alg eq 'none' ) {
+        @keyArg = ( allow_none => 1 );
     }
 
-    if ( $alg eq "HS256" or $alg eq "HS384" or $alg eq "HS512" ) {
+    #  b) HMAC algorithms, key is the client secret
+    elsif ( $alg =~ /^HS/ ) {
 
         # Sign with client secret
         my $client_secret =
@@ -2076,65 +2002,33 @@ sub createJWT {
                 "Algorithm $alg needs a Client Secret to sign JWT");
             return;
         }
-
-        my $digest;
-
-        if ( $alg eq "HS256" ) {
-            $digest = hmac_sha256_base64( $jwt_header . "." . $jwt_payload,
-                $client_secret );
-        }
-
-        if ( $alg eq "HS384" ) {
-            $digest = hmac_sha384_base64( $jwt_header . "." . $jwt_payload,
-                $client_secret );
-        }
-
-        if ( $alg eq "HS512" ) {
-            $digest = hmac_sha512_base64( $jwt_header . "." . $jwt_payload,
-                $client_secret );
-        }
-
-        # Convert + and / to get Base64 URL valid (RFC 4648)
-        $digest =~ s/\+/-/g;
-        $digest =~ s/\//_/g;
-        $digest =~ s/=+$//g;
-
-        return $jwt_header . "." . $jwt_payload . "." . $digest;
+        @keyArg = ( key => $client_secret );
     }
 
-    elsif ( $alg eq "RS256" or $alg eq "RS384" or $alg eq "RS512" ) {
-
-        # Get signing private key
+    #  c) asymetric algorithms
+    else {
         my $priv_key = $self->conf->{oidcServicePrivateKeySig};
         unless ($priv_key) {
             $self->logger->error(
                 "Algorithm $alg needs a Private Key to sign JWT");
             return;
         }
-
-        my $rsa_priv = Crypt::OpenSSL::RSA->new_private_key($priv_key);
-
-        if ( $alg eq "RS256" ) {
-            $rsa_priv->use_sha256_hash;
-        }
-
-        if ( $alg eq "RS384" ) {
-            $rsa_priv->use_sha384_hash;
-        }
-
-        if ( $alg eq "RS512" ) {
-            $rsa_priv->use_sha512_hash;
-        }
-
-        my $digest = encode_base64url(
-            $rsa_priv->sign( $jwt_header . "." . $jwt_payload ) );
-
-        return $jwt_header . "." . $jwt_payload . "." . $digest;
+        @keyArg = ( key => \$priv_key, );
     }
 
-    $self->logger->debug("Algorithm $alg not supported to sign JWT");
-
-    return;
+    # Encode payload here due to #2748
+    my $jwt = eval {
+        encode_jwt(
+            payload => to_json($payload),
+            alg     => $alg,
+            @keyArg,
+        );
+    };
+    if ($@) {
+        $self->logger->error("Unable to build JWT: $@");
+        return;
+    }
+    return $jwt;
 }
 
 # Return ID Token
