@@ -264,7 +264,8 @@ sub logout {
             'importHandlerData',      'controlUrl',
             @{ $self->beforeLogout }, 'authLogout',
             'deleteSession'
-        ]
+        ],
+        1,    # No fail: logout should continue even if errors
     );
 }
 
@@ -295,10 +296,10 @@ sub _unauthLogout {
 # ---------------
 
 sub do {
-    my ( $self, $req, $steps ) = @_;
+    my ( $self, $req, $steps, $nofail ) = @_;
     $req->steps($steps);
     $req->data->{activeTimer} = $self->conf->{activeTimer};
-    my $err = $req->error( $self->process($req) );
+    my $err = $req->error( $self->process( $req, nofail => $nofail ) );
 
     # Update status
     if ( my $p = $self->HANDLER->tsv->{statusPipe} ) {
