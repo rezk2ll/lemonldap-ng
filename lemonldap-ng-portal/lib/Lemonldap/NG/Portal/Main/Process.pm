@@ -31,7 +31,7 @@ sub process {
             my $tmp = $sub->( $req, %args );
             if ($tmp) {
                 $err = $tmp unless $err > 0;
-                last        unless $nofail;
+                last        unless $nofail and $err != PE_SENDRESPONSE;
             }
         }
         else {
@@ -40,14 +40,14 @@ sub process {
                 my $tmp = $as->( $req, %args );
                 if ($tmp) {
                     $err = $tmp unless $err > 0;
-                    last        unless $nofail;
+                    last        unless $nofail and $err != PE_SENDRESPONSE;
                 }
             }
             else {
                 my $tmp = $self->$sub( $req, %args );
                 if ($tmp) {
                     $err = $tmp unless $err > 0;
-                    last        unless $nofail;
+                    last        unless $nofail and $err != PE_SENDRESPONSE;
                 }
             }
             if ( $self->afterSub->{$sub} ) {
