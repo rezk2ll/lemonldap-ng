@@ -34,10 +34,6 @@ License: Artistic or GPL-1+
 Comment: contains code from DateTime::Format::Duration::XSD by Smal D A,
  <mialinx@gmail.com>
 
-Files: lemonldap-ng-portal/inc/LWP/Protocol/PSGI.pm
-Copyright: 2011, Tatsuhiko Miyagawa <miyagawa@bulknews.net>
-License: Artistic or GPL-1+
-
 Files: *.js
 Copyright: 2005-2023, Xavier Guimard <yadd@debian.org>
  2006-2023, Clement Oudot <clem.oudot@gmail.com>
