@@ -1145,6 +1145,30 @@ sub tests {
             return 1;
         },
 
+        # OIDC Signature and Encryption tests
+        oidcSigAlgShouldMatchKeyType => sub {
+            for my $key (
+                qw(oidcRPMetaDataOptionsIDTokenSignAlg oidcRPMetaDataOptionsAccessTokenSignAlg oidcRPMetaDataOptionsUserInfoSignAlg)
+              )
+            {
+                foreach my $rp ( keys %{ $conf->{oidcRPMetaDataOptions} } ) {
+                    return ( 0,
+"Signature algorithm shouldn't be ES* if key type is RSA ($rp/$key)"
+                      )
+                      if $conf->{oidcRPMetaDataOptions}->{$rp}->{$key}
+                      and $conf->{oidcRPMetaDataOptions}->{$rp}->{$key} =~ /^E/
+                      and $conf->{oidcServiceKeyTypeSig} ne 'EC';
+                    return ( 0,
+"Signature algorithm shouldn't be RS* or PS* if key type is EC ($rp/$key)"
+                      )
+                      if $conf->{oidcRPMetaDataOptions}->{$rp}->{$key}
+                      and $conf->{oidcRPMetaDataOptions}->{$rp}->{$key} !~ /^E/
+                      and $conf->{oidcServiceKeyTypeSig} eq 'EC';
+                }
+            }
+            return 1;
+        },
+
 # Warn if both oidcRPMetaDataOptionsJwks and oidcRPMetaDataOptionsJwksUri is set
         noJwksDuplication => sub {
             return 1

@@ -2178,7 +2178,8 @@ sub registration {
       $client_metadata->{client_name} || "Self registered client";
     my $logo_uri = $client_metadata->{logo_uri};
     my $id_token_signed_response_alg =
-      $client_metadata->{id_token_signed_response_alg} || "RS256";
+      $client_metadata->{id_token_signed_response_alg}
+      || ( $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256' : 'RS256' );
     my $userinfo_signed_response_alg =
       $client_metadata->{userinfo_signed_response_alg};
     my $redirect_uris          = $client_metadata->{redirect_uris};
@@ -2421,8 +2422,14 @@ sub logout {
                     #   logout_token=<JWT value>
                     #
                     # RP response should be 200 (204 accepted) or 400 for errors
-                    my $alg = $self->rpOptions->{$rp}
-                      ->{oidcRPMetaDataOptionsAccessTokenSignAlg} || "RS256";
+                    my $alg =
+                      $self->rpOptions->{$rp}
+                      ->{oidcRPMetaDataOptionsAccessTokenSignAlg}
+                      || (
+                        $self->conf->{oidcServiceKeyTypeSig} eq 'EC'
+                        ? 'ES256'
+                        : 'RS256'
+                      );
                     $self->logger->debug(
                         "Access Token signature algorithm: $alg");
                     my $userId =
@@ -2554,6 +2561,14 @@ sub metadata {
         push( @$grant_types, "hybrid" );
     }
 
+    my @supportedSigAlg = qw/none HS256 HS384 HS512/;
+    if ( $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ) {
+        push @supportedSigAlg, qw/ES256 ES256K ES384 ES512 EdDSA/;
+    }
+    else {
+        push @supportedSigAlg, qw/RS256 RS384 RS512 PS256 PS384 PS512/;
+    }
+
     # Create OpenID configuration hash;
     return $self->p->sendJSONresponse(
         $req,
@@ -2592,15 +2607,13 @@ sub metadata {
             require_request_uri_registration => JSON::true,
 
             # Algorithms
-            id_token_signing_alg_values_supported =>
-              [qw/none HS256 HS384 HS512 RS256 RS384 RS512/],
+            id_token_signing_alg_values_supported => \@supportedSigAlg,
 
             id_token_encryption_alg_values_supported =>
               &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_ALG_SUPPORTED,
             id_token_encryption_enc_values_supported =>
               &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_SUPPORTED,
-            userinfo_signing_alg_values_supported =>
-              [qw/none HS256 HS384 HS512 RS256 RS384 RS512/],
+            userinfo_signing_alg_values_supported => \@supportedSigAlg,
 
             userinfo_encryption_alg_values_supported =>
               &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_ALG_SUPPORTED,

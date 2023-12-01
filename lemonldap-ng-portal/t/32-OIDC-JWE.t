@@ -312,7 +312,6 @@ sub rp {
                         oidcOPMetaDataOptionsClientID     => "rpid",
                         oidcOPMetaDataOptionsConfigurationURI =>
 "https://auth.op.com/.well-known/openid-configuration",
-                        oidcServiceKeyIdEnc => 'aabbcc',
                     }
                 },
                 oidcServicePrivateKeyEnc => oidc_key_op_private_sig,

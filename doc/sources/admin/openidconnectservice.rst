@@ -59,13 +59,15 @@ to define attributes and extra claims released when a new relying party is regis
 Security
 ~~~~~~~~
 
--  **Keys**: Define public/private key pairs for asymmetric signature. A JWKS
-   ``kid`` (Key ID) is automatically derived when new keys are generated:
+-  **Keys**: Define public/private key pair for asymmetric signature. A JWKS
+   ``kid`` (Key ID) is automatically derived when new keys are generated.
+   You have to choose the key type: ``RSA`` or ``EC``. The list of
+   supported algorithms in OIDC metadata will be automatically updated.
 
    - Set signing key if LLNG is an OpenID-Connect server
    - Set Encryption key if LLNG is an OpenID-Connect Relying-Party and if you
      want that the OpenID-Connect server encrypt the JWT tokens
-- 
+
 -  **Authorization Code Flow**: Set to 1 to allow Authorization Code flow
 -  **Implicit Flow**: Set to 1 to allow Implicit flow
 -  **Hybrid Flow**: Set to 1 to allow Hybrid flow

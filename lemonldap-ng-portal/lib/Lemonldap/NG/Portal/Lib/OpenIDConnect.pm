@@ -8,8 +8,9 @@ package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 use strict;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
-use Crypt::JWT  qw(encode_jwt decode_jwt);
-use Digest::SHA qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
+use Crypt::JWT qw(encode_jwt decode_jwt);
+use Digest::SHA
+  qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::UserAgent;
@@ -1229,7 +1230,7 @@ sub makeJWT {
 
     # Get signature algorithm
     my $alg = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenSignAlg}
-      || "RS256";
+      || ( $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256' : 'RS256' );
     $self->logger->debug("Access Token signature algorithm: $alg");
 
     my $jwt = $self->createJWT( $access_token_payload, $alg, $rp, "at+JWT" );
@@ -2176,15 +2177,24 @@ sub getIDTokenSub {
 # @param key Raw key
 # @return HashRef JWKS key
 sub key2jwks {
-    my ( $self, $key ) = @_;
+    my ( $self, $key, $type ) = @_;
 
-    my $rsa_pub = Crypt::OpenSSL::RSA->new_private_key($key);
-    my @params  = $rsa_pub->get_key_parameters();
+    if ( $type and $type eq 'EC' ) {
+        require Crypt::PK::ECC;
+        my $eck = Crypt::PK::ECC->new();
+        $eck->import_key( \$key );
+        return $eck->export_key_jwk( 'public', 1 );
+    }
+    else {
+        my $rsa_pub = Crypt::OpenSSL::RSA->new_private_key($key);
+        my @params  = $rsa_pub->get_key_parameters();
 
-    return {
-        n => encode_base64url( $params[0]->to_bin(), "" ),
-        e => encode_base64url( $params[1]->to_bin(), "" ),
-    };
+        return {
+            n   => encode_base64url( $params[0]->to_bin(), "" ),
+            e   => encode_base64url( $params[1]->to_bin(), "" ),
+            kty => 'RSA',
+        };
+    }
 }
 
 # Return X.509 data if public key is a certificate
@@ -2232,9 +2242,10 @@ sub _buildJwk {
     my $publicKeyOrCert = $self->conf->{"oidcService${prefix}PublicKey$type"};
     my $privateKey      = $self->conf->{"oidcService${prefix}PrivateKey$type"};
     my $keyId           = $self->conf->{"oidcService${prefix}KeyId$type"};
+    my $keytype         = $self->conf->{"oidcService${prefix}KeyType$type"};
     return $privateKey
       ? {
-        kty => 'RSA',
+        kty => $keytype,
         use => lc($type),
         (
             $type eq 'Enc'
@@ -2242,7 +2253,7 @@ sub _buildJwk {
             : ()
         ),
         ( $keyId ? ( kid => $keyId ) : () ),
-        %{ $self->key2jwks($privateKey) },
+        %{ $self->key2jwks( $privateKey, $keytype ) },
         %{ $self->getCertInfo($publicKeyOrCert) },
       }
       : ();

@@ -69,6 +69,7 @@ sub init {
         confs => {
             newRSAKey      => 'newRSAKey',
             newCertificate => 'newCertificate',
+            newEcKeys      => 'newEcKeys',
             sendTestMail   => 'sendTestMail',
             raw            => 'newRawConf',
             '*'            => 'newConf'
@@ -155,6 +156,30 @@ sub newRSAKey {
             Password => $query->{password},
         );
     }
+    return $self->sendJSONresponse( $req, $keys );
+}
+
+# 35 - New EC key pair on demand
+#      --------------------------
+
+##@method public PSGI-JSON-response newEcKeys($req)
+# Return a hashref containing private and public keys
+#
+#@param $req Lemonldap::NG::Common::PSGI::Request object
+#@return PSGI JSON response
+sub newEcKeys {
+    my ( $self, $req, @others ) = @_;
+    require Crypt::PK::ECC;
+    my $ec_key = Crypt::PK::ECC->new();
+    $ec_key->generate_key('secp256r1');
+
+    my $pubKey = $ec_key->export_key_pem('public');
+    my $privKey = $ec_key->export_key_pem('private');
+    my $keys = {
+        private => $privKey,
+        public => $pubKey,
+        hash => md5_base64($pubKey),
+    };
     return $self->sendJSONresponse( $req, $keys );
 }
 
