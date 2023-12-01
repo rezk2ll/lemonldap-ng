@@ -273,7 +273,7 @@ L<Lemonldap::NG::Portal> second factor plugins.
       # "token"
       ...
       # A LLNG constant must be returned. Example:
-      $req->response($my_psgi_response)
+      $req->response($my_psgi_response);
       return PE_SENDRESPONSE;
   }
   # Required 2nd factor verify method
@@ -285,9 +285,10 @@ L<Lemonldap::NG::Portal> second factor plugins.
         return PE_OK;
       }
       else {
-        return PE_BADCREDENTIALS
+        return PE_BADCREDENTIALS;
       }
   }
+  1;
 
 Enable your plugin in lemonldap-ng.ini, section [portal]:
 

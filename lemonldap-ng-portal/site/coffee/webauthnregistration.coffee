@@ -62,9 +62,9 @@ register = ->
 									e = jQuery.Event( "mfaAdded" )
 									$(document).trigger e, [ { "type": "webauthn" } ]
 									if !e.isDefaultPrevented()
-										setMsg 'yourKeyIsRegistered', 'positive'
+										window.location.href = window.portal + "2fregisters?continue=1"
 							error: displayError
-				. catch (error) ->
+				, (error) ->
 					e = jQuery.Event( "webauthnRegistrationFailure" )
 					$(document).trigger e, [ error ]
 					if !e.isDefaultPrevented()

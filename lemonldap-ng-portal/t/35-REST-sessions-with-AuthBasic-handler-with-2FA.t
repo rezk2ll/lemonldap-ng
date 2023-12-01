@@ -25,11 +25,6 @@ SKIP: {
     if ($@) {
         skip 'Convert::Base32 is missing', $maintests;
     }
-    eval { require Authen::OATH };
-    if ($@) {
-        skip 'Authen::OATH is missing', $maintests;
-    }
-
     ok( $p = issuer(), 'Issuer portal' );
 
     # BEGIN TESTS

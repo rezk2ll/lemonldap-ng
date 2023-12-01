@@ -1,3 +1,11 @@
+lemonldap-ng (2.18.0-1) unstable; urgency=medium
+
+  lemonldap now uses native systemd timers instead of cron tasks when systemd
+  is used. If you overwrote the cron schedules, you have now to update systemd
+  timer else default value will be used.
+
+ -- Yadd <yadd@debian.org>  Fri, 01 Sep 2023 17:08:27 +0400
+
 lemonldap-ng (2.0.9-1) unstable; urgency=medium
 
   This release fixes 2 CVE:

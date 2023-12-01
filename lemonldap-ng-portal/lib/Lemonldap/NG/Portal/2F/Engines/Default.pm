@@ -211,29 +211,22 @@ sub init {
 
     unless (
         $self->sfReq(
-            $self->p->HANDLER->buildSub(
-                $self->p->HANDLER->substitute( $self->conf->{sfRequired} )
-            )
+            $self->p->buildRule( $self->conf->{sfRequired}, 'sfRequired' )
         )
       )
     {
-        $self->error( 'Error in sfRequired rule: '
-              . $self->p->HANDLER->tsv->{jail}->error );
         return 0;
     }
 
     unless (
         $self->sfMsgRule(
-            $self->p->HANDLER->buildSub(
-                $self->p->HANDLER->substitute(
-                    $self->conf->{sfRemovedMsgRule}
-                )
+            $self->p->buildRule(
+                $self->conf->{sfRemovedMsgRule},
+                'sfRemovedMsg'
             )
         )
       )
     {
-        $self->error( 'Error in sfRemovedMsg rule: '
-              . $self->p->HANDLER->tsv->{jail}->error );
         return 0;
     }
 
@@ -404,15 +397,9 @@ sub run {
     $self->userLogger->info( 'Second factor required for '
           . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
-    # Store user data in a token
-    $req->sessionInfo->{_2fRealSession} = $req->id;
-    $req->sessionInfo->{_2fUrldc}       = $req->urldc;
-    $req->sessionInfo->{_2fUtime}       = $req->{sessionInfo}->{_utime};
-    if ( $self->conf->{impersonationRule} ) {
-        $req->sessionInfo->{_impSpoofId} = $spoofId;
-        $req->sessionInfo->{_impUser}    = $req->user;
-    }
     delete $req->{authResult};
+
+    my $token = $self->ott->createToken( $self->save2faSessionInfo($req) );
 
     # If only one 2F is authorized, display it
     unless ($#am) {
@@ -421,13 +408,10 @@ sub run {
               . '2F selected for '
               . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
-        my $token = $self->ott->createToken( $req->sessionInfo );
-        my $res   = $am[0]->run( $req, $token );
+        my $res = $am[0]->run( $req, $token );
         $req->authResult($res);
         return $res;
     }
-
-    my $token = $self->ott->createToken( $req->sessionInfo );
 
     # More than 1 2F has been found, display choice
     $self->logger->debug("Prepare 2F choice");
@@ -453,6 +437,36 @@ sub run {
     );
     $req->response($res);
     return PE_SENDRESPONSE;
+}
+
+sub save2faSessionInfo {
+    my ( $self, $req ) = @_;
+    my $spoofId = $req->param('spoofId') || '';
+
+    my $info = { %{ $req->sessionInfo } };
+
+    # Store user data in a token
+    $info->{_2fRealSession} = $req->id;
+    $info->{_2fUrldc}       = $req->urldc;
+    $info->{_2fUtime}       = $req->sessionInfo->{_utime};
+    if ( $self->conf->{impersonationRule} ) {
+        $info->{_impSpoofId} = $spoofId;
+        $info->{_impUser}    = $req->user;
+    }
+
+    return $info;
+}
+
+sub restore2faSessionInfo {
+    my ( $self, $req, $info ) = @_;
+
+    # Update sessionInfo
+    delete $info->{$_}
+      foreach (qw(tokenSessionStartTimestamp tokenTimeoutTimestamp _type));
+    $req->sessionInfo($info);
+    $req->id( delete $req->sessionInfo->{_2fRealSession} );
+    $req->urldc( delete $req->sessionInfo->{_2fUrldc} );
+    $req->{sessionInfo}->{_utime} = delete $req->{sessionInfo}->{_2fUtime};
 }
 
 # bool public display2fRegisters($req, $session)
@@ -531,6 +545,14 @@ sub _displayRegister {
     my ( $self, $req, $prefix ) = @_;
     my $_2fDevices = [];
     my @am;
+    my %tplParams;
+
+    if ( $req->params("continue") ) {
+        %tplParams = (%tplParams,
+            MSG   => 'your2faIsRegistered',
+            ALERT => "positive",
+          );
+    }
 
     $self->p->importHandlerData($req);
 
@@ -623,7 +645,8 @@ sub _displayRegister {
             MSG          => $self->canUpdateSfa($req) || 'choose2f',
             ALERT => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
             SFREGISTERS_URL =>
-              encode_base64( "$self->{conf}->{portal}2fregisters", '' )
+              encode_base64( "$self->{conf}->{portal}2fregisters", '' ),
+            %tplParams,
         }
     );
 }

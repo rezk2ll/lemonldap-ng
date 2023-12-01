@@ -1143,7 +1143,26 @@ sub tests {
                 }
             }
             return 1;
-        }
+        },
+
+# Warn if both oidcRPMetaDataOptionsJwks and oidcRPMetaDataOptionsJwksUri is set
+        noJwksDuplication => sub {
+            return 1
+              unless $conf->{oidcRPMetaDataOptions}
+              and ref $conf->{oidcRPMetaDataOptions};
+            my @pb;
+            for my $rp ( keys %{ $conf->{oidcRPMetaDataOptions} } ) {
+                push @pb, $rp
+                  if $conf->{oidcRPMetaDataOptions}->{$rp}
+                  ->{oidcRPMetaDataOptionsJwks}
+                  and $conf->{oidcRPMetaDataOptions}->{$rp}
+                  ->{oidcRPMetaDataOptionsJwksUri};
+            }
+            return 1 unless @pb;
+            return ( 1,
+                "JWKS URI defined while JWKS document is fixed: "
+                  . join( ', ', @pb ) );
+        },
     };
 }
 

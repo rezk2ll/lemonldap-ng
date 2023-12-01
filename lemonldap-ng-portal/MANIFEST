@@ -234,10 +234,6 @@ site/htdocs/static/bwr/bootstrap/dist/css/bootstrap.css
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap.css.map
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap.min.css
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap.min.css.map
-site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.bundle.js
-site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.bundle.js.map
-site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.bundle.min.js
-site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.bundle.min.js.map
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.js
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.js.map
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.min.js
@@ -673,6 +669,7 @@ t/32-OIDC-Grant-Type-OAuth2-Handler-Rules.t
 t/32-OIDC-Grant-Type-Rules.t
 t/32-OIDC-Hook-GetRpConfig.t
 t/32-OIDC-Hooks.t
+t/32-OIDC-JWE.t
 t/32-OIDC-Logout-from-RP-bypass-confirm.t
 t/32-OIDC-Logout-redirect-uri-not-allowed.t
 t/32-OIDC-Macro.t
@@ -731,6 +728,7 @@ t/37-SAML-SP-POST-to-CAS-server-with-Choice.t
 t/37-SAML-SP-POST-to-CAS-server.t
 t/37-SAML-SP-POST-to-OIDC-OP.t
 t/38-No-persistent-session.t
+t/39-Failing-RP-Logout.t
 t/40-Notifications-Explorer-JSON-File.t
 t/40-Notifications-Explorer-XML-File.t
 t/40-Notifications-JSON-DBI.t
@@ -924,6 +922,7 @@ t/lib/Lemonldap/NG/Handler/Test.pm
 t/lib/Lemonldap/NG/Portal/Auth/LDAPPolicy.pm
 t/lib/Lemonldap/NG/Portal/Custom.pm
 t/lmConf-1.json
+t/LogoutFail.pm
 t/main-idps-renater-metadata.xml
 t/main-sps-renater-metadata.xml
 t/oidc-lib.pm

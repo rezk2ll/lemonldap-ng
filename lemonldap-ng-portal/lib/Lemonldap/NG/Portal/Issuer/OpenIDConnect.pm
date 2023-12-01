@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON                       qw(from_json to_json);
+use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -19,10 +19,11 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OIDC_SERVICE_NOT_ALLOWED
   PE_FIRSTACCESS
   PE_SENDRESPONSE
+  PE_SLO_ERROR
 );
 use String::Random qw/random_string/;
 
-our $VERSION = '2.17.2';
+our $VERSION = '2.18.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Issuer
@@ -249,7 +250,13 @@ sub run {
 
             # Detect requested flow
             my $response_type = $oidc_request->{'response_type'};
-            my $flow          = $self->getFlowType($response_type);
+
+            unless ($response_type) {
+                $self->logger->error("No response type provided");
+                return PE_ERROR;
+            }
+
+            my $flow = $self->getFlowType($response_type);
 
             unless ($flow) {
                 $self->logger->error("Unknown response type: $response_type");
@@ -324,15 +331,10 @@ sub run {
             }
 
             if ( $oidc_request->{'request'} ) {
-                if (
-                    $self->verifyJWTSignature(
-                        $oidc_request->{'request'},
-                        undef, $rp
-                    )
-                  )
+                if ( my $request =
+                    $self->decodeJWT( $oidc_request->{'request'}, undef, $rp ) )
                 {
                     $self->logger->debug("JWT signature request verified");
-                    my $request = getJWTPayload( $oidc_request->{'request'} );
 
                     # Override OIDC parameters by request content
                     foreach ( keys %$request ) {
@@ -916,6 +918,7 @@ sub run {
                   || $self->conf->{oidcServiceAccessTokenExpiration};
 
                 my $state = $oidc_request->{'state'};
+
                 return $self->sendOidcResponse(
                     $req, $flow,
                     $oidc_request->{'response_mode'},
@@ -2036,8 +2039,14 @@ sub userInfo {
         return $self->p->sendJSONresponse( $req, $userinfo_response );
     }
     else {
-        my $userinfo_jwt =
-          $self->createJWT( $userinfo_response, $userinfo_sign_alg, $rp );
+        my $userinfo_jwt = $self->encryptToken(
+            $rp,
+            $self->createJWT( $userinfo_response, $userinfo_sign_alg, $rp ),
+            $self->rpOptions->{$rp}
+              ->{oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg},
+            $self->rpOptions->{$rp}
+              ->{oidcRPMetaDataOptionsUserInfoEncContentEncAlg},
+        );
         $self->logger->debug("Return UserInfo as JWT: $userinfo_jwt");
         return [
             200,
@@ -2118,32 +2127,7 @@ sub introspection {
     return $self->p->sendJSONresponse( $req, $response );
 }
 
-# Handle jwks endpoint
-sub jwks {
-    my ( $self, $req ) = @_;
-    $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
-    $self->logger->debug("URL detected as an OpenID Connect JWKS URL");
-
-    my $jwks = { keys => [] };
-
-    foreach my $prefix (qw(oidcService oidcServiceOld oidcServiceNew)) {
-        my $public_key_sig_or_cert = $self->conf->{ $prefix . 'PublicKeySig' };
-        my $private_key_sig        = $self->conf->{ $prefix . 'PrivateKeySig' };
-        my $key_id_sig             = $self->conf->{ $prefix . 'KeyIdSig' };
-        if ($private_key_sig) {
-            my $jwk = {
-                kty => "RSA",
-                use => "sig",
-                ( $key_id_sig ? ( kid => $key_id_sig ) : () ),
-                %{ $self->key2jwks($private_key_sig) },
-                %{ $self->getCertInfo($public_key_sig_or_cert) },
-            };
-            push @{ $jwks->{keys} }, $jwk;
-        }
-    }
-    $self->logger->debug("Send JWKS response sent");
-    return $self->p->sendJSONresponse( $req, $jwks );
-}
+# Endpoint JWKS is implemented in Lib/OpenIDConnect
 
 # Handle register endpoint
 sub registration {
@@ -2205,6 +2189,13 @@ sub registration {
     my $frontchannel_logout_uri = $client_metadata->{backchannel_logout_uri};
     my $frontchannel_logout_session_required =
       $client_metadata->{frontchannel_logout_session_required};
+    my $jwksUri = $client_metadata->{jwks_uri};
+    my $encryptedResponseAlg =
+      $client_metadata->{id_token_encrypted_response_alg};
+    my $encryptedResponseEnc =
+      $client_metadata->{id_token_encrypted_response_enc};
+    my $userInfoEncAlg = $client_metadata->{userinfo_encrypted_response_alg};
+    my $userInfoEncEnc = $client_metadata->{userinfo_encrypted_response_enc};
 
     # Register RP in global configuration
     my $conf = $self->confAcc->getConf( { raw => 1, noCache => 1 } );
@@ -2251,6 +2242,23 @@ sub registration {
           ->{oidcRPMetaDataOptionsLogoutSessionRequired} =
           $backchannel_logout_session_required;
     }
+    $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsJwksUri} =
+      $jwksUri
+      if $jwksUri;
+    $conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg} = $encryptedResponseAlg
+      if $encryptedResponseAlg;
+    $conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsIdTokenEncContentEncAlg} = $encryptedResponseEnc
+      if $encryptedResponseEnc;
+    $conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg} = $userInfoEncAlg
+      if $userInfoEncAlg;
+    $conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsUserInfoEncContentEncAlg} = $userInfoEncEnc
+      if $userInfoEncEnc;
+
+    # TODO "jwks" support (when jwks_uri isn't available
 
     # Exported Vars
     if (
@@ -2354,6 +2362,7 @@ sub checkSession {
 sub logout {
     my ( $self, $req ) = @_;
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
+    my $code = PE_OK;
     if ( my $s = $req->userData->{_oidcConnectedRPIDs} ) {
         my @rps = grep /\w/, split( ',', $s );
         foreach my $client_id (@rps) {
@@ -2361,11 +2370,13 @@ sub logout {
             if ( !$rp ) {
                 $self->logger->warn(
                     "Cannot find RP configuration for $client_id");
+                $code = PE_SLO_ERROR;
                 next;
             }
             my $rpConf = $self->rpOptions->{$rp};
             if ( !$rpConf ) {
                 $self->logger->warn("Cannot find RP options for $client_id");
+                $code = PE_SLO_ERROR;
                 next;
             }
             if ( my $url = $rpConf->{oidcRPMetaDataOptionsLogoutUrl} ) {
@@ -2436,7 +2447,14 @@ sub logout {
                     }
                     $self->logger->debug( "Logout token content: "
                           . JSON::to_json($logoutToken) );
-                    my $jwt  = $self->createJWT( $logoutToken, $alg, $rp );
+                    my $jwt = $self->encryptToken(
+                        $rp,
+                        $self->createJWT( $logoutToken, $alg, $rp ),
+                        $self->rpOptions->{$rp}
+                          ->{oidcRPMetaDataOptionsLogoutEncKeyMgtAlg},
+                        $self->rpOptions->{$rp}
+                          ->{oidcRPMetaDataOptionsLogoutEncContentEncAlg},
+                    );
                     my $resp = $self->ua->post(
                         $url,
                         { logout_token => $jwt },
@@ -2448,6 +2466,7 @@ sub logout {
                               . " $userId from $rp: "
                               . $resp->message );
                         $self->logger->debug( $resp->content );
+                        $code = PE_SLO_ERROR;
                     }
                     else {
                         $self->logger->info(
@@ -2458,7 +2477,7 @@ sub logout {
             }
         }
     }
-    return PE_OK;
+    return $code;
 }
 
 # Internal methods
@@ -2576,13 +2595,17 @@ sub metadata {
             id_token_signing_alg_values_supported =>
               [qw/none HS256 HS384 HS512 RS256 RS384 RS512/],
 
-            # id_token_encryption_alg_values_supported
-            # id_token_encryption_enc_values_supported
+            id_token_encryption_alg_values_supported =>
+              &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_ALG_SUPPORTED,
+            id_token_encryption_enc_values_supported =>
+              &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_SUPPORTED,
             userinfo_signing_alg_values_supported =>
               [qw/none HS256 HS384 HS512 RS256 RS384 RS512/],
 
-            # userinfo_encryption_alg_values_supported
-            # userinfo_encryption_enc_values_supported
+            userinfo_encryption_alg_values_supported =>
+              &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_ALG_SUPPORTED,
+            userinfo_encryption_enc_values_supported =>
+              &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_SUPPORTED,
 
             # PKCE
             code_challenge_methods_supported => [qw/plain S256/],
@@ -2628,16 +2651,9 @@ sub exportRequestParameters {
 
     my $rp;
     if ( $req->param('client_id') ) {
-        my $rp = $self->getRP( $req->param('client_id') );
+        $rp = $self->getRP( $req->param('client_id') );
         if ($rp) {
-
             $req->env->{"llng_oidc_rp"} = $rp;
-
-            # Store target authentication level in pdata
-            my $targetAuthnLevel =
-              $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel};
-            $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
-              if $targetAuthnLevel;
         }
     }
 
@@ -2660,6 +2676,20 @@ sub exportRequestParameters {
         foreach ( keys %$request_data ) {
             $req->env->{ "llng_oidc_" . $_ } = $request_data->{$_};
         }
+    }
+
+    # Store target authentication level in pdata
+    if ($rp) {
+        my $targetAuthnLevel =
+          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel};
+
+        if ( my $acr_values = $req->env->{'llng_oidc_acr_values'} ) {
+            $targetAuthnLevel =
+              $self->_get_authn_level_from_acr_values($acr_values);
+        }
+
+        $req->pdata->{targetAuthnLevel} = $targetAuthnLevel
+          if $targetAuthnLevel;
     }
 
     return PE_OK;
@@ -2785,6 +2815,37 @@ sub _generateIDToken {
 
     # Create ID Token
     return $self->createIDToken( $req, $id_token_payload_hash, $rp );
+}
+
+sub encryptToken {
+    my ( $self, $rp, $token, $alg, $enc ) = @_;
+    return $token unless $alg;
+    my $keys = $self->rpEncKey->{$rp};
+    unless ($keys) {
+        $self->logger->error(
+            "No key defined for $rp, unable to encrypt tokens");
+        return $token;
+    }
+    my $key = $keys->{$alg};
+    unless ($key) {
+        $self->logger->error(
+            "No compatible key found for $rp with algorithm $alg");
+        return $token;
+    }
+    $self->logger->debug('Encrypt JWT token');
+    my $tmp = eval {
+        Crypt::JWT::encode_jwt(
+            payload => $token,
+            alg     => $alg,
+            key     => $key,
+            enc     => $enc || 'A128CBC-HS256',
+        );
+    };
+    if ($@) {
+        $self->logger->error("Unable to encrypt token: $@");
+        return undef;
+    }
+    return $token;
 }
 
 1;

@@ -54,7 +54,7 @@ You will only need to install liblasso-perl package:
 
 ::
 
-   sudo apt-get install liblasso-perl
+   apt install liblasso-perl
 
 RHEL/CentOS/Fedora
 ^^^^^^^^^^^^^^^^^^
@@ -452,15 +452,8 @@ SAML sessions module name and options
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 By default, the main session module is used to store SAML temporary data
-(like relay-states), but SAML sessions need to use a session module
-compatible with the
-:ref:`sessions restrictions feature<session-restrictions>`.
-
-
-.. tip::
-
-    You can also choose a different session module to split SSO
-    sessions and SAML sessions.
+(like relay-states), but if you need high performance on session access, you
+should use a decidated session storage.
 
 Common Domain Cookie
 ^^^^^^^^^^^^^^^^^^^^

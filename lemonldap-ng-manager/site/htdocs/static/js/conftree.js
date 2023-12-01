@@ -735,11 +735,321 @@ function templates(tpl,key) {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
                   "title" : "oidcRPMetaDataOptionsRule"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg",
+                  "select" : [
+                     {
+                        "k" : "",
+                        "v" : "None"
+                     },
+                     {
+                        "k" : "RSA-OAEP",
+                        "v" : "RSA-OAEP"
+                     },
+                     {
+                        "k" : "RSA-OAEP-256",
+                        "v" : "RSA-OAEP-256"
+                     },
+                     {
+                        "k" : "RSA1_5",
+                        "v" : "RSA1_5"
+                     },
+                     {
+                        "k" : "ECDH-ES",
+                        "v" : "ECDH-ES"
+                     },
+                     {
+                        "k" : "ECDH-ES+A128KW",
+                        "v" : "ECDH-ES+A128KW"
+                     },
+                     {
+                        "k" : "ECDH-ES+A192KW",
+                        "v" : "ECDH-ES+A192KW"
+                     },
+                     {
+                        "k" : "ECDH-ES+A256KW",
+                        "v" : "ECDH-ES+A256KW"
+                     }
+                  ],
+                  "title" : "oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg",
+                  "type" : "select"
+               },
+               {
+                  "default" : "A256GCM",
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenEncContentEncAlg",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenEncContentEncAlg",
+                  "select" : [
+                     {
+                        "k" : "A256CBC-HS512",
+                        "v" : "A256CBC-HS512"
+                     },
+                     {
+                        "k" : "A256GCM",
+                        "v" : "A256GCM"
+                     },
+                     {
+                        "k" : "A192CBC-HS384",
+                        "v" : "A192CBC-HS384"
+                     },
+                     {
+                        "k" : "A192GCM",
+                        "v" : "A192GCM"
+                     },
+                     {
+                        "k" : "A128CBC-HS256",
+                        "v" : "A128CBC-HS256"
+                     },
+                     {
+                        "k" : "A128GCM",
+                        "v" : "A128GCM"
+                     }
+                  ],
+                  "title" : "oidcRPMetaDataOptionsAccessTokenEncContentEncAlg",
+                  "type" : "select"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg",
+                  "select" : [
+                     {
+                        "k" : "",
+                        "v" : "None"
+                     },
+                     {
+                        "k" : "RSA-OAEP",
+                        "v" : "RSA-OAEP"
+                     },
+                     {
+                        "k" : "RSA-OAEP-256",
+                        "v" : "RSA-OAEP-256"
+                     },
+                     {
+                        "k" : "RSA1_5",
+                        "v" : "RSA1_5"
+                     },
+                     {
+                        "k" : "ECDH-ES",
+                        "v" : "ECDH-ES"
+                     },
+                     {
+                        "k" : "ECDH-ES+A128KW",
+                        "v" : "ECDH-ES+A128KW"
+                     },
+                     {
+                        "k" : "ECDH-ES+A192KW",
+                        "v" : "ECDH-ES+A192KW"
+                     },
+                     {
+                        "k" : "ECDH-ES+A256KW",
+                        "v" : "ECDH-ES+A256KW"
+                     }
+                  ],
+                  "title" : "oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg",
+                  "type" : "select"
+               },
+               {
+                  "default" : "A256GCM",
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIdTokenEncContentEncAlg",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIdTokenEncContentEncAlg",
+                  "select" : [
+                     {
+                        "k" : "A256CBC-HS512",
+                        "v" : "A256CBC-HS512"
+                     },
+                     {
+                        "k" : "A256GCM",
+                        "v" : "A256GCM"
+                     },
+                     {
+                        "k" : "A192CBC-HS384",
+                        "v" : "A192CBC-HS384"
+                     },
+                     {
+                        "k" : "A192GCM",
+                        "v" : "A192GCM"
+                     },
+                     {
+                        "k" : "A128CBC-HS256",
+                        "v" : "A128CBC-HS256"
+                     },
+                     {
+                        "k" : "A128GCM",
+                        "v" : "A128GCM"
+                     }
+                  ],
+                  "title" : "oidcRPMetaDataOptionsIdTokenEncContentEncAlg",
+                  "type" : "select"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg",
+                  "select" : [
+                     {
+                        "k" : "",
+                        "v" : "None"
+                     },
+                     {
+                        "k" : "RSA-OAEP",
+                        "v" : "RSA-OAEP"
+                     },
+                     {
+                        "k" : "RSA-OAEP-256",
+                        "v" : "RSA-OAEP-256"
+                     },
+                     {
+                        "k" : "RSA1_5",
+                        "v" : "RSA1_5"
+                     },
+                     {
+                        "k" : "ECDH-ES",
+                        "v" : "ECDH-ES"
+                     },
+                     {
+                        "k" : "ECDH-ES+A128KW",
+                        "v" : "ECDH-ES+A128KW"
+                     },
+                     {
+                        "k" : "ECDH-ES+A192KW",
+                        "v" : "ECDH-ES+A192KW"
+                     },
+                     {
+                        "k" : "ECDH-ES+A256KW",
+                        "v" : "ECDH-ES+A256KW"
+                     }
+                  ],
+                  "title" : "oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg",
+                  "type" : "select"
+               },
+               {
+                  "default" : "A256GCM",
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserInfoEncContentEncAlg",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserInfoEncContentEncAlg",
+                  "select" : [
+                     {
+                        "k" : "A256CBC-HS512",
+                        "v" : "A256CBC-HS512"
+                     },
+                     {
+                        "k" : "A256GCM",
+                        "v" : "A256GCM"
+                     },
+                     {
+                        "k" : "A192CBC-HS384",
+                        "v" : "A192CBC-HS384"
+                     },
+                     {
+                        "k" : "A192GCM",
+                        "v" : "A192GCM"
+                     },
+                     {
+                        "k" : "A128CBC-HS256",
+                        "v" : "A128CBC-HS256"
+                     },
+                     {
+                        "k" : "A128GCM",
+                        "v" : "A128GCM"
+                     }
+                  ],
+                  "title" : "oidcRPMetaDataOptionsUserInfoEncContentEncAlg",
+                  "type" : "select"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutEncKeyMgtAlg",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutEncKeyMgtAlg",
+                  "select" : [
+                     {
+                        "k" : "",
+                        "v" : "None"
+                     },
+                     {
+                        "k" : "RSA-OAEP",
+                        "v" : "RSA-OAEP"
+                     },
+                     {
+                        "k" : "RSA-OAEP-256",
+                        "v" : "RSA-OAEP-256"
+                     },
+                     {
+                        "k" : "RSA1_5",
+                        "v" : "RSA1_5"
+                     },
+                     {
+                        "k" : "ECDH-ES",
+                        "v" : "ECDH-ES"
+                     },
+                     {
+                        "k" : "ECDH-ES+A128KW",
+                        "v" : "ECDH-ES+A128KW"
+                     },
+                     {
+                        "k" : "ECDH-ES+A192KW",
+                        "v" : "ECDH-ES+A192KW"
+                     },
+                     {
+                        "k" : "ECDH-ES+A256KW",
+                        "v" : "ECDH-ES+A256KW"
+                     }
+                  ],
+                  "title" : "oidcRPMetaDataOptionsLogoutEncKeyMgtAlg",
+                  "type" : "select"
+               },
+               {
+                  "default" : "A256GCM",
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutEncContentEncAlg",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsLogoutEncContentEncAlg",
+                  "select" : [
+                     {
+                        "k" : "A256CBC-HS512",
+                        "v" : "A256CBC-HS512"
+                     },
+                     {
+                        "k" : "A256GCM",
+                        "v" : "A256GCM"
+                     },
+                     {
+                        "k" : "A192CBC-HS384",
+                        "v" : "A192CBC-HS384"
+                     },
+                     {
+                        "k" : "A192GCM",
+                        "v" : "A192GCM"
+                     },
+                     {
+                        "k" : "A128CBC-HS256",
+                        "v" : "A128CBC-HS256"
+                     },
+                     {
+                        "k" : "A128GCM",
+                        "v" : "A128GCM"
+                     }
+                  ],
+                  "title" : "oidcRPMetaDataOptionsLogoutEncContentEncAlg",
+                  "type" : "select"
                }
             ],
             "id" : "security",
             "title" : "security",
             "type" : "simpleInputContainer"
+         },
+         {
+            "_nodes" : [
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsJwksUri",
+                  "help" : "idpopenidconnect.html",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsJwksUri",
+                  "title" : "oidcRPMetaDataOptionsJwksUri"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsJwks",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsJwks",
+                  "title" : "oidcRPMetaDataOptionsJwks",
+                  "type" : "file"
+               }
+            ],
+            "id" : "keys",
+            "title" : "keys"
          },
          {
             "_nodes" : [

@@ -2,7 +2,7 @@ package Lemonldap::NG::Handler::Lib::ServiceToken;
 
 use strict;
 
-our $VERSION = '2.0.18';
+our $VERSION = '2.18.0';
 
 sub fetchId {
     my ( $class, $req ) = @_;
@@ -39,7 +39,7 @@ sub fetchId {
             1;
         }
         else {
-            $class->logger->debug("Found a non valid VHost: $_");
+            $class->logger->warn("Found a non valid VHost: $_");
             0;
         }
     } @vhosts;
