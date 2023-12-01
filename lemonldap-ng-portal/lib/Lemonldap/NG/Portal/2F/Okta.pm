@@ -66,7 +66,7 @@ sub init {
             ['POST']
         );
         $self->addUnauthRoute(
-            $self->prefix . '2fchoice' => '_redirect',
+            $self->prefix . '2fwait' => '_redirect',
             ['GET']
         );
     }
