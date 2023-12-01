@@ -11,13 +11,9 @@
       <TMPL_LOOP NAME="MODULES">
         <button type="submit" name="sf" value="<TMPL_VAR NAME="CODE">" class="mx-3 btn btn-light" role="button">
         <div>
-         <TMPL_IF LABEL>
-            <h4><TMPL_VAR NAME="LABEL"></h4>
-            <TMPL_ELSE>
-            <h4 trspan="<TMPL_VAR NAME="CODE">2f"></h4>
-            </TMPL_IF>
+          <h4 trspan="okta2f<TMPL_VAR NAME="LABEL">"></h4>
         </div>
-          <img src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/<TMPL_VAR NAME="LOGO">" alt="<TMPL_VAR NAME="CODE">2F" title="<TMPL_VAR NAME="CODE">2F" />
+          <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/2F/okta-<TMPL_VAR NAME="LABEL">.png" alt="<TMPL_VAR NAME="LABEL">" title="OKTA <TMPL_VAR NAME="LABEL">" />
         </button>
       </TMPL_LOOP>
     </form>

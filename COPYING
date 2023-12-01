@@ -126,6 +126,11 @@ Copyright: Mark James
 License: CC-BY-2.5
 Comment: downloaded from https://github.com/legacy-icons/famfamfam-silk/
 
+Files: lemonldap-ng-portal/site/htdocs/static/common/2F/*
+Copyright: unDraw
+License: unDraw - https://undraw.co/license
+Comment: downloaded from https://undraw.co/
+
 Files: lemonldap-ng-portal/site/htdocs/static/common/icons/decryptValue.png
 Copyright: Christophe Maudoux <chrmdx@gmail.com>
 License: CC-3

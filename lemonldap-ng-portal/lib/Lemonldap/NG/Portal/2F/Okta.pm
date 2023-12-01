@@ -125,6 +125,8 @@ sub run {
                     map { { CODE => $_, LABEL => $okta_factors->{$_} } }
                     sort keys %$okta_factors
                 ],
+                ALERT => 'positive',
+                MSG   => 'okta2fSelectFactor'
             }
         );
         $req->response($res);
@@ -320,6 +322,7 @@ sub getOktaActiveFactors {
             next;
         }
 
+        $factor_type =~ s/://g;
         $okta_factors->{$factor_id} = $factor_type;
     }
 
