@@ -114,6 +114,56 @@ sub run {
     return PE_SENDRESPONSE;
 }
 
+sub verify {
+    my ( $self, $req, $session ) = @_;
+
+    # Call Code2F to verify code if code is supplied
+    if ( $req->param('code') ) {
+        return $self->SUPER::verify( $req, $session );
+    }
+
+    # Else poll URL to verify 2F
+    my $okta_userid   = $session->{__oktaUserId};
+    my $okta_poll_url = $session->{__oktaPollUrl};
+
+    my $okta_poll_result;
+    my $poll_response;
+    my $poll_content;
+    my $okta_poll_result;
+    for ( my $i = 0 ; $i <= 60 ; $i++ ) {
+
+        $poll_response = $self->ua->get($okta_poll_url);
+        if ( $poll_response->is_error ) {
+            $self->logger->error(
+                "Unable to get poll response for $okta_userid in Okta:"
+                  . $poll_response->content );
+            last;
+        }
+        $self->logger->debug( "Get poll response for $okta_userid:"
+              . $poll_response->decoded_content );
+
+        $poll_content = $self->decodeJSON( $poll_response->decoded_content );
+
+        $okta_poll_result = $poll_content->{factorResult};
+
+        unless ( $okta_poll_result eq "WAITING" ) {
+            $self->logger->debug(
+                "Okta push response received for $okta_userid ");
+            last;
+        }
+
+        sleep 1;
+    }
+
+    if ( $okta_poll_result eq "SUCCESS" ) {
+        $self->logger->debug("Okta push verified for $okta_userid");
+        return PE_OK;
+    }
+    else {
+        return PE_ERROR;
+    }
+}
+
 sub verify_external {
     my ( $self, $req, $session, $code ) = @_;
 
@@ -301,62 +351,36 @@ sub _issueFactor {
 
     my $okta_issue = $self->decodeJSON( $issue_response->decoded_content );
 
+    $self->logger->debug("2FA sent to $okta_userid: $okta_issue");
+
     if ( $okta_issue->{factorResult} eq "CHALLENGE" ) {
 
-        $self->logger->debug( "2FA challenge sent to $okta_userid:"
-              . $issue_response->content() );
-        my $tmp = $self->sendCodeForm( $req, TOKEN => $token );
+        $self->logger->debug(
+            "2FA is a challenge, redirect $okta_userid to code form");
 
+        my $tmp = $self->sendCodeForm( $req, TOKEN => $token );
         $req->response($tmp);
+
         return $self->p->do( $req, [ sub { PE_SENDRESPONSE } ] );
     }
 
     elsif ( $okta_issue->{factorResult} eq "WAITING" ) {
 
-        # Simple version - wait on server side
+        $self->logger->debug(
+            "2FA is not a code, redirect $okta_userid to waiting screen");
 
         # Get poll URL
         my $okta_poll_url = $okta_issue->{_links}->{poll}->{href};
+        $self->ott->updateToken( $token, __oktaPollUrl => $okta_poll_url );
 
-        my $okta_poll_result;
-        my $poll_response;
-        my $poll_content;
-        my $okta_poll_result;
-        for ( my $i = 0 ; $i <= 60 ; $i++ ) {
+        # Redirect on 2Fcheck endpoint
+        my $redirect_uri = $self->p->portal . $self->prefix . "2fcheck";
 
-            $poll_response = $self->ua->get($okta_poll_url);
-            if ( $poll_response->is_error ) {
-                $self->logger->error(
-                    "Unable to get poll response for $okta_userid in Okta:"
-                      . $poll_response->content );
-                last;
-            }
-            $self->logger->debug( "Get poll response for $okta_userid:"
-                  . $poll_response->decoded_content );
+        $self->logger->debug("Redirect user to $redirect_uri with POST");
+        $req->postUrl($redirect_uri);
+        $req->postFields( { token => $token } );
 
-            $poll_content =
-              $self->decodeJSON( $poll_response->decoded_content );
-
-            $okta_poll_result = $poll_content->{factorResult};
-
-            unless ( $okta_poll_result eq "WAITING" ) {
-                $self->logger->debug(
-                    "Okta push response received for $okta_userid ");
-                last;
-            }
-
-            sleep 1;
-        }
-
-        if ( $okta_poll_result eq "SUCCESS" ) {
-            $self->logger->debug("Okta push verified for $okta_userid");
-            return $self->p->do( $req, [ sub { PE_OK } ] );
-        }
-        else {
-            return $self->p->do( $req, [ sub { PE_ERROR } ] );
-        }
-
-        #TODO waiting screen with ajax requests
+        return $self->p->do( $req, ['autoPost'] );
     }
 
     eval { $self->setSecurity($req) };
