@@ -1157,13 +1157,13 @@ sub tests {
                       )
                       if $conf->{oidcRPMetaDataOptions}->{$rp}->{$key}
                       and $conf->{oidcRPMetaDataOptions}->{$rp}->{$key} =~ /^E/
-                      and $conf->{oidcServiceKeyType} ne 'EC';
+                      and $conf->{oidcServiceKeyTypeSig} ne 'EC';
                     return ( 0,
 "Signature algorithm shouldn't be RS* or PS* if key type is EC ($rp/$key)"
                       )
                       if $conf->{oidcRPMetaDataOptions}->{$rp}->{$key}
                       and $conf->{oidcRPMetaDataOptions}->{$rp}->{$key} !~ /^E/
-                      and $conf->{oidcServiceKeyType} eq 'EC';
+                      and $conf->{oidcServiceKeyTypeSig} eq 'EC';
                 }
             }
             return 1;
