@@ -132,6 +132,7 @@ BuildRequires:  perl(Glib)
 %endif
 BuildRequires:  perl(Log::Log4perl)
 BuildRequires:  perl(LWP::Protocol::https)
+BuildRequires:  perl(LWP::Protocol::PSGI)
 BuildRequires:  perl(LWP::UserAgent)
 BuildRequires:  perl(MIME::Base64)
 BuildRequires:  perl(MIME::Entity)

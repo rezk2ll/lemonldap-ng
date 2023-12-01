@@ -1,4 +1,3 @@
-use lib 'inc';
 use Test::More;
 use strict;
 use IO::String;
