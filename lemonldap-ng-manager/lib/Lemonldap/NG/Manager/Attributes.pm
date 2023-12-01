@@ -59,6 +59,22 @@ sub types {
                 1;
             }
         },
+        'EcOrRSAPrivateKey' => {
+            'test' => sub {
+                return $_[0] =~
+m[^(?:(?:\-+\s*BEGIN\s+(?:(?:RSA|EC|ENCRYPTED)\s+)?PRIVATE\s+KEY\s*\-+\r?\n)?(?:Proc-Type:.*\r?\nDEK-Info:.*\r?\n[\r\n]*)?[a-zA-Z0-9/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:(?:RSA|EC|ENCRYPTED)\s+)?PRIVATE\s+KEY\s*\-+)?[\r\n]*)?$]s
+                  ? 1
+                  : ( 1, '__badPemEncoding__' );
+            }
+        },
+        'EcOrRSAPublicKeyOrCertificate' => {
+            'test' => sub {
+                return $_[0] =~
+m[^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+)?[\r\n]*)?$]s
+                  ? 1
+                  : ( 1, '__badPemEncoding__' );
+            }
+        },
         'file' => {
             'test' => sub {
                 1;
@@ -2516,6 +2532,18 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcRPMetaDataOptionsAccessTokenSignAlg' => {
             'default' => 'RS256',
             'select'  => [ {
+                    'k' => 'HS256',
+                    'v' => 'HS256'
+                },
+                {
+                    'k' => 'HS384',
+                    'v' => 'HS384'
+                },
+                {
+                    'k' => 'HS512',
+                    'v' => 'HS512'
+                },
+                {
                     'k' => 'RS256',
                     'v' => 'RS256'
                 },
@@ -2526,6 +2554,34 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 {
                     'k' => 'RS512',
                     'v' => 'RS512'
+                },
+                {
+                    'k' => 'PS256',
+                    'v' => 'PS256'
+                },
+                {
+                    'k' => 'PS384',
+                    'v' => 'PS384'
+                },
+                {
+                    'k' => 'PS512',
+                    'v' => 'PS512'
+                },
+                {
+                    'k' => 'ES256',
+                    'v' => 'ES256'
+                },
+                {
+                    'k' => 'ES384',
+                    'v' => 'ES384'
+                },
+                {
+                    'k' => 'ES512',
+                    'v' => 'ES512'
+                },
+                {
+                    'k' => 'EdDSA',
+                    'v' => 'EdDSA'
                 }
             ],
             'type' => 'select'
@@ -2676,6 +2732,34 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 {
                     'k' => 'RS512',
                     'v' => 'RS512'
+                },
+                {
+                    'k' => 'PS256',
+                    'v' => 'PS256'
+                },
+                {
+                    'k' => 'PS384',
+                    'v' => 'PS384'
+                },
+                {
+                    'k' => 'PS512',
+                    'v' => 'PS512'
+                },
+                {
+                    'k' => 'ES256',
+                    'v' => 'ES256'
+                },
+                {
+                    'k' => 'ES384',
+                    'v' => 'ES384'
+                },
+                {
+                    'k' => 'ES512',
+                    'v' => 'ES512'
+                },
+                {
+                    'k' => 'EdDSA',
+                    'v' => 'EdDSA'
                 }
             ],
             'type' => 'select'
@@ -2909,6 +2993,34 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 {
                     'k' => 'RS512',
                     'v' => 'JWT/RS512'
+                },
+                {
+                    'k' => 'PS256',
+                    'v' => 'JWT/PS256'
+                },
+                {
+                    'k' => 'PS384',
+                    'v' => 'JWT/PS384'
+                },
+                {
+                    'k' => 'PS512',
+                    'v' => 'JWT/PS512'
+                },
+                {
+                    'k' => 'ES256',
+                    'v' => 'JWT/ES256'
+                },
+                {
+                    'k' => 'ES384',
+                    'v' => 'JWT/ES384'
+                },
+                {
+                    'k' => 'ES512',
+                    'v' => 'JWT/ES512'
+                },
+                {
+                    'k' => 'EdDSA',
+                    'v' => 'JWT/EdDSA'
                 }
             ],
             'type' => 'select'
@@ -3039,6 +3151,32 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcServiceKeyIdSig' => {
             'type' => 'text'
         },
+        'oidcServiceKeyTypeEnc' => {
+            'default' => 'RSA',
+            'select'  => [ {
+                    'k' => 'RSA',
+                    'v' => 'RSA'
+                },
+                {
+                    'k' => 'EC',
+                    'v' => 'EC'
+                }
+            ],
+            'type' => 'select'
+        },
+        'oidcServiceKeyTypeSig' => {
+            'default' => 'RSA',
+            'select'  => [ {
+                    'k' => 'RSA',
+                    'v' => 'RSA'
+                },
+                {
+                    'k' => 'EC',
+                    'v' => 'EC'
+                }
+            ],
+            'type' => 'select'
+        },
         'oidcServiceMetaDataAuthnContext' => {
             'default' => {
                 'loa-1' => 1,
@@ -3096,11 +3234,24 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcServiceNewKeyIdSig' => {
             'type' => 'text'
         },
+        'oidcServiceNewKeyTypeSig' => {
+            'default' => 'RSA',
+            'select'  => [ {
+                    'k' => 'RSA',
+                    'v' => 'RSA'
+                },
+                {
+                    'k' => 'EC',
+                    'v' => 'EC'
+                }
+            ],
+            'type' => 'select'
+        },
         'oidcServiceNewPrivateKeySig' => {
-            'type' => 'RSAPrivateKey'
+            'type' => 'EcOrRSAPrivateKey'
         },
         'oidcServiceNewPublicKeySig' => {
-            'type' => 'RSAPublicKeyOrCertificate'
+            'type' => 'EcOrRSAPublicKeyOrCertificate'
         },
         'oidcServiceOfflineSessionExpiration' => {
             'default' => 2592000,
@@ -3112,29 +3263,55 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcServiceOldKeyIdSig' => {
             'type' => 'text'
         },
+        'oidcServiceOldKeyTypeEnc' => {
+            'default' => 'RSA',
+            'select'  => [ {
+                    'k' => 'RSA',
+                    'v' => 'RSA'
+                },
+                {
+                    'k' => 'EC',
+                    'v' => 'EC'
+                }
+            ],
+            'type' => 'select'
+        },
+        'oidcServiceOldKeyTypeSig' => {
+            'default' => 'RSA',
+            'select'  => [ {
+                    'k' => 'RSA',
+                    'v' => 'RSA'
+                },
+                {
+                    'k' => 'EC',
+                    'v' => 'EC'
+                }
+            ],
+            'type' => 'select'
+        },
         'oidcServiceOldPrivateKeyEnc' => {
             'type' => 'RSAPrivateKey'
         },
         'oidcServiceOldPrivateKeySig' => {
-            'type' => 'RSAPrivateKey'
+            'type' => 'EcOrRSAPrivateKey'
         },
         'oidcServiceOldPublicKeyEnc' => {
             'type' => 'RSAPublicKeyOrCertificate'
         },
         'oidcServiceOldPublicKeySig' => {
-            'type' => 'RSAPublicKeyOrCertificate'
+            'type' => 'EcOrRSAPublicKeyOrCertificate'
         },
         'oidcServicePrivateKeyEnc' => {
             'type' => 'RSAPrivateKey'
         },
         'oidcServicePrivateKeySig' => {
-            'type' => 'RSAPrivateKey'
+            'type' => 'EcOrRSAPrivateKey'
         },
         'oidcServicePublicKeyEnc' => {
             'type' => 'RSAPublicKeyOrCertificate'
         },
         'oidcServicePublicKeySig' => {
-            'type' => 'RSAPublicKeyOrCertificate'
+            'type' => 'EcOrRSAPublicKeyOrCertificate'
         },
         'oidcStorage' => {
             'type' => 'PerlModule'
