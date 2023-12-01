@@ -94,35 +94,53 @@ sub run {
     $self->logger->debug("Found factors for $okta_userid");
     $self->p->_dump($okta_factors);
 
-    # More than one factor  has been found, display okta choice
-    $self->logger->debug("Prepare Okta Factor choice");
-    my ( $checkLogins, $stayConnected ) = $self->getFormParams($req);
-    my $res = $self->p->sendHtml(
-        $req,
-        'okta2fchoice',
-        params => {
-            TOKEN         => $token,
-            CHECKLOGINS   => $checkLogins,
-            STAYCONNECTED => $stayConnected,
-            MODULES       => [
-                map { { CODE => $_, LABEL => $okta_factors->{$_} } }
-                sort keys %$okta_factors
-            ],
-        }
-    );
-    $req->response($res);
-    return PE_SENDRESPONSE;
+    # Only one factor available, skip choice
+    if ( scalar keys %$okta_factors == 1 ) {
+        my $factor_id = ( keys %$okta_factors )[0];
+        $self->logger->debug("Only one factor found ($factor_id), use it");
+
+        # Redirect on 2Fchoice endpoint
+        my $redirect_uri = $self->p->portal . $self->prefix . "2fchoice";
+
+        $self->logger->debug("Redirect user to $redirect_uri with POST");
+        $req->postUrl($redirect_uri);
+        $req->postFields( { token => $token, sf => $factor_id } );
+
+        $req->steps( ['autoPost'] );
+        return PE_OK;
+    }
+
+    # More than one factor has been found, display choice
+    else {
+        $self->logger->debug("Prepare Okta Factor choice");
+        my ( $checkLogins, $stayConnected ) = $self->getFormParams($req);
+        my $res = $self->p->sendHtml(
+            $req,
+            'okta2fchoice',
+            params => {
+                TOKEN         => $token,
+                CHECKLOGINS   => $checkLogins,
+                STAYCONNECTED => $stayConnected,
+                MODULES       => [
+                    map { { CODE => $_, LABEL => $okta_factors->{$_} } }
+                    sort keys %$okta_factors
+                ],
+            }
+        );
+        $req->response($res);
+        return PE_SENDRESPONSE;
+    }
 }
 
 sub verify {
     my ( $self, $req, $session ) = @_;
 
-    # Call Code2F to verify code if code is supplied
     if ( $req->param('code') ) {
+        $self->logger->debug("Okta 2F is a code, verify it with Code2F module");
         return $self->SUPER::verify( $req, $session );
     }
 
-    # Else poll URL to verify 2F
+    $self->logger->debug("Okta 2F is not a code, wait for user interaction");
     my $okta_userid   = $session->{__oktaUserId};
     my $okta_poll_url = $session->{__oktaPollUrl};
 
@@ -311,7 +329,6 @@ sub getOktaActiveFactors {
 sub _issueFactor {
     my ( $self, $req ) = @_;
 
-    # Check token
     my $token;
     unless ( $token = $req->param('token') ) {
         $self->userLogger->error( $self->prefix . ' 2F access without token' );
@@ -349,9 +366,10 @@ sub _issueFactor {
         return $self->p->do( $req, [ sub { PE_ERROR } ] );
     }
 
-    my $okta_issue = $self->decodeJSON( $issue_response->decoded_content );
+    $self->logger->debug(
+        "2FA sent to $okta_userid: " . $issue_response->decoded_content );
 
-    $self->logger->debug("2FA sent to $okta_userid: $okta_issue");
+    my $okta_issue = $self->decodeJSON( $issue_response->decoded_content );
 
     if ( $okta_issue->{factorResult} eq "CHALLENGE" ) {
 
