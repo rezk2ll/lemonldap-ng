@@ -54,7 +54,7 @@
 "PE53":"SAML 訊息目標不正確",
 "PE54":"不遵守 SAML 訊息條件",
 "PE55":"身份提供者發起的單一登入未授權",
-"PE56":"SAML 單一登出時遇到錯誤",
+"PE56":"You've been disconnected but an error occured in another application, you should close your browser",
 "PE57":"SAML 訊息簽章管理中有錯誤",
 "PE58":"使用 SAML artifact 時發生錯誤",
 "PE59":"SMAL 工作階段通訊錯誤",

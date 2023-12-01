@@ -728,6 +728,7 @@ t/37-SAML-SP-POST-to-CAS-server-with-Choice.t
 t/37-SAML-SP-POST-to-CAS-server.t
 t/37-SAML-SP-POST-to-OIDC-OP.t
 t/38-No-persistent-session.t
+t/39-Failing-RP-Logout.t
 t/40-Notifications-Explorer-JSON-File.t
 t/40-Notifications-Explorer-XML-File.t
 t/40-Notifications-JSON-DBI.t
@@ -921,6 +922,7 @@ t/lib/Lemonldap/NG/Handler/Test.pm
 t/lib/Lemonldap/NG/Portal/Auth/LDAPPolicy.pm
 t/lib/Lemonldap/NG/Portal/Custom.pm
 t/lmConf-1.json
+t/LogoutFail.pm
 t/main-idps-renater-metadata.xml
 t/main-sps-renater-metadata.xml
 t/oidc-lib.pm

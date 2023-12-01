@@ -54,7 +54,7 @@
 "PE53":"SAML message destination is not correct",
 "PE54":"SAML message conditions are not respected",
 "PE55":"Identity provider initiated single sign on is not authorized",
-"PE56":"An error occurred during SAML single logout",
+"PE56":"You've been disconnected but an error occured in another application, you should close your browser",
 "PE57":"Error in SAML message signature management",
 "PE58":"An error occurred during SAML artifact use",
 "PE59":"Communication error with SAML sessions",

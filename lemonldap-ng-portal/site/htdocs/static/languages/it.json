@@ -54,7 +54,7 @@
 "PE53":"Destinazione del messaggio SAML errata",
 "PE54":"Condizioni del messaggio SAML non rispettate",
 "PE55":"L'autenticazione avviata dal provider d'identità non è autorizzata",
-"PE56":"Si è verificato un errore al momento della disconnessione SAML",
+"PE56":"You've been disconnected but an error occured in another application, you should close your browser",
 "PE57":"Errore durante la gestione della firma del messaggio SAML",
 "PE58":"Si è verificato un errore durante l'utilizzo di un artefatto SAML",
 "PE59":"Errore di comunicazione con le sessioni SAML",

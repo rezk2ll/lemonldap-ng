@@ -8,8 +8,9 @@ package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 use strict;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
-use Crypt::JWT  qw(encode_jwt decode_jwt);
-use Digest::SHA qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
+use Crypt::JWT qw(encode_jwt decode_jwt);
+use Digest::SHA
+  qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::UserAgent;
@@ -26,7 +27,7 @@ use URI;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
 
-our $VERSION = '2.17.2';
+our $VERSION = '2.18.0';
 
 use constant BACKCHANNEL_EVENTSKEY =>
   'http://schemas.openid.net/event/backchannel-logout';

@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
-use JSON                       qw(from_json to_json);
+use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
@@ -19,10 +19,11 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OIDC_SERVICE_NOT_ALLOWED
   PE_FIRSTACCESS
   PE_SENDRESPONSE
+  PE_SLO_ERROR
 );
 use String::Random qw/random_string/;
 
-our $VERSION = '2.17.2';
+our $VERSION = '2.18.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Issuer
@@ -249,7 +250,13 @@ sub run {
 
             # Detect requested flow
             my $response_type = $oidc_request->{'response_type'};
-            my $flow          = $self->getFlowType($response_type);
+
+            unless ($response_type) {
+                $self->logger->error("No response type provided");
+                return PE_ERROR;
+            }
+
+            my $flow = $self->getFlowType($response_type);
 
             unless ($flow) {
                 $self->logger->error("Unknown response type: $response_type");
@@ -2356,6 +2363,7 @@ sub checkSession {
 sub logout {
     my ( $self, $req ) = @_;
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
+    my $code = PE_OK;
     if ( my $s = $req->userData->{_oidcConnectedRPIDs} ) {
         my @rps = grep /\w/, split( ',', $s );
         foreach my $client_id (@rps) {
@@ -2363,11 +2371,13 @@ sub logout {
             if ( !$rp ) {
                 $self->logger->warn(
                     "Cannot find RP configuration for $client_id");
+                $code = PE_SLO_ERROR;
                 next;
             }
             my $rpConf = $self->rpOptions->{$rp};
             if ( !$rpConf ) {
                 $self->logger->warn("Cannot find RP options for $client_id");
+                $code = PE_SLO_ERROR;
                 next;
             }
             if ( my $url = $rpConf->{oidcRPMetaDataOptionsLogoutUrl} ) {
@@ -2463,6 +2473,7 @@ sub logout {
                               . " $userId from $rp: "
                               . $resp->message );
                         $self->logger->debug( $resp->content );
+                        $code = PE_SLO_ERROR;
                     }
                     else {
                         $self->logger->info(
@@ -2473,7 +2484,7 @@ sub logout {
             }
         }
     }
-    return PE_OK;
+    return $code;
 }
 
 # Internal methods
