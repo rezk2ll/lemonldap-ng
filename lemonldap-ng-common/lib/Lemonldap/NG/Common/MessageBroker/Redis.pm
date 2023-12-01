@@ -21,6 +21,7 @@ sub new {
 
 sub publish {
     my ( $self, $channel, $msg ) = @_;
+    die 'Not a hash msg' unless ref $msg eq 'HASH';
     my $j = eval { JSON::to_json($msg) };
     die "MessageBroker publish only hashes! $@" if $@;
     $self->{redis}->publish( $channel, $j );
@@ -32,7 +33,13 @@ sub subscribe {
     $self->{redis}->subscribe(
         $channel,
         sub {
-            push @{ $self->{messages}{$channel} }, $_[0];
+            my $tmp = eval { JSON::from_json( $_[0] ) };
+            if ($@) {
+                print STDERR "Bad message from Redis: $@";
+            }
+            else {
+                push @{ $self->{messages}{$channel} }, JSON::from_json( $_[0] );
+            }
         }
     );
 }
@@ -43,9 +50,10 @@ sub checkNextMessage {
       unless $self->{messages}{$channel};
     return shift( @{ $self->{messages}{$channel} } )
       if @{ $self->{messages}{$channel} };
-    $self->{redis}->wait_for_messages(1);
+    $self->{redis}->wait_for_messages(0.1);
     return shift( @{ $self->{messages}{$channel} } )
       if @{ $self->{messages}{$channel} };
+    return;
 }
 
 sub getNextMessage {
