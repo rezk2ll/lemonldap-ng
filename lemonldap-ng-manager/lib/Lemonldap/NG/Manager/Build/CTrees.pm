@@ -266,7 +266,22 @@ sub cTrees {
                             'oidcRPMetaDataOptionsRequestUris',
                             'oidcRPMetaDataOptionsAuthnLevel',
                             'oidcRPMetaDataOptionsRule',
+                            'oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg',
+                            'oidcRPMetaDataOptionsAccessTokenEncContentEncAlg',
+                            'oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg',
+                            'oidcRPMetaDataOptionsIdTokenEncContentEncAlg',
+                            'oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg',
+                            'oidcRPMetaDataOptionsUserInfoEncContentEncAlg',
+                            'oidcRPMetaDataOptionsLogoutEncKeyMgtAlg',
+                            'oidcRPMetaDataOptionsLogoutEncContentEncAlg',
                         ]
+                    },
+                    {
+                        title => 'keys',
+                        nodes => [
+                            'oidcRPMetaDataOptionsJwksUri',
+                            'oidcRPMetaDataOptionsJwks',
+                        ],
                     },
                     {
                         title => 'oidcRPMetaDataOptionsTimeouts',
@@ -289,7 +304,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsPostLogoutRedirectUris',
                         ]
                     },
-                    'oidcRPMetaDataOptionsComment'
+                    'oidcRPMetaDataOptionsComment',
                 ]
             },
             'oidcRPMetaDataMacros',
@@ -345,9 +360,7 @@ sub cTrees {
             {
                 title => 'casAppMetaDataOptionsDisplay',
                 form  => 'simpleInputContainer',
-                nodes => [
-                    'casAppMetaDataOptionsDisplayName',
-                ],
+                nodes => [ 'casAppMetaDataOptionsDisplayName', ],
             },
             'casAppMetaDataMacros',
         ],

@@ -218,6 +218,8 @@ sub defaultValues {
         'oidcServiceAccessTokenExpiration'       => 3600,
         'oidcServiceAllowAuthorizationCodeFlow'  => 1,
         'oidcServiceAuthorizationCodeExpiration' => 60,
+        'oidcServiceEncAlgorithmAlg'             => 'RSA-OAEP',
+        'oidcServiceEncAlgorithmEnc'             => 'A256GCM',
         'oidcServiceIDTokenExpiration'           => 3600,
         'oidcServiceMetaDataAuthnContext'        => {
             'loa-1' => 1,
