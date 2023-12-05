@@ -729,7 +729,7 @@
 "oidcRPMetaDataOptionsIcon":"圖示",
 "oidcRPMetaDataOptionsIdTokenEncContentEncAlg":"ID Token Encryption content encryption algorithm",
 "oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg":"ID Token Encryption key management alg",
-"oidcRPMetaDataOptionsJwks":"JWKS data",
+"oidcRPMetaDataOptionsJwks":"JWKS 資料",
 "oidcRPMetaDataOptionsJwksUri":"JWKS URL",
 "oidcRPMetaDataOptionsLogoutBypassConfirm":"Bypass confirm",
 "oidcRPMetaDataOptionsLogoutEncContentEncAlg":"Logout Encryption content encryption algorithm",
