@@ -39,8 +39,7 @@ require 't/smtp.pm';
 use_ok('Lemonldap::NG::Common::FormEncode');
 
 my $res;
-my $client = LLNG::Manager::Test->new(
-    {
+my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel              => 'error',
             localSessionStorage   => "Cache::NullCache",
@@ -83,6 +82,15 @@ my $client = LLNG::Manager::Test->new(
                     'rule'     => '$uid eq "dwho"',
                     'type'     => 'Mail2F',
                     'register' => 1,
+                    'level'    => 5,
+                },
+                'homeregrule' => {
+                    'logo'     => 'homeregrule.jpg',
+                    'label'    => "Home Regrule Label",
+                    'rule'     => '$ENV{REMOTE_ADDR} eq "1.2.3.4"',
+                    'type'     => 'Mail2F',
+                    'register' => 1,
+                    'regrule'  => 1,
                     'level'    => 5,
                 },
             },
@@ -204,6 +212,104 @@ subtest "Register and use mail based custom SF as dwho" => sub {
         _2f                 => "home",
         authenticationLevel => 5
     );
+};
+
+subtest "Register a 2F that is not always available on login" => sub {
+    getPSession('dwho')->remove;
+    my ( $id, $host, $url, $query );
+
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=dwho&password=dwho'),
+            length => 23,
+            accept => 'text/html',
+        ),
+        'Auth query'
+    );
+
+    $id = expectCookie($res);
+
+    $res = $client->_get(
+        '/2fregisters',
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+    );
+    ok( getHtmlElement( $res, '//a[@href="/2fregisters/homeregrule"]' ),
+        "Found link to homeregrule register" );
+
+    $res = $client->_get(
+        '/2fregisters/homeregrule',
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+    );
+
+    # Ajax send mail
+    $query = buildForm( { generic => 'test@test.com' } );
+    $res   = $client->_post(
+        '/2fregisters/homeregrule/sendcode',
+        IO::String->new($query),
+        length => length $query,
+        cookie => "lemonldap=$id",
+        accept => 'application/json',
+    );
+
+    $res = expectJSON($res);
+    is( $res->{result}, 1 );
+    ok( $res->{token} );
+    my $token = $res->{token};
+
+    like( mail(), qr%Doctor Who%,     'Found session attribute in mail' );
+    like( mail(), qr%<b>(\w{6})</b>%, 'Found 2F code in mail' );
+
+    mail() =~ qr%<b>(\w{6})</b>%;
+    is( envelope()->{to}->[0], 'test@test.com',
+        'Sent to self registered mail' );
+
+    my $code = $1;
+
+    $query = buildForm(
+        { generic => 'test@test.com', genericcode => $code, token => $token } );
+    $res = $client->_post(
+        '/2fregisters/homeregrule/verify',
+        IO::String->new($query),
+        length => length $query,
+        cookie => "lemonldap=$id",
+        accept => 'application/json',
+    );
+
+    $res = expectJSON($res);
+    is( $res->{result}, 1 );
+
+    # Login with dwho, with 2FA
+    # -----------------
+    clear_mail();
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=dwho&password=dwho'),
+            length => 23,
+            accept => 'text/html',
+        ),
+        'Auth query'
+    );
+
+    # 2fa is not asked is rule doesn't match
+    expectCookie($res);
+
+    # 2fa is asked if rule matches
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=dwho&password=dwho'),
+            length => 23,
+            accept => 'text/html',
+            ip     => "1.2.3.4",
+        ),
+        'Auth query'
+    );
+    expectForm( $res, undef, '/homeregrule2fcheck?skin=bootstrap',
+        'token', 'code' );
 };
 
 subtest "Fail to register mail based custom SF as dwho" => sub {
