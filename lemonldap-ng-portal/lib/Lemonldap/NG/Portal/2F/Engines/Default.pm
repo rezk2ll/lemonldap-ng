@@ -154,7 +154,7 @@ sub init {
         my $reg_rule;
         my $prefix = $m->prefix;
         if ( $self->conf->{sfExtra}->{$extraKey}->{register} ) {
-            $reg_rule = $rule;
+            $reg_rule = $self->conf->{sfExtra}->{$extraKey}->{regrule} || $rule;
             $rule     = "( $rule ) and has2f('$prefix')";
         }
 
