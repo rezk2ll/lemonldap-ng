@@ -186,6 +186,8 @@ If you want to display user feedback, you need to do two additional things
             data => { },
             # Custom HTML code to inject before the element
             customHtml => qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/myppolicy.min.js"></script>',
+            # Custom HTML code to inject after the element
+            customHtmlAfter => qq'<div id="advanced_feedback"></div>',
             # Optional display order, higher goes last
             order => 100,
         }

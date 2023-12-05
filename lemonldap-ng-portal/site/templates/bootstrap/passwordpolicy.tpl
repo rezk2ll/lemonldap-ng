@@ -7,6 +7,7 @@
         <li>
             <i id="<TMPL_VAR NAME="id">-feedback" class="fa fa-li"> </i>
             <span trspan="<TMPL_VAR NAME="label">"<TMPL_LOOP NAME="data"> data-<TMPL_VAR key>="<TMPL_VAR value ESCAPE="html">"</TMPL_LOOP>></span> <TMPL_IF NAME="value"><TMPL_VAR NAME="value" ESCAPE="html"></TMPL_IF>
+            <TMPL_IF NAME="customHtmlAfter"><TMPL_VAR NAME="customHtmlAfter"></TMPL_IF>
         </li>
         </TMPL_IF>
     </TMPL_LOOP>
