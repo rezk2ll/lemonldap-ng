@@ -4424,6 +4424,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         sfExtra => {
             type          => 'sfExtraContainer',
+            help          => "sfextra.html",
             keyTest       => qr/^\w+$/,
             test          => sub { 1 },
             documentation => 'Extra second factors',

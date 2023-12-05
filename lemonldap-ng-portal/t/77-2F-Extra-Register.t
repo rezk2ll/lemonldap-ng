@@ -446,8 +446,7 @@ subtest "Register and use rest based custom SF as dwho" => sub {
 
     my $code = $receivedCode;
 
-    $query = buildForm(
-        {
+    $query = buildForm( {
             generic     => 'dwho-destination',
             genericcode => $code,
             token       => $token
