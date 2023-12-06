@@ -1,26 +1,20 @@
-progressbar = '<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>'
-entropybar = '<div id="entropybar" class="progress">' + progressbar + '</div>'
-entropybarmsg = '<div id="entropybar-msg" class="alert alert-warning entropyHidden"></div>'
-bootstrapClasses = new Map([ [ "Err", "bg-danger" ], [ "0", "bg-danger" ], [ "1", "bg-warning" ], [ "2", "bg-info" ], [ "3", "bg-primary" ], [ "4", "bg-success" ] ]);
-
-$(document).ready ->
-	# insert entropybar after corresponding label
-	$( entropybar + entropybarmsg ).insertAfter( $( 'span[trspan="checkentropyLabel"]' ) );
+bootstrapClasses = new Map([ [ "Err", "bg-danger" ], [ "0", "bg-danger" ], [ "1", "bg-warning" ], [ "2", "bg-info" ], [ "3", "bg-primary" ], [ "4", "bg-success" ] ])
+barWidth = new Map([["Err", "0"], ["0", "20"], ["1", "40"], ["2", "60"], ["3", "80"], ["4", "100"]])
 
 # display entropy bar with correct level
 displayEntropyBar = (level) ->
-	# restore original content of progressbar
-	$("#entropybar").html(progressbar)
+	# Remove all classes from progressbar and restore default progress-bar class
+	$("#entropybar div").removeClass()
+	$("#entropybar div").addClass 'progress-bar'
 
 	# set width
-	$("#entropybar div").addClass 'level' + level
+	$("#entropybar div").width(barWidth.get(level) + '%')
 
 	# set color
 	$("#entropybar div").addClass bootstrapClasses.get(level)
 
 	# display percentage width inside the bar
-	width = Math.round($("#entropybar div").width() / $("#entropybar div").parent().width() * 100)
-	$("#entropybar div").html( width + '%')
+	$("#entropybar div").html( barWidth.get(level) + '%')
 
 
 # display custom message if any, else remove hide div block

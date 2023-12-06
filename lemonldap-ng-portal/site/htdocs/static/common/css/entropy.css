@@ -1,0 +1,9 @@
+/* password entropy customization*/
+#entropybar>div {
+  width: 0%;
+  /* Adjust with JavaScript */
+}
+
+.entropyHidden {
+  display: none;
+}
