@@ -255,6 +255,7 @@
 "password":"Mot de passe",
 "password2f":"Mot de passe",
 "passwordCompromised":"Absent d'une base de mots de passe compromis",
+"checkentropyLabel":"Force du mot de passe",
 "passwordPolicy":"Merci de respecter la politique suivante :",
 "passwordPolicyMinDigit":"Minimum de chiffres :",
 "passwordPolicyMinLower":"Minimum de minuscules :",

@@ -255,6 +255,7 @@
 "password":"סיסמה",
 "password2f":"סיסמה",
 "passwordCompromised":"לא נמצאה במסד נתוני הסיסמאות שדלפו",
+"checkentropyLabel":"Password strength",
 "passwordPolicy":"נא לכבד את המדיניות הבאה:",
 "passwordPolicyMinDigit":"כמות מזערית של ספרות:",
 "passwordPolicyMinLower":"כמות מזערית של אותיות קטנות:",

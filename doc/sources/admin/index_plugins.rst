@@ -9,6 +9,7 @@ Plugins
    bruteforceprotection
    cda
    checkdevops
+   checkentropy
    checkhibp
    checkstate
    checkuser

@@ -36,6 +36,7 @@ our @pList = (
     newLocationWarning                  => '::Plugins::NewLocationWarning',
     passwordPolicyActivation            => '::Plugins::BasePasswordPolicy',
     checkHIBP                           => '::Plugins::CheckHIBP',
+    checkEntropy                        => '::Plugins::CheckEntropy',
     adaptativeAuthenticationLevelRules  =>
       '::Plugins::AdaptativeAuthenticationLevel',
     refreshSessions     => '::Plugins::Refresh',

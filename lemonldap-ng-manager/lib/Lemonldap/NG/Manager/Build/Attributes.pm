@@ -621,6 +621,23 @@ sub attributes {
             documentation => 'Require HIBP check to pass',
             flags         => 'p',
         },
+        checkEntropy => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable entropy check of password',
+            flags         => 'p',
+        },
+        checkEntropyRequired => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Require entropy check to pass',
+            flags         => 'p',
+        },
+        checkEntropyRequiredLevel => {
+            type          => 'int',
+            documentation => 'Minimal entropy required for the password to be accepted',
+            flags         => 'p',
+        },
         checkUser => {
             default       => 0,
             type          => 'bool',

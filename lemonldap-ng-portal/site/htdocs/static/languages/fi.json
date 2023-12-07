@@ -255,6 +255,7 @@
 "password":"Salasana",
 "password2f":"Salasana",
 "passwordCompromised":"Ei löydy vaarantuneiden salasanojen tietokannasta",
+"checkentropyLabel":"Password strength",
 "passwordPolicy":"Ole hyvä ja noudata seuraavaa käytännettä:",
 "passwordPolicyMinDigit":"Numeroiden vähimmäismäärä:",
 "passwordPolicyMinLower":"Pienten kirjainten vähimmäismäärä:",

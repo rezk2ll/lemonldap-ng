@@ -255,6 +255,7 @@
 "password":"كلمة المرور",
 "password2f":"كلمة المرور",
 "passwordCompromised":"Not found in a compromised password database",
+"checkentropyLabel":"Password strength",
 "passwordPolicy":"Please respect the following policy:",
 "passwordPolicyMinDigit":"Minimal digit characters:",
 "passwordPolicyMinLower":"Minimal lower characters:",
