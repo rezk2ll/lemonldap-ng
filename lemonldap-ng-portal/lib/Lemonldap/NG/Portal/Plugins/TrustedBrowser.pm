@@ -252,7 +252,14 @@ sub getTrustedBrowserSessionFromReq {
     my ( $self, $req ) = @_;
 
     if ( my $cid = $req->cookies->{ $self->cookieName } ) {
-        return $self->getTrustedBrowserSession($cid);
+        my $session = $self->getTrustedBrowserSession($cid);
+        if ($session) {
+            return $session;
+        }
+        else {
+            $self->removeCookie($req);
+            return;
+        }
     }
     else {
         $self->logger->debug("No trusted browser cookie was sent");
@@ -377,14 +384,7 @@ sub challenge {
 
 sub logout {
     my ( $self, $req ) = @_;
-    $req->addCookie(
-        $self->p->cookie(
-            name    => $self->cookieName,
-            value   => 0,
-            expires => 'Wed, 21 Oct 2015 00:00:00 GMT',
-            secure  => $self->conf->{securedCookie},
-        )
-    );
+    $self->removeCookie($req);
 
     # Try to clean stayconnected cookie
     my $cid = $req->sessionInfo->{_stayConnectedSession};
@@ -397,6 +397,19 @@ sub logout {
     }
 
     return PE_OK;
+}
+
+sub removeCookie {
+    my ( $self, $req ) = @_;
+
+    $req->addCookie(
+        $self->p->cookie(
+            name    => $self->cookieName,
+            value   => 0,
+            expires => 'Wed, 21 Oct 2015 00:00:00 GMT',
+            secure  => $self->conf->{securedCookie},
+        )
+    );
 }
 
 sub removeExistingSessions {
