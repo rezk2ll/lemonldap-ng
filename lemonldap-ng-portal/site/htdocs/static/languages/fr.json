@@ -318,6 +318,7 @@
 "totp2f":"Application OTP",
 "totpExistingKey":"Un périphérique TOTP est déja enregistré, vous devez le supprimer pour pouvoir en ajouter un nouveau",
 "totpMissingCode":"Veuillez entrer le code fourni par votre application TOTP",
+"totpOrTouch":"Si vous êtes sur mobile, touchez le QR code pour ouvrir votre application TOTP",
 "totpQrCode":"Scannez ce QR code dans votre application TOTP",
 "totpRegisterCode":"Recopiez le code affiché par votre application",
 "totpRegisterName":"Choisissez un nom pour votre périphérique TOTP",

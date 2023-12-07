@@ -318,6 +318,7 @@
 "totp2f":"OTP Uygulaması",
 "totpExistingKey":"Bir TOTP cihazı zaten kaydedildi, yeni bir TOTP cihazı eklemeden önce diğerini kaldırmalısınız",
 "totpMissingCode":"Lütfen TOTP uygulamanız tarafından sağlanan kodu girin",
+"totpOrTouch":"If you see this on your mobile, touch the QR code to open your TOTP application",
 "totpQrCode":"TOTP uygulamanızda bu QR kodu tarayın",
 "totpRegisterCode":"Uygulamanız tarafından desteklenen kodu girin",
 "totpRegisterName":"TOTP cihazınız için bir isim seçin",

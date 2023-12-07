@@ -318,6 +318,7 @@
 "totp2f":"OTP-sovellus",
 "totpExistingKey":"TOTP-tunnistusväline on jo rekisteröity, sinun pitää poistaa se ennen uuden TOTP-tunnistusvälineen lisäämistä",
 "totpMissingCode":"Ole hyvä ja anna TOTP-sovelluksesi tarjoama koodi",
+"totpOrTouch":"If you see this on your mobile, touch the QR code to open your TOTP application",
 "totpQrCode":"Skannaa tämä QR-koodi TOTP-sovelluksellasi",
 "totpRegisterCode":"Anna sovelluksesi tarjoama koodi",
 "totpRegisterName":"Valitse nimi tälle TOTP-tunnistusvälineelle",
