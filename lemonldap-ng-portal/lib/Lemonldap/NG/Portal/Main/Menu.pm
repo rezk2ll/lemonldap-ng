@@ -195,6 +195,9 @@ sub displayModules {
                 $moduleHash->{'OIDC_CONSENTS'} =
                   $self->p->mkOidcConsent( $req, $req->userData );
             }
+            elsif ( $module->[0] eq 'ChangePassword' ) {
+                $moduleHash->{'PPOLICY_RULES'} = $self->p->getPpolicyRules;
+            }
             push @$displayModules, $moduleHash;
         }
     }

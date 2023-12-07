@@ -496,10 +496,11 @@ sub changePwd {
     }
 
     # Check password quality if enabled
-    require Lemonldap::NG::Portal::Password::Base;
+    require Lemonldap::NG::Portal::Plugins::BasePasswordPolicy;
     my $cpq =
-      $self->passwordPolicyActivationRule->( $req, $req->sessionInfo )
-      ? $self->Lemonldap::NG::Portal::Password::Base::checkPasswordQuality(
+        $self->passwordPolicyActivationRule->( $req, $req->sessionInfo )
+      ? $self
+      ->Lemonldap::NG::Portal::Plugins::BasePasswordPolicy::checkBasicPolicy(
         $req->data->{newpassword} )
       : PE_OK;
     unless ( $cpq == PE_OK ) {
@@ -583,19 +584,6 @@ sub setSecurity {
 
 sub display {
     my ( $self, $req ) = @_;
-    my $speChars =
-      $self->conf->{passwordPolicySpecialChar} eq '__ALL__'
-      ? ''
-      : $self->conf->{passwordPolicySpecialChar};
-    $speChars =~ s/\s+/ /g;
-    $speChars =~ s/(?:^\s|\s$)//g;
-    my $isPP =
-         $self->conf->{passwordPolicyMinSize}
-      || $self->conf->{passwordPolicyMinLower}
-      || $self->conf->{passwordPolicyMinUpper}
-      || $self->conf->{passwordPolicyMinDigit}
-      || $self->conf->{passwordPolicyMinSpeChar}
-      || $speChars;
     $self->logger->debug( 'Display called with code: ' . $req->error );
 
     my %tplPrm = (
@@ -625,17 +613,9 @@ sub display {
         DISPLAY_MAILSENT        => 0,
         DISPLAY_PASSWORD_FORM   => 0,
         ENABLE_PASSWORD_DISPLAY => $self->conf->{portalEnablePasswordDisplay},
-        ENABLE_CHECKHIBP        => $self->conf->{checkHIBP},
         DONT_STORE_PASSWORD     => $self->conf->{browsersDontStorePassword},
-        DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy} && $isPP,
-        PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
-        PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
-        PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
-        PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
-        PPOLICY_MINSPECHAR          => $self->conf->{passwordPolicyMinSpeChar},
-        PPOLICY_ALLOWEDSPECHAR      => $speChars,
-        PPOLICY_ALLOWEDSPECHAR_JSON =>
-          to_json( $speChars, { allow_nonref => 1 } ),
+        %{ $self->p->getPasswordPolicyTemplateVars },
+        PPOLICY_RULES             => $self->p->getPpolicyRules,
         DISPLAY_GENERATE_PASSWORD =>
           $self->conf->{portalDisplayGeneratePassword},
     );
