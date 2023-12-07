@@ -91,7 +91,7 @@ sub init {
             },
             customHtml =>
 qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/entropy.min.js"></script>\n
-<link rel="stylesheet" type="text/css" href="$self->{p}->{staticPrefix}/common/css/entropy.css">',
+<link rel="stylesheet" type="text/css" href="$self->{p}->{staticPrefix}/common/css/entropy.min.css">',
             customHtmlAfter =>
 qq'<div id="entropybar" class="progress">\n
     <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>\n
