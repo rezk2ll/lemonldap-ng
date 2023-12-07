@@ -89,6 +89,7 @@ BuildRequires:  perl(Crypt::Rijndael)
 BuildRequires:  perl(Crypt::URandom)
 BuildRequires:  perl(Cwd)
 BuildRequires:  perl(Data::Dumper)
+%{!?el7:BuildRequires:  perl(Data::Password::zxcvbn)}
 BuildRequires:  perl(Date::Parse)
 BuildRequires:  perl(DateTime::Format::RFC3339)
 BuildRequires:  perl(DBI)
@@ -329,6 +330,8 @@ Requires:       perl(Digest::HMAC_SHA1)
 %else
 # Fido2
 Recommends:     perl(Authen::WebAuthn)
+# Password entropy
+Recommends:     perl(Data::Password::zxcvbn)
 # Location
 Recommends:     perl(GeoIP2)}
 Recommends:     perl(HTTP::BrowserDetect)}
