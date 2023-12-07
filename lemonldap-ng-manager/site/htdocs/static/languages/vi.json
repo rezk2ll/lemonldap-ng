@@ -203,7 +203,7 @@
 "checkHIBP":"Kích hoạt",
 "checkHIBPRequired":"Yêu cầu kiểm tra HIBP để pass",
 "checkHIBPURL":"HIBP URL",
-"checkEntropy":"Activation",
+"checkEntropy":"Kích hoạt",
 "checkEntropyRequired":"Require entropy check to pass",
 "checkEntropyRequiredLevel":"Minimal entropy level for password to be accepted",
 "checkState":"Kích hoạt",

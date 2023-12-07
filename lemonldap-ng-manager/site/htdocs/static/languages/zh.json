@@ -203,7 +203,7 @@
 "checkHIBP":"激活",
 "checkHIBPRequired":"Require HIBP check to pass",
 "checkHIBPURL":"HIBP URL",
-"checkEntropy":"Activation",
+"checkEntropy":"激活",
 "checkEntropyRequired":"Require entropy check to pass",
 "checkEntropyRequiredLevel":"Minimal entropy level for password to be accepted",
 "checkState":"激活",

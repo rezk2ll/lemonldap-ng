@@ -203,7 +203,7 @@
 "checkHIBP":"Aktivasyon",
 "checkHIBPRequired":"Geçmek için HIBP kontrolünü zorunlu kıl",
 "checkHIBPURL":"HIBP URL",
-"checkEntropy":"Activation",
+"checkEntropy":"Aktivasyon",
 "checkEntropyRequired":"Require entropy check to pass",
 "checkEntropyRequiredLevel":"Minimal entropy level for password to be accepted",
 "checkState":"Aktivasyon",

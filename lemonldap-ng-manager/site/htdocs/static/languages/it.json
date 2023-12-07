@@ -203,7 +203,7 @@
 "checkHIBP":"Attivazione",
 "checkHIBPRequired":"Require HIBP check to pass",
 "checkHIBPURL":"HIBP URL",
-"checkEntropy":"Activation",
+"checkEntropy":"Attivazione",
 "checkEntropyRequired":"Require entropy check to pass",
 "checkEntropyRequiredLevel":"Minimal entropy level for password to be accepted",
 "checkState":"Attivazione",
