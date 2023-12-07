@@ -49,6 +49,10 @@ sub runTest {
         );
     }
     my $refresh_token = $json->{refresh_token};
+
+    # Make sure refresh token session has no _lastSeen to avoid purge
+    ok (!getSamlSession($refresh_token)->{data}->{_lastSeen});
+
     my $id_token      = $json->{id_token};
     ok( $access_token,  "Got access token" );
     ok( $refresh_token, "Got refresh token" );
@@ -74,6 +78,9 @@ sub runTest {
     # Refresh access token after logging out
 
     $json = expectJSON( refreshGrant( $op, 'rpid', $refresh_token ) );
+
+    # Make sure refresh token session has no _lastSeen to avoid purge
+    ok (!getSamlSession($refresh_token)->{data}->{_lastSeen});
 
     $access_token = $json->{access_token};
     if ($jwt) {
@@ -112,6 +119,9 @@ sub runTest {
       'Frédéric Freedom';
 
     $json = expectJSON( refreshGrant( $op, 'rpid', $refresh_token ) );
+
+    # Make sure refresh token session has no _lastSeen to avoid purge
+    ok (!getSamlSession($refresh_token)->{data}->{_lastSeen});
 
     $access_token = $json->{access_token};
     if ($jwt) {
@@ -172,6 +182,7 @@ my $baseConfig = {
         domain                          => 'op.com',
         portal                          => 'http://auth.op.com',
         authentication                  => 'Demo',
+        timeoutActivity                 => 3600,
         userDB                          => 'Same',
         issuerDBOpenIDConnectActivation => 1,
         oidcRPMetaDataExportedVars      => {
