@@ -140,7 +140,8 @@ sub storeBrowser {
     my ( $self, $req ) = @_;
 
     if ( my $totpSecret = $self->_restoreRegisterState($req) ) {
-        my $name = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+        my $name       = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+        my $authnLevel = $req->sessionInfo->{authenticationLevel};
         if ( my $fg = $req->param('fg') ) {
             my $isTotp = ( $fg =~ s/^TOTP_// ) ? 1 : 0;
             if ( $isTotp
@@ -151,7 +152,8 @@ sub storeBrowser {
             }
             else {
                 my $ps = $self->newConnectionSession( { (
-                            _session_uid => $name,
+                            _session_uid        => $name,
+                            authenticationLevel => $authnLevel,
                             $isTotp
                             ? ( totpSecret => $totpSecret )
                             : ( fingerprint => $fg )
@@ -277,9 +279,10 @@ sub getKnownBrowserState {
 
     my $ps = $self->getTrustedBrowserSessionFromReq($req);
     if ( $ps and $self->_hasFingerprintParams($req) ) {
-        my $fg    = $req->param('fg');
-        my $token = $req->param('token');
-        my $uid   = $ps->data->{_session_uid};
+        my $fg         = $req->param('fg');
+        my $token      = $req->param('token');
+        my $uid        = $ps->data->{_session_uid};
+        my $authnLevel = $ps->data->{authenticationLevel};
 
         my $token_data = $self->ott->getToken($token);
         return unless $token_data;
@@ -287,6 +290,7 @@ sub getKnownBrowserState {
         if ( $self->checkFingerprint( $req, $ps, $uid, $fg ) ) {
             return {
                 _trustedUser          => $uid,
+                _trustedAuthnLevel    => $authnLevel,
                 _stayConnectedSession => $ps->id,
                 data                  => $token_data,
             };
