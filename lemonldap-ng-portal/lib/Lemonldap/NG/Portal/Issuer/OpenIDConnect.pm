@@ -1904,6 +1904,7 @@ sub _handleRefreshTokenGrant {
         # Cleanup sessionInfo
         delete $req->sessionInfo->{_utime};
         delete $req->sessionInfo->{_startTime};
+        delete $req->sessionInfo->{_lastSeen};
 
         # Update refresh session
         $self->updateRefreshToken( $refreshSession->id, $req->sessionInfo );
