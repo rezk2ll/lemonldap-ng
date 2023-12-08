@@ -3,7 +3,6 @@ Changes
 eg/index.cgi
 eg/index.fcgi
 eg/index.psgi
-inc/LWP/Protocol/PSGI.pm
 lib/Lemonldap/NG/Portal.pm
 lib/Lemonldap/NG/Portal/2F/Engines/Default.pm
 lib/Lemonldap/NG/Portal/2F/Ext2F.pm
@@ -119,10 +118,12 @@ lib/Lemonldap/NG/Portal/Password/Null.pm
 lib/Lemonldap/NG/Portal/Password/REST.pm
 lib/Lemonldap/NG/Portal/Plugins/AdaptativeAuthenticationLevel.pm
 lib/Lemonldap/NG/Portal/Plugins/AutoSignin.pm
+lib/Lemonldap/NG/Portal/Plugins/BasePasswordPolicy.pm
 lib/Lemonldap/NG/Portal/Plugins/BruteForceProtection.pm
 lib/Lemonldap/NG/Portal/Plugins/CDA.pm
 lib/Lemonldap/NG/Portal/Plugins/CertificateResetByMail.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckDevOps.pm
+lib/Lemonldap/NG/Portal/Plugins/CheckEntropy.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckHIBP.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckState.pm
 lib/Lemonldap/NG/Portal/Plugins/CheckUser.pm
@@ -186,8 +187,10 @@ site/coffee/2fregistration.coffee
 site/coffee/autoRenew.coffee
 site/coffee/captcha.coffee
 site/coffee/confirm.coffee
+site/coffee/entropy.coffee
 site/coffee/generic2fregistration.coffee
 site/coffee/globalLogout.coffee
+site/coffee/hibp.coffee
 site/coffee/idpchoice.coffee
 site/coffee/info.coffee
 site/coffee/kerberos.coffee
@@ -196,6 +199,7 @@ site/coffee/notifications.coffee
 site/coffee/oidcchecksession.coffee
 site/coffee/password2fregistration.coffee
 site/coffee/portal.coffee
+site/coffee/ppolicy.coffee
 site/coffee/redirect.coffee
 site/coffee/registerbrowser.coffee
 site/coffee/ssl.coffee
@@ -221,6 +225,7 @@ site/htdocs/static/bootstrap/u2f.png
 site/htdocs/static/bootstrap/utotp.png
 site/htdocs/static/bootstrap/webauthn.png
 site/htdocs/static/bootstrap/yubikey.png
+site/htdocs/static/bwr/bootstrap/.gitignore
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-grid.css
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-grid.css.map
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-grid.min.css
@@ -237,9 +242,11 @@ site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.js
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.js.map
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.min.js
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.min.js.map
+site/htdocs/static/bwr/fingerprintjs2/.gitignore
 site/htdocs/static/bwr/fingerprintjs2/fingerprint2.js
 site/htdocs/static/bwr/fingerprintjs2/fingerprint2.min.js
 site/htdocs/static/bwr/fingerprintjs2/fingerprint2.min.js.map
+site/htdocs/static/bwr/font-awesome/.gitignore
 site/htdocs/static/bwr/font-awesome/css/font-awesome.css
 site/htdocs/static/bwr/font-awesome/css/font-awesome.css.map
 site/htdocs/static/bwr/font-awesome/css/font-awesome.min.css
@@ -248,6 +255,7 @@ site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.svg
 site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.ttf
 site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.woff
 site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.woff2
+site/htdocs/static/bwr/jquery-ui/.gitignore
 site/htdocs/static/bwr/jquery-ui/jquery-ui.js
 site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js
 site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js.map
@@ -292,6 +300,8 @@ site/htdocs/static/common/backgrounds/1280px-Cedar_Breaks_National_Monument_part
 site/htdocs/static/common/backgrounds/1280px-Parry_Peak_from_Winter_Park.jpg
 site/htdocs/static/common/backgrounds/Aletschgletscher_mit_Pinus_cembra1.jpg
 site/htdocs/static/common/co.png
+site/htdocs/static/common/css/entropy.css
+site/htdocs/static/common/css/entropy.min.css
 site/htdocs/static/common/de.png
 site/htdocs/static/common/en.png
 site/htdocs/static/common/es.png
@@ -327,12 +337,18 @@ site/htdocs/static/common/js/captcha.min.js.map
 site/htdocs/static/common/js/confirm.js
 site/htdocs/static/common/js/confirm.min.js
 site/htdocs/static/common/js/confirm.min.js.map
+site/htdocs/static/common/js/entropy.js
+site/htdocs/static/common/js/entropy.min.js
+site/htdocs/static/common/js/entropy.min.js.map
 site/htdocs/static/common/js/generic2fregistration.js
 site/htdocs/static/common/js/generic2fregistration.min.js
 site/htdocs/static/common/js/generic2fregistration.min.js.map
 site/htdocs/static/common/js/globalLogout.js
 site/htdocs/static/common/js/globalLogout.min.js
 site/htdocs/static/common/js/globalLogout.min.js.map
+site/htdocs/static/common/js/hibp.js
+site/htdocs/static/common/js/hibp.min.js
+site/htdocs/static/common/js/hibp.min.js.map
 site/htdocs/static/common/js/idpchoice.js
 site/htdocs/static/common/js/idpchoice.min.js
 site/htdocs/static/common/js/idpchoice.min.js.map
@@ -357,6 +373,9 @@ site/htdocs/static/common/js/password2fregistration.min.js.map
 site/htdocs/static/common/js/portal.js
 site/htdocs/static/common/js/portal.min.js
 site/htdocs/static/common/js/portal.min.js.map
+site/htdocs/static/common/js/ppolicy.js
+site/htdocs/static/common/js/ppolicy.min.js
+site/htdocs/static/common/js/ppolicy.min.js.map
 site/htdocs/static/common/js/redirect.js
 site/htdocs/static/common/js/redirect.min.js
 site/htdocs/static/common/js/redirect.min.js.map
@@ -547,6 +566,7 @@ t/01-Reject-Hashes-in-URL.t
 t/01-Unauth-Logout.t
 t/01-WebAuthn-Registration.t
 t/01-WebAuthn.t
+t/02-Password-Demo-checkEntropy.t
 t/02-Password-Demo-checkHIBP.t
 t/02-Password-Demo-Hook.t
 t/02-Password-Demo-Local-noPpolicy.t
@@ -658,8 +678,8 @@ t/32-Auth-and-issuer-OIDC-implicit.t
 t/32-Auth-and-issuer-OIDC-sorted.t
 t/32-OIDC-Back-Channel-Logout-no-sid.t
 t/32-OIDC-Back-Channel-Logout-sid-EC-keys.t
-t/32-OIDC-Back-Channel-Logout-sid.t
 t/32-OIDC-Back-Channel-Logout-sid-with-JWE-and-EC-keys.t
+t/32-OIDC-Back-Channel-Logout-sid.t
 t/32-OIDC-ClaimTypes.t
 t/32-OIDC-ClientCredentials-Grant.t
 t/32-OIDC-Code-Flow-Mobile.t
