@@ -1393,7 +1393,11 @@ sub buildUrl {
 sub rememberBrowser {
     my ( $self, $req ) = @_;
 
-    return $self->_trustedBrowser->newDevice($req);
+    if ($self->_trustedBrowser and $self->_trustedBrowser->can("newDevice")) {
+        return $self->_trustedBrowser->newDevice($req);
+    } else {
+        return PE_OK;
+    }
 }
 
 1;
