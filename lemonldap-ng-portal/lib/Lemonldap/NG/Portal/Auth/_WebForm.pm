@@ -185,6 +185,7 @@ sub setSecurity {
     }
 }
 
+# DEPRECATED, use get2fTplParams
 sub getFormParams {
     my ( $self, $req ) = @_;
     my $checkLogins = $req->param('checkLogins');
