@@ -79,9 +79,33 @@ has timeout => (
     }
 );
 
+has rule => (
+    is      => 'rw',
+    default => sub {
+        sub { 0 }
+    }
+);
+
 sub init {
     my ($self) = @_;
     $self->addUnauthRoute( registerbrowser => 'storeBrowser', ['POST'] );
+
+    # Parse activation rule
+    if ( $self->conf->{trustedBrowserRule} ) {
+        $self->rule(
+            $self->p->buildRule(
+                $self->conf->{trustedBrowserRule},
+                'trustedBrowserRule'
+            )
+        );
+        return 0 unless $self->rule;
+    }
+
+    # Enable with an all-allowing rule if stayConnected is used,
+    # for backward-compatibility
+    elsif ( $self->conf->{stayConnected} ) {
+        $self->rule( sub { 1 } );
+    }
 
     return 1;
 }
@@ -94,21 +118,29 @@ sub newDevice {
     my ( $self, $req ) = @_;
 
     if ( $req->param('stayconnected') ) {
-        my $totpSecret = $self->newSecret;
 
-        my $state = $self->_getRegisterStateTplParams( $req, $totpSecret );
-        $req->response(
-            $self->p->sendHtml(
-                $req,
-                '../common/registerBrowser',
-                params => {
-                    TOTPSEC => $totpSecret,
-                    ACTION  => '/registerbrowser',
-                    %$state,
-                }
-            )
-        );
-        return PE_SENDRESPONSE;
+        if ( $self->rule->( $req, $req->sessionInfo ) ) {
+            my $totpSecret = $self->newSecret;
+
+            my $state = $self->_getRegisterStateTplParams( $req, $totpSecret );
+            $req->response(
+                $self->p->sendHtml(
+                    $req,
+                    '../common/registerBrowser',
+                    params => {
+                        TOTPSEC => $totpSecret,
+                        ACTION  => '/registerbrowser',
+                        %$state,
+                    }
+                )
+            );
+            return PE_SENDRESPONSE;
+        }
+        else {
+            $self->userLogger->info( "User "
+                  . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                  . "asked to trust his web browser but was denied by rule" );
+        }
     }
     return PE_OK;
 }
