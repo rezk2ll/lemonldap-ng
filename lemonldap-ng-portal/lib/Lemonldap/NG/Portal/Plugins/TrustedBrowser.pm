@@ -89,6 +89,7 @@ has rule => (
 sub init {
     my ($self) = @_;
     $self->addUnauthRoute( registerbrowser => 'storeBrowser', ['POST'] );
+    $self->addAuthRoute( registerbrowser => 'storeBrowser', ['POST'] );
 
     # Parse activation rule
     if ( $self->conf->{trustedBrowserRule} ) {
