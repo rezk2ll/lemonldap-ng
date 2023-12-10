@@ -1552,7 +1552,7 @@ sub decodeJWT {
         $self->logger->error("Jwt was: $jwt");
         return;
     }
-    return $content;
+    return wantarray ? ( $content, $alg ) : $content;
 }
 
 ### HERE
@@ -1720,8 +1720,10 @@ sub checkEndPointAuthenticationCredentials {
     my ( $self, $req ) = @_;
 
     # Check authentication
-    my ( $client_id, $client_secret, $secretOk ) =
+    my ( $client_id, $client_secret, $method ) =
       $self->getEndPointAuthenticationCredentials($req);
+
+    $self->logger->debug("Authentication method: $method");
 
     unless ($client_id) {
         $self->logger->error(
@@ -1747,21 +1749,29 @@ sub checkEndPointAuthenticationCredentials {
         $self->logger->debug(
             "Relying Party $rp is public, do not check client secret");
     }
-    elsif ($secretOk) {
-        $self->logger->debug('No need to check client secret');
-    }
     else {
-        unless ($client_secret) {
-            $self->logger->error(
+        if ( $method =~ /^client_secret_(?:basic|post)$/ ) {
+            unless ($client_secret) {
+                $self->logger->error(
 "Relying Party $rp is confidential but no client secret was provided to authenticate on token endpoint"
-            );
-            return undef;
+                );
+                return undef;
+            }
+            unless ( $client_secret eq
+                $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret} )
+            {
+                $self->logger->error("Wrong credentials for $rp");
+                return undef;
+            }
         }
-        unless ( $client_secret eq
-            $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret} )
-        {
-            $self->logger->error("Wrong credentials for $rp");
-            return undef;
+
+        if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthMethod} ) {
+            unless ( $method eq
+                $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthMethod} )
+            {
+                $self->logger->error("Wrong authetication method for $rp");
+                return undef;
+            }
         }
     }
     return $rp;
@@ -1771,10 +1781,11 @@ sub checkEndPointAuthenticationCredentials {
 # @return array (client_id, client_secret)
 sub getEndPointAuthenticationCredentials {
     my ( $self, $req ) = @_;
-    my ( $client_id, $client_secret, $secretOk );
+    my ( $client_id, $client_secret, $scheme );
 
     my $authorization = $req->authorization;
     if ( $authorization and $authorization =~ /^Basic (\w+)/i ) {
+        $scheme = 'client_secret_basic';
         $self->logger->debug("Method client_secret_basic used");
         eval {
             ( $client_id, $client_secret ) =
@@ -1827,8 +1838,14 @@ sub getEndPointAuthenticationCredentials {
                     {
 
                         # Signature must be valid
-                        my $jwt = $self->decodeJWT( $jws, undef, $rp );
+                        my ( $jwt, $alg ) =
+                          $self->decodeJWT( $jws, undef, $rp );
                         if ($jwt) {
+
+                            $scheme =
+                              $alg =~ /^HS/i
+                              ? 'client_secret_jwt'
+                              : 'private_key_jwt';
 
                             # Token must be time-valid
                             if ( $jwt->{aud} and $jwt->{exp} ) {
@@ -1837,7 +1854,6 @@ sub getEndPointAuthenticationCredentials {
 
                                     # Then export the client_id !
                                     $client_id = $_clientId;
-                                    $secretOk  = 1;
                                 }
                                 else {
                                     $self->logger->error('JWS expired');
@@ -1870,16 +1886,18 @@ sub getEndPointAuthenticationCredentials {
         }
     }
     elsif ( $req->param('client_id') and $req->param('client_secret') ) {
+        $scheme = 'client_secret_post';
         $self->logger->debug("Method client_secret_post used");
         $client_id     = $req->param('client_id');
         $client_secret = $req->param('client_secret');
     }
     elsif ( $req->param('client_id') and !$req->param('client_secret') ) {
+        $scheme = 'none';
         $self->logger->debug("Method none used");
         $client_id = $req->param('client_id');
     }
 
-    return ( $client_id, $client_secret, $secretOk );
+    return ( $client_id, $client_secret, $scheme );
 }
 
 # Get Access Token

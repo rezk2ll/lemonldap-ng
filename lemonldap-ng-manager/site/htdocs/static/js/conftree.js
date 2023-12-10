@@ -477,6 +477,34 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRedirectUris",
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRedirectUris",
             "title" : "oidcRPMetaDataOptionsRedirectUris"
+         },
+         {
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthMethod",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthMethod",
+            "select" : [
+               {
+                  "k" : "",
+                  "v" : "Any"
+               },
+               {
+                  "k" : "client_secret_post",
+                  "v" : "client_secret_post"
+               },
+               {
+                  "k" : "client_secret_basic",
+                  "v" : "client_secret_basic"
+               },
+               {
+                  "k" : "client_secret_jwt",
+                  "v" : "client_secret_jwt"
+               },
+               {
+                  "k" : "private_key_jwt",
+                  "v" : "private_key_jwt"
+               }
+            ],
+            "title" : "oidcRPMetaDataOptionsAuthMethod",
+            "type" : "select"
          }
       ],
       "help" : "idpopenidconnect.html#basic-options",

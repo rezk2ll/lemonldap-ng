@@ -680,6 +680,7 @@ t/32-OIDC-Back-Channel-Logout-no-sid.t
 t/32-OIDC-Back-Channel-Logout-sid-EC-keys.t
 t/32-OIDC-Back-Channel-Logout-sid-with-JWE-and-EC-keys.t
 t/32-OIDC-Back-Channel-Logout-sid.t
+t/32-OIDC-bad-auth-method.t
 t/32-OIDC-ClaimTypes.t
 t/32-OIDC-ClientCredentials-Grant.t
 t/32-OIDC-Code-Flow-Mobile.t
@@ -707,6 +708,7 @@ t/32-OIDC-Register.t
 t/32-OIDC-Request-Uri.t
 t/32-OIDC-Response-Modes.t
 t/32-OIDC-RP-rule.t
+t/32-OIDC-strict-JWS-private_key_jwt.t
 t/32-OIDC-Token-Exchange.t
 t/32-OIDC-Token-Introspection.t
 t/32-OIDC-Token-Security.t

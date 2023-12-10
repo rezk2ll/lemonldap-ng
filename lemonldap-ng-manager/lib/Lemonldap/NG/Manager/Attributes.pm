@@ -2620,6 +2620,30 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 0,
             'type'    => 'bool'
         },
+        'oidcRPMetaDataOptionsAuthMethod' => {
+            'select' => [ {
+                    'k' => '',
+                    'v' => 'Any'
+                },
+                {
+                    'k' => 'client_secret_post',
+                    'v' => 'client_secret_post'
+                },
+                {
+                    'k' => 'client_secret_basic',
+                    'v' => 'client_secret_basic'
+                },
+                {
+                    'k' => 'client_secret_jwt',
+                    'v' => 'client_secret_jwt'
+                },
+                {
+                    'k' => 'private_key_jwt',
+                    'v' => 'private_key_jwt'
+                }
+            ],
+            'type' => 'select'
+        },
         'oidcRPMetaDataOptionsAuthnLevel' => {
             'type' => 'intOrNull'
         },
