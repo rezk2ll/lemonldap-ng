@@ -92,9 +92,12 @@ sub init {
     }
     $self->{rule} = $rule;
 
-    # Initialize RP list
     return 0
       unless $self->Lemonldap::NG::Portal::Main::Issuer::init();
+
+    # Preloading RPs should not be needed thanks to lazy loading, but is
+    # required to make sp:confKey display rules work (#3058)
+    $self->loadRPs;
 
     # Manage RP requests
     $self->addRouteFromConf(
@@ -194,6 +197,31 @@ sub load_config {
     my $ttl = $config->{ttl};
     return { ( $ttl ? ( ttl => $ttl ) : () ),
         ( $info ? ( info => $info ) : () ) };
+}
+
+# Load all OpenID Connect Relying Parties from configuration
+sub loadRPs {
+    my ($self) = @_;
+
+    # Check presence of at least one relying party in configuration
+    unless ( $self->conf->{oidcRPMetaDataOptions}
+        and keys %{ $self->conf->{oidcRPMetaDataOptions} } )
+    {
+        $self->logger->warn(
+            "No OpenID Connect Relying Party found in configuration");
+        return 1;
+    }
+
+    foreach my $rp ( keys %{ $self->conf->{oidcRPMetaDataOptions} || {} } ) {
+        my $client_id = $self->conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsClientID};
+        if ($client_id) {
+            $self->lazy_load_config($client_id);
+        }
+        else {
+            $self->logger->warn("RP $rp has no Client ID");
+        }
+    }
 }
 
 # RUNNING METHODS
