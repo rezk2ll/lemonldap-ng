@@ -433,9 +433,10 @@ sub display {
             ENABLE_PASSWORD_DISPLAY =>
               $self->conf->{portalEnablePasswordDisplay},
             %{ $self->getPasswordPolicyTemplateVars },
-            (
-                $self->stayConnected->( $req, $req->sessionInfo )
-                ? ( STAYCONNECTED => 1 )
+            ( (
+                         $self->conf->{trustedBrowserRule}
+                      or $self->stayConnected->( $req, $req->sessionInfo )
+                ) ? ( STAYCONNECTED => 1 )
                 : ()
             ),
             (
