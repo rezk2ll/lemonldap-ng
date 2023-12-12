@@ -1262,6 +1262,11 @@ sub attributes {
             default       => '[A-Z]{3}[a-z]{5}.\d{2}',
             documentation => 'Regular expression to create a random password',
         },
+        trustedBrowserRule => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Trusted browser registration rule',
+        },
         trustedDomains =>
           { type => 'text', documentation => 'Trusted domains', },
         storePassword => {

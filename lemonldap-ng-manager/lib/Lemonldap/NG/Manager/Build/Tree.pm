@@ -739,9 +739,10 @@ sub tree {
                         'autoSigninRules',
                         {
                             title => 'stayConnect',
-                            help  => 'stayconnected.html',
+                            help  => 'trustedbrowser.html',
                             form  => 'simpleInputContainer',
                             nodes => [
+                                'trustedBrowserRule',
                                 'stayConnected',
                                 'stayConnectedBypassFG',
                                 'stayConnectedTimeout',
