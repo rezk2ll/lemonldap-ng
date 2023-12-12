@@ -8,19 +8,8 @@
 # $req->param('stayconnected'), usually by the user clicking a checkbox.
 # Request state is handled automatically during browser registration.
 #
-# Recognition of an already registered browser is not triggered by the plugin
-# itself but by other plugins (StayConnected, 2FA engine).
-# Plugins should call 'mustChallenge' to know if they need to start a TOTP
-# challenge with the web browser. If it is the case, they run 'challenge' to
-# prepare the validation form containing the JS challenge.
-#
-# Plugins must indicate a route for the challenge form to POST to. Plugins must
-# implement that route, and in that route, call 'getKnownBrowserState' to check
-# that the browser really is trusted, and then, continue the current flow.
-#
-# Plugins are responsible for saving the request state and restoring it during
-# the recognition phase.
-#
+# This plugin sets a _trustedBrowser session variable that can be used in 2FA
+# activation rules or other Portal features and plugins
 
 package Lemonldap::NG::Portal::Plugins::TrustedBrowser;
 

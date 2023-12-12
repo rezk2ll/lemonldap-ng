@@ -33,5 +33,5 @@ Plugins
    restservices
    soapservices
    status
-   stayconnected
+   trustedbrowser
    viewer
