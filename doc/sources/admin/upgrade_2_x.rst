@@ -29,6 +29,14 @@ None
 2.18.0
 ------
 
+"Stay connected" has changed name
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The "Stay connected on this device" feature has been refactored into a more
+generic :doc:`trustedbrowser` feature. The name of the configuration section
+has changed in the manager but no particular actions are required for existing
+installations.
+
 Change in second factor UI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
