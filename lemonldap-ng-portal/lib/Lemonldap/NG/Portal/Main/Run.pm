@@ -36,7 +36,7 @@ sub authProcess { qw(extractFormInfo getUser authenticate) }
 
 sub sessionData {
     return qw(setAuthSessionInfo setSessionInfo), $_[0]->groupsAndMacros,
-      qw(setPersistentSessionInfo setLocalGroups store secondFactor);
+      qw(setPersistentSessionInfo setLocalGroups rememberBrowserCheck store secondFactor);
 }
 
 sub validSession {
@@ -1393,9 +1393,21 @@ sub buildUrl {
 sub rememberBrowser {
     my ( $self, $req ) = @_;
 
-    if ($self->_trustedBrowser and $self->_trustedBrowser->can("newDevice")) {
+    if ( $self->_trustedBrowser and $self->_trustedBrowser->can("newDevice") ) {
         return $self->_trustedBrowser->newDevice($req);
-    } else {
+    }
+    else {
+        return PE_OK;
+    }
+}
+
+sub rememberBrowserCheck {
+    my ( $self, $req ) = @_;
+
+    if ( $self->_trustedBrowser and $self->_trustedBrowser->can("check") ) {
+        return $self->_trustedBrowser->check($req);
+    }
+    else {
         return PE_OK;
     }
 }

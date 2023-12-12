@@ -90,6 +90,8 @@ sub init {
     my ($self) = @_;
     $self->addUnauthRoute( registerbrowser => 'storeBrowser', ['POST'] );
     $self->addAuthRoute( registerbrowser => 'storeBrowser', ['POST'] );
+    $self->addUnauthRoute( checkbrowser => 'checkBrowserReturn', ['POST'] );
+    $self->addAuthRoute( checkbrowser => 'checkBrowserReturn', ['POST'] );
 
     # Parse activation rule
     if ( $self->conf->{trustedBrowserRule} ) {
@@ -119,6 +121,13 @@ sub newDevice {
     my ( $self, $req ) = @_;
 
     if ( $req->param('stayconnected') ) {
+
+        if ( $req->sessionInfo->{_trustedBrowser} ) {
+            $self->logger->debug( "User "
+                  . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                  . "asked to trust his web browser but is already trusted" );
+            return PE_OK;
+        }
 
         if ( $self->rule->( $req, $req->sessionInfo ) ) {
             my $totpSecret = $self->newSecret;
@@ -453,6 +462,72 @@ sub newConnectionSession {
             %$info,
         }
     );
+}
+
+sub check {
+    my ( $self, $req ) = @_;
+
+    if (
+        $self->mustChallenge(
+            $req, $req->sessionInfo->{ $self->conf->{whatToTrace} }
+        )
+      )
+    {
+        return $self->challenge(
+            $req,
+            '/checkbrowser',
+            {
+                _challenge_session_info => $req->sessionInfo,
+                _challenge_urldc        => $req->urldc
+            }
+        );
+    }
+    return PE_OK;
+}
+
+sub checkBrowserReturn {
+    my ( $self, $req ) = @_;
+    my $state = $self->getKnownBrowserState($req);
+
+    if ($state) {
+
+        # Restore state
+        my $sessionInfo = $state->{data}->{_challenge_session_info};
+        my $urldc       = $state->{data}->{_challenge_urldc};
+        return $self->p->do( $req, [ sub { PE_ERROR } ] ) unless $sessionInfo;
+        $req->urldc($urldc) if $urldc;
+        $req->sessionInfo($sessionInfo);
+
+        $req->sessionInfo->{_trustedBrowser} = 1;
+        my $authn_level_from_trusted = $state->{_trustedAuthnLevel};
+        my $authn_level_from_auth    = $sessionInfo->{authenticationLevel};
+        my $new_authn_level =
+          ( $authn_level_from_trusted > $authn_level_from_auth )
+          ? $authn_level_from_trusted
+          : undef;
+
+        if ($new_authn_level) {
+            $req->sessionInfo->{authenticationLevel} = $new_authn_level;
+        }
+
+        $req->mustRedirect(1);
+
+        # Resume login
+        return $self->p->do(
+            $req,
+            [
+                'store',                  'secondFactor',
+                @{ $self->p->afterData }, $self->p->validSession,
+                @{ $self->p->endAuth },   sub { PE_OK }
+            ]
+        );
+
+    }
+    else {
+        $self->logger->error("Trusted browser failed fingerprint challenge");
+    }
+    $req->noLoginDisplay(1);
+    return $self->p->do( $req, [ sub { PE_ERROR } ] );
 }
 
 1;
