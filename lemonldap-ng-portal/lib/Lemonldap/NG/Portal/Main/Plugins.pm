@@ -37,6 +37,7 @@ our @pList = (
     passwordPolicyActivation            => '::Plugins::BasePasswordPolicy',
     checkHIBP                           => '::Plugins::CheckHIBP',
     checkEntropy                        => '::Plugins::CheckEntropy',
+    initializePasswordReset             => '::Plugins::InitializePasswordReset',
     adaptativeAuthenticationLevelRules  =>
       '::Plugins::AdaptativeAuthenticationLevel',
     refreshSessions     => '::Plugins::Refresh',
