@@ -45,6 +45,7 @@ LWP::Protocol::PSGI->register(
                 ),
                 '  Execute request'
             );
+            count(1);
         }
         else {
             ok(
@@ -98,6 +99,9 @@ switch ('rp');
 &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
 ok( $rp = rp( $jwks, $metadata ), 'RP portal' );
 count(1);
+
+# Reload OP so it can fetch RP's JWKS
+$op->p->HANDLER->checkConf(1);
 
 # Query RP for auth
 ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth RP request' );

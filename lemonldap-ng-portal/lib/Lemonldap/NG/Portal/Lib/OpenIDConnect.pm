@@ -168,29 +168,6 @@ sub loadOPs {
     return 1;
 }
 
-# Load OpenID Connect Relying Parties
-# DEPRECATED, remove in 3.0, use sendOidcResponse instead
-# @param no_cache Disable cache use
-# @return boolean result
-sub loadRPs {
-    my ($self) = @_;
-
-    $self->warning->info("Using loadRPs is deprecated, use getRP instead");
-
-    # Check presence of at least one relying party in configuration
-    unless ( $self->conf->{oidcRPMetaDataOptions}
-        and keys %{ $self->conf->{oidcRPMetaDataOptions} } )
-    {
-        $self->logger->warn(
-            "No OpenID Connect Relying Party found in configuration");
-        return 1;
-    }
-
-    foreach my $rp ( keys %{ $self->conf->{oidcRPMetaDataOptions} || {} } ) {
-        $self->load_rp_from_llng_conf($rp);
-    }
-}
-
 # Load a single RP from LLNG configuration
 sub load_rp_from_llng_conf {
     my ( $self, $rp ) = @_;

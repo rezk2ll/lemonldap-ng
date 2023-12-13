@@ -45,6 +45,7 @@ LWP::Protocol::PSGI->register(
                 ),
                 '  Execute request'
             );
+            count(1);
         }
         else {
             ok(
@@ -109,6 +110,10 @@ SKIP: {
     &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
     ok( $rp = rp( $jwks, $metadata ), 'RP portal' );
     count(1);
+
+    # Reload OP so it can fetch RP's JWKS
+    $op->p->HANDLER->checkConf(1);
+
 
     # Verify that RP published its keys
     ok( $res = $rp->_get('/oauth2/jwks'), 'RP publish its keys' );
