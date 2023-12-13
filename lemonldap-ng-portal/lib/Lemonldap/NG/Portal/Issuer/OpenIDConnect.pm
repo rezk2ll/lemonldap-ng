@@ -222,6 +222,7 @@ sub loadRPs {
             $self->logger->warn("RP $rp has no Client ID");
         }
     }
+    return 1
 }
 
 # RUNNING METHODS
