@@ -115,6 +115,84 @@ sub resetPwd {
     return $self->p->sendHtml( $req, $tpl, params => $prms );
 }
 
+sub searchUser {
+    my $self         = shift;
+    my $req          = shift;
+    my $searchByMail = shift;
+
+    # Search user in database
+    $req->steps( [
+            'getUser',                 'setSessionInfo',
+            $self->p->groupsAndMacros, 'setPersistentSessionInfo',
+            'setLocalGroups'
+        ]
+    );
+    if ( my $error = $self->p->process( $req, useMail => $searchByMail ) ) {
+        if ( $error == PE_USERNOTFOUND or $error == PE_BADCREDENTIALS ) {
+            $self->userLogger->warn(
+                'Reset asked for an invalid user (' . $req->{user} . ')' );
+
+            # To avoid mail enumeration, return OK
+            # unless portalErrorOnMailNotFound is set
+
+            if ( $self->conf->{portalErrorOnMailNotFound} ) {
+                $self->setSecurity($req);
+                return PE_MAILNOTFOUND;
+            }
+
+            my $mailTimeout =
+              $self->conf->{mailTimeout} || $self->conf->{timeout};
+            my $expTimestamp = time() + $mailTimeout;
+            $req->data->{expMailDate} =
+              strftime( '%d/%m/%Y', localtime $expTimestamp );
+            $req->data->{expMailTime} =
+              strftime( '%H:%M', localtime $expTimestamp );
+            return PE_MAILCONFIRMOK;
+        }
+        return $error;
+    }
+    return PE_OK;
+}
+
+sub createMailSession {
+    my $self = shift;
+    my $req  = shift;
+
+    # Create a new session
+    my $infos = {};
+
+    # Set _utime for session autoremove
+    # Use default session timeout and mail session timeout to compute it
+    my $time        = time();
+    my $timeout     = $self->conf->{timeout};
+    my $mailTimeout = $self->conf->{mailTimeout} || $timeout;
+
+    $infos->{_utime} = $time + ( $mailTimeout - $timeout );
+
+    # Store expiration timestamp for further use
+    $infos->{mailSessionTimeoutTimestamp} = $time + $mailTimeout;
+
+    # Store start timestamp for further use
+    $infos->{mailSessionStartTimestamp} = $time;
+
+    # Store mail
+    $infos->{ $self->conf->{mailSessionKey} } =
+      $self->p->getFirstValue(
+        $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
+
+    # Store user
+    $infos->{user} = $req->{user};
+
+    # Store type
+    $infos->{_type} = 'mail';
+
+    # Store pdata
+    $infos->{_pdata} = $req->pdata;
+
+    # create session
+    return $self->p->getApacheSession( undef, kind => "TOKEN", info => $infos );
+}
+
 sub _reset {
     my ( $self, $req ) = @_;
     my $mailToken;
@@ -196,78 +274,12 @@ sub _reset {
         }
     }
 
-    # Search user in database
-    $req->steps( [
-            'getUser',                 'setSessionInfo',
-            $self->p->groupsAndMacros, 'setPersistentSessionInfo',
-            'setLocalGroups'
-        ]
-    );
-    if ( my $error = $self->p->process( $req, useMail => $searchByMail ) ) {
-        if ( $error == PE_USERNOTFOUND or $error == PE_BADCREDENTIALS ) {
-            $self->userLogger->warn( 'Reset asked for an invalid user ('
-                  . $req->param('mail')
-                  . ')' );
+    my $searchUserCode = $self->searchUser( $req, $searchByMail );
+    return $searchUserCode unless $searchUserCode == PE_OK;
 
-            # To avoid mail enumeration, return OK
-            # unless portalErrorOnMailNotFound is set
-
-            if ( $self->conf->{portalErrorOnMailNotFound} ) {
-                $self->setSecurity($req);
-                return PE_MAILNOTFOUND;
-            }
-
-            my $mailTimeout =
-              $self->conf->{mailTimeout} || $self->conf->{timeout};
-            my $expTimestamp = time() + $mailTimeout;
-            $req->data->{expMailDate} =
-              strftime( '%d/%m/%Y', localtime $expTimestamp );
-            $req->data->{expMailTime} =
-              strftime( '%H:%M', localtime $expTimestamp );
-            return PE_MAILCONFIRMOK;
-        }
-        return $error;
-    }
-
-    # Build temporary session
     my $mailSession = $self->getMailSession( $req->{user} );
     unless ( $mailSession or $mailToken ) {
-
-        # Create a new session
-        my $infos = {};
-
-        # Set _utime for session autoremove
-        # Use default session timeout and mail session timeout to compute it
-        my $time        = time();
-        my $timeout     = $self->conf->{timeout};
-        my $mailTimeout = $self->conf->{mailTimeout} || $timeout;
-
-        $infos->{_utime} = $time + ( $mailTimeout - $timeout );
-
-        # Store expiration timestamp for further use
-        $infos->{mailSessionTimeoutTimestamp} = $time + $mailTimeout;
-
-        # Store start timestamp for further use
-        $infos->{mailSessionStartTimestamp} = $time;
-
-        # Store mail
-        $infos->{ $self->conf->{mailSessionKey} } =
-          $self->p->getFirstValue(
-            $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
-
-        # Store user
-        $infos->{user} = $req->{user};
-
-        # Store type
-        $infos->{_type} = 'mail';
-
-        # Store pdata
-        $infos->{_pdata} = $req->pdata;
-
-        # create session
-        $mailSession =
-          $self->p->getApacheSession( undef, kind => "TOKEN", info => $infos );
-
+        $mailSession = $self->createMailSession( $req, $mailToken );
         $req->id( $mailSession->id );
     }
     elsif ($mailSession) {

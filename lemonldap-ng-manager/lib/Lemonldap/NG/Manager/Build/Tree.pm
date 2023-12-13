@@ -908,6 +908,15 @@ sub tree {
                               [ 'decryptValueRule', 'decryptValueFunctions', ]
                         },
                         {
+                            title => 'initializePasswordResetLabel',
+                            help  => 'initializePasswordReset.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'initializePasswordReset',
+                                'initializePasswordResetSecret',
+                            ],
+                        },
+                        {
                             title => 'customPluginsNode',
                             help  => 'plugincustom.html',
                             nodes => [ 'customPlugins', 'customPluginsParams' ]

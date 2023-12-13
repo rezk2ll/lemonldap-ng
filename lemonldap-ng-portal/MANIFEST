@@ -136,6 +136,7 @@ lib/Lemonldap/NG/Portal/Plugins/GlobalLogout.pm
 lib/Lemonldap/NG/Portal/Plugins/GrantSession.pm
 lib/Lemonldap/NG/Portal/Plugins/History.pm
 lib/Lemonldap/NG/Portal/Plugins/Impersonation.pm
+lib/Lemonldap/NG/Portal/Plugins/InitializePasswordReset.pm
 lib/Lemonldap/NG/Portal/Plugins/LocationDetect.pm
 lib/Lemonldap/NG/Portal/Plugins/MailPasswordReset.pm
 lib/Lemonldap/NG/Portal/Plugins/NewLocationWarning.pm
@@ -873,6 +874,7 @@ t/68-Impersonation-with-merge.t
 t/68-Impersonation-with-TOTP.t
 t/68-Impersonation-with-UnrestrictedUser.t
 t/68-Impersonation.t
+t/68-InitializePasswordReset.t
 t/70-2F-Password.t
 t/70-2F-TOTP-8-with-global-storage.t
 t/70-2F-TOTP-and-U2F-with-authnLevels-and-UpgradeOnly.t

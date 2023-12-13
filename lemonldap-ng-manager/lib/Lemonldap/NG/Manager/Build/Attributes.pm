@@ -638,6 +638,17 @@ sub attributes {
             documentation => 'Minimal entropy required for the password to be accepted',
             flags         => 'p',
         },
+        initializePasswordReset => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable Password Reset API plugin',
+            flags         => 'p',
+        },
+        initializePasswordResetSecret => {
+            type          => 'password',
+            documentation => 'Secret key for the Initialize Password Reset API',
+            flags         => 'p',
+        },
         checkUser => {
             default       => 0,
             type          => 'bool',

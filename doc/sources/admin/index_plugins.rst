@@ -21,6 +21,7 @@ Plugins
    globallogout
    grantsession
    impersonation
+   initializePasswordReset
    locationdetect
    loginhistory
    notifications

@@ -1675,6 +1675,13 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
             ],
             'type' => 'select'
         },
+        'initializePasswordReset' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'initializePasswordResetSecret' => {
+            'type' => 'password'
+        },
         'issuerDBCASActivation' => {
             'default' => 0,
             'type'    => 'bool'

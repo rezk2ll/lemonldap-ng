@@ -92,6 +92,8 @@ checkHIBPURL                                            URL of Have I Been Pwned
 checkEntropy                                            Enable entropy check of the password                                                 ✔
 checkEntropyRequired                                    Require entropy check to pass                                                        ✔
 checkEntropyRequiredLevel                               Minimal level of entropy required for the password                                   ✔
+initializePasswordReset                                 Enable Password Reset plugin                                                         ✔
+initializePasswordResetSecret                           Secret key of the Password Reset plugin API                                          ✔
 checkState                                              Enable CheckState plugin                                                             ✔
 checkStateSecret                                        Secret token for CheckState plugin                                                   ✔
 checkTime                                               Timeout to check new configuration in local cache                                    ✔      ✔               ✔
