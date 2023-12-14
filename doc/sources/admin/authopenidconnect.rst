@@ -25,6 +25,7 @@ As an RP, LL::NG supports many OpenID Connect features:
 -  Authorization Code, Implicit and Hybrid flows
 -  Automatic download of JWKS
 -  JWT signature verification
+-  Encrypted JWT (JWE)
 -  Access Token Hash verification
 -  ID Token validation
 -  Get UserInfo as JSON or as JWT

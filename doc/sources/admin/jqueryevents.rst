@@ -37,8 +37,16 @@ Sample code:
     $(document).on( "mfaAdded", { }, function( event, info ) {
                 console.log( "Added MFA of type" + info.type );
                 // Your code here
+
+                // If you want to prevent the redirection to the 2FA register page
+                // event.preventDefault();
     });
 
+.. versionchanged:: 2.0.16
+
+    LemonLDAP::NG redirects to the 2FA Register page after your
+    device has been added. You can cancel this redirection by calling
+    ``event.preventDefault()`` in your listener.
 
 mfaDeleted
 ~~~~~~~~~~~
@@ -237,4 +245,41 @@ This even is triggered when the user successfully registered a WebAuthn device
 
     $(document).on( "webauthnRegistrationSuccess", { }, function( event , info ) {
                 console.log( "WebAuthn registration success", info );
+    });
+
+Password policy
+---------------
+
+.. _checkpassword:
+
+checkpassword
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.18
+
+This event is triggered on every keystroke while the user inputs a new
+password. You can use it to check if it fits certain criteria.
+
+You can fetch the candidate password in ``context.password``.
+
+``context.evType`` will contain ``focusout`` if the user has focused out of the
+password field. You can use it for costly password quality checks to avoid
+running the check at every keystroke.
+
+``context.setResult`` is a function that you can call to update the password form state.
+
+* Its first argument is the ``id`` of the policy that you added with ``addPasswordPolicy`` in the server-side code.
+* Its second argument is the state of the policy, you can use one of ``good``,  ``bad``, ``unknown``, ``waiting`` or ``info``.
+
+The new password form can only be submitted when all policies have been set to a status of either ``good`` or ``info``.
+
+.. code:: javascript
+
+    $(document).on( "checkpassword", function( event , context ) {
+        password = context.password;
+        evType = context.evType;
+        setResult = context.setResult;
+
+        // Do your client-side check here
+        setResult("my-custom-ppolicy", "bad");
     });

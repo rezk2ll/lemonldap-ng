@@ -24,10 +24,11 @@ As an OP, LL::NG supports many OpenID Connect features:
 -  Nonce
 -  `Dynamic registration <https://openid.net/specs/openid-connect-registration-1_0.html>`__
 -  Access Token Hash generation
--  ID Token signature (HS256/HS384/HS512/RS256/RS384/RS512)
+-  ID Token signature (HS256/HS384/HS512 and RS256/RS384/RS512/PS256/PS384/PS512 or ES256/ES256K/ES384/ES512/EdDSA depending on the key type)
 -  UserInfo endpoint, as JSON or as JWT
 -  Request and Request URI
 -  `Back Channel Logout <https://openid.net/specs/openid-connect-backchannel-1_0.html>`__
+   (Since ``2.17.0``)
 -  `Front Channel Logout <https://openid.net/specs/openid-connect-frontchannel-1_0.html>`__
 -  `RP-Initiated Logout <https://openid.net/specs/openid-connect-rpinitiated-1_0.html>`__
 -  PKCE (Since ``2.0.4``) - See :rfc:`7636`
@@ -36,6 +37,7 @@ As an OP, LL::NG supports many OpenID Connect features:
 -  Refresh Tokens (Since ``2.0.7``)
 -  Optional JWT Access Tokens (Since ``2.0.12``) - See :rfc:`9068`
 -  `Form Post Response Mode <https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html>`__ (Since ``2.0.16``)
+-  Encrypted JWT (Since ``2.18.0``) - See :rfc:`7516`
 
 Configuration
 -------------
@@ -105,7 +107,10 @@ OIDC metadata example:
          "HS512",
          "RS256",
          "RS384",
-         "RS512"
+         "RS512",
+         "PS256",
+         "PS384",
+         "PS512"
       ],
       "id_token_signing_alg_values_supported" : [
          "none",
@@ -114,7 +119,10 @@ OIDC metadata example:
          "HS512",
          "RS256",
          "RS384",
-         "RS512"
+         "RS512",
+         "PS256",
+         "PS384",
+         "PS512"
       ],
       "userinfo_endpoint" : "http://auth.example.com/oauth2/userinfo",
       "request_uri_parameter_supported" : "true",
@@ -249,8 +257,26 @@ Options
       This feature only works if you have configured a form-based authentication module.
    -  **Allow OAuth2.0 Client Credentials Grant** (since version ``2.0.11``): Allow the use of the
       :ref:`Client Credentials Grant <client-credentials-grant>` by this client.
+   -  **Allowed URLs for fetching Request Object**: (since version ``2.17.1``):
+      which URLs may be called by the portal to fetch the request object (see
+      `request_uri
+      <https://openid.net/specs/openid-connect-core-1_0.html#RequestUriParameter>`__
+      in OIDC specifications). These URLs may use wildcards (``https://app.example.com/*``).
    -  **Authentication level**: Required authentication level to access this application
    -  **Access rule**: Lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
+   -  **Access Token Encryption key management algorithm**: If Relying-Party require access_token encryption, set here the key management algorithm
+   -  **Access Token Encryption content encryption algorithm**: If Relying-Party require access_token encryption, set here the content encryption algorithm
+   -  **ID Token Encryption key management algorithm**: If Relying-Party require id_token encryption, set here the key management algorithm
+   -  **ID Token Encryption content encryption algorithm**: If Relying-Party require id_token encryption, set here the content encryption algorithm
+   -  **User_info Encryption key management algorithm**: If Relying-Party require user_info response encryption, set here the key management algorithm
+   -  **User_info Encryption content encryption algorithm**: If Relying-Party require user_info response encryption, set here the content encryption algorithm
+   -  **Logout Encryption key management algorithm**: If Relying-Party require back-channel-logout token encryption, set here the key management algorithm
+   -  **Logout Encryption content encryption algorithm**: If Relying-Party require back-channel-logout token encryption, set here the content encryption algorithm
+
+-  **Keys**
+
+   -  **JWKS URI**: When Relying-Party require encryption, set here the relying-party endpoint where keys are published
+   -  **JWKS Data**: Alternative, fix here the relying-party JWKS document
 
 -  **Timeouts**
 

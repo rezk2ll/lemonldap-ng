@@ -8,7 +8,6 @@ Build-Depends: debhelper (>= 10),
 Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libapache-session-perl <!nocheck>,
                      libauth-yubikey-webclient-perl <!nocheck>,
-                     libauthen-oath-perl <!nocheck>,
                      libauthen-radius-perl <!nocheck>,
                      libcache-cache-perl <!nocheck>,
                      libclass-xsaccessor-perl <!nocheck>,
@@ -16,6 +15,7 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libconfig-inifiles-perl <!nocheck>,
                      libconvert-base32-perl <!nocheck>,
                      libconvert-pem-perl <!nocheck>,
+                     libcrypt-jwt-perl <!nocheck>,
                      libcrypt-openssl-rsa-perl <!nocheck>,
                      libcrypt-openssl-x509-perl <!nocheck>,
                      libcrypt-urandom-perl <!nocheck>,
@@ -35,6 +35,7 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libio-string-perl,
                      libipc-run-perl <!nocheck>,
                      liblist-moreutils-perl <!nocheck>,
+                     liblwp-protocol-psgi-perl <!nocheck>,
                      libjson-perl,
                      libjson-xs-perl <!nocheck>,
                      liblasso-perl <!nocheck>,
@@ -186,8 +187,8 @@ Recommends: lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uws
 Suggests: libcache-memcached-perl,
           libdigest-hmac-perl,
           libsoap-lite-perl
-Breaks: liblemonldap-ng-handler-perl (<< 1.9.1-2~), lemonldap-ng-fastcgi-server (<< 2.0.5~)
-Replaces: liblemonldap-ng-handler-perl (<< 1.9.1-2~), lemonldap-ng-fastcgi-server (<< 2.0.5~)
+Breaks: lemonldap-ng-fastcgi-server (<< 2.0.5~)
+Replaces: lemonldap-ng-fastcgi-server (<< 2.0.5~)
 Description: Lemonldap::NG handler part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
@@ -312,6 +313,7 @@ Depends: ${misc:Depends},
          libemail-date-format-perl
 Recommends: fonts-urw-base35 | gsfonts,
             libauthen-webauthn-perl,
+            libcrypt-jwt-perl,
             libcrypt-openssl-bignum-perl,
             libconvert-base32-perl,
             libio-string-perl,
@@ -321,7 +323,8 @@ Recommends: fonts-urw-base35 | gsfonts,
             libnet-ldap-perl,
             libio-socket-timeout-perl,
             libunicode-string-perl
-Suggests: gpg,
+Suggests: crowdsec,
+          gpg,
           libauthen-radius-perl,
           libcrypt-u2f-server-perl,
           libdbi-perl,

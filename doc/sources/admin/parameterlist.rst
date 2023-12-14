@@ -86,9 +86,14 @@ checkDevOps                                             Enable check DevOps     
 checkDevOpsCheckSessionAttributes                       Check if session attributes exist                                                    ✔
 checkDevOpsDisplayNormalizedHeaders                     Display normalized headers                                                           ✔
 checkDevOpsDownload                                     Enable check DevOps download field                                                   ✔
-checkHIBP                                               Enable check HIBP                                                                    ✔                      ✔
-checkHIBPRequired                                       Require HIBP check to pass                                                           ✔                      ✔
-checkHIBPURL                                            URL of Have I Been Pwned API                                                         ✔                      ✔
+checkHIBP                                               Enable check HIBP                                                                    ✔
+checkHIBPRequired                                       Require HIBP check to pass                                                           ✔
+checkHIBPURL                                            URL of Have I Been Pwned API                                                         ✔
+checkEntropy                                            Enable entropy check of the password                                                 ✔
+checkEntropyRequired                                    Require entropy check to pass                                                        ✔
+checkEntropyRequiredLevel                               Minimal level of entropy required for the password                                   ✔
+initializePasswordReset                                 Enable Password Reset plugin                                                         ✔
+initializePasswordResetSecret                           Secret key of the Password Reset plugin API                                          ✔
 checkState                                              Enable CheckState plugin                                                             ✔
 checkStateSecret                                        Secret token for CheckState plugin                                                   ✔
 checkTime                                               Timeout to check new configuration in local cache                                    ✔      ✔               ✔
@@ -168,6 +173,7 @@ dbiUserTable                                                                    
 dbiUserUser                                                                                                                                  ✔
 decryptValueFunctions                                   Custom function used for decrypting values                                           ✔
 decryptValueRule                                        Decrypt value activation rule                                                        ✔
+defaultNewKeySize                                       Default size for new RSA key helper                                                                 ✔       ✔
 demoExportedVars                                        Demo exported variables                                                              ✔
 disablePersistentStorage                                Enabled persistent storage                                                           ✔
 displaySessionId                                        Display _session_id with sessions explorer                                           ✔
@@ -209,6 +215,7 @@ globalStorageOptions                                    Session backend module o
 gpgAuthnLevel                                           GPG authentication level                                                             ✔
 gpgDb                                                   GPG keys database                                                                    ✔
 grantSessionRules                                       Rules to grant sessions                                                              ✔
+groupLDAPFilter                                         LDAP filter for group search                                                         ✔
 groups                                                  Groups                                                                               ✔
 groupsBeforeMacros                                      Compute groups before macros                                                         ✔
 handlerInternalCache                                    Handler internal cache timeout                                                       ✔      ✔               ✔
@@ -358,6 +365,7 @@ notifyDeleted                                           Show deleted sessions in
 notifyOther                                             Show other sessions in portal                                                        ✔
 nullAuthnLevel                                          Null authentication level                                                            ✔
 oidcAuthnLevel                                          OpenID Connect authentication level                                                  ✔
+oidcDropCspHeaders                                      Drop CORS headers from OIDC issuer responses                                         ✔
 oidcOPMetaDataOptions                                                                                                                        ✔                      [1]
 oidcRPCallbackGetParam                                  OpenID Connect Callback GET URLparameter                                             ✔
 oidcRPMetaDataOptions                                                                                                                        ✔                      [1]
@@ -376,7 +384,7 @@ oidcServiceIgnoreScopeForClaims                         OpenID Connect release a
 oidcServiceKeyIdSig                                     OpenID Connect Signature Key ID                                                      ✔
 oidcServiceMetaDataAuthnContext                         OpenID Connect Authentication Context Class Ref                                      ✔
 oidcServiceMetaDataAuthorizeURI                         OpenID Connect authorizaton endpoint                                                 ✔
-oidcServiceMetaDataBackChannelURI                       OpenID Connect Front-Channel logout endpoint                                         ✔
+oidcServiceMetaDataBackChannelURI                       OpenID Connect Back-Channel logout endpoint                                          ✔
 oidcServiceMetaDataCheckSessionURI                      OpenID Connect check session iframe                                                  ✔
 oidcServiceMetaDataEndSessionURI                        OpenID Connect end session endpoint                                                  ✔
 oidcServiceMetaDataFrontChannelURI                      OpenID Connect Front-Channel logout endpoint                                         ✔
@@ -386,7 +394,13 @@ oidcServiceMetaDataJWKSURI                              OpenID Connect JWKS endp
 oidcServiceMetaDataRegistrationURI                      OpenID Connect registration endpoint                                                 ✔
 oidcServiceMetaDataTokenURI                             OpenID Connect token endpoint                                                        ✔
 oidcServiceMetaDataUserInfoURI                          OpenID Connect user info endpoint                                                    ✔
+oidcServiceNewKeyIdSig                                  Future OpenID Connect Signature Key ID                                               ✔
+oidcServiceNewPrivateKeySig                                                                                                                  ✔
+oidcServiceNewPublicKeySig                                                                                                                   ✔
 oidcServiceOfflineSessionExpiration                     OpenID Connect global offline session TTL                                            ✔
+oidcServiceOldKeyIdSig                                  Previous OpenID Connect Signature Key ID                                             ✔
+oidcServiceOldPrivateKeySig                                                                                                                  ✔
+oidcServiceOldPublicKeySig                                                                                                                   ✔
 oidcServicePrivateKeySig                                                                                                                     ✔
 oidcServicePublicKeySig                                                                                                                      ✔
 oidcStorage                                             Apache::Session module to store OIDC user data                                       ✔
@@ -473,15 +487,19 @@ proxySessionService                                                             
 proxyUseSoap                                            Use SOAP instead of REST                                                             ✔
 radius2fActivation                                      Radius second factor activation                                                      ✔
 radius2fAuthnLevel                                      Authentication level for users authenticated by Radius second factor                 ✔
+radius2fDictionaryFile                                                                                                                       ✔
 radius2fLabel                                           Portal label for Radius 2F                                                           ✔
 radius2fLogo                                            Custom logo for Radius 2F                                                            ✔
+radius2fRequestAttributes                               RADIUS second factor authentication attributes                                       ✔
 radius2fSecret                                                                                                                               ✔
+radius2fSendInitialRequest                              Dial in to radius server before displaying form                                      ✔
 radius2fServer                                                                                                                               ✔
 radius2fTimeout                                         Radius 2f verification timeout                                                       ✔
 radius2fUsernameSessionKey                              Session key used as Radius login                                                     ✔
 radiusAuthnLevel                                        Radius authentication level                                                          ✔
 radiusDictionaryFile                                                                                                                         ✔
 radiusExportedVars                                      RADIUS exported variables                                                            ✔
+radiusRequestAttributes                                 RADIUS authentication attributes                                                     ✔
 radiusSecret                                                                                                                                 ✔
 radiusServer                                                                                                                                 ✔
 randomPasswordRegexp                                    Regular expression to create a random password                                       ✔

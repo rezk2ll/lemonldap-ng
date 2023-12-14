@@ -26,7 +26,82 @@ Known regressions in the latest released version
 
 None
 
-2.17
+2.18.0
+------
+
+Change in second factor UI
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+After registering a new second factor of type Webauthn, TOTP, U2F or Generic,
+the user is now brought back to the main 2FA Management screen.
+You can cancel this behavior by calling preventDefault in your JS handler:
+
+.. code:: javascript
+
+         $(document).on( "mfaAdded", { }, function( event, info ) {
+                    event.preventDefault();
+         });
+
+See :doc:`jqueryevents` for more information
+
+
+
+Apache2 handler now uses IP from mod_remoteip
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you use `mod_remoteip <https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html>`__ in your handlers,
+LemonLDAP::NG will now correctly use the IP from ``mod_remoteip`` in
+``$env->{REMOTE_ADDR}``.
+
+OpenID Connect issuer now implements ``acr_values``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The `acr_values` from OpenID Connect authorization requests can now be used to increase the authentication level required for accessing a service. If after upgrading you start noticing that users are now asked to upgrade their session when trying to access OIDC applications, you should check the `acr_values` requested by you application, and map them to the desired authentication level in `OpenID Connect Service` » `Authentication context`
+
+Cron files moved to systemd timers on Debian
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+On Debian, LemonLDAP::NG now uses systemd timers for maintenance tasks instead
+of ``cron.d`` scripts.
+
+If you need to modify the frequency of execution of your maintenance tasks, you should use a systemd override:
+
+```
+systemd edit liblemonldap-ng-portal-perl.timer
+systemd edit liblemonldap-ng-handler-perl.timer
+```
+
+```
+[Timer]
+OnCalendar=*-*-* *:07:07
+```
+
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can skip this entire section if you use the default ``bootstrap`` theme or if your custo theme only uses ``custom*.tpl`` templates.
+
+Password policy display
+^^^^^^^^^^^^^^^^^^^^^^^
+
+It is recommended to replace your custom theme's ``passwordpolicy.tpl`` by the one that is provided in the ``bootstrap`` theme.
+
+If you use the :doc:`Have I Been Pwned <checkhibp>` plugin, this is a required change because the modifications in 2.18 will break this particular plugin.
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
+2.17.1
+------
+
+Declaration of OIDC `request_uri` is now required
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+A little-know feature of OIDC (*note*: you are probably not using it) allows the OpenID Provider, LemonLDAP::NG in this case, to fetch the Authorization request parameters itself by indicating a `request_uri` parameter.
+
+By default, we now disallow this feature, and require LemonLDAP::NG admins to explicitely allow Request URIs in the configuration (*OpenID Connect Relying Parties* » *Your RP* » *Options* » *Security* » *Allowed URLs for fetching Request Object*). This setting allows wildcards such as ``http://rp.example.com/*``.
+
+2.17.0
 ------
 
 Possible regression in unicode character handling for UWSGI users
@@ -54,6 +129,8 @@ even more encoding bugs in the long run.
 
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can skip this entire section if you use the default ``bootstrap`` theme or if your custo theme only uses ``custom*.tpl`` templates.
 
 Font Awesome application icons
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -340,7 +417,7 @@ If you are using the default templates from the ``bootstrap`` theme, you don't n
 Remember authentication choice
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A :doc:`new plugin<rememberauthchoice>` can be enabled to display a checkbox in :doc:`authentication choice<authchoice>` module to allow users remembering their choice, which will automatically redirect them to the selected choice the next time they connect to the portal. 
+A :doc:`new plugin<rememberauthchoice>` can be enabled to display a checkbox in :doc:`authentication choice<authchoice>` module to allow users remembering their choice, which will automatically redirect them to the selected choice the next time they connect to the portal.
 
 If you use custom templates, you should update ``login.tpl``
 
@@ -349,7 +426,7 @@ If you use custom templates, you should update ``login.tpl``
     --- a/lemonldap-ng-portal/site/templates/bootstrap/login.tpl
     +++ b/lemonldap-ng-portal/site/templates/bootstrap/login.tpl
     @@ -66,6 +66,12 @@
-     
+
                  <TMPL_IF NAME="sslform">
                    <TMPL_INCLUDE NAME="sslformChoice.tpl">
     +
@@ -359,24 +436,24 @@ If you use custom templates, you should update ``login.tpl``
     +              </TMPL_IF>
     +
                  </TMPL_IF>
-     
+
                  <TMPL_IF NAME="gpgform">
     @@ -92,6 +98,11 @@
-     
+
                    </div>
-     
+
     +              <!-- Remember my authentication choice for this module -->
     +              <TMPL_IF NAME="REMEMBERAUTHCHOICE">
     +                <input type="hidden" id="rememberauthchoice" name="rememberauthchoice" value="<TMPL_IF NAME="REMEMBERAUTHCHOICEDEFAULTCHECKED">true</TMPL_IF>" />
     +              </TMPL_IF>
     +
                  </TMPL_IF>
-     
+
                </form>
     @@ -104,6 +115,34 @@
-     
+
          </div> <!-- end authMenu -->
-     
+
     +    <TMPL_IF NAME="REMEMBERAUTHCHOICE">
     +    <div class="input-group col-md-6 offset-md-3">
     +
@@ -406,7 +483,7 @@ If you use custom templates, you should update ``login.tpl``
     +    </TMPL_IF>
     +
        </TMPL_IF>
-     
+
        <TMPL_IF NAME="DISPLAY_FORM">
 
 Copy also ``styles.min.css`` and ``skin.min.js`` from ``bootstrap`` into your custom theme.

@@ -105,8 +105,10 @@ Logout user from current application and from Lemonldap::NG and redirect it to h
 
 .. danger::
 
-    \ ``logout_app`` and ``logout_app_sso`` rules are not
-    available with Nginx, Apache ONLY.
+    \ For ``logout_app`` and ``logout_app_sso`` rules to work with Nginx, you need
+    lua module, and you must enable ``nginx-lua-headers.conf``.
+    Also, make sure the ``header_filter_by_lua`` and corresponding ``error_page`` directives
+    are present in the appropriate "location" section. See ``test-nginx.conf`` for more information.
 
 By default, users will be redirected to the Portal if no URL is defined,
 or to the specified URL if exists.

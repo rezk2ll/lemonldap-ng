@@ -1,10 +1,26 @@
 Configuration overview
 ======================
 
+LemonLDAP::NG reads configuration from two sources:
+
+.. image:: config-overview.png
+
+The :ref:`local configuration<configlocation-local-file>` is generally stored in a ``/etc/lemonldap-ng/lemonldap-ng.ini`` file.
+
+Its main purpose is to tell LemonLDAP::NG where it can find the shared
+configuration. But it also contains some important settings like the logging
+verbosity level.
+
+The *shared configuration* is where most of the configuration is stored:
+authentication sources, applications, session backends, UI parameters, and so
+on. It needs to be shared between various componentes (*Portal* and *Handler*)
+and that's why it's generally stored in a shared database.
+
+
 Backends
 --------
 
-LemonLDAP::NG configuration is stored in a backend that allows all
+LemonLDAP::NG shared configuration is stored in a backend that allows all
 modules to access it.
 
 

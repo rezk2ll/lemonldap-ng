@@ -65,147 +65,7 @@ sub init {
     $self->label( $self->conf->{ $self->prefix . '2fLabel' } )
       if $self->conf->{ $self->prefix . '2fLabel' };
 
-    unless ( $self->noRoute ) {
-        $self->logger->debug( 'Adding ' . $self->prefix . '2fcheck routes' );
-        $self->addAuthRoute(
-            $self->prefix . '2fcheck' => '_verify',
-            ['POST']
-        );
-        $self->addAuthRoute(
-            $self->prefix . '2fcheck' => '_redirect',
-            ['GET']
-        );
-        $self->addUnauthRoute(
-            $self->prefix . '2fcheck' => '_verify',
-            ['POST']
-        );
-        $self->addUnauthRoute(
-            $self->prefix . '2fcheck' => '_redirect',
-            ['GET']
-        );
-    }
     return 1;
-}
-
-sub _redirect {
-    my ( $self, $req ) = @_;
-    my $arg = $req->env->{QUERY_STRING};
-    return [
-        302, [ Location => $self->conf->{portal} . ( $arg ? "?$arg" : '' ) ], []
-    ];
-}
-
-sub _verify {
-    my ( $self, $req ) = @_;
-
-    # Check token
-    my $token;
-    unless ( $token = $req->param('token') ) {
-        $self->userLogger->error( $self->prefix . ' 2F access without token' );
-        eval { $self->setSecurity($req) };
-        $req->mustRedirect(1);
-        return $self->p->do( $req, [ sub { PE_NOTOKEN } ] );
-    }
-
-    my $session;
-    unless ( $session = $self->ott->getToken($token) ) {
-        $self->userLogger->info(
-            'Invalid token during ' . $self->prefix . '2f validation' );
-        $req->noLoginDisplay(1);
-        return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
-    }
-    unless ( $session->{_2fRealSession} ) {
-        $self->logger->error("Invalid 2FA session token");
-        $req->noLoginDisplay(1);
-        return $self->p->do( $req, [ sub { PE_ERROR } ] );
-    }
-
-    # Launch second factor verification
-    my $res = $self->verify( $req, $session );
-
-    # Update sessionInfo
-    delete $session->{$_}
-      foreach (qw(tokenSessionStartTimestamp tokenTimeoutTimestamp _type));
-    $req->sessionInfo($session);
-    $req->id( delete $req->sessionInfo->{_2fRealSession} );
-    $req->urldc( delete $req->sessionInfo->{_2fUrldc} );
-    $req->{sessionInfo}->{_utime} = delete $req->{sessionInfo}->{_2fUtime};
-    $req->{sessionInfo}->{_2f}    = $self->prefix;
-
-    # Case error
-    if ($res) {
-        $req->noLoginDisplay(1);
-        $req->authResult(PE_BADCREDENTIALS);
-        return $self->p->do( $req, [ 'storeHistory', sub { $res } ] );
-    }
-
-    # Else restore session
-    $req->mustRedirect(1);
-    $self->userLogger->notice( $self->prefix
-          . '2f verification succeeded for '
-          . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
-
-    if ( my $l = $self->authnLevel ) {
-        $self->logger->debug(
-            "Update sessionInfo with new authenticationLevel: $l");
-        $req->sessionInfo->{authenticationLevel} = $l;
-
-        # Compute macros & local groups again with new authenticationLevel
-        $self->logger->debug("Compute macros and local groups...");
-        $req->steps( [ 'setMacros', 'setLocalGroups' ] );
-        if ( my $error = $self->p->process($req) ) {
-            $self->logger->debug("SFA: Process returned error: $error");
-            $req->error($error);
-            return $self->p->do( $req, [ sub { $error } ] );
-        }
-        $self->logger->debug("De-duplicate groups...");
-        $req->sessionInfo->{groups} = join $self->conf->{multiValuesSeparator},
-          keys %{ {
-                map { $_ => 1 } split $self->conf->{multiValuesSeparator},
-                $req->sessionInfo->{groups}
-            }
-          };
-
-        $self->logger->debug("Filter macros...");
-        my %macros = (
-            map { $_ => $req->sessionInfo->{$_} }
-              keys %{ $self->{conf}->{macros} }
-        );
-
-        $self->logger->debug(
-"Update session with new authenticationLevel, groups, hGroups and macros"
-        );
-        $self->p->updateSession(
-            $req,
-            {
-                authenticationLevel => $l,
-                groups              => $req->sessionInfo->{groups},
-                hGroups             => $req->sessionInfo->{hGroups},
-                _2f                 => $self->prefix,
-                %macros
-            }
-        );
-    }
-    else {
-        # Only update _2f session key
-        $self->p->updateSession(
-            $req,
-            {
-                _2f => $self->prefix,
-            }
-        );
-    }
-
-    $req->authResult(PE_SENDRESPONSE);
-    return $self->p->do(
-        $req,
-        [
-            @{ $self->p->afterData },
-            $self->p->validSession,
-            @{ $self->p->endAuth },
-            sub { PE_OK }
-        ]
-    );
 }
 
 1;
@@ -266,7 +126,7 @@ L<Lemonldap::NG::Portal> second factor plugins.
       # "token"
       ...
       # A LLNG constant must be returned. Example:
-      $req->response($my_psgi_response)
+      $req->response($my_psgi_response);
       return PE_SENDRESPONSE;
   }
   # Required 2nd factor verify method
@@ -278,9 +138,10 @@ L<Lemonldap::NG::Portal> second factor plugins.
         return PE_OK;
       }
       else {
-        return PE_BADCREDENTIALS
+        return PE_BADCREDENTIALS;
       }
   }
+  1;
 
 Enable your plugin in lemonldap-ng.ini, section [portal]:
 

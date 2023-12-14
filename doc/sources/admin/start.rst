@@ -14,13 +14,15 @@ Documentation for LemonLDAP::NG 2.0
    :caption: Getting started
    :hidden:
 
-   index_presentation
+   presentation
+   index_upgrade
    index_installation
 
 .. toctree::
    :caption: Configuration
    :hidden:
 
+   index_webserver
    index_firststeps
    index_portal
    index_handler
@@ -55,46 +57,21 @@ Presentation
 ------------
 
 -  :doc:`Presentation<presentation>`
--  :doc:`Main features<features>`
 -  :doc:`Quick start tutorial<quickstart>`
--  :doc:`Choose a platform<platformsoverview>`
+
+Upgrading
+---------
+
+-  :doc:`Upgrade notes<upgrade>`
 
 Installation
 ------------
 
-Before installation
-~~~~~~~~~~~~~~~~~~~
+-  :doc:`prereq`
 
-|image0|
-
--  :doc:`Prerequisites and dependencies<prereq>`
--  :doc:`Upgrade notes<upgrade>`
-
-.. _installation-1:
-
-Installation
-~~~~~~~~~~~~
-
-|image1|
-
--  :doc:`Installation from the tarball<installtarball>`
 -  :doc:`Installation on Debian/Ubuntu with packages<installdeb>`
 -  :doc:`Installation on RHEL/CentOS with packages<installrpm>`
--  :doc:`Installation on Suse Linux Enterprise Server with packages<installsles>`
 -  :doc:`Run in LemonLDAP::NG in Docker<docker>`
--  :doc:`Node.js handler<nodehandler>` |new|
-
-After installation
-~~~~~~~~~~~~~~~~~~
-
-|image3|
-
--  :doc:`Deploy Nginx configuration<confignginx>` *(recommended
-   configuration)*
--  :doc:`Deploy Traefik configuration<configtraefik>`
--  :doc:`Deploy Apache configuration<configapache>`
--  :doc:`Deploy LemonLDAP::NG on Plack servers family<configplack>`
-   *(Twiggy, Starman, Corona,...)* |new|
 
 
 .. _start-configuration:
@@ -102,8 +79,15 @@ After installation
 Configuration
 -------------
 
-First steps
-~~~~~~~~~~~
+Configuring your Web server
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  :doc:`Deploy Nginx configuration<confignginx>` *(recommended
+   configuration)*
+-  :doc:`Deploy Apache configuration<configapache>`
+
+Basics
+~~~~~~
 
 |image5|
 
@@ -274,6 +258,7 @@ Man-in-the-Middle                                                      ✔
 Software Exploit                                                       ✔
 :ref:`SSO by-passing<security-reverseproxies>`                         ✔
 :doc:`XSS<safejail>`                                   ✔
+:doc:`IP reputation<crowdsec>`                         ✔               ✔
 ====================================================== =============== ============================
 
 Plugins
@@ -290,6 +275,8 @@ Name                                                                 Description
 :doc:`CDA<cda>`                                                      Cross Domain Authentication
 :doc:`Check DevOps<checkdevops>` [5]_ |new|                          Check DevOps handler file
 :doc:`Check HIBP<checkhibp>` [19]_ |new|                             Check Have I Been Pwned
+:doc:`Check entropy<checkentropy>` [21]_ |new|                       Check entropy of password
+:doc:`InitializePasswordReset<initializePasswordReset>` [22]_ |new|  Initialize Password Reset by mail
 :doc:`Check state<checkstate>` |new|                                 Check state plugin (test page)
 :doc:`Check user<checkuser>`  [6]_                                   Check access rights, transmitted headers and session attibutes for a specific user and URL
 :doc:`Configuration viewer<viewer>`                                  Edit WebSSO configuration in Read Only mode
@@ -405,7 +392,7 @@ style modules are usable except for some features.
     generally a good choice.
 
 ================================================================ ========= ================================================ ==================================================== ================== =================================================================================================================================================================================================
-Backend                                                          Shareable :ref:`Session explorer<session-explorer>`        :ref:`Session restrictions<session-restrictions>`    Session expiration Comment
+Backend                                                          Shareable Session explorer                                 Session restrictions                                 Session expiration Comment
 ================================================================ ========= ================================================ ==================================================== ================== =================================================================================================================================================================================================
 :doc:`File<filesessionbackend>`                                            ✔                                                ✔                                                    ✔                  Not shareable between servers except if used in conjunction with :doc:`REST session backend<restsessionbackend>` or with a shared file system (NFS,...). Selected by default during installation.
 :doc:`PgJSON<pgjsonsessionbackend>`                              ✔         ✔                                                ✔                                                    ✔                  **Recommended backend for production installations**
@@ -414,7 +401,7 @@ Backend                                                          Shareable :ref:
 :doc:`Redis<redissessionbackend>`                                ✔         ✔                                                ✔                                                    ✔                  The fastest. Must be secured by network access control.
 :doc:`MongoDB<mongodbsessionbackend>` |deprecated|               ✔         ✔                                                ✔                                                    ✔                  Must be secured by network access control.
 :doc:`Cassandra<cassandrasessionbackend>`                        ✔         ✔                                                ✔                                                    ✔                  Another supported NoSQL DB
-:doc:`SQL<sqlsessionbackend>`                                    ✔         ✔                                                ✔                                                    ✔                  Unoptimized for :doc:`session explorer<features>` and :doc:`single session<features>` features.
+:doc:`SQL<sqlsessionbackend>`                                    ✔         ✔                                                ✔                                                    ✔                  Unoptimized for session explorer and single session features.
 :doc:`REST<restsessionbackend>` |new|                            ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
 :doc:`SOAP<soapsessionbackend>`  |deprecated|                    ✔         ✔                                                ✔                                                    ✔                  Proxy backend to be used in conjunction with another session backend.
 ================================================================ ========= ================================================ ==================================================== ================== =================================================================================================================================================================================================
@@ -493,6 +480,12 @@ Advanced features
 -  :doc:`Advanced PSGI usage<psgi>`
 -  :doc:`Ignore some manager tests<managertests>`
 -  :doc:`See full parameters list<parameterlist>`
+-  :doc:`Installation from the tarball<installtarball>`
+-  :doc:`Installation on Suse Linux Enterprise Server with packages<installsles>`
+-  :doc:`Deploy Traefik configuration<configtraefik>`
+-  :doc:`Deploy LemonLDAP::NG on Plack servers family<configplack>`
+   *(Twiggy, Starman, Corona,...)* |new|
+-  :doc:`Node.js handler<nodehandler>` |new|
 
 Mini howtos
 -----------
@@ -649,6 +642,14 @@ by your language code):
 .. [20]
    :doc:`Remember AuthChoice plugin<rememberauthchoice>` is available with LLNG ≥
    2.0.15
+
+.. [21]
+   :doc:`Check entropy plugin<checkentropy>` is available with LLNG ≥
+   2.18.1
+
+.. [22]
+   :doc:`initializePasswordReset<initializePasswordReset>` is available with LLNG ≥
+   2.18.1
 
 .. |image0| image:: /icons/kthememgr.png
 .. |image1| image:: /icons/warehause.png

@@ -401,6 +401,7 @@ sub tree {
                                 'radiusAuthnLevel',
                                 'radiusSecret',
                                 'radiusServer',
+                                'radiusTimeout',
                                 'radiusExportedVars',
                                 'radiusDictionaryFile',
                                 'radiusRequestAttributes',
@@ -908,6 +909,15 @@ sub tree {
                               [ 'decryptValueRule', 'decryptValueFunctions', ]
                         },
                         {
+                            title => 'initializePasswordResetLabel',
+                            help  => 'initializePasswordReset.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'initializePasswordReset',
+                                'initializePasswordResetSecret',
+                            ],
+                        },
+                        {
                             title => 'customPluginsNode',
                             help  => 'plugincustom.html',
                             nodes => [ 'customPlugins', 'customPluginsParams' ]
@@ -971,6 +981,8 @@ sub tree {
                                 'webauthn2fSelfRegistration',
                                 'webauthn2fUserCanRemoveKey',
                                 'webauthn2fUserVerification',
+                                'webauthn2fAttestation',
+                                'webauthn2fAttestationTrust',
                                 'webauthnRpName',
                                 'webauthnDisplayNameAttr',
                                 'webauthn2fAuthnLevel',
@@ -1145,6 +1157,16 @@ sub tree {
                                     nodes => [
                                         'checkHIBP', 'checkHIBPURL',
                                         'checkHIBPRequired'
+                                    ],
+                                },
+                                {
+                                    title => 'Entropycheck',
+                                    help  => 'checkentropy.html',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'checkEntropy',
+                                        'checkEntropyRequired',
+                                        'checkEntropyRequiredLevel'
                                     ],
                                 },
                                 {
@@ -1459,17 +1481,38 @@ sub tree {
                     help  => 'openidconnectservice.html#security',
                     nodes => [ {
                             title => 'oidcServiceMetaDataKeys',
-                            form  => 'RSACertKeyNoPassword',
-                            group => [
-                                'oidcServicePrivateKeySig',
-                                'oidcServicePublicKeySig',
-                                'oidcServiceKeyIdSig',
-                                'oidcServiceOldPrivateKeySig',
-                                'oidcServiceOldPublicKeySig',
-                                'oidcServiceOldKeyIdSig',
-                                'oidcServiceNewPrivateKeySig',
-                                'oidcServiceNewPublicKeySig',
-                                'oidcServiceNewKeyIdSig',
+                            nodes => [ {
+                                    title => 'oidcServiceMetaDataSigKeys',
+                                    form  => 'OidcKey',
+                                    group => [
+                                        'oidcServicePrivateKeySig',
+                                        'oidcServicePublicKeySig',
+                                        'oidcServiceKeyIdSig',
+                                        'oidcServiceKeyTypeSig',
+                                        'oidcServiceOldPrivateKeySig',
+                                        'oidcServiceOldPublicKeySig',
+                                        'oidcServiceOldKeyIdSig',
+                                        'oidcServiceOldKeyTypeSig',
+                                        'oidcServiceNewPrivateKeySig',
+                                        'oidcServiceNewPublicKeySig',
+                                        'oidcServiceNewKeyIdSig',
+                                        'oidcServiceNewKeyTypeSig',
+                                    ],
+                                },
+                                {
+                                    title => 'oidcServiceMetaDataEncKeys',
+                                    form  => 'OidcKey',
+                                    group => [
+                                        'oidcServicePrivateKeyEnc',
+                                        'oidcServicePublicKeyEnc',
+                                        'oidcServiceKeyIdEnc',
+                                        'oidcServiceKeyTypeEnc',
+                                        'oidcServiceOldPrivateKeyEnc',
+                                        'oidcServiceOldPublicKeyEnc',
+                                        'oidcServiceOldKeyIdEnc',
+                                        'oidcServiceOldKeyTypeEnc',
+                                    ],
+                                },
                             ],
                         },
                         'oidcServiceAllowAuthorizationCodeFlow',
@@ -1478,6 +1521,8 @@ sub tree {
                         'oidcServiceIgnoreScopeForClaims',
                         'oidcServiceAllowOnlyDeclaredScopes',
                         'oidcDropCspHeaders',
+                        'oidcServiceEncAlgorithmAlg',
+                        'oidcServiceEncAlgorithmEnc',
                     ],
                 },
                 {

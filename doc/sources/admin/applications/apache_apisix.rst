@@ -1,5 +1,5 @@
 Apache Apisix
-=======
+=============
 
 |logo|
 
@@ -14,7 +14,7 @@ Configuration
 --------------
 
 LemonLDAP::NG
-~~~~~
+~~~~~~~~~~~~~
 
 Make sure you have already
 :doc:`enabled OpenID Connect<../idpopenidconnect>` on your LemonLDAP::NG
@@ -32,11 +32,12 @@ Define exported attributes:
 - ``email``: the user identifier
 
 Apisix
-~~~~~~~
+~~~~~~
 
 The Apisix route configuration for OIDC is as follows: (based on `openid-connect plugins <https://apisix.apache.org/docs/apisix/plugins/openid-connect/>`__)
 
 .. code-block:: yaml
+
     services:
       -
         id: jmap_service_oidc
@@ -61,5 +62,3 @@ The Apisix route configuration for OIDC is as follows: (based on `openid-connect
 
 .. |logo| image:: /applications/apache_apisix_logo.png
    :class: align-center
-
-

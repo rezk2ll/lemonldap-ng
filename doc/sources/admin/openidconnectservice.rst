@@ -61,6 +61,13 @@ Security
 
 -  **Keys**: Define public/private key pair for asymmetric signature. A JWKS
    ``kid`` (Key ID) is automatically derived when new keys are generated.
+   You have to choose the key type: ``RSA`` or ``EC``. The list of
+   supported algorithms in OIDC metadata will be automatically updated.
+
+   - Set signing key if LLNG is an OpenID-Connect server
+   - Set Encryption key if LLNG is an OpenID-Connect Relying-Party and if you
+     want that the OpenID-Connect server encrypt the JWT tokens
+
 -  **Authorization Code Flow**: Set to 1 to allow Authorization Code flow
 -  **Implicit Flow**: Set to 1 to allow Implicit flow
 -  **Hybrid Flow**: Set to 1 to allow Hybrid flow
@@ -73,6 +80,14 @@ Security
    - Standard OIDC scopes (``openid`` ``profile`` ``email`` ``address`` ``phone``)
    - Scopes declared in :ref:`Scope values content <oidcextraclaims>`
    - Scopes declared in :ref:`Scope Rules <oidcscoperules>` (if they match the rule)
+-  **Drop CSP headers**: By default, LL::NG sets CSP headers everywhere. You can
+   change this behavior for OIDC with this option
+-  **Default "alg" algorithm for JWE encryption**: when LL::NG is an OpenID-Connect
+   Server, you can set here the default "alg" algorithm to use for JWE encryption
+-  **Default "enc" algorithm for JWE encryption**: when LL::NG is an OpenID-Connect
+   Server, you can set here the default "enc" algorithm to use for JWE encryption
+
+-  **Drop CSP headers from OIDC responses**: Set to 1 to drop all Content Security Policy headers (:ref:`CSP<security-configure-security-settings>`) from OIDC responses
 
 .. _x5c:
 
