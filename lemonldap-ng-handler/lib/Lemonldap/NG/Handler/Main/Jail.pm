@@ -106,7 +106,7 @@ sub build_jail {
     }
 
     $self->jail->share_from( __PACKAGE__,
-        [ @builtCustomFunctions, '&encrypt', '&decryot', '&token', '&listMatch' ] );
+        [ @builtCustomFunctions, '&encrypt', '&decrypt', '&token', '&listMatch' ] );
 
     $self->jail->share_from( 'MIME::Base64', ['&encode_base64'] );
 
