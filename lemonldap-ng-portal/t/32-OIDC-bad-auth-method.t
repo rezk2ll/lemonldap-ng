@@ -18,10 +18,10 @@ LWP::Protocol::PSGI->register(
     sub {
         my $req = Plack::Request->new(@_);
         ok( $req->uri =~ m#http://auth.((?:o|r)p).com(.*)#, ' REST request' );
+        count(1);
         my $host = $1;
         my $url  = $2;
         my ( $res, $client );
-        count(1);
         if ( $host eq 'op' ) {
             pass("  Request from RP to OP,     endpoint $url");
             $client = $op;
@@ -34,6 +34,7 @@ LWP::Protocol::PSGI->register(
             fail('  Aborting REST request (external)');
             return [ 500, [], [] ];
         }
+        count(1);
         switch ($host);
         if ( $req->method =~ /^post$/i ) {
             my $s = $req->content;
@@ -67,7 +68,7 @@ LWP::Protocol::PSGI->register(
         ok( ( $res->[0] == 200 or $res->[0] == 400 ),
             '  Response is 200 or 401' )
           or explain( $res->[0], '200 or 400' );
-        count(3);
+        count(2);
         if ( $url !~ /blogout/ ) {
             ok(
                 getHeader( $res, 'Content-Type' ) =~
@@ -100,6 +101,9 @@ switch ('rp');
 &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
 ok( $rp = rp( $jwks, $metadata ), 'RP portal' );
 count(1);
+
+# Reload OP so it can fetch RP's JWKS
+$op->p->HANDLER->checkConf(1);
 
 # Verify that RP published its keys
 ok( $res = $rp->_get('/oauth2/jwks'), 'RP publish its keys' );
