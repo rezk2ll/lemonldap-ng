@@ -488,6 +488,7 @@ sub checkBrowserReturn {
         $req->sessionInfo($sessionInfo);
 
         $req->sessionInfo->{_trustedBrowser} = 1;
+        $req->sessionInfo->{_stayConnectedSession} = $state->{_stayConnectedSession};
         my $authn_level_from_trusted = $state->{_trustedAuthnLevel};
         my $authn_level_from_auth    = $sessionInfo->{authenticationLevel};
         my $new_authn_level =
