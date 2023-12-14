@@ -433,7 +433,7 @@
 "impersonationUnrestrictedUsersRule":"Kısıtlamasız kullanıcı kuralı",
 "incompleteForm":"Gerekli alanlar eksik",
 "index":"Dizin",
-"initializePasswordReset":"Activation",
+"initializePasswordReset":"Aktivasyon",
 "initializePasswordResetLabel":"Initialize Password Reset API plugin",
 "initializePasswordResetSecret":"Secret key",
 "infoFormMethod":"Bilgi formu için metot",

@@ -433,7 +433,7 @@
 "impersonationUnrestrictedUsersRule":"כלל משתמשים בלתי מוגבלים",
 "incompleteForm":"שדות נחוצים חסרים",
 "index":"אינדקס",
-"initializePasswordReset":"Activation",
+"initializePasswordReset":"הפעלה",
 "initializePasswordResetLabel":"Initialize Password Reset API plugin",
 "initializePasswordResetSecret":"Secret key",
 "infoFormMethod":"שיטה לטופס מידע",

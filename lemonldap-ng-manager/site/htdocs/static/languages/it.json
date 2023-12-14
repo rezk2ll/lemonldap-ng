@@ -433,7 +433,7 @@
 "impersonationUnrestrictedUsersRule":"Unrestricted users rule",
 "incompleteForm":"Mancano campi obbligatori",
 "index":"Indice",
-"initializePasswordReset":"Activation",
+"initializePasswordReset":"Attivazione",
 "initializePasswordResetLabel":"Initialize Password Reset API plugin",
 "initializePasswordResetSecret":"Secret key",
 "infoFormMethod":"Metodo per il modulo informazioni",

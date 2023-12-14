@@ -433,7 +433,7 @@
 "impersonationUnrestrictedUsersRule":"Quy tắc người dùng không hạn chế",
 "incompleteForm":"Các trường bắt buộc bị thiếu",
 "index":"Chỉ mục",
-"initializePasswordReset":"Activation",
+"initializePasswordReset":"Kích hoạt",
 "initializePasswordResetLabel":"Initialize Password Reset API plugin",
 "initializePasswordResetSecret":"Secret key",
 "infoFormMethod":"Phương pháp cho mẫu thông tin",

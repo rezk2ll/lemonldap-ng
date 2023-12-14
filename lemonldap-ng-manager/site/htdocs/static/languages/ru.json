@@ -433,7 +433,7 @@
 "impersonationUnrestrictedUsersRule":"Правило неограниченных пользователей",
 "incompleteForm":"Отсутствуют обязательные поля",
 "index":"Индекс",
-"initializePasswordReset":"Activation",
+"initializePasswordReset":"Активация",
 "initializePasswordResetLabel":"Initialize Password Reset API plugin",
 "initializePasswordResetSecret":"Secret key",
 "infoFormMethod":"Метод для информационной формы",
