@@ -720,7 +720,7 @@
 "oidcRPMetaDataOptionsAllowClientCredentialsGrant":"Allow OAuth2.0 Client Credentials Grant",
 "oidcRPMetaDataOptionsAllowOffline":"允許離線存取",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"允許 OAuth2.0 密碼授權",
-"oidcRPMetaDataOptionsAuthMethod":"Token endpoint authentication method",
+"oidcRPMetaDataOptionsAuthMethod":"權杖端點驗證方法",
 "oidcRPMetaDataOptionsAuthnLevel":"驗證等級",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Authorization Codes",
 "oidcRPMetaDataOptionsBasic":"基本",

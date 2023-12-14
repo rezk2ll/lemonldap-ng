@@ -720,7 +720,7 @@
 "oidcRPMetaDataOptionsAllowClientCredentialsGrant":"Zezwalaj na przyznanie poświadczeń klienta OAuth2.0",
 "oidcRPMetaDataOptionsAllowOffline":"Zezwalaj na dostęp offline",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"Zezwól na przyznanie hasła OAuth2.0",
-"oidcRPMetaDataOptionsAuthMethod":"Token endpoint authentication method",
+"oidcRPMetaDataOptionsAuthMethod":"Metoda uwierzytelniania tokena punktu końcowego",
 "oidcRPMetaDataOptionsAuthnLevel":"Poziom uwierzytelnienia",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Kody autoryzacyjne",
 "oidcRPMetaDataOptionsBasic":"Podstawowy",

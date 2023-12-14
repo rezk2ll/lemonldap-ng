@@ -720,7 +720,7 @@
 "oidcRPMetaDataOptionsAllowClientCredentialsGrant":"Разрешить предоставление учетных данных клиента OAuth2.0",
 "oidcRPMetaDataOptionsAllowOffline":"Разрешить автономный доступ",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"Разрешить предоставление пароля OAuth2.0",
-"oidcRPMetaDataOptionsAuthMethod":"Token endpoint authentication method",
+"oidcRPMetaDataOptionsAuthMethod":"Метод аутентификации конечной точки токена",
 "oidcRPMetaDataOptionsAuthnLevel":"Уровень аутентификации",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Коды авторизации",
 "oidcRPMetaDataOptionsBasic":"Базовый",

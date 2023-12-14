@@ -720,7 +720,7 @@
 "oidcRPMetaDataOptionsAllowClientCredentialsGrant":"Cho phép cấp thông tin xác thực ứng dụng khách OAuth2.0",
 "oidcRPMetaDataOptionsAllowOffline":"Cho phép truy cập ngoại tuyến",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"Cho phép cấp mật khẩu OAuth2.0",
-"oidcRPMetaDataOptionsAuthMethod":"Token endpoint authentication method",
+"oidcRPMetaDataOptionsAuthMethod":"Phương pháp xác thực thiết bị đầu cuối Token",
 "oidcRPMetaDataOptionsAuthnLevel":"Mức xác thực",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Mã ủy quyền",
 "oidcRPMetaDataOptionsBasic":"Cơ bản ",

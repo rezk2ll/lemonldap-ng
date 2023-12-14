@@ -720,7 +720,7 @@
 "oidcRPMetaDataOptionsAllowClientCredentialsGrant":"Allow OAuth2.0 Client Credentials Grant",
 "oidcRPMetaDataOptionsAllowOffline":"Allow offline access",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"Allow OAuth2.0 Password Grant",
-"oidcRPMetaDataOptionsAuthMethod":"Token endpoint authentication method",
+"oidcRPMetaDataOptionsAuthMethod":"Metodo di autenticazione degli endpoint di token",
 "oidcRPMetaDataOptionsAuthnLevel":"Livello di autenticazione",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Authorization Codes",
 "oidcRPMetaDataOptionsBasic":"Basic",

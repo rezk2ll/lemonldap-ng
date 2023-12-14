@@ -720,7 +720,7 @@
 "oidcRPMetaDataOptionsAllowClientCredentialsGrant":"Permitir concessão de credenciais OAuth2.0 de cliente",
 "oidcRPMetaDataOptionsAllowOffline":"Permitir acesso offline",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"Permitir concessão de senha OAuth2.0",
-"oidcRPMetaDataOptionsAuthMethod":"Token endpoint authentication method",
+"oidcRPMetaDataOptionsAuthMethod":"Método de autenticação do ponto final de Token",
 "oidcRPMetaDataOptionsAuthnLevel":"Nível de autenticação",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Códigos de Autorização",
 "oidcRPMetaDataOptionsBasic":"Básico",

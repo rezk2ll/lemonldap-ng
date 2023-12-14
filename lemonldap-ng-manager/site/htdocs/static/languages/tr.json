@@ -720,7 +720,7 @@
 "oidcRPMetaDataOptionsAllowClientCredentialsGrant":"OAuth2.0 Client Credentials Grant İzin Ver",
 "oidcRPMetaDataOptionsAllowOffline":"Çevrimdışı erişime izin ver",
 "oidcRPMetaDataOptionsAllowPasswordGrant":"OAuth2.0 Password Grant İzin Ver",
-"oidcRPMetaDataOptionsAuthMethod":"Token endpoint authentication method",
+"oidcRPMetaDataOptionsAuthMethod":"Jeton uç noktası doğrulama metodu",
 "oidcRPMetaDataOptionsAuthnLevel":"Doğrulama seviyesi",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Yetkilendirme Kodları",
 "oidcRPMetaDataOptionsBasic":"Temel",
