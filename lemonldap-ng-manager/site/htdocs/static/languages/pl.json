@@ -1197,6 +1197,7 @@
 "stayConnectedSingleSession":"Jedna sesja na użytkownika",
 "stayConnectedTimeout":"Data ważności",
 "storePassword":"Przechowuj hasło użytkownika w sesji",
+"storePasswordEncrypted":"Encrypt password in session",
 "strictTransportSecurityMax_Age":"Maksymalny wiek ścisłego bezpieczeństwa transportu",
 "string":"Łańcuch znaków",
 "subtitle":"Podtytuł",

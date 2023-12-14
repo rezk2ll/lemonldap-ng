@@ -1197,6 +1197,7 @@
 "stayConnectedSingleSession":"每個使用者一個工作階段",
 "stayConnectedTimeout":"過期名稱",
 "storePassword":"在工作階段中儲存使用者密碼",
+"storePasswordEncrypted":"Encrypt password in session",
 "strictTransportSecurityMax_Age":"Strict-Transport-Security max age",
 "string":"字串",
 "subtitle":"副標題",

@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.18.0';
 
 sub tree {
     return [ {
@@ -579,6 +579,7 @@ sub tree {
                     help  => 'sessions.html',
                     nodes => [
                         'storePassword',
+                        'storePasswordEncrypted',
                         'displaySessionId',
                         'timeout',
                         'timeoutActivity',

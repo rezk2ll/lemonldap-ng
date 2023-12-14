@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.18.0';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -1198,6 +1198,11 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Store password in session',
+        },
+        storePasswordEncrypted => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Crypt the password in session',
         },
         timeout => {
             type          => 'int',

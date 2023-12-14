@@ -1197,6 +1197,7 @@
 "stayConnectedSingleSession":"Une seule session par utilisateur",
 "stayConnectedTimeout":"Durée de validité",
 "storePassword":"Stocke le mot de passe de l'utilisateur en session",
+"storePasswordEncrypted":"Chiffrer le mot de passe dans la session",
 "strictTransportSecurityMax_Age":"Age maximum Strict-Transport-Security",
 "string":"Chaîne",
 "subtitle":"Sous-titre",
