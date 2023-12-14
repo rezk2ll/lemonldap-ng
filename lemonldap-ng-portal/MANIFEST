@@ -556,6 +556,7 @@ t/02-Password-Demo-Local-noPpolicy.t
 t/02-Password-Demo-Local-Ppolicy.t
 t/02-Password-Demo-Local-SpeChars-Ppolicy.t
 t/02-Password-Demo.t
+t/02-Password-Encrypted-Demo.t
 t/02-SendHtml-Plugin.t
 t/03-ConfTimeout.t
 t/03-SessionTimeout.t
