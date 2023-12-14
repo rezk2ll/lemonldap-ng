@@ -34,6 +34,7 @@ LWP::Protocol::PSGI->register(
             fail('  Aborting REST request (external)');
             return [ 500, [], [] ];
         }
+        count(1);
         switch ($host);
         if ( $req->method =~ /^post$/i ) {
             my $s = $req->content;
@@ -45,7 +46,6 @@ LWP::Protocol::PSGI->register(
                 ),
                 '  Execute request'
             );
-            count(1);
         }
         else {
             ok(
@@ -66,7 +66,7 @@ LWP::Protocol::PSGI->register(
             );
         }
         ok( $res->[0] == 200, '  Response is 200' );
-        count(3);
+        count(2);
         if ( $url !~ /blogout/ ) {
             ok(
                 getHeader( $res, 'Content-Type' ) =~
