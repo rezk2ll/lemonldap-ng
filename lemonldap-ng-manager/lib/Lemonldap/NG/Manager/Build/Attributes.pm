@@ -3686,7 +3686,7 @@ sub attributes {
         available2F => {
             type    => 'text',
             default => join( ',',
-                qw/UTOTP TOTP U2F REST Mail2F Ext2F WebAuthn Yubikey Radius Password/
+                qw/UTOTP TOTP U2F REST Mail2F Ext2F WebAuthn Yubikey Radius Password Okta/
             ),
             documentation => 'Available second factor modules',
         },

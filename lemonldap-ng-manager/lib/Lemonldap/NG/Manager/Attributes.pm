@@ -661,7 +661,7 @@ sub attributes {
         },
         'available2F' => {
             'default' =>
-'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius,Password',
+'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius,Password,Okta',
             'type' => 'text'
         },
         'available2FSelfRegistration' => {
