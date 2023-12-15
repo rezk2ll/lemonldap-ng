@@ -162,24 +162,29 @@ sub send_mail {
                     : ()
                 ),
                 Subject => $subject,
-                Type    => 'multipart/alternative',
+                Type    => 'multipart/mixed',
                 Date    => email_date,
             );
-            $message->attach(
+
+            my $alternative = $message->attach( Type => 'multipart/alternative' );
+
+            # Text message
+            $alternative->attach(
                 Type => 'text/plain; charset=' . $self->charset,
                 Data => $self->htmlParser->parse($body),
             );
-            my $alternative = $message->attach( Type => 'multipart/related' );
+
+            my $related = $alternative->attach( Type => 'multipart/related' );
 
             # Attach HTML message
-            $alternative->attach(
+            $related->attach(
                 Type => 'text/html; charset=' . $self->charset,
                 Data => $body,
             );
 
             # Attach included images
             foreach ( keys %cid ) {
-                $alternative->attach(
+                $related->attach(
                     Type => "image/" . ( $cid{$_} =~ m/\.(\w+)/ )[0],
                     Id   => $_,
                     Path => $self->conf->{templateDir} . "/"
