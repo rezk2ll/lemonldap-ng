@@ -90,6 +90,13 @@ If you use the :doc:`Have I Been Pwned <checkhibp>` plugin, this is a required c
 
 If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
 
+Email templates
+^^^^^^^^^^^^^^^
+
+To avoid email sent by LL::NG being flagged as spam, we remove inline images in HTML content. You can add them back by customising the email templates and eithier use inline images (cid) or links to external resources.
+
+Note that we now send a plain text version of the mail attached to the HTML email.
+
 2.17.1
 ------
 

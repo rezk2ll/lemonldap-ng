@@ -118,6 +118,7 @@ BuildRequires:  perl(Getopt::Std)
 BuildRequires:  perl(GSSAPI)
 BuildRequires:  perl(Hash::Merge::Simple)
 BuildRequires:  perl(HTML::Entities)
+BuildRequires:  perl(HTML::FormatText::WithLinks)
 BuildRequires:  perl(HTML::Template)
 %{!?el7:BuildRequires:  perl(HTTP::BrowserDetect)}
 BuildRequires:  perl(HTTP::Date)
