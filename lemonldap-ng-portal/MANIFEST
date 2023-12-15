@@ -226,7 +226,6 @@ site/htdocs/static/bootstrap/u2f.png
 site/htdocs/static/bootstrap/utotp.png
 site/htdocs/static/bootstrap/webauthn.png
 site/htdocs/static/bootstrap/yubikey.png
-site/htdocs/static/bwr/bootstrap/.gitignore
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-grid.css
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-grid.css.map
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-grid.min.css
@@ -243,11 +242,9 @@ site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.js
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.js.map
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.min.js
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.min.js.map
-site/htdocs/static/bwr/fingerprintjs2/.gitignore
 site/htdocs/static/bwr/fingerprintjs2/fingerprint2.js
 site/htdocs/static/bwr/fingerprintjs2/fingerprint2.min.js
 site/htdocs/static/bwr/fingerprintjs2/fingerprint2.min.js.map
-site/htdocs/static/bwr/font-awesome/.gitignore
 site/htdocs/static/bwr/font-awesome/css/font-awesome.css
 site/htdocs/static/bwr/font-awesome/css/font-awesome.css.map
 site/htdocs/static/bwr/font-awesome/css/font-awesome.min.css
@@ -256,7 +253,6 @@ site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.svg
 site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.ttf
 site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.woff
 site/htdocs/static/bwr/font-awesome/fonts/fontawesome-webfont.woff2
-site/htdocs/static/bwr/jquery-ui/.gitignore
 site/htdocs/static/bwr/jquery-ui/jquery-ui.js
 site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js
 site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js.map
@@ -739,6 +735,7 @@ t/36-Combination-with-TOTP.t
 t/36-Combination.t
 t/37-CAS-App-to-SAML-IdP-POST-with-WAYF.t
 t/37-CAS-App-to-SAML-IdP-POST.t
+t/37-Issuer-Display-Rule.t
 t/37-Issuer-Timeout.t
 t/37-Logout-from-2-chained-SAML-SP-SOAP.t
 t/37-Logout-from-OIDC-RP-to-SAML-IDP-Redirect.t
