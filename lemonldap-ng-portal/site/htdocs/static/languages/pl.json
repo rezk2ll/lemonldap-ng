@@ -259,6 +259,7 @@
 "password":"Hasło",
 "password2f":"Hasło",
 "passwordCompromised":"Nie znaleziono w przejętej bazie danych haseł",
+"checkentropyLabel":"Password strength",
 "passwordPolicy":"Przestrzegaj następujących zasad:",
 "passwordPolicyMinDigit":"Minimalna liczba cyfr:",
 "passwordPolicyMinLower":"Minimalna liczba małych liter:",

@@ -34,6 +34,7 @@ LWP::Protocol::PSGI->register(
             fail('  Aborting REST request (external)');
             return [ 500, [], [] ];
         }
+        count(1);
         switch ($host);
         if ( $req->method =~ /^post$/i ) {
             my $s = $req->content;
@@ -65,7 +66,7 @@ LWP::Protocol::PSGI->register(
             );
         }
         ok( $res->[0] == 200, '  Response is 200' );
-        count(3);
+        count(2);
         if ( $url !~ /blogout/ ) {
             ok(
                 getHeader( $res, 'Content-Type' ) =~
@@ -109,6 +110,10 @@ SKIP: {
     &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
     ok( $rp = rp( $jwks, $metadata ), 'RP portal' );
     count(1);
+
+    # Reload OP so it can fetch RP's JWKS
+    $op->p->HANDLER->checkConf(1);
+
 
     # Verify that RP published its keys
     ok( $res = $rp->_get('/oauth2/jwks'), 'RP publish its keys' );
@@ -312,7 +317,6 @@ sub rp {
                         oidcOPMetaDataOptionsClientID     => "rpid",
                         oidcOPMetaDataOptionsConfigurationURI =>
 "https://auth.op.com/.well-known/openid-configuration",
-                        oidcServiceKeyIdEnc => 'aabbcc',
                     }
                 },
                 oidcServicePrivateKeyEnc => oidc_key_op_private_sig,

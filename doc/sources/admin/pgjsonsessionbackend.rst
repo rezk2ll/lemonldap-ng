@@ -39,6 +39,8 @@ Create the following tables. You may skip the session types you are not going to
    CREATE INDEX i_s_ipAddr           ON sessions ((a_session ->> 'ipAddr'));
    CREATE INDEX i_s__httpSessionType ON sessions ((a_session ->> '_httpSessionType'));
    CREATE INDEX i_s_user             ON sessions ((a_session ->> 'user'));
+   CREATE INDEX i_s_mail             ON sessions ((a_session ->> 'mail'));
+   CREATE INDEX i_s__session_uid     ON sessions ((a_session ->> '_session_uid'));
 
 
    CREATE TABLE psessions (

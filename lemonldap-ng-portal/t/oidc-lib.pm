@@ -1,5 +1,30 @@
 use Lemonldap::NG::Common::JWT qw/getJWTPayload getJWTHeader/;
 
+sub oidc_key_op_private_ec_sig {
+    '-----BEGIN EC PRIVATE KEY-----
+MIIBUQIBAQQggmWd5U3Stm54SoTlH18+b7n1/T5agIin9BqwpGnCwMuggeMwgeAC
+AQEwLAYHKoZIzj0BAQIhAP////8AAAABAAAAAAAAAAAAAAAA////////////////
+MEQEIP////8AAAABAAAAAAAAAAAAAAAA///////////////8BCBaxjXYqjqT57Pr
+vVV2mIa8ZR0GsMxTsPY7zjw+J9JgSwRBBGsX0fLhLEJH+Lzm5WOkQPJ3A32BLesz
+oPShOUXYmMKWT+NC4v4af5uO5+tKfA+eFivOM1drMV7Oy7ZAaDe/UfUCIQD/////
+AAAAAP//////////vOb6racXnoTzucrC/GMlUQIBAaFEA0IABG+Hq4JussV3gHNt
+KADLOTyfvvEbZSX/izaftpK05tVU39YTYz54PKOOcgXPvmoPPreVaQLhL2YjxFPD
+p2qalrs=
+-----END EC PRIVATE KEY-----';
+}
+
+sub oidc_key_op_public_ec_sig {
+    '-----BEGIN PUBLIC KEY-----
+MIIBMzCB7AYHKoZIzj0CATCB4AIBATAsBgcqhkjOPQEBAiEA/////wAAAAEAAAAA
+AAAAAAAAAAD///////////////8wRAQg/////wAAAAEAAAAAAAAAAAAAAAD/////
+//////////wEIFrGNdiqOpPns+u9VXaYhrxlHQawzFOw9jvOPD4n0mBLBEEEaxfR
+8uEsQkf4vOblY6RA8ncDfYEt6zOg9KE5RdiYwpZP40Li/hp/m47n60p8D54WK84z
+V2sxXs7LtkBoN79R9QIhAP////8AAAAA//////////+85vqtpxeehPO5ysL8YyVR
+AgEBA0IABG+Hq4JussV3gHNtKADLOTyfvvEbZSX/izaftpK05tVU39YTYz54PKOO
+cgXPvmoPPreVaQLhL2YjxFPDp2qalrs=
+-----END PUBLIC KEY-----';
+}
+
 sub oidc_key_op_private_sig {
     "-----BEGIN RSA PRIVATE KEY-----
 MIIEowIBAAKCAQEAs2jsmIoFuWzMkilJaA8//5/T30cnuzX9GImXUrFR2k9EKTMt
@@ -78,8 +103,7 @@ sub login {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $op, $uid ) = @_;
     my $res;
-    my $query = buildForm(
-        {
+    my $query = buildForm( {
             user     => $uid,
             password => $uid,
         }
@@ -116,8 +140,7 @@ sub codeAuthorize {
 
 sub tokenExchange {
     my ( $op, $clientid, %params ) = @_;
-    my $query = buildForm(
-        {
+    my $query = buildForm( {
             grant_type => 'urn:ietf:params:oauth:grant-type:token-exchange',
             %params
         }
@@ -138,8 +161,7 @@ sub tokenExchange {
 
 sub codeGrant {
     my ( $op, $clientid, $code, $redirect_uri ) = @_;
-    my $query = buildForm(
-        {
+    my $query = buildForm( {
             grant_type   => "authorization_code",
             code         => $code,
             redirect_uri => $redirect_uri,
@@ -176,8 +198,7 @@ sub getUserinfo {
 sub refreshGrant {
     my ( $op, $client_id, $refresh_token ) = @_;
 
-    $query = buildForm(
-        {
+    $query = buildForm( {
             grant_type    => 'refresh_token',
             refresh_token => $refresh_token,
         }
@@ -198,8 +219,7 @@ sub refreshGrant {
 
 sub introspect {
     my ( $op, $client_id, $token ) = @_;
-    my $query = buildForm(
-        {
+    my $query = buildForm( {
             client_id     => $client_id,
             client_secret => $client_id,
             token         => $token,

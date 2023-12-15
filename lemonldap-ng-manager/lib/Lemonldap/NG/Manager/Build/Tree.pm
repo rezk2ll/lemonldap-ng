@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.18.0';
 
 sub tree {
     return [ {
@@ -580,6 +580,7 @@ sub tree {
                     help  => 'sessions.html',
                     nodes => [
                         'storePassword',
+                        'storePasswordEncrypted',
                         'displaySessionId',
                         'timeout',
                         'timeoutActivity',
@@ -908,6 +909,15 @@ sub tree {
                               [ 'decryptValueRule', 'decryptValueFunctions', ]
                         },
                         {
+                            title => 'initializePasswordResetLabel',
+                            help  => 'initializePasswordReset.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'initializePasswordReset',
+                                'initializePasswordResetSecret',
+                            ],
+                        },
+                        {
                             title => 'customPluginsNode',
                             help  => 'plugincustom.html',
                             nodes => [ 'customPlugins', 'customPluginsParams' ]
@@ -1147,6 +1157,16 @@ sub tree {
                                     nodes => [
                                         'checkHIBP', 'checkHIBPURL',
                                         'checkHIBPRequired'
+                                    ],
+                                },
+                                {
+                                    title => 'Entropycheck',
+                                    help  => 'checkentropy.html',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'checkEntropy',
+                                        'checkEntropyRequired',
+                                        'checkEntropyRequiredLevel'
                                     ],
                                 },
                                 {
@@ -1463,29 +1483,34 @@ sub tree {
                             title => 'oidcServiceMetaDataKeys',
                             nodes => [ {
                                     title => 'oidcServiceMetaDataSigKeys',
-                                    form  => 'RSACertKeyNoPassword',
+                                    form  => 'OidcKey',
                                     group => [
                                         'oidcServicePrivateKeySig',
                                         'oidcServicePublicKeySig',
                                         'oidcServiceKeyIdSig',
+                                        'oidcServiceKeyTypeSig',
                                         'oidcServiceOldPrivateKeySig',
                                         'oidcServiceOldPublicKeySig',
                                         'oidcServiceOldKeyIdSig',
+                                        'oidcServiceOldKeyTypeSig',
                                         'oidcServiceNewPrivateKeySig',
                                         'oidcServiceNewPublicKeySig',
                                         'oidcServiceNewKeyIdSig',
+                                        'oidcServiceNewKeyTypeSig',
                                     ],
                                 },
                                 {
                                     title => 'oidcServiceMetaDataEncKeys',
-                                    form  => 'RSACertKeyNoPassword',
+                                    form  => 'OidcKey',
                                     group => [
                                         'oidcServicePrivateKeyEnc',
                                         'oidcServicePublicKeyEnc',
                                         'oidcServiceKeyIdEnc',
+                                        'oidcServiceKeyTypeEnc',
                                         'oidcServiceOldPrivateKeyEnc',
                                         'oidcServiceOldPublicKeyEnc',
                                         'oidcServiceOldKeyIdEnc',
+                                        'oidcServiceOldKeyTypeEnc',
                                     ],
                                 },
                             ],

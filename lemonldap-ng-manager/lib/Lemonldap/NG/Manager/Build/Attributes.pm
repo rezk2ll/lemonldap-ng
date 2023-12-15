@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.17.2';
+our $VERSION = '2.18.0';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -164,6 +164,26 @@ sub types {
                 return (
                     $_[0] =~
 /^(?:(?:\-+\s*BEGIN\s+(?:(?:RSA|ENCRYPTED)\s+)?PRIVATE\s+KEY\s*\-+\r?\n)?(?:Proc-Type:.*\r?\nDEK-Info:.*\r?\n[\r\n]*)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:(?:RSA|ENCRYPTED)\s+)?PRIVATE\s+KEY\s*\-+)?[\r\n]*)?$/s
+                    ? (1)
+                    : ( 1, '__badPemEncoding__' )
+                );
+            },
+        },
+        'EcOrRSAPublicKeyOrCertificate' => {
+            'test' => sub {
+                return (
+                    $_[0] =~
+/^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+)?[\r\n]*)?$/s
+                    ? (1)
+                    : ( 1, '__badPemEncoding__' )
+                );
+            },
+        },
+        EcOrRSAPrivateKey => {
+            test => sub {
+                return (
+                    $_[0] =~
+/^(?:(?:\-+\s*BEGIN\s+(?:(?:RSA|EC|ENCRYPTED)\s+)?PRIVATE\s+KEY\s*\-+\r?\n)?(?:Proc-Type:.*\r?\nDEK-Info:.*\r?\n[\r\n]*)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:(?:RSA|EC|ENCRYPTED)\s+)?PRIVATE\s+KEY\s*\-+)?[\r\n]*)?$/s
                     ? (1)
                     : ( 1, '__badPemEncoding__' )
                 );
@@ -599,6 +619,35 @@ sub attributes {
             default       => 1,
             type          => 'bool',
             documentation => 'Require HIBP check to pass',
+            flags         => 'p',
+        },
+        checkEntropy => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable entropy check of password',
+            flags         => 'p',
+        },
+        checkEntropyRequired => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Require entropy check to pass',
+            flags         => 'p',
+        },
+        checkEntropyRequiredLevel => {
+            type          => 'int',
+            documentation =>
+              'Minimal entropy required for the password to be accepted',
+            flags => 'p',
+        },
+        initializePasswordReset => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable Password Reset API plugin',
+            flags         => 'p',
+        },
+        initializePasswordResetSecret => {
+            type          => 'password',
+            documentation => 'Secret key for the Initialize Password Reset API',
             flags         => 'p',
         },
         checkUser => {
@@ -1231,6 +1280,11 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Store password in session',
+        },
+        storePasswordEncrypted => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Crypt the password in session',
         },
         timeout => {
             type          => 'int',
@@ -2422,17 +2476,18 @@ sub attributes {
         webauthn2fAttestation => {
             type   => 'select',
             select => [
-                { k => 'none', v => 'None' },
-                { k => 'direct',   v => 'Direct' },
-                { k => 'indirect',    v => 'Indirect' },
-                { k => 'enterprise',    v => 'Enterprise' },
+                { k => 'none',       v => 'None' },
+                { k => 'direct',     v => 'Direct' },
+                { k => 'indirect',   v => 'Indirect' },
+                { k => 'enterprise', v => 'Enterprise' },
             ],
             default       => 'none',
             documentation => 'Ask the authenticator for an attestation',
         },
         webauthn2fAttestationTrust => {
             type          => 'file',
-            documentation => 'Certificate bundle for attestation trust validation',
+            documentation =>
+              'Certificate bundle for attestation trust validation',
         },
         webauthn2fUserCanRemoveKey => {
             type          => 'bool',
@@ -4404,6 +4459,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         sfExtra => {
             type          => 'sfExtraContainer',
+            help          => "sfextra.html",
             keyTest       => qr/^\w+$/,
             test          => sub { 1 },
             documentation => 'Extra second factors',
@@ -4535,24 +4591,46 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             },
             documentation => 'OpenID Connect Authentication Context Class Ref',
         },
-        oidcServiceOldPrivateKeySig => { type => 'RSAPrivateKey', },
-        oidcServiceOldPublicKeySig  => { type => 'RSAPublicKeyOrCertificate', },
-        oidcServiceOldKeyIdSig      => {
+
+        # OIDC Keys
+        oidcServiceOldPrivateKeySig => { type => 'EcOrRSAPrivateKey', },
+        oidcServiceOldPublicKeySig  =>
+          { type => 'EcOrRSAPublicKeyOrCertificate', },
+        oidcServiceOldKeyIdSig => {
             type          => 'text',
             documentation => 'Previous OpenID Connect Signature Key ID',
         },
-        oidcServicePrivateKeySig => { type => 'RSAPrivateKey', },
-        oidcServicePublicKeySig  => { type => 'RSAPublicKeyOrCertificate', },
-        oidcServiceKeyIdSig      => {
+        oidcServiceOldKeyTypeSig => {
+            type    => 'select',
+            select  => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
+            default => 'RSA',
+        },
+
+        oidcServicePrivateKeySig => { type => 'EcOrRSAPrivateKey', },
+        oidcServicePublicKeySig => { type => 'EcOrRSAPublicKeyOrCertificate', },
+        oidcServiceKeyIdSig     => {
             type          => 'text',
             documentation => 'OpenID Connect Signature Key ID',
         },
-        oidcServiceNewPrivateKeySig => { type => 'RSAPrivateKey', },
-        oidcServiceNewPublicKeySig  => { type => 'RSAPublicKeyOrCertificate', },
-        oidcServiceNewKeyIdSig      => {
+        oidcServiceKeyTypeSig => {
+            type    => 'select',
+            select  => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
+            default => 'RSA',
+        },
+
+        oidcServiceNewPrivateKeySig => { type => 'EcOrRSAPrivateKey', },
+        oidcServiceNewPublicKeySig  =>
+          { type => 'EcOrRSAPublicKeyOrCertificate', },
+        oidcServiceNewKeyIdSig => {
             type          => 'text',
             documentation => 'Future OpenID Connect Signature Key ID',
         },
+        oidcServiceNewKeyTypeSig => {
+            type    => 'select',
+            select  => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
+            default => 'RSA',
+        },
+
         oidcServiceEncAlgorithmAlg => {
             type   => 'select',
             select => [
@@ -4591,18 +4669,31 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 'A256GCM',
             documentation => 'JWT encryption algorithme',
         },
+
         oidcServiceOldPrivateKeyEnc => { type => 'RSAPrivateKey', },
         oidcServiceOldPublicKeyEnc  => { type => 'RSAPublicKeyOrCertificate', },
         oidcServiceOldKeyIdEnc      => {
             type          => 'text',
             documentation => 'Previous OpenID Connect Encryption Key ID',
         },
+        oidcServiceOldKeyTypeEnc => {
+            type    => 'select',
+            select  => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
+            default => 'RSA',
+        },
+
         oidcServicePrivateKeyEnc => { type => 'RSAPrivateKey', },
         oidcServicePublicKeyEnc  => { type => 'RSAPublicKeyOrCertificate', },
         oidcServiceKeyIdEnc      => {
             type          => 'text',
             documentation => 'OpenID Connect Encryption Key ID',
         },
+        oidcServiceKeyTypeEnc => {
+            type    => 'select',
+            select  => [ { k => 'RSA', v => 'RSA' }, { k => 'EC', v => 'EC' } ],
+            default => 'RSA',
+        },
+
         oidcServiceAllowDynamicRegistration => {
             type          => 'bool',
             default       => 0,
@@ -4737,6 +4828,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             select => [
                 { k => 'client_secret_post',  v => 'client_secret_post' },
                 { k => 'client_secret_basic', v => 'client_secret_basic' },
+                { k => 'client_secret_jwt',   v => 'client_secret_jwt' },
+                { k => 'private_key_jwt',     v => 'private_key_jwt' },
             ],
             default => 'client_secret_post',
         },
@@ -4767,8 +4860,18 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 'email'              => 'mail',
             }
         },
-        oidcRPMetaDataOptionsClientID       => { type => 'text', },
-        oidcRPMetaDataOptionsClientSecret   => { type => 'password', },
+        oidcRPMetaDataOptionsClientID     => { type => 'text', },
+        oidcRPMetaDataOptionsClientSecret => { type => 'password', },
+        oidcRPMetaDataOptionsAuthMethod   => {
+            type   => 'select',
+            select => [
+                { k => '',                    v => 'Any' },
+                { k => 'client_secret_post',  v => 'client_secret_post' },
+                { k => 'client_secret_basic', v => 'client_secret_basic' },
+                { k => 'client_secret_jwt',   v => 'client_secret_jwt' },
+                { k => 'private_key_jwt',     v => 'private_key_jwt' },
+            ],
+        },
         oidcRPMetaDataOptionsDisplayName    => { type => 'text', },
         oidcRPMetaDataOptionsIcon           => { type => 'text', },
         oidcRPMetaDataOptionsUserIDAttr     => { type => 'text', },
@@ -4782,6 +4885,13 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'RS256', v => 'RS256' },
                 { k => 'RS384', v => 'RS384' },
                 { k => 'RS512', v => 'RS512' },
+                { k => 'PS256', v => 'PS256' },
+                { k => 'PS384', v => 'PS384' },
+                { k => 'PS512', v => 'PS512' },
+                { k => 'ES256', v => 'ES256' },
+                { k => 'ES384', v => 'ES384' },
+                { k => 'ES512', v => 'ES512' },
+                { k => 'EdDSA', v => 'EdDSA' },
             ],
             default => 'RS256',
         },
@@ -4791,9 +4901,19 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsAccessTokenSignAlg => {
             type   => 'select',
             select => [
+                { k => 'HS256', v => 'HS256' },
+                { k => 'HS384', v => 'HS384' },
+                { k => 'HS512', v => 'HS512' },
                 { k => 'RS256', v => 'RS256' },
                 { k => 'RS384', v => 'RS384' },
                 { k => 'RS512', v => 'RS512' },
+                { k => 'PS256', v => 'PS256' },
+                { k => 'PS384', v => 'PS384' },
+                { k => 'PS512', v => 'PS512' },
+                { k => 'ES256', v => 'ES256' },
+                { k => 'ES384', v => 'ES384' },
+                { k => 'ES512', v => 'ES512' },
+                { k => 'EdDSA', v => 'EdDSA' },
             ],
             default => 'RS256',
         },
@@ -4808,6 +4928,13 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'RS256', v => 'JWT/RS256' },
                 { k => 'RS384', v => 'JWT/RS384' },
                 { k => 'RS512', v => 'JWT/RS512' },
+                { k => 'PS256', v => 'JWT/PS256' },
+                { k => 'PS384', v => 'JWT/PS384' },
+                { k => 'PS512', v => 'JWT/PS512' },
+                { k => 'ES256', v => 'JWT/ES256' },
+                { k => 'ES384', v => 'JWT/ES384' },
+                { k => 'ES512', v => 'JWT/ES512' },
+                { k => 'EdDSA', v => 'JWT/EdDSA' },
             ],
             default => '',
         },

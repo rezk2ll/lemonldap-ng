@@ -177,6 +177,52 @@ sub redirectFilter {
     return $class->OK;
 }
 
+
+sub logout_app
+{
+    my $class = shift;
+    my $u = shift || $class->tsv->{portal}->();
+    $class->logger->debug("logout_app redirect to $u");
+    eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
+    return (
+        sub {
+            $_[0]->{env}->{'psgi.r'}->add_output_filter(
+                sub {
+                    return $class->redirectFilter( $u, @_ );
+                }
+            );
+            1;
+        },
+        0
+    );
+}
+
+sub logout_app_sso {
+    my $class = shift;
+    my $u = shift || $class->tsv->{portal}->();
+    $class->logger->debug("logout_app_sso redirect to $u");
+    eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
+    return (
+        sub {
+            my ($req) = @_;
+            $class->localUnlog( $req, @_ );
+            $req->{env}->{'psgi.r'}->add_output_filter(
+                sub {
+                    my $r = $_[0]->r;
+                    return $class->redirectFilter(
+                        &{ $class->tsv->{portal} }() . "?url="
+                          . $class->encodeUrl( $req, $u )
+                          . "&logout=1",
+                        @_
+                    );
+                }
+            );
+            1;
+        },
+        0
+    );
+}
+
 1;
 
 __END__

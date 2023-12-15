@@ -894,7 +894,7 @@ sub _scanNodes {
                     foreach my $node ( @{ $leaf->{nodes} } ) {
                         my $tmp;
                         $tmp->{$_} = $node->{data}->{$_}
-                          foreach (qw(type rule logo level label));
+                          foreach (qw(type rule logo level label regrule));
                         $tmp->{register} = $node->{data}->{register} ? 1 : 0;
                         $tmp->{over}     = {};
                         foreach ( @{ $node->{data}->{over} } ) {

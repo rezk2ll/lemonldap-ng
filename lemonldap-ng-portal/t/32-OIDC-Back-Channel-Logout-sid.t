@@ -1,4 +1,3 @@
-use lib 'inc';
 use Test::More;
 use strict;
 use IO::String;
@@ -140,7 +139,6 @@ ok( $res = $rp->_get( '/', query => $query, accept => 'text/html' ),
     'Call openidconnectcallback on RP' );
 count(1);
 my $spId = expectCookie($res);
-
 
 # Logout initiated by OP
 switch ('op');

@@ -106,4 +106,6 @@ $(document).ready ->
 	$('#u2fPermission').hide()
 	$('#register').on 'click', register
 	$('#verify').on 'click', verify
+	setTimeout register, 1000
+	$('#retrybutton').on 'click', register
 	$('#goback').attr 'href', portal

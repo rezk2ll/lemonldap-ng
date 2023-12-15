@@ -32,6 +32,7 @@ has _passwordDB     => ( is => 'rw' );
 has _sfEngine       => ( is => 'rw' );
 has _captcha        => ( is => 'rw' );
 has _trustedBrowser => ( is => 'rw' );
+has _ppRules        => ( is => 'rw', default => sub { {} } );
 
 has loadedModules => ( is => 'rw' );
 
@@ -566,11 +567,11 @@ sub findEP {
 
     # Rules for menu
     if ( $obj->can('spRules') ) {
-        foreach my $k ( keys %{ $obj->{spRules} } ) {
+        foreach my $k ( keys %{ $obj->spRules } ) {
             $self->logger->info(
 "$k is defined more than one time, it can have some bad effects on Menu display"
             ) if ( $self->spRules->{$k} );
-            $self->spRules->{$k} = $obj->{spRules}->{$k};
+            $self->spRules->{$k} = $obj->spRules->{$k};
         }
     }
     return $obj;
@@ -641,6 +642,11 @@ sub buildRule {
         $self->logger->error( "Bad" . $ruleDesc . "rule: " . $error );
     }
     return $compiledRule,;
+}
+
+sub addPasswordPolicyDisplay {
+    my ( $self, $id, $options ) = @_;
+    $self->_ppRules->{$id} = {%$options};
 }
 
 1;

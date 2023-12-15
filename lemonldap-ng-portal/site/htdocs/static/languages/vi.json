@@ -259,6 +259,7 @@
 "password":"Mật khẩu",
 "password2f":"Mật khẩu",
 "passwordCompromised":"Không tìm thấy trong một cơ sở dữ liệu mật khẩu bị xâm nhập",
+"checkentropyLabel":"Password strength",
 "passwordPolicy":"Vui lòng tuân thủ chính sách sau:",
 "passwordPolicyMinDigit":"Ký tự chữ số tối giản",
 "passwordPolicyMinLower":"Ký tự viết thường tối giản",

@@ -29,7 +29,9 @@ Create the following tables. You may skip the session types you are not going to
        ipAddr varchar(64),
        _utime bigint,
        _httpSessionType varchar(64),
-       user varchar(64)
+       user varchar(64),
+       mail varchar(64),
+       _session_uid varchar(64)
    ) DEFAULT CHARSET utf8;
    CREATE INDEX i_s__whatToTrace ON sessions (_whatToTrace);
    CREATE INDEX i_s__session_kind ON sessions (_session_kind);
@@ -37,6 +39,8 @@ Create the following tables. You may skip the session types you are not going to
    CREATE INDEX i_s_ipAddr ON sessions (ipAddr);
    CREATE INDEX i_s__httpSessionType ON sessions (_httpSessionType);
    CREATE INDEX i_s_user ON sessions (user);
+   CREATE INDEX i_s_mail ON sessions (mail);
+   CREATE INDEX i_s__session_uid ON sessions (_session_uid);
 
    CREATE TABLE psessions (
        id varchar(64) not null primary key,

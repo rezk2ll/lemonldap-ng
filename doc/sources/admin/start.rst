@@ -275,6 +275,8 @@ Name                                                                 Description
 :doc:`CDA<cda>`                                                      Cross Domain Authentication
 :doc:`Check DevOps<checkdevops>` [5]_ |new|                          Check DevOps handler file
 :doc:`Check HIBP<checkhibp>` [19]_ |new|                             Check Have I Been Pwned
+:doc:`Check entropy<checkentropy>` [21]_ |new|                       Check entropy of password
+:doc:`InitializePasswordReset<initializePasswordReset>` [22]_ |new|  Initialize Password Reset by mail
 :doc:`Check state<checkstate>` |new|                                 Check state plugin (test page)
 :doc:`Check user<checkuser>`  [6]_                                   Check access rights, transmitted headers and session attibutes for a specific user and URL
 :doc:`Configuration viewer<viewer>`                                  Edit WebSSO configuration in Read Only mode
@@ -640,6 +642,14 @@ by your language code):
 .. [20]
    :doc:`Remember AuthChoice plugin<rememberauthchoice>` is available with LLNG ≥
    2.0.15
+
+.. [21]
+   :doc:`Check entropy plugin<checkentropy>` is available with LLNG ≥
+   2.18.1
+
+.. [22]
+   :doc:`initializePasswordReset<initializePasswordReset>` is available with LLNG ≥
+   2.18.1
 
 .. |image0| image:: /icons/kthememgr.png
 .. |image1| image:: /icons/warehause.png

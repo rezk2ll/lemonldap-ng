@@ -259,6 +259,7 @@
 "password":"Parola",
 "password2f":"Parola",
 "passwordCompromised":"Güvenliği ihlal edilmiş bir parola veritabanında bulunamadı",
+"checkentropyLabel":"Password strength",
 "passwordPolicy":"Lütfen aşağıdaki ilkeye uyun:",
 "passwordPolicyMinDigit":"Minimum rakam karakter sayısı:",
 "passwordPolicyMinLower":"Minimum küçük harf karakter sayısı:",
