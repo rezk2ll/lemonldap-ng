@@ -225,7 +225,7 @@ Simple usage example:
 decrypt
 ~~~~~~~
 
-This function uses the secret key of LL::NG configuration to decrypt a data.
+This function uses the secret key of LL::NG configuration to decrypt a value.
 
 ::
 
