@@ -76,7 +76,8 @@ You can also add some other parameters
    password     = mypassword
    realm        = myrealm
    # LWP::UserAgent parameters
-   proxyOptions = { timeout => 5 }
+   lwpOpts      = { timeout => 5 }
+   lwpSslOpts   = { SSL_ca_file => "..." }
 
 `user`, `password` and `realm` parameters are only used if the entry point
 `index.fcgi/config` is protected by a basic authentication. Thus, handlers will
