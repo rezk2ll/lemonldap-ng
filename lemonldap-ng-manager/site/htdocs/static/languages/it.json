@@ -1235,6 +1235,7 @@
 "stayConnectedSingleSession":"One session per user",
 "stayConnectedTimeout":"Expiration time",
 "storePassword":"Memorizzare la password dell'utente nei dati di sessione",
+"storePasswordEncrypted":"Encrypt password in session",
 "strictTransportSecurityMax_Age":"Strict-Transport-Security max age",
 "string":"String",
 "subtitle":"Subtitle",

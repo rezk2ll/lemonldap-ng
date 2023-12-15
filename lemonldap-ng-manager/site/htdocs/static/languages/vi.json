@@ -1235,6 +1235,7 @@
 "stayConnectedSingleSession":"Một địa chỉ IP cho mỗi người dùng",
 "stayConnectedTimeout":"thời gian hết hạn",
 "storePassword":"Lưu trữ mật khẩu người dùng trong các dữ liệu phiên",
+"storePasswordEncrypted":"Encrypt password in session",
 "strictTransportSecurityMax_Age":"Thời gian tối đa của Chính sách Bảo mật Vận chuyển Nghiêm ngặt",
 "string":"Chuỗi",
 "subtitle":"Phụ đề",

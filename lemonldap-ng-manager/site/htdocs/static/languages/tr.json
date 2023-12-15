@@ -1235,6 +1235,7 @@
 "stayConnectedSingleSession":"Her kullanıcı için bir oturum",
 "stayConnectedTimeout":"Son kullanma süresi",
 "storePassword":"Kullanıcı parolasını oturumda sakla",
+"storePasswordEncrypted":"Encrypt password in session",
 "strictTransportSecurityMax_Age":"Sıkı Taşıma Güvenliği maksimum yıl",
 "string":"Dize",
 "subtitle":"Altyazı",

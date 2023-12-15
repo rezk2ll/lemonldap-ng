@@ -30,6 +30,7 @@ Inside this jail, you can access to:
   * checkLogonHours_
   * date_
   * dateToTime_ (|new| in version 2.0.12)
+  * decrypt_ (|new| in version 2.18)
   * encrypt_
   * groupMatch_
   * has2f_ (|new| in version 2.0.10)
@@ -220,6 +221,15 @@ Simple usage example:
 ::
 
     dateToTime($ssoStartDate) lt dateToTime(date(1))
+
+decrypt
+~~~~~~~
+
+This function uses the secret key of LL::NG configuration to decrypt a value.
+
+::
+
+   decrypt($_password)
 
 encrypt
 ~~~~~~~

@@ -1235,6 +1235,7 @@
 "stayConnectedSingleSession":"Один сеанс на пользователя",
 "stayConnectedTimeout":"Время истечения",
 "storePassword":"Сохранять пароль пользователя в сеансе",
+"storePasswordEncrypted":"Encrypt password in session",
 "strictTransportSecurityMax_Age":"Максимальный возраст Strict-Transport-Security",
 "string":"Строка",
 "subtitle":"Подзаголовок",
