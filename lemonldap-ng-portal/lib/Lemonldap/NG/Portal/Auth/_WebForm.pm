@@ -38,15 +38,6 @@ has authnLevel => (
 has captcha => ( is => 'rw' );
 has ott     => ( is => 'rw' );
 
-has crypto => (
-    is      => 'ro',
-    lazy    => 1,
-    default => sub {
-        my ($self) = @_;
-        Lemonldap::NG::Common::Crypto->new( $self->conf->{key} );
-    }
-);
-
 # INITIALIZATION
 
 sub init {
@@ -168,7 +159,7 @@ sub setAuthSessionInfo {
           $req->data->{'newpassword'} || $req->data->{'password'};
         $req->{sessionInfo}->{'_password'} =
             $self->conf->{storePasswordEncrypted}
-          ? $self->crypto->encrypt($passwordToStore)
+          ? $self->p->HANDLER->tsv->{cipher}->encrypt($passwordToStore)
           : $passwordToStore;
     }
 

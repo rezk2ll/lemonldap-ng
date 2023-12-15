@@ -23,15 +23,6 @@ our $VERSION = '2.18.0';
 
 has requireOldPwdRule => ( is => 'rw' );
 
-has crypto => (
-    is      => 'ro',
-    lazy    => 1,
-    default => sub {
-        my ($self) = @_;
-        Lemonldap::NG::Common::Crypto->new( $self->conf->{key} );
-    }
-);
-
 sub init {
     my ($self) = shift;
     $self->requireOldPwdRule(
@@ -116,7 +107,8 @@ sub _modifyPassword {
                 {
                     _passwordDB => $self->p->getModule( $req, 'password' ),
                     _password   => $self->conf->{storePasswordEncrypted}
-                    ? $self->crypto->encrypt($passwordToStore)
+                    ? $self->p->HANDLER->tsv->{cipher}
+                      ->encrypt($passwordToStore)
                     : $passwordToStore
                 }
             );
