@@ -44,8 +44,6 @@ You can cancel this behavior by calling preventDefault in your JS handler:
 
 See :doc:`jqueryevents` for more information
 
-
-
 Apache2 handler now uses IP from mod_remoteip
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -75,6 +73,14 @@ systemd edit liblemonldap-ng-handler-perl.timer
 [Timer]
 OnCalendar=*-*-* *:07:07
 ```
+
+Encryption of password in session
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you store the password in session because you need to replay it on a protected application (Auth Basic or form replay),
+you should now enable password encryption in session (this option is disabled by default).
+
+This requires to decrypt the ``$_password``` value before sending it to the application, with the ``decrypt()`` method.
 
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
