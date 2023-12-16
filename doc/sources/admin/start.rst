@@ -645,11 +645,11 @@ by your language code):
 
 .. [21]
    :doc:`Check entropy plugin<checkentropy>` is available with LLNG ≥
-   2.18.1
+   2.18.0
 
 .. [22]
    :doc:`initializePasswordReset<initializePasswordReset>` is available with LLNG ≥
-   2.18.1
+   2.18.0
 
 .. |image0| image:: /icons/kthememgr.png
 .. |image1| image:: /icons/warehause.png
