@@ -244,6 +244,7 @@ sub defaultValues {
         'oidcServiceOfflineSessionExpiration' => 2592000,
         'oidcServiceOldKeyTypeEnc'            => 'RSA',
         'oidcServiceOldKeyTypeSig'            => 'RSA',
+        'okta2fActivation'                    => 0,
         'openIdAuthnLevel'                    => 1,
         'openIdExportedVars'                  => {},
         'openIdIDPList'                       => '0;',

@@ -2052,6 +2052,34 @@ sub attributes {
             documentation => 'Maximum 2F devices name length',
         },
 
+        # Okta 2FA
+        okta2fActivation => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Okta2F activation',
+        },
+        okta2fAdminURL => {
+            type          => 'url',
+            documentation => 'Okta Administration URL'
+        },
+        okta2fApiKey => {
+            type          => 'text',
+            documentation => 'Okta API key'
+        },
+        okta2fAuthnLevel => {
+            type          => 'intOrNull',
+            documentation =>
+              'Authentication level for users authentified by Okta2F'
+        },
+        okta2fLabel => {
+            type          => 'text',
+            documentation => 'Portal label for Okta2F'
+        },
+        okta2fLogo => {
+            type          => 'text',
+            documentation => 'Custom logo for Okta 2F',
+        },
+
         # Password 2FA
         password2fActivation => {
             type          => 'boolOrExpr',

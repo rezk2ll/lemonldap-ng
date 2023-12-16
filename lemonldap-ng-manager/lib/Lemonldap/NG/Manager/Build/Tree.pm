@@ -1048,6 +1048,17 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'okta2f',
+                            help  => 'okta2f.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'okta2fActivation', 'okta2fAdminURL',
+                                'okta2fApiKey',     'okta2fAuthnLevel',
+                                'okta2fLabel',      'okta2fLogo',
+                            ]
+                        },
+
+                        {
                             title => 'radius2f',
                             help  => 'radius2f.html',
                             form  => 'simpleInputContainer',
@@ -1549,10 +1560,14 @@ sub tree {
             title => 'casServiceMetadata',
             help  => 'idpcas.html#configuring-the-cas-service',
             nodes => [
-                'casAttr',                    'casAccessControlPolicy',
-                'casStrictMatching',          'casTicketExpiration',
-                'casBackChannelSingleLogout', 'casStorage',
-                'casStorageOptions',          'casAttributes',
+                'casAttr',
+                'casAccessControlPolicy',
+                'casStrictMatching',
+                'casTicketExpiration',
+                'casBackChannelSingleLogout',
+                'casStorage',
+                'casStorageOptions',
+                'casAttributes',
             ]
         },
         'casSrvMetaDataNodes',
