@@ -149,7 +149,6 @@ sub verify {
     my $okta_poll_result;
     my $poll_response;
     my $poll_content;
-    my $okta_poll_result;
     for ( my $i = 0 ; $i <= 60 ; $i++ ) {
 
         $poll_response = $self->ua->get($okta_poll_url);
