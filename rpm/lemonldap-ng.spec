@@ -629,10 +629,6 @@ fi
 %license COPYING LICENSE
 %dir %{lm_confdir}
 %config(noreplace) %attr(-,root,%{lm_apachegroup}) %{lm_storagefile}
-%config(noreplace) %{apache_confdir}/z-lemonldap-ng-handler.conf
-%config(noreplace) %{apache_confdir}/z-lemonldap-ng-manager.conf
-%config(noreplace) %{apache_confdir}/z-lemonldap-ng-api.conf
-%config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
 %{_mandir}/man1/convertConfig*
 %{_mandir}/man1/convertSessions*
 %{_mandir}/man1/convertToHashSessionStorage*
@@ -670,12 +666,15 @@ fi
 
 %files handler
 %{lm_bindir}/purgeLocalCache
+%config(noreplace) %{apache_confdir}/z-lemonldap-ng-handler.conf
 %config(noreplace) %{_sysconfdir}/cron.d/lemonldap-ng-handler
 %{lm_sharedir}/handler
 %{lm_examplesdir}/handler
 %{lm_sharedir}/llng-server/
 
 %files manager
+%config(noreplace) %{apache_confdir}/z-lemonldap-ng-manager.conf
+%config(noreplace) %{apache_confdir}/z-lemonldap-ng-api.conf
 %{lm_sharedir}/manager
 %{lm_examplesdir}/manager
 %{lm_bindir}/lmConfigEditor
@@ -687,6 +686,7 @@ fi
 %files portal
 %{lm_sharedir}/portal
 %{lm_bindir}/purgeCentralCache
+%config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
 %config(noreplace) %{_sysconfdir}/cron.d/lemonldap-ng-portal
 %{lm_examplesdir}/portal
 %defattr(-,%{lm_apacheuser},%{lm_apachegroup},750)
