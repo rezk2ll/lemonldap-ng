@@ -23,6 +23,7 @@ our $VERSION = '2.17.0';
 #############################
 
 use constant defaultRoute => 'sessions.html';
+use constant icon         => 'duplicate';
 
 sub init {
     my ( $self, $conf ) = @_;

@@ -116,7 +116,7 @@ lemonldap-ng-uwsgi-app installs a uWSGI application:
 
 .. code-block:: shell
 
-   apt-get install uwsgi uwsgi-plugin-psgi
+   apt install uwsgi uwsgi-plugin-psgi
    cd /etc/uwsgi/apps-enabled
    ln -s ../apps-available/llng-server.yaml
    service uwsgi restart

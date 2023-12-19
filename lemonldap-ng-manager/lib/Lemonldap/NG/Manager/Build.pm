@@ -238,9 +238,8 @@ EOF
     printf STDERR $format, $self->defaultValuesFile;
     $defaultValues->{locationRules} = $attributes->{locationRules}->{default};
     foreach ( keys %$attributes ) {
-        if (    not /(?:MetaData|vhost)/
-            and $attributes->{$_}->{default}
-            and not $reverseScanResult->{$_} )
+        if ( not /(?:MetaData|vhost)/
+            and $attributes->{$_}->{default} )
         {
             $defaultValues->{$_} = $attributes->{$_}->{default};
         }
@@ -689,8 +688,9 @@ sub scanTree {
             if ( $leaf =~ s/^\*// ) {
                 push @angularScopeVars, [ $leaf, "$path._nodes[$ord]" ];
             }
-            push @sessionTypes, $1
-              if ( $leaf =~ /^(.*)(?<!notification)StorageOptions$/ );
+            if ( $leaf =~ /^(.*)(?<!notification)StorageOptions$/ ) {
+                push @sessionTypes, $1;
+            }
             my $attr = $attributes->{$leaf} or die("Missing attribute $leaf");
 
             #print STDERR "| $attr->{documentation}  |  $leaf  |\n";

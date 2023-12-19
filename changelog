@@ -1,3 +1,98 @@
+lemonldap-ng (2.17.2) jammy; urgency=medium
+
+  * Bugs:
+    * #3014: Logout error with message "[error] Unknown Relying Party xxxx" in logs
+    * #3033: Userinfo sometimes does not return attributes
+
+ -- Clément <clem.oudot@gmail.com>  Tue, 14 Nov 2023 14:53:18 +0100
+
+lemonldap-ng (2.17.1) jammy; urgency=medium
+
+  * Bugs:
+    * #2992: WAYF not triggered when using SAML federation plugin + one other provider
+    * #2996: Invalid URL for application logo in myapplications web service
+    * #2998: [Security:low] SSRF vulnerability in OIDC SSO
+    * #3001: Conf::LDAP options in lemonldap-ng.ini overrides Auth options in portal
+    * #3003: [Security:low] Open redirection when OIDC RP isn't configured with redirection uri
+    * #3010: oidcServiceAllowOnlyDeclaredScopes option drop offline_access scope
+
+ -- Clément <clem.oudot@gmail.com>  Mon, 25 Sep 2023 16:46:45 +0200
+
+lemonldap-ng (2.17.0) jammy; urgency=medium
+
+  * Bugs:
+    * #2055: Vhosts options hash key is removed after a while
+    * #2641: Unable to remove value for casAppMetaDataOptionsAuthnLevel
+    * #2711: Cannot override configuration in lemonldap-ng.ini when value is "0"
+    * #2847: Configuration corruption due to accented characters
+    * #2863: OIDC: `sid` in Front-Channel-Logout request is wrong
+    * #2873: AjaxInitScript/InitCmd not called after Choice error
+    * #2874: Removing oidcOPMetaDataOptionsAcrValues causes OIDC auth to fail
+    * #2882: SAML signature validation fails in RHEL9 + Lasso 2.8.0
+    * #2912: Non reproducible error when redirect to another url (SAML,..)
+    * #2920: invalid entry in SAML IDP list after logout error
+    * #2922: Remove | as separator for Choice configuration values
+    * #2931: [Security:medium] open redirection due to incorrect escape handling in URI userinfo
+    * #2932: unreachable LDAP server blocks initialization for too long
+    * #2935: importMetadata causes encoding issues when saving conf
+    * #2938: POST to /oauth2/token responds error 400 "This endpoint is not supposed to be called by authenticated users"
+    * #2939: Unexpected token type: auth_token_krb when using SSL and Kerberos in a Combination
+    * #2942: Logout shouldn't fail when a OIDC/SAML partner doesn't respond
+    * #2943: eduPersonTargetedID missing from Plugins::SamlFederation
+    * #2946: userControl regexp is not applied by authSlave
+    * #2948: Manager should accept mobile-style URL in OIDC callbacks
+    * #2952: Unable to change password if LDAP returns PE_PP_CHANGE_AFTER_RESET and captcha is enabled
+    * #2962: timeoutActivity feature makes Offline sessions expire prematurely
+    * #2966: SAML federation plugin incorrectly skips entityIDs
+    * #2979: forced saveConf does not correctly report success on MySQL/MariaDB
+    * #2984: Test fails with Perl 5.38
+    * #2987: Cannot use single quote in passwordPolicySpecialChar
+
+  * New features:
+    * #1194: OIDC: implement Back-Channel and Front-Channel logout
+    * #2853: Add ability to use applications icons instead of images
+    * #2862: OIDC: include `sid` claim
+    * #2867: Add configuration extension hooks for OIDC
+    * #2884: Manager API: add methods to get login history
+    * #2885: Add plugin hook at sendHtml
+    * #2903: Add a function in Safelib to match IP addresses reliably
+    * #2940: Allow custom attributes to be sent for radius/radius2f access requests
+    * #2959: Send Access-Request without password when preparing Radius 2FA validation
+    * #2960: Add option to drop CSP headers from OIDC response
+    * #2965: Add cassandra support (conf & sessions)
+
+  * Improvements:
+    * #2255: Improvements on OpenID Connect logout (id_token_hint, user consent, ...)
+    * #2623: refactor code of Lemonldap::NG::Portal::Lib::Net::LDAP
+    * #2701: Possibility to configure which OIDC attribute from ID token  should be used as pivot
+    * #2850: Improve CAS logout
+    * #2858: Improve accountability of 2FA devices
+    * #2878: Regexp to hide session attributes
+    * #2881: StayConnected: do not try to fingerprint browser if fingerprint check is disabled
+    * #2897: When Radius is in use login failure does not log if its due to wrong credentials or to radius unavailability
+    * #2908: GlobalLogout plugin does not take into account confirm URL parameter
+    * #2911: Manager warning when a config test needs confirmation is confusing
+    * #2928: Extra '/' in 2FA urls
+    * #2929: Set more than one class on LDAP group filter
+    * #2934: Implement urn:oasis:names:tc:SAML:profiles:subject-id:req in SAML federations
+    * #2949: Reset captcha input when renewing captcha & translate tooltip
+    * #2950: Hide password policy when ticking 'Generate the password automatically' box
+    * #2954: Add userData to log4perl placeholders
+    * #2956: Allow custom jquery event handlers to block default processing
+    * #2957: Add new jquery events for webauthn, SSL, Kerberos
+    * #2961: Make RS256 the default ID Token signature algorithm
+    * #2964: Allow customization of some error codes in templates
+    * #2970: Provide all applications informations trought REST service GET /myapplications
+    * #2972: Better OIDC keys management
+    * #2975: Allow admin to choose key size during certificate generation
+
+  * Templates:
+    * #2949: Reset captcha input when renewing captcha & translate tooltip
+    * #2950: Hide password policy when ticking 'Generate the password automatically' box
+    * #2987: Cannot use single quote in passwordPolicySpecialChar
+
+ -- Clément <clem.oudot@gmail.com>  Wed, 30 Aug 2023 17:14:33 +0200
+
 lemonldap-ng (2.16.2) jammy; urgency=medium
 
   * Bugs:

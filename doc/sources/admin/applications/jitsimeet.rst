@@ -73,7 +73,7 @@ configuration file:
 
    # Protect only the /login/ URL
    # You may want to change this is your goal is to make the whole Jitsi Meet instance private
-   location /login/ {
+   location = /login/ {
 
        # Protect the current path with LL::NG
        auth_request /lmauth;

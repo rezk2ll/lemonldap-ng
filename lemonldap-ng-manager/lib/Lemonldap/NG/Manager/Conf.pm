@@ -31,9 +31,16 @@ our $VERSION = '2.17.0';
 #############################
 
 use constant defaultRoute => 'manager.html';
+use constant icon         => 'cog';
+
+has defaultNewKeySize => ( is => 'rw', default => 2048, );
 
 sub init {
     my ( $self, $conf ) = @_;
+
+    $self->defaultNewKeySize( $conf->{defaultNewKeySize} )
+      if $conf->{defaultNewKeySize};
+
     $self->ua( Lemonldap::NG::Common::UserAgent->new($conf) );
 
     # HTML template
@@ -62,6 +69,7 @@ sub init {
         confs => {
             newRSAKey      => 'newRSAKey',
             newCertificate => 'newCertificate',
+            newEcKeys      => 'newEcKeys',
             sendTestMail   => 'sendTestMail',
             raw            => 'newRawConf',
             '*'            => 'newConf'
@@ -118,7 +126,7 @@ sub newRSAKey {
     my ( $self, $req, @others ) = @_;
     return $self->sendError( $req, 'There is no subkey for "newRSAKey"', 400 )
       if (@others);
-    my $rsa = Crypt::OpenSSL::RSA->generate_key(2048);
+    my $rsa = Crypt::OpenSSL::RSA->generate_key( $self->defaultNewKeySize );
 
     my $query = $req->jsonBodyToObj;
     my $keys  = {
@@ -151,6 +159,30 @@ sub newRSAKey {
     return $self->sendJSONresponse( $req, $keys );
 }
 
+# 35 - New EC key pair on demand
+#      --------------------------
+
+##@method public PSGI-JSON-response newEcKeys($req)
+# Return a hashref containing private and public keys
+#
+#@param $req Lemonldap::NG::Common::PSGI::Request object
+#@return PSGI JSON response
+sub newEcKeys {
+    my ( $self, $req, @others ) = @_;
+    require Crypt::PK::ECC;
+    my $ec_key = Crypt::PK::ECC->new();
+    $ec_key->generate_key('secp256r1');
+
+    my $pubKey = $ec_key->export_key_pem('public');
+    my $privKey = $ec_key->export_key_pem('private');
+    my $keys = {
+        private => $privKey,
+        public => $pubKey,
+        hash => md5_base64($pubKey),
+    };
+    return $self->sendJSONresponse( $req, $keys );
+}
+
 # This function does the dirty X509 work,
 # mostly copied from IO::Socket::SSL::Utils
 # and adapter to work on old platforms (CentOS7)
@@ -163,7 +195,7 @@ sub _generateX509 {
     # Generate 2048 bits RSA key
     my $key = Net::SSLeay::EVP_PKEY_new();
     Net::SSLeay::EVP_PKEY_assign_RSA( $key,
-        Net::SSLeay::RSA_generate_key( 2048, 0x10001 ) );
+        Net::SSLeay::RSA_generate_key( $self->defaultNewKeySize, 0x10001 ) );
 
     my $cert = Net::SSLeay::X509_new();
 

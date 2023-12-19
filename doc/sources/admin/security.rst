@@ -109,6 +109,9 @@ LLNG portal now embeds the following features:
    by default by the same-origin security policy. You can modify default
    values in the manager *(General parameters » Advanced parameters »
    Security » Cross-Origin Resource Sharing)*
+-  IP filtering: LemonLDAP::NG can use a `CrowdSec server
+   <https://www.crowdsec.net/>`__ to filter connexion using IP reputation
+   from CrowdSec. See :doc:`CrowdSec Bouncer<crowdsec>`
 
 
 .. attention::
@@ -318,7 +321,7 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
    -  Example: ``myapp.example.com .subdomain.example.com``
    -  ``*`` allows redirections to any external domain (DANGEROUS)
 
--  **Use Safe jail**: set to 'Off' to disable Safe jail. Safe module is
+-  **Use Safe jail**: Set to 'Off' to disable Safe jail. Safe module is
    used to eval expressions in headers, rules, etc. Disabling it can
    lead to security issues.
 -  **Avoid assignment in expressions**: Set to 'Off' to disable syntax checking.
@@ -332,10 +335,10 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
 -  **Form timeout**: Form token timeout (default to 120 seconds)
 -  **Use global storage**: Local cache is used by default for one time
    tokens. To use global storage, set it to 'On'
--  **Strict-Transport-Security Max-age**: set STS header max-age if you use SSL only (by example: 15768000)
--  **CrowdSec Bouncer**: set to 'On' to enable :doc:`CrowdSec Bouncer plugin<crowdsec>`
+-  **Strict-Transport-Security Max-age**: Set STS header max-age if you use SSL only (by example: 15768000)
+-  **CrowdSec Bouncer**: Set to 'On' to enable :doc:`CrowdSec Bouncer plugin<crowdsec>`
 -  **Brute-Force Attack protection**: set to 'On' to enable :doc:`Brute-force protection plugin<bruteforceprotection>`
--  **LWP::UserAgent and SSL options**: insert here options to pass to
+-  **LWP::UserAgent and SSL options**: Insert here options to pass to
    LWP::UserAgent object (used by SAML or OpenID-Connect to query
    partners and AuthSSL or AuthBasic handler to request Portal URL).
    Example: ``verify_hostname => 0``, ``SSL_verify_mode => 0``
@@ -362,7 +365,7 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
     Enable global storage for one time tokens will downgrade
     Portal performance!!!
 
-    Must ONLY be use with outdated or low performance Load Balancer.
+    Must ONLY be used with outdated or low performance Load Balancer.
 
 Fail2ban
 --------

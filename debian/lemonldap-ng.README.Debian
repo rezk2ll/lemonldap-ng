@@ -65,8 +65,8 @@ Customize them, then reload nginx
 ------------------
 
 Be sure that your browser can reach (adapt it with your domain):
-- auth.example.com    : Authentication portal
-- manager.example.com : Configuration interface
+- auth.example.com   : Authentication portal
+- manager.example.com: Configuration interface
 
 4 - Connect to the manager
 --------------------------

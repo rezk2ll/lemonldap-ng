@@ -39,6 +39,7 @@ lib/Lemonldap/NG/Common/EmailTransport.pm
 lib/Lemonldap/NG/Common/FormEncode.pm
 lib/Lemonldap/NG/Common/IPv6.pm
 lib/Lemonldap/NG/Common/JWT.pm
+lib/Lemonldap/NG/Common/Languages.pm
 lib/Lemonldap/NG/Common/Logger/_Duplicate.pm
 lib/Lemonldap/NG/Common/Logger/Apache2.pm
 lib/Lemonldap/NG/Common/Logger/Dispatch.pm
@@ -99,6 +100,7 @@ t/45-importMetadata.t
 t/50-Combination-Parser.t
 t/60-Session-Cli.t
 t/60-U2F-Migrate.t
+t/70-User-Agent.t
 t/99-pod.t
 t/data/preview-all-test-metadata.xml
 t/TestPsgi.pm

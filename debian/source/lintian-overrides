@@ -1,8 +1,22 @@
+# False positive, team test are launched but wrapped by a custom script
+team/pkg-perl/testsuite/no-team-tests
+
 # These serialized files just contains 2 constants
-lemonldap-ng source: source-contains-prebuilt-javascript-object doc/pages/documentation/current/lib/exe/js.php.t.bootstrap3.js line length is 1787 characters (>512)
-lemonldap-ng source: source-is-missing doc/pages/documentation/current/lib/exe/js.php.t.bootstrap3.js line length is 1787 characters (>512)
-lemonldap-ng source: insane-line-length-in-source-file doc/pages/documentation/current/lib/exe/js.php.t.bootstrap3.js line length is 1787 characters (>512)
+source-contains-prebuilt-javascript-object doc/pages/documentation/current/lib/exe/js.php.t.bootstrap3.js line length is 1787 characters (>512)
+source-is-missing doc/pages/documentation/current/lib/exe/js.php.t.bootstrap3.js line length is 1787 characters (>512)
+insane-line-length-in-source-file doc/pages/documentation/current/lib/exe/js.php.t.bootstrap3.js line length is 1787 characters (>512)
+
 # False positive: these long lines are in source files (and deleted during build) with USEDEBIANLIBS=yes
-lemonldap-ng source: insane-line-length-in-source-file lemonldap-ng-manager/site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-tpls.js line length is 683 characters (>512)
-lemonldap-ng source: source-contains-prebuilt-javascript-object lemonldap-ng-manager/site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-tpls.js line length is 680 characters (>512)
-lemonldap-ng source: source-is-missing lemonldap-ng-manager/site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-tpls.js line length is 680 characters (>512)
+source-is-missing [*lemonldap-ng-manager/site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-tpls.js*]
+source-contains-prebuilt-javascript-object [*lemonldap-ng-manager/site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-tpls.js*]
+very-long-line-length-in-source-file *lemonldap-ng-manager/site/htdocs/static/bwr/angular-bootstrap/ui-bootstrap-tpls.js*
+very-long-line-length-in-source-file *scripts/*.pl*
+
+# Doc
+very-long-line-length-in-source-file *doc/*.rst*
+
+# Regexps regenerated
+very-long-line-length-in-source-file *lemonldap-ng-*.pm*
+
+# Test data
+very-long-line-length-in-source-file *lemonldap-ng-manager/t/*.t*

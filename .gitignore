@@ -1,4 +1,5 @@
 .gitignore
+.transifexrc
 .vstags
 tags
 doc/sources/admin/_build/

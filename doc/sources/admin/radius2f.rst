@@ -30,11 +30,11 @@ For CentOS/RHEL:
 
    yum install perl-Authen-Radius
 
-In Debian/Ubuntu, install the library through apt-get command
+In Debian/Ubuntu, install the library through apt command
 
 .. code-block:: shell
 
-   apt-get install libauthen-radius-perl
+   apt install libauthen-radius-perl
 
 Configuration
 -------------
@@ -50,7 +50,7 @@ Mail second factor".
 -  **Activation**: Set to ``On`` to activate this module, or use a
    specific rule to select which users may use this type of second
    factor
--  **Server hostname**: The hostname of the Radius server
+-  **Server hostname**: The hostname of the Radius server. Since 2.17 you can specify multiple servers, separated by spaces, for failover.
 -  **Shared secret**: The secret key shared with the Radius server
 -  **Session key containing login** (Optional): When verifying the OTP
    code against the Radius server, use this attribute as the login and
@@ -62,6 +62,10 @@ Mail second factor".
 -  **Request attributes**: a list of additional Radius attributes to send with
    the Access Request. Key is the radius attribute name in the provided
    dictionary, value is a perl expression used to populate the attribute value.
+-  **Add login validation call**: If enabled, send an Access-Request to the
+   Radius server with only the User-Name attribute and no User-Password before
+   displaying the OTP form. This can be used by some Radius implementations to
+   trigger the delivery of the OTP to the user.
 -  **Authentication level** (Optional): if you want to overwrite the
    value sent by your authentication module, you can define here the new
    authentication level. Example: 5

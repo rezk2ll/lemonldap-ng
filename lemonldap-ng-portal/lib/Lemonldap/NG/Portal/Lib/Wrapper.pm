@@ -54,6 +54,15 @@ sub _wrapEntryPoint {
                 "Missing $self->{sessionKey} key in session");
         }
     }
+    elsif ( my $mod = $req->sessionInfo->{ $self->sessionKey } ) {
+        if ( $self->modules->{$mod} ) {
+            @t = ( $self->modules->{$mod} );
+        }
+        else {
+            $self->userLogger->error(
+                "Bad $self->{sessionKey} value in session ($name)");
+        }
+    }
     elsif ( ref $req->data->{ "enabledMods" . $self->type } ) {
         @t = @{ $req->data->{ "enabledMods" . $self->type } };
     }

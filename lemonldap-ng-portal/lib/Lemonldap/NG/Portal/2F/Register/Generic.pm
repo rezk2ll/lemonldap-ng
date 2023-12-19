@@ -57,6 +57,15 @@ sub run {
             return $self->p->sendError( $req, 'PE79', 200 );
         }
 
+        # Validate format
+        unless ( $self->validateFormat($generic) ) {
+            my $error_label = $self->conf->{generic2fFormatErrorLabel}
+              || 'generic2fFormatError';
+            $self->userLogger->info(
+                $self->prefix . "2f: registration -> invalid format" );
+            return $self->p->sendError( $req, $error_label, 200 );
+        }
+
         # Generate and send code
 
         # Save current session info into a token
@@ -131,6 +140,7 @@ sub run {
             )
           )
         {
+            $self->markRegistered($req);
             return [
                 200,
                 [
@@ -175,6 +185,13 @@ sub run {
         $self->logger->error( $self->prefix . "2f: unknown action ($action)" );
         return $self->p->sendError( $req, 'unknownAction', 400 );
     }
+}
+
+sub validateFormat {
+    my ( $self, $generic ) = @_;
+    my $format_regex = $self->{conf}->{generic2fFormatRegex};
+    return 1 if ( !$format_regex );
+    return scalar $generic =~ $format_regex;
 }
 
 1;

@@ -28,3 +28,7 @@ Advanced features
    rules_examples
    parameterlist
    configtraefik
+   installtarball
+   installsles
+   nodehandler
+   configplack

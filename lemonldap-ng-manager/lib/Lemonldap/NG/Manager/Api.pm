@@ -27,6 +27,7 @@ our $VERSION = '2.17.0';
 #############################
 
 use constant defaultRoute => 'api.html';
+use constant icon         => 'flash';
 
 sub init {
     my ( $self, $conf ) = @_;

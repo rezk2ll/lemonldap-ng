@@ -10,6 +10,7 @@ PIDFile=/run/llng-fastcgi-server/llng-fastcgi-server.pid
 ExecStart=/usr/sbin/llng-fastcgi-server
 ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile ${PID}
 KillMode=mixed
+PrivateTmp=yes
 
 [Install]
 Alias=llng-fastcgi-server.service

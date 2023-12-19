@@ -546,7 +546,7 @@ Some options are available:
    :doc:`DevOpsST<devopssthandler>`,
    :doc:`DevOpsCDA<devopscdahandler>`,
    :doc:`OAuth2<oauth2handler>`,...)
--  **DevOps rules file URL**: option to define URL to retreive DevOps rules file.
+-  **DevOps rules file URL**: option to define URL to retrieve DevOps rules file.
    This option can be overridden with ``uwsgi_param/fastcgi_param RULES_URL`` parameter.
 -  **ServiceToken timeout**: by default, ServiceToken is just valid during 30
    seconds. This TTL can be customized for each virtual host.

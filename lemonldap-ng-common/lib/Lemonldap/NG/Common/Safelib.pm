@@ -312,9 +312,7 @@ sub groupMatch {
 
 sub isInNet6 {
     my ( $ip, $net ) = @_;
-    $net =~ s#/(\d+)##;
-    my $bits = $1;
-
+    my ($bits) = $net =~ s#/(\d+)##;
     return net6( $ip, $bits ) eq net6( $net, $bits ) ? 1 : 0;
 }
 

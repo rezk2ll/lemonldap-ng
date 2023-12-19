@@ -271,6 +271,44 @@ Sample code::
         return PE_OK;
     }
 
+getOidcRpConfig
+~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.17
+
+This hook is triggered when processing a request for a Client ID that is not
+registered as an OIDC RP.
+
+You can use this hook to inject configuration on-demand. Update `$config` with
+the RP configuration ::
+
+   use constant hook => {
+      getOidcRpConfig => 'getRpFromDB',
+   };
+
+   sub getRpFromDB {
+       my ( $self, $req, $client_id, $config ) = @_;
+
+       # Lookup $entityID in some DB
+
+       # Update the provided $config reference
+       %$config = (
+           confKey     => # a unique configuration key
+           attributes  => # hashref of attributes to return
+           options     => # hashref of options
+           macros      => # hashref of macros to compute
+           scopeRules  => # hashref of scope rules
+           extraClaims => # hashref of additional scopes to consider
+       );
+
+       # Set the TTL even if nothing was found in DB to prevent LLNG from
+       # calling the hook too often
+       $config->{ttl} = 3600;
+
+       return PE_OK;
+   }
+
+
 SAML service hooks
 ------------------
 
@@ -306,6 +344,10 @@ the IDP or SP information::
            idp_attributes => #hashref of exported attributes
            idp_options => #hashref of options
        );
+
+       # Set the TTL even if nothing was found in DB to prevent LLNG from
+       # calling the hook too often
+       $config->{ttl} = 3600;
 
        return PE_OK;
    }
@@ -662,12 +704,16 @@ Password change hooks
 ---------------------
 
 
+.. _passwordBeforeChange:
+
 passwordBeforeChange
 ~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.0.12
 
-This hook is triggered when LemonLDAP::NG is about to change or reset a user's password. Returning an error will cancel the password change operation
+This hook is triggered when LemonLDAP::NG is about to change or reset a user's password.
+Returning an error will cancel the password change operation.
+You can use this hook to implement :ref:`custom password policies <pluginppolicy>`.
 
 The hook's parameters are:
 
@@ -716,6 +762,39 @@ Sample code::
        $self->userLogger->info("Password changed for $user: $old -> $password");
        return PE_OK;
    }
+
+
+Second factor hooks
+-------------------
+
+sfBeforeVerify
+~~~~~~~~~~~~~~
+
+.. versionadded:: 2.18
+
+This hook is called immediately before LemonLDAP::NG calls the `verify` method
+of each second factor implementation in order to verify the code/response
+submitted by the user. You can use it to run additional checks.
+
+The hook's parameters are:
+* An instance of the 2F module in use
+* A hash of session information
+
+Sample code::
+
+    use constant hook => { sfBeforeVerify => 'ipHasChanged', };
+
+    sub ipHasChanged {
+        my ( $self, $req, $sfa, $session ) = @_;
+        my $prefix = $sfa->prefix;
+
+        if ($req->address ne $session->{ipAddr}) {
+            $self->logger->error("Error when validating $prefix: IP has changed");
+            return PE_ERROR;
+        }
+
+        return PE_OK;
+    }
 
 Generic hooks
 -------------

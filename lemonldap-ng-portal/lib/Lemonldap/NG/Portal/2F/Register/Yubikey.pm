@@ -71,13 +71,16 @@ sub run {
                 )
               )
             {
-                return $self->p->sendHtml(
-                    $req, 'error',
-                    params => {
-                        RAW_ERROR       => 'yourKeyIsRegistered',
-                        AUTH_ERROR_TYPE => 'positive',
-                    }
-                );
+                $self->markRegistered($req);
+                return [
+                    302,
+                    [
+                        Location => $self->p->buildUrl(
+                            "2fregisters", { continue => 1 }
+                        )
+                    ],
+                    []
+                ];
             }
             else {
                 $self->logger->debug(

@@ -24,6 +24,9 @@ has ua => (
     }
 );
 
+# Icon from https://www.w3schools.com/icons/bootstrap_icons_glyphicons.asp
+use constant icon => 'wrench';
+
 sub sendError {
     my $self = shift;
     return $self->p->sendError(@_);

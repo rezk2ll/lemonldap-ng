@@ -20,6 +20,9 @@ password was given by user on authentication phase.
        activated by default
     -  This mechanism can only work with authentication backends using a
        login/password form (:doc:`LDAP<authldap>`, :doc:`DBI<authdbi>`, ...)
+       so not with Kerberos for example
+    -  This mechanism will not work with Persistent connections plugin, as
+       the password is not available if user is automatically connected
 
 
 

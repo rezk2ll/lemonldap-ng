@@ -16,6 +16,15 @@
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery-ui/jquery-ui.js"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery.cookie/jquery.cookie.js"></script>
  <!-- //endif -->
+
+ <TMPL_IF NAME="DISPLAY_PPOLICY">
+ <!-- //if:jsminified
+ <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/ppolicy.min.js"></script>
+ //else -->
+ <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/ppolicy.js"></script>
+ <!-- //endif -->
+ </TMPL_IF>
+
  <script type="application/init">
  {
  "displaytab":"<TMPL_VAR NAME="DISPLAY_TAB">",
@@ -33,7 +42,7 @@
             "minupper": "<TMPL_VAR NAME="PPOLICY_MINUPPER" DEFAULT="0">",
             "mindigit": "<TMPL_VAR NAME="PPOLICY_MINDIGIT" DEFAULT="0">",
             "nopolicy": "<TMPL_VAR NAME="PPOLICY_NOPOLICY" DEFAULT="0">",
-            "allowedspechar": "<TMPL_VAR NAME="PPOLICY_ALLOWEDSPECHAR" ESCAPE="js" DEFAULT="">",
+            "allowedspechar": <TMPL_VAR NAME="PPOLICY_ALLOWEDSPECHAR_JSON" DEFAULT='""'>,
             "minspechar": "<TMPL_VAR NAME="PPOLICY_MINSPECHAR" DEFAULT="0">"
             },</TMPL_IF>
  "enablePasswordDisplay":<TMPL_VAR NAME="ENABLE_PASSWORD_DISPLAY" DEFAULT="0">,

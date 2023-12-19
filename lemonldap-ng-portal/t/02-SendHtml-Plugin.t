@@ -72,8 +72,6 @@ like(
     "Found customized captcha from loadTemplate"
 );
 
-diag explain $res;
-
 clean_sessions();
 
 done_testing();

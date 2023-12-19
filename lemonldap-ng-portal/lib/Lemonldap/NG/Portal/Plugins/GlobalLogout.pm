@@ -205,17 +205,27 @@ sub activeSessions {
           map {
             my $epoch;
             my $regex = '^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$';
-            $_->{startTime} =~ /$regex/;
-            $epoch = timelocal( $6, $5, $4, $3, $2 - 1, $1 );
-            $_->{startTime} = $epoch;
-            if ( $_->{updateTime} ) {
-                $_->{updateTime} =~ /$regex/;
+            if ( $_->{startTime} =~ /$regex/ ) {
                 $epoch = timelocal( $6, $5, $4, $3, $2 - 1, $1 );
-                $_->{updateTime} = $epoch;
+                $_->{startTime} = $epoch;
+            }
+            else {
+                delete $_->{startTime};
+            }
+            if ( $_->{updateTime} ) {
+                if ( $_->{updateTime} =~ /$regex/ ) {
+
+                    $epoch = timelocal( $6, $5, $4, $3, $2 - 1, $1 );
+                    $_->{updateTime} = $epoch;
+                }
+                else {
+                    delete $_->{updateTime};
+                }
             }
             $_;
           }
-          sort { $b->{startTime} cmp $a->{startTime} } map { {
+          sort { $b->{startTime} cmp $a->{startTime} } map {
+            {
                 id          => $_,
                 customParam => $sessions->{$_}->{$customParam},
                 ipAddr      => $sessions->{$_}->{ipAddr},

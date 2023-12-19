@@ -1,9 +1,6 @@
-#==============================================================================
-# Variables
-#==============================================================================
 %global lm_prefix %{_prefix}
 %global lm_sharedir %{_datadir}/lemonldap-ng
-%global lm_examplesdir %{lm_sharedir}/examples
+%global lm_examplesdir %{_docdir}/lemonldap-ng/examples
 %global lm_vardir %{_localstatedir}/lib/lemonldap-ng
 %global lm_cachedir %{_localstatedir}/cache/lemonldap-ng
 %global lm_confdir %{_sysconfdir}/lemonldap-ng
@@ -30,14 +27,15 @@
 
 #global pre_release beta1
 
-#==============================================================================
-# Main package
-#==============================================================================
 Name:           lemonldap-ng
-Version:        2.16.2
+Version:        2.17.2
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
-Summary:        LemonLDAP-NG WebSSO
-License:        GPLv2+
+Summary:        Web Single Sign On (SSO) and Access Management
+# Lemonldap-ng itself is GPLv2+
+# Qrious bundled javascript library is GPLv3+
+# All other bundled javascript libraries are MIT
+# Fontawesome bundled font is OFL
+License:        GPL-2.0-or-later AND MIT AND GPL-3.0-or-later AND OFL-1.1-RFN
 URL:            https://lemonldap-ng.org
 Source0:        https://release.ow2.org/lemonldap/%{name}-%{version}%{?pre_release:~%{pre_release}}.tar.gz
 BuildArch:      noarch
@@ -59,17 +57,22 @@ BuildRequires:  perl(Apache2::ServerUtil)
 BuildRequires:  perl(Apache::Session)
 BuildRequires:  perl(Apache::Session::Browseable)
 BuildRequires:  perl(Apache::Session::Generate::MD5)
+BuildRequires:  perl(Apache::Session::Lock::File)
 BuildRequires:  perl(APR::Table)
 BuildRequires:  perl(AuthCAS)
 BuildRequires:  perl(Authen::Captcha)
 BuildRequires:  perl(Authen::PAM)
 BuildRequires:  perl(Authen::Radius)
+%{!?el7:BuildRequires:  perl(Authen::WebAuthn)}
+# Not available
+#BuildRequires:  perl(Auth::Yubikey_WebClient)
 BuildRequires:  perl(AutoLoader)
 BuildRequires:  perl(base)
 BuildRequires:  perl(bytes)
 BuildRequires:  perl(Cache::Cache)
 BuildRequires:  perl(Cache::FileCache)
 BuildRequires:  perl(Cache::Memcached)
+BuildRequires:  perl(Carp)
 BuildRequires:  perl(CGI)
 BuildRequires:  perl(Class::Inspector)
 BuildRequires:  perl(Clone)
@@ -77,13 +80,17 @@ BuildRequires:  perl(Config::IniFiles)
 BuildRequires:  perl(constant)
 BuildRequires:  perl(Convert::Base32)
 BuildRequires:  perl(Convert::PEM)
+BuildRequires:  perl(Crypt::JWT)
 BuildRequires:  perl(Crypt::OpenSSL::Bignum)
 BuildRequires:  perl(Crypt::OpenSSL::RSA)
 BuildRequires:  perl(Crypt::OpenSSL::X509)
 BuildRequires:  perl(Crypt::Rijndael)
+%{?fedora:BuildRequires:  perl(Crypt::U2F::Server::Simple)}
 BuildRequires:  perl(Crypt::URandom)
 BuildRequires:  perl(Cwd)
 BuildRequires:  perl(Data::Dumper)
+%{!?el7:BuildRequires:  perl(Data::Password::zxcvbn)}
+BuildRequires:  perl(Date::Parse)
 BuildRequires:  perl(DateTime::Format::RFC3339)
 BuildRequires:  perl(DBI)
 BuildRequires:  perl(Digest::HMAC_SHA1)
@@ -102,21 +109,21 @@ BuildRequires:  perl(FCGI::Client)
 BuildRequires:  perl(FCGI::ProcManager)
 BuildRequires:  perl(feature)
 BuildRequires:  perl(fields)
+BuildRequires:  perl(File::Compare)
 BuildRequires:  perl(File::Temp)
 BuildRequires:  perl(GD::SecurityImage)
-%if 0%{?fedora}%{?el9}
-BuildRequires:  perl(GeoIP2)
-%endif
+%{!?el7:BuildRequires:  perl(GeoIP2::Database::Reader)}
 BuildRequires:  perl(Getopt::Long)
 BuildRequires:  perl(Getopt::Std)
 BuildRequires:  perl(GSSAPI)
 BuildRequires:  perl(Hash::Merge::Simple)
+BuildRequires:  perl(HTML::Entities)
+BuildRequires:  perl(HTML::FormatText::WithLinks)
 BuildRequires:  perl(HTML::Template)
-%if 0%{?fedora}%{?el9}
-BuildRequires:  perl(HTTP::BrowserDetect)
-%endif
+%{!?el7:BuildRequires:  perl(HTTP::BrowserDetect)}
+BuildRequires:  perl(HTTP::Date)
 BuildRequires:  perl(HTTP::Headers)
-BuildRequires:  perl(HTTP::Message)
+BuildRequires:  perl(HTTP::Message::PSGI)
 BuildRequires:  perl(HTTP::Request)
 BuildRequires:  perl(Image::Magick)
 BuildRequires:  perl(IO::Pipe)
@@ -131,68 +138,99 @@ BuildRequires:  perl(JSON::XS)
 BuildRequires:  perl(Lasso)
 BuildRequires:  perl(Glib)
 %endif
+BuildRequires:  perl(List::MoreUtils)
 BuildRequires:  perl(Log::Log4perl)
+BuildRequires:  perl(Log::Log4perl::MDC)
 BuildRequires:  perl(LWP::Protocol::https)
 BuildRequires:  perl(LWP::UserAgent)
 BuildRequires:  perl(MIME::Base64)
 BuildRequires:  perl(MIME::Entity)
 BuildRequires:  perl(mod_perl2)
+BuildRequires:  perl(Moose)
 BuildRequires:  perl(Mouse)
+BuildRequires:  perl(Mouse::Role)
 BuildRequires:  perl(Net::CIDR)
 BuildRequires:  perl(Net::Facebook::Oauth2)
 BuildRequires:  perl(Net::LDAP)
+BuildRequires:  perl(Net::LDAP::Control::PasswordPolicy)
 BuildRequires:  perl(Net::LDAP::Extension::SetPassword)
 BuildRequires:  perl(Net::LDAP::Util)
 BuildRequires:  perl(Net::OAuth)
 BuildRequires:  perl(Net::OpenID::Consumer)
 BuildRequires:  perl(Net::OpenID::Server)
+BuildRequires:  perl(Net::SSLeay)
+BuildRequires:  perl(parent)
+BuildRequires:  perl(Perl::Tidy)
 BuildRequires:  perl(Plack)
 BuildRequires:  perl(Plack::Handler::CGI)
 BuildRequires:  perl(Plack::Handler::FCGI)
 BuildRequires:  perl(Plack::Middleware)
 BuildRequires:  perl(Plack::Request)
 BuildRequires:  perl(Plack::Runner)
-BuildRequires:  perl(Plack::Test)
 BuildRequires:  perl(Plack::Util)
 BuildRequires:  perl(Plack::Util::Accessor)
+BuildRequires:  perl(Pod::Usage)
 BuildRequires:  perl(POSIX)
 BuildRequires:  perl(Regexp::Assemble)
 BuildRequires:  perl(Regexp::Common)
 BuildRequires:  perl(Safe)
 BuildRequires:  perl(Scalar::Util)
-%if ! 0%{?el7}
-BuildRequires:  perl(Sentry::Raven)
-%endif
+%{!?el7:BuildRequires:  perl(Sentry::Raven)}
 BuildRequires:  perl(SOAP::Lite)
 BuildRequires:  perl(SOAP::Transport::HTTP)
+BuildRequires:  perl(Storable)
 BuildRequires:  perl(strict)
 BuildRequires:  perl(String::Random)
 BuildRequires:  perl(Sys::Syslog)
-BuildRequires:  perl(Test::LeakTrace)
 BuildRequires:  perl(Test::MockObject)
-BuildRequires:  perl(Test::Output)
 BuildRequires:  perl(Test::Pod) >= 1.00
 BuildRequires:  perl(Text::Unidecode)
-BuildRequires:  perl(Time::Fake)
+BuildRequires:  perl(threads::shared)
 BuildRequires:  perl(Time::Local)
 BuildRequires:  perl(Unicode::String)
 BuildRequires:  perl(URI)
 BuildRequires:  perl(URI::Escape)
+BuildRequires:  perl(URI::QueryParam)
 BuildRequires:  perl(URI::URL)
 BuildRequires:  perl(utf8)
 BuildRequires:  perl(warnings)
-%if ! 0%{?el7}
-BuildRequires:  perl(Web::ID)
-%endif
+%{!?el7:BuildRequires:  perl(Web::ID)}
+%{!?el7:BuildRequires:  perl(WWW::Form::UrlEncoded)}
 BuildRequires:  perl(XML::LibXML)
 BuildRequires:  perl(XML::LibXSLT)
 BuildRequires:  perl(XML::Simple)
 BuildRequires:  perl(YAML)
+# Tests
+BuildRequires:  perl(Apache::Session::File)
+%{?fedora:BuildRequires:  perl(Authen::U2F::Tester)}
+%{?fedora:BuildRequires:  perl(Crypt::U2F::Server)}
+BuildRequires:  perl(DBD::SQLite)
+BuildRequires:  perl(Email::Sender::Transport)
+BuildRequires:  perl(File::Basename)
+BuildRequires:  perl(File::Copy)
+BuildRequires:  perl(File::Find)
+BuildRequires:  perl(File::Path)
+%{!?el7:BuildRequires:  perl(GeoIP2)}
+BuildRequires:  perl(HTTP::Request::Common)
+BuildRequires:  perl(IPC::Open3)
+BuildRequires:  perl(lib)
+BuildRequires:  perl(locale)
+BuildRequires:  perl(LWP::Protocol::PSGI)
+BuildRequires:  perl(Plack::Builder)
+BuildRequires:  perl(Plack::Response)
+BuildRequires:  perl(Plack::Test)
+BuildRequires:  perl(Test::LeakTrace)
+BuildRequires:  perl(Test::More)
+BuildRequires:  perl(Test::Output)
+BuildRequires:  perl(Time::Fake)
+BuildRequires:  perl(Time::HiRes)
+
 %if 0%{?fedora}%{?el9}
 BuildRequires:  systemd-rpm-macros
 %else
 BuildRequires:  systemd
 %endif
+BuildRequires:  uglify-js
 
 # Doc
 %if 0%{?el7}
@@ -232,9 +270,6 @@ application. It manages both authentication and authorization and provides
 headers for accounting.
 So you can have a full AAA protection for your web space as described below.
 
-#==============================================================================
-# Conf
-#==============================================================================
 %package conf
 Summary:        LemonLDAP-NG configuration
 Requires:       perl(Apache::Session)
@@ -248,9 +283,6 @@ Requires:       mod_fcgid
 %description conf
 This package contains the main storage configuration.
 
-#==============================================================================
-# Documentation
-#==============================================================================
 %package doc
 Summary:        LemonLDAP-NG documentation
 Requires:       lemonldap-ng-conf = %{version}-%{release}
@@ -258,9 +290,6 @@ Requires:       lemonldap-ng-conf = %{version}-%{release}
 %description doc
 This package contains HTML documentation.
 
-#==============================================================================
-# Handler
-#==============================================================================
 %package handler
 Summary:        LemonLDAP-NG handler
 Requires:       crontabs
@@ -270,35 +299,64 @@ Requires:       perl(Lemonldap::NG::Handler) = %{version}-%{release}
 %description handler
 This package deploys the Apache Handler.
 
-#==============================================================================
-# Manager
-#==============================================================================
 %package manager
 Summary:        LemonLDAP-NG administration interface
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Manager) = %{version}-%{release}
+Provides:       bundled(js-angular) = 1.7.9
+Provides:       bundled(js-angular-bootstrap) = 2.5.0
+Provides:       bundled(js-angular-ui-tree) = 2.22.6
+Provides:       bundled(js-es5-shim)
+Provides:       bundled(js-filesaver)
 
 %description manager
 This package deploys the administration interface and sessions explorer.
 
-#==============================================================================
-# Portal
-#==============================================================================
 %package portal
 Summary:        LemonLDAP-NG authentication portal
 Requires:       crontabs
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Portal) = %{version}-%{release}
+%if 0%{?el7}
+# Fido2
+Requires:       perl(Authen::WebAuthn)
+# Facebook
 Requires:       perl(Net::Facebook::Oauth2)
+# OpenID
 Requires:       perl(Net::OAuth)
 Requires:       perl(Net::OpenID::Consumer)
+# TOTP
+Requires:       perl(Convert::Base32)
+Requires:       perl(Digest::HMAC_SHA1)
+%else
+# Fido2
+Recommends:     perl(Authen::WebAuthn)
+# Password entropy
+Recommends:     perl(Data::Password::zxcvbn)
+# Location
+Recommends:     perl(GeoIP2)}
+Recommends:     perl(HTTP::BrowserDetect)}
+# SAML
+%{?fedora:Recommends:    perl(Lasso)}
+# Facebook
+Recommends:     perl(Net::Facebook::Oauth2)
+# OpenID
+Recommends:     perl(Net::OAuth)
+Recommends:     perl(Net::OpenID::Consumer)
+# TOTP
+Recommends:     perl(Convert::Base32)
+Recommends:     perl(Digest::HMAC_SHA1)
+%endif
+Provides:       bundled(fontawesome-fonts) = 4.7.0
+Provides:       bundled(js-bootstrap) = 4.5.2
+Provides:       bundled(js-fingerprint2) = 2.1.4
+Provides:       bundled(js-jquery) = 3.5.1
+Provides:       bundled(js-jquery-ui) = 1.13.2
+Provides:       bundled(js-qrious)
 
 %description portal
 This package deploys the authentication portal.
 
-#==============================================================================
-# Test
-#==============================================================================
 %package test
 Summary:        LemonLDAP-NG test applications
 Requires:       lemonldap-ng-conf = %{version}-%{release}
@@ -306,9 +364,6 @@ Requires:       lemonldap-ng-conf = %{version}-%{release}
 %description test
 This package deploys small test applications.
 
-#==============================================================================
-# FastCGI Server
-#==============================================================================
 %package fastcgi-server
 Summary:        LemonLDAP-NG FastCGI Server
 Requires:       lemonldap-ng-conf = %{version}-%{release}
@@ -318,9 +373,6 @@ Requires:       perl(FCGI::ProcManager)
 %description fastcgi-server
 This package deploys files needed to start a FastCGI server.
 
-#==============================================================================
-# UWSGI Application
-#==============================================================================
 %package uwsgi-app
 Summary:        LemonLDAP-NG UWSGI Application
 Requires:       uwsgi-plugin-psgi
@@ -329,9 +381,6 @@ Requires:       uwsgi-plugin-psgi
 LemonLDAP::NG uWSGI server provides a replacement to LemonLDAP::NG FastCGI
 server, using uWSGI instead of Plack FCGI.
 
-#==============================================================================
-# Nginx server
-#==============================================================================
 %package nginx
 Summary:        LemonLDAP-NG Nginx support
 Requires:       nginx
@@ -339,9 +388,6 @@ Requires:       nginx
 %description nginx
 Nginx support for LemonLDAP::NG.
 
-#==============================================================================
-# CPAN modules - Common
-#==============================================================================
 %package -n perl-Lemonldap-NG-Common
 Summary:        LemonLDAP-NG Common Modules
 Requires:       perl(JSON::XS)
@@ -352,9 +398,6 @@ Requires:       perl(Cache::Cache)
 This package installs the configuration libraries used by other LemonLDAP::NG
 modules.
 
-#==============================================================================
-# CPAN modules - Handler
-#==============================================================================
 %package -n perl-Lemonldap-NG-Handler
 Summary:        LemonLDAP-NG Handler Modules
 
@@ -362,27 +405,18 @@ Summary:        LemonLDAP-NG Handler Modules
 This package installs the Apache module part (handler) used to protect web
 areas.
 
-#==============================================================================
-# CPAN modules -  Manager
-#==============================================================================
 %package -n perl-Lemonldap-NG-Manager
 Summary:        LemonLDAP-NG Manager Modules
 
 %description -n perl-Lemonldap-NG-Manager
 This package installs the administration interface (manager).
 
-#==============================================================================
-# CPAN modules - Portal
-#==============================================================================
 %package -n perl-Lemonldap-NG-Portal
 Summary:        LemonLDAP-NG Portal Modules
 
 %description -n perl-Lemonldap-NG-Portal
 This package installs the authentication portal.
 
-#==============================================================================
-# SELinux policy package
-#==============================================================================
 %if 0%{?with_selinux}
 %package selinux
 Summary:             LemonLDAP-NG SELinux policy
@@ -396,9 +430,6 @@ BuildRequires:       selinux-policy-devel
 Custom SELinux policy module
 %endif
 
-#==============================================================================
-# SSOaaS client for Apache
-#==============================================================================
 %package -n perl-Lemonldap-NG-SSOaaS-Apache-Client
 Summary:        Lemonldap-NG SSOaaS client for Apache
 
@@ -406,23 +437,18 @@ Summary:        Lemonldap-NG SSOaaS client for Apache
 This package permits one to enroll an Apache server
 into Lemonldap::NG's SSOaaS service.
 
-#==============================================================================
-# Source preparation
-#==============================================================================
+
 %prep
 %setup -q -n %{name}-%{version}%{?pre_release:~%{pre_release}}
 
 
-#==============================================================================
-# Building
-#==============================================================================
 %build
-make %{?_smp_mflags} configure \
+%make_build configure \
     STORAGECONFFILE=%{lm_storagefile} \
     DATADIR=%{lm_vardir} \
     CACHEDIR=%{lm_cachedir} \
     PERLOPTIONS="INSTALLDIRS=vendor"
-make %{?_smp_mflags}
+%make_build
 
 %if 0%{?with_selinux}
 # SELinux policy (originally from selinux-policy-contrib)
@@ -435,12 +461,9 @@ make -f %{_datadir}/selinux/devel/Makefile %{modulename}.pp
 bzip2 -9 %{modulename}.pp
 %endif
 
-#==============================================================================
-# Installation
-#============================================================================
+
 %install
-make %{?_smp_mflags} install \
-    DESTDIR=%{buildroot} \
+%make_install \
     PREFIX=%{lm_prefix} \
     BINDIR=%{lm_bindir} \
     SBINDIR=%{lm_sbindir} \
@@ -496,32 +519,13 @@ mkdir -p %{buildroot}%{lm_sharedir}/llng-server
 # Note: we do not use the APACHEUSER and APACHEGROUP in make install
 # because it launches a 'chown', which is not permitted if RPM is not
 # built as root
-sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{_sysconfdir}/cron.d/*
-sed -i 's/nobody/%{lm_apacheuser}/' \
-    %{buildroot}%{lm_bindir}/lmConfigEditor
 sed -i 's/nobody/%{lm_apacheuser}/g' \
-    %{buildroot}%{lm_bindir}/lemonldap-ng-sessions
-sed -i 's/nobody/%{lm_apacheuser}/g' \
-    %{buildroot}%{lm_bindir}/lemonldap-ng-cli
-sed -i 's/nobody/%{lm_apacheuser}/g' \
-    %{buildroot}%{lm_bindir}/llngDeleteSession
-sed -i 's/nobody/%{lm_apacheuser}/g' \
+    %{buildroot}%{_sysconfdir}/cron.d/* \
+    %{buildroot}%{lm_bindir}/lmConfigEditor \
+    %{buildroot}%{lm_bindir}/lemonldap-ng-sessions \
+    %{buildroot}%{lm_bindir}/lemonldap-ng-cli \
+    %{buildroot}%{lm_bindir}/llngDeleteSession \
     %{buildroot}%{_sysconfdir}/default/llng-fastcgi-server
-
-# Set UNIX rights
-mkdir -p %{buildroot}%{lm_vardir}/sessions/lock
-mkdir -p %{buildroot}%{lm_vardir}/psessions/lock
-chmod 750 %{buildroot}%{lm_vardir}/conf
-chmod 640 %{buildroot}%{lm_vardir}/conf/*
-chmod 640 %{buildroot}%{lm_storagefile}
-chmod 770 %{buildroot}%{lm_vardir}/sessions
-chmod 770 %{buildroot}%{lm_vardir}/sessions/lock
-chmod 770 %{buildroot}%{lm_vardir}/psessions
-chmod 770 %{buildroot}%{lm_vardir}/psessions/lock
-chmod 770 %{buildroot}%{lm_vardir}/notifications
-chmod 770 %{buildroot}%{lm_cachedir}
-chmod 770 %{buildroot}%{lm_vardir}/captcha
-chmod 775 %{buildroot}%{lm_sbindir}/llng-fastcgi-server
 
 # Install httpd conf files
 # We use "z-lemonldap-ng-*" so that httpd read the files after "perl.conf"
@@ -550,27 +554,26 @@ mv %{buildroot}%{lm_confdir}/for_etc_hosts .
 
 # Fix shebang and perms
 sed -i -e 's,#!/usr/bin/env plackup,#!/usr/bin/plackup,' \
-    %{buildroot}/usr/share/lemonldap-ng/manager/api/api.psgi
-chmod 755 %{buildroot}/usr/share/lemonldap-ng/manager/api/api.psgi
-sed -i -e 's,#!/usr/bin/env plackup,#!/usr/bin/plackup,' \
-    %{buildroot}/usr/share/lemonldap-ng/manager/htdocs/manager.psgi
-chmod 755 %{buildroot}/usr/share/lemonldap-ng/manager/htdocs/manager.psgi
-sed -i -e 's,#!/usr/bin/env plackup,#!/usr/bin/plackup,' \
-    %{buildroot}/usr/share/lemonldap-ng/examples/manager/manager.psgi
-chmod 755 %{buildroot}/usr/share/lemonldap-ng/examples/manager/manager.psgi
+    %{buildroot}%{lm_sharedir}/manager/api/api.psgi \
+    %{buildroot}%{lm_sharedir}/manager/htdocs/manager.psgi \
+    %{buildroot}%{lm_examplesdir}/manager/manager.psgi
+chmod 755 \
+    %{buildroot}%{lm_sharedir}/manager/api/api.psgi \
+    %{buildroot}%{lm_sharedir}/manager/htdocs/manager.psgi \
+    %{buildroot}%{lm_examplesdir}/manager/manager.psgi
 sed -i -e '1i#!/usr/bin/plackup' \
-    %{buildroot}/usr/share/lemonldap-ng/examples/llngapp.psgi
-chmod 644 %{buildroot}/usr/share/lemonldap-ng/test/cas.php
+    %{buildroot}%{lm_examplesdir}/llngapp.psgi
+chmod 644 %{buildroot}%{lm_sharedir}/test/cas.php
 
 # Install SELinux policy
 %if 0%{?with_selinux}
-install -D -m 0644 %{modulename}.pp.bz2 %{buildroot}%{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
+install -D -m 0644 %{modulename}.pp.bz2 \
+    %{buildroot}%{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
 %endif
 
-#==============================================================================
-# Run test
-#==============================================================================
 %check
+# This test requires network, use "--with network_tests" to execute it
+%{?!_with_network_tests:rm lemonldap-ng-portal/t/02-Password-Demo-checkHIBP.t}
 sed -i 's:^dirName.*:dirName = %{buildroot}%{lm_vardir}/conf:' \
     %{buildroot}%{lm_storagefile}
 make %{?_smp_mflags} test \
@@ -578,9 +581,7 @@ make %{?_smp_mflags} test \
 sed -i 's:^dirName.*:dirName = %{lm_vardir}/conf:' \
     %{buildroot}%{lm_storagefile}
 
-#==============================================================================
-# Post Installation
-#==============================================================================
+
 %post conf
 # Upgrade from previous version
 # See http://lemonldap-ng.org/documentation/1.0/upgrade
@@ -594,15 +595,7 @@ if [ $1 -gt 1 ] ; then
         chgrp %{lm_apachegroup} %{lm_storagefile} || :
     fi
 fi
-# Set editor alternatives if it does not exist
-update-alternatives --display editor > /dev/null 2>&1
-if [ $? -ne 0 ] ; then
-        update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1
-fi
 
-#==============================================================================
-# Pre uninstallation
-#==============================================================================
 %preun conf
 # Upgrade from previous version
 if [ $1 -eq 1 ] ; then
@@ -639,10 +632,11 @@ fi
 # if with_selinux
 %endif
 
+
 %files
 
 %files conf
-%doc changelog INSTALL README.md AUTHORS CONTRIBUTING.md
+%doc changelog README.md AUTHORS CONTRIBUTING.md
 %doc for_etc_hosts
 %license COPYING LICENSE
 %dir %{lm_confdir}
@@ -681,7 +675,7 @@ fi
 
 %files doc
 %doc %{lm_sharedir}/doc
-%doc changelog INSTALL README.md AUTHORS CONTRIBUTING.md
+%doc changelog README.md AUTHORS CONTRIBUTING.md
 %license COPYING LICENSE
 
 %files handler
@@ -705,7 +699,7 @@ fi
 %{lm_bindir}/purgeCentralCache
 %config(noreplace) %{_sysconfdir}/cron.d/lemonldap-ng-portal
 %{lm_examplesdir}/portal
-%defattr(750,%{lm_apacheuser},%{lm_apachegroup},-)
+%defattr(-,%{lm_apacheuser},%{lm_apachegroup},750)
 %dir %{lm_vardir}/captcha
 
 %files test
@@ -717,9 +711,9 @@ fi
 %config(noreplace) %{_sysconfdir}/default/llng-fastcgi-server
 %{_unitdir}/llng-fastcgi-server.service
 %{_tmpfilesdir}/llng-fastcgi-server.conf
-%defattr(755,%{lm_apacheuser},%{lm_apachegroup},-)
+%defattr(755,%{lm_apacheuser},%{lm_apachegroup},755)
 %dir %{_rundir}/llng-fastcgi-server
-%{lm_sharedir}/examples/llngapp.psgi
+%{lm_examplesdir}/llngapp.psgi
 
 %files uwsgi-app
 %config(noreplace) %{_sysconfdir}/uwsgi/apps-available/llng-server.yaml
@@ -769,10 +763,42 @@ fi
 %{_mandir}/man3/Lemonldap::NG::SSOaaS::Apache*.3pm.*
 %{perl_vendorlib}/Lemonldap/NG/SSOaaS/Apache/
 
-#==============================================================================
-# Changelog
-#==============================================================================
+
 %changelog
+* Tue Nov 14 2023 Clement Oudot <clem.oudot@gmail.com> - 2.17.2-1
+- Update to 2.17.2
+
+* Fri Oct 13 2023 Xavier Bachelot <xavier@bachelot.org> - 2.17.1-4
+- Enable GeoIP2 and HTTP::BrowserDetectfor EL8
+
+* Tue Oct 10 2023 Xavier Bachelot <xavier@bachelot.org> - 2.17.1-3
+- Fix broken dep on SSOaaS module dependency
+
+* Mon Oct 02 2023 Xavier Bachelot <xavier@bachelot.org> - 2.17.1-2
+- Add a dep on SSOaaS version
+- Simplify fix shebang and perms
+- Drop INSTALL from %doc
+
+* Mon Sep 25 2023 Clement Oudot <clem.oudot@gmail.com> - 2.17.1-1
+- Update to 2.17.1
+
+* Wed Aug 30 2023 Clement Oudot <clem.oudot@gmail.com> - 2.17.0-1
+- Update to 2.17.0
+
+* Mon May 15 2023 Xavier Bachelot <xavier@bachelot.org> - 2.16.2-2
+- Improve Summary:
+- Drop updates-alternatives from %%post
+- Split long line
+- Drop useless comments
+- Add provides for bundled javascript libraries and adapt License tag accordingly
+- Add provides for bundled font and adapt License tag accordingly
+- Make use of %%lm_sharedir instead of plain path
+- Add BR: for uglify-js
+- Move examples to %%_docdir
+- Fix perms on %%lm_vardir/captcha and %%_rundir/llng-fastcgi-server
+- Drop redundant dirs creation and perms change
+- Conditionalize test that needs network access
+
 * Fri May 12 2023 Clement Oudot <clem.oudot@gmail.com> - 2.16.2-1
 - Update to 2.16.2
 
