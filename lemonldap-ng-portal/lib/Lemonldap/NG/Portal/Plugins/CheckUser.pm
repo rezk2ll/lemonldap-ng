@@ -256,7 +256,7 @@ sub check {
         );
     }
 
-    if ( !$user || $req->{user} eq $req->{user} eq $user ) {
+    if ( !$user || $req->{user} eq $user ) {
         $self->userLogger->info("checkUser requested for himself");
         $self->userLogger->info("Using spoofed SSO groups if exist")
           if $self->conf->{impersonationRule};
