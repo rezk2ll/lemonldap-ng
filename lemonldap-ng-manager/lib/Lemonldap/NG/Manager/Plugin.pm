@@ -6,7 +6,7 @@ use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::Conf::Constants;
 use URI::URL;
 
-our $VERSION = '2.0.10';
+our $VERSION = '2.18.0';
 
 extends 'Lemonldap::NG::Common::Module';
 

@@ -24,7 +24,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NO_SECOND_FACTORS
 );
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.18.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 with qw(

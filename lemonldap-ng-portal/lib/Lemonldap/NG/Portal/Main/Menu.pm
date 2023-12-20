@@ -7,7 +7,7 @@ use Mouse;
 use Clone 'clone';
 use Lemonldap::NG::Portal::Main::Constants 'URIRE';
 
-our $VERSION = '2.16.2';
+our $VERSION = '2.18.0';
 
 extends 'Lemonldap::NG::Common::Module';
 
