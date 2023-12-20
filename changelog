@@ -1,3 +1,54 @@
+lemonldap-ng (2.18.0) jammy; urgency=medium
+
+  * Bugs:
+    * #2555: Language icons are truncated on mobile screens
+    * #2771: LemonLDAP::NG SAML IDP crash when saml attribute contains a special character in debug mode
+    * #2936: this version of MariaDB doesn't yet support 'GET_LOCK in cluster (WSREP_ON=ON)
+    * #2945: CheckUser: Do not compute setAuthSession step for unauthenticated user
+    * #2962: timeoutActivity feature makes Offline sessions expire prematurely
+    * #2983: StayConnected + Singlesession does not display deleted sessions
+    * #2990: LLNG mails flagged as spam by SpamAssassin
+    * #2994: Auth::SAML back channel logout doesnt work when 2FA is used
+    * #3009: Apache2 handler not compatible with mod_remoteip
+    * #3013: Default value is not applied to ServiceTokenTTL
+    * #3016: 'Bad token' error is returned if just a regexp is employed to define serviceToken scope
+    * #3018: Choice breaks OIDC Offline
+    * #3041: LLNG should not refuse logout when one OIDC/SAML SP fail to logout
+    * #3055: Internal error while processing a "access forbidden" SAML assertion
+    * #3058: Access rule of an OIDC RP not working to dynamically display application in portal menu
+    * #3060: No LWP options or SSL options for REST configuration access (proxyOptions parameter not working)
+
+  * New features:
+    * #811: Encryption of JWT
+    * #2490: Possibility to remember second factor / 2FA on a device, to avoid entering it at each authentication
+    * #2872: Mass send reset password link / access to password reset link through CLI
+    * #2971: add an indicator of entropy during password change
+    * #2993: Add value filtering to 2F::Register::Generic
+    * #3017: Handle acr_values in Issuer::OpenIDConnect
+    * #3027: Support attestation validation in 2F::WebAuthn
+    * #3037: Add a hook before 2FA validation
+    * #3044: Allow logout_app and logout_app_sso in Nginx
+
+  * Improvements:
+    * #2286: PS256 support for OIDC ID Token signature
+    * #2783: Continue login after mandatory 2FA registration
+    * #2963: improve Additional 2FA to support different registration rule and activation rule
+    * #2973: Implement pluggable password policies
+    * #2982: Allow specifying a Radius failover server
+    * #2988: Do not store password in clear text in session when password store option is enabled
+    * #3022: Add a log to give details if CAS SLO request returns an error
+    * #3025: Accept EC algorithms in OpenIDConnect
+    * #3029: Set a UserAgent for requests done by LemonLDAP::NG
+    * #3031: OIDC: implement client_secret_jwt and private_key_jwt authentication mechanisms for endpoints access
+    * #3043: Return to 2FA manager after registration
+    * #3044: Allow logout_app and logout_app_sso in Nginx
+    * #3046: Conf::Backends::LDAP permanently fails to connect after an error
+
+  * Templates:
+    * #2555: Language icons are truncated on mobile screens
+
+ -- Clément <clem.oudot@gmail.com>  Wed, 20 Dec 2023 16:57:45 +0100
+
 lemonldap-ng (2.17.2) jammy; urgency=medium
 
   * Bugs:
