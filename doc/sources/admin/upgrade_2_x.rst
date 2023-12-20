@@ -90,6 +90,13 @@ you should now enable password encryption in session (this option is disabled by
 
 This requires to decrypt the ``$_password``` value before sending it to the application, with the ``decrypt()`` method.
 
+Safe Jail
+~~~~~~~~~
+
+For security reason, we now enforce Safe Jail by default in lemonldap-ng.ini, so an administrator with only access to Manager
+cannot disable it. If you want to improve security, update your lemonldap-ng.ini. To retrieve the old behavior (Safe Jail configuration
+through Manager), just let the option commented in lemonldap-ng.ini.
+
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
