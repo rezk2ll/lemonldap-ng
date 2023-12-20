@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.17.2';
+our $VERSION = '2.18.0';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -635,7 +635,19 @@ sub attributes {
         },
         checkEntropyRequiredLevel => {
             type          => 'int',
-            documentation => 'Minimal entropy required for the password to be accepted',
+            documentation =>
+              'Minimal entropy required for the password to be accepted',
+            flags => 'p',
+        },
+        initializePasswordReset => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable Password Reset API plugin',
+            flags         => 'p',
+        },
+        initializePasswordResetSecret => {
+            type          => 'password',
+            documentation => 'Secret key for the Initialize Password Reset API',
             flags         => 'p',
         },
         checkUser => {
@@ -1273,6 +1285,11 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Store password in session',
+        },
+        storePasswordEncrypted => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Crypt the password in session',
         },
         timeout => {
             type          => 'int',
@@ -2464,17 +2481,18 @@ sub attributes {
         webauthn2fAttestation => {
             type   => 'select',
             select => [
-                { k => 'none', v => 'None' },
-                { k => 'direct',   v => 'Direct' },
-                { k => 'indirect',    v => 'Indirect' },
-                { k => 'enterprise',    v => 'Enterprise' },
+                { k => 'none',       v => 'None' },
+                { k => 'direct',     v => 'Direct' },
+                { k => 'indirect',   v => 'Indirect' },
+                { k => 'enterprise', v => 'Enterprise' },
             ],
             default       => 'none',
             documentation => 'Ask the authenticator for an attestation',
         },
         webauthn2fAttestationTrust => {
             type          => 'file',
-            documentation => 'Certificate bundle for attestation trust validation',
+            documentation =>
+              'Certificate bundle for attestation trust validation',
         },
         webauthn2fUserCanRemoveKey => {
             type          => 'bool',
@@ -4815,6 +4833,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             select => [
                 { k => 'client_secret_post',  v => 'client_secret_post' },
                 { k => 'client_secret_basic', v => 'client_secret_basic' },
+                { k => 'client_secret_jwt',   v => 'client_secret_jwt' },
+                { k => 'private_key_jwt',     v => 'private_key_jwt' },
             ],
             default => 'client_secret_post',
         },
@@ -4845,8 +4865,18 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 'email'              => 'mail',
             }
         },
-        oidcRPMetaDataOptionsClientID       => { type => 'text', },
-        oidcRPMetaDataOptionsClientSecret   => { type => 'password', },
+        oidcRPMetaDataOptionsClientID     => { type => 'text', },
+        oidcRPMetaDataOptionsClientSecret => { type => 'password', },
+        oidcRPMetaDataOptionsAuthMethod   => {
+            type   => 'select',
+            select => [
+                { k => '',                    v => 'Any' },
+                { k => 'client_secret_post',  v => 'client_secret_post' },
+                { k => 'client_secret_basic', v => 'client_secret_basic' },
+                { k => 'client_secret_jwt',   v => 'client_secret_jwt' },
+                { k => 'private_key_jwt',     v => 'private_key_jwt' },
+            ],
+        },
         oidcRPMetaDataOptionsDisplayName    => { type => 'text', },
         oidcRPMetaDataOptionsIcon           => { type => 'text', },
         oidcRPMetaDataOptionsUserIDAttr     => { type => 'text', },

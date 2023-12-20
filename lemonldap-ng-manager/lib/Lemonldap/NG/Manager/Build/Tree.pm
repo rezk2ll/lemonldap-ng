@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.18.0';
 
 sub tree {
     return [ {
@@ -580,6 +580,7 @@ sub tree {
                     help  => 'sessions.html',
                     nodes => [
                         'storePassword',
+                        'storePasswordEncrypted',
                         'displaySessionId',
                         'timeout',
                         'timeoutActivity',
@@ -907,6 +908,15 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes =>
                               [ 'decryptValueRule', 'decryptValueFunctions', ]
+                        },
+                        {
+                            title => 'initializePasswordResetLabel',
+                            help  => 'initializePasswordReset.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'initializePasswordReset',
+                                'initializePasswordResetSecret',
+                            ],
                         },
                         {
                             title => 'customPluginsNode',

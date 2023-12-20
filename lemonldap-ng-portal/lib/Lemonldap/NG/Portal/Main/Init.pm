@@ -8,7 +8,7 @@
 #                  of lemonldap-ng.ini) and underlying handler configuration
 package Lemonldap::NG::Portal::Main::Init;
 
-our $VERSION = '2.17.2';
+our $VERSION = '2.18.0';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -567,11 +567,11 @@ sub findEP {
 
     # Rules for menu
     if ( $obj->can('spRules') ) {
-        foreach my $k ( keys %{ $obj->{spRules} } ) {
+        foreach my $k ( keys %{ $obj->spRules } ) {
             $self->logger->info(
 "$k is defined more than one time, it can have some bad effects on Menu display"
             ) if ( $self->spRules->{$k} );
-            $self->spRules->{$k} = $obj->{spRules}->{$k};
+            $self->spRules->{$k} = $obj->spRules->{$k};
         }
     }
     return $obj;

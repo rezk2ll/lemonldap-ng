@@ -225,7 +225,8 @@ sub cTrees {
                     'oidcRPMetaDataOptionsPublic',
                     'oidcRPMetaDataOptionsClientID',
                     'oidcRPMetaDataOptionsClientSecret',
-                    'oidcRPMetaDataOptionsRedirectUris'
+                    'oidcRPMetaDataOptionsRedirectUris',
+                    'oidcRPMetaDataOptionsAuthMethod',
                 ]
             },
             'oidcRPMetaDataExportedVars',

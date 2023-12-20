@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PP_INSUFFICIENT_PASSWORD_QUALITY
 );
 
-our $VERSION = '2.16.1';
+our $VERSION = '2.18.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 

@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
 );
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.18.0';
 
 extends 'Lemonldap::NG::Portal::2F::Register::Base';
 with 'Lemonldap::NG::Portal::Lib::2fDevices';
