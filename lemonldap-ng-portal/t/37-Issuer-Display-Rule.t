@@ -12,31 +12,42 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $debug = 'error';
+my $maintests = 2;
+my $debug     = 'error';
 
-my $client = portal();
-
-my $id = login( $client, "dwho", "dwho" );
-my $res;
-ok(
-    $res =
-      $client->_get( '/', accept => 'text/html', cookie => "lemonldap=$id" ),
-    'Get Menu',
-);
-count(1);
-
-my %applications = map { ( split( " ", $_->getAttribute("class") ) )[1] => 1 }
-  getHtmlElement( $res, '//div[contains(@class,"application")]' );
-is_deeply(
-    \%applications,
-    {
-        cas_ok  => 1,
-        saml_ok => 1,
-        oidc_ok => 1,
+SKIP: {
+    eval "use Lasso";
+    if ($@) {
+        skip 'Lasso not found', $maintests;
     }
-);
-count(1);
 
+    my $client = portal();
+
+    my $id = login( $client, "dwho", "dwho" );
+    my $res;
+    ok(
+        $res = $client->_get(
+            '/',
+            accept => 'text/html',
+            cookie => "lemonldap=$id"
+        ),
+        'Get Menu',
+    );
+
+    my %applications =
+      map { ( split( " ", $_->getAttribute("class") ) )[1] => 1 }
+      getHtmlElement( $res, '//div[contains(@class,"application")]' );
+    is_deeply(
+        \%applications,
+        {
+            cas_ok  => 1,
+            saml_ok => 1,
+            oidc_ok => 1,
+        }
+    );
+}
+
+count($maintests);
 clean_sessions();
 done_testing( count() );
 
@@ -69,11 +80,11 @@ sub portal {
                 issuerDBSAMLActivation          => "1",
                 oidcRPMetaDataOptions           => {
                     'oidc_ok' => {
-                        oidcRPMetaDataOptionsRule => '$uid eq "dwho"',
+                        oidcRPMetaDataOptionsRule     => '$uid eq "dwho"',
                         oidcRPMetaDataOptionsClientID => "oidc-ok",
                     },
                     'oidc_ko' => {
-                        oidcRPMetaDataOptionsRule => '$uid eq "rtyler"',
+                        oidcRPMetaDataOptionsRule     => '$uid eq "rtyler"',
                         oidcRPMetaDataOptionsClientID => "oidc-ko",
                     }
                 },
