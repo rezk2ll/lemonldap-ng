@@ -137,7 +137,7 @@
 "checkUserComputedSession":"Kertakirjautumisistuntoa ei löydy. Laskennalliset arvot!",
 "checkUserMerged":"Tarkista käyttäjän kertakirjautumisprofiili. Jotkin todelliset ja väärennetyt ryhmän on yhdistetty!",
 "checkUserNoSessionFound":"Kertakirjautumisistuntoa ei löydy",
-"checkentropyLabel":"Password strength",
+"checkentropyLabel":"Salasanan vahvuus",
 "choose2f":"Valitse toisen vaiheen tunnistustapasi",
 "chooseApp":"Valitse sovellus, johon sinun on sallittu päästä",
 "cipheredValue":"Koodattu arvo",
