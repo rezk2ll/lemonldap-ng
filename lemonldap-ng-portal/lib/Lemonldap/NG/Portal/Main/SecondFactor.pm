@@ -68,6 +68,11 @@ sub init {
     return 1;
 }
 
+sub get2fTplParams {
+    my ( $self, $req ) = @_;
+
+    return $self->p->_sfEngine->get2fTplParams($req, $self);
+}
 1;
 __END__
 

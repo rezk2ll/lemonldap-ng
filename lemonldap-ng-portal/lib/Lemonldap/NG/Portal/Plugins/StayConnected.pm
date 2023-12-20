@@ -58,6 +58,7 @@ sub skipAuthentication {
     $req->user($uid);
     $req->sessionInfo->{_stayConnectedSession} =
       $state->{_stayConnectedSession};
+    $req->sessionInfo->{_trustedBrowser} = 1;
     my @steps =
       grep { ref $_ or $_ !~ /^(?:extractFormInfo|authenticate)$/ }
       @{ $req->steps };

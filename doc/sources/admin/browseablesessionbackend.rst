@@ -41,7 +41,7 @@ List of fields to index by session type
 .. [1]
    - ``user`` is used by :doc:`resetpassword`.
    - ``mail`` is used by :doc:`register`.
-   - ``_session_uid`` is used by :doc:`stayconnected`.
+   - ``_session_uid`` is used by :doc:`trustedbrowser`.
 
 .. note::
 

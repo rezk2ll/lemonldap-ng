@@ -1080,4 +1080,22 @@ sub _registerRoutes {
     }
 }
 
+sub get2fTplParams {
+    my ( $self, $req, $module ) = @_;
+    my %param;
+    my $checkLogins = $req->param('checkLogins');
+    $self->logger->debug( $module->prefix . '2f: checkLogins set' )
+      if $checkLogins;
+
+    my $stayConnected = $req->param('stayconnected');
+    $self->logger->debug( $module->prefix . '2f: stayConnected set' )
+      if $stayConnected;
+
+
+    $param{CHECKLOGINS}   = $checkLogins;
+    $param{STAYCONNECTED} = $stayConnected;
+
+    return %param;
+}
+
 1;

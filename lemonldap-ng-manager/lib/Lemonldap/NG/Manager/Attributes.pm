@@ -5117,6 +5117,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 1,
             'type'    => 'bool'
         },
+        'trustedBrowserRule' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
         'trustedDomains' => {
             'type' => 'text'
         },
