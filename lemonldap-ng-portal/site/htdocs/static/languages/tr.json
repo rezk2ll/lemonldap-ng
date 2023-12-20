@@ -317,7 +317,7 @@
 "showhidePasswords":"Parolayı göster/gizle",
 "spoofId":"Gizlenen ID",
 "startTime":"Oluşturulma tarihi",
-"stayConnected":"Bu cihazda oturumu açık tut",
+"stayConnected":"Trust this device for future logins",
 "submit":"Gönder",
 "switchContext":"Bağlam değiştir",
 "totp2f":"OTP Uygulaması",

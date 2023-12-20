@@ -3,7 +3,7 @@ package Lemonldap::NG::Common::Logger::Syslog;
 use strict;
 use Sys::Syslog qw(:standard);
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.18.0';
 
 sub new {
     my ( $class, $conf, %args ) = @_;

@@ -4,7 +4,7 @@ use Authen::Radius;
 use strict;
 use Mouse;
 
-our $VERSION = '2.0.17';
+our $VERSION = '2.18.0';
 
 # INITIALIZATION
 

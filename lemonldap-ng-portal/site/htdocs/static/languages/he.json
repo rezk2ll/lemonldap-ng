@@ -317,7 +317,7 @@
 "showhidePasswords":"הצגת/הסתרת סיסמאות",
 "spoofId":"מזהה מזויף",
 "startTime":"תאריך יצירה",
-"stayConnected":"לשמור על הקישור במכשיר זה",
+"stayConnected":"Trust this device for future logins",
 "submit":"הגשה",
 "switchContext":"החלפת הקשר",
 "totp2f":"יישומון סיסמה חד־פעמית",

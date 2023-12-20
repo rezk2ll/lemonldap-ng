@@ -317,7 +317,7 @@
 "showhidePasswords":"Показать/Скрыть пароли",
 "spoofId":"Поддельный идентификатор",
 "startTime":"Дата создания",
-"stayConnected":"Сохранять подключение на этом устройстве",
+"stayConnected":"Trust this device for future logins",
 "submit":"Подтвердить",
 "switchContext":"Переключение контекста",
 "totp2f":"Приложение OTP",

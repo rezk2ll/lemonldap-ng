@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.18.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -68,6 +68,11 @@ sub init {
     return 1;
 }
 
+sub get2fTplParams {
+    my ( $self, $req ) = @_;
+
+    return $self->p->_sfEngine->get2fTplParams($req, $self);
+}
 1;
 __END__
 

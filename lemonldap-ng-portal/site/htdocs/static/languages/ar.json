@@ -317,7 +317,7 @@
 "showhidePasswords":"Show/Hide passwords",
 "spoofId":"Spoofed Id",
 "startTime":"تاريخ الإنشاء",
-"stayConnected":"ابق على اتصال على هذا الجهاز",
+"stayConnected":"Trust this device for future logins",
 "submit":"قدم",
 "switchContext":"Switch context",
 "totp2f":"OTP App",

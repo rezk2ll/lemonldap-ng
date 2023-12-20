@@ -24,7 +24,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NO_SECOND_FACTORS
 );
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.18.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 with qw(
@@ -1078,6 +1078,24 @@ sub _registerRoutes {
             ['GET']
         );
     }
+}
+
+sub get2fTplParams {
+    my ( $self, $req, $module ) = @_;
+    my %param;
+    my $checkLogins = $req->param('checkLogins');
+    $self->logger->debug( $module->prefix . '2f: checkLogins set' )
+      if $checkLogins;
+
+    my $stayConnected = $req->param('stayconnected');
+    $self->logger->debug( $module->prefix . '2f: stayConnected set' )
+      if $stayConnected;
+
+
+    $param{CHECKLOGINS}   = $checkLogins;
+    $param{STAYCONNECTED} = $stayConnected;
+
+    return %param;
 }
 
 1;

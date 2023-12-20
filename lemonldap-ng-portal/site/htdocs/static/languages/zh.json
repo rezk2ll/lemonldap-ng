@@ -317,7 +317,7 @@
 "showhidePasswords":"顯示／隱藏密碼",
 "spoofId":"Spoofed Id",
 "startTime":"建立日期",
-"stayConnected":"在此裝置上保持連線",
+"stayConnected":"Trust this device for future logins",
 "submit":"提交",
 "switchContext":"切換內容",
 "totp2f":"OTP 應用程式",

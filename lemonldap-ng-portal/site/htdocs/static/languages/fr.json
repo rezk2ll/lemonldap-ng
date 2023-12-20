@@ -317,7 +317,7 @@
 "showhidePasswords":"Mots de passe",
 "spoofId":"Identifiant simulé",
 "startTime":"Date de création",
-"stayConnected":"Rester connecté sur cet appareil",
+"stayConnected":"Faire confiance à ce navigateur lors des prochaines connexions",
 "submit":"Envoyer",
 "switchContext":"Changer de contexte",
 "totp2f":"Application OTP",

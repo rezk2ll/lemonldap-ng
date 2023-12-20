@@ -20,7 +20,7 @@ extends qw(
   Lemonldap::NG::Common::Session::REST
 );
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.18.0';
 
 #############################
 # I. INITIALIZATION METHODS #

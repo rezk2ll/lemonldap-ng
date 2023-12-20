@@ -317,7 +317,7 @@
 "showhidePasswords":"Show/Hide passwords",
 "spoofId":"Id usurpato",
 "startTime":"Data di creazione",
-"stayConnected":"Resta connesso su questo dispositivo",
+"stayConnected":"Trust this device for future logins",
 "submit":"Invia",
 "switchContext":"Switch context",
 "totp2f":"OTP App",

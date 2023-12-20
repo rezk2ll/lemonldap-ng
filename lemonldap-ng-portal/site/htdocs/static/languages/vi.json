@@ -317,7 +317,7 @@
 "showhidePasswords":"Hiện/Ẩn mật khẩu",
 "spoofId":"Spoofed Id",
 "startTime":"Ngày tạo",
-"stayConnected":"Giữ kết nối trên thiết bị này",
+"stayConnected":"Trust this device for future logins",
 "submit":"Gửi",
 "switchContext":"Chuyển ngữ cảnh",
 "totp2f":"Ứng dụng OTP",

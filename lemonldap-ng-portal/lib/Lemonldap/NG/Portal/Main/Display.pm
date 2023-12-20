@@ -2,7 +2,7 @@
 # Display functions for LemonLDAP::NG Portal
 package Lemonldap::NG::Portal::Main::Display;
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.18.0';
 
 package Lemonldap::NG::Portal::Main;
 use strict;
@@ -433,9 +433,10 @@ sub display {
             ENABLE_PASSWORD_DISPLAY =>
               $self->conf->{portalEnablePasswordDisplay},
             %{ $self->getPasswordPolicyTemplateVars },
-            (
-                $self->stayConnected->( $req, $req->sessionInfo )
-                ? ( STAYCONNECTED => 1 )
+            ( (
+                         $self->conf->{trustedBrowserRule}
+                      or $self->stayConnected->( $req, $req->sessionInfo )
+                ) ? ( STAYCONNECTED => 1 )
                 : ()
             ),
             (

@@ -300,7 +300,7 @@ Name                                                                 Description
 :doc:`Remember auth choice<rememberauthchoice>` [20]_\ |new|         Remember user last authentication choice
 :doc:`REST services<restservices>`                                   REST server for :doc:`Proxy<authproxy>`
 :doc:`SOAP services<soapservices>` |deprecated|                      SOAP server for :doc:`Proxy<authproxy>`
-:doc:`Stay connected<stayconnected>`                                 Enable persistent connection on same browser
+:doc:`Trusted browser<trustedbrowser>`                               Remember previous authentications
 Upgrade session                                                      This plugin explains to an already authenticated user that a higher authentication level is required to access the URL instead of reject him
 ==================================================================== ============================================================================================================================================
 
@@ -645,11 +645,11 @@ by your language code):
 
 .. [21]
    :doc:`Check entropy plugin<checkentropy>` is available with LLNG ≥
-   2.18.1
+   2.18.0
 
 .. [22]
    :doc:`initializePasswordReset<initializePasswordReset>` is available with LLNG ≥
-   2.18.1
+   2.18.0
 
 .. |image0| image:: /icons/kthememgr.png
 .. |image1| image:: /icons/warehause.png

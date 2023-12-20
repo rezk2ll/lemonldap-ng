@@ -29,6 +29,14 @@ None
 2.18.0
 ------
 
+"Stay connected" has changed name
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The "Stay connected on this device" feature has been refactored into a more
+generic :doc:`trustedbrowser` feature. The name of the configuration section
+has changed in the manager but no particular actions are required for existing
+installations.
+
 Change in second factor UI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -43,8 +51,6 @@ You can cancel this behavior by calling preventDefault in your JS handler:
          });
 
 See :doc:`jqueryevents` for more information
-
-
 
 Apache2 handler now uses IP from mod_remoteip
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -76,6 +82,21 @@ systemd edit liblemonldap-ng-handler-perl.timer
 OnCalendar=*-*-* *:07:07
 ```
 
+Encryption of password in session
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you store the password in session because you need to replay it on a protected application (Auth Basic or form replay),
+you should now enable password encryption in session (this option is disabled by default).
+
+This requires to decrypt the ``$_password``` value before sending it to the application, with the ``decrypt()`` method.
+
+Safe Jail
+~~~~~~~~~
+
+For security reason, we now enforce Safe Jail by default in lemonldap-ng.ini, so an administrator with only access to Manager
+cannot disable it. If you want to improve security, update your lemonldap-ng.ini. To retrieve the old behavior (Safe Jail configuration
+through Manager), just let the option commented in lemonldap-ng.ini.
+
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -89,6 +110,13 @@ It is recommended to replace your custom theme's ``passwordpolicy.tpl`` by the o
 If you use the :doc:`Have I Been Pwned <checkhibp>` plugin, this is a required change because the modifications in 2.18 will break this particular plugin.
 
 If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
+Email templates
+^^^^^^^^^^^^^^^
+
+To avoid email sent by LL::NG being flagged as spam, we remove inline images in HTML content. You can add them back by customising the email templates and eithier use inline images (cid) or links to external resources.
+
+Note that we now send a plain text version of the mail attached to the HTML email.
 
 2.17.1
 ------

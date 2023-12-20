@@ -10,7 +10,7 @@ use Carp;
 with 'Lemonldap::NG::Portal::Lib::2fDevices';
 use Lemonldap::NG::Common::Util qw/display2F/;
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.18.0';
 
 has rp_id    => ( is => 'rw', lazy => 1, builder => "_build_rp_id" );
 has origin   => ( is => 'rw', lazy => 1, builder => "_build_origin" );

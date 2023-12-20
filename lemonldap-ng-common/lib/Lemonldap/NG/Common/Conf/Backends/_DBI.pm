@@ -5,7 +5,7 @@ use utf8;
 use DBI;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.18.0';
 our @ISA     = qw(Lemonldap::NG::Common::Conf::Constants);
 our ( @EXPORT, %EXPORT_TAGS );
 
