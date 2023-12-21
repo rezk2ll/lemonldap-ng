@@ -40,6 +40,10 @@ build_bullseye:
   extends: .debian_build_job
   image: buildpkg/debian:bullseye
 
+build_bookworm:
+  extends: .debian_build_job
+  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/debian:bookworm
+
 build_focal:
   extends: .debian_build_job
   image: buildpkg/ubuntu:focal
