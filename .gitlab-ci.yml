@@ -57,14 +57,12 @@ build_centos_7:
     - make dist
     - ci-build-pkg
 
-build_centos_8:
+build_rocky_8:
   extends: .build_job
-  image: buildpkg/centos:8
+  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/rockylinux:8
   script:
-    - sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
-    - sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
-    - yum-config-manager --enable PowerTools
-    - yum-config-manager --enable AppStream
+    - yum-config-manager --enable powertools
+    - yum-config-manager --enable appstream
     - yum -y install epel-release
     - make dist
     - ci-build-pkg
@@ -93,7 +91,7 @@ sign:
     - build_buster
     - build_bullseye
     - build_centos_7
-    - build_centos_8
+    - build_rocky_8
   artifacts:
     expire_in: 1 day
     paths:
