@@ -1506,7 +1506,7 @@ sub decodeJWT {
 
     # Choosing keys
     #  - if algorithm is HS{digits}, the key is the ClientSecret
-    #  - if JWS has a "kti" field in its header, use it (then replace the
+    #  - if JWS has a "kid" field in its header, use it (then replace the
     #    "key" arg of Crypt::JWT by "kid_keys" and give the whole JWKS)
     #  - else we try the first available key of jwks document
     my @keyArg =
@@ -1516,7 +1516,7 @@ sub decodeJWT {
         ? $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientSecret}
         : $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret}
       )
-      : $jwt_header->{kti} ? ( kid_keys => $jwks )
+      : $jwt_header->{kid} ? ( kid_keys => $jwks )
       :                      ( key => $jwks->{keys}->[0] );
 
     # JSON decoding is done here because #2748
@@ -2230,6 +2230,11 @@ sub _createJWT {
             return;
         }
         @keyArg = ( key => \$priv_key, );
+
+        if ( $self->conf->{oidcServiceKeyIdSig} ) {
+            push @keyArg,
+              extra_headers => { kid => $self->conf->{oidcServiceKeyIdSig} };
+        }
     }
 
     # Encode payload here due to #2748
