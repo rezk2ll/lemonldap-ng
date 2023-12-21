@@ -74,7 +74,6 @@ build_rocky_9:
     - yum-config-manager --enable crb
     - yum-config-manager --enable appstream
     - yum -y install epel-release
-    - yum -y install systemd
     - make dist
     - ci-build-pkg
 
