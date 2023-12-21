@@ -67,8 +67,8 @@ build_rocky_8:
   image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/rockylinux:8
   script:
     - dnf -y update
-    - yum-config-manager --enable powertools
-    - yum -y install epel-release
+    - dnf config-manager --enable powertools
+    - dnf -y install epel-release
     - make dist
     - ci-build-pkg
 
@@ -77,8 +77,8 @@ build_rocky_9:
   image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/rockylinux:9
   script:
     - dnf -y update
-    - yum-config-manager --enable crb
-    - yum -y install epel-release
+    - dnf config-manager --enable crb
+    - dnf -y install epel-release
     - make dist
     - ci-build-pkg
 
