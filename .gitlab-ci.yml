@@ -57,6 +57,7 @@ build_centos_7:
   image: buildpkg/centos:7
   script:
     - rm -f /etc/yum.repos.d/CentOS-Sources.repo
+    - yum -y update
     - yum -y install epel-release
     - make dist
     - ci-build-pkg
@@ -65,6 +66,7 @@ build_rocky_8:
   extends: .build_job
   image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/rockylinux:8
   script:
+    - dnf -y update
     - yum-config-manager --enable powertools
     - yum-config-manager --enable appstream
     - yum -y install epel-release
@@ -75,6 +77,7 @@ build_rocky_9:
   extends: .build_job
   image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/rockylinux:9
   script:
+    - dnf -y update
     - yum-config-manager --enable crb
     - yum-config-manager --enable appstream
     - yum -y install epel-release
