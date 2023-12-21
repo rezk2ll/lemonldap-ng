@@ -2230,6 +2230,11 @@ sub _createJWT {
             return;
         }
         @keyArg = ( key => \$priv_key, );
+
+        if ( $self->conf->{oidcServiceKeyIdSig} ) {
+            push @keyArg,
+              extra_headers => { kid => $self->conf->{oidcServiceKeyIdSig} };
+        }
     }
 
     # Encode payload here due to #2748
