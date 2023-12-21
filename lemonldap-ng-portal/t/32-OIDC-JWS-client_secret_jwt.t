@@ -81,7 +81,7 @@ LWP::Protocol::PSGI->register(
 );
 
 # Initialization
-ok( $op = op(), 'OP portal' );
+$op = register( 'op', \&op );
 
 ok( $res = $op->_get('/oauth2/jwks'), 'Get JWKS,     endpoint /oauth2/jwks' );
 expectOK($res);
@@ -93,12 +93,10 @@ ok(
 );
 expectOK($res);
 my $metadata = $res->[2]->[0];
-count(3);
+count(2);
 
+$rp = register( 'rp', sub { rp( $jwks, $metadata ) } );
 switch ('rp');
-&Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-ok( $rp = rp( $jwks, $metadata ), 'RP portal' );
-count(1);
 
 # Query RP for auth
 ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth RP request' );
