@@ -121,9 +121,8 @@ Note that we now send a plain text version of the mail attached to the HTML emai
 2.17.1
 ------
 
-Declaration of OIDC `request_uri` is now required
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+Restriction in use of OIDC `request_uri`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A little-know feature of OIDC (*note*: you are probably not using it) allows the OpenID Provider, LemonLDAP::NG in this case, to fetch the Authorization request parameters itself by indicating a `request_uri` parameter.
 
