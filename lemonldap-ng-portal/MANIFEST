@@ -684,6 +684,7 @@ t/32-OIDC-ClientCredentials-Grant.t
 t/32-OIDC-Code-Flow-Mobile.t
 t/32-OIDC-Code-Flow-with-2F-UpgradeOnly.t
 t/32-OIDC-Code-Flow-with-2F.t
+t/32-OIDC-Double-Keys.t
 t/32-OIDC-Grant-Type-OAuth2-Handler-Rules.t
 t/32-OIDC-Grant-Type-Rules.t
 t/32-OIDC-Hook-GetRpConfig.t
@@ -913,6 +914,7 @@ t/77-2F-Mail-SessionKey.t
 t/77-2F-Mail-with-global-storage.t
 t/77-2F-Mail.t
 t/77-2F-Radius.t
+t/77-2F-Trust.t
 t/78-2F-Upgrade-Many.t
 t/78-2F-Upgrade.t
 t/78-2F-UpgradeOnly-with-forceFlag.t
