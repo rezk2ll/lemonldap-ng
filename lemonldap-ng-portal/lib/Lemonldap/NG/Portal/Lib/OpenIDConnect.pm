@@ -2235,8 +2235,11 @@ sub _createJWT {
     # Encode payload here due to #2748
     my $jwt = eval {
         encode_jwt(
-            payload => to_json($payload),
-            alg     => $alg,
+            payload       => to_json($payload),
+            alg           => $alg,
+            extra_headers => {
+                kid => $self->conf->{oidcServiceKeyIdSig},
+            },
             @keyArg,
         );
     };
