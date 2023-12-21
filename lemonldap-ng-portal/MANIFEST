@@ -684,11 +684,13 @@ t/32-OIDC-ClientCredentials-Grant.t
 t/32-OIDC-Code-Flow-Mobile.t
 t/32-OIDC-Code-Flow-with-2F-UpgradeOnly.t
 t/32-OIDC-Code-Flow-with-2F.t
+t/32-OIDC-Double-Keys-without-kid.t
 t/32-OIDC-Double-Keys.t
 t/32-OIDC-Grant-Type-OAuth2-Handler-Rules.t
 t/32-OIDC-Grant-Type-Rules.t
 t/32-OIDC-Hook-GetRpConfig.t
 t/32-OIDC-Hooks.t
+t/32-OIDC-ID-Token.t
 t/32-OIDC-JWE.t
 t/32-OIDC-JWS-client_secret_jwt.t
 t/32-OIDC-JWS-private_key_jwt.t

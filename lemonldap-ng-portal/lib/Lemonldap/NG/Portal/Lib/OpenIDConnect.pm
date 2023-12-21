@@ -26,7 +26,7 @@ use URI;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.18.1';
 
 use constant BACKCHANNEL_EVENTSKEY =>
   'http://schemas.openid.net/event/backchannel-logout';
@@ -1509,24 +1509,49 @@ sub decodeJWT {
     #  - if JWS has a "kid" field in its header, use it (then replace the
     #    "key" arg of Crypt::JWT by "kid_keys" and give the whole JWKS)
     #  - else we try the first available key of jwks document
-    my @keyArg =
-      $alg =~ /^HS/
-      ? (
-        key => $op
-        ? $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientSecret}
-        : $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret}
-      )
-      : $jwt_header->{kid} ? ( kid_keys => $jwks )
-      :                      ( key => $jwks->{keys}->[0] );
+    my @keyArgs;
+    if ( $alg =~ /^HS/ ) {
+        $self->logger->debug("Alg is $alg, using secret as key");
+        @keyArgs = ( [
+                key => $op
+                ? $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientSecret}
+                : $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret}
+            ]
+        );
+    }
+    elsif ( $jwt_header->{kid} ) {
+        $self->logger->debug(
+            "'kid' found in JWT header, using the whole JWKS doc as 'kid_keys'"
+        );
+        @keyArgs = ( [ kid_keys => $jwks ] );
+    }
+    else {
+        $self->logger->debug(
+"No 'kid' found in JWT header, will try all keys found in JWKS doc ("
+              . @{ $jwks->{keys} }
+              . ' key(s))' );
+        @keyArgs = map { [ key => $_ ] } @{ $jwks->{keys} };
+    }
 
-    # JSON decoding is done here because #2748
-    my $content = eval {
-        JSON::from_json(
-            decode_jwt( token => $jwt, @keyArg, decode_payload => 0 ) );
-    };
-    if ($@) {
-        $self->logger->error("Unable to verify JWT: $@");
-        $self->logger->error("Jwt was: $jwt");
+    my $error = [];
+    my $content;
+    foreach my $keyArg (@keyArgs) {
+
+        # JSON decoding is done here because #2748
+        $content = eval {
+            JSON::from_json(
+                decode_jwt( token => $jwt, @$keyArg, decode_payload => 0 ) );
+        };
+        if ($@) {
+            $error = [ "Unable to verify JWT: $@", "Jwt was: $jwt" ];
+        }
+        else {
+            $error = [];
+            last;
+        }
+    }
+    if (@$error) {
+        $self->logger->error($_) foreach @$error;
         return;
     }
     return wantarray ? ( $content, $alg ) : $content;
