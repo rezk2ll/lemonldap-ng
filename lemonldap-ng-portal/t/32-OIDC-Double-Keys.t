@@ -33,6 +33,7 @@ LWP::Protocol::PSGI->register(
             fail('  Aborting REST request (external)');
             return [ 500, [], [] ];
         }
+        count(1);
         switch ($host);
         if ( $req->method =~ /^post$/i ) {
             my $s = $req->content;
@@ -57,7 +58,7 @@ LWP::Protocol::PSGI->register(
             );
         }
         ok( $res->[0] == 200, '  Response is 200' );
-        count(3);
+        count(2);
         if ( $url !~ /blogout/ ) {
             ok( getHeader( $res, 'Content-Type' ) =~ m#^application/json#,
                 '  Content is JSON' )
@@ -70,24 +71,22 @@ LWP::Protocol::PSGI->register(
 );
 
 # Initialization
-ok( $op = op(), 'OP portal' );
+$op = register( 'op', \&op );
 
 ok( $res = $op->_get('/oauth2/jwks'), 'Get JWKS,     endpoint /oauth2/jwks' );
 expectOK($res);
 my $jwks = $res->[2]->[0];
-my $obj = eval { JSON::from_json($jwks) };
+my $obj  = eval { JSON::from_json($jwks) };
 if ($@) {
     fail $@;
     exit 1;
 }
-ok( ref($obj->{keys}) eq 'ARRAY', 'JWKS->keys is an array');
-ok( @{$obj->{keys}} == 2, 'Found 2 keys');
+ok( ref( $obj->{keys} ) eq 'ARRAY', 'JWKS->keys is an array' );
+ok( @{ $obj->{keys} } == 2,         'Found 2 keys' );
 
 # Reproduce #3065 bug
-$jwks = JSON::to_json({keys =>
-    [ $obj->{keys}->[1], $obj->{keys}->[0] ]
-});
-count(2);
+$jwks = JSON::to_json( { keys => [ $obj->{keys}->[1], $obj->{keys}->[0] ] } );
+count(3);
 
 ok(
     $res = $op->_get('/.well-known/openid-configuration'),
@@ -95,12 +94,10 @@ ok(
 );
 expectOK($res);
 my $metadata = $res->[2]->[0];
-count(3);
-
-switch ('rp');
-&Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-ok( $rp = rp( $jwks, $metadata ), 'RP portal' );
 count(1);
+
+$rp = register( 'rp', sub { rp( $jwks, $metadata ) } );
+switch ('rp');
 
 # Query RP for auth
 ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth RP request' );
@@ -197,8 +194,7 @@ clean_sessions();
 done_testing( count() );
 
 sub op {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                        => $debug,
                 domain                          => 'idp.com',
@@ -244,8 +240,10 @@ sub op {
                     'loa-2' => 2,
                     'loa-3' => 3
                 },
-                oidcServicePrivateKeySig => alt_oidc_key_op_private_sig,
-                oidcServicePublicKeySig  => alt_oidc_cert_op_public_sig,
+                oidcServiceKeyIdSig         => "abcabc",
+                oidcServicePrivateKeySig    => alt_oidc_key_op_private_sig,
+                oidcServicePublicKeySig     => alt_oidc_cert_op_public_sig,
+                oidcServiceOldKeyIdSig      => "zzzxxx",
                 oidcServiceOldPrivateKeySig => oidc_key_op_private_sig,
                 oidcServiceOldPublicKeySig  => oidc_cert_op_public_sig,
             }
@@ -255,8 +253,7 @@ sub op {
 
 sub rp {
     my ( $jwks, $metadata ) = @_;
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                   => $debug,
                 domain                     => 'rp.com',
