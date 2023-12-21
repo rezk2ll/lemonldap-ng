@@ -68,7 +68,6 @@ build_rocky_8:
   script:
     - dnf -y update
     - yum-config-manager --enable powertools
-    - yum-config-manager --enable appstream
     - yum -y install epel-release
     - make dist
     - ci-build-pkg
@@ -79,7 +78,6 @@ build_rocky_9:
   script:
     - dnf -y update
     - yum-config-manager --enable crb
-    - yum-config-manager --enable appstream
     - yum -y install epel-release
     - make dist
     - ci-build-pkg
