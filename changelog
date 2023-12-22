@@ -5,6 +5,7 @@ lemonldap-ng (2.18.1) jammy; urgency=medium
     * #3065: Error when verifying signature when OP uses more than one key and kid provided in ID Token
     * #3066: "kid" missing from emitted JWT
     * #3068: Regression in configuration reload
+    * #3072: Authen WebAuthn package not available on CentOS 7
 
   * Improvements:
     * #3067: Error when verifying signature when OP uses more than one key and kid missing in ID Token
