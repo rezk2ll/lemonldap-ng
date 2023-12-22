@@ -319,7 +319,7 @@ Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Portal) = %{version}-%{release}
 %if 0%{?el7}
 # Fido2
-Requires:       perl(Authen::WebAuthn)
+#Requires:       perl(Authen::WebAuthn)
 # Facebook
 Requires:       perl(Net::Facebook::Oauth2)
 # OpenID
