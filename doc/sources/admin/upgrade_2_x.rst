@@ -24,7 +24,8 @@ files before the update.
 Known regressions in the latest released version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-None
+Some regressions have been found on OpenID Connect signature management
+and on configuration reload. Upgrade to 2.18.1 to fix them.
 
 2.18.0
 ------
