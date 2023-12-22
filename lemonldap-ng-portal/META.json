@@ -75,7 +75,7 @@
          },
          "requires" : {
             "Clone" : "0",
-            "Lemonldap::NG::Handler" : "v2.18.0",
+            "Lemonldap::NG::Handler" : "v2.18.1",
             "Regexp::Assemble" : "0"
          }
       }
@@ -92,6 +92,6 @@
       ],
       "x_MailingList" : "mailto:lemonldap-ng-dev@ow2.org"
    },
-   "version" : "v2.18.0",
+   "version" : "v2.18.1",
    "x_serialization_backend" : "JSON::PP version 4.07"
 }
