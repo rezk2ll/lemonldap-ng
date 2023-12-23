@@ -222,7 +222,7 @@ sub loadRPs {
             $self->logger->warn("RP $rp has no Client ID");
         }
     }
-    return 1
+    return 1;
 }
 
 # RUNNING METHODS
@@ -2190,8 +2190,9 @@ sub registration {
     my $registration_response = {};
 
     # Check redirect_uris
-    unless ( $client_metadata->{redirect_uris} ) {
-        $self->logger->error("Field redirect_uris is mandatory");
+    my $redirect_uris = $client_metadata->{redirect_uris};
+    unless ( $redirect_uris and ref($redirect_uris) eq 'ARRAY' ) {
+        $self->logger->error("Field redirect_uris (array) is mandatory");
         return $self->p->sendError( $req, 'invalid_client_metadata', 400 );
     }
 
@@ -2212,7 +2213,6 @@ sub registration {
       || ( $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256' : 'RS256' );
     my $userinfo_signed_response_alg =
       $client_metadata->{userinfo_signed_response_alg};
-    my $redirect_uris          = $client_metadata->{redirect_uris};
     my $request_uris           = $client_metadata->{request_uris};
     my $backchannel_logout_uri = $client_metadata->{backchannel_logout_uri};
     my $backchannel_logout_session_required =
