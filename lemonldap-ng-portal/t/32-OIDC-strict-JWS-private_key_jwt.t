@@ -298,6 +298,7 @@ sub rp {
 "https://auth.op.com/.well-known/openid-configuration",
                         oidcOPMetaDataOptionsTokenEndpointAuthMethod =>
                           'private_key_jwt',
+                        oidcOPMetaDataOptionsAuthnEndpointAuthMethod => 'jws',
                     }
                 },
                 oidcServicePrivateKeySig => oidc_key_op_private_sig,

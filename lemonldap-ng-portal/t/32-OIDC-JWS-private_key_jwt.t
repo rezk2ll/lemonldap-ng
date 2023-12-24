@@ -295,6 +295,7 @@ sub rp {
                         oidcOPMetaDataOptionsClientID     => "rpid",
                         oidcOPMetaDataOptionsConfigurationURI =>
 "https://auth.op.com/.well-known/openid-configuration",
+                        oidcOPMetaDataOptionsAuthnEndpointAuthMethod  => 'jws',
                         oidcOPMetaDataOptionsTokenEndpointAuthMethod =>
                           'private_key_jwt',
                     }

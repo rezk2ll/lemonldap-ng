@@ -424,6 +424,8 @@ sub getCallbackUri {
 # return String Authentication Request URI
 sub buildAuthorizationCodeAuthnRequest {
     my ( $self, $req, $op, $state, $nonce ) = @_;
+    my $authMode =
+      $self->opOptions->{$op}->{oidcOPMetaDataOptionsAuthnEndpointAuthMethod};
 
     my $authorize_uri =
       $self->opMetadata->{$op}->{conf}->{authorization_endpoint};
@@ -445,13 +447,15 @@ sub buildAuthorizationCodeAuthnRequest {
     my $ui_locales = $self->opOptions->{$op}->{oidcOPMetaDataOptionsUiLocales};
     my $acr_values = $self->opOptions->{$op}->{oidcOPMetaDataOptionsAcrValues};
 
-    my $authorize_request_params = {
+    my $authorize_request_oauth2_params = {
         response_type => $response_type,
         client_id     => $client_id,
         scope         => $scope,
         redirect_uri  => $redirect_uri,
-        ( defined $state      ? ( state      => $state )      : () ),
-        ( defined $nonce      ? ( nonce      => $nonce )      : () ),
+        ( defined $state ? ( state => $state ) : () ),
+        ( defined $nonce ? ( nonce => $nonce ) : () ),
+    };
+    my $authorize_request_params = {
         ( defined $display    ? ( display    => $display )    : () ),
         ( defined $prompt     ? ( prompt     => $prompt )     : () ),
         ( $max_age            ? ( max_age    => $max_age )    : () ),
@@ -466,10 +470,38 @@ sub buildAuthorizationCodeAuthnRequest {
     );
     return if ( $h != PE_OK );
 
+    if ( $authMode and $authMode =~ /^jw(?:s|e)$/ ) {
+        my $aud = $authorize_uri;
+        $aud =~ s#^(https://[^/]*).*?$#$1#;
+        my $jwt = $self->createJWTForOP( {
+                iss => $client_id,
+                aud => $aud,
+                jti => $self->generateNonce,
+                exp => time + 30,
+                iat => time,
+                %$authorize_request_oauth2_params,
+                %$authorize_request_params,
+            },
+            $self->opOptions->{op}
+              ->{oidcOPMetaDataOptionsAuthnEndpointAuthSigAlg} || 'RS256',
+            $op
+        );
+        if ($jwt) {
+            $authorize_request_params = { request => $jwt };
+            if ( $authMode eq 'jwe' ) {
+                $self->logger->error('jwe mode not yet implemented');
+            }
+        }
+        else {
+            $self->logger->error(
+                'Unable to generate JWT, continue with unauthenticated query');
+        }
+    }
     my $authn_uri =
         $authorize_uri
       . ( $authorize_uri =~ /\?/ ? '&' : '?' )
-      . build_urlencoded(%$authorize_request_params);
+      . build_urlencoded( %$authorize_request_oauth2_params,
+        %$authorize_request_params );
 
     $self->logger->debug(
         "OpenIDConnect Authorization Code Flow Authn Request: $authn_uri");
