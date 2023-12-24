@@ -76,6 +76,7 @@ for my $lang (@langs) {
     }
     $content = $json->encode($jsonObj);
     $content =~ s/\n\s+/\n/sg;
+    $content =~ s/\n*$//s;
     open $file, '>', "$wdir/$lang" or die $!;
     binmode $file;
     print $file $content;
