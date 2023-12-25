@@ -275,6 +275,8 @@ sub cTrees {
                             'oidcRPMetaDataOptionsUserInfoEncContentEncAlg',
                             'oidcRPMetaDataOptionsLogoutEncKeyMgtAlg',
                             'oidcRPMetaDataOptionsLogoutEncContentEncAlg',
+                            'oidcRPMetaDataOptionsAuthnRequireState',
+                            'oidcRPMetaDataOptionsAuthnRequireNonce',
                         ]
                     },
                     {

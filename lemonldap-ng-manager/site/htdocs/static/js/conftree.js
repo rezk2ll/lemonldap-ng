@@ -1159,6 +1159,18 @@ function templates(tpl,key) {
                   ],
                   "title" : "oidcRPMetaDataOptionsLogoutEncContentEncAlg",
                   "type" : "select"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireState",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireState",
+                  "title" : "oidcRPMetaDataOptionsAuthnRequireState",
+                  "type" : "bool"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireNonce",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireNonce",
+                  "title" : "oidcRPMetaDataOptionsAuthnRequireNonce",
+                  "type" : "bool"
                }
             ],
             "id" : "security",
