@@ -1187,6 +1187,30 @@ sub tests {
                 "JWKS URI defined while JWKS document is fixed: "
                   . join( ', ', @pb ) );
         },
+
+# If oidcRPMetaDataOptionsAuthRequiredForAuthorize is set, oidcRPMetaDataOptionsAuthMethod should be compatible
+        oidcCompatAuth => sub {
+            return 1
+              unless $conf->{oidcRPMetaDataOptions}
+              and ref $conf->{oidcRPMetaDataOptions};
+            my @pb;
+            for my $rp ( keys %{ $conf->{oidcRPMetaDataOptions} } ) {
+                push @pb, $rp
+                  if $conf->{oidcRPMetaDataOptions}->{$rp}
+                  ->{oidcRPMetaDataOptionsAuthRequiredForAuthorize}
+                  and $conf->{oidcRPMetaDataOptions}->{$rp}
+                  ->{oidcRPMetaDataOptionsAuthMethod}
+                  and $conf->{oidcRPMetaDataOptions}->{$rp}
+                  ->{oidcRPMetaDataOptionsAuthMethod} !~
+                  /^(?:client_secret|private_key)_jwt$/;
+            }
+            return 1 unless @pb;
+            return ( 1,
+                    'Incompatible required authentication methods in RP '
+                  . '(only client_secret_jwt and private_key_jwt are allowed '
+                  . 'when authentication is required on authorization endpoint: '
+                  . join( ', ', @pb ) );
+        },
     };
 }
 
