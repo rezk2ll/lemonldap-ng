@@ -3010,6 +3010,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             'type' => 'select'
         },
+        'oidcRPMetaDataOptionsUserinfoRequireHeaderToken' => {
+            'type' => 'bool'
+        },
         'oidcRPMetaDataOptionsUserInfoSignAlg' => {
             'default' => '',
             'select'  => [ {

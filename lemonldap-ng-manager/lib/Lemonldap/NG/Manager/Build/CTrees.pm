@@ -275,6 +275,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsUserInfoEncContentEncAlg',
                             'oidcRPMetaDataOptionsLogoutEncKeyMgtAlg',
                             'oidcRPMetaDataOptionsLogoutEncContentEncAlg',
+                            'oidcRPMetaDataOptionsUserinfoRequireHeaderToken',
                         ]
                     },
                     {

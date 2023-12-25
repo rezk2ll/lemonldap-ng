@@ -5110,6 +5110,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 'A256GCM',
             documentation => '"enc" algorithm for logout encryption',
         },
+        oidcRPMetaDataOptionsUserinfoRequireHeaderToken => {
+            type          => 'bool',
+            documentation =>
+              '/userinfo endpoint requires authn using Bearer token',
+        },
     };
 }
 

@@ -1906,18 +1906,20 @@ sub getEndPointAuthenticationCredentials {
 # @return access_token
 sub getEndPointAccessToken {
     my ( $self, $req ) = @_;
-    my $access_token;
+    my ( $access_token, $method );
 
     my $authorization = $req->authorization;
     if ( $authorization and $authorization =~ /^Bearer ([\w\-\.]+)/i ) {
         $self->logger->debug("Bearer access token");
         $access_token = $1;
+        $method       = 'header';
     }
     elsif ( $access_token = $req->param('access_token') ) {
         $self->logger->debug("GET/POST access token");
+        $method = 'param';
     }
 
-    return $access_token;
+    return wantarray ? ( $access_token, $method ) : $access_token;
 }
 
 # DEPRECATED, remove in 3.0, use getAttributeListFromScopeValue instead

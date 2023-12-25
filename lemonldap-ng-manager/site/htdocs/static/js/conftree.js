@@ -1159,6 +1159,12 @@ function templates(tpl,key) {
                   ],
                   "title" : "oidcRPMetaDataOptionsLogoutEncContentEncAlg",
                   "type" : "select"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
+                  "title" : "oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
+                  "type" : "bool"
                }
             ],
             "id" : "security",
