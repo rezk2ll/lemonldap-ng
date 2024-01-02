@@ -240,16 +240,11 @@ sub _load_2f_module_by_prefix {
                 $isRegister ? "::2F::Register::$name" : "::2F::$name" )
               or return 0;
 
-            # We must read the rule from conf *after* loading the module
-            # in case the module overwrites $self->conf
-            my $rule = $self->p->buildRule( $self->conf->{$ap}, $ap );
-            return 0 unless $rule;
-
             if ($isRegister) {
-                $self->_enable_2f_register_module( $m, $rule );
+                $self->_enable_2f_register_module($m) or return 0;
             }
             else {
-                $self->_enable_2f_module( $m, $rule );
+                $self->_enable_2f_module($m) or return 0;
             }
         }
         else {
@@ -260,31 +255,31 @@ sub _load_2f_module_by_prefix {
 }
 
 sub _enable_2f_register_module {
-    my ( $self, $m, $rule ) = @_;
-
-    # Store module
-    push @{ $self->sfRModules },
-      {
-        p => $m->prefix,
-        m => $m,
-        r => $rule,
-        t => ( $m->can('type') ? $m->type : $m->prefix ),
-      };
+    my ( $self, $m ) = @_;
+    return $self->_enable_module( $m, $self->sfRModules );
 }
 
 sub _enable_2f_module {
-    my ( $self, $m, $rule ) = @_;
+    my ( $self, $m ) = @_;
 
     $self->_registerRoutes($m);
+    return $self->_enable_module( $m, $self->sfModules );
+}
 
-    # Store module
-    push @{ $self->sfModules },
+sub _enable_module {
+    my ( $self, $m, $array ) = @_;
+
+    my $rule = $self->p->buildRule( $m->rule );
+    return 0 unless $rule;
+
+    push @$array,
       {
         p => $m->prefix,
         m => $m,
         r => $rule,
         t => ( $m->can('type') ? $m->type : $m->prefix ),
       };
+    return 1;
 }
 
 # RUNNING METHODS

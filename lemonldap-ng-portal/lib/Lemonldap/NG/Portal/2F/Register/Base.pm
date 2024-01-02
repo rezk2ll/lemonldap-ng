@@ -23,6 +23,14 @@ has type => (
     }
 );
 
+has rule => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        return $_[0]->conf->{ $_[0]->prefix . '2fSelfRegistration' };
+    }
+);
+
 sub init {
     my ($self) = @_;
 
@@ -74,7 +82,7 @@ sub checkNameSfa {
 
 # Update request with newly registered device
 sub markRegistered {
-    my ($self, $req)  = @_;
+    my ( $self, $req ) = @_;
     $req->data->{_2fRegistered}                     = 1;
     $req->userData->{_2f}                           = $self->prefix;
     $req->userData->{registeredAuthenticationLevel} = $self->authnLevel;
