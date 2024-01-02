@@ -85,46 +85,7 @@ sub init {
             }
           )
         {
-            my $prefix = lc($_);
-            $prefix =~ s/2f$//i;
-
-            # Activation parameter
-            my $ap = $prefix . ( $i ? '2fSelfRegistration' : '2fActivation' );
-            $self->logger->debug("Checking $ap");
-
-            # Unless $rule, skip loading
-            if ( $self->conf->{$ap} ) {
-                $self->logger->debug("Trying to load $_ 2F");
-                my $m =
-                  $self->p->loadPlugin( $i ? "::2F::Register::$_" : "::2F::$_" )
-                  or return 0;
-
-                $self->_registerRoutes($m) unless ($i);
-
-                # Rule and prefix may be modified by 2F module, reread them
-                my $rule = $self->conf->{$ap};
-                $prefix = $m->prefix;
-
-                # Compile rule
-                $rule = $self->p->HANDLER->substitute($rule);
-                unless ( $rule = $self->p->HANDLER->buildSub($rule) ) {
-                    $self->error( 'External 2F rule error: '
-                          . $self->p->HANDLER->tsv->{jail}->error );
-                    return 0;
-                }
-
-                # Store module
-                push @{ $self->{ $i ? 'sfRModules' : 'sfModules' } },
-                  {
-                    p => $prefix,
-                    m => $m,
-                    r => $rule,
-                    t => ( $m->can('type') ? $m->type : $prefix ),
-                  };
-            }
-            else {
-                $self->logger->debug(' -> not enabled');
-            }
+            return 0 unless $self->_load_2f_module_by_prefix( $_, $i );
         }
     }
 
@@ -258,6 +219,72 @@ sub init {
         ) if ( $self->conf->{sfRequired} );
     }
     return 1;
+}
+
+sub _load_2f_module_by_prefix {
+    my ( $self, $name, $isRegister ) = @_;
+    {
+        my $prefix = lc($name);
+        $prefix =~ s/2f$//i;
+
+        # Activation parameter
+        my $ap =
+          $prefix . ( $isRegister ? '2fSelfRegistration' : '2fActivation' );
+        $self->logger->debug("Checking $ap");
+
+        # Unless $rule, skip loading
+        if ( $self->conf->{$ap} ) {
+            $self->logger->debug("Trying to load $name 2F");
+            my $m =
+              $self->p->loadPlugin(
+                $isRegister ? "::2F::Register::$name" : "::2F::$name" )
+              or return 0;
+
+            # We must read the rule from conf *after* loading the module
+            # in case the module overwrites $self->conf
+            my $rule = $self->p->buildRule( $self->conf->{$ap}, $ap );
+            return 0 unless $rule;
+
+            if ($isRegister) {
+                $self->_enable_2f_register_module( $m, $rule );
+            }
+            else {
+                $self->_enable_2f_module( $m, $rule );
+            }
+        }
+        else {
+            $self->logger->debug(' -> not enabled');
+        }
+    }
+    return 1;
+}
+
+sub _enable_2f_register_module {
+    my ( $self, $m, $rule ) = @_;
+
+    # Store module
+    push @{ $self->sfRModules },
+      {
+        p => $m->prefix,
+        m => $m,
+        r => $rule,
+        t => ( $m->can('type') ? $m->type : $m->prefix ),
+      };
+}
+
+sub _enable_2f_module {
+    my ( $self, $m, $rule ) = @_;
+
+    $self->_registerRoutes($m);
+
+    # Store module
+    push @{ $self->sfModules },
+      {
+        p => $m->prefix,
+        m => $m,
+        r => $rule,
+        t => ( $m->can('type') ? $m->type : $m->prefix ),
+      };
 }
 
 # RUNNING METHODS
