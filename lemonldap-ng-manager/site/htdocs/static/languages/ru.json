@@ -725,6 +725,8 @@
 "oidcRPMetaDataOptionsAuthMethod":"Метод аутентификации конечной точки токена",
 "oidcRPMetaDataOptionsAuthRequiredForAuthorize":"Require JWS for authorization requests",
 "oidcRPMetaDataOptionsAuthnLevel":"Уровень аутентификации",
+"oidcRPMetaDataOptionsAuthnRequireNonce":"Require \"nonce\" in authorization request",
+"oidcRPMetaDataOptionsAuthnRequireState":"Require \"state\" in authorization request",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Коды авторизации",
 "oidcRPMetaDataOptionsBasic":"Базовый",
 "oidcRPMetaDataOptionsBypassConsent":"Обойти согласие",

@@ -725,6 +725,8 @@
 "oidcRPMetaDataOptionsAuthMethod":"Token endpoint authentication method",
 "oidcRPMetaDataOptionsAuthRequiredForAuthorize":"Require JWS for authorization requests",
 "oidcRPMetaDataOptionsAuthnLevel":"Authentication level",
+"oidcRPMetaDataOptionsAuthnRequireNonce":"Require \"nonce\" in authorization request",
+"oidcRPMetaDataOptionsAuthnRequireState":"Require \"state\" in authorization request",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Authorization Codes",
 "oidcRPMetaDataOptionsBasic":"Basic",
 "oidcRPMetaDataOptionsBypassConsent":"Bypass consent",

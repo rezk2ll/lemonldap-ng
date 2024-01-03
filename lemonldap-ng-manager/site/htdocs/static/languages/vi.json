@@ -725,6 +725,8 @@
 "oidcRPMetaDataOptionsAuthMethod":"Phương pháp xác thực thiết bị đầu cuối Token",
 "oidcRPMetaDataOptionsAuthRequiredForAuthorize":"Require JWS for authorization requests",
 "oidcRPMetaDataOptionsAuthnLevel":"Mức xác thực",
+"oidcRPMetaDataOptionsAuthnRequireNonce":"Require \"nonce\" in authorization request",
+"oidcRPMetaDataOptionsAuthnRequireState":"Require \"state\" in authorization request",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Mã ủy quyền",
 "oidcRPMetaDataOptionsBasic":"Cơ bản ",
 "oidcRPMetaDataOptionsBypassConsent":"Bỏ qua sự đồng ý",

@@ -725,6 +725,8 @@
 "oidcRPMetaDataOptionsAuthMethod":"توكن نقطة النهاية لطريقة إثبات الهوية",
 "oidcRPMetaDataOptionsAuthRequiredForAuthorize":"Require JWS for authorization requests",
 "oidcRPMetaDataOptionsAuthnLevel":"مستوى إثبات الهوية",
+"oidcRPMetaDataOptionsAuthnRequireNonce":"Require \"nonce\" in authorization request",
+"oidcRPMetaDataOptionsAuthnRequireState":"Require \"state\" in authorization request",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Authorization Codes",
 "oidcRPMetaDataOptionsBasic":"Basic",
 "oidcRPMetaDataOptionsBypassConsent":"تخطى الموافقة ",

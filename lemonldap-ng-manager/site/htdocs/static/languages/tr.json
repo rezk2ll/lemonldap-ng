@@ -725,6 +725,8 @@
 "oidcRPMetaDataOptionsAuthMethod":"Jeton uç noktası doğrulama metodu",
 "oidcRPMetaDataOptionsAuthRequiredForAuthorize":"Require JWS for authorization requests",
 "oidcRPMetaDataOptionsAuthnLevel":"Doğrulama seviyesi",
+"oidcRPMetaDataOptionsAuthnRequireNonce":"Require \"nonce\" in authorization request",
+"oidcRPMetaDataOptionsAuthnRequireState":"Require \"state\" in authorization request",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Yetkilendirme Kodları",
 "oidcRPMetaDataOptionsBasic":"Temel",
 "oidcRPMetaDataOptionsBypassConsent":"İzni es geç",

@@ -725,6 +725,8 @@
 "oidcRPMetaDataOptionsAuthMethod":"Metoda uwierzytelniania tokena punktu końcowego",
 "oidcRPMetaDataOptionsAuthRequiredForAuthorize":"Require JWS for authorization requests",
 "oidcRPMetaDataOptionsAuthnLevel":"Poziom uwierzytelnienia",
+"oidcRPMetaDataOptionsAuthnRequireNonce":"Require \"nonce\" in authorization request",
+"oidcRPMetaDataOptionsAuthnRequireState":"Require \"state\" in authorization request",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Kody autoryzacyjne",
 "oidcRPMetaDataOptionsBasic":"Podstawowy",
 "oidcRPMetaDataOptionsBypassConsent":"Obejdź zgodę",

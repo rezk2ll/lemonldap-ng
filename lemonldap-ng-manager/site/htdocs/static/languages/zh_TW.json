@@ -725,6 +725,8 @@
 "oidcRPMetaDataOptionsAuthMethod":"權杖端點驗證方法",
 "oidcRPMetaDataOptionsAuthRequiredForAuthorize":"Require JWS for authorization requests",
 "oidcRPMetaDataOptionsAuthnLevel":"驗證等級",
+"oidcRPMetaDataOptionsAuthnRequireNonce":"Require \"nonce\" in authorization request",
+"oidcRPMetaDataOptionsAuthnRequireState":"Require \"state\" in authorization request",
 "oidcRPMetaDataOptionsAuthorizationCodeExpiration":"Authorization Codes",
 "oidcRPMetaDataOptionsBasic":"基本",
 "oidcRPMetaDataOptionsBypassConsent":"繞過同意",

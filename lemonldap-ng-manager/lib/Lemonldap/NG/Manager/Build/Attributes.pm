@@ -5111,6 +5111,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 'A256GCM',
             documentation => '"enc" algorithm for logout encryption',
         },
+        oidcRPMetaDataOptionsAuthnRequireState => {
+            type => 'bool',
+        },
+        oidcRPMetaDataOptionsAuthnRequireNonce => {
+            type => 'bool',
+        },
     };
 }
 

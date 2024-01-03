@@ -508,6 +508,30 @@ sub run {
                 }
             }
 
+            # Check if state is required
+            if ( $self->rpOptions->{$rp}
+                ->{oidcRPMetaDataOptionsAuthnRequireState}
+                and not( $oidc_request->{'state'} ) )
+            {
+                return $self->returnRedirectError(
+                    $req,           $oidc_request->{'redirect_uri'},
+                    "server_error", "State required",
+                    undef,          undef, 1
+                );
+            }
+
+            # Check if nonce is required
+            if ( $self->rpOptions->{$rp}
+                ->{oidcRPMetaDataOptionsAuthnRequireNonce}
+                and not( $oidc_request->{'nonce'} ) )
+            {
+                return $self->returnRedirectError(
+                    $req,           $oidc_request->{'redirect_uri'},
+                    "server_error", "Nonce required",
+                    undef,          undef, 1
+                );
+            }
+
             my $spAuthnLevel =
               $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel} || 0;
 

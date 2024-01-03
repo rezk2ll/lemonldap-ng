@@ -2724,6 +2724,12 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcRPMetaDataOptionsAuthnLevel' => {
             'type' => 'intOrNull'
         },
+        'oidcRPMetaDataOptionsAuthnRequireNonce' => {
+            'type' => 'bool'
+        },
+        'oidcRPMetaDataOptionsAuthnRequireState' => {
+            'type' => 'bool'
+        },
         'oidcRPMetaDataOptionsAuthorizationCodeExpiration' => {
             'type' => 'intOrNull'
         },
