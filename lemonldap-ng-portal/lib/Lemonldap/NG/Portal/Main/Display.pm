@@ -460,15 +460,15 @@ sub display {
         # External links
         if ( $self->conf->{portalDisplayResetPassword} ) {
             $templateParams{"MAIL_URL_EXTERNAL"} =
-              $self->_isExternalUrl( $self->passwordResetUrl );
+              $self->_isExternalUrl( $req, $self->passwordResetUrl );
         }
         if ( $self->conf->{portalDisplayRegister} ) {
             $templateParams{"REGISTER_URL_EXTERNAL"} =
-              $self->_isExternalUrl( $self->registerUrl );
+              $self->_isExternalUrl( $req, $self->registerUrl );
         }
         if ( $self->conf->{portalDisplayCertificateResetByMail} ) {
             $templateParams{MAILCERTIF_URL_EXTERNAL} =
-              $self->_isExternalUrl( $self->certificateResetUrl );
+              $self->_isExternalUrl( $req, $self->certificateResetUrl );
         }
 
         # Display captcha if it's enabled
@@ -880,8 +880,8 @@ sub mkOidcConsent {
 }
 
 sub _isExternalUrl {
-    my ( $self, $url ) = @_;
-    return ( index( $url, $self->conf->{portal} ) < 0 );
+    my ( $self, $req, $url ) = @_;
+    return ( index( $url, $req->portal ) < 0 );
 }
 
 sub getPasswordPolicyTemplateVars {
