@@ -65,6 +65,7 @@
 "addU2FKey":"Añadir clave U2F",
 "addVhost":"Añadir virtualhost",
 "advancedParams":"Parámetros avanzados",
+"algorithms":"Algorithms",
 "allowedMarkups":"Marcas permitidas:",
 "always":"Always",
 "apacheAuthnLevel":"Nivel de autentificación",

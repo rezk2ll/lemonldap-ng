@@ -65,6 +65,7 @@
 "addU2FKey":"Add U2F key",
 "addVhost":"Thêm host ảo",
 "advancedParams":"Tham số nâng cao",
+"algorithms":"Algorithms",
 "allowedMarkups":"Được phép đánh dấu:",
 "always":"Luôn luôn",
 "apacheAuthnLevel":"Mức xác thực",

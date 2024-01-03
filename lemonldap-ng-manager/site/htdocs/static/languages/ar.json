@@ -65,6 +65,7 @@
 "addU2FKey":"Add U2F key",
 "addVhost":"إضافة خادم افتراضي",
 "advancedParams":"المعايير المتقدمة",
+"algorithms":"Algorithms",
 "allowedMarkups":"السماح بالترميز:",
 "always":"Always",
 "apacheAuthnLevel":"مستوى إثبات الهوية",

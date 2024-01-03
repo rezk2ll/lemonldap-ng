@@ -258,9 +258,6 @@ sub cTrees {
                         title => 'security',
                         form  => 'simpleInputContainer',
                         nodes => [
-                            'oidcRPMetaDataOptionsIDTokenSignAlg',
-                            'oidcRPMetaDataOptionsAccessTokenSignAlg',
-                            'oidcRPMetaDataOptionsUserInfoSignAlg',
                             'oidcRPMetaDataOptionsRequirePKCE',
                             'oidcRPMetaDataOptionsAllowOffline',
                             'oidcRPMetaDataOptionsAllowPasswordGrant',
@@ -268,6 +265,20 @@ sub cTrees {
                             'oidcRPMetaDataOptionsRequestUris',
                             'oidcRPMetaDataOptionsAuthnLevel',
                             'oidcRPMetaDataOptionsRule',
+                            'oidcRPMetaDataOptionsAuthMethod',
+                            'oidcRPMetaDataOptionsAuthRequiredForAuthorize',
+                            'oidcRPMetaDataOptionsAuthnRequireState',
+                            'oidcRPMetaDataOptionsAuthnRequireNonce',
+                            'oidcRPMetaDataOptionsUserinfoRequireHeaderToken',
+                        ]
+                    },
+                    {
+                        title => 'algorithms',
+                        form  => 'simpleInputContainer',
+                        nodes => [
+                            'oidcRPMetaDataOptionsIDTokenSignAlg',
+                            'oidcRPMetaDataOptionsAccessTokenSignAlg',
+                            'oidcRPMetaDataOptionsUserInfoSignAlg',
                             'oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg',
                             'oidcRPMetaDataOptionsAccessTokenEncContentEncAlg',
                             'oidcRPMetaDataOptionsIdTokenEncKeyMgtAlg',
@@ -276,12 +287,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsUserInfoEncContentEncAlg',
                             'oidcRPMetaDataOptionsLogoutEncKeyMgtAlg',
                             'oidcRPMetaDataOptionsLogoutEncContentEncAlg',
-                            'oidcRPMetaDataOptionsAuthMethod',
-                            'oidcRPMetaDataOptionsAuthRequiredForAuthorize',
-                            'oidcRPMetaDataOptionsAuthnRequireState',
-                            'oidcRPMetaDataOptionsAuthnRequireNonce',
-                            'oidcRPMetaDataOptionsUserinfoRequireHeaderToken',
-                        ]
+                        ],
                     },
                     {
                         title => 'keys',

@@ -65,6 +65,7 @@
 "addU2FKey":"Dodaj klucz U2F",
 "addVhost":"Dodaj virtualhost",
 "advancedParams":"Zaawansowane parametry",
+"algorithms":"Algorithms",
 "allowedMarkups":"Dozwolone znaczniki:",
 "always":"Zawsze",
 "apacheAuthnLevel":"Poziom uwierzytelnienia",

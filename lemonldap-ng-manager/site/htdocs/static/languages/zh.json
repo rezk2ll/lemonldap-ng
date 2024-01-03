@@ -65,6 +65,7 @@
 "addU2FKey":"新增 U2F 金鑰",
 "addVhost":"新增虛擬主機",
 "advancedParams":"進階參數",
+"algorithms":"Algorithms",
 "allowedMarkups":"允許的標記：",
 "always":"總是",
 "apacheAuthnLevel":"驗證等級",

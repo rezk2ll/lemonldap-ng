@@ -65,6 +65,7 @@
 "addU2FKey":"U2F anahtarı ekle",
 "addVhost":"Sanal konak ekle",
 "advancedParams":"Gelişmiş parametreler",
+"algorithms":"Algorithms",
 "allowedMarkups":"İzin verilen biçimlendirmeler:",
 "always":"Her zaman",
 "apacheAuthnLevel":"Doğrulama seviyesi",

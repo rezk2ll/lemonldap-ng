@@ -65,6 +65,7 @@
 "addU2FKey":"הוספת מפתח U2F",
 "addVhost":"הוספת מארח וירטואלי",
 "advancedParams":"משתנים מתקדמים",
+"algorithms":"Algorithms",
 "allowedMarkups":"סימונים מורשים:",
 "always":"תמיד",
 "apacheAuthnLevel":"דרגת אימות",

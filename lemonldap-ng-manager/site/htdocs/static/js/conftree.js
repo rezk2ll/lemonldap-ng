@@ -680,6 +680,109 @@ function templates(tpl,key) {
          {
             "_nodes" : [
                {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequirePKCE",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequirePKCE",
+                  "title" : "oidcRPMetaDataOptionsRequirePKCE",
+                  "type" : "bool"
+               },
+               {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowOffline",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowOffline",
+                  "title" : "oidcRPMetaDataOptionsAllowOffline",
+                  "type" : "bool"
+               },
+               {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowPasswordGrant",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowPasswordGrant",
+                  "title" : "oidcRPMetaDataOptionsAllowPasswordGrant",
+                  "type" : "bool"
+               },
+               {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowClientCredentialsGrant",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowClientCredentialsGrant",
+                  "title" : "oidcRPMetaDataOptionsAllowClientCredentialsGrant",
+                  "type" : "bool"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequestUris",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequestUris",
+                  "title" : "oidcRPMetaDataOptionsRequestUris"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnLevel",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnLevel",
+                  "title" : "oidcRPMetaDataOptionsAuthnLevel",
+                  "type" : "intOrNull"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
+                  "title" : "oidcRPMetaDataOptionsRule"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthMethod",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthMethod",
+                  "select" : [
+                     {
+                        "k" : "",
+                        "v" : "Any"
+                     },
+                     {
+                        "k" : "client_secret_post",
+                        "v" : "client_secret_post"
+                     },
+                     {
+                        "k" : "client_secret_basic",
+                        "v" : "client_secret_basic"
+                     },
+                     {
+                        "k" : "client_secret_jwt",
+                        "v" : "client_secret_jwt"
+                     },
+                     {
+                        "k" : "private_key_jwt",
+                        "v" : "private_key_jwt"
+                     }
+                  ],
+                  "title" : "oidcRPMetaDataOptionsAuthMethod",
+                  "type" : "select"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthRequiredForAuthorize",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthRequiredForAuthorize",
+                  "title" : "oidcRPMetaDataOptionsAuthRequiredForAuthorize",
+                  "type" : "bool"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireState",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireState",
+                  "title" : "oidcRPMetaDataOptionsAuthnRequireState",
+                  "type" : "bool"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireNonce",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireNonce",
+                  "title" : "oidcRPMetaDataOptionsAuthnRequireNonce",
+                  "type" : "bool"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
+                  "title" : "oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
+                  "type" : "bool"
+               }
+            ],
+            "id" : "security",
+            "title" : "security",
+            "type" : "simpleInputContainer"
+         },
+         {
+            "_nodes" : [
+               {
                   "default" : "RS256",
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIDTokenSignAlg",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsIDTokenSignAlg",
@@ -873,50 +976,6 @@ function templates(tpl,key) {
                   ],
                   "title" : "oidcRPMetaDataOptionsUserInfoSignAlg",
                   "type" : "select"
-               },
-               {
-                  "default" : 0,
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequirePKCE",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequirePKCE",
-                  "title" : "oidcRPMetaDataOptionsRequirePKCE",
-                  "type" : "bool"
-               },
-               {
-                  "default" : 0,
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowOffline",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowOffline",
-                  "title" : "oidcRPMetaDataOptionsAllowOffline",
-                  "type" : "bool"
-               },
-               {
-                  "default" : 0,
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowPasswordGrant",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowPasswordGrant",
-                  "title" : "oidcRPMetaDataOptionsAllowPasswordGrant",
-                  "type" : "bool"
-               },
-               {
-                  "default" : 0,
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowClientCredentialsGrant",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowClientCredentialsGrant",
-                  "title" : "oidcRPMetaDataOptionsAllowClientCredentialsGrant",
-                  "type" : "bool"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequestUris",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequestUris",
-                  "title" : "oidcRPMetaDataOptionsRequestUris"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnLevel",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnLevel",
-                  "title" : "oidcRPMetaDataOptionsAuthnLevel",
-                  "type" : "intOrNull"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRule",
-                  "title" : "oidcRPMetaDataOptionsRule"
                },
                {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAccessTokenEncKeyMgtAlg",
@@ -1209,62 +1268,10 @@ function templates(tpl,key) {
                   ],
                   "title" : "oidcRPMetaDataOptionsLogoutEncContentEncAlg",
                   "type" : "select"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthMethod",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthMethod",
-                  "select" : [
-                     {
-                        "k" : "",
-                        "v" : "Any"
-                     },
-                     {
-                        "k" : "client_secret_post",
-                        "v" : "client_secret_post"
-                     },
-                     {
-                        "k" : "client_secret_basic",
-                        "v" : "client_secret_basic"
-                     },
-                     {
-                        "k" : "client_secret_jwt",
-                        "v" : "client_secret_jwt"
-                     },
-                     {
-                        "k" : "private_key_jwt",
-                        "v" : "private_key_jwt"
-                     }
-                  ],
-                  "title" : "oidcRPMetaDataOptionsAuthMethod",
-                  "type" : "select"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthRequiredForAuthorize",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthRequiredForAuthorize",
-                  "title" : "oidcRPMetaDataOptionsAuthRequiredForAuthorize",
-                  "type" : "bool"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireState",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireState",
-                  "title" : "oidcRPMetaDataOptionsAuthnRequireState",
-                  "type" : "bool"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireNonce",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireNonce",
-                  "title" : "oidcRPMetaDataOptionsAuthnRequireNonce",
-                  "type" : "bool"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
-                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
-                  "title" : "oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
-                  "type" : "bool"
                }
             ],
-            "id" : "security",
-            "title" : "security",
+            "id" : "algorithms",
+            "title" : "algorithms",
             "type" : "simpleInputContainer"
          },
          {
@@ -2229,6 +2236,20 @@ function templates(tpl,key) {
   default:
     return [];
   }
+}
+
+function setScopeVars(scope) {
+  scope.portal = scope.data[0]._nodes[0]._nodes[0];
+  scope.getKey(scope.portal);
+  scope.domain = scope.data[0]._nodes[4]._nodes[1];
+  scope.getKey(scope.domain);
+}
+
+function setScopeVars(scope) {
+  scope.portal = scope.data[0]._nodes[0]._nodes[0];
+  scope.getKey(scope.portal);
+  scope.domain = scope.data[0]._nodes[4]._nodes[1];
+  scope.getKey(scope.domain);
 }
 
 function setScopeVars(scope) {

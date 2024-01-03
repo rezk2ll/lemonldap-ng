@@ -65,6 +65,7 @@
 "addU2FKey":"Добавить ключ U2F",
 "addVhost":"Добавить виртуальный хост",
 "advancedParams":"Расширенные настройки",
+"algorithms":"Algorithms",
 "allowedMarkups":"Разрешенные исправления:",
 "always":"Всегда",
 "apacheAuthnLevel":"Уровень аутентификации",
