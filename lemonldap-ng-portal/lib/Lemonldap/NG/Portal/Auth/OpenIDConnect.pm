@@ -39,7 +39,6 @@ sub init {
         return 0;
     }
     my @list       = ();
-    my $portalPath = $req->portal;
 
     foreach (@tab) {
         my $name = $_;
@@ -56,7 +55,7 @@ sub init {
             $img_src =
               ( $icon =~ m#^https?://# )
               ? $icon
-              : $portalPath . $self->p->staticPrefix . "/common/" . $icon;
+              : $self->p->staticPrefix . "/common/" . $icon;
         }
 
         push @list,
@@ -69,12 +68,10 @@ sub init {
           };
     }
 
-    my $portal = $req->portal;
     my $re     = '^/' . $self->path . '/(?:' . join(
         '|',
         map {
             my $s = $self->conf->{$_};
-            $s =~ s/^$portal\/*//;
             $s =~ s/#PORTAL#\/*//;
             $s
         } ( qw(
