@@ -1255,6 +1255,12 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireNonce",
                   "title" : "oidcRPMetaDataOptionsAuthnRequireNonce",
                   "type" : "bool"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
+                  "title" : "oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
+                  "type" : "bool"
                }
             ],
             "id" : "security",

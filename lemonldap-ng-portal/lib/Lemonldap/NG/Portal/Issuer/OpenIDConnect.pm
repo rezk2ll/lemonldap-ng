@@ -2085,7 +2085,7 @@ sub userInfo {
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect USERINFO URL");
 
-    my $access_token = $self->getEndPointAccessToken($req);
+    my ( $access_token, $authMethod ) = $self->getEndPointAccessToken($req);
 
     unless ($access_token) {
         $self->logger->error("Unable to get access_token");
@@ -2108,6 +2108,16 @@ sub userInfo {
     my $scope           = $accessTokenSession->data->{scope};
     my $rp              = $accessTokenSession->data->{rp};
     my $user_session_id = $accessTokenSession->data->{user_session_id};
+
+    if ( $self->rpOptions->{$rp}
+        ->{oidcRPMetaDataOptionsUserinfoRequireHeaderToken}
+        and $authMethod ne 'header' )
+    {
+        $self->userLogger->error(
+            'Endpoint authentication without using header');
+        return $self->returnBearerError( 'invalid_request',
+            'Invalid request', 400 );
+    }
 
     # Make sure $rp has been lazy loaded
     if ( $accessTokenSession->data->{client_id} ) {

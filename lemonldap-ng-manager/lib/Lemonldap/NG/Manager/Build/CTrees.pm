@@ -280,6 +280,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsAuthRequiredForAuthorize',
                             'oidcRPMetaDataOptionsAuthnRequireState',
                             'oidcRPMetaDataOptionsAuthnRequireNonce',
+                            'oidcRPMetaDataOptionsUserinfoRequireHeaderToken',
                         ]
                     },
                     {

@@ -5117,6 +5117,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsAuthnRequireNonce => {
             type => 'bool',
         },
+        oidcRPMetaDataOptionsUserinfoRequireHeaderToken => {
+            type          => 'bool',
+            documentation =>
+              '/userinfo endpoint requires authn using Bearer token',
+        },
     };
 }
 

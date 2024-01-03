@@ -764,6 +764,7 @@
 "oidcRPMetaDataOptionsUserInfoEncContentEncAlg":"Algorithme de chiffrement du contenu pour le chiffrement des réponses user_info",
 "oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg":"Algorithme d'échange de clef pour le chiffrement des réponses user_info",
 "oidcRPMetaDataOptionsUserInfoSignAlg":"Format de réponse UserInfo",
+"oidcRPMetaDataOptionsUserinfoRequireHeaderToken":"Authentification au point d'accès userinfo par en-tête seulement",
 "oidcRPMetaDataScopeRules":"Règles de scope",
 "oidcRPName":"Nom du client OpenID Connect",
 "oidcRPStateTimeout":"Durée d'une session state",
