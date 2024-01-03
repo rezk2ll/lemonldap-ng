@@ -1239,7 +1239,7 @@ sub makeJWT {
     my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
 
     my $access_token_payload = {
-        iss       => $self->iss,                  # Issuer Identifier
+        iss       => $self->get_issuer($req),     # Issuer Identifier
         exp       => $exp,                        # expiration
         aud       => $self->getAudiences($rp),    # Audience
         client_id => $client_id,                  # Client ID

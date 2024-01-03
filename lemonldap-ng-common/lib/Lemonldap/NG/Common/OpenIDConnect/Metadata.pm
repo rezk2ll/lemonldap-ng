@@ -7,7 +7,8 @@ use Mouse::Role;
 our $VERSION = '2.19.0';
 
 sub metadataDoc {
-    my ( $self, $conf ) = @_;
+    my ( $self, $issuer ) = @_;
+    my $conf                      = $self->conf;
     my $issuerDBOpenIDConnectPath = $conf->{issuerDBOpenIDConnectPath};
     my $authorize_uri             = $conf->{oidcServiceMetaDataAuthorizeURI};
     my $token_uri                 = $conf->{oidcServiceMetaDataTokenURI};
@@ -18,8 +19,7 @@ sub metadataDoc {
     my $checksession_uri          = $conf->{oidcServiceMetaDataCheckSessionURI};
     my $introspection_uri = $conf->{oidcServiceMetaDataIntrospectionURI};
 
-    my $path   = $self->path . '/';
-    my $issuer = $self->iss;
+    my $path = $self->path . '/';
     $path = "/" . $path unless ( $issuer =~ /\/$/ );
     my $baseUrl = $issuer . $path;
 
