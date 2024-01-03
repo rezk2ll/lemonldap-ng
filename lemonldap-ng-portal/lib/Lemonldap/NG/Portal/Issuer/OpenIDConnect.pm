@@ -2053,7 +2053,7 @@ sub userInfo {
         $self->userLogger->error(
             'Endpoint authentication without using header');
         return $self->returnBearerError( 'invalid_request',
-            'Invalid request', 401 );
+            'Invalid request', 400 );
     }
 
     # Make sure $rp has been lazy loaded
