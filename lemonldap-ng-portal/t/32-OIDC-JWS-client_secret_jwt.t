@@ -278,6 +278,8 @@ sub rp {
                         oidcOPMetaDataOptionsClientID     => "rpid",
                         oidcOPMetaDataOptionsConfigurationURI =>
 "https://auth.op.com/.well-known/openid-configuration",
+                        oidcOPMetaDataOptionsAuthnEndpointAuthMethod  => 'jws',
+                        oidcOPMetaDataOptionsAuthnEndpointAuthSigAlg  => 'HS256',
                         oidcOPMetaDataOptionsTokenEndpointAuthMethod =>
                           'client_secret_jwt',
                     }

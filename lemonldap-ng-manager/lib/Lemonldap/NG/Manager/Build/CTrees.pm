@@ -195,6 +195,8 @@ sub cTrees {
                             'oidcOPMetaDataOptionsMaxAge',
                             'oidcOPMetaDataOptionsUiLocales',
                             'oidcOPMetaDataOptionsAcrValues',
+                            'oidcOPMetaDataOptionsAuthnEndpointAuthMethod',
+                            'oidcOPMetaDataOptionsAuthnEndpointAuthSigAlg',
                             'oidcOPMetaDataOptionsTokenEndpointAuthMethod',
                             'oidcOPMetaDataOptionsCheckJWTSignature',
                             'oidcOPMetaDataOptionsIDTokenMaxAge',
@@ -226,7 +228,6 @@ sub cTrees {
                     'oidcRPMetaDataOptionsClientID',
                     'oidcRPMetaDataOptionsClientSecret',
                     'oidcRPMetaDataOptionsRedirectUris',
-                    'oidcRPMetaDataOptionsAuthMethod',
                 ]
             },
             'oidcRPMetaDataExportedVars',
@@ -275,6 +276,8 @@ sub cTrees {
                             'oidcRPMetaDataOptionsUserInfoEncContentEncAlg',
                             'oidcRPMetaDataOptionsLogoutEncKeyMgtAlg',
                             'oidcRPMetaDataOptionsLogoutEncContentEncAlg',
+                            'oidcRPMetaDataOptionsAuthMethod',
+                            'oidcRPMetaDataOptionsAuthRequiredForAuthorize',
                         ]
                     },
                     {

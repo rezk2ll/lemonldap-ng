@@ -11,7 +11,6 @@ BEGIN {
     require 't/oidc-lib.pm';
 }
 
-my $debug = 'error';
 my ( $op, $rp, $res );
 
 LWP::Protocol::PSGI->register(
@@ -213,7 +212,6 @@ done_testing( count() );
 sub op {
     return LLNG::Manager::Test->new( {
             ini => {
-                logLevel                        => $debug,
                 domain                          => 'idp.com',
                 portal                          => 'http://auth.op.com',
                 authentication                  => 'Demo',
@@ -234,7 +232,8 @@ sub op {
                         oidcRPMetaDataOptionsDisplayName => "RP",
                         oidcRPMetaDataOptionsClientID    => "rpid",
                         oidcRPMetaDataOptionsAuthMethod  => 'private_key_jwt',
-                        oidcRPMetaDataOptionsIDTokenExpiration     => 3600,
+                        oidcRPMetaDataOptionsAuthRequiredForAuthorize => 1,
+                        oidcRPMetaDataOptionsIDTokenExpiration        => 3600,
                         oidcRPMetaDataOptionsIDTokenSignAlg        => "RS256",
                         oidcRPMetaDataOptionsBypassConsent         => 0,
                         oidcRPMetaDataOptionsUserIDAttr            => "",
@@ -271,7 +270,6 @@ sub rp {
     my ( $jwks, $metadata ) = @_;
     return LLNG::Manager::Test->new( {
             ini => {
-                logLevel                   => $debug,
                 domain                     => 'rp.com',
                 portal                     => 'http://auth.rp.com',
                 authentication             => 'OpenIDConnect',
@@ -298,6 +296,7 @@ sub rp {
 "https://auth.op.com/.well-known/openid-configuration",
                         oidcOPMetaDataOptionsTokenEndpointAuthMethod =>
                           'private_key_jwt',
+                        oidcOPMetaDataOptionsAuthnEndpointAuthMethod => 'jws',
                     }
                 },
                 oidcServicePrivateKeySig => oidc_key_op_private_sig,

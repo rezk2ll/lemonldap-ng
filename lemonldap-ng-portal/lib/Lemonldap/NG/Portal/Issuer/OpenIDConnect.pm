@@ -360,11 +360,17 @@ sub run {
                 }
             }
 
+            my $authMethod;
             if ( $oidc_request->{'request'} ) {
-                if ( my $request =
+                if ( my ( $request, $alg ) =
                     $self->decodeJWT( $oidc_request->{'request'}, undef, $rp ) )
                 {
                     $self->logger->debug("JWT signature request verified");
+
+                    $authMethod =
+                      $alg =~ /^HS/i
+                      ? 'client_secret_jwt'
+                      : 'private_key_jwt';
 
                     # Override OIDC parameters by request content
                     foreach ( keys %$request ) {
@@ -467,6 +473,39 @@ sub run {
                     undef,          $oidc_request->{'state'},
                     1
                 );
+            }
+
+            # Check if authentication was required
+            if ( $self->rpOptions->{$rp}
+                ->{oidcRPMetaDataOptionsAuthRequiredForAuthorize} )
+            {
+                $self->logger->debug('JWS authentication is required');
+                unless ($authMethod) {
+                    $self->userLogger->error(
+                        'Authentication required but not done');
+                    return $self->returnRedirectError(
+                        $req,           $oidc_request->{'redirect_uri'},
+                        'server_error', 'JWS authentication required',
+                        undef,          $oidc_request->{'state'},
+                        1
+                    );
+                }
+                my $methodAllowed =
+                  $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthMethod};
+                if ( $methodAllowed and $authMethod ne $methodAllowed ) {
+                    $self->userLogger->error(
+"Authentication with $authMethod instead of $methodAllowed"
+                    );
+                    return $self->returnRedirectError(
+                        $req,
+                        $oidc_request->{'redirect_uri'},
+                        'server_error',
+                        "Authentication must use $methodAllowed",
+                        undef,
+                        $oidc_request->{'state'},
+                        1
+                    );
+                }
             }
 
             my $spAuthnLevel =

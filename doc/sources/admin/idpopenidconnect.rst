@@ -272,6 +272,8 @@ Options
    -  **User_info Encryption content encryption algorithm**: If Relying-Party require user_info response encryption, set here the content encryption algorithm
    -  **Logout Encryption key management algorithm**: If Relying-Party require back-channel-logout token encryption, set here the key management algorithm
    -  **Logout Encryption content encryption algorithm**: If Relying-Party require back-channel-logout token encryption, set here the content encryption algorithm
+   -  **Token endpoint authentication method**: Fix method to use to connect to "token" endpoint
+   -  **Require JWS for authorization requests**: Require a signed JWS for code authorization requests. If **Token endpoint authentication method** is set, it will require the same algorithm
 
 -  **Keys**
 
