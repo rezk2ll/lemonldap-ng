@@ -10,6 +10,18 @@ use Lemonldap::NG::Manager::Build::CTrees;
 
 # use Scalar::Util 'weaken'; ?
 
+my @arrayize = qw(
+  oidcRPMetaDataOptionsRedirectUris
+  oidcRPMetaDataOptionsPostLogoutRedirectUris
+  oidcRPMetaDataOptionsAdditionalAudiences
+  casAppMetaDataOptionsService
+);
+
+sub _mustArrayizeOption {
+    my ( $self, $option ) = @_;
+    return ( grep { $_ eq $option } @arrayize ) ? 1 : 0;
+}
+
 sub _isSimpleKeyValueHash {
     my ( $self, $hash ) = @_;
     return 0 if ( ref($hash) ne "HASH" );
@@ -101,16 +113,9 @@ sub _translateOptionConfToApi {
 
 sub _translateValueConfToApi {
     my ( $self, $optionName, $optionValue ) = @_;
-    if ( $optionName eq "oidcRPMetaDataOptionsRedirectUris" ) {
-        return [ split( /\s+/, $optionValue, ) ];
-    }
-    elsif ( $optionName eq "oidcRPMetaDataOptionsPostLogoutRedirectUris" ) {
-        return [ split( /\s+/, $optionValue, ) ];
-    }
-    elsif ( $optionName eq "oidcRPMetaDataOptionsAdditionalAudiences" ) {
-        return [ split( /\s+/, $optionValue, ) ];
-    }
-    elsif ( $optionName eq "casAppMetaDataOptionsService" ) {
+
+    if ( $self->_mustArrayizeOption($optionName))
+    {
         return [ split( /\s+/, $optionValue, ) ];
     }
     else {
@@ -121,30 +126,8 @@ sub _translateValueConfToApi {
 sub _translateValueApiToConf {
     my ( $self, $optionName, $optionValue ) = @_;
 
-    # redirectUris is handled as an array
-    if ( $optionName eq 'redirectUris' ) {
-        die "redirectUris is not an array\n"
-          unless ( ref($optionValue) eq "ARRAY" );
-        return join( ' ', @{$optionValue} );
-    }
-
-    # postLogoutRedirectUris is handled as an array
-    elsif ( $optionName eq 'postLogoutRedirectUris' ) {
-        die "postLogoutRedirectUris is not an array\n"
-          unless ( ref($optionValue) eq "ARRAY" );
-        return join( ' ', @{$optionValue} );
-    }
-
-    # additionalAudiences is handled as an array
-    elsif ( $optionName eq 'additionalAudiences' ) {
-        die "additionalAudiences is not an array\n"
-          unless ( ref($optionValue) eq "ARRAY" );
-        return join( ' ', @{$optionValue} );
-    }
-
-    # service is handled as an array
-    elsif ( $optionName eq 'service' ) {
-        die "service is not an array\n"
+    if ( $self->_mustArrayizeOption($optionName) ) {
+        die "$optionName is not an array\n"
           unless ( ref($optionValue) eq "ARRAY" );
         return join( ' ', @{$optionValue} );
     }
