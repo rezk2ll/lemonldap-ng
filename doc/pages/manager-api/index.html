@@ -1047,7 +1047,6 @@
     "redirectUris" : {
       "type" : "array",
       "items" : {
-        "minItems" : 1,
         "type" : "string",
         "format" : "uri"
       }
@@ -1160,10 +1159,12 @@
       "type" : "integer"
     },
     "checkSLOMessageSignature" : {
-      "type" : "boolean"
+      "type" : "boolean",
+      "default" : false
     },
     "checkSSOMessageSignature" : {
-      "type" : "boolean"
+      "type" : "boolean",
+      "default" : false
     },
     "enableIDPInitiatedURL" : {
       "type" : "boolean"
@@ -1174,7 +1175,8 @@
       "enum" : [ "none", "nameid", "assertion" ]
     },
     "forceUTF8" : {
-      "type" : "boolean"
+      "type" : "boolean",
+      "default" : false
     },
     "nameIDFormat" : {
       "type" : "string",
@@ -1184,8 +1186,7 @@
       "type" : "string"
     },
     "notOnOrAfterTimeout" : {
-      "type" : "integer",
-      "default" : 72000
+      "type" : "integer"
     },
     "oneTimeUse" : {
       "type" : "boolean"
@@ -1194,20 +1195,13 @@
       "type" : "string"
     },
     "sessionNotOnOrAfterTimeout" : {
-      "type" : "integer",
-      "default" : 72000
+      "type" : "integer"
     },
     "signSLOMessage" : {
-      "maximum" : 1,
-      "minimum" : -1,
-      "type" : "integer",
-      "default" : -1
+      "type" : "integer"
     },
     "signSSOMessage" : {
-      "maximum" : 1,
-      "minimum" : -1,
-      "type" : "integer",
-      "default" : -1
+      "type" : "integer"
     }
   }
 };
