@@ -2606,9 +2606,7 @@ sub attributes {
         },
         rest2fInitArgs => {
             type          => 'keyTextContainer',
-            keyTest       => qr/^\w+$/,
-            keyMsgFail    => '__badKeyName__',
-            test          => qr/^\w+$/,
+            test          => sub { return perlExpr(@_) },
             msgFail       => '__badValue__',
             documentation => 'Args for REST 2F init',
         },
