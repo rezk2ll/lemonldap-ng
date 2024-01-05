@@ -2614,15 +2614,15 @@ sub attributes {
         },
         rest2fVerifyUrl => {
             type          => 'url',
+            documentation => 'REST 2F verify URL',
+        },
+        rest2fVerifyArgs => {
+            type          => 'keyTextContainer',
             keyTest       => qr/^\w+$/,
             keyMsgFail    => '__badKeyName__',
             test          => qr/^\w+$/,
             msgFail       => '__badValue__',
-            documentation => 'REST 2F init URL',
-        },
-        rest2fVerifyArgs => {
-            type          => 'keyTextContainer',
-            documentation => 'Args for REST 2F init',
+            documentation => 'Args for REST 2F verify',
         },
         rest2fResendInterval => {
             type          => 'text',
@@ -4436,12 +4436,47 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
 
         # REST
-        restAuthUrl       => { type => 'url' },
-        restUserDBUrl     => { type => 'url' },
-        restFindUserDBUrl => { type => 'url' },
+        restAuthUrl  => { type => 'url' },
+        restAuthArgs => {
+            type          => 'keyTextContainer',
+            test          => sub { return perlExpr(@_) },
+            msgFail       => '__badValue__',
+            documentation => 'Extra args for REST Auth request',
+            help          => 'authrest.html#rest-args',
+        },
+        restUserDBUrl  => { type => 'url' },
+        restUserDBArgs => {
+            type          => 'keyTextContainer',
+            test          => sub { return perlExpr(@_) },
+            msgFail       => '__badValue__',
+            documentation => 'Extra args for REST UserDB request',
+            help          => 'authrest.html#rest-args',
+        },
+        restFindUserDBUrl  => { type => 'url' },
+        restFindUserDBArgs => {
+            type          => 'keyTextContainer',
+            test          => sub { return perlExpr(@_) },
+            msgFail       => '__badValue__',
+            documentation => 'Extra args for REST FindUser request',
+            help          => 'authrest.html#rest-args',
+        },
 
-        restPwdConfirmUrl => { type => 'url' },
+        restPwdConfirmUrl  => { type => 'url' },
+        restPwdConfirmArgs => {
+            type          => 'keyTextContainer',
+            test          => sub { return perlExpr(@_) },
+            msgFail       => '__badValue__',
+            documentation => 'Extra args for REST password confirm request',
+            help          => 'authrest.html#rest-args',
+        },
         restPwdModifyUrl  => { type => 'url' },
+        restPwdModifyArgs => {
+            type          => 'keyTextContainer',
+            test          => sub { return perlExpr(@_) },
+            msgFail       => '__badValue__',
+            documentation => 'Extra args for REST password modify request',
+            help          => 'authrest.html#rest-args',
+        },
 
         # Remote
         remoteCookieName => {

@@ -415,9 +415,28 @@ sub tree {
                             help  => 'authrest.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'restAuthnLevel', 'restAuthUrl',
-                                'restUserDBUrl',  'restPwdConfirmUrl',
-                                'restPwdModifyUrl'
+                                'restAuthnLevel',
+                                {
+                                    title => 'url',
+                                    form  => 'simpleInputContainer',
+                                    help  => 'authrest.html',
+                                    nodes => [
+                                        'restAuthUrl',
+                                        'restUserDBUrl',
+                                        'restPwdConfirmUrl',
+                                        'restPwdModifyUrl',
+                                    ]
+                                },
+                                {
+                                    title => 'args',
+                                    help  => 'authrest.html#rest-args',
+                                    nodes => [
+                                        'restAuthArgs',
+                                        'restUserDBArgs',
+                                        'restPwdConfirmArgs',
+                                        'restPwdModifyArgs',
+                                    ]
+                                },
                             ]
                         },
                         {
@@ -933,6 +952,7 @@ sub tree {
                                 'findUserWildcard',
                                 'findUserControl',
                                 'restFindUserDBUrl',
+                                'restFindUserDBArgs',
                                 'findUserSearchingAttributes',
                                 'findUserExcludingAttributes'
                             ]
@@ -1144,10 +1164,19 @@ sub tree {
                             nodes => [
                                 'rest2fActivation',
                                 'rest2fCodeActivation',
-                                'rest2fInitUrl',
-                                'rest2fInitArgs',
-                                'rest2fVerifyUrl',
-                                'rest2fVerifyArgs',
+                                {
+                                    title => 'url',
+                                    form  => 'simpleInputContainer',
+                                    help  => 'authrest.html',
+                                    nodes =>
+                                      [ 'rest2fInitUrl', 'rest2fVerifyUrl', ]
+                                },
+                                {
+                                    title => 'args',
+                                    help  => 'authrest.html#rest-args',
+                                    nodes =>
+                                      [ 'rest2fInitArgs', 'rest2fVerifyArgs', ]
+                                },
                                 'rest2fResendInterval',
                                 'rest2fAuthnLevel',
                                 'rest2fLabel',
