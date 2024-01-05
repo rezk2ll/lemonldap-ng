@@ -26,7 +26,7 @@ use URI;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
 
-our $VERSION = '2.18.1';
+our $VERSION = '2.19.0';
 
 use constant BACKCHANNEL_EVENTSKEY =>
   'http://schemas.openid.net/event/backchannel-logout';
