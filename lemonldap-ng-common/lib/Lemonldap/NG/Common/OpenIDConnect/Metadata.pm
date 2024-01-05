@@ -4,6 +4,8 @@ use strict;
 use JSON;
 use Mouse::Role;
 
+our $VERSION = '2.19.0';
+
 sub metadataDoc {
     my ( $self, $conf ) = @_;
     my $issuerDBOpenIDConnectPath = $conf->{issuerDBOpenIDConnectPath};
