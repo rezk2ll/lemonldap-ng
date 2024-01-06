@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 our $VERSION = '2.0.12';
 
-extends 'Lemonldap::NG::Common::Module';
+extends 'Lemonldap::NG::Portal::Main::UserDB';
 
 # INITIALIZATION
 

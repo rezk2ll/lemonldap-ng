@@ -9,7 +9,10 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-extends 'Lemonldap::NG::Portal::Lib::DBI';
+extends qw(
+  Lemonldap::NG::Portal::Main::UserDB
+  Lemonldap::NG::Portal::Lib::DBI
+);
 
 our $VERSION = '2.0.11';
 

@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 
 extends qw(
-  Lemonldap::NG::Common::Module
+  Lemonldap::NG::Portal::Main::UserDB
   Lemonldap::NG::Portal::Lib::REST
 );
 
