@@ -434,3 +434,14 @@ See
 .. |image0| image:: /documentation/manager-rule.png
    :class: align-center
 
+OIDC
+----
+
+See
+:ref:`openidconnectservice#security<openidconnectservice-security-parameters>`
+
+ANSSI security guidelines
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+See
+:doc:`How to implement ANSSI security guidelines<anssi-oidc>`
