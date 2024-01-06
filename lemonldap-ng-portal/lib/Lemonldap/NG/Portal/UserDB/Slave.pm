@@ -55,8 +55,4 @@ sub setSessionInfo {
     return PE_OK;
 }
 
-sub setGroups {
-    return PE_OK;
-}
-
 1;

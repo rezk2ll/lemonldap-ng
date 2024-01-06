@@ -23,10 +23,4 @@ sub init {
     return $self->SUPER::init();
 }
 
-# RUNNING METHODS
-
-sub setGroups {
-    return PE_OK;
-}
-
 1;
