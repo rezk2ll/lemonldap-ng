@@ -56,10 +56,12 @@ build_centos_7:
   extends: .build_job
   image: buildpkg/centos:7
   script:
-    - rm -f /etc/yum.repos.d/CentOS-Sources.repo
+    - yum clean all
+    - yum makecache
     - yum -y update
     - yum -y install epel-release
     - make dist
+    - yum -y install openssl openssl-libs
     - ci-build-pkg
 
 build_rocky_8:
