@@ -206,7 +206,24 @@ ok( $access_token_eol, 'OIDC EOL time is stored' );
 ok( $access_token_old, 'Obtained refresh token' );
 is( $res->{cn},   'Frédéric Accents', 'UTF-8 values' );
 is( $res->{mail}, 'fa@badwolf.org',   'Correct email' );
-count(5);
+is_deeply(
+    [ sort split( /[; ]+/, $res->{groups} ) ],
+    [ "earthlings", "users" ],
+    'Correct groups'
+);
+is_deeply(
+    $res->{hGroups},
+    {
+        'earthlings' => {
+            'name' => 'earthlings'
+        },
+        'users' => {
+            'name' => 'users'
+        }
+    },
+    "Correct hGroups"
+);
+count(7);
 
 is( $res->{userinfo_hook}, "op/french", "oidcGotUserInfo called" );
 is( $res->{id_token_hook}, "op/french", "oidcGotIDToken called" );
@@ -285,7 +302,24 @@ isnt( $access_token_new_eol, $access_token_eol,
     "Access token EOL has changed" );
 isnt( $access_token_new, $access_token_old, "Access token has changed" );
 is( $res->{mail}, 'fa3@badwolf.org', 'Updated RP session' );
-count(3);
+is_deeply(
+    [ sort split( /[; ]+/, $res->{groups} ) ],
+    [ "earthlings", "users" ],
+    'Still correct groups'
+);
+is_deeply(
+    $res->{hGroups},
+    {
+        'earthlings' => {
+            'name' => 'earthlings'
+        },
+        'users' => {
+            'name' => 'users'
+        }
+    },
+    "Still correct hGroups"
+);
+count(5);
 
 # Logout initiated by RP
 ok(
@@ -423,11 +457,13 @@ sub op {
                 issuerDBOpenIDConnectActivation => "1",
                 restSessionServer               => 1,
                 restExportSecretKeys            => 1,
+                oidcServiceIgnoreScopeForClaims => 1,
                 oidcRPMetaDataExportedVars      => {
                     rp => {
                         email       => "mail",
                         family_name => "cn",
-                        name        => "cn"
+                        name        => "cn",
+                        groups      => "groups",
                     }
                 },
                 oidcServiceAllowHybridFlow            => 1,
@@ -482,10 +518,11 @@ sub rp {
                 restExportSecretKeys       => 1,
                 oidcOPMetaDataExportedVars => {
                     op => {
-                        cn   => "name",
-                        uid  => "sub",
-                        sn   => "family_name",
-                        mail => "email"
+                        cn     => "name",
+                        uid    => "sub",
+                        sn     => "family_name",
+                        mail   => "email",
+                        groups => "groups",
                     }
                 },
                 oidcOPMetaDataOptions => {
