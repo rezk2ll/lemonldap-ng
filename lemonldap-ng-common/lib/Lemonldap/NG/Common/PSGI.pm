@@ -37,6 +37,13 @@ sub init {
     foreach my $k ( keys %$args ) {
         $self->{$k} = $args->{$k} unless ( $k eq 'logger' );
     }
+    $self->_initLogger($args);
+
+    return 1;
+}
+
+sub _initLogger {
+    my ( $self, $args ) = @_;
     unless ( ref( $self->logger ) and ref( $self->userLogger ) ) {
         my $logger =
              $args->{logger}
@@ -72,7 +79,6 @@ sub init {
             );
         }
     }
-    return 1;
 }
 
 # RUNNING METHODS
