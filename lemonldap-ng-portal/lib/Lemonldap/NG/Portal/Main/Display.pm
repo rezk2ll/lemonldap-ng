@@ -21,34 +21,22 @@ has passwordResetUrl => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
-        my $self = $_[0];
-        my $p    = $self->conf->{portal};
-        $p =~ s#/*$##;
-        return $self->conf->{mailUrl} ? $self->conf->{mailUrl} : "$p/resetpwd";
+        $_[0]->conf->{mailUrl} || $_[0]->buildUrl("resetpwd");
     }
 );
 has certificateResetUrl => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
-        my $self = $_[0];
-        my $p    = $self->conf->{portal};
-        $p =~ s#/*$##;
-        return $self->conf->{certificateResetByMailURL}
-          ? $self->conf->{certificateResetByMailURL}
-          : "$p/certificateReset";
+        $_[0]->conf->{certificateResetByMailURL}
+          || $_[0]->buildUrl("certificateReset");
     }
 );
 has registerUrl => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
-        my $self = $_[0];
-        my $p    = $self->conf->{portal};
-        $p =~ s#/*$##;
-        return $self->conf->{registerUrl}
-          ? $self->conf->{registerUrl}
-          : "$p/register";
+        $_[0]->conf->{registerUrl} || $_[0]->buildUrl("register");
     }
 );
 
