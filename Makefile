@@ -41,6 +41,7 @@ COMPRESSSUFFIX=tar.gz
 NGINX=/usr/sbin/nginx
 UGLIFYJSVERSION:=$(shell uglifyjs --version|perl -pe 's/^[^\d]*(\d).*$$/$$1/')
 CHOWN=chown
+CHGRP=chgrp
 CHMOD=chmod
 
 # Default directories install
@@ -727,7 +728,7 @@ install_fastcgi_server:
 	@if [ "$(FASTCGIUSER)" != "" ]; then \
 		$(CHOWN) $(FASTCGIUSER) $(RFASTCGISOCKDIR) || exit 1; \
 		if [ "$(FASTCGIGROUP)" != "" ]; then \
-			chgrp $(FASTCGIGROUP) $(RFASTCGISOCKDIR) || exit 1; \
+			$(CHGRP) $(FASTCGIGROUP) $(RFASTCGISOCKDIR) || exit 1; \
 		fi; \
 		$(CHMOD) 770 $(RFASTCGISOCKDIR); \
 	else \
@@ -962,7 +963,7 @@ install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir ins
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		$(CHOWN) $(APACHEUSER) $(RFILECONFIGDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
-			chgrp $(APACHEGROUP) $(RFILECONFIGDIR) || exit 1; \
+			$(CHGRP) $(APACHEGROUP) $(RFILECONFIGDIR) || exit 1; \
 		fi; \
 		$(CHMOD) 770 $(RFILECONFIGDIR); \
 	else \
@@ -980,7 +981,7 @@ install_sessions_dir:
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		$(CHOWN) $(APACHEUSER) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
-			chgrp $(APACHEGROUP) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR) || exit 1; \
+			$(CHGRP) $(APACHEGROUP) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR) || exit 1; \
 		fi; \
 		$(CHMOD) 770 $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR); \
 	else \
@@ -993,7 +994,7 @@ install_notif_dir:
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		$(CHOWN) $(APACHEUSER) $(RFILENOTIFDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
-			chgrp $(APACHEGROUP) $(RFILENOTIFDIR) || exit 1; \
+			$(CHGRP) $(APACHEGROUP) $(RFILENOTIFDIR) || exit 1; \
 		fi; \
 		$(CHMOD) 770 $(RFILENOTIFDIR); \
 	else \
@@ -1006,7 +1007,7 @@ install_captcha_dir:
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		$(CHOWN) $(APACHEUSER) $(RCAPTCHADIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
-			chgrp $(APACHEGROUP) $(RCAPTCHADIR) || exit 1; \
+			$(CHGRP) $(APACHEGROUP) $(RCAPTCHADIR) || exit 1; \
 		fi; \
 		$(CHMOD) 770 $(RCAPTCHADIR); \
 	else \
@@ -1019,7 +1020,7 @@ install_cache_dir:
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		$(CHOWN) $(APACHEUSER) $(RCACHEDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
-			chgrp $(APACHEGROUP) $(RCACHEDIR) || exit 1; \
+			$(CHGRP) $(APACHEGROUP) $(RCACHEDIR) || exit 1; \
 		fi; \
 		$(CHMOD) 770 $(RCACHEDIR); \
 	else \
