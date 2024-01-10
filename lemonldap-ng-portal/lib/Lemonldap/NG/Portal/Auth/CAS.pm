@@ -38,7 +38,6 @@ sub init {
     }
     $self->srvNumber( scalar @tab );
     my @list;
-    my $portalPath = $self->p->buildUrl($req);
 
     foreach (@tab) {
         my $name = $_;
@@ -59,7 +58,7 @@ sub init {
             $img_src =
               ( $icon =~ m#^https?://# )
               ? $icon
-              : $portalPath . $self->p->staticPrefix . "/common/" . $icon;
+              : $self->p->staticPrefix . "/common/" . $icon;
         }
         push @list,
           {
