@@ -54,6 +54,7 @@ BINDIR=$(LMPREFIX)/bin
 SBINDIR=$(LMPREFIX)/sbin
 INITDIR=$(LMPREFIX)/etc/init.d
 UNITDIR=$(LMPREFIX)/usr/lib/systemd/system
+TMPFILESDIR=$(LMPREFIX)/usr/lib/tmpfiles.d
 ETCDEFAULTDIR=$(LMPREFIX)/etc/default
 DATADIR=$(LMPREFIX)/data
 
@@ -164,6 +165,7 @@ RUWSGIYAMLDIR=$(DESTDIR)/$(UWSGIYAMLDIR)
 RLLNGAPPDIR=$(DESTDIR)/$(LLNGAPPDIR)
 RINITDIR=$(DESTDIR)/$(INITDIR)
 RUNITDIR=$(DESTDIR)/$(UNITDIR)
+RTMPFILESDIR=$(DESTDIR)/$(TMPFILESDIR)
 RETCDEFAULTDIR=$(DESTDIR)/$(ETCDEFAULTDIR)
 RDATADIR=$(DESTDIR)/$(DATADIR)
 RPORTALDIR=$(DESTDIR)/$(PORTALDIR)
@@ -691,26 +693,36 @@ install_bin:	install_conf_dir
 	@$(CHMOD) +x $(RBINDIR)/*
 
 install_fastcgi_server:
-	@install -v -d $(RSBINDIR) $(RINITDIR) $(RUNITDIR) $(RETCDEFAULTDIR) $(RFASTCGISOCKDIR)
+	@install -v -d $(RSBINDIR) $(RINITDIR) $(RUNITDIR) $(RTMPFILESDIR) $(RETCDEFAULTDIR) $(RFASTCGISOCKDIR)
 	@cp -f fastcgi-server/sbin/llng-fastcgi-server $(RSBINDIR)
 	@$(CHMOD) +x $(RSBINDIR)/llng-fastcgi-server
 	@cp -f fastcgi-server/rc/llng-fastcgi-server $(RINITDIR)
 	@cp -f fastcgi-server/systemd/llng-fastcgi-server.service $(RUNITDIR)
+	@cp -f fastcgi-server/systemd/llng-fastcgi-server.tmpfile $(RTMPFILESDIR)/llng-fastcgi-server.conf
 	@cp -f fastcgi-server/default/llng-fastcgi-server $(RETCDEFAULTDIR)
 	@$(PERL) -pi -e 's#__SBINDIR__#$(SBINDIR)#;s#__DEFAULTDIR__#$(ETCDEFAULTDIR)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g;' \
 		$(RETCDEFAULTDIR)/llng-fastcgi-server \
 		$(RSBINDIR)/llng-fastcgi-server \
 		$(RUNITDIR)/llng-fastcgi-server.service \
+		$(RTMPFILESDIR)/llng-fastcgi-server.conf \
 		$(RINITDIR)/llng-fastcgi-server
 	@if [ ! "$(FASTCGIUSER)" ]; then \
-		$(PERL) -pi -e 's#__USER__#nobody#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
+		$(PERL) -pi -e 's#__USER__#nobody#' \
+			$(RTMPFILESDIR)/llng-fastcgi-server.conf \
+			$(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	else \
-		$(PERL) -pi -e 's#__USER__#$(FASTCGIUSER)#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
+		$(PERL) -pi -e 's#__USER__#$(FASTCGIUSER)#' \
+			$(RTMPFILESDIR)/llng-fastcgi-server.conf \
+			$(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	fi
 	@if [ ! "$(FASTCGIGROUP)" ]; then \
-		$(PERL) -pi -e 's#__GROUP__#nobody#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
+		$(PERL) -pi -e 's#__GROUP__#nobody#' \
+			$(RTMPFILESDIR)/llng-fastcgi-server.conf \
+			$(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	else \
-		$(PERL) -pi -e 's#__GROUP__#$(FASTCGIGROUP)#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
+		$(PERL) -pi -e 's#__GROUP__#$(FASTCGIGROUP)#' \
+			$(RTMPFILESDIR)/llng-fastcgi-server.conf \
+			$(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	fi
 	@if [ "$(FASTCGIUSER)" != "" ]; then \
 		$(CHOWN) $(FASTCGIUSER) $(RFASTCGISOCKDIR) || exit 1; \
