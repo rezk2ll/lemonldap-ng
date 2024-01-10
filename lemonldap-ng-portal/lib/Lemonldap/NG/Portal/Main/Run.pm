@@ -54,6 +54,9 @@ sub handler {
 
     bless $req, 'Lemonldap::NG::Portal::Main::Request';
     $req->init( $self->conf );
+
+    # Set portal URL dynamically
+    $req->portal( HANDLER->tsv->{portal}->($req) );
     my $sp = 0;
 
     # Restore pdata
