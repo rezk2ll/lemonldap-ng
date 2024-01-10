@@ -1,5 +1,4 @@
 Changes
-eg/llng-app.psgi
 lemonldap-ng.ini
 lib/Lemonldap/NG/Common.pm
 lib/Lemonldap/NG/Common/Apache/Session.pm
