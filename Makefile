@@ -827,9 +827,6 @@ install_manager_site:	install_conf_dir
 	elif test "$(USEDEBIANLIBS)" = "yes"; then \
 		rm -rvf $(MANAGERLIBSTOREMOVEFORDEBIAN); \
 	fi
-	# Clean svn files
-	@rm -rf $$(find ${RMANAGERSTATICDIR} \
-		$(RMANAGERTEMPLATESDIR) $(RCONFDIR) -type d -name .svn)
 	@$(PERL) -i -pe 's#__MANAGERSTATICDIR__#$(MANAGERRELATIVESTATICDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 	@$(PERL) -i -pe 's#__MANAGERDOCDIR__#$(MANAGERRELATIVEDOCDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 	@$(PERL) -i -pe 's#__MANAGERTEMPLATESDIR__#$(MANAGERTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
@@ -888,8 +885,6 @@ install_portal_site:	install_conf_dir
 	#
 	@$(PERL) -i -pe 's#__PORTALSTATICDIR__#$(PORTALRELATIVESTATICDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 	@$(PERL) -i -pe 's#__PORTALTEMPLATESDIR__#$(PORTALTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
-	# Clean SVN files
-	@rm -rf $$(find ${RPORTALDIR} $(RPORTALSKINSDIR) $(RCRONDIR) $(RCONFDIR) -type d -name .svn)
 
 install_handler_site:	install_conf_dir
 	# Handler install
@@ -912,16 +907,12 @@ install_handler_site:	install_conf_dir
 		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RUNITDIR)/lemonldap-ng-handler.service; \
 	fi
 	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RUNITDIR)/lemonldap-ng-handler.service
-	# Clean SVN files
-	@rm -rf $$(find $(RHANDLERDIR) -type d -name .svn)
 
 install_test_site:
 	# Test site install
 	@install -v -d $(RTESTDIR)
 	@cp -pR -f _example/test/* $(RTESTDIR)
-	@rm -rf $$(find $(RTESTDIR) -type d -name .svn)
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RTESTDIR)/index.pl
-	@rm -rf $$(find $(RTESTDIR) -type d -name .svn)
 
 install_examples_site:
 	# Examples install
@@ -932,7 +923,6 @@ install_examples_site:
 	@cp -a -f fastcgi-server/psgi/llngapp.psgi $(REXAMPLESDIR)/$$i
 	@rm -rf $(REXAMPLESDIR)/portal/skins \
 		$(REXAMPLESDIR)/manager/skins \
-	@rm -rf $$(find $(REXAMPLESDIR) -type d -name .svn)
 
 install_doc_site:
 	# Offline documentation install
@@ -973,7 +963,6 @@ install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir ins
 	@cp $(SRCCOMMONDIR)/tools/sso.schema $(RTOOLSDIR)
 	$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; s#__CACHEDIR__#$(CACHEDIR)#g;' \
 		$(RCONFDIR)/$(CONFFILENAME)
-	@rm -rf $$(find $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR) -type d -name .svn)
 
 install_sessions_dir:
 	@install -m 777 -v -d $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR)
