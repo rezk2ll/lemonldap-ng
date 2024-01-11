@@ -1972,6 +1972,8 @@ sub sloServer {
         $req->setInfo('');
 
         # Launch normal logout and ignore errors
+        my $tmp = $req->data->{nofail};
+        $req->data->{nofail} = 1;
         $req->steps( [
                 @{ $self->p->beforeLogout },
                 ( $doAuthLogout ? 'authLogout' : () ),
@@ -1979,6 +1981,7 @@ sub sloServer {
             ]
         );
         my $res = $self->p->process($req);
+        $req->data->{nofail} = $tmp;
 
         if ( $res eq PE_REDIRECT ) {
 
