@@ -537,7 +537,6 @@ sub frontLogout {
     return $self->p->do(
         $req,
         [
-            @{ $self->p->beforeLogout },
             'authLogout',
             'deleteSession',
             sub {
