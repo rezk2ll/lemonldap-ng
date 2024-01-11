@@ -190,9 +190,9 @@ sub extractFormInfo {
             $self->logger->debug("Token response is valid");
         }
 
-        my $access_token = $token_response->{access_token};
-        my $expires_in   = $token_response->{expires_in};
-        my $id_token     = $self->decryptJwt( $token_response->{id_token} );
+        my $access_token  = $token_response->{access_token};
+        my $expires_in    = $token_response->{expires_in};
+        my $id_token      = $self->decryptJwt( $token_response->{id_token} );
         my $refresh_token = $token_response->{refresh_token};
 
         undef $expires_in unless looks_like_number($expires_in);
@@ -533,6 +533,7 @@ sub frontLogout {
     if ($badRequest) {
         return $self->p->sendError( $req, 'Bad OIDC Logout Request', 200 );
     }
+    my $res = $self->p->do( $req, @{ $self->p->beforeLogout } );
     return $self->p->do(
         $req,
         [
@@ -541,7 +542,7 @@ sub frontLogout {
             'deleteSession',
             sub {
                 $req->response($response);
-                return PE_SENDRESPONSE;
+                return $res ? $res : PE_SENDRESPONSE;
             }
         ]
     );
