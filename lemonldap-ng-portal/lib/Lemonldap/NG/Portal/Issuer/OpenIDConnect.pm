@@ -1153,12 +1153,12 @@ sub run {
                             'deleteSession'
                         ]
                     );
+                    $req->data->{nofail} = 1;
                     $err = $req->error( $self->p->process($req) );
                     if ( $err and $err != PE_LOGOUT_OK ) {
                         if ( $err > 0 ) {
                             $self->logger->error(
                                 "Logout process returns error code $err");
-                            return PE_ERROR;
                         }
                         return $err;
                     }
