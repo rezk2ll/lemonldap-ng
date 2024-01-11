@@ -533,7 +533,8 @@ sub frontLogout {
     if ($badRequest) {
         return $self->p->sendError( $req, 'Bad OIDC Logout Request', 200 );
     }
-    my $res = $self->p->do( $req, @{ $self->p->beforeLogout } );
+    $req->steps( $self->p->beforeLogout );
+    my $res = $self->p->process($req);
     return $self->p->do(
         $req,
         [
