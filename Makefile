@@ -53,6 +53,7 @@ LMPREFIX=$(PREFIX)/lemonldap-ng
 BINDIR=$(LMPREFIX)/bin
 SBINDIR=$(LMPREFIX)/sbin
 INITDIR=$(LMPREFIX)/etc/init.d
+UNITDIR=$(LMPREFIX)/usr/lib/systemd/system
 ETCDEFAULTDIR=$(LMPREFIX)/etc/default
 DATADIR=$(LMPREFIX)/data
 
@@ -162,6 +163,7 @@ RSBINDIR=$(DESTDIR)/$(SBINDIR)
 RUWSGIYAMLDIR=$(DESTDIR)/$(UWSGIYAMLDIR)
 RLLNGAPPDIR=$(DESTDIR)/$(LLNGAPPDIR)
 RINITDIR=$(DESTDIR)/$(INITDIR)
+RUNITDIR=$(DESTDIR)/$(UNITDIR)
 RETCDEFAULTDIR=$(DESTDIR)/$(ETCDEFAULTDIR)
 RDATADIR=$(DESTDIR)/$(DATADIR)
 RPORTALDIR=$(DESTDIR)/$(PORTALDIR)
@@ -821,7 +823,7 @@ install_portal_site:	install_conf_dir
 	# Portal install
 	@install -v -d $(RPORTALDIR) $(RPORTALSTATICDIR) \
 		$(RPORTALTEMPLATESDIR) \
-		$(RCRONDIR) $(RCONFDIR)
+		$(RCRONDIR) $(RUNITDIR) $(RCONFDIR)
 	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/index.* $(RPORTALSITEDIR)
 	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/static/* $(RPORTALSTATICDIR)
 	@cd $(SRCPORTALDIR)/site/templates; for f in `find * -type f -name '*.tpl'`; do \
@@ -858,14 +860,26 @@ install_portal_site:	install_conf_dir
 		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng-portal; \
 	fi
 	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng-portal
-	# Clean SVN files
-	@rm -rf $$(find ${RPORTALDIR} $(RPORTALSKINSDIR) $(RCRONDIR) $(RCONFDIR) -type d -name .svn)
+	# systemd files
+	@cp -f $(SRCPORTALDIR)/site/systemd/lemonldap-ng-portal.service \
+		$(SRCPORTALDIR)/site/systemd/lemonldap-ng-portal.timer \
+		$(RUNITDIR)/
+	@if [ ! "$(APACHEUSER)" ]; then \
+		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RUNITDIR)/lemonldap-ng-portal.service; \
+	else \
+		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RUNITDIR)/lemonldap-ng-portal.service;  \
+	fi
+	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RUNITDIR)/lemonldap-ng-portal.service
+	#
 	@$(PERL) -i -pe 's#__PORTALSTATICDIR__#$(PORTALRELATIVESTATICDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 	@$(PERL) -i -pe 's#__PORTALTEMPLATESDIR__#$(PORTALTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
+	# Clean SVN files
+	@rm -rf $$(find ${RPORTALDIR} $(RPORTALSKINSDIR) $(RCRONDIR) $(RCONFDIR) -type d -name .svn)
 
 install_handler_site:	install_conf_dir
 	# Handler install
-	@install -v -d ${RHANDLERDIR}
+	@install -v -d ${RHANDLERDIR} $(RCRONDIR) $(RUNITDIR)
+	# Cron files
 	@cp -f $(SRCHANDLERDIR)/eg/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-handler; \
@@ -873,6 +887,17 @@ install_handler_site:	install_conf_dir
 		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng-handler; \
 	fi
 	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng-handler
+	# systemd files
+	@cp -f $(SRCHANDLERDIR)/eg/scripts/lemonldap-ng-handler.service \
+		$(SRCHANDLERDIR)/eg/scripts/lemonldap-ng-handler.timer \
+		$(RUNITDIR)/
+	@if [ ! "$(APACHEUSER)" ]; then \
+		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RUNITDIR)/lemonldap-ng-handler.service; \
+	else \
+		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RUNITDIR)/lemonldap-ng-handler.service; \
+	fi
+	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RUNITDIR)/lemonldap-ng-handler.service
+	# Clean SVN files
 	@rm -rf $$(find $(RHANDLERDIR) -type d -name .svn)
 
 install_test_site:
