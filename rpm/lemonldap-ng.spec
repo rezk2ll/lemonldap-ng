@@ -302,7 +302,6 @@ This package contains HTML documentation.
 
 %package handler
 Summary:        LemonLDAP-NG handler
-Requires:       crontabs
 Requires:       lemonldap-ng-common = %{version}-%{release}
 %if 0%{!?el7}
 Requires:       (perl(Apache2::Connection) if httpd)
@@ -341,7 +340,6 @@ This package deploys the administration interface and sessions explorer.
 
 %package portal
 Summary:        LemonLDAP-NG authentication portal
-Requires:       crontabs
 Requires:       lemonldap-ng-common = %{version}-%{release}
 %if 0%{?el7}
 # SAML
@@ -502,6 +500,16 @@ rm -f %{buildroot}%{_sysconfdir}/init.d/llng-fastcgi-server
 mkdir -p %{buildroot}%{_sysconfdir}/uwsgi/apps-available
 mkdir -p %{buildroot}%{lm_sharedir}/llng-server
 
+# Drop cron files
+rm -f %{buildroot}%{_sysconfdir}/cron.d/lemonldap-ng-handler
+rm -f %{buildroot}%{_sysconfdir}/cron.d/lemonldap-ng-portal
+
+# Install systemd presets for timers
+mkdir -p %{buildroot}%{_presetdir}
+install -p -m 0644 lemonldap-ng-handler/eg/scripts/lemonldap-ng-handler.preset \
+  %{buildroot}%{_presetdir}/10-lemonldap-ng-handler.preset
+install -p -m 0644 lemonldap-ng-portal/site/systemd/lemonldap-ng-portal.preset \
+  %{buildroot}%{_presetdir}/10-lemonldap-ng-portal.preset
 
 # Install httpd conf files
 # We use "z-lemonldap-ng-*" so that httpd read the files after "perl.conf"
@@ -585,6 +593,24 @@ fi
 %postun fastcgi-server
 %systemd_postun_with_restart llng-fastcgi-server.service
 
+%post portal
+%systemd_post lemonldap-ng-portal.service
+
+%preun portal
+%systemd_preun lemonldap-ng-portal.service
+
+%postun portal
+%systemd_postun lemonldap-ng-portal.service
+
+%post handler
+%systemd_post lemonldap-ng-handler.service
+
+%preun handler
+%systemd_preun lemonldap-ng-handler.service
+
+%postun handler
+%systemd_postun lemonldap-ng-handler.service
+
 %if 0%{?with_selinux}
 # SELinux contexts are saved so that only affected files can be
 # relabeled after the policy module installation
@@ -659,7 +685,9 @@ fi
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-handler.conf
 %config(noreplace) %{_sysconfdir}/nginx/conf.d/handler-nginx.conf
 %config(noreplace) %{_sysconfdir}/nginx/nginx-lmlog.conf
-%config(noreplace) %{_sysconfdir}/cron.d/lemonldap-ng-handler
+%{_unitdir}/lemonldap-ng-handler.service
+%{_unitdir}/lemonldap-ng-handler.timer
+%{_presetdir}/10-lemonldap-ng-handler.preset
 %{lm_sharedir}/handler
 %{lm_examplesdir}/handler
 %{lm_sharedir}/llng-server/
@@ -691,7 +719,9 @@ fi
 %{lm_bindir}/purgeCentralCache
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
 %config(noreplace) %{_sysconfdir}/nginx/conf.d/portal-nginx.conf
-%config(noreplace) %{_sysconfdir}/cron.d/lemonldap-ng-portal
+%{_unitdir}/lemonldap-ng-portal.service
+%{_unitdir}/lemonldap-ng-portal.timer
+%{_presetdir}/10-lemonldap-ng-portal.preset
 %{lm_examplesdir}/portal
 %defattr(-,%{lm_apacheuser},%{lm_apachegroup},750)
 %dir %{lm_vardir}/captcha
