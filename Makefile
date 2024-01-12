@@ -691,14 +691,16 @@ install_bin:	install_conf_dir
 	@$(CHMOD) +x $(RBINDIR)/*
 
 install_fastcgi_server:
-	@install -v -d $(RSBINDIR) $(RINITDIR) $(RETCDEFAULTDIR) $(RFASTCGISOCKDIR)
+	@install -v -d $(RSBINDIR) $(RINITDIR) $(RUNITDIR) $(RETCDEFAULTDIR) $(RFASTCGISOCKDIR)
 	@cp -f fastcgi-server/sbin/llng-fastcgi-server $(RSBINDIR)
 	@$(CHMOD) +x $(RSBINDIR)/llng-fastcgi-server
 	@cp -f fastcgi-server/rc/llng-fastcgi-server $(RINITDIR)
+	@cp -f fastcgi-server/systemd/llng-fastcgi-server.service $(RUNITDIR)
 	@cp -f fastcgi-server/default/llng-fastcgi-server $(RETCDEFAULTDIR)
 	@$(PERL) -pi -e 's#__SBINDIR__#$(SBINDIR)#;s#__DEFAULTDIR__#$(ETCDEFAULTDIR)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g;' \
 		$(RETCDEFAULTDIR)/llng-fastcgi-server \
 		$(RSBINDIR)/llng-fastcgi-server \
+		$(RUNITDIR)/llng-fastcgi-server.service \
 		$(RINITDIR)/llng-fastcgi-server
 	@if [ ! "$(FASTCGIUSER)" ]; then \
 		$(PERL) -pi -e 's#__USER__#nobody#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
