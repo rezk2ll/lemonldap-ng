@@ -476,12 +476,18 @@ bzip2 -9 %{modulename}.pp
     DATADIR=%{lm_vardir} \
     CACHEDIR=%{lm_cachedir} \
     INITDIR=%{_sysconfdir}/init.d \
+    UNITDIR=%{_unitdir}/ \
+    TMPFILESDIR=%{_tmpfilesdir}/ \
     ETCDEFAULTDIR=%{_sysconfdir}/default \
     DNSDOMAIN=%{lm_dnsdomain} \
     APACHEVERSION=%{apache_version} \
+    APACHEUSER=%{lm_apacheuser} \
+    APACHEGROUP=%{lm_apachegroup} \
     APACHELOGDIR=%{_localstatedir}/log/httpd \
     UWSGIYAMLDIR=%{_sysconfdir}/uwsgi/apps-available \
     LLNGAPPDIR=%{lm_sharedir}/llng-server \
+    CHOWN=/usr/bin/true \
+    CHGRP=/usr/bin/true \
     PROD=yes
 
 # Remove some unwanted files
@@ -489,40 +495,13 @@ find %{buildroot} -name .packlist -exec rm -f {} \;
 find %{buildroot} -name perllocal.pod -exec rm -f {} \;
 find %{buildroot} -name *.bak -exec rm -f {} \;
 
-# Install files for FastCGI Server
-mkdir -p %{buildroot}%{_unitdir}
-install -m644 fastcgi-server/systemd/llng-fastcgi-server.service \
-    %{buildroot}%{_unitdir}
-sed -i \
-    -e 's:__FASTCGISOCKDIR__:%{_rundir}/llng-fastcgi-server:' \
-    -e 's:__SBINDIR__:%{lm_sbindir}:' \
-    %{buildroot}%{_unitdir}/llng-fastcgi-server.service
+# Drop sysvinit script for FastCGI Server
 rm -f %{buildroot}%{_sysconfdir}/init.d/llng-fastcgi-server
-
-mkdir -p %{buildroot}%{_tmpfilesdir}
-install -m644 fastcgi-server/systemd/llng-fastcgi-server.tmpfile \
-    %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
-sed -i \
-    -e 's:__FASTCGISOCKDIR__:%{_rundir}/llng-fastcgi-server:' \
-    -e 's:__USER__:%{lm_apacheuser}:' \
-    -e 's:__GROUP__:%{lm_apachegroup}:' \
-    %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
 
 # UWSGI Application
 mkdir -p %{buildroot}%{_sysconfdir}/uwsgi/apps-available
 mkdir -p %{buildroot}%{lm_sharedir}/llng-server
 
-# Set apache user in some files (see Makefile)
-# Note: we do not use the APACHEUSER and APACHEGROUP in make install
-# because it launches a 'chown', which is not permitted if RPM is not
-# built as root
-sed -i 's/nobody/%{lm_apacheuser}/g' \
-    %{buildroot}%{_sysconfdir}/cron.d/* \
-    %{buildroot}%{lm_bindir}/lmConfigEditor \
-    %{buildroot}%{lm_bindir}/lemonldap-ng-sessions \
-    %{buildroot}%{lm_bindir}/lemonldap-ng-cli \
-    %{buildroot}%{lm_bindir}/llngDeleteSession \
-    %{buildroot}%{_sysconfdir}/default/llng-fastcgi-server
 
 # Install httpd conf files
 # We use "z-lemonldap-ng-*" so that httpd read the files after "perl.conf"
