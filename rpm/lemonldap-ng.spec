@@ -506,9 +506,9 @@ rm -f %{buildroot}%{_sysconfdir}/cron.d/lemonldap-ng-portal
 
 # Install systemd presets for timers
 mkdir -p %{buildroot}%{_presetdir}
-install -p -m 0644 lemonldap-ng-handler/eg/scripts/lemonldap-ng-handler.preset \
+install -p -m 0644 lemonldap-ng-handler/scripts/lemonldap-ng-handler.preset \
   %{buildroot}%{_presetdir}/10-lemonldap-ng-handler.preset
-install -p -m 0644 lemonldap-ng-portal/site/systemd/lemonldap-ng-portal.preset \
+install -p -m 0644 lemonldap-ng-portal/scripts/lemonldap-ng-portal.preset \
   %{buildroot}%{_presetdir}/10-lemonldap-ng-portal.preset
 
 # Install httpd conf files

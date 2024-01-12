@@ -356,14 +356,14 @@ fastcgi-server/man/llng-fastcgi-server.8p: fastcgi-server/sbin/llng-fastcgi-serv
 json:	$(MANAGERJSONDST) fastcgi-server/man/llng-fastcgi-server.8p debian/*cron*
 	@if which yui-compressor >/dev/null; then $(MAKE) minify; fi
 
-debian/liblemonldap-ng-handler-perl.cron.d: lemonldap-ng-handler/eg/scripts/purgeLocalCache.cron.d
+debian/liblemonldap-ng-handler-perl.cron.d: lemonldap-ng-handler/scripts/purgeLocalCache.cron.d
 	@perl -pe 's/__APACHEUSER__/www-data/g;s@__BINDIR__@/usr/share/lemonldap-ng/bin@g' \
-		lemonldap-ng-handler/eg/scripts/purgeLocalCache.cron.d \
+		lemonldap-ng-handler/scripts/purgeLocalCache.cron.d \
 		> debian/liblemonldap-ng-handler-perl.cron.d
 
-debian/liblemonldap-ng-portal-perl.cron.d: lemonldap-ng-portal/site/cron/purgeCentralCache.cron.d
+debian/liblemonldap-ng-portal-perl.cron.d: lemonldap-ng-portal/scripts/purgeCentralCache.cron.d
 	@perl -pe 's/__APACHEUSER__/www-data/g;s@__BINDIR__@/usr/share/lemonldap-ng/bin@g' \
-		lemonldap-ng-portal/site/cron/purgeCentralCache.cron.d \
+		lemonldap-ng-portal/scripts/purgeCentralCache.cron.d \
 		> debian/liblemonldap-ng-portal-perl.cron.d
 
 $(MANAGERJSONDST):	$(MANAGERJSONSRC)
@@ -655,8 +655,8 @@ install_bin:	install_conf_dir
 	# Binary install
 	@install -v -d $(RBINDIR)
 	@cp -f\
-		${SRCHANDLERDIR}/eg/scripts/purgeLocalCache \
-		${SRCPORTALDIR}/site/cron/purgeCentralCache \
+		${SRCHANDLERDIR}/scripts/purgeLocalCache \
+		${SRCPORTALDIR}/scripts/purgeCentralCache \
 		${SRCPORTALDIR}/scripts/llngDeleteSession \
 		${SRCCOMMONDIR}/scripts/convertConfig \
 		${SRCCOMMONDIR}/scripts/convertSessions \
@@ -865,7 +865,7 @@ install_portal_site:	install_conf_dir
 		rm -rvf $(PORTALLIBSTOREMOVEFORDEBIAN); \
 	fi
 	# Cron files
-	@cp -f $(SRCPORTALDIR)/site/cron/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng-portal
+	@cp -f $(SRCPORTALDIR)/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng-portal
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-portal; \
 	else \
@@ -873,8 +873,8 @@ install_portal_site:	install_conf_dir
 	fi
 	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng-portal
 	# systemd files
-	@cp -f $(SRCPORTALDIR)/site/systemd/lemonldap-ng-portal.service \
-		$(SRCPORTALDIR)/site/systemd/lemonldap-ng-portal.timer \
+	@cp -f $(SRCPORTALDIR)/scripts/lemonldap-ng-portal.service \
+		$(SRCPORTALDIR)/scripts/lemonldap-ng-portal.timer \
 		$(RUNITDIR)/
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RUNITDIR)/lemonldap-ng-portal.service; \
@@ -890,7 +890,7 @@ install_handler_site:	install_conf_dir
 	# Handler install
 	@install -v -d ${RHANDLERDIR} $(RCRONDIR) $(RUNITDIR)
 	# Cron files
-	@cp -f $(SRCHANDLERDIR)/eg/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler
+	@cp -f $(SRCHANDLERDIR)/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-handler; \
 	else \
@@ -898,8 +898,8 @@ install_handler_site:	install_conf_dir
 	fi
 	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng-handler
 	# systemd files
-	@cp -f $(SRCHANDLERDIR)/eg/scripts/lemonldap-ng-handler.service \
-		$(SRCHANDLERDIR)/eg/scripts/lemonldap-ng-handler.timer \
+	@cp -f $(SRCHANDLERDIR)/scripts/lemonldap-ng-handler.service \
+		$(SRCHANDLERDIR)/scripts/lemonldap-ng-handler.timer \
 		$(RUNITDIR)/
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RUNITDIR)/lemonldap-ng-handler.service; \
