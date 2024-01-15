@@ -108,8 +108,12 @@ sub viewDiff {
     # Check Diff activation rule
     unless ( $self->diffRule->( $req, $req->{userData} ) ) {
         my $user = $req->{userData}->{_whatToTrace} || 'anonymous';
-        $self->userLogger->warn(
-            "$user is not authorized to compare configurations");
+        $self->auditLog(
+            $req,
+            code    => "CONF_COMPARISON_REFUSED",
+            message => ("$user is not authorized to compare configurations"),
+            user    => $user,
+        );
         return $self->sendJSONresponse( $req, { 'value' => '_Hidden_' } );
     }
 
@@ -173,8 +177,12 @@ sub viewKey {
             $self->logger->debug(
                 " $req->{env}->{REQUEST_URI} -> URI FORBIDDEN");
             my $user = $req->{userData}->{_whatToTrace} || 'anonymous';
-            $self->userLogger->warn(
-                "$user is not authorized to browse configurations");
+            $self->auditLog(
+                $req,
+                code    => "CONF_BROWSING_REFUSED",
+                message => ("$user is not authorized to browse configurations"),
+                user    => $user,
+            );
             $self->rejectKey( $req, @args );
         }
     }
