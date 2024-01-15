@@ -198,26 +198,18 @@ sub init {
         return 0;
     }
 
-    # Enable REST request only if more than 1 2F module is enabled
-    if ( @{ $self->{sfModules} } > 1 ) {
-        $self->addAuthRoute( '2fchoice' => '_choice',   ['POST'] );
-        $self->addAuthRoute( '2fchoice' => '_redirect', ['GET'] );
-        $self->addUnauthRoute( '2fchoice' => '_choice',   ['POST'] );
-        $self->addUnauthRoute( '2fchoice' => '_redirect', ['GET'] );
-    }
+    $self->addAuthRoute( '2fchoice' => '_choice',   ['POST'] );
+    $self->addAuthRoute( '2fchoice' => '_redirect', ['GET'] );
+    $self->addUnauthRoute( '2fchoice' => '_choice',   ['POST'] );
+    $self->addUnauthRoute( '2fchoice' => '_redirect', ['GET'] );
 
-    # Enable 2F registration URL only if at least 1 registration module
-    # is enabled
-    if ( @{ $self->{sfRModules} } ) {
-
-        # Registration base
-        $self->addAuthRoute( '2fregisters' => '_displayRegister', ['GET'] );
-        $self->addAuthRoute( '2fregisters' => 'register',         ['POST'] );
-        $self->addUnauthRoute(
-            '2fregisters' => 'restoreSession',
-            [ 'GET', 'POST' ]
-        ) if ( $self->conf->{sfRequired} );
-    }
+    # Registration base
+    $self->addAuthRoute( '2fregisters' => '_displayRegister', ['GET'] );
+    $self->addAuthRoute( '2fregisters' => 'register',         ['POST'] );
+    $self->addUnauthRoute(
+        '2fregisters' => 'restoreSession',
+        [ 'GET', 'POST' ]
+    ) if ( $self->conf->{sfRequired} );
     return 1;
 }
 
