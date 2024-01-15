@@ -144,6 +144,7 @@ lib/Lemonldap/NG/Portal/Plugins/MailPasswordReset.pm
 lib/Lemonldap/NG/Portal/Plugins/NewLocationWarning.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
 lib/Lemonldap/NG/Portal/Plugins/OIDCInternalTokenExchange.pm
+lib/Lemonldap/NG/Portal/Plugins/OIDCNativeSso.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
 lib/Lemonldap/NG/Portal/Plugins/Refresh.pm
 lib/Lemonldap/NG/Portal/Plugins/Register.pm
@@ -705,6 +706,7 @@ t/32-OIDC-Logout-from-RP-bypass-confirm.t
 t/32-OIDC-Logout-redirect-uri-not-allowed.t
 t/32-OIDC-Macro.t
 t/32-OIDC-Metadata.t
+t/32-OIDC-Native-SSO.t
 t/32-OIDC-no-Metadata.t
 t/32-OIDC-Offline-Session.t
 t/32-OIDC-Opaque-Token.t
