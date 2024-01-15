@@ -82,7 +82,7 @@ sub deleteSecondFactors {
 
     $self->logger->debug("[API] Delete all 2F for $uid requested");
 
-    $res = $self->_delete2F($uid);
+    $res = $self->_delete2F( $req, $uid );
 
     return $self->sendError( $req, $res->{msg}, $res->{code} )
       unless ( $res->{res} eq 'ok' );
@@ -102,7 +102,7 @@ sub deleteSecondFactorsById {
 
     $self->logger->debug("[API] Delete 2F for $uid with id $id requested");
 
-    $res = $self->_delete2F( $uid, undef, $id );
+    $res = $self->_delete2F( $req, $uid, undef, $id );
 
     return $self->sendError( $req, $res->{msg}, $res->{code} )
       unless ( $res->{res} eq 'ok' );
@@ -127,7 +127,7 @@ sub deleteSecondFactorsByType {
     $self->logger->debug(
         "[API] Delete all 2F for $uid with type $type requested");
 
-    $res = $self->_delete2F( $uid, uc $type );
+    $res = $self->_delete2F( $req, $uid, uc $type );
 
     return $self->sendError( $req, $res->{msg}, $res->{code} )
       unless ( $res->{res} eq 'ok' );
@@ -272,7 +272,7 @@ sub _delete2FFromSessions {
 }
 
 sub _delete2F {
-    my ( $self, $uid, $type, $id ) = @_;
+    my ( $self, $req, $uid, $type, $id ) = @_;
     my ( $res, $removed, $count );
 
     $res =
