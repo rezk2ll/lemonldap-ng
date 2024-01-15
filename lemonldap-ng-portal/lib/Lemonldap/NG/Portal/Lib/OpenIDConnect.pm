@@ -2301,9 +2301,6 @@ sub _createJWT {
         encode_jwt(
             payload       => to_json($payload),
             alg           => $alg,
-            extra_headers => {
-                kid => $self->conf->{oidcServiceKeyIdSig},
-            },
             @keyArg,
         );
     };
