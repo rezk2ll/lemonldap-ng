@@ -99,7 +99,7 @@ sub init {
 
         $self->logger->debug(
             "Loading extra 2F module $extraKey of type $moduleType");
-        my $m = $self->loadPlugin(
+        my $m = $self->loadModule(
             "::2F::$moduleType",
             $over,
             prefix => $extraKey,
@@ -148,7 +148,7 @@ sub init {
                 "Loading register module for $extraKey of type $moduleType");
             my $register_module_name = $self->findRegisterModuleFor($m);
             if ($register_module_name) {
-                my $rm = $self->loadPlugin(
+                my $rm = $self->loadModule(
                     "::2F::Register::Generic",
                     $over,
                     prefix             => $extraKey,
@@ -236,7 +236,7 @@ sub _load_2f_module_by_prefix {
         if ( $self->conf->{$ap} ) {
             $self->logger->debug("Trying to load $name 2F");
             my $m =
-              $self->p->loadPlugin(
+              $self->p->loadModule(
                 $isRegister ? "::2F::Register::$name" : "::2F::$name" )
               or return 0;
 
