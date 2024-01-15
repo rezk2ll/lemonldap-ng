@@ -61,7 +61,7 @@ sub newNotification {
                 push @data, $tmp;
             }
             else {
-                $self->userLogger->info(
+                $self->logger->info(
                     "Set defaultCondition ($defaultCond) for notification "
                       . $notif->{reference} );
                 push @data, $defaultCond;
@@ -95,7 +95,7 @@ sub deleteNotification {
 
     # Check input parameters
     unless ( $uid and $myref ) {
-        $self->userLogger->error(
+        $self->logger->error(
             "SOAP service deleteNotification called without all parameters");
         return 0;
     }

@@ -783,14 +783,24 @@ sub metadata {
     if ( $req->params('full') and $req->params('full') !~ NO ) {
         my $c = $self->getConfKey( $req, 'cfgNum' );
         return $self->sendError( $req, undef, 400 ) if ( $req->error );
-        if ( $self->can('userId') ) {
-            $self->userLogger->notice( 'User '
-                  . $self->userId($req)
-                  . ' ask for full configuration '
-                  . $c );
+        if ( my $userid = $self->_userId($req) ) {
+            $self->auditLog(
+                $req,
+                message => (
+                    'User ' . $userid . ' ask for full configuration ' . $c
+                ),
+                code   => "CONFIG_DOWNLOADED",
+                user   => $userid,
+                cfgNum => $c
+            );
         }
         else {
-            $self->logger->info("REST request to get full configuration $c");
+            $self->auditLog(
+                $req,
+                message => "REST request to get full configuration $c",
+                code    => "CONFIG_DOWNLOADED",
+                cfgNum  => $c
+            );
         }
         return $self->sendJSONresponse(
             $req,
@@ -849,16 +859,28 @@ sub metadata {
         if ( defined $ind and $ind < $#a ) {
             $res->{next} = $a[ $ind + 1 ];
         }
-        if ( $self->can('userId') ) {
-            $self->userLogger->info( 'User '
-                  . $self->userId($req)
-                  . ' ask for configuration metadata ('
-                  . $res->{cfgNum}
-                  . ')' );
+        if ( my $userid = $self->_userId($req) ) {
+            $self->auditLog(
+                $req,
+                code    => "CONFIG_GET_METADATA",
+                user    => $userid,
+                cfgNum  => $res->{cfgNum},
+                message => (
+                        'User '
+                      . $userid
+                      . ' ask for configuration metadata ('
+                      . $res->{cfgNum} . ')'
+                )
+            );
         }
         else {
-            $self->logger->info(
-                "REST request to get configuration metadata ($res->{cfgNum})");
+            $self->auditLog(
+                $req,
+                code    => "CONFIG_GET_METADATA",
+                cfgNum  => $res->{cfgNum},
+                message =>
+                  "REST request to get configuration metadata ($res->{cfgNum})",
+            );
         }
         return $self->sendJSONresponse( $req, $res );
     }
@@ -879,12 +901,22 @@ sub getKey {
     unless ($key) {
         return $self->metadata($req);
     }
-    if ( $self->can('userId') ) {
-        $self->userLogger->info(
-            'User ' . $self->userId($req) . " asks for key $key" );
+    if ( my $userid = $self->_userId($req) ) {
+        $self->auditLog(
+            $req,
+            code    => "CONFIG_GET_KEY",
+            message => ( 'User ' . $userid . " asks for key $key" ),
+            user    => $userid,
+            key     => $key,
+        );
     }
     else {
-        $self->logger->info("REST request to get configuration key $key");
+        $self->auditLog(
+            $req,
+            code    => "CONFIG_GET_KEY",
+            message => ("REST request to get configuration key $key"),
+            key     => $key,
+        );
     }
     my $value = $self->getConfKey( $req, $key );
     return $self->sendError( $req, undef, 400 ) if ( $req->error );
@@ -934,6 +966,14 @@ sub getKey {
     return $self->sendJSONresponse( $req, { value => $value } );
 
     # TODO authParam key
+}
+
+sub _userId {
+    my ( $self, $req ) = @_;
+    if ( $self->can('p') and $self->p->can('userId') ) {
+        return $self->p->userId($req);
+    }
+    return;
 }
 
 1;

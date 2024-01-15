@@ -44,7 +44,7 @@ sub newNotification {
         }
 
         unless ( exists $notif->{condition} ) {
-            $self->userLogger->info(
+            $self->logger->info(
 "Set defaultCondition ($defaultCond) for notification $notif->{reference}"
             );
             $notif->{condition} = $defaultCond;
@@ -70,7 +70,7 @@ sub deleteNotification {
 
     # Check input parameters
     unless ( $uid and $myref ) {
-        $self->userLogger->error(
+        $self->logger->error(
             'REST service "delete notification" called without all parameters');
         return 0;
     }
