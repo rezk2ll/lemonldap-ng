@@ -89,8 +89,7 @@ sub verifyCode {
     }
     for ( -$range .. $range ) {
         if ( $code eq $self->_code( $s, $_, $interval, $digits ) ) {
-            $self->userLogger->info("Codes match at range $_");
-            return 1;
+            return (wantarray() ? (1, $_) : 1 );
         }
     }
     return 0;
