@@ -42,6 +42,9 @@ sub beforeAuth { 'exportRequestParameters' }
 
 use constant sessionKind => 'OIDCI';
 
+# random_string mask for auto-registration client-id/secret
+use constant RS_MSK => 's' x 30;
+
 has rule => ( is => 'rw' );
 has configStorage => (
     is      => 'ro',
@@ -2275,8 +2278,8 @@ sub registration {
     my $rp                = "register-$registration_time";
 
     # Generate Client ID and Client Password
-    my $client_id     = random_string("ssssssssssssssssssssssssssssss");
-    my $client_secret = random_string("ssssssssssssssssssssssssssssss");
+    my $client_id     = random_string(RS_MSK);
+    my $client_secret = random_string(RS_MSK);
 
     # Register known parameters
     my $client_name =
