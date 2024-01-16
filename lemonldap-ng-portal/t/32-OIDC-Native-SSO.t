@@ -152,6 +152,9 @@ $res = $op->_post(
 );
 
 $json  = expectJSON($res);
+
+# Try to get access_token from rp2 using device_secret
+
 $query = build_urlencoded(
     grant_type => 'urn:ietf:params:oauth:grant-type:token-exchange',
 
@@ -169,14 +172,28 @@ ok(
         accept => 'text/html',
         length => length($query),
         custom => {
-            HTTP_AUTHORIZATION => "Basic " . encode_base64("rpid1:rpid1"),
+            HTTP_AUTHORIZATION => "Basic " . encode_base64("rpid2:rpid2"),
         },
     ),
     "Post token"
 );
 
+$json  = expectJSON($res);
 expectOK($res);
 $json = from_json( $res->[2]->[0] );
+
+# Try this access_token
+$res = $op->_post(
+    "/oauth2/userinfo",
+    IO::String->new(''),
+    accept => 'application/json',
+    length => 0,
+    custom => {
+        HTTP_AUTHORIZATION => "Bearer " . $json->{access_token},
+    },
+);
+
+#expectJSON($res);
 
 clean_sessions();
 done_testing();

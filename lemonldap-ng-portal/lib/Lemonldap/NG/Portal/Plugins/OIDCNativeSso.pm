@@ -3,8 +3,10 @@ package Lemonldap::NG::Portal::Plugins::OIDCNativeSso;
 use strict;
 use Digest::SHA qw(sha256_hex);
 use Mouse;
-use Lemonldap::NG::Common::JWT             qw(getJWTPayload);
+use Lemonldap::NG::Common::JWT qw(getJWTPayload);
+use Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_BADCREDENTIALS
   PE_ERROR
   PE_OK
   PE_SENDRESPONSE
@@ -15,6 +17,8 @@ our $VERSION = '2.19.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin',
   'Lemonldap::NG::Portal::Lib::OpenIDConnect';
+
+with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration';
 
 use constant hook => {
 
@@ -39,10 +43,21 @@ has iss => (
 );
 
 sub init {
+    my ($self) = @_;
+    $self->loadRPs;
     1;
 }
 
-use constant sessionKind => 'OIDC';
+use constant sessionKind => 'OIDCI';
+
+BEGIN {
+    *loadRPs = \&Lemonldap::NG::Portal::Issuer::OpenIDConnect::loadRPs;
+    *lazy_load_config =
+      \&Lemonldap::NG::Portal::Issuer::OpenIDConnect::lazy_load_config;
+    *load_config = \&Lemonldap::NG::Portal::Issuer::OpenIDConnect::load_config;
+    *encryptToken =
+      \&Lemonldap::NG::Portal::Issuer::OpenIDConnect::encryptToken;
+}
 
 # STEP 1: verify that device_sso scope is authorized during authorization request
 
@@ -188,7 +203,63 @@ sub tokenExchangeHook {
             return PE_ERROR;
         }
 
-        $req->response( $self->p->sendJSONresponse( $req, { a => 1 } ) );
+        # STEP 3.2: generate new access_token
+        my ( $access_token, $refresh_token );
+
+        $req->user( $session->data->{_session_uid} );
+        $req->data->{$_} = $session->data->{$_} foreach (qw(_choice));
+        $req->steps( [
+                'getUser',        @{ $self->p->betweenAuthAndData },
+                'setSessionInfo', $self->p->groupsAndMacros,
+                'setLocalGroups',
+            ]
+        );
+        $req->{error} = $self->p->process($req);
+
+        if ( $req->error > 0 ) {
+
+            # PE_BADCREDENTIAL is returned by UserDB modules when the user was
+            # explicitely not found. And not in case of temporary failures
+            if ( $req->error == PE_BADCREDENTIALS ) {
+                $self->logger->error( "User: "
+                      . $req->user
+                      . " no longer exists, removing device_secret session" );
+                $session->remove;
+            }
+            else {
+                $self->logger->error( "Could not resolve user: " . $req->user );
+            }
+            return PE_ERROR;
+        }
+
+        $access_token = $self->newAccessToken(
+            $req, $rp,
+            $session->data->{scope},
+            $session->data,
+            {
+                # TODO: offline_session_id must point to refresh_token
+                #offline_session_id => $session->id,
+                grant_type         => $session->data->{grant_type},
+            }
+        );
+
+        unless ($access_token) {
+            $self->userLogger->error("Unable to create Access Token");
+            return PE_ERROR;
+        }
+
+        # Send response
+
+        my $response = {
+            issued_token_type =>
+              'urn:ietf:params:oauth:token-type:access_token',
+            token_type   => 'Bearer',
+            access_token => $access_token,
+            expires_in   => 'TODO',
+            ( $refresh_token ? ( refresh_token => $refresh_token ) : () ),
+        };
+
+        $req->response( $self->p->sendJSONresponse( $req, $response ) );
         return PE_SENDRESPONSE;
     }
 
