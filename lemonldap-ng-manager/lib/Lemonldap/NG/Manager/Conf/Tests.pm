@@ -711,10 +711,7 @@ sub tests {
         bruteForceProtection => sub {
             my @lockTimes =
               sort { $a <=> $b }
-              map {
-                $_ =~ s/\D//;
-                abs $_;
-              }
+              map  { abs(s/\D//r) }
               grep { /\d+/ }
               split /\s*,\s*/, $conf->{bruteForceProtectionLockTimes} || '';
             $conf->{bruteForceProtectionLockTimes} = join ', ', @lockTimes

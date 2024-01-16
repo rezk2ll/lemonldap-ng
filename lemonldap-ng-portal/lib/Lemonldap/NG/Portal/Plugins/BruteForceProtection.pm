@@ -59,9 +59,9 @@ sub init {
         my $lockTimes = @{ $self->lockTimes } =
           sort { $a <=> $b }
           map {
-            $_ =~ s/\D//;
-            abs $_ < $self->conf->{bruteForceProtectionMaxLockTime}
-              ? abs $_
+            my $time = s/\D//r;
+            abs $time < $self->conf->{bruteForceProtectionMaxLockTime}
+              ? abs $time
               : ()
           }
           grep /\d+/,

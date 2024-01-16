@@ -1025,7 +1025,7 @@ sub sendHtml {
     # created in the code, and remove this
     my @url;
     if ( $req->info ) {
-        @url = map { s#https?://([^/]+).*#$1#; $_ }
+        @url = map { s#https?://([^/]+).*#$1#r }
           ( $req->info =~ /<iframe.*?src="(.*?)"/sg );
     }
 
