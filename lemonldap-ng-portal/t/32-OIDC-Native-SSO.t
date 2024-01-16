@@ -151,7 +151,7 @@ $res = $op->_post(
     },
 );
 
-$json  = expectJSON($res);
+$json = expectJSON($res);
 
 # Try to get access_token from rp2 using device_secret
 
@@ -178,7 +178,7 @@ ok(
     "Post token"
 );
 
-$json  = expectJSON($res);
+$json = expectJSON($res);
 expectOK($res);
 $json = from_json( $res->[2]->[0] );
 
@@ -193,7 +193,13 @@ $res = $op->_post(
     },
 );
 
-#expectJSON($res);
+$json = expectJSON($res);
+ok( (
+              $json->{name} eq 'Frédéric Accents'
+          and $json->{email} eq 'fa@badwolf.org'
+    ),
+    'Found attributes'
+);
 
 clean_sessions();
 done_testing();

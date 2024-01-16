@@ -63,9 +63,7 @@ BEGIN {
 
 sub resolveScope {
     my ( $self, $req, $scopeList, $rp ) = @_;
-    unless ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
-        ->{oidcRPMetaDataOptionsAllowDeviceSso} )
-    {
+    unless ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAllowDeviceSso} ) {
         my @scopes;
 
         # To keep $scopeList reference, empty related array then populate it
@@ -111,7 +109,7 @@ sub tokenResponse {
         for my $userKey ( grep !/^(_session|_utime$|_lastSeen$)/,
             keys %$sessionInfo )
         {
-            $userInfo{$userKey} = $oidcSession->{$userKey};
+            $userInfo{$userKey} = $sessionInfo->{$userKey};
         }
         my $deviceSecret = $self->getOpenIDConnectSession(
             undef,
@@ -203,7 +201,7 @@ sub tokenExchangeHook {
             return PE_ERROR;
         }
 
-        # STEP 3.2: generate new access_token
+        # STEP 3.2: generate new refresh_token and access_token
         my ( $access_token, $refresh_token );
 
         $req->user( $session->data->{_session_uid} );
@@ -232,13 +230,35 @@ sub tokenExchangeHook {
             return PE_ERROR;
         }
 
+        my %refreshInfo = (
+            map {
+/^(?:_session_.*|_utime$|ds_hash|id_token_h|client_id|redirect_uri|_type)$/
+                  ? ()
+                  : ( $_ => $session->data->{$_} )
+            } keys %{ $session->data }
+        );
+        my $refreshTokenSession = $self->newRefreshToken(
+            $rp,
+            {
+                %refreshInfo,
+
+                # TODO: adapt scope if asked
+                #scope =>
+                client_id =>
+                  $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID},
+                _session_uid => $session->data->{_session_uid},
+                auth_time    => $session->data->{_lastAuthnUTime},
+            }
+        );
+        $refresh_token = $refreshTokenSession->id;
+
         $access_token = $self->newAccessToken(
             $req, $rp,
             $session->data->{scope},
             $session->data,
             {
                 # TODO: offline_session_id must point to refresh_token
-                #offline_session_id => $session->id,
+                offline_session_id => $refresh_token,
                 grant_type         => $session->data->{grant_type},
             }
         );
