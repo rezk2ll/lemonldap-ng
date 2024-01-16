@@ -2,6 +2,7 @@ use warnings;
 use Test::More;
 use strict;
 use IO::String;
+use Lemonldap::NG::Common::FormEncode;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;
 use MIME::Base64;
@@ -132,7 +133,7 @@ ok( $id_token, 'ID token present' );
 my $refresh_token = $json->{refresh_token};
 ok( $refresh_token, 'Refresh token present' );
 my $device_secret = $json->{device_secret};
-ok( $device_secret, 'Device secret present');
+ok( $device_secret, 'Device secret present' );
 my $id_token_payload = id_token_payload($id_token);
 ok( $id_token_payload->{ds_hash}, 'Found ds_hash in ID token' );
 
@@ -150,9 +151,17 @@ $res = $op->_post(
     },
 );
 
-$json = expectJSON($res);
-$query =
-"grant_type=urn:ietf:params:oauth:grant-type:token-exchange&redirect_uri=http%3A%2F%2Frp1.com%2F";
+$json  = expectJSON($res);
+$query = build_urlencoded(
+    grant_type => 'urn:ietf:params:oauth:grant-type:token-exchange',
+
+    #redirect_uri => 'http://rp1.com/',
+    audience           => $id_token_payload->{iss},
+    subject_token      => $id_token,
+    subject_token_type => 'urn:ietf:params:oauth:token-type:id_token',
+    actor_token        => $device_secret,
+    actor_token_type   => 'urn:x-oath:params:oauth:token-type:device-secret',
+);
 ok(
     $res = $op->_post(
         "/oauth2/token",
