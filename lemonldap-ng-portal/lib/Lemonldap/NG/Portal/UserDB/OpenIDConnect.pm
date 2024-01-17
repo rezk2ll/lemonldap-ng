@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 our $VERSION = '2.0.15';
 
 extends qw(
-  Lemonldap::NG::Common::Module
+  Lemonldap::NG::Portal::Main::UserDB
   Lemonldap::NG::Portal::Lib::OpenIDConnect
 );
 
@@ -87,14 +87,21 @@ sub setSessionInfo {
     );
 
     while ( my ( $k, $v ) = each %vars ) {
-        $req->{sessionInfo}->{$k} = $req->data->{OpenIDConnect_user_info}->{$v};
+        my $value = $req->data->{OpenIDConnect_user_info}->{$v};
+        if ( !ref($value) ) {
+            $req->{sessionInfo}->{$k} = $value;
+        }
+        elsif ( ref($value) eq "ARRAY" ) {
+            $req->{sessionInfo}->{$k} =
+              join( $self->conf->{multiValuesSeparator}, @$value );
+        }
+        else {
+            $self->logger->warn( "Unable to process $v of type "
+                  . ref($value)
+                  . "from OIDC userinfo" );
+        }
     }
 
-    return PE_OK;
-}
-
-# Does nothing
-sub setGroups {
     return PE_OK;
 }
 

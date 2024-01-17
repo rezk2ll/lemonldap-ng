@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 our $VERSION = '2.0.12';
 
 extends qw(
-  Lemonldap::NG::Common::Module
+  Lemonldap::NG::Portal::Main::UserDB
   Lemonldap::NG::Portal::Lib::OpenIDConnect
 );
 
@@ -56,11 +56,6 @@ sub setSessionInfo {
         }
     }
 
-    return PE_OK;
-}
-
-# Does nothing
-sub setGroups {
     return PE_OK;
 }
 
