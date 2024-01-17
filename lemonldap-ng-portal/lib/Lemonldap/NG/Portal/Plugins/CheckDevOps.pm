@@ -214,7 +214,7 @@ sub parse {
             $Lemonldap::NG::Common::Safelib::functions );
 
         foreach ( keys %{ $json->{rules} } ) {
-            $cpt->reval("BEGIN { 'warnings'->unimport; } $json->{rules}->{$_}");
+            $cpt->reval($json->{rules}->{$_});
             my $err = join(
                 '',
                 grep(
