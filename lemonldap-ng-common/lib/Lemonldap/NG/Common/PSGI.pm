@@ -268,13 +268,15 @@ sub sendJs {
     $sp =~ s/\/*$/\//;
     my $sc = $req->script_name // "";
 
+    my $portal = $req->can('portal') ? $req->portal : $self->portal;
+
     # Javascript scriptname is assumed by our JS code to end with /
     $sc =~ s#/*$#/#;
     my $s =
         sprintf 'var staticPrefix="%s";'
       . 'var scriptname="%s";'
       . 'var availableLanguages="%s".split(/[,;] */);'
-      . 'var portal="%s";', $sp, $sc, $self->languages, $self->portal;
+      . 'var portal="%s";', $sp, $sc, $self->languages, $portal;
     $s .= $self->javascript($req) if ( $self->can('javascript') );
     return [
         200,
