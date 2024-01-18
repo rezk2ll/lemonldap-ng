@@ -28,6 +28,7 @@ sub init {
         );
         return 0;
     }
+
     eval { $self->portal( $self->api->tsv->{portal}->() ) };
     my $rule =
       $args->{protection} || $self->api->localConfig->{protection} || '';
@@ -135,7 +136,7 @@ sub _authAndTrace {
     eval "require $type";
     die $@ if ($@);
     my ( $res, $session ) = $type->run( $req, $self->{rule} );
-    eval { $self->portal( $type->tsv->{portal}->() ) } unless $self->portal;
+    my $portal = eval { $type->tsv->{portal}->($req) };
     $self->logger->warn($@)  if $@;
     $req->userData($session) if ($session);
 
@@ -155,18 +156,16 @@ sub _authAndTrace {
             my %h    = ( $req->spliceHdrs );
             my $host = $req->env->{HTTP_HOST};
             if (    $h{Location}
-                and $h{Location} =~ m#^\Q$self->{portal}\E#
+                and $h{Location} =~ m#^\Q$portal\E#
                 and $h{Location} !~ m#^https?://$host# )
             {
-                return [
-                    401, [ 'WWW-Authenticate' => 'SSO ' . $self->{portal} ], []
-                ];
+                return [ 401, [ 'WWW-Authenticate' => 'SSO ' . $portal ], [] ];
             }
         }
         return [ $res, [ $req->spliceHdrs ], [] ];
     }
     else {
-        my $s = ( $self->portal ? $self->portal . "/lmerror/$res" : '' );
+        my $s = ( $portal ? $portal . "/lmerror/$res" : '' );
         $s =
             '<html><head><title>Redirection</title></head><body>'
           . qq{<script type="text/javascript">window.location='$s'</script>}
