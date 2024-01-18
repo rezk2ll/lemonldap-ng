@@ -194,7 +194,9 @@ sub loadService {
 
     # Create Lasso server with service metadata
     my $server = $self->createServer(
-        $service_metadata->serviceToXML( $self->conf, '' ),
+        $service_metadata->serviceToXML(
+            { %{ $self->conf }, portal => $self->p->HANDLER->tsv->{portal}->() }, ''
+        ),
         $self->conf->{samlServicePrivateKeySig},
         $self->conf->{samlServicePrivateKeySigPwd},
 
@@ -3394,7 +3396,9 @@ sub metadata {
     my $type = $req->param('type') || 'all';
     require Lemonldap::NG::Common::Conf::SAML::Metadata;
     if ( my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new() ) {
-        my $s = $metadata->serviceToXML( $self->conf, $type );
+        my $s =
+          $metadata->serviceToXML( { %{ $self->conf }, portal => $req->portal },
+            $type );
         return [
             200,
             [
