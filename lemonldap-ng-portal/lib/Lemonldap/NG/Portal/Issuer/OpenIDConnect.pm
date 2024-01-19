@@ -2272,6 +2272,18 @@ sub registration {
         $self->logger->error("Field redirect_uris (array) is mandatory");
         return $self->p->sendError( $req, 'invalid_client_metadata', 400 );
     }
+    else {
+        foreach (@$redirect_uris) {
+            if ( /^\s*((?:java|vb)script|data):/i
+                or $self->p->checkXSSAttack( 'redirect_uri', $_ ) )
+            {
+                $self->userLogger->error(
+                    "Registration tried with a forbidden redirect_uri: $_");
+                return $self->p->sendError( $req, 'invalid_client_metadata',
+                    400 );
+            }
+        }
+    }
 
     # RP identifier
     my $registration_time = time;
