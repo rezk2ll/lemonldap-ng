@@ -1512,7 +1512,6 @@ sub tree {
                         'oidcServiceAllowDynamicRegistration',
                         'oidcServiceDynamicRegistrationExportedVars',
                         'oidcServiceDynamicRegistrationExtraClaims',
-                        'oidcServiceAllowNativeSso',
                     ],
                 },
                 {
@@ -1557,6 +1556,7 @@ sub tree {
                         'oidcServiceAllowAuthorizationCodeFlow',
                         'oidcServiceAllowImplicitFlow',
                         'oidcServiceAllowHybridFlow',
+                        'oidcServiceAllowNativeSso',
                         'oidcServiceIgnoreScopeForClaims',
                         'oidcServiceAllowOnlyDeclaredScopes',
                         'oidcDropCspHeaders',

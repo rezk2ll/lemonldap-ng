@@ -71,6 +71,8 @@ Security
 -  **Authorization Code Flow**: Set to 1 to allow Authorization Code flow
 -  **Implicit Flow**: Set to 1 to allow Implicit flow
 -  **Hybrid Flow**: Set to 1 to allow Hybrid flow
+-  **Enable Native SSO for Mobile Apps service**: Set to 1 to enable Native SSO
+   for Mobile Apps service
 -  **Always send exported attributes**: By default, LL::NG will release all
    exported attributes to RPs. When this option is disabled, only attributes
    allowed by a scope can be transmitted
