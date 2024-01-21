@@ -791,6 +791,7 @@
 "oidcServiceAllowDynamicRegistration":"Kích hoạt",
 "oidcServiceAllowHybridFlow":"Dòng chảy hỗn hợp",
 "oidcServiceAllowImplicitFlow":"Dòng chảy ngầm",
+"oidcServiceAllowNativeSso":"Allow Native SSO for Mobile Apps",
 "oidcServiceAllowOffline":"Cho phép truy cập ngoại tuyến",
 "oidcServiceAllowOnlyDeclaredScopes":"Chỉ cho phép phạm vi khai báo",
 "oidcServiceAuthorizationCodeExpiration":"Mã ủy quyền",

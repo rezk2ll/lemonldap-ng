@@ -791,6 +791,7 @@
 "oidcServiceAllowDynamicRegistration":"Activation",
 "oidcServiceAllowHybridFlow":"Hybrid Flow",
 "oidcServiceAllowImplicitFlow":"Implicit Flow",
+"oidcServiceAllowNativeSso":"Allow Native SSO for Mobile Apps",
 "oidcServiceAllowOffline":"Allow offline access",
 "oidcServiceAllowOnlyDeclaredScopes":"Only allow declared scopes",
 "oidcServiceAuthorizationCodeExpiration":"Authorization Codes",

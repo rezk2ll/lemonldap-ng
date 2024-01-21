@@ -4686,6 +4686,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'bool',
             Documentation => "Don't display OIDC metadata",
         },
+        oidcServiceAllowNativeSso => {
+            type => 'bool'
+        },
 
         # OIDC Keys
         oidcServiceOldPrivateKeySig => { type => 'EcOrRSAPrivateKey', },

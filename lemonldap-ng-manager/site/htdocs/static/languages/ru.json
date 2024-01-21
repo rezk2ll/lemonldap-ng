@@ -791,6 +791,7 @@
 "oidcServiceAllowDynamicRegistration":"Активация",
 "oidcServiceAllowHybridFlow":"Гибридный поток",
 "oidcServiceAllowImplicitFlow":"Неявный поток",
+"oidcServiceAllowNativeSso":"Allow Native SSO for Mobile Apps",
 "oidcServiceAllowOffline":"Разрешить автономный доступ",
 "oidcServiceAllowOnlyDeclaredScopes":"Разрешить только объявленные области",
 "oidcServiceAuthorizationCodeExpiration":"Коды авторизации",

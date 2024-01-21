@@ -1512,6 +1512,7 @@ sub tree {
                         'oidcServiceAllowDynamicRegistration',
                         'oidcServiceDynamicRegistrationExportedVars',
                         'oidcServiceDynamicRegistrationExtraClaims',
+                        'oidcServiceAllowNativeSso',
                     ],
                 },
                 {

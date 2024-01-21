@@ -42,6 +42,11 @@ has oidc => (
 
 sub init {
     my ($self) = @_;
+    unless ( $self->conf->{issuerDBOpenIDConnectActivation} ) {
+        $self->logger->error(
+            'This plugin can be used only if OIDC server is enabled');
+        return 0;
+    }
     1;
 }
 

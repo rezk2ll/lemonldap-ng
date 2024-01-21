@@ -791,6 +791,7 @@
 "oidcServiceAllowDynamicRegistration":"激活",
 "oidcServiceAllowHybridFlow":"混合流程",
 "oidcServiceAllowImplicitFlow":"內含流程",
+"oidcServiceAllowNativeSso":"Allow Native SSO for Mobile Apps",
 "oidcServiceAllowOffline":"允許離線存取",
 "oidcServiceAllowOnlyDeclaredScopes":"Only allow declared scopes",
 "oidcServiceAuthorizationCodeExpiration":"Authorization Codes",

@@ -22,6 +22,7 @@ my $op = LLNG::Manager::Test->new( {
             userDB                          => 'Same',
             issuerDBOpenIDConnectActivation => 1,
             issuerDBOpenIDConnectRule       => '$uid eq "french"',
+            oidcServiceAllowNativeSso       => 1,
             oidcRPMetaDataExportedVars      => {
                 rp1 => {
                     email       => "mail",
@@ -74,7 +75,6 @@ my $op = LLNG::Manager::Test->new( {
             },
             oidcServicePrivateKeySig => oidc_key_op_private_sig,
             oidcServicePublicKeySig  => oidc_cert_op_public_sig,
-            customPlugins            => '::Plugins::OIDCNativeSso',
         }
     }
 );

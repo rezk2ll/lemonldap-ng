@@ -791,6 +791,7 @@
 "oidcServiceAllowDynamicRegistration":"הפעלה",
 "oidcServiceAllowHybridFlow":"Hybrid Flow",
 "oidcServiceAllowImplicitFlow":"Implicit Flow",
+"oidcServiceAllowNativeSso":"Allow Native SSO for Mobile Apps",
 "oidcServiceAllowOffline":"לאפשר גישה בלתי מקוונת",
 "oidcServiceAllowOnlyDeclaredScopes":"Only allow declared scopes",
 "oidcServiceAuthorizationCodeExpiration":"Authorization Codes",
