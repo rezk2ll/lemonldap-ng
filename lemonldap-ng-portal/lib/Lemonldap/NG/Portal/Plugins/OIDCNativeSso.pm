@@ -15,10 +15,7 @@ use String::Random qw/random_string/;
 
 our $VERSION = '2.19.0';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin',
-  'Lemonldap::NG::Portal::Lib::OpenIDConnect';
-
-with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration';
+extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 use constant hook => {
 
@@ -34,36 +31,29 @@ use constant hook => {
     oidcGotTokenExchange => 'tokenExchangeHook',
 };
 
-has iss => (
+has oidc => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
-        $_[0]->conf->{oidcServiceMetaDataIssuer} || $_[0]->conf->{portal};
+        $_[0]
+          ->p->loadedModules->{'Lemonldap::NG::Portal::Issuer::OpenIDConnect'};
     }
 );
 
 sub init {
     my ($self) = @_;
-    $self->loadRPs;
     1;
 }
 
 use constant sessionKind => 'OIDCI';
 
-BEGIN {
-    *loadRPs = \&Lemonldap::NG::Portal::Issuer::OpenIDConnect::loadRPs;
-    *lazy_load_config =
-      \&Lemonldap::NG::Portal::Issuer::OpenIDConnect::lazy_load_config;
-    *load_config = \&Lemonldap::NG::Portal::Issuer::OpenIDConnect::load_config;
-    *encryptToken =
-      \&Lemonldap::NG::Portal::Issuer::OpenIDConnect::encryptToken;
-}
-
 # STEP 1: verify that device_sso scope is authorized during authorization request
 
 sub resolveScope {
     my ( $self, $req, $scopeList, $rp ) = @_;
-    unless ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAllowDeviceSso} ) {
+    unless (
+        $self->oidc->rpOptions->{$rp}->{oidcRPMetaDataOptionsAllowDeviceSso} )
+    {
         my @scopes;
 
         # To keep $scopeList reference, empty related array then populate it
@@ -111,10 +101,10 @@ sub tokenResponse {
         {
             $userInfo{$userKey} = $sessionInfo->{$userKey};
         }
-        my $deviceSecret = $self->getOpenIDConnectSession(
+        my $deviceSecret = $self->oidc->getOpenIDConnectSession(
             undef,
             'device_secret',
-            $self->rpOptions->{$rp}
+            $self->oidc->rpOptions->{$rp}
               ->{oidcRPMetaDataOptionsOfflineSessionExpiration}
               || $self->conf->{oidcServiceOfflineSessionExpiration},
             {
@@ -169,7 +159,7 @@ sub tokenExchangeHook {
         # Check for audience that should be the issuer
         # (given by "iss" field of id_token)
 
-        unless ( $req->param('audience') eq $self->iss ) {
+        unless ( $req->param('audience') eq $self->oidc->iss ) {
             $self->userLogger->error( T_LOG_PREFIX
                   . 'missing or bad audience '
                   . $req->param('audience') );
@@ -179,7 +169,8 @@ sub tokenExchangeHook {
         # Check for device_secret
         my $deviceSecret = $req->param('actor_token');
         my $session =
-          $self->getOpenIDConnectSession( $deviceSecret, "device_secret" );
+          $self->oidc->getOpenIDConnectSession( $deviceSecret,
+            "device_secret" );
         unless ($session) {
             $self->userLogger->error(
                 T_LOG_PREFIX . "bad device_secret $deviceSecret" );
@@ -237,22 +228,22 @@ sub tokenExchangeHook {
                   : ( $_ => $session->data->{$_} )
             } keys %{ $session->data }
         );
-        my $refreshTokenSession = $self->newRefreshToken(
+        my $refreshTokenSession = $self->oidc->newRefreshToken(
             $rp,
             {
                 %refreshInfo,
 
                 # TODO: adapt scope if asked
                 #scope =>
-                client_id =>
-                  $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID},
+                client_id => $self->oidc->rpOptions->{$rp}
+                  ->{oidcRPMetaDataOptionsClientID},
                 _session_uid => $session->data->{_session_uid},
                 auth_time    => $session->data->{_lastAuthnUTime},
             }
         );
         $refresh_token = $refreshTokenSession->id;
 
-        $access_token = $self->newAccessToken(
+        $access_token = $self->oidc->newAccessToken(
             $req, $rp,
             $session->data->{scope},
             $session->data,
