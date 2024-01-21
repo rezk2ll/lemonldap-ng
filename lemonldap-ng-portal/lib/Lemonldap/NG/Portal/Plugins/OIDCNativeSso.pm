@@ -57,7 +57,7 @@ use constant sessionKind => 'OIDCI';
 sub resolveScope {
     my ( $self, $req, $scopeList, $rp ) = @_;
     unless (
-        $self->oidc->rpOptions->{$rp}->{oidcRPMetaDataOptionsAllowDeviceSso} )
+        $self->oidc->rpOptions->{$rp}->{oidcRPMetaDataOptionsAllowNativeSso} )
     {
         my @scopes;
 
@@ -135,7 +135,7 @@ use constant T_LOG_PREFIX => 'Native SSO token exchange: ';
 sub tokenExchangeHook {
     my ( $self, $req, $rp ) = @_;
     if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
-        ->{oidcRPMetaDataOptionsAllowDeviceSso} )
+        ->{oidcRPMetaDataOptionsAllowNativeSso} )
     {
         # STEP 3.1: Check parameters
 
@@ -226,27 +226,31 @@ sub tokenExchangeHook {
             return PE_ERROR;
         }
 
-        my %refreshInfo = (
-            map {
+        if (
+            $self->oidc->rpOptions->{$rp}->{oidcRPMetaDataOptionsAllowOffline} )
+        {
+            my %refreshInfo = (
+                map {
 /^(?:_session_.*|_utime$|ds_hash|id_token_h|client_id|redirect_uri|_type)$/
-                  ? ()
-                  : ( $_ => $session->data->{$_} )
-            } keys %{ $session->data }
-        );
-        my $refreshTokenSession = $self->oidc->newRefreshToken(
-            $rp,
-            {
-                %refreshInfo,
+                      ? ()
+                      : ( $_ => $session->data->{$_} )
+                } keys %{ $session->data }
+            );
+            my $refreshTokenSession = $self->oidc->newRefreshToken(
+                $rp,
+                {
+                    %refreshInfo,
 
-                # TODO: adapt scope if asked
-                #scope =>
-                client_id => $self->oidc->rpOptions->{$rp}
-                  ->{oidcRPMetaDataOptionsClientID},
-                _session_uid => $session->data->{_session_uid},
-                auth_time    => $session->data->{_lastAuthnUTime},
-            }
-        );
-        $refresh_token = $refreshTokenSession->id;
+                    # TODO: adapt scope if asked
+                    #scope =>
+                    client_id => $self->oidc->rpOptions->{$rp}
+                      ->{oidcRPMetaDataOptionsClientID},
+                    _session_uid => $session->data->{_session_uid},
+                    auth_time    => $session->data->{_lastAuthnUTime},
+                }
+            );
+            $refresh_token = $refreshTokenSession->id;
+        }
 
         $access_token = $self->oidc->newAccessToken(
             $req, $rp,

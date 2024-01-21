@@ -711,6 +711,12 @@ function templates(tpl,key) {
                   "type" : "bool"
                },
                {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowNativeSso",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowNativeSso",
+                  "title" : "oidcRPMetaDataOptionsAllowNativeSso",
+                  "type" : "bool"
+               },
+               {
                   "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowPasswordGrant",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowPasswordGrant",

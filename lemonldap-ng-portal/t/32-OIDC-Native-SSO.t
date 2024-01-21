@@ -14,7 +14,8 @@ BEGIN {
 }
 
 # Initialization
-my $op = LLNG::Manager::Test->new( {
+my $op = LLNG::Manager::Test->new(
+    {
         ini => {
             domain                          => 'idp.com',
             portal                          => 'http://auth.op.com',
@@ -48,7 +49,7 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsBypassConsent         => 1,
                     oidcRPMetaDataOptionsRefreshToken          => 1,
                     oidcRPMetaDataOptionsAllowOffline          => 1,
-                    oidcRPMetaDataOptionsAllowDeviceSso        => 1,
+                    oidcRPMetaDataOptionsAllowNativeSso        => 1,
                     oidcRPMetaDataOptionsRedirectUris => 'http://rp1.com/',
                 },
                 rp2 => {
@@ -63,7 +64,7 @@ my $op = LLNG::Manager::Test->new( {
                     oidcRPMetaDataOptionsBypassConsent         => 1,
                     oidcRPMetaDataOptionsRefreshToken          => 1,
                     oidcRPMetaDataOptionsAllowOffline          => 1,
-                    oidcRPMetaDataOptionsAllowDeviceSso        => 1,
+                    oidcRPMetaDataOptionsAllowNativeSso        => 1,
                     oidcRPMetaDataOptionsRedirectUris => 'http://rp2.com/',
                 },
                 oauth => {
@@ -179,8 +180,9 @@ ok(
 );
 
 $json = expectJSON($res);
+ok( $json->{refresh_token}, 'Get refresh_token' );
+ok( $json->{access_token},  'Get access_token' );
 expectOK($res);
-$json = from_json( $res->[2]->[0] );
 
 # Try this access_token
 $res = $op->_post(
@@ -194,7 +196,8 @@ $res = $op->_post(
 );
 
 $json = expectJSON($res);
-ok( (
+ok(
+    (
               $json->{name} eq 'Frédéric Accents'
           and $json->{email} eq 'fa@badwolf.org'
     ),

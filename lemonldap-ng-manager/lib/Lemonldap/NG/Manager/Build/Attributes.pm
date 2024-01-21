@@ -4687,7 +4687,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             Documentation => "Don't display OIDC metadata",
         },
         oidcServiceAllowNativeSso => {
-            type => 'bool'
+            type          => 'bool',
+            documentation => 'Enable Native SSO for Mobile Apps service',
         },
 
         # OIDC Keys
@@ -5115,6 +5116,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'text',
             test          => sub { return perlExpr(@_) },
             documentation => 'Rule to grant access to this RP',
+        },
+        oidcRPMetaDataOptionsAllowNativeSso => {
+            type          => 'bool',
+            documentation => 'Allow Native SSO for Mobile Apps',
         },
         oidcRPMetaDataMacros => {
             type => 'keyTextContainer',
