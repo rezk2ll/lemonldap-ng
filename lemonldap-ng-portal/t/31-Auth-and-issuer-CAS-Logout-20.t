@@ -61,6 +61,7 @@ $issuer = register( 'issuer', \&issuer );
 $sp     = register( 'sp',     \&sp );
 
 # Simple SP access
+switch ('sp');
 ok(
     $res = $sp->_get(
         '/', accept => 'text/html',
@@ -188,9 +189,9 @@ sub issuer {
                 casAttributes          => { cn => 'cn', uid => 'uid', },
                 casAccessControlPolicy => 'none',
                 multiValuesSeparator   => ';',
-                "locationRules"        => {
-                    "test1.idp.com" => {
-                        "default" => "accept"
+                casAppMetaDataOptions  => {
+                    myapp => {
+                        casAppMetaDataOptionsService => "http://test1.idp.com",
                     },
                 },
             }
