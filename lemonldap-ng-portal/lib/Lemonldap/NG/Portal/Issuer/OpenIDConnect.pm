@@ -1929,21 +1929,22 @@ sub _handleRefreshTokenGrant {
     }
 
     my $access_token;
-    my $session;
+    my $userData;
 
     # If this refresh token is tied to a SSO session
     if ( $refreshSession->data->{user_session_id} ) {
         my $user_session_id = $refreshSession->data->{user_session_id};
-        $session = $self->p->getApacheSession($user_session_id);
+        $userData =
+          $self->p->HANDLER->retrieveSession( $req, $user_session_id );
 
-        unless ($session) {
+        unless ($userData) {
             $self->logger->error(
                 "Unable to find user session tied to Refresh Token");
             return $self->sendOIDCError( $req, 'invalid_grant', 400 );
         }
 
         my $h = $self->p->processHook( $req, 'oidcGotOnlineRefresh', $rp,
-            $refreshSession->data, $session->data );
+            $refreshSession->data, $userData );
         if ( $h != PE_OK ) {
             return $self->sendOIDCError( $req, 'server_error', 500 );
         }
@@ -1952,7 +1953,7 @@ sub _handleRefreshTokenGrant {
         $access_token = $self->newAccessToken(
             $req, $rp,
             $refreshSession->data->{scope},
-            $session->data,
+            $userData,
             {
                 user_session_id => $user_session_id,
                 grant_type      => $refreshSession->data->{grant_type},
@@ -2004,7 +2005,7 @@ sub _handleRefreshTokenGrant {
 
         # Update refresh session
         $self->updateRefreshToken( $refreshSession->id, $req->sessionInfo );
-        $session = $refreshSession;
+        $userData = $refreshSession->data;
         for ( keys %{ $req->sessionInfo } ) {
             $refreshSession->data->{$_} = $req->sessionInfo->{$_};
         }
@@ -2047,7 +2048,7 @@ sub _handleRefreshTokenGrant {
         $id_token = $self->_generateIDToken(
             $req, $rp,
             $refreshSession->data->{scope},
-            $session->data,
+            $userData,
             0,
             {
                 ( $nonce   ? ( nonce   => $nonce )   : () ),
