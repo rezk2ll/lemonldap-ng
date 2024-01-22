@@ -702,6 +702,7 @@ sub tempdb {
 }
 
 my %handlerOR;
+my %handlerTSHV;
 
 =head4 register
 
@@ -714,10 +715,24 @@ sub register {
     my ( $type, $constructor ) = @_;
     my $obj;
     @Lemonldap::NG::Handler::Main::_onReload = ();
+    $Lemonldap::NG::Handler::Main::_tshv     = {
+        tsv         => {},
+        cfgNum      => 0,
+        cfgDate     => 0,
+        lastCheck   => 0,
+        checkTime   => 600,
+        confAcc     => {},
+        logger      => {},
+        userLogger  => {},
+        lmConf      => {},
+        localConfig => {},
+    };
+
     &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
     ok( $obj = $constructor->(), 'Register $type' );
     count(1);
-    $handlerOR{$type} = \@Lemonldap::NG::Handler::Main::_onReload;
+    $handlerOR{$type}   = \@Lemonldap::NG::Handler::Main::_onReload;
+    $handlerTSHV{$type} = $Lemonldap::NG::Handler::Main::_tshv;
     return $obj;
 }
 
@@ -734,6 +749,8 @@ sub switch {
     @Lemonldap::NG::Handler::Main::_onReload = @{
         $handlerOR{$type};
     };
+
+    $Lemonldap::NG::Handler::Main::_tshv = $handlerTSHV{$type};
 }
 
 =head4 encodeUrl( $url );
