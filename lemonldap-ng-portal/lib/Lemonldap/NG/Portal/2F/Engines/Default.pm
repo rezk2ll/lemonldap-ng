@@ -402,6 +402,7 @@ sub run {
 
     delete $req->{authResult};
 
+    $req->data->{_2fRetries} = $self->conf->{sfRetries};
     my $token = $self->ott->createToken( $self->save2faSessionInfo($req) );
 
     # If only one 2F is authorized, display it
@@ -449,6 +450,7 @@ sub save2faSessionInfo {
     my $info = { %{ $req->sessionInfo } };
 
     # Store user data in a token
+    $info->{_2fRetries}     = $req->data->{_2fRetries};
     $info->{_2fRealSession} = $req->id;
     $info->{_2fUrldc}       = $req->urldc;
     $info->{_2fUtime}       = $req->sessionInfo->{_utime};
@@ -466,6 +468,7 @@ sub restore2faSessionInfo {
     # Update sessionInfo
     delete $info->{$_}
       foreach (qw(tokenSessionStartTimestamp tokenTimeoutTimestamp _type));
+    $req->data->{_2fRetries} = delete $info->{_2fRetries};
     $req->sessionInfo($info);
     $req->id( delete $req->sessionInfo->{_2fRealSession} );
     $req->urldc( delete $req->sessionInfo->{_2fUrldc} );
@@ -894,10 +897,25 @@ sub _verify {
     $self->restore2faSessionInfo( $req, $session );
 
     # Case error
-    if ($res) {
+    if ( $res and !$req->data->{_2fRetries} ) {
         $req->noLoginDisplay(1);
         $req->authResult(PE_BADCREDENTIALS);
         return $self->p->do( $req, [ 'storeHistory', sub { $res } ] );
+    }
+    elsif ($res) {
+        $req->data->{_2fRetries} = (
+            ( $req->data->{_2fRetries} > 0 )
+            ? $req->data->{_2fRetries} - 1
+            : 0
+        );
+        $self->logger->debug(
+            "Retrying 2FA: " . $req->data->{_2fRetries} . " retries left" );
+
+        my $token = $self->ott->createToken( $self->save2faSessionInfo($req) );
+        my $res   = $module->run( $req, $token );
+        $req->authResult($res);
+
+        return $self->p->do( $req, [ sub { $res } ] );
     }
 
     # Else restore session
