@@ -912,6 +912,7 @@ sub _verify {
         $self->logger->debug(
             "Retrying 2FA: " . $req->data->{_2fRetries} . " retries left" );
 
+        $req->error(PE_RETRY_2FA);
         my $token = $self->ott->createToken( $self->save2faSessionInfo($req) );
         my $res   = $module->run( $req, $token );
         $req->authResult($res);
@@ -1110,9 +1111,12 @@ sub get2fTplParams {
     $self->logger->debug( $module->prefix . '2f: stayConnected set' )
       if $stayConnected;
 
-
     $param{CHECKLOGINS}   = $checkLogins;
     $param{STAYCONNECTED} = $stayConnected;
+
+    $param{AUTH_ERROR}      = $req->error;
+    $param{AUTH_ERROR_TYPE} = $req->error_type;
+    $param{AUTH_ERROR_ROLE} = $req->error_role;
 
     return %param;
 }
