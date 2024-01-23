@@ -14,6 +14,7 @@
 "PE107":"Bu uygulama bilinmiyor",
 "PE108":"Yetkisiz URL",
 "PE109":"Korumalı veya güvenli URL değil",
+"PE110":"Second factor validation failed, please retry",
 "PE2":"Kullanıcı adı ve parola alanları doldurulmalı",
 "PE20":"Parola back-end'i tanımlanmadı",
 "PE21":"Hesabınız kilitli",

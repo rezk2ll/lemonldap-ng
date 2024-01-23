@@ -22,6 +22,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
   PE_TOKENEXPIRED
   PE_NO_SECOND_FACTORS
+  PE_RETRY_2FA
 );
 
 our $VERSION = '2.18.0';
