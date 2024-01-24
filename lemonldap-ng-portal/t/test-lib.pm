@@ -950,9 +950,11 @@ has ini => (
         }
         if ( $ENV{DEBUG} ) {
             $ini->{logLevel} = 'debug';
+            $ini->{logger}  = "t::TestStdLogger";
         }
         if ( $ENV{LLNGLOGLEVEL} ) {
             $ini->{logLevel} = $ENV{LLNGLOGLEVEL};
+            $ini->{logger}  = "t::TestStdLogger";
         }
         $self->{ini} = $ini;
         main::ok( $self->{p} = $self->class->new(), 'Portal object' );
