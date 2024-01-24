@@ -88,7 +88,6 @@ expectRedirection( $res, 'http://auth.sp.com' );
 $spId = expectCookie($res);
 
 # Test other REST queries
-switch ('issuer');
 
 # Session content
 ok( $res = $issuer->_get("/sessions/global/$idpId"), 'Session content' );
@@ -274,7 +273,6 @@ ok( $res->[0] == 400, ' Session does not exist' );
 count(2);
 
 # Logout
-switch ('sp');
 ok(
     $res = $sp->_get(
         '/',

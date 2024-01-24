@@ -92,7 +92,6 @@ count(1);
 expectOK($res);
 
 # Test other REST queries
-switch ('issuer');
 
 # Session key
 ok( $res = $issuer->_get("/sessions/global/$spId/[_session_id,_password]"),

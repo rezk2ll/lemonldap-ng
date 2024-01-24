@@ -54,7 +54,6 @@ SKIP: {
     $sp     = register( 'sp',     \&sp );
 
     # Simple authentication on IdP
-    switch ('issuer');
     ok(
         $res = $issuer->_post(
             '/', IO::String->new('user=russian&password=russian'),
@@ -78,7 +77,6 @@ SKIP: {
     my ( $url, $query ) = expectRedirection( $res,
         qr#http://auth.sp.com(/saml/proxySingleSignOnArtifact)\?(SAMLart=[^&]+)#
     );
-    switch ('sp');
     ok( $res = $sp->_get( $url, query => $query, accept => 'test/html' ),
         'Give artifact to SP' );
     expectRedirection( $res, 'http://auth.sp.com' );
@@ -100,7 +98,6 @@ SKIP: {
       or explain( $res, 'cn => Frédéric Accents' );
 
     # Logout initiated by IdP
-    switch ('issuer');
     ok(
         $res = $issuer->_get(
             '/',
@@ -132,7 +129,6 @@ m#img src="http://auth.idp.com(/saml/relaySingleLogoutSOAP)\?(relay=.*?)"#s,
     expectRedirection( $res, "http://auth.idp.com/static/common/icons/ok.png" );
 
     # Test if logout is done
-    switch ('issuer');
     ok(
         $res = $issuer->_get(
             '/', cookie => "lemonldap=$idpId",
@@ -141,7 +137,6 @@ m#img src="http://auth.idp.com(/saml/relaySingleLogoutSOAP)\?(relay=.*?)"#s,
     );
     expectReject($res);
 
-    switch ('sp');
     ok(
         $res = $sp->_get(
             '/',

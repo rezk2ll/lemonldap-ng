@@ -20,7 +20,6 @@ LWP::Protocol::PSGI->register(
             $req->uri =~ m#http://auth.idp.com(.*?)(?:\?(.*))?$#,
             ' @ REST request (' . $req->method . " $1)"
         );
-        switch ('issuer');
         count(1);
         my $url   = $1;
         my $query = $2;
@@ -60,21 +59,18 @@ LWP::Protocol::PSGI->register(
         }
         pass(' @ END OF REST REQUEST');
         count(1);
-        switch ('sp');
         return $res;
     }
 );
 
-$issuer = register( 'issuer', \&issuer );
+$issuer = register( 'issuer', sub { issuer() } );
 
 # Test REST config backend
 ok( $res = $issuer->_get('/config/latest'), 'Get latest conf metadata' );
 count(1);
 expectOK($res);
 
-$sp = register( 'sp', \&sp );
-
-switch ('sp');
+$sp = register( 'sp', sub { sp() } );
 
 # Simple SP access
 ok(
@@ -104,7 +100,6 @@ count(1);
 expectOK($res);
 
 # Test other REST queries
-switch ('issuer');
 
 # Session content
 ok( $res = $issuer->_get("/sessions/global/$spId"), 'Session content' );
@@ -181,7 +176,6 @@ ok( $res->{result} eq '1', ' Good result' )
 count(6);
 
 # Logout
-switch ('sp');
 ok(
     $res = $sp->_get(
         '/',
@@ -208,8 +202,7 @@ clean_sessions();
 done_testing( count() );
 
 sub issuer {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel          => $debug,
                 domain            => 'idp.com',
@@ -226,8 +219,7 @@ sub issuer {
 }
 
 sub sp {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel       => $debug,
                 domain         => 'sp.com',

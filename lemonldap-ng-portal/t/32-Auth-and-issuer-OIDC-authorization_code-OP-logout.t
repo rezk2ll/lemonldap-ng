@@ -34,7 +34,6 @@ LWP::Protocol::PSGI->register(
             fail('  Aborting REST request (external)');
             return [ 500, [], [] ];
         }
-        switch ($host);
         if ( $req->method =~ /^post$/i ) {
             my $s = $req->content;
             ok(
@@ -62,7 +61,6 @@ LWP::Protocol::PSGI->register(
             '  Content is JSON' )
           or explain( $res->[1], 'Content-Type => application/json' );
         count(4);
-        switch ( $host eq 'rp' ? 'op' : 'rp' );
         return $res;
     }
 );
@@ -85,14 +83,12 @@ count(2);
 $rp = register( 'rp', sub { rp( $jwks, $metadata ) } );
 
 # Query RP for auth
-switch ('rp');
 ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth SP request' );
 count(1);
 my ( $url, $query ) =
   expectRedirection( $res, qr#http://auth.op.com(/oauth2/authorize)\?(.*)$# );
 
 # Push request to OP
-switch ('op');
 ok( $res = $op->_get( $url, query => $query, accept => 'text/html' ),
     "Push request to OP,         endpoint $url" );
 count(1);
@@ -129,14 +125,12 @@ count(1);
 ($query) = expectRedirection( $res, qr#^http://auth.rp.com/?\?(.*)$# );
 
 # Push OP response to RP
-switch ('rp');
 
 ok( $res = $rp->_get( '/', query => $query, accept => 'text/html' ),
     'Call openidconnectcallback on RP' );
 count(1);
 my $spId = expectCookie($res);
 
-switch ('op');
 ok(
     $res = $op->_get( '/oauth2/checksession.html', accept => 'text.html' ),
     'Check session,      endpoint /oauth2/checksession.html'
@@ -150,7 +144,6 @@ ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancestors/,
 count(1);
 
 # Verify UTF-8
-switch ('rp');
 ok( $res = $rp->_get("/sessions/global/$spId"), 'Get UTF-8' );
 $res = expectJSON($res);
 ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
@@ -158,7 +151,6 @@ ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
 count(2);
 
 # Logout initiated by OP
-switch ('op');
 ok(
     $res = $op->_get(
         '/',
@@ -188,7 +180,6 @@ ok(
 count(1);
 expectReject($res);
 
-switch ('rp');
 
 # Launch font logout request
 ok(
