@@ -20,11 +20,13 @@ LWP::Protocol::PSGI->register(
             $req->uri =~ m#http://auth.idp.com(.*?)(?:\?(.*))?$#,
             ' @ REST request (' . $req->method . " $1)"
         );
+        switch ('issuer');
         count(1);
         my $url   = $1;
         my $query = $2;
         my $res;
         my $s = $req->content;
+
         if ( $req->method =~ /^(post|put)$/i ) {
             my $mth = '_' . lc($1);
             my $s   = $req->content;
@@ -58,6 +60,7 @@ LWP::Protocol::PSGI->register(
         }
         pass(' @ END OF REST REQUEST');
         count(1);
+        switch ('sp');
         return $res;
     }
 );
