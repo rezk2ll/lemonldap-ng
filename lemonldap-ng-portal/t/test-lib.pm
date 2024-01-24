@@ -706,14 +706,20 @@ my %handlerTSHV;
 
 =head4 register
 
-Registers a new LLNG instance
+Multi-handler system. This automatically takes care of loading the correct
+handler when processing a request.
+
 
 =cut
+
+our @currenthandler;
 
 sub register {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $type, $constructor ) = @_;
     my $obj;
+
+    # Clear previous global handler data
     @Lemonldap::NG::Handler::Main::_onReload = ();
     $Lemonldap::NG::Handler::Main::_tshv     = {
         tsv         => {},
@@ -727,30 +733,88 @@ sub register {
         lmConf      => {},
         localConfig => {},
     };
-
     &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
+
+    # Set currenthandler stack to the type being initialized
+    @currenthandler = $type;
+
     ok( $obj = $constructor->(), 'Register $type' );
+
+    # If the constructed object has an app (most cases)
+    # we wrap the app in a function that loads the correct handler context
+    # before processing the request, and unloads if afterwards
+    use Scalar::Util 'blessed';
+    if ( $obj and blessed($obj) and $obj->can('app') ) {
+        my $inner_app = $obj->app;
+
+        my $wrapper = sub {
+            pushHandler($type);
+            my $res = $inner_app->(@_);
+            popHandler();
+            return $res;
+        };
+        $obj->app($wrapper);
+    }
     count(1);
-    $handlerOR{$type}   = \@Lemonldap::NG::Handler::Main::_onReload;
+
+    # Save the initialized handler data for future requests
+    $handlerOR{$type}   = [@Lemonldap::NG::Handler::Main::_onReload];
     $handlerTSHV{$type} = $Lemonldap::NG::Handler::Main::_tshv;
+    pop @currenthandler;
     return $obj;
 }
 
-=head4 register
+=head4 withHandler
 
-Switch to a registered instance
+This method lets you run handler methods (such as conf reload)
+inside a give context
 
 =cut
 
-sub switch {
+sub withHandler {
+    my ( $type, $sub ) = @_;
+    pushHandler($type);
+    $sub->();
+    popHandler();
+}
+
+
+sub pushHandler {
     my $type = shift;
-    return [] unless $handlerOR{$type};
-    note( '==> Switching to ' . uc($type) . ' <==' );
+
+    # Save the current state of the previous handler, this is needed
+    # for tests in which portal initialization requires a HTTP request to
+    # another portal
+    if (@currenthandler) {
+        my $type = $currenthandler[-1];
+        note( '==> Saving handler  ' . uc($type) . ' <==' );
+        $handlerOR{$type}   = [@Lemonldap::NG::Handler::Main::_onReload];
+        $handlerTSHV{$type} = $Lemonldap::NG::Handler::Main::_tshv;
+    }
+    note( '==> Pushing ' . uc($type) . ' <==' );
+    push @currenthandler, $type;
     @Lemonldap::NG::Handler::Main::_onReload = @{
         $handlerOR{$type};
     };
 
     $Lemonldap::NG::Handler::Main::_tshv = $handlerTSHV{$type};
+}
+
+sub popHandler {
+    my $type = pop @currenthandler;
+    note( '==> Popping ' . uc($type) . ' <==' );
+
+    # Restore previous handler context
+    if (@currenthandler) {
+        my $type = $currenthandler[-1];
+        return [] unless $handlerOR{$type};
+        note( '==> Restoring ' . uc($type) . ' <==' );
+        @Lemonldap::NG::Handler::Main::_onReload = @{
+            $handlerOR{$type};
+        };
+
+        $Lemonldap::NG::Handler::Main::_tshv = $handlerTSHV{$type};
+    }
 }
 
 =head4 encodeUrl( $url );
