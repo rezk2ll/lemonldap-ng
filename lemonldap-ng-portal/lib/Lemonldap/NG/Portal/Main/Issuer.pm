@@ -18,6 +18,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_RENEWSESSION
   PE_UPGRADESESSION
+  PE_TOKENEXPIRED
 );
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
@@ -139,21 +140,35 @@ sub _redirect {
 sub _forAuthUser {
     my ( $self, $req, @path ) = @_;
 
+    my $restore_failed;
     if (    $req->pdata->{issuerTs}
         and $req->pdata->{issuerTs} + $self->conf->{issuersTimeout} < time )
     {
+        $restore_failed = 1;
         $self->cleanAllPdata($req);
     }
+
     $self->logger->debug('Processing _forAuthUser');
     if ( my $r = $req->pdata->{ $self->ipath } ) {
         $self->logger->debug("Restoring request to $self->{path} issuer");
-        $self->restoreRequest( $req, $r );
-        @path = @{ $req->pdata->{ $self->ipath . 'Path' } }
-          if ( $req->pdata->{ $self->ipath . 'Path' } );
+        if ( $self->restoreRequest( $req, $r ) ) {
+            @path = @{ $req->pdata->{ $self->ipath . 'Path' } }
+              if ( $req->pdata->{ $self->ipath . 'Path' } );
 
-        # In case a confirm form is shown, we need it to POST on the
-        # current Path
-        $req->data->{confirmFormAction} = URI->new( $req->uri )->path;
+            # In case a confirm form is shown, we need it to POST on the
+            # current Path
+            $req->data->{confirmFormAction} = URI->new( $req->uri )->path;
+        }
+        else {
+            $restore_failed = 1;
+            $self->cleanAllPdata($req);
+        }
+    }
+
+    if ( $restore_failed and !@path ) {
+        $self->logger->error("Unable to restore issuer context");
+        $req->mustRedirect(1);
+        return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
     }
 
     # Clean pdata: keepPdata has been set, so pdata must be cleaned here
@@ -221,8 +236,11 @@ sub storeRequest {
 
 sub restoreRequest {
     my ( $self, $req, $token ) = @_;
-    my $env = $self->_ott->getToken($token);
+
+    my $result = 0;
+    my $env    = $self->_ott->getToken($token);
     if ($env) {
+        $result = 1;
         $self->logger->debug("Restoring request from $token");
         if ( my $c = delete $env->{content} ) {
             $env->{'psgix.input.buffered'} = 0;
@@ -237,7 +255,7 @@ sub restoreRequest {
     }
     $req->{uri} = uri_unescape( $req->env->{REQUEST_URI} );
     $req->{uri} =~ s|^//+|/|g;
-    return $req;
+    return $result;
 }
 
 sub reAuth {
