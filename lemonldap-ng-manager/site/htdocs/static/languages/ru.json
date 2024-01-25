@@ -886,6 +886,7 @@
 "portalCaptcha":"Капча",
 "portalCheckLogins":"Проверить последние входы в систему",
 "portalCustomCss":"Пользовательский файл CSS",
+"portalCustomJs":"Пользовательский файл JS",
 "portalCustomization":"Кастомизация",
 "portalDisplayAppslist":"Список приложений",
 "portalDisplayCertificateResetByMail":"Сбросить сертификат",
