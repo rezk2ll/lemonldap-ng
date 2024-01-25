@@ -68,7 +68,6 @@ SKIP: {
     #  or explain( decode_base64($samlReq), '<?xml ...' );
 
     # Push SAML request to IdP
-    switch ('issuer');
     ok(
         $res = $issuer->_get(
             $url,
@@ -105,7 +104,6 @@ SKIP: {
     );
 
     # Query SP with SAML artifact
-    switch ('sp');
     ok(
         $res = $sp->_get(
             $url,
@@ -146,14 +144,12 @@ SKIP: {
 #($url,$query)=expectRedirection($res,qr#http://auth.idp.com(/saml/singleLogout)\?(SAMLart=.*)#);
 
     ## Push logout artifact to IdP
-#switch('issuer');
 #ok($res=$issuer->_get($url,query=>$query,accept=>'text/html',cookie=>"lemonldap=$idpId"),'Follow redirection');
 
     my $removedCookie = expectCookie($res);
     is( $removedCookie, 0, "SSO cookie removed" );
 
     # Test if logout is done
-    switch ('issuer');
     ok(
         $res = $issuer->_get(
             '/', cookie => "lemonldap=$idpId",
@@ -162,7 +158,6 @@ SKIP: {
     );
     expectReject($res);
 
-    switch ('sp');
     ok(
         $res = $sp->_get(
             '/',

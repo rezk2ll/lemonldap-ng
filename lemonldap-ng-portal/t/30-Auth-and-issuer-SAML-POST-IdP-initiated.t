@@ -36,7 +36,6 @@ SKIP: {
     $sp     = register( 'sp',     \&sp );
 
     # Simple authentication on IdP
-    switch ('issuer');
     ok(
         $res = $issuer->_post(
             '/', IO::String->new('user=russian&password=russian'),
@@ -102,7 +101,6 @@ SKIP: {
         'SAMLResponse' );
 
     # Post SAML response to SP
-    switch ('sp');
     ok(
         $res = $sp->_post(
             $url, IO::String->new($query),
@@ -129,7 +127,6 @@ SKIP: {
       or explain( $res, 'cn => Frédéric Accents' );
 
     # Logout initiated by IdP
-    switch ('issuer');
     ok(
         $res = $issuer->_get(
             '/',
@@ -169,7 +166,6 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
         'SAMLRequest' );
 
     # Post SAML logout request to SP
-    switch ('sp');
     ok(
         $res = $sp->_post(
             $url, IO::String->new($query),
@@ -184,7 +180,6 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
         'SAMLResponse' );
 
     # Post SAML logout response to IdP
-    switch ('issuer');
     ok(
         $res = $sp->_post(
             $url, IO::String->new($query),
@@ -196,7 +191,6 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
     );
 
     # Test if logout is done
-    switch ('issuer');
     ok(
         $res = $issuer->_get(
             '/', cookie => "lemonldap=$idpId",
@@ -205,7 +199,6 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
     );
     expectReject($res);
 
-    switch ('sp');
     ok(
         $res = $sp->_get(
             '/',

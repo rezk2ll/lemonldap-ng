@@ -34,18 +34,35 @@ my $client2 = register(
     }
 );
 
-switch ("client1");
-is( Lemonldap::NG::Handler::Main->tsv->{portal}->(),
-    'https://auth.example.com/' );
-switch ("client2");
-is( Lemonldap::NG::Handler::Main->tsv->{portal}->(),
-    'https://auth.example2.com/' );
-switch ("client1");
-is( Lemonldap::NG::Handler::Main->tsv->{portal}->(),
-    'https://auth.example.com/' );
-switch ("client2");
-is( Lemonldap::NG::Handler::Main->tsv->{portal}->(),
-    'https://auth.example2.com/' );
+withHandler(
+    "client1",
+    sub {
+        is( Lemonldap::NG::Handler::Main->tsv->{portal}->(),
+            'https://auth.example.com/' );
+    }
+);
+withHandler(
+    "client2",
+    sub {
+        is( Lemonldap::NG::Handler::Main->tsv->{portal}->(),
+            'https://auth.example2.com/' );
+    }
+);
+withHandler(
+    "client1",
+    sub {
+        is( Lemonldap::NG::Handler::Main->tsv->{portal}->(),
+            'https://auth.example.com/' );
+    }
+);
+withHandler(
+    "client2",
+    sub {
+        is( Lemonldap::NG::Handler::Main->tsv->{portal}->(),
+            'https://auth.example2.com/' );
+    }
+);
+
 count(4);
 
 done_testing( count() );

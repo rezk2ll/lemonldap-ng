@@ -74,7 +74,7 @@ LWP::Protocol::PSGI->register(
 );
 
 # Initialization
-ok( $op = op(), 'OP portal' );
+ok( $op = register( 'op', sub { op() } ), 'OP portal' );
 
 ok( $res = $op->_get('/oauth2/jwks'), 'Get JWKS,     endpoint /oauth2/jwks' );
 expectOK($res);
@@ -88,9 +88,8 @@ expectOK($res);
 my $metadata = $res->[2]->[0];
 count(3);
 
-switch ('rp');
 &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
-ok( $rp = rp( $jwks, $metadata ), 'RP portal' );
+ok( $rp = register( 'rp', sub { rp( $jwks, $metadata ) } ), 'RP portal' );
 count(1);
 
 # Query RP for auth
@@ -100,7 +99,6 @@ my ( $url, $query ) =
   expectRedirection( $res, qr#http://auth.op.com(/oauth2/authorize)\?(.*)$# );
 
 # Push request to OP
-switch ('op');
 ok( $res = $op->_get( $url, query => $query, accept => 'text/html' ),
     "Push request to OP,         endpoint $url" );
 count(1);
@@ -137,14 +135,12 @@ count(1);
 ($query) = expectRedirection( $res, qr#^http://auth.rp.com/?\?(.*)$# );
 
 # Push OP response to RP
-switch ('rp');
 
 ok( $res = $rp->_get( '/', query => $query, accept => 'text/html' ),
     'Call openidconnectcallback on RP' );
 count(1);
 my $spId = expectCookie($res);
 
-switch ('op');
 ok(
     $res = $op->_get( '/oauth2/checksession.html', accept => 'text.html' ),
     'Check session,      endpoint /oauth2/checksession.html'
@@ -174,7 +170,6 @@ ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'cn => Frédéric Accents' );
 count(2);
 
-switch ('rp');
 ok( $res = $rp->_get("/sessions/global/$spId"), 'Get UTF-8' );
 $res = expectJSON($res);
 ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
@@ -196,7 +191,6 @@ count(1);
     qr#http://auth.op.com(/oauth2/logout)\?(post_logout_redirect_uri=.+)$# );
 
 # Push logout to OP
-switch ('op');
 
 ok(
     $res = $op->_get(
@@ -255,7 +249,6 @@ ok(
 count(1);
 expectReject($res);
 
-switch ('rp');
 ok(
     $res = $rp->_get(
         '/',
@@ -272,7 +265,6 @@ count(1);
 # -------------------------
 
 # Push request to OP
-switch ('op');
 ok( $res = $op->_get( $url, query => $query, accept => 'text/html' ),
     "Push request to OP,         endpoint $url" );
 count(1);

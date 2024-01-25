@@ -61,7 +61,6 @@ $issuer = register( 'issuer', \&issuer );
 $sp     = register( 'sp',     \&sp );
 
 # Simple SP access
-switch ('sp');
 ok(
     $res = $sp->_get(
         '/', accept => 'text/html',
@@ -75,7 +74,6 @@ expectRedirection( $res,
     'http://auth.idp.com/cas/login?service=http%3A%2F%2Fauth.sp.com%2F' );
 
 # Query IdP
-switch ('issuer');
 ok(
     $res = $issuer->_get(
         '/cas/login',
@@ -119,7 +117,6 @@ my ($query) =
   expectRedirection( $res, qr#^http://auth.sp.com/\?(ticket=[^&]+)$# );
 
 # Back to SP
-switch ('sp');
 ok(
     $res = $sp->_get(
         '/',
@@ -149,7 +146,6 @@ ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
 count(3);
 
 # Logout initiated by CAS
-switch ('issuer');
 ok(
     $res = $issuer->_get(
         '/cas/logout',
