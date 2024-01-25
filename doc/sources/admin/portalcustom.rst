@@ -78,6 +78,20 @@ CSS file example to remove white background of main logo:
    }
 
 
+Custom JS file
+~~~~~~~~~~~~~~
+
+Similarly, you can define a custom JS file, for example ``custom.js``, which will
+be loaded after default JS files. This file must be created in the
+static repository
+(``/usr/share/lemonldap-ng/portal/htdocs/static/bootstrap/js``).
+
+Then set this value in Custom CSS parameter:
+``bootstrap/js/custom.js``.
+
+Check out the :doc:`jqueryevents` page for available integrations
+
+
 .. _portalcustom-skin-customization:
 
 Skin
