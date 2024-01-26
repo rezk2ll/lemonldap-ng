@@ -834,6 +834,7 @@
 "okta2fApiKey":"Clé d'API",
 "okta2fAuthnLevel":"Niveau d'authentification",
 "okta2fLabel":"Label",
+"okta2fLoginAttribute":"Attribut contenant l'identifiant",
 "okta2fLogo":"Logo",
 "oldNotifFormat":"Utiliser l'ancien format XML",
 "oldValue":"Ancienne valeur",

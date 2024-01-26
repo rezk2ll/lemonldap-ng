@@ -2096,6 +2096,10 @@ sub attributes {
             type          => 'text',
             documentation => 'Portal label for Okta2F'
         },
+        okta2fLoginAttribute => {
+            type          => 'text',
+            documentation => 'Session key containing Okta login'
+        },
         okta2fLogo => {
             type          => 'text',
             documentation => 'Custom logo for Okta 2F',

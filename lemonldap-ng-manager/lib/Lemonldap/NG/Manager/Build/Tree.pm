@@ -1054,8 +1054,9 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'okta2fActivation', 'okta2fAdminURL',
-                                'okta2fApiKey',     'okta2fAuthnLevel',
-                                'okta2fLabel',      'okta2fLogo',
+                                'okta2fApiKey',     'okta2fLoginAttribute',
+                                'okta2fAuthnLevel', 'okta2fLabel',
+                                'okta2fLogo',
                             ]
                         },
 

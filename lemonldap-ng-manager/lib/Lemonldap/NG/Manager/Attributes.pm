@@ -3467,6 +3467,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'okta2fLabel' => {
             'type' => 'text'
         },
+        'okta2fLoginAttribute' => {
+            'type' => 'text'
+        },
         'okta2fLogo' => {
             'type' => 'text'
         },
