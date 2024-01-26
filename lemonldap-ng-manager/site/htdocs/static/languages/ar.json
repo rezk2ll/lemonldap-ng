@@ -886,6 +886,7 @@
 "portalCaptcha":"كلمة التحقق أو الكابتشا ",
 "portalCheckLogins":"تحقق من آخر تسجيلات دخول",
 "portalCustomCss":"تخصيص ملف CSS",
+"portalCustomJs":"تخصيص ملف JS",
 "portalCustomization":"التخصيص",
 "portalDisplayAppslist":"Application list",
 "portalDisplayCertificateResetByMail":"Reset certificate",

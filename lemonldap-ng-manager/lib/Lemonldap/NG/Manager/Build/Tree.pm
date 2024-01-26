@@ -55,6 +55,7 @@ sub tree {
                                 'showLanguages',
                                 'scrollTop',
                                 'portalCustomCss',
+                                'portalCustomJs',
                                 'portalSkin',
                                 'portalSkinBackground',
                                 'portalSkinRules',

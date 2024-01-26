@@ -1160,6 +1160,7 @@ sub tplParams {
         SKIN_BG      => $self->conf->{portalSkinBackground},
         FAVICON      => $self->conf->{portalFavicon} || 'common/favicon.ico',
         CUSTOM_CSS   => $self->conf->{portalCustomCss},
+        CUSTOM_JS   => $self->conf->{portalCustomJs},
         (
             $self->customParameters
             ? ( %{ $self->customParameters } )

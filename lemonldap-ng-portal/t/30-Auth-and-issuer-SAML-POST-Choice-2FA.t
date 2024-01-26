@@ -119,7 +119,6 @@ SKIP: {
             'SAMLResponse' );
 
         # Post SAML response to SP
-        switch ('sp');
         ok(
             $res = $sp->_post(
                 $url, IO::String->new($s),
@@ -164,7 +163,6 @@ SKIP: {
           or explain( $res, 'cn => Frédéric Accents' );
 
         # Logout initiated by IDP
-        switch ('issuer');
         ok(
             $res = $issuer->_get(
                 '/',
@@ -196,7 +194,6 @@ m#img src="http://auth.idp.com(/saml/relaySingleLogoutSOAP)\?(relay=.*?)"#s,
             "http://auth.idp.com/static/common/icons/ok.png" );
 
         # Test if logout is done
-        switch ('sp');
         ok(
             $res = $sp->_get(
                 '/', cookie => "lemonldap=$spId"

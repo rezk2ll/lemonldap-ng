@@ -461,7 +461,7 @@ sub extractFormInfo {
         $req->steps( [ @{ $self->p->beforeLogout }, 'deleteSession' ] );
 
         # Don't fail on "beforeLogout" errors
-        $req->data->{nofail};
+        $req->data->{nofail} = 1;
 
         # Check SAML Message
         my ( $request, $response, $method, $relaystate, $artifact ) =

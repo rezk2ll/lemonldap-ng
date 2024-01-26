@@ -51,7 +51,6 @@ SKIP: {
         qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
 
     # Push SAML request to IdP
-    switch ('issuer');
     ok(
         $res = $issuer->_get(
             $url,
@@ -90,7 +89,6 @@ SKIP: {
         'SAMLResponse', 'RelayState' );
 
     # Post SAML response to SP
-    switch ('sp');
     ok(
         $res = $sp->_post(
             $url, IO::String->new($query),
@@ -116,7 +114,6 @@ SKIP: {
 
     # Simple SP2 access
 
-    switch ('sp2');
     ok(
         $res = $sp2->_get(
             '/',
@@ -130,7 +127,6 @@ SKIP: {
         qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
 
     # Push SAML request to IdP
-    switch ('issuer');
     ok(
         $res = $issuer->_get(
             $url,
@@ -145,7 +141,6 @@ SKIP: {
         'SAMLResponse', 'RelayState' );
 
     # Post SAML response to SP2
-    switch ('sp2');
     ok(
         $res = $sp2->_post(
             $url, IO::String->new($query),
@@ -176,7 +171,6 @@ SKIP: {
         qr#^http://auth.idp.com(/saml/singleLogout)\?(SAMLRequest=.+)# );
 
     # Push SAML logout request to IdP
-    switch ('issuer');
     ok(
         $res = $issuer->_get(
             $url,
@@ -205,7 +199,6 @@ SKIP: {
     );
     expectReject($res);
 
-    switch ('sp');
     ok(
         $res = $sp->_get(
             '/',
@@ -218,7 +211,6 @@ SKIP: {
     expectRedirection( $res,
         qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
 
-    switch ('sp2');
     ok(
         $res = $sp2->_get(
             '/',

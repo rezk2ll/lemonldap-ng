@@ -886,6 +886,7 @@
 "portalCaptcha":"Captcha",
 "portalCheckLogins":"Conferir últimos logins",
 "portalCustomCss":"Arquivo CSS customizado",
+"portalCustomJs":"Arquivo JS customizado",
 "portalCustomization":"Customização",
 "portalDisplayAppslist":"Lista de aplicação",
 "portalDisplayCertificateResetByMail":"Redefinir certificado",

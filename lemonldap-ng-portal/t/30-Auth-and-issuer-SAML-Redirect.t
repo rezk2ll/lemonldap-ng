@@ -55,7 +55,6 @@ SKIP: {
         qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
 
     # Push SAML request to IdP
-    switch ('issuer');
     ok(
         $res = $issuer->_get(
             $url,
@@ -165,7 +164,6 @@ qr@SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"
     );
 
     # Post SAML response to SP
-    switch ('sp');
     ok(
         $res = $sp->_post(
             $url, IO::String->new($query),
@@ -211,7 +209,6 @@ qr@SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"
     );
 
     # Push SAML logout request to IdP
-    switch ('issuer');
     ok(
         $res = $issuer->_get(
             $url,
@@ -229,7 +226,6 @@ qr#^http://auth.sp.com(/saml/proxySingleLogoutReturn)\?(SAMLResponse=.+)#
     is( $removedCookie, 0, "IDP Cookie removed" );
 
     # Send SAML response to SP
-    switch ('sp');
     ok(
         $res = $sp->_get(
             $url,
@@ -241,7 +237,6 @@ qr#^http://auth.sp.com(/saml/proxySingleLogoutReturn)\?(SAMLResponse=.+)#
     expectOK($res);
 
     # Test if logout is done
-    switch ('issuer');
     ok(
         $res = $issuer->_get(
             '/', cookie => "lemonldap=$idpId",
@@ -250,7 +245,6 @@ qr#^http://auth.sp.com(/saml/proxySingleLogoutReturn)\?(SAMLResponse=.+)#
     );
     expectReject($res);
 
-    switch ('sp');
     ok(
         $res = $sp->_get(
             '/',

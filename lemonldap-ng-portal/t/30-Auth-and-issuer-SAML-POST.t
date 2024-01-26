@@ -38,7 +38,6 @@ SKIP: {
 
         # SP-initiated flow
         my $res;
-        switch ('sp');
         ok(
             $res = $sp->_get(
                 '/', accept => 'text/html',
@@ -54,7 +53,6 @@ SKIP: {
             1, 'samlGenerateRequestHook called' );
 
         # Push SAML request to IdP
-        switch ('issuer');
         ok(
             $res = $issuer->_post(
                 $url,
@@ -149,7 +147,6 @@ SKIP: {
             1, 'samlGotRequestHookCalled called' );
 
         # Post SAML response to SP
-        switch ('sp');
         ok(
             $res = $sp->_post(
                 $url, IO::String->new($s),
@@ -194,7 +191,6 @@ SKIP: {
             'SAMLRequest' );
 
         # Push SAML logout request to IdP
-        switch ('issuer');
         ok(
             $res = $issuer->_post(
                 $url,
@@ -213,7 +209,6 @@ SKIP: {
         is( $removedCookie, 0, "IDP Cookie removed" );
 
         # Post SAML response to SP
-        switch ('sp');
         ok(
             $res = $sp->_post(
                 $url, IO::String->new($s),
@@ -225,7 +220,6 @@ SKIP: {
         expectRedirection( $res, 'http://auth.sp.com' );
 
         # Test if logout is done
-        switch ('issuer');
         ok(
             $res = $issuer->_get(
                 '/', cookie => "lemonldap=$idpId",
@@ -234,7 +228,6 @@ SKIP: {
         );
         expectReject($res);
 
-        switch ('sp');
         ok(
             $res = $sp->_get(
                 '/',
@@ -312,7 +305,6 @@ SKIP: {
             1, 'samlGotRequestHookCalled called' );
 
         # Post SAML response to SP
-        switch ('sp');
         ok(
             $res = $sp->_post(
                 $url, IO::String->new($s),
@@ -362,7 +354,6 @@ SKIP: {
             'SAMLRequest' );
 
         # Push SAML logout request to IdP
-        switch ('issuer');
         ok(
             $res = $issuer->_post(
                 $url,
@@ -381,7 +372,6 @@ SKIP: {
         is( $removedCookie, 0, "IDP Cookie removed" );
 
         # Post SAML response to SP
-        switch ('sp');
         ok(
             $res = $sp->_post(
                 $url, IO::String->new($s),
@@ -393,7 +383,6 @@ SKIP: {
         expectRedirection( $res, 'http://test1.example.com' );
 
         # Test if logout is done
-        switch ('issuer');
         ok(
             $res = $issuer->_get(
                 '/', cookie => "lemonldap=$idpId",
@@ -402,7 +391,6 @@ SKIP: {
         );
         expectReject($res);
 
-        switch ('sp');
         ok(
             $res = $sp->_get(
                 '/',
