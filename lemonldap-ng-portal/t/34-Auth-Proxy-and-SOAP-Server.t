@@ -24,7 +24,6 @@ LWP::Protocol::PSGI->register(
         my $res;
         my $s      = $req->content;
         my $client = ( $host eq 'idp' ? $issuer : $sp );
-        switch ( $host eq 'idp' ? 'issuer' : 'sp' );
         ok(
             $res = $client->_post(
                 $url,
@@ -43,7 +42,6 @@ LWP::Protocol::PSGI->register(
           or explain( $res->[1], 'Content-Type => application/xml' );
         pass(' @ END OF SOAP REQUEST @');
         count(4);
-        switch ( $host eq 'idp' ? 'sp' : 'issuer' );
         return $res;
     }
 );

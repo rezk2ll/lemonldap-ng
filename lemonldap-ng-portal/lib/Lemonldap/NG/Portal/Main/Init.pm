@@ -74,11 +74,11 @@ BEGIN {
 }
 
 # Endpoints inserted after any main sub
-has 'afterSub'  => ( is => 'rw', default => sub { {} } );
-has 'aroundSub' => ( is => 'rw', default => sub { {} } );
+has afterSub  => ( is => 'rw', default => sub { {} } );
+has aroundSub => ( is => 'rw', default => sub { {} } );
 
 # Issuer hooks
-has 'hook' => ( is => 'rw', default => sub { {} } );
+has hook => ( is => 'rw', default => sub { {} } );
 
 has spRules => (
     is      => 'rw',

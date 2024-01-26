@@ -114,10 +114,11 @@ sub validateCredential {
 
     # If Authen::WebAuthn is too old, we can't check attestation
     my $attestation = $registration_options->{attestation} || "none";
-    if ($attestation ne "none" and $Authen::WebAuthn::VERSION < 0.002) {
-        croak("Authen::WebAuthn version is too old, cannot validate attestation");
+    if ( $attestation ne "none" and $Authen::WebAuthn::VERSION < 0.002 ) {
+        croak(  "Authen::WebAuthn version is too old"
+              . " ($Authen::WebAuthn::VERSION < 0.002),"
+              . " cannot validate attestation" );
     }
-
 
     return $self->verifier->validate_registration(
         challenge_b64          => $challenge_b64,

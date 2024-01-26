@@ -23,7 +23,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use String::Random qw/random_string/;
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.19.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Issuer
@@ -31,7 +31,8 @@ extends qw(
   Lemonldap::NG::Portal::Lib::OpenIDConnect
 );
 
-with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration';
+with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration',
+  'Lemonldap::NG::Common::OpenIDConnect::Metadata';
 
 # INTERFACE
 
@@ -40,6 +41,9 @@ sub beforeAuth { 'exportRequestParameters' }
 # INITIALIZATION
 
 use constant sessionKind => 'OIDCI';
+
+# random_string mask for auto-registration client-id/secret
+use constant RS_MSK => 's' x 30;
 
 has rule => ( is => 'rw' );
 has configStorage => (
@@ -222,7 +226,7 @@ sub loadRPs {
             $self->logger->warn("RP $rp has no Client ID");
         }
     }
-    return 1
+    return 1;
 }
 
 # RUNNING METHODS
@@ -359,11 +363,17 @@ sub run {
                 }
             }
 
+            my $authMethod;
             if ( $oidc_request->{'request'} ) {
-                if ( my $request =
+                if ( my ( $request, $alg ) =
                     $self->decodeJWT( $oidc_request->{'request'}, undef, $rp ) )
                 {
                     $self->logger->debug("JWT signature request verified");
+
+                    $authMethod =
+                      $alg =~ /^HS/i
+                      ? 'client_secret_jwt'
+                      : 'private_key_jwt';
 
                     # Override OIDC parameters by request content
                     foreach ( keys %$request ) {
@@ -465,6 +475,63 @@ sub run {
                     "server_error", "Hybrid flow not allowed",
                     undef,          $oidc_request->{'state'},
                     1
+                );
+            }
+
+            # Check if authentication was required
+            if ( $self->rpOptions->{$rp}
+                ->{oidcRPMetaDataOptionsAuthRequiredForAuthorize} )
+            {
+                $self->logger->debug('JWS authentication is required');
+                unless ($authMethod) {
+                    $self->userLogger->error(
+                        'Authentication required but not done');
+                    return $self->returnRedirectError(
+                        $req,           $oidc_request->{'redirect_uri'},
+                        'server_error', 'JWS authentication required',
+                        undef,          $oidc_request->{'state'},
+                        1
+                    );
+                }
+                my $methodAllowed =
+                  $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthMethod};
+                if ( $methodAllowed and $authMethod ne $methodAllowed ) {
+                    $self->userLogger->error(
+"Authentication with $authMethod instead of $methodAllowed"
+                    );
+                    return $self->returnRedirectError(
+                        $req,
+                        $oidc_request->{'redirect_uri'},
+                        'server_error',
+                        "Authentication must use $methodAllowed",
+                        undef,
+                        $oidc_request->{'state'},
+                        1
+                    );
+                }
+            }
+
+            # Check if state is required
+            if ( $self->rpOptions->{$rp}
+                ->{oidcRPMetaDataOptionsAuthnRequireState}
+                and not( $oidc_request->{'state'} ) )
+            {
+                return $self->returnRedirectError(
+                    $req,           $oidc_request->{'redirect_uri'},
+                    "server_error", "State required",
+                    undef,          undef, 1
+                );
+            }
+
+            # Check if nonce is required
+            if ( $self->rpOptions->{$rp}
+                ->{oidcRPMetaDataOptionsAuthnRequireNonce}
+                and not( $oidc_request->{'nonce'} ) )
+            {
+                return $self->returnRedirectError(
+                    $req,           $oidc_request->{'redirect_uri'},
+                    "server_error", "Nonce required",
+                    undef,          undef, 1
                 );
             }
 
@@ -1153,12 +1220,12 @@ sub run {
                             'deleteSession'
                         ]
                     );
+                    $req->data->{nofail} = 1;
                     $err = $req->error( $self->p->process($req) );
                     if ( $err and $err != PE_LOGOUT_OK ) {
                         if ( $err > 0 ) {
                             $self->logger->error(
                                 "Logout process returns error code $err");
-                            return PE_ERROR;
                         }
                         return $err;
                     }
@@ -2021,7 +2088,7 @@ sub userInfo {
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect USERINFO URL");
 
-    my $access_token = $self->getEndPointAccessToken($req);
+    my ( $access_token, $authMethod ) = $self->getEndPointAccessToken($req);
 
     unless ($access_token) {
         $self->logger->error("Unable to get access_token");
@@ -2044,6 +2111,16 @@ sub userInfo {
     my $scope           = $accessTokenSession->data->{scope};
     my $rp              = $accessTokenSession->data->{rp};
     my $user_session_id = $accessTokenSession->data->{user_session_id};
+
+    if ( $self->rpOptions->{$rp}
+        ->{oidcRPMetaDataOptionsUserinfoRequireHeaderToken}
+        and $authMethod ne 'header' )
+    {
+        $self->userLogger->error(
+            'Endpoint authentication without using header');
+        return $self->returnBearerError( 'invalid_request',
+            'Invalid request', 400 );
+    }
 
     # Make sure $rp has been lazy loaded
     if ( $accessTokenSession->data->{client_id} ) {
@@ -2190,9 +2267,22 @@ sub registration {
     my $registration_response = {};
 
     # Check redirect_uris
-    unless ( $client_metadata->{redirect_uris} ) {
-        $self->logger->error("Field redirect_uris is mandatory");
+    my $redirect_uris = $client_metadata->{redirect_uris};
+    unless ( $redirect_uris and ref($redirect_uris) eq 'ARRAY' ) {
+        $self->logger->error("Field redirect_uris (array) is mandatory");
         return $self->p->sendError( $req, 'invalid_client_metadata', 400 );
+    }
+    else {
+        foreach (@$redirect_uris) {
+            if ( /^\s*((?:java|vb)script|data):/i
+                or $self->p->checkXSSAttack( 'redirect_uri', $_ ) )
+            {
+                $self->userLogger->error(
+                    "Registration tried with a forbidden redirect_uri: $_");
+                return $self->p->sendError( $req, 'invalid_client_metadata',
+                    400 );
+            }
+        }
     }
 
     # RP identifier
@@ -2200,8 +2290,8 @@ sub registration {
     my $rp                = "register-$registration_time";
 
     # Generate Client ID and Client Password
-    my $client_id     = random_string("ssssssssssssssssssssssssssssss");
-    my $client_secret = random_string("ssssssssssssssssssssssssssssss");
+    my $client_id     = random_string(RS_MSK);
+    my $client_secret = random_string(RS_MSK);
 
     # Register known parameters
     my $client_name =
@@ -2212,7 +2302,6 @@ sub registration {
       || ( $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256' : 'RS256' );
     my $userinfo_signed_response_alg =
       $client_metadata->{userinfo_signed_response_alg};
-    my $redirect_uris          = $client_metadata->{redirect_uris};
     my $request_uris           = $client_metadata->{request_uris};
     my $backchannel_logout_uri = $client_metadata->{backchannel_logout_uri};
     my $backchannel_logout_session_required =
@@ -2522,159 +2611,8 @@ sub logout {
 sub metadata {
     my ( $self, $req ) = @_;
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
-    my $issuerDBOpenIDConnectPath = $self->conf->{issuerDBOpenIDConnectPath};
-    my $authorize_uri     = $self->conf->{oidcServiceMetaDataAuthorizeURI};
-    my $token_uri         = $self->conf->{oidcServiceMetaDataTokenURI};
-    my $userinfo_uri      = $self->conf->{oidcServiceMetaDataUserInfoURI};
-    my $jwks_uri          = $self->conf->{oidcServiceMetaDataJWKSURI};
-    my $registration_uri  = $self->conf->{oidcServiceMetaDataRegistrationURI};
-    my $endsession_uri    = $self->conf->{oidcServiceMetaDataEndSessionURI};
-    my $checksession_uri  = $self->conf->{oidcServiceMetaDataCheckSessionURI};
-    my $introspection_uri = $self->conf->{oidcServiceMetaDataIntrospectionURI};
-
-    my $path   = $self->path . '/';
-    my $issuer = $self->iss;
-    $path = "/" . $path unless ( $issuer =~ /\/$/ );
-    my $baseUrl = $issuer . $path;
-
-    my @acr = keys %{ $self->conf->{oidcServiceMetaDataAuthnContext} };
-
-    # List response types depending on allowed flows
-    my $response_types = [];
-    my $grant_types    = [];
-    if ( $self->conf->{oidcServiceAllowAuthorizationCodeFlow} ) {
-        push( @$response_types, "code" );
-        push( @$grant_types,    "authorization_code" );
-    }
-    if ( $self->conf->{oidcServiceAllowImplicitFlow} ) {
-        push( @$response_types, "id_token", "id_token token" );
-        push( @$grant_types, "implicit" );
-    }
-
-    # If one of the RPs has password grant enabled
-    if (
-        grep {
-            $self->rpOptions->{$_}->{oidcRPMetaDataOptionsAllowPasswordGrant}
-        } keys %{ $self->rpOptions }
-      )
-    {
-        push( @$grant_types, "password" );
-    }
-
-    # If one of the RPs has client credentials grant enabled
-    if (
-        grep {
-            $self->rpOptions->{$_}
-              ->{oidcRPMetaDataOptionsAllowClientCredentialsGrant}
-        } keys %{ $self->rpOptions }
-      )
-    {
-        push( @$grant_types, "client_credentials" );
-    }
-
-    # If one of the RPs has refresh tokens enabled
-    if (
-        grep {
-                 $self->rpOptions->{$_}->{oidcRPMetaDataOptionsRefreshToken}
-              or $self->rpOptions->{$_}->{oidcRPMetaDataOptionsAllowOffline}
-        }
-        keys %{ $self->rpOptions }
-      )
-    {
-        push( @$grant_types, "refresh_token" );
-    }
-
-    if ( $self->conf->{oidcServiceAllowHybridFlow} ) {
-        push( @$response_types,
-            "code id_token",
-            "code token", "code id_token token" );
-        push( @$grant_types, "hybrid" );
-    }
-
-    my @supportedSigAlg = qw/none HS256 HS384 HS512/;
-    if ( $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ) {
-        push @supportedSigAlg, qw/ES256 ES256K ES384 ES512 EdDSA/;
-    }
-    else {
-        push @supportedSigAlg, qw/RS256 RS384 RS512 PS256 PS384 PS512/;
-    }
-
-    # Create OpenID configuration hash;
-    return $self->p->sendJSONresponse(
-        $req,
-        {
-            issuer => $issuer,
-
-            # Endpoints
-            authorization_endpoint => $baseUrl . $authorize_uri,
-            token_endpoint         => $baseUrl . $token_uri,
-            userinfo_endpoint      => $baseUrl . $userinfo_uri,
-            jwks_uri               => $baseUrl . $jwks_uri,
-            (
-                $self->conf->{oidcServiceAllowDynamicRegistration}
-                ? ( registration_endpoint => $baseUrl . $registration_uri )
-                : ()
-            ),
-            end_session_endpoint => $baseUrl . $endsession_uri,
-
-            #check_session_iframe   => $baseUrl . $checksession_uri,
-            introspection_endpoint => $baseUrl . $introspection_uri,
-
-            # Scopes
-            scopes_supported => [qw/openid profile email address phone/],
-            response_types_supported => $response_types,
-            response_modes_supported => [ "query", "fragment", "form_post", ],
-            grant_types_supported    => $grant_types,
-            acr_values_supported     => \@acr,
-            subject_types_supported  => ["public"],
-            token_endpoint_auth_methods_supported =>
-              [qw/client_secret_post client_secret_basic/],
-            introspection_endpoint_auth_methods_supported =>
-              [qw/client_secret_post client_secret_basic/],
-            claims_supported                 => [qw/sub iss auth_time acr sid/],
-            request_parameter_supported      => JSON::true,
-            request_uri_parameter_supported  => JSON::true,
-            require_request_uri_registration => JSON::true,
-
-            # Algorithms
-            id_token_signing_alg_values_supported => \@supportedSigAlg,
-
-            id_token_encryption_alg_values_supported =>
-              &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_ALG_SUPPORTED,
-            id_token_encryption_enc_values_supported =>
-              &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_SUPPORTED,
-            userinfo_signing_alg_values_supported => \@supportedSigAlg,
-
-            userinfo_encryption_alg_values_supported =>
-              &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_ALG_SUPPORTED,
-            userinfo_encryption_enc_values_supported =>
-              &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_SUPPORTED,
-
-            # PKCE
-            code_challenge_methods_supported => [qw/plain S256/],
-
-            # Logout supported methods
-            frontchannel_logout_supported         => JSON::true,
-            frontchannel_logout_session_supported => JSON::true,
-            backchannel_logout_supported          => JSON::true,
-            backchannel_logout_session_supported  => JSON::true,
-        }
-    );
-
-    # request_object_signing_alg_values_supported
-    # request_object_encryption_alg_values_supported
-    # request_object_encryption_enc_values_supported
-
-    # token_endpoint_auth_signing_alg_values_supported
-    # display_values_supported
-    # claim_types_supported
-    # service_documentation
-    # claims_locales_supported
-    # ui_locales_supported
-    # claims_parameter_supported
-
-    # op_policy_uri
-    # op_tos_uri
+    return $self->p->sendJSONresponse( $req,
+        $self->metadataDoc( $self->conf ) );
 }
 
 # Store request parameters in %ENV

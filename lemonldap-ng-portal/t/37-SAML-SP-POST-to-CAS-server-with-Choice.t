@@ -82,7 +82,6 @@ SKIP: {
         'SAMLRequest' );
 
     # Push SAML request to IdP
-    switch ('proxy');
     ok(
         $res = $proxy->_post(
             $url,
@@ -117,7 +116,6 @@ qr'^http://auth.idp.com/cas/login\?(service=http%3A%2F%2Fauth.proxy.com%2F.*)$'
     );
 
     # Follow redirection to CAS server
-    switch ('issuer');
     ok(
         $res = $issuer->_get(
             '/cas/login',
@@ -148,7 +146,6 @@ qr'^http://auth.idp.com/cas/login\?(service=http%3A%2F%2Fauth.proxy.com%2F.*)$'
         qr#^http://auth.proxy.com(/saml/singleSignOn)\?(.*ticket=.*)$# );
 
     # Push CAS response to proxy
-    switch ('proxy');
     ok(
         $res = $proxy->_get(
             $url,
@@ -166,7 +163,6 @@ qr'^http://auth.idp.com/cas/login\?(service=http%3A%2F%2Fauth.proxy.com%2F.*)$'
         'SAMLResponse' );
 
     # Post SAML response to SP
-    switch ('sp');
     ok(
         $res = $sp->_post(
             $url, IO::String->new($query),

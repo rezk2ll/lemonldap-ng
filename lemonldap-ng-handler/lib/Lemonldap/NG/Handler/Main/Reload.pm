@@ -542,6 +542,7 @@ sub conditionSub {
     if ( $cond =~ /^logout_app(?:\s+(.*))?$/i ) {
         return $class->logout_app($1);
     }
+
     # logout_app_sso
     elsif ( $cond =~ /^logout_app_sso(?:\s+(.*))?$/i ) {
         return $class->logout_app_sso($1);
@@ -560,6 +561,15 @@ sub conditionSub {
 
     # Return sub and protected flag
     return ( $sub, $mayskip );
+}
+
+## These methods should be overriden in subclasses
+sub logout_app {
+    return ( sub { 1 }, 0 );
+}
+
+sub logout_app_sso {
+    return ( sub { 1 }, 0 );
 }
 
 ## @method arrayref aliasInit

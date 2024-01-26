@@ -92,7 +92,6 @@ count(1);
 expectOK($res);
 
 # Test other REST queries
-switch ('issuer');
 
 # Session content
 ok( $res = $issuer->_get("/sessions/global/$spId"), 'Session content' );
@@ -121,7 +120,6 @@ ok( $res->{uid} eq 'french', ' Uid is french' )
 count(4);
 
 # Logout
-switch ('sp');
 ok(
     $res = $sp->_get(
         '/',

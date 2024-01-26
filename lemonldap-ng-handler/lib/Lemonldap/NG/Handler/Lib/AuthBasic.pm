@@ -125,25 +125,6 @@ sub createSession {
             "Authentication failed for $user: " . $resp->status_line );
         return 0;
     }
-
-    ## Catch SOAP errors
-    #if ( $soapRequest->fault ) {
-    #    $class->abort( "SOAP request to the portal failed: "
-    #          . $soapRequest->fault->{faultstring} );
-    #}
-    #else {
-    #    my $res = $soapRequest->result();
-
-    #    # If authentication failed, display error
-    #    if ( $res->{errorCode} ) {
-    #        $class->userLogger->notice( "Authentication failed for $user: "
-    #              . $soapClient->error( $res->{errorCode}, 'en' )->result() );
-    #        return 0;
-    #    }
-    #    else {
-    #        return 1;
-    #    }
-    #}
 }
 
 ## @rmethod protected void hideCookie()

@@ -63,7 +63,6 @@ SKIP: {
         'SAMLRequest' );
 
     # Push SAML request to IdP
-    switch ('issuer');
     ok(
         $res = $issuer->_post(
             $url,
@@ -110,7 +109,6 @@ m#<iframe.*src="http://auth.cdc.com/\?(action=write&idp=http://auth.idp.com/saml
     );
 
     # Post SAML response to SP
-    switch ('sp');
     ok(
         $res = $sp->_post(
             $url, IO::String->new($s),
@@ -151,7 +149,6 @@ m#<iframe.*src="http://auth.cdc.com/\?(action=write&idp=http://auth.idp.com/saml
         'SAMLRequest' );
 
     # Push SAML logout request to IdP
-    switch ('issuer');
     ok(
         $res = $issuer->_post(
             $url,
@@ -167,7 +164,6 @@ m#<iframe.*src="http://auth.cdc.com/\?(action=write&idp=http://auth.idp.com/saml
         'SAMLResponse' );
 
     # Post SAML response to SP
-    switch ('sp');
     ok(
         $res = $sp->_post(
             $url, IO::String->new($s),
@@ -179,7 +175,6 @@ m#<iframe.*src="http://auth.cdc.com/\?(action=write&idp=http://auth.idp.com/saml
     expectRedirection( $res, 'http://auth.sp.com' );
 
     # Test if logout is done
-    switch ('issuer');
     ok(
         $res = $issuer->_get(
             '/', cookie => "lemonldap=$idpId",
@@ -188,7 +183,6 @@ m#<iframe.*src="http://auth.cdc.com/\?(action=write&idp=http://auth.idp.com/saml
     );
     expectReject($res);
 
-    switch ('sp');
     ok(
         $res = $sp->_get(
             '/',

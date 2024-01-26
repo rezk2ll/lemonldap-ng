@@ -89,6 +89,57 @@ LcJp
 -----END CERTIFICATE-----";
 }
 
+sub alt_oidc_key_op_private_sig {
+    '-----BEGIN PRIVATE KEY-----
+MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCWS2Wd0gXbiMDU
+69k27D2FByrzpogZtjhQCVdIiF8/CDNeB7FZlIRPbRVYFeapCo5gmBldx89gf8y9
+QqnCmCLCCo7zy/xL07niDrmnh1AIZYJ9QPEdBuKqicXVX0luhpgIEZNL47cciLzU
+09EBBhMB/abRZzGh+gwlQSpQM2WRYKe3h8ERHsxVSnWUqR7w4/zwmUCTB22dlTSS
+FfOYfaYG0YeKQUmenv5DMjanDHz3W7GzSQarpGbPzrPq7M0nmvToyCfuB+butNUX
+1lCUszT6hGgKm5A1U5dJr3mLX9bOLnsrrG0EbAHz3WfJan5NqcZkzH2zTiJOVck4
+NoSz3O6LAgMBAAECggEAEFXDhqK0FkdHxhyYMDr++L1tsquv8TN37WMGhJCl4YDv
+rFGjufvFYaiWgEtpFYhbLy5421ODO5bIVu2u68KDTJm/LcpG8qrhcittjELNtQvr
+Yde0HRaJfkWZJfbEUWn5ji7y1nW6ijRmaa9X8QeK+1VpUysnHtbBiS8K/UqIyIMR
+KxKskc7hoDG5J11UUTznLSRiqulSGCVbOmTrswH8Wk8EFL3HZSqYgpvSmptrYKYb
+7NmmOhH/6KnwRQp22pN8/qG5m9E4I+jJR57hdG829fI8PCJywZC4Az27MMZNQPGv
+nzdjHas+LiIJsXdlSOxG3yO6C4eWUYyxzpGWh3z+sQKBgQDMP2oFo8UDYX5YcZvG
+P5NsXhqb9kapZk0x4xb+kkHy5mRhEOwB4668Ndyif4GRPuEpxOsvF1e58bc0yy+z
+6OES12lwlr358KeG5DG2N2pQofDPBhoB0Z5DF5sXvjRYqQyB/9RJlQbB4QeRdKo1
+Pnrz0Uh90XrqswBYUBVyInmqiQKBgQC8YEssTA3dQXNwAt5ZNhrR1makWZ4exIt+
+AJww3euBO0KejtSJ3JQepNhSC6cGvrb2FqJy2YwujQROmxgQ+jZbwY65J4fjP4BO
+cE3E+lFudRHiUl0CXfoPqN7HtXfBmG4cEorR2XosOKLhdE2cLUfFsd0EHSOeyQyB
+ksssMLn7cwKBgQCWcN8W6Fnk85qsaoHitFFSML5Iwk2p2MBjTnFRcUlCMJEfLeeo
+PJwn5URuLJyy7y3KJlFUjkz/mRrouACa851U03XGiEHGJ4w9vzcekBKu8Zj94/Ck
+BlIb+PcztdW4uEuONXGYATzI8YcxjE0SisLlc/GBOxreZJqMcfBZ8SrMgQKBgQCi
+CdrgEdPjPQfFlFIbPzU2x0ynlwcyxDKRgojYaCzKj2Uw6v/cTseCzJ3fhXJ5lNfh
+O3slfAjfiiHoU/URtYnIx+izUFPNoLQHxQbAp+ogL8fgfKTRAnG1wrdP5sNK3ono
+z/JlrMMxAs7pTJft/e09G1BY14/qaFq/orvuGUQCDQKBgBlfhj00UvuEXIXawvTj
+F+Q4gn+xAc3xGc+A1pf0Mwg1yWxCUcSXwwY9ebayl21FTBD0IlF/B2FHxLt1E4iK
+SF0LnH9iFxzSIeon4TABUnmOef/n0R80CgV5XZTQr2zcYR5I4Z6RDwFV1xRDS6le
+yf45nEm/1yEZX6iu3wGBfixM
+-----END PRIVATE KEY-----';
+}
+
+sub alt_oidc_cert_op_public_sig {
+    '-----BEGIN CERTIFICATE-----
+MIICsjCCAZqgAwIBAgIEAM8InTANBgkqhkiG9w0BAQsFADAbMRkwFwYDVQQDDBBh
+dXRoLmV4YW1wbGUuY29tMB4XDTIzMTIyMTAyMjgxN1oXDTQzMTIxNjAyMjgxN1ow
+GzEZMBcGA1UEAwwQYXV0aC5leGFtcGxlLmNvbTCCASIwDQYJKoZIhvcNAQEBBQAD
+ggEPADCCAQoCggEBAJZLZZ3SBduIwNTr2TbsPYUHKvOmiBm2OFAJV0iIXz8IM14H
+sVmUhE9tFVgV5qkKjmCYGV3Hz2B/zL1CqcKYIsIKjvPL/EvTueIOuaeHUAhlgn1A
+8R0G4qqJxdVfSW6GmAgRk0vjtxyIvNTT0QEGEwH9ptFnMaH6DCVBKlAzZZFgp7eH
+wREezFVKdZSpHvDj/PCZQJMHbZ2VNJIV85h9pgbRh4pBSZ6e/kMyNqcMfPdbsbNJ
+BqukZs/Os+rszSea9OjIJ+4H5u601RfWUJSzNPqEaAqbkDVTl0mveYtf1s4ueyus
+bQRsAfPdZ8lqfk2pxmTMfbNOIk5VyTg2hLPc7osCAwEAATANBgkqhkiG9w0BAQsF
+AAOCAQEAUbO7UX8N23nKfWU7YhZZyjncMNTPmeqWqOciLaAhpeB2W6cgDi2ddCjR
+E10s8cnyd8QDZC5wLGHDeBsPoeb5KdXdxi4x4w+IZrnq+NputA7sRtmRaDVe16LY
+0RRPYmElR0KGpXRp5gXQrF0qF4+xM1ggrj4fMKccpZoPYaQQa43BAGh7Ay9mu6Ux
+K6dXdRI1oP964BjmLE4psuZdeWZt/nl7BKv9uLrCPIPiQWXKbQFtCxi8si8AeaDt
+52oFL+7e0A//DWZQ2p0yEPh1Ge6d7TZ83a5Qa9nIFzXePjT2vC9DGIkhwBOaUD0b
+vyWVJ/bZUDjRu1nAer3/1t7RlTI0KA==
+-----END CERTIFICATE-----';
+}
+
 sub id_token_payload {
     my $token = shift;
     return getJWTPayload($token);
@@ -103,7 +154,8 @@ sub login {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $op, $uid ) = @_;
     my $res;
-    my $query = buildForm( {
+    my $query = buildForm(
+        {
             user     => $uid,
             password => $uid,
         }
@@ -140,7 +192,8 @@ sub codeAuthorize {
 
 sub tokenExchange {
     my ( $op, $clientid, %params ) = @_;
-    my $query = buildForm( {
+    my $query = buildForm(
+        {
             grant_type => 'urn:ietf:params:oauth:grant-type:token-exchange',
             %params
         }
@@ -161,7 +214,8 @@ sub tokenExchange {
 
 sub codeGrant {
     my ( $op, $clientid, $code, $redirect_uri ) = @_;
-    my $query = buildForm( {
+    my $query = buildForm(
+        {
             grant_type   => "authorization_code",
             code         => $code,
             redirect_uri => $redirect_uri,
@@ -198,7 +252,8 @@ sub getUserinfo {
 sub refreshGrant {
     my ( $op, $client_id, $refresh_token ) = @_;
 
-    $query = buildForm( {
+    $query = buildForm(
+        {
             grant_type    => 'refresh_token',
             refresh_token => $refresh_token,
         }
@@ -219,7 +274,8 @@ sub refreshGrant {
 
 sub introspect {
     my ( $op, $client_id, $token ) = @_;
-    my $query = buildForm( {
+    my $query = buildForm(
+        {
             client_id     => $client_id,
             client_secret => $client_id,
             token         => $token,

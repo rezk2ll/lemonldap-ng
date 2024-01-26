@@ -28,55 +28,55 @@ BEGIN {
     }
 }
 
-has 'id' => (
+has id => (
     is  => 'rw',
     isa => 'Str|Undef',
 );
 
-has 'force' => (
+has force => (
     is      => 'rw',
     isa     => 'Bool',
     default => 0,
 );
 
-has 'kind' => (
+has kind => (
     is  => 'rw',
     isa => 'Str|Undef',
 );
 
-has 'data' => (
+has data => (
     is      => 'rw',
     isa     => 'HashRef',
     default => sub { {} },
 );
 
-has 'options' => (
+has options => (
     is  => 'rw',
     isa => 'HashRef',
 );
 
-has 'storageModule' => (
+has storageModule => (
     is       => 'ro',
     isa      => 'Str',
     required => 1,
 );
 
-has 'storageModuleOptions' => (
+has storageModuleOptions => (
     is  => 'ro',
     isa => 'HashRef|Undef',
 );
 
-has 'cacheModule' => (
+has cacheModule => (
     is  => 'rw',
     isa => 'Str|Undef',
 );
 
-has 'cacheModuleOptions' => (
+has cacheModuleOptions => (
     is  => 'rw',
     isa => 'HashRef|Undef',
 );
 
-has 'error' => (
+has error => (
     is  => 'rw',
     isa => 'Str|Undef',
 );

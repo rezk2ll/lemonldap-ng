@@ -8,7 +8,7 @@ use Lemonldap::NG::Handler::Main;
 use Lemonldap::NG::Common::Util qw(getSameSite);
 use URI;
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.19.0';
 
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
@@ -711,10 +711,7 @@ sub tests {
         bruteForceProtection => sub {
             my @lockTimes =
               sort { $a <=> $b }
-              map {
-                $_ =~ s/\D//;
-                abs $_;
-              }
+              map  { abs(s/\D//r) }
               grep { /\d+/ }
               split /\s*,\s*/, $conf->{bruteForceProtectionLockTimes} || '';
             $conf->{bruteForceProtectionLockTimes} = join ', ', @lockTimes
@@ -1185,6 +1182,30 @@ sub tests {
             return 1 unless @pb;
             return ( 1,
                 "JWKS URI defined while JWKS document is fixed: "
+                  . join( ', ', @pb ) );
+        },
+
+# If oidcRPMetaDataOptionsAuthRequiredForAuthorize is set, oidcRPMetaDataOptionsAuthMethod should be compatible
+        oidcCompatAuth => sub {
+            return 1
+              unless $conf->{oidcRPMetaDataOptions}
+              and ref $conf->{oidcRPMetaDataOptions};
+            my @pb;
+            for my $rp ( keys %{ $conf->{oidcRPMetaDataOptions} } ) {
+                push @pb, $rp
+                  if $conf->{oidcRPMetaDataOptions}->{$rp}
+                  ->{oidcRPMetaDataOptionsAuthRequiredForAuthorize}
+                  and $conf->{oidcRPMetaDataOptions}->{$rp}
+                  ->{oidcRPMetaDataOptionsAuthMethod}
+                  and $conf->{oidcRPMetaDataOptions}->{$rp}
+                  ->{oidcRPMetaDataOptionsAuthMethod} !~
+                  /^(?:client_secret|private_key)_jwt$/;
+            }
+            return 1 unless @pb;
+            return ( 1,
+                    'Incompatible required authentication methods in RP '
+                  . '(only client_secret_jwt and private_key_jwt are allowed '
+                  . 'when authentication is required on authorization endpoint: '
                   . join( ', ', @pb ) );
         },
     };

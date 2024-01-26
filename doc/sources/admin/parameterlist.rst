@@ -86,14 +86,12 @@ checkDevOps                                             Enable check DevOps     
 checkDevOpsCheckSessionAttributes                       Check if session attributes exist                                                    ✔
 checkDevOpsDisplayNormalizedHeaders                     Display normalized headers                                                           ✔
 checkDevOpsDownload                                     Enable check DevOps download field                                                   ✔
+checkEntropy                                            Enable entropy check of password                                                     ✔
+checkEntropyRequired                                    Require entropy check to pass                                                        ✔
+checkEntropyRequiredLevel                               Minimal entropy required for the password to be accepted                             ✔
 checkHIBP                                               Enable check HIBP                                                                    ✔
 checkHIBPRequired                                       Require HIBP check to pass                                                           ✔
 checkHIBPURL                                            URL of Have I Been Pwned API                                                         ✔
-checkEntropy                                            Enable entropy check of the password                                                 ✔
-checkEntropyRequired                                    Require entropy check to pass                                                        ✔
-checkEntropyRequiredLevel                               Minimal level of entropy required for the password                                   ✔
-initializePasswordReset                                 Enable Password Reset plugin                                                         ✔
-initializePasswordResetSecret                           Secret key of the Password Reset plugin API                                          ✔
 checkState                                              Enable CheckState plugin                                                             ✔
 checkStateSecret                                        Secret token for CheckState plugin                                                   ✔
 checkTime                                               Timeout to check new configuration in local cache                                    ✔      ✔               ✔
@@ -232,6 +230,8 @@ impersonationRule                                       Impersonation activation
 impersonationSkipEmptyValues                            Skip session empty values                                                            ✔
 impersonationUnrestrictedUsersRule                      Impersonation unrestricted users rule                                                ✔
 infoFormMethod                                          HTTP method for info page form                                                       ✔
+initializePasswordReset                                 Enable Password Reset API plugin                                                     ✔
+initializePasswordResetSecret                           Secret key for the Initialize Password Reset API                                     ✔
 issuerDBCASActivation                                   CAS server activation                                                                ✔
 issuerDBCASPath                                         CAS server request path                                                              ✔
 issuerDBCASRule                                         CAS server rule                                                                      ✔
@@ -379,9 +379,14 @@ oidcServiceAllowOnlyDeclaredScopes                      OpenID Connect allow onl
 oidcServiceAuthorizationCodeExpiration                  OpenID Connect global code TTL                                                       ✔
 oidcServiceDynamicRegistrationExportedVars              OpenID Connect exported variables for dynamic registration                           ✔
 oidcServiceDynamicRegistrationExtraClaims               OpenID Connect extra claims for dynamic registration                                 ✔
+oidcServiceEncAlgorithmAlg                              JWT encryption algorithme                                                            ✔
+oidcServiceEncAlgorithmEnc                              JWT encryption algorithme                                                            ✔
 oidcServiceIDTokenExpiration                            OpenID Connect global ID token TTL                                                   ✔
 oidcServiceIgnoreScopeForClaims                         OpenID Connect release all attributes even when not allowed by scope                 ✔
+oidcServiceKeyIdEnc                                     OpenID Connect Encryption Key ID                                                     ✔
 oidcServiceKeyIdSig                                     OpenID Connect Signature Key ID                                                      ✔
+oidcServiceKeyTypeEnc                                                                                                                        ✔
+oidcServiceKeyTypeSig                                                                                                                        ✔
 oidcServiceMetaDataAuthnContext                         OpenID Connect Authentication Context Class Ref                                      ✔
 oidcServiceMetaDataAuthorizeURI                         OpenID Connect authorizaton endpoint                                                 ✔
 oidcServiceMetaDataBackChannelURI                       OpenID Connect Back-Channel logout endpoint                                          ✔
@@ -395,13 +400,21 @@ oidcServiceMetaDataRegistrationURI                      OpenID Connect registrat
 oidcServiceMetaDataTokenURI                             OpenID Connect token endpoint                                                        ✔
 oidcServiceMetaDataUserInfoURI                          OpenID Connect user info endpoint                                                    ✔
 oidcServiceNewKeyIdSig                                  Future OpenID Connect Signature Key ID                                               ✔
+oidcServiceNewKeyTypeSig                                                                                                                     ✔
 oidcServiceNewPrivateKeySig                                                                                                                  ✔
 oidcServiceNewPublicKeySig                                                                                                                   ✔
 oidcServiceOfflineSessionExpiration                     OpenID Connect global offline session TTL                                            ✔
+oidcServiceOldKeyIdEnc                                  Previous OpenID Connect Encryption Key ID                                            ✔
 oidcServiceOldKeyIdSig                                  Previous OpenID Connect Signature Key ID                                             ✔
+oidcServiceOldKeyTypeEnc                                                                                                                     ✔
+oidcServiceOldKeyTypeSig                                                                                                                     ✔
+oidcServiceOldPrivateKeyEnc                                                                                                                  ✔
 oidcServiceOldPrivateKeySig                                                                                                                  ✔
+oidcServiceOldPublicKeyEnc                                                                                                                   ✔
 oidcServiceOldPublicKeySig                                                                                                                   ✔
+oidcServicePrivateKeyEnc                                                                                                                     ✔
 oidcServicePrivateKeySig                                                                                                                     ✔
+oidcServicePublicKeyEnc                                                                                                                      ✔
 oidcServicePublicKeySig                                                                                                                      ✔
 oidcStorage                                             Apache::Session module to store OIDC user data                                       ✔
 oidcStorageOptions                                      Apache::Session module parameters                                                    ✔
@@ -502,6 +515,7 @@ radiusExportedVars                                      RADIUS exported variable
 radiusRequestAttributes                                 RADIUS authentication attributes                                                     ✔
 radiusSecret                                                                                                                                 ✔
 radiusServer                                                                                                                                 ✔
+radiusTimeout                                                                                                                                ✔
 randomPasswordRegexp                                    Regular expression to create a random password                                       ✔
 redirectFormMethod                                      HTTP method for redirect page form                                                   ✔
 refreshSessions                                         Refresh sessions plugin                                                              ✔
@@ -649,6 +663,7 @@ stayConnectedCookieName                                 Name of the stayConnecte
 stayConnectedSingleSession                              Allow only one permanent session per user                                            ✔
 stayConnectedTimeout                                    StayConnected persistent connexion session timeout                                                  ✔
 storePassword                                           Store password in session                                                            ✔
+storePasswordEncrypted                                  Crypt the password in session                                                        ✔
 strictTransportSecurityMax_Age                          Max-age for Strict-Transport-Security                                                ✔
 successLoginNumber                                      Number of success stored in login history                                            ✔
 syslogFacility                                          Syslog logger technical facility                                                     ✔      ✔       ✔       ✔
@@ -668,6 +683,7 @@ totp2fRange                                             TOTP range (number of in
 totp2fSelfRegistration                                  TOTP self registration activation                                                    ✔
 totp2fTTL                                               TOTP device time to live                                                             ✔
 totp2fUserCanRemoveKey                                  Authorize users to remove existing TOTP secret                                       ✔
+trustedBrowserRule                                      Trusted browser registration rule                                                    ✔
 trustedDomains                                          Trusted domains                                                                      ✔
 twitterAppName                                                                                                                               ✔
 twitterAuthnLevel                                       Twitter authentication level                                                         ✔
@@ -702,6 +718,8 @@ webIDAuthnLevel                                         WebID authentication lev
 webIDExportedVars                                       WebID exported variables                                                             ✔
 webIDWhitelist                                                                                                                               ✔
 webauthn2fActivation                                    WebAuthn second factor activation                                                    ✔
+webauthn2fAttestation                                   Ask the authenticator for an attestation                                             ✔
+webauthn2fAttestationTrust                              Certificate bundle for attestation trust validation                                  ✔
 webauthn2fAuthnLevel                                    Authentication level for users authentified by WebAuthn second factor                ✔
 webauthn2fLabel                                         Portal label for WebAuthn second factor                                              ✔
 webauthn2fLogo                                          Custom logo for WebAuthn 2F                                                          ✔

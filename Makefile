@@ -406,7 +406,7 @@ manager:	manager_conf handler
 # ------------
 test:		all common_test handler_test portal_test manager_test
 	@echo
-	@echo "All test passed"
+	@echo "All tests passed"
 
 common_test:	common
 	@HARNESS_OPTIONS=$(PARA) $(MAKE) -C ${SRCCOMMONDIR} test

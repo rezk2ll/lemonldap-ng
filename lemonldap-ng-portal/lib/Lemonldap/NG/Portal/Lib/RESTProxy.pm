@@ -97,7 +97,7 @@ sub getUser {
     }
 
     $req->sessionInfo->{_proxyCookies} = join '; ',
-      map { s/;.*$//; $_ } $resp->header('Set-Cookie');
+      map { s/;.*$//r } $resp->header('Set-Cookie');
     $self->logger->debug( 'Store remote cookies in session ('
           . $req->sessionInfo->{_proxyCookies}
           . ')' );

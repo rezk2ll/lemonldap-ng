@@ -56,6 +56,8 @@ to define attributes and extra claims released when a new relying party is regis
     You can restrict this by protecting the WebServer registration endpoint
     with an authentication module, and give credentials to clients.
 
+.. _openidconnectservice-security-parameters:
+
 Security
 ~~~~~~~~
 

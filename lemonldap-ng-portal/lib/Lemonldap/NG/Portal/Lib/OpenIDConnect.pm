@@ -26,7 +26,7 @@ use URI;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.19.0';
 
 use constant BACKCHANNEL_EVENTSKEY =>
   'http://schemas.openid.net/event/backchannel-logout';
@@ -424,6 +424,8 @@ sub getCallbackUri {
 # return String Authentication Request URI
 sub buildAuthorizationCodeAuthnRequest {
     my ( $self, $req, $op, $state, $nonce ) = @_;
+    my $authMode =
+      $self->opOptions->{$op}->{oidcOPMetaDataOptionsAuthnEndpointAuthMethod};
 
     my $authorize_uri =
       $self->opMetadata->{$op}->{conf}->{authorization_endpoint};
@@ -445,13 +447,15 @@ sub buildAuthorizationCodeAuthnRequest {
     my $ui_locales = $self->opOptions->{$op}->{oidcOPMetaDataOptionsUiLocales};
     my $acr_values = $self->opOptions->{$op}->{oidcOPMetaDataOptionsAcrValues};
 
-    my $authorize_request_params = {
+    my $authorize_request_oauth2_params = {
         response_type => $response_type,
         client_id     => $client_id,
         scope         => $scope,
         redirect_uri  => $redirect_uri,
-        ( defined $state      ? ( state      => $state )      : () ),
-        ( defined $nonce      ? ( nonce      => $nonce )      : () ),
+        ( defined $state ? ( state => $state ) : () ),
+        ( defined $nonce ? ( nonce => $nonce ) : () ),
+    };
+    my $authorize_request_params = {
         ( defined $display    ? ( display    => $display )    : () ),
         ( defined $prompt     ? ( prompt     => $prompt )     : () ),
         ( $max_age            ? ( max_age    => $max_age )    : () ),
@@ -466,10 +470,38 @@ sub buildAuthorizationCodeAuthnRequest {
     );
     return if ( $h != PE_OK );
 
+    if ( $authMode and $authMode =~ /^jw(?:s|e)$/ ) {
+        my $aud = $authorize_uri;
+        $aud =~ s#^(https://[^/]*).*?$#$1#;
+        my $jwt = $self->createJWTForOP( {
+                iss => $client_id,
+                aud => $aud,
+                jti => $self->generateNonce,
+                exp => time + 30,
+                iat => time,
+                %$authorize_request_oauth2_params,
+                %$authorize_request_params,
+            },
+            $self->opOptions->{op}
+              ->{oidcOPMetaDataOptionsAuthnEndpointAuthSigAlg} || 'RS256',
+            $op
+        );
+        if ($jwt) {
+            $authorize_request_params = { request => $jwt };
+            if ( $authMode eq 'jwe' ) {
+                $self->logger->error('jwe mode not yet implemented');
+            }
+        }
+        else {
+            $self->logger->error(
+                'Unable to generate JWT, continue with unauthenticated query');
+        }
+    }
     my $authn_uri =
         $authorize_uri
       . ( $authorize_uri =~ /\?/ ? '&' : '?' )
-      . build_urlencoded(%$authorize_request_params);
+      . build_urlencoded( %$authorize_request_oauth2_params,
+        %$authorize_request_params );
 
     $self->logger->debug(
         "OpenIDConnect Authorization Code Flow Authn Request: $authn_uri");
@@ -1506,27 +1538,52 @@ sub decodeJWT {
 
     # Choosing keys
     #  - if algorithm is HS{digits}, the key is the ClientSecret
-    #  - if JWS has a "kti" field in its header, use it (then replace the
+    #  - if JWS has a "kid" field in its header, use it (then replace the
     #    "key" arg of Crypt::JWT by "kid_keys" and give the whole JWKS)
     #  - else we try the first available key of jwks document
-    my @keyArg =
-      $alg =~ /^HS/
-      ? (
-        key => $op
-        ? $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientSecret}
-        : $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret}
-      )
-      : $jwt_header->{kti} ? ( kid_keys => $jwks )
-      :                      ( key => $jwks->{keys}->[0] );
+    my @keyArgs;
+    if ( $alg =~ /^HS/ ) {
+        $self->logger->debug("Alg is $alg, using secret as key");
+        @keyArgs = ( [
+                key => $op
+                ? $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientSecret}
+                : $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret}
+            ]
+        );
+    }
+    elsif ( $jwt_header->{kid} ) {
+        $self->logger->debug(
+            "'kid' found in JWT header, using the whole JWKS doc as 'kid_keys'"
+        );
+        @keyArgs = ( [ kid_keys => $jwks ] );
+    }
+    else {
+        $self->logger->debug(
+"No 'kid' found in JWT header, will try all keys found in JWKS doc ("
+              . @{ $jwks->{keys} }
+              . ' key(s))' );
+        @keyArgs = map { [ key => $_ ] } @{ $jwks->{keys} };
+    }
 
-    # JSON decoding is done here because #2748
-    my $content = eval {
-        JSON::from_json(
-            decode_jwt( token => $jwt, @keyArg, decode_payload => 0 ) );
-    };
-    if ($@) {
-        $self->logger->error("Unable to verify JWT: $@");
-        $self->logger->error("Jwt was: $jwt");
+    my $error = [];
+    my $content;
+    foreach my $keyArg (@keyArgs) {
+
+        # JSON decoding is done here because #2748
+        $content = eval {
+            JSON::from_json(
+                decode_jwt( token => $jwt, @$keyArg, decode_payload => 0 ) );
+        };
+        if ($@) {
+            $error = [ "Unable to verify JWT: $@", "Jwt was: $jwt" ];
+        }
+        else {
+            $error = [];
+            last;
+        }
+    }
+    if (@$error) {
+        $self->logger->error($_) foreach @$error;
         return;
     }
     return wantarray ? ( $content, $alg ) : $content;
@@ -1881,18 +1938,20 @@ sub getEndPointAuthenticationCredentials {
 # @return access_token
 sub getEndPointAccessToken {
     my ( $self, $req ) = @_;
-    my $access_token;
+    my ( $access_token, $method );
 
     my $authorization = $req->authorization;
     if ( $authorization and $authorization =~ /^Bearer ([\w\-\.]+)/i ) {
         $self->logger->debug("Bearer access token");
         $access_token = $1;
+        $method       = 'header';
     }
     elsif ( $access_token = $req->param('access_token') ) {
         $self->logger->debug("GET/POST access token");
+        $method = 'param';
     }
 
-    return $access_token;
+    return wantarray ? ( $access_token, $method ) : $access_token;
 }
 
 # DEPRECATED, remove in 3.0, use getAttributeListFromScopeValue instead
@@ -2230,13 +2289,18 @@ sub _createJWT {
             return;
         }
         @keyArg = ( key => \$priv_key, );
+
+        if ( $self->conf->{oidcServiceKeyIdSig} ) {
+            push @keyArg,
+              extra_headers => { kid => $self->conf->{oidcServiceKeyIdSig} };
+        }
     }
 
     # Encode payload here due to #2748
     my $jwt = eval {
         encode_jwt(
-            payload => to_json($payload),
-            alg     => $alg,
+            payload       => to_json($payload),
+            alg           => $alg,
             @keyArg,
         );
     };

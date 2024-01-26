@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 
 extends qw(
-  Lemonldap::NG::Common::Module
+  Lemonldap::NG::Portal::Main::UserDB
   Lemonldap::NG::Portal::Lib::REST
 );
 
@@ -129,10 +129,6 @@ sub setSessionInfo {
     $req->sessionInfo->{$_} = $req->data->{restUserDBInfo}->{$_}
       foreach ( keys %{ $req->data->{restUserDBInfo} } );
 
-    return PE_OK;
-}
-
-sub setGroups {
     return PE_OK;
 }
 

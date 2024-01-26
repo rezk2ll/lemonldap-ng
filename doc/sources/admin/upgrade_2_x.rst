@@ -24,7 +24,8 @@ files before the update.
 Known regressions in the latest released version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-None
+Some regressions have been found on OpenID Connect signature management
+and on configuration reload. Upgrade to 2.18.1 to fix them.
 
 2.18.0
 ------
@@ -121,9 +122,8 @@ Note that we now send a plain text version of the mail attached to the HTML emai
 2.17.1
 ------
 
-Declaration of OIDC `request_uri` is now required
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+Restriction in use of OIDC `request_uri`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A little-know feature of OIDC (*note*: you are probably not using it) allows the OpenID Provider, LemonLDAP::NG in this case, to fetch the Authorization request parameters itself by indicating a `request_uri` parameter.
 

@@ -317,7 +317,7 @@
 "showhidePasswords":"Näytä/Piilota salasanat",
 "spoofId":"Väärennetty tunniste",
 "startTime":"Luontipäivämäärä",
-"stayConnected":"Trust this device for future logins",
+"stayConnected":"Luota tähän tunnistusvälineeseen tulevissa kirjautumisissa",
 "submit":"Lähetä",
 "switchContext":"Vaihda kontekstia",
 "totp2f":"OTP-sovellus",

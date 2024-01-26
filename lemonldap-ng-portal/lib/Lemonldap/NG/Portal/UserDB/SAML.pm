@@ -13,7 +13,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 our $VERSION = '2.0.12';
 
 extends qw(
-  Lemonldap::NG::Common::Module
+  Lemonldap::NG::Portal::Main::UserDB
   Lemonldap::NG::Portal::Lib::SAML
 );
 
@@ -175,11 +175,6 @@ sub setSessionInfo {
     # Restore current Lasso::Server
     $self->lassoServer = $current_server;
 
-    return PE_OK;
-}
-
-# Does nothing
-sub setGroups {
     return PE_OK;
 }
 

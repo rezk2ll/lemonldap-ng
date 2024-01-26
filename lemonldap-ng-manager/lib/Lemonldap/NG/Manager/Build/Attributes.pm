@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.19.0';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -23,7 +23,7 @@ sub perlExpr {
     );
     $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
-    $cpt->reval("BEGIN { 'warnings'->unimport; } $val");
+    $cpt->reval($val);
     my $err = join( '',
         grep { $_ =~ /(?:Undefined subroutine|Devel::StackTrace)/ ? () : $_ }
           split( /\n/, $@ ) );
@@ -287,6 +287,22 @@ use constant oidcEncAlgorithmAlg => [
     { k => 'ECDH-ES+A128KW', v => 'ECDH-ES+A128KW' },
     { k => 'ECDH-ES+A192KW', v => 'ECDH-ES+A192KW' },
     { k => 'ECDH-ES+A256KW', v => 'ECDH-ES+A256KW' },
+];
+
+use constant oidcSigAlgorithmAlg => [
+    { k => 'HS256', v => 'HS256' },
+    { k => 'HS384', v => 'HS384' },
+    { k => 'HS512', v => 'HS512' },
+    { k => 'RS256', v => 'RS256' },
+    { k => 'RS384', v => 'RS384' },
+    { k => 'RS512', v => 'RS512' },
+    { k => 'PS256', v => 'PS256' },
+    { k => 'PS384', v => 'PS384' },
+    { k => 'PS512', v => 'PS512' },
+    { k => 'ES256', v => 'ES256' },
+    { k => 'ES384', v => 'ES384' },
+    { k => 'ES512', v => 'ES512' },
+    { k => 'EdDSA', v => 'EdDSA' },
 ];
 
 sub attributes {
@@ -4866,6 +4882,17 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             default => 'client_secret_post',
         },
+        oidcOPMetaDataOptionsAuthnEndpointAuthMethod => {
+            type   => 'select',
+            select =>
+              [ { k => '', v => 'None' }, { k => 'jws', v => 'Signed JWT' }, ],
+            default => 'get',
+        },
+        oidcOPMetaDataOptionsAuthnEndpointAuthSigAlg => {
+            type    => 'select',
+            select  => oidcSigAlgorithmAlg,
+            default => 'RS256',
+        },
         oidcOPMetaDataOptionsCheckJWTSignature =>
           { type => 'bool', default => 1 },
         oidcOPMetaDataOptionsIDTokenMaxAge => { type => 'int',  default => 30 },
@@ -4905,49 +4932,23 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'private_key_jwt',     v => 'private_key_jwt' },
             ],
         },
+        oidcRPMetaDataOptionsAuthRequiredForAuthorize => {
+            type => 'bool',
+        },
         oidcRPMetaDataOptionsDisplayName    => { type => 'text', },
         oidcRPMetaDataOptionsIcon           => { type => 'text', },
         oidcRPMetaDataOptionsUserIDAttr     => { type => 'text', },
         oidcRPMetaDataOptionsIDTokenSignAlg => {
             type   => 'select',
-            select => [
-                { k => 'none',  v => 'None' },
-                { k => 'HS256', v => 'HS256' },
-                { k => 'HS384', v => 'HS384' },
-                { k => 'HS512', v => 'HS512' },
-                { k => 'RS256', v => 'RS256' },
-                { k => 'RS384', v => 'RS384' },
-                { k => 'RS512', v => 'RS512' },
-                { k => 'PS256', v => 'PS256' },
-                { k => 'PS384', v => 'PS384' },
-                { k => 'PS512', v => 'PS512' },
-                { k => 'ES256', v => 'ES256' },
-                { k => 'ES384', v => 'ES384' },
-                { k => 'ES512', v => 'ES512' },
-                { k => 'EdDSA', v => 'EdDSA' },
-            ],
+            select => [ { k => 'none', v => 'None' }, @{&oidcSigAlgorithmAlg} ],
             default => 'RS256',
         },
         oidcRPMetaDataOptionsIDTokenExpiration  => { type => 'intOrNull' },
         oidcRPMetaDataOptionsIDTokenForceClaims =>
           { type => 'bool', default => 0 },
         oidcRPMetaDataOptionsAccessTokenSignAlg => {
-            type   => 'select',
-            select => [
-                { k => 'HS256', v => 'HS256' },
-                { k => 'HS384', v => 'HS384' },
-                { k => 'HS512', v => 'HS512' },
-                { k => 'RS256', v => 'RS256' },
-                { k => 'RS384', v => 'RS384' },
-                { k => 'RS512', v => 'RS512' },
-                { k => 'PS256', v => 'PS256' },
-                { k => 'PS384', v => 'PS384' },
-                { k => 'PS512', v => 'PS512' },
-                { k => 'ES256', v => 'ES256' },
-                { k => 'ES384', v => 'ES384' },
-                { k => 'ES512', v => 'ES512' },
-                { k => 'EdDSA', v => 'EdDSA' },
-            ],
+            type    => 'select',
+            select  => oidcSigAlgorithmAlg,
             default => 'RS256',
         },
         oidcRPMetaDataOptionsUserInfoSignAlg => {
@@ -5137,6 +5138,17 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             select        => oidcEncAlgorithmEnc,
             default       => 'A256GCM',
             documentation => '"enc" algorithm for logout encryption',
+        },
+        oidcRPMetaDataOptionsAuthnRequireState => {
+            type => 'bool',
+        },
+        oidcRPMetaDataOptionsAuthnRequireNonce => {
+            type => 'bool',
+        },
+        oidcRPMetaDataOptionsUserinfoRequireHeaderToken => {
+            type          => 'bool',
+            documentation =>
+              '/userinfo endpoint requires authn using Bearer token',
         },
     };
 }

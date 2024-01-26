@@ -36,7 +36,6 @@ SKIP: {
     $sp     = register( 'sp',     \&sp );
 
     # Simple authentication on IdP
-    switch ('issuer');
     ok(
         $res = $issuer->_post(
             '/', IO::String->new('user=russian&password=russian'),
@@ -72,7 +71,6 @@ SKIP: {
     my $s = "SAMLResponse=$1";
 
     # Post SAML response to SP
-    switch ('sp');
     ok(
         $res = $sp->_post(
             $url, IO::String->new($s),
@@ -99,7 +97,6 @@ SKIP: {
       or explain( $res, 'cn => Frédéric Accents' );
 
     # Logout initiated by IdP
-    switch ('issuer');
     ok(
         $res = $issuer->_get(
             '/',
@@ -122,14 +119,12 @@ m#iframe src="http://auth.sp.com(/saml/proxySingleLogout)\?(SAMLRequest=.*?)"#,
     my $removedCookie = expectCookie($res);
     is( $removedCookie, 0, "SSO cookie removed" );
 
-    switch ('sp');
     ok( $res = $sp->_get( $url, query => $query, accept => 'text/html' ),
         'Query SP for iframe' );
     ( $url, $query ) = expectRedirection( $res,
         qr#http://auth.idp.com(/saml/singleLogoutReturn)\?(SAMLResponse=.*)# );
 
     # Push SAML logout response to IdP
-    switch ('issuer');
     ok( $res = $issuer->_get( $url, query => $query, accept => 'text/html' ),
         'Push SAML response to IdP' );
     expectRedirection( $res, 'http://auth.idp.com/static/common/icons/ok.png' );
@@ -142,7 +137,6 @@ m#iframe src="http://auth.sp.com(/saml/proxySingleLogout)\?(SAMLRequest=.*?)"#,
         'Content-Security-Policy does not contain a frame-ancestors' );
 
     # Test if logout is done
-    switch ('issuer');
     ok(
         $res = $issuer->_get(
             '/', cookie => "lemonldap=$idpId",
@@ -151,7 +145,6 @@ m#iframe src="http://auth.sp.com(/saml/proxySingleLogout)\?(SAMLRequest=.*?)"#,
     );
     expectReject($res);
 
-    switch ('sp');
     ok(
         $res = $sp->_get(
             '/',

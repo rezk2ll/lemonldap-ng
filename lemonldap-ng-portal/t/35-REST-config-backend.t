@@ -25,6 +25,7 @@ LWP::Protocol::PSGI->register(
         my $query = $2;
         my $res;
         my $s = $req->content;
+
         if ( $req->method =~ /^(post|put)$/i ) {
             my $mth = '_' . lc($1);
             my $s   = $req->content;
@@ -62,16 +63,14 @@ LWP::Protocol::PSGI->register(
     }
 );
 
-$issuer = register( 'issuer', \&issuer );
+$issuer = register( 'issuer', sub { issuer() } );
 
 # Test REST config backend
 ok( $res = $issuer->_get('/config/latest'), 'Get latest conf metadata' );
 count(1);
 expectOK($res);
 
-$sp = register( 'sp', \&sp );
-
-switch ('sp');
+$sp = register( 'sp', sub { sp() } );
 
 # Simple SP access
 ok(
@@ -101,7 +100,6 @@ count(1);
 expectOK($res);
 
 # Test other REST queries
-switch ('issuer');
 
 # Session content
 ok( $res = $issuer->_get("/sessions/global/$spId"), 'Session content' );
@@ -178,7 +176,6 @@ ok( $res->{result} eq '1', ' Good result' )
 count(6);
 
 # Logout
-switch ('sp');
 ok(
     $res = $sp->_get(
         '/',
@@ -205,8 +202,7 @@ clean_sessions();
 done_testing( count() );
 
 sub issuer {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel          => $debug,
                 domain            => 'idp.com',
@@ -223,8 +219,7 @@ sub issuer {
 }
 
 sub sp {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel       => $debug,
                 domain         => 'sp.com',

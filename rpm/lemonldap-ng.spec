@@ -28,7 +28,7 @@
 #global pre_release beta1
 
 Name:           lemonldap-ng
-Version:        2.17.2
+Version:        2.18.1
 Release:        %{?pre_release:0.}1%{?pre_release:.%{pre_release}}%{?dist}
 Summary:        Web Single Sign On (SSO) and Access Management
 # Lemonldap-ng itself is GPLv2+
@@ -319,7 +319,7 @@ Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Portal) = %{version}-%{release}
 %if 0%{?el7}
 # Fido2
-Requires:       perl(Authen::WebAuthn)
+#Requires:       perl(Authen::WebAuthn)
 # Facebook
 Requires:       perl(Net::Facebook::Oauth2)
 # OpenID
@@ -765,6 +765,12 @@ fi
 
 
 %changelog
+* Fri Dec 22 2023 Clement Oudot <clem.oudot@gmail.com> - 2.18.1-1
+- Update to 2.18.1
+
+* Wed Dec 20 2023 Clement Oudot <clem.oudot@gmail.com> - 2.18.0-1
+- Update to 2.18.0
+
 * Tue Nov 14 2023 Clement Oudot <clem.oudot@gmail.com> - 2.17.2-1
 - Update to 2.17.2
 

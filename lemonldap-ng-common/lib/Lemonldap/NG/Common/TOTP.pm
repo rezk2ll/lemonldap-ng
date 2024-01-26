@@ -12,7 +12,7 @@ use Lemonldap::NG::Common::Crypto;
 
 our $VERSION = '2.0.14';
 
-has 'key' => (
+has key => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
@@ -30,7 +30,7 @@ has encryptSecret => (
     }
 );
 
-has 'crypto' => (
+has crypto => (
     is      => 'ro',
     lazy    => 1,
     default => sub {

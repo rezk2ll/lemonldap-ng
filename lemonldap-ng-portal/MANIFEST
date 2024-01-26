@@ -107,6 +107,7 @@ lib/Lemonldap/NG/Portal/Main/Process.pm
 lib/Lemonldap/NG/Portal/Main/Request.pm
 lib/Lemonldap/NG/Portal/Main/Run.pm
 lib/Lemonldap/NG/Portal/Main/SecondFactor.pm
+lib/Lemonldap/NG/Portal/Main/UserDB.pm
 lib/Lemonldap/NG/Portal/Password/AD.pm
 lib/Lemonldap/NG/Portal/Password/Base.pm
 lib/Lemonldap/NG/Portal/Password/Choice.pm
@@ -686,10 +687,13 @@ t/32-OIDC-ClientCredentials-Grant.t
 t/32-OIDC-Code-Flow-Mobile.t
 t/32-OIDC-Code-Flow-with-2F-UpgradeOnly.t
 t/32-OIDC-Code-Flow-with-2F.t
+t/32-OIDC-Double-Keys-without-kid.t
+t/32-OIDC-Double-Keys.t
 t/32-OIDC-Grant-Type-OAuth2-Handler-Rules.t
 t/32-OIDC-Grant-Type-Rules.t
 t/32-OIDC-Hook-GetRpConfig.t
 t/32-OIDC-Hooks.t
+t/32-OIDC-ID-Token.t
 t/32-OIDC-JWE.t
 t/32-OIDC-JWS-client_secret_jwt.t
 t/32-OIDC-JWS-private_key_jwt.t
@@ -704,6 +708,7 @@ t/32-OIDC-Password-Grant-with-Bruteforce-and-Choice.t
 t/32-OIDC-Password-Grant.t
 t/32-OIDC-redirect_uri-filter.t
 t/32-OIDC-Refresh-Token.t
+t/32-OIDC-Register-with-bad-redirect-uri.t
 t/32-OIDC-Register.t
 t/32-OIDC-Request-Uri.t
 t/32-OIDC-Response-Modes.t
@@ -915,6 +920,7 @@ t/77-2F-Mail-SessionKey.t
 t/77-2F-Mail-with-global-storage.t
 t/77-2F-Mail.t
 t/77-2F-Radius.t
+t/77-2F-Trust.t
 t/78-2F-Upgrade-Many.t
 t/78-2F-Upgrade.t
 t/78-2F-UpgradeOnly-with-forceFlag.t
