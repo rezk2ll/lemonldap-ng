@@ -76,9 +76,11 @@ sub init {
 sub run {
     my ( $self, $req, $token ) = @_;
 
-    my $okta_userid = $self->getOktaUserID( $req->user );
+    my $okta_login_attribute = $self->conf->{'okta2fLoginAttribute'} || '_user';
+    my $okta_login           = $req->sessionInfo->{$okta_login_attribute};
+    my $okta_userid          = $self->getOktaUserID($okta_login);
     unless ($okta_userid) {
-        $self->logger->error( "No Okta user found for " . $req->user );
+        $self->logger->error( "No Okta user found for " . $okta_login );
         return PE_ERROR;
     }
     $self->ott->updateToken( $token, __oktaUserId => $okta_userid );
