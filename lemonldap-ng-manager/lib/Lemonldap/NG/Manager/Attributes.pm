@@ -3682,6 +3682,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'portalCustomCss' => {
             'type' => 'text'
         },
+        'portalCustomJs' => {
+            'type' => 'text'
+        },
         'portalDisplayAppslist' => {
             'default' => 1,
             'type'    => 'boolOrExpr'

@@ -894,6 +894,7 @@
 "portalCaptcha":"CAPTCHA",
 "portalCheckLogins":"Check last logins",
 "portalCustomCss":"Custom CSS file",
+"portalCustomJs":"Custom JS file",
 "portalCustomization":"Personalización",
 "portalDisplayAppslist":"Application list",
 "portalDisplayCertificateResetByMail":"Reset certificate",

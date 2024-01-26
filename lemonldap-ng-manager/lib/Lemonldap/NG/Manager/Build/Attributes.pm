@@ -456,6 +456,10 @@ sub attributes {
             type          => 'text',
             documentation => 'Path to custom CSS file',
         },
+        portalCustomJs => {
+            type          => 'text',
+            documentation => 'Path to custom JS file',
+        },
         portalStatus => {
             type          => 'bool',
             default       => 0,

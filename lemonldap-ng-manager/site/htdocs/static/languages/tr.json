@@ -894,6 +894,7 @@
 "portalCaptcha":"Captcha",
 "portalCheckLogins":"Son girişleri kontrol et",
 "portalCustomCss":"Özelleştirilmiş CSS dosyası",
+"portalCustomJs":"Özelleştirilmiş JS dosyası",
 "portalCustomization":"Özelleştirme",
 "portalDisplayAppslist":"Uygulama listesi",
 "portalDisplayCertificateResetByMail":"Sertifikayı sıfırla",

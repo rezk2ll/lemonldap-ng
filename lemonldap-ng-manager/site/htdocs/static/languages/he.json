@@ -894,6 +894,7 @@
 "portalCaptcha":"מבחן טיורינג",
 "portalCheckLogins":"בדיקת הכניסות האחרונות",
 "portalCustomCss":"Custom CSS file",
+"portalCustomJs":"Custom JS file",
 "portalCustomization":"התאמה אישית",
 "portalDisplayAppslist":"Application list",
 "portalDisplayCertificateResetByMail":"Reset certificate",

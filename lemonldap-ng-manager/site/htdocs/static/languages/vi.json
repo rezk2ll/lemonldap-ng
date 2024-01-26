@@ -894,6 +894,7 @@
 "portalCaptcha":"Captcha",
 "portalCheckLogins":"Kiểm tra đăng nhập lần cuối",
 "portalCustomCss":"Tùy chỉnh tệp CSS",
+"portalCustomJs":"Tùy chỉnh tệp JS",
 "portalCustomization":"Tùy chỉnh",
 "portalDisplayAppslist":"danh sách ứng dụng",
 "portalDisplayCertificateResetByMail":"Reset certificate",

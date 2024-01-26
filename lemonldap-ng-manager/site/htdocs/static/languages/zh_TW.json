@@ -894,6 +894,7 @@
 "portalCaptcha":"驗證碼",
 "portalCheckLogins":"檢查上次登入",
 "portalCustomCss":"自訂 CSS 檔案",
+"portalCustomJs":"自訂 JS 檔案",
 "portalCustomization":"自訂",
 "portalDisplayAppslist":"Application list",
 "portalDisplayCertificateResetByMail":"Reset certificate",
