@@ -116,6 +116,7 @@ use constant {
     PE_UNKNOWNPARTNER                    => 107,
     PE_UNAUTHORIZEDURL                   => 108,
     PE_UNPROTECTEDURL                    => 109,
+    PE_RETRY_2FA                         => 110,
 };
 
 sub portalConsts {
@@ -138,6 +139,7 @@ sub portalConsts {
         '107' => 'PE_UNKNOWNPARTNER',
         '108' => 'PE_UNAUTHORIZEDURL',
         '109' => 'PE_UNPROTECTEDURL',
+        '110' => 'PE_RETRY_2FA',
         '2'   => 'PE_FORMEMPTY',
         '20'  => 'PE_NO_PASSWORD_BE',
         '21'  => 'PE_PP_ACCOUNT_LOCKED',
@@ -340,7 +342,8 @@ our @EXPORT_OK = (
     'PE_OIDC_AUTH_ERROR',
     'PE_UNKNOWNPARTNER',
     'PE_UNAUTHORIZEDURL',
-    'PE_UNPROTECTEDURL'
+    'PE_UNPROTECTEDURL',
+    'PE_RETRY_2FA'
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT_OK, 'import' ], );
 

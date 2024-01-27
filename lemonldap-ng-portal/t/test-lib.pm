@@ -1262,4 +1262,17 @@ sub _put {
     return $self->_post( $path, $body, %args );
 }
 
+sub getHistory {
+    my ( $self, $uid, $only_type ) = @_;
+    my $psession = $self->p->getPersistentSession($uid);
+    my @entries;
+    my $history = $psession->data->{_loginHistory} || {};
+    for my $type ( keys %$history ) {
+        if ( !$only_type or $type eq "${only_type}Login" ) {
+            push @entries, @{ $history->{$type} || [] };
+        }
+    }
+    return @entries;
+}
+
 1;

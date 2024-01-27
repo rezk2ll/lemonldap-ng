@@ -14,6 +14,7 @@
 "PE107":"Esta aplicação é desconhecida",
 "PE108":"URL não-autorizada",
 "PE109":"Não é uma URL protegida ou confiável",
+"PE110":"Second factor validation failed, please retry",
 "PE2":"Os campos de usuário e senha devem ser preenchidos",
 "PE20":"Não há backend de senhas definido",
 "PE21":"A sua conta está bloqueada",
