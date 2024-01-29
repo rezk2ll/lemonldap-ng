@@ -3652,6 +3652,10 @@ sub attributes {
             default       => '::2F::Engines::Default',
             documentation => 'Second factor engine',
         },
+        sfRetries => {
+            type          => 'intOrNull',
+            documentation => 'Allowed number of retries',
+        },
         sfRequired => {
             type          => 'boolOrExpr',
             default       => 0,

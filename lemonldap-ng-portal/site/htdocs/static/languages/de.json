@@ -14,6 +14,7 @@
 "PE107":"This application is not known",
 "PE108":"Unauthorized URL",
 "PE109":"Not a protected or trusted URL",
+"PE110":"Second factor validation failed, please retry",
 "PE2":"Benutzername oder Passwort nicht eingegeben",
 "PE20":"No password backend defined",
 "PE21":"Ihr Konto ist blockiert",

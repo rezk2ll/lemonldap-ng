@@ -14,6 +14,7 @@
 "PE107":"Cette application n'est pas reconnue",
 "PE108":"URL non autorisée",
 "PE109":"Cette URL n'est pas protégée ou de confiance",
+"PE110":"Échec de la validation du second facteur, veuillez réessayer",
 "PE2":"Identifiant ou mot de passe non renseigné",
 "PE20":"Base des mots de passe non définie",
 "PE21":"Votre compte est bloqué",

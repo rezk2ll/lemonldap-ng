@@ -56,6 +56,76 @@ The TOTP registration now offers a ``otpauth://`` url that can automatically ope
                  <tt id="secret"></tt>
                </div>
 
+Second factor retry
+^^^^^^^^^^^^^^^^^^^
+
+It is recommended to apply the following patch to your custom templates so that users will have a more friendly error message when retrying their 2FA:
+
+.. code-block:: diff
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl b/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
+    index 4f277f295..c0381fc9e 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
+    @@ -2,7 +2,11 @@
+
+     <main id="logincontent" class="container">
+
+    +<TMPL_IF NAME="AUTH_ERROR">
+    +  <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert" role="<TMPL_VAR NAME="AUTH_ERROR_ROLE">"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
+    +<TMPL_ELSE>
+     <div class="message message-positive alert"><span trspan="<TMPL_IF "LEGEND"><TMPL_VAR "LEGEND"><TMPL_ELSE>enterExt2fCode</TMPL_IF>"></span></div>
+    +</TMPL_IF>
+
+     <div class="card">
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/password2fcheck.tpl b/lemonldap-ng-portal/site/templates/bootstrap/password2fcheck.tpl
+    index 098d91345..361365ef6 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/password2fcheck.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/password2fcheck.tpl
+    @@ -2,7 +2,11 @@
+
+     <main id="logincontent" class="container">
+
+    +<TMPL_IF NAME="AUTH_ERROR">
+    +  <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert" role="<TMPL_VAR NAME="AUTH_ERROR_ROLE">"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
+    +<TMPL_ELSE>
+     <div class="message message-positive alert"><span trspan="enterPassword">Enter your password</span></div>
+    +</TMPL_IF>
+
+     <div class="card">
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl b/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl
+    index 427f78f6c..8e84497e6 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl
+    @@ -2,7 +2,11 @@
+
+     <main id="logincontent" class="container">
+
+    +<TMPL_IF NAME="AUTH_ERROR">
+    +  <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert" role="<TMPL_VAR NAME="AUTH_ERROR_ROLE">"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
+    +<TMPL_ELSE>
+     <div class="message message-positive alert"><span trspan="enterTotpCode"></span></div>
+    +</TMPL_IF>
+
+     <div class="card">
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl b/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl
+    index 881625d5f..aad8d4886 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl
+    @@ -3,7 +3,7 @@
+     <div class="container">
+
+     <TMPL_IF NAME="AUTH_ERROR">
+    -  <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
+    +  <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert" role="<TMPL_VAR NAME="AUTH_ERROR_ROLE">"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
+     </TMPL_IF>
+     <TMPL_IF NAME="DATA">
+       <div id="color" class="message message-positive alert"><span id="msg" trspan="webAuthnRequired"></span></div>
+
+
 2.18.0
 ------
 
@@ -130,7 +200,7 @@ through Manager), just let the option commented in lemonldap-ng.ini.
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can skip this entire section if you use the default ``bootstrap`` theme or if your custo theme only uses ``custom*.tpl`` templates.
+You can skip this entire section if you use the default ``bootstrap`` theme or if your custom theme only uses ``custom*.tpl`` templates.
 
 Password policy display
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -187,7 +257,7 @@ even more encoding bugs in the long run.
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can skip this entire section if you use the default ``bootstrap`` theme or if your custo theme only uses ``custom*.tpl`` templates.
+You can skip this entire section if you use the default ``bootstrap`` theme or if your custom theme only uses ``custom*.tpl`` templates.
 
 Font Awesome application icons
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

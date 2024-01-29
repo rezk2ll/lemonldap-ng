@@ -26,6 +26,7 @@ sub portalConsts {
         '107' => 'PE_UNKNOWNPARTNER',
         '108' => 'PE_UNAUTHORIZEDURL',
         '109' => 'PE_UNPROTECTEDURL',
+        '110' => 'PE_RETRY_2FA',
         '2'   => 'PE_FORMEMPTY',
         '20'  => 'PE_NO_PASSWORD_BE',
         '21'  => 'PE_PP_ACCOUNT_LOCKED',
