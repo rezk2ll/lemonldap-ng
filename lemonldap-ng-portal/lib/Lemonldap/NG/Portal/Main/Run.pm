@@ -435,26 +435,33 @@ sub autoRedirect {
 
     # Redirection should be made if urldc defined
     if ( $req->{urldc} ) {
-        $self->logger->debug("Building redirection to $req->{urldc}");
-        if (    $req->{pdata}->{_url}
-            and $req->{pdata}->{_url} eq encode_base64( $req->{urldc}, '' ) )
-        {
-            $self->logger->info("Force cleaning pdata");
-            delete $req->{pdata}->{_url};
-        }
-        if ( $self->_jsRedirect->( $req, $req->sessionInfo ) ) {
-            $req->error(PE_REDIRECT);
-            $req->data->{redirectFormMethod} = "get";
+        if ( $req->{urldc} =~ /^\s*((?:java|vb)script|data):/ ) {
+            $self->userLogger->error("Redirection to $req->{urldc} blocked");
+            delete $req->{urldc};
         }
         else {
-            return [
-                302,
-                [
-                    Location => URI->new( $req->{urldc} )->as_string,
-                    $req->spliceHdrs
-                ],
-                []
-            ];
+            $self->logger->debug("Building redirection to $req->{urldc}");
+            if (    $req->{pdata}->{_url}
+                and $req->{pdata}->{_url} eq encode_base64( $req->{urldc}, '' )
+              )
+            {
+                $self->logger->info("Force cleaning pdata");
+                delete $req->{pdata}->{_url};
+            }
+            if ( $self->_jsRedirect->( $req, $req->sessionInfo ) ) {
+                $req->error(PE_REDIRECT);
+                $req->data->{redirectFormMethod} = "get";
+            }
+            else {
+                return [
+                    302,
+                    [
+                        Location => URI->new( $req->{urldc} )->as_string,
+                        $req->spliceHdrs
+                    ],
+                    []
+                ];
+            }
         }
     }
     my ( $tpl, $prms ) = $self->display($req);
@@ -742,6 +749,10 @@ sub autoPost {
 
     # Get URL and Form fields
     $req->{urldc} = $req->postUrl;
+    if ( $req->{urldc} =~ /^\s*((?:java|vb)script|data):/ ) {
+        $self->userLogger->error("Redirection to $req->{urldc} blocked");
+        return PE_BADURL;
+    }
     my $formFields = $req->postFields;
 
     $self->clearHiddenFormValue($req);
