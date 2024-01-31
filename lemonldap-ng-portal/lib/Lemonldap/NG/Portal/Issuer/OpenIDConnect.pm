@@ -59,7 +59,8 @@ has iss => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
-        $_[0]->conf->{oidcServiceMetaDataIssuer} || $_[0]->conf->{portal};
+        $_[0]->conf->{oidcServiceMetaDataIssuer}
+          || $_[0]->p->HANDLER->tsv->{portal}->();
     }
 );
 
