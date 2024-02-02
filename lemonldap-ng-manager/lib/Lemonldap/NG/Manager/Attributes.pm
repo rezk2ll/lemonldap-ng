@@ -426,6 +426,10 @@ sub attributes {
                         'v' => 'WebID'
                     },
                     {
+                        'k' => 'WebAuthn',
+                        'v' => 'WebAuthn'
+                    },
+                    {
                         'k' => 'Custom',
                         'v' => 'customModule'
                     }
@@ -595,6 +599,10 @@ sub attributes {
                 {
                     'k' => 'WebID',
                     'v' => 'WebID'
+                },
+                {
+                    'k' => 'WebAuthn',
+                    'v' => 'WebAuthn'
                 },
                 {
                     'k' => 'Demo',
@@ -5650,6 +5658,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'webauthnAppId' => {
             'default' => 1,
             'type'    => 'bool'
+        },
+        'webauthnAuthnLevel' => {
+            'default' => 3,
+            'type'    => 'int'
         },
         'webauthnDisplayNameAttr' => {
             'type' => 'text'

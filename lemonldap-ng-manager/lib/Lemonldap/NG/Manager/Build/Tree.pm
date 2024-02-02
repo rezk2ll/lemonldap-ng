@@ -253,6 +253,14 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'webauthnParams',
+                            form  => 'simpleInputContainer',
+                            help  => 'authwebauthn.html',
+                            nodes => [
+                                'webauthnAuthnLevel',
+                            ]
+                        },
+                        {
                             title => 'ldapParams',
                             help  => 'authldap.html',
                             nodes => [
