@@ -147,11 +147,11 @@ sub login {
     return $self->do(
         $req,
         [
-            'checkUnauthLogout',            'controlUrl',          # Fix 2342
-            @{ $self->beforeAuth },         $self->authProcess,
-            @{ $self->betweenAuthAndData }, $self->sessionData,
-            @{ $self->afterData },          $self->validSession,
-            @{ $self->endAuth }
+            'checkUnauthLogout', 'checkCancel',
+            'controlUrl',        @{ $self->beforeAuth },
+            $self->authProcess,  @{ $self->betweenAuthAndData },
+            $self->sessionData,  @{ $self->afterData },
+            $self->validSession, @{ $self->endAuth }
         ]
     );
 }

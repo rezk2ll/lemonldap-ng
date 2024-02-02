@@ -455,13 +455,6 @@ sub reloadConf {
         }
         return PE_OK;
     };
-    unshift @{ $self->beforeAuth }, sub {
-        if ( $_[0]->param('cancel') ) {
-            $self->logger->debug('Cancel called, push authCancel calls');
-            unshift @{ $_[0]->steps }, @{ $self->authCancel };
-            return PE_OK;
-        }
-    };
     my $portal = $self->conf->{portal};
     $portal =~ s#^https?://(.*?)(?:[:/].*)?$#$1#;
     HANDLER->tsv->{defaultCondition}->{$portal} ||= sub { 1 };
