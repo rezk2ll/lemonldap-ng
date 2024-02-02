@@ -83,6 +83,8 @@ ENDKEY
         my ( $host, $url, $query ) =
           expectForm( $res, "", '/webauthn2fcheck', 'token', 'credential' );
 
+        is( getJsVars($res)->{webauthn_autostart},
+            "1", "WebAuthn set to autostart" );
         ok( my $request = getJsVars($res)->{request},
             "Found WebAuthn request" );
         my $challenge = $request->{challenge};

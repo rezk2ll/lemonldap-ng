@@ -622,6 +622,8 @@ t/28-AuthChoice-with-rules.t
 t/28-AuthChoice-with-token.t
 t/29-AuthGPG.t
 t/29-AuthSSL.t
+t/29-AuthWebAuthn-Choice.t
+t/29-AuthWebAuthn.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO.t
 t/30-Auth-and-issuer-SAML-Federation.t
