@@ -64,6 +64,7 @@ use URI::Escape;
 use MIME::Base64;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::Util qw/getPSessionID/;
+use Carp qw/shortmess/;
 
 #use 5.10.0;
 
@@ -815,6 +816,12 @@ sub popHandler {
 
         $Lemonldap::NG::Handler::Main::_tshv = $handlerTSHV{$type};
     }
+}
+
+# Not needed anymore, all the work is done by "register"
+sub switch {
+    note shortmess( 'Manual switching is deprecated,'
+          . ' you can remove it from your tests' );
 }
 
 =head4 encodeUrl( $url );
