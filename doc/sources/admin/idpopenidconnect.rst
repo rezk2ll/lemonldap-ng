@@ -181,7 +181,9 @@ Basic options
 Exported attributes (claims)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionchanged:: In 2.0.16, all exported attributes are sent if **Always send exported attributes** option is enabled in **OpenID Connect Service**. In previous versions, you had to declare them in **Options**/**Scope**/**Scope Values content** too.
+.. versionchanged:: 2.0.16
+
+   All exported attributes are sent if **Always send exported attributes** option is enabled in **OpenID Connect Service**. In previous versions, you had to declare them in **Options**/**Scope**/**Scope Values content** too.
 
 
 For each OpenID Connect attribute you want to expose to applications, you can define:

@@ -26,7 +26,7 @@ Configuration
 This plugin is enabled when at least one rule is defined.
 
 To configure rules, go in ``General Parameters`` > ``Plugins`` >
-``Adapative Authentication Level``.
+``Adaptative Authentication Rules``.
 
 You can then create rules with these fields:
 
