@@ -1645,17 +1645,15 @@ sub _handleAuthorizationCodeGrant {
     $codeSession->remove();
 
     # Check PKCE
-    if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRequirePKCE} ) {
-        unless (
-            $self->validatePKCEChallenge(
-                $req->param('code_verifier'),
-                $codeSession->data->{'code_challenge'},
-                $codeSession->data->{'code_challenge_method'}
-            )
-          )
-        {
-            return $self->sendOIDCError( $req, 'invalid_grant', 400 );
-        }
+    unless (
+        $self->validatePKCEChallenge(
+            $req->param('code_verifier'),
+            $codeSession->data->{'code_challenge'},
+            $codeSession->data->{'code_challenge_method'}
+        )
+    )
+    {
+        return $self->sendOIDCError( $req, 'invalid_grant', 400 );
     }
 
     # Check we have the same client_id value
