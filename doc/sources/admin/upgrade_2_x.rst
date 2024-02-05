@@ -126,6 +126,22 @@ It is recommended to apply the following patch to your custom templates so that 
        <div id="color" class="message message-positive alert"><span id="msg" trspan="webAuthnRequired"></span></div>
 
 
+2.18.2
+------
+
+PKCE is enforced for all OIDC clients supporting it
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In versions before 2.18.2, PKCE was not verified doing the token request of an
+OIDC flow unless the "Require PKCE" option was set explicitely in the
+LemonLDAP::NG configuration for this RP.
+
+Starting from now, PKCE will be verified anytime a RP enabled it by specifying
+the ``code_challenge`` parameter during the authorization request.
+
+RPs that do not support PKCE will not send the ``code_challenge`` parameter,
+and therefore will not be affected by this change.
+
 2.18.0
 ------
 
