@@ -246,6 +246,17 @@ sub checkUnauthLogout {
     return PE_OK;
 }
 
+sub checkCancel {
+    my ( $self, $req ) = @_;
+    if ( $req->param('cancel') ) {
+        $self->logger->debug('Cancel called, run authCancel calls');
+        $req->mustRedirect(1);
+        $req->steps( [ @{ $self->authCancel }, sub { PE_OK } ] );
+        return PE_OK;
+    }
+    return PE_OK;
+}
+
 sub authLogout {
     my ( $self, $req ) = @_;
     my $res = $self->_authentication->authLogout($req);
