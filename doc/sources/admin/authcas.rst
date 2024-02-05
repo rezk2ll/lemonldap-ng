@@ -101,7 +101,7 @@ Used only if at least 2 CAS servers are declared
 -  **Logo**: Logo of the CAS server
 -  **Tooltip**: Information displayed on mouse over the button
 -  **Resolution rule**: Rule that will be applied to preselect a CAS server for
-   a user. You have access to all environment variable *(like user IP address)*
+   a user. You have access to all environment variables *(like user IP address)*
    and all session keys
 
 For example, to preselect this server for users coming from 129.168.0.0/16 network
@@ -118,5 +118,5 @@ To preselect this server when the ``MY_SRV`` :doc:`choice <authchoice>` is selec
 
 .. tip::
 
-    If no proxied services defined, CAS authentication will not
+    If no proxied services are defined, CAS authentication will not
     activate the CAS proxy mode with this CAS server.

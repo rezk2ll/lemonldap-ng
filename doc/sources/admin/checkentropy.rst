@@ -26,7 +26,7 @@ You have to enable the :doc:`local password policy <portalcustom>` in ``General 
 - **Display policy in password form**: on
 
 
-Then enable the checkEntropy plugin in ``General Parameters > Plugins > check entropy``:
+Then enable the checkEntropy plugin in ``General Parameters > Advanced parameters > Security > Check entropy``:
 
 -  **Activation**: Enable / Disable this plugin
 -  **Require entropy check to pass**: Is the entropy check required to pass? (default to ``Off``)

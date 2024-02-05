@@ -41,7 +41,7 @@ site/htdocs/static/common/modules/icon.png
 
 .. attention::
 
-    Be careful. Don' t use an already attributed name in
+    Be careful. Don't use an already attributed name in
     configuration.
 
 These parameters are available in your plugins using

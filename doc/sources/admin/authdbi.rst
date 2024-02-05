@@ -39,7 +39,7 @@ LL::NG can use two tables:
     Authentication table and user table can be the same.
 
 The password can be in plain text, or encoded with a SQL method (for example
-``SHA``, ``SHA1``, ``MD5`` or any method valid on database side).
+``SHA``, ``SHA1``, ``MD5`` or any valid method on database side).
 
 Example 1: two tables
 ^^^^^^^^^^^^^^^^^^^^^
