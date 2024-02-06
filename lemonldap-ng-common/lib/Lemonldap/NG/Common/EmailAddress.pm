@@ -21,12 +21,14 @@ BEGIN {
             require Email::Address;
             $module = 'Email::Address';
         };
+        die "Unable to find Email::Address, neither Email::Address::XS: $@"
+          if ($@);
     }
 }
 
 sub format_email {
-    my ($name, $email) = @_;
-    my $obj = $module->new($name, $email);
+    my ( $name, $email ) = @_;
+    my $obj = $module->new( $name, $email );
     return $obj->as_string;
 }
 
