@@ -147,7 +147,7 @@ sub controlUrl {
         else {
             if ( $url =~ m#[^A-Za-z0-9\+/=]# ) {
                 unless ( $req->maybeNotBase64 ) {
-                    $self->userLogger->error(
+                    $self->logger->error(
 "Value must be BASE64 encoded (param: url | value: $url)"
                     );
                     return PE_BADURL;
@@ -182,7 +182,12 @@ sub controlUrl {
 
         # Unprotected hosts
         if ( $tmp and ( $tmp !~ URIRE ) ) {
-            $self->userLogger->error("Bad URL $tmp");
+            $self->auditLog(
+                $req,
+                message => "Bad URL $tmp",
+                code    => "UNAUTHORIZED_REDIRECT",
+                url     => $tmp,
+            );
             delete $req->{urldc};
             return PE_BADURL;
         }
@@ -216,10 +221,16 @@ sub controlUrl {
             and !$self->isTrustedUrl($tmp)
             and !$self->isTrustedUrl($vhost) )
         {
-            $self->userLogger->error(
-                    "URL contains an unprotected host (param: "
-                  . ( $req->param('logout') ? 'HTTP Referer' : 'urldc' )
-                  . " | value: $tmp | alias: $vhost)" );
+            $self->auditLog(
+                $req,
+                message => (
+                        "URL contains an unprotected host (param: "
+                      . ( $req->param('logout') ? 'HTTP Referer' : 'urldc' )
+                      . " | value: $tmp | alias: $vhost)"
+                ),
+                code => "UNAUTHORIZED_REDIRECT",
+                url  => $tmp,
+            );
             delete $req->{urldc};
             return PE_UNPROTECTEDURL;
         }
@@ -375,7 +386,7 @@ sub checkXSSAttack {
     # Test value
     $value =~ s/\%25/\%/g;
     if ( $value =~ m/(?:\0|<|'|"|`|\%(?:00|3C|22|27))/ ) {
-        $self->userLogger->error(
+        $self->logger->error(
             "XSS attack detected (param: $name | value: $value)");
         return $self->conf->{checkXSS};
     }
@@ -642,9 +653,16 @@ sub buildCookie {
         ? $req->{sessionInfo}
         : $req->{userData}
     );
-    $self->userLogger->notice( 'User '
-          . $ref->{ $self->conf->{whatToTrace} }
-          . " successfully authenticated at level $ref->{authenticationLevel}"
+    $self->auditLog(
+        $req,
+        message => (
+                'User '
+              . $ref->{ $self->conf->{whatToTrace} }
+              . " successfully authenticated at level $ref->{authenticationLevel}"
+        ),
+        code  => "AUTHENTICATED",
+        user  => $ref->{ $self->conf->{whatToTrace} },
+        level => $ref->{authenticationLevel},
     );
     return PE_OK;
 }

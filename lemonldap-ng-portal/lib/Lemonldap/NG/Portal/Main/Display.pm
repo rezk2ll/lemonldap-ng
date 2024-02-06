@@ -730,12 +730,12 @@ sub getSkin {
                     "Skin $skin selected from GET/POST parameter");
             }
             else {
-                $self->userLogger->error(
-                    "User tries to access to unexistent skin dir $skinParam");
+                $self->logger->warn(
+                    "User tries to access to nonexistent skin dir $skinParam");
             }
         }
         else {
-            $self->userLogger->error("Strange skin parameter: $skinParam");
+            $self->logger->warn("Invalid skin name $skinParam");
         }
     }
 

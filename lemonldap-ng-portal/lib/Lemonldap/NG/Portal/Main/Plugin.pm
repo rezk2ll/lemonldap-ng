@@ -94,8 +94,15 @@ sub createNotification {
 
     if ( $notifEngine->module->notifObject->newNotification($content) ) {
         $self->logger->debug("Notification $ref successfully created");
-        $self->userLogger->notice(
-            "Notification $ref / $date successfully created for $uid");
+        $self->auditLog(
+            $req,
+            message =>
+              ("Notification $ref / $date successfully created for $uid"),
+            code => "NOTIFICATION_CREATED",
+            ref  => $ref,
+            date => $date,
+            user => $uid,
+        );
         return PE_OK;
     }
     else {
