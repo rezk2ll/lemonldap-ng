@@ -867,6 +867,10 @@ sub _verify {
     if ( $res and !$req->data->{_2fRetries} ) {
         $req->noLoginDisplay(1);
         $req->authResult(PE_BADCREDENTIALS);
+
+        # Set the failed 2f type in case you want to store it in history
+        # through sessionDataToRemember
+        $req->sessionInfo->{'_2f'} = $module->prefix;
         return $self->p->do( $req, [ 'storeHistory', sub { $res } ] );
     }
     elsif ($res) {
