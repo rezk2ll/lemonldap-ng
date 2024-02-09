@@ -1187,7 +1187,7 @@ tidyversion:
 tidy: clean
 	@if perltidy -v|grep "$(PERLTIDY_VERSION)" >/dev/null; then \
 		find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \) -print0 | xargs -t -0 $(PARAXARGS) -n10 perltidy -se -b -bext=/ ;\
-	else echo "Wrong perltidy version, please install Perl::Tidy@20220217" ; exit 1 ;\
+	else echo "Wrong perltidy version, please install Perl::Tidy@$(PERLTIDY_VERSION)" ; exit 1 ;\
 	fi
 	$(MAKE) json
 
