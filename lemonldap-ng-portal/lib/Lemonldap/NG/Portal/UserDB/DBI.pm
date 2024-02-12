@@ -102,7 +102,8 @@ sub findUser {
         $self->logger->debug("Demo UserDB random rank: $rank");
         $self->userLogger->info(
             "FindUser: DBI UserDB returns $results->[$rank]->[0]");
-        $req->data->{findUser} = $results->[$rank]->[0];
+        $req->data->{findUser}    = $results->[$rank]->[0];
+        $req->data->{findUserAll} = map { $_->[0] } @$results;
         return PE_OK;
     }
 

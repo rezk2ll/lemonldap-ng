@@ -1,0 +1,108 @@
+#!/usr/bin/perl
+
+use strict;
+use Getopt::Long;
+use JSON;
+use Lemonldap::NG::Common::FormEncode;
+use Lemonldap::NG::Portal;
+use Lemonldap::NG::Portal::Main::Constants 'portalConsts';
+my $exitCode = 0;
+my %opts;
+my $p;
+
+my $req;
+
+sub usage {
+    print STDERR "Tool to search for a user
+
+Usage:
+`$0 <options> <username>`
+
+Options:
+ -v, --version: display version
+ -h, --help:    display this
+ -d, --debug:   enable debug mode
+ -y, --yaml:    output in YAML mode
+";
+}
+
+sub userSearch {
+    my $uid = shift;
+    $req->user($uid);
+    $req->steps(
+        [
+            'getUser',        @{ $p->betweenAuthAndData },
+            'setSessionInfo', $p->groupsAndMacros,
+            'setLocalGroups',
+        ]
+    );
+    $exitCode = $p->process($req);
+    return $req->sessionInfo // ();
+}
+
+# MAIN
+
+unless ( GetOptions( \%opts, 'h|help', 'v|version', 'y|yaml', 'd|debug' ) ) {
+    $exitCode = 1;
+    usage;
+}
+
+# HELP
+elsif ( $opts{h} ) {
+    usage;
+}
+
+# VERSION
+elsif ( $opts{v} ) {
+    print $Lemonldap::NG::Portal::VERSION. "\n";
+}
+
+# COMMANDS
+else {
+    $p = Lemonldap::NG::Portal->new;
+    my $findUserSearchingAttributes = { 'uid##1' => 'Login' };
+    $p->init(
+        {
+            logLevel                    => $opts{d} ? 'debug' : 'error',
+            findUser                    => 1,
+            findUserSearchingAttributes => $findUserSearchingAttributes
+        }
+    );
+    my $uid = $ARGV[0] or die 'Missing uid';
+    $req = Lemonldap::NG::Portal::Main::Request->new(
+        {
+            REQUEST_URI  => '/',
+            REMOTE_ADDR  => '127.0.0.1',
+            PATH_INFO    => '/',
+            QUERY_STRING => build_urlencoded( uid => $uid ),
+        }
+    );
+    my $res = $p->_userDB->findUser($req);
+
+    my $resp = [];
+    if ( !$res and $req->data->{findUserAll} and ref $req->data->{findUserAll} )
+    {
+        foreach my $id ( @{ $req->data->{findUserAll} } ) {
+            print STDERR "Trying $id\n";
+            push @$resp, userSearch($id);
+        }
+    }
+    else {
+        $resp = [ userSearch($uid) ];
+    }
+
+    my $encoder;
+    if ( $opts{y} ) {
+        require YAML;
+        $encoder = sub { YAML::Dump(@_); }
+    }
+    else {
+        $encoder = sub { JSON->new->canonical->pretty->encode(@_); }
+    }
+
+    if ($exitCode) {
+        print STDERR "Error " . portalConsts->{$exitCode} . " ($exitCode)\n";
+    }
+    print $encoder->($resp);
+}
+exit $exitCode;
