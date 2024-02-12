@@ -23,14 +23,14 @@ Options:
  -h, --help:    display this
  -d, --debug:   enable debug mode
  -y, --yaml:    output in YAML mode
+ -f, --field:   field to use (default: uid)
 ";
 }
 
 sub userSearch {
     my $uid = shift;
     $req->user($uid);
-    $req->steps(
-        [
+    $req->steps( [
             'getUser',        @{ $p->betweenAuthAndData },
             'setSessionInfo', $p->groupsAndMacros,
             'setLocalGroups',
@@ -42,7 +42,10 @@ sub userSearch {
 
 # MAIN
 
-unless ( GetOptions( \%opts, 'h|help', 'v|version', 'y|yaml', 'd|debug' ) ) {
+unless (
+    GetOptions( \%opts, 'h|help', 'v|version', 'y|yaml', 'd|debug', 'f|field=s' )
+  )
+{
     $exitCode = 1;
     usage;
 }
@@ -59,22 +62,22 @@ elsif ( $opts{v} ) {
 
 # COMMANDS
 else {
+    $opts{f} ||= 'uid';
+
     $p = Lemonldap::NG::Portal->new;
-    my $findUserSearchingAttributes = { 'uid##1' => 'Login' };
-    $p->init(
-        {
+    my $findUserSearchingAttributes = { "$opts{f}##1" => 'Login' };
+    $p->init( {
             logLevel                    => $opts{d} ? 'debug' : 'error',
             findUser                    => 1,
             findUserSearchingAttributes => $findUserSearchingAttributes
         }
     );
-    my $uid = $ARGV[0] or die 'Missing uid';
-    $req = Lemonldap::NG::Portal::Main::Request->new(
-        {
+    my $uid = $ARGV[0] or die 'Missing arg (string to search)';
+    $req = Lemonldap::NG::Portal::Main::Request->new( {
             REQUEST_URI  => '/',
             REMOTE_ADDR  => '127.0.0.1',
             PATH_INFO    => '/',
-            QUERY_STRING => build_urlencoded( uid => $uid ),
+            QUERY_STRING => build_urlencoded( $opts{f} => $uid ),
         }
     );
     my $res = $p->_userDB->findUser($req);
