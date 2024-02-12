@@ -115,6 +115,7 @@ BuildRequires:  perl(GD::SecurityImage)
 %{!?el7:BuildRequires:  perl(GeoIP2::Database::Reader)}
 BuildRequires:  perl(Getopt::Long)
 BuildRequires:  perl(Getopt::Std)
+BuildRequires:  perl(Glib)
 BuildRequires:  perl(GSSAPI)
 BuildRequires:  perl(Hash::Merge::Simple)
 BuildRequires:  perl(HTML::Entities)
@@ -134,10 +135,7 @@ BuildRequires:  perl(IO::String)
 BuildRequires:  perl(IPC::Run)
 BuildRequires:  perl(JSON)
 BuildRequires:  perl(JSON::XS)
-%if 0%{?fedora}
 BuildRequires:  perl(Lasso)
-BuildRequires:  perl(Glib)
-%endif
 BuildRequires:  perl(List::MoreUtils)
 BuildRequires:  perl(Log::Log4perl)
 BuildRequires:  perl(Log::Log4perl::MDC)
@@ -258,9 +256,7 @@ Requires:        (%{name}-selinux = %{version}-%{release} if selinux-policy-%{se
 
 # Setup requires filtering
 %{?perl_default_filter}
-%{?el7:%global __requires_exclude perl\\(Lasso|perl\\(Web::ID|perl\\(Sentry::Raven}
-%{?el8:%global __requires_exclude perl\\(Lasso}
-%{?el9:%global __requires_exclude perl\\(Lasso}
+%{?el7:%global __requires_exclude perl\\(Web::ID|perl\\(Sentry::Raven}
 
 
 %description
@@ -318,6 +314,9 @@ Requires:       crontabs
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Portal) = %{version}-%{release}
 %if 0%{?el7}
+# SAML
+Requires:       perl(Glib)
+Requires:       perl(Lasso)
 # Facebook
 Requires:       perl(Net::Facebook::Oauth2)
 # OpenID
@@ -335,7 +334,8 @@ Recommends:     perl(Data::Password::zxcvbn)
 Recommends:     perl(GeoIP2)}
 Recommends:     perl(HTTP::BrowserDetect)}
 # SAML
-%{?fedora:Recommends:    perl(Lasso)}
+Recommends:     perl(Glib)
+Recommends:     perl(Lasso)
 # Facebook
 Recommends:     perl(Net::Facebook::Oauth2)
 # OpenID
