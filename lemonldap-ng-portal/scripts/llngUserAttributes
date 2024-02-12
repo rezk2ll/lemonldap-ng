@@ -5,7 +5,7 @@ use Getopt::Long;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal;
-use Lemonldap::NG::Portal::Main::Constants 'portalConsts';
+use Lemonldap::NG::Portal::Main::Constants qw(portalConsts PE_FIRSTACCESS);
 my $exitCode = 0;
 my %opts;
 my $p;
@@ -24,6 +24,7 @@ Options:
  -d, --debug:   enable debug mode
  -y, --yaml:    output in YAML mode
  -f, --field:   field to use (default: uid)
+ --loglevel:    fix logLevel (default: error)
 ";
 }
 
@@ -43,7 +44,10 @@ sub userSearch {
 # MAIN
 
 unless (
-    GetOptions( \%opts, 'h|help', 'v|version', 'y|yaml', 'd|debug', 'f|field=s' )
+    GetOptions(
+        \%opts,    'h|help',    'v|version', 'y|yaml',
+        'd|debug', 'f|field=s', 'loglevel=s'
+    )
   )
 {
     $exitCode = 1;
@@ -62,12 +66,13 @@ elsif ( $opts{v} ) {
 
 # COMMANDS
 else {
-    $opts{f} ||= 'uid';
+    $opts{f}        ||= 'uid';
+    $opts{loglevel} ||= 'error';
 
     $p = Lemonldap::NG::Portal->new;
     my $findUserSearchingAttributes = { "$opts{f}##1" => 'Login' };
     $p->init( {
-            logLevel                    => $opts{d} ? 'debug' : 'error',
+            logLevel                    => $opts{d} ? 'debug' : $opts{loglevel},
             findUser                    => 1,
             findUserSearchingAttributes => $findUserSearchingAttributes
         }
@@ -80,17 +85,24 @@ else {
             QUERY_STRING => build_urlencoded( $opts{f} => $uid ),
         }
     );
+    $req->init( {} );
+    $req->data->{_pwdcheck} = 1;
     my $res = $p->_userDB->findUser($req);
 
     my $resp = [];
     if ( !$res and $req->data->{findUserAll} and ref $req->data->{findUserAll} )
     {
         foreach my $id ( @{ $req->data->{findUserAll} } ) {
-            print STDERR "Trying $id\n";
+            $p->logger->info("Trying $id");
             push @$resp, userSearch($id);
         }
     }
     else {
+        if ( $res eq PE_FIRSTACCESS ) {
+            print STDERR
+'findUser returned PE_FIRSTACCESS, did you forgot to set authChoiceAuthBasic?';
+        }
+        $p->logger->info('FindUser failed, trying direct login');
         $resp = [ userSearch($uid) ];
     }
 
@@ -107,5 +119,9 @@ else {
         print STDERR "Error " . portalConsts->{$exitCode} . " ($exitCode)\n";
     }
     print $encoder->($resp);
+}
+if ( $exitCode eq PE_FIRSTACCESS ) {
+    print STDERR
+'findUser returned PE_FIRSTACCESS, did you forgot to set authChoiceAuthBasic?';
 }
 exit $exitCode;
