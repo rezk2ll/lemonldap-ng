@@ -45,6 +45,8 @@ our @pList = (
     locationDetect      => '::Plugins::LocationDetect',
     globalLogoutRule    => '::Plugins::GlobalLogout',
     samlFederationFiles => '::Plugins::SamlFederation',
+    'or::oidcOPMetaDataOptions/*/oidcOPMetaDataOptionsRequirePkce' =>
+      '::Plugins::AuthOidcPkce',
 );
 
 ##@method list enabledPlugins
@@ -72,15 +74,12 @@ sub enabledPlugins {
 
     # Load static plugin list
     for ( my $i = 0 ; $i < @pList ; $i += 2 ) {
-        my $pluginConf = $conf->{ $pList[$i] };
-        if ( ref($pluginConf) eq "HASH" ) {
-
-            # Do not load plugin if config is an empty hash
-            push @res, $pList[ $i + 1 ] if %{$pluginConf};
+        my $pluginConf;
+        if ( $pList[$i] =~ /^(.*?)::(.*)$/ ) {
+            $pluginConf = checkConf( $conf, $2, $1 );
         }
-        else {
-            push @res, $pList[ $i + 1 ] if $pluginConf;
-        }
+        else { $pluginConf = $conf->{ $pList[$i] } }
+        push @res, $pList[ $i + 1 ] if $pluginConf;
     }
 
     # Check if SOAP is enabled
@@ -114,6 +113,31 @@ sub enabledPlugins {
       if $conf->{impersonationRule};
 
     return @res;
+}
+
+sub checkConf {
+    my ( $conf, $path, $type ) = @_;
+    if ( $path =~ s#^(.*?)/## ) {
+        my $w = $1;
+        if ( $w eq '*' ) {
+            my @res;
+            foreach my $k ( keys %{ $conf || {} } ) {
+                push @res, checkConf( $conf->{$k}, $path, $type );
+            }
+            if ( $type eq 'or' ) {
+                my $res = 0;
+                map { $res ||= $_ } @res;
+                return $res;
+            }
+            else { die "Unkown type $type"; }
+        }
+        else {
+            return checkConf( $conf->{$w}, $path, $type );
+        }
+    }
+    else {
+        return $conf->{$path};
+    }
 }
 
 1;

@@ -217,7 +217,6 @@ sub rp {
                 domain                     => 'rp.com',
                 portal                     => 'http://auth.rp.com',
                 authentication             => 'OpenIDConnect',
-                customPlugins              => '::Plugins::AuthOidcPkce',
                 userDB                     => 'Same',
                 restSessionServer          => 1,
                 oidcOPMetaDataExportedVars => {
