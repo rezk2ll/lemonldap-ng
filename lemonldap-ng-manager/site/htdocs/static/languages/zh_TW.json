@@ -694,6 +694,7 @@
 "oidcOPMetaDataOptionsMaxAge":"最大時間",
 "oidcOPMetaDataOptionsPrompt":"提示",
 "oidcOPMetaDataOptionsProtocol":"協定",
+"oidcOPMetaDataOptionsRequirePkce":"PKCE required",
 "oidcOPMetaDataOptionsResolutionRule":"解析規則",
 "oidcOPMetaDataOptionsScope":"範圍",
 "oidcOPMetaDataOptionsSortNumber":"順序",
