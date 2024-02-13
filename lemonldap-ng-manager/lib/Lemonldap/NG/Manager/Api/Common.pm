@@ -15,6 +15,7 @@ my @arrayize = qw(
   oidcRPMetaDataOptionsPostLogoutRedirectUris
   oidcRPMetaDataOptionsAdditionalAudiences
   casAppMetaDataOptionsService
+  oidcRPMetaDataOptionsRequestUris
 );
 
 sub _mustArrayizeOption {

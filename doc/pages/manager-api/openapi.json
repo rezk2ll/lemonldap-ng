@@ -667,7 +667,10 @@
                   "type" : "boolean"
                },
                "requestUris" : {
-                  "type" : "string"
+                  "items" : {
+                     "type" : "string"
+                  },
+                  "type" : "array"
                },
                "requirePKCE" : {
                   "type" : "boolean"
