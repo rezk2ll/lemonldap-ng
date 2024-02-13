@@ -329,4 +329,85 @@ sub _getDevicesFromSessionData {
     return [];
 }
 
+sub addSecondFactor {
+    my ( $self, $req ) = @_;
+    my $uid = $req->param('uid')
+      or return $self->sendError( $req, 'uid is missing', 400 );
+
+    $self->logger->debug("[API] Add 2F for $uid");
+
+    my $add = $req->jsonBodyToObj;
+
+    return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
+      unless ($add);
+
+    return $self->sendError( $req, 'Invalid input: type is missing', 400 )
+      unless ( defined $add->{type} );
+
+    return $self->sendError( $req, 'Invalid input: epoch is forbidden', 400 )
+      if ( defined $add->{epoch} );
+
+    $add->{epoch} = time();
+
+    my $res = $self->_add2F( $uid, $add );
+
+    return $self->sendError( $req, $res->{msg}, $res->{code} )
+      if ( $res->{res} ne 'ok' );
+    return $self->sendJSONresponse(
+        $req,
+        { message => "Successful operation" },
+        code => 201
+    );
+}
+
+sub _add2F {
+    my ( $self, $uid, $add ) = @_;
+
+    my $res =
+      $self->_add2FToSessions( $uid, $add, $self->_getPersistentMod,
+        'Persistent', '_session_uid' );
+    return $res if ( $res->{res} ne 'ok' );
+
+    # Add to existing sessions
+    my $whatToTrace = Lemonldap::NG::Handler::PSGI::Main->tsv->{whatToTrace};
+    $res =
+      $self->_add2FToSessions( $uid, $add, $self->_getSSOMod, 'SSO',
+        $whatToTrace );
+
+    return { res => "ok" };
+}
+
+sub _add2FToSessions {
+    my ( $self, $uid, $add, $mod, $kind, $key ) = @_;
+
+    my ( $sessions, $session, $devices, @keep, $removed,
+        $total, $module, $localStorage );
+    $sessions = $self->_getSessions2F( $mod, $kind, $key, $uid );
+    my $found = 0;
+
+    foreach ( keys %$sessions ) {
+        $found = 1;
+
+        $session = $self->_getSession2F( $_, $mod )
+          or return { res => 'ko', code => 500, msg => $@ };
+
+        $devices = $self->_getDevicesFromSessionData( $session->data );
+        push @$devices, $add;
+
+        # Update session
+        $self->logger->debug(
+            "Adding " . display2F($add) . " to sessionId $_" );
+        $session->data->{_2fDevices} = to_json($devices);
+        $session->update( $session->data );
+    }
+    return {
+        res     => "notfound",
+        message => "User $uid was not found",
+        code    => 404
+      }
+      if !$found;
+
+    return { res => 'ok' };
+}
+
 1;

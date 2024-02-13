@@ -133,6 +133,9 @@ sub init {
                         ':confKey' => 'addMenuApp'
                     }
                 },
+                secondFactor => {
+                    ':uid' => 'addSecondFactor',
+                },
             },
         },
         ['POST']
