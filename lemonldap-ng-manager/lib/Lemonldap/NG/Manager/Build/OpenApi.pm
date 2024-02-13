@@ -4,6 +4,86 @@ package Lemonldap::NG::Manager::Build::OpenApi;
 
 our $VERSION = '2.19.0';
 
+use Lemonldap::NG::Manager::Attributes;
+use Lemonldap::NG::Manager::Api::Common qw/_listAttributes/;
+
+my %TYPEMAP = (
+    "bool"      => sub { { type => "boolean" } },
+    "text"      => sub { { type => "string" } },
+    "longtext"  => sub { { type => "string" } },
+    "int"       => sub { { type => "integer" } },
+    "intOrNull" => sub { { type => "integer" } },
+    "trool"     => sub { { type => "integer", maximum => 1, minimum => -1 } },
+    "select"    => \&handleSelect,
+    "password"  => sub { { type => "string", format => "password" } },
+    "file"      => sub { { type => "string" } },
+    "url"       => sub { { type => "string", format => "url" } },
+);
+
+sub handleSelect {
+    my ($attribute_desc) = @_;
+    return {
+        type => "string",
+        enum => [ map { $_->{k} } @{ $attribute_desc->{select} } ],
+      },
+      ;
+}
+
+my @exceptions = qw(
+  oidcRPMetaDataOptionsExtraClaims
+);
+
+sub getOptions {
+    my ( $attributes, $prefix ) = @_;
+    my $options = {};
+    for my $option ( grep /^$prefix./, keys %$attributes ) {
+        next if grep { $_ eq $option } @exceptions;
+        my $attribute_desc = $attributes->{$option};
+        my $api_option_name =
+          Lemonldap::NG::Manager::Api->_translateOptionConfToApi($option);
+        if ($api_option_name) {
+            $options->{$api_option_name} = {};
+
+            my $type          = $attribute_desc->{type};
+            my $api_type_func = $TYPEMAP{$type};
+
+            if ($api_type_func) {
+                my $desc = $api_type_func->($attribute_desc);
+
+                if (
+                    Lemonldap::NG::Manager::Api->_mustArrayizeOption(
+                        $option)
+                  )
+                {
+                    $options->{$api_option_name} = {
+                        type  => "array",
+                        items => $desc,
+                    };
+                }
+                else {
+                    $options->{$api_option_name} = $desc;
+                }
+            }
+            else {
+                warn("Could not translate API type $type for $option");
+            }
+
+            my $default = $attribute_desc->{default};
+            if ($default) {
+                $options->{$api_option_name}->{default} = $default;
+            }
+        }
+        else {
+            warn("Could not translate option name $option");
+        }
+    }
+    return $options;
+}
+
+my $attributes = Lemonldap::NG::Manager::Attributes->attributes();
+
+#getOptions( $attributes, "samlSPMetaDataOptions" );
+
 sub openapi {
     return {
         'openapi' => '3.0.1',
@@ -1639,70 +1719,8 @@ sub openapi {
                 },
                 'samlOptions' => {
                     'type'       => 'object',
-                    'properties' => {
-                        'checkSSOMessageSignature' => {
-                            'type'    => 'boolean',
-                            'default' => '1'
-                        },
-                        'sessionNotOnOrAfterTimeout' => {
-                            'type'    => 'integer',
-                            'default' => '72000'
-                        },
-                        'signSLOMessage' => {
-                            'type'    => 'integer',
-                            'minimum' => '-1',
-                            'maximum' => '1',
-                            'default' => '-1'
-                        },
-                        'enableIDPInitiatedURL' => {
-                            'type' => 'boolean'
-                        },
-                        'oneTimeUse' => {
-                            'type' => 'boolean'
-                        },
-                        'checkSLOMessageSignature' => {
-                            'type'    => 'boolean',
-                            'default' => '1'
-                        },
-                        'encryptionMode' => {
-                            'type'    => 'string',
-                            'enum'    => [ 'none', 'nameid', 'assertion' ],
-                            'default' => 'none'
-                        },
-                        'notOnOrAfterTimeout' => {
-                            'type'    => 'integer',
-                            'default' => '72000'
-                        },
-                        'authnLevel' => {
-                            'type' => 'integer'
-                        },
-                        'rule' => {
-                            'type' => 'string'
-                        },
-                        'forceUTF8' => {
-                            'type'    => 'boolean',
-                            'default' => '1'
-                        },
-                        'signSSOMessage' => {
-                            'type'    => 'integer',
-                            'minimum' => '-1',
-                            'maximum' => '1',
-                            'default' => '-1'
-                        },
-                        'nameIDSessionKey' => {
-                            'type' => 'string'
-                        },
-                        'nameIDFormat' => {
-                            'type' => 'string',
-                            'enum' => [
-                                'unspecified', 'email',
-                                'x509',        'windows',
-                                'kerberos',    'entity',
-                                'persistent',  'transient',
-                                'encrypted'
-                            ]
-                        }
-                    }
+                    'properties' =>
+                      getOptions( $attributes, 'samlSPMetaDataOptions' ),
                 },
                 'samlAttribute' => {
                     'type'       => 'object',
@@ -1774,120 +1792,8 @@ sub openapi {
                 },
                 'OidcOptions' => {
                     'type'       => 'object',
-                    'properties' => {
-                        'logoutUrl' => {
-                            'type'   => 'string',
-                            'format' => 'url'
-                        },
-                        'logoutBypassConfirm' => {
-                            'type' => 'boolean'
-                        },
-                        'clientSecret' => {
-                            'type'   => 'string',
-                            'format' => 'password'
-                        },
-                        'displayName' => {
-                            'type' => 'string'
-                        },
-                        'allowOffline' => {
-                            'type' => 'boolean'
-                        },
-                        'accessTokenSignAlg' => {
-                            'type'    => 'string',
-                            'enum'    => [ 'none', 'RS256', 'RS384', 'RS512' ],
-                            'default' => 'RS256'
-                        },
-                        'userInfoSignAlg' => {
-                            'type' => 'string',
-                            'enum' => [
-                                '',      'none',  'HS256', 'HS384',
-                                'HS512', 'RS256', 'RS384', 'RS512'
-                            ],
-                            'default' => ''
-                        },
-                        'accessTokenJWT' => {
-                            'type' => 'boolean'
-                        },
-                        'accessTokenClaims' => {
-                            'type' => 'boolean'
-                        },
-                        'authnLevel' => {
-                            'type' => 'integer'
-                        },
-                        'rule' => {
-                            'type' => 'string'
-                        },
-                        'IDTokenSignAlg' => {
-                            'type' => 'string',
-                            'enum' => [
-                                'none',  'HS256', 'HS384', 'HS512',
-                                'RS256', 'RS384', 'RS512'
-                            ],
-                            'default' => 'RS256'
-                        },
-                        'refreshToken' => {
-                            'type' => 'boolean'
-                        },
-                        'public' => {
-                            'type' => 'boolean'
-                        },
-                        'postLogoutRedirectUris' => {
-                            'type'  => 'array',
-                            'items' => {
-                                'type' => 'string'
-                            }
-                        },
-                        'logoutType' => {
-                            'type'    => 'string',
-                            'enum'    => [ 'front', 'back' ],
-                            'default' => 'front'
-                        },
-                        'accessTokenExpiration' => {
-                            'type' => 'integer'
-                        },
-                        'IDTokenForceClaims' => {
-                            'type' => 'boolean'
-                        },
-                        'additionalAudiences' => {
-                            'type'  => 'array',
-                            'items' => {
-                                'type' => 'string'
-                            }
-                        },
-                        'requirePKCE' => {
-                            'type' => 'boolean'
-                        },
-                        'offlineSessionExpiration' => {
-                            'type' => 'integer'
-                        },
-                        'redirectUris' => {
-                            'type'  => 'array',
-                            'items' => {
-                                'type' => 'string'
-                            }
-                        },
-                        'bypassConsent' => {
-                            'type' => 'boolean'
-                        },
-                        'logoutSessionRequired' => {
-                            'type' => 'boolean'
-                        },
-                        'clientId' => {
-                            'type' => 'string'
-                        },
-                        'IDTokenExpiration' => {
-                            'type' => 'integer'
-                        },
-                        'authorizationCodeExpiration' => {
-                            'type' => 'integer'
-                        },
-                        'icon' => {
-                            'type' => 'string'
-                        },
-                        'userIDAttr' => {
-                            'type' => 'string'
-                        }
-                    }
+                    'properties' =>
+                      getOptions( $attributes, 'oidcRPMetaDataOptions' ),
                 },
                 'OidcRpUpdate' => {
                     'type'       => 'object',
@@ -2037,23 +1943,8 @@ sub openapi {
                 'casOptions' => {
                     'required'   => ['service'],
                     'type'       => 'object',
-                    'properties' => {
-                        'service' => {
-                            'type'  => 'array',
-                            'items' => {
-                                'type'   => 'string',
-                                'format' => 'uri'
-                            }
-                        },
-                        'userAttribute' => {
-                            'type'    => 'string',
-                            'default' => 'none'
-                        },
-                        'rule' => {
-                            'type'    => 'string',
-                            'default' => 'none'
-                        }
-                    }
+                    'properties' =>
+                      getOptions( $attributes, 'casAppMetaDataOptions' ),
                 },
                 'SecondFactor' => {
                     'type'       => 'object',
