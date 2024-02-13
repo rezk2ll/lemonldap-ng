@@ -464,10 +464,8 @@ sub buildAuthorizationCodeAuthnRequest {
     };
 
     # Call oidcGenerateAuthenticationRequest
-    my $h = $self->p->processHook(
-        $req, 'oidcGenerateAuthenticationRequest',
-        $op,  $authorize_request_params
-    );
+    my $h = $self->p->processHook( $req, 'oidcGenerateAuthenticationRequest',
+        $op, $authorize_request_params, $state, );
     return if ( $h != PE_OK );
 
     if ( $authMode and $authMode =~ /^jw(?:s|e)$/ ) {
