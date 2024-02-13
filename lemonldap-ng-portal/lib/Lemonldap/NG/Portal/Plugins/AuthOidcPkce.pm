@@ -27,7 +27,7 @@ use constant RS_MSK => 's' x 16;
 sub init { 1 }
 
 sub setChallenge {
-    my ( $self, $req, $op, $token_request_params, $state ) = @_;
+    my ( $self, $req, $op, $token_request_params ) = @_;
     unless ( $self->oidc ) {
         $self->logger->error('Authentication is not OIDC, aborting');
         return PE_ERROR;
@@ -35,10 +35,11 @@ sub setChallenge {
     if (    $self->oidc->opOptions->{$op}
         and $self->oidc->opOptions->{$op}->{oidcOPMetaDataOptionsRequirePkce} )
     {
-        my $code      = random_string(RS_MSK);
-        my $realState = $self->oidc->state_ott->getToken( $state, 1 );
+        my $code = random_string(RS_MSK);
+        my $realState =
+          $self->oidc->state_ott->getToken( $token_request_params->{state}, 1 );
         $realState->{state}->{data__auth_pkce} = $code;
-        $self->oidc->state_ott->updateToken( $state,
+        $self->oidc->state_ott->updateToken( $token_request_params->{state},
             state => $realState->{state} );
         my $challenge = encode_base64url( sha256($code) );
         $token_request_params->{code_challenge}        = $challenge;
