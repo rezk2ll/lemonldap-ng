@@ -1946,16 +1946,8 @@ sub _handleRefreshTokenGrant {
     # Else, we are in an offline session
     else {
 
-        # Lookup attributes and macros for user
-        $req->user( $refreshSession->data->{_session_uid} );
-        $req->data->{$_} = $refreshSession->data->{$_} foreach (qw(_choice));
-        $req->steps( [
-                'getUser',        @{ $self->p->betweenAuthAndData },
-                'setSessionInfo', $self->p->groupsAndMacros,
-                'setLocalGroups',
-            ]
-        );
-        $req->{error} = $self->p->process($req);
+        $req->userData( $refreshSession->data );
+        $req->{error} = $self->p->processRefreshSession($req);
 
         if ( $req->error > 0 ) {
 
