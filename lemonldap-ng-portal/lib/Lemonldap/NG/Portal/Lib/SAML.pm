@@ -3427,13 +3427,15 @@ sub getSignatureMethod {
 sub setProviderSignatureMethod {
     my ( $self, $provider, $signature_method ) = @_;
 
+    # We have to use an intermediate variable to avoid interferences between
+    # Lasso binding and tied hashes (#3105)
+    my $priv = $self->conf->{samlServicePrivateKeySig};
+    my $pass = $self->conf->{samlServicePrivateKeySigPwd} || '';
+    my $cert = $self->conf->{samlServicePublicKeySig};
+
     eval {
-        my $key = Lasso::Key::new_for_signature_from_file(
-            $self->conf->{samlServicePrivateKeySig},
-            $self->conf->{samlServicePrivateKeySigPwd} || '',
-            $signature_method,
-            $self->conf->{samlServicePublicKeySig}
-        );
+        my $key = Lasso::Key::new_for_signature_from_file( $priv, $pass,
+            $signature_method, $cert, );
         $provider->set_server_signing_key($key);
     };
 
