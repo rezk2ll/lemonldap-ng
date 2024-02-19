@@ -1229,9 +1229,4 @@ e2e_cert:
 		-config e2e-tests/openssl.cnf
 
 api_doc: doc/sources/manager-api/openapi-spec.yaml doc/sources/manager-api/config-codegen.json
-	@if [ -f "$(SWAGGER_CODEGEN)" ] ; then \
-	java -jar "$(SWAGGER_CODEGEN)" generate -i doc/sources/manager-api/openapi-spec.yaml -l html2 -o doc/pages/manager-api/ -c doc/sources/manager-api/config-codegen.json; \
-	else \
-		echo "Please run me with SWAGGER_CODEGEN=/path/to/swagger-codegen.jar"; \
-	fi
-
+	@env SWAGGER_CODEGEN=$(SWAGGER_CODEGEN) scripts/openapigenerator.pl

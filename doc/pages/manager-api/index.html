@@ -718,18 +718,18 @@
             defs["CasAppReplace"] = {
   "type" : "object",
   "properties" : {
-    "macros" : {
-      "type" : "object",
-      "example" : {
-        "myMacroName" : "$macro(rule)"
-      }
-    },
     "exportedVars" : {
       "type" : "object",
       "default" : {
         "cn" : "cn",
         "mail" : "mail",
         "uid" : "uid"
+      }
+    },
+    "macros" : {
+      "type" : "object",
+      "example" : {
+        "myMacroName" : "$macro(rule)"
       }
     },
     "options" : {
@@ -740,18 +740,18 @@
             defs["CasAppUpdate"] = {
   "type" : "object",
   "properties" : {
-    "macros" : {
-      "type" : "object",
-      "example" : {
-        "myMacroName" : "$macro(rule)"
-      }
-    },
     "exportedVars" : {
       "type" : "object",
       "default" : {
         "cn" : "cn",
         "mail" : "mail",
         "uid" : "uid"
+      }
+    },
+    "macros" : {
+      "type" : "object",
+      "example" : {
+        "myMacroName" : "$macro(rule)"
       }
     },
     "options" : {
@@ -763,6 +763,10 @@
   "required" : [ "service" ],
   "type" : "object",
   "properties" : {
+    "rule" : {
+      "type" : "string",
+      "default" : "none"
+    },
     "service" : {
       "type" : "array",
       "items" : {
@@ -771,10 +775,6 @@
       }
     },
     "userAttribute" : {
-      "type" : "string",
-      "default" : "none"
-    },
-    "rule" : {
       "type" : "string",
       "default" : "none"
     }
@@ -801,6 +801,10 @@
       "type" : "string",
       "description" : "Unix timestamp of the event"
     },
+    "error" : {
+      "type" : "integer",
+      "description" : "LemonLDAP::NG error code"
+    },
     "ipAddr" : {
       "type" : "string",
       "description" : "String representation of the IP address"
@@ -809,10 +813,6 @@
       "type" : "string",
       "description" : "Result of authentication attempt",
       "enum" : [ "success", "failed" ]
-    },
-    "error" : {
-      "type" : "integer",
-      "description" : "LemonLDAP::NG error code"
     }
   }
 };
@@ -823,11 +823,11 @@
     "confKey" : {
       "$ref" : "#/components/schemas/confKey"
     },
-    "order" : {
-      "type" : "integer"
-    },
     "options" : {
       "$ref" : "#/components/schemas/MenuAppOptions"
+    },
+    "order" : {
+      "type" : "integer"
     }
   }
 };
@@ -835,38 +835,38 @@
   "required" : [ "name" ],
   "type" : "object",
   "properties" : {
-    "name" : {
-      "type" : "string"
-    },
-    "tooltip" : {
-      "type" : "string"
-    },
     "description" : {
       "type" : "string"
     },
-    "uri" : {
-      "type" : "string"
+    "display" : {
+      "type" : "string",
+      "default" : "auto",
+      "enum" : [ "on", "off", "auto", "(Any special rule to apply for example \"$uid eq 'dwho'\")" ]
     },
     "logo" : {
       "type" : "string",
       "default" : "network.png",
       "enum" : [ "attach.png", "bell.png", "bookmark.png", "configure.png", "database.png", "demo.png", "folder.png", "gear.png", "help.png", "llng.png", "mailappt.png", "money.png", "network.png", "terminal.png", "thumbnail.png", "tux.png", "web.png", "(Any reference to an available image in app logo folder)" ]
     },
-    "display" : {
-      "type" : "string",
-      "default" : "auto",
-      "enum" : [ "on", "off", "auto", "(Any special rule to apply for example \"$uid eq 'dwho'\")" ]
+    "name" : {
+      "type" : "string"
+    },
+    "tooltip" : {
+      "type" : "string"
+    },
+    "uri" : {
+      "type" : "string"
     }
   }
 };
             defs["MenuAppUpdate"] = {
   "type" : "object",
   "properties" : {
-    "order" : {
-      "type" : "integer"
-    },
     "options" : {
       "$ref" : "#/components/schemas/MenuAppOptions"
+    },
+    "order" : {
+      "type" : "integer"
     }
   }
 };
@@ -874,11 +874,11 @@
   "required" : [ "catname", "confKey" ],
   "type" : "object",
   "properties" : {
-    "confKey" : {
-      "$ref" : "#/components/schemas/confKey"
-    },
     "catname" : {
       "type" : "string"
+    },
+    "confKey" : {
+      "$ref" : "#/components/schemas/confKey"
     },
     "order" : {
       "type" : "integer"
@@ -903,12 +903,51 @@
             defs["OidcOptions"] = {
   "type" : "object",
   "properties" : {
-    "logoutUrl" : {
-      "type" : "string",
-      "format" : "url"
+    "IDTokenExpiration" : {
+      "type" : "integer"
     },
-    "logoutBypassConfirm" : {
+    "IDTokenForceClaims" : {
       "type" : "boolean"
+    },
+    "IDTokenSignAlg" : {
+      "type" : "string",
+      "default" : "RS256",
+      "enum" : [ "none", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512" ]
+    },
+    "accessTokenClaims" : {
+      "type" : "boolean"
+    },
+    "accessTokenExpiration" : {
+      "type" : "integer"
+    },
+    "accessTokenJWT" : {
+      "type" : "boolean"
+    },
+    "accessTokenSignAlg" : {
+      "type" : "string",
+      "default" : "RS256",
+      "enum" : [ "none", "RS256", "RS384", "RS512" ]
+    },
+    "additionalAudiences" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
+    },
+    "allowOffline" : {
+      "type" : "boolean"
+    },
+    "authnLevel" : {
+      "type" : "integer"
+    },
+    "authorizationCodeExpiration" : {
+      "type" : "integer"
+    },
+    "bypassConsent" : {
+      "type" : "boolean"
+    },
+    "clientId" : {
+      "type" : "string"
     },
     "clientSecret" : {
       "type" : "string",
@@ -917,41 +956,26 @@
     "displayName" : {
       "type" : "string"
     },
-    "allowOffline" : {
-      "type" : "boolean"
-    },
-    "accessTokenSignAlg" : {
-      "type" : "string",
-      "default" : "RS256",
-      "enum" : [ "none", "RS256", "RS384", "RS512" ]
-    },
-    "userInfoSignAlg" : {
-      "type" : "string",
-      "default" : "",
-      "enum" : [ "", "none", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512" ]
-    },
-    "accessTokenJWT" : {
-      "type" : "boolean"
-    },
-    "accessTokenClaims" : {
-      "type" : "boolean"
-    },
-    "authnLevel" : {
-      "type" : "integer"
-    },
-    "rule" : {
+    "icon" : {
       "type" : "string"
     },
-    "IDTokenSignAlg" : {
+    "logoutBypassConfirm" : {
+      "type" : "boolean"
+    },
+    "logoutSessionRequired" : {
+      "type" : "boolean"
+    },
+    "logoutType" : {
       "type" : "string",
-      "default" : "RS256",
-      "enum" : [ "none", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512" ]
+      "default" : "front",
+      "enum" : [ "front", "back" ]
     },
-    "refreshToken" : {
-      "type" : "boolean"
+    "logoutUrl" : {
+      "type" : "string",
+      "format" : "url"
     },
-    "public" : {
-      "type" : "boolean"
+    "offlineSessionExpiration" : {
+      "type" : "integer"
     },
     "postLogoutRedirectUris" : {
       "type" : "array",
@@ -959,28 +983,8 @@
         "type" : "string"
       }
     },
-    "logoutType" : {
-      "type" : "string",
-      "default" : "front",
-      "enum" : [ "front", "back" ]
-    },
-    "accessTokenExpiration" : {
-      "type" : "integer"
-    },
-    "IDTokenForceClaims" : {
+    "public" : {
       "type" : "boolean"
-    },
-    "additionalAudiences" : {
-      "type" : "array",
-      "items" : {
-        "type" : "string"
-      }
-    },
-    "requirePKCE" : {
-      "type" : "boolean"
-    },
-    "offlineSessionExpiration" : {
-      "type" : "integer"
     },
     "redirectUris" : {
       "type" : "array",
@@ -988,26 +992,22 @@
         "type" : "string"
       }
     },
-    "bypassConsent" : {
+    "refreshToken" : {
       "type" : "boolean"
     },
-    "logoutSessionRequired" : {
+    "requirePKCE" : {
       "type" : "boolean"
     },
-    "clientId" : {
-      "type" : "string"
-    },
-    "IDTokenExpiration" : {
-      "type" : "integer"
-    },
-    "authorizationCodeExpiration" : {
-      "type" : "integer"
-    },
-    "icon" : {
+    "rule" : {
       "type" : "string"
     },
     "userIDAttr" : {
       "type" : "string"
+    },
+    "userInfoSignAlg" : {
+      "type" : "string",
+      "default" : "",
+      "enum" : [ "", "none", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512" ]
     }
   }
 };
@@ -1015,19 +1015,11 @@
   "required" : [ "clientId", "confKey", "redirectUris" ],
   "type" : "object",
   "properties" : {
-    "confKey" : {
-      "$ref" : "#/components/schemas/confKey"
-    },
     "clientId" : {
       "type" : "string"
     },
-    "redirectUris" : {
-      "type" : "array",
-      "items" : {
-        "minItems" : 1,
-        "type" : "string",
-        "format" : "uri"
-      }
+    "confKey" : {
+      "$ref" : "#/components/schemas/confKey"
     },
     "exportedVars" : {
       "type" : "object",
@@ -1051,6 +1043,13 @@
     },
     "options" : {
       "$ref" : "#/components/schemas/OidcOptions"
+    },
+    "redirectUris" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "format" : "uri"
+      }
     },
     "scopeRules" : {
       "type" : "object",
@@ -1138,44 +1137,36 @@
             defs["samlAttribute"] = {
   "type" : "object",
   "properties" : {
-    "name" : {
+    "format" : {
+      "type" : "string",
+      "example" : "urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
+    },
+    "friendlyName" : {
       "type" : "string"
     },
     "mandatory" : {
       "type" : "boolean"
     },
-    "friendlyName" : {
+    "name" : {
       "type" : "string"
-    },
-    "format" : {
-      "type" : "string",
-      "example" : "urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
     }
   }
 };
             defs["samlOptions"] = {
   "type" : "object",
   "properties" : {
-    "checkSSOMessageSignature" : {
-      "type" : "boolean"
-    },
-    "sessionNotOnOrAfterTimeout" : {
-      "type" : "integer",
-      "default" : 72000
-    },
-    "signSLOMessage" : {
-      "maximum" : 1,
-      "minimum" : -1,
-      "type" : "integer",
-      "default" : -1
-    },
-    "enableIDPInitiatedURL" : {
-      "type" : "boolean"
-    },
-    "oneTimeUse" : {
-      "type" : "boolean"
+    "authnLevel" : {
+      "type" : "integer"
     },
     "checkSLOMessageSignature" : {
+      "type" : "boolean",
+      "default" : false
+    },
+    "checkSSOMessageSignature" : {
+      "type" : "boolean",
+      "default" : false
+    },
+    "enableIDPInitiatedURL" : {
       "type" : "boolean"
     },
     "encryptionMode" : {
@@ -1183,31 +1174,34 @@
       "default" : "none",
       "enum" : [ "none", "nameid", "assertion" ]
     },
-    "notOnOrAfterTimeout" : {
-      "type" : "integer",
-      "default" : 72000
-    },
-    "authnLevel" : {
-      "type" : "integer"
-    },
-    "rule" : {
-      "type" : "string"
-    },
     "forceUTF8" : {
-      "type" : "boolean"
-    },
-    "signSSOMessage" : {
-      "maximum" : 1,
-      "minimum" : -1,
-      "type" : "integer",
-      "default" : -1
-    },
-    "nameIDSessionKey" : {
-      "type" : "string"
+      "type" : "boolean",
+      "default" : false
     },
     "nameIDFormat" : {
       "type" : "string",
       "enum" : [ "unspecified", "email", "x509", "windows", "kerberos", "entity", "persistent", "transient", "encrypted" ]
+    },
+    "nameIDSessionKey" : {
+      "type" : "string"
+    },
+    "notOnOrAfterTimeout" : {
+      "type" : "integer"
+    },
+    "oneTimeUse" : {
+      "type" : "boolean"
+    },
+    "rule" : {
+      "type" : "string"
+    },
+    "sessionNotOnOrAfterTimeout" : {
+      "type" : "integer"
+    },
+    "signSLOMessage" : {
+      "type" : "integer"
+    },
+    "signSSOMessage" : {
+      "type" : "integer"
     }
   }
 };
@@ -1218,10 +1212,6 @@
     "confKey" : {
       "$ref" : "#/components/schemas/confKey"
     },
-    "metadata" : {
-      "type" : "string",
-      "example" : "<?xml version=\"1.0\"?><EntityDescriptor..."
-    },
     "exportedAttributes" : {
       "type" : "array",
       "items" : {
@@ -1233,6 +1223,10 @@
       "example" : {
         "myMacroName" : "$macro(rule)"
       }
+    },
+    "metadata" : {
+      "type" : "string",
+      "example" : "<?xml version=\"1.0\"?><EntityDescriptor..."
     },
     "options" : {
       "$ref" : "#/components/schemas/samlOptions"
@@ -1243,9 +1237,11 @@
   "required" : [ "metadata" ],
   "type" : "object",
   "properties" : {
-    "metadata" : {
-      "type" : "string",
-      "example" : "<?xml version=\"1.0\"?><EntityDescriptor..."
+    "exportedAttributes" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/samlAttribute"
+      }
     },
     "macros" : {
       "type" : "object",
@@ -1253,11 +1249,9 @@
         "myMacroName" : "$macro(rule)"
       }
     },
-    "exportedAttributes" : {
-      "type" : "array",
-      "items" : {
-        "$ref" : "#/components/schemas/samlAttribute"
-      }
+    "metadata" : {
+      "type" : "string",
+      "example" : "<?xml version=\"1.0\"?><EntityDescriptor..."
     },
     "options" : {
       "$ref" : "#/components/schemas/samlOptions"
@@ -1267,9 +1261,11 @@
             defs["SamlSpUpdate"] = {
   "type" : "object",
   "properties" : {
-    "metadata" : {
-      "type" : "string",
-      "example" : "<?xml version=\"1.0\"?><EntityDescriptor..."
+    "exportedAttributes" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/samlAttribute"
+      }
     },
     "macros" : {
       "type" : "object",
@@ -1277,11 +1273,9 @@
         "myMacroName" : "$macro(rule)"
       }
     },
-    "exportedAttributes" : {
-      "type" : "array",
-      "items" : {
-        "$ref" : "#/components/schemas/samlAttribute"
-      }
+    "metadata" : {
+      "type" : "string",
+      "example" : "<?xml version=\"1.0\"?><EntityDescriptor..."
     },
     "options" : {
       "$ref" : "#/components/schemas/samlOptions"
@@ -1296,14 +1290,14 @@
       "type" : "string",
       "description" : "An opaque idenfifier for this particular token"
     },
+    "name" : {
+      "type" : "string",
+      "description" : "A user-set description of the token"
+    },
     "type" : {
       "type" : "string",
       "description" : "The type of token in use",
       "example" : "TOTP, U2F, UBK (Yubikey), WebAuthn"
-    },
-    "name" : {
-      "type" : "string",
-      "description" : "A user-set description of the token"
     }
   }
 };
@@ -1320,29 +1314,29 @@
       "type" : "string",
       "description" : "Descriptive name of the software"
     },
-    "version" : {
+    "status" : {
       "type" : "string",
-      "description" : "Version of the LemonLDAP::NG software"
-    },
-    "status_sessions" : {
-      "type" : "string",
-      "description" : "Status of the sessions database",
-      "enum" : [ "ok", "ko", "unknown" ]
-    },
-    "status_psessions" : {
-      "type" : "string",
-      "description" : "Status of the psessions database",
-      "enum" : [ "ok", "ko", "unknown" ]
+      "description" : "Global status",
+      "enum" : [ "ok", "ko" ]
     },
     "status_config" : {
       "type" : "string",
       "description" : "Status of the configuration database",
       "enum" : [ "ok", "ko" ]
     },
-    "status" : {
+    "status_psessions" : {
       "type" : "string",
-      "description" : "Global status",
-      "enum" : [ "ok", "ko" ]
+      "description" : "Status of the psessions database",
+      "enum" : [ "ok", "ko", "unknown" ]
+    },
+    "status_sessions" : {
+      "type" : "string",
+      "description" : "Status of the sessions database",
+      "enum" : [ "ok", "ko", "unknown" ]
+    },
+    "version" : {
+      "type" : "string",
+      "description" : "Version of the LemonLDAP::NG software"
     }
   }
 };
