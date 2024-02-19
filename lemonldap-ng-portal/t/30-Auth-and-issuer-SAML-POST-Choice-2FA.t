@@ -43,7 +43,13 @@ LWP::Protocol::PSGI->register(
 );
 
 SKIP: {
-    eval "use Lasso";
+    unless (
+        eval
+'use Lasso; (Lasso::check_version( 2, 5, 1, Lasso::Constants::CHECK_VERSION_NUMERIC) )? 1 : 0'
+      )
+    {
+        skip 'Lasso not found or too old';
+    }
     if ($@) {
         skip 'Lasso not found';
     }
@@ -263,7 +269,7 @@ sub sp {
                 authentication    => 'Choice',
                 userDB            => 'Same',
                 authChoiceModules => {
-                    '1_SAML' => 'SAML;SAML;Null;;;',
+                    '1_SAML' => 'SAML;SAML;Null;;;{}',
                 },
                 userDB                            => 'Same',
                 ext2fActivation                   => 1,
@@ -286,6 +292,7 @@ sub sp {
                         samlIDPMetaDataOptionsSignSSOMessage => 1,
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
+                        samlIDPMetaDataOptionsSignatureMethod => "RSA_SHA256",
                         samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
                         samlIDPMetaDataOptionsForceUTF8                => 1,
                     }
