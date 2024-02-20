@@ -23,6 +23,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_TOKENEXPIRED
   PE_NO_SECOND_FACTORS
   PE_RETRY_2FA
+  portalConsts
 );
 
 our $VERSION = '2.18.0';
@@ -317,7 +318,13 @@ sub run {
                 $self->logger->debug(
 "Remove $device->{type} -> $device->{name} / $device->{epoch}"
                 );
-                $self->userLogger->info("Remove expired $device->{type}");
+                $self->auditLog(
+                    $req,
+                    message => ("Remove expired $device->{type}"),
+                    code    => "2FA_DEVICE_EXPIRED",
+                    device  => display2F($device),
+                    user    => $req->user,
+                );
                 push @expired2fDevices, $device;
                 $name .= "$device->{name}; ";
                 $removed++;
@@ -381,7 +388,10 @@ sub run {
             $self->logger->debug(" -> Redirect to 2fregisters/");
             $req->response( [
                     302,
-                    [ Location => $self->p->buildUrl( $req->portal, '2fregisters' ) ],
+                    [
+                        Location =>
+                          $self->p->buildUrl( $req->portal, '2fregisters' )
+                    ],
                     []
                 ]
             );
@@ -401,8 +411,15 @@ sub run {
         }
     }
 
-    $self->userLogger->info( 'Second factor required for '
-          . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+    $self->auditLog(
+        $req,
+        message => (
+            'Second factor required for '
+              . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+        ),
+        code => "2FA_REQUIRED",
+        user => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+    );
 
     delete $req->{authResult};
 
@@ -411,10 +428,18 @@ sub run {
 
     # If only one 2F is authorized, display it
     unless ($#am) {
-        $self->userLogger->info( 'Second factor '
-              . $am[0]->prefix
-              . '2F selected for '
-              . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+        $self->auditLog(
+            $req,
+            message => (
+                    'Second factor '
+                  . $am[0]->prefix
+                  . '2F selected for '
+                  . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+            ),
+            code => "2FA_SELECTED",
+            user => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+            type => $am[0]->prefix,
+        );
 
         my $res = $am[0]->run( $req, $token );
         $req->authResult($res);
@@ -496,6 +521,14 @@ sub _choice {
 
     my ( $tokres, $session ) = $self->_check_token($req);
     if ( $tokres != PE_OK ) {
+        $self->auditLog(
+            $req,
+            message      => "Token validation failed during 2FA type selection",
+            code         => "2FA_SELECTION_FAILED",
+            user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+            reason       => "Token validation failed",
+            portal_error => portalConsts->{$tokres},
+        );
         return $self->p->do( $req, [ sub { $tokres } ] );
     }
 
@@ -504,14 +537,22 @@ sub _choice {
     my $ch = $req->param('sf');
     foreach my $m ( @{ $self->sfModules } ) {
         if ( $m->{m}->prefix eq $ch ) {
-            $self->userLogger->info( 'Second factor '
-                  . $m->{m}->prefix
-                  . '2f selected for '
-                  . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+            $self->auditLog(
+                $req,
+                message => (
+                        'Second factor '
+                      . $m->{m}->prefix
+                      . '2f selected for '
+                      . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                ),
+                code => "2FA_SELECTED",
+                user => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+                type => $m->{m}->prefix,
+            );
 
             # New token
             my $token = $self->ott->createToken( $req->sessionInfo );
-            my $res = $m->{m}->run( $req, $token );
+            my $res   = $m->{m}->run( $req, $token );
             $req->authResult($res);
             return $self->p->do(
                 $req,
@@ -522,8 +563,16 @@ sub _choice {
             );
         }
     }
-    $self->userLogger->error('Bad 2F choice');
-    return $self->p->lmError( $req, 500 );
+    $self->auditLog(
+        $req,
+        message      => ('Bad 2F choice'),
+        code         => "2FA_SELECTION_FAILED",
+        reason       => "Unknown type",
+        user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+        portal_error => portalConsts->{PE_ERROR},
+        type         => $ch,
+    );
+    return $self->p->do( $req, [ sub { PE_ERROR } ] );
 }
 
 sub _redirect {
@@ -531,10 +580,7 @@ sub _redirect {
     my $arg = $req->env->{QUERY_STRING};
 
     $self->logger->debug('Call sfEngine _redirect method');
-    return [
-        302,
-        [ Location => $req->portal . ( $arg ? "?$arg" : '' ) ], []
-    ];
+    return [ 302, [ Location => $req->portal . ( $arg ? "?$arg" : '' ) ], [] ];
 }
 
 sub _displayRegister {
@@ -648,8 +694,9 @@ sub _displayRegister {
             DISPLAY_UPG  => $displayUpgBtn,
             MSG          => $self->canUpdateSfa($req) || 'choose2f',
             ALERT => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
-            SFREGISTERS_URL =>
-              encode_base64( $self->p->buildUrl( $req->portal, '2fregisters' ), '' ),
+            SFREGISTERS_URL => encode_base64(
+                $self->p->buildUrl( $req->portal, '2fregisters' ), ''
+            ),
             %tplParams,
         }
     );
@@ -857,6 +904,14 @@ sub _verify {
 
     my ( $tokres, $session ) = $self->_check_token($req);
     if ( $tokres != PE_OK ) {
+        $self->auditLog(
+            $req,
+            message      => "Token validation failed during 2FA verification",
+            code         => "2FA_VERIFICATION_FAILED",
+            user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+            reason       => "Token validation failed",
+            portal_error => portalConsts->{$tokres},
+        );
         return $self->p->do( $req, [ sub { $tokres } ] );
     }
 
