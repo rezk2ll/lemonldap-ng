@@ -56,7 +56,7 @@ sub enabledPlugins {
     my @res;
 
     # Search for Issuer* modules enabled
-    foreach my $key (qw(SAML OpenID CAS OpenIDConnect Get)) {
+    foreach my $key (qw(SAML OpenID CAS OpenIDConnect Get JitsiMeetTokens)) {
         if ( $conf->{"issuerDB${key}Activation"} ) {
             $self->logger->debug("Issuer${key} enabled");
             push @res, "::Issuer::$key";
