@@ -20,6 +20,7 @@ lib/Lemonldap/NG/Manager/Attributes.pm
 lib/Lemonldap/NG/Manager/Build.pm
 lib/Lemonldap/NG/Manager/Build/Attributes.pm
 lib/Lemonldap/NG/Manager/Build/CTrees.pm
+lib/Lemonldap/NG/Manager/Build/OpenApi.pm
 lib/Lemonldap/NG/Manager/Build/PortalConstants.pm
 lib/Lemonldap/NG/Manager/Build/Tree.pm
 lib/Lemonldap/NG/Manager/Cli.pm

@@ -77,6 +77,7 @@ lib/Lemonldap/NG/Portal/Lib/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Net/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Notifications/JSON.pm
 lib/Lemonldap/NG/Portal/Lib/Notifications/XML.pm
+lib/Lemonldap/NG/Portal/Lib/Okta.pm
 lib/Lemonldap/NG/Portal/Lib/OneTimeToken.pm
 lib/Lemonldap/NG/Portal/Lib/OpenID/Server.pm
 lib/Lemonldap/NG/Portal/Lib/OpenID/SREG.pm
@@ -270,6 +271,9 @@ site/htdocs/static/bwr/qrious/dist/qrious.js
 site/htdocs/static/bwr/qrious/dist/qrious.js.map
 site/htdocs/static/bwr/qrious/dist/qrious.min.js
 site/htdocs/static/bwr/qrious/dist/qrious.min.js.map
+site/htdocs/static/common/2F/okta-push.png
+site/htdocs/static/common/2F/okta-sms.png
+site/htdocs/static/common/2F/okta-tokensoftwaretotp.png
 site/htdocs/static/common/apps/attach.png
 site/htdocs/static/common/apps/bell.png
 site/htdocs/static/common/apps/bookmark.png
@@ -604,6 +608,7 @@ t/26-AuthRadius.t
 t/26-AuthRemote.t
 t/27-AuthProxy-with-choice.t
 t/27-AuthProxy.t
+t/28-AuthChoice-2FA.t
 t/28-AuthChoice-and-password.t
 t/28-AuthChoice-Custom.t
 t/28-AuthChoice-Slave-rememberAuthChoice.t
@@ -677,6 +682,7 @@ t/32-Auth-and-issuer-OIDC-authorization_code.t
 t/32-Auth-and-issuer-OIDC-hybrid.t
 t/32-Auth-and-issuer-OIDC-implicit-no-token.t
 t/32-Auth-and-issuer-OIDC-implicit.t
+t/32-Auth-and-issuer-OIDC-PKCE.t
 t/32-Auth-and-issuer-OIDC-sorted.t
 t/32-OIDC-Back-Channel-Logout-no-sid.t
 t/32-OIDC-Back-Channel-Logout-sid-EC-keys.t
