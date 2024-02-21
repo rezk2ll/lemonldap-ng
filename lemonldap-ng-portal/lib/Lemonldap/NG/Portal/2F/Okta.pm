@@ -16,6 +16,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 
 extends 'Lemonldap::NG::Portal::Lib::Code2F';
+with 'Lemonldap::NG::Portal::Lib::Okta';
 
 has prefix    => ( is => 'ro', default => 'okta' );
 has conf_type => ( is => 'ro', default => 'okta' );
@@ -257,20 +258,10 @@ sub getOktaUserID {
 
     # Search user
     $self->logger->debug("Search $okta_login in Okta");
-    my $okta_search =
-      build_urlencoded( 'search', 'profile.login eq "' . $okta_login . '"' );
-    my $user_response =
-      $self->ua->get(
-        $self->conf->{okta2fAdminURL} . '/api/v1/users/?' . $okta_search );
-    if ( $user_response->is_error ) {
-        $self->logger->error( "Unable to get user "
-              . $okta_login
-              . " in Okta:"
-              . $user_response->content );
-        return;
-    }
+    my $search_profile_response = $self->searchProfile($okta_login);
+    return unless $search_profile_response;
 
-    my $okta_user = $self->decodeJSON( $user_response->decoded_content );
+    my $okta_user = $self->decodeJSON($search_profile_response);
     unless ( $okta_user and $okta_user->[0]->{id} ) {
         $self->logger->error("User $okta_login not found in Okta");
         return;
