@@ -213,7 +213,7 @@ Protocol                                                              Service Pr
 :doc:`CAS 1.0 / 2.0 / 3.0<idpcas>`                                    ✔                ✔
 :doc:`SAML 2.0 / Shibboleth<idpsaml>`                                 ✔                ✔
 :doc:`OpenID Connect<idpopenidconnect>`                               ✔                ✔
-:doc:`OpenID 2.0<idpopenid>` *(decrepated)*                           ✔                ✔
+:doc:`OpenID 2.0<idpopenid>` *(deprecated)*                           ✔                ✔
 :doc:`Get parameters provider<issuerdbget>` *(for poor applications)*                  ✔
 ===================================================================== ================ =================
 

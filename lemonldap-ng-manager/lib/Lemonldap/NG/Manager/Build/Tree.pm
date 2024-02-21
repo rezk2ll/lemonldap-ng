@@ -929,12 +929,31 @@ sub tree {
                 {
                     title => 'secondFactors',
                     help  => 'secondfactor.html',
-                    nodes => [
-                        'sfManagerRule',
-                        'sfRequired',
-                        'sfOnlyUpgrade',
-                        'sfLoginTimeout',
-                        'sfRegisterTimeout',
+                    nodes => [ {
+                            title => 'sfOptions',
+                            help  => 'secondfactor.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'sfManagerRule',
+                                'sfRequired',
+                                'sfOnlyUpgrade',
+                                'sfLoginTimeout',
+                                'sfRegisterTimeout',
+                                'sfRetries',
+                                {
+                                    title => 'sfRemovedNotification',
+                                    help  => 'secondfactor.html',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'sfRemovedMsgRule',
+                                        'sfRemovedUseNotif',
+                                        'sfRemovedNotifRef',
+                                        'sfRemovedNotifTitle',
+                                        'sfRemovedNotifMsg'
+                                    ],
+                                }
+                            ]
+                        },
                         {
                             title => 'utotp2f',
                             help  => 'utotp2f.html',
@@ -1097,16 +1116,6 @@ sub tree {
                             ]
                         },
                         'sfExtra',
-                        {
-                            title => 'sfRemovedNotification',
-                            help  => 'secondfactor.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'sfRemovedMsgRule',  'sfRemovedUseNotif',
-                                'sfRemovedNotifRef', 'sfRemovedNotifTitle',
-                                'sfRemovedNotifMsg'
-                            ],
-                        }
                     ]
                 },
                 {

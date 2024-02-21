@@ -85,7 +85,7 @@ Define here:
 
 .. note::
 
-    Authentication request to an another URL than Portal URL can lead
+    Authentication request to another URL than Portal URL can lead
     to a persistent loop between Portal and a redirection URL (pdata is not
     removed because domains mismatch). To avoid this, you have to set pdata
     cookie domain by editing ``lemonldap-ng.ini`` in section [portal]:

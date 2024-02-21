@@ -135,6 +135,7 @@ sub error_type {
                 PE_REGISTERFORMEMPTY,
                 PE_PP_CHANGE_AFTER_RESET,
                 PE_RESETCERTIFICATE_FORMEMPTY,
+                PE_RETRY_2FA,
             )
         )
       );

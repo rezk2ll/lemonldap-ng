@@ -117,7 +117,8 @@ sub portalConstants {
         PE_OIDC_AUTH_ERROR                   => 106,
         PE_UNKNOWNPARTNER                    => 107,
         PE_UNAUTHORIZEDURL                   => 108,
-        PE_UNPROTECTEDURL                    => 109
+        PE_UNPROTECTEDURL                    => 109,
+        PE_RETRY_2FA                         => 110,
     };
 }
 

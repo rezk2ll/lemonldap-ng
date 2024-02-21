@@ -1114,7 +1114,6 @@ manifest:   configure
 		$(MAKE) manifest; \
 		cd -; \
 	done
-	perl -i -ne 'print unless/proverc/' */MANIFEST
 
 cpan:	clean configure common_cpan handler_cpan portal_cpan manager_cpan
 	for i in Common Portal Handler Manager; do \
@@ -1188,7 +1187,7 @@ tidyversion:
 tidy: clean
 	@if perltidy -v|grep "$(PERLTIDY_VERSION)" >/dev/null; then \
 		find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \) -print0 | xargs -t -0 $(PARAXARGS) -n10 perltidy -se -b -bext=/ ;\
-	else echo "Wrong perltidy version, please install Perl::Tidy@20220217" ; exit 1 ;\
+	else echo "Wrong perltidy version, please install Perl::Tidy@$(PERLTIDY_VERSION)" ; exit 1 ;\
 	fi
 	$(MAKE) json
 
@@ -1230,9 +1229,4 @@ e2e_cert:
 		-config e2e-tests/openssl.cnf
 
 api_doc: doc/sources/manager-api/openapi-spec.yaml doc/sources/manager-api/config-codegen.json
-	@if [ -f "$(SWAGGER_CODEGEN)" ] ; then \
-	java -jar "$(SWAGGER_CODEGEN)" generate -i doc/sources/manager-api/openapi-spec.yaml -l html2 -o doc/pages/manager-api/ -c doc/sources/manager-api/config-codegen.json; \
-	else \
-		echo "Please run me with SWAGGER_CODEGEN=/path/to/swagger-codegen.jar"; \
-	fi
-
+	@env SWAGGER_CODEGEN=$(SWAGGER_CODEGEN) scripts/openapigenerator.pl

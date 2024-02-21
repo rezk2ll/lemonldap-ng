@@ -416,6 +416,10 @@ sub run {
                         $self->logger->error(
                                 "Requested AssertionConsumerServiceURL $ACS"
                               . " might be missing from registered metadata" );
+                    } else {
+                        $self->logger->error(
+                                "Make sure AssertionConsumerServiceURL from the "
+                              . " SAML requests is defined in registered metadata" );
                     }
 
                     return PE_SAML_SSO_ERROR;

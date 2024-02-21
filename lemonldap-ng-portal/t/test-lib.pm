@@ -64,6 +64,7 @@ use URI::Escape;
 use MIME::Base64;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::Util qw/getPSessionID/;
+use Carp qw/shortmess/;
 
 #use 5.10.0;
 
@@ -817,6 +818,12 @@ sub popHandler {
     }
 }
 
+# Not needed anymore, all the work is done by "register"
+sub switch {
+    note shortmess( 'Manual switching is deprecated,'
+          . ' you can remove it from your tests' );
+}
+
 =head4 encodeUrl( $url );
 
 Encode URL like the handler would, see ::Handler::Main
@@ -1260,6 +1267,19 @@ sub _put {
     my ( $self, $path, $body, %args ) = @_;
     $args{method} = 'PUT';
     return $self->_post( $path, $body, %args );
+}
+
+sub getHistory {
+    my ( $self, $uid, $only_type ) = @_;
+    my $psession = $self->p->getPersistentSession($uid);
+    my @entries;
+    my $history = $psession->data->{_loginHistory} || {};
+    for my $type ( keys %$history ) {
+        if ( !$only_type or $type eq "${only_type}Login" ) {
+            push @entries, @{ $history->{$type} || [] };
+        }
+    }
+    return @entries;
 }
 
 1;

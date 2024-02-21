@@ -555,6 +555,7 @@ site/templates/common/notifinclude.tpl
 site/templates/common/oidc_checksession.tpl
 site/templates/common/registerBrowser.tpl
 site/templates/common/script.tpl
+t/00-Switch.t
 t/01-AuthDemo.t
 t/01-BuildRule.t
 t/01-BuildUrl.t
@@ -920,6 +921,7 @@ t/77-2F-Mail-SessionKey.t
 t/77-2F-Mail-with-global-storage.t
 t/77-2F-Mail.t
 t/77-2F-Radius.t
+t/77-2F-Retry.t
 t/77-2F-Trust.t
 t/78-2F-Upgrade-Many.t
 t/78-2F-Upgrade.t
@@ -981,4 +983,5 @@ t/test-yubikey.pm
 t/testslapd/confs-sessions.ldif
 t/testslapd/slapd.ldif
 t/testslapd/users.ldif
+t/TestStdLogger.pm
 t/vrfyOTP.pl

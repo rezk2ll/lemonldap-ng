@@ -3684,6 +3684,10 @@ sub attributes {
             default       => '::2F::Engines::Default',
             documentation => 'Second factor engine',
         },
+        sfRetries => {
+            type          => 'intOrNull',
+            documentation => 'Allowed number of retries',
+        },
         sfRequired => {
             type          => 'boolOrExpr',
             default       => 0,
@@ -5009,7 +5013,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Bypass logout confirmation'
         },
         oidcRPMetaDataOptionsLogoutUrl => {
-            type          => 'text',
+            type          => 'url',
             documentation => 'Logout URL',
         },
         oidcRPMetaDataOptionsLogoutType => {

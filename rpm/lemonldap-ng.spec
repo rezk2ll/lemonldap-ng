@@ -115,6 +115,7 @@ BuildRequires:  perl(GD::SecurityImage)
 %{!?el7:BuildRequires:  perl(GeoIP2::Database::Reader)}
 BuildRequires:  perl(Getopt::Long)
 BuildRequires:  perl(Getopt::Std)
+BuildRequires:  perl(Glib)
 BuildRequires:  perl(GSSAPI)
 BuildRequires:  perl(Hash::Merge::Simple)
 BuildRequires:  perl(HTML::Entities)
@@ -134,10 +135,7 @@ BuildRequires:  perl(IO::String)
 BuildRequires:  perl(IPC::Run)
 BuildRequires:  perl(JSON)
 BuildRequires:  perl(JSON::XS)
-%if 0%{?fedora}
 BuildRequires:  perl(Lasso)
-BuildRequires:  perl(Glib)
-%endif
 BuildRequires:  perl(List::MoreUtils)
 BuildRequires:  perl(Log::Log4perl)
 BuildRequires:  perl(Log::Log4perl::MDC)
@@ -258,9 +256,7 @@ Requires:        (%{name}-selinux = %{version}-%{release} if selinux-policy-%{se
 
 # Setup requires filtering
 %{?perl_default_filter}
-%{?el7:%global __requires_exclude perl\\(Lasso|perl\\(Web::ID|perl\\(Sentry::Raven}
-%{?el8:%global __requires_exclude perl\\(Lasso}
-%{?el9:%global __requires_exclude perl\\(Lasso}
+%{?el7:%global __requires_exclude perl\\(Web::ID|perl\\(Sentry::Raven}
 
 
 %description
@@ -306,8 +302,8 @@ Requires:       perl(Lemonldap::NG::Manager) = %{version}-%{release}
 Provides:       bundled(js-angular) = 1.7.9
 Provides:       bundled(js-angular-bootstrap) = 2.5.0
 Provides:       bundled(js-angular-ui-tree) = 2.22.6
-Provides:       bundled(js-es5-shim)
-Provides:       bundled(js-filesaver)
+Provides:       bundled(js-es5-shim) = 4.5.14
+Provides:       bundled(js-filesaver) = 2.0.4
 
 %description manager
 This package deploys the administration interface and sessions explorer.
@@ -318,8 +314,9 @@ Requires:       crontabs
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Portal) = %{version}-%{release}
 %if 0%{?el7}
-# Fido2
-#Requires:       perl(Authen::WebAuthn)
+# SAML
+Requires:       perl(Glib)
+Requires:       perl(Lasso)
 # Facebook
 Requires:       perl(Net::Facebook::Oauth2)
 # OpenID
@@ -337,7 +334,8 @@ Recommends:     perl(Data::Password::zxcvbn)
 Recommends:     perl(GeoIP2)}
 Recommends:     perl(HTTP::BrowserDetect)}
 # SAML
-%{?fedora:Recommends:    perl(Lasso)}
+Recommends:     perl(Glib)
+Recommends:     perl(Lasso)
 # Facebook
 Recommends:     perl(Net::Facebook::Oauth2)
 # OpenID
@@ -352,7 +350,7 @@ Provides:       bundled(js-bootstrap) = 4.5.2
 Provides:       bundled(js-fingerprint2) = 2.1.4
 Provides:       bundled(js-jquery) = 3.5.1
 Provides:       bundled(js-jquery-ui) = 1.13.2
-Provides:       bundled(js-qrious)
+Provides:       bundled(js-qrious) = 4.0.2
 
 %description portal
 This package deploys the authentication portal.
@@ -552,18 +550,13 @@ sed -i 's:/etc/lemonldap-ng/nginx-lua-headers.conf:/etc/nginx/nginx-lua-headers.
 # Remove for_etc_hosts from %%{_sysconfdir}
 mv %{buildroot}%{lm_confdir}/for_etc_hosts .
 
-# Fix shebang and perms
+# Fix shebangs
 sed -i -e 's,#!/usr/bin/env plackup,#!/usr/bin/plackup,' \
-    %{buildroot}%{lm_sharedir}/manager/api/api.psgi \
-    %{buildroot}%{lm_sharedir}/manager/htdocs/manager.psgi \
-    %{buildroot}%{lm_examplesdir}/manager/manager.psgi
-chmod 755 \
     %{buildroot}%{lm_sharedir}/manager/api/api.psgi \
     %{buildroot}%{lm_sharedir}/manager/htdocs/manager.psgi \
     %{buildroot}%{lm_examplesdir}/manager/manager.psgi
 sed -i -e '1i#!/usr/bin/plackup' \
     %{buildroot}%{lm_examplesdir}/llngapp.psgi
-chmod 644 %{buildroot}%{lm_sharedir}/test/cas.php
 
 # Install SELinux policy
 %if 0%{?with_selinux}
@@ -572,11 +565,12 @@ install -D -m 0644 %{modulename}.pp.bz2 \
 %endif
 
 %check
-# This test requires network, use "--with network_tests" to execute it
-%{?!_with_network_tests:rm lemonldap-ng-portal/t/02-Password-Demo-checkHIBP.t}
 sed -i 's:^dirName.*:dirName = %{buildroot}%{lm_vardir}/conf:' \
     %{buildroot}%{lm_storagefile}
-make %{?_smp_mflags} test \
+# Tests requiring network are disabled by default
+# Use "--with network_tests" to execute them
+%make_build test \
+    %{?!_with_network_tests:SKIP_NETWORK_TESTS=1} \
     LLNG_DEFAULTCONFFILE=%{buildroot}%{lm_storagefile}
 sed -i 's:^dirName.*:dirName = %{lm_vardir}/conf:' \
     %{buildroot}%{lm_storagefile}
@@ -783,7 +777,7 @@ fi
 * Mon Oct 02 2023 Xavier Bachelot <xavier@bachelot.org> - 2.17.1-2
 - Add a dep on SSOaaS version
 - Simplify fix shebang and perms
-- Drop INSTALL from %doc
+- Drop INSTALL from %%doc
 
 * Mon Sep 25 2023 Clement Oudot <clem.oudot@gmail.com> - 2.17.1-1
 - Update to 2.17.1

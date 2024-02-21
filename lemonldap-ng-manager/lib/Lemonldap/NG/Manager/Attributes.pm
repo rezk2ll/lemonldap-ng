@@ -2989,7 +2989,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type' => 'select'
         },
         'oidcRPMetaDataOptionsLogoutUrl' => {
-            'type' => 'text'
+            'type' => 'url'
         },
         'oidcRPMetaDataOptionsOfflineSessionExpiration' => {
             'type' => 'intOrNull'
@@ -4982,6 +4982,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'sfRequired' => {
             'default' => 0,
             'type'    => 'boolOrExpr'
+        },
+        'sfRetries' => {
+            'type' => 'intOrNull'
         },
         'showLanguages' => {
             'default' => 1,
