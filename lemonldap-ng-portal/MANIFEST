@@ -936,6 +936,7 @@ t/78-2F-UpgradeOnly-without-2F.t
 t/78-2F-UpgradeOnly.t
 t/79-2F-Yubikey-from-Session.t
 t/79-2F-Yubikey.t
+t/80-2F-Okta.t
 t/90-Translations.t
 t/91-Handler-cache-cleaned.t
 t/91-Memory-Leak.t

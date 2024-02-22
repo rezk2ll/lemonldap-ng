@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Lib::Okta;
 
 use strict;
 use HTTP::Request;
-use Mouse::Role;
+use Mouse;
 use WWW::Form::UrlEncoded qw/build_urlencoded/;
 
 has ua => (
