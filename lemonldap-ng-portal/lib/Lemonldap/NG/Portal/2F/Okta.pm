@@ -21,16 +21,6 @@ with 'Lemonldap::NG::Portal::Lib::Okta';
 has prefix    => ( is => 'ro', default => 'okta' );
 has conf_type => ( is => 'ro', default => 'okta' );
 
-has ua => (
-    is      => 'rw',
-    lazy    => 1,
-    builder => sub {
-        my $ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
-        $ua->env_proxy();
-        return $ua;
-    }
-);
-
 sub init {
     my ($self) = @_;
 
@@ -43,12 +33,6 @@ sub init {
         $self->error("Okta 2F: API key is required");
         return 0;
     }
-
-    # Prepare UA headers
-    $self->ua->default_headers->header( 'Accept'       => 'application/json' );
-    $self->ua->default_headers->header( 'Content-Type' => 'application/json' );
-    $self->ua->default_headers->header(
-        'Authorization' => 'SSWS ' . $self->conf->{okta2fApiKey} );
 
     # Add Okta factor choice endpoint
     unless ( $self->noRoute ) {
@@ -154,17 +138,13 @@ sub verify {
     my $poll_content;
     for ( my $i = 0 ; $i <= 60 ; $i++ ) {
 
-        $poll_response = $self->ua->get($okta_poll_url);
-        if ( $poll_response->is_error ) {
-            $self->logger->error(
-                "Unable to get poll response for $okta_userid in Okta:"
-                  . $poll_response->content );
-            last;
-        }
-        $self->logger->debug( "Get poll response for $okta_userid:"
-              . $poll_response->decoded_content );
+        $poll_response = $self->pollFactor($okta_poll_url);
+        last unless ($poll_response);
 
-        $poll_content = $self->decodeJSON( $poll_response->decoded_content );
+        $self->logger->debug(
+            "Get poll response for $okta_userid:" . $poll_response );
+
+        $poll_content = $self->decodeJSON($poll_response);
 
         $okta_poll_result = $poll_content->{factorResult};
 
@@ -196,32 +176,14 @@ sub verify_external {
         return PE_ERROR;
     }
 
-    my $issue_content = to_json( { 'passCode' => $code } );
-    my $issue_request = HTTP::Request->new(
-        'POST',
-        $self->conf->{okta2fAdminURL}
-          . '/api/v1/users/'
-          . $okta_userid
-          . '/factors/'
-          . $selected_factor
-          . '/verify',
-        [],
-        $issue_content
-    );
-    my $issue_response = $self->ua->request($issue_request);
-
-    if ( $issue_response->is_error ) {
-        $self->logger->error(
-            "Unable to verify code $code for $okta_userid in Okta:"
-              . $issue_response->content );
-        return PE_ERROR;
-    }
+    my $verify_factor_response =
+      $self->verifyFactor( $okta_userid, $selected_factor, $code );
+    return PE_ERROR unless ($verify_factor_response);
 
     $self->logger->debug(
         "Verify 2FA code $code with factor $selected_factor for $okta_userid:"
-          . $issue_response->decoded_content );
-    my $okta_verification =
-      $self->decodeJSON( $issue_response->decoded_content );
+          . $verify_factor_response );
+    my $okta_verification = $self->decodeJSON($verify_factor_response);
 
     unless ( $okta_verification->{factorResult} eq "SUCCESS" ) {
         $self->logger->error(
@@ -281,27 +243,19 @@ sub getOktaActiveFactors {
     my $okta_factors = {};
 
     # Search factors
-    my $factor_response =
-      $self->ua->get( $self->conf->{okta2fAdminURL}
-          . '/api/v1/users/'
-          . $okta_userid
-          . '/factors' );
-    if ( $factor_response->is_error ) {
-        $self->logger->error( "Unable to get factors for $okta_userid in Okta:"
-              . $factor_response->content );
-        return $okta_factors;
-    }
+    my $search_factors_response = $self->searchFactors($okta_userid);
+    return unless $search_factors_response;
 
     $self->logger->debug(
-        "Get factors for $okta_userid:" . $factor_response->decoded_content );
+        "Get factors for $okta_userid:" . $search_factors_response );
 
-    my $okta_factor = $self->decodeJSON( $factor_response->decoded_content );
+    my $okta_factor = $self->decodeJSON($search_factors_response);
     unless ($okta_factor) {
         $self->logger->error("No factors for $okta_userid in Okta");
         return $okta_factors;
     }
 
-    # Loop on factors to find SMS
+    # Keep active factors
     foreach (@$okta_factor) {
 
         my $factor_id     = $_->{id};
@@ -344,27 +298,18 @@ sub _issueFactor {
     my $selected_factor = $req->param('sf');
     $self->ott->updateToken( $token, __oktaFactorId => $selected_factor );
 
-    my $issue_response =
-      $self->ua->post( $self->conf->{okta2fAdminURL}
-          . '/api/v1/users/'
-          . $okta_userid
-          . '/factors/'
-          . $selected_factor
-          . '/verify' );
-
-    if ( $issue_response->is_error ) {
-        $self->logger->error(
-            "Unable to issue factor challenge for $okta_userid in Okta:"
-              . $issue_response->content );
+    my $issue_factor_response =
+      $self->issueFactor( $okta_userid, $selected_factor );
+    unless ($issue_factor_response) {
         eval { $self->setSecurity($req) };
         $req->mustRedirect(1);
         return $self->p->do( $req, [ sub { PE_ERROR } ] );
     }
 
     $self->logger->debug(
-        "2FA sent to $okta_userid: " . $issue_response->decoded_content );
+        "2FA sent to $okta_userid: " . $issue_factor_response );
 
-    my $okta_issue = $self->decodeJSON( $issue_response->decoded_content );
+    my $okta_issue = $self->decodeJSON($issue_factor_response);
 
     if ( $okta_issue->{factorResult} eq "CHALLENGE" ) {
 
