@@ -1840,6 +1840,55 @@ sub attributes {
             documentation => 'List of virtualHosts with their get parameters',
         },
 
+        # Jitsi Meet tokens issuer
+        issuerDBJitsiMeetTokensActivation => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Jitsi issuer activation',
+        },
+        issuerDBJitsiMeetTokensPath => {
+            type          => 'text',
+            default       => '^/jitsi/',
+            documentation => 'Jitsi issuer request path',
+        },
+        issuerDBJitsiMeetTokensRule => {
+            type          => 'boolOrExpr',
+            default       => 1,
+            documentation => 'Jitsi issuer rule',
+        },
+
+        jitsiServer => {
+            type          => 'text',
+            documentation => 'Jitsi server URL',
+        },
+        jitsiAppId => {
+            type          => 'text',
+            documentation => 'Jitsi application ID',
+        },
+        jitsiAppSecret => {
+            type          => 'text',
+            documentation => 'Jitsi application secret',
+        },
+        jitsiSigningAlg => {
+            type    => 'select',
+            select  => oidcSigAlgorithmAlg,
+            default => 'HS256',
+            documentation => 'Jitsi JWT signature method',
+        },
+        jitsiIdAttribute => {
+            type          => 'text',
+            documentation => 'Jitsi attribute for ID',
+        },
+        jitsiNameAttribute => {
+            type          => 'text',
+            documentation => 'Jitsi attribute for name',
+        },
+        jitsiMailAttribute => {
+            type          => 'text',
+            documentation => 'Jitsi attribute for email',
+        },
+
+
         # Password
         mailOnPasswordChange => {
             default       => 0,

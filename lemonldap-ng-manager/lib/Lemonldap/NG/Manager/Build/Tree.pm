@@ -551,6 +551,33 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'issuerDBJitsiMeetTokens',
+                            help  => 'idpjitsimeettokens.html',
+                            nodes => [
+                                'issuerDBJitsiMeetTokensActivation',
+                                'issuerDBJitsiMeetTokensPath',
+                                'issuerDBJitsiMeetTokensRule',
+                                {
+                                    title => 'jitsiOptions',
+                                    nodes => [
+                                        'jitsiServer',
+                                        'jitsiAppId',
+                                        'jitsiAppSecret',
+                                        'jitsiSigningAlg',
+                                        {
+                                            title => 'jitsiAttributes',
+                                            form  => 'simpleInputContainer',
+                                            nodes => [
+                                                'jitsiIdAttribute',
+                                                'jitsiNameAttribute',
+                                                'jitsiMailAttribute',
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
                             title => 'issuerOptions',
                             help  => 'start.html#options',
                             form  => 'simpleInputContainer',
