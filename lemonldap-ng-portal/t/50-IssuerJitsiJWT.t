@@ -12,17 +12,17 @@ require 't/oidc-lib.pm';
 my $res;
 
 my $test_ini = {
-    logLevel                   => 'error',
-    useSafeJail                => 1,
+    logLevel                          => 'error',
+    useSafeJail                       => 1,
     issuerDBJitsiMeetTokensActivation => 1,
     issuerDBJitsiMeetTokensRule       => '$uid eq "french"',
     issuerDBJitsiMeetTokensPath       => '^/jitsi/',
-    jitsiServer                => 'http://jitsi.example.com/',
-    jitsiAppId                 => "app",
-    jitsiSigningAlg            => "RS256",
-    oidcServicePrivateKeySig   => oidc_key_op_private_sig(),
-    oidcServicePublicKeySig    => oidc_cert_op_public_sig(),
-    oidcServiceKeyIdSig        => "abc",
+    jitsiServer                       => 'http://jitsi.example.com/',
+    jitsiAppId                        => "app",
+    jitsiSigningAlg                   => "RS256",
+    oidcServicePrivateKeySig          => oidc_key_op_private_sig(),
+    oidcServicePublicKeySig           => oidc_cert_op_public_sig(),
+    oidcServiceKeyIdSig               => "abc",
 };
 
 my $client = LLNG::Manager::Test->new( {
@@ -150,7 +150,7 @@ sub testSuccessfulLogin {
           URI->new(
             expectRedirection( $res, qr#(http://jitsi.example.com/.*)# ) );
         is( $uri->path, "/abc", "Correct path" );
-        my $jwt = $uri->query_param('jwt');
+        my $jwt = { $uri->query_form }->{jwt};
         ok( $jwt, "Found JWT parameter in response" );
 
         my ( $header, $jwt_payload ) = decode_jwt(
@@ -183,15 +183,16 @@ sub testSuccessfulLogin {
     };
 }
 
-subtest
-  "Login with RS256" => \&testSuccessfulLogin,
-  $client, \( oidc_cert_op_public_sig() ), "RS256";
+subtest "Login with RS256" => sub {
+    testSuccessfulLogin( $client, \( oidc_cert_op_public_sig() ), "RS256" );
+};
 
 # Update config to use HS256
 $client->ini(
     { %$test_ini, jitsiAppSecret => "secret", jitsiSigningAlg => "HS256" } );
 
-subtest "Login with RS256" => \&testSuccessfulLogin, $client, "secret", "HS256";
+subtest "Login with HS256" =>
+  sub { testSuccessfulLogin( $client, "secret", "HS256" ) };
 
 clean_sessions();
 done_testing();
