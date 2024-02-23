@@ -215,6 +215,7 @@ Protocol                                                              Service Pr
 :doc:`OpenID Connect<idpopenidconnect>`                               ✔                ✔
 :doc:`OpenID 2.0<idpopenid>` *(deprecated)*                           ✔                ✔
 :doc:`Get parameters provider<issuerdbget>` *(for poor applications)*                  ✔
+:doc:`Jitsi Meet Tokens<idpjitsimeettokens>`                                           ✔
 ===================================================================== ================ =================
 
 *Options*
