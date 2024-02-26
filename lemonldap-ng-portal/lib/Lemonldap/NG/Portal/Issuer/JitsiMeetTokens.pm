@@ -17,7 +17,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
 );
 
-our $VERSION = '2.17';
+our $VERSION = '2.19';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer';
 
@@ -112,7 +112,7 @@ sub asap {
     my %loop = (
         oidcServiceKeyIdSig    => 'oidcServicePublicKeySig',
         oidcServiceOldKeyIdSig => 'oidcServiceOldPublicKeySig',
-        oidcServiceOldKeyIdSig => 'oidcServiceOldPublicKeySig',
+        oidcServiceNewKeyIdSig => 'oidcServiceNewPublicKeySig',
     );
 
     while ( my ( $id, $pub ) = each %loop ) {
