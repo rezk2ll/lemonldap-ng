@@ -183,6 +183,7 @@ sub cTrees {
                             'oidcOPMetaDataOptionsClientSecret',
                             'oidcOPMetaDataOptionsStoreIDToken',
                             'oidcOPMetaDataOptionsUserAttribute',
+                            'oidcOPMetaDataOptionsRequirePkce',
                         ]
                     },
                     {

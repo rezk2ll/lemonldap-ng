@@ -286,6 +286,12 @@ function templates(tpl,key) {
                   "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUserAttribute",
                   "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUserAttribute",
                   "title" : "oidcOPMetaDataOptionsUserAttribute"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsRequirePkce",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsRequirePkce",
+                  "title" : "oidcOPMetaDataOptionsRequirePkce",
+                  "type" : "bool"
                }
             ],
             "id" : "oidcOPMetaDataOptionsConfiguration",
