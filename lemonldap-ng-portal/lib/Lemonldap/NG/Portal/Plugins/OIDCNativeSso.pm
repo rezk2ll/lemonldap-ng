@@ -109,9 +109,13 @@ sub tokenResponse {
         my $deviceSecret = $self->oidc->getOpenIDConnectSession(
             undef,
             'device_secret',
-            $self->oidc->rpOptions->{$rp}
-              ->{oidcRPMetaDataOptionsOfflineSessionExpiration}
-              || $self->conf->{oidcServiceOfflineSessionExpiration},
+
+            # Fix device_secret timeout to the same value than offline token
+            $self->oidc->rpOptions->{$rp}->{oidcRPMetaDataOptionsAllowOffline}
+            ? ( $self->oidc->rpOptions->{$rp}
+                  ->{oidcRPMetaDataOptionsOfflineSessionExpiration}
+                  || $self->conf->{oidcServiceOfflineSessionExpiration} )
+            : $self->conf->{timeout},
             {
                 %userInfo,
                 redirect_uri => $oidcSession->{redirect_uri},
