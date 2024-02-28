@@ -1993,24 +1993,9 @@ sub _handleRefreshTokenGrant {
     # Else, we are in an offline session
     else {
 
-        $req->userData( $refreshSession->data );
-        $req->{error} = $self->p->processRefreshSession($req);
-
-        if ( $req->error > 0 ) {
-
-            # PE_BADCREDENTIAL is returned by UserDB modules when the user was
-            # explicitly not found. And not in case of temporary failures
-            if ( $req->error == PE_BADCREDENTIALS ) {
-                $self->logger->error( "User: "
-                      . $req->user
-                      . " no longer exists, removing offline session" );
-                $refreshSession->remove;
-            }
-            else {
-                $self->logger->error( "Could not resolve user: " . $req->user );
-            }
-            return $self->sendOIDCError( $req, 'invalid_grant', 400 );
-        }
+        # Lookup attributes and macros for user
+        $self->getAttributesForUser( $req, $refreshSession )
+          or return $self->sendOIDCError( $req, 'invalid_grant', 400 );
 
         # Cleanup sessionInfo
         delete $req->sessionInfo->{_utime};
@@ -2889,6 +2874,28 @@ sub encryptToken {
         return undef;
     }
     return $token;
+}
+
+# Used to build refresh_token
+sub getAttributesForUser {
+    my ( $self, $req, $session ) = @_;
+    $req->userData( $session->data );
+    $req->{error} = $self->p->processRefreshSession($req);
+
+    return 1 unless $req->error > 0;
+
+    # PE_BADCREDENTIAL is returned by UserDB modules when the user was
+    # explicitly not found. And not in case of temporary failures
+    if ( $req->error == PE_BADCREDENTIALS ) {
+        $self->logger->error( "User: "
+              . $req->user
+              . " no longer exists, removing offline session" );
+        $session->remove;
+    }
+    else {
+        $self->logger->error( "Could not resolve user: " . $req->user );
+    }
+    return 0;
 }
 
 1;

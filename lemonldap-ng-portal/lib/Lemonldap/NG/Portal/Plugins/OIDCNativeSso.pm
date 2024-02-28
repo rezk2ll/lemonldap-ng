@@ -200,31 +200,7 @@ sub tokenExchangeHook {
         # STEP 3.2: generate new refresh_token and access_token
         my ( $access_token, $refresh_token );
 
-        $req->user( $session->data->{_session_uid} );
-        $req->data->{$_} = $session->data->{$_} foreach (qw(_choice));
-        $req->steps( [
-                'getUser',        @{ $self->p->betweenAuthAndData },
-                'setSessionInfo', $self->p->groupsAndMacros,
-                'setLocalGroups',
-            ]
-        );
-        $req->{error} = $self->p->process($req);
-
-        if ( $req->error > 0 ) {
-
-            # PE_BADCREDENTIAL is returned by UserDB modules when the user was
-            # explicitely not found. And not in case of temporary failures
-            if ( $req->error == PE_BADCREDENTIALS ) {
-                $self->logger->error( "User: "
-                      . $req->user
-                      . " no longer exists, removing device_secret session" );
-                $session->remove;
-            }
-            else {
-                $self->logger->error( "Could not resolve user: " . $req->user );
-            }
-            return PE_ERROR;
-        }
+        $self->oidc->getAttributesForUser( $req, $session ) or return PE_ERROR;
 
         if (
             $self->oidc->rpOptions->{$rp}->{oidcRPMetaDataOptionsAllowOffline} )
