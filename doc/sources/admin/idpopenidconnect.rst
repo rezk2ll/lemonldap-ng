@@ -261,6 +261,9 @@ Options
       https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
       for details. These offline sessions can be administered through
       the Session Browser.
+   -  **Allow Native SSO for Mobile Apps** (since version ``2.19.0``): Allow
+      relying party to request a **device_secret**. See
+      https://openid.net/specs/openid-connect-native-sso-1_0.html for details.
    -  **Allow OAuth2.0 Password Grant** (since version ``2.0.8``): Allow the use of
       the :ref:`Resource Owner Password Credentials Grant <resource-owner-password-grant>` by this client.
       This feature only works if you have configured a form-based authentication module.
