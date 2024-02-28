@@ -472,6 +472,10 @@ sub buildAuthorizationCodeAuthnRequest {
     return if ( $h != PE_OK );
 
     if ( $authMode and $authMode =~ /^jw(?:s|e)$/ ) {
+
+        # Save hook changes if any
+        $authorize_request_oauth2_params->{$_} = $authorize_request_params->{$_}
+          foreach ( keys %$authorize_request_oauth2_params );
         my $aud = $authorize_uri;
         $aud =~ s#^(https://[^/]*).*?$#$1#;
         my $jwt = $self->createJWTForOP( {
