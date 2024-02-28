@@ -134,6 +134,12 @@ use constant T_LOG_PREFIX => 'Native SSO token exchange: ';
 # STEP 3: give new access_token when device_secret is valid
 sub tokenExchangeHook {
     my ( $self, $req, $rp ) = @_;
+
+    # Ignore request if token exchange isn't for this plugin
+    return PE_OK
+      unless $req->param('actor_token_type') eq
+      'urn:x-oath:params:oauth:token-type:device-secret';
+
     if ( $self->conf->{oidcRPMetaDataOptions}->{$rp}
         ->{oidcRPMetaDataOptionsAllowNativeSso} )
     {
@@ -152,9 +158,7 @@ sub tokenExchangeHook {
 
         # Check for static parameters
         unless ( $req->param('subject_token_type') eq
-            'urn:ietf:params:oauth:token-type:id_token'
-            and $req->param('actor_token_type') eq
-            'urn:x-oath:params:oauth:token-type:device-secret' )
+            'urn:ietf:params:oauth:token-type:id_token' )
         {
             $self->userLogger->error(
                 T_LOG_PREFIX . 'Bad subject_token_type or actor_token_type' );
@@ -257,6 +261,11 @@ sub tokenExchangeHook {
 
         $req->response( $self->p->sendJSONresponse( $req, $response ) );
         return PE_SENDRESPONSE;
+    }
+    else {
+        $self->userLogger->error(
+            "$rp isn't allowed to request for a device_secret");
+        return PE_ERROR;
     }
 
     # Else ignore this request
