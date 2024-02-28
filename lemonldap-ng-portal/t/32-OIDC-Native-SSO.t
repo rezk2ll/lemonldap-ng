@@ -23,7 +23,6 @@ my $op = LLNG::Manager::Test->new(
             userDB                          => 'Same',
             issuerDBOpenIDConnectActivation => 1,
             issuerDBOpenIDConnectRule       => '$uid eq "french"',
-            oidcServiceAllowNativeSso       => 1,
             oidcRPMetaDataExportedVars      => {
                 rp1 => {
                     email       => "mail",

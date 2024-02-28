@@ -1556,7 +1556,6 @@ sub tree {
                         'oidcServiceAllowAuthorizationCodeFlow',
                         'oidcServiceAllowImplicitFlow',
                         'oidcServiceAllowHybridFlow',
-                        'oidcServiceAllowNativeSso',
                         'oidcServiceIgnoreScopeForClaims',
                         'oidcServiceAllowOnlyDeclaredScopes',
                         'oidcDropCspHeaders',

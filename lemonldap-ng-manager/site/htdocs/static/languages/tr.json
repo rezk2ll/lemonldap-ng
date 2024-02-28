@@ -792,7 +792,6 @@
 "oidcServiceAllowDynamicRegistration":"Aktivasyon",
 "oidcServiceAllowHybridFlow":"Hibrit Akış",
 "oidcServiceAllowImplicitFlow":"Kapalı Akış",
-"oidcServiceAllowNativeSso":"Enable Native SSO for Mobile Apps service",
 "oidcServiceAllowOffline":"Çevrimdışı erişime izin ver",
 "oidcServiceAllowOnlyDeclaredScopes":"Sadece belirli kapsamlara izin ver",
 "oidcServiceAuthorizationCodeExpiration":"Yetkilendirme Kodları",

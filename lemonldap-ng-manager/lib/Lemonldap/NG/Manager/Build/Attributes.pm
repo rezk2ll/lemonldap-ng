@@ -4686,10 +4686,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'bool',
             Documentation => "Don't display OIDC metadata",
         },
-        oidcServiceAllowNativeSso => {
-            type          => 'bool',
-            documentation => 'Enable Native SSO for Mobile Apps service',
-        },
 
         # OIDC Keys
         oidcServiceOldPrivateKeySig => { type => 'EcOrRSAPrivateKey', },
