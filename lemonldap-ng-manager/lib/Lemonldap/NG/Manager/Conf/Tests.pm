@@ -1073,6 +1073,18 @@ sub tests {
             return 1;
         },
 
+        # When auth is choice, userDB should be choice also
+        userdbChoice => sub {
+            return 1
+              unless ( $conf->{authChoiceModules}
+                and %{ $conf->{authChoiceModules} }
+                and $conf->{authentication} eq 'Choice' );
+            return ( 1, 'UserDB should be Same when authentication is Choice' )
+              unless $conf->{userDB} eq 'Same'
+              or $conf->{userDB} eq 'Choice';
+            return 1;
+        },
+
         # FindUser authChoice parameter must be defined
         findUserChoiceParam => sub {
             return ( -1, 'FindUser choice parameter must be defined' )
