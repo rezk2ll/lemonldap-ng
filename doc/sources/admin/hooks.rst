@@ -153,6 +153,31 @@ Sample code::
        return PE_OK;
    }
 
+oidcGenerateTokenResponse
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.19.0
+
+This hook is triggered when LemonLDAP::NG has generated id_token and access_token
+
+The hook's parameters are:
+
+* the configuration key of the relying party which will receive the tokens
+* the prepared response before JSON encoding
+* the OIDC session content
+* the user's session content
+
+Sample code::
+
+    use constant hook => {
+        oidcGenerateTokenResponse      => 'addTokenToResponse',
+    };
+
+    sub addTokenToResponse {
+        my ( $self, $req, $tokensResponse, $oidcSession, $userSession ) = @_;
+        $tokensResponse->{mySpecialToken} = 'randomValue';
+        return PE_OK;
+    }
 
 oidcResolveScope
 ~~~~~~~~~~~~~~~~

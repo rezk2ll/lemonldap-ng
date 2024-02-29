@@ -1878,6 +1878,9 @@ sub _handleAuthorizationCodeGrant {
         ( ( $req_scope ne $scope ) ? ( scope => "$scope" )       : () ),
     };
 
+    $self->p->processHook( $req, 'oidcGenerateTokenResponse', $rp,
+        $token_response, $codeSession->data, $apacheSession->data );
+
     my %update;
 
     # This is kept for compatibility in case some plugins use it
