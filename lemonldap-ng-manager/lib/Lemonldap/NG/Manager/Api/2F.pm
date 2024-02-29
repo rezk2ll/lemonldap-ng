@@ -331,15 +331,15 @@ sub _getDevicesFromSessionData {
 
 sub addSecondFactor {
     my ( $self, $req ) = @_;
-    my $uid = $req->param('uid')
+
+    my $uid = $req->params('uid')
       or return $self->sendError( $req, 'uid is missing', 400 );
 
     $self->logger->debug("[API] Add 2F for $uid");
 
     my $add = $req->jsonBodyToObj;
-
     return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
-      unless ($add);
+      unless ( $add and ref($add) eq "HASH" );
 
     return $self->sendError( $req, 'Invalid input: type is missing', 400 )
       unless ( defined $add->{type} );
@@ -347,9 +347,7 @@ sub addSecondFactor {
     return $self->sendError( $req, 'Invalid input: epoch is forbidden', 400 )
       if ( defined $add->{epoch} );
 
-    $add->{epoch} = time();
-
-    my $res = $self->_add2F( $uid, $add );
+    my $res = $self->_add2F( $uid, undef, $add );
 
     return $self->sendError( $req, $res->{msg}, $res->{code} )
       if ( $res->{res} ne 'ok' );
@@ -360,18 +358,124 @@ sub addSecondFactor {
     );
 }
 
-sub _add2F {
-    my ( $self, $uid, $add ) = @_;
+sub addSecondFactorByType {
+    my ( $self, $req ) = @_;
 
-    my $res =
-      $self->_add2FToSessions( $uid, $add, $self->_getPersistentMod,
+    my $uid = $req->params('uid')
+      or return $self->sendError( $req, 'uid is missing', 400 );
+
+    my $type = $req->params('type')
+      or return $self->sendError( $req, 'type is missing', 400 );
+
+    my $add = $req->jsonBodyToObj;
+    return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
+      unless ( $add and ref($add) eq "HASH" );
+
+    $self->logger->debug("[API] Add $type 2F for $uid");
+
+    my $res = $self->_add2F( $uid, $type, $add );
+
+    return $self->sendError( $req, $res->{msg}, $res->{code} )
+      unless ( $res->{res} eq 'ok' );
+
+    return $self->sendJSONresponse(
+        $req,
+        { message => "Successful operation" },
+        code => 201
+    );
+}
+
+sub _transformNew2f {
+    my ( $self, $type, $add ) = @_;
+
+    # Generic API, no transformation is done
+    if ( !defined($type) ) {
+        return {
+            res    => "ok",
+            device => $add,
+        };
+    }
+
+    if ( uc($type) eq "TOTP" ) {
+        return $self->_transformNew2fTotp( $type, $add );
+    }
+
+    else {
+        return {
+            res  => "ko",
+            code => 400,
+            msg  => "Invalid type: $type",
+        };
+    }
+}
+
+sub _transformNew2fTotp {
+    my ( $self, $type, $add ) = @_;
+
+    if ( !$add->{key} ) {
+        return {
+            res  => "ko",
+            code => 400,
+            msg  => "Invalid input: missing \"key\" parameter",
+        };
+    }
+
+    my $secret = $self->_totpKeyToSecret( $add->{key} );
+    if ( !$secret ) {
+        return {
+            res  => "ko",
+            code => 400,
+            msg  => "Invalid secret: you must provide a base32-encoded key",
+        };
+    }
+
+    my $newdevice = {
+        type => "TOTP",
+        ( $add->{name} ? ( name => $add->{name} ) : () ),
+        _secret => $secret,
+    };
+
+    return {
+        res    => "ok",
+        device => $newdevice,
+    };
+}
+
+sub _totpKeyToSecret {
+    my ( $self, $key ) = @_;
+
+    return unless $key;
+
+    # Make sure only BASE32 characters are present
+    if ( uc($key) =~ /^[ABCDEFGHIJKLMNOPQRSTUVWXYZ234567\s]*$/ ) {
+
+        # Trim spaces and normalize to lowercase
+        my $newKey = $key =~ s/\s//gr;
+        return $self->totp_encrypt->get_storable_secret( lc($newKey) );
+    }
+
+    return undef;
+}
+
+sub _add2F {
+    my ( $self, $uid, $type, $add ) = @_;
+
+    my $res = $self->_transformNew2f( $type, $add );
+    return $res if ( $res->{res} ne 'ok' );
+
+    my $device = $res->{device};
+
+    $device->{epoch} = time();
+
+    $res =
+      $self->_add2FToSessions( $uid, $device, $self->_getPersistentMod,
         'Persistent', '_session_uid' );
     return $res if ( $res->{res} ne 'ok' );
 
     # Add to existing sessions
     my $whatToTrace = Lemonldap::NG::Handler::PSGI::Main->tsv->{whatToTrace};
     $res =
-      $self->_add2FToSessions( $uid, $add, $self->_getSSOMod, 'SSO',
+      $self->_add2FToSessions( $uid, $device, $self->_getSSOMod, 'SSO',
         $whatToTrace );
 
     return { res => "ok" };
