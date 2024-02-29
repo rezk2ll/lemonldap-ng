@@ -1079,7 +1079,7 @@ sub tests {
               unless ( $conf->{authChoiceModules}
                 and %{ $conf->{authChoiceModules} }
                 and $conf->{authentication} eq 'Choice' );
-            return ( 1, 'UserDB should be Choice' )
+            return ( 1, 'UserDB should be Same when authentication is Choice' )
               unless $conf->{userDB} eq 'Same'
               or $conf->{userDB} eq 'Choice';
             return 1;
