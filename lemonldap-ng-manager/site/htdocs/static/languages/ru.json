@@ -707,6 +707,7 @@
 "oidcOPMetaDataOptionsMaxAge":"Максимальный возраст",
 "oidcOPMetaDataOptionsPrompt":"Вызвать",
 "oidcOPMetaDataOptionsProtocol":"Протокол",
+"oidcOPMetaDataOptionsRequirePkce":"PKCE required",
 "oidcOPMetaDataOptionsResolutionRule":"Правило разрешения",
 "oidcOPMetaDataOptionsScope":"Объем",
 "oidcOPMetaDataOptionsSortNumber":"Порядок",

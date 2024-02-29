@@ -2556,6 +2556,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'oidcOPMetaDataOptionsPrompt' => {
             'type' => 'text'
         },
+        'oidcOPMetaDataOptionsRequirePkce' => {
+            'type' => 'bool'
+        },
         'oidcOPMetaDataOptionsResolutionRule' => {
             'default' => '',
             'type'    => 'longtext'

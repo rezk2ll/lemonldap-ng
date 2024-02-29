@@ -707,6 +707,7 @@
 "oidcOPMetaDataOptionsMaxAge":"Età massima",
 "oidcOPMetaDataOptionsPrompt":"Richiesta",
 "oidcOPMetaDataOptionsProtocol":"Protocollo",
+"oidcOPMetaDataOptionsRequirePkce":"PKCE required",
 "oidcOPMetaDataOptionsResolutionRule":"Regola di risoluzione",
 "oidcOPMetaDataOptionsScope":"Scopo",
 "oidcOPMetaDataOptionsSortNumber":"Ordine",

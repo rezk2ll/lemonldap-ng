@@ -707,6 +707,7 @@
 "oidcOPMetaDataOptionsMaxAge":"Maksymalny czas ważności",
 "oidcOPMetaDataOptionsPrompt":"Prompt",
 "oidcOPMetaDataOptionsProtocol":"Protokół",
+"oidcOPMetaDataOptionsRequirePkce":"PKCE required",
 "oidcOPMetaDataOptionsResolutionRule":"Reguła rozstrzygania",
 "oidcOPMetaDataOptionsScope":"Zakres",
 "oidcOPMetaDataOptionsSortNumber":"Kolejność",

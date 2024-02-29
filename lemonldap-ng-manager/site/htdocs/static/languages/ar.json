@@ -707,6 +707,7 @@
 "oidcOPMetaDataOptionsMaxAge":"الحد الأقصى للعمر",
 "oidcOPMetaDataOptionsPrompt":"عاجل",
 "oidcOPMetaDataOptionsProtocol":"بروتوكول",
+"oidcOPMetaDataOptionsRequirePkce":"PKCE required",
 "oidcOPMetaDataOptionsResolutionRule":"حل القاعدة",
 "oidcOPMetaDataOptionsScope":"نطاق",
 "oidcOPMetaDataOptionsSortNumber":"Order",

@@ -152,7 +152,7 @@ For an advanced usage, you can also map lemonldap groups to openCTI groups with 
 Configure LemonLDAP (OIDC)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Configure LemonLDAP as an :ref:`OpenID Connect provider<idpopenidconnect>`
+Configure LemonLDAP as an :doc:`OpenID Connect provider <../idpopenidconnect>`.
 
 As describe in documentation link above, also define a new Relying Party in LL::NG.
 

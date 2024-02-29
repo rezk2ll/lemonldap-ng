@@ -707,6 +707,7 @@
 "oidcOPMetaDataOptionsMaxAge":"Thời hạn tối đa",
 "oidcOPMetaDataOptionsPrompt":"Nhắc nhở",
 "oidcOPMetaDataOptionsProtocol":"Giao thức",
+"oidcOPMetaDataOptionsRequirePkce":"PKCE required",
 "oidcOPMetaDataOptionsResolutionRule":"Quy tắc phân giải ",
 "oidcOPMetaDataOptionsScope":"Phạm vi",
 "oidcOPMetaDataOptionsSortNumber":"Order",
