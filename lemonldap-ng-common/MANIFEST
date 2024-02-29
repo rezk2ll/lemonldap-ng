@@ -35,6 +35,7 @@ lib/Lemonldap/NG/Common/Conf/Serializer.pm
 lib/Lemonldap/NG/Common/Conf/Wrapper.pm
 lib/Lemonldap/NG/Common/Crypto.pm
 lib/Lemonldap/NG/Common/EmailAddress.pm
+lib/Lemonldap/NG/Common/EmailTransport.pm
 lib/Lemonldap/NG/Common/FormEncode.pm
 lib/Lemonldap/NG/Common/IPv6.pm
 lib/Lemonldap/NG/Common/JWT.pm
@@ -89,11 +90,11 @@ t/02-Common-Conf-ServerEnv.t
 t/03-Common-Conf-CDBI.t
 t/03-Common-Conf-RDBI.t
 t/05-Common-Conf-LDAP.t
-t/10-PSGI.pm
+t/10-PSGI.t
 t/30-Common-Safelib.t
 t/35-Common-Crypto.t
 t/36-Common-Regexp.t
-t/37-Common-TOTP.pm
+t/37-Common-TOTP.t
 t/40-Common-Session.t
 t/41-Common-EmailAddress.t
 t/45-importMetadata-config.t

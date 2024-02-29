@@ -118,6 +118,7 @@ lib/Lemonldap/NG/Portal/Password/LDAP.pm
 lib/Lemonldap/NG/Portal/Password/Null.pm
 lib/Lemonldap/NG/Portal/Password/REST.pm
 lib/Lemonldap/NG/Portal/Plugins/AdaptativeAuthenticationLevel.pm
+lib/Lemonldap/NG/Portal/Plugins/AuthOidcPkce.pm
 lib/Lemonldap/NG/Portal/Plugins/AutoSignin.pm
 lib/Lemonldap/NG/Portal/Plugins/BasePasswordPolicy.pm
 lib/Lemonldap/NG/Portal/Plugins/BruteForceProtection.pm
@@ -602,6 +603,7 @@ t/26-AuthRadius.t
 t/26-AuthRemote.t
 t/27-AuthProxy-with-choice.t
 t/27-AuthProxy.t
+t/28-AuthChoice-2FA.t
 t/28-AuthChoice-and-password.t
 t/28-AuthChoice-Custom.t
 t/28-AuthChoice-Slave-rememberAuthChoice.t
@@ -675,6 +677,8 @@ t/32-Auth-and-issuer-OIDC-authorization_code.t
 t/32-Auth-and-issuer-OIDC-hybrid.t
 t/32-Auth-and-issuer-OIDC-implicit-no-token.t
 t/32-Auth-and-issuer-OIDC-implicit.t
+t/32-Auth-and-issuer-OIDC-PKCE-2.t
+t/32-Auth-and-issuer-OIDC-PKCE.t
 t/32-Auth-and-issuer-OIDC-sorted.t
 t/32-OIDC-Back-Channel-Logout-no-sid.t
 t/32-OIDC-Back-Channel-Logout-sid-EC-keys.t
