@@ -28,10 +28,24 @@ BEGIN {
     }
 }
 
+sub id2storage {
+    my $res = Digest::SHA::sha256_hex( $_[0] );
+    if ( $ENV{LLNGLOGLEVEL} && $ENV{LLNGLOGLEVEL} eq 'debug' ) {
+        print STDERR "Session ID: $_[0]\nStorage ID: $res\n";
+    }
+    return $res;
+}
+
 has id => (
-    is  => 'rw',
-    isa => 'Str|Undef',
+    is      => 'rw',
+    isa     => 'Str|Undef',
+    trigger => sub {
+        $_[0]->{storageId} =
+          ( $_[0]->secure && $_[0]->id ) ? id2storage( $_[0]->id ) : $_[0]->id;
+    }
 );
+
+has storageId => ( is => 'rw', );
 
 has force => (
     is      => 'rw',
@@ -85,6 +99,8 @@ has info => ( is => 'rw' );
 
 has timeout => ( is => 'rw', default => 5 );
 
+has secure => ( is => 'rw' );
+
 sub BUILD {
     my ($self) = @_;
 
@@ -107,7 +123,8 @@ sub BUILD {
 
     $self->options( \%options );
 
-    my $data = $self->_tie_session;
+    my $data;
+    $data = $self->_tie_session;
 
     # Is it a session creation request?
     my $creation = 1
@@ -157,6 +174,8 @@ sub BUILD {
         $self->_save_data($data);
         $self->kind( $data->{_session_kind} );
         $self->id( $data->{_session_id} );
+        $data->{_session_id} = id2storage( $self->id )
+          if $self->secure and $self->id;
 
         untie(%$data);
     }
@@ -166,6 +185,18 @@ sub _tie_session {
     my $self    = $_[0];
     my $options = $_[1] || {};
     my %h;
+
+    # Secured storage
+    my $securedId = $self->id;
+    if ( !$self->id ) {
+        if ( $self->secure ) {
+            my $id = $self->options->{setId} || Digest::SHA::sha256_hex( time() . {} . rand() . $$ );
+            $securedId = $id;
+            $self->storageId( id2storage($securedId) );
+            $options->{setId} = $self->storageId;
+            $self->error(undef);
+        }
+    }
 
     eval {
         local $SIG{ALRM} = sub { die "TIMEOUT\n" };
@@ -180,7 +211,8 @@ sub _tie_session {
                   { %{ $self->options }, %$options, kind => $self->kind };
             }
             else {
-                tie %h, 'Lemonldap::NG::Common::Apache::Session', $self->id,
+                tie %h, 'Lemonldap::NG::Common::Apache::Session',
+                  ( $options->{setId} ? $self->id : $self->storageId ),
                   { %{ $self->options }, %$options };
             }
         };
@@ -193,6 +225,9 @@ sub _tie_session {
         $msg .= ": $@" if $@;
         $self->error($msg);
         return undef;
+    }
+    if ( $self->{secure} ) {
+        $h{_session_id} = $securedId;
     }
 
     return \%h;
@@ -240,6 +275,7 @@ sub remove {
     my ( $self, $tieOptions ) = @_;
 
     my $data = $self->_tie_session($tieOptions);
+    $data->{_session_id} = id2storage( $self->id ) if $self->secure;
 
     eval { tied(%$data)->delete(); };
 
