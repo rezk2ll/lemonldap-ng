@@ -117,7 +117,8 @@ sub findUser {
         $self->logger->debug("REST UserDB random rank: $rank");
         $self->userLogger->info(
             "FindUser: REST UserDB returns $results->[$rank]");
-        $req->data->{findUser} = $results->[$rank];
+        $req->data->{findUser}    = $results->[$rank];
+        $req->data->{findUserAll} = $results;
         return PE_OK;
     }
 
