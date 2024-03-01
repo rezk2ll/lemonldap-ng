@@ -86,11 +86,14 @@ Here are the variables you need to adjust when using LemonLDAP::NG:
 =========================== ================
 Variable                    Value
 =========================== ================
+ENABLE_AUTH                 1
+AUTH_TYPE                   jwt
 JWT_APP_ID                  Same as *Application ID*
 JWT_APP_SECRET              If ``HS*`` signature is used: same as *Shared secret*
 JWT_ACCEPTED_ISSUERS        ``https://auth.example.com/``
 JWT_ACCEPTED_AUDIENCES      Same as *Application ID*
 JWT_ASAP_KEYSERVER          If public-key signature is used: ``https://auth.example.com/jitsi/asap``
+TOKEN_AUTH_URL              ``https://auth.example.com/jitsi/login?room={room}``
 =========================== ================
 
 
