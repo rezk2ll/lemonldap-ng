@@ -30,10 +30,28 @@ my $client = LLNG::Manager::Test->new( {
     }
 );
 
-subtest "ASAP key server" => sub {
+sub testAsapKeyServer {
+    my ( $client, $authenticated ) = @_;
+    my %extra;
+
+    if ($authenticated) {
+        ok(
+            $res = $client->_post(
+                '/', IO::String->new('user=french&password=french'),
+                length => 27
+            ),
+            'Auth query'
+        );
+        expectOK($res);
+        my $id = expectCookie($res);
+        $extra{cookie} = "lemonldap=$id",;
+    }
+
     ok(
         $res = $client->_get(
-            '/jitsi/asap/123.pem', accept => 'text/html'
+            '/jitsi/asap/123.pem',
+            accept => 'text/html',
+            %extra,
         ),
         'ASAP request with unknown key id hash'
     );
@@ -42,7 +60,8 @@ subtest "ASAP key server" => sub {
     ok(
         $res = $client->_get(
             '/jitsi/asap/' . sha256_hex('abc') . '.pem',
-            accept => 'text/html'
+            accept => 'text/html',
+            %extra,
         ),
         'ASAP request with valid key id hash'
     );
@@ -50,6 +69,13 @@ subtest "ASAP key server" => sub {
 
     # BEGIN CERTIFICATE / BEGIN RSA PUBLIC KEY are not supported by jitsi
     like( $res->[2]->[0], qr/BEGIN PUBLIC KEY/, "Found correct format" );
+}
+subtest "ASAP key server" => sub {
+    testAsapKeyServer( $client, 0 );
+};
+
+subtest "ASAP key server (authenticated)" => sub {
+    testAsapKeyServer( $client, 1 );
 };
 
 subtest "Unauthorized user" => sub {
@@ -77,32 +103,6 @@ subtest "Unauthorized user" => sub {
     expectPortalError( $res, PE_UNAUTHORIZEDPARTNER );
 };
 
-subtest "Missing room parameter" => sub {
-    ok(
-        $res = $client->_post(
-            '/', IO::String->new('user=french&password=french'),
-            length => 27
-        ),
-        'Auth query'
-    );
-    expectOK($res);
-    my $id = expectCookie($res);
-
-    subtest "Missing room parameter" => sub {
-
-        # Test GET login without room parameter
-        ok(
-            $res = $client->_get(
-                '/jitsi/login',
-                cookie => "lemonldap=$id",
-                accept => 'text/html'
-            ),
-            'Jitsi request with good url'
-        );
-        expectPortalError( $res, PE_ERROR );
-    };
-};
-
 sub testSuccessfulLogin {
     my ( $client, $jwt_key, $alg ) = @_;
     my $res;
@@ -126,7 +126,7 @@ sub testSuccessfulLogin {
                 cookie => "lemonldap=$id",
                 accept => 'text/html'
             ),
-            'Jitsi request with good url'
+            'Jitsi request without room'
         );
         expectPortalError( $res, PE_ERROR );
     };
