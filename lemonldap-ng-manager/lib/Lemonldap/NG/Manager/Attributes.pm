@@ -1796,7 +1796,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'text'
         },
         'jitsiServer' => {
-            'type' => 'text'
+            'type' => 'url'
         },
         'jitsiSigningAlg' => {
             'default' => 'HS256',

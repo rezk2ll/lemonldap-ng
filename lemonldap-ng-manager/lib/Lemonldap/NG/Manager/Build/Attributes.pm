@@ -1858,7 +1858,7 @@ sub attributes {
         },
 
         jitsiServer => {
-            type          => 'text',
+            type          => 'url',
             documentation => 'Jitsi server URL',
         },
         jitsiAppId => {
@@ -1870,9 +1870,9 @@ sub attributes {
             documentation => 'Jitsi application secret',
         },
         jitsiSigningAlg => {
-            type    => 'select',
-            select  => oidcSigAlgorithmAlg,
-            default => 'HS256',
+            type          => 'select',
+            select        => oidcSigAlgorithmAlg,
+            default       => 'HS256',
             documentation => 'Jitsi JWT signature method',
         },
         jitsiIdAttribute => {
@@ -1887,7 +1887,6 @@ sub attributes {
             type          => 'text',
             documentation => 'Jitsi attribute for email',
         },
-
 
         # Password
         mailOnPasswordChange => {
@@ -4937,7 +4936,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default => '',
         },
         oidcOPMetaDataOptionsRequirePkce => {
-            type => 'bool',
+            type          => 'bool',
             documentation => 'Use PKCE with this OP',
         },
 
