@@ -17,7 +17,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
 );
 
-our $VERSION = '2.19';
+our $VERSION = '2.19.0';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer';
 
@@ -89,18 +89,10 @@ sub init {
     return 0 unless $self->SUPER::init();
 
     $self->addUnauthRoute( $self->path() => { asap => "asap" }, ['GET'] );
+    $self->addAuthRoute( $self->path() => { asap => "asap" }, ['GET'] );
     $self->rule($compiled_rule);
     return 1;
 
-}
-
-sub ssoMatch {
-    my ( $self, $req ) = @_;
-
-    if ( $req->uri =~ qr,^/jitsi/asap, ) {
-        return 0;
-    }
-    return 1;
 }
 
 sub asap {
