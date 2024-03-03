@@ -186,6 +186,7 @@ META.json
 META.yml
 README
 scripts/llngDeleteSession
+scripts/llngUserAttributes
 site/coffee/2fregistration.coffee
 site/coffee/autoRenew.coffee
 site/coffee/captcha.coffee
