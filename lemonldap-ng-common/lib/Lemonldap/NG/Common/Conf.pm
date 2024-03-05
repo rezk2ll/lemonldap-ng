@@ -201,7 +201,6 @@ sub getConf {
             {
                 $msg .=
                   "Configuration unchanged, get configuration from cache.\n";
-                $args->{noCache} = 1;
             }
             else {
                 my $r2 = $self->getDBConf($args);
@@ -391,8 +390,7 @@ sub setLocalConf {
 ## @method hashRef getDBConf(hashRef args)
 # Get configuration from remote storage system.
 # @param $args hashRef that must contains a key "cfgNum" (number of the wanted
-# configuration) and optionaly a key "fields" that points to an array of wanted
-# configuration keys
+# configuration)
 # @return Lemonldap::NG configuration hashRef
 sub getDBConf {
     my ( $self, $args ) = @_;
@@ -619,9 +617,6 @@ a hash reference as first argument containing 2 optional parameters:
 
 =item * C<cfgNum => $number>: the number of the configuration wanted. If this
 argument is omitted, the last configuration is returned.
-
-=item * C<fields => [array of names]: the desired fields asked. By default,
-getConf returns all (C<select * from lmConfig>).
 
 =back
 
