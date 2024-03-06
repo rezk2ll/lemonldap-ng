@@ -352,7 +352,7 @@ sub _pushCasApp {
         foreach ( keys %{ $push->{options} } ) {
             my $optionName = $self->_translateOptionApiToConf( $_, 'casApp' );
             my $optionValue =
-              $self->_translateValueApiToConf( $_, $push->{options}->{$_} );
+              $self->_translateValueApiToConf( $optionName, $push->{options}->{$_} );
 
             $translatedOptions->{$optionName} = $optionValue;
         }

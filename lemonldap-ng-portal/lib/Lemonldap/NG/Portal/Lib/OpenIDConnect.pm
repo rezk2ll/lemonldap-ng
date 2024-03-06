@@ -456,6 +456,7 @@ sub buildAuthorizationCodeAuthnRequest {
         ( defined $nonce ? ( nonce => $nonce ) : () ),
     };
     my $authorize_request_params = {
+        %$authorize_request_oauth2_params,
         ( defined $display    ? ( display    => $display )    : () ),
         ( defined $prompt     ? ( prompt     => $prompt )     : () ),
         ( $max_age            ? ( max_age    => $max_age )    : () ),
@@ -466,11 +467,15 @@ sub buildAuthorizationCodeAuthnRequest {
     # Call oidcGenerateAuthenticationRequest
     my $h = $self->p->processHook(
         $req, 'oidcGenerateAuthenticationRequest',
-        $op,  $authorize_request_params
+        $op,  $authorize_request_params,
     );
     return if ( $h != PE_OK );
 
     if ( $authMode and $authMode =~ /^jw(?:s|e)$/ ) {
+
+        # Save hook changes if any
+        $authorize_request_oauth2_params->{$_} = $authorize_request_params->{$_}
+          foreach ( keys %$authorize_request_oauth2_params );
         my $aud = $authorize_uri;
         $aud =~ s#^(https://[^/]*).*?$#$1#;
         my $jwt = $self->createJWTForOP( {
@@ -479,7 +484,6 @@ sub buildAuthorizationCodeAuthnRequest {
                 jti => $self->generateNonce,
                 exp => time + 30,
                 iat => time,
-                %$authorize_request_oauth2_params,
                 %$authorize_request_params,
             },
             $self->opOptions->{op}
@@ -487,7 +491,8 @@ sub buildAuthorizationCodeAuthnRequest {
             $op
         );
         if ($jwt) {
-            $authorize_request_params = { request => $jwt };
+            $authorize_request_params =
+              { %$authorize_request_oauth2_params, request => $jwt };
             if ( $authMode eq 'jwe' ) {
                 $self->logger->error('jwe mode not yet implemented');
             }
@@ -500,8 +505,7 @@ sub buildAuthorizationCodeAuthnRequest {
     my $authn_uri =
         $authorize_uri
       . ( $authorize_uri =~ /\?/ ? '&' : '?' )
-      . build_urlencoded( %$authorize_request_oauth2_params,
-        %$authorize_request_params );
+      . build_urlencoded(%$authorize_request_params);
 
     $self->logger->debug(
         "OpenIDConnect Authorization Code Flow Authn Request: $authn_uri");
@@ -2299,8 +2303,8 @@ sub _createJWT {
     # Encode payload here due to #2748
     my $jwt = eval {
         encode_jwt(
-            payload       => to_json($payload),
-            alg           => $alg,
+            payload => to_json($payload),
+            alg     => $alg,
             @keyArg,
         );
     };

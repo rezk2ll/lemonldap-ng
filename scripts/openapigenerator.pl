@@ -7,7 +7,8 @@ use File::Temp qw/ tempfile /;
 
 my $swagger_codegen_jar = $ENV{SWAGGER_CODEGEN};
 if ( $swagger_codegen_jar and -f $swagger_codegen_jar ) {
-    my ( $fh, $filename ) = tempfile( UNLINK => 1 );
+    my $filename = "doc/pages/manager-api/openapi.json";
+    open(my $fh, ">", $filename);
     my $openapi_spec_json = JSON->new->utf8->pretty->canonical->encode(
         Lemonldap::NG::Manager::Build::OpenApi->openapi );
 

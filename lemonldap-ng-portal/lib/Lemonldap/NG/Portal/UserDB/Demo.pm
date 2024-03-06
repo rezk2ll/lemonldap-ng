@@ -123,7 +123,8 @@ sub findUser {
         $self->logger->debug("Demo UserDB random rank: $rank");
         $self->userLogger->info(
             "FindUser: Demo UserDB returns $results[$rank]");
-        $req->data->{findUser} = $results[$rank];
+        $req->data->{findUser}    = $results[$rank];
+        $req->data->{findUserAll} = \@results;
         return PE_OK;
     }
 

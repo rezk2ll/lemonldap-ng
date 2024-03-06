@@ -1,0 +1,2745 @@
+{
+   "components" : {
+      "responses" : {
+         "Conflict" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "$ref" : "#/components/schemas/Error"
+                  }
+               }
+            },
+            "description" : "The specified object could not be created because its configuration key, client_id or entityID already exists"
+         },
+         "Created" : {
+            "description" : "Successful creation"
+         },
+         "Error" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "$ref" : "#/components/schemas/Error"
+                  }
+               }
+            },
+            "description" : "An error was encountered when processing the request"
+         },
+         "HistoryItem" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "$ref" : "#/components/schemas/HistoryItem"
+                  }
+               }
+            },
+            "description" : "History entry"
+         },
+         "HistoryList" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "items" : {
+                        "$ref" : "#/components/schemas/HistoryItem"
+                     },
+                     "type" : "array"
+                  }
+               }
+            },
+            "description" : "List of history entries, sorted by date, from most recent to least recent"
+         },
+         "ManyCasApp" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "items" : {
+                        "$ref" : "#/components/schemas/CasApp"
+                     },
+                     "type" : "array"
+                  }
+               }
+            },
+            "description" : "Return a list of CAS Providers"
+         },
+         "ManyMenuApp" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "items" : {
+                        "$ref" : "#/components/schemas/MenuApp"
+                     },
+                     "type" : "array"
+                  }
+               }
+            },
+            "description" : "Return a list of Menu Applications"
+         },
+         "ManyMenuCat" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "items" : {
+                        "$ref" : "#/components/schemas/MenuCat"
+                     },
+                     "type" : "array"
+                  }
+               }
+            },
+            "description" : "Return a list of Menu Categories"
+         },
+         "ManyOidcRp" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "items" : {
+                        "$ref" : "#/components/schemas/OidcRp"
+                     },
+                     "type" : "array"
+                  }
+               }
+            },
+            "description" : "Return a list of OpenID Connect Providers"
+         },
+         "ManySamlSp" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "items" : {
+                        "$ref" : "#/components/schemas/SamlSp"
+                     },
+                     "type" : "array"
+                  }
+               }
+            },
+            "description" : "Return a list of SAML Providers"
+         },
+         "NoContent" : {
+            "description" : "Successful modification"
+         },
+         "NotFound" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "$ref" : "#/components/schemas/Error"
+                  }
+               }
+            },
+            "description" : "The specified resource was not found"
+         },
+         "OneCasApp" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "$ref" : "#/components/schemas/CasApp"
+                  }
+               }
+            },
+            "description" : "Return a CAS Provider"
+         },
+         "OneMenuApp" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "$ref" : "#/components/schemas/MenuApp"
+                  }
+               }
+            },
+            "description" : "Return a Menu Application"
+         },
+         "OneMenuCat" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "$ref" : "#/components/schemas/MenuCat"
+                  }
+               }
+            },
+            "description" : "Return a Menu Category"
+         },
+         "OneOidcRp" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "$ref" : "#/components/schemas/OidcRp"
+                  }
+               }
+            },
+            "description" : "Return an OpenID Connect Provider"
+         },
+         "OneSamlSp" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "$ref" : "#/components/schemas/SamlSp"
+                  }
+               }
+            },
+            "description" : "Return a SAML Provider"
+         },
+         "SecondFactor" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "$ref" : "#/components/schemas/SecondFactor"
+                  }
+               }
+            },
+            "description" : "Return a second factor"
+         },
+         "SecondFactors" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "$ref" : "#/components/schemas/SecondFactors"
+                  }
+               }
+            },
+            "description" : "Return a list of second factors"
+         },
+         "StatusResponse" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "$ref" : "#/components/schemas/Status"
+                  }
+               }
+            },
+            "description" : "Response to API health check"
+         }
+      },
+      "schemas" : {
+         "CasApp" : {
+            "properties" : {
+               "confKey" : {
+                  "$ref" : "#/components/schemas/confKey"
+               },
+               "exportedVars" : {
+                  "default" : {
+                     "cn" : "cn",
+                     "mail" : "mail",
+                     "uid" : "uid"
+                  },
+                  "type" : "object"
+               },
+               "macros" : {
+                  "example" : {
+                     "myMacroName" : "$macro(rule)"
+                  },
+                  "type" : "object"
+               },
+               "options" : {
+                  "$ref" : "#/components/schemas/casOptions"
+               }
+            },
+            "required" : [
+               "confKey"
+            ],
+            "type" : "object"
+         },
+         "CasAppReplace" : {
+            "properties" : {
+               "exportedVars" : {
+                  "default" : {
+                     "cn" : "cn",
+                     "mail" : "mail",
+                     "uid" : "uid"
+                  },
+                  "type" : "object"
+               },
+               "macros" : {
+                  "example" : {
+                     "myMacroName" : "$macro(rule)"
+                  },
+                  "type" : "object"
+               },
+               "options" : {
+                  "$ref" : "#/components/schemas/casOptions"
+               }
+            },
+            "type" : "object"
+         },
+         "CasAppUpdate" : {
+            "properties" : {
+               "exportedVars" : {
+                  "default" : {
+                     "cn" : "cn",
+                     "mail" : "mail",
+                     "uid" : "uid"
+                  },
+                  "type" : "object"
+               },
+               "macros" : {
+                  "example" : {
+                     "myMacroName" : "$macro(rule)"
+                  },
+                  "type" : "object"
+               },
+               "options" : {
+                  "$ref" : "#/components/schemas/casOptions"
+               }
+            },
+            "type" : "object"
+         },
+         "Error" : {
+            "properties" : {
+               "error" : {
+                  "type" : "string"
+               }
+            },
+            "required" : [
+               "error"
+            ],
+            "type" : "object"
+         },
+         "HistoryItem" : {
+            "properties" : {
+               "date" : {
+                  "description" : "Unix timestamp of the event",
+                  "type" : "string"
+               },
+               "error" : {
+                  "description" : "LemonLDAP::NG error code",
+                  "type" : "integer"
+               },
+               "ipAddr" : {
+                  "description" : "String representation of the IP address",
+                  "type" : "string"
+               },
+               "result" : {
+                  "description" : "Result of authentication attempt",
+                  "enum" : [
+                     "success",
+                     "failed"
+                  ],
+                  "type" : "string"
+               }
+            },
+            "required" : [
+               "date",
+               "result"
+            ],
+            "type" : "object"
+         },
+         "MenuApp" : {
+            "properties" : {
+               "confKey" : {
+                  "$ref" : "#/components/schemas/confKey"
+               },
+               "options" : {
+                  "$ref" : "#/components/schemas/MenuAppOptions"
+               },
+               "order" : {
+                  "type" : "integer"
+               }
+            },
+            "required" : [
+               "confKey"
+            ],
+            "type" : "object"
+         },
+         "MenuAppOptions" : {
+            "properties" : {
+               "description" : {
+                  "type" : "string"
+               },
+               "display" : {
+                  "default" : "auto",
+                  "enum" : [
+                     "on",
+                     "off",
+                     "auto",
+                     "(Any special rule to apply for example \"$uid eq 'dwho'\")"
+                  ],
+                  "type" : "string"
+               },
+               "logo" : {
+                  "default" : "network.png",
+                  "enum" : [
+                     "attach.png",
+                     "bell.png",
+                     "bookmark.png",
+                     "configure.png",
+                     "database.png",
+                     "demo.png",
+                     "folder.png",
+                     "gear.png",
+                     "help.png",
+                     "llng.png",
+                     "mailappt.png",
+                     "money.png",
+                     "network.png",
+                     "terminal.png",
+                     "thumbnail.png",
+                     "tux.png",
+                     "web.png",
+                     "(Any reference to an available image in app logo folder)"
+                  ],
+                  "type" : "string"
+               },
+               "name" : {
+                  "type" : "string"
+               },
+               "tooltip" : {
+                  "type" : "string"
+               },
+               "uri" : {
+                  "type" : "string"
+               }
+            },
+            "required" : [
+               "name"
+            ],
+            "type" : "object"
+         },
+         "MenuAppUpdate" : {
+            "properties" : {
+               "options" : {
+                  "$ref" : "#/components/schemas/MenuAppOptions"
+               },
+               "order" : {
+                  "type" : "integer"
+               }
+            },
+            "type" : "object"
+         },
+         "MenuCat" : {
+            "properties" : {
+               "catname" : {
+                  "type" : "string"
+               },
+               "confKey" : {
+                  "$ref" : "#/components/schemas/confKey"
+               },
+               "order" : {
+                  "type" : "integer"
+               }
+            },
+            "required" : [
+               "confKey",
+               "catname"
+            ],
+            "type" : "object"
+         },
+         "MenuCatUpdate" : {
+            "properties" : {
+               "catname" : {
+                  "type" : "string"
+               },
+               "order" : {
+                  "type" : "integer"
+               }
+            },
+            "type" : "object"
+         },
+         "OidcOptions" : {
+            "properties" : {
+               "IDTokenExpiration" : {
+                  "type" : "integer"
+               },
+               "IDTokenForceClaims" : {
+                  "type" : "boolean"
+               },
+               "IDTokenSignAlg" : {
+                  "default" : "RS256",
+                  "enum" : [
+                     "none",
+                     "HS256",
+                     "HS384",
+                     "HS512",
+                     "RS256",
+                     "RS384",
+                     "RS512",
+                     "PS256",
+                     "PS384",
+                     "PS512",
+                     "ES256",
+                     "ES384",
+                     "ES512",
+                     "EdDSA"
+                  ],
+                  "type" : "string"
+               },
+               "accessTokenClaims" : {
+                  "type" : "boolean"
+               },
+               "accessTokenEncContentEncAlg" : {
+                  "default" : "A256GCM",
+                  "enum" : [
+                     "A256CBC-HS512",
+                     "A256GCM",
+                     "A192CBC-HS384",
+                     "A192GCM",
+                     "A128CBC-HS256",
+                     "A128GCM"
+                  ],
+                  "type" : "string"
+               },
+               "accessTokenEncKeyMgtAlg" : {
+                  "enum" : [
+                     "",
+                     "RSA-OAEP",
+                     "RSA-OAEP-256",
+                     "RSA1_5",
+                     "ECDH-ES",
+                     "ECDH-ES+A128KW",
+                     "ECDH-ES+A192KW",
+                     "ECDH-ES+A256KW"
+                  ],
+                  "type" : "string"
+               },
+               "accessTokenExpiration" : {
+                  "type" : "integer"
+               },
+               "accessTokenJWT" : {
+                  "type" : "boolean"
+               },
+               "accessTokenSignAlg" : {
+                  "default" : "RS256",
+                  "enum" : [
+                     "HS256",
+                     "HS384",
+                     "HS512",
+                     "RS256",
+                     "RS384",
+                     "RS512",
+                     "PS256",
+                     "PS384",
+                     "PS512",
+                     "ES256",
+                     "ES384",
+                     "ES512",
+                     "EdDSA"
+                  ],
+                  "type" : "string"
+               },
+               "additionalAudiences" : {
+                  "items" : {
+                     "type" : "string"
+                  },
+                  "type" : "array"
+               },
+               "allowClientCredentialsGrant" : {
+                  "type" : "boolean"
+               },
+               "allowOffline" : {
+                  "type" : "boolean"
+               },
+               "allowPasswordGrant" : {
+                  "type" : "boolean"
+               },
+               "authMethod" : {
+                  "enum" : [
+                     "",
+                     "client_secret_post",
+                     "client_secret_basic",
+                     "client_secret_jwt",
+                     "private_key_jwt"
+                  ],
+                  "type" : "string"
+               },
+               "authRequiredForAuthorize" : {
+                  "type" : "boolean"
+               },
+               "authnLevel" : {
+                  "type" : "integer"
+               },
+               "authnRequireNonce" : {
+                  "type" : "boolean"
+               },
+               "authnRequireState" : {
+                  "type" : "boolean"
+               },
+               "authorizationCodeExpiration" : {
+                  "type" : "integer"
+               },
+               "bypassConsent" : {
+                  "type" : "boolean"
+               },
+               "clientId" : {
+                  "type" : "string"
+               },
+               "clientSecret" : {
+                  "format" : "password",
+                  "type" : "string"
+               },
+               "comment" : {
+                  "type" : "string"
+               },
+               "displayName" : {
+                  "type" : "string"
+               },
+               "icon" : {
+                  "type" : "string"
+               },
+               "idTokenEncContentEncAlg" : {
+                  "default" : "A256GCM",
+                  "enum" : [
+                     "A256CBC-HS512",
+                     "A256GCM",
+                     "A192CBC-HS384",
+                     "A192GCM",
+                     "A128CBC-HS256",
+                     "A128GCM"
+                  ],
+                  "type" : "string"
+               },
+               "idTokenEncKeyMgtAlg" : {
+                  "enum" : [
+                     "",
+                     "RSA-OAEP",
+                     "RSA-OAEP-256",
+                     "RSA1_5",
+                     "ECDH-ES",
+                     "ECDH-ES+A128KW",
+                     "ECDH-ES+A192KW",
+                     "ECDH-ES+A256KW"
+                  ],
+                  "type" : "string"
+               },
+               "jwks" : {
+                  "type" : "string"
+               },
+               "jwksUri" : {
+                  "format" : "url",
+                  "type" : "string"
+               },
+               "logoutBypassConfirm" : {
+                  "type" : "boolean"
+               },
+               "logoutEncContentEncAlg" : {
+                  "default" : "A256GCM",
+                  "enum" : [
+                     "A256CBC-HS512",
+                     "A256GCM",
+                     "A192CBC-HS384",
+                     "A192GCM",
+                     "A128CBC-HS256",
+                     "A128GCM"
+                  ],
+                  "type" : "string"
+               },
+               "logoutEncKeyMgtAlg" : {
+                  "enum" : [
+                     "",
+                     "RSA-OAEP",
+                     "RSA-OAEP-256",
+                     "RSA1_5",
+                     "ECDH-ES",
+                     "ECDH-ES+A128KW",
+                     "ECDH-ES+A192KW",
+                     "ECDH-ES+A256KW"
+                  ],
+                  "type" : "string"
+               },
+               "logoutSessionRequired" : {
+                  "type" : "boolean"
+               },
+               "logoutType" : {
+                  "default" : "front",
+                  "enum" : [
+                     "front",
+                     "back"
+                  ],
+                  "type" : "string"
+               },
+               "logoutUrl" : {
+                  "format" : "url",
+                  "type" : "string"
+               },
+               "offlineSessionExpiration" : {
+                  "type" : "integer"
+               },
+               "postLogoutRedirectUris" : {
+                  "items" : {
+                     "type" : "string"
+                  },
+                  "type" : "array"
+               },
+               "public" : {
+                  "type" : "boolean"
+               },
+               "redirectUris" : {
+                  "items" : {
+                     "type" : "string"
+                  },
+                  "type" : "array"
+               },
+               "refreshToken" : {
+                  "type" : "boolean"
+               },
+               "requestUris" : {
+                  "items" : {
+                     "type" : "string"
+                  },
+                  "type" : "array"
+               },
+               "requirePKCE" : {
+                  "type" : "boolean"
+               },
+               "rule" : {
+                  "type" : "string"
+               },
+               "userIDAttr" : {
+                  "type" : "string"
+               },
+               "userInfoEncContentEncAlg" : {
+                  "default" : "A256GCM",
+                  "enum" : [
+                     "A256CBC-HS512",
+                     "A256GCM",
+                     "A192CBC-HS384",
+                     "A192GCM",
+                     "A128CBC-HS256",
+                     "A128GCM"
+                  ],
+                  "type" : "string"
+               },
+               "userInfoEncKeyMgtAlg" : {
+                  "enum" : [
+                     "",
+                     "RSA-OAEP",
+                     "RSA-OAEP-256",
+                     "RSA1_5",
+                     "ECDH-ES",
+                     "ECDH-ES+A128KW",
+                     "ECDH-ES+A192KW",
+                     "ECDH-ES+A256KW"
+                  ],
+                  "type" : "string"
+               },
+               "userInfoSignAlg" : {
+                  "enum" : [
+                     "",
+                     "none",
+                     "HS256",
+                     "HS384",
+                     "HS512",
+                     "RS256",
+                     "RS384",
+                     "RS512",
+                     "PS256",
+                     "PS384",
+                     "PS512",
+                     "ES256",
+                     "ES384",
+                     "ES512",
+                     "EdDSA"
+                  ],
+                  "type" : "string"
+               },
+               "userinfoRequireHeaderToken" : {
+                  "type" : "boolean"
+               }
+            },
+            "type" : "object"
+         },
+         "OidcRp" : {
+            "properties" : {
+               "clientId" : {
+                  "type" : "string"
+               },
+               "confKey" : {
+                  "$ref" : "#/components/schemas/confKey"
+               },
+               "exportedVars" : {
+                  "example" : {
+                     "email" : "mail",
+                     "family_name" : "sn",
+                     "name" : "cn"
+                  },
+                  "type" : "object"
+               },
+               "extraClaims" : {
+                  "example" : {
+                     "myscope" : "myattr1 myattr2 myattr3"
+                  },
+                  "type" : "object"
+               },
+               "macros" : {
+                  "example" : {
+                     "myMacroName" : "$macro(rule)"
+                  },
+                  "type" : "object"
+               },
+               "options" : {
+                  "$ref" : "#/components/schemas/OidcOptions"
+               },
+               "redirectUris" : {
+                  "items" : {
+                     "format" : "uri",
+                     "minItems" : "1",
+                     "type" : "string"
+                  },
+                  "type" : "array"
+               },
+               "scopeRules" : {
+                  "example" : {
+                     "write" : "requested and inGroup('writers')"
+                  },
+                  "type" : "object"
+               }
+            },
+            "required" : [
+               "confKey",
+               "clientId",
+               "redirectUris"
+            ],
+            "type" : "object"
+         },
+         "OidcRpReplace" : {
+            "properties" : {
+               "clientId" : {
+                  "type" : "string"
+               },
+               "exportedVars" : {
+                  "example" : {
+                     "email" : "mail",
+                     "family_name" : "sn",
+                     "name" : "cn"
+                  },
+                  "type" : "object"
+               },
+               "extraClaims" : {
+                  "example" : {
+                     "myscope" : "myattr1 myattr2 myattr3"
+                  },
+                  "type" : "object"
+               },
+               "macros" : {
+                  "example" : {
+                     "myMacroName" : "$macro(rule)"
+                  },
+                  "type" : "object"
+               },
+               "options" : {
+                  "$ref" : "#/components/schemas/OidcOptions"
+               },
+               "scopeRules" : {
+                  "example" : {
+                     "write" : "requested and inGroup('writers')"
+                  },
+                  "type" : "object"
+               }
+            },
+            "required" : [
+               "clientId",
+               "redirectUris"
+            ],
+            "type" : "object"
+         },
+         "OidcRpUpdate" : {
+            "properties" : {
+               "clientId" : {
+                  "type" : "string"
+               },
+               "exportedVars" : {
+                  "example" : {
+                     "email" : "mail",
+                     "family_name" : "sn",
+                     "name" : "cn"
+                  },
+                  "type" : "object"
+               },
+               "extraClaims" : {
+                  "example" : {
+                     "myscope" : "myattr1 myattr2 myattr3"
+                  },
+                  "type" : "object"
+               },
+               "macros" : {
+                  "example" : {
+                     "myMacroName" : "$macro(rule)"
+                  },
+                  "type" : "object"
+               },
+               "options" : {
+                  "$ref" : "#/components/schemas/OidcOptions"
+               },
+               "scopeRules" : {
+                  "example" : {
+                     "write" : "requested and inGroup('writers')"
+                  },
+                  "type" : "object"
+               }
+            },
+            "type" : "object"
+         },
+         "SamlSp" : {
+            "properties" : {
+               "confKey" : {
+                  "$ref" : "#/components/schemas/confKey"
+               },
+               "exportedAttributes" : {
+                  "items" : {
+                     "$ref" : "#/components/schemas/samlAttribute"
+                  },
+                  "type" : "object"
+               },
+               "macros" : {
+                  "example" : {
+                     "myMacroName" : "$macro(rule)"
+                  },
+                  "type" : "object"
+               },
+               "metadata" : {
+                  "example" : "<?xml version=\"1.0\"?><EntityDescriptor...",
+                  "type" : "string"
+               },
+               "options" : {
+                  "$ref" : "#/components/schemas/samlOptions"
+               }
+            },
+            "required" : [
+               "confKey",
+               "metadata"
+            ],
+            "type" : "object"
+         },
+         "SamlSpReplace" : {
+            "properties" : {
+               "exportedAttributes" : {
+                  "items" : {
+                     "$ref" : "#/components/schemas/samlAttribute"
+                  },
+                  "type" : "object"
+               },
+               "macros" : {
+                  "example" : {
+                     "myMacroName" : "$macro(rule)"
+                  },
+                  "type" : "object"
+               },
+               "metadata" : {
+                  "example" : "<?xml version=\"1.0\"?><EntityDescriptor...",
+                  "type" : "string"
+               },
+               "options" : {
+                  "$ref" : "#/components/schemas/samlOptions"
+               }
+            },
+            "required" : [
+               "metadata"
+            ],
+            "type" : "object"
+         },
+         "SamlSpUpdate" : {
+            "properties" : {
+               "exportedAttributes" : {
+                  "items" : {
+                     "$ref" : "#/components/schemas/samlAttribute"
+                  },
+                  "type" : "object"
+               },
+               "macros" : {
+                  "example" : {
+                     "myMacroName" : "$macro(rule)"
+                  },
+                  "type" : "object"
+               },
+               "metadata" : {
+                  "example" : "<?xml version=\"1.0\"?><EntityDescriptor...",
+                  "type" : "string"
+               },
+               "options" : {
+                  "$ref" : "#/components/schemas/samlOptions"
+               }
+            },
+            "type" : "object"
+         },
+         "SecondFactor" : {
+            "properties" : {
+               "id" : {
+                  "description" : "An opaque idenfifier for this particular token",
+                  "type" : "string"
+               },
+               "name" : {
+                  "description" : "A user-set description of the token",
+                  "type" : "string"
+               },
+               "type" : {
+                  "description" : "The type of token in use",
+                  "example" : "TOTP, U2F, UBK (Yubikey), WebAuthn",
+                  "type" : "string"
+               }
+            },
+            "required" : [
+               "type",
+               "id"
+            ],
+            "type" : "object"
+         },
+         "SecondFactors" : {
+            "items" : {
+               "$ref" : "#/components/schemas/SecondFactor"
+            },
+            "type" : "array"
+         },
+         "Status" : {
+            "properties" : {
+               "name" : {
+                  "description" : "Descriptive name of the software",
+                  "type" : "string"
+               },
+               "status" : {
+                  "description" : "Global status",
+                  "enum" : [
+                     "ok",
+                     "ko"
+                  ],
+                  "type" : "string"
+               },
+               "status_config" : {
+                  "description" : "Status of the configuration database",
+                  "enum" : [
+                     "ok",
+                     "ko"
+                  ],
+                  "type" : "string"
+               },
+               "status_psessions" : {
+                  "description" : "Status of the psessions database",
+                  "enum" : [
+                     "ok",
+                     "ko",
+                     "unknown"
+                  ],
+                  "type" : "string"
+               },
+               "status_sessions" : {
+                  "description" : "Status of the sessions database",
+                  "enum" : [
+                     "ok",
+                     "ko",
+                     "unknown"
+                  ],
+                  "type" : "string"
+               },
+               "version" : {
+                  "description" : "Version of the LemonLDAP::NG software",
+                  "type" : "string"
+               }
+            },
+            "type" : "object"
+         },
+         "casOptions" : {
+            "properties" : {
+               "authnLevel" : {
+                  "type" : "integer"
+               },
+               "comment" : {
+                  "type" : "string"
+               },
+               "displayName" : {
+                  "type" : "string"
+               },
+               "logout" : {
+                  "default" : -1,
+                  "maximum" : 1,
+                  "minimum" : -1,
+                  "type" : "integer"
+               },
+               "rule" : {
+                  "type" : "string"
+               },
+               "service" : {
+                  "items" : {
+                     "type" : "string"
+                  },
+                  "type" : "array"
+               },
+               "userAttribute" : {
+                  "type" : "string"
+               }
+            },
+            "required" : [
+               "service"
+            ],
+            "type" : "object"
+         },
+         "confKey" : {
+            "pattern" : "^\\w[\\w\\.\\-]*$",
+            "type" : "string"
+         },
+         "menuCatConfKey" : {
+            "pattern" : "^\\w[\\w\\.\\-]*$",
+            "type" : "string"
+         },
+         "samlAttribute" : {
+            "properties" : {
+               "format" : {
+                  "example" : "urn:oasis:names:tc:SAML:2.0:attrname-format:basic",
+                  "type" : "string"
+               },
+               "friendlyName" : {
+                  "type" : "string"
+               },
+               "mandatory" : {
+                  "type" : "boolean"
+               },
+               "name" : {
+                  "type" : "string"
+               }
+            },
+            "type" : "object"
+         },
+         "samlOptions" : {
+            "properties" : {
+               "authnLevel" : {
+                  "type" : "integer"
+               },
+               "checkSLOMessageSignature" : {
+                  "default" : 1,
+                  "type" : "boolean"
+               },
+               "checkSSOMessageSignature" : {
+                  "default" : 1,
+                  "type" : "boolean"
+               },
+               "comment" : {
+                  "type" : "string"
+               },
+               "enableIDPInitiatedURL" : {
+                  "type" : "boolean"
+               },
+               "encryptionMode" : {
+                  "default" : "none",
+                  "enum" : [
+                     "none",
+                     "nameid",
+                     "assertion"
+                  ],
+                  "type" : "string"
+               },
+               "federationEntityID" : {
+                  "type" : "string"
+               },
+               "federationOptionalAttributes" : {
+                  "enum" : [
+                     "",
+                     "ignore"
+                  ],
+                  "type" : "string"
+               },
+               "federationRequiredAttributes" : {
+                  "enum" : [
+                     "",
+                     "optional",
+                     "ignore"
+                  ],
+                  "type" : "string"
+               },
+               "forceUTF8" : {
+                  "default" : 1,
+                  "type" : "boolean"
+               },
+               "nameIDFormat" : {
+                  "enum" : [
+                     "",
+                     "unspecified",
+                     "email",
+                     "x509",
+                     "windows",
+                     "kerberos",
+                     "entity",
+                     "persistent",
+                     "transient",
+                     "encrypted"
+                  ],
+                  "type" : "string"
+               },
+               "nameIDSessionKey" : {
+                  "type" : "string"
+               },
+               "notOnOrAfterTimeout" : {
+                  "default" : 72000,
+                  "type" : "integer"
+               },
+               "oneTimeUse" : {
+                  "type" : "boolean"
+               },
+               "rule" : {
+                  "type" : "string"
+               },
+               "sessionNotOnOrAfterTimeout" : {
+                  "default" : 72000,
+                  "type" : "integer"
+               },
+               "signSLOMessage" : {
+                  "default" : -1,
+                  "maximum" : 1,
+                  "minimum" : -1,
+                  "type" : "integer"
+               },
+               "signSSOMessage" : {
+                  "default" : -1,
+                  "maximum" : 1,
+                  "minimum" : -1,
+                  "type" : "integer"
+               },
+               "signatureMethod" : {
+                  "enum" : [
+                     "",
+                     "RSA_SHA1",
+                     "RSA_SHA256",
+                     "RSA_SHA384",
+                     "RSA_SHA512"
+                  ],
+                  "type" : "string"
+               }
+            },
+            "type" : "object"
+         }
+      }
+   },
+   "info" : {
+      "description" : "The Manager API allows an administrator to modify the LemonLDAP::NG configuration programmatically. It is not meant to be accessed by end users. The client libraries mentionned in examples can be generated from doc/sources/manager-api/openapi-spec.yaml",
+      "title" : "LemonLDAP::NG Manager API",
+      "version" : "2.17"
+   },
+   "openapi" : "3.0.1",
+   "paths" : {
+      "/api/v1/history/{uid}" : {
+         "get" : {
+            "operationId" : "getHistory",
+            "parameters" : [
+               {
+                  "in" : "path",
+                  "name" : "uid",
+                  "required" : "true",
+                  "schema" : {
+                     "type" : "string"
+                  }
+               },
+               {
+                  "in" : "query",
+                  "name" : "result",
+                  "required" : "false",
+                  "schema" : {
+                     "enum" : [
+                        "success",
+                        "failed",
+                        "any"
+                     ],
+                     "type" : "string"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/HistoryList"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Get the login history for a user",
+            "tags" : [
+               "history"
+            ]
+         }
+      },
+      "/api/v1/history/{uid}/last" : {
+         "get" : {
+            "operationId" : "getHistoryLast",
+            "parameters" : [
+               {
+                  "in" : "path",
+                  "name" : "uid",
+                  "required" : "true",
+                  "schema" : {
+                     "type" : "string"
+                  }
+               },
+               {
+                  "in" : "query",
+                  "name" : "result",
+                  "required" : "false",
+                  "schema" : {
+                     "enum" : [
+                        "success",
+                        "failed",
+                        "any"
+                     ],
+                     "type" : "string"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/HistoryItem"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Get the last history event for a user",
+            "tags" : [
+               "history"
+            ]
+         }
+      },
+      "/api/v1/menu/app/{cat}" : {
+         "get" : {
+            "description" : "Return existing applications within a menu category",
+            "operationId" : "getMenuApps",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of Menu Category to work with",
+                  "in" : "path",
+                  "name" : "cat",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/menuCatConfKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/ManyMenuApp"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Get Menu Applications within a Menu Category",
+            "tags" : [
+               "menuapp"
+            ]
+         },
+         "post" : {
+            "operationId" : "addMenuApp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of Menu Category to work with",
+                  "in" : "path",
+                  "name" : "cat",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/menuCatConfKey"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/MenuApp"
+                     }
+                  }
+               },
+               "description" : "Menu Application to add",
+               "required" : "true"
+            },
+            "responses" : {
+               "201" : {
+                  "$ref" : "#/components/responses/Created"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Create a new Menu Application within a Menu Category",
+            "tags" : [
+               "menuapp"
+            ]
+         }
+      },
+      "/api/v1/menu/app/{cat}/findByConfKey" : {
+         "get" : {
+            "description" : "Takes a search pattern to be tested against existing applications within a menu category",
+            "operationId" : "findMenuAppByConfKey",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of Menu Category to work with",
+                  "in" : "path",
+                  "name" : "cat",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/menuCatConfKey"
+                  }
+               },
+               {
+                  "description" : "Search pattern",
+                  "examples" : {
+                     "any" : {
+                        "summary" : "Any value",
+                        "value" : "*"
+                     },
+                     "anywhere" : {
+                        "summary" : "Substring",
+                        "value" : "something"
+                     },
+                     "prefix" : {
+                        "summary" : "Given prefix",
+                        "value" : "zone1-*"
+                     }
+                  },
+                  "in" : "query",
+                  "name" : "pattern",
+                  "required" : "true",
+                  "schema" : {
+                     "type" : "string"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/ManyMenuApp"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               }
+            },
+            "summary" : "Finds Menu Applications by configuration key within a Menu Category",
+            "tags" : [
+               "menuapp"
+            ]
+         }
+      },
+      "/api/v1/menu/app/{cat}/{confKey}" : {
+         "delete" : {
+            "operationId" : "deleteMenuApp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of Menu Category to work with",
+                  "in" : "path",
+                  "name" : "cat",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/menuCatConfKey"
+                  }
+               },
+               {
+                  "description" : "Configuration key of Menu Application to delete",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Deletes a Menu Application",
+            "tags" : [
+               "menuapp"
+            ]
+         },
+         "get" : {
+            "description" : "Returns a single application",
+            "operationId" : "getMenuAppByConfKey",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of Menu Category to work with",
+                  "in" : "path",
+                  "name" : "cat",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/menuCatConfKey"
+                  }
+               },
+               {
+                  "description" : "Configuration key of Menu Application",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/OneMenuApp"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Get Menu Application within a Menu Category by configuration key",
+            "tags" : [
+               "menuapp"
+            ]
+         },
+         "patch" : {
+            "operationId" : "updateMenuApp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of Menu Category to work with",
+                  "in" : "path",
+                  "name" : "cat",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/menuCatConfKey"
+                  }
+               },
+               {
+                  "description" : "Configuration key of Menu Application that needs to be updated",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/MenuAppUpdate"
+                     }
+                  }
+               }
+            },
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Updates a Menu Application",
+            "tags" : [
+               "menuapp"
+            ]
+         },
+         "put" : {
+            "operationId" : "replaceMenuApp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of Menu Category to work with",
+                  "in" : "path",
+                  "name" : "cat",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/menuCatConfKey"
+                  }
+               },
+               {
+                  "description" : "Configuration key of Menu Application that needs to be replaced",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/MenuApp"
+                     }
+                  }
+               }
+            },
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Replaces a Menu Application",
+            "tags" : [
+               "menuapp"
+            ]
+         }
+      },
+      "/api/v1/menu/cat" : {
+         "post" : {
+            "operationId" : "addMenuCat",
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/MenuCat"
+                     }
+                  }
+               },
+               "description" : "Menu Category to add",
+               "required" : "true"
+            },
+            "responses" : {
+               "201" : {
+                  "$ref" : "#/components/responses/Created"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Create a new Menu Category",
+            "tags" : [
+               "menucat"
+            ]
+         }
+      },
+      "/api/v1/menu/cat/findByConfKey" : {
+         "get" : {
+            "description" : "Takes a search pattern to be tested against existing categories",
+            "operationId" : "findMenuCatByConfKey",
+            "parameters" : [
+               {
+                  "description" : "Search pattern",
+                  "examples" : {
+                     "any" : {
+                        "summary" : "Any value",
+                        "value" : "*"
+                     },
+                     "anywhere" : {
+                        "summary" : "Substring",
+                        "value" : "something"
+                     },
+                     "prefix" : {
+                        "summary" : "Given prefix",
+                        "value" : "zone1-*"
+                     }
+                  },
+                  "in" : "query",
+                  "name" : "pattern",
+                  "required" : "true",
+                  "schema" : {
+                     "type" : "string"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/ManyMenuCat"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               }
+            },
+            "summary" : "Finds Menu Categories by configuration key",
+            "tags" : [
+               "menucat"
+            ]
+         }
+      },
+      "/api/v1/menu/cat/{confKey}" : {
+         "delete" : {
+            "operationId" : "deleteMenuCat",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of Menu Category to delete",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Deletes a Menu Category",
+            "tags" : [
+               "menucat"
+            ]
+         },
+         "get" : {
+            "description" : "Returns a single Category",
+            "operationId" : "getMenuCatByConfKey",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of Menu Category",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/OneMenuCat"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Get Menu Category by configuration key",
+            "tags" : [
+               "menucat"
+            ]
+         },
+         "patch" : {
+            "operationId" : "updateMenuCat",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of Menu Category that needs to be updated",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/MenuCatUpdate"
+                     }
+                  }
+               }
+            },
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Updates a Menu Category",
+            "tags" : [
+               "menucat"
+            ]
+         },
+         "put" : {
+            "operationId" : "replaceMenuCat",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of Menu Category that needs to be replaced",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/MenuCat"
+                     }
+                  }
+               }
+            },
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Replaces a Menu Category",
+            "tags" : [
+               "menucat"
+            ]
+         }
+      },
+      "/api/v1/providers/cas/app" : {
+         "post" : {
+            "operationId" : "addcasapp",
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/CasApp"
+                     }
+                  }
+               },
+               "description" : "CAS Application to add",
+               "required" : "true"
+            },
+            "responses" : {
+               "201" : {
+                  "$ref" : "#/components/responses/Created"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Create a new CAS Application",
+            "tags" : [
+               "casapp"
+            ]
+         }
+      },
+      "/api/v1/providers/cas/app/findByConfKey" : {
+         "get" : {
+            "description" : "Takes a search pattern to be tested against existing applications",
+            "operationId" : "findCasAppByConfKey",
+            "parameters" : [
+               {
+                  "description" : "Search pattern",
+                  "examples" : {
+                     "any" : {
+                        "summary" : "Any value",
+                        "value" : "*"
+                     },
+                     "anywhere" : {
+                        "summary" : "Substring",
+                        "value" : "something"
+                     },
+                     "prefix" : {
+                        "summary" : "Given prefix",
+                        "value" : "zone1-*"
+                     }
+                  },
+                  "in" : "query",
+                  "name" : "pattern",
+                  "required" : "true",
+                  "schema" : {
+                     "type" : "string"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/ManyCasApp"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               }
+            },
+            "summary" : "Finds CAS applications by configuration key",
+            "tags" : [
+               "casapp"
+            ]
+         }
+      },
+      "/api/v1/providers/cas/app/findByServiceUrl" : {
+         "get" : {
+            "operationId" : "findCasAppByServiceUrl",
+            "parameters" : [
+               {
+                  "description" : "Service URL to search",
+                  "example" : "http://mycasapp.example.com/",
+                  "in" : "query",
+                  "name" : "serviceUrl",
+                  "required" : "true",
+                  "schema" : {
+                     "type" : "string"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/OneCasApp"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Get CAS Application by Service URL",
+            "tags" : [
+               "casapp"
+            ]
+         }
+      },
+      "/api/v1/providers/cas/app/{confKey}" : {
+         "delete" : {
+            "operationId" : "deleteCasApp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of CAS Application to delete",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Deletes a CAS Application",
+            "tags" : [
+               "casapp"
+            ]
+         },
+         "get" : {
+            "description" : "Returns a single Application",
+            "operationId" : "getCasAppByConfKey",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of CAS Application",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/OneCasApp"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Get CAS Application by configuration key",
+            "tags" : [
+               "casapp"
+            ]
+         },
+         "patch" : {
+            "operationId" : "updateCasApp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of CAS Application that needs to be updated",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/CasAppUpdate"
+                     }
+                  }
+               }
+            },
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Updates a CAS Application.",
+            "tags" : [
+               "casapp"
+            ]
+         },
+         "put" : {
+            "operationId" : "replaceCasApp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of CAS Application that needs to be replaced",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/CasAppReplace"
+                     }
+                  }
+               }
+            },
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Replaces a CAS Application",
+            "tags" : [
+               "casapp"
+            ]
+         }
+      },
+      "/api/v1/providers/oidc/rp" : {
+         "post" : {
+            "operationId" : "addoidcrp",
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/OidcRp"
+                     }
+                  }
+               },
+               "description" : "OpenID Connect Relaying Party to add",
+               "required" : "true"
+            },
+            "responses" : {
+               "201" : {
+                  "$ref" : "#/components/responses/Created"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Create a new OpenID Connect Relaying Party",
+            "tags" : [
+               "oidcrp"
+            ]
+         }
+      },
+      "/api/v1/providers/oidc/rp/findByClientId" : {
+         "get" : {
+            "operationId" : "findOidcRpByClientId",
+            "parameters" : [
+               {
+                  "description" : "Client ID to search",
+                  "example" : "my_client_id",
+                  "in" : "query",
+                  "name" : "clientId",
+                  "required" : "true",
+                  "schema" : {
+                     "type" : "string"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/OneOidcRp"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Finds OpenID Connect Relaying Party by Client ID",
+            "tags" : [
+               "oidcrp"
+            ]
+         }
+      },
+      "/api/v1/providers/oidc/rp/findByConfKey" : {
+         "get" : {
+            "description" : "Takes a search pattern to be tested against existing service providers",
+            "operationId" : "findOidcRpByConfKey",
+            "parameters" : [
+               {
+                  "description" : "Search pattern",
+                  "examples" : {
+                     "any" : {
+                        "summary" : "Any value",
+                        "value" : "*"
+                     },
+                     "anywhere" : {
+                        "summary" : "Substring",
+                        "value" : "something"
+                     },
+                     "prefix" : {
+                        "summary" : "Given prefix",
+                        "value" : "zone1-*"
+                     }
+                  },
+                  "in" : "query",
+                  "name" : "pattern",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/ManyOidcRp"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               }
+            },
+            "summary" : "Finds OpenID Connect Relaying Partys by configuration key",
+            "tags" : [
+               "oidcrp"
+            ]
+         }
+      },
+      "/api/v1/providers/oidc/rp/{confKey}" : {
+         "delete" : {
+            "operationId" : "deleteOidcRp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of OpenID Connect Relaying Party to delete",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Deletes a OpenID Connect Relaying Party",
+            "tags" : [
+               "oidcrp"
+            ]
+         },
+         "get" : {
+            "description" : "Returns a single Service Provider",
+            "operationId" : "getOidcRpByConfKey",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of OpenID Connect Relaying Party",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/OneOidcRp"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Get OpenID Connect Relaying Party by configuration key",
+            "tags" : [
+               "oidcrp"
+            ]
+         },
+         "patch" : {
+            "operationId" : "updateOidcRp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of OpenID Connect Relaying Party that needs to be updated",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/OidcRpUpdate"
+                     }
+                  }
+               }
+            },
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Updates an OpenID Connect Relaying Party",
+            "tags" : [
+               "oidcrp"
+            ]
+         },
+         "put" : {
+            "operationId" : "replaceOidcRp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of OpenID Connect Relaying Party that needs to be replaced",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/OidcRpReplace"
+                     }
+                  }
+               }
+            },
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Replaces an OpenID Connect Relaying Party",
+            "tags" : [
+               "oidcrp"
+            ]
+         }
+      },
+      "/api/v1/providers/saml/sp" : {
+         "post" : {
+            "operationId" : "addsamlsp",
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/SamlSp"
+                     }
+                  }
+               },
+               "description" : "SAML Service provider to add",
+               "required" : "true"
+            },
+            "responses" : {
+               "201" : {
+                  "$ref" : "#/components/responses/Created"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Create a new SAML Service provider",
+            "tags" : [
+               "samlsp"
+            ]
+         }
+      },
+      "/api/v1/providers/saml/sp/findByConfKey" : {
+         "get" : {
+            "description" : "Takes a search pattern to be tested against existing service providers",
+            "operationId" : "findSamlSpByConfKey",
+            "parameters" : [
+               {
+                  "description" : "Search pattern",
+                  "examples" : {
+                     "any" : {
+                        "summary" : "Any value",
+                        "value" : "*"
+                     },
+                     "anywhere" : {
+                        "summary" : "Substring",
+                        "value" : "something"
+                     },
+                     "prefix" : {
+                        "summary" : "Given prefix",
+                        "value" : "zone1-*"
+                     }
+                  },
+                  "in" : "query",
+                  "name" : "pattern",
+                  "required" : "true",
+                  "schema" : {
+                     "type" : "string"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/ManySamlSp"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               }
+            },
+            "summary" : "Finds SAML Service providers by configuration key",
+            "tags" : [
+               "samlsp"
+            ]
+         }
+      },
+      "/api/v1/providers/saml/sp/findByEntityId" : {
+         "get" : {
+            "operationId" : "findSamlSpByEntityId",
+            "parameters" : [
+               {
+                  "description" : "Entity ID to search",
+                  "example" : "http://mysp.example.com/saml/metadata",
+                  "in" : "query",
+                  "name" : "entityId",
+                  "required" : "true",
+                  "schema" : {
+                     "type" : "string"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/OneSamlSp"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Finds SAML Service Provider by Entity ID",
+            "tags" : [
+               "samlsp"
+            ]
+         }
+      },
+      "/api/v1/providers/saml/sp/{confKey}" : {
+         "delete" : {
+            "operationId" : "deleteSamlSp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of SAML Service Provider to delete",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Deletes a SAML Service Provider",
+            "tags" : [
+               "samlsp"
+            ]
+         },
+         "get" : {
+            "description" : "Returns a single Service Provider",
+            "operationId" : "getSamlSpByConfKey",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of SAML Service Provider",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/OneSamlSp"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Get SAML Service Provider by configuration key",
+            "tags" : [
+               "samlsp"
+            ]
+         },
+         "patch" : {
+            "operationId" : "updateSamlSp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of SAML Service Provider that needs to be updated",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/SamlSpUpdate"
+                     }
+                  }
+               }
+            },
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Updates a SAML Service.",
+            "tags" : [
+               "samlsp"
+            ]
+         },
+         "put" : {
+            "operationId" : "replaceSamlSp",
+            "parameters" : [
+               {
+                  "description" : "Configuration key of SAML Service Provider that needs to be replaced",
+                  "in" : "path",
+                  "name" : "confKey",
+                  "required" : "true",
+                  "schema" : {
+                     "$ref" : "#/components/schemas/confKey"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/SamlSpReplace"
+                     }
+                  }
+               }
+            },
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               },
+               "409" : {
+                  "$ref" : "#/components/responses/Conflict"
+               }
+            },
+            "summary" : "Replaces a SAML Service",
+            "tags" : [
+               "samlsp"
+            ]
+         }
+      },
+      "/api/v1/secondFactor/{uid}" : {
+         "delete" : {
+            "description" : "",
+            "operationId" : "deleteSecondFactors",
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Delete all second factors for a user",
+            "tags" : [
+               "2fa"
+            ]
+         },
+         "description" : "Second factors for a particular user",
+         "get" : {
+            "description" : "",
+            "operationId" : "getSecondFactors",
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/SecondFactors"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "List second factors for a user",
+            "tags" : [
+               "2fa"
+            ]
+         },
+         "parameters" : [
+            {
+               "in" : "path",
+               "name" : "uid",
+               "required" : "true",
+               "schema" : {
+                  "type" : "string"
+               }
+            }
+         ]
+      },
+      "/api/v1/secondFactor/{uid}/id/{id}" : {
+         "delete" : {
+            "description" : "",
+            "operationId" : "deleteSecondFactorsById",
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Delete a second factors for a user",
+            "tags" : [
+               "2fa"
+            ]
+         },
+         "description" : "Second factors of a given id for a particular user",
+         "get" : {
+            "description" : "",
+            "operationId" : "getSecondFactorsById",
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/SecondFactors"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Get second factors for a user given its ID",
+            "tags" : [
+               "2fa"
+            ]
+         },
+         "parameters" : [
+            {
+               "in" : "path",
+               "name" : "uid",
+               "required" : "true",
+               "schema" : {
+                  "type" : "string"
+               }
+            },
+            {
+               "in" : "path",
+               "name" : "id",
+               "required" : "true",
+               "schema" : {
+                  "type" : "string"
+               }
+            }
+         ]
+      },
+      "/api/v1/secondFactor/{uid}/type/{type}" : {
+         "delete" : {
+            "description" : "",
+            "operationId" : "deleteSecondFactorsByType",
+            "responses" : {
+               "204" : {
+                  "$ref" : "#/components/responses/NoContent"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Delete all second factors of a given type for a user",
+            "tags" : [
+               "2fa"
+            ]
+         },
+         "description" : "Second factors of a given type for a particular user",
+         "get" : {
+            "description" : "",
+            "operationId" : "getSecondFactorsByType",
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/SecondFactors"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "List second factors for a user given its type",
+            "tags" : [
+               "2fa"
+            ]
+         },
+         "parameters" : [
+            {
+               "in" : "path",
+               "name" : "uid",
+               "required" : "true",
+               "schema" : {
+                  "type" : "string"
+               }
+            },
+            {
+               "in" : "path",
+               "name" : "type",
+               "required" : "true",
+               "schema" : {
+                  "type" : "string"
+               }
+            }
+         ]
+      },
+      "/api/v1/status" : {
+         "get" : {
+            "operationId" : "status",
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/StatusResponse"
+               },
+               "503" : {
+                  "$ref" : "#/components/responses/StatusResponse"
+               }
+            },
+            "summary" : "Check the status of the API"
+         }
+      }
+   },
+   "servers" : [
+      {
+         "url" : "https://manager-api.example.com"
+      }
+   ],
+   "tags" : [
+      {
+         "description" : "SAML Service Providers",
+         "name" : "samlsp"
+      },
+      {
+         "description" : "OpenID Connect Relaying Parties",
+         "name" : "oidcrp"
+      },
+      {
+         "description" : "Registered Second Factors",
+         "name" : "2fa"
+      },
+      {
+         "description" : "Login history",
+         "name" : "history"
+      }
+   ]
+}

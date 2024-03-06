@@ -4919,6 +4919,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type    => 'longtext',
             default => '',
         },
+        oidcOPMetaDataOptionsRequirePkce => {
+            type => 'bool',
+            documentation => 'Use PKCE with this OP',
+        },
 
         # OpenID Connect relying parties
         oidcRPMetaDataExportedVars => {

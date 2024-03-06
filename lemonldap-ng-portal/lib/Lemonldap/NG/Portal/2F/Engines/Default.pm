@@ -490,26 +490,10 @@ sub display2fRegisters {
 
 sub _choice {
     my ( $self, $req ) = @_;
-    my $token;
 
-    # Restore session
-    unless ( $token = $req->param('token') ) {
-        $self->userLogger->error('2F choice requested without token');
-        $req->mustRedirect(1);
-        return $self->p->do( $req, [ sub { PE_NOTOKEN } ] );
-    }
-
-    my $session;
-    unless ( $session = $self->ott->getToken($token) ) {
-        $self->userLogger->info('Invalid 2F choice form token');
-        $req->noLoginDisplay(1);
-        return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
-    }
-
-    unless ( $session->{_2fRealSession} ) {
-        $self->logger->error("Invalid 2FA session token");
-        $req->noLoginDisplay(1);
-        return $self->p->do( $req, [ sub { PE_ERROR } ] );
+    my ( $tokres, $session ) = $self->_check_token($req);
+    if ( $tokres != PE_OK ) {
+        return $self->p->do( $req, [ sub { $tokres } ] );
     }
 
     $req->sessionInfo($session);
@@ -523,7 +507,7 @@ sub _choice {
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
             # New token
-            $token = $self->ott->createToken( $req->sessionInfo );
+            my $token = $self->ott->createToken( $req->sessionInfo );
             my $res = $m->{m}->run( $req, $token );
             $req->authResult($res);
             return $self->p->do(
@@ -862,27 +846,9 @@ sub _verify {
       unless $m;
     my $module = $m->{m};
 
-    # Check token
-    my $token;
-    unless ( $token = $req->param('token') ) {
-        $self->userLogger->error(
-            $module->prefix . ' 2F access without token' );
-        eval { $module->setSecurity($req) };
-        $req->mustRedirect(1);
-        return $self->p->do( $req, [ sub { PE_NOTOKEN } ] );
-    }
-
-    my $session;
-    unless ( $session = $self->ott->getToken($token) ) {
-        $self->userLogger->info(
-            'Invalid token during ' . $module->prefix . '2f validation' );
-        $req->noLoginDisplay(1);
-        return $self->p->do( $req, [ sub { PE_TOKENEXPIRED } ] );
-    }
-    unless ( $session->{_2fRealSession} ) {
-        $self->logger->error("Invalid 2FA session token");
-        $req->noLoginDisplay(1);
-        return $self->p->do( $req, [ sub { PE_ERROR } ] );
+    my ( $tokres, $session ) = $self->_check_token($req);
+    if ( $tokres != PE_OK ) {
+        return $self->p->do( $req, [ sub { $tokres } ] );
     }
 
     # Evaluate hook
@@ -1119,6 +1085,31 @@ sub get2fTplParams {
     $param{AUTH_ERROR_ROLE} = $req->error_role;
 
     return %param;
+}
+
+sub _check_token {
+    my ( $self, $req ) = @_;
+
+    my $token;
+    unless ( $token = $req->param('token') ) {
+        $self->logger->error('2F choice requested without token');
+        $req->mustRedirect(1);
+        return PE_NOTOKEN;
+    }
+
+    my $session;
+    unless ( $session = $self->ott->getToken($token) ) {
+        $self->logger->error('Invalid 2F choice form token');
+        $req->noLoginDisplay(1);
+        return PE_TOKENEXPIRED;
+    }
+
+    unless ( $session->{_2fRealSession} ) {
+        $self->logger->error("Invalid 2FA session token");
+        $req->noLoginDisplay(1);
+        return PE_ERROR;
+    }
+    return ( PE_OK, $session );
 }
 
 1;

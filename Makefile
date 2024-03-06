@@ -1228,5 +1228,5 @@ e2e_cert:
 		-extensions SAN \
 		-config e2e-tests/openssl.cnf
 
-api_doc: doc/sources/manager-api/openapi-spec.yaml doc/sources/manager-api/config-codegen.json
+api_doc: doc/sources/manager-api/config-codegen.json
 	@env SWAGGER_CODEGEN=$(SWAGGER_CODEGEN) scripts/openapigenerator.pl

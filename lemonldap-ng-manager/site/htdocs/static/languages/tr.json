@@ -694,6 +694,7 @@
 "oidcOPMetaDataOptionsMaxAge":"Maksimum ömür",
 "oidcOPMetaDataOptionsPrompt":"İstem",
 "oidcOPMetaDataOptionsProtocol":"Protokol",
+"oidcOPMetaDataOptionsRequirePkce":"PKCE required",
 "oidcOPMetaDataOptionsResolutionRule":"Çözünürlük kuralı",
 "oidcOPMetaDataOptionsScope":"Kapsam",
 "oidcOPMetaDataOptionsSortNumber":"Sıra",
