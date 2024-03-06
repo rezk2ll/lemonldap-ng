@@ -23,7 +23,7 @@ has ua => (
 sub searchProfile {
     my ( $self, $okta_login ) = @_;
 
-    my $u = URI->new( $self->conf->{okta2fAdminURL} . '/api/v1/users/?' );
+    my $u = URI->new( $self->conf->{okta2fAdminURL} . '/api/v1/users/' );
     $u->query_form( 'search' => 'profile.login eq "' . $okta_login . '"' );
     my $user_response = $self->ua->get( $u->as_string );
     if ( $user_response->is_error ) {
