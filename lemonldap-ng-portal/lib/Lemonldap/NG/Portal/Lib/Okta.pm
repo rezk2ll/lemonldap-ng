@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Lib::Okta;
 use strict;
 use HTTP::Request;
 use Mouse;
-use WWW::Form::UrlEncoded qw/build_urlencoded/;
+use URI;
 
 has ua => (
     is      => 'rw',
@@ -23,11 +23,9 @@ has ua => (
 sub searchProfile {
     my ( $self, $okta_login ) = @_;
 
-    my $okta_search =
-      build_urlencoded( 'search', 'profile.login eq "' . $okta_login . '"' );
-    my $user_response =
-      $self->ua->get(
-        $self->conf->{okta2fAdminURL} . '/api/v1/users/?' . $okta_search );
+    my $u = URI->new( $self->conf->{okta2fAdminURL} . '/api/v1/users/?' );
+    $u->query_form( 'search' => 'profile.login eq "' . $okta_login . '"' );
+    my $user_response = $self->ua->get( $u->as_string );
     if ( $user_response->is_error ) {
         $self->logger->error( "Unable to get user "
               . $okta_login

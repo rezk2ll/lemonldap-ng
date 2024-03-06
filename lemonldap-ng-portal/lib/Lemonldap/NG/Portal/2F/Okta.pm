@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::2F::Okta;
 use HTTP::Request;
 use JSON;
 use Mouse;
-use WWW::Form::UrlEncoded qw/build_urlencoded/;
+use URI;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
