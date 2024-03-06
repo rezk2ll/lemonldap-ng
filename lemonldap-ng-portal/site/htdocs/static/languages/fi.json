@@ -350,6 +350,7 @@
 "value":"Arvo",
 "verify":"Vahvista",
 "wait":"Odota",
+"waitFor2f":"Waiting for your second factor activation",
 "waitingmessage":"Tunnistautuminen käynnissä, ole hyvä ja odota",
 "warning":"Varoitus",
 "webAuthnBrowserFailed":"Selain ei onnistunut hankkimaan WebAuthn-pääsytietoa",

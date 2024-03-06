@@ -350,6 +350,7 @@
 "value":"Giá trị",
 "verify":"Xác minh",
 "wait":"Hãy đợi",
+"waitFor2f":"Waiting for your second factor activation",
 "waitingmessage":"Quá trình xác thực đang được tiến hành, vui lòng đợi",
 "warning":"Cảnh báo",
 "webAuthnBrowserFailed":"Trình duyệt không lấy được thông tin xác thực WebAuthn",

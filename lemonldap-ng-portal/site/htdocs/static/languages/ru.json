@@ -350,6 +350,7 @@
 "value":"Значение",
 "verify":"Подтвердить",
 "wait":"Подождите",
+"waitFor2f":"Waiting for your second factor activation",
 "waitingmessage":"Выполняется аутентификация, пожалуйста, подождите",
 "warning":"Предупреждение",
 "webAuthnBrowserFailed":"Браузер не смог получить учетные данные WebAuthn",

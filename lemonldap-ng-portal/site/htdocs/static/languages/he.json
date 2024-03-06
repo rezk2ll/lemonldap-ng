@@ -350,6 +350,7 @@
 "value":"ערך",
 "verify":"אימות",
 "wait":"המתנה",
+"waitFor2f":"Waiting for your second factor activation",
 "waitingmessage":"מתבצע אימות, נא להמתין",
 "warning":"אזהרה",
 "webAuthnBrowserFailed":"הדפדפן כשל במשיכת פרטי האימות עם Webauthn",

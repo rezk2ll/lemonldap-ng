@@ -350,6 +350,7 @@
 "value":"Valore",
 "verify":"Verifica",
 "wait":"Attendere",
+"waitFor2f":"Waiting for your second factor activation",
 "waitingmessage":"Autenticazione in corso, attendere prego",
 "warning":"Avvertimento",
 "webAuthnBrowserFailed":"Browser failed to obtain WebAuthn credential",

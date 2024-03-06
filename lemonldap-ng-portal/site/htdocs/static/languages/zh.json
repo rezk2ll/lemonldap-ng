@@ -350,6 +350,7 @@
 "value":"值",
 "verify":"验证",
 "wait":"等待",
+"waitFor2f":"Waiting for your second factor activation",
 "waitingmessage":"正在進行驗證，請稍候",
 "warning":"警告",
 "webAuthnBrowserFailed":"Browser failed to obtain WebAuthn credential",

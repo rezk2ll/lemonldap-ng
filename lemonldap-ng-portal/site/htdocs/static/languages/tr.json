@@ -350,6 +350,7 @@
 "value":"Değer",
 "verify":"Doğrula",
 "wait":"Bekleyin",
+"waitFor2f":"Waiting for your second factor activation",
 "waitingmessage":"Kimlik doğrulama işlemi devam ediyor, lütfen bekleyin",
 "warning":"Uyarı",
 "webAuthnBrowserFailed":"Tarayıcı WebAuthn kimlik bilgilerini alamadı",

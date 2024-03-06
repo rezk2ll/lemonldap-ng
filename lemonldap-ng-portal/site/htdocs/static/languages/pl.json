@@ -350,6 +350,7 @@
 "value":"Wartość",
 "verify":"Zweryfikuj",
 "wait":"Czekaj",
+"waitFor2f":"Waiting for your second factor activation",
 "waitingmessage":"Uwierzytelnianie w toku, proszę czekać",
 "warning":"Ostrzeżenie",
 "webAuthnBrowserFailed":"Przeglądarka nie uzyskała poświadczeń WebAuthn",

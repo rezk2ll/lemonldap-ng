@@ -457,6 +457,7 @@ site/htdocs/static/languages/zh.json
 site/htdocs/static/languages/zh_TW.json
 site/templates/bootstrap/2fchoice.tpl
 site/templates/bootstrap/2fregisters.tpl
+site/templates/bootstrap/2fwait.tpl
 site/templates/bootstrap/captcha.tpl
 site/templates/bootstrap/casBack2Url.tpl
 site/templates/bootstrap/certificateReset.tpl
