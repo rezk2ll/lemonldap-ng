@@ -227,10 +227,7 @@ sub getConf {
                     $r = $r2;
                 }
 
-                $self->setDefault( $r, $localPrm );
-                $self->compactConf($r);
-
-                # Store modified configuration in cache
+                # Store configuration in cache
                 $self->setLocalConf($r)
                   if ( $self->{refLocalStorage}
                     and not( $noCache == 1 or $raw ) );
@@ -240,6 +237,9 @@ sub getConf {
         # Return configuration hash
         $res = $r;
     }
+
+    $self->setDefault( $res, $localPrm );
+    $self->compactConf($res);
 
     # Create cipher object and replace variable placeholder
     unless ($raw) {
