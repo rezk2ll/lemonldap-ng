@@ -164,10 +164,21 @@ sub saveConf {
 sub getConf {
     my ( $self, $args ) = @_;
     my $res;
+    my $local                = $args->{local};
+    my $cfgNum               = $args->{cfgNum};
+    my $localPrm             = $args->{localPrm};
+    my $noCache              = $args->{noCache};
+    my $raw                  = $args->{raw};
+    my $allow_cache_for_root = $args->{allow_cache_for_root};
 
-    # Use only cache to get conf if $args->{local} is set
-    if (    $>
-        and $args->{local}
+    # If running as UID=0, disabled the cache unless explicitely allowed
+    if ( $> == 0 and !$allow_cache_for_root ) {
+        $noCache = 1;
+    }
+
+    # Use only cache to get conf if $local is set
+    if (   !$noCache
+        and $local
         and ref( $self->{refLocalStorage} )
         and $res = $self->{refLocalStorage}->get('conf') )
     {
@@ -177,33 +188,33 @@ sub getConf {
     # Check cfgNum in conf backend
     # Get conf in backend only if a newer configuration is available
     else {
-        $args->{cfgNum} ||= $self->lastCfg;
-        unless ( $args->{cfgNum} ) {
+        $cfgNum ||= $self->lastCfg;
+        unless ($cfgNum) {
             $msg .= "Error: No configuration available in backend.\n";
         }
         my $r;
         unless ( ref( $self->{refLocalStorage} ) ) {
             $msg .= "Get remote configuration (localStorage unavailable).\n";
-            $r = $self->getDBConf($args);
+            $r = $self->getDBConf( { cfgNum => $cfgNum } );
             return undef unless ( $r->{cfgNum} );
-            $self->setDefault( $r, $args->{localPrm} );
+            $self->setDefault( $r, $localPrm );
             $self->compactConf($r);
         }
         else {
             eval { $r = $self->{refLocalStorage}->get('conf') }
-              if ( $> and not $args->{noCache} );
+              if ( !$noCache );
             $msg .= "Warn: $@" if ($@);
 
             if (    ref($r)
                 and $r->{cfgNum}
-                and $args->{cfgNum}
-                and $r->{cfgNum} == $args->{cfgNum} )
+                and $cfgNum
+                and $r->{cfgNum} == $cfgNum )
             {
                 $msg .=
                   "Configuration unchanged, get configuration from cache.\n";
             }
             else {
-                my $r2 = $self->getDBConf($args);
+                my $r2 = $self->getDBConf( { cfgNum => $cfgNum } );
                 unless ( $r2->{cfgNum} ) {
                     $r = $self->{refLocalStorage}->get('conf') unless ($r);
                     $msg .=
@@ -216,13 +227,13 @@ sub getConf {
                     $r = $r2;
                 }
 
-                $self->setDefault( $r, $args->{localPrm} );
+                $self->setDefault( $r, $localPrm );
                 $self->compactConf($r);
 
                 # Store modified configuration in cache
                 $self->setLocalConf($r)
                   if ( $self->{refLocalStorage}
-                    and not( $args->{noCache} == 1 or $args->{raw} ) );
+                    and not( $noCache == 1 or $raw ) );
             }
         }
 
@@ -231,7 +242,7 @@ sub getConf {
     }
 
     # Create cipher object and replace variable placeholder
-    unless ( $args->{raw} ) {
+    unless ($raw) {
 
         $self->replacePlaceholders($res) if $self->{useServerEnv};
         eval {
@@ -382,7 +393,6 @@ sub getLocalConf {
 # @param $conf Lemonldap::NG configuration hashRef
 sub setLocalConf {
     my ( $self, $conf ) = @_;
-    return unless ($>);
     eval { $self->{refLocalStorage}->set( "conf", $conf ) };
     $msg .= "Warn: $@\n" if ($@);
 }
@@ -394,15 +404,17 @@ sub setLocalConf {
 # @return Lemonldap::NG configuration hashRef
 sub getDBConf {
     my ( $self, $args ) = @_;
-    return undef unless $args->{cfgNum};
-    if ( $args->{cfgNum} < 0 ) {
+    my $cfgNum = $args->{cfgNum};
+    return undef unless $cfgNum;
+
+    if ( $cfgNum < 0 ) {
         my @a = $self->available();
-        $args->{cfgNum} =
-            ( @a + $args->{cfgNum} > 0 )
-          ? ( $a[ $#a + $args->{cfgNum} ] )
+        $cfgNum =
+            ( @a + $cfgNum > 0 )
+          ? ( $a[ $#a + $cfgNum ] )
           : $a[0];
     }
-    my $conf = $self->load( $args->{cfgNum} );
+    my $conf = $self->load($cfgNum);
     return undef if $conf == "-1";
     $msg .= "Get configuration $conf->{cfgNum}.\n"
       if ( defined $conf->{cfgNum} );
