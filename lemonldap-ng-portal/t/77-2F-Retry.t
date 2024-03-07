@@ -103,6 +103,7 @@ my $client = LLNG::Manager::Test->new( {
             ext2FSendCommand    => '/bin/true',
             authentication      => 'Demo',
             userDB              => 'Same',
+            customPlugins       => "t::sfHookPlugin",
         }
     }
 );
@@ -181,6 +182,15 @@ subtest 'Two factors offered, succeed after 2 tries' => sub {
     my $hist = [ $client->getHistory('rtyler') ];
     is( scalar @$hist, 1, "One entry in history" );
     cmp_ok( $hist->[0]->{error}, "<=", 0, "Success was recorded" );
+};
+
+subtest 'Test sfBeforeVerify hook' => sub {
+
+    clean_sessions();
+    $res  = init_login( $client, 'msmith' );
+    $code = expectExtPrompt($res);
+    $res  = sendExt( $res, $client, 0 );
+    expectPortalError( $res, 999, "User msmith denied by hook" );
 };
 
 clean_sessions();
