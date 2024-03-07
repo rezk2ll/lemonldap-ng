@@ -10,6 +10,24 @@ require 't/smtp.pm';
 
 use_ok('Lemonldap::NG::Common::FormEncode');
 
+# in seconds
+our $time_offset_auto_increase = 0;
+our $time_offset = 0;
+
+sub resetTimeOffset {
+    our $time_offset = 0;
+    Time::Fake->reset;
+}
+
+sub timeOffsetIncrease {
+    my ($delay) = @_;
+    if ( $delay != 0 )
+    {
+        $time_offset += $delay;
+        Time::Fake->offset("+${time_offset}s");
+    }
+}
+
 sub sendExt {
     my ( $res, $client, $correct_code ) = @_;
 
@@ -148,6 +166,7 @@ subtest 'Only one factor offered, succeed after 2 tries' => sub {
 subtest 'Two factors offered, fail after 3 tries' => sub {
 
     clean_sessions();
+    resetTimeOffset();
 
     # Login on first try
     $res  = init_login( $client, 'rtyler' );
@@ -157,17 +176,29 @@ subtest 'Two factors offered, fail after 3 tries' => sub {
     $code = expectExtPrompt( $res, 1 );
     $res  = sendExt( $res, $client, 0 );
     $code = expectExtPrompt( $res, 1 );
+
+    my $beforetime=time;
+    timeOffsetIncrease(60);
+    # $lastfailuretime=time does not work here, compute it.
+    my $lastfailuretime=$beforetime+60;
+
     $res  = sendExt( $res, $client, 0 );
+
     expectPortalError( $res, 96 );
 
     my $hist = [ $client->getHistory('rtyler') ];
     is( scalar @$hist, 1, "One entry in history" );
-    cmp_ok( $hist->[0]->{error}, ">", 0, "Failure was recorded" );
+    my $last_history_log = $hist->[0];
+    cmp_ok( $last_history_log->{error}, ">", 0, "Failure was recorded" );
+    cmp_ok( $last_history_log->{_utime}, ">=", $lastfailuretime, "history failed time match >" );
+    cmp_ok( $last_history_log->{_utime}, "<=", ( $lastfailuretime + 1 ), "history failed time match <" );
 };
 
 subtest 'Two factors offered, succeed after 2 tries' => sub {
 
     clean_sessions();
+    resetTimeOffset();
+
     $res  = init_login( $client, 'rtyler' );
     $res  = expect_2fa_choice( $client, $res, 'ext' );
     $code = expectExtPrompt($res);
@@ -175,12 +206,23 @@ subtest 'Two factors offered, succeed after 2 tries' => sub {
     $code = expectExtPrompt( $res, 1 );
     $res  = sendExt( $res, $client, 0 );
     $code = expectExtPrompt( $res, 1 );
+
+    my $beforetime=time;
+    timeOffsetIncrease(60);
+    # $lastsuccesstime=time does not work here, compute it.
+    my $lastsuccesstime=$beforetime+60;
+    cmp_ok( ($beforetime + 60), '<=' , ($lastsuccesstime), "internal fake time ok");
+
     $res  = sendExt( $res, $client, 1 );
     $id   = expectCookie($res);
 
     my $hist = [ $client->getHistory('rtyler') ];
     is( scalar @$hist, 1, "One entry in history" );
-    cmp_ok( $hist->[0]->{error}, "<=", 0, "Success was recorded" );
+    my $last_history_log = $hist->[0];
+    cmp_ok( $last_history_log->{error}, "<=", 0, "Success was recorded" );
+    cmp_ok( $last_history_log->{_utime}, ">=", $lastsuccesstime , "history success time match >" );
+    cmp_ok( $last_history_log->{_utime}, "<=", ( $lastsuccesstime + 1 ), "history success time match <" );
+
 };
 
 clean_sessions();
