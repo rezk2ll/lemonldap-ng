@@ -879,6 +879,14 @@ sub _verify {
             ? $req->data->{_2fRetries} - 1
             : 0
         );
+
+        # Evaluate hook
+        my $h = $self->p->processHook( $req, 'sfBeforeRetry', $module );
+        if ( $h != PE_OK ) {
+            $req->noLoginDisplay(1);
+            return $self->p->do( $req, [ sub { $h } ] );
+        }
+
         $self->logger->debug(
             "Retrying 2FA: " . $req->data->{_2fRetries} . " retries left" );
 
