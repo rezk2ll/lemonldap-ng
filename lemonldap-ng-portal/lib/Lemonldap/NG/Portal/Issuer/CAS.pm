@@ -353,18 +353,8 @@ sub run {
                 "CAS service session $casServiceSessionID created");
         }
 
-        # Redirect to service
-        # cas_request may have been modified by hook
-        my $service_url = $cas_request->{service};
-        $service_url .= ( $service_url =~ /\?/ ? '&' : '?' )
-          . build_urlencoded( ticket => $casServiceTicket );
-
-        $self->logger->debug("Redirect user to $service_url");
-
-        $req->{urldc} = $service_url;
-
-        $req->steps( [] );
-        return PE_OK;
+        return $self->_redirectUser( $req, $cas_request->{service},
+            $casServiceTicket );
     }
 
     # 2. LOGOUT
@@ -425,11 +415,7 @@ sub run {
             }
 
             if ($logout_service) {
-                $self->logger->debug(
-                    "User will be redirected to $logout_service");
-                $req->{urldc} = $logout_service;
-                $req->steps( [] );
-                return PE_OK;
+                return $self->_redirectUser( $req, $logout_service );
             }
         }
         else {
@@ -1118,6 +1104,23 @@ sub isLogoutEnabled {
     else {
         return $option;
     }
+}
+
+sub _redirectUser {
+    my ( $self, $req, $destination, $ticket ) = @_;
+
+    # Redirect to service
+    # cas_request may have been modified by hook
+    if ($ticket) {
+        $destination .= ( $destination =~ /\?/ ? '&' : '?' )
+          . build_urlencoded( ticket => $ticket );
+    }
+
+    $self->logger->debug("Redirect user to $destination");
+
+    $req->{urldc} = $destination;
+    $req->steps( [] );
+    return PE_OK;
 }
 
 1;
