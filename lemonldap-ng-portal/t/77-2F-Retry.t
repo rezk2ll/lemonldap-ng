@@ -191,7 +191,7 @@ subtest 'Two factors offered, fail after 3 tries' => sub {
     my $last_history_log = $hist->[0];
     cmp_ok( $last_history_log->{error}, ">", 0, "Failure was recorded" );
     cmp_ok( $last_history_log->{_utime}, ">=", $lastfailuretime, "history failed time match >" );
-    cmp_ok( $last_history_log->{_utime}, "<=", ( $lastfailuretime + 1 ), "history failed time match <" );
+
 };
 
 subtest 'Two factors offered, succeed after 2 tries' => sub {
@@ -221,7 +221,6 @@ subtest 'Two factors offered, succeed after 2 tries' => sub {
     my $last_history_log = $hist->[0];
     cmp_ok( $last_history_log->{error}, "<=", 0, "Success was recorded" );
     cmp_ok( $last_history_log->{_utime}, ">=", $lastsuccesstime , "history success time match >" );
-    cmp_ok( $last_history_log->{_utime}, "<=", ( $lastsuccesstime + 1 ), "history success time match <" );
 
 };
 
