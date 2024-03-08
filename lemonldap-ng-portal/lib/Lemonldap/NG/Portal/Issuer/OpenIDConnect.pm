@@ -1774,6 +1774,8 @@ sub _handleAuthorizationCodeGrant {
     # Generate refresh_token
     my $refresh_token = undef;
 
+    my $sid;
+
     # For offline access, the refresh token isn't tied to the session ID
     if ( $codeSession->{data}->{offline} ) {
 
@@ -1811,6 +1813,8 @@ sub _handleAuthorizationCodeGrant {
         $refresh_token = $refreshTokenSession->id;
 
         $self->logger->debug("Generated offline refresh token: $refresh_token");
+
+        $sid = $self->getSidFromSession( $rp, $refreshTokenSession );
     }
 
     # For online access, if configured
@@ -1853,7 +1857,8 @@ sub _handleAuthorizationCodeGrant {
         {
             ( $nonce   ? ( nonce   => $nonce )   : () ),
             ( $at_hash ? ( at_hash => $at_hash ) : () ),
-        }
+        },
+        $sid,
     );
 
     unless ($id_token) {
@@ -2741,9 +2746,10 @@ sub _convertOldFormatConsents {
 
 sub _generateIDToken {
     my ( $self, $req, $rp, $scope, $sessionInfo, $release_user_claims,
-        $extra_claims )
+        $extra_claims, $sid )
       = @_;
 
+    $sid ||= $self->getSidFromSession( $rp, $sessionInfo );
     my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
 
     my $id_token_exp =
@@ -2775,7 +2781,7 @@ sub _generateIDToken {
         acr       => $id_token_acr,  # Authentication Context Class Reference
         azp       => $client_id,     # Authorized party, this is used for logout
                                      # TODO amr
-        sid       => $self->getSidFromSession( $rp, $sessionInfo ), # Session id
+        sid       => $sid,
     };
 
     for ( keys %{$extra_claims} ) {
