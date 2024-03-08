@@ -5,83 +5,161 @@ use IO::String;
 use Data::Dumper;
 
 require 't/test-lib.pm';
+my $debug = 'error';
 
-my $client = LLNG::Manager::Test->new(
-    {
-        ini => {
-            logLevel             => 'error',
-            authentication       => 'Demo',
-            userDB               => 'Same',
-            okta2fActivation     => 1,
-            okta2fAdminURL       => 'https://fake/',
-            okta2fApiKey         => 'fake',
-            okta2fLoginAttribute => "uid",
-            restSessionServer    => 1,
+subtest "Choose Okta SMS" => sub {
+
+    my $client = LLNG::Manager::Test->new(
+        {
+            ini => {
+                logLevel             => $debug,
+                authentication       => 'Demo',
+                userDB               => 'Same',
+                okta2fActivation     => 1,
+                okta2fAdminURL       => 'https://fake/',
+                okta2fApiKey         => 'fake',
+                okta2fLoginAttribute => "uid",
+                restSessionServer    => 1,
+            }
         }
-    }
-);
+    );
 
-my $res;
-ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Portal', );
-my ( $host, $url, $query ) = expectForm( $res, '#', undef, 'user', 'password' );
+    my $res;
+    ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Portal', );
+    my ( $host, $url, $query ) =
+      expectForm( $res, '#', undef, 'user', 'password' );
 
-$query =~ s/user=/user=dwho/;
-$query =~ s/password=/password=dwho/;
-ok(
-    $res = $client->_post(
-        '/',
-        IO::String->new($query),
-        length => length($query),
-        accept => 'text/html',
-    ),
-    'Auth query'
-);
+    $query =~ s/user=/user=dwho/;
+    $query =~ s/password=/password=dwho/;
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'Auth query'
+    );
 
-( $host, $url, $query ) = expectForm( $res, undef, '/okta2fchoice' );
+    ( $host, $url, $query ) = expectForm( $res, undef, '/okta2fchoice' );
 
-$query =~ s/sf=/sf=sms2gt8gzgEBPUWBIFHN/;
-ok(
-    $res = $client->_post(
-        '/okta2fchoice',
-        IO::String->new($query),
-        length => length($query),
-        accept => 'text/html',
-    ),
-    'Choose SMS'
-);
+    $query =~ s/sf=/sf=sms2gt8gzgEBPUWBIFHN/;
+    ok(
+        $res = $client->_post(
+            '/okta2fchoice',
+            IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'Choose SMS'
+    );
 
-( $host, $url, $query ) =
-  expectForm( $res, undef, '/okta2fcheck?skin=bootstrap' );
+    ( $host, $url, $query ) =
+      expectForm( $res, undef, '/okta2fcheck?skin=bootstrap' );
 
-$query =~ s/extcode=/extcode=1234/;
-ok(
-    $res = $client->_post(
-        '/okta2fcheck',
-        IO::String->new($query),
-        length => length($query),
-        accept => 'text/html',
-    ),
-    'Send code'
-);
-my $id   = expectCookie($res);
-my $attr = expectSessionAttributes(
-    $client, $id,
-    _auth => "Demo",
-    _2f   => "okta",
-);
-$client->logout($id);
+    $query =~ s/extcode=/extcode=1234/;
+    ok(
+        $res = $client->_post(
+            '/okta2fcheck',
+            IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'Send code'
+    );
+    my $id   = expectCookie($res);
+    my $attr = expectSessionAttributes(
+        $client, $id,
+        _auth => "Demo",
+        _2f   => "okta",
+    );
+    $client->logout($id);
+};
+
+subtest "Choose Okta Push" => sub {
+
+    my $client = LLNG::Manager::Test->new(
+        {
+            ini => {
+                logLevel             => $debug,
+                authentication       => 'Demo',
+                userDB               => 'Same',
+                okta2fActivation     => 1,
+                okta2fAdminURL       => 'https://fake/',
+                okta2fApiKey         => 'fake',
+                okta2fLoginAttribute => "uid",
+                restSessionServer    => 1,
+            }
+        }
+    );
+
+    my $res;
+    ok( $res = $client->_get( '/', accept => 'text/html' ), 'Get Portal', );
+    my ( $host, $url, $query ) =
+      expectForm( $res, '#', undef, 'user', 'password' );
+
+    $query =~ s/user=/user=msmith/;
+    $query =~ s/password=/password=msmith/;
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'Auth query'
+    );
+
+    ( $host, $url, $query ) = expectForm( $res, undef, '/okta2fchoice' );
+
+    $query =~ s/sf=/sf=opf9xr59yyB0t7RL9417/;
+    ok(
+        $res = $client->_post(
+            '/okta2fchoice',
+            IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'Choose SMS'
+    );
+
+    ( $host, $url, $query ) = expectForm( $res, undef, '/okta2fcheck' );
+
+    $query =~ s/extcode=/extcode=1234/;
+    ok(
+        $res = $client->_post(
+            '/okta2fcheck',
+            IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'Send code'
+    );
+    my $id   = expectCookie($res);
+    my $attr = expectSessionAttributes(
+        $client, $id,
+        _auth => "Demo",
+        _2f   => "okta",
+    );
+    $client->logout($id);
+};
+
 clean_sessions();
 
 done_testing();
 
 # Override Okta API
 # Sample data from https://developer.okta.com/docs/reference/core-okta-api/
+# dwho -> SMS
+# msmith -> PUSH
+
 no warnings 'redefine';
 
 sub Lemonldap::NG::Portal::Lib::Okta::searchProfile {
+    my ( $self, $okta_login ) = @_;
     return '[
   {
-    "id": "oktaID0fTheFakeUser",
+    "id": "oktaID0fTheFakeUser' . $okta_login . '",
     "status": "ACTIVE",
     "created": "2013-06-24T16:39:18.000Z",
     "activated": "2013-06-24T16:39:19.000Z",
@@ -117,6 +195,7 @@ sub Lemonldap::NG::Portal::Lib::Okta::searchProfile {
 }
 
 sub Lemonldap::NG::Portal::Lib::Okta::searchFactors {
+    my ( $self, $okta_userid ) = @_;
     return '[
   {
     "id": "ufs2bysphxKODSZKWVCT",
@@ -242,11 +321,145 @@ sub Lemonldap::NG::Portal::Lib::Okta::searchFactors {
       }
     }
   }
-]';
+]' if ( $okta_userid eq "oktaID0fTheFakeUserdwho" );
+
+    return '[
+   {
+      "_links" : {
+         "self" : {
+            "hints" : {
+               "allow" : [
+                  "GET",
+                  "DELETE"
+               ]
+            },
+            "href" : "https://fake/api/v1/users/00u9i07w7r7L9t2u3417/factors/sms9i0k87tZuc9aoU417"
+         },
+         "user" : {
+            "hints" : {
+               "allow" : [
+                  "GET"
+               ]
+            },
+            "href" : "https://fake/api/v1/users/00u9i07w7r7L9t2u3417"
+         },
+         "verify" : {
+            "hints" : {
+               "allow" : [
+                  "POST"
+               ]
+            },
+            "href" : "https://fake/api/v1/users/00u9i07w7r7L9t2u3417/factors/sms9i0k87tZuc9aoU417/verify"
+         }
+      },
+      "created" : "2023-10-13T13:10:41.000Z",
+      "factorType" : "sms",
+      "id" : "sms9i0k87tZuc9aoU417",
+      "lastUpdated" : "2023-10-13T13:10:41.000Z",
+      "profile" : {
+         "phoneNumber" : "+33611223344"
+      },
+      "provider" : "OKTA",
+      "status" : "ACTIVE",
+      "vendorName" : "OKTA"
+   },
+   {
+      "_links" : {
+         "self" : {
+            "hints" : {
+               "allow" : [
+                  "GET",
+                  "DELETE"
+               ]
+            },
+            "href" : "https://fake/api/v1/users/00u9i07w7r7L9t2u3417/factors/opf9xr59yyB0t7RL9417"
+         },
+         "user" : {
+            "hints" : {
+               "allow" : [
+                  "GET"
+               ]
+            },
+            "href" : "https://fake/api/v1/users/00u9i07w7r7L9t2u3417"
+         },
+         "verify" : {
+            "hints" : {
+               "allow" : [
+                  "POST"
+               ]
+            },
+            "href" : "https://fake/api/v1/users/00u9i07w7r7L9t2u3417/factors/opf9xr59yyB0t7RL9417/verify"
+         }
+      },
+      "created" : "2023-11-10T14:52:42.000Z",
+      "factorType" : "push",
+      "id" : "opf9xr59yyB0t7RL9417",
+      "lastUpdated" : "2023-11-10T14:52:42.000Z",
+      "profile" : {
+         "credentialId" : "fakeid",
+         "deviceType" : "SmartPhone_Android",
+         "keys" : [
+            {
+               "e" : "AQAB",
+               "kid" : "default",
+               "kty" : "RSA",
+               "n" : "XXXX",
+               "use" : "sig"
+            }
+         ],
+         "name" : "Sonic screwdriver",
+         "platform" : "ANDROID",
+         "version" : "69:2023-01-01"
+      },
+      "provider" : "OKTA",
+      "status" : "ACTIVE",
+      "vendorName" : "OKTA"
+   },
+   {
+      "_links" : {
+         "self" : {
+            "hints" : {
+               "allow" : [
+                  "GET",
+                  "DELETE"
+               ]
+            },
+            "href" : "https://fake/api/v1/users/00u9i07w7r7L9t2u3417/factors/ost9xr59yz67Ko0XE417"
+         },
+         "user" : {
+            "hints" : {
+               "allow" : [
+                  "GET"
+               ]
+            },
+            "href" : "https://fake/api/v1/users/00u9i07w7r7L9t2u3417"
+         },
+         "verify" : {
+            "hints" : {
+               "allow" : [
+                  "POST"
+               ]
+            },
+            "href" : "https://fake/api/v1/users/00u9i07w7r7L9t2u3417/factors/ost9xr59yz67Ko0XE417/verify"
+         }
+      },
+      "created" : "2023-11-10T14:52:42.000Z",
+      "factorType" : "token:software:totp",
+      "id" : "ost9xr59yz67Ko0XE417",
+      "lastUpdated" : "2023-11-10T14:52:42.000Z",
+      "profile" : {
+         "credentialId" : "fakeid"
+      },
+      "provider" : "OKTA",
+      "status" : "ACTIVE",
+      "vendorName" : "OKTA"
+   }
+]' if ( $okta_userid eq "oktaID0fTheFakeUsermsmith" );
 
 }
 
 sub Lemonldap::NG::Portal::Lib::Okta::issueFactor {
+    my ( $self, $okta_userid, $okta_factorid ) = @_;
     return '{
     "factorResult": "CHALLENGE",
     "profile": {
@@ -271,8 +484,45 @@ sub Lemonldap::NG::Portal::Lib::Okta::issueFactor {
             }
         }
     }
-}';
-
+}' if ( $okta_userid eq "oktaID0fTheFakeUserdwho" );
+    return '{
+   "_links" : {
+      "cancel" : {
+         "hints" : {
+            "allow" : [
+               "DELETE"
+            ]
+         },
+         "href" : "https://fake/api/v1/users/00u9i07w7r7L9t2u3417/factors/opf9xr59yyB0t7RL9417/transactions/v2mst.vc7bYhbFSmSVHbiGwCsxqw"
+      },
+      "poll" : {
+         "hints" : {
+            "allow" : [
+               "GET"
+            ]
+         },
+         "href" : "https://fake/api/v1/users/00u9i07w7r7L9t2u3417/factors/opf9xr59yyB0t7RL9417/transactions/v2mst.vc7bYhbFSmSVHbiGwCsxqw"
+      }
+   },
+   "expiresAt" : "2024-03-08T15:04:53.000Z",
+   "factorResult" : "WAITING",
+   "profile" : {
+      "credentialId" : "fakeid",
+      "deviceType" : "SmartPhone_Android",
+      "keys" : [
+         {
+            "e" : "AQAB",
+            "kid" : "default",
+            "kty" : "RSA",
+            "n" : "XXXX",
+            "use" : "sig"
+         }
+      ],
+      "name" : "Sonic Screwdriver",
+      "platform" : "ANDROID",
+      "version" : "69:2023-01-01"
+   }
+}' if ( $okta_userid eq "oktaID0fTheFakeUsermsmith" );
 }
 
 sub Lemonldap::NG::Portal::Lib::Okta::pollFactor {
