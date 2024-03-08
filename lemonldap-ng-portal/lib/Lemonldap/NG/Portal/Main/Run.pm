@@ -767,6 +767,13 @@ sub autoPost {
     }
 
     $req->data->{redirectFormMethod} = "post";
+
+    # Case 2F wait
+    if ( $req->data->{sfWait} ) {
+        return PE_2FWAIT;
+    }
+
+    # Default case -> redirect
     return PE_REDIRECT;
 }
 
@@ -1171,7 +1178,7 @@ sub tplParams {
         SKIN_BG      => $self->conf->{portalSkinBackground},
         FAVICON      => $self->conf->{portalFavicon} || 'common/favicon.ico',
         CUSTOM_CSS   => $self->conf->{portalCustomCss},
-        CUSTOM_JS   => $self->conf->{portalCustomJs},
+        CUSTOM_JS    => $self->conf->{portalCustomJs},
         (
             $self->customParameters
             ? ( %{ $self->customParameters } )

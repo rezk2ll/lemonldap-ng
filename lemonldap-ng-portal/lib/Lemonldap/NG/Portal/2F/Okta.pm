@@ -337,6 +337,7 @@ sub _issueFactor {
         $req->postUrl($redirect_uri);
         $req->postFields( { token => $token } );
 
+        $req->data->{sfWait} = 1;
         return $self->p->do( $req, ['autoPost'] );
     }
 
