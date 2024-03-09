@@ -258,1013 +258,13 @@ sub run {
         if ( $path eq $self->conf->{oidcServiceMetaDataAuthorizeURI} ) {
             $self->logger->debug(
                 "URL detected as an OpenID Connect AUTHORIZE URL");
+            return $self->_authorizeEndpoint($req);
 
-            # Get and save parameters
-            my $oidc_request = {};
-            foreach my $param (
-                qw/response_type scope client_id state redirect_uri nonce
-                response_mode display prompt max_age ui_locales id_token_hint
-                login_hint acr_values request request_uri code_challenge code_challenge_method/
-              )
-            {
-                if ( $req->param($param) ) {
-                    $oidc_request->{$param} = $req->param($param);
-                    $self->logger->debug( "OIDC request parameter $param: "
-                          . $oidc_request->{$param} );
-                    $self->p->setHiddenFormValue( $req, $param,
-                        $oidc_request->{$param},
-                        '', 0 );
-                }
-            }
-
-            my $h =
-              $self->p->processHook( $req, 'oidcGotRequest', $oidc_request );
-            return PE_ERROR if ( $h != PE_OK );
-
-            # Detect requested flow
-            my $response_type = $oidc_request->{'response_type'};
-
-            unless ($response_type) {
-                $self->logger->error("No response type provided");
-                return PE_ERROR;
-            }
-
-            my $flow = $self->getFlowType($response_type);
-
-            unless ($flow) {
-                $self->logger->error("Unknown response type: $response_type");
-                return PE_ERROR;
-            }
-            $self->logger->debug(
-                "OIDC $flow flow requested (response type: $response_type)");
-
-            # Check if response mode is allowed for flow
-            my $response_mode = $oidc_request->{'response_mode'};
-            if ( !$self->isResponseModeAllowed( $flow, $response_mode ) ) {
-                $self->logger->error(
-                    "Reponse mode $response_mode is not allowed in $flow Flow");
-                return PE_ERROR;
-            }
-
-            # Client ID must be provided and cannot come from
-            # request or request_uri
-            unless ( $oidc_request->{'client_id'} ) {
-                $self->logger->error("Client ID is required");
-                return PE_ERROR;
-            }
-
-            # Check client_id
-            my $client_id = $oidc_request->{'client_id'};
-            $self->logger->debug("Request from client id $client_id");
-
-            # Verify that client_id is registered in configuration
-            my $rp = $self->getRP($client_id);
-
-            unless ($rp) {
-                $self->logger->error(
-                        "No registered Relying Party found with"
-                      . " client_id $client_id" );
-                return PE_UNKNOWNPARTNER;
-            }
-            else {
-                $self->logger->debug("Client id $client_id matches RP $rp");
-            }
-
-            # Scope must be provided and cannot come from request or request_uri
-            unless ( $oidc_request->{'scope'} ) {
-                $self->logger->error("Scope is required");
-                return PE_ERROR;
-            }
-
-            # Extract request_uri/request parameter
-            if ( my $request_uri = $oidc_request->{'request_uri'} ) {
-                if (
-                    $self->isUriAllowedForRP(
-                        $request_uri,                       $rp,
-                        "oidcRPMetaDataOptionsRequestUris", 1
-                    )
-                  )
-                {
-                    my $request = $self->getRequestJWT($request_uri);
-
-                    if ($request) {
-                        $oidc_request->{'request'} = $request;
-                    }
-                    else {
-                        $self->logger->error(
-                            "Error with Request URI resolution");
-                        return PE_ERROR;
-                    }
-                }
-                else {
-                    $self->logger->error(
-                        "Request URI $request_uri is not allowed for $rp");
-                    return PE_ERROR;
-                }
-            }
-
-            my $authMethod;
-            if ( $oidc_request->{'request'} ) {
-                if ( my ( $request, $alg ) =
-                    $self->decodeJWT( $oidc_request->{'request'}, undef, $rp ) )
-                {
-                    $self->logger->debug("JWT signature request verified");
-
-                    $authMethod =
-                      $alg =~ /^HS/i
-                      ? 'client_secret_jwt'
-                      : 'private_key_jwt';
-
-                    # Override OIDC parameters by request content
-                    foreach ( keys %$request ) {
-                        $self->logger->debug( "Override $_ OIDC param"
-                              . " by value present in request parameter" );
-
-                        if ( $_ eq "client_id" or $_ eq "response_type" ) {
-                            if ( $oidc_request->{$_} ne $request->{$_} ) {
-                                $self->logger->error( "$_ from request JWT ("
-                                      . $oidc_request->{$_}
-                                      . ") does not match $_ from request URI ("
-                                      . $request->{$_}
-                                      . ")" );
-                                return PE_ERROR;
-                            }
-                        }
-                        $oidc_request->{$_} = $request->{$_};
-                        $self->p->setHiddenFormValue( $req, $_, $request->{$_},
-                            '', 0 );
-                    }
-                }
-                else {
-                    $self->logger->error(
-                        "JWT signature request can not be verified");
-                    return PE_ERROR;
-                }
-            }
-
-            # Check all required parameters
-            unless ( $oidc_request->{'redirect_uri'} ) {
-                $self->logger->error("Redirect URI is required");
-                return PE_ERROR;
-            }
-            if ( $flow eq "implicit" and not defined $oidc_request->{'nonce'} )
-            {
-                $self->logger->error("Nonce is required for implicit flow");
-                return PE_ERROR;
-            }
-
-            # Check if this RP is authorized
-            if ( my $rule = $self->rpRules->{$rp} ) {
-                my $ruleVariables =
-                  { %{ $req->sessionInfo || {} }, _oidc_grant_type => $flow };
-                unless ( $rule->( $req, $ruleVariables ) ) {
-                    $self->userLogger->warn( 'User '
-                          . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                          . " is not authorized to access to $rp" );
-                    return PE_UNAUTHORIZEDPARTNER;
-                }
-            }
-
-            $self->userLogger->notice( 'User '
-                  . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                  . " is authorized to access to $rp" );
-
-            # Check redirect_uri
-            my $redirect_uri = $oidc_request->{'redirect_uri'};
-            if (
-                !$self->isUriAllowedForRP(
-                    $redirect_uri, $rp, 'oidcRPMetaDataOptionsRedirectUris'
-                )
-              )
-            {
-                $self->userLogger->error(
-                    "Redirect URI $redirect_uri not allowed");
-                return PE_UNAUTHORIZEDURL;
-            }
-
-            # Check if flow is allowed
-            if ( $flow eq "authorizationcode"
-                and not $self->conf->{oidcServiceAllowAuthorizationCodeFlow} )
-            {
-                $self->userLogger->error(
-                    "Authorization code flow is not allowed");
-                return $self->returnRedirectError(
-                    $req,           $oidc_request->{'redirect_uri'},
-                    "server_error", "Authorization code flow not allowed",
-                    undef,          $oidc_request->{'state'},
-                    0
-                );
-            }
-            if ( $flow eq "implicit"
-                and not $self->conf->{oidcServiceAllowImplicitFlow} )
-            {
-                $self->logger->error("Implicit flow is not allowed");
-                return $self->returnRedirectError(
-                    $req,           $oidc_request->{'redirect_uri'},
-                    "server_error", "Implicit flow not allowed",
-                    undef,          $oidc_request->{'state'},
-                    1
-                );
-            }
-            if ( $flow eq "hybrid"
-                and not $self->conf->{oidcServiceAllowHybridFlow} )
-            {
-                $self->logger->error("Hybrid flow is not allowed");
-                return $self->returnRedirectError(
-                    $req,           $oidc_request->{'redirect_uri'},
-                    "server_error", "Hybrid flow not allowed",
-                    undef,          $oidc_request->{'state'},
-                    1
-                );
-            }
-
-            # Check if authentication was required
-            if ( $self->rpOptions->{$rp}
-                ->{oidcRPMetaDataOptionsAuthRequiredForAuthorize} )
-            {
-                $self->logger->debug('JWS authentication is required');
-                unless ($authMethod) {
-                    $self->userLogger->error(
-                        'Authentication required but not done');
-                    return $self->returnRedirectError(
-                        $req,           $oidc_request->{'redirect_uri'},
-                        'server_error', 'JWS authentication required',
-                        undef,          $oidc_request->{'state'},
-                        1
-                    );
-                }
-                my $methodAllowed =
-                  $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthMethod};
-                if ( $methodAllowed and $authMethod ne $methodAllowed ) {
-                    $self->userLogger->error(
-"Authentication with $authMethod instead of $methodAllowed"
-                    );
-                    return $self->returnRedirectError(
-                        $req,
-                        $oidc_request->{'redirect_uri'},
-                        'server_error',
-                        "Authentication must use $methodAllowed",
-                        undef,
-                        $oidc_request->{'state'},
-                        1
-                    );
-                }
-            }
-
-            # Check if state is required
-            if ( $self->rpOptions->{$rp}
-                ->{oidcRPMetaDataOptionsAuthnRequireState}
-                and not( $oidc_request->{'state'} ) )
-            {
-                return $self->returnRedirectError(
-                    $req,           $oidc_request->{'redirect_uri'},
-                    "server_error", "State required",
-                    undef,          undef, 1
-                );
-            }
-
-            # Check if nonce is required
-            if ( $self->rpOptions->{$rp}
-                ->{oidcRPMetaDataOptionsAuthnRequireNonce}
-                and not( $oidc_request->{'nonce'} ) )
-            {
-                return $self->returnRedirectError(
-                    $req,           $oidc_request->{'redirect_uri'},
-                    "server_error", "Nonce required",
-                    undef,          undef, 1
-                );
-            }
-
-            my $spAuthnLevel =
-              $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel} || 0;
-
-            # RP may increase, but not lower, the requirement set in LLNG conf
-            if ( $oidc_request->{'acr_values'} ) {
-                my $requested_authn_level =
-                  $self->_get_authn_level_from_acr_values(
-                    $oidc_request->{'acr_values'} );
-                if ( $requested_authn_level > $spAuthnLevel ) {
-                    $spAuthnLevel = $requested_authn_level;
-                }
-                else {
-                    $self->logger->info(
-                            "Ignoring requested authentication level "
-                          . $requested_authn_level
-                          . " because it is lower than minimum for this RP: $spAuthnLevel"
-                    );
-                }
-            }
-
-            # Check if user needs to be reauthenticated
-            my $prompt = $oidc_request->{'prompt'};
-            if (
-                    $prompt
-                and $prompt =~ /\blogin\b/
-                and (
-                    time - $req->sessionInfo->{_utime} >
-                    $self->conf->{portalForceAuthnInterval} )
-              )
-            {
-                $self->logger->debug(
-"Reauthentication required by Relying Party in prompt parameter"
-                );
-                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
-                return $self->reAuth($req);
-            }
-
-            # Check scope validity
-            # We use a slightly more relaxed version of
-            # https://tools.ietf.org/html/rfc6749#appendix-A.4
-            # To be tolerant of user error (trailing spaces, etc.)
-            # Scope names are restricted to printable ASCII characters,
-            # excluding double quote and backslash
-            unless (
-                $oidc_request->{'scope'} =~ /^[\x20\x21\x23-\x5B\x5D-\x7E]*$/ )
-            {
-                $self->logger->error("Submitted scope is not valid");
-                return PE_ERROR;
-            }
-
-            # Check openid scope
-            unless ( $self->_hasScope( 'openid', $oidc_request->{'scope'} ) ) {
-                $self->logger->error("No openid scope found");
-
-                #TODO manage standard OAuth request
-                return PE_ERROR;
-            }
-
-            # Check id_token_hint
-            my $id_token_hint = $oidc_request->{'id_token_hint'};
-            if ($id_token_hint) {
-
-                $self->logger->debug("Check sub of ID Token $id_token_hint");
-
-                # Check that id_token_hint sub match current user
-                my $sub = $self->getIDTokenSub($id_token_hint);
-                my $user_id =
-                  $self->getUserIDForRP( $req, $rp, $req->{sessionInfo} );
-                unless ( $sub eq $user_id ) {
-                    $self->userLogger->error(
-                        "ID Token hint sub $sub does not match user $user_id");
-                    return $self->returnRedirectError(
-                        $req,
-                        $oidc_request->{'redirect_uri'},
-                        'invalid_request',
-                        "Current user does not match id_token_hint sub",
-                        undef,
-                        $oidc_request->{'state'},
-                        ( $flow ne "authorizationcode" )
-                    );
-                }
-                else {
-                    $self->logger->debug(
-                        "ID Token hint sub $sub matches current user");
-                }
-            }
-
-            my $max_age         = $oidc_request->{'max_age'};
-            my $_lastAuthnUTime = $req->{sessionInfo}->{_lastAuthnUTime};
-            if ( $max_age && time > $_lastAuthnUTime + $max_age ) {
-                $self->logger->debug(
-"Reauthentication forced because authentication time ($_lastAuthnUTime) is too old (>$max_age s)"
-                );
-                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
-                return $self->reAuth($req);
-            }
-
-            # Check if we have sufficient auth level
-            my $authenticationLevel =
-              $req->{sessionInfo}->{authenticationLevel} || 0;
-            if ( $authenticationLevel < $spAuthnLevel ) {
-                $self->logger->debug(
-                        "Insufficient authentication level for service $rp"
-                      . " (has: $authenticationLevel, want: $spAuthnLevel)" );
-
-                # Reauth with sp auth level as target
-                $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
-                return $self->upgradeAuth($req);
-            }
-
-            # Compute scopes
-            my $req_scope = $oidc_request->{'scope'};
-            my $scope     = $self->getScope( $req, $rp, $req_scope );
-
-            # Obtain consent
-            my $bypassConsent =
-              $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsBypassConsent};
-            if ($bypassConsent) {
-                $self->logger->debug(
-"Consent is disabled for Relying Party $rp, user will not be prompted"
-                );
-            }
-            else {
-                my $ask_for_consent = 1;
-                my $_oidcConsents;
-                my @RPoidcConsent = ();
-
-                # Loading existing oidcConsents
-                $self->logger->debug("Looking for OIDC Consents ...");
-
-                if ( $req->{sessionInfo}->{_oidcConsents} ) {
-                    $_oidcConsents = eval {
-                        from_json( $req->{sessionInfo}->{_oidcConsents},
-                            { allow_nonref => 1 } );
-                    };
-                    if ($@) {
-                        $self->logger->error(
-                            "Corrupted session (_oidcConsents): $@");
-                        return PE_ERROR;
-                    }
-                }
-                else {
-                    $self->logger->debug("No OIDC Consent found");
-                    $_oidcConsents = [];
-                }
-
-                # Read existing RP
-                @RPoidcConsent = grep { $_->{rp} eq $rp } @$_oidcConsents;
-                unless (@RPoidcConsent) {
-                    $self->logger->debug("No Relying Party $rp Consent found");
-
-                    # Set default value
-                    push @RPoidcConsent,
-                      { rp => $rp, epoch => '', scope => '' };
-                }
-
-                if (   $RPoidcConsent[0]{rp} eq $rp
-                    && $RPoidcConsent[0]{epoch}
-                    && $RPoidcConsent[0]{scope} )
-                {
-                    $ask_for_consent = 0;
-                    my $consent_time  = $RPoidcConsent[0]{epoch};
-                    my $consent_scope = $RPoidcConsent[0]{scope};
-                    $self->logger->debug(
-"Consent already given for Relying Party $rp (time: $consent_time, scope: $consent_scope)"
-                    );
-
-                    # Check accepted scope
-                    foreach my $requested_scope ( split( /\s+/, $scope ) ) {
-                        if (
-                            $self->_hasScope(
-                                $requested_scope, $consent_scope
-                            )
-                          )
-                        {
-                            $self->logger->debug(
-                                "Scope $requested_scope already accepted");
-                        }
-                        else {
-                            $self->logger->debug(
-"Scope $requested_scope was not previously accepted"
-                            );
-                            $ask_for_consent = 1;
-                            last;
-                        }
-                    }
-
-                    # Check prompt parameter
-                    $ask_for_consent = 1
-                      if ( $prompt and $prompt =~ /\bconsent\b/ );
-                }
-                if ($ask_for_consent) {
-                    if (    $req->param('confirm')
-                        and $req->param('confirm') == 1 )
-                    {
-                        $RPoidcConsent[0]{epoch} = time;
-                        $RPoidcConsent[0]{scope} = $scope;
-
-                        # Build new consent list by removing all references
-                        # to the current RP from the old list and appending the
-                        # new consent
-                        my @newoidcConsents =
-                          grep { $_->{rp} ne $rp } @$_oidcConsents;
-                        push @newoidcConsents, $RPoidcConsent[0];
-                        $self->logger->debug(
-                            "Append Relying Party $rp Consent");
-                        $self->p->updatePersistentSession( $req,
-                            { _oidcConsents => to_json( \@newoidcConsents ) } );
-
-                        $self->logger->debug(
-                            "Consent given for Relying Party $rp");
-                    }
-                    elsif ( $req->param('confirm')
-                        and $req->param('confirm') == -1 )
-                    {
-                        $self->logger->debug(
-                            "User refused consent for Relying party $rp");
-                        return $self->returnRedirectError(
-                            $req,
-                            $oidc_request->{'redirect_uri'},
-                            "consent_required",
-                            "consent not given",
-                            undef,
-                            $oidc_request->{'state'},
-                            ( $flow ne "authorizationcode" )
-                        );
-                    }
-                    else {
-                        $self->logger->debug(
-                            "Request user consent for Relying Party $rp");
-
-                        # Return error if prompt is none
-                        if ( $prompt and $prompt =~ /\bnone\b/ ) {
-                            $self->logger->debug(
-                                "Consent is requiered but prompt is set to none"
-                            );
-                            return $self->returnRedirectError(
-                                $req,
-                                $oidc_request->{'redirect_uri'},
-                                "consent_required",
-                                "consent required",
-                                undef,
-                                $oidc_request->{'state'},
-                                ( $flow ne "authorizationcode" )
-                            );
-                        }
-
-                        my $display_name =
-                          $self->rpOptions->{$rp}
-                          ->{oidcRPMetaDataOptionsDisplayName};
-                        my $icon =
-                          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIcon};
-                        my $imgSrc;
-
-                        if ($icon) {
-                            $imgSrc =
-                              ( $icon =~ m#^https?://# )
-                              ? $icon
-                              : $self->p->staticPrefix . "/common/" . $icon;
-                        }
-
-                        my $scope_messages = {
-                            openid         => 'yourIdentity',
-                            profile        => 'yourProfile',
-                            email          => 'yourEmail',
-                            address        => 'yourAddress',
-                            phone          => 'yourPhone',
-                            offline_access => 'yourOffline',
-                        };
-                        my @list;
-                        foreach my $requested_scope ( split( /\s+/, $scope ) ) {
-                            if ( my $message =
-                                $scope_messages->{$requested_scope} )
-                            {
-                                push @list, { m => $message };
-                            }
-                            else {
-                                push @list,
-                                  {
-                                    m => 'anotherInformation',
-                                    n => $requested_scope
-                                  };
-                            }
-                        }
-                        $req->info(
-                            $self->loadTemplate(
-                                $req,
-                                'oidcGiveConsent',
-                                params => {
-                                    displayName => $display_name,
-                                    imgUrl      => $imgSrc,
-                                    list        => \@list,
-                                }
-                            )
-                        );
-                        $req->data->{activeTimer} = 0;
-                        return PE_CONFIRM;
-                    }
-                }
-            }
-
-            # Create session_state
-            my $session_state =
-              $self->createSessionState( $req->id, $client_id );
-
-            # Check if PKCE is required
-            if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRequirePKCE}
-                and !$oidc_request->{'code_challenge'} )
-            {
-                $self->userLogger->error(
-                    "Relying Party must use PKCE protection");
-                return $self->returnRedirectError(
-                    $req,
-                    $oidc_request->{'redirect_uri'},
-                    'invalid_request',
-                    "Code challenge is required",
-                    undef,
-                    $oidc_request->{'state'},
-                    ( $flow ne "authorizationcode" )
-                );
-            }
-
-            my $offline = 0;
-            if ( $self->_hasScope( 'offline_access', $scope ) ) {
-                $offline = 1;
-
-                # MUST ensure that the prompt parameter contains consent unless
-                # other conditions for processing the request permitting offline
-                # access to the requested resources are in place; unless one or
-                # both of these conditions are fulfilled, then it MUST ignore
-                # the offline_access request,
-                unless ( $bypassConsent
-                    or ( $prompt and $prompt =~ /\bconsent\b/ ) )
-                {
-                    $self->logger->warn( "Offline access ignored, "
-                          . "prompt parameter must contain \"consent\"" );
-                    $offline = 0;
-                }
-
-                # MUST ignore the offline_access request unless the Client is
-                # using a response_type value that would result in an
-                # Authorization Code being returned,
-                if ( $response_type !~ /\bcode\b/ ) {
-                    $self->logger->warn( "Offline access incompatible "
-                          . "with response type $response_type" );
-                    $offline = 0;
-                }
-
-                # Ignore offline_access request if not authorized by the RP
-                unless (
-                    $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAllowOffline}
-                  )
-                {
-                    $self->logger->warn(
-                        "Offline access not authorized for RP $rp");
-                    $offline = 0;
-                }
-
-                # Strip offline_access from scopes from now on
-                $scope = join " ",
-                  grep !/^offline_access$/,
-                  split /\s+/,
-                  $scope;
-            }
-
-            # Authorization Code Flow
-            if ( $flow eq "authorizationcode" ) {
-
-                # Store data in session
-                my $code_payload = {
-                    code_challenge        => $oidc_request->{'code_challenge'},
-                    code_challenge_method =>
-                      $oidc_request->{'code_challenge_method'},
-                    nonce           => $oidc_request->{'nonce'},
-                    offline         => $offline,
-                    redirect_uri    => $oidc_request->{'redirect_uri'},
-                    scope           => $scope,
-                    req_scope       => $req_scope,
-                    client_id       => $client_id,
-                    user_session_id => $req->id,
-                };
-
-                my $h = $self->p->processHook( $req, 'oidcGenerateCode',
-                    $oidc_request, $rp, $code_payload );
-                return PE_ERROR if ( $h != PE_OK );
-
-                my $codeSession =
-                  $self->newAuthorizationCode( $rp, $code_payload );
-
-                # Generate code
-                my $code = $codeSession->id();
-
-                $self->logger->debug("Generated code: $code");
-
-                my $state = $oidc_request->{'state'};
-
-                return $self->sendOidcResponse(
-                    $req, $flow,
-                    $oidc_request->{'response_mode'},
-                    $oidc_request->{'redirect_uri'},
-                    {
-                        ( $code  ? ( code  => $code )  : () ),
-                        ( $state ? ( state => $state ) : () ),
-                        (
-                            $session_state
-                            ? ( session_state => $session_state )
-                            : ()
-                        ),
-                    }
-                );
-            }
-
-            # Implicit Flow
-            if ( $flow eq "implicit" ) {
-
-                my $access_token;
-                my $at_hash;
-
-                my $release_claims_in_id_token = 1;
-                if ( $response_type =~ /\btoken\b/ ) {
-
-                    $release_claims_in_id_token = 0;
-
-                    # Store data in access token
-                    # Generate access_token
-                    $access_token = $self->newAccessToken(
-                        $req, $rp, $scope,
-                        $req->sessionInfo,
-                        {
-                            scope           => $scope,
-                            rp              => $rp,
-                            user_session_id => $req->id,
-                            grant_type      => $flow,
-                        }
-                    );
-
-                    unless ($access_token) {
-                        $self->logger->error("Unable to create Access Token");
-                        $self->returnRedirectError( $req,
-                            $oidc_request->{'redirect_uri'},
-                            "server_error",           undef, undef,
-                            $oidc_request->{'state'}, 1 );
-                    }
-
-                    $self->logger->debug(
-                        "Generated access token: $access_token");
-
-                    # Compute hash to store in at_hash
-                    my $alg =
-                      $self->rpOptions->{$rp}
-                      ->{oidcRPMetaDataOptionsIDTokenSignAlg};
-                    my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
-                    $at_hash = $self->createHash( $access_token, $hash_level )
-                      if $hash_level;
-                }
-
-                my $id_token = $self->_generateIDToken(
-                    $req,
-                    $rp,
-                    $scope,
-                    $req->sessionInfo,
-                    $release_claims_in_id_token,
-                    { at_hash => $at_hash, nonce => $oidc_request->{nonce} }
-                );
-
-                unless ($id_token) {
-                    $self->logger->error("Could not generate ID token");
-                    return PE_ERROR;
-                }
-
-                $self->logger->debug("Generated id token: $id_token");
-
-                # Send token response
-                my $expires_in =
-                  $self->rpOptions->{$rp}
-                  ->{oidcRPMetaDataOptionsAccessTokenExpiration}
-                  || $self->conf->{oidcServiceAccessTokenExpiration};
-
-                my $state = $oidc_request->{'state'};
-
-                return $self->sendOidcResponse(
-                    $req, $flow,
-                    $oidc_request->{'response_mode'},
-                    $oidc_request->{'redirect_uri'},
-                    {
-                        id_token => $id_token,
-                        (
-                            $access_token
-                            ? (
-                                token_type   => 'bearer',
-                                access_token => $access_token
-                              )
-                            : ()
-                        ),
-                        ( $expires_in ? ( expires_in => $expires_in )    : () ),
-                        ( $state      ? ( state      => $state )         : () ),
-                        ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
-                        (
-                            $session_state ? ( session_state => $session_state )
-                            : ()
-                        )
-                    }
-                );
-            }
-
-            # Hybrid Flow
-            if ( $flow eq "hybrid" ) {
-
-                my $access_token;
-                my $id_token;
-                my $at_hash;
-                my $c_hash;
-
-                # Hash level
-                my $alg = $self->rpOptions->{$rp}
-                  ->{oidcRPMetaDataOptionsIDTokenSignAlg};
-                my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
-
-                # Store data in session
-                my $codeSession = $self->newAuthorizationCode(
-                    $rp,
-                    {
-                        nonce           => $oidc_request->{'nonce'},
-                        offline         => $offline,
-                        redirect_uri    => $oidc_request->{'redirect_uri'},
-                        client_id       => $client_id,
-                        scope           => $scope,
-                        user_session_id => $req->id,
-                    }
-                );
-
-                # Generate code
-                my $code = $codeSession->id();
-
-                $self->logger->debug("Generated code: $code");
-
-                # Compute hash to store in c_hash
-                $c_hash = $self->createHash( $code, $hash_level )
-                  if $hash_level;
-
-                my $release_claims_in_id_token = 1;
-                if ( $response_type =~ /\btoken\b/ ) {
-
-                    $release_claims_in_id_token = 0;
-
-                    # Generate access_token
-                    $access_token = $self->newAccessToken(
-                        $req, $rp, $scope,
-                        $req->sessionInfo,
-                        {
-                            scope           => $scope,
-                            rp              => $rp,
-                            user_session_id => $req->id,
-                            grant_type      => $flow,
-                        }
-                    );
-
-                    unless ($access_token) {
-                        $self->logger->error("Unable to create Access Token");
-                        return $self->returnRedirectError( $req,
-                            $oidc_request->{'redirect_uri'},
-                            "server_error",           undef, undef,
-                            $oidc_request->{'state'}, 1 );
-                    }
-
-                    $self->logger->debug(
-                        "Generated access token: $access_token");
-
-                    # Compute hash to store in at_hash
-                    $at_hash = $self->createHash( $access_token, $hash_level )
-                      if $hash_level;
-                }
-
-                if ( $response_type =~ /\bid_token\b/ ) {
-
-                    $id_token = $self->_generateIDToken(
-                        $req, $rp, $scope,
-                        $req->sessionInfo,
-                        $release_claims_in_id_token,
-                        {
-                            at_hash => $at_hash,
-                            c_hash  => $c_hash,
-                            nonce   => $oidc_request->{nonce},
-                        }
-                    );
-
-                    unless ($id_token) {
-                        $self->logger->error("Could not generate ID token");
-                        return PE_ERROR;
-                    }
-
-                    $self->logger->debug("Generated id token: $id_token");
-                }
-
-                my $expires_in =
-                  $self->rpOptions->{$rp}
-                  ->{oidcRPMetaDataOptionsAccessTokenExpiration}
-                  || $self->conf->{oidcServiceAccessTokenExpiration};
-
-                my $state = $oidc_request->{state};
-
-                return $self->sendOidcResponse(
-                    $req, $flow,
-                    $oidc_request->{'response_mode'},
-                    $oidc_request->{'redirect_uri'},
-                    {
-                        code => $code,
-                        (
-                            $access_token
-                            ? (
-                                token_type   => 'bearer',
-                                access_token => $access_token
-                              )
-                            : ()
-                        ),
-                        (
-                            $id_token ? ( id_token => $id_token )
-                            : ()
-                        ),
-                        ( $expires_in ? ( expires_in => $expires_in )    : () ),
-                        ( $state      ? ( state      => $state )         : () ),
-                        ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
-                        (
-                            $session_state ? ( session_state => $session_state )
-                            : ()
-                        )
-                    }
-                );
-            }
-
-            $self->logger->debug("None flow has been selected");
-            return PE_OK;
         }
-
-        # LOGOUT
         elsif ( $path eq $self->conf->{oidcServiceMetaDataEndSessionURI} ) {
             $self->logger->debug(
                 "URL detected as an OpenID Connect END SESSION URL");
-
-            # Set hidden fields
-            my $oidc_request = {};
-            foreach my $param (qw/id_token_hint post_logout_redirect_uri state/)
-            {
-                if ( $oidc_request->{$param} = $req->param($param) ) {
-                    $self->logger->debug( "OIDC request parameter $param: "
-                          . $oidc_request->{$param} );
-                }
-            }
-
-            my $post_logout_redirect_uri =
-              $oidc_request->{'post_logout_redirect_uri'};
-            my $id_token_hint = $oidc_request->{'id_token_hint'};
-            my $state         = $oidc_request->{'state'};
-            my $bypassConfirm = 0;
-
-            # Check if we can bypass confirm using token_hint
-            if ($id_token_hint) {
-
-                # TODO: we should check JWT signature here to avoid DoS by
-                # logging the user out, however, as long as there is no logout
-                # confirmation when accessing ?logout=1, such a protection is
-                # trivial to bypass
-                my $payload = getJWTPayload($id_token_hint);
-                my $rp;
-                $rp = $self->getRP( $payload->{azp} ) if $payload->{azp};
-
-                $bypassConfirm =
-                  $self->_check_bypass_confirm( $req, $rp, $payload );
-            }
-
-            # Ask consent for logout
-            if ( $req->param('confirm') or $bypassConfirm ) {
-                my $err;
-                if ( (
-                        defined( $req->param('confirm') )
-                        and $req->param('confirm') eq '1'
-                    )
-                    or $bypassConfirm
-                  )
-                {
-                    $req->steps( [
-                            @{ $self->p->beforeLogout }, 'authLogout',
-                            'deleteSession'
-                        ]
-                    );
-                    $req->data->{nofail} = 1;
-                    $err = $req->error( $self->p->process($req) );
-                    if ( $err and $err != PE_LOGOUT_OK ) {
-                        if ( $err > 0 ) {
-                            $self->logger->error(
-                                "Logout process returns error code $err");
-                        }
-                        return $err;
-                    }
-                }
-
-                if ($post_logout_redirect_uri) {
-
-                    unless (
-                        $self->findRPFromUri(
-                            $post_logout_redirect_uri,
-                            'oidcRPMetaDataOptionsPostLogoutRedirectUris'
-                        )
-                      )
-                    {
-                        $self->logger->error(
-                            "$post_logout_redirect_uri is not allowed");
-                        return PE_UNAUTHORIZEDURL;
-                    }
-
-                    # Build Response
-                    my $response_url =
-                      $self->buildLogoutResponse( $post_logout_redirect_uri,
-                        $state );
-
-                    return $self->_redirectToUrl( $req, $response_url );
-                }
-                return $req->param('confirm') == 1
-                  ? ( $err ? $err : PE_LOGOUT_OK )
-                  : PE_OK;
-            }
-
-            $req->info( $self->loadTemplate( $req, 'oidcLogout' ) );
-            $req->data->{activeTimer} = 0;
-
-            while ( my ( $k, $v ) = each %$oidc_request ) {
-                $self->p->setHiddenFormValue( $req, $k, $v, '', 0 );
-            }
-
-            return PE_CONFIRM;
+            return $self->_rpInitiatedLogout($req);
         }
     }
 
@@ -1274,6 +274,943 @@ sub run {
         : 'No OIDC endpoint found, aborting'
     );
     return PE_ERROR;
+}
+
+sub _authorizeEndpoint {
+    my ( $self, $req ) = @_;
+
+    # Get and save parameters
+    my $oidc_request = {};
+    foreach my $param (
+        qw/response_type scope client_id state redirect_uri nonce
+        response_mode display prompt max_age ui_locales id_token_hint
+        login_hint acr_values request request_uri code_challenge code_challenge_method/
+      )
+    {
+        if ( $req->param($param) ) {
+            $oidc_request->{$param} = $req->param($param);
+            $self->logger->debug(
+                "OIDC request parameter $param: " . $oidc_request->{$param} );
+            $self->p->setHiddenFormValue( $req, $param, $oidc_request->{$param},
+                '', 0 );
+        }
+    }
+
+    my $h = $self->p->processHook( $req, 'oidcGotRequest', $oidc_request );
+    return PE_ERROR if ( $h != PE_OK );
+
+    # Detect requested flow
+    my $response_type = $oidc_request->{'response_type'};
+
+    unless ($response_type) {
+        $self->logger->error("No response type provided");
+        return PE_ERROR;
+    }
+
+    my $flow = $self->getFlowType($response_type);
+
+    unless ($flow) {
+        $self->logger->error("Unknown response type: $response_type");
+        return PE_ERROR;
+    }
+    $self->logger->debug(
+        "OIDC $flow flow requested (response type: $response_type)");
+
+    # Check if response mode is allowed for flow
+    my $response_mode = $oidc_request->{'response_mode'};
+    if ( !$self->isResponseModeAllowed( $flow, $response_mode ) ) {
+        $self->logger->error(
+            "Reponse mode $response_mode is not allowed in $flow Flow");
+        return PE_ERROR;
+    }
+
+    # Client ID must be provided and cannot come from
+    # request or request_uri
+    unless ( $oidc_request->{'client_id'} ) {
+        $self->logger->error("Client ID is required");
+        return PE_ERROR;
+    }
+
+    # Check client_id
+    my $client_id = $oidc_request->{'client_id'};
+    $self->logger->debug("Request from client id $client_id");
+
+    # Verify that client_id is registered in configuration
+    my $rp = $self->getRP($client_id);
+
+    unless ($rp) {
+        $self->logger->error( "No registered Relying Party found with"
+              . " client_id $client_id" );
+        return PE_UNKNOWNPARTNER;
+    }
+    else {
+        $self->logger->debug("Client id $client_id matches RP $rp");
+    }
+
+    # Scope must be provided and cannot come from request or request_uri
+    unless ( $oidc_request->{'scope'} ) {
+        $self->logger->error("Scope is required");
+        return PE_ERROR;
+    }
+
+    # Extract request_uri/request parameter
+    if ( my $request_uri = $oidc_request->{'request_uri'} ) {
+        if (
+            $self->isUriAllowedForRP(
+                $request_uri, $rp, "oidcRPMetaDataOptionsRequestUris", 1
+            )
+          )
+        {
+            my $request = $self->getRequestJWT($request_uri);
+
+            if ($request) {
+                $oidc_request->{'request'} = $request;
+            }
+            else {
+                $self->logger->error("Error with Request URI resolution");
+                return PE_ERROR;
+            }
+        }
+        else {
+            $self->logger->error(
+                "Request URI $request_uri is not allowed for $rp");
+            return PE_ERROR;
+        }
+    }
+
+    my $authMethod;
+    if ( $oidc_request->{'request'} ) {
+        if ( my ( $request, $alg ) =
+            $self->decodeJWT( $oidc_request->{'request'}, undef, $rp ) )
+        {
+            $self->logger->debug("JWT signature request verified");
+
+            $authMethod =
+              $alg =~ /^HS/i
+              ? 'client_secret_jwt'
+              : 'private_key_jwt';
+
+            # Override OIDC parameters by request content
+            foreach ( keys %$request ) {
+                $self->logger->debug( "Override $_ OIDC param"
+                      . " by value present in request parameter" );
+
+                if ( $_ eq "client_id" or $_ eq "response_type" ) {
+                    if ( $oidc_request->{$_} ne $request->{$_} ) {
+                        $self->logger->error( "$_ from request JWT ("
+                              . $oidc_request->{$_}
+                              . ") does not match $_ from request URI ("
+                              . $request->{$_}
+                              . ")" );
+                        return PE_ERROR;
+                    }
+                }
+                $oidc_request->{$_} = $request->{$_};
+                $self->p->setHiddenFormValue( $req, $_, $request->{$_}, '', 0 );
+            }
+        }
+        else {
+            $self->logger->error("JWT signature request can not be verified");
+            return PE_ERROR;
+        }
+    }
+
+    # Check all required parameters
+    unless ( $oidc_request->{'redirect_uri'} ) {
+        $self->logger->error("Redirect URI is required");
+        return PE_ERROR;
+    }
+    if ( $flow eq "implicit" and not defined $oidc_request->{'nonce'} ) {
+        $self->logger->error("Nonce is required for implicit flow");
+        return PE_ERROR;
+    }
+
+    # Check if this RP is authorized
+    if ( my $rule = $self->rpRules->{$rp} ) {
+        my $ruleVariables =
+          { %{ $req->sessionInfo || {} }, _oidc_grant_type => $flow };
+        unless ( $rule->( $req, $ruleVariables ) ) {
+            $self->userLogger->warn( 'User '
+                  . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                  . " is not authorized to access to $rp" );
+            return PE_UNAUTHORIZEDPARTNER;
+        }
+    }
+
+    $self->userLogger->notice( 'User '
+          . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+          . " is authorized to access to $rp" );
+
+    # Check redirect_uri
+    my $redirect_uri = $oidc_request->{'redirect_uri'};
+    if (
+        !$self->isUriAllowedForRP(
+            $redirect_uri, $rp, 'oidcRPMetaDataOptionsRedirectUris'
+        )
+      )
+    {
+        $self->userLogger->error("Redirect URI $redirect_uri not allowed");
+        return PE_UNAUTHORIZEDURL;
+    }
+
+    # Check if flow is allowed
+    if ( $flow eq "authorizationcode"
+        and not $self->conf->{oidcServiceAllowAuthorizationCodeFlow} )
+    {
+        $self->userLogger->error("Authorization code flow is not allowed");
+        return $self->returnRedirectError(
+            $req,           $oidc_request->{'redirect_uri'},
+            "server_error", "Authorization code flow not allowed",
+            undef,          $oidc_request->{'state'}, 0
+        );
+    }
+    if ( $flow eq "implicit"
+        and not $self->conf->{oidcServiceAllowImplicitFlow} )
+    {
+        $self->logger->error("Implicit flow is not allowed");
+        return $self->returnRedirectError(
+            $req,           $oidc_request->{'redirect_uri'},
+            "server_error", "Implicit flow not allowed",
+            undef,          $oidc_request->{'state'}, 1
+        );
+    }
+    if ( $flow eq "hybrid"
+        and not $self->conf->{oidcServiceAllowHybridFlow} )
+    {
+        $self->logger->error("Hybrid flow is not allowed");
+        return $self->returnRedirectError(
+            $req,           $oidc_request->{'redirect_uri'},
+            "server_error", "Hybrid flow not allowed",
+            undef,          $oidc_request->{'state'}, 1
+        );
+    }
+
+    # Check if authentication was required
+    if (
+        $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthRequiredForAuthorize}
+      )
+    {
+        $self->logger->debug('JWS authentication is required');
+        unless ($authMethod) {
+            $self->userLogger->error('Authentication required but not done');
+            return $self->returnRedirectError(
+                $req,           $oidc_request->{'redirect_uri'},
+                'server_error', 'JWS authentication required',
+                undef,          $oidc_request->{'state'}, 1
+            );
+        }
+        my $methodAllowed =
+          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthMethod};
+        if ( $methodAllowed and $authMethod ne $methodAllowed ) {
+            $self->userLogger->error(
+                "Authentication with $authMethod instead of $methodAllowed");
+            return $self->returnRedirectError(
+                $req,           $oidc_request->{'redirect_uri'},
+                'server_error', "Authentication must use $methodAllowed",
+                undef,          $oidc_request->{'state'},
+                1
+            );
+        }
+    }
+
+    # Check if state is required
+    if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnRequireState}
+        and not( $oidc_request->{'state'} ) )
+    {
+        return $self->returnRedirectError(
+            $req,           $oidc_request->{'redirect_uri'},
+            "server_error", "State required",
+            undef,          undef, 1
+        );
+    }
+
+    # Check if nonce is required
+    if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnRequireNonce}
+        and not( $oidc_request->{'nonce'} ) )
+    {
+        return $self->returnRedirectError(
+            $req,           $oidc_request->{'redirect_uri'},
+            "server_error", "Nonce required",
+            undef,          undef, 1
+        );
+    }
+
+    my $spAuthnLevel =
+      $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthnLevel} || 0;
+
+    # RP may increase, but not lower, the requirement set in LLNG conf
+    if ( $oidc_request->{'acr_values'} ) {
+        my $requested_authn_level =
+          $self->_get_authn_level_from_acr_values(
+            $oidc_request->{'acr_values'} );
+        if ( $requested_authn_level > $spAuthnLevel ) {
+            $spAuthnLevel = $requested_authn_level;
+        }
+        else {
+            $self->logger->info( "Ignoring requested authentication level "
+                  . $requested_authn_level
+                  . " because it is lower than minimum for this RP: $spAuthnLevel"
+            );
+        }
+    }
+
+    # Check if user needs to be reauthenticated
+    my $prompt = $oidc_request->{'prompt'};
+    if (
+            $prompt
+        and $prompt =~ /\blogin\b/
+        and (
+            time - $req->sessionInfo->{_utime} >
+            $self->conf->{portalForceAuthnInterval} )
+      )
+    {
+        $self->logger->debug(
+            "Reauthentication required by Relying Party in prompt parameter");
+        $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
+        return $self->reAuth($req);
+    }
+
+    # Check scope validity
+    # We use a slightly more relaxed version of
+    # https://tools.ietf.org/html/rfc6749#appendix-A.4
+    # To be tolerant of user error (trailing spaces, etc.)
+    # Scope names are restricted to printable ASCII characters,
+    # excluding double quote and backslash
+    unless ( $oidc_request->{'scope'} =~ /^[\x20\x21\x23-\x5B\x5D-\x7E]*$/ ) {
+        $self->logger->error("Submitted scope is not valid");
+        return PE_ERROR;
+    }
+
+    # Check openid scope
+    unless ( $self->_hasScope( 'openid', $oidc_request->{'scope'} ) ) {
+        $self->logger->error("No openid scope found");
+
+        #TODO manage standard OAuth request
+        return PE_ERROR;
+    }
+
+    # Check id_token_hint
+    my $id_token_hint = $oidc_request->{'id_token_hint'};
+    if ($id_token_hint) {
+
+        $self->logger->debug("Check sub of ID Token $id_token_hint");
+
+        # Check that id_token_hint sub match current user
+        my $sub     = $self->getIDTokenSub($id_token_hint);
+        my $user_id = $self->getUserIDForRP( $req, $rp, $req->{sessionInfo} );
+        unless ( $sub eq $user_id ) {
+            $self->userLogger->error(
+                "ID Token hint sub $sub does not match user $user_id");
+            return $self->returnRedirectError(
+                $req,
+                $oidc_request->{'redirect_uri'},
+                'invalid_request',
+                "Current user does not match id_token_hint sub",
+                undef,
+                $oidc_request->{'state'},
+                ( $flow ne "authorizationcode" )
+            );
+        }
+        else {
+            $self->logger->debug("ID Token hint sub $sub matches current user");
+        }
+    }
+
+    my $max_age         = $oidc_request->{'max_age'};
+    my $_lastAuthnUTime = $req->{sessionInfo}->{_lastAuthnUTime};
+    if ( $max_age && time > $_lastAuthnUTime + $max_age ) {
+        $self->logger->debug(
+"Reauthentication forced because authentication time ($_lastAuthnUTime) is too old (>$max_age s)"
+        );
+        $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
+        return $self->reAuth($req);
+    }
+
+    # Check if we have sufficient auth level
+    my $authenticationLevel = $req->{sessionInfo}->{authenticationLevel} || 0;
+    if ( $authenticationLevel < $spAuthnLevel ) {
+        $self->logger->debug(
+                "Insufficient authentication level for service $rp"
+              . " (has: $authenticationLevel, want: $spAuthnLevel)" );
+
+        # Reauth with sp auth level as target
+        $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
+        return $self->upgradeAuth($req);
+    }
+
+    # Compute scopes
+    my $req_scope = $oidc_request->{'scope'};
+    my $scope     = $self->getScope( $req, $rp, $req_scope );
+
+    # Obtain consent
+    my $bypassConsent =
+      $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsBypassConsent};
+    if ($bypassConsent) {
+        $self->logger->debug(
+"Consent is disabled for Relying Party $rp, user will not be prompted"
+        );
+    }
+    else {
+        my $ask_for_consent = 1;
+        my $_oidcConsents;
+        my @RPoidcConsent = ();
+
+        # Loading existing oidcConsents
+        $self->logger->debug("Looking for OIDC Consents ...");
+
+        if ( $req->{sessionInfo}->{_oidcConsents} ) {
+            $_oidcConsents = eval {
+                from_json( $req->{sessionInfo}->{_oidcConsents},
+                    { allow_nonref => 1 } );
+            };
+            if ($@) {
+                $self->logger->error("Corrupted session (_oidcConsents): $@");
+                return PE_ERROR;
+            }
+        }
+        else {
+            $self->logger->debug("No OIDC Consent found");
+            $_oidcConsents = [];
+        }
+
+        # Read existing RP
+        @RPoidcConsent = grep { $_->{rp} eq $rp } @$_oidcConsents;
+        unless (@RPoidcConsent) {
+            $self->logger->debug("No Relying Party $rp Consent found");
+
+            # Set default value
+            push @RPoidcConsent, { rp => $rp, epoch => '', scope => '' };
+        }
+
+        if (   $RPoidcConsent[0]{rp} eq $rp
+            && $RPoidcConsent[0]{epoch}
+            && $RPoidcConsent[0]{scope} )
+        {
+            $ask_for_consent = 0;
+            my $consent_time  = $RPoidcConsent[0]{epoch};
+            my $consent_scope = $RPoidcConsent[0]{scope};
+            $self->logger->debug(
+"Consent already given for Relying Party $rp (time: $consent_time, scope: $consent_scope)"
+            );
+
+            # Check accepted scope
+            foreach my $requested_scope ( split( /\s+/, $scope ) ) {
+                if ( $self->_hasScope( $requested_scope, $consent_scope ) ) {
+                    $self->logger->debug(
+                        "Scope $requested_scope already accepted");
+                }
+                else {
+                    $self->logger->debug(
+                        "Scope $requested_scope was not previously accepted");
+                    $ask_for_consent = 1;
+                    last;
+                }
+            }
+
+            # Check prompt parameter
+            $ask_for_consent = 1
+              if ( $prompt and $prompt =~ /\bconsent\b/ );
+        }
+        if ($ask_for_consent) {
+            if (    $req->param('confirm')
+                and $req->param('confirm') == 1 )
+            {
+                $RPoidcConsent[0]{epoch} = time;
+                $RPoidcConsent[0]{scope} = $scope;
+
+                # Build new consent list by removing all references
+                # to the current RP from the old list and appending the
+                # new consent
+                my @newoidcConsents =
+                  grep { $_->{rp} ne $rp } @$_oidcConsents;
+                push @newoidcConsents, $RPoidcConsent[0];
+                $self->logger->debug("Append Relying Party $rp Consent");
+                $self->p->updatePersistentSession( $req,
+                    { _oidcConsents => to_json( \@newoidcConsents ) } );
+
+                $self->logger->debug("Consent given for Relying Party $rp");
+            }
+            elsif ( $req->param('confirm')
+                and $req->param('confirm') == -1 )
+            {
+                $self->logger->debug(
+                    "User refused consent for Relying party $rp");
+                return $self->returnRedirectError(
+                    $req,
+                    $oidc_request->{'redirect_uri'},
+                    "consent_required",
+                    "consent not given",
+                    undef,
+                    $oidc_request->{'state'},
+                    ( $flow ne "authorizationcode" )
+                );
+            }
+            else {
+                $self->logger->debug(
+                    "Request user consent for Relying Party $rp");
+
+                # Return error if prompt is none
+                if ( $prompt and $prompt =~ /\bnone\b/ ) {
+                    $self->logger->debug(
+                        "Consent is requiered but prompt is set to none");
+                    return $self->returnRedirectError(
+                        $req,
+                        $oidc_request->{'redirect_uri'},
+                        "consent_required",
+                        "consent required",
+                        undef,
+                        $oidc_request->{'state'},
+                        ( $flow ne "authorizationcode" )
+                    );
+                }
+
+                my $display_name =
+                  $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsDisplayName};
+                my $icon = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIcon};
+                my $imgSrc;
+
+                if ($icon) {
+                    $imgSrc =
+                      ( $icon =~ m#^https?://# )
+                      ? $icon
+                      : $self->p->staticPrefix . "/common/" . $icon;
+                }
+
+                my $scope_messages = {
+                    openid         => 'yourIdentity',
+                    profile        => 'yourProfile',
+                    email          => 'yourEmail',
+                    address        => 'yourAddress',
+                    phone          => 'yourPhone',
+                    offline_access => 'yourOffline',
+                };
+                my @list;
+                foreach my $requested_scope ( split( /\s+/, $scope ) ) {
+                    if ( my $message = $scope_messages->{$requested_scope} ) {
+                        push @list, { m => $message };
+                    }
+                    else {
+                        push @list,
+                          {
+                            m => 'anotherInformation',
+                            n => $requested_scope
+                          };
+                    }
+                }
+                $req->info(
+                    $self->loadTemplate(
+                        $req,
+                        'oidcGiveConsent',
+                        params => {
+                            displayName => $display_name,
+                            imgUrl      => $imgSrc,
+                            list        => \@list,
+                        }
+                    )
+                );
+                $req->data->{activeTimer} = 0;
+                return PE_CONFIRM;
+            }
+        }
+    }
+
+    # Create session_state
+    my $session_state = $self->createSessionState( $req->id, $client_id );
+
+    # Check if PKCE is required
+    if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRequirePKCE}
+        and !$oidc_request->{'code_challenge'} )
+    {
+        $self->userLogger->error("Relying Party must use PKCE protection");
+        return $self->returnRedirectError(
+            $req,              $oidc_request->{'redirect_uri'},
+            'invalid_request', "Code challenge is required",
+            undef,             $oidc_request->{'state'},
+            ( $flow ne "authorizationcode" )
+        );
+    }
+
+    my $offline = 0;
+    if ( $self->_hasScope( 'offline_access', $scope ) ) {
+        $offline = 1;
+
+        # MUST ensure that the prompt parameter contains consent unless
+        # other conditions for processing the request permitting offline
+        # access to the requested resources are in place; unless one or
+        # both of these conditions are fulfilled, then it MUST ignore
+        # the offline_access request,
+        unless ( $bypassConsent
+            or ( $prompt and $prompt =~ /\bconsent\b/ ) )
+        {
+            $self->logger->warn( "Offline access ignored, "
+                  . "prompt parameter must contain \"consent\"" );
+            $offline = 0;
+        }
+
+        # MUST ignore the offline_access request unless the Client is
+        # using a response_type value that would result in an
+        # Authorization Code being returned,
+        if ( $response_type !~ /\bcode\b/ ) {
+            $self->logger->warn( "Offline access incompatible "
+                  . "with response type $response_type" );
+            $offline = 0;
+        }
+
+        # Ignore offline_access request if not authorized by the RP
+        unless ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAllowOffline} )
+        {
+            $self->logger->warn("Offline access not authorized for RP $rp");
+            $offline = 0;
+        }
+
+        # Strip offline_access from scopes from now on
+        $scope = join " ", grep !/^offline_access$/, split /\s+/, $scope;
+    }
+
+    # Authorization Code Flow
+    if ( $flow eq "authorizationcode" ) {
+
+        # Store data in session
+        my $code_payload = {
+            code_challenge        => $oidc_request->{'code_challenge'},
+            code_challenge_method => $oidc_request->{'code_challenge_method'},
+            nonce                 => $oidc_request->{'nonce'},
+            offline               => $offline,
+            redirect_uri          => $oidc_request->{'redirect_uri'},
+            scope                 => $scope,
+            req_scope             => $req_scope,
+            client_id             => $client_id,
+            user_session_id       => $req->id,
+        };
+
+        my $h = $self->p->processHook( $req, 'oidcGenerateCode',
+            $oidc_request, $rp, $code_payload );
+        return PE_ERROR if ( $h != PE_OK );
+
+        my $codeSession = $self->newAuthorizationCode( $rp, $code_payload );
+
+        # Generate code
+        my $code = $codeSession->id();
+
+        $self->logger->debug("Generated code: $code");
+
+        my $state = $oidc_request->{'state'};
+
+        return $self->sendOidcResponse(
+            $req, $flow,
+            $oidc_request->{'response_mode'},
+            $oidc_request->{'redirect_uri'},
+            {
+                ( $code  ? ( code  => $code )  : () ),
+                ( $state ? ( state => $state ) : () ),
+                (
+                    $session_state
+                    ? ( session_state => $session_state )
+                    : ()
+                ),
+            }
+        );
+    }
+
+    # Implicit Flow
+    if ( $flow eq "implicit" ) {
+
+        my $access_token;
+        my $at_hash;
+
+        my $release_claims_in_id_token = 1;
+        if ( $response_type =~ /\btoken\b/ ) {
+
+            $release_claims_in_id_token = 0;
+
+            # Store data in access token
+            # Generate access_token
+            $access_token = $self->newAccessToken(
+                $req, $rp, $scope,
+                $req->sessionInfo,
+                {
+                    scope           => $scope,
+                    rp              => $rp,
+                    user_session_id => $req->id,
+                    grant_type      => $flow,
+                }
+            );
+
+            unless ($access_token) {
+                $self->logger->error("Unable to create Access Token");
+                $self->returnRedirectError( $req,
+                    $oidc_request->{'redirect_uri'},
+                    "server_error", undef, undef, $oidc_request->{'state'}, 1 );
+            }
+
+            $self->logger->debug("Generated access token: $access_token");
+
+            # Compute hash to store in at_hash
+            my $alg =
+              $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIDTokenSignAlg};
+            my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
+            $at_hash = $self->createHash( $access_token, $hash_level )
+              if $hash_level;
+        }
+
+        my $id_token =
+          $self->_generateIDToken( $req, $rp, $scope, $req->sessionInfo,
+            $release_claims_in_id_token,
+            { at_hash => $at_hash, nonce => $oidc_request->{nonce} } );
+
+        unless ($id_token) {
+            $self->logger->error("Could not generate ID token");
+            return PE_ERROR;
+        }
+
+        $self->logger->debug("Generated id token: $id_token");
+
+        # Send token response
+        my $expires_in =
+          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
+          || $self->conf->{oidcServiceAccessTokenExpiration};
+
+        my $state = $oidc_request->{'state'};
+
+        return $self->sendOidcResponse(
+            $req, $flow,
+            $oidc_request->{'response_mode'},
+            $oidc_request->{'redirect_uri'},
+            {
+                id_token => $id_token,
+                (
+                    $access_token
+                    ? (
+                        token_type   => 'bearer',
+                        access_token => $access_token
+                      )
+                    : ()
+                ),
+                ( $expires_in ? ( expires_in => $expires_in )    : () ),
+                ( $state      ? ( state      => $state )         : () ),
+                ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
+                (
+                    $session_state ? ( session_state => $session_state )
+                    : ()
+                )
+            }
+        );
+    }
+
+    # Hybrid Flow
+    if ( $flow eq "hybrid" ) {
+
+        my $access_token;
+        my $id_token;
+        my $at_hash;
+        my $c_hash;
+
+        # Hash level
+        my $alg =
+          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsIDTokenSignAlg};
+        my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
+
+        # Store data in session
+        my $codeSession = $self->newAuthorizationCode(
+            $rp,
+            {
+                nonce           => $oidc_request->{'nonce'},
+                offline         => $offline,
+                redirect_uri    => $oidc_request->{'redirect_uri'},
+                client_id       => $client_id,
+                scope           => $scope,
+                user_session_id => $req->id,
+            }
+        );
+
+        # Generate code
+        my $code = $codeSession->id();
+
+        $self->logger->debug("Generated code: $code");
+
+        # Compute hash to store in c_hash
+        $c_hash = $self->createHash( $code, $hash_level )
+          if $hash_level;
+
+        my $release_claims_in_id_token = 1;
+        if ( $response_type =~ /\btoken\b/ ) {
+
+            $release_claims_in_id_token = 0;
+
+            # Generate access_token
+            $access_token = $self->newAccessToken(
+                $req, $rp, $scope,
+                $req->sessionInfo,
+                {
+                    scope           => $scope,
+                    rp              => $rp,
+                    user_session_id => $req->id,
+                    grant_type      => $flow,
+                }
+            );
+
+            unless ($access_token) {
+                $self->logger->error("Unable to create Access Token");
+                return $self->returnRedirectError( $req,
+                    $oidc_request->{'redirect_uri'},
+                    "server_error", undef, undef, $oidc_request->{'state'}, 1 );
+            }
+
+            $self->logger->debug("Generated access token: $access_token");
+
+            # Compute hash to store in at_hash
+            $at_hash = $self->createHash( $access_token, $hash_level )
+              if $hash_level;
+        }
+
+        if ( $response_type =~ /\bid_token\b/ ) {
+
+            $id_token = $self->_generateIDToken(
+                $req, $rp, $scope,
+                $req->sessionInfo,
+                $release_claims_in_id_token,
+                {
+                    at_hash => $at_hash,
+                    c_hash  => $c_hash,
+                    nonce   => $oidc_request->{nonce},
+                }
+            );
+
+            unless ($id_token) {
+                $self->logger->error("Could not generate ID token");
+                return PE_ERROR;
+            }
+
+            $self->logger->debug("Generated id token: $id_token");
+        }
+
+        my $expires_in =
+          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
+          || $self->conf->{oidcServiceAccessTokenExpiration};
+
+        my $state = $oidc_request->{state};
+
+        return $self->sendOidcResponse(
+            $req, $flow,
+            $oidc_request->{'response_mode'},
+            $oidc_request->{'redirect_uri'},
+            {
+                code => $code,
+                (
+                    $access_token
+                    ? (
+                        token_type   => 'bearer',
+                        access_token => $access_token
+                      )
+                    : ()
+                ),
+                (
+                    $id_token ? ( id_token => $id_token )
+                    : ()
+                ),
+                ( $expires_in ? ( expires_in => $expires_in )    : () ),
+                ( $state      ? ( state      => $state )         : () ),
+                ( ( $req_scope ne $scope ) ? ( scope => $scope ) : () ),
+                (
+                    $session_state ? ( session_state => $session_state )
+                    : ()
+                )
+            }
+        );
+    }
+
+    $self->logger->debug("None flow has been selected");
+    return PE_OK;
+}
+
+sub _rpInitiatedLogout {
+    my ( $self, $req ) = @_;
+
+    # Set hidden fields
+    my $oidc_request = {};
+    foreach my $param (qw/id_token_hint post_logout_redirect_uri state/) {
+        if ( $oidc_request->{$param} = $req->param($param) ) {
+            $self->logger->debug(
+                "OIDC request parameter $param: " . $oidc_request->{$param} );
+        }
+    }
+
+    my $post_logout_redirect_uri = $oidc_request->{'post_logout_redirect_uri'};
+    my $id_token_hint            = $oidc_request->{'id_token_hint'};
+    my $state                    = $oidc_request->{'state'};
+    my $bypassConfirm            = 0;
+
+    # Check if we can bypass confirm using token_hint
+    if ($id_token_hint) {
+
+        # TODO: we should check JWT signature here to avoid DoS by
+        # logging the user out, however, as long as there is no logout
+        # confirmation when accessing ?logout=1, such a protection is
+        # trivial to bypass
+        my $payload = getJWTPayload($id_token_hint);
+        my $rp;
+        $rp = $self->getRP( $payload->{azp} ) if $payload->{azp};
+
+        $bypassConfirm = $self->_check_bypass_confirm( $req, $rp, $payload );
+    }
+
+    # Ask consent for logout
+    if ( $req->param('confirm') or $bypassConfirm ) {
+        my $err;
+        if ( (
+                defined( $req->param('confirm') )
+                and $req->param('confirm') eq '1'
+            )
+            or $bypassConfirm
+          )
+        {
+            $req->steps(
+                [ @{ $self->p->beforeLogout }, 'authLogout', 'deleteSession' ]
+            );
+            $req->data->{nofail} = 1;
+            $err = $req->error( $self->p->process($req) );
+            if ( $err and $err != PE_LOGOUT_OK ) {
+                if ( $err > 0 ) {
+                    $self->logger->error(
+                        "Logout process returns error code $err");
+                }
+                return $err;
+            }
+        }
+
+        if ($post_logout_redirect_uri) {
+
+            unless (
+                $self->findRPFromUri(
+                    $post_logout_redirect_uri,
+                    'oidcRPMetaDataOptionsPostLogoutRedirectUris'
+                )
+              )
+            {
+                $self->logger->error(
+                    "$post_logout_redirect_uri is not allowed");
+                return PE_UNAUTHORIZEDURL;
+            }
+
+            # Build Response
+            my $response_url =
+              $self->buildLogoutResponse( $post_logout_redirect_uri, $state );
+
+            return $self->_redirectToUrl( $req, $response_url );
+        }
+        return $req->param('confirm') == 1
+          ? ( $err ? $err : PE_LOGOUT_OK )
+          : PE_OK;
+    }
+
+    $req->info( $self->loadTemplate( $req, 'oidcLogout' ) );
+    $req->data->{activeTimer} = 0;
+
+    while ( my ( $k, $v ) = each %$oidc_request ) {
+        $self->p->setHiddenFormValue( $req, $k, $v, '', 0 );
+    }
+
+    return PE_CONFIRM;
 }
 
 sub _check_bypass_confirm {
@@ -1718,7 +1655,7 @@ sub _handleAuthorizationCodeGrant {
             $codeSession->data->{'code_challenge'},
             $codeSession->data->{'code_challenge_method'}
         )
-    )
+      )
     {
         return $self->sendOIDCError( $req, 'invalid_grant', 400 );
     }
