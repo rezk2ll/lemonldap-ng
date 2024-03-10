@@ -482,6 +482,8 @@ sub getApacheSession {
     }
 
     my $as = Lemonldap::NG::Common::Session->new( {
+            secure => $ENV{LLNG_SECURED_SESSION_STORAGE}
+              // $self->conf->{securedSessionStorage},
             storageModule        => $self->conf->{globalStorage},
             storageModuleOptions => $self->conf->{globalStorageOptions},
             cacheModule          => $self->conf->{localSessionStorage},
@@ -1171,7 +1173,7 @@ sub tplParams {
         SKIN_BG      => $self->conf->{portalSkinBackground},
         FAVICON      => $self->conf->{portalFavicon} || 'common/favicon.ico',
         CUSTOM_CSS   => $self->conf->{portalCustomCss},
-        CUSTOM_JS   => $self->conf->{portalCustomJs},
+        CUSTOM_JS    => $self->conf->{portalCustomJs},
         (
             $self->customParameters
             ? ( %{ $self->customParameters } )

@@ -188,8 +188,8 @@ sub _tie_session {
 
     # Secured storage
     my $securedId = $self->id;
-    if ( !$self->id ) {
-        if ( $self->secure ) {
+    if ( $self->secure ) {
+        if ( !$self->id ) {
             my $id = $self->options->{setId} || Digest::SHA::sha256_hex( time() . {} . rand() . $$ );
             $securedId = $id;
             $self->storageId( id2storage($securedId) );
