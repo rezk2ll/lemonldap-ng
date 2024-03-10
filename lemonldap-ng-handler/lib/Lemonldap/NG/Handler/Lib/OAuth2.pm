@@ -28,6 +28,7 @@ sub retrieveSession {
     # 2. Get the session from cache or backend
     my $session = $req->data->{session} = (
         Lemonldap::NG::Common::Session->new( {
+                secure               => $class->tsv->{securedSessionStorage},
                 storageModule        => $class->tsv->{oidcStorageModule},
                 storageModuleOptions => $class->tsv->{oidcStorageOptions},
                 cacheModule          => $class->tsv->{sessionCacheModule},
@@ -141,6 +142,7 @@ sub getOIDCInfos {
 
     # Get the session
     my $oidcSession = Lemonldap::NG::Common::Session->new( {
+            secure               => $class->tsv->{securedSessionStorage},
             storageModule        => $class->tsv->{oidcStorageModule},
             storageModuleOptions => $class->tsv->{oidcStorageOptions},
             cacheModule          => $class->tsv->{sessionCacheModule},

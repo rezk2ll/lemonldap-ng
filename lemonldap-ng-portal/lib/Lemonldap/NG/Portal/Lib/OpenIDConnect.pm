@@ -87,6 +87,14 @@ has rpScopes     => ( is => 'rw', default => sub { {} } );
 has rpScopeRules => ( is => 'rw', default => sub { {} } );
 has rpEncKey     => ( is => 'rw', default => sub { {} } );
 has rpSigKey     => ( is => 'rw', default => sub { {} } );
+has securedStorage => (
+    is      => 'rw',
+    default => sub {
+        defined( $ENV{LLNG_SECURED_SESSION_STORAGE} )
+          ? $ENV{LLNG_SECURED_SESSION_STORAGE}
+          : $_[0]->{conf}->{securedSessionStorage};
+    },
+);
 
 # Deprecated names, remove in 3.0
 *oidcOPList   = *opMetadata;
@@ -1352,6 +1360,7 @@ sub updateToken {
             $self->_storeOpts(),
             cacheModule        => $self->conf->{localSessionStorage},
             cacheModuleOptions => $self->conf->{localSessionStorageOptions},
+            secure             => $self->securedStorage,
             id                 => $id,
             info               => $infos,
         }
@@ -1378,6 +1387,7 @@ sub getOpenIDConnectSession {
             $self->_storeOpts(),
             cacheModule        => $self->conf->{localSessionStorage},
             cacheModuleOptions => $self->conf->{localSessionStorageOptions},
+            secure             => $self->securedStorage,
             id                 => $id,
             kind               => $self->sessionKind,
             (
