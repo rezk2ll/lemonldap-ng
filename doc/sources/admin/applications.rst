@@ -30,6 +30,7 @@ Applications
    applications/humhub
    applications/iparapheur
    applications/itsm-ng
+   applications/jitsimeet
    applications/liferay
    applications/limesurvey
    applications/mailman
