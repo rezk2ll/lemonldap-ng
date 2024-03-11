@@ -2,7 +2,7 @@ Redis session backend
 =====================
 
 `Apache::Session::Browseable::Redis <https://metacpan.org/pod/Apache::Session::Browseable::Redis>`__
-is the faster shareable session backend
+is the fastest shareable session backend
 
 Setup
 -----
