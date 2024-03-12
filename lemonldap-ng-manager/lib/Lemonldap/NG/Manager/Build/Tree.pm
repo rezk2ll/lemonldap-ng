@@ -1152,7 +1152,7 @@ sub tree {
                                 'formTimeout',
                                 'tokenUseGlobalStorage',
                                 'strictTransportSecurityMax_Age',
-                                'securedSessionStorage',
+                                'hashedSessionStore',
                                 {
                                     title => 'CrowdSecPlugin',
                                     help  => 'crowdsec.html',

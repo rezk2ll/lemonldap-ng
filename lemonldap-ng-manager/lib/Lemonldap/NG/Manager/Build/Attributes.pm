@@ -1544,7 +1544,7 @@ sub attributes {
             documentation => 'Cookie securisation method',
             flags         => 'hp',
         },
-        securedSessionStorage => {
+        hashedSessionStore => {
             type          => 'bool',
             default       => 0,
             documentation => 'Securize storage of sensible sessions',

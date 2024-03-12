@@ -82,7 +82,7 @@ sub init {
     };
 
     my $as = Lemonldap::NG::Common::Session->new( {
-            hashStorage          => $ENV{LLNG_SECURED_SESSION_STORAGE},
+            hashStorage          => $ENV{LLNG_HASHED_SESSION_STORE},
             storageModule        => 'Apache::Session::File',
             storageModuleOptions => { Directory => 't/sessions' },
             id                   => $sessionId,

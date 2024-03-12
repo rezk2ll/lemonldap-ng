@@ -250,7 +250,7 @@ sub op {
     return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                        => $debug,
-                securedSessionStorage           => 1,
+                hashedSessionStore              => 1,
                 domain                          => 'op.com',
                 portal                          => 'http://auth.op.com',
                 authentication                  => 'Demo',
@@ -307,7 +307,7 @@ sub proxy {
     return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                   => $debug,
-                securedSessionStorage      => 1,
+                hashedSessionStore         => 1,
                 domain                     => 'proxy.com',
                 portal                     => 'http://auth.proxy.com',
                 authentication             => 'OpenIDConnect',
@@ -379,7 +379,7 @@ sub sp {
     return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                          => $debug,
-                securedSessionStorage             => 1,
+                hashedSessionStore                => 1,
                 domain                            => 'sp.com',
                 portal                            => 'http://auth.sp.com',
                 authentication                    => 'SAML',

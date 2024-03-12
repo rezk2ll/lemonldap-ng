@@ -1183,7 +1183,7 @@
 "search":"Поиск...",
 "secondFactors":"Вторые факторы",
 "securedCookie":"Защищенный файл куки (SSL)",
-"securedSessionStorage":"Securized session storage",
+"hashedSessionStore":"Securized session storage",
 "security":"Безопасность",
 "sendTestMail":"Отправить тестовое письмо",
 "sendTestMailSuccess":"Тестовое письмо успешно отправлено",

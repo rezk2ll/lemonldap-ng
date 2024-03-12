@@ -1183,7 +1183,7 @@
 "search":"Search...",
 "secondFactors":"Second factors",
 "securedCookie":"ملفات تعريف الارتباط المضمونة (سسل)",
-"securedSessionStorage":"Securized session storage",
+"hashedSessionStore":"Securized session storage",
 "security":"الحماية",
 "sendTestMail":"Send test email",
 "sendTestMailSuccess":"Test email successfully sent",

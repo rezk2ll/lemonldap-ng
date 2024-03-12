@@ -28,7 +28,7 @@ sub retrieveSession {
     # 2. Get the session from cache or backend
     my $session = $req->data->{session} = (
         Lemonldap::NG::Common::Session->new( {
-                hashStorage          => $class->tsv->{securedSessionStorage},
+                hashStorage          => $class->tsv->{hashedSessionStore},
                 storageModule        => $class->tsv->{oidcStorageModule},
                 storageModuleOptions => $class->tsv->{oidcStorageOptions},
                 cacheModule          => $class->tsv->{sessionCacheModule},
@@ -82,7 +82,7 @@ sub fetchId {
     if ( $authorization
         and ( $access_token = ( $authorization =~ /^Bearer (.+)$/i )[0] ) )
     {
-        $class->logger->debug( "Found OAuth2 Access Token ($access_token)" );
+        $class->logger->debug("Found OAuth2 Access Token ($access_token)");
     }
     else {
         return $class->Lemonldap::NG::Handler::Main::fetchId($req);
@@ -142,7 +142,7 @@ sub getOIDCInfos {
 
     # Get the session
     my $oidcSession = Lemonldap::NG::Common::Session->new( {
-            hashStorage          => $class->tsv->{securedSessionStorage},
+            hashStorage          => $class->tsv->{hashedSessionStore},
             storageModule        => $class->tsv->{oidcStorageModule},
             storageModuleOptions => $class->tsv->{oidcStorageOptions},
             cacheModule          => $class->tsv->{sessionCacheModule},
@@ -162,7 +162,7 @@ sub getOIDCInfos {
         }
 
         my $ttl = $class->tsv->{timeout} - time + $oidcSession->data->{_utime};
-        $class->logger->debug( "Session TTL = $ttl" );
+        $class->logger->debug("Session TTL = $ttl");
 
         if ( time - $oidcSession->data->{_utime} > $class->tsv->{timeout} ) {
             $class->logger->info("Access Token session $id expired");

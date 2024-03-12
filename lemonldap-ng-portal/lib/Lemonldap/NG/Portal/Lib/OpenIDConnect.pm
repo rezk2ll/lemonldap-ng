@@ -90,9 +90,9 @@ has rpSigKey     => ( is => 'rw', default => sub { {} } );
 has securedStorage => (
     is      => 'rw',
     default => sub {
-        defined( $ENV{LLNG_SECURED_SESSION_STORAGE} )
-          ? $ENV{LLNG_SECURED_SESSION_STORAGE}
-          : $_[0]->{conf}->{securedSessionStorage};
+        defined( $ENV{LLNG_HASHED_SESSION_STORE} )
+          ? $ENV{LLNG_HASHED_SESSION_STORE}
+          : $_[0]->{conf}->{hashedSessionStore};
     },
 );
 

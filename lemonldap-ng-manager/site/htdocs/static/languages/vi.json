@@ -1183,7 +1183,7 @@
 "search":"Tìm kiếm...",
 "secondFactors":"yếu tố thứ hai",
 "securedCookie":"Cookie bảo mật (SSL)",
-"securedSessionStorage":"Securized session storage",
+"hashedSessionStore":"Securized session storage",
 "security":"An ninh",
 "sendTestMail":"Gửi email kiểm tra",
 "sendTestMailSuccess":"Email kiểm tra đã được gửi thành công",

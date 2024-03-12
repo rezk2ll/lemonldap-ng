@@ -1183,7 +1183,7 @@
 "search":"Buscar...",
 "secondFactors":"Segundos factores",
 "securedCookie":"Cookie segura (SSL)",
-"securedSessionStorage":"Securized session storage",
+"hashedSessionStore":"Securized session storage",
 "security":"Seguridad",
 "sendTestMail":"Send test email",
 "sendTestMailSuccess":"Test email successfully sent",

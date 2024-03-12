@@ -11,7 +11,7 @@ our $VERSION = '2.17.0';
 
 has sessionTypes => ( is => 'rw' );
 
-has securedSessionStorage => ( is => 'rw' );
+has hashedSessionStore => ( is => 'rw' );
 
 sub setTypes {
     my ( $self, $conf ) = @_;
@@ -35,7 +35,7 @@ sub setTypes {
     $self->{sessionTypes}->{offline}->{options} =
       $self->{sessionTypes}->{$offlinebackend}->{options};
     $self->{sessionTypes}->{offline}->{kind} = "OIDCI";
-    $self->securedSessionStorage( $conf->{securedSessionStorage} );
+    $self->hashedSessionStore( $conf->{hashedSessionStore} );
 }
 
 ### SEE LEMONLDAP::NG::COMMON::SESSION FOR AVAILABLE FUNCTIONS
@@ -250,7 +250,7 @@ sub rawSession {
 sub getApacheSession {
     my ( $self, $mod, $id, $info, $force ) = @_;
     my $apacheSession = Lemonldap::NG::Common::Session->new( {
-            hashStorage => $self->securedSessionStorage
+            hashStorage => $self->hashedSessionStore
               && $mod->{kind} =~ /(?:SSO|OIDC)/,
             storageModule        => $mod->{module},
             storageModuleOptions => $mod->{options},
