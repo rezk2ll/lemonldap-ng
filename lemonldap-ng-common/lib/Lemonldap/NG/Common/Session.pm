@@ -8,6 +8,7 @@ package Lemonldap::NG::Common::Session;
 
 use strict;
 use Lemonldap::NG::Common::Apache::Session;
+use Lemonldap::NG::Common::Apache::Session::Generate::SHA256;
 
 our $VERSION = '2.0.15';
 
@@ -36,12 +37,20 @@ sub id2storage {
     return $res;
 }
 
+sub randomId {
+    my $tmp = {};
+    &Lemonldap::NG::Common::Apache::Session::Generate::SHA256::generate($tmp);
+    return $tmp->{_session_id};
+}
+
 has id => (
     is      => 'rw',
     isa     => 'Str|Undef',
     trigger => sub {
         $_[0]->{storageId} =
-          ( $_[0]->hashStore && $_[0]->id ) ? id2storage( $_[0]->id ) : $_[0]->id;
+          ( $_[0]->hashStore && $_[0]->id )
+          ? id2storage( $_[0]->id )
+          : $_[0]->id;
     }
 );
 
@@ -190,7 +199,7 @@ sub _tie_session {
     my $securedId = $self->id;
     if ( $self->hashStore ) {
         if ( !$self->id ) {
-            my $id = $self->options->{setId} || Digest::SHA::sha256_hex( time() . {} . rand() . $$ );
+            my $id = $self->options->{setId} || randomId();
             $securedId = $id;
             $self->storageId( id2storage($securedId) );
             $options->{setId} = $self->storageId;
