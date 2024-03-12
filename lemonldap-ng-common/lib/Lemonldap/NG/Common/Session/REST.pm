@@ -35,7 +35,7 @@ sub setTypes {
     $self->{sessionTypes}->{offline}->{options} =
       $self->{sessionTypes}->{$offlinebackend}->{options};
     $self->{sessionTypes}->{offline}->{kind} = "OIDCI";
-    $self->securedSessionStorage($conf->{securedSessionStorage});
+    $self->securedSessionStorage( $conf->{securedSessionStorage} );
 }
 
 ### SEE LEMONLDAP::NG::COMMON::SESSION FOR AVAILABLE FUNCTIONS
@@ -173,8 +173,7 @@ sub delete2F {
     while (@$_2fDevices) {
         my $element = shift @$_2fDevices;
 
-        $self->logger->debug(
-            "Looking for 2F device to delete: [$type]$epoch");
+        $self->logger->debug("Looking for 2F device to delete: [$type]$epoch");
         if ( defined $element->{type} && defined $element->{epoch} ) {
             if (    ( $element->{type} eq $type )
                 and ( $element->{epoch} eq $epoch ) )
@@ -251,7 +250,8 @@ sub rawSession {
 sub getApacheSession {
     my ( $self, $mod, $id, $info, $force ) = @_;
     my $apacheSession = Lemonldap::NG::Common::Session->new( {
-            hashStorage          => $self->securedSessionStorage && $mod->{kind} eq 'SSO',
+            hashStorage => $self->securedSessionStorage
+              && $mod->{kind} =~ /(?:SSO|OIDC)/,
             storageModule        => $mod->{module},
             storageModuleOptions => $mod->{options},
             cacheModule          =>
