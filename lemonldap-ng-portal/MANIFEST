@@ -760,6 +760,7 @@ t/37-SAML-SP-GET-to-OIDC-OP.t
 t/37-SAML-SP-GET-to-SAML-with-Logout.t
 t/37-SAML-SP-POST-to-CAS-server-with-Choice.t
 t/37-SAML-SP-POST-to-CAS-server.t
+t/37-SAML-SP-POST-to-OIDC-OP-hashStorage.t
 t/37-SAML-SP-POST-to-OIDC-OP.t
 t/38-No-persistent-session.t
 t/39-Failing-RP-Logout.t
