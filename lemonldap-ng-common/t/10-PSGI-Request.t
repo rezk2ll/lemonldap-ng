@@ -1,5 +1,4 @@
 use strict;
-use open ':std', ':encoding(utf8)';
 use Test::More;
 use Plack::Test;
 use Lemonldap::NG::Common::PSGI::Request;
@@ -7,7 +6,13 @@ use Lemonldap::NG::Common::PSGI::Request;
 use JSON;
 use HTTP::Request;
 use HTTP::Message::PSGI;
+
+# UTF-8 awareness
 use utf8;
+my $builder = Test::More->builder;
+binmode $builder->output,         ":encoding(utf8)";
+binmode $builder->failure_output, ":encoding(utf8)";
+binmode $builder->todo_output,    ":encoding(utf8)";
 
 sub build_json_request {
     my ($href) = @_;
