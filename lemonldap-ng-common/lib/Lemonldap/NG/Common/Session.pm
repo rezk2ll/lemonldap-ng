@@ -30,11 +30,7 @@ BEGIN {
 }
 
 sub id2storage {
-    my $res = Digest::SHA::sha256_hex( $_[0] );
-    if ( $ENV{LLNGLOGLEVEL} && $ENV{LLNGLOGLEVEL} eq 'debug' ) {
-        print STDERR "Session ID: $_[0]\nStorage ID: $res\n";
-    }
-    return $res;
+    return Digest::SHA::sha256_hex( $_[0] );
 }
 
 sub randomId {
