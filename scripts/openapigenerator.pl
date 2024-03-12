@@ -26,8 +26,9 @@ if ( $swagger_codegen_jar and -f $swagger_codegen_jar ) {
         ) == 0
       )
     {
-        print "\nSuccessfully generated: doc/pages/manager-api/index.html\n";
-
+        print "\nSuccessfully generated: \n";
+        print "\t- OpenAPI spec: $filename\n";
+        print "\t- OpenAPI documentation: doc/pages/manager-api/index.html\n";
     }
 
 }
