@@ -1799,7 +1799,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'url'
         },
         'jitsiSigningAlg' => {
-            'default' => 'HS256',
+            'default' => 'RS256',
             'select'  => [ {
                     'k' => 'HS256',
                     'v' => 'HS256'

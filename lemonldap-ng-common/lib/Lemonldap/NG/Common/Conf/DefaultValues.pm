@@ -138,7 +138,7 @@ sub defaultValues {
         'issuerDBSAMLPath'              => '^/saml/',
         'issuerDBSAMLRule'              => 1,
         'issuersTimeout'                => 120,
-        'jitsiSigningAlg'               => 'HS256',
+        'jitsiSigningAlg'               => 'RS256',
         'jsRedirect'                    => 0,
         'krbAuthnLevel'                 => 3,
         'krbRemoveDomain'               => 1,

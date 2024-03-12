@@ -1872,7 +1872,7 @@ sub attributes {
         jitsiSigningAlg => {
             type          => 'select',
             select        => oidcSigAlgorithmAlg,
-            default       => 'HS256',
+            default       => 'RS256',
             documentation => 'Jitsi JWT signature method',
         },
         jitsiIdAttribute => {
