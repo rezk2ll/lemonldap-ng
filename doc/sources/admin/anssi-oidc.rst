@@ -18,6 +18,7 @@ LLNG as OpenID-Connect Provider
 
 List of points to enable if possible:
 
+* Enable **Hashed session storage** in security parameters
 * Allow only "authorization code" flow
 * Forbid the use of **HS** algorithms, prefer those with public/private keys
 * Disable automatic enrollment
@@ -37,6 +38,7 @@ LLNG as OpenID-Connect Relying-Party
 
 List of points to enable if possible:
 
+* Enable **Hashed session storage** in security parameters
 * always use ``nonce``
 * Forbid the use of **HS** algorithms, prefer those with public/private keys
 * Code requests
