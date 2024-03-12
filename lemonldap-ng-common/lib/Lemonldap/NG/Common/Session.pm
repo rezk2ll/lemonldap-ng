@@ -41,7 +41,7 @@ has id => (
     isa     => 'Str|Undef',
     trigger => sub {
         $_[0]->{storageId} =
-          ( $_[0]->secure && $_[0]->id ) ? id2storage( $_[0]->id ) : $_[0]->id;
+          ( $_[0]->hashStore && $_[0]->id ) ? id2storage( $_[0]->id ) : $_[0]->id;
     }
 );
 
@@ -99,7 +99,7 @@ has info => ( is => 'rw' );
 
 has timeout => ( is => 'rw', default => 5 );
 
-has secure => ( is => 'rw' );
+has hashStore => ( is => 'rw' );
 
 sub BUILD {
     my ($self) = @_;
@@ -175,7 +175,7 @@ sub BUILD {
         $self->kind( $data->{_session_kind} );
         $self->id( $data->{_session_id} );
         $data->{_session_id} = id2storage( $self->id )
-          if $self->secure and $self->id;
+          if $self->hashStore and $self->id;
 
         untie(%$data);
     }
@@ -188,7 +188,7 @@ sub _tie_session {
 
     # Secured storage
     my $securedId = $self->id;
-    if ( $self->secure ) {
+    if ( $self->hashStore ) {
         if ( !$self->id ) {
             my $id = $self->options->{setId} || Digest::SHA::sha256_hex( time() . {} . rand() . $$ );
             $securedId = $id;
@@ -226,7 +226,7 @@ sub _tie_session {
         $self->error($msg);
         return undef;
     }
-    if ( $self->{secure} ) {
+    if ( $self->hashStore ) {
         $h{_session_id} = $securedId;
     }
 
@@ -275,7 +275,7 @@ sub remove {
     my ( $self, $tieOptions ) = @_;
 
     my $data = $self->_tie_session($tieOptions);
-    $data->{_session_id} = id2storage( $self->id ) if $self->secure;
+    $data->{_session_id} = id2storage( $self->id ) if $self->hashStore;
 
     eval { tied(%$data)->delete(); };
 

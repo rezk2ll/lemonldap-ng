@@ -69,7 +69,7 @@ sub getCDAInfos {
 
     # Get the session
     my $cdaSession = Lemonldap::NG::Common::Session->new( {
-            secure               => $class->tsv->{securedSessionStorage},
+            hashStorage          => $class->tsv->{securedSessionStorage},
             storageModule        => $class->tsv->{sessionStorageModule},
             storageModuleOptions => $class->tsv->{sessionStorageOptions},
             cacheModule          => $class->tsv->{sessionCacheModule},

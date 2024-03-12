@@ -1360,7 +1360,7 @@ sub updateToken {
             $self->_storeOpts(),
             cacheModule        => $self->conf->{localSessionStorage},
             cacheModuleOptions => $self->conf->{localSessionStorageOptions},
-            secure             => $self->securedStorage,
+            hashStorage        => $self->securedStorage,
             id                 => $id,
             info               => $infos,
         }
@@ -1387,7 +1387,7 @@ sub getOpenIDConnectSession {
             $self->_storeOpts(),
             cacheModule        => $self->conf->{localSessionStorage},
             cacheModuleOptions => $self->conf->{localSessionStorageOptions},
-            secure             => $self->securedStorage,
+            hashStorage        => $self->securedStorage,
             id                 => $id,
             kind               => $self->sessionKind,
             (
