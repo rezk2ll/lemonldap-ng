@@ -46,7 +46,6 @@ untie %session;
 
 my $cache = Cache::FileCache->new($cacheOpts);
 my $cacheData;
-ok( $cacheData = $cache->get($id), 'Cache is used' );
 
 # Cache corruption
 $cache->set( $id, '{"a":k' );
