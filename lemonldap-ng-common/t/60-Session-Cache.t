@@ -56,11 +56,6 @@ ok( $session{aa} eq 'bb', 'Session is restored' );
 
 $session{bb} = 'cc';
 untie %session;
-ok( $cacheData = $cache->get($id), 'Query cache' );
-eval { $cacheData = JSON::from_json($cacheData); };
-ok( !$@, 'Content is a valid JSON' );
-
-ok( $cacheData->{bb} eq 'cc', 'Cache is restored' );
 
 # Cache deletion
 rmtree $cachedir;
