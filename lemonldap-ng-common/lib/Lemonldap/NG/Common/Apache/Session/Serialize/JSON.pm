@@ -38,9 +38,16 @@ sub _unserialize {
     my $tmp;
     eval { $tmp = from_json( $serialized, { allow_nonref => 1 } ) };
     if ($@) {
-        require Storable;
-        $next ||= \&Storable::thaw;
-        return &$next($serialized);
+        eval {
+            require Storable;
+            $next ||= \&Storable::thaw;
+            return &$next($serialized);
+        };
+        if ($@) {
+
+            # Error is catched in unserialize
+            return undef;
+        }
     }
     return $tmp;
 }
