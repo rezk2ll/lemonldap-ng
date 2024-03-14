@@ -37,7 +37,7 @@ sub id2storage {
 sub randomId {
     my $tmp = {};
     &Lemonldap::NG::Common::Apache::Session::Generate::SHA256::generate($tmp);
-    return $tmp->{_session_id};
+    return $tmp->{data}->{_session_id};
 }
 
 has id => (

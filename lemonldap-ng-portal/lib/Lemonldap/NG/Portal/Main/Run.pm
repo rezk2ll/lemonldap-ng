@@ -482,7 +482,7 @@ sub getApacheSession {
     }
 
     my $as = Lemonldap::NG::Common::Session->new( {
-            hashStorage => $ENV{LLNG_HASHED_SESSION_STORE}
+            hashStore => $ENV{LLNG_HASHED_SESSION_STORE}
               // $self->conf->{hashedSessionStore},
             storageModule        => $self->conf->{globalStorage},
             storageModuleOptions => $self->conf->{globalStorageOptions},
@@ -1224,7 +1224,8 @@ sub registerLogin {
     $self->logger->debug("Current login saved into $type");
 
     # Gather current login's parameters and force current time
-    my $login = $self->_sumUpSession({ %{$req->sessionInfo}, _utime => time }, 1 );
+    my $login =
+      $self->_sumUpSession( { %{ $req->sessionInfo }, _utime => time }, 1 );
     $login->{error} = $self->error( $req->authResult )
       if ( $req->authResult );
 
