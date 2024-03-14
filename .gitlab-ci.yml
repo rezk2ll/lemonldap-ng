@@ -52,6 +52,10 @@ build_jammy:
   extends: .debian_build_job
   image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/ubuntu:jammy
 
+build_noble:
+  extends: .debian_build_job
+  image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/ubuntu:noble
+
 build_centos_7:
   extends: .build_job
   image: buildpkg/centos:7
