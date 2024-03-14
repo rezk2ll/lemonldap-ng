@@ -257,6 +257,7 @@ Requires:        (%{name}-selinux = %{version}-%{release} if selinux-policy-%{se
 # Setup requires filtering
 %{?perl_default_filter}
 %{?el7:%global __requires_exclude perl\\(Web::ID|perl\\(Sentry::Raven}
+%{!?el7:%global __requires_exclude perl\\(Apache2::|perl\\(APR::Table\\)}
 
 
 %description
@@ -271,10 +272,19 @@ Summary:        LemonLDAP-NG configuration
 Requires:       perl(Apache::Session::Browseable)
 Requires:       perl(Cache::Cache)
 Requires:       perl(IO::String)
-Requires:       perl(mod_perl2)
 Requires:       perl(String::Random)
+%if 0%{?el7}
 Requires(post): httpd
 Requires:       mod_fcgid
+Requires:       perl(mod_perl2)
+%else
+Requires:       (httpd or nginx)
+Requires:       httpd-filesystem
+Requires:       nginx-filesystem
+Requires:       (mod_fcgid if httpd)
+Requires:       (perl(mod_perl2) if httpd)
+Requires:       (perl(Apache2::ServerRec) if httpd)
+%endif
 Obsoletes:      perl-Lemonldap-NG-Common < %{version}-%{release}
 Provides:       perl-Lemonldap-NG-Common = %{version}-%{release}
 Obsoletes:      lemonldap-ng-conf < %{version}-%{release}
@@ -294,6 +304,17 @@ This package contains HTML documentation.
 Summary:        LemonLDAP-NG handler
 Requires:       crontabs
 Requires:       lemonldap-ng-common = %{version}-%{release}
+%if 0%{!?el7}
+Requires:       (perl(Apache2::Connection) if httpd)
+Requires:       (perl(Apache2::Const) if httpd)
+Requires:       (perl(Apache2::Filter) if httpd)
+Requires:       (perl(Apache2::Log) if httpd)
+Requires:       (perl(Apache2::RequestIO) if httpd)
+Requires:       (perl(Apache2::RequestRec) if httpd)
+Requires:       (perl(Apache2::RequestUtil) if httpd)
+Requires:       (perl(Apache2::ServerUtil) if httpd)
+Requires:       (perl(APR::Table) if httpd)
+%endif
 Obsoletes:      lemonldap-ng-nginx < %{version}-%{release}
 Provides:       lemonldap-ng-nginx = %{version}-%{release}
 Obsoletes:      perl-Lemonldap-NG-Handler < %{version}-%{release}
@@ -374,8 +395,12 @@ This package deploys small test applications.
 %package fastcgi-server
 Summary:        LemonLDAP-NG FastCGI Server
 Requires:       lemonldap-ng-common = %{version}-%{release}
-Requires:       mod_fcgid
 Requires:       perl(FCGI::ProcManager)
+%if 0%{?el7}
+Requires:       mod_fcgi
+%else
+Requires:       (mod_fcgid if httpd)
+%endif
 
 %description fastcgi-server
 This package deploys files needed to start a FastCGI server.
