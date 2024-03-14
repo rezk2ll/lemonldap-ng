@@ -286,7 +286,7 @@ sub check {
 
         my $age = '1';
         foreach my $id ( keys %$sessions ) {
-            my $session = $self->p->getApacheSession( $id, hashStore => 1, )
+            my $session = $self->p->getApacheSession( $id, hashStore => 0, )
               or next;
 
             if ( $session->{data}->{_utime} gt $age ) {

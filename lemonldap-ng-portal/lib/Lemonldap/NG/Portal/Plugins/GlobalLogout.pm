@@ -136,7 +136,7 @@ sub globalLogout {
                     foreach (@$sessions) {
                         unless (
                             $as = $self->p->getApacheSession(
-                                $_->{id}, hashStore => 1,
+                                $_->{id}, hashStore => 0,
                             )
                           )
                         {
@@ -249,7 +249,7 @@ sub removeOtherActiveSessions {
     my $as;
 
     foreach (@$sessions) {
-        unless ( $as = $self->p->getApacheSession( $_->{id}, hashStore => 1, ) )
+        unless ( $as = $self->p->getApacheSession( $_->{id}, hashStore => 0, ) )
         {
             $self->userLogger->info("GlobalLogout: session $_->{id} expired");
             next;

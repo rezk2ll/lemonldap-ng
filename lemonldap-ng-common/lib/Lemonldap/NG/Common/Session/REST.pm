@@ -250,9 +250,7 @@ sub rawSession {
 sub getApacheSession {
     my ( $self, $mod, $id, $info, $force ) = @_;
     my $apacheSession = Lemonldap::NG::Common::Session->new( {
-            hashStore => (
-                $ENV{LLNG_HASHED_SESSION_STORE} // $self->hashedSessionStore
-              )
+            hashStore => $self->hashedSessionStore
               && $mod->{kind} =~ /(?:SSO|OIDC)/,
             storageModule        => $mod->{module},
             storageModuleOptions => $mod->{options},

@@ -482,8 +482,7 @@ sub getApacheSession {
     }
 
     my $as = Lemonldap::NG::Common::Session->new( {
-            hashStore => $args{hashStore} // $ENV{LLNG_HASHED_SESSION_STORE}
-              // $self->conf->{hashedSessionStore},
+            hashStore => $args{hashStore} // $self->conf->{hashedSessionStore},
             storageModule        => $self->conf->{globalStorage},
             storageModuleOptions => $self->conf->{globalStorageOptions},
             cacheModule          => $self->conf->{localSessionStorage},

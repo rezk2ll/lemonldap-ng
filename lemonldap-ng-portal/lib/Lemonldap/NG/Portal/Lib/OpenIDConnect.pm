@@ -89,11 +89,7 @@ has rpEncKey     => ( is => 'rw', default => sub { {} } );
 has rpSigKey     => ( is => 'rw', default => sub { {} } );
 has securedStorage => (
     is      => 'rw',
-    default => sub {
-        defined( $ENV{LLNG_HASHED_SESSION_STORE} )
-          ? $ENV{LLNG_HASHED_SESSION_STORE}
-          : $_[0]->{conf}->{hashedSessionStore};
-    },
+    default => sub { $_[0]->{conf}->{hashedSessionStore} },
 );
 
 # Deprecated names, remove in 3.0

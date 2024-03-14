@@ -218,8 +218,6 @@ sub defaultValuesInit {
         )
       );
 
-    $class->tsv->{hashedSessionStore} = $ENV{LLNG_HASHED_SESSION_STORE}
-      if defined $ENV{LLNG_HASHED_SESSION_STORE};
     $class->tsv->{cipher} = Lemonldap::NG::Common::Crypto->new( $conf->{key} );
     $class->tsv->{keyH}   = sha256_hex( $conf->{key} );
 

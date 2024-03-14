@@ -37,8 +37,7 @@ has ott => (
 
 sub storageId {
     my ( $self, $id ) = @_;
-    return ( $ENV{LLNG_HASHED_SESSION_STORE}
-          // $self->conf->{hashedSessionStore} ) ? id2storage($id) : $id;
+    return $self->conf->{hashedSessionStore} ? id2storage($id) : $id;
 }
 
 sub init {

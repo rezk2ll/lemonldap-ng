@@ -145,6 +145,7 @@ sub saveConf {
     $msg .= "Configuration $conf->{cfgNum} stored.\n";
     if ( $self->{refLocalStorage} ) {
         $self->setDefault($conf);
+        $self->setValuesFromEnv($conf);
         $self->compactConf($conf);
         eval { Lemonldap::NG::Handler::Main->reload() };
     }
@@ -275,6 +276,13 @@ sub setDefault {
         $conf->{whatToTrace} =~ s/^\$//;
     }
 
+    return $conf;
+}
+
+sub setValuesFromEnv {
+    my ( $self, $conf ) = @_;
+    $conf->{hashedSessionStore} = $ENV{LLNG_HASHED_SESSION_STORE}
+      if $ENV{LLNG_HASHED_SESSION_STORE};
     return $conf;
 }
 
