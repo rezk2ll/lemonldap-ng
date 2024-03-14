@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 use strict;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
-use Crypt::JWT  qw(encode_jwt decode_jwt);
+use Crypt::JWT qw(encode_jwt decode_jwt);
 use Digest::SHA qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
@@ -331,7 +331,11 @@ sub refreshJWKSdata {
             next;
         }
 
-        if ( $self->opMetadata->{$_}->{jwks}->{time} + $jwksTimeout > time ) {
+        if (
+            $self->opMetadata->{$_}->{jwks}->{time}
+            && ( $self->opMetadata->{$_}->{jwks}->{time} + $jwksTimeout > time )
+          )
+        {
             $self->logger->debug("JWKS data still valid for $_, skipping...");
             next;
         }
