@@ -2,6 +2,7 @@ use warnings;
 use Test::More;
 use strict;
 use IO::String;
+use Lemonldap::NG::Common::Session 'id2storage';
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;
 
@@ -94,12 +95,18 @@ expectOK($res);
 # Test other REST queries
 
 # Session key
-ok( $res = $issuer->_get("/sessions/global/$spId/[_session_id,_password]"),
-    'Some session keys' );
+ok(
+    $res = $issuer->_get(
+            "/sessions/global/"
+          . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($spId) : $spId )
+          . "/[_session_id,_password]"
+    ),
+    'Some session keys'
+);
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
-ok( $res->{_session_id} eq $spId, ' Good ID' )
+ok( $res->{_session_id} eq ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($spId) : $spId ), ' Good ID' )
   or explain( $res, "_session_id => $spId" );
 ok( $res->{_password} eq 'french', ' Password is exported' )
   or explain( $res, '_password => french' );
@@ -109,8 +116,7 @@ clean_sessions();
 done_testing( count() );
 
 sub issuer {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel             => $debug,
                 domain               => 'idp.com',
@@ -125,8 +131,7 @@ sub issuer {
 }
 
 sub sp {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel       => $debug,
                 domain         => 'sp.com',

@@ -113,6 +113,13 @@ has hashStore => ( is => 'rw' );
 sub BUILD {
     my ($self) = @_;
 
+    #print STDERR "Common::Session, ID: "
+    # . ($self->id//'undef')
+    # . ", Secure: "
+    # . ($self->hashStore//0)
+    # . "\n";
+    #print Data::Dumper::Dumper([caller(0)]) if not $self->hashStore;
+
     # Load Apache::Session module
     unless ( $self->storageModule->can('populate') ) {
         eval "require " . $self->storageModule;
@@ -216,7 +223,8 @@ sub _tie_session {
             if ( $self->storageModule =~
                 /^Lemonldap::NG::Common::Apache::Session/ )
             {
-                tie %h, $self->storageModule, $self->id,
+                tie %h, $self->storageModule,
+                  ( $options->{setId} ? $self->id : $self->storageId ),
                   { %{ $self->options }, %$options, kind => $self->kind };
             }
             else {

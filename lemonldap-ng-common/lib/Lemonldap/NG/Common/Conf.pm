@@ -188,6 +188,7 @@ sub getConf {
             $r = $self->getDBConf($args);
             return undef unless ( $r->{cfgNum} );
             $self->setDefault( $r, $args->{localPrm} );
+            $self->setValuesFromEnv($r);
             $self->compactConf($r);
         }
         else {
@@ -219,6 +220,7 @@ sub getConf {
                 }
 
                 $self->setDefault( $r, $args->{localPrm} );
+                $self->setValuesFromEnv($r);
                 $self->compactConf($r);
 
                 # Store modified configuration in cache

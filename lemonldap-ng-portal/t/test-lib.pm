@@ -63,6 +63,7 @@ use Time::Fake;
 use URI::Escape;
 use MIME::Base64;
 use Lemonldap::NG::Common::FormEncode;
+use Lemonldap::NG::Common::Session 'id2storage';
 use Lemonldap::NG::Common::Util qw/getPSessionID/;
 use Carp qw/shortmess/;
 
@@ -190,6 +191,7 @@ sub getCache {
 
 sub getSession {
     my $id           = shift;
+    $id = $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id) : $id;
     my @sessionsOpts = (
         storageModule        => "Apache::Session::File",
         storageModuleOptions => {

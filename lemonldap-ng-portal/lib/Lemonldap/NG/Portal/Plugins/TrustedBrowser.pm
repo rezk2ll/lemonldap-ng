@@ -443,8 +443,7 @@ sub newConnectionSession {
     }
 
     return Lemonldap::NG::Common::Session->new(
-        hashStore => $ENV{LLNG_HASHED_SESSION_STORE}
-          || $self->{conf}->{hashedSessionStore},
+        hashStore            => $self->{conf}->{hashedSessionStore},
         storageModule        => $self->conf->{globalStorage},
         storageModuleOptions => $self->conf->{globalStorageOptions},
         kind                 => "SSO",

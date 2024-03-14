@@ -4,6 +4,7 @@ use strict;
 use Mouse;
 use JSON qw(from_json to_json);
 use Time::Local;
+use Lemonldap::NG::Common::Session 'id2storage';
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
@@ -120,6 +121,10 @@ sub globalLogout {
     if ( $req->param('all') ) {
         if ( my $token = $req->param('token') ) {
             if ( $token = $self->ott->getToken($token) ) {
+                my $storeId =
+                  $self->conf->{hashedSessionStore}
+                  ? id2storage( $req->{userData}->{_session_id} )
+                  : $req->{userData}->{_session_id};
 
                 # Read active sessions from token
                 my $sessions = eval { from_json( $token->{sessions} ) };
@@ -144,7 +149,7 @@ sub globalLogout {
                                 "GlobalLogout: session $_->{id} expired");
                             next;
                         }
-                        unless ( $req->{userData}->{_session_id} eq $_->{id} ) {
+                        unless ( $storeId eq $_->{id} ) {
                             $self->userLogger->info(
                                 "Remove \"$user\" session: $_->{id}");
                             $as->remove;
@@ -248,13 +253,17 @@ sub removeOtherActiveSessions {
     my $count = 0;
     my $as;
 
+    my $storeId =
+      $self->conf->{hashedSessionStore}
+      ? id2storage( $req->{userData}->{_session_id} )
+      : $req->{userData}->{_session_id};
     foreach (@$sessions) {
         unless ( $as = $self->p->getApacheSession( $_->{id}, hashStore => 0, ) )
         {
             $self->userLogger->info("GlobalLogout: session $_->{id} expired");
             next;
         }
-        unless ( $req->{userData}->{_session_id} eq $_->{id} ) {
+        unless ( $storeId eq $_->{id} ) {
             $self->userLogger->info(
 "Remove \"$req->{userData}->{ $self->conf->{whatToTrace} }\" session: $_->{id}"
             );
