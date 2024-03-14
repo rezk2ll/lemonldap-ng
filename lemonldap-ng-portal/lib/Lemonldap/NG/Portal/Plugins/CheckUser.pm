@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Plugins::CheckUser;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Common::Util qw(isHiddenAttr);
+use Lemonldap::NG::Common::Util            qw(isHiddenAttr);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NOTOKEN
   PE_TOKENEXPIRED
@@ -286,7 +286,8 @@ sub check {
 
         my $age = '1';
         foreach my $id ( keys %$sessions ) {
-            my $session = $self->p->getApacheSession($id) or next;
+            my $session = $self->p->getApacheSession( $id, hashStore => 1, )
+              or next;
 
             if ( $session->{data}->{_utime} gt $age ) {
                 $attrs = $session->{data};
@@ -592,12 +593,13 @@ sub _headers {
 sub _createArray {
     my ( $self, $req, $attrs, $userData ) = @_;
     my $array_attrs = [];
-    my @hidden = split /[,\s]+/, $self->conf->{checkUserHiddenAttributes};
+    my @hidden      = split /[,\s]+/, $self->conf->{checkUserHiddenAttributes};
 
     foreach ( sort keys %$attrs ) {
         push @$array_attrs,
           { key => $_, value => $attrs->{$_} }
-          unless ( ( isHiddenAttr( $self->conf, $_, @hidden )
+          unless ( (
+                isHiddenAttr( $self->conf, $_, @hidden )
                 && !$self->displayHiddenAttributesRule->( $req, $userData )
             )
             || (   !$attrs->{$_}

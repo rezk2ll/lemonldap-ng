@@ -24,7 +24,7 @@ use constant beforeLogout => 'run';
 
 # INITIALIZATION
 has rule => ( is => 'rw', default => sub { 0 } );
-has ott  => (
+has ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
@@ -134,7 +134,11 @@ sub globalLogout {
                   $req->{userData}->{ $self->{conf}->{whatToTrace} };
                 if ( $req_user eq $user ) {
                     foreach (@$sessions) {
-                        unless ( $as = $self->p->getApacheSession( $_->{id} ) )
+                        unless (
+                            $as = $self->p->getApacheSession(
+                                $_->{id}, hashStore => 1,
+                            )
+                          )
                         {
                             $self->userLogger->info(
                                 "GlobalLogout: session $_->{id} expired");
@@ -245,7 +249,8 @@ sub removeOtherActiveSessions {
     my $as;
 
     foreach (@$sessions) {
-        unless ( $as = $self->p->getApacheSession( $_->{id} ) ) {
+        unless ( $as = $self->p->getApacheSession( $_->{id}, hashStore => 1, ) )
+        {
             $self->userLogger->info("GlobalLogout: session $_->{id} expired");
             next;
         }

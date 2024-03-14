@@ -7,11 +7,14 @@
 package Lemonldap::NG::Common::Session;
 
 use strict;
+use Exporter 'import';
 use Digest::SHA;
 use Lemonldap::NG::Common::Apache::Session;
 use Lemonldap::NG::Common::Apache::Session::Generate::SHA256;
 
 our $VERSION = '2.0.15';
+
+our @EXPORT = ('id2storage');
 
 # Workaround for another ModPerl/Mouse issue...
 BEGIN {

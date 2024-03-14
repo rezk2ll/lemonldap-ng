@@ -4,6 +4,7 @@ use strict;
 use Mouse;
 use MIME::Base64;
 use JSON qw(from_json to_json);
+use Lemonldap::NG::Common::Session 'id2storage';
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
   PE_ERROR
@@ -33,6 +34,12 @@ has ott => (
         return $ott;
     }
 );
+
+sub storageId {
+    my ( $self, $id ) = @_;
+    return ( $ENV{LLNG_HASHED_SESSION_STORE}
+          // $self->conf->{hashedSessionStore} ) ? id2storage($id) : $id;
+}
 
 sub init {
     my ($self) = @_;
@@ -92,9 +99,11 @@ sub run {
         }
 
         foreach my $id ( keys %$sessions ) {
-            next if ( $req->id eq $id );
-            next if ( $linkedSessionId and $id eq $linkedSessionId );
-            my $session = $self->p->getApacheSession($id) or next;
+            next if $id eq $self->storageId( $req->id );
+            next
+              if $linkedSessionId and $id eq $self->storageId($linkedSessionId);
+            my $session = $self->p->getApacheSession( $id, hashStore => 0 )
+              or next;
             if (
                 $self->singleSessionRule->( $req, $req->sessionInfo )
                 or (    $self->singleIPRule->( $req, $req->sessionInfo )
@@ -123,8 +132,9 @@ sub run {
           $self->module->searchOn( $moduleOptions, 'ipAddr',
             $req->sessionInfo->{ipAddr} );
         foreach my $id ( keys %$sessions ) {
-            next if ( $req->id eq $id );
-            my $session = $self->p->getApacheSession($id) or next;
+            next if $self->storageId( $req->id ) eq $id;
+            my $session = $self->p->getApacheSession( $id, hashStore => 0, )
+              or next;
             unless ( $req->{sessionInfo}->{ $self->conf->{whatToTrace} } eq
                 $session->data->{ $self->conf->{whatToTrace} } )
             {
@@ -162,7 +172,9 @@ sub removeOther {
             }
             my $as;
             foreach (@$sessions) {
-                unless ( $as = $self->p->getApacheSession($_) ) {
+                unless ( $as =
+                    $self->p->getApacheSession( $_, hashStore => 0, ) )
+                {
                     $self->userLogger->info(
                         "SingleSession: session $_ expired");
                     next;

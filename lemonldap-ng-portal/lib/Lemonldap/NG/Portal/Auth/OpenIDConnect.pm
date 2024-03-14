@@ -502,7 +502,7 @@ sub frontLogout {
             '_oidc_sid', $sid );
         my @sessionToDelete = keys %$oidcSessions;
         foreach (@sessionToDelete) {
-            if ( my $as = $self->p->getApacheSession($_) ) {
+            if ( my $as = $self->p->getApacheSession( $_, hashStore => 0, ) ) {
                 if ( $self->p->_deleteSession( $req, $as, 1 ) ) {
                     $self->logger->debug(
                         "$logName: session $_ deleted from global storage");
@@ -648,7 +648,7 @@ sub backLogout {
             );
         }
         foreach (@userSessions) {
-            if ( my $as = $self->p->getApacheSession($_) ) {
+            if ( my $as = $self->p->getApacheSession( $_, hashStore => 0 ) ) {
                 if ( $self->p->_deleteSession( $req, $as, 1 ) ) {
                     $self->logger->debug(
                         "$logName: session $_ deleted from global storage");
