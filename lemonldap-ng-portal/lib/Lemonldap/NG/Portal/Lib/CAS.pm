@@ -152,6 +152,8 @@ sub getCasSession {
 
     my $casSession = Lemonldap::NG::Common::Session->new( {
             %storage,
+            hashStorage => $ENV{LLNG_HASHED_SESSION_STORE}
+              || $self->{conf}->{hashedSessionStore},
             cacheModule        => $self->conf->{localSessionStorage},
             cacheModuleOptions => $self->conf->{localSessionStorageOptions},
             id                 => $id,
