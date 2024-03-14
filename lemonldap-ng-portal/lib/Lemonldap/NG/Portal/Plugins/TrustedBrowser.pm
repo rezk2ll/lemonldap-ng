@@ -267,9 +267,9 @@ sub getTrustedBrowserSessionFromReq {
 }
 
 sub getTrustedBrowserSession {
-    my ( $self, $cid ) = @_;
+    my ( $self, $cid, $raw ) = @_;
     my $ps = Lemonldap::NG::Common::Session->new(
-        hashStore            => $self->{conf}->{hashedSessionStore},
+        hashStore            => $raw ? 0 : $self->{conf}->{hashedSessionStore},
         storageModule        => $self->conf->{globalStorage},
         storageModuleOptions => $self->conf->{globalStorageOptions},
         kind                 => "SSO",
@@ -420,7 +420,7 @@ sub removeExistingSessions {
       $self->module->searchOn( $self->moduleOpts, '_session_uid', $uid );
 
     foreach ( keys %{ $sessions || {} } ) {
-        if ( my $ps = $self->getTrustedBrowserSession($_) ) {
+        if ( my $ps = $self->getTrustedBrowserSession($_, 1) ) {
 
             # If this is a StayConnected session, remove it
             $ps->remove if $ps->{data}->{_connectedSince};

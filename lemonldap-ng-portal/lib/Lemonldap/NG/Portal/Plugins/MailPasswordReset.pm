@@ -190,7 +190,12 @@ sub createMailSession {
     $infos->{_pdata} = $req->pdata;
 
     # create session
-    return $self->p->getApacheSession( undef, kind => "TOKEN", info => $infos );
+    return $self->p->getApacheSession(
+        undef,
+        kind      => "TOKEN",
+        info      => $infos,
+        hashStore => 0,
+    );
 }
 
 sub _reset {
@@ -219,8 +224,11 @@ sub _reset {
         $self->logger->debug("Token given for password reset: $mailToken");
 
         # Check if token is valid
-        my $mailSession =
-          $self->p->getApacheSession( $mailToken, kind => "TOKEN" );
+        my $mailSession = $self->p->getApacheSession(
+            $mailToken,
+            kind      => "TOKEN",
+            hashStore => 0,
+        );
         unless ($mailSession) {
             $self->userLogger->warn('Bad reset token');
             return PE_BADMAILTOKEN;
@@ -441,8 +449,11 @@ sub changePwd {
         $self->logger->debug("Token given for password reset: $mailToken");
 
         # Check if token is valid
-        my $mailSession =
-          $self->p->getApacheSession( $mailToken, kind => "TOKEN" );
+        my $mailSession = $self->p->getApacheSession(
+            $mailToken,
+            kind      => "TOKEN",
+            hashStore => 0,
+        );
         unless ($mailSession) {
             $self->userLogger->warn('Bad reset token');
             return PE_BADMAILTOKEN;
