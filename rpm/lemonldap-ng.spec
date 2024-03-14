@@ -291,6 +291,8 @@ Summary:        LemonLDAP-NG handler
 Requires:       crontabs
 Requires:       lemonldap-ng-conf = %{version}-%{release}
 Requires:       perl(Lemonldap::NG::Handler) = %{version}-%{release}
+Obsoletes:      lemonldap-ng-nginx < %{version}-%{release}
+Provides:       lemonldap-ng-nginx = %{version}-%{release}
 
 %description handler
 This package deploys the Apache Handler.
@@ -304,6 +306,8 @@ Provides:       bundled(js-angular-bootstrap) = 2.5.0
 Provides:       bundled(js-angular-ui-tree) = 2.22.6
 Provides:       bundled(js-es5-shim) = 4.5.14
 Provides:       bundled(js-filesaver) = 2.0.4
+Obsoletes:      lemonldap-ng-nginx < %{version}-%{release}
+Provides:       lemonldap-ng-nginx = %{version}-%{release}
 
 %description manager
 This package deploys the administration interface and sessions explorer.
@@ -345,6 +349,8 @@ Provides:       bundled(js-fingerprint2) = 2.1.4
 Provides:       bundled(js-jquery) = 3.5.1
 Provides:       bundled(js-jquery-ui) = 1.13.2
 Provides:       bundled(js-qrious) = 4.0.2
+Obsoletes:      lemonldap-ng-nginx < %{version}-%{release}
+Provides:       lemonldap-ng-nginx = %{version}-%{release}
 
 %description portal
 This package deploys the authentication portal.
@@ -352,6 +358,8 @@ This package deploys the authentication portal.
 %package test
 Summary:        LemonLDAP-NG test applications
 Requires:       lemonldap-ng-conf = %{version}-%{release}
+Obsoletes:      lemonldap-ng-nginx < %{version}-%{release}
+Provides:       lemonldap-ng-nginx = %{version}-%{release}
 
 %description test
 This package deploys small test applications.
@@ -372,13 +380,6 @@ Requires:       uwsgi-plugin-psgi
 %description uwsgi-app
 LemonLDAP::NG uWSGI server provides a replacement to LemonLDAP::NG FastCGI
 server, using uWSGI instead of Plack FCGI.
-
-%package nginx
-Summary:        LemonLDAP-NG Nginx support
-Requires:       nginx
-
-%description nginx
-Nginx support for LemonLDAP::NG.
 
 %package -n perl-Lemonldap-NG-Common
 Summary:        LemonLDAP-NG Common Modules
@@ -667,6 +668,8 @@ fi
 %files handler
 %{lm_bindir}/purgeLocalCache
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-handler.conf
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/handler-nginx.conf
+%config(noreplace) %{_sysconfdir}/nginx/nginx-lmlog.conf
 %config(noreplace) %{_sysconfdir}/cron.d/lemonldap-ng-handler
 %{lm_sharedir}/handler
 %{lm_examplesdir}/handler
@@ -675,6 +678,8 @@ fi
 %files manager
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-manager.conf
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-api.conf
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/manager-nginx.conf
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/api-nginx.conf
 %{lm_sharedir}/manager
 %{lm_examplesdir}/manager
 %{lm_bindir}/lmConfigEditor
@@ -687,6 +692,7 @@ fi
 %{lm_sharedir}/portal
 %{lm_bindir}/purgeCentralCache
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/portal-nginx.conf
 %config(noreplace) %{_sysconfdir}/cron.d/lemonldap-ng-portal
 %{lm_examplesdir}/portal
 %defattr(-,%{lm_apacheuser},%{lm_apachegroup},750)
@@ -695,6 +701,8 @@ fi
 %files test
 %{lm_sharedir}/test
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-test.conf
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/test-nginx.conf
+%config(noreplace) %{_sysconfdir}/nginx/nginx-lua-headers.conf
 
 %files fastcgi-server
 %{lm_sbindir}/llng-fastcgi-server
@@ -707,15 +715,6 @@ fi
 
 %files uwsgi-app
 %config(noreplace) %{_sysconfdir}/uwsgi/apps-available/llng-server.yaml
-
-%files nginx
-%config(noreplace) %{_sysconfdir}/nginx/conf.d/handler-nginx.conf
-%config(noreplace) %{_sysconfdir}/nginx/conf.d/manager-nginx.conf
-%config(noreplace) %{_sysconfdir}/nginx/nginx-lmlog.conf
-%config(noreplace) %{_sysconfdir}/nginx/nginx-lua-headers.conf
-%config(noreplace) %{_sysconfdir}/nginx/conf.d/portal-nginx.conf
-%config(noreplace) %{_sysconfdir}/nginx/conf.d/api-nginx.conf
-%config(noreplace) %{_sysconfdir}/nginx/conf.d/test-nginx.conf
 
 %files -n perl-Lemonldap-NG-Common
 %{_mandir}/man3/Lemonldap::NG::Common*.3pm.*
