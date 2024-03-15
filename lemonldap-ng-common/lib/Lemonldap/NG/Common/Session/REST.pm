@@ -206,7 +206,7 @@ sub delete2F {
 sub _session {
     my ( $self, $raw, $req, $id, $skey ) = @_;
     my ( %h, $res, $hashStore );
-    $hashStore = ($req->{data}->{hashStore} or $req->param('hash') );
+    $hashStore = ( $req->{data}->{hashStore} or $req->param('hash') );
     return $self->sendError( $req, 'Bad request', 400 ) unless $id;
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
@@ -252,8 +252,8 @@ sub rawSession {
 sub getApacheSession {
     my ( $self, $mod, $id, %args ) = @_;
     my $apacheSession = Lemonldap::NG::Common::Session->new( {
-            hashStore            => $args{hashStore} && $self->hashedSessionStore,
-            storageModule        => $mod->{module},
+            hashStore     => $args{hashStore} && $self->hashedSessionStore,
+            storageModule => $mod->{module},
             storageModuleOptions => $mod->{options},
             cacheModule          =>
               Lemonldap::NG::Handler::PSGI::Main->tsv->{sessionCacheModule},

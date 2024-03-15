@@ -9,7 +9,6 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $debug = 'error';
 my ( $issuer, $sp, $res, $spId, $idpId );
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -126,7 +125,6 @@ sub issuer {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel          => $debug,
                 domain            => 'idp.com',
                 portal            => 'http://auth.idp.com',
                 authentication    => 'Demo',
@@ -143,7 +141,6 @@ sub sp {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel         => $debug,
                 domain           => 'sp.com',
                 portal           => 'http://auth.sp.com',
                 authentication   => 'Proxy',

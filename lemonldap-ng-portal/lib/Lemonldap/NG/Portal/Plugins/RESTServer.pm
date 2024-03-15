@@ -365,9 +365,12 @@ sub updateSession {
     my $force  = $self->_checkSecret($secret);
 
     # Get session and store info
-    my $session =
-      $self->getApacheSession( $mod, $id, info => $infos, force => $force )
-      or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
+    my $session = $self->getApacheSession(
+        $mod, $id,
+        info      => $infos,
+        force     => $force,
+        hashStore => $req->param('hash') // 0,
+    ) or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     return $self->p->sendJSONresponse( $req, { result => 1 } );
 }
@@ -379,7 +382,8 @@ sub delSession {
     return $self->p->sendError( $req, 'ID is required', 400 ) unless ($id);
 
     # Get session
-    my $session = $self->getApacheSession( $mod, $id )
+    my $session =
+      $self->getApacheSession( $mod, $id, hashStore => $req->param('hash') // 0, )
       or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     # Delete it

@@ -90,7 +90,7 @@ $spId = expectCookie($res);
 # Test other REST queries
 
 # Session content
-ok( $res = $issuer->_get("/sessions/global/$idpId", query => 'hash'), 'Session content' );
+ok( $res = $issuer->_get("/sessions/global/$idpId", query => 'hash=1'), 'Session content' );
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
@@ -99,7 +99,7 @@ ok( $res->{_session_id} eq $idpId, ' Good ID' )
 count(3);
 
 # Session key
-ok( $res = $issuer->_get("/sessions/global/$idpId/[_session_id,uid]", query => 'hash'),
+ok( $res = $issuer->_get("/sessions/global/$idpId/[_session_id,uid]", query => 'hash=1'),
     'Some session keys' );
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
@@ -124,7 +124,7 @@ ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
 my $newId = $res->{session}->{_session_id};
 
 # Verify a key
-ok( $res = $issuer->_get("/sessions/global/$newId/uid", query => 'hash'), 'Verify uid' );
+ok( $res = $issuer->_get("/sessions/global/$newId/uid", query => 'hash=1'), 'Verify uid' );
 ok( $res->[2]->[0] eq 'zz',                              ' Uid is good' );
 count(4);
 
