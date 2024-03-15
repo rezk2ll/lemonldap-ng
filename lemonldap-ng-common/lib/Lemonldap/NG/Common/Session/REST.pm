@@ -205,13 +205,15 @@ sub delete2F {
 
 sub _session {
     my ( $self, $raw, $req, $id, $skey ) = @_;
-    my ( %h, $res );
+    my ( %h, $res, $hashStore );
+    $hashStore = ($req->{data}->{hashStore} or $req->param('hash') );
     return $self->sendError( $req, 'Bad request', 400 ) unless $id;
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
 
     # Try to read session
-    my $apacheSession = $self->getApacheSession( $mod, $id )
+    my $apacheSession =
+      $self->getApacheSession( $mod, $id, hashStore => $hashStore )
       or return $self->sendError( $req, undef, 400 );
 
     my %session = %{ $apacheSession->data };
@@ -248,10 +250,9 @@ sub rawSession {
 }
 
 sub getApacheSession {
-    my ( $self, $mod, $id, $info, $force ) = @_;
+    my ( $self, $mod, $id, %args ) = @_;
     my $apacheSession = Lemonldap::NG::Common::Session->new( {
-            hashStore => $self->hashedSessionStore
-              && $mod->{kind} =~ /(?:SSO|OIDC)/,
+            hashStore            => $args{hashStore} && $self->hashedSessionStore,
             storageModule        => $mod->{module},
             storageModuleOptions => $mod->{options},
             cacheModule          =>
@@ -259,9 +260,9 @@ sub getApacheSession {
             cacheModuleOptions =>
               Lemonldap::NG::Handler::PSGI::Main->tsv->{sessionCacheOptions},
             id    => $id,
-            force => $force,
-            ( $id   ? ()                : ( kind => $mod->{kind} ) ),
-            ( $info ? ( info => $info ) : () ),
+            force => $args{force},
+            ( $id         ? () : ( kind => $mod->{kind} ) ),
+            ( $args{info} ? ( info => $args{info} ) : () ),
         }
     );
     if ( $apacheSession->error ) {

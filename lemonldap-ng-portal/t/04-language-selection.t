@@ -34,7 +34,7 @@ count(1);
 expectOK($res);
 $id = expectCookie($res);
 
-ok( $res = $client->_get("/sessions/global/$id"), 'Get session' );
+ok( $res = $client->_get("/sessions/global/$id", query => 'hash=1'), 'Get session' );
 count(1);
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
@@ -62,7 +62,7 @@ my $rawCookie = getHeader( $res, 'Set-Cookie' );
 ok( $rawCookie =~ /;\s*SameSite=Strict/, 'Found SameSite=Strict (conf)' )
   or explain( $rawCookie, 'SameSite value must be "Strict"' );
 count(1);
-ok( $res = $client->_get("/sessions/global/$id"), 'Get session' );
+ok( $res = $client->_get("/sessions/global/$id", query => 'hash=1'), 'Get session' );
 count(1);
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )

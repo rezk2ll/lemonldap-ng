@@ -146,7 +146,7 @@ ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancestors/,
 count(1);
 
 # Verify UTF-8
-ok( $res = $rp->_get("/sessions/global/$spId"), 'Get UTF-8' );
+ok( $res = $rp->_get("/sessions/global/$spId", query => 'hash=1'), 'Get UTF-8' );
 $res = expectJSON($res);
 ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'cn => Frédéric Accents' );

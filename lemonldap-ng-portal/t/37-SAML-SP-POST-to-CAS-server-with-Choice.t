@@ -181,7 +181,7 @@ qr'^http://auth.idp.com/cas/login\?(service=http%3A%2F%2Fauth.proxy.com%2F.*)$'
     expectAuthenticatedAs( $res, 'fa@badwolf.org@proxy' );
 
     # Verify UTF-8
-    ok( $res = $sp->_get("/sessions/global/$spId"), 'Get UTF-8' );
+    ok( $res = $sp->_get("/sessions/global/$spId", query => 'hash=1'), 'Get UTF-8' );
     expectOK($res);
     ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
       or print STDERR $@;

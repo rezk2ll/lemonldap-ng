@@ -89,7 +89,8 @@ sub run {
 
         if ( $self->conf->{securedCookie} == 2 ) {
             $self->logger->debug("Looking for double sessions...");
-            $linkedSessionId = $sessions->{ $req->id }->{_httpSession};
+            $linkedSessionId =
+              $sessions->{ $self->storageId( $req->id ) }->{_httpSession};
             my $msg =
               $linkedSessionId
               ? "Linked session found -> $linkedSessionId / " . $req->id

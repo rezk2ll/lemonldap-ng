@@ -187,13 +187,13 @@ ok( $res->{name} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'name => Frédéric Accents' );
 count(2);
 
-ok( $res = $op->_get("/sessions/global/$spId"), 'Get UTF-8' );
+ok( $res = $op->_get("/sessions/global/$spId", query => 'hash=1'), 'Get UTF-8' );
 $res = expectJSON($res);
 ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'cn => Frédéric Accents' );
 count(2);
 
-ok( $res = $rp->_get("/sessions/global/$spId"), 'Get UTF-8' );
+ok( $res = $rp->_get("/sessions/global/$spId", query => 'hash=1'), 'Get UTF-8' );
 $res = expectJSON($res);
 my $access_token_eol = $res->{_oidc_access_token_eol};
 my $access_token_old = $res->{_oidc_access_token};
@@ -250,7 +250,7 @@ ok(
 );
 count(1);
 
-ok( $res = $rp->_get("/sessions/global/$spId"), 'Get session after refresh' );
+ok( $res = $rp->_get("/sessions/global/$spId", query => 'hash=1'), 'Get session after refresh' );
 count(1);
 $res = expectJSON($res);
 my $access_token_new     = $res->{_oidc_access_token};
@@ -284,7 +284,7 @@ ok(
 );
 count(1);
 
-ok( $res = $rp->_get("/sessions/global/$spId"), 'Get session after refresh' );
+ok( $res = $rp->_get("/sessions/global/$spId", query => 'hash=1'), 'Get session after refresh' );
 count(1);
 $res                  = expectJSON($res);
 $access_token_new     = $res->{_oidc_access_token};

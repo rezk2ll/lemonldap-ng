@@ -44,7 +44,7 @@ $id = expectCookie($res);
 
 ok(
     $res = $client->_get(
-        '/session/my/global', cookie => "lemonldap=$id"
+        '/session/my/global', cookie => "lemonldap=$id", query => 'hash=1'
     ),
     'Get session'
 );
@@ -74,7 +74,7 @@ $id = expectCookie($res);
 
 ok(
     $res = $client->_get(
-        '/session/my/global', cookie => "lemonldap=$id"
+        '/session/my/global', cookie => "lemonldap=$id", query => 'hash=1'
     ),
     'Get session'
 );

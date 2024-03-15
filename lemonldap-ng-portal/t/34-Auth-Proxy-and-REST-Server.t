@@ -90,7 +90,7 @@ $spId = expectCookie($res);
 # Test other REST queries
 
 # Session content
-ok( $res = $issuer->_get("/sessions/global/$idpId"), 'Session content' );
+ok( $res = $issuer->_get("/sessions/global/$idpId", query => 'hash'), 'Session content' );
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
@@ -99,7 +99,7 @@ ok( $res->{_session_id} eq $idpId, ' Good ID' )
 count(3);
 
 # Session key
-ok( $res = $issuer->_get("/sessions/global/$idpId/[_session_id,uid]"),
+ok( $res = $issuer->_get("/sessions/global/$idpId/[_session_id,uid]", query => 'hash'),
     'Some session keys' );
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
@@ -124,7 +124,7 @@ ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
 my $newId = $res->{session}->{_session_id};
 
 # Verify a key
-ok( $res = $issuer->_get("/sessions/global/$newId/uid"), 'Verify uid' );
+ok( $res = $issuer->_get("/sessions/global/$newId/uid", query => 'hash'), 'Verify uid' );
 ok( $res->[2]->[0] eq 'zz',                              ' Uid is good' );
 count(4);
 
@@ -138,7 +138,7 @@ ok(
             PATH_INFO              => "/sessions/global/$newId",
             REMOTE_ADDR            => '127.0.0.1',
             REQUEST_METHOD         => 'PUT',
-            REQUEST_URI            => "/sessions/global/$newId",
+            REQUEST_URI            => "/sessions/global/$newId?hash=1",
             SCRIPT_NAME            => '',
             SERVER_NAME            => 'auth.example.com',
             SERVER_PORT            => '80',
@@ -147,6 +147,7 @@ ok(
             'psgi.input'           => IO::String->new('{"cn":"CN"}'),
             CONTENT_TYPE           => 'application/json',
             CONTENT_LENGTH         => 11,
+            QUERY_STRING           => 'hash=1',
         }
     ),
     'Put a new key'
@@ -158,7 +159,7 @@ ok( $res->{result} == 1, ' Result is 1' );
 count(3);
 
 # Verify new key
-ok( $res = $issuer->_get("/sessions/global/$newId/cn"), 'Verify cn' );
+ok( $res = $issuer->_get("/sessions/global/$newId/cn", query => 'hash=1'), 'Verify cn' );
 ok( $res->[2]->[0] eq 'CN',                             ' CN is good' );
 count(2);
 
@@ -251,11 +252,12 @@ ok(
             PATH_INFO            => "/sessions/global/$newId",
             REMOTE_ADDR          => '127.0.0.1',
             REQUEST_METHOD       => 'DELETE',
-            REQUEST_URI          => "/sessions/global/$newId",
+            REQUEST_URI          => "/sessions/global/$newId?hash=1",
             SCRIPT_NAME          => '',
             SERVER_NAME          => 'auth.example.com',
             SERVER_PORT          => '80',
             SERVER_PROTOCOL      => 'HTTP/1.1',
+            QUERY_STRING         => 'hash=1'
         }
     ),
     'Delete new session'
@@ -267,7 +269,7 @@ ok( $res->{result} == 1, ' Result is 1' );
 count(3);
 
 # Verify that session is deleted
-ok( $res = $issuer->_get("/sessions/global/$newId/cn"),
+ok( $res = $issuer->_get("/sessions/global/$newId/cn", query => 'hash=1'),
     'New session is deleted' );
 ok( $res->[0] == 400, ' Session does not exist' );
 count(2);

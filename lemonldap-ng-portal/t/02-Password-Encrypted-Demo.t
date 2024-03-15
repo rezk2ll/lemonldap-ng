@@ -39,7 +39,7 @@ my $id = expectCookie($res);
 
 # Check encrypted password in session
 my $json =
-  expectJSON( $client->_get("/sessions/global/$id"), 'Get session content' );
+  expectJSON( $client->_get("/sessions/global/$id", query => 'hash=1'), 'Get session content' );
 ok( $json->{_password} ne "dwho", "password encrypted in session" );
 count(1);
 

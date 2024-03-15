@@ -426,7 +426,7 @@ sub getSessionAttributes {
     my ( $app, $id ) = @_;
     my $res;
     ok(
-        $res = $app->_get("/sessions/global/$id"),
+        $res = $app->_get("/sessions/global/$id", query => 'hash=1'),
         "Get session using restSessionServer"
     );
     count(1);

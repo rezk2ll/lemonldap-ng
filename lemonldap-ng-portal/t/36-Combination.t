@@ -38,7 +38,7 @@ SKIP: {
     );
     my $id = expectCookie( try('rtyler') );
     my $res;
-    ok( $res = $client->_get("/sessions/global/$id"), 'Get session content' );
+    ok( $res = $client->_get("/sessions/global/$id", query => 'hash=1'), 'Get session content' );
     ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
       or print STDERR $@;
     ok(

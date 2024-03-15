@@ -180,7 +180,7 @@ qr@SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"
     expectAuthenticatedAs( $res, 'fa@badwolf.org@idp' );
 
     # Verify UTF-8
-    ok( $res = $sp->_get("/sessions/global/$spId"), 'Get UTF-8' );
+    ok( $res = $sp->_get("/sessions/global/$spId", query => 'hash=1'), 'Get UTF-8' );
     expectOK($res);
     ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
       or print STDERR $@;

@@ -94,7 +94,7 @@ expectOK($res);
 # Test other REST queries
 
 # Session content
-ok( $res = $issuer->_get("/sessions/global/$spId"), 'Session content' );
+ok( $res = $issuer->_get("/sessions/global/$spId", query => 'hash=1'), 'Session content' );
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
@@ -105,7 +105,7 @@ ok( $res->{array} =~ /;/, 'Mulivalued attribute found' )
 count(4);
 
 # Session key
-ok( $res = $issuer->_get("/sessions/global/$spId/[_session_id,uid,cn]"),
+ok( $res = $issuer->_get("/sessions/global/$spId/[_session_id,uid,cn]", query => 'hash=1'),
     'Some session keys' );
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )

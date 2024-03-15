@@ -46,7 +46,7 @@ ok(
 );
 expectOK($res);
 my $id = expectCookie($res);
-ok( $res = $client->_get("/sessions/global/$id"), 'Get session' );
+ok( $res = $client->_get("/sessions/global/$id", query => 'hash=1'), 'Get session' );
 my $sessiondata = from_json( $res->[2]->[0] );
 is( $sessiondata->{authenticationLevel}, 3, "Overriden authentication level" );
 $client->logout($id);
@@ -66,7 +66,7 @@ ok(
 );
 expectOK($res);
 $id = expectCookie($res);
-ok( $res = $client->_get("/sessions/global/$id"), 'Get session' );
+ok( $res = $client->_get("/sessions/global/$id", query => 'hash=1'), 'Get session' );
 $sessiondata = from_json( $res->[2]->[0] );
 is( $sessiondata->{authenticationLevel}, 1, "Default authentication level" );
 $client->logout($id);

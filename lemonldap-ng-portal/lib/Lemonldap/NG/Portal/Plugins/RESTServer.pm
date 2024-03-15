@@ -298,7 +298,12 @@ sub newSession {
         }
         return $self->p->sendJSONresponse( $req, $sessions );
     }
-    my $session = $self->getApacheSession( $mod, $id, $infos, $force );
+    my $session = $self->getApacheSession(
+        $mod, $id,
+        info      => $infos,
+        force     => $force,
+        hashStore => 1,
+    );
     return $self->p->sendError( $req, 'Unable to create session', 500 )
       unless ($session);
 
@@ -360,7 +365,8 @@ sub updateSession {
     my $force  = $self->_checkSecret($secret);
 
     # Get session and store info
-    my $session = $self->getApacheSession( $mod, $id, $infos, $force )
+    my $session =
+      $self->getApacheSession( $mod, $id, info => $infos, force => $force )
       or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     return $self->p->sendJSONresponse( $req, { result => 1 } );
@@ -442,6 +448,7 @@ sub mysession {
 
 sub getMyKey {
     my ( $self, $req, $key ) = @_;
+    $req->data->{hashStore} = 1;
     $key ||= '';
     if ($key) {
         $self->logger->debug(
@@ -463,6 +470,7 @@ sub getMyKey {
 
 sub updateMySession {
     my ( $self, $req ) = @_;
+    $req->data->{hashStore} = 1;
     my $res   = 0;
     my $mKeys = [];
 
@@ -508,6 +516,7 @@ sub updateMySession {
 
 sub delKeyInMySession {
     my ( $self, $req ) = @_;
+    $req->data->{hashStore} = 1;
     my $res   = 0;
     my $mKeys = [];
     my $dkey  = $req->param('key');
@@ -619,7 +628,7 @@ sub removeSession {
       or return $self->p->sendError( $req, undef, 400 );
 
     # Get session
-    my $session = $self->getApacheSession( $mod, $id )
+    my $session = $self->getApacheSession( $mod, $id, hashStore => 1, )
       or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     # Delete it
@@ -819,7 +828,9 @@ sub languages {
                 {
                     code => $_,
                     name => langName->{$_},
-                    flag => $self->conf->{portal}.$self->p->{staticPrefix} . "/languages/$_.png"
+                    flag => $self->conf->{portal}
+                      . $self->p->{staticPrefix}
+                      . "/languages/$_.png"
                 }
             } split /[,;]\s*/,
             $self->p->{languages}
