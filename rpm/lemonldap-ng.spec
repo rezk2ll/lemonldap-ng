@@ -239,7 +239,7 @@ BuildRequires:  python3-sphinx-bootstrap-theme
 BuildRequires:  python3-sphinx
 %endif
 
-Requires: lemonldap-ng-conf = %{version}-%{release}
+Requires: lemonldap-ng-common = %{version}-%{release}
 Requires: lemonldap-ng-doc = %{version}-%{release}
 Requires: lemonldap-ng-handler = %{version}-%{release}
 Requires: lemonldap-ng-manager = %{version}-%{release}
@@ -266,7 +266,7 @@ application. It manages both authentication and authorization and provides
 headers for accounting.
 So you can have a full AAA protection for your web space as described below.
 
-%package conf
+%package common
 Summary:        LemonLDAP-NG configuration
 Requires:       perl(Apache::Session::Browseable)
 Requires:       perl(Cache::Cache)
@@ -277,13 +277,15 @@ Requires(post): httpd
 Requires:       mod_fcgid
 Obsoletes:      perl-Lemonldap-NG-Common < %{version}-%{release}
 Provides:       perl-Lemonldap-NG-Common = %{version}-%{release}
+Obsoletes:      lemonldap-ng-conf < %{version}-%{release}
+Provides:       lemonldap-ng-conf = %{version}-%{release}
 
-%description conf
+%description common
 This package contains the main storage configuration.
 
 %package doc
 Summary:        LemonLDAP-NG documentation
-Requires:       lemonldap-ng-conf = %{version}-%{release}
+Requires:       lemonldap-ng-common = %{version}-%{release}
 
 %description doc
 This package contains HTML documentation.
@@ -291,7 +293,7 @@ This package contains HTML documentation.
 %package handler
 Summary:        LemonLDAP-NG handler
 Requires:       crontabs
-Requires:       lemonldap-ng-conf = %{version}-%{release}
+Requires:       lemonldap-ng-common = %{version}-%{release}
 Obsoletes:      lemonldap-ng-nginx < %{version}-%{release}
 Provides:       lemonldap-ng-nginx = %{version}-%{release}
 Obsoletes:      perl-Lemonldap-NG-Handler < %{version}-%{release}
@@ -302,7 +304,7 @@ This package deploys the Apache Handler.
 
 %package manager
 Summary:        LemonLDAP-NG administration interface
-Requires:       lemonldap-ng-conf = %{version}-%{release}
+Requires:       lemonldap-ng-common = %{version}-%{release}
 Provides:       bundled(js-angular) = 1.7.9
 Provides:       bundled(js-angular-bootstrap) = 2.5.0
 Provides:       bundled(js-angular-ui-tree) = 2.22.6
@@ -319,7 +321,7 @@ This package deploys the administration interface and sessions explorer.
 %package portal
 Summary:        LemonLDAP-NG authentication portal
 Requires:       crontabs
-Requires:       lemonldap-ng-conf = %{version}-%{release}
+Requires:       lemonldap-ng-common = %{version}-%{release}
 %if 0%{?el7}
 # SAML
 Requires:       perl(Glib)
@@ -362,7 +364,7 @@ This package deploys the authentication portal.
 
 %package test
 Summary:        LemonLDAP-NG test applications
-Requires:       lemonldap-ng-conf = %{version}-%{release}
+Requires:       lemonldap-ng-common = %{version}-%{release}
 Obsoletes:      lemonldap-ng-nginx < %{version}-%{release}
 Provides:       lemonldap-ng-nginx = %{version}-%{release}
 
@@ -371,7 +373,7 @@ This package deploys small test applications.
 
 %package fastcgi-server
 Summary:        LemonLDAP-NG FastCGI Server
-Requires:       lemonldap-ng-conf = %{version}-%{release}
+Requires:       lemonldap-ng-common = %{version}-%{release}
 Requires:       mod_fcgid
 Requires:       perl(FCGI::ProcManager)
 
@@ -548,7 +550,7 @@ sed -i 's:^dirName.*:dirName = %{lm_vardir}/conf:' \
     %{buildroot}%{lm_storagefile}
 
 
-%post conf
+%post common
 # Upgrade from previous version
 # See http://lemonldap-ng.org/documentation/1.0/upgrade
 if [ $1 -gt 1 ] ; then
@@ -562,7 +564,7 @@ if [ $1 -gt 1 ] ; then
     fi
 fi
 
-%preun conf
+%preun common
 # Upgrade from previous version
 if [ $1 -eq 1 ] ; then
     # Remove old symlinks in Apache configuration
@@ -601,7 +603,7 @@ fi
 
 %files
 
-%files conf
+%files common
 %doc changelog README.md AUTHORS CONTRIBUTING.md
 %doc for_etc_hosts
 %license COPYING LICENSE
