@@ -753,6 +753,7 @@ t/37-Logout-from-2-chained-SAML-SP-SOAP.t
 t/37-Logout-from-OIDC-RP-to-SAML-IDP-Redirect.t
 t/37-Logout-from-OIDC-RP-to-SAML-IDP-SOAP.t
 t/37-Logout-from-OIDC-RP-to-SAML-SP.t
+t/37-OIDC-and-DBI-with-choice-and-override.t
 t/37-OIDC-RP-to-SAML-IdP-GET-with-WAYF.t
 t/37-OIDC-RP-to-SAML-IdP-GET.t
 t/37-OIDC-RP-to-SAML-IdP-POST.t
