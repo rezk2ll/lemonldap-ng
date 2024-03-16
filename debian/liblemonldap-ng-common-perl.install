@@ -1,7 +1,7 @@
 etc/lemonldap-ng/lemonldap-ng.ini
 etc/lemonldap-ng/for_etc_hosts
 usr/share/man/man1/convertConfig.1p
-use/share/man/man1/convertToHashSessionStorage.1p
+usr/share/man/man1/convertToHashSessionStorage.1p
 usr/share/man/man1/convertSessions.1p
 usr/share/man/man1/encryptTotpSecrets.1p
 usr/share/man/man1/importMetadata.1p
