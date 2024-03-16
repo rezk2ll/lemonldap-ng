@@ -32,6 +32,7 @@ List of points to enable if possible:
     * Require JWS authentication
 * UserInfo endpoint
     * Accept only authentication using ``Authorization: Bearer ...``
+* Use hashed storage for sessions *(this includes OIDC tokens)*
 
 LLNG as OpenID-Connect Relying-Party
 ------------------------------------
@@ -45,3 +46,4 @@ List of points to enable if possible:
     * Use JWS to pass request parameters
 * Token endpoint
     * Use JWS authentication
+* Use hashed storage for sessions
