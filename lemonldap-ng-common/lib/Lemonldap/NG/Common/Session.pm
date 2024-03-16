@@ -14,7 +14,14 @@ use Lemonldap::NG::Common::Apache::Session::Generate::SHA256;
 
 our $VERSION = '2.0.15';
 
-our @EXPORT = ('id2storage');
+our @EXPORT = qw(id2storage hashedKinds reHashedKinds);
+
+use constant hashedKinds => ( 'SSO', 'OIDC' );
+
+sub reHashedKinds {
+    my $s = '^(' . join( ',', hashedKinds() ) . ')$';
+    return qr/$s/;
+}
 
 # Workaround for another ModPerl/Mouse issue...
 BEGIN {
