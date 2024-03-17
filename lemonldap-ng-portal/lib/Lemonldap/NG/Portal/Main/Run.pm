@@ -482,6 +482,10 @@ sub getApacheSession {
     }
 
     my $as = Lemonldap::NG::Common::Session->new( {
+
+            # The $args{hashStore} permits one to override the
+            # hashedSessionStore parameter. It is used when sessions are given
+            # by searchOn (like in Refresh plugin)
             hashStore => $args{hashStore} // $self->conf->{hashedSessionStore},
             storageModule        => $self->conf->{globalStorage},
             storageModuleOptions => $self->conf->{globalStorageOptions},

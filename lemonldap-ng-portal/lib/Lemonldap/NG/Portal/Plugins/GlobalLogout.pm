@@ -140,6 +140,10 @@ sub globalLogout {
                 if ( $req_user eq $user ) {
                     foreach (@$sessions) {
                         unless (
+
+                            # searchOn() returns sessions indexed by their
+                            # storage ID, then it is required to set hashStore
+                            # to 0
                             $as = $self->p->getApacheSession(
                                 $_->{id}, hashStore => 0,
                             )
@@ -258,6 +262,9 @@ sub removeOtherActiveSessions {
       ? id2storage( $req->{userData}->{_session_id} )
       : $req->{userData}->{_session_id};
     foreach (@$sessions) {
+
+        # searchOn() returns sessions indexed by their storage ID, then
+        # it is required to set hashStore to 0
         unless ( $as = $self->p->getApacheSession( $_->{id}, hashStore => 0, ) )
         {
             $self->userLogger->info("GlobalLogout: session $_->{id} expired");

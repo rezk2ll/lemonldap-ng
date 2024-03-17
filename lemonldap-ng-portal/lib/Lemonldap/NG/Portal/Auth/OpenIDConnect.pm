@@ -502,6 +502,9 @@ sub frontLogout {
             '_oidc_sid', $sid );
         my @sessionToDelete = keys %$oidcSessions;
         foreach (@sessionToDelete) {
+
+            # searchOn() returns sessions indexed by their storage ID, then
+            # it is required to set hashStore to 0
             if ( my $as = $self->p->getApacheSession( $_, hashStore => 0, ) ) {
                 if ( $self->p->_deleteSession( $req, $as, 1 ) ) {
                     $self->logger->debug(
@@ -648,6 +651,9 @@ sub backLogout {
             );
         }
         foreach (@userSessions) {
+
+            # searchOn() returns sessions indexed by their storage ID, then
+            # it is required to set hashStore to 0
             if ( my $as = $self->p->getApacheSession( $_, hashStore => 0 ) ) {
                 if ( $self->p->_deleteSession( $req, $as, 1 ) ) {
                     $self->logger->debug(

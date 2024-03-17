@@ -206,6 +206,10 @@ sub delete2F {
 sub _session {
     my ( $self, $raw, $req, $id, $skey ) = @_;
     my ( %h, $res, $hashStore );
+
+    # When requesting a session, depending on the context, the cann can be
+    # with the storage ID or the cookie value. the "hash=1' parameter indicates
+    # that the query uses the cookie value
     $hashStore = ( $req->{data}->{hashStore} or $req->param('hash') );
     return $self->sendError( $req, 'Bad request', 400 ) unless $id;
     my $mod = $self->getMod($req)
@@ -252,6 +256,9 @@ sub rawSession {
 sub getApacheSession {
     my ( $self, $mod, $id, %args ) = @_;
     my $apacheSession = Lemonldap::NG::Common::Session->new( {
+
+            # The request is done with the storage ID by default unless
+            # hashStore is explicitely set to a true value
             hashStore     => $args{hashStore} && $self->hashedSessionStore,
             storageModule => $mod->{module},
             storageModuleOptions => $mod->{options},

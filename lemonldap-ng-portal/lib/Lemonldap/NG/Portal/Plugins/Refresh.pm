@@ -34,6 +34,9 @@ sub run {
         $req->userData(
             { _session_id => $id, $self->conf->{whatToTrace} => $info->{uid} }
         );
+
+        # searchOn() returns sessions indexed by their storage ID, then
+        # it is required to set hashStore to 0
         $req->data->{hashStore} = 0;
         $req->id($id);
         $req->user( $info->{uid} );

@@ -14,6 +14,7 @@ use Lemonldap::NG::Common::Apache::Session::Generate::SHA256;
 
 our $VERSION = '2.0.15';
 
+# Export method needed to handle hashed storage
 our @EXPORT = qw(id2storage hashedKinds reHashedKinds);
 
 use constant hashedKinds => ( 'SSO', 'OIDC' );
@@ -40,6 +41,7 @@ BEGIN {
     }
 }
 
+# Convert a session ID into store entry
 sub id2storage {
     return $_[0] ? Digest::SHA::sha256_hex( $_[0] ) : undef;
 }
@@ -119,20 +121,11 @@ has hashStore => ( is => 'rw' );
 
 sub BUILD {
     my ($self) = @_;
+
+    # When session are stored remotely using SOAP or REST, don't hash the ID
+    # here, will be done in real LLNG storage
     $self->hashStore(0)
       if $self->storageModule =~ /^Lemonldap::NG::Common::Apache::Session/;
-
-    #print STDERR "Common::Session, ID: "
-    #  . ( $self->id // 'undef' )
-    #  . ", Secure: "
-    #  . ( $self->hashStore // 0 ) . "\n";
-    #if (  !$self->hashStore
-    #    && $ENV{LLNG_HASHED_SESSION_STORE}
-    #    && $self->storageModule !~ /^Lemonldap::NG::Common::Apache::Session/ )
-    #{
-    #    require Carp;
-    #    Carp::cluck('BAD CALL');
-    #}
 
     # Load Apache::Session module
     unless ( $self->storageModule->can('populate') ) {
@@ -153,8 +146,7 @@ sub BUILD {
 
     $self->options( \%options );
 
-    my $data;
-    $data = $self->_tie_session;
+    my $data = $self->_tie_session;
 
     # Is it a session creation request?
     my $creation = 1
@@ -216,7 +208,8 @@ sub _tie_session {
     my $options = $_[1] || {};
     my %h;
 
-    # Secured storage
+    # Secured storage for new session: generate a new random ID and calculate
+    # the storage ID
     my $securedId = $self->id;
     if ( $self->hashStore ) {
         if ( !$self->id ) {
@@ -257,6 +250,8 @@ sub _tie_session {
         return undef;
     }
     if ( $self->hashStore ) {
+
+        # Before returning the session, set here the real cookie value
         $h{_session_id} = $securedId;
     }
 
@@ -305,6 +300,8 @@ sub remove {
     my ( $self, $tieOptions ) = @_;
 
     my $data = $self->_tie_session($tieOptions);
+
+    # Before saving, hide the real ID and replace it by the storage ID
     $data->{_session_id} = id2storage( $self->id ) if $self->hashStore;
 
     eval { tied(%$data)->delete(); };

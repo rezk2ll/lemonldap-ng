@@ -11,6 +11,10 @@
 #   * PUT /sessions/<type>/<session-id>          : update some keys
 #   * DELETE /sessions/<type>/<session-id>       : delete a session
 #
+# When the storage is hashed, and if those APIs are called with real IDs, not
+# the storage IDs, it is required to add a "hash=1" parameter in the URL.
+#
+#
 # - Sessions for connected users (if restSessionServer is on):
 #   * GET /session/my/<type>                     : get session data
 #   * GET /session/my/<type>/key                 : get session key
@@ -299,11 +303,16 @@ sub newSession {
         }
         return $self->p->sendJSONresponse( $req, $sessions );
     }
+
+    # The "hashStore" here doesn't override configuration:
+    # Lemonldap::NG::Common::Session::REST module check the configuration
+    # parameter. So here it means "use hashed id if possible" and of course
+    # if session kind is OIDC or SSO
     my $session = $self->getApacheSession(
         $mod, $id,
         info      => $infos,
         force     => $force,
-        hashStore => 1,
+        hashStore => $mod->{kind} =~ reHashedKinds,
     );
     return $self->p->sendError( $req, 'Unable to create session', 500 )
       unless ($session);
@@ -366,6 +375,8 @@ sub updateSession {
     my $force  = $self->_checkSecret($secret);
 
     # Get session and store info
+    # The hashed store is used if explicitely asked and if session type is
+    # SSO or OIDC
     my $session = $self->getApacheSession(
         $mod, $id,
         info      => $infos,
@@ -384,6 +395,8 @@ sub delSession {
     return $self->p->sendError( $req, 'ID is required', 400 ) unless ($id);
 
     # Get session
+    # The hashed store is used if explicitely asked and if session type is
+    # SSO or OIDC
     my $session = $self->getApacheSession( $mod, $id,
         hashStore =>
           ( $mod->{kind} =~ reHashedKinds ? $req->param('hash') // 0 : 0 ), )
@@ -455,6 +468,9 @@ sub mysession {
 
 sub getMyKey {
     my ( $self, $req, $key ) = @_;
+
+    # All /my/ API are called with user's session, so indicates here that
+    # it uses hashed store if available
     $req->data->{hashStore} = 1;
     $key ||= '';
     if ($key) {
@@ -477,6 +493,9 @@ sub getMyKey {
 
 sub updateMySession {
     my ( $self, $req ) = @_;
+
+    # All /my/ API are called with user's session, so indicates here that
+    # it uses hashed store if available
     $req->data->{hashStore} = 1;
     my $res   = 0;
     my $mKeys = [];
@@ -523,6 +542,9 @@ sub updateMySession {
 
 sub delKeyInMySession {
     my ( $self, $req ) = @_;
+
+    # All /my/ API are called with user's session, so indicates here that
+    # it uses hashed store if available
     $req->data->{hashStore} = 1;
     my $res   = 0;
     my $mKeys = [];
@@ -635,7 +657,9 @@ sub removeSession {
       or return $self->p->sendError( $req, undef, 400 );
 
     # Get session
-    my $session = $self->getApacheSession( $mod, $id, hashStore => 1, )
+    my $session =
+      $self->getApacheSession( $mod, $id,
+        hashStore => $mod->{kind} =~ reHashedKinds, )
       or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     # Delete it

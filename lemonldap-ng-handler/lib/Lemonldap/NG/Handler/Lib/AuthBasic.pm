@@ -94,7 +94,8 @@ sub createSession {
     my ( $user, $pwd ) = ( decode_base64($creds) =~ /^(.*?):(.*)$/ );
     $class->logger->debug("AuthBasic authentication for user: $user");
 
-    #my $soapRequest = $soapClient->getCookies( $user, $pwd, $id );
+    # Here the API is called with hash=1 to explicitely explain to remote
+    # server that we're using a cookie value, not the storage ID
     my $url = $class->tsv->{portal}->() . "/sessions/global/$id?auth&hash=1";
     $url =~ s#//sessions/#/sessions/#g;
     my $get = HTTP::Request->new( POST => $url );
