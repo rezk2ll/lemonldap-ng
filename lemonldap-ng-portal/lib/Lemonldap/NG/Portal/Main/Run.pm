@@ -1221,8 +1221,8 @@ sub registerLogin {
     $history->{$type} ||= [];
     $self->logger->debug("Current login saved into $type");
 
-    # Gather current login's parameters
-    my $login = $self->_sumUpSession( $req->{sessionInfo}, 1 );
+    # Gather current login's parameters and force current time
+    my $login = $self->_sumUpSession({ %{$req->sessionInfo}, _utime => time }, 1 );
     $login->{error} = $self->error( $req->authResult )
       if ( $req->authResult );
 

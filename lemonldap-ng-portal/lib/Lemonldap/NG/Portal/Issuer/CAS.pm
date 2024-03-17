@@ -201,8 +201,6 @@ sub run {
         my $renew   = $cas_request->{renew};
         my $gateway = $cas_request->{gateway};
 
-        my $casServiceTicket;
-
         # If no service defined, exit
         unless ( defined $service ) {
             $self->logger->debug("No service defined in CAS URL");
@@ -282,7 +280,9 @@ sub run {
                     else {
                         $self->logger->debug(
                             "Redirect user on CAS service with a fake ticket");
-                        $casServiceTicket = "ST-F4K3T1CK3T";
+                        return $self->_redirectUser( $req,
+                            $cas_request->{service},
+                            "ST-F4K3T1CK3T" );
                     }
                 }
             }
@@ -299,72 +299,56 @@ sub run {
                   . " is redirected to $service" );
         }
 
-        unless ($casServiceTicket) {
-
-            # Check last authentication time to decide if
-            # the authentication is recent or not
-            my $casRenewFlag     = 0;
-            my $last_authn_utime = $req->{sessionInfo}->{_lastAuthnUTime} || 0;
-            if (
-                time() - $last_authn_utime <
-                $self->conf->{portalForceAuthnInterval} )
-            {
-                $self->logger->debug(
-                    "Authentication is recent, will set CAS renew flag to true"
-                );
-                $casRenewFlag = 1;
-            }
-
-            # Create a service ticket
+        # Check last authentication time to decide if
+        # the authentication is recent or not
+        my $casRenewFlag     = 0;
+        my $last_authn_utime = $req->{sessionInfo}->{_lastAuthnUTime} || 0;
+        if (
+            time() - $last_authn_utime <
+            $self->conf->{portalForceAuthnInterval} )
+        {
             $self->logger->debug(
-                "Create a CAS service ticket for service $service");
-
-            my $_utime =
-              $self->conf->{casTicketExpiration}
-              ? (
-                time +
-                  $self->conf->{casTicketExpiration} -
-                  $self->conf->{timeout} )
-              : ( $req->{sessionInfo}->{_utime} || time() );
-
-            my $Sinfos;
-            $Sinfos->{type}    = 'casService';
-            $Sinfos->{service} = $service;
-            $Sinfos->{renew}   = $casRenewFlag;
-            $Sinfos->{_cas_id} = $session_id;
-            $Sinfos->{_utime}  = $_utime;
-            $Sinfos->{_casApp} = $app;
-
-            my $h = $self->p->processHook( $req, 'casGenerateServiceTicket',
-                $cas_request, $app, $Sinfos );
-            return $h if ( $h != PE_OK );
-
-            my $casServiceSession = $self->getCasSession( undef, $Sinfos );
-
-            unless ($casServiceSession) {
-                $self->logger->error("Unable to create CAS session");
-                return PE_ERROR;
-            }
-
-            my $casServiceSessionID = $casServiceSession->id;
-            $casServiceTicket = "ST-" . $casServiceSessionID;
-
-            $self->logger->debug(
-                "CAS service session $casServiceSessionID created");
+                "Authentication is recent, will set CAS renew flag to true");
+            $casRenewFlag = 1;
         }
 
-        # Redirect to service
-        # cas_request may have been modified by hook
-        my $service_url = $cas_request->{service};
-        $service_url .= ( $service_url =~ /\?/ ? '&' : '?' )
-          . build_urlencoded( ticket => $casServiceTicket );
+        # Create a service ticket
+        $self->logger->debug(
+            "Create a CAS service ticket for service $service");
 
-        $self->logger->debug("Redirect user to $service_url");
+        my $_utime =
+          $self->conf->{casTicketExpiration}
+          ? (
+            time + $self->conf->{casTicketExpiration} - $self->conf->{timeout} )
+          : ( $req->{sessionInfo}->{_utime} || time() );
 
-        $req->{urldc} = $service_url;
+        my $Sinfos;
+        $Sinfos->{type}    = 'casService';
+        $Sinfos->{service} = $service;
+        $Sinfos->{renew}   = $casRenewFlag;
+        $Sinfos->{_cas_id} = $session_id;
+        $Sinfos->{_utime}  = $_utime;
+        $Sinfos->{_casApp} = $app;
 
-        $req->steps( [] );
-        return PE_OK;
+        $h = $self->p->processHook( $req, 'casGenerateServiceTicket',
+            $cas_request, $app, $Sinfos );
+        return $h if ( $h != PE_OK );
+
+        my $casServiceSession = $self->getCasSession( undef, $Sinfos );
+
+        unless ($casServiceSession) {
+            $self->logger->error("Unable to create CAS session");
+            return PE_ERROR;
+        }
+
+        my $casServiceSessionID = $casServiceSession->id;
+        my $casServiceTicket    = "ST-" . $casServiceSessionID;
+
+        $self->logger->debug(
+            "CAS service session $casServiceSessionID created");
+
+        return $self->_redirectUser( $req, $cas_request->{service},
+            $casServiceTicket );
     }
 
     # 2. LOGOUT
@@ -425,11 +409,7 @@ sub run {
             }
 
             if ($logout_service) {
-                $self->logger->debug(
-                    "User will be redirected to $logout_service");
-                $req->{urldc} = $logout_service;
-                $req->steps( [] );
-                return PE_OK;
+                return $self->_redirectUser( $req, $logout_service );
             }
         }
         else {
@@ -1096,8 +1076,8 @@ sub relayLogout {
         return $self->p->imgok;
     }
     else {
-        $self->logger->error(
-            "CAS back-channel logout to $service error: " . $response->message );
+        $self->logger->error( "CAS back-channel logout to $service error: "
+              . $response->message );
         $self->logger->debug( $response->dump );
         return $self->p->imgnok;
     }
@@ -1118,6 +1098,23 @@ sub isLogoutEnabled {
     else {
         return $option;
     }
+}
+
+sub _redirectUser {
+    my ( $self, $req, $destination, $ticket ) = @_;
+
+    # Redirect to service
+    # cas_request may have been modified by hook
+    if ($ticket) {
+        $destination .= ( $destination =~ /\?/ ? '&' : '?' )
+          . build_urlencoded( ticket => $ticket );
+    }
+
+    $self->logger->debug("Redirect user to $destination");
+
+    $req->{urldc} = $destination;
+    $req->steps( [] );
+    return PE_OK;
 }
 
 1;

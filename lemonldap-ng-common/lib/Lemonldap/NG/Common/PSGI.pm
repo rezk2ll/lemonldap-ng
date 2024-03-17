@@ -37,42 +37,46 @@ sub init {
     foreach my $k ( keys %$args ) {
         $self->{$k} = $args->{$k} unless ( $k eq 'logger' );
     }
-    unless ( ref( $self->logger ) and ref( $self->userLogger ) ) {
-        my $logger =
-             $args->{logger}
-          || $ENV{LLNG_DEFAULTLOGGER}
-          || 'Lemonldap::NG::Common::Logger::Std';
-        unless ( ref $self->logger ) {
-            eval "require $logger";
-            die $@ if ($@);
-            my $err;
-            unless ( $self->{logLevel} =~ /^(?:debug|info|notice|warn|error)$/ )
-            {
-                $err =
-                    'Bad logLevel value \''
-                  . $self->{logLevel}
-                  . "', switching to 'info'";
-                $self->{logLevel} = 'info';
-            }
-            $self->logger( $logger->new($self) );
-            $self->logger->error($err) if $err;
-        }
-        unless ( ref $self->userLogger ) {
-            $logger = $ENV{LLNG_USERLOGGER} || $args->{userLogger} || $logger;
-            eval "require $logger";
-            die $@ if ($@);
-            require Lemonldap::NG::Common::Logger::_Duplicate;
-            $self->userLogger(
-                Lemonldap::NG::Common::Logger::_Duplicate->new(
-                    $self,
-                    user   => 1,
-                    logger => $logger,
-                    dup    => $self->logger
-                )
-            );
-        }
-    }
+    $self->_initLogger($args);
+
     return 1;
+}
+
+sub _initLogger {
+    my ( $self, $args ) = @_;
+
+    my $logger =
+         $args->{logger}
+      || $ENV{LLNG_DEFAULTLOGGER}
+      || 'Lemonldap::NG::Common::Logger::Std';
+    unless ( ref $self->logger ) {
+        eval "require $logger";
+        die $@ if ($@);
+        my $err;
+        unless ( $self->{logLevel} =~ /^(?:debug|info|notice|warn|error)$/ ) {
+            $err =
+                'Bad logLevel value \''
+              . $self->{logLevel}
+              . "', switching to 'info'";
+            $self->{logLevel} = 'info';
+        }
+        $self->logger( $logger->new($self) );
+        $self->logger->error($err) if $err;
+    }
+    unless ( ref $self->userLogger ) {
+        $logger = $ENV{LLNG_USERLOGGER} || $args->{userLogger} || $logger;
+        eval "require $logger";
+        die $@ if ($@);
+        require Lemonldap::NG::Common::Logger::_Duplicate;
+        $self->userLogger(
+            Lemonldap::NG::Common::Logger::_Duplicate->new(
+                $self,
+                user   => 1,
+                logger => $logger,
+                dup    => $self->logger
+            )
+        );
+    }
 }
 
 # RUNNING METHODS
