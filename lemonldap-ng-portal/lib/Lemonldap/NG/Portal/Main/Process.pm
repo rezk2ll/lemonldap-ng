@@ -584,6 +584,7 @@ sub store {
     # Main session
     my $session = $self->getApacheSession(
         $req->id,
+        hashStore => $req->data->{hashStore},
         force => $req->{force},
         info  => $infos
     );

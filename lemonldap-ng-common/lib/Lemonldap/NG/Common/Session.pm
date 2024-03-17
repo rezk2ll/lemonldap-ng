@@ -123,11 +123,16 @@ sub BUILD {
       if $self->storageModule =~ /^Lemonldap::NG::Common::Apache::Session/;
 
     #print STDERR "Common::Session, ID: "
-    # . ($self->id//'undef')
-    # . ", Secure: "
-    # . ($self->hashStore//0)
-    # . "\n";
-    #print Data::Dumper::Dumper([caller(0)]) if not $self->hashStore;
+    #  . ( $self->id // 'undef' )
+    #  . ", Secure: "
+    #  . ( $self->hashStore // 0 ) . "\n";
+    #if (  !$self->hashStore
+    #    && $ENV{LLNG_HASHED_SESSION_STORE}
+    #    && $self->storageModule !~ /^Lemonldap::NG::Common::Apache::Session/ )
+    #{
+    #    require Carp;
+    #    Carp::cluck('BAD CALL');
+    #}
 
     # Load Apache::Session module
     unless ( $self->storageModule->can('populate') ) {

@@ -32,6 +32,7 @@ LWP::Protocol::PSGI->register(
                 $res = $issuer->$mth(
                     $url,
                     IO::String->new($s),
+                    query => $query,
                     length => length($s),
                     type   => $req->header('Content-Type'),
                 ),
@@ -97,16 +98,16 @@ expectOK($res);
 # Session key
 ok(
     $res = $issuer->_get(
-            "/sessions/global/"
-          . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($spId) : $spId )
-          . "/[_session_id,_password]"
+            "/sessions/global/$spId"
+          . "/[_session_id,_password]",
+          query => 'hash=1',
     ),
     'Some session keys'
 );
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
-ok( $res->{_session_id} eq ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($spId) : $spId ), ' Good ID' )
+ok( $res->{_session_id} eq $spId, ' Good ID' )
   or explain( $res, "_session_id => $spId" );
 ok( $res->{_password} eq 'french', ' Password is exported' )
   or explain( $res, '_password => french' );

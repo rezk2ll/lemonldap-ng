@@ -34,6 +34,7 @@ sub run {
         $req->userData(
             { _session_id => $id, $self->conf->{whatToTrace} => $info->{uid} }
         );
+        $req->data->{hashStore} = 0;
         $req->id($id);
         $req->user( $info->{uid} );
         my $res;
