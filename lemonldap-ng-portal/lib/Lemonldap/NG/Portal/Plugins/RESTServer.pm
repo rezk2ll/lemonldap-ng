@@ -61,6 +61,7 @@ use Mouse;
 use JSON qw(from_json to_json);
 use MIME::Base64;
 use Lemonldap::NG::Common::Languages;
+use Lemonldap::NG::Common::Session 'reHashedKinds';
 use Lemonldap::NG::Portal::Main::Constants qw(
   URIRE
   PE_OK
@@ -369,7 +370,8 @@ sub updateSession {
         $mod, $id,
         info      => $infos,
         force     => $force,
-        hashStore => $req->param('hash') // 0,
+        hashStore =>
+          ( $mod->{kind} =~ reHashedKinds ? $req->param('hash') // 0 : 0 ),
     ) or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     return $self->p->sendJSONresponse( $req, { result => 1 } );
@@ -382,8 +384,9 @@ sub delSession {
     return $self->p->sendError( $req, 'ID is required', 400 ) unless ($id);
 
     # Get session
-    my $session =
-      $self->getApacheSession( $mod, $id, hashStore => $req->param('hash') // 0, )
+    my $session = $self->getApacheSession( $mod, $id,
+        hashStore =>
+          ( $mod->{kind} =~ reHashedKinds ? $req->param('hash') // 0 : 0 ), )
       or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     # Delete it

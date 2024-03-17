@@ -122,7 +122,8 @@ sub getJson {
     my $resp = $self->ua->get(
         $self->base
           . $id
-          . ( $self->{kind} ne 'SSO' ? "?kind=$self->{kind}" : '' ),
+          . '?hash=1'
+          . ( $self->{kind} ne 'SSO' ? "&kind=$self->{kind}" : '' ),
         @_
     );
     if ( $resp->is_success ) {
@@ -223,7 +224,8 @@ sub save {
 
     # REST
     my $req =
-      HTTP::Request->new( PUT => $self->base . $self->{data}->{_session_id} );
+      HTTP::Request->new(
+        PUT => $self->base . $self->{data}->{_session_id} . '?hash=1' );
     eval {
         $self->{data}->{__secret} =
           Lemonldap::NG::Handler::Main->tsv->{cipher}->encrypt(time);
@@ -265,7 +267,7 @@ sub delete {
 
     # REST
     my $req = HTTP::Request->new(
-        DELETE => $self->base . $self->{data}->{_session_id} );
+        DELETE => $self->base . $self->{data}->{_session_id} . '?hash=1' );
     $req->header( 'Content-Type' => 'application/json' );
     my $resp = $self->ua->request($req);
     return ( $resp->is_success ? 1 : 0 );

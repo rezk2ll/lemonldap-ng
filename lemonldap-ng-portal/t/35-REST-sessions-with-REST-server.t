@@ -9,7 +9,6 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $debug = 'error';
 my ( $issuer, $sp, $res, $spId );
 
 # Redefine LWP methods for tests
@@ -18,7 +17,7 @@ LWP::Protocol::PSGI->register(
         my $req = Plack::Request->new(@_);
         ok(
             $req->uri =~ m#http://auth.idp.com(.*?)(?:\?(.*))?$#,
-            ' @ REST request (' . $req->method . " $1)"
+            ' @ REST request (' . $req->method . " $1".($2 ? "?$2":'').")"
         );
         count(1);
         my $url   = $1;
@@ -31,6 +30,7 @@ LWP::Protocol::PSGI->register(
                 $res = $issuer->$mth(
                     $url,
                     IO::String->new($s),
+                    query => $query,
                     length => length($s),
                     type   => $req->header('Content-Type'),
                 ),
@@ -149,7 +149,6 @@ sub issuer {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel          => $debug,
                 domain            => 'idp.com',
                 portal            => 'http://auth.idp.com',
                 authentication    => 'Demo',
@@ -164,7 +163,6 @@ sub sp {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel       => $debug,
                 domain         => 'sp.com',
                 portal         => 'http://auth.sp.com',
                 authentication => 'Demo',
