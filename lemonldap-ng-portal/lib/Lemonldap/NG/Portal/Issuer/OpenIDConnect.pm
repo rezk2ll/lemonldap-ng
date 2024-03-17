@@ -1991,7 +1991,7 @@ sub _handleRefreshTokenGrant {
         if ( $req->error > 0 ) {
 
             # PE_BADCREDENTIAL is returned by UserDB modules when the user was
-            # explicitely not found. And not in case of temporary failures
+            # explicitly not found. And not in case of temporary failures
             if ( $req->error == PE_BADCREDENTIALS ) {
                 $self->logger->error( "User: "
                       . $req->user

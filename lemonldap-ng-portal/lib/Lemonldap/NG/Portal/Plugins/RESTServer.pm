@@ -375,7 +375,7 @@ sub updateSession {
     my $force  = $self->_checkSecret($secret);
 
     # Get session and store info
-    # The hashed store is used if explicitely asked and if session type is
+    # The hashed store is used if explicitly asked and if session type is
     # SSO or OIDC
     my $session = $self->getApacheSession(
         $mod, $id,
@@ -395,7 +395,7 @@ sub delSession {
     return $self->p->sendError( $req, 'ID is required', 400 ) unless ($id);
 
     # Get session
-    # The hashed store is used if explicitely asked and if session type is
+    # The hashed store is used if explicitly asked and if session type is
     # SSO or OIDC
     my $session = $self->getApacheSession( $mod, $id,
         hashStore =>

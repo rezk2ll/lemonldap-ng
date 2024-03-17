@@ -2237,7 +2237,7 @@ sub attributeServer {
                 [$req_attr] );
 
             $self->logger->debug(
-                "Some values are explicitely requested: $rvalue")
+                "Some values are explicitly requested: $rvalue")
               if defined $rvalue;
 
             # Get session value

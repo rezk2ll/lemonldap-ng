@@ -258,7 +258,7 @@ sub getApacheSession {
     my $apacheSession = Lemonldap::NG::Common::Session->new( {
 
             # The request is done with the storage ID by default unless
-            # hashStore is explicitely set to a true value
+            # hashStore is explicitly set to a true value
             hashStore     => $args{hashStore} && $self->hashedSessionStore,
             storageModule => $mod->{module},
             storageModuleOptions => $mod->{options},
