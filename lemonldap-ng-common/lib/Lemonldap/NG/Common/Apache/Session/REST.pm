@@ -119,6 +119,10 @@ sub ua {
 sub getJson {
     my $self = shift;
     my $id   = shift;
+
+    # By design, this module calls REST API with real values, so it is
+    # require to add "hash" parameter in this request to ask to API to
+    # calculate storage ID before searching
     my $resp = $self->ua->get(
         $self->base
           . $id
@@ -223,6 +227,10 @@ sub save {
     }
 
     # REST
+
+    # By design, this module calls REST API with real values, so it is
+    # require to add "hash" parameter in this request to ask to API to
+    # calculate storage ID before searching
     my $req =
       HTTP::Request->new(
         PUT => $self->base . $self->{data}->{_session_id} . '?hash=1' );
@@ -266,6 +274,10 @@ sub delete {
     }
 
     # REST
+
+    # By design, this module calls REST API with real values, so it is
+    # require to add "hash" parameter in this request to ask to API to
+    # calculate storage ID before searching
     my $req = HTTP::Request->new(
         DELETE => $self->base . $self->{data}->{_session_id} . '?hash=1' );
     $req->header( 'Content-Type' => 'application/json' );

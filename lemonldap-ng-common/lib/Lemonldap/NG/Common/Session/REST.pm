@@ -11,6 +11,7 @@ our $VERSION = '2.17.0';
 
 has sessionTypes => ( is => 'rw' );
 
+# Boolean value to tell if storage ID is hashed or not
 has hashedSessionStore => ( is => 'rw' );
 
 sub setTypes {

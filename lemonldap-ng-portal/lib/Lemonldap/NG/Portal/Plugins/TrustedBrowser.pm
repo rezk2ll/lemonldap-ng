@@ -419,6 +419,8 @@ sub removeExistingSessions {
     my $sessions =
       $self->module->searchOn( $self->moduleOpts, '_session_uid', $uid );
 
+    # searchOn() returns sessions indexed by their storage ID, then
+    # it is required to use hashed ID
     foreach ( keys %{ $sessions || {} } ) {
         if ( my $ps = $self->getTrustedBrowserSession($_, 1) ) {
 
