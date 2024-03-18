@@ -656,9 +656,28 @@ sub storeHistory {
     return PE_OK;
 }
 
+# This method returns the domain for a new cookie
+# In modern browsers:
+# - an empty value means the cookie is only valid on the portal itself
+# - in other situations, the cookie is sent to all subdomains
+#   and a leading dot is added for compatibility
 sub getCookieDomain {
     my ( $self, $req ) = @_;
-    return $self->conf->{domain};
+
+    if ( my $domain = $self->conf->{domain} ) {
+        if ( $domain eq '#PORTALDOMAIN#' ) {
+            my $host = URI->new( $self->portal )->host;
+            return $host =~ s/^([^\.]*)//r;
+        }
+        elsif ( $domain eq '#PORTAL#' ) {
+            my $host = URI->new( $self->portal )->host;
+            return ".$host";
+        }
+        else {
+            return $domain =~ s/^(?!\.)/./r;
+        }
+    }
+    return;
 }
 
 1;
