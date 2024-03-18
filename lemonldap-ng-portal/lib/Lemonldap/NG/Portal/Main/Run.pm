@@ -285,7 +285,6 @@ sub _unauthLogout {
         $self->genCookie(
             $req,
             name    => $self->conf->{cookieName},
-            domain  => $self->conf->{domain},
             secure  => $self->conf->{securedCookie},
             expires => 'Wed, 21 Oct 2015 00:00:00 GMT',
             value   => 0

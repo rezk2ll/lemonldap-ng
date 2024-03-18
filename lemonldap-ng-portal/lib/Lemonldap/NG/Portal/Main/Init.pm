@@ -291,11 +291,6 @@ sub reloadConf {
           $self->conf->{globalStorageOptions};
     }
 
-    # Initialize cookie domain
-    if ( $self->conf->{domain} ) {
-        $self->conf->{domain} =~ s/^([^\.])/.$1/;
-    }
-
     # Initialize cookie SameSite value
     $self->cookieSameSite( getSameSite( $self->conf ) );
     $self->logger->debug(
