@@ -32,6 +32,7 @@ sub assertStandardBehavior {
         { name => "coucou", value => 0 },
         "coucou=0; path=/; HttpOnly=1; SameSite=Lax"
     );
+
     # cookie() with explicit domain
     assertCookieValue(
         $client,
@@ -41,8 +42,7 @@ sub assertStandardBehavior {
 
     # Domain can be overwritten
     assertGenCookieValue(
-        $client,
-        $req,
+        $client, $req,
         { name => "coucou", value => 0, domain => "other.com" },
         "coucou=0; domain=other.com; path=/; HttpOnly=1; SameSite=Lax"
     );
@@ -60,13 +60,11 @@ subtest "Behavior with domain = example.com" => sub {
     my $req = Lemonldap::NG::Portal::Main::Request->new(
         { PATH_INFO => "", REQUEST_URI => "/" } );
 
-
-    assertStandardBehavior($client, $req);
+    assertStandardBehavior( $client, $req );
 
     # Domain is automatically set from portal config
     assertGenCookieValue(
-        $client,
-        $req,
+        $client, $req,
         { name => "coucou", value => 0 },
         "coucou=0; domain=.example.com; path=/; HttpOnly=1; SameSite=Lax"
     );
@@ -85,12 +83,11 @@ subtest "Behavior with unset domain" => sub {
     my $req = Lemonldap::NG::Portal::Main::Request->new(
         { PATH_INFO => "", REQUEST_URI => "/" } );
 
-    assertStandardBehavior($client, $req);
+    assertStandardBehavior( $client, $req );
 
     # Domain is not automatically set
     assertGenCookieValue(
-        $client,
-        $req,
+        $client, $req,
         { name => "coucou", value => 0 },
         "coucou=0; path=/; HttpOnly=1; SameSite=Lax"
     );
@@ -108,15 +105,13 @@ subtest "Behavior with special #PORTAL# value" => sub {
     # Stub Request object
     my $req = Lemonldap::NG::Portal::Main::Request->new(
         { PATH_INFO => "", REQUEST_URI => "/" } );
+    $req->portal("http://auth.dynamic.com/");
 
-    assertStandardBehavior($client, $req);
+    assertStandardBehavior( $client, $req );
 
     # Domain is not automatically set
-    assertGenCookieValue(
-        $client,
-        $req,
-        { name => "coucou", value => 0 },
-        "coucou=0; domain=.auth.example.com; path=/; HttpOnly=1; SameSite=Lax"
+    assertGenCookieValue( $client, $req, { name => "coucou", value => 0 },
+        "coucou=0; domain=.auth.dynamic.com; path=/; HttpOnly=1; SameSite=Lax"
     );
 };
 
@@ -132,15 +127,15 @@ subtest "Behavior with special #PORTALDOMAIN# value" => sub {
     # Stub Request object
     my $req = Lemonldap::NG::Portal::Main::Request->new(
         { PATH_INFO => "", REQUEST_URI => "/" } );
+    $req->portal("http://auth.dynamic.com/");
 
-    assertStandardBehavior($client, $req);
+    assertStandardBehavior( $client, $req );
 
     # Domain is not automatically set
     assertGenCookieValue(
-        $client,
-        $req,
+        $client, $req,
         { name => "coucou", value => 0 },
-        "coucou=0; domain=.example.com; path=/; HttpOnly=1; SameSite=Lax"
+        "coucou=0; domain=.dynamic.com; path=/; HttpOnly=1; SameSite=Lax"
     );
 };
 
