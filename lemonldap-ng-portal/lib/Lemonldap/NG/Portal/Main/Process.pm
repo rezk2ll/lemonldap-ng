@@ -671,11 +671,11 @@ sub getCookieDomain {
 
     if ( my $domain = $self->conf->{domain} ) {
         if ( $domain eq '#PORTALDOMAIN#' ) {
-            my $host = URI->new( $self->portal )->host;
+            my $host = URI->new( $req->portal )->host;
             return $host =~ s/^([^\.]*)//r;
         }
         elsif ( $domain eq '#PORTAL#' ) {
-            my $host = URI->new( $self->portal )->host;
+            my $host = URI->new( $req->portal )->host;
             return ".$host";
         }
         else {
