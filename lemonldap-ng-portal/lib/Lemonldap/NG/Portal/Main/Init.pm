@@ -224,6 +224,9 @@ sub setPortalRoutes {
 sub reloadConf {
     my ( $self, $conf ) = @_;
 
+    # Store default portal value in $self->portal
+    $self->portal( Lemonldap::NG::Handler::Main->tsv->{portal}->() );
+
     # Handle requests (other path may be declared in enabled plugins)
     $self->setPortalRoutes;
 
