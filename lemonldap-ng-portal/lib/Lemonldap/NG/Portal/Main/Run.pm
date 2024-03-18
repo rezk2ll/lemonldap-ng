@@ -1254,7 +1254,11 @@ sub _sumUpSession {
     $res->{$_} = $session->{$_}
       foreach (
         "_utime", "ipAddr",
-        keys %{ $self->conf->{sessionDataToRemember} },
+        map {
+            # Modifying key to remove ordering prefix
+            $_ =~ s/(\d+_)?//;
+            $_;
+        } keys %{ $self->conf->{sessionDataToRemember} },
         keys %{ $self->pluginSessionDataToRemember }
       );
     return $res;
