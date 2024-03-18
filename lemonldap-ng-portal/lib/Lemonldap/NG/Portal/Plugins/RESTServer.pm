@@ -312,7 +312,7 @@ sub newSession {
         $mod, $id,
         info      => $infos,
         force     => $force,
-        hashStore => $mod->{kind} =~ reHashedKinds,
+        hashStore => ( $mod->{kind} =~ reHashedKinds ),
     );
     return $self->p->sendError( $req, 'Unable to create session', 500 )
       unless ($session);
@@ -381,8 +381,11 @@ sub updateSession {
         $mod, $id,
         info      => $infos,
         force     => $force,
-        hashStore =>
-          ( $mod->{kind} =~ reHashedKinds ? $req->param('hash') // 0 : 0 ),
+        hashStore => (
+              ( $mod->{kind} =~ reHashedKinds )
+            ? ( $req->param('hash') ) // 0
+            : 0
+        ),
     ) or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     return $self->p->sendJSONresponse( $req, { result => 1 } );
@@ -397,10 +400,14 @@ sub delSession {
     # Get session
     # The hashed store is used if explicitly asked and if session type is
     # SSO or OIDC
-    my $session = $self->getApacheSession( $mod, $id,
-        hashStore =>
-          ( $mod->{kind} =~ reHashedKinds ? $req->param('hash') // 0 : 0 ), )
-      or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
+    my $session = $self->getApacheSession(
+        $mod, $id,
+        hashStore => (
+              ( $mod->{kind} =~ reHashedKinds )
+            ? ( $req->param('hash') ) // 0
+            : 0
+        ),
+    ) or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     # Delete it
     $self->logger->debug("REST request to delete session $id");
@@ -659,7 +666,7 @@ sub removeSession {
     # Get session
     my $session =
       $self->getApacheSession( $mod, $id,
-        hashStore => $mod->{kind} =~ reHashedKinds, )
+        hashStore => ( $mod->{kind} =~ reHashedKinds ), )
       or return $self->p->sendError( $req, 'Session Id does not exist', 400 );
 
     # Delete it
