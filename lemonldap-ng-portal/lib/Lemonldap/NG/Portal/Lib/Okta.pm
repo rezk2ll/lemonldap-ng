@@ -58,13 +58,17 @@ sub searchFactors {
 sub issueFactor {
     my ( $self, $okta_userid, $okta_factorid ) = @_;
 
-    my $issue_response =
-      $self->ua->post( $self->conf->{okta2fAdminURL}
+    my $issue_request = HTTP::Request->new(
+        'POST',
+        $self->conf->{okta2fAdminURL}
           . '/api/v1/users/'
           . $okta_userid
           . '/factors/'
           . $okta_factorid
-          . '/verify' );
+          . '/verify',
+        []
+    );
+    my $issue_response = $self->ua->request($issue_request);
 
     if ( $issue_response->is_error ) {
         $self->logger->error(
