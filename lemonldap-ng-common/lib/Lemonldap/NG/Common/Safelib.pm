@@ -20,7 +20,7 @@ our $VERSION = '2.17.0';
 # Note that only functions, not methods, can be written here
 our $functions =
   [
-    qw(&checkLogonHours &date &dateToTime &checkDate &basic &unicode2iso &unicode2isoSafe &iso2unicode &iso2unicodeSafe &groupMatch &isInNet6 &varIsInUri &has2f_internal &ipInSubnet &subjectid)
+    qw(&checkLogonHours &date &dateToTime &checkDate &basic &unicode2iso &unicode2isoSafe &iso2unicode &iso2unicodeSafe &groupMatch &isInNet6 &varIsInUri &has2f_internal &ipInSubnet &subjectid &inDomain_internal)
   ];
 
 ## @function boolean ipInSubnet(string ip, string network, ... )
@@ -44,7 +44,8 @@ sub subjectid {
     my ( $value, $scope, $salt ) = @_;
     $salt //= "";
     $scope = $scope ? "\@$scope" : "";
-    return ( lc ( encode_base32( Digest::SHA::sha256( $value . $salt ) ) ). $scope );
+    return (
+        lc( encode_base32( Digest::SHA::sha256( $value . $salt ) ) ) . $scope );
 }
 
 # This function is copied from MIME::Base32 under GPL/Artistic license
@@ -342,6 +343,12 @@ sub has2f_internal {
     }
 
     return 1;
+}
+
+sub inDomain_internal {
+    my ( $host, $domain ) = @_;
+    my $res = $host =~ /(?:^|\.)\Q$domain\E$/i;
+    return $res;
 }
 
 1;
