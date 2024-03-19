@@ -241,7 +241,7 @@ sub getConf {
     }
 
     $self->setDefault( $res, $localPrm );
-    $self->setValuesFromEnv($r);
+    $self->setValuesFromEnv($res);
     $self->compactConf($res);
 
     # Create cipher object and replace variable placeholder
