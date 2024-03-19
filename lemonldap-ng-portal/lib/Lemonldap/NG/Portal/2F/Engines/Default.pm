@@ -1073,10 +1073,16 @@ sub searchForAuthorized2Fmodules {
     $session ||= $req->sessionInfo;
     my @am;
     foreach ( @{ $self->sfModules } ) {
-        $self->logger->debug(
-            'Looking if ' . $_->{m}->prefix . '2f is available' );
-        if ( $_->{r}->( $req, $session ) ) {
-            $self->logger->debug(' -> OK');
+        my $authModuleName = $_->{m}->prefix;
+        $self->logger->debug('Looking for ' . $authModuleName . ' 2f');
+
+        # Adding targetAuthnLevel from req to session;
+        my $modifiedSession = {%$session};
+        $modifiedSession->{targetAuthnLevel} = $req->{pdata}->{targetAuthnLevel}
+          if $req->{pdata}->{targetAuthnLevel};
+
+        if ( $_->{r}->( $req, $modifiedSession ) ) {
+            $self->logger->debug(' -> ' . $authModuleName . ' 2f is available');
             push @am, $_->{m};
         }
     }
