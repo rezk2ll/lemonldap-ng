@@ -34,6 +34,7 @@ Inside this jail, you can access to:
   * encrypt_
   * groupMatch_
   * has2f_ (|new| in version 2.0.10)
+  * inDomain_ (|new| in version 2.19.0)
   * inGroup_ (|new| in version 2.0.8)
   * inSubnet_ (|new| in version 2.17)
   * ipInSubnet_ (|new| in version 2.17)
@@ -299,6 +300,23 @@ Example::
    Before version 2.0.10, you need to use the following syntax ::
 
       $_2fDevices =~ /"type":\s*"TOTP"/s
+
+inDomain
+~~~~~~~~
+
+.. versionadded:: 2.19.0
+
+This function tests if the request's hostname (HTTP ``Host`` header) belongs to
+a given DNS domain
+
+Usage example:
+
+::
+
+   inDomain('example.com')
+
+The function returns 1 if the targeted Vhost is equal to the given domain or
+contains it as a suffix.
 
 inGroup
 ~~~~~~~
