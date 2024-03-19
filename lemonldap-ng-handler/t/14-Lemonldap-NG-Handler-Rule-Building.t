@@ -133,6 +133,27 @@ sub runTests {
 
     is( $r->( { env => { X_FORWARDED_FOR => "192.168.0.1" } }, {} ),
         "1", "ipInSubnet works" );
+
+    # inDomain
+    $r = compileRule("inDomain('example.com') || 0");
+    is( ref($r), "CODE", "Returned code ref" );
+
+    is( $r->( { env => { HTTP_HOST => "AUTH.EXAMPLE.COM" } }, {} ),
+        "1", "inDomain works for AUTH.EXAMPLE.COM" );
+
+    is( $r->( { env => { HTTP_HOST => "auth.example.com" } }, {} ),
+        "1", "inDomain works for auth.example.com" );
+
+    is( $r->( { env => { HTTP_HOST => "example.com" } }, {} ),
+        "1", "inDomain works for example.com" );
+
+    is( $r->( { env => { HTTP_HOST => "cda.com" } }, {} ),
+        "0", "inDomain works for cda.com" );
+
+    is( $r->( { env => { HTTP_HOST => "notexample.com" } }, {} ),
+        "0", "inDomain works for notexample.com" );
+    is( $r->( { env => { HTTP_HOST => "exampleacom" } }, {} ),
+        "0", "inDomain works for exampleacom" );
 }
 
 sub runUnsafeTests {
@@ -152,7 +173,7 @@ eval { $h->localConfig($conf); $h->logLevelInit() };
 ok( !$@, 'init' );
 
 subtest "Safe jail off" => sub {
-    plan tests => 28;
+    plan tests => 35;
     ok( $h->configReload($conf), 'Load conf' );
     is(
         ref( $h->tsv->{jail}->jail ),
@@ -165,7 +186,7 @@ subtest "Safe jail off" => sub {
 };
 
 subtest "Safe jail on" => sub {
-    plan tests => 26;
+    plan tests => 33;
     ok( $h->configReload( { %$conf, useSafeJail => 1 } ), 'Load conf' );
     is( ref( $h->tsv->{jail}->jail ), "Safe", "Safe jail is enabled" );
 
