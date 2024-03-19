@@ -1761,7 +1761,7 @@ sub attributes {
         },
         sessionDataToRemember => {
             type          => 'keyTextContainer',
-            keyTest       => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+            keyTest       => qr/^(\d+_)?[_a-zA-Z][a-zA-Z0-9_]*$/,
             keyMsgFail    => '__invalidSessionData__',
             documentation => 'Data to remember in login history',
         },

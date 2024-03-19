@@ -448,7 +448,7 @@ sub _resolveURL {
     my ($port) = $vhost =~ m#^.+(:\d+)$#;
     $port ||= '';
     $vhost =~ s/:\d+$//;
-    $vhost .= $self->conf->{domain} unless ( $vhost =~ /\./ );
+    $vhost .= $self->p->getCookieDomain($req) unless ( $vhost =~ /\./ );
     $proto =
       $self->p->HANDLER->_isHttps( $req, $vhost ) ? 'https://' : 'http://'
       unless $proto;

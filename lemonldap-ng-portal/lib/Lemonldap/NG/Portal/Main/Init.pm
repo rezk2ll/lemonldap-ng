@@ -291,13 +291,6 @@ sub reloadConf {
           $self->conf->{globalStorageOptions};
     }
 
-    # Initialize cookie domain
-    unless ( $self->conf->{domain} ) {
-        $self->error('Configuration error: no domain');
-        return $self->fail;
-    }
-    $self->conf->{domain} =~ s/^([^\.])/.$1/;
-
     # Initialize cookie SameSite value
     $self->cookieSameSite( getSameSite( $self->conf ) );
     $self->logger->debug(

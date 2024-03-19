@@ -4899,7 +4899,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'sessionDataToRemember' => {
             'keyMsgFail' => '__invalidSessionData__',
-            'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+            'keyTest'    => qr/^(\d+_)?[_a-zA-Z][a-zA-Z0-9_]*$/,
             'type'       => 'keyTextContainer'
         },
         'sfEngine' => {
