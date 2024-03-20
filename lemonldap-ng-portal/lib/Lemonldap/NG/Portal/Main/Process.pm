@@ -205,7 +205,12 @@ sub controlUrl {
 
         # If the target URL has an authLevel set in config, remember it.
         my $level = $self->HANDLER->getLevel( $req, $appuri, $originalVhost );
-        $req->pdata->{targetAuthnLevel} = $level if $level;
+
+        if ($level) {
+            $self->logger->debug( "VirtualHost $originalVhost requires"
+                  . " authentication level $level" );
+            $req->pdata->{targetAuthnLevel} = $level;
+        }
 
         if (    $tmp
             and !$self->isTrustedUrl($tmp)
