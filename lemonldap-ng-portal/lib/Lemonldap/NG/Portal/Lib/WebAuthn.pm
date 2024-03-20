@@ -34,8 +34,13 @@ sub verifier {
 sub rp_id {
     my ( $self, $req ) = @_;
 
-    my $portal_uri = URI->new( $req->portal );
-    return $portal_uri->authority;
+    if ( $self->conf->{webauthnRpId} ) {
+        return $self->conf->{webauthnRpId};
+    }
+    else {
+        my $portal_uri = URI->new( $req->portal );
+        return $portal_uri->authority;
+    }
 }
 
 sub origin {
@@ -83,6 +88,7 @@ sub generateChallenge {
 
     return {
         challenge        => $challenge_base64,
+        rpId             => $self->rp_id,
         allowCredentials => [
             map { { type => "public-key", id => $_->{_credentialId}, } }
               @webauthn_devices
