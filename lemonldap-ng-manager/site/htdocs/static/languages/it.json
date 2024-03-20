@@ -1377,6 +1377,7 @@
 "webauthn2fUserCanRemoveKey":"Autorizza l'utente a rimuovere la WebAuthn",
 "webauthn2fUserVerification":"User verification",
 "webauthnDisplayNameAttr":"User Display Name attribute",
+"webauthnRpId":"Relying Party ID",
 "webauthnRpName":"Relying Party display name",
 "webidParams":"Parametri di WebID",
 "whatToTrace":"\nREMOTE_USER",

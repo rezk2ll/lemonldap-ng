@@ -1377,6 +1377,7 @@
 "webauthn2fUserCanRemoveKey":"Cho phép người dùng xóa WebAuthn",
 "webauthn2fUserVerification":"xác minh người dùng",
 "webauthnDisplayNameAttr":"Thuộc tính Tên hiển thị của người dùng",
+"webauthnRpId":"Relying Party ID",
 "webauthnRpName":"Tên hiển thị của Relying Party",
 "webidParams":"Tham số WebID",
 "whatToTrace":"REMOTE_USER",

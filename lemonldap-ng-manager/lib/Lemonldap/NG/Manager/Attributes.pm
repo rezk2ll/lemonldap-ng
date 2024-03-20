@@ -5587,6 +5587,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'webauthnDisplayNameAttr' => {
             'type' => 'text'
         },
+        'webauthnRpId' => {
+            'type' => 'text'
+        },
         'webauthnRpName' => {
             'type' => 'text'
         },

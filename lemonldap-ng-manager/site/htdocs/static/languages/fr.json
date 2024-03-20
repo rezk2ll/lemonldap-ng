@@ -1377,6 +1377,7 @@
 "webauthn2fUserCanRemoveKey":"Autoriser les utilisateurs à effacer leur WebAuthn",
 "webauthn2fUserVerification":"Vérification de l'utilisateur",
 "webauthnDisplayNameAttr":"Attribut du nom d'affichage de l'utilisateur",
+"webauthnRpId":"Domaine de validité",
 "webauthnRpName":"Nom d'affichage du portail",
 "webidParams":"Paramètres WebID",
 "whatToTrace":"REMOTE_USER",

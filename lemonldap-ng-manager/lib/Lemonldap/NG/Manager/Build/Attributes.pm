@@ -2576,6 +2576,10 @@ sub attributes {
             type          => 'text',
             documentation => 'Session attribute containing user display name',
         },
+        webauthnRpId => {
+            type          => 'text',
+            documentation => 'WebAuthn Relying Party ID',
+        },
         webauthnRpName => {
             type          => 'text',
             documentation => 'WebAuthn Relying Party display name',
