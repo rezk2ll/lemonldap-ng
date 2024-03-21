@@ -146,11 +146,9 @@ ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancestors/,
 count(1);
 
 # Verify UTF-8
-ok( $res = $rp->_get("/sessions/global/$spId", query => 'hash=1'), 'Get UTF-8' );
-$res = expectJSON($res);
-ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
+ok( getSession($spId)->data->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'cn => Frédéric Accents' );
-count(2);
+count(1);
 
 # Logout initiated by RP
 ok(
@@ -200,8 +198,7 @@ clean_sessions();
 done_testing( count() );
 
 sub op {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                        => $debug,
                 domain                          => 'idp.com',
@@ -256,8 +253,7 @@ sub op {
 
 sub rp {
     my ( $jwks, $metadata ) = @_;
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                   => $debug,
                 domain                     => 'rp.com',

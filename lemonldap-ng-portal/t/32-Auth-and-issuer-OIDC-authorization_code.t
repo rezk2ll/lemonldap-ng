@@ -187,14 +187,11 @@ ok( $res->{name} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'name => Frédéric Accents' );
 count(2);
 
-ok( $res = $op->_get("/sessions/global/$spId", query => 'hash=1'), 'Get UTF-8' );
-$res = expectJSON($res);
-ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
+ok( getSession($spId)->data->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'cn => Frédéric Accents' );
-count(2);
+count(1);
 
-ok( $res = $rp->_get("/sessions/global/$spId", query => 'hash=1'), 'Get UTF-8' );
-$res = expectJSON($res);
+$res = getSession($spId)->data;
 my $access_token_eol = $res->{_oidc_access_token_eol};
 my $access_token_old = $res->{_oidc_access_token};
 ok( $access_token_eol, 'OIDC EOL time is stored' );
@@ -218,7 +215,7 @@ is_deeply(
     },
     "Correct hGroups"
 );
-count(7);
+count(6);
 
 is( $res->{userinfo_hook}, "op/french", "oidcGotUserInfo called" );
 is( $res->{id_token_hook}, "op/french", "oidcGotIDToken called" );
@@ -250,9 +247,7 @@ ok(
 );
 count(1);
 
-ok( $res = $rp->_get("/sessions/global/$spId", query => 'hash=1'), 'Get session after refresh' );
-count(1);
-$res = expectJSON($res);
+$res = getSession($spId)->data;
 my $access_token_new     = $res->{_oidc_access_token};
 my $access_token_new_eol = $res->{_oidc_access_token_eol};
 is( $access_token_new_eol, $access_token_eol,
@@ -284,9 +279,7 @@ ok(
 );
 count(1);
 
-ok( $res = $rp->_get("/sessions/global/$spId", query => 'hash=1'), 'Get session after refresh' );
-count(1);
-$res                  = expectJSON($res);
+$res                  = getSession($spId)->data;
 $access_token_new     = $res->{_oidc_access_token};
 $access_token_new_eol = $res->{_oidc_access_token_eol};
 isnt( $access_token_new_eol, $access_token_eol,
@@ -434,8 +427,7 @@ clean_sessions();
 done_testing( count() );
 
 sub op {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                        => $debug,
                 domain                          => 'idp.com',
@@ -494,8 +486,7 @@ sub op {
 
 sub rp {
     my ( $jwks, $metadata ) = @_;
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                   => $debug,
                 domain                     => 'rp.com',

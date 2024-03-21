@@ -168,10 +168,7 @@ SKIP: {
         expectAuthenticatedAs( $res, 'fa@badwolf.org@idp' );
 
         # Verify UTF-8
-        ok( $res = $sp->_get("/sessions/global/$spId", query => 'hash=1'), 'Get UTF-8' );
-        expectOK($res);
-        ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
-          or print STDERR $@;
+        $res = getSession($spId)->data;
         is( $res->{gotResponseHookCalled}, 1, 'samlGotResponseHook called' );
         ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
           or explain( $res, 'cn => Frédéric Accents' );
@@ -326,10 +323,7 @@ SKIP: {
         expectAuthenticatedAs( $res, 'fa@badwolf.org@idp' );
 
         # Verify UTF-8
-        ok( $res = $sp->_get("/sessions/global/$spId", query => 'hash=1'), 'Get UTF-8' );
-        expectOK($res);
-        ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
-          or print STDERR $@;
+        $res = getSession($spId)->data;
         is( $res->{gotResponseHookCalled}, 1, 'samlGotResponseHook called' );
         ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
           or explain( $res, 'cn => Frédéric Accents' );
@@ -338,8 +332,7 @@ SKIP: {
         ok(
             $res = $sp->_get(
                 '/',
-                query => buildForm(
-                    {
+                query => buildForm( {
                         logout => 1,
                         url    => encodeUrl("http://test1.example.com")
                     }
@@ -409,8 +402,7 @@ clean_sessions();
 done_testing();
 
 sub issuer {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel               => $debug,
                 domain                 => 'idp.com',
@@ -458,8 +450,7 @@ sub issuer {
 }
 
 sub sp {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                          => $debug,
                 domain                            => 'sp.com',

@@ -164,21 +164,9 @@ ok( $res->{name} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'name => Frédéric Accents' );
 count(2);
 
-ok( $res = $op->_get("/sessions/global/$spId", query => 'hash=1'), 'Get UTF-8' );
-expectOK($res);
-ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
-  or print STDERR $@;
-ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
+ok( getSession($spId)->data->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'cn => Frédéric Accents' );
-count(3);
-
-ok( $res = $rp->_get("/sessions/global/$spId", query => 'hash=1'), 'Get UTF-8' );
-expectOK($res);
-ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
-  or print STDERR $@;
-ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
-  or explain( $res, 'cn => Frédéric Accents' );
-count(3);
+count(1);
 
 # Logout initiated by RP
 ok(
@@ -292,8 +280,7 @@ clean_sessions();
 done_testing( count() );
 
 sub op {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                        => $debug,
                 domain                          => 'idp.com',
@@ -347,8 +334,7 @@ sub op {
 
 sub rp {
     my ( $jwks, $metadata ) = @_;
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                   => $debug,
                 domain                     => 'rp.com',

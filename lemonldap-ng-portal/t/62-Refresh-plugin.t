@@ -9,8 +9,7 @@ BEGIN {
 
 my $res;
 
-my $client = LLNG::Manager::Test->new(
-    {
+my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel          => 'error',
             authentication    => 'Demo',
@@ -52,8 +51,14 @@ ok( $res->[2]->[0] =~ /"updated":$c/, "Count is $c" );
 count(1);
 
 foreach (@ids) {
-    ok( $res = $client->_get("/sessions/global/$_", query => 'hash=1'), 'Get session content' );
-    ok( $res->[2]->[0] =~ /"uid":"Dr Who"/,          ' Content is updated' );
+    ok(
+        $res = $client->_get(
+            "/sessions/global/"
+              . ( $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($_) : $_ )
+        ),
+        'Get session content'
+    );
+    ok( $res->[2]->[0] =~ /"uid":"Dr Who"/, ' Content is updated' );
     count(2);
 }
 

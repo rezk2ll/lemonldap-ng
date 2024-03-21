@@ -44,7 +44,7 @@ $id = expectCookie($res);
 
 ok(
     $res = $client->_get(
-        '/session/my/global', cookie => "lemonldap=$id", query => 'hash=1'
+        '/session/my/global', cookie => "lemonldap=$id"
     ),
     'Get session'
 );
@@ -53,7 +53,7 @@ $json = expectJSON($res);
 
 ok( $json->{uid} eq 'dwho', 'uid found' ) or explain( $json, "uid='dwho'" );
 ok( $json->{authenticationLevel} == 3, 'Authentication level upgraded' );
-ok( scalar keys %$json == 10, 'Ten exported attributes found' )
+ok( scalar keys %$json == 10,          'Ten exported attributes found' )
   or explain( scalar keys %$json, Dumper $json );
 count(3);
 
@@ -74,7 +74,7 @@ $id = expectCookie($res);
 
 ok(
     $res = $client->_get(
-        '/session/my/global', cookie => "lemonldap=$id", query => 'hash=1'
+        '/session/my/global', cookie => "lemonldap=$id"
     ),
     'Get session'
 );

@@ -177,7 +177,7 @@ expectSessionAttributes(
     _user     => 'french',
     mail      => 'fa2@badwolf.org'
 );
-ok( $res = $rp->_get("/sessions/global/$spId", query => 'hash=1'), 'Get session after refresh' );
+ok( $res = $rp->_get("/sessions/global/$spId"), 'Get session after refresh' );
 
 # Logout
 ok(

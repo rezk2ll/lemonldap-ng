@@ -161,11 +161,8 @@ SKIP: {
         expectAuthenticatedAs( $res, 'fa@badwolf.org@idp' );
 
         # Verify UTF-8
-        ok( $res = $sp->_get("/sessions/global/$spId", query => 'hash=1'), 'Get UTF-8' );
-        expectOK($res);
-        ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
-          or print STDERR $@;
-        ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
+        ok( getSession($spId)->data->{cn} eq 'Frédéric Accents',
+            'UTF-8 values' )
           or explain( $res, 'cn => Frédéric Accents' );
 
         # Logout initiated by IDP

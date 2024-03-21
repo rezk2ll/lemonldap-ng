@@ -137,15 +137,12 @@ expectOK($res);
 expectAuthenticatedAs( $res, 'french' );
 
 # Test attributes
-ok( $res = $sp->_get("/sessions/global/$spId", query => 'hash=1'), 'Get UTF-8' );
-expectOK($res);
-ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
-  or print STDERR $@;
+$res = getSession($spId)->data;
 ok( $res->{cn} eq 'Frédéric Accents', 'UTF-8 values' )
   or explain( $res, 'cn => Frédéric Accents' );
 ok( $res->{multi} =~ /value1;value2/ )
   or explain( $res->{multi}, 'Multi valued attribute' );
-count(4);
+count(2);
 
 # Logout initiated by SP
 ok(
@@ -208,8 +205,7 @@ clean_sessions();
 done_testing( count() );
 
 sub issuer {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel              => $debug,
                 domain                => 'idp.com',
@@ -229,8 +225,7 @@ sub issuer {
 }
 
 sub sp {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                   => $debug,
                 domain                     => 'sp.com',
