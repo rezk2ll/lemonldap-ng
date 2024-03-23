@@ -117,6 +117,7 @@ lib/Lemonldap/NG/Portal/Password/Demo.pm
 lib/Lemonldap/NG/Portal/Password/LDAP.pm
 lib/Lemonldap/NG/Portal/Password/Null.pm
 lib/Lemonldap/NG/Portal/Password/REST.pm
+lib/Lemonldap/NG/Portal/Plugins/_PasswordReset.pm
 lib/Lemonldap/NG/Portal/Plugins/AdaptativeAuthenticationLevel.pm
 lib/Lemonldap/NG/Portal/Plugins/AuthOidcPkce.pm
 lib/Lemonldap/NG/Portal/Plugins/AutoSignin.pm
@@ -559,6 +560,7 @@ t/00-Switch.t
 t/01-AuthDemo.t
 t/01-BuildRule.t
 t/01-BuildUrl.t
+t/01-Cookie-Domain.t
 t/01-CSP-and-CORS-headers.t
 t/01-EnablePasswordDisplay.t
 t/01-Handler-redirection-and-URL-check-by-portal.t
