@@ -21,6 +21,7 @@ lib/Lemonldap/NG/Common/Conf/Backends/JSONFile.pm
 lib/Lemonldap/NG/Common/Conf/Backends/LDAP.pm
 lib/Lemonldap/NG/Common/Conf/Backends/Local.pm
 lib/Lemonldap/NG/Common/Conf/Backends/MongoDB.pm
+lib/Lemonldap/NG/Common/Conf/Backends/Overlay.pm
 lib/Lemonldap/NG/Common/Conf/Backends/RDBI.pm
 lib/Lemonldap/NG/Common/Conf/Backends/REST.pm
 lib/Lemonldap/NG/Common/Conf/Backends/SOAP.pm
@@ -86,6 +87,7 @@ scripts/lmMigrateConfFiles2ini
 scripts/rotateOidcKeys
 t/01-Common-Conf.t
 t/02-Common-Conf-File.t
+t/02-Common-Conf-Overlay.t
 t/02-Common-Conf-ServerEnv.t
 t/03-Common-Conf-CDBI.t
 t/03-Common-Conf-RDBI.t
@@ -110,6 +112,9 @@ t/60-U2F-Migrate.t
 t/70-User-Agent.t
 t/99-pod.t
 t/data/preview-all-test-metadata.xml
+t/overlay_test/lmConf-1.json
+t/overlay_test/overlay/globalStorage
+t/overlay_test/overlay/globalStorageOptions
 t/TestLogger.pm
 t/TestPsgi.pm
 tools/apache-session-mysql.sql

@@ -53,6 +53,9 @@ sub run {
 
     $self->ott->updateToken( $token, _webauthn_request => $request );
 
+    $self->logger->debug(
+        "WebAuthn authentication parameters " . to_json($request) );
+
     # Prepare form
     my ( $checkLogins, $stayConnected ) = $self->getFormParams($req);
     my $tmp = $self->p->sendHtml(
