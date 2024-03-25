@@ -1095,7 +1095,7 @@ sub _failLogin {
     my ( $self, $req, %params ) = @_;
     my $reason = $params{'msg'} ? ": $params{'msg'}" : "";
 
-    if ( $param{userLogger} ) {
+    if ( $params{userLogger} ) {
         $self->userLogger->error( "CAS login failed" . $reason );
     }
     else {

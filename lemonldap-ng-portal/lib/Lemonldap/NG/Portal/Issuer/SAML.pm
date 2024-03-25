@@ -1199,7 +1199,7 @@ sub _failAuthnRequest {
     my ( $self, $req, %params ) = @_;
     my $reason = $params{'msg'} ? ": $params{'msg'}" : "";
 
-    if ( $param{userLogger} ) {
+    if ( $params{userLogger} ) {
         $self->userLogger->error( "SAML request processing failed" . $reason );
     }
     else {

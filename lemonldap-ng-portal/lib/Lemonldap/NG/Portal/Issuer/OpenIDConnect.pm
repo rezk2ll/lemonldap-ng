@@ -1144,7 +1144,7 @@ sub _failAuthorize {
     my ( $self, $req, %params ) = @_;
 
     my $reason = $params{'msg'} ? ": $params{'msg'}" : "";
-    if ( $param{userLogger} ) {
+    if ( $params{userLogger} ) {
         $self->userLogger->error( "Authorization request failed" . $reason );
     }
     else {
