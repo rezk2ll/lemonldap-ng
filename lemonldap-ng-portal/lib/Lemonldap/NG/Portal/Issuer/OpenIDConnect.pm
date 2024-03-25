@@ -297,21 +297,25 @@ sub _authorizeEndpoint {
     }
 
     my $h = $self->p->processHook( $req, 'oidcGotRequest', $oidc_request );
-    return PE_ERROR if ( $h != PE_OK );
+    return $self->_failAuthorize(
+        $req,
+        message => "oidcGotRequest hook failed",
+        res     => $h
+    ) if ( $h != PE_OK );
 
     # Detect requested flow
     my $response_type = $oidc_request->{'response_type'};
 
     unless ($response_type) {
-        $self->logger->error("No response type provided");
-        return PE_ERROR;
+        return $self->_failAuthorize( $req,
+            msg => "No response type provided" );
     }
 
     my $flow = $self->getFlowType($response_type);
 
     unless ($flow) {
-        $self->logger->error("Unknown response type: $response_type");
-        return PE_ERROR;
+        return $self->_failAuthorize( $req,
+            msg => "Unknown response type: $response_type" );
     }
     $self->logger->debug(
         "OIDC $flow flow requested (response type: $response_type)");
@@ -319,16 +323,14 @@ sub _authorizeEndpoint {
     # Check if response mode is allowed for flow
     my $response_mode = $oidc_request->{'response_mode'};
     if ( !$self->isResponseModeAllowed( $flow, $response_mode ) ) {
-        $self->logger->error(
-            "Reponse mode $response_mode is not allowed in $flow Flow");
-        return PE_ERROR;
+        return $self->_failAuthorize( $req,
+            msg => "Reponse mode $response_mode is not allowed in $flow Flow" );
     }
 
     # Client ID must be provided and cannot come from
     # request or request_uri
     unless ( $oidc_request->{'client_id'} ) {
-        $self->logger->error("Client ID is required");
-        return PE_ERROR;
+        return $self->_failAuthorize( $req, msg => "Client ID is required" );
     }
 
     # Check client_id
@@ -339,9 +341,14 @@ sub _authorizeEndpoint {
     my $rp = $self->getRP($client_id);
 
     unless ($rp) {
-        $self->logger->error( "No registered Relying Party found with"
-              . " client_id $client_id" );
-        return PE_UNKNOWNPARTNER;
+        return $self->_failAuthorize(
+            $req,
+            msg => (
+                    "No registered Relying Party found with"
+                  . " client_id $client_id"
+            ),
+            res => PE_UNKNOWNPARTNER
+        );
     }
     else {
         $self->logger->debug("Client id $client_id matches RP $rp");
@@ -349,8 +356,7 @@ sub _authorizeEndpoint {
 
     # Scope must be provided and cannot come from request or request_uri
     unless ( $oidc_request->{'scope'} ) {
-        $self->logger->error("Scope is required");
-        return PE_ERROR;
+        return $self->_failAuthorize( $req, msg => "Scope is required" );
     }
 
     # Extract request_uri/request parameter
@@ -367,14 +373,13 @@ sub _authorizeEndpoint {
                 $oidc_request->{'request'} = $request;
             }
             else {
-                $self->logger->error("Error with Request URI resolution");
-                return PE_ERROR;
+                return $self->_failAuthorize( $req,
+                    msg => "Error with Request URI resolution" );
             }
         }
         else {
-            $self->logger->error(
-                "Request URI $request_uri is not allowed for $rp");
-            return PE_ERROR;
+            return $self->_failAuthorize( $req,
+                msg => "Request URI $request_uri is not allowed for $rp" );
         }
     }
 
@@ -397,12 +402,15 @@ sub _authorizeEndpoint {
 
                 if ( $_ eq "client_id" or $_ eq "response_type" ) {
                     if ( $oidc_request->{$_} ne $request->{$_} ) {
-                        $self->logger->error( "$_ from request JWT ("
-                              . $oidc_request->{$_}
-                              . ") does not match $_ from request URI ("
-                              . $request->{$_}
-                              . ")" );
-                        return PE_ERROR;
+                        return $self->_failAuthorize(
+                            $req,
+                            msg => (
+                                    "$_ from request JWT ("
+                                  . $oidc_request->{$_}
+                                  . ") does not match $_ from request URI ("
+                                  . $request->{$_} . ")"
+                            )
+                        );
                     }
                 }
                 $oidc_request->{$_} = $request->{$_};
@@ -410,19 +418,18 @@ sub _authorizeEndpoint {
             }
         }
         else {
-            $self->logger->error("JWT signature request can not be verified");
-            return PE_ERROR;
+            return $self->_failAuthorize( $req,
+                msg => "JWT signature request can not be verified" );
         }
     }
 
     # Check all required parameters
     unless ( $oidc_request->{'redirect_uri'} ) {
-        $self->logger->error("Redirect URI is required");
-        return PE_ERROR;
+        return $self->_failAuthorize( $req, msg => "Redirect URI is required" );
     }
     if ( $flow eq "implicit" and not defined $oidc_request->{'nonce'} ) {
-        $self->logger->error("Nonce is required for implicit flow");
-        return PE_ERROR;
+        return $self->_failAuthorize( $req,
+            msg => "Nonce is required for implicit flow" );
     }
 
     # Check if this RP is authorized
@@ -430,10 +437,16 @@ sub _authorizeEndpoint {
         my $ruleVariables =
           { %{ $req->sessionInfo || {} }, _oidc_grant_type => $flow };
         unless ( $rule->( $req, $ruleVariables ) ) {
-            $self->userLogger->warn( 'User '
-                  . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                  . " is not authorized to access to $rp" );
-            return PE_UNAUTHORIZEDPARTNER;
+            return $self->_failAuthorize(
+                $req,
+                msg => (
+                        'User '
+                      . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                      . " is not authorized to access to $rp"
+                ),
+                res        => PE_UNAUTHORIZEDPARTNER,
+                userLogger => 1,
+            );
         }
     }
 
@@ -449,8 +462,12 @@ sub _authorizeEndpoint {
         )
       )
     {
-        $self->userLogger->error("Redirect URI $redirect_uri not allowed");
-        return PE_UNAUTHORIZEDURL;
+        return $self->_failAuthorize(
+            $req,
+            msg        => "Redirect URI $redirect_uri not allowed",
+            res        => PE_UNAUTHORIZEDURL,
+            userLogger => 1,
+        );
     }
 
     # Check if flow is allowed
@@ -577,16 +594,13 @@ sub _authorizeEndpoint {
     # Scope names are restricted to printable ASCII characters,
     # excluding double quote and backslash
     unless ( $oidc_request->{'scope'} =~ /^[\x20\x21\x23-\x5B\x5D-\x7E]*$/ ) {
-        $self->logger->error("Submitted scope is not valid");
-        return PE_ERROR;
+        return $self->_failAuthorize( $req,
+            msg => "Submitted scope is not valid" );
     }
 
     # Check openid scope
     unless ( $self->_hasScope( 'openid', $oidc_request->{'scope'} ) ) {
-        $self->logger->error("No openid scope found");
-
-        #TODO manage standard OAuth request
-        return PE_ERROR;
+        return $self->_failAuthorize( $req, msg => "No openid scope found" );
     }
 
     # Check id_token_hint
@@ -620,8 +634,8 @@ sub _authorizeEndpoint {
     my $_lastAuthnUTime = $req->{sessionInfo}->{_lastAuthnUTime};
     if ( $max_age && time > $_lastAuthnUTime + $max_age ) {
         $self->logger->debug(
-"Reauthentication forced because authentication time ($_lastAuthnUTime) is too old (>$max_age s)"
-        );
+                "Reauthentication forced because authentication time"
+              . " ($_lastAuthnUTime) is too old (>$max_age s)" );
         $req->pdata->{targetAuthnLevel} = $spAuthnLevel;
         return $self->reAuth($req);
     }
@@ -646,9 +660,8 @@ sub _authorizeEndpoint {
     my $bypassConsent =
       $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsBypassConsent};
     if ($bypassConsent) {
-        $self->logger->debug(
-"Consent is disabled for Relying Party $rp, user will not be prompted"
-        );
+        $self->logger->debug( "Consent is disabled for Relying Party $rp,"
+              . " user will not be prompted" );
     }
     else {
         my $ask_for_consent = 1;
@@ -664,8 +677,8 @@ sub _authorizeEndpoint {
                     { allow_nonref => 1 } );
             };
             if ($@) {
-                $self->logger->error("Corrupted session (_oidcConsents): $@");
-                return PE_ERROR;
+                return $self->_failAuthorize( $req,
+                    msg => "Corrupted session (_oidcConsents): $@" );
             }
         }
         else {
@@ -690,8 +703,8 @@ sub _authorizeEndpoint {
             my $consent_time  = $RPoidcConsent[0]{epoch};
             my $consent_scope = $RPoidcConsent[0]{scope};
             $self->logger->debug(
-"Consent already given for Relying Party $rp (time: $consent_time, scope: $consent_scope)"
-            );
+                    "Consent already given for Relying Party $rp"
+                  . " (time: $consent_time, scope: $consent_scope)" );
 
             # Check accepted scope
             foreach my $requested_scope ( split( /\s+/, $scope ) ) {
@@ -885,7 +898,11 @@ sub _authorizeEndpoint {
 
         my $h = $self->p->processHook( $req, 'oidcGenerateCode',
             $oidc_request, $rp, $code_payload );
-        return PE_ERROR if ( $h != PE_OK );
+        return $self->_failAuthorize(
+            $req,
+            msg => "oidcGenerateCode hook failed",
+            res => $h
+        ) if ( $h != PE_OK );
 
         my $codeSession = $self->newAuthorizationCode( $rp, $code_payload );
 
@@ -959,8 +976,8 @@ sub _authorizeEndpoint {
             { at_hash => $at_hash, nonce => $oidc_request->{nonce} } );
 
         unless ($id_token) {
-            $self->logger->error("Could not generate ID token");
-            return PE_ERROR;
+            return $self->_failAuthorize( $req,
+                msg => "Could not generate ID token" );
         }
 
         $self->logger->debug("Generated id token: $id_token");
@@ -1077,8 +1094,8 @@ sub _authorizeEndpoint {
             );
 
             unless ($id_token) {
-                $self->logger->error("Could not generate ID token");
-                return PE_ERROR;
+                return $self->_failAuthorize( $req,
+                    msg => "Could not generate ID token" );
             }
 
             $self->logger->debug("Generated id token: $id_token");
@@ -1121,6 +1138,21 @@ sub _authorizeEndpoint {
 
     $self->logger->debug("None flow has been selected");
     return PE_OK;
+}
+
+sub _failAuthorize {
+    my ( $self, $req, %params ) = @_;
+
+    my $reason = $params{'msg'} ? ": $params{'msg'}" : "";
+    if ( $param{userLogger} ) {
+        $self->userLogger->error( "Authorization request failed" . $reason );
+    }
+    else {
+        $self->logger->error( "Authorization request failed" . $reason );
+    }
+
+    my $res = $params{res} || PE_ERROR;
+    return $res;
 }
 
 sub _rpInitiatedLogout {
@@ -2667,9 +2699,8 @@ sub _convertOldFormatConsents {
                 { "_oidc_consent_time_" . $_ => undef } );
         }
         else {
-            $self->logger->debug(
-"Corrupted Consent / Session -> RP=$rp, Scope=$scope, Epoch=$epoch"
-            );
+            $self->logger->debug( "Corrupted Consent / Session -> "
+                  . "RP=$rp, Scope=$scope, Epoch=$epoch" );
             return PE_ERROR;
         }
     }
