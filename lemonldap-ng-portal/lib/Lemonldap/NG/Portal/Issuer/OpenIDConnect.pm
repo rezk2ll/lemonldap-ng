@@ -6,6 +6,7 @@ use Lemonldap::NG::Common::JWT qw(getJWTPayload);
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
+  portalConsts
   PE_OK
   PE_ERROR
   PE_CONFIRM
@@ -461,10 +462,6 @@ sub _authorizeEndpoint {
         }
     }
 
-    $self->userLogger->notice( 'User '
-          . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-          . " is authorized to access to $rp" );
-
     # Check redirect_uri
     my $redirect_uri = $oidc_request->{'redirect_uri'};
     if (
@@ -485,7 +482,6 @@ sub _authorizeEndpoint {
     if ( $flow eq "authorizationcode"
         and not $self->conf->{oidcServiceAllowAuthorizationCodeFlow} )
     {
-        $self->userLogger->error("Authorization code flow is not allowed");
         return $self->returnRedirectError(
             $req,           $oidc_request->{'redirect_uri'},
             "server_error", "Authorization code flow not allowed",
@@ -495,7 +491,6 @@ sub _authorizeEndpoint {
     if ( $flow eq "implicit"
         and not $self->conf->{oidcServiceAllowImplicitFlow} )
     {
-        $self->logger->error("Implicit flow is not allowed");
         return $self->returnRedirectError(
             $req,           $oidc_request->{'redirect_uri'},
             "server_error", "Implicit flow not allowed",
@@ -505,7 +500,6 @@ sub _authorizeEndpoint {
     if ( $flow eq "hybrid"
         and not $self->conf->{oidcServiceAllowHybridFlow} )
     {
-        $self->logger->error("Hybrid flow is not allowed");
         return $self->returnRedirectError(
             $req,           $oidc_request->{'redirect_uri'},
             "server_error", "Hybrid flow not allowed",
@@ -520,7 +514,6 @@ sub _authorizeEndpoint {
     {
         $self->logger->debug('JWS authentication is required');
         unless ($authMethod) {
-            $self->userLogger->error('Authentication required but not done');
             return $self->returnRedirectError(
                 $req,           $oidc_request->{'redirect_uri'},
                 'server_error', 'JWS authentication required',
@@ -530,8 +523,6 @@ sub _authorizeEndpoint {
         my $methodAllowed =
           $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthMethod};
         if ( $methodAllowed and $authMethod ne $methodAllowed ) {
-            $self->userLogger->error(
-                "Authentication with $authMethod instead of $methodAllowed");
             return $self->returnRedirectError(
                 $req,           $oidc_request->{'redirect_uri'},
                 'server_error', "Authentication must use $methodAllowed",
@@ -624,7 +615,7 @@ sub _authorizeEndpoint {
         my $sub     = $self->getIDTokenSub($id_token_hint);
         my $user_id = $self->getUserIDForRP( $req, $rp, $req->{sessionInfo} );
         unless ( $sub eq $user_id ) {
-            $self->userLogger->error(
+            $self->logger->error(
                 "ID Token hint sub $sub does not match user $user_id");
             return $self->returnRedirectError(
                 $req,
@@ -845,7 +836,6 @@ sub _authorizeEndpoint {
     if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRequirePKCE}
         and !$oidc_request->{'code_challenge'} )
     {
-        $self->userLogger->error("Relying Party must use PKCE protection");
         return $self->returnRedirectError(
             $req,              $oidc_request->{'redirect_uri'},
             'invalid_request', "Code challenge is required",
@@ -924,6 +914,18 @@ sub _authorizeEndpoint {
 
         my $state = $oidc_request->{'state'};
 
+        $self->auditLog(
+            $req,
+            code    => "ISSUER_OIDC_LOGIN_SUCCESS",
+            rp      => $rp,
+            message => (
+                    'User '
+                  . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                  . " is authorized to access to $rp"
+            ),
+            user => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+        );
+
         return $self->sendOidcResponse(
             $req, $flow,
             $oidc_request->{'response_mode'},
@@ -965,10 +967,12 @@ sub _authorizeEndpoint {
             );
 
             unless ($access_token) {
-                $self->logger->error("Unable to create Access Token");
-                $self->returnRedirectError( $req,
-                    $oidc_request->{'redirect_uri'},
-                    "server_error", undef, undef, $oidc_request->{'state'}, 1 );
+                $self->returnRedirectError(
+                    $req,           $oidc_request->{'redirect_uri'},
+                    "server_error", "Unable to create Access Token",
+                    undef,          $oidc_request->{'state'},
+                    1
+                );
             }
 
             $self->logger->debug("Generated access token: $access_token");
@@ -999,6 +1003,18 @@ sub _authorizeEndpoint {
           || $self->conf->{oidcServiceAccessTokenExpiration};
 
         my $state = $oidc_request->{'state'};
+
+        $self->auditLog(
+            $req,
+            code    => "ISSUER_OIDC_LOGIN_SUCCESS",
+            rp      => $rp,
+            message => (
+                    'User '
+                  . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                  . " is authorized to access to $rp"
+            ),
+            user => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+        );
 
         return $self->sendOidcResponse(
             $req, $flow,
@@ -1078,10 +1094,12 @@ sub _authorizeEndpoint {
             );
 
             unless ($access_token) {
-                $self->logger->error("Unable to create Access Token");
-                return $self->returnRedirectError( $req,
-                    $oidc_request->{'redirect_uri'},
-                    "server_error", undef, undef, $oidc_request->{'state'}, 1 );
+                return $self->returnRedirectError(
+                    $req,           $oidc_request->{'redirect_uri'},
+                    "server_error", "Unable to create Access Token",
+                    undef,          $oidc_request->{'state'},
+                    1
+                );
             }
 
             $self->logger->debug("Generated access token: $access_token");
@@ -1117,6 +1135,18 @@ sub _authorizeEndpoint {
           || $self->conf->{oidcServiceAccessTokenExpiration};
 
         my $state = $oidc_request->{state};
+
+        $self->auditLog(
+            $req,
+            code    => "ISSUER_OIDC_LOGIN_SUCCESS",
+            rp      => $rp,
+            message => (
+                    'User '
+                  . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                  . " is authorized to access to $rp"
+            ),
+            user => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+        );
 
         return $self->sendOidcResponse(
             $req, $flow,
@@ -1155,14 +1185,16 @@ sub _failAuthorize {
     my ( $self, $req, %params ) = @_;
 
     my $reason = $params{'msg'} ? ": $params{'msg'}" : "";
-    if ( $params{userLogger} ) {
-        $self->userLogger->error( "Authorization request failed" . $reason );
-    }
-    else {
-        $self->logger->error( "Authorization request failed" . $reason );
-    }
+    my $res    = $params{res} || PE_ERROR;
 
-    my $res = $params{res} || PE_ERROR;
+    $self->auditLog(
+        $req,
+        code    => "ISSUER_OIDC_LOGIN_FAILED",
+        message => ( "OIDC login failed" . $reason ),
+        ( $reason ? ( reason => $reason ) : () ),
+        portal_error => portalConsts->{$res},
+    );
+
     return $res;
 }
 

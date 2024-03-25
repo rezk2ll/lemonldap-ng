@@ -25,7 +25,8 @@ use Mouse;
 use Crypt::URandom;
 use URI;
 
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
+use Lemonldap::NG::Portal::Main::Constants
+  qw(PE_OK PE_REDIRECT PE_ERROR portalConsts);
 
 our $VERSION = '2.19.0';
 
@@ -1643,6 +1644,16 @@ sub returnRedirectError {
     my ( $self, $req, $redirect_url, $error, $error_description,
         $error_uri, $state, $fragment )
       = @_;
+
+    my $reason = $error_description ? ": $error_description" : "";
+    $self->auditLog(
+        $req,
+        code    => "ISSUER_OIDC_LOGIN_FAILED",
+        message => ( "OIDC login failed" . $reason ),
+        ( $error_description ? ( reason => $error_description ) : () ),
+        oauth_error  => $error,
+        portal_error => portalConsts->{PE_REDIRECT},
+    );
 
     my $urldc =
         $redirect_url
