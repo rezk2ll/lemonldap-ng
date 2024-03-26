@@ -228,6 +228,10 @@ sub refresh {
     $data{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
     $self->logger->debug(
         "Set session $req->{id} _updateTime with $data{_updateTime}");
+
+    # Avoid interferences when refresh is run on multiple sessions
+    # in the same request
+    $req->sessionInfo({});
     $req->steps( [
             'getUser',
             @{ $self->betweenAuthAndData },
