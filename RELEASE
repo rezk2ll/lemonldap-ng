@@ -29,6 +29,9 @@ Before release
   $ make minify
   $ make documentation
 
+- Update OpenAPI spec
+  $ make SWAGGER_CODEGEN=/opt/swagger-codegen-cli-3.0.51.jar api_doc
+
 - Update languages (needs a Transifex token)
   $ ./scripts/download_translations
 

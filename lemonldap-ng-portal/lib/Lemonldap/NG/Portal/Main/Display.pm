@@ -796,7 +796,14 @@ sub mkSessionArray {
                         ip     => $session->{ipAddr},
                         values => [
                             map {
-                                { v => $session->{$_}, k => $_, "k_$_" => 1 }
+                                # Modifying key to remove ordering prefix
+                                my $modifiedKey = $_;
+                                $modifiedKey =~ s/(\d+_)?//;
+                                {
+                                    v      => $session->{$modifiedKey},
+                                    k      => $_,
+                                    "k_$_" => 1
+                                }
                             } @fields
                         ],
                         error        => $session->{error},

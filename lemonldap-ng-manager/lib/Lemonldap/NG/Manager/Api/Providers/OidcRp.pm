@@ -387,7 +387,7 @@ sub _pushOidcRp {
             my $optionName = $self->_translateOptionApiToConf( $_, 'oidcRP' );
             eval {
                 my $optionValue =
-                  $self->_translateValueApiToConf( $_, $push->{options}->{$_} );
+                  $self->_translateValueApiToConf( $optionName, $push->{options}->{$_} );
                 $translatedOptions->{$optionName} = $optionValue;
             };
             if ($@) {

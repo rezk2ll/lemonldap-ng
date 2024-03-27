@@ -74,6 +74,7 @@ ENDKEY
             '/',
             IO::String->new('user=dwho&password=dwho'),
             length => 23,
+            accept => 'text/html',
         ),
         'Auth query'
     );

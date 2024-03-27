@@ -194,14 +194,16 @@ sub run {
         }
 
         my $h = $self->p->processHook( $req, 'casGotRequest', $cas_request );
-        return $h if ( $h != PE_OK );
+        return $self->_failLogin(
+            $req,
+            msg => "casGotRequest hook failed",
+            res => $h
+        ) if ( $h != PE_OK );
 
         my $service = $cas_request->{service};
         $service = '' if ( $self->p->checkXSSAttack( 'service', $service ) );
         my $renew   = $cas_request->{renew};
         my $gateway = $cas_request->{gateway};
-
-        my $casServiceTicket;
 
         # If no service defined, exit
         unless ( defined $service ) {
@@ -210,8 +212,7 @@ sub run {
         }
 
         unless ( $service =~ m#^(https?://[^/]+)(/.*)?$# ) {
-            $self->logger->error("Bad service $service");
-            return PE_ERROR;
+            return $self->_failAuthorize( $req, msg => "Bad service $service" );
         }
         my $app = $self->getCasApp($service);
 
@@ -245,8 +246,12 @@ sub run {
                 "CAS access control requested on service $service");
 
             unless ($app) {
-                $self->userLogger->error('CAS service not configured');
-                return PE_UNKNOWNPARTNER;
+                return $self->_failLogin(
+                    $req,
+                    msg        => 'CAS service not configured',
+                    res        => PE_UNKNOWNPARTNER,
+                    userLogger => 1,
+                );
             }
 
             # Check if we have sufficient auth level
@@ -268,22 +273,7 @@ sub run {
                     $self->logger->debug("CAS service $service access allowed");
                 }
                 else {
-                    $self->userLogger->warn( 'User '
-                          . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                          . " is not authorized to access to $app" );
-
-                    if ( $casAccessControlPolicy =~ /^(error)$/i ) {
-                        $self->logger->debug(
-                                "Return error instead of redirecting user"
-                              . " on CAS service" );
-                        return PE_UNAUTHORIZEDPARTNER;
-                    }
-
-                    else {
-                        $self->logger->debug(
-                            "Redirect user on CAS service with a fake ticket");
-                        $casServiceTicket = "ST-F4K3T1CK3T";
-                    }
+                    return $self->_failLoginRule( $req, $cas_request, $app );
                 }
             }
         }
@@ -299,72 +289,60 @@ sub run {
                   . " is redirected to $service" );
         }
 
-        unless ($casServiceTicket) {
-
-            # Check last authentication time to decide if
-            # the authentication is recent or not
-            my $casRenewFlag     = 0;
-            my $last_authn_utime = $req->{sessionInfo}->{_lastAuthnUTime} || 0;
-            if (
-                time() - $last_authn_utime <
-                $self->conf->{portalForceAuthnInterval} )
-            {
-                $self->logger->debug(
-                    "Authentication is recent, will set CAS renew flag to true"
-                );
-                $casRenewFlag = 1;
-            }
-
-            # Create a service ticket
+        # Check last authentication time to decide if
+        # the authentication is recent or not
+        my $casRenewFlag     = 0;
+        my $last_authn_utime = $req->{sessionInfo}->{_lastAuthnUTime} || 0;
+        if (
+            time() - $last_authn_utime <
+            $self->conf->{portalForceAuthnInterval} )
+        {
             $self->logger->debug(
-                "Create a CAS service ticket for service $service");
-
-            my $_utime =
-              $self->conf->{casTicketExpiration}
-              ? (
-                time +
-                  $self->conf->{casTicketExpiration} -
-                  $self->conf->{timeout} )
-              : ( $req->{sessionInfo}->{_utime} || time() );
-
-            my $Sinfos;
-            $Sinfos->{type}    = 'casService';
-            $Sinfos->{service} = $service;
-            $Sinfos->{renew}   = $casRenewFlag;
-            $Sinfos->{_cas_id} = $session_id;
-            $Sinfos->{_utime}  = $_utime;
-            $Sinfos->{_casApp} = $app;
-
-            my $h = $self->p->processHook( $req, 'casGenerateServiceTicket',
-                $cas_request, $app, $Sinfos );
-            return $h if ( $h != PE_OK );
-
-            my $casServiceSession = $self->getCasSession( undef, $Sinfos );
-
-            unless ($casServiceSession) {
-                $self->logger->error("Unable to create CAS session");
-                return PE_ERROR;
-            }
-
-            my $casServiceSessionID = $casServiceSession->id;
-            $casServiceTicket = "ST-" . $casServiceSessionID;
-
-            $self->logger->debug(
-                "CAS service session $casServiceSessionID created");
+                "Authentication is recent, will set CAS renew flag to true");
+            $casRenewFlag = 1;
         }
 
-        # Redirect to service
-        # cas_request may have been modified by hook
-        my $service_url = $cas_request->{service};
-        $service_url .= ( $service_url =~ /\?/ ? '&' : '?' )
-          . build_urlencoded( ticket => $casServiceTicket );
+        # Create a service ticket
+        $self->logger->debug(
+            "Create a CAS service ticket for service $service");
 
-        $self->logger->debug("Redirect user to $service_url");
+        my $_utime =
+          $self->conf->{casTicketExpiration}
+          ? (
+            time + $self->conf->{casTicketExpiration} - $self->conf->{timeout} )
+          : ( $req->{sessionInfo}->{_utime} || time() );
 
-        $req->{urldc} = $service_url;
+        my $Sinfos;
+        $Sinfos->{type}    = 'casService';
+        $Sinfos->{service} = $service;
+        $Sinfos->{renew}   = $casRenewFlag;
+        $Sinfos->{_cas_id} = $session_id;
+        $Sinfos->{_utime}  = $_utime;
+        $Sinfos->{_casApp} = $app;
 
-        $req->steps( [] );
-        return PE_OK;
+        $h = $self->p->processHook( $req, 'casGenerateServiceTicket',
+            $cas_request, $app, $Sinfos );
+        return $self->_failLogin(
+            $req,
+            msg => 'casGenerateServiceTicket hook failed',
+            res => $h
+        ) if ( $h != PE_OK );
+
+        my $casServiceSession = $self->getCasSession( undef, $Sinfos );
+
+        unless ($casServiceSession) {
+            return $self->_failLogin( $req,
+                msg => "Unable to create CAS session" );
+        }
+
+        my $casServiceSessionID = $casServiceSession->id;
+        my $casServiceTicket    = "ST-" . $casServiceSessionID;
+
+        $self->logger->debug(
+            "CAS service session $casServiceSessionID created");
+
+        return $self->_redirectUser( $req, $cas_request->{service},
+            $casServiceTicket );
     }
 
     # 2. LOGOUT
@@ -425,11 +403,7 @@ sub run {
             }
 
             if ($logout_service) {
-                $self->logger->debug(
-                    "User will be redirected to $logout_service");
-                $req->{urldc} = $logout_service;
-                $req->steps( [] );
-                return PE_OK;
+                return $self->_redirectUser( $req, $logout_service );
             }
         }
         else {
@@ -565,8 +539,8 @@ sub validate {
         if (   $service1_uri->rel($service2_uri) eq "./"
             or $service2_uri->rel($service1_uri) eq "./" )
         {
-            $self->logger->notice(
-"Submitted service $service1_uri does not exactly match initial service "
+            $self->logger->notice( "Submitted service $service1_uri"
+                  . " does not exactly match initial service "
                   . $service2_uri
                   . ' but difference is tolerated.' );
         }
@@ -589,9 +563,8 @@ sub validate {
         $self->logger->debug("Renew flag detected ");
 
         unless ( $casServiceSession->data->{renew} ) {
-            $self->logger->error(
-"Authentication renew requested, but not done in former authentication process"
-            );
+            $self->logger->error( "Authentication renew requested,"
+                  . " but not done in former authentication process" );
             $self->deleteCasSession($casServiceSession);
             return $self->returnCasValidateError();
         }
@@ -796,8 +769,8 @@ sub _validate2 {
         if (   $service1_uri->rel($service2_uri) eq "./"
             or $service2_uri->rel($service1_uri) eq "./" )
         {
-            $self->logger->notice(
-"Submitted service $service1_uri does not exactly match initial service "
+            $self->logger->notice( "Submitted service $service1_uri"
+                  . " does not exactly match initial service "
                   . $service2_uri
                   . ' but difference is tolerated.' );
         }
@@ -823,9 +796,8 @@ sub _validate2 {
         $self->logger->debug("Renew flag detected ");
 
         unless ( $casServiceSession->data->{renew} ) {
-            $self->logger->error(
-"Authentication renew requested, but not done in former authentication process"
-            );
+            $self->logger->error( "Authentication renew requested,"
+                  . " but not done in former authentication process" );
             $self->deleteCasSession($casServiceSession);
             return $self->returnCasValidateError();
         }
@@ -876,9 +848,8 @@ sub _validate2 {
 
                 $casProxyGrantingTicketIOU = "PGTIOU-" . $tmpCasSession->id;
                 $self->deleteCasSession($tmpCasSession);
-                $self->logger->debug(
-"Generate proxy granting ticket IOU $casProxyGrantingTicketIOU"
-                );
+                $self->logger->debug( "Generate proxy granting ticket IOU"
+                      . $casProxyGrantingTicketIOU );
 
                 # Request pgtUrl
                 if (
@@ -1096,8 +1067,8 @@ sub relayLogout {
         return $self->p->imgok;
     }
     else {
-        $self->logger->error(
-            "CAS back-channel logout to $service error: " . $response->message );
+        $self->logger->error( "CAS back-channel logout to $service error: "
+              . $response->message );
         $self->logger->debug( $response->dump );
         return $self->p->imgnok;
     }
@@ -1118,6 +1089,59 @@ sub isLogoutEnabled {
     else {
         return $option;
     }
+}
+
+sub _failLogin {
+    my ( $self, $req, %params ) = @_;
+    my $reason = $params{'msg'} ? ": $params{'msg'}" : "";
+
+    if ( $params{userLogger} ) {
+        $self->userLogger->error( "CAS login failed" . $reason );
+    }
+    else {
+        $self->logger->error( "CAS login failed" . $reason );
+    }
+
+    my $res = $params{res} || PE_ERROR;
+    return $res;
+}
+
+sub _failLoginRule {
+    my ( $self, $req, $cas_request, $app ) = @_;
+    my $casAccessControlPolicy = $self->conf->{casAccessControlPolicy};
+
+    $self->userLogger->warn( 'User '
+          . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+          . " is not authorized to access to $app" );
+
+    if ( $casAccessControlPolicy =~ /^(error)$/i ) {
+        $self->logger->debug(
+            "Return error instead of redirecting user" . " on CAS service" );
+        return PE_UNAUTHORIZEDPARTNER;
+    }
+
+    else {
+        $self->logger->debug("Redirect user on CAS service with a fake ticket");
+        return $self->_redirectUser( $req, $cas_request->{service},
+            "ST-F4K3T1CK3T" );
+    }
+}
+
+sub _redirectUser {
+    my ( $self, $req, $destination, $ticket ) = @_;
+
+    # Redirect to service
+    # cas_request may have been modified by hook
+    if ($ticket) {
+        $destination .= ( $destination =~ /\?/ ? '&' : '?' )
+          . build_urlencoded( ticket => $ticket );
+    }
+
+    $self->logger->debug("Redirect user to $destination");
+
+    $req->{urldc} = $destination;
+    $req->steps( [] );
+    return PE_OK;
 }
 
 1;

@@ -5,8 +5,8 @@ use Time::Fake;
 
 # Must subclass TOTP because it uses $self->logger etc.
 package TestableTotp;
-use Moose;
 use Test::More;
+use Mouse;
 use Lemonldap::NG::Common::TOTP;
 use Lemonldap::NG::Common::Logger::Null;
 extends 'Lemonldap::NG::Common::TOTP';

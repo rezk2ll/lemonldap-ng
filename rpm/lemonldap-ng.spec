@@ -322,9 +322,6 @@ Requires:       perl(Net::Facebook::Oauth2)
 # OpenID
 Requires:       perl(Net::OAuth)
 Requires:       perl(Net::OpenID::Consumer)
-# TOTP
-Requires:       perl(Convert::Base32)
-Requires:       perl(Digest::HMAC_SHA1)
 %else
 # Fido2
 Recommends:     perl(Authen::WebAuthn)
@@ -341,9 +338,6 @@ Recommends:     perl(Net::Facebook::Oauth2)
 # OpenID
 Recommends:     perl(Net::OAuth)
 Recommends:     perl(Net::OpenID::Consumer)
-# TOTP
-Recommends:     perl(Convert::Base32)
-Recommends:     perl(Digest::HMAC_SHA1)
 %endif
 Provides:       bundled(fontawesome-fonts) = 4.7.0
 Provides:       bundled(js-bootstrap) = 4.5.2

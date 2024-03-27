@@ -205,7 +205,12 @@ sub controlUrl {
 
         # If the target URL has an authLevel set in config, remember it.
         my $level = $self->HANDLER->getLevel( $req, $appuri, $originalVhost );
-        $req->pdata->{targetAuthnLevel} = $level if $level;
+
+        if ($level) {
+            $self->logger->debug( "VirtualHost $originalVhost requires"
+                  . " authentication level $level" );
+            $req->pdata->{targetAuthnLevel} = $level;
+        }
 
         if (    $tmp
             and !$self->isTrustedUrl($tmp)
@@ -393,10 +398,10 @@ sub extractFormInfo {
         and $req->cookies->{ $self->conf->{cookieName} } )
     {
         $req->addCookie(
-            $self->cookie(
+            $self->genCookie(
+                $req,
                 name    => $self->conf->{cookieName},
                 value   => 0,
-                domain  => $self->conf->{domain},
                 secure  => $self->conf->{securedCookie},
                 expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
             )
@@ -613,19 +618,19 @@ sub buildCookie {
     my ( $self, $req ) = @_;
     if ( $req->id ) {
         $req->addCookie(
-            $self->cookie(
+            $self->genCookie(
+                $req,
                 name   => $self->conf->{cookieName},
                 value  => $req->id,
-                domain => $self->conf->{domain},
                 secure => $self->conf->{securedCookie},
             )
         );
         if ( $self->conf->{securedCookie} >= 2 ) {
             $req->addCookie(
-                $self->cookie(
+                $self->genCookie(
+                    $req,
                     name   => $self->conf->{cookieName} . "http",
                     value  => $req->{sessionInfo}->{_httpSession},
-                    domain => $self->conf->{domain},
                     secure => 0,
                 )
             );
@@ -654,6 +659,30 @@ sub storeHistory {
         $self->registerLogin($req);
     }
     return PE_OK;
+}
+
+# This method returns the domain for a new cookie
+# In modern browsers:
+# - an empty value means the cookie is only valid on the portal itself
+# - in other situations, the cookie is sent to all subdomains
+#   and a leading dot is added for compatibility
+sub getCookieDomain {
+    my ( $self, $req ) = @_;
+
+    if ( my $domain = $self->conf->{domain} ) {
+        if ( $domain eq '#PORTALDOMAIN#' ) {
+            my $host = URI->new( $self->portal )->host;
+            return $host =~ s/^([^\.]*)//r;
+        }
+        elsif ( $domain eq '#PORTAL#' ) {
+            my $host = URI->new( $self->portal )->host;
+            return ".$host";
+        }
+        else {
+            return $domain =~ s/^(?!\.)/./r;
+        }
+    }
+    return;
 }
 
 1;

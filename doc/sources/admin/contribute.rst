@@ -54,7 +54,7 @@ As *root:*
 
 ::
 
-   apt install make devscripts equivs yui-compressor git uglifyjs coffeescript autopkgtest
+   apt install make devscripts equivs yui-compressor git uglifyjs coffeescript autopkgtest cpanminus
 
 Configure Git
 ^^^^^^^^^^^^^

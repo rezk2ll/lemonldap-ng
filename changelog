@@ -748,7 +748,7 @@ lemonldap-ng (2.0.9) stable; urgency=medium
     * #2283: Improve Notifications explorer to display done notifications content
     * #2284: Improve serviceToken debug logs
     * #2292: request "do not minify" json config option
-    * #2295: Erroneous use of NTLM should be explicitely reported to the user
+    * #2295: Erroneous use of NTLM should be explicitly reported to the user
     * #2299: healthcheck endpoint for manager API
     * #2302: correct usage of invalid vs unvalid in code & messaging
     * #2303: Add del method to lemonldap-ng-cli
@@ -2475,7 +2475,7 @@ lemonldap-ng (1.1.0) stable; urgency=low
 
 lemonldap-ng (1.0.6) stable; urgency=low
 
-    * [LEMONLDAP-297] - LDAP attributes are not explicitely requested
+    * [LEMONLDAP-297] - LDAP attributes are not explicitly requested
     * [LEMONLDAP-298] - Multi option with # not accepted in Manager
     * [LEMONLDAP-304] - Cannot use spaces between values of Multi
       authentication
@@ -2745,7 +2745,7 @@ lemonldap-ng (1.0rc2) unstable; urgency=low
       statement
     * [LEMONLDAP-78] - Request Denied on SOAP SLO request on IDP
     * [LEMONLDAP-79] - Mandatory attributes are not requested
-    * [LEMONLDAP-81] - SessionNotOnOrAfter should be set explicitely
+    * [LEMONLDAP-81] - SessionNotOnOrAfter should be set explicitly
     * [LEMONLDAP-82] - CDA always use secured cookie even if requested site is
       a http one
     * [LEMONLDAP-100] - Secondary SAML session should be destroyed when

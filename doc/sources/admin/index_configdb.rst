@@ -14,3 +14,4 @@ Configuration database
    soapconfbackend
    restconfbackend
    localconfbackend
+   overlayconfbackend

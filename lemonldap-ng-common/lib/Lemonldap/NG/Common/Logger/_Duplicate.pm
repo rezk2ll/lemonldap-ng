@@ -20,6 +20,7 @@ sub AUTOLOAD {
     $AUTOLOAD =~ s/.*:://;
     return if $AUTOLOAD eq 'DESTROY';
     $self->{logger}->$AUTOLOAD(@_);
+    return if $AUTOLOAD !~ m/^(?:error|warn|notice|info|debug)$/;
     my $msg = shift;
     $msg = "[$AUTOLOAD] $msg";
     $self->{dup}->debug( $msg, @_ );

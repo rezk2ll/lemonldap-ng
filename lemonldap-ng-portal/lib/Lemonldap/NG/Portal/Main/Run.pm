@@ -104,7 +104,7 @@ sub handler {
                 : ()
             ),
         );
-        push @{ $res->[1] }, 'Set-Cookie', $self->cookie(%v);
+        push @{ $res->[1] }, 'Set-Cookie', $self->genCookie( $req, %v );
     }
     return $res;
 }
@@ -194,12 +194,10 @@ sub postAuthenticatedRequest {
     );
 }
 
-sub refresh {
+sub processRefreshSession {
     my ( $self, $req ) = @_;
-    $req->mustRedirect(1);
+
     my %data = %{ $req->userData };
-    $self->userLogger->notice(
-        'Refresh request for ' . $data{ $self->conf->{whatToTrace} } );
     $req->user( $data{_user} || $data{ $self->conf->{whatToTrace} } );
     $req->id( $data{_session_id} );
     foreach ( keys %data ) {
@@ -228,6 +226,10 @@ sub refresh {
     $data{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
     $self->logger->debug(
         "Set session $req->{id} _updateTime with $data{_updateTime}");
+
+    # Avoid interferences when refresh is run on multiple sessions
+    # in the same request
+    $req->sessionInfo({});
     $req->steps( [
             'getUser',
             @{ $self->betweenAuthAndData },
@@ -239,10 +241,28 @@ sub refresh {
             },
             $self->groupsAndMacros,
             'setLocalGroups',
-            'store'
         ]
     );
-    my $res = $req->error( $self->process($req) );
+    return $self->process($req);
+}
+
+sub refresh {
+    my ( $self, $req ) = @_;
+    $req->mustRedirect(1);
+
+    $self->userLogger->notice( 'Refresh request for '
+          . $req->userData->{ $self->conf->{whatToTrace} } );
+
+    my $res = $self->processRefreshSession($req);
+
+    # Run additional 'store' step We need to call process() here in case
+    # 'store' is hooked by aroundSub or afterSub
+    if ( $res == PE_OK ) {
+        $req->steps( ['store'] );
+        $res = $self->process($req);
+    }
+
+    $req->error($res);
     if ($res) {
         $req->info(
             $self->loadTemplate(
@@ -282,9 +302,9 @@ sub _unauthLogout {
     $self->logger->debug("Removing $self->{conf}->{cookieName} cookie");
     $req->pdata( {} );
     $req->addCookie(
-        $self->cookie(
+        $self->genCookie(
+            $req,
             name    => $self->conf->{cookieName},
-            domain  => $self->conf->{domain},
             secure  => $self->conf->{securedCookie},
             expires => 'Wed, 21 Oct 2015 00:00:00 GMT',
             value   => 0
@@ -691,10 +711,10 @@ sub _deleteSession {
 
         # Create an obsolete cookie to remove it
         $req->addCookie(
-            $self->cookie(
+            $self->genCookie(
+                $req,
                 name    => $self->conf->{cookieName} . 'http',
                 value   => 0,
-                domain  => $self->conf->{domain},
                 secure  => 0,
                 expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
             )
@@ -706,10 +726,10 @@ sub _deleteSession {
 
     # Create an obsolete cookie to remove it
     $req->addCookie(
-        $self->cookie(
+        $self->genCookie(
+            $req,
             name    => $self->conf->{cookieName},
             value   => 0,
-            domain  => $self->conf->{domain},
             secure  => $self->conf->{securedCookie},
             expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
         )
@@ -865,16 +885,36 @@ sub fullUrl {
     return $pHost . $req->env->{REQUEST_URI};
 }
 
-sub cookie {
-    my ( $self, %h ) = @_;
-    my @res;
-    $res[0] = "$h{name}" or die("name required");
-    $res[0] .= "=$h{value}";
+# Generates a cookie header which can depend on the request
+sub genCookie {
+    my ( $self, $req, %h ) = @_;
     $h{path} ||= '/';
     $h{HttpOnly} //= $self->conf->{httpOnly};
     $h{max_age}  //= $self->conf->{cookieExpiration}
       if ( $self->conf->{cookieExpiration} );
     $h{SameSite} ||= $self->cookieSameSite;
+    $h{domain}   ||= $self->getCookieDomain($req);
+    return $self->assemble_cookie(%h);
+}
+
+# Deprecated method, does not handle dynamic portal URL
+sub cookie {
+    my ( $self, %h ) = @_;
+    $h{path} ||= '/';
+    $h{HttpOnly} //= $self->conf->{httpOnly};
+    $h{max_age}  //= $self->conf->{cookieExpiration}
+      if ( $self->conf->{cookieExpiration} );
+    $h{SameSite} ||= $self->cookieSameSite;
+
+    return $self->assemble_cookie(%h);
+}
+
+sub assemble_cookie {
+    my ( $self, %h ) = @_;
+
+    my @res;
+    $res[0] = "$h{name}" or die("name required");
+    $res[0] .= "=$h{value}";
 
     foreach (qw(domain path expires max_age HttpOnly SameSite)) {
         my $f = $_;
@@ -1221,8 +1261,8 @@ sub registerLogin {
     $history->{$type} ||= [];
     $self->logger->debug("Current login saved into $type");
 
-    # Gather current login's parameters
-    my $login = $self->_sumUpSession( $req->{sessionInfo}, 1 );
+    # Gather current login's parameters and force current time
+    my $login = $self->_sumUpSession({ %{$req->sessionInfo}, _utime => time }, 1 );
     $login->{error} = $self->error( $req->authResult )
       if ( $req->authResult );
 
@@ -1254,7 +1294,11 @@ sub _sumUpSession {
     $res->{$_} = $session->{$_}
       foreach (
         "_utime", "ipAddr",
-        keys %{ $self->conf->{sessionDataToRemember} },
+        map {
+            # Modifying key to remove ordering prefix
+            $_ =~ s/(\d+_)?//;
+            $_;
+        } keys %{ $self->conf->{sessionDataToRemember} },
         keys %{ $self->pluginSessionDataToRemember }
       );
     return $res;
