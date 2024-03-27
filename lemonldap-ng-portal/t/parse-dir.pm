@@ -39,10 +39,10 @@ sub testRequiredMethods {
         subtest "$mod" => sub {
             use_ok($mod);
             my $o;
-            ok( $o = $mod->new(), "Able to create $mod object" );
+            ok( $o = $mod->new(), "Able to create object" );
             count(2);
             foreach my $method (@$methods) {
-                ok( $o->can($method), "$mod implement $method" );
+                ok( $o->can($method), "Implement $method" );
             }
             done_testing();
         }
