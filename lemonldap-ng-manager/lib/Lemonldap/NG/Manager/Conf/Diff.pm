@@ -90,7 +90,7 @@ sub diff {
     }
     while ( my $key = shift @{ $keys[1] } ) {
         next unless ( defined( $conf[1]->{$key} ) );
-        next if ( $key =~ $hashParameters and not( %{ $conf[1]->{$key} } ) );
+        next if ( $key =~ $hashParameters and ref( $conf[1]->{$key} ) eq 'HASH' and not( %{ $conf[1]->{$key} } ) );
         if ( (
                 not ref( $conf[1]->{$key} ) and not( (
                         defined defaultValue( $self, $key )
