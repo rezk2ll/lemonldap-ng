@@ -168,6 +168,11 @@ sub run {
     return PE_OK;
 }
 
+# Nothing to do here for now
+sub logout {
+    return PE_OK;
+}
+
 sub jitsi {
     my ( $self, $req ) = @_;
     my $room = $req->param('room');
