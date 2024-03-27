@@ -12,11 +12,12 @@ testRequiredMethods(
           setGroups
         )
     ],
-    [qw(
-      Combination
-      Custom
-      Proxy
-    )],
+    [ qw(
+          Combination
+          Custom
+          Proxy
+        )
+    ],
 );
 
 done_testing();

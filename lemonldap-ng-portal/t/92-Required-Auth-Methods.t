@@ -11,12 +11,12 @@ testRequiredMethods(
           authLogout
         )
     ],
-    [qw(
-      Custom
-      PAM
-      Proxy
-      WebID
-    )],
+    [ qw(
+          Custom
+          PAM
+          WebID
+        )
+    ],
 );
 
 done_testing();
