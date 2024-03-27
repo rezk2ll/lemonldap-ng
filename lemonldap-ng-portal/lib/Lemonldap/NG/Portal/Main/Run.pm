@@ -194,12 +194,10 @@ sub postAuthenticatedRequest {
     );
 }
 
-sub refresh {
+sub processRefreshSession {
     my ( $self, $req ) = @_;
-    $req->mustRedirect(1);
+
     my %data = %{ $req->userData };
-    $self->userLogger->notice(
-        'Refresh request for ' . $data{ $self->conf->{whatToTrace} } );
     $req->user( $data{_user} || $data{ $self->conf->{whatToTrace} } );
     $req->id( $data{_session_id} );
     foreach ( keys %data ) {
@@ -228,6 +226,10 @@ sub refresh {
     $data{_updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
     $self->logger->debug(
         "Set session $req->{id} _updateTime with $data{_updateTime}");
+
+    # Avoid interferences when refresh is run on multiple sessions
+    # in the same request
+    $req->sessionInfo({});
     $req->steps( [
             'getUser',
             @{ $self->betweenAuthAndData },
@@ -239,10 +241,28 @@ sub refresh {
             },
             $self->groupsAndMacros,
             'setLocalGroups',
-            'store'
         ]
     );
-    my $res = $req->error( $self->process($req) );
+    return $self->process($req);
+}
+
+sub refresh {
+    my ( $self, $req ) = @_;
+    $req->mustRedirect(1);
+
+    $self->userLogger->notice( 'Refresh request for '
+          . $req->userData->{ $self->conf->{whatToTrace} } );
+
+    my $res = $self->processRefreshSession($req);
+
+    # Run additional 'store' step We need to call process() here in case
+    # 'store' is hooked by aroundSub or afterSub
+    if ( $res == PE_OK ) {
+        $req->steps( ['store'] );
+        $res = $self->process($req);
+    }
+
+    $req->error($res);
     if ($res) {
         $req->info(
             $self->loadTemplate(

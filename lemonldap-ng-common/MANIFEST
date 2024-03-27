@@ -112,9 +112,11 @@ t/60-U2F-Migrate.t
 t/70-User-Agent.t
 t/99-pod.t
 t/data/preview-all-test-metadata.xml
+t/lemonldap-ng.ini
 t/overlay_test/lmConf-1.json
 t/overlay_test/overlay/globalStorage
 t/overlay_test/overlay/globalStorageOptions
+t/TestConfBackend.pm
 t/TestLogger.pm
 t/TestPsgi.pm
 tools/apache-session-mysql.sql

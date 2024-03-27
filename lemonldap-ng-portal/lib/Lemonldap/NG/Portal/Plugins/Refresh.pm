@@ -40,6 +40,7 @@ sub run {
         $req->data->{hashStore} = 0;
         $req->id($id);
         $req->user( $info->{uid} );
+        $req->userData( $sessions->{$id} );
         my $res;
         eval { $res = $self->p->refresh($req); };
         if ($@) {
