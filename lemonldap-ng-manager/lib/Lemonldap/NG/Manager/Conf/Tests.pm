@@ -33,6 +33,12 @@ sub tests {
 
         # Check if portal is in domain
         portalIsInDomain => sub {
+
+            # Looks like a sub, user knows what they are doing
+            if ( $conf->{portal} =~ /[\$\(&\|"']/ ) {
+                return 1;
+            }
+
             return (
                 1,
                 (

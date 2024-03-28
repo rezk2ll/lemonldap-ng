@@ -1512,7 +1512,7 @@ sub attributes {
         },
         domain => {
             type          => 'text',
-            test          => qr/^(?:$Regexp::Common::URI::RFC2396::hostname)?$/,
+            test          => qr/^(?:(?:$Regexp::Common::URI::RFC2396::hostname|#\w+#))?$/,
             msgFail       => '__badDomainName__',
             default       => 'example.com',
             documentation => 'DNS domain',
