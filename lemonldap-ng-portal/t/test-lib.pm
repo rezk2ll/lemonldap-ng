@@ -65,7 +65,7 @@ use MIME::Base64;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::Session 'id2storage';
 use Lemonldap::NG::Common::Util qw/getPSessionID/;
-use Carp qw/shortmess/;
+use Carp                        qw/shortmess/;
 
 #use 5.10.0;
 
@@ -190,7 +190,7 @@ sub getCache {
 }
 
 sub getSession {
-    my $id           = shift;
+    my $id = shift;
     $id = $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id) : $id;
     my @sessionsOpts = (
         storageModule        => "Apache::Session::File",
@@ -424,9 +424,10 @@ sub expectSessionAttributes {
 sub getSessionAttributes {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ( $app, $id ) = @_;
+    $id = $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($id) : $id;
     my $res;
     ok(
-        $res = $app->_get("/sessions/global/$id", query => 'hash=1'),
+        $res = $app->_get("/sessions/global/$id"),
         "Get session using restSessionServer"
     );
     count(1);
@@ -781,7 +782,6 @@ sub withHandler {
     popHandler();
 }
 
-
 sub pushHandler {
     my $type = shift;
 
@@ -959,11 +959,11 @@ has ini => (
         }
         if ( $ENV{DEBUG} ) {
             $ini->{logLevel} = 'debug';
-            $ini->{logger}  = "t::TestStdLogger";
+            $ini->{logger}   = "t::TestStdLogger";
         }
         if ( $ENV{LLNGLOGLEVEL} ) {
             $ini->{logLevel} = $ENV{LLNGLOGLEVEL};
-            $ini->{logger}  = "t::TestStdLogger";
+            $ini->{logger}   = "t::TestStdLogger";
         }
         $self->{ini} = $ini;
         main::ok( $self->{p} = $self->class->new(), 'Portal object' );

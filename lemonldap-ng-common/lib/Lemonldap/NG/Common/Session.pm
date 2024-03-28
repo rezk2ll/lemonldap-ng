@@ -9,6 +9,7 @@ package Lemonldap::NG::Common::Session;
 use strict;
 use Exporter 'import';
 use Digest::SHA;
+use JSON;
 use Lemonldap::NG::Common::Apache::Session;
 use Lemonldap::NG::Common::Apache::Session::Generate::SHA256;
 
@@ -196,8 +197,10 @@ sub BUILD {
         $self->_save_data($data);
         $self->kind( $data->{_session_kind} );
         $self->id( $data->{_session_id} );
-        $data->{_session_id} = id2storage( $self->id )
-          if $self->hashStore and $self->id;
+        if ( $self->hashStore and $self->id ) {
+            $data->{_session_id}     = id2storage( $self->id );
+            $data->{_session_hashed} = JSON::true;
+        }
 
         untie(%$data);
     }

@@ -59,7 +59,7 @@ ok( $res->[2]->[0] =~ /"updated":$c/, "Count is $c" );
 count(1);
 
 foreach (@ids) {
-    ok( my $attr = getSessionAttributes( $client, $ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($_) : $_ ), 'Get session content' );
+    ok( my $attr = getSessionAttributes( $client, $_ ), 'Get session content' );
     is( $attr->{uid},                  "Dr Who",        ' Content is updated' );
     is( sortgroups( $attr->{groups} ), "daleks; users", ' Correct groups' );
     count(3);
