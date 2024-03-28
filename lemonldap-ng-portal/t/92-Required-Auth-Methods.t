@@ -15,6 +15,7 @@ testRequiredMethods(
           Custom
           PAM
           WebID
+          Proxy
         )
     ],
 );
