@@ -55,7 +55,7 @@ sub STORE {
     my $value = shift;
 
     $self->{data}->{$key} = $value;
-    $self->{modified} = 1;
+    $self->{modified} = 1 unless $key eq '_session_id';
     return $value;
 }
 
@@ -119,15 +119,10 @@ sub ua {
 sub getJson {
     my $self = shift;
     my $id   = shift;
-
-    # By design, this module calls REST API with real values, so it is
-    # require to add "hash" parameter in this request to ask to API to
-    # calculate storage ID before searching
     my $resp = $self->ua->get(
         $self->base
           . $id
-          . '?hash=1'
-          . ( $self->{kind} ne 'SSO' ? "&kind=$self->{kind}" : '' ),
+          . ( $self->{kind} ne 'SSO' ? "?kind=$self->{kind}" : '' ),
         @_
     );
     if ( $resp->is_success ) {
@@ -227,13 +222,8 @@ sub save {
     }
 
     # REST
-
-    # By design, this module calls REST API with real values, so it is
-    # require to add "hash" parameter in this request to ask to API to
-    # calculate storage ID before searching
     my $req =
-      HTTP::Request->new(
-        PUT => $self->base . $self->{data}->{_session_id} . '?hash=1' );
+      HTTP::Request->new( PUT => $self->base . $self->{data}->{_session_id} );
     eval {
         $self->{data}->{__secret} =
           Lemonldap::NG::Handler::Main->tsv->{cipher}->encrypt(time);
@@ -274,12 +264,8 @@ sub delete {
     }
 
     # REST
-
-    # By design, this module calls REST API with real values, so it is
-    # require to add "hash" parameter in this request to ask to API to
-    # calculate storage ID before searching
     my $req = HTTP::Request->new(
-        DELETE => $self->base . $self->{data}->{_session_id} . '?hash=1' );
+        DELETE => $self->base . $self->{data}->{_session_id} );
     $req->header( 'Content-Type' => 'application/json' );
     my $resp = $self->ua->request($req);
     return ( $resp->is_success ? 1 : 0 );

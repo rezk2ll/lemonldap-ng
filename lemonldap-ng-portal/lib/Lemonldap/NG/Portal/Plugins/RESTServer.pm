@@ -65,7 +65,7 @@ use Mouse;
 use JSON qw(from_json to_json);
 use MIME::Base64;
 use Lemonldap::NG::Common::Languages;
-use Lemonldap::NG::Common::Session 'reHashedKinds';
+use Lemonldap::NG::Common::Session qw(id2storage reHashedKinds);
 use Lemonldap::NG::Portal::Main::Constants qw(
   URIRE
   PE_OK
@@ -491,11 +491,9 @@ sub getMyKey {
         $self->logger->debug("REST request to get exported attributes: $keys");
     }
 
-    return $self->session(
-        $req,
-        $req->userData->{_session_id},
-        $key || $self->exportedAttr
-    );
+    my $id = $req->userData->{_session_id};
+    $id = id2storage($id) if $req->userData->{_session_hashed};
+    return $self->session( $req, $id, $key || $self->exportedAttr );
 }
 
 sub updateMySession {

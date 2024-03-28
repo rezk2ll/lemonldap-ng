@@ -96,7 +96,7 @@ sub createSession {
 
     # Here the API is called with hash=1 to explicitly explain to remote
     # server that we're using a cookie value, not the storage ID
-    my $url = $class->tsv->{portal}->() . "/sessions/global/$id?auth&hash=1";
+    my $url = $class->tsv->{portal}->() . "/sessions/global/$id?auth";
     $url =~ s#//sessions/#/sessions/#g;
     my $get = HTTP::Request->new( POST => $url );
     $get->header( 'X-Forwarded-For' => $xheader );

@@ -206,19 +206,17 @@ sub delete2F {
 
 sub _session {
     my ( $self, $raw, $req, $id, $skey ) = @_;
-    my ( %h, $res, $hashStore );
+    my ( %h, $res );
 
     # When requesting a session, depending on the context, the cann can be
     # with the storage ID or the cookie value. the "hash=1' parameter indicates
     # that the query uses the cookie value
-    $hashStore = ( $req->{data}->{hashStore} or $req->param('hash') );
     return $self->sendError( $req, 'Bad request', 400 ) unless $id;
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
 
     # Try to read session
-    my $apacheSession =
-      $self->getApacheSession( $mod, $id, hashStore => $hashStore )
+    my $apacheSession = $self->getApacheSession( $mod, $id, hashStore => 0 )
       or return $self->sendError( $req, undef, 400 );
 
     my %session = %{ $apacheSession->data };

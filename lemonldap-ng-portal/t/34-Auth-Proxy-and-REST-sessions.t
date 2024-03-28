@@ -99,15 +99,20 @@ count(1);
 expectOK($res);
 
 # Test if user is reject on IdP
-ok(
-    $res = $sp->_get(
-        '/', cookie => "lemonldap=$spId",
-    ),
-    'Test if user is reject on IdP'
-);
-count(1);
-expectReject($res);
-
+SKIP: {
+    count(1);
+    skip(
+'LLNG_HASHED_SESSION_STORE is set, Auth::Proxy is unable to delete internal session',
+        1
+    ) if $ENV{LLNG_HASHED_SESSION_STORE};
+    ok(
+        $res = $sp->_get(
+            '/', cookie => "lemonldap=$spId",
+        ),
+        'Test if user is reject on IdP'
+    );
+    expectReject($res);
+}
 clean_sessions();
 done_testing( count() );
 
@@ -122,8 +127,7 @@ sub switch {
 }
 
 sub issuer {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 domain            => 'idp.com',
                 portal            => 'http://auth.idp.com',
@@ -138,8 +142,7 @@ sub issuer {
 }
 
 sub sp {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 domain           => 'sp.com',
                 portal           => 'http://auth.sp.com',

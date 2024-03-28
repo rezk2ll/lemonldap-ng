@@ -18,7 +18,7 @@ our $VERSION = '2.0.15';
 # Export method needed to handle hashed storage
 our @EXPORT = qw(id2storage hashedKinds reHashedKinds);
 
-use constant hashedKinds => ( 'SSO', 'OIDC' );
+use constant hashedKinds => ( 'SSO', 'OIDC', 'CDA' );
 
 sub reHashedKinds {
     my $s = '^(' . join( '|', hashedKinds() ) . ')$';
@@ -123,10 +123,6 @@ has hashStore => ( is => 'rw' );
 sub BUILD {
     my ($self) = @_;
 
-    # When session are stored remotely using SOAP or REST, don't hash the ID
-    # here, will be done in real LLNG storage
-    $self->hashStore(0)
-      if $self->storageModule =~ /^Lemonldap::NG::Common::Apache::Session/;
 
     # Load Apache::Session module
     unless ( $self->storageModule->can('populate') ) {
@@ -199,7 +195,7 @@ sub BUILD {
         $self->id( $data->{_session_id} );
         if ( $self->hashStore and $self->id ) {
             $data->{_session_id}     = id2storage( $self->id );
-            $data->{_session_hashed} = JSON::true;
+            $data->{_session_hashed} = 1;
         }
 
         untie(%$data);
@@ -233,7 +229,8 @@ sub _tie_session {
             if ( $self->storageModule =~
                 /^Lemonldap::NG::Common::Apache::Session/ )
             {
-                tie %h, $self->storageModule, $self->id,
+                tie %h, $self->storageModule,
+                  ( $options->{setId} ? $self->id : $self->storageId ),
                   { %{ $self->options }, %$options, kind => $self->kind };
             }
             else {
