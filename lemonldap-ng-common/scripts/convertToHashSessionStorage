@@ -42,9 +42,9 @@ foreach my $kind (hashedKinds) {
             kind => $kind,
         });
         next unless $oldSession;
-        next if $oldSession->data->{_session_converted};
+        next if $oldSession->data->{_session_hashed};
         my $info = $oldSession->data;
-        $info->{_session_converted} = JSON::true;
+        $info->{_session_hashed} = JSON::true;
         delete $info->{_session_id};
         my $newSession = Lemonldap::NG::Common::Session->new({
             hashStore => 1,
