@@ -732,6 +732,7 @@ t/35-REST-config-backend.t
 t/35-REST-export-password.t
 t/35-REST-OAuth2-deny.t
 t/35-REST-OAuth2.t
+t/35-REST-sessions-with-AuthBasic-handler-hashed-sessions.t
 t/35-REST-sessions-with-AuthBasic-handler-with-2FA.t
 t/35-REST-sessions-with-AuthBasic-handler.t
 t/35-REST-sessions-with-REST-server.t
@@ -762,7 +763,7 @@ t/37-SAML-SP-GET-to-OIDC-OP.t
 t/37-SAML-SP-GET-to-SAML-with-Logout.t
 t/37-SAML-SP-POST-to-CAS-server-with-Choice.t
 t/37-SAML-SP-POST-to-CAS-server.t
-t/37-SAML-SP-POST-to-OIDC-OP-hashStore.t
+t/37-SAML-SP-POST-to-OIDC-OP-hashStorage.t
 t/37-SAML-SP-POST-to-OIDC-OP.t
 t/38-No-persistent-session.t
 t/39-Failing-RP-Logout.t

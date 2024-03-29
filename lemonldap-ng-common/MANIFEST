@@ -79,6 +79,7 @@ META.yml
 README
 scripts/convertConfig
 scripts/convertSessions
+scripts/convertToHashSessionStorage
 scripts/encryptTotpSecrets
 scripts/importMetadata
 scripts/lemonldap-ng-cli
