@@ -801,6 +801,36 @@ sub metadata {
             ],
         );
     }
+    elsif ( $req->params('oidcMetadata') ) {
+        my $c = $self->getConfKey( $req, 'cfgNum' );
+        return $self->sendError( $req, undef, 400 ) if ( $req->error );
+        if ( $self->can('userId') ) {
+            $self->userLogger->notice( 'User '
+                  . $self->userId($req)
+                  . ' ask for OIDC metadata '
+                  . $c );
+        }
+        else {
+            $self->logger->info("REST request to get OIDC metadata $c");
+        }
+        require Lemonldap::NG::Common::OpenIDConnect::Metadata;
+        my $path = $self->currentConf->{issuerDBOpenIDConnectPath};
+        $path =~ s/^.*?(\w+).*?$/$1/;
+        return $self->sendJSONresponse(
+            $req,
+            Lemonldap::NG::Common::OpenIDConnect::Metadata->metadataDoc(
+                $self->currentConf,
+                $path,
+                $self->currentConf->{oidcServiceMetaDataIssuer}
+                  || $self->currentConf->{portal}
+            ),
+            pretty  => 1,
+            headers => [
+                'content-Type'        => 'application/json',
+                'Content-Disposition' => "Attachment; filename=openid-configuration.json"
+            ],
+        );
+    }
     else {
         my $res = {};
         $res->{cfgNum} = $self->getConfKey( $req, 'cfgNum' );
