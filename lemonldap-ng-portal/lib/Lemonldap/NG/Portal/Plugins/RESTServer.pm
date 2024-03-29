@@ -356,7 +356,8 @@ sub newAuthSession {
         $self->p->deleteSession($req);
         return $self->p->sendError( $req, 'Unauthorized', 401 );
     }
-    return $self->session( $req, $id );
+    return $self->session( $req,
+        $self->conf->{hashedSessionStore} ? id2storage($id) : $id );
 }
 
 sub updateSession {
