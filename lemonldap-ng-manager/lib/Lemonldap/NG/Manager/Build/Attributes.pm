@@ -4620,6 +4620,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             },
             documentation => 'OpenID Connect Authentication Context Class Ref',
         },
+        oidcServiceHideMetadata => {
+            type => 'bool',
+            Documentation => "Don't display OIDC metadata",
+        },
 
         # OIDC Keys
         oidcServiceOldPrivateKeySig => { type => 'EcOrRSAPrivateKey', },
