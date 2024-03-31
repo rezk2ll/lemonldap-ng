@@ -43,18 +43,6 @@ extends qw(
 
 # PROPERTIES
 
-# Reset URL to set in mail
-has resetUrl => (
-    is      => 'ro',
-    lazy    => 1,
-    default => sub {
-        my $self = $_[0];
-        my $p    = $self->conf->{portal};
-        $p =~ s#/*$##;
-        return $self->conf->{mailUrl} ? $self->conf->{mailUrl} : "$p/resetpwd";
-    }
-);
-
 # Mail timeout token generator
 # Form timout token generator (used even if requireToken is not set)
 has ott => (
@@ -333,13 +321,14 @@ sub _reset {
         # Build confirmation url
         my $req_url = $req->data->{_url};
         my $skin    = $self->p->getSkin($req);
-        my $url =
-          $self->resetUrl . '?'
-          . build_urlencoded(
-            mail_token => $req->{id},
-            skin       => $skin,
-            ( $req_url ? ( url => $req_url ) : () ),
-          );
+        my $url     = $self->p->buildUrl(
+            ( $self->conf->{mailUrl} || ( $req->portal, "resetpwd" ) ),
+            {
+                mail_token => $req->{id},
+                skin       => $skin,
+                ( $req_url ? ( url => $req_url ) : () ),
+            }
+        );
 
         # Build mail content
         my $tr      = $self->translate($req);

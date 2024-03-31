@@ -44,6 +44,10 @@ has mustRedirect => ( is => 'rw' );
 # authentication)
 has noLoginDisplay => ( is => 'rw' );
 
+# Portal URL, can be dynamic
+
+has portal => ( is => 'rw' );
+
 # Store URL for redirections
 has urldc                  => ( is => 'rw' );
 has postUrl                => ( is => 'rw' );

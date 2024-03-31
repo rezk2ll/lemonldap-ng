@@ -76,7 +76,7 @@ sub run {
                     302,
                     [
                         Location => $self->p->buildUrl(
-                            "2fregisters", { continue => 1 }
+                            $req->portal, "2fregisters", { continue => 1 }
                         )
                     ],
                     []

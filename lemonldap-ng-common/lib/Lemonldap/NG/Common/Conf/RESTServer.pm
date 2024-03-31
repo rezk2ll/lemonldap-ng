@@ -819,10 +819,10 @@ sub metadata {
         return $self->sendJSONresponse(
             $req,
             Lemonldap::NG::Common::OpenIDConnect::Metadata->metadataDoc(
-                $self->currentConf,
-                $path,
                 $self->currentConf->{oidcServiceMetaDataIssuer}
                   || $self->currentConf->{portal}
+                $self->currentConf,
+                $path,
             ),
             pretty  => 1,
             headers => [

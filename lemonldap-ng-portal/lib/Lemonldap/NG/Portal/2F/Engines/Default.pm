@@ -379,8 +379,11 @@ sub run {
               $self->regOtt->createToken( $self->save2faSessionInfo($req) );
             $self->logger->debug("Just one 2F is enabled");
             $self->logger->debug(" -> Redirect to 2fregisters/");
-            $req->response(
-                [ 302, [ Location => $self->p->buildUrl('2fregisters') ], [] ]
+            $req->response( [
+                    302,
+                    [ Location => $self->p->buildUrl( $req->portal, '2fregisters' ) ],
+                    []
+                ]
             );
             return PE_SENDRESPONSE;
         }
@@ -526,9 +529,11 @@ sub _choice {
 sub _redirect {
     my ( $self, $req ) = @_;
     my $arg = $req->env->{QUERY_STRING};
+
     $self->logger->debug('Call sfEngine _redirect method');
     return [
-        302, [ Location => $self->conf->{portal} . ( $arg ? "?$arg" : '' ) ], []
+        302,
+        [ Location => $req->portal . ( $arg ? "?$arg" : '' ) ], []
     ];
 }
 
@@ -595,7 +600,11 @@ sub _displayRegister {
     # If only one 2F is available, redirect to it
     return [
         302,
-        [ Location => $self->p->buildUrl( '2fregisters', $am[0]->{CODE} ) ], []
+        [
+            Location =>
+              $self->p->buildUrl( $req->portal, '2fregisters', $am[0]->{CODE} )
+        ],
+        []
       ]
       if (
         @am == 1
@@ -640,7 +649,7 @@ sub _displayRegister {
             MSG          => $self->canUpdateSfa($req) || 'choose2f',
             ALERT => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
             SFREGISTERS_URL =>
-              encode_base64( "$self->{conf}->{portal}2fregisters", '' ),
+              encode_base64( $self->p->buildUrl( $req->portal, '2fregisters' ), '' ),
             %tplParams,
         }
     );
@@ -718,7 +727,7 @@ sub restoreSession {
 
             unless ( $sessionData->{_2fRealSession} ) {
                 $self->logger->error("Invalid 2FA registration token");
-                return [ 302, [ Location => $self->conf->{portal} ], [] ];
+                return [ 302, [ Location => $req->portal ], [] ];
             }
             $self->restore2faSessionInfo( $req, $sessionData );
 
@@ -750,7 +759,7 @@ sub restoreSession {
     }
     $self->logger->warn(
         "Cannot restore session state during mandatory 2FA registration");
-    return [ 302, [ Location => $self->conf->{portal} ], [] ];
+    return [ 302, [ Location => $req->portal ], [] ];
 }
 
 sub continueLoginAfterRegistration {
