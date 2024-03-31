@@ -820,7 +820,7 @@ sub metadata {
             $req,
             Lemonldap::NG::Common::OpenIDConnect::Metadata->metadataDoc(
                 $self->currentConf->{oidcServiceMetaDataIssuer}
-                  || $self->currentConf->{portal}
+                  || $self->currentConf->{portal},
                 $self->currentConf,
                 $path,
             ),
