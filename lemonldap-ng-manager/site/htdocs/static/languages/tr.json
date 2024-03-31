@@ -784,6 +784,7 @@
 "oidcServiceDynamicRegistrationExtraClaims":"Ekstra haklar",
 "oidcServiceEncAlgorithmAlg":"Default \"alg\" algorithm for JWE encryption",
 "oidcServiceEncAlgorithmEnc":"Default \"enc\" algorithm for JWE encryption",
+"oidcServiceHideMetadata":"Don't display metadata",
 "oidcServiceIDTokenExpiration":"ID Jetonları",
 "oidcServiceIgnoreScopeForClaims":"Her zaman dışa aktarılan öznitelikleri gönder",
 "oidcServiceKeyIdEnc":"Encryption key ID",

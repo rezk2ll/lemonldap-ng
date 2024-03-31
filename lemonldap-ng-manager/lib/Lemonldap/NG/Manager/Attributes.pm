@@ -3272,6 +3272,9 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             'type' => 'select'
         },
+        'oidcServiceHideMetadata' => {
+            'type' => 'bool'
+        },
         'oidcServiceIDTokenExpiration' => {
             'default' => 3600,
             'type'    => 'int'

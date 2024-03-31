@@ -130,7 +130,7 @@ sub init {
     $self->addUnauthRoute(
         '.well-known' => { 'openid-configuration' => 'metadata' },
         ['GET']
-    );
+    ) unless $self->conf->{oidcServiceHideMetadata};
     $self->addAuthRoute(
         '.well-known' => { 'openid-configuration' => 'metadata' },
         ['GET']
