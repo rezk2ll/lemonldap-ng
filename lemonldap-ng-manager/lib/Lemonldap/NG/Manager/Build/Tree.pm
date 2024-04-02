@@ -1535,6 +1535,7 @@ sub tree {
                         'oidcDropCspHeaders',
                         'oidcServiceEncAlgorithmAlg',
                         'oidcServiceEncAlgorithmEnc',
+                        'oidcServiceHideMetadata',
                     ],
                 },
                 {

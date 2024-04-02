@@ -15,7 +15,7 @@ sub init {
         $self->error("Can't load U2F library: $@");
         return 0;
     }
-    my $p = $_[0]->{conf}->{portal};
+    my $p = $self->p->HANDLER->tsv->{portal}->();
     $p =~ s#^(https?://[^/]+).*$#$1#;
     $self->origin($p);
 

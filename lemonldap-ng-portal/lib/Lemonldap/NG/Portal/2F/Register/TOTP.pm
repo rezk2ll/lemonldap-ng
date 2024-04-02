@@ -161,7 +161,7 @@ sub run {
             }
         );
         unless ( $issuer = $self->conf->{totp2fIssuer} ) {
-            $issuer = $self->conf->{portal};
+            $issuer = $req->portal;
             $issuer =~ s#^https?://([^/:]+).*$#$1#;
         }
 

@@ -20,7 +20,7 @@ use constant forAuthUser => 'run';
 sub run {
     my ( $self, $req ) = @_;
     if (    $req->env->{HTTP_HOST}
-        and $self->conf->{portal} =~ /\Q$req->{env}->{HTTP_HOST}/ )
+        and $req->portal =~ /\Q$req->{env}->{HTTP_HOST}/ )
     {
         my $delta = time - $req->{sessionInfo}->{_utime};
         $self->logger->debug( "Delta with last Authn -> " . $delta );

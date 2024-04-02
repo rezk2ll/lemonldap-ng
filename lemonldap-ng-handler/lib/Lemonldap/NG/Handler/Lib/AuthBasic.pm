@@ -94,7 +94,8 @@ sub createSession {
     my ( $user, $pwd ) = ( decode_base64($creds) =~ /^(.*?):(.*)$/ );
     $class->logger->debug("AuthBasic authentication for user: $user");
 
-    my $url = $class->tsv->{portal}->() . "/sessions/global/$id?auth";
+    #my $soapRequest = $soapClient->getCookies( $user, $pwd, $id );
+    my $url = $class->tsv->{portal}->($req) . "/sessions/global/$id?auth";
     $url =~ s#//sessions/#/sessions/#g;
     my $get = HTTP::Request->new( POST => $url );
     $get->header( 'X-Forwarded-For' => $xheader );

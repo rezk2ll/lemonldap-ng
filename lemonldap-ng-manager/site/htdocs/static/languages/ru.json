@@ -784,6 +784,7 @@
 "oidcServiceDynamicRegistrationExtraClaims":"Дополнительные требования",
 "oidcServiceEncAlgorithmAlg":"Default \"alg\" algorithm for JWE encryption",
 "oidcServiceEncAlgorithmEnc":"Default \"enc\" algorithm for JWE encryption",
+"oidcServiceHideMetadata":"Don't display metadata",
 "oidcServiceIDTokenExpiration":"ID-токены",
 "oidcServiceIgnoreScopeForClaims":"Всегда отправлять экспортированные атрибуты",
 "oidcServiceKeyIdEnc":"Encryption key ID",

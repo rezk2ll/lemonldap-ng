@@ -76,7 +76,7 @@ sub init {
         return 0;
     }
     return 0 unless ( $self->SUPER::init() );
-    $self->openidPortal( $self->conf->{portal} . '/' . $self->path . '/' );
+    $self->openidPortal( $self->p->buildUrl( $self->path ) . '/' );
 
     #$openidPortal =~ s#(?<!:)//#/#g;
     return 1;

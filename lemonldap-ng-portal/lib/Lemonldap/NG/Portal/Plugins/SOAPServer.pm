@@ -93,7 +93,7 @@ has wsdl => (
         close DATA;
         $resp =~ s/\$cookieList/$cookieList/g;
         $resp =~ s/\$attrList/$attrList/g;
-        $resp =~ s/\$portal/$self->conf->{portal}/ge;
+        $resp =~ s/\$portal/$self->p->buildUrl/ge;
         return [
             200,
             [

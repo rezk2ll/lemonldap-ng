@@ -45,7 +45,7 @@ sub testRequiredMethods {
             }
             count(2);
             foreach my $method (@$methods) {
-                ok( $mod->can($method), "Implement $method" );
+                ok( $mod->can($method), "$mod implement $method" );
             }
             done_testing();
         }

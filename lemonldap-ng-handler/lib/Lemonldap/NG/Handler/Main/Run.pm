@@ -398,7 +398,7 @@ sub grant {
 sub forbidden {
     my ( $class, $req, $session, $vhost ) = @_;
     my $uri    = $req->{env}->{REQUEST_URI};
-    my $portal = $class->tsv->{portal}->();
+    my $portal = $class->tsv->{portal}->($req);
     $portal = ( $portal =~ m#^https?://([^/]*).*# )[0];
     $portal =~ s/:\d+$//;
     $vhost ||= $class->resolveAlias($req);
@@ -476,7 +476,7 @@ sub goToPortal {
     $class->logger->debug(
         'Redirect ' . $req->address . " to portal (url was $url)" );
     $class->set_header_out( $req,
-            'Location' => $class->tsv->{portal}->()
+            'Location' => $class->tsv->{portal}->($req)
           . "$path?url=$urlc_init"
           . ( $arg ? "&$arg" : "" ) );
     return $class->REDIRECT;
@@ -488,7 +488,7 @@ sub goToError {
     $class->logger->debug(
         "Redirect $req->{env}->{REMOTE_ADDR} to lmError (url was $url)");
     $class->set_header_out( $req,
-            'Location' => $class->tsv->{portal}->()
+            'Location' => $class->tsv->{portal}->($req)
           . "/lmerror/$code"
           . "?url=$urlc_init" );
     return $class->REDIRECT;
@@ -906,7 +906,7 @@ sub postJavascript {
 
     my $jqueryUrl = $formParams->{jqueryUrl} || "";
     $jqueryUrl =
-      &{ $class->tsv->{portal} } . "static/bwr/jquery/dist/jquery.min.js"
+      $class->tsv->{portal}->($req) . "static/bwr/jquery/dist/jquery.min.js"
       if ( $jqueryUrl eq "default" );
     $jqueryUrl = "<script type='text/javascript' src='$jqueryUrl'></script>\n"
       if ($jqueryUrl);

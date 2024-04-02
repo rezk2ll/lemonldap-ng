@@ -234,7 +234,8 @@ sub _mkRemoveOtherLink {
         $req,
         'removeOther',
         params => {
-            link => $self->conf->{portal} . "removeOther?token=$token"
+            link =>
+              $self->p->buildUrl( $req->portal, "removeOther", { token => $token } ),
         }
     );
 }

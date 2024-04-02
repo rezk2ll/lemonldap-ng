@@ -831,7 +831,7 @@ sub getUser {
 
 sub myApplications {
     my ( $self, $req ) = @_;
-    my $basePath = $self->conf->{portal};
+    my $basePath = $req->portal;
     $basePath =~ s#/*$##;
     $basePath .= $self->p->{staticPrefix} . '/common/apps/';
     my @appslist = map {
@@ -865,7 +865,7 @@ sub languages {
                 {
                     code => $_,
                     name => langName->{$_},
-                    flag => $self->conf->{portal}
+                    flag => $req->portal
                       . $self->p->{staticPrefix}
                       . "/languages/$_.png"
                 }
