@@ -994,7 +994,8 @@ sub _send_back_channel_LogoutRequests {
 
         # Build the URL that could be used to play this logout request
         my $slo_url =
-          $self->p->buildUrl( "cas", "relayLogout", { relay => $relayid } );
+          $self->p->buildUrl( $req->portal, "cas", "relayLogout",
+            { relay => $relayid } );
 
         my $name = $self->getNameFromService($service);
 
@@ -1064,13 +1065,13 @@ sub relayLogout {
 
     if ( $response->is_success ) {
         $self->logger->debug("CAS back-channel logout to $service OK");
-        return $self->p->imgok;
+        return $self->p->imgok($req);
     }
     else {
         $self->logger->error( "CAS back-channel logout to $service error: "
               . $response->message );
         $self->logger->debug( $response->dump );
-        return $self->p->imgnok;
+        return $self->p->imgnok($req);
     }
 }
 

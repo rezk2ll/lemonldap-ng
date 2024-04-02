@@ -194,7 +194,9 @@ sub loadService {
 
     # Create Lasso server with service metadata
     my $server = $self->createServer(
-        $service_metadata->serviceToXML( $self->conf, '' ),
+        $service_metadata->serviceToXML(
+            { %{ $self->conf }, portal => $self->p->HANDLER->tsv->{portal}->() }, ''
+        ),
         $self->conf->{samlServicePrivateKeySig},
         $self->conf->{samlServicePrivateKeySigPwd},
 
@@ -1795,8 +1797,8 @@ sub getMetaDataURL {
 
     my $url = ( split( /;/, $self->conf->{$key} ) )[$index] || '';
 
-    # Get portal value
-    my $portal = $self->conf->{portal};
+    # Get default portal value
+    my $portal = $self->p->buildUrl;
     $portal =~ s/\/$//;
 
     # Replace #PORTAL# macro
@@ -2836,7 +2838,7 @@ sub sendLogoutRequestToProvider {
     }
 
     # Get portal value
-    my $portal = $self->conf->{portal};
+    my $portal = $self->p->buildUrl;
     $portal =~ s/\/$//;
 
     # Send logout request to the provider depending of the request method
@@ -3111,7 +3113,7 @@ sub checkDestination {
     $self->logger->debug("Destination $destination found in SAML message");
 
     # Retrieve full URL
-    my $portal = $self->conf->{portal};
+    my $portal = $self->p->buildUrl;
     $portal =~ s#^(https?://[^/]+)/.*#$1#;    # remove path of portal URL
     $url = $portal . $url;
     $url =~ s/\?.*//;
@@ -3394,7 +3396,9 @@ sub metadata {
     my $type = $req->param('type') || 'all';
     require Lemonldap::NG::Common::Conf::SAML::Metadata;
     if ( my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new() ) {
-        my $s = $metadata->serviceToXML( $self->conf, $type );
+        my $s =
+          $metadata->serviceToXML( { %{ $self->conf }, portal => $req->portal },
+            $type );
         return [
             200,
             [

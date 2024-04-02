@@ -54,6 +54,9 @@ sub handler {
 
     bless $req, 'Lemonldap::NG::Portal::Main::Request';
     $req->init( $self->conf );
+
+    # Set portal URL dynamically
+    $req->portal( HANDLER->tsv->{portal}->($req) );
     my $sp = 0;
 
     # Restore pdata
@@ -270,7 +273,7 @@ sub refresh {
                 'simpleInfo', params => { trspan => 'rightsReloadNeedsLogout' }
             )
         );
-        $req->urldc( $self->conf->{portal} );
+        $req->urldc( $req->portal );
         return $self->do( $req, [ sub { PE_INFO } ] );
     }
     return $self->do( $req, [ sub { PE_OK } ] );
@@ -354,7 +357,7 @@ sub do {
                 $req, $json,
                 code    => 401,
                 headers => [
-                    'WWW-Authenticate' => "SSO " . $self->conf->{portal},
+                    'WWW-Authenticate' => "SSO " . $req->portal,
                     "Content-Type"     => "application/json"
                 ],
             );
@@ -450,7 +453,7 @@ sub autoRedirect {
     my ( $self, $req ) = @_;
 
     # Set redirection URL if needed
-    $req->{urldc} ||= $self->conf->{portal}
+    $req->{urldc} ||= $req->portal
       if ( $req->mustRedirect and not( $req->info ) );
 
     # Redirection should be made if urldc defined
@@ -880,7 +883,7 @@ sub info {
 
 sub fullUrl {
     my ( $self, $req ) = @_;
-    my $pHost = $self->conf->{portal};
+    my $pHost = $req->portal;
     $pHost =~ s#^(https?://[^/]+)(?:/.*)?$#$1#;
     return $pHost . $req->env->{REQUEST_URI};
 }
@@ -1007,7 +1010,7 @@ sub sendHtml {
     $self->setCorsHeaderFromConfig($res);
 
     if (    $self->conf->{strictTransportSecurityMax_Age}
-        and $self->conf->{portal} =~ /^https:/ )
+        and $req->portal =~ /^https:/ )
     {
         push @{ $res->[1] },
           'Strict-Transport-Security' =>
@@ -1110,10 +1113,7 @@ sub sendImage {
     return [
         302,
         [
-                'Location' => $self->conf->{portal}
-              . $self->staticPrefix
-              . '/common/'
-              . $img,
+            'Location' => ($req->portal . $self->staticPrefix . "/common/$img")
         ],
         [],
     ];
@@ -1161,7 +1161,7 @@ sub lmError {
     my %templateParams = (
         MAIN_LOGO  => $self->conf->{portalMainLogo},
         LANGS      => $self->conf->{showLanguages},
-        LOGOUT_URL => $self->conf->{portal} . "?logout=1",
+        LOGOUT_URL => $self->buildUrl( $req->portal, { logout => 1 } ),
         URL        => $req->{urldc},
     );
 
@@ -1186,7 +1186,7 @@ sub tplParams {
     my ( $self, $req ) = @_;
     my %templateParams;
 
-    my $portalPath = $self->conf->{portal};
+    my $portalPath = $req->portal;
     $portalPath =~ s#^https?://[^/]+/?#/#;
     $portalPath =~ s#[^/]+\.fcgi$##;
 
@@ -1200,7 +1200,7 @@ sub tplParams {
     }
 
     return (
-        PORTAL_URL   => $self->conf->{portal},
+        PORTAL_URL   => $req->portal,
         MAIN_LOGO    => $self->conf->{portalMainLogo},
         LANGS        => $self->conf->{showLanguages},
         SCROLL_TOP   => $self->conf->{scrollTop},
@@ -1334,7 +1334,7 @@ sub sendJSONresponse {
     # (Ajax SSL to a different VHost)
     # we allow CORS
     if ( $req->origin
-        and index( $self->conf->{portal}, $req->origin ) == 0 )
+        and index( $req->portal, $req->origin ) == 0 )
     {
         $self->logger->debug('AJAX request from portal, allowing CORS');
         push @{ $res->[1] },
