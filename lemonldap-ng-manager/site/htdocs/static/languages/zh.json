@@ -796,6 +796,7 @@
 "oidcServiceDynamicRegistrationExtraClaims":"額外的聲明",
 "oidcServiceEncAlgorithmAlg":"Default \"alg\" algorithm for JWE encryption",
 "oidcServiceEncAlgorithmEnc":"Default \"enc\" algorithm for JWE encryption",
+"oidcServiceHideMetadata":"Don't display metadata",
 "oidcServiceIDTokenExpiration":"ID Tokens",
 "oidcServiceIgnoreScopeForClaims":"Always send exported attributes",
 "oidcServiceKeyIdEnc":"Encryption key ID",

@@ -796,6 +796,7 @@
 "oidcServiceDynamicRegistrationExtraClaims":"Xác nhận bổ sung",
 "oidcServiceEncAlgorithmAlg":"Default \"alg\" algorithm for JWE encryption",
 "oidcServiceEncAlgorithmEnc":"Default \"enc\" algorithm for JWE encryption",
+"oidcServiceHideMetadata":"Don't display metadata",
 "oidcServiceIDTokenExpiration":"ID Tokens",
 "oidcServiceIgnoreScopeForClaims":"Luôn gửi các thuộc tính đã xuất",
 "oidcServiceKeyIdEnc":"Encryption key ID",

@@ -194,7 +194,9 @@ sub loadService {
 
     # Create Lasso server with service metadata
     my $server = $self->createServer(
-        $service_metadata->serviceToXML( $self->conf, '' ),
+        $service_metadata->serviceToXML(
+            { %{ $self->conf }, portal => $self->p->HANDLER->tsv->{portal}->() }, ''
+        ),
         $self->conf->{samlServicePrivateKeySig},
         $self->conf->{samlServicePrivateKeySigPwd},
 
@@ -251,8 +253,12 @@ sub loadIDP {
     my $idp_metadata =
       $self->conf->{samlIDPMetaDataXML}->{$idpConfKey}->{samlIDPMetaDataXML};
     if ($idp_metadata) {
-        $self->load_idp_from_conf( $idpConfKey, $idp_metadata );
-        $self->logger->debug("IDP $idpConfKey added");
+        if ( $self->load_idp_from_conf( $idpConfKey, $idp_metadata ) ) {
+            $self->logger->debug("IDP $idpConfKey added");
+        }
+        else {
+            $self->logger->warn("Ignoring IDP $idpConfKey");
+        }
     }
 }
 
@@ -319,6 +325,7 @@ sub load_idp_metadata {
         $self->logger->error(
             "Unable to set encryption mode $encryption_mode on IDP $idpConfKey"
         );
+        delete $self->idpList->{$entityID};
         return;
     }
     $self->logger->debug(
@@ -340,6 +347,7 @@ sub load_idp_metadata {
             $self->logger->error(
 "Unable to set signature method $signature_method on IDP $idpConfKey"
             );
+            delete $self->idpList->{$entityID};
             return;
         }
         $self->logger->debug(
@@ -363,6 +371,7 @@ sub load_idp_metadata {
         unless ( $cond = $self->p->HANDLER->buildSub($cond) ) {
             $self->logger->error( 'SAML IdP rule error: '
                   . $self->p->HANDLER->tsv->{jail}->error );
+            delete $self->idpList->{$entityID};
             return;
         }
         $self->idpRules->{$entityID} = $cond;
@@ -370,6 +379,8 @@ sub load_idp_metadata {
 
     $self->idpAttributes->{$entityID} = { %{ $attributes || {} } };
     $self->idpOptions->{$entityID}    = { %{ $options    || {} } };
+
+    return 1;
 }
 
 sub loadSPs {
@@ -579,13 +590,20 @@ sub load_config {
 
     if ( $config->{idp_metadata} ) {
         $info->{idp_confKey} = $config->{idp_confKey};
-        $self->load_idp_metadata(
-            $config->{idp_confKey}, $config->{idp_metadata},
-            $entityID,              $config->{idp_attributes},
-            $config->{idp_options}
-        );
+        if (
+            $self->load_idp_metadata(
+                $config->{idp_confKey}, $config->{idp_metadata},
+                $entityID,              $config->{idp_attributes},
+                $config->{idp_options}
+            )
+          )
+        {
+            $self->logger->debug("IDP $config->{idp_confKey} added from hook");
+        }
+        else {
+            $self->logger->warn("Ignoring IDP $config->{idp_confKey}");
+        }
     }
-
     my $ttl = $config->{ttl};
     return { ( $ttl ? ( ttl => $ttl ) : () ),
         ( $info ? ( info => $info ) : () ) };
@@ -1779,8 +1797,8 @@ sub getMetaDataURL {
 
     my $url = ( split( /;/, $self->conf->{$key} ) )[$index] || '';
 
-    # Get portal value
-    my $portal = $self->conf->{portal};
+    # Get default portal value
+    my $portal = $self->p->buildUrl;
     $portal =~ s/\/$//;
 
     # Replace #PORTAL# macro
@@ -2820,7 +2838,7 @@ sub sendLogoutRequestToProvider {
     }
 
     # Get portal value
-    my $portal = $self->conf->{portal};
+    my $portal = $self->p->buildUrl;
     $portal =~ s/\/$//;
 
     # Send logout request to the provider depending of the request method
@@ -3095,7 +3113,7 @@ sub checkDestination {
     $self->logger->debug("Destination $destination found in SAML message");
 
     # Retrieve full URL
-    my $portal = $self->conf->{portal};
+    my $portal = $self->p->buildUrl;
     $portal =~ s#^(https?://[^/]+)/.*#$1#;    # remove path of portal URL
     $url = $portal . $url;
     $url =~ s/\?.*//;
@@ -3378,7 +3396,9 @@ sub metadata {
     my $type = $req->param('type') || 'all';
     require Lemonldap::NG::Common::Conf::SAML::Metadata;
     if ( my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new() ) {
-        my $s = $metadata->serviceToXML( $self->conf, $type );
+        my $s =
+          $metadata->serviceToXML( { %{ $self->conf }, portal => $req->portal },
+            $type );
         return [
             200,
             [

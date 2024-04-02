@@ -1520,7 +1520,7 @@ sub logout {
     # for them.
     # Redirect on logout page when all is done.
     if ( $self->sendLogoutRequestToProviders( $req, $logout ) ) {
-        $req->urldc( $self->p->buildUrl( { logout => 1 } ) );
+        $req->urldc( $self->p->buildUrl($req->portal, { logout => 1 } ) );
         return PE_OK;
     }
 
@@ -1820,7 +1820,7 @@ sub _finishSlo {
     # Else build SLO status relay URL and display info
     else {
         $req->{urldc} =
-          $self->conf->{portal} . '/saml/relaySingleLogoutTermination';
+          $self->p->buildUrl( $req->portal, 'saml', 'relaySingleLogoutTermination' );
         $self->p->setHiddenFormValue( $req, 'relay', $relayID, '', 0 );
         return $self->p->do( $req, [] );
     }
@@ -2039,7 +2039,8 @@ sub sloServer {
             $logoutContextSession =
               $self->getSamlSession( undef, $logoutInfos );
             my $uri =
-              URI->new( $self->conf->{portal} . '/saml/singleLogoutResume' );
+              URI->new(
+                $self->p->buildUrl( $req->portal, 'saml', 'singleLogoutResume' ) );
             $uri->query_param( ResumeParams => $logoutContextSession->id );
             $req->{issuerUrldc} = $uri->as_string;
         }

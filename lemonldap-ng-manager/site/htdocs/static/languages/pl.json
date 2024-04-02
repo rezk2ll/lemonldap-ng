@@ -796,6 +796,7 @@
 "oidcServiceDynamicRegistrationExtraClaims":"Dodatkowe roszczenia",
 "oidcServiceEncAlgorithmAlg":"Default \"alg\" algorithm for JWE encryption",
 "oidcServiceEncAlgorithmEnc":"Default \"enc\" algorithm for JWE encryption",
+"oidcServiceHideMetadata":"Don't display metadata",
 "oidcServiceIDTokenExpiration":"Tokeny identyfikacyjne",
 "oidcServiceIgnoreScopeForClaims":"Zawsze wysyłaj wyeksportowane atrybuty",
 "oidcServiceKeyIdEnc":"Encryption key ID",

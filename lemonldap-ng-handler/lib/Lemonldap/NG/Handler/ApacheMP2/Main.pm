@@ -177,18 +177,19 @@ sub redirectFilter {
     return $class->OK;
 }
 
-
-sub logout_app
-{
+sub logout_app {
     my $class = shift;
-    my $u = shift || $class->tsv->{portal}->();
+    my $u     = shift;
     $class->logger->debug("logout_app redirect to $u");
     eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
     return (
         sub {
-            $_[0]->{env}->{'psgi.r'}->add_output_filter(
+            my ($req)  = @_;
+            my $portal = $class->tsv->{portal}->($req);
+            my $dest   = $u || $portal;
+            $req->{env}->{'psgi.r'}->add_output_filter(
                 sub {
-                    return $class->redirectFilter( $u, @_ );
+                    return $class->redirectFilter( $dest, @_ );
                 }
             );
             1;
@@ -199,19 +200,21 @@ sub logout_app
 
 sub logout_app_sso {
     my $class = shift;
-    my $u = shift || $class->tsv->{portal}->();
+    my $u     = shift;
     $class->logger->debug("logout_app_sso redirect to $u");
     eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
     return (
         sub {
-            my ($req) = @_;
+            my ($req)  = @_;
+            my $portal = $class->tsv->{portal}->($req);
+            my $dest   = $u || $portal;
             $class->localUnlog( $req, @_ );
             $req->{env}->{'psgi.r'}->add_output_filter(
                 sub {
                     my $r = $_[0]->r;
                     return $class->redirectFilter(
-                        &{ $class->tsv->{portal} }() . "?url="
-                          . $class->encodeUrl( $req, $u )
+                        $portal . "?url="
+                          . $class->encodeUrl( $req, $dest )
                           . "&logout=1",
                         @_
                     );

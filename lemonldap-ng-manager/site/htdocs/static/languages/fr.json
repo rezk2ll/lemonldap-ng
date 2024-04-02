@@ -796,6 +796,7 @@
 "oidcServiceDynamicRegistrationExtraClaims":"Claims supplémentaires",
 "oidcServiceEncAlgorithmAlg":"Algorithme \"alg\" par défaut pour le chffrement JWE",
 "oidcServiceEncAlgorithmEnc":"Algorithme \"enc\" par défaut pour le chffrement JWE",
+"oidcServiceHideMetadata":"Ne pas exposer les metadonnées",
 "oidcServiceIDTokenExpiration":"Jetons d'identité",
 "oidcServiceIgnoreScopeForClaims":"Envoyer tous les attributs exportés",
 "oidcServiceKeyIdEnc":"Identifiant de clef de chiffrement",

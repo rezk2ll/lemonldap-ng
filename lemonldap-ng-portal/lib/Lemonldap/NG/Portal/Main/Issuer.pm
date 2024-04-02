@@ -100,7 +100,7 @@ sub _redirect {
         $self->logger->debug(
             'Add ' . $self->ipath . ', ' . $self->ipath . 'Path in keepPdata' );
         push @{ $req->pdata->{keepPdata} }, $self->ipath, $self->ipath . 'Path';
-        $req->{urldc}           = $self->p->buildUrl( $self->path );
+        $req->{urldc}           = $self->p->buildUrl( $req->portal, $self->path );
         $req->pdata->{_url}     = encode_base64( $req->urldc, '' );
         $req->pdata->{issuerTs} = time;
     }
@@ -246,7 +246,7 @@ sub reAuth {
 qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/autoRenew.min.js"></script>'
       if ( $self->conf->{skipRenewConfirmation} );
     $req->data->{_url} =
-      encode_base64( $self->conf->{portal} . $req->path_info, '' );
+      encode_base64( $req->portal . $req->path_info, '' );
     $req->pdata->{ $self->ipath } = $self->storeRequest($req);
     push @{ $req->pdata->{keepPdata} }, $self->ipath, $self->ipath . 'Path';
     $req->pdata->{issuerTs} = time;
@@ -259,7 +259,7 @@ sub upgradeAuth {
 qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/autoRenew.min.js"></script>'
       if ( $self->conf->{skipUpgradeConfirmation} );
     $req->data->{_url} =
-      encode_base64( $self->conf->{portal} . $req->path_info, '' );
+      encode_base64( $req->portal . $req->path_info, '' );
     $req->pdata->{ $self->ipath } = $self->storeRequest($req);
     push @{ $req->pdata->{keepPdata} }, $self->ipath, $self->ipath . 'Path';
     $req->pdata->{issuerTs} = time;

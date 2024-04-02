@@ -548,7 +548,7 @@ sub extractFormInfo {
             }
 
             if (    $req->urldc
-                and $self->conf->{portal} !~ /$req->{urldc}\/?/ )
+                and $req->portal !~ /$req->{urldc}\/?/ )
             {
                 $req->steps( [] );
                 $req->user('TODO');
@@ -920,7 +920,7 @@ sub extractFormInfo {
             $req->pdata->{_url} = encode_base64( $req->urldc, '' );
         }
         my $disco_url = $self->conf->{samlDiscoveryProtocolURL};
-        my $portal    = $self->conf->{portal};
+        my $portal    = $req->portal;
         $disco_url .= ( $disco_url =~ /\?/ ? '&' : '?' )
           . build_urlencoded(
             entityID      => $self->getMetaDataURL( 'samlEntityID', 0, 1 ),
@@ -961,7 +961,7 @@ sub extractFormInfo {
 
         # IDP list
         my @list       = ();
-        my $portalPath = $self->conf->{portal};
+        my $portalPath = $req->portal;
 
         foreach ( keys %{ $self->idpList } ) {
             my $idpName = $self->{idpList}->{$_}->{name};

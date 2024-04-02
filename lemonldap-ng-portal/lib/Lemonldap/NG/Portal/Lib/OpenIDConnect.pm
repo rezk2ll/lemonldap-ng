@@ -408,11 +408,7 @@ sub getCallbackUri {
 
     my $callback_get_param = $self->conf->{oidcRPCallbackGetParam};
 
-    my $callback_uri = $self->conf->{portal};
-    $callback_uri .=
-      ( $self->conf->{portal} =~ /\?/ )
-      ? '&' . $callback_get_param . '=1'
-      : '?' . $callback_get_param . '=1';
+    my $callback_uri = $self->p->buildUrl( $req->portal, { $callback_get_param => 1 } );
 
     $self->logger->debug("OpenIDConnect Callback URI: $callback_uri");
     return $callback_uri;
@@ -1243,7 +1239,7 @@ sub makeJWT {
     my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
 
     my $access_token_payload = {
-        iss       => $self->iss,                  # Issuer Identifier
+        iss       => $self->get_issuer($req),     # Issuer Identifier
         exp       => $exp,                        # expiration
         aud       => $self->getAudiences($rp),    # Audience
         client_id => $client_id,                  # Client ID

@@ -335,7 +335,7 @@ sub deleteSession {
         # Redirect on logout page if no other target defined
         if ( !$req->urldc and !$req->postUrl ) {
             $self->logger->debug('No other target defined, redirect on logout');
-            $req->urldc( $self->buildUrl( { logout => 1 } ) );
+            $req->urldc( $self->buildUrl( $req->portal, { logout => 1 } ) );
         }
     }
     $req->userData( {} );
@@ -346,14 +346,14 @@ sub deleteSession {
         return PE_OK;
     }
 
-    if ( $req->urldc and $req->urldc ne $self->conf->{portal} ) {
+    if ( $req->urldc and $req->urldc ne $req->portal ) {
         $req->steps( [] );
         return PE_REDIRECT;
     }
 
     # If logout redirects to another URL, just remove next steps for the
     # request so autoRedirect will be called
-    if ( $req->{urldc} and $req->{urldc} ne $self->conf->{portal} ) {
+    if ( $req->{urldc} and $req->{urldc} ne $req->portal ) {
         $req->steps( [] );
         return PE_OK;
     }
@@ -671,11 +671,11 @@ sub getCookieDomain {
 
     if ( my $domain = $self->conf->{domain} ) {
         if ( $domain eq '#PORTALDOMAIN#' ) {
-            my $host = URI->new( $self->portal )->host;
+            my $host = URI->new( $req->portal )->host;
             return $host =~ s/^([^\.]*)//r;
         }
         elsif ( $domain eq '#PORTAL#' ) {
-            my $host = URI->new( $self->portal )->host;
+            my $host = URI->new( $req->portal )->host;
             return ".$host";
         }
         else {

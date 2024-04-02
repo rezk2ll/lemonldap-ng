@@ -59,9 +59,20 @@ has iss => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
-        $_[0]->conf->{oidcServiceMetaDataIssuer} || $_[0]->conf->{portal};
+        $_[0]->conf->{oidcServiceMetaDataIssuer}
+          || $_[0]->p->HANDLER->tsv->{portal}->();
     }
 );
+
+sub get_issuer {
+    my ( $self, $req ) = @_;
+    if ( $self->iss ) {
+        return $self->iss;
+    }
+    else {
+        return $req->portal;
+    }
+}
 
 # OIDC has 7 endpoints managed here as PSGI endpoints or in run() [Main/Issuer.pm
 # manage transparent authentication for run()]:
@@ -130,7 +141,7 @@ sub init {
     $self->addUnauthRoute(
         '.well-known' => { 'openid-configuration' => 'metadata' },
         ['GET']
-    );
+    ) unless $self->conf->{oidcServiceHideMetadata};
     $self->addAuthRoute(
         '.well-known' => { 'openid-configuration' => 'metadata' },
         ['GET']
@@ -2191,7 +2202,7 @@ sub introspection {
               if $oidcSession->{data}->{scope};
             $response->{client_id} = $oidcSession->{data}->{client_id}
               if $oidcSession->{data}->{client_id};
-            $response->{iss} = $self->iss;
+            $response->{iss} = $self->get_issuer($req);
             $response->{exp} =
               $oidcSession->{data}->{_utime} + $self->conf->{timeout};
         }
@@ -2475,7 +2486,7 @@ sub logout {
                     {
                         $url .= ( $url =~ /\?/ ? '&' : '?' )
                           . build_urlencoded(
-                            iss => $self->iss,
+                            iss => $self->get_issuer($req),
                             sid => $self->getSidFromSession(
                                 $rp, $req->{sessionInfo}
                             )
@@ -2522,7 +2533,7 @@ sub logout {
                     my $userId =
                       $self->getUserIDForRP( $req, $rp, $req->userData );
                     my $logoutToken = {
-                        iss => $self->iss,
+                        iss => $self->get_issuer($req),
                         sub => $userId,
                         aud => $self->getAudiences($rp),
                         iat => time,
@@ -2580,7 +2591,7 @@ sub metadata {
     my ( $self, $req ) = @_;
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     return $self->p->sendJSONresponse( $req,
-        $self->metadataDoc( $self->conf ) );
+        $self->metadataDoc( $self->get_issuer($req) ) );
 }
 
 # Store request parameters in %ENV
@@ -2732,7 +2743,7 @@ sub _generateIDToken {
     my $user_id = $self->getUserIDForRP( $req, $rp, $sessionInfo );
 
     my $id_token_payload_hash = {
-        iss       => $self->iss,                         # Issuer Identifier
+        iss       => $self->get_issuer($req),            # Issuer Identifier
         sub       => $user_id,                           # Subject Identifier
         aud       => $self->getAudiences($rp),           # Audience
         exp       => $id_token_exp,                      # expiration

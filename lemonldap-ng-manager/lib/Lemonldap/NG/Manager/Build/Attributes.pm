@@ -1512,7 +1512,7 @@ sub attributes {
         },
         domain => {
             type          => 'text',
-            test          => qr/^(?:$Regexp::Common::URI::RFC2396::hostname)?$/,
+            test          => qr/^(?:(?:$Regexp::Common::URI::RFC2396::hostname|#\w+#))?$/,
             msgFail       => '__badDomainName__',
             default       => 'example.com',
             documentation => 'DNS domain',
@@ -4667,6 +4667,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 'loa-5' => 5,
             },
             documentation => 'OpenID Connect Authentication Context Class Ref',
+        },
+        oidcServiceHideMetadata => {
+            type => 'bool',
+            Documentation => "Don't display OIDC metadata",
         },
 
         # OIDC Keys

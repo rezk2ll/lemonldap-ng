@@ -523,14 +523,16 @@ sub conditionSub {
             $url
             ? (
                 sub {
-                    $_[1]->{_logout} = $url;
+                    my ( $req, $session ) = @_;
+                    $session->{_logout} = $url;
                     return 0;
                 },
                 0
               )
             : (
                 sub {
-                    $_[1]->{_logout} = $class->tsv->{portal}->();
+                    my ( $req, $session ) = @_;
+                    $session->{_logout} = $class->tsv->{portal}->($req);
                     return 0;
                 },
                 0
@@ -633,6 +635,10 @@ sub substitute {
 
     # handle inSubnet
     $expr =~ s/\binSubnet\(([^)]*)\)/ipInSubnet(\$r->{env}->{REMOTE_ADDR},$1)/g;
+
+    # handle inSubnet
+    $expr =~
+      s/\binDomain\(([^)]*)\)/inDomain_internal(\$r->{env}->{HTTP_HOST},$1)/g;
 
     return $expr;
 }

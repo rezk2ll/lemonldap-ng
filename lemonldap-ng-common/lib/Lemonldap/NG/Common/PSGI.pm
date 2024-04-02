@@ -15,7 +15,6 @@ our $_json = JSON->new->allow_nonref;
 has error           => ( is => 'rw', default => '' );
 has languages       => ( is => 'rw', isa     => 'Str', default => 'en' );
 has logLevel        => ( is => 'rw', isa     => 'Str', default => 'info' );
-has portal          => ( is => 'rw', isa     => 'Str' );
 has staticPrefix    => ( is => 'rw', isa     => 'Str' );
 has instanceName    => ( is => 'rw', isa     => 'Str', default => '' );
 has customCSS       => ( is => 'rw', isa     => 'Str', default => '' );
@@ -25,6 +24,10 @@ has links           => ( is => 'rw', isa     => 'ArrayRef' );
 has menuLinks       => ( is => 'rw', isa     => 'ArrayRef' );
 has logger          => ( is => 'rw' );
 has userLogger      => ( is => 'rw' );
+
+# portal only stores the "default" portal URL, in case a request
+# is not available in the current context to compute the dynamic portal URL
+has portal => ( is => 'rw', isa => 'Str' );
 
 # INITIALIZATION
 
@@ -265,13 +268,15 @@ sub sendJs {
     $sp =~ s/\/*$/\//;
     my $sc = $req->script_name // "";
 
+    my $portal = $req->can('portal') ? $req->portal : $self->portal;
+
     # Javascript scriptname is assumed by our JS code to end with /
     $sc =~ s#/*$#/#;
     my $s =
         sprintf 'var staticPrefix="%s";'
       . 'var scriptname="%s";'
       . 'var availableLanguages="%s".split(/[,;] */);'
-      . 'var portal="%s";', $sp, $sc, $self->languages, $self->portal;
+      . 'var portal="%s";', $sp, $sc, $self->languages, $portal;
     $s .= $self->javascript($req) if ( $self->can('javascript') );
     return [
         200,

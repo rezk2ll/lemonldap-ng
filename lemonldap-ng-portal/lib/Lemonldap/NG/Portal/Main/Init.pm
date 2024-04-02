@@ -16,6 +16,7 @@ use strict;
 use Mouse;
 use Regexp::Assemble;
 use Lemonldap::NG::Common::Util qw(getSameSite);
+use URI;
 
 # PROPERTIES
 
@@ -224,6 +225,9 @@ sub setPortalRoutes {
 sub reloadConf {
     my ( $self, $conf ) = @_;
 
+    # Store default portal value in $self->portal
+    $self->portal( Lemonldap::NG::Handler::Main->tsv->{portal}->() );
+
     # Handle requests (other path may be declared in enabled plugins)
     $self->setPortalRoutes;
 
@@ -395,9 +399,8 @@ sub reloadConf {
                 $re->add("$_");
             }
         }
-        foreach ( @{ $self->{additionalTrustedDomains} },
-            $self->conf->{portal} )
-        {
+        my $default_portal = HANDLER->tsv->{portal}->();
+        foreach ( @{ $self->{additionalTrustedDomains} }, $default_portal ) {
             my $p = $_;
             $p =~ s#https?://([^/]*).*$#$1#;
             $re->add( quotemeta($p) );
@@ -448,9 +451,12 @@ sub reloadConf {
         }
         return PE_OK;
     };
-    my $portal = $self->conf->{portal};
-    $portal =~ s#^https?://(.*?)(?:[:/].*)?$#$1#;
-    HANDLER->tsv->{defaultCondition}->{$portal} ||= sub { 1 };
+    # Failsafe: allow handler access to portal in case it's missing in conf
+    my $default_portal_uri  = URI->new( HANDLER->tsv->{portal}->() );
+    my $default_portal_host = eval { $default_portal_uri->host };
+    if ($default_portal_host) {
+        HANDLER->tsv->{defaultCondition}->{$default_portal_host} ||= sub { 1 };
+    }
 
     1;
 }
