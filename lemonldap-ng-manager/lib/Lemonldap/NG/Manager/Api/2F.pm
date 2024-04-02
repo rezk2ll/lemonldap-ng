@@ -347,7 +347,12 @@ sub addSecondFactor {
     return $self->sendError( $req, 'Invalid input: epoch is forbidden', 400 )
       if ( defined $add->{epoch} );
 
-    my $res = $self->_add2F( $uid, undef, $add );
+    my $allow_create =
+      (      $req->params('create')
+          && $req->params('create') ne "false"
+          && $req->params('create') ne "0" );
+
+    my $res = $self->_add2F( $uid, undef, $add, $allow_create );
 
     return $self->sendError( $req, $res->{msg}, $res->{code} )
       if ( $res->{res} ne 'ok' );
@@ -373,7 +378,12 @@ sub addSecondFactorByType {
 
     $self->logger->debug("[API] Add $type 2F for $uid");
 
-    my $res = $self->_add2F( $uid, $type, $add );
+    my $allow_create =
+      (      $req->params('create')
+          && $req->params('create') ne "false"
+          && $req->params('create') ne "0" );
+
+    my $res = $self->_add2F( $uid, $type, $add, $allow_create );
 
     return $self->sendError( $req, $res->{msg}, $res->{code} )
       unless ( $res->{res} eq 'ok' );
@@ -458,7 +468,7 @@ sub _totpKeyToSecret {
 }
 
 sub _add2F {
-    my ( $self, $uid, $type, $add ) = @_;
+    my ( $self, $uid, $type, $add, $allow_create ) = @_;
 
     my $res = $self->_transformNew2f( $type, $add );
     return $res if ( $res->{res} ne 'ok' );
@@ -469,7 +479,7 @@ sub _add2F {
 
     $res =
       $self->_add2FToSessions( $uid, $device, $self->_getPersistentMod,
-        'Persistent', '_session_uid' );
+        'Persistent', '_session_uid', $allow_create );
     return $res if ( $res->{res} ne 'ok' );
 
     # Add to existing sessions
@@ -482,16 +492,20 @@ sub _add2F {
 }
 
 sub _add2FToSessions {
-    my ( $self, $uid, $add, $mod, $kind, $key ) = @_;
+    my ( $self, $uid, $add, $mod, $kind, $key, $allow_create ) = @_;
 
     my ( $sessions, $session, $devices, @keep, $removed,
         $total, $module, $localStorage );
     $sessions = $self->_getSessions2F( $mod, $kind, $key, $uid );
-    my $found = 0;
+    my $found = keys %$sessions;
+
+    if ( !$found and $allow_create ) {
+        my $ps = $self->getPersistentSession( $mod, $uid );
+        $sessions = { $ps->id => { _2fDevices => undef } };
+        $found    = 1;
+    }
 
     foreach ( keys %$sessions ) {
-        $found = 1;
-
         $session = $self->_getSession2F( $_, $mod )
           or return { res => 'ko', code => 500, msg => $@ };
 

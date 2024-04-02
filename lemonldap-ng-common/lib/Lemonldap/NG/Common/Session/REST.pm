@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Common::Util qw(isHiddenAttr);
 use Lemonldap::NG::Common::Conf::Constants;
-use Lemonldap::NG::Common::Util qw/display2F/;
+use Lemonldap::NG::Common::Util qw/display2F getPSessionID/;
 use JSON qw(from_json to_json);
 
 our $VERSION = '2.17.0';
@@ -272,11 +272,48 @@ sub getApacheSession {
         }
     );
     if ( $apacheSession->error ) {
-        $self->error( $apacheSession->error );
+        $self->logger->error( $apacheSession->error );
         return undef;
     }
     $self->logger->debug("Get session $id from Common::Session::REST") if ($id);
     return $apacheSession;
+}
+
+sub getPersistentSession {
+    my ( $self, $mod, $uid, $info ) = @_;
+
+    # Compute persistent identifier
+    my $pid = getPSessionID($uid);
+
+    $info->{_session_uid} = $uid;
+
+    my $ps = Lemonldap::NG::Common::Session->new( {
+            storageModule        => $mod->{module},
+            storageModuleOptions => $mod->{options},
+            id                   => $pid,
+            force                => 1,
+            kind                 => "Persistent",
+            ( $info ? ( info => $info ) : () ),
+        }
+    );
+
+    if ( $ps->error ) {
+        $self->logger->error( $ps->error );
+        return undef;
+    }
+    else {
+
+        # Set _session_uid if not already present
+        unless ( defined $ps->data->{_session_uid} ) {
+            $ps->update( { _session_uid => $uid } );
+        }
+
+        # Set _utime if not already present
+        unless ( defined $ps->data->{_utime} ) {
+            $ps->update( { _utime => time } );
+        }
+    }
+    return $ps;
 }
 
 sub getMod {
