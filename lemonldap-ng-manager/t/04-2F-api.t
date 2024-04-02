@@ -320,15 +320,15 @@ sub checkReplaceWithInvalidAttribute {
 }
 
 sub add {
-    my ( $test, $uid, $type, $obj ) = splice @_;
+    my ( $test, $uid, $type, $obj, $query ) = splice @_;
     my $j = $_json->encode($obj);
     my $res;
 
     my $path = $type ? "/type/$type" : "";
     ok(
         $res = &client->_post(
-            "/api/v1/secondFactor/${uid}${path}", '',
-            IO::String->new($j),                  'application/json',
+            "/api/v1/secondFactor/${uid}${path}", ( $query || '' ),
+            IO::String->new($j), 'application/json',
             length($j)
         ),
         "$test: Request succeed"
@@ -338,8 +338,8 @@ sub add {
 }
 
 sub checkAdd {
-    my ( $test, $uid, $type, $add ) = splice @_;
-    check201( $test, add( $test, $uid, $type, $add ) );
+    my ( $test, $uid, $type, $add, $query ) = splice @_;
+    check201( $test, add( $test, $uid, $type, $add, $query ) );
 }
 
 sub checkAddFailsIfExists {
@@ -354,8 +354,8 @@ sub checkAddWithBadAttributes {
 }
 
 sub checkAddWithUnknownUser {
-    my ( $test, $uid, $type, $add ) = splice @_;
-    check404( $test, add( $test, $uid, $type, $add ) );
+    my ( $test, $uid, $type, $add, $query ) = splice @_;
+    check404( $test, add( $test, $uid, $type, $add, $query ) );
 }
 
 sub checkAddWithUnknownType {
@@ -525,8 +525,6 @@ checkAddWithBadAttributes(
     { name => "test", type => "test", epoch => 1 },
     qr/Invalid input: epoch is forbidden/
 );
-checkAddWithUnknownUser( "Add/missinguser", "unknown", undef,
-    { type => "test", name => "test" } );
 checkAdd( "Add second factor",
     "donna", undef, { type => "test", name => "test" } );
 $ret = checkGetList( 1, 'donna', 'test' );
@@ -576,5 +574,27 @@ checkTotpData(
     "gezdgnbvgy3tqojqgezdgnbvgy3tqojq",
     name => "test"
 );
+
+# 2FA add with nonexisting session
+checkAddWithUnknownUser( "Add/missinguser", "unknowng", undef,
+    { type => "test", name => "test" } );
+checkAddWithUnknownUser( "Add/missinguser", "unknownt", "TOTP",
+    { type => "test", key => "GEZDGNBVGY3TQOJQ GEZDGNBVG Y3TQOJQ  " } );
+checkAddWithUnknownUser( "Add/missinguser", "unknowng", undef,
+    { type => "test", name => "test" },
+    "create=false" );
+checkAddWithUnknownUser( "Add/missinguser", "unknownt", "TOTP",
+    { type => "test", key => "GEZDGNBVGY3TQOJQ GEZDGNBVG Y3TQOJQ  " },
+    "create=false" );
+
+checkAdd( "Add/missinguser", "unknowng", undef,
+    { type => "test", name => "test" },
+    "create=true" );
+checkGetList( 1, 'unknowng', 'test' );
+
+checkAdd( "Add/missinguser", "unknownt", "TOTP",
+    { name => "test", key => "GEZDGNBVGY3TQOJQ GEZDGNBVG Y3TQOJQ  " },
+    "create=true" );
+checkGetList( 1, 'unknownt', 'TOTP' );
 
 done_testing();
