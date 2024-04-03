@@ -1544,6 +1544,11 @@ sub attributes {
             documentation => 'Cookie securisation method',
             flags         => 'hp',
         },
+        hashedSessionStore => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Securize storage of sensible sessions',
+        },
         sameSite => {
             type   => 'select',
             select => [
@@ -4892,7 +4897,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default => '',
         },
         oidcOPMetaDataOptionsRequirePkce => {
-            type => 'bool',
+            type          => 'bool',
             documentation => 'Use PKCE with this OP',
         },
 

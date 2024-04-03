@@ -505,6 +505,11 @@ sub getApacheSession {
     }
 
     my $as = Lemonldap::NG::Common::Session->new( {
+
+            # The $args{hashStore} permits one to override the
+            # hashedSessionStore parameter. It is used when sessions are given
+            # by searchOn (like in Refresh plugin)
+            hashStore => $args{hashStore} // $self->conf->{hashedSessionStore},
             storageModule        => $self->conf->{globalStorage},
             storageModuleOptions => $self->conf->{globalStorageOptions},
             cacheModule          => $self->conf->{localSessionStorage},
@@ -1211,7 +1216,7 @@ sub tplParams {
         SKIN_BG      => $self->conf->{portalSkinBackground},
         FAVICON      => $self->conf->{portalFavicon} || 'common/favicon.ico',
         CUSTOM_CSS   => $self->conf->{portalCustomCss},
-        CUSTOM_JS   => $self->conf->{portalCustomJs},
+        CUSTOM_JS    => $self->conf->{portalCustomJs},
         (
             $self->customParameters
             ? ( %{ $self->customParameters } )
@@ -1262,7 +1267,8 @@ sub registerLogin {
     $self->logger->debug("Current login saved into $type");
 
     # Gather current login's parameters and force current time
-    my $login = $self->_sumUpSession({ %{$req->sessionInfo}, _utime => time }, 1 );
+    my $login =
+      $self->_sumUpSession( { %{ $req->sessionInfo }, _utime => time }, 1 );
     $login->{error} = $self->error( $req->authResult )
       if ( $req->authResult );
 

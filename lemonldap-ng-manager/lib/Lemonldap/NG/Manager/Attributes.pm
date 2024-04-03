@@ -1613,6 +1613,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 30,
             'type'    => 'int'
         },
+        'hashedSessionStore' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'hiddenAttributes' => {
             'default' => '_password _2fDevices',
             'type'    => 'text'

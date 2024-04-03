@@ -11,7 +11,7 @@ BEGIN {
     require 't/saml-lib.pm';
 }
 
-my $maintests = 17;
+my $maintests = 15;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 
@@ -89,11 +89,7 @@ SKIP: {
     expectAuthenticatedAs( $res, 'ru@badwolf.org@idp' );
 
     # Verify UTF-8
-    ok( $res = $sp->_get("/sessions/global/$spId"), 'Get UTF-8' );
-    expectOK($res);
-    ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
-      or print STDERR $@;
-    ok( $res->{cn} eq 'Русский', 'UTF-8 values' )
+    ok( getSession($spId)->data->{cn} eq 'Русский', 'UTF-8 values' )
       or explain( $res, 'cn => Frédéric Accents' );
 
     # Logout initiated by IdP
@@ -162,8 +158,7 @@ clean_sessions();
 done_testing( count() );
 
 sub issuer {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel               => $debug,
                 domain                 => 'idp.com',
@@ -208,8 +203,7 @@ sub issuer {
 }
 
 sub sp {
-    return LLNG::Manager::Test->new(
-        {
+    return LLNG::Manager::Test->new( {
             ini => {
                 logLevel                          => $debug,
                 domain                            => 'sp.com',

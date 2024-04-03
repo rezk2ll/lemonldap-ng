@@ -415,6 +415,7 @@
 "groups":"Grupy",
 "groupsBeforeMacros":"Oblicz grupy przed makrami",
 "hGroups":"Grupy (HashRef)",
+"hashedSessionStore":"Hashed session storage",
 "hashkey":"Klucz",
 "headers":"Nagłówki HTTP",
 "hiddenAttributes":"Ukryte atrybuty",

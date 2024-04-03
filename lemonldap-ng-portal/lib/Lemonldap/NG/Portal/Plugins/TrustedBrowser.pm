@@ -268,8 +268,9 @@ sub getTrustedBrowserSessionFromReq {
 }
 
 sub getTrustedBrowserSession {
-    my ( $self, $cid ) = @_;
+    my ( $self, $cid, $raw ) = @_;
     my $ps = Lemonldap::NG::Common::Session->new(
+        hashStore            => $raw ? 0 : $self->{conf}->{hashedSessionStore},
         storageModule        => $self->conf->{globalStorage},
         storageModuleOptions => $self->conf->{globalStorageOptions},
         kind                 => "SSO",
@@ -420,8 +421,10 @@ sub removeExistingSessions {
     my $sessions =
       $self->module->searchOn( $self->moduleOpts, '_session_uid', $uid );
 
+    # searchOn() returns sessions indexed by their storage ID, then
+    # it is required to use hashed ID
     foreach ( keys %{ $sessions || {} } ) {
-        if ( my $ps = $self->getTrustedBrowserSession($_) ) {
+        if ( my $ps = $self->getTrustedBrowserSession($_, 1) ) {
 
             # If this is a StayConnected session, remove it
             $ps->remove if $ps->{data}->{_connectedSince};
@@ -444,6 +447,7 @@ sub newConnectionSession {
     }
 
     return Lemonldap::NG::Common::Session->new(
+        hashStore            => $self->{conf}->{hashedSessionStore},
         storageModule        => $self->conf->{globalStorage},
         storageModuleOptions => $self->conf->{globalStorageOptions},
         kind                 => "SSO",
@@ -490,7 +494,8 @@ sub checkBrowserReturn {
         $req->sessionInfo($sessionInfo);
 
         $req->sessionInfo->{_trustedBrowser} = 1;
-        $req->sessionInfo->{_stayConnectedSession} = $state->{_stayConnectedSession};
+        $req->sessionInfo->{_stayConnectedSession} =
+          $state->{_stayConnectedSession};
         my $authn_level_from_trusted = $state->{_trustedAuthnLevel};
         my $authn_level_from_auth    = $sessionInfo->{authenticationLevel};
         my $new_authn_level =

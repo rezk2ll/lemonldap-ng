@@ -336,6 +336,11 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
 -  **Use global storage**: Local cache is used by default for one time
    tokens. To use global storage, set it to 'On'
 -  **Strict-Transport-Security Max-age**: Set STS header max-age if you use SSL only (by example: 15768000)
+-  **Hashed session storage**: when set to "On", SSO sessions and OIDC tokens
+   are stored with a hashed name, then when parsing storage, nobody
+   can reconver SSO session name or OIDC access_token. Not enabled by default
+   because it breaks exiting OIDC offline sessions.
+   **Incompatible with "Proxy" authentication in SOAP mode**.
 -  **CrowdSec Bouncer**: Set to 'On' to enable :doc:`CrowdSec Bouncer plugin<crowdsec>`
 -  **Brute-Force Attack protection**: set to 'On' to enable :doc:`Brute-force protection plugin<bruteforceprotection>`
 -  **LWP::UserAgent and SSL options**: Insert here options to pass to

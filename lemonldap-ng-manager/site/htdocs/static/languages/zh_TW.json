@@ -415,6 +415,7 @@
 "groups":"群組",
 "groupsBeforeMacros":"在巨集前計算群組",
 "hGroups":"群組 (HashRef)",
+"hashedSessionStore":"Hashed session storage",
 "hashkey":"金鑰",
 "headers":"HTTP 標頭",
 "hiddenAttributes":"隱藏屬性",

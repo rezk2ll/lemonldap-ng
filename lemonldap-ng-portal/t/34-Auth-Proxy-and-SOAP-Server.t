@@ -1,6 +1,7 @@
 use warnings;
 use Test::More;
 use strict;
+use Lemonldap::NG::Common::Session 'id2storage';
 use IO::String;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;
@@ -96,7 +97,7 @@ SKIP: {
           ),
         'Try get_key_from_all_sessions'
     );
-    ok( defined $res->{$spId}, ' Found session' );
+    ok( defined $res->{$ENV{LLNG_HASHED_SESSION_STORE} ? id2storage($spId) : $spId}, ' Found session' );
     count(3);
 
     # Logout

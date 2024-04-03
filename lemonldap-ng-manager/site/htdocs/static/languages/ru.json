@@ -415,6 +415,7 @@
 "groups":"Группы",
 "groupsBeforeMacros":"Вычислять группы перед макросами",
 "hGroups":"Группы (HashRef)",
+"hashedSessionStore":"Hashed session storage",
 "hashkey":"Ключ",
 "headers":"Заголовки HTTP",
 "hiddenAttributes":"Скрытые атрибуты",

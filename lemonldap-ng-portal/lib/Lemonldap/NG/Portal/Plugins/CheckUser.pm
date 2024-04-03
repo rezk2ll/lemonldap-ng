@@ -286,7 +286,11 @@ sub check {
 
         my $age = '1';
         foreach my $id ( keys %$sessions ) {
-            my $session = $self->p->getApacheSession($id) or next;
+
+            # searchOn() returns sessions indexed by their storage ID, then
+            # it is required to set hashStore to 0
+            my $session = $self->p->getApacheSession( $id, hashStore => 0, )
+              or next;
 
             if ( $session->{data}->{_utime} gt $age ) {
                 $attrs = $session->{data};

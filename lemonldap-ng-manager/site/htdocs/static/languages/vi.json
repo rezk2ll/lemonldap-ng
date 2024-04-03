@@ -415,6 +415,7 @@
 "groups":"Nhóm",
 "groupsBeforeMacros":"Tính toán các nhóm trước macros",
 "hGroups":"Nhóm (HashRef)",
+"hashedSessionStore":"Hashed session storage",
 "hashkey":"Khóa",
 "headers":"Tiêu đề HTTP",
 "hiddenAttributes":"Thuộc tính ẩn",

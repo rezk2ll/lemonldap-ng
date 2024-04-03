@@ -577,7 +577,7 @@ sub store {
 
     # Fill session
     my $infos = {};
-    foreach my $k ( keys %{ $req->{sessionInfo} } ) {
+    foreach my $k ( sort keys %{ $req->{sessionInfo} } ) {
         next unless defined $req->{sessionInfo}->{$k};
         my $displayValue = $req->{sessionInfo}->{$k};
         $displayValue = '****' if isHiddenAttr( $self->conf, $k );
@@ -589,6 +589,7 @@ sub store {
     # Main session
     my $session = $self->getApacheSession(
         $req->id,
+        hashStore => $req->data->{hashStore},
         force => $req->{force},
         info  => $infos
     );

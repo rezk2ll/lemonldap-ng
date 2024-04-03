@@ -415,6 +415,7 @@
 "groups":"Gruplar",
 "groupsBeforeMacros":"Grupları makrolardan önce hesapla",
 "hGroups":"Gruplar (HashRef)",
+"hashedSessionStore":"Hashed session storage",
 "hashkey":"Anahtar",
 "headers":"HTTP Başlıkları",
 "hiddenAttributes":"Gizli nitelikler",

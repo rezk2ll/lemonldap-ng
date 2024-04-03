@@ -415,6 +415,7 @@
 "groups":"Grupos",
 "groupsBeforeMacros":"Método para formulario de información",
 "hGroups":"Groups (HashRef)",
+"hashedSessionStore":"Hashed session storage",
 "hashkey":"Clave",
 "headers":"Cabeceras HTTP",
 "hiddenAttributes":"Atributos ocultos",
