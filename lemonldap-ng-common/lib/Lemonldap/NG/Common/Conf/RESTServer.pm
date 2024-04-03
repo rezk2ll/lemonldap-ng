@@ -815,12 +815,12 @@ sub metadata {
         }
         require Lemonldap::NG::Common::OpenIDConnect::Metadata;
         my $path = $self->currentConf->{issuerDBOpenIDConnectPath};
-        $path =~ s/^.*?(\w+).*?$/$1/;
+        $path =~ s#^.*?(\w+).*?$#$1/#;
         return $self->sendJSONresponse(
             $req,
             Lemonldap::NG::Common::OpenIDConnect::Metadata->metadataDoc(
                 $self->currentConf->{oidcServiceMetaDataIssuer}
-                  || $self->currentConf->{portal},
+                  || $self->p->portal,
                 $self->currentConf,
                 $path,
             ),
