@@ -135,8 +135,9 @@ sub removeFromCache { _cache_call( 'remove', @_ ); }
 
 sub _cache_call {
     my ( $sub, $self, @args ) = @_;
-    eval { $self->cache->$sub(@args); };
+    my $res = eval { $self->cache->$sub(@args); };
     print STDERR "Unable to use cache: $@\n" if $@;
+    return $res;
 }
 
 1;
