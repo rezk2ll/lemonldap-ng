@@ -1458,6 +1458,7 @@ sub tree {
         'samlSPMetaDataNodes',
         {
             title => 'oidcServiceMetaData',
+            form  => 'displayOidcMetadata',
             help  => 'openidconnectservice.html#service-configuration',
             nodes => [
                 'oidcServiceMetaDataIssuer',
