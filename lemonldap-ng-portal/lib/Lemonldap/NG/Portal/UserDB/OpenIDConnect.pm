@@ -88,17 +88,12 @@ sub setSessionInfo {
 
     while ( my ( $k, $v ) = each %vars ) {
         my $value = $req->data->{OpenIDConnect_user_info}->{$v};
-        if ( !ref($value) ) {
-            $req->{sessionInfo}->{$k} = $value;
-        }
-        elsif ( ref($value) eq "ARRAY" ) {
+        if (  ref($value) and ref($value) eq "ARRAY" ) {
             $req->{sessionInfo}->{$k} =
               join( $self->conf->{multiValuesSeparator}, @$value );
         }
         else {
-            $self->logger->warn( "Unable to process $v of type "
-                  . ref($value)
-                  . "from OIDC userinfo" );
+            $req->{sessionInfo}->{$k} = $value;
         }
     }
 
