@@ -102,7 +102,7 @@ sub _registrationchallenge {
     my $request          = {
         rp => {
             name => $self->rpName,
-            id   => $self->rp_id,
+            id   => $self->rp_id($req),
         },
         user => {
             name        => $user,
