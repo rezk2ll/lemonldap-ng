@@ -477,7 +477,7 @@
 "issuerParams":"Issuer modules",
 "issuersTimeout":"Issuers timeout",
 "jitsiAppId":"Application ID",
-"jitsiAppSecret":"Shared secret",
+"jitsiAppSecret":"Secreto compartido",
 "jitsiAttributes":"Atributos exportados",
 "jitsiIdAttribute":"Identifier attribute",
 "jitsiMailAttribute":"Email attribute",

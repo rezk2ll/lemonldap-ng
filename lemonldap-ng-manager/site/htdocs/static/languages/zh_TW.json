@@ -477,7 +477,7 @@
 "issuerParams":"發行者模組",
 "issuersTimeout":"發行者逾時",
 "jitsiAppId":"Application ID",
-"jitsiAppSecret":"Shared secret",
+"jitsiAppSecret":"已分享的祕密",
 "jitsiAttributes":"已匯出的屬性",
 "jitsiIdAttribute":"Identifier attribute",
 "jitsiMailAttribute":"Email attribute",

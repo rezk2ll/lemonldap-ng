@@ -477,7 +477,7 @@
 "issuerParams":"Düzenleyici modülleri",
 "issuersTimeout":"Düzenleyici zaman aşımı",
 "jitsiAppId":"Application ID",
-"jitsiAppSecret":"Shared secret",
+"jitsiAppSecret":"Paylaşılan sır",
 "jitsiAttributes":"Dışa aktarılan nitelikler",
 "jitsiIdAttribute":"Identifier attribute",
 "jitsiMailAttribute":"Email attribute",

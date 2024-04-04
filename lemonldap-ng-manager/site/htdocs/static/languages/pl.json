@@ -477,7 +477,7 @@
 "issuerParams":"Moduły wystawcy",
 "issuersTimeout":"Limit czasu wystawców",
 "jitsiAppId":"Application ID",
-"jitsiAppSecret":"Shared secret",
+"jitsiAppSecret":"Współdzielony sekret",
 "jitsiAttributes":"Wyeksportowane atrybuty",
 "jitsiIdAttribute":"Identifier attribute",
 "jitsiMailAttribute":"Email attribute",

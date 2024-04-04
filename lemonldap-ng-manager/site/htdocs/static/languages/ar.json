@@ -477,7 +477,7 @@
 "issuerParams":"وحدات المصدر",
 "issuersTimeout":"Issuers timeout",
 "jitsiAppId":"Application ID",
-"jitsiAppSecret":"Shared secret",
+"jitsiAppSecret":"سر مشترك",
 "jitsiAttributes":"السمات المصدرة",
 "jitsiIdAttribute":"Identifier attribute",
 "jitsiMailAttribute":"Email attribute",

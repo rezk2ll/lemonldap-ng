@@ -477,7 +477,7 @@
 "issuerParams":"מודולי מנפיק",
 "issuersTimeout":"Issuers timeout",
 "jitsiAppId":"Application ID",
-"jitsiAppSecret":"Shared secret",
+"jitsiAppSecret":"סוד משותף",
 "jitsiAttributes":"תכונות שייוצאו",
 "jitsiIdAttribute":"Identifier attribute",
 "jitsiMailAttribute":"Email attribute",

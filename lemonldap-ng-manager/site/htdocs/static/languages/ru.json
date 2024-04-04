@@ -477,7 +477,7 @@
 "issuerParams":"Модули эмитента",
 "issuersTimeout":"Время ожидания эмитентов",
 "jitsiAppId":"Application ID",
-"jitsiAppSecret":"Shared secret",
+"jitsiAppSecret":"Общий секрет",
 "jitsiAttributes":"Экспортированные атрибуты",
 "jitsiIdAttribute":"Identifier attribute",
 "jitsiMailAttribute":"Email attribute",
