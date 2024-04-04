@@ -61,11 +61,29 @@ rmtree $cachedir;
 mkdir $cachedir;
 chmod 0555, $cachedir;
 
-ok( tie( %session, 'Lemonldap::NG::Common::Apache::Session', $id, $args ), 'Get session' );
+ok( tie( %session, 'Lemonldap::NG::Common::Apache::Session', $id, $args ),
+    'Get session' );
 ok( $session{bb} eq 'cc', 'Session is restored' );
 untie %session;
 
-system('find',$cachedir,'-type','f');
+chmod 0755, $cachedir;
+
+ok( tie( %session, 'Lemonldap::NG::Common::Apache::Session', $id, $args ),
+    'Get session' );
+untie %session;
+
+ok( unlink("$sessionsdir/$id"), 'Drop session' );
+
+ok( tie( %session, 'Lemonldap::NG::Common::Apache::Session', $id, $args ),
+    'get session from cache' );
+ok( $session{bb} eq 'cc', 'cached session is valid' );
+untie %session;
+
+rmtree $cachedir;
+mkdir $cachedir;
+
+eval { tie( %session, 'Lemonldap::NG::Common::Apache::Session', $id, $args ) };
+ok ($@, 'Error when session and cache are inexitent' );
 
 rmtree $dir;
 done_testing();

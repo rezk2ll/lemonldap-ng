@@ -60,7 +60,7 @@ sub materialize {
         $session->{serialized} = $self->getFromCache($id);
         eval { JSON::from_json( $session->{serialized} ); };
         if ($@) {
-            print STDERR "Local data corrupted, ignore session\n";
+            print STDERR "Local data corrupted, ignore cached session\n";
             $session->{serialized} = undef;
         }
         else {
