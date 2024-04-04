@@ -56,6 +56,7 @@ lib/Lemonldap/NG/Common/Notifications/File.pm
 lib/Lemonldap/NG/Common/Notifications/JSON.pm
 lib/Lemonldap/NG/Common/Notifications/LDAP.pm
 lib/Lemonldap/NG/Common/Notifications/XML.pm
+lib/Lemonldap/NG/Common/OpenIDConnect/Constants.pm
 lib/Lemonldap/NG/Common/OpenIDConnect/Metadata.pm
 lib/Lemonldap/NG/Common/PSGI.pm
 lib/Lemonldap/NG/Common/PSGI/Cli/Lib.pm
