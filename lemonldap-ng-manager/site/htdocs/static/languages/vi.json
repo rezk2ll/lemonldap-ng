@@ -481,7 +481,7 @@
 "jitsiMailAttribute":"Email attribute",
 "jitsiNameAttribute":"Name attribute",
 "jitsiOptions":"Tùy chọn",
-"jitsiServer":"Jitsi server URL",
+"jitsiDefaultServer":"Jitsi server URL",
 "jitsiSigningAlg":"Signature algorithm",
 "jqueryButtonSelector":"nút chọn jQuery (tùy chọn)",
 "jqueryFormSelector":"trình đơn chọn jQuery (tùy chọn)",

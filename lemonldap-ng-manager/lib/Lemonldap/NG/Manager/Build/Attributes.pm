@@ -1857,7 +1857,7 @@ sub attributes {
             documentation => 'Jitsi issuer rule',
         },
 
-        jitsiServer => {
+        jitsiDefaultServer => {
             type          => 'url',
             documentation => 'Jitsi server URL',
         },

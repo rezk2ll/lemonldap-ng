@@ -481,7 +481,7 @@
 "jitsiMailAttribute":"Email attribute",
 "jitsiNameAttribute":"Name attribute",
 "jitsiOptions":"Opcje",
-"jitsiServer":"Jitsi server URL",
+"jitsiDefaultServer":"Jitsi server URL",
 "jitsiSigningAlg":"Signature algorithm",
 "jqueryButtonSelector":"Przycisk wyboru jQuery (opcjonalnie)",
 "jqueryFormSelector":"Selektor formularzy jQuery (opcjonalnie)",

@@ -481,7 +481,7 @@
 "jitsiMailAttribute":"Email attribute",
 "jitsiNameAttribute":"Name attribute",
 "jitsiOptions":"選項",
-"jitsiServer":"Jitsi server URL",
+"jitsiDefaultServer":"Jitsi server URL",
 "jitsiSigningAlg":"Signature algorithm",
 "jqueryButtonSelector":"jQuery 按鈕選取器（選擇性）",
 "jqueryFormSelector":"jQuery 表單選取器（選擇性）",

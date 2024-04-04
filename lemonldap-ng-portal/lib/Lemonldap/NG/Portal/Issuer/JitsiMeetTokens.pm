@@ -23,11 +23,11 @@ extends 'Lemonldap::NG::Portal::Main::Issuer';
 
 has rule => ( is => 'rw' );
 
-has jitsi_server => (
+has jitsi_default_server => (
     is      => "rw",
     lazy    => 1,
     default => sub {
-        $_[0]->conf->{jitsiServer};
+        $_[0]->conf->{jitsiDefaultServer};
     }
 );
 
@@ -177,7 +177,7 @@ sub jitsi {
     my ( $self, $req ) = @_;
     my $room = $req->param('room');
 
-    if ( !$self->jitsi_server ) {
+    if ( !$self->jitsi_default_server ) {
         $self->logger->error("Jitsi Server URL not set in configuration");
         return PE_ERROR;
     }
@@ -216,7 +216,7 @@ sub jitsi {
         }
     };
     my $server;
-    my $u = URI->new_abs( $room, URI->new( $self->jitsi_server ) );
+    my $u = URI->new_abs( $room, URI->new( $self->jitsi_default_server ) );
 
     my @extra_headers;
     my $key;

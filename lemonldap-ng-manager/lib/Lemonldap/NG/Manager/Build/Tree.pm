@@ -560,7 +560,7 @@ sub tree {
                                 {
                                     title => 'jitsiOptions',
                                     nodes => [
-                                        'jitsiServer',
+                                        'jitsiDefaultServer',
                                         'jitsiAppId',
                                         'jitsiAppSecret',
                                         'jitsiSigningAlg',

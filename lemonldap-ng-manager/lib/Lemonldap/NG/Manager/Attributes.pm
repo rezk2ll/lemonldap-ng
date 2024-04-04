@@ -1786,6 +1786,9 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'jitsiAppSecret' => {
             'type' => 'text'
         },
+        'jitsiDefaultServer' => {
+            'type' => 'url'
+        },
         'jitsiIdAttribute' => {
             'type' => 'text'
         },
@@ -1794,9 +1797,6 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'jitsiNameAttribute' => {
             'type' => 'text'
-        },
-        'jitsiServer' => {
-            'type' => 'url'
         },
         'jitsiSigningAlg' => {
             'default' => 'RS256',
