@@ -1732,6 +1732,18 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 1,
             'type'    => 'boolOrExpr'
         },
+        'issuerDBJitsiMeetTokensActivation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'issuerDBJitsiMeetTokensPath' => {
+            'default' => '^/jitsi/',
+            'type'    => 'text'
+        },
+        'issuerDBJitsiMeetTokensRule' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
         'issuerDBOpenIDActivation' => {
             'default' => 0,
             'type'    => 'bool'
@@ -1771,6 +1783,81 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'issuersTimeout' => {
             'default' => 120,
             'type'    => 'int'
+        },
+        'jitsiAppId' => {
+            'type' => 'text'
+        },
+        'jitsiAppSecret' => {
+            'type' => 'text'
+        },
+        'jitsiDefaultServer' => {
+            'type' => 'url'
+        },
+        'jitsiIdAttribute' => {
+            'type' => 'text'
+        },
+        'jitsiMailAttribute' => {
+            'type' => 'text'
+        },
+        'jitsiNameAttribute' => {
+            'type' => 'text'
+        },
+        'jitsiSigningAlg' => {
+            'default' => 'RS256',
+            'select'  => [ {
+                    'k' => 'HS256',
+                    'v' => 'HS256'
+                },
+                {
+                    'k' => 'HS384',
+                    'v' => 'HS384'
+                },
+                {
+                    'k' => 'HS512',
+                    'v' => 'HS512'
+                },
+                {
+                    'k' => 'RS256',
+                    'v' => 'RS256'
+                },
+                {
+                    'k' => 'RS384',
+                    'v' => 'RS384'
+                },
+                {
+                    'k' => 'RS512',
+                    'v' => 'RS512'
+                },
+                {
+                    'k' => 'PS256',
+                    'v' => 'PS256'
+                },
+                {
+                    'k' => 'PS384',
+                    'v' => 'PS384'
+                },
+                {
+                    'k' => 'PS512',
+                    'v' => 'PS512'
+                },
+                {
+                    'k' => 'ES256',
+                    'v' => 'ES256'
+                },
+                {
+                    'k' => 'ES384',
+                    'v' => 'ES384'
+                },
+                {
+                    'k' => 'ES512',
+                    'v' => 'ES512'
+                },
+                {
+                    'k' => 'EdDSA',
+                    'v' => 'EdDSA'
+                }
+            ],
+            'type' => 'select'
         },
         'jsRedirect' => {
             'default' => 0,

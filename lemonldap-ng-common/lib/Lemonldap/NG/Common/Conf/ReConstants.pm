@@ -63,6 +63,7 @@ our $authParameters = {
 our $issuerParameters = {
   issuerDBCAS => [qw(issuerDBCASActivation issuerDBCASPath issuerDBCASRule)],
   issuerDBGet => [qw(issuerDBGetActivation issuerDBGetPath issuerDBGetRule issuerDBGetParameters)],
+  issuerDBJitsiMeetTokens => [qw(issuerDBJitsiMeetTokensActivation issuerDBJitsiMeetTokensPath issuerDBJitsiMeetTokensRule jitsiDefaultServer jitsiAppId jitsiAppSecret jitsiSigningAlg jitsiIdAttribute jitsiNameAttribute jitsiMailAttribute)],
   issuerDBOpenID => [qw(issuerDBOpenIDActivation issuerDBOpenIDPath issuerDBOpenIDRule openIdIssuerSecret openIdAttr openIdSPList openIdSreg_fullname openIdSreg_nickname openIdSreg_language openIdSreg_postcode openIdSreg_timezone openIdSreg_country openIdSreg_gender openIdSreg_email openIdSreg_dob)],
   issuerDBOpenIDConnect => [qw(issuerDBOpenIDConnectActivation issuerDBOpenIDConnectPath issuerDBOpenIDConnectRule)],
   issuerDBSAML => [qw(issuerDBSAMLActivation issuerDBSAMLPath issuerDBSAMLRule)],
