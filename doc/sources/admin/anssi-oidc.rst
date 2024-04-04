@@ -18,6 +18,7 @@ LLNG as OpenID-Connect Provider
 
 List of points to enable if possible:
 
+* Enable **Hashed session storage** in security parameters
 * Allow only "authorization code" flow
 * Forbid the use of **HS** algorithms, prefer those with public/private keys
 * Disable automatic enrollment
@@ -31,15 +32,18 @@ List of points to enable if possible:
     * Require JWS authentication
 * UserInfo endpoint
     * Accept only authentication using ``Authorization: Bearer ...``
+* Use hashed storage for sessions *(this includes OIDC tokens)*
 
 LLNG as OpenID-Connect Relying-Party
 ------------------------------------
 
 List of points to enable if possible:
 
+* Enable **Hashed session storage** in security parameters
 * always use ``nonce``
 * Forbid the use of **HS** algorithms, prefer those with public/private keys
 * Code requests
     * Use JWS to pass request parameters
 * Token endpoint
     * Use JWS authentication
+* Use hashed storage for sessions

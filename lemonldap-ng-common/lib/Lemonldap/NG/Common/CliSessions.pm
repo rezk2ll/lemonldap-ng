@@ -123,6 +123,7 @@ sub _get_one_session {
     $backendStorage = "globalStorage" unless $self->conf->{$backendStorage};
 
     my $as = Lemonldap::NG::Common::Session->new( {
+            hashStore            => $self->conf->{hashedSessionStore},
             storageModule        => $self->conf->{$backendStorage},
             storageModuleOptions => $self->conf->{"${backendStorage}Options"},
             id                   => $id,

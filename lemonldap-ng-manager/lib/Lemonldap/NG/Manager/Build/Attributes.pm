@@ -1544,6 +1544,11 @@ sub attributes {
             documentation => 'Cookie securisation method',
             flags         => 'hp',
         },
+        hashedSessionStore => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Securize storage of sensible sessions',
+        },
         sameSite => {
             type   => 'select',
             select => [

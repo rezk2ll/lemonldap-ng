@@ -55,7 +55,7 @@ sub STORE {
     my $value = shift;
 
     $self->{data}->{$key} = $value;
-    $self->{modified} = 1;
+    $self->{modified} = 1 unless $key eq '_session_id';
     return $value;
 }
 

@@ -79,6 +79,7 @@ META.yml
 README
 scripts/convertConfig
 scripts/convertSessions
+scripts/convertToHashSessionStorage
 scripts/encryptTotpSecrets
 scripts/importMetadata
 scripts/lemonldap-ng-cli
@@ -105,6 +106,7 @@ t/41-Common-EmailAddress.t
 t/45-importMetadata-config.t
 t/45-importMetadata.t
 t/50-Combination-Parser.t
+t/60-Hashed-Session.t
 t/60-Session-Cache.t
 t/60-Session-Cli.t
 t/60-U2F-Migrate.t

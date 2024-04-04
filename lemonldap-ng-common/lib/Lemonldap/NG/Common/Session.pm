@@ -7,9 +7,23 @@
 package Lemonldap::NG::Common::Session;
 
 use strict;
+use Exporter 'import';
+use Digest::SHA;
+use JSON;
 use Lemonldap::NG::Common::Apache::Session;
+use Lemonldap::NG::Common::Apache::Session::Generate::SHA256;
 
 our $VERSION = '2.0.15';
+
+# Export method needed to handle hashed storage
+our @EXPORT = qw(id2storage hashedKinds reHashedKinds);
+
+use constant hashedKinds => ( 'SSO', 'OIDC', 'CDA' );
+
+sub reHashedKinds {
+    my $s = '^(' . join( '|', hashedKinds() ) . ')$';
+    return qr/$s/;
+}
 
 # Workaround for another ModPerl/Mouse issue...
 BEGIN {
@@ -28,10 +42,29 @@ BEGIN {
     }
 }
 
+# Convert a session ID into store entry
+sub id2storage {
+    return $_[0] ? Digest::SHA::sha256_hex( $_[0] ) : undef;
+}
+
+sub randomId {
+    my $tmp = {};
+    &Lemonldap::NG::Common::Apache::Session::Generate::SHA256::generate($tmp);
+    return $tmp->{data}->{_session_id};
+}
+
 has id => (
-    is  => 'rw',
-    isa => 'Str|Undef',
+    is      => 'rw',
+    isa     => 'Str|Undef',
+    trigger => sub {
+        $_[0]->{storageId} =
+          ( $_[0]->hashStore && $_[0]->id )
+          ? id2storage( $_[0]->id )
+          : $_[0]->id;
+    }
 );
+
+has storageId => ( is => 'rw', );
 
 has force => (
     is      => 'rw',
@@ -85,8 +118,11 @@ has info => ( is => 'rw' );
 
 has timeout => ( is => 'rw', default => 5 );
 
+has hashStore => ( is => 'rw' );
+
 sub BUILD {
     my ($self) = @_;
+
 
     # Load Apache::Session module
     unless ( $self->storageModule->can('populate') ) {
@@ -157,6 +193,10 @@ sub BUILD {
         $self->_save_data($data);
         $self->kind( $data->{_session_kind} );
         $self->id( $data->{_session_id} );
+        if ( $self->hashStore and $self->id ) {
+            $data->{_session_id}     = id2storage( $self->id );
+            $data->{_session_hashed} = 1;
+        }
 
         untie(%$data);
     }
@@ -167,6 +207,19 @@ sub _tie_session {
     my $options = $_[1] || {};
     my %h;
 
+    # Secured storage for new session: generate a new random ID and calculate
+    # the storage ID
+    my $securedId = $self->id;
+    if ( $self->hashStore ) {
+        if ( !$self->id ) {
+            my $id = $self->options->{setId} || randomId();
+            $securedId = $id;
+            $self->storageId( id2storage($securedId) );
+            $self->options->{setId} = $options->{setId} = $self->storageId;
+            $self->error(undef);
+        }
+    }
+
     eval {
         local $SIG{ALRM} = sub { die "TIMEOUT\n" };
         eval {
@@ -176,11 +229,13 @@ sub _tie_session {
             if ( $self->storageModule =~
                 /^Lemonldap::NG::Common::Apache::Session/ )
             {
-                tie %h, $self->storageModule, $self->id,
+                tie %h, $self->storageModule,
+                  ( $options->{setId} ? $self->id : $self->storageId ),
                   { %{ $self->options }, %$options, kind => $self->kind };
             }
             else {
-                tie %h, 'Lemonldap::NG::Common::Apache::Session', $self->id,
+                tie %h, 'Lemonldap::NG::Common::Apache::Session',
+                  ( $options->{setId} ? $self->id : $self->storageId ),
                   { %{ $self->options }, %$options };
             }
         };
@@ -193,6 +248,11 @@ sub _tie_session {
         $msg .= ": $@" if $@;
         $self->error($msg);
         return undef;
+    }
+    if ( $self->hashStore ) {
+
+        # Before returning the session, set here the real cookie value
+        $h{_session_id} = $securedId;
     }
 
     return \%h;
@@ -240,6 +300,9 @@ sub remove {
     my ( $self, $tieOptions ) = @_;
 
     my $data = $self->_tie_session($tieOptions);
+
+    # Before saving, hide the real ID and replace it by the storage ID
+    $data->{_session_id} = id2storage( $self->id ) if $self->hashStore;
 
     eval { tied(%$data)->delete(); };
 

@@ -11,6 +11,9 @@ our $VERSION = '2.17.0';
 
 has sessionTypes => ( is => 'rw' );
 
+# Boolean value to tell if storage ID is hashed or not
+has hashedSessionStore => ( is => 'rw' );
+
 sub setTypes {
     my ( $self, $conf ) = @_;
     foreach my $type (@sessionTypes) {
@@ -33,6 +36,7 @@ sub setTypes {
     $self->{sessionTypes}->{offline}->{options} =
       $self->{sessionTypes}->{$offlinebackend}->{options};
     $self->{sessionTypes}->{offline}->{kind} = "OIDCI";
+    $self->hashedSessionStore( $conf->{hashedSessionStore} );
 }
 
 ### SEE LEMONLDAP::NG::COMMON::SESSION FOR AVAILABLE FUNCTIONS
@@ -170,8 +174,7 @@ sub delete2F {
     while (@$_2fDevices) {
         my $element = shift @$_2fDevices;
 
-        $self->logger->debug(
-            "Looking for 2F device to delete: [$type]$epoch");
+        $self->logger->debug("Looking for 2F device to delete: [$type]$epoch");
         if ( defined $element->{type} && defined $element->{epoch} ) {
             if (    ( $element->{type} eq $type )
                 and ( $element->{epoch} eq $epoch ) )
@@ -204,12 +207,16 @@ sub delete2F {
 sub _session {
     my ( $self, $raw, $req, $id, $skey ) = @_;
     my ( %h, $res );
+
+    # When requesting a session, depending on the context, the cann can be
+    # with the storage ID or the cookie value. the "hash=1' parameter indicates
+    # that the query uses the cookie value
     return $self->sendError( $req, 'Bad request', 400 ) unless $id;
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
 
     # Try to read session
-    my $apacheSession = $self->getApacheSession( $mod, $id )
+    my $apacheSession = $self->getApacheSession( $mod, $id, hashStore => 0 )
       or return $self->sendError( $req, undef, 400 );
 
     my %session = %{ $apacheSession->data };
@@ -246,18 +253,22 @@ sub rawSession {
 }
 
 sub getApacheSession {
-    my ( $self, $mod, $id, $info, $force ) = @_;
+    my ( $self, $mod, $id, %args ) = @_;
     my $apacheSession = Lemonldap::NG::Common::Session->new( {
-            storageModule        => $mod->{module},
+
+            # The request is done with the storage ID by default unless
+            # hashStore is explicitly set to a true value
+            hashStore     => $args{hashStore} && $self->hashedSessionStore,
+            storageModule => $mod->{module},
             storageModuleOptions => $mod->{options},
             cacheModule          =>
               Lemonldap::NG::Handler::PSGI::Main->tsv->{sessionCacheModule},
             cacheModuleOptions =>
               Lemonldap::NG::Handler::PSGI::Main->tsv->{sessionCacheOptions},
             id    => $id,
-            force => $force,
-            ( $id   ? ()                : ( kind => $mod->{kind} ) ),
-            ( $info ? ( info => $info ) : () ),
+            force => $args{force},
+            ( $id         ? () : ( kind => $mod->{kind} ) ),
+            ( $args{info} ? ( info => $args{info} ) : () ),
         }
     );
     if ( $apacheSession->error ) {

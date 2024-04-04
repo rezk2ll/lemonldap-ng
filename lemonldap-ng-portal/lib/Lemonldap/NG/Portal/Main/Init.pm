@@ -406,7 +406,7 @@ sub reloadConf {
             $re->add( quotemeta($p) );
         }
 
-        foreach my $vhost ( keys %{ $self->conf->{locationRules} } ) {
+        foreach my $vhost ( sort keys %{ $self->conf->{locationRules} } ) {
             my $expr = quotemeta($vhost);
 
             # Handle wildcards

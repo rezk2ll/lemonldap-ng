@@ -14,6 +14,7 @@ testRequiredMethods(
     [ qw(
           Custom
           PAM
+          Proxy
           WebID
           Proxy
         )
