@@ -29,11 +29,12 @@ my $cacheOpts = {
 };
 
 my $args = {
-    localStorage        => 'Cache::FileCache',
-    localStorageOptions => $cacheOpts,
-    backend             => 'Apache::Session::File',
-    Directory           => $sessionsdir,
-    LockDirectory       => "$sessionsdir/lock",
+    localStorage         => 'Cache::FileCache',
+    localStorageOptions  => $cacheOpts,
+    backend              => 'Apache::Session::File',
+    Directory            => $sessionsdir,
+    LockDirectory        => "$sessionsdir/lock",
+    allow_cache_for_root => 1,
 };
 
 ok( tie( %session, 'Lemonldap::NG::Common::Apache::Session', undef, $args ),
@@ -83,7 +84,7 @@ rmtree $cachedir;
 mkdir $cachedir;
 
 eval { tie( %session, 'Lemonldap::NG::Common::Apache::Session', $id, $args ) };
-ok ($@, 'Error when session and cache are inexitent' );
+ok( $@, 'Error when session and cache are inexitent' );
 
 rmtree $dir;
 done_testing();
