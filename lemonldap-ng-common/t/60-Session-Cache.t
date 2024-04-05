@@ -82,5 +82,8 @@ untie %session;
 rmtree $cachedir;
 mkdir $cachedir;
 
+eval { tie( %session, 'Lemonldap::NG::Common::Apache::Session', $id, $args ) };
+ok ($@, 'Error when session and cache are inexitent' );
+
 rmtree $dir;
 done_testing();
