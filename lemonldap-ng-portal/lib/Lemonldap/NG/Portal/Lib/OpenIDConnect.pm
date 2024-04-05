@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 use strict;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
-use Crypt::JWT  qw(encode_jwt decode_jwt);
+use Crypt::JWT qw(encode_jwt decode_jwt);
 use Digest::SHA qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
@@ -311,49 +311,59 @@ sub refreshJWKSdata {
     }
 
     foreach ( keys %{ $self->conf->{oidcOPMetaDataJSON} } ) {
-
-        # Refresh JWKS data if
-        # 1/ oidcOPMetaDataOptionsJWKSTimeout > 0
-        # 2/ jwks_uri defined in metadata
-
-        my $jwksTimeout =
-          $self->opOptions->{$_}->{oidcOPMetaDataOptionsJWKSTimeout};
-        my $jwksUri = $self->opMetadata->{$_}->{conf}->{jwks_uri};
-
-        unless ($jwksTimeout) {
-            $self->logger->debug(
-                "No JWKS refresh timeout defined for $_, skipping...");
-            next;
-        }
-
-        unless ($jwksUri) {
-            $self->logger->debug("No JWKS URI defined for $_, skipping...");
-            next;
-        }
-
-        if ( $self->opMetadata->{$_}->{jwks}->{time} + $jwksTimeout > time ) {
-            $self->logger->debug("JWKS data still valid for $_, skipping...");
-            next;
-        }
-
-        $self->logger->debug("Refresh JWKS data for $_ from $jwksUri");
-
-        my $response = $self->ua->get($jwksUri);
-
-        if ( $response->is_error ) {
-            $self->logger->warn(
-                "Unable to get JWKS data for $_ from $jwksUri: "
-                  . $response->message );
-            $self->logger->debug( $response->content );
-            next;
-        }
-
-        my $content = $self->decodeJSON( $response->decoded_content );
-
-        $self->opMetadata->{$_}->{jwks} = $content;
-        $self->opMetadata->{$_}->{jwks}->{time} = time;
-
+        $self->refreshJWKSdataForOp($_);
     }
+    return 1;
+}
+
+sub refreshJWKSdataForOp {
+    my ( $self, $op ) = @_;
+
+    $self->logger->debug("Attempting to refresh JWKS data for $op");
+
+    # Refresh JWKS data if
+    # 1/ oidcOPMetaDataOptionsJWKSTimeout > 0
+    # 2/ jwks_uri defined in metadata
+
+    my $jwksTimeout =
+      $self->opOptions->{$op}->{oidcOPMetaDataOptionsJWKSTimeout};
+    my $jwksUri = $self->opMetadata->{$op}->{conf}->{jwks_uri};
+
+    unless ($jwksTimeout) {
+        $self->logger->debug(
+            "No JWKS refresh timeout defined for $op, skipping...");
+        return;
+    }
+
+    unless ($jwksUri) {
+        $self->logger->debug("No JWKS URI defined for $op, skipping...");
+        return;
+    }
+
+    if ( $self->opMetadata->{$op}->{jwks}->{time}
+        && ( $self->opMetadata->{$op}->{jwks}->{time} + $jwksTimeout > time ) )
+    {
+        $self->logger->debug("JWKS data still valid for $op, skipping...");
+        return;
+    }
+
+    $self->logger->debug("Refresh JWKS data for $op from $jwksUri");
+
+    my $response = $self->ua->get($jwksUri);
+
+    if ( $response->is_error ) {
+        $self->logger->warn(
+            "Unable to get JWKS data for $op from $jwksUri: "
+              . $response->message );
+        $self->logger->debug( $response->content );
+        return;
+    }
+
+    my $content = $self->decodeJSON( $response->decoded_content );
+
+    $self->opMetadata->{$op}->{jwks} = $content;
+    $self->opMetadata->{$op}->{jwks}->{time} = time;
+
     return 1;
 }
 
@@ -1474,10 +1484,14 @@ sub decodeJWT {
         return;
     }
 
-   # For now, only OP has JWKS
-   #my $jwks =
-   #  $op ? $self->opMetadata->{$op}->{jwks} : $self->rpMetadata->{$rp}->{jwks};
-    my $jwks = $op ? $self->opMetadata->{$op}->{jwks} : $self->rpSigKey->{$rp};
+    my $jwks;
+    if ($op) {
+        $self->refreshJWKSdataForOp($op);
+        $jwks = $self->opMetadata->{$op}->{jwks};
+    }
+    else {
+        $jwks = $self->rpSigKey->{$rp};
+    }
 
     unless ( $alg =~ /^HS/ ) {
         unless ($jwks) {
