@@ -1511,8 +1511,9 @@ sub attributes {
             flags         => 'hp',
         },
         domain => {
-            type          => 'text',
-            test          => qr/^(?:(?:$Regexp::Common::URI::RFC2396::hostname|#\w+#))?$/,
+            type => 'text',
+            test =>
+              qr/^(?:(?:$Regexp::Common::URI::RFC2396::hostname|#\w+#))?$/,
             msgFail       => '__badDomainName__',
             default       => 'example.com',
             documentation => 'DNS domain',
@@ -1879,6 +1880,11 @@ sub attributes {
             select        => oidcSigAlgorithmAlg,
             default       => 'RS256',
             documentation => 'Jitsi JWT signature method',
+        },
+        jitsiExpiration => {
+            type          => 'int',
+            default       => '30',
+            documentation => 'Jitsi JWT expiration',
         },
         jitsiIdAttribute => {
             type          => 'text',
@@ -4678,7 +4684,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'OpenID Connect Authentication Context Class Ref',
         },
         oidcServiceHideMetadata => {
-            type => 'bool',
+            type          => 'bool',
             Documentation => "Don't display OIDC metadata",
         },
 

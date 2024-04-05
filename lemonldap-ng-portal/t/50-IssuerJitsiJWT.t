@@ -20,6 +20,7 @@ my $test_ini = {
     jitsiDefaultServer                => 'http://jitsi.example.com/',
     jitsiAppId                        => "app",
     jitsiSigningAlg                   => "RS256",
+    jitsiExpiration                   => 600,
     oidcServicePrivateKeySig          => oidc_key_op_private_sig(),
     oidcServicePublicKeySig           => oidc_cert_op_public_sig(),
     oidcServiceKeyIdSig               => "abc",
@@ -180,6 +181,10 @@ sub testSuccessfulLogin {
             },
             "Correct user"
         );
+
+        my $exp = $jwt->{exp};
+        cmp_ok( $exp - time,
+            ">", 500, "Token expires in more than 500 seconds" );
     };
 }
 

@@ -1793,6 +1793,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'jitsiDefaultServer' => {
             'type' => 'url'
         },
+        'jitsiExpiration' => {
+            'default' => '30',
+            'type'    => 'int'
+        },
         'jitsiIdAttribute' => {
             'type' => 'text'
         },

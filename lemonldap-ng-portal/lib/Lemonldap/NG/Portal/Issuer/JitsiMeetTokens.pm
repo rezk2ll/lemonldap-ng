@@ -39,6 +39,14 @@ has jitsi_appid => (
     }
 );
 
+has jitsi_expiration => (
+    is      => "rw",
+    lazy    => 1,
+    default => sub {
+        $_[0]->conf->{jitsiExpiration} || "30";
+    }
+);
+
 has jitsi_signing_alg => (
     is      => "rw",
     lazy    => 1,
@@ -193,7 +201,7 @@ sub jitsi {
     my $payload = {
         iss     => $self->p->buildUrl(),
         room    => $room,
-        exp     => ( time + 30 ),
+        exp     => ( time + $self->jitsi_expiration ),
         sub     => '*',
         aud     => $self->jitsi_appid,
         context => {
