@@ -60,6 +60,7 @@ lib/Lemonldap/NG/Portal/CertificateResetByMail/Demo.pm
 lib/Lemonldap/NG/Portal/CertificateResetByMail/LDAP.pm
 lib/Lemonldap/NG/Portal/Issuer/CAS.pm
 lib/Lemonldap/NG/Portal/Issuer/Get.pm
+lib/Lemonldap/NG/Portal/Issuer/JitsiMeetTokens.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenID.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Issuer/SAML.pm
@@ -561,6 +562,7 @@ t/01-BuildRule.t
 t/01-BuildUrl.t
 t/01-Cookie-Domain.t
 t/01-CSP-and-CORS-headers.t
+t/01-Dynamic-Portal-Url.t
 t/01-EnablePasswordDisplay.t
 t/01-Handler-redirection-and-URL-check-by-portal.t
 t/01-pdata.t
@@ -682,6 +684,7 @@ t/32-Auth-and-issuer-OIDC-implicit.t
 t/32-Auth-and-issuer-OIDC-PKCE-2.t
 t/32-Auth-and-issuer-OIDC-PKCE.t
 t/32-Auth-and-issuer-OIDC-sorted.t
+t/32-Auth-OIDC-JWKS-Refresh.t
 t/32-OIDC-Back-Channel-Logout-no-sid.t
 t/32-OIDC-Back-Channel-Logout-sid-EC-keys.t
 t/32-OIDC-Back-Channel-Logout-sid-with-JWE-and-EC-keys.t
@@ -802,6 +805,7 @@ t/43-MailPasswordReset.t
 t/44-CertificateResetByMail-Demo.t
 t/44-CertificateResetByMail-LDAP.t
 t/50-IssuerGet.t
+t/50-IssuerJitsiJWT.t
 t/56-CheckDevOps-with-Download.t
 t/56-CheckDevOps.t
 t/57-GlobalLogout-with-Confirmation.t
