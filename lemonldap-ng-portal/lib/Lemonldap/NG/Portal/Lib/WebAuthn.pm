@@ -88,7 +88,7 @@ sub generateChallenge {
 
     return {
         challenge        => $challenge_base64,
-        rpId             => $self->rp_id,
+        rpId             => $self->rp_id($req),
         allowCredentials => [
             map { { type => "public-key", id => $_->{_credentialId}, } }
               @webauthn_devices
