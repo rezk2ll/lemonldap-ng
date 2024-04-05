@@ -1794,7 +1794,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'url'
         },
         'jitsiExpiration' => {
-            'default' => '30',
+            'default' => '300',
             'type'    => 'int'
         },
         'jitsiIdAttribute' => {

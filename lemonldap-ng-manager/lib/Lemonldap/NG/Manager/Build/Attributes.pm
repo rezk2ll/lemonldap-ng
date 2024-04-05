@@ -1883,7 +1883,7 @@ sub attributes {
         },
         jitsiExpiration => {
             type          => 'int',
-            default       => '30',
+            default       => '300',
             documentation => 'Jitsi JWT expiration',
         },
         jitsiIdAttribute => {

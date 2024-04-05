@@ -43,7 +43,7 @@ has jitsi_expiration => (
     is      => "rw",
     lazy    => 1,
     default => sub {
-        $_[0]->conf->{jitsiExpiration} || "30";
+        $_[0]->conf->{jitsiExpiration} || "300";
     }
 );
 
