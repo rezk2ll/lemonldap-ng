@@ -12,16 +12,17 @@ use strict;
 BEGIN {
 # Thread shared properties (if threads are available: needs to be loaded elsewhere)
     our $_tshv = {
-        tsv         => {},
-        cfgNum      => 0,
-        cfgDate     => 0,
-        lastCheck   => 0,
-        checkTime   => 600,
-        confAcc     => {},
-        logger      => {},
-        userLogger  => {},
-        lmConf      => {},
-        localConfig => {},
+        tsv             => {},
+        cfgNum          => 0,
+        cfgDate         => 0,
+        lastCheck       => 0,
+        checkTime       => 600,
+        confAcc         => {},
+        logger          => {},
+        userLogger      => {},
+        _auditLogger    => {},
+        lmConf          => {},
+        localConfig     => {},
     };
 
     # Current sessions properties

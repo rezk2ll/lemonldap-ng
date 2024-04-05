@@ -80,6 +80,14 @@ sub logLevelInit {
         )
     );
     $class->logger->debug("User logger $logger loaded");
+
+    my $auditlogger =
+         $ENV{LLNG_AUDITLOGGER}
+      || $class->localConfig->{auditLogger}
+      || "Lemonldap::NG::Common::AuditLogger::UserLoggerCompat";
+    eval "require $auditlogger";
+    die $@ if ($@);
+    $class->_auditLogger( $auditlogger->new($class) );
 }
 
 # @method void serverSignatureInit

@@ -288,6 +288,11 @@ sub lmLog {
     return $class->logger->$level($msg);
 }
 
+sub auditLog {
+    my ( $class, $req, %info ) = @_;
+    $class->_auditLogger->log( $req, %info );
+}
+
 ## @rmethod protected boolean checkMaintenanceMode
 # Check if we are in maintenance mode
 # @return true if maintenance mode is enabled
