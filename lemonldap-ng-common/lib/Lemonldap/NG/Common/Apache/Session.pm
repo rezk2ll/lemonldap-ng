@@ -61,7 +61,9 @@ sub populate {
     }
 
     # If cache is configured, use our specific object store module
-    if ( $> and $self->{args}->{localStorage} ) {
+    if ( ( $> or $self->{args}->{allow_cache_for_root} )
+        and $self->{args}->{localStorage} )
+    {
         $self->{args}->{object_store} = $self->{object_store};
         $self->{object_store} =
           Lemonldap::NG::Common::Apache::Session::Store->new($self);
