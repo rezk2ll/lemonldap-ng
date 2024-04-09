@@ -48,8 +48,9 @@ OpenID Connect Service
 See :doc:`OpenID Connect service<openidconnectservice>` configuration
 chapter.
 
-IssuerDB
-~~~~~~~~
+
+OpenID Connect Issuer Activation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Go in ``General Parameters`` » ``Issuer modules`` » ``OpenID Connect``
 and configure:
