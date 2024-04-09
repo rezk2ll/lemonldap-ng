@@ -1,6 +1,11 @@
 ANSSI security guidelines
 =========================
 
+|anssi-logo|
+
+.. |anssi-logo| image:: logos/240px-ANSSI_Logo.svg.png
+   :class: align-center
+
 Presentation
 ------------
 
