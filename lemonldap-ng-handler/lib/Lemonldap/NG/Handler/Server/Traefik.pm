@@ -36,11 +36,16 @@ sub _run {
 
 sub handler {
     my ( $self, $req ) = @_;
-    my @convertedHdrs = (
-        @{ $req->{respHeaders} },
-        'Content-Length' => 0,
-        Cookie           => ( $req->env->{HTTP_COOKIE} // '' )
-    );
+    my @convertedHdrs =
+      ( 'Content-Length' => 0, Cookie => ( $req->env->{HTTP_COOKIE} // '' ) );
+    while ( my ( $k, $v ) = splice( @{ $req->{respHeaders} }, 0, 2 ) ) {
+        if ( $k =~ /^(?:Deleteheader\d+|Cookie)$/ ) {
+            next;
+        }
+        else {
+            push @convertedHdrs, $k, $v;
+        }
+    }
     return [ 200, \@convertedHdrs, [] ];
 }
 
