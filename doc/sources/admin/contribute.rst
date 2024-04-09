@@ -40,7 +40,7 @@ Test ssh connexion :
 
 ::
 
-   ssh -T git@gitlab.com
+   ssh -T git@gitlab.ow2.org
 
 Accept messages
 

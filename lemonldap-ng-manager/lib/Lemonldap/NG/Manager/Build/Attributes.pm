@@ -1511,8 +1511,9 @@ sub attributes {
             flags         => 'hp',
         },
         domain => {
-            type          => 'text',
-            test          => qr/^(?:$Regexp::Common::URI::RFC2396::hostname)?$/,
+            type => 'text',
+            test =>
+              qr/^(?:(?:$Regexp::Common::URI::RFC2396::hostname|#\w+#))?$/,
             msgFail       => '__badDomainName__',
             default       => 'example.com',
             documentation => 'DNS domain',
@@ -1543,6 +1544,11 @@ sub attributes {
             default       => 0,
             documentation => 'Cookie securisation method',
             flags         => 'hp',
+        },
+        hashedSessionStore => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Securize storage of sensible sessions',
         },
         sameSite => {
             type   => 'select',
@@ -1756,7 +1762,7 @@ sub attributes {
         },
         sessionDataToRemember => {
             type          => 'keyTextContainer',
-            keyTest       => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+            keyTest       => qr/^(\d+_)?[_a-zA-Z][a-zA-Z0-9_]*$/,
             keyMsgFail    => '__invalidSessionData__',
             documentation => 'Data to remember in login history',
         },
@@ -1838,6 +1844,59 @@ sub attributes {
                 },
             },
             documentation => 'List of virtualHosts with their get parameters',
+        },
+
+        # Jitsi Meet tokens issuer
+        issuerDBJitsiMeetTokensActivation => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Jitsi issuer activation',
+        },
+        issuerDBJitsiMeetTokensPath => {
+            type          => 'text',
+            default       => '^/jitsi/',
+            documentation => 'Jitsi issuer request path',
+        },
+        issuerDBJitsiMeetTokensRule => {
+            type          => 'boolOrExpr',
+            default       => 1,
+            documentation => 'Jitsi issuer rule',
+        },
+
+        jitsiDefaultServer => {
+            type          => 'url',
+            documentation => 'Jitsi server URL',
+        },
+        jitsiAppId => {
+            type          => 'text',
+            documentation => 'Jitsi application ID',
+        },
+        jitsiAppSecret => {
+            type          => 'text',
+            documentation => 'Jitsi application secret',
+        },
+        jitsiSigningAlg => {
+            type          => 'select',
+            select        => oidcSigAlgorithmAlg,
+            default       => 'RS256',
+            documentation => 'Jitsi JWT signature method',
+        },
+        jitsiExpiration => {
+            type          => 'int',
+            default       => '300',
+            documentation => 'Jitsi JWT expiration',
+        },
+        jitsiIdAttribute => {
+            type          => 'text',
+            documentation => 'Jitsi attribute for ID',
+        },
+        jitsiNameAttribute => {
+            type          => 'text',
+            documentation => 'Jitsi attribute for name',
+        },
+        jitsiMailAttribute => {
+            type          => 'text',
+            documentation => 'Jitsi attribute for email',
         },
 
         # Password
@@ -2554,6 +2613,10 @@ sub attributes {
         webauthnDisplayNameAttr => {
             type          => 'text',
             documentation => 'Session attribute containing user display name',
+        },
+        webauthnRpId => {
+            type          => 'text',
+            documentation => 'WebAuthn Relying Party ID',
         },
         webauthnRpName => {
             type          => 'text',
@@ -4652,6 +4715,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             },
             documentation => 'OpenID Connect Authentication Context Class Ref',
         },
+        oidcServiceHideMetadata => {
+            type          => 'bool',
+            Documentation => "Don't display OIDC metadata",
+        },
 
         # OIDC Keys
         oidcServiceOldPrivateKeySig => { type => 'EcOrRSAPrivateKey', },
@@ -4920,7 +4987,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default => '',
         },
         oidcOPMetaDataOptionsRequirePkce => {
-            type => 'bool',
+            type          => 'bool',
             documentation => 'Use PKCE with this OP',
         },
 

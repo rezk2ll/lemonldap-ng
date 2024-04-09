@@ -19,3 +19,4 @@ Mini Howtos
    behindproxyminihowto
    useoutgoingproxy
    testopenidconnect
+   anssi-oidc

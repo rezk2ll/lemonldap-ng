@@ -33,6 +33,12 @@ sub tests {
 
         # Check if portal is in domain
         portalIsInDomain => sub {
+
+            # Looks like a sub, user knows what they are doing
+            if ( $conf->{portal} =~ /[\$\(&\|"']/ ) {
+                return 1;
+            }
+
             return (
                 1,
                 (
@@ -47,16 +53,20 @@ sub tests {
         portalURL => sub {
             my $url = $conf->{portal};
 
-            # Append or remove trailing slashes
-            $conf->{portal} =~ s%/*$%/%;
-            return (
-                1,
-                (
-                    ( $url =~ m%/$% )
-                    ? ''
-                    : "Portal URL should end with a /"
-                )
-            );
+            # Looks like a sub, user knows what they are doing
+            if ( $url =~ /[\$\(&\|"']/ ) {
+                return 1;
+            }
+            else {
+                return (
+                    1,
+                    (
+                        ( $url =~ m%/$% )
+                        ? ''
+                        : "Portal URL should end with a /"
+                    )
+                );
+            }
         },
 
         # Check if virtual hosts are in the domain

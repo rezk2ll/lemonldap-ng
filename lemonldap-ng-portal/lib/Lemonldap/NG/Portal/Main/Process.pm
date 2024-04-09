@@ -205,7 +205,12 @@ sub controlUrl {
 
         # If the target URL has an authLevel set in config, remember it.
         my $level = $self->HANDLER->getLevel( $req, $appuri, $originalVhost );
-        $req->pdata->{targetAuthnLevel} = $level if $level;
+
+        if ($level) {
+            $self->logger->debug( "VirtualHost $originalVhost requires"
+                  . " authentication level $level" );
+            $req->pdata->{targetAuthnLevel} = $level;
+        }
 
         if (    $tmp
             and !$self->isTrustedUrl($tmp)
@@ -330,7 +335,7 @@ sub deleteSession {
         # Redirect on logout page if no other target defined
         if ( !$req->urldc and !$req->postUrl ) {
             $self->logger->debug('No other target defined, redirect on logout');
-            $req->urldc( $self->buildUrl( { logout => 1 } ) );
+            $req->urldc( $self->buildUrl( $req->portal, { logout => 1 } ) );
         }
     }
     $req->userData( {} );
@@ -341,14 +346,14 @@ sub deleteSession {
         return PE_OK;
     }
 
-    if ( $req->urldc and $req->urldc ne $self->conf->{portal} ) {
+    if ( $req->urldc and $req->urldc ne $req->portal ) {
         $req->steps( [] );
         return PE_REDIRECT;
     }
 
     # If logout redirects to another URL, just remove next steps for the
     # request so autoRedirect will be called
-    if ( $req->{urldc} and $req->{urldc} ne $self->conf->{portal} ) {
+    if ( $req->{urldc} and $req->{urldc} ne $req->portal ) {
         $req->steps( [] );
         return PE_OK;
     }
@@ -393,10 +398,10 @@ sub extractFormInfo {
         and $req->cookies->{ $self->conf->{cookieName} } )
     {
         $req->addCookie(
-            $self->cookie(
+            $self->genCookie(
+                $req,
                 name    => $self->conf->{cookieName},
                 value   => 0,
-                domain  => $self->conf->{domain},
                 secure  => $self->conf->{securedCookie},
                 expires => 'Wed, 21 Oct 2015 00:00:00 GMT'
             )
@@ -572,7 +577,7 @@ sub store {
 
     # Fill session
     my $infos = {};
-    foreach my $k ( keys %{ $req->{sessionInfo} } ) {
+    foreach my $k ( sort keys %{ $req->{sessionInfo} } ) {
         next unless defined $req->{sessionInfo}->{$k};
         my $displayValue = $req->{sessionInfo}->{$k};
         $displayValue = '****' if isHiddenAttr( $self->conf, $k );
@@ -584,6 +589,7 @@ sub store {
     # Main session
     my $session = $self->getApacheSession(
         $req->id,
+        hashStore => $req->data->{hashStore},
         force => $req->{force},
         info  => $infos
     );
@@ -613,19 +619,19 @@ sub buildCookie {
     my ( $self, $req ) = @_;
     if ( $req->id ) {
         $req->addCookie(
-            $self->cookie(
+            $self->genCookie(
+                $req,
                 name   => $self->conf->{cookieName},
                 value  => $req->id,
-                domain => $self->conf->{domain},
                 secure => $self->conf->{securedCookie},
             )
         );
         if ( $self->conf->{securedCookie} >= 2 ) {
             $req->addCookie(
-                $self->cookie(
+                $self->genCookie(
+                    $req,
                     name   => $self->conf->{cookieName} . "http",
                     value  => $req->{sessionInfo}->{_httpSession},
-                    domain => $self->conf->{domain},
                     secure => 0,
                 )
             );
@@ -654,6 +660,30 @@ sub storeHistory {
         $self->registerLogin($req);
     }
     return PE_OK;
+}
+
+# This method returns the domain for a new cookie
+# In modern browsers:
+# - an empty value means the cookie is only valid on the portal itself
+# - in other situations, the cookie is sent to all subdomains
+#   and a leading dot is added for compatibility
+sub getCookieDomain {
+    my ( $self, $req ) = @_;
+
+    if ( my $domain = $self->conf->{domain} ) {
+        if ( $domain eq '#PORTALDOMAIN#' ) {
+            my $host = URI->new( $req->portal )->host;
+            return $host =~ s/^([^\.]*)//r;
+        }
+        elsif ( $domain eq '#PORTAL#' ) {
+            my $host = URI->new( $req->portal )->host;
+            return ".$host";
+        }
+        else {
+            return $domain =~ s/^(?!\.)/./r;
+        }
+    }
+    return;
 }
 
 1;

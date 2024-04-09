@@ -13,6 +13,7 @@ sub portalConsts {
         '-3'  => 'PE_INFO',
         '-4'  => 'PE_SENDRESPONSE',
         '-5'  => 'PE_IDPCHOICE',
+        '-6'  => 'PE_2FWAIT',
         '0'   => 'PE_OK',
         '1'   => 'PE_SESSIONEXPIRED',
         '10'  => 'PE_BADCERTIFICATE',

@@ -15,7 +15,6 @@ our $_json = JSON->new->allow_nonref;
 has error           => ( is => 'rw', default => '' );
 has languages       => ( is => 'rw', isa     => 'Str', default => 'en' );
 has logLevel        => ( is => 'rw', isa     => 'Str', default => 'info' );
-has portal          => ( is => 'rw', isa     => 'Str' );
 has staticPrefix    => ( is => 'rw', isa     => 'Str' );
 has instanceName    => ( is => 'rw', isa     => 'Str', default => '' );
 has customCSS       => ( is => 'rw', isa     => 'Str', default => '' );
@@ -25,6 +24,10 @@ has links           => ( is => 'rw', isa     => 'ArrayRef' );
 has menuLinks       => ( is => 'rw', isa     => 'ArrayRef' );
 has logger          => ( is => 'rw' );
 has userLogger      => ( is => 'rw' );
+
+# portal only stores the "default" portal URL, in case a request
+# is not available in the current context to compute the dynamic portal URL
+has portal => ( is => 'rw', isa => 'Str' );
 
 # INITIALIZATION
 
@@ -37,42 +40,46 @@ sub init {
     foreach my $k ( keys %$args ) {
         $self->{$k} = $args->{$k} unless ( $k eq 'logger' );
     }
-    unless ( ref( $self->logger ) and ref( $self->userLogger ) ) {
-        my $logger =
-             $args->{logger}
-          || $ENV{LLNG_DEFAULTLOGGER}
-          || 'Lemonldap::NG::Common::Logger::Std';
-        unless ( ref $self->logger ) {
-            eval "require $logger";
-            die $@ if ($@);
-            my $err;
-            unless ( $self->{logLevel} =~ /^(?:debug|info|notice|warn|error)$/ )
-            {
-                $err =
-                    'Bad logLevel value \''
-                  . $self->{logLevel}
-                  . "', switching to 'info'";
-                $self->{logLevel} = 'info';
-            }
-            $self->logger( $logger->new($self) );
-            $self->logger->error($err) if $err;
-        }
-        unless ( ref $self->userLogger ) {
-            $logger = $ENV{LLNG_USERLOGGER} || $args->{userLogger} || $logger;
-            eval "require $logger";
-            die $@ if ($@);
-            require Lemonldap::NG::Common::Logger::_Duplicate;
-            $self->userLogger(
-                Lemonldap::NG::Common::Logger::_Duplicate->new(
-                    $self,
-                    user   => 1,
-                    logger => $logger,
-                    dup    => $self->logger
-                )
-            );
-        }
-    }
+    $self->_initLogger($args);
+
     return 1;
+}
+
+sub _initLogger {
+    my ( $self, $args ) = @_;
+
+    my $logger =
+         $args->{logger}
+      || $ENV{LLNG_DEFAULTLOGGER}
+      || 'Lemonldap::NG::Common::Logger::Std';
+    unless ( ref $self->logger ) {
+        eval "require $logger";
+        die $@ if ($@);
+        my $err;
+        unless ( $self->{logLevel} =~ /^(?:debug|info|notice|warn|error)$/ ) {
+            $err =
+                'Bad logLevel value \''
+              . $self->{logLevel}
+              . "', switching to 'info'";
+            $self->{logLevel} = 'info';
+        }
+        $self->logger( $logger->new($self) );
+        $self->logger->error($err) if $err;
+    }
+    unless ( ref $self->userLogger ) {
+        $logger = $ENV{LLNG_USERLOGGER} || $args->{userLogger} || $logger;
+        eval "require $logger";
+        die $@ if ($@);
+        require Lemonldap::NG::Common::Logger::_Duplicate;
+        $self->userLogger(
+            Lemonldap::NG::Common::Logger::_Duplicate->new(
+                $self,
+                user   => 1,
+                logger => $logger,
+                dup    => $self->logger
+            )
+        );
+    }
 }
 
 # RUNNING METHODS
@@ -261,13 +268,15 @@ sub sendJs {
     $sp =~ s/\/*$/\//;
     my $sc = $req->script_name // "";
 
+    my $portal = $req->can('portal') ? $req->portal : $self->portal;
+
     # Javascript scriptname is assumed by our JS code to end with /
     $sc =~ s#/*$#/#;
     my $s =
         sprintf 'var staticPrefix="%s";'
       . 'var scriptname="%s";'
       . 'var availableLanguages="%s".split(/[,;] */);'
-      . 'var portal="%s";', $sp, $sc, $self->languages, $self->portal;
+      . 'var portal="%s";', $sp, $sc, $self->languages, $portal;
     $s .= $self->javascript($req) if ( $self->can('javascript') );
     return [
         200,

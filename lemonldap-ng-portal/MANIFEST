@@ -61,6 +61,7 @@ lib/Lemonldap/NG/Portal/CertificateResetByMail/Demo.pm
 lib/Lemonldap/NG/Portal/CertificateResetByMail/LDAP.pm
 lib/Lemonldap/NG/Portal/Issuer/CAS.pm
 lib/Lemonldap/NG/Portal/Issuer/Get.pm
+lib/Lemonldap/NG/Portal/Issuer/JitsiMeetTokens.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenID.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Issuer/SAML.pm
@@ -566,7 +567,9 @@ t/00-Switch.t
 t/01-AuthDemo.t
 t/01-BuildRule.t
 t/01-BuildUrl.t
+t/01-Cookie-Domain.t
 t/01-CSP-and-CORS-headers.t
+t/01-Dynamic-Portal-Url.t
 t/01-EnablePasswordDisplay.t
 t/01-Handler-redirection-and-URL-check-by-portal.t
 t/01-pdata.t
@@ -688,6 +691,7 @@ t/32-Auth-and-issuer-OIDC-implicit.t
 t/32-Auth-and-issuer-OIDC-PKCE-2.t
 t/32-Auth-and-issuer-OIDC-PKCE.t
 t/32-Auth-and-issuer-OIDC-sorted.t
+t/32-Auth-OIDC-JWKS-Refresh.t
 t/32-OIDC-Back-Channel-Logout-no-sid.t
 t/32-OIDC-Back-Channel-Logout-sid-EC-keys.t
 t/32-OIDC-Back-Channel-Logout-sid-with-JWE-and-EC-keys.t
@@ -712,6 +716,7 @@ t/32-OIDC-Logout-from-RP-bypass-confirm.t
 t/32-OIDC-Logout-redirect-uri-not-allowed.t
 t/32-OIDC-Macro.t
 t/32-OIDC-Metadata.t
+t/32-OIDC-no-Metadata.t
 t/32-OIDC-Offline-Session-with-choice.t
 t/32-OIDC-Offline-Session.t
 t/32-OIDC-Opaque-Token.t
@@ -738,6 +743,7 @@ t/35-REST-config-backend.t
 t/35-REST-export-password.t
 t/35-REST-OAuth2-deny.t
 t/35-REST-OAuth2.t
+t/35-REST-sessions-with-AuthBasic-handler-hashed-sessions.t
 t/35-REST-sessions-with-AuthBasic-handler-with-2FA.t
 t/35-REST-sessions-with-AuthBasic-handler.t
 t/35-REST-sessions-with-REST-server.t
@@ -760,6 +766,7 @@ t/37-Logout-from-2-chained-SAML-SP-SOAP.t
 t/37-Logout-from-OIDC-RP-to-SAML-IDP-Redirect.t
 t/37-Logout-from-OIDC-RP-to-SAML-IDP-SOAP.t
 t/37-Logout-from-OIDC-RP-to-SAML-SP.t
+t/37-OIDC-and-DBI-with-choice-and-override.t
 t/37-OIDC-RP-to-SAML-IdP-GET-with-WAYF.t
 t/37-OIDC-RP-to-SAML-IdP-GET.t
 t/37-OIDC-RP-to-SAML-IdP-POST.t
@@ -767,6 +774,7 @@ t/37-SAML-SP-GET-to-OIDC-OP.t
 t/37-SAML-SP-GET-to-SAML-with-Logout.t
 t/37-SAML-SP-POST-to-CAS-server-with-Choice.t
 t/37-SAML-SP-POST-to-CAS-server.t
+t/37-SAML-SP-POST-to-OIDC-OP-hashStorage.t
 t/37-SAML-SP-POST-to-OIDC-OP.t
 t/38-No-persistent-session.t
 t/39-Failing-RP-Logout.t
@@ -804,6 +812,7 @@ t/43-MailPasswordReset.t
 t/44-CertificateResetByMail-Demo.t
 t/44-CertificateResetByMail-LDAP.t
 t/50-IssuerGet.t
+t/50-IssuerJitsiJWT.t
 t/56-CheckDevOps-with-Download.t
 t/56-CheckDevOps.t
 t/57-GlobalLogout-with-Confirmation.t
@@ -944,6 +953,9 @@ t/80-2F-Okta.t
 t/90-Translations.t
 t/91-Handler-cache-cleaned.t
 t/91-Memory-Leak.t
+t/92-Required-Auth-Methods.t
+t/92-Required-Issuer-Methods.t
+t/92-Required-UserDB-Methods.t
 t/99-Bad-logLevel.t
 t/99-Dont-load-Dumper.t
 t/99-pod.t
@@ -972,6 +984,7 @@ t/main-idps-renater-metadata.xml
 t/main-sps-renater-metadata.xml
 t/oidc-lib.pm
 t/OidcHookPlugin.pm
+t/parse-dir.pm
 t/PasswordHookPlugin.pm
 t/pdata.pm
 t/README.md

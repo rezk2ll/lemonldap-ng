@@ -322,9 +322,6 @@ Requires:       perl(Net::Facebook::Oauth2)
 # OpenID
 Requires:       perl(Net::OAuth)
 Requires:       perl(Net::OpenID::Consumer)
-# TOTP
-Requires:       perl(Convert::Base32)
-Requires:       perl(Digest::HMAC_SHA1)
 %else
 # Fido2
 Recommends:     perl(Authen::WebAuthn)
@@ -341,9 +338,6 @@ Recommends:     perl(Net::Facebook::Oauth2)
 # OpenID
 Recommends:     perl(Net::OAuth)
 Recommends:     perl(Net::OpenID::Consumer)
-# TOTP
-Recommends:     perl(Convert::Base32)
-Recommends:     perl(Digest::HMAC_SHA1)
 %endif
 Provides:       bundled(fontawesome-fonts) = 4.7.0
 Provides:       bundled(js-bootstrap) = 4.5.2
@@ -641,6 +635,7 @@ fi
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
 %{_mandir}/man1/convertConfig*
 %{_mandir}/man1/convertSessions*
+%{_mandir}/man1/convertToHashSessionStorage*
 %{_mandir}/man1/encryptTotpSecrets*
 %{_mandir}/man1/lemonldap-ng-sessions*
 %dir %{_libexecdir}/%{name}
@@ -648,6 +643,7 @@ fi
 %dir %{lm_bindir}
 %{lm_bindir}/convertConfig
 %{lm_bindir}/convertSessions
+%{lm_bindir}/convertToHashSessionStorage
 %{lm_bindir}/encryptTotpSecrets
 %{lm_bindir}/lemonldap-ng-sessions
 %{lm_bindir}/importMetadata

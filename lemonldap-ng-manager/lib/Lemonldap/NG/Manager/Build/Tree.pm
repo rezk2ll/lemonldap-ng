@@ -551,6 +551,34 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'issuerDBJitsiMeetTokens',
+                            help  => 'idpjitsimeettokens.html',
+                            nodes => [
+                                'issuerDBJitsiMeetTokensActivation',
+                                'issuerDBJitsiMeetTokensPath',
+                                'issuerDBJitsiMeetTokensRule',
+                                {
+                                    title => 'jitsiOptions',
+                                    nodes => [
+                                        'jitsiDefaultServer',
+                                        'jitsiAppId',
+                                        'jitsiAppSecret',
+                                        'jitsiSigningAlg',
+                                        'jitsiExpiration',
+                                        {
+                                            title => 'jitsiAttributes',
+                                            form  => 'simpleInputContainer',
+                                            nodes => [
+                                                'jitsiIdAttribute',
+                                                'jitsiNameAttribute',
+                                                'jitsiMailAttribute',
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
                             title => 'issuerOptions',
                             help  => 'start.html#options',
                             form  => 'simpleInputContainer',
@@ -1005,6 +1033,7 @@ sub tree {
                                 'webauthn2fAttestation',
                                 'webauthn2fAttestationTrust',
                                 'webauthnRpName',
+                                'webauthnRpId',
                                 'webauthnDisplayNameAttr',
                                 'webauthn2fAuthnLevel',
                                 'webauthn2fLabel',
@@ -1164,6 +1193,7 @@ sub tree {
                                 'formTimeout',
                                 'tokenUseGlobalStorage',
                                 'strictTransportSecurityMax_Age',
+                                'hashedSessionStore',
                                 {
                                     title => 'CrowdSecPlugin',
                                     help  => 'crowdsec.html',
@@ -1469,6 +1499,7 @@ sub tree {
         'samlSPMetaDataNodes',
         {
             title => 'oidcServiceMetaData',
+            form  => 'displayOidcMetadata',
             help  => 'openidconnectservice.html#service-configuration',
             nodes => [
                 'oidcServiceMetaDataIssuer',
@@ -1546,6 +1577,7 @@ sub tree {
                         'oidcDropCspHeaders',
                         'oidcServiceEncAlgorithmAlg',
                         'oidcServiceEncAlgorithmEnc',
+                        'oidcServiceHideMetadata',
                     ],
                 },
                 {

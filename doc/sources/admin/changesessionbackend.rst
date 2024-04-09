@@ -8,6 +8,14 @@ indexes to a
 :doc:`browseable session backend</browseablesessionbackend>`. It is
 available in LemonLDAP::NG utilities directory (``convertSessions``).
 
+.. tip::
+
+   This script isn't able to migrate sessions from unhashed storage into
+   hashed storage. Use the `convertToHashSessionStorage` to change from
+   unhashed storage into hashed storage.
+
+   Note also that this operation isn't reversible.
+
 How it works
 ------------
 

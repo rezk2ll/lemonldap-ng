@@ -41,6 +41,8 @@ Configuration
   that you trust for attestation
 - **Relying Party display name**: How the LemonLDAP::NG server will appear in
   the web browser messages displayed to the user
+- **Relying Party ID**: The domain name on which WebAuthn devices can be
+  registered and used. It must be a non-public suffix of the portal's hostname.
 - **User Display Name attribute**: session attribute containing user display name
 - **Authentication level**: you can overwrite here auth level for
   WebAuthn registered users. Leave it blank keeps auth level provided by

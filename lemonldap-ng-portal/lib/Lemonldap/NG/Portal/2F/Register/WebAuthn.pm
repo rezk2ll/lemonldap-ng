@@ -102,6 +102,7 @@ sub _registrationchallenge {
     my $request          = {
         rp => {
             name => $self->rpName,
+            id   => $self->rp_id($req),
         },
         user => {
             name        => $user,
@@ -125,8 +126,8 @@ sub _registrationchallenge {
         }
     );
 
-
-    $self->logger->debug( "Register parameters " . to_json($request) );
+    $self->logger->debug(
+        "WebAuthn registration parameters " . to_json($request) );
     return $self->p->sendJSONresponse( $req,
         { request => $request, state_id => $token } );
 }

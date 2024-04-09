@@ -1,13 +1,15 @@
 package Lemonldap::NG::Common::OpenIDConnect::Metadata;
 
 use strict;
+use Lemonldap::NG::Common::OpenIDConnect::Constants;
 use JSON;
 use Mouse::Role;
 
 our $VERSION = '2.19.0';
 
 sub metadataDoc {
-    my ( $self, $conf ) = @_;
+    my ( $self, $issuer, $conf, $path ) = @_;
+    $conf //= $self->conf;
     my $issuerDBOpenIDConnectPath = $conf->{issuerDBOpenIDConnectPath};
     my $authorize_uri             = $conf->{oidcServiceMetaDataAuthorizeURI};
     my $token_uri                 = $conf->{oidcServiceMetaDataTokenURI};
@@ -18,8 +20,7 @@ sub metadataDoc {
     my $checksession_uri          = $conf->{oidcServiceMetaDataCheckSessionURI};
     my $introspection_uri = $conf->{oidcServiceMetaDataIntrospectionURI};
 
-    my $path   = $self->path . '/';
-    my $issuer = $self->iss;
+    $path ||= $self->path . '/';
     $path = "/" . $path unless ( $issuer =~ /\/$/ );
     my $baseUrl = $issuer . $path;
 
@@ -40,8 +41,9 @@ sub metadataDoc {
     # If one of the RPs has password grant enabled
     if (
         grep {
-            $self->{oidcRPMetaDataOptions}->{$_}->{oidcRPMetaDataOptionsAllowPasswordGrant}
-        } keys %{ $self->{oidcRPMetaDataOptions} // {} }
+            $conf->{oidcRPMetaDataOptions}->{$_}
+              ->{oidcRPMetaDataOptionsAllowPasswordGrant}
+        } keys %{ $conf->{oidcRPMetaDataOptions} // {} }
       )
     {
         push( @$grant_types, "password" );
@@ -50,9 +52,9 @@ sub metadataDoc {
     # If one of the RPs has client credentials grant enabled
     if (
         grep {
-            $self->{oidcRPMetaDataOptions}->{$_}
+            $conf->{oidcRPMetaDataOptions}->{$_}
               ->{oidcRPMetaDataOptionsAllowClientCredentialsGrant}
-        } keys %{ $self->{oidcRPMetaDataOptions} // {} }
+        } keys %{ $conf->{oidcRPMetaDataOptions} // {} }
       )
     {
         push( @$grant_types, "client_credentials" );
@@ -61,10 +63,12 @@ sub metadataDoc {
     # If one of the RPs has refresh tokens enabled
     if (
         grep {
-                 $self->{oidcRPMetaDataOptions}->{$_}->{oidcRPMetaDataOptionsRefreshToken}
-              or $self->{oidcRPMetaDataOptions}->{$_}->{oidcRPMetaDataOptionsAllowOffline}
+            $conf->{oidcRPMetaDataOptions}->{$_}
+              ->{oidcRPMetaDataOptionsRefreshToken}
+              or $conf->{oidcRPMetaDataOptions}->{$_}
+              ->{oidcRPMetaDataOptionsAllowOffline}
         }
-        keys %{ $self->{oidcRPMetaDataOptions} // {} }
+        keys %{ $conf->{oidcRPMetaDataOptions} // {} }
       )
     {
         push( @$grant_types, "refresh_token" );
@@ -123,16 +127,12 @@ sub metadataDoc {
         # Algorithms
         id_token_signing_alg_values_supported => \@supportedSigAlg,
 
-        id_token_encryption_alg_values_supported =>
-          &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_ALG_SUPPORTED,
-        id_token_encryption_enc_values_supported =>
-          &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_SUPPORTED,
-        userinfo_signing_alg_values_supported => \@supportedSigAlg,
+        id_token_encryption_alg_values_supported => ENC_ALG_SUPPORTED,
+        id_token_encryption_enc_values_supported => ENC_SUPPORTED,
+        userinfo_signing_alg_values_supported    => \@supportedSigAlg,
 
-        userinfo_encryption_alg_values_supported =>
-          &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_ALG_SUPPORTED,
-        userinfo_encryption_enc_values_supported =>
-          &Lemonldap::NG::Portal::Lib::OpenIDConnect::ENC_SUPPORTED,
+        userinfo_encryption_alg_values_supported => ENC_ALG_SUPPORTED,
+        userinfo_encryption_enc_values_supported => ENC_SUPPORTED,
 
         # PKCE
         code_challenge_methods_supported => [qw/plain S256/],

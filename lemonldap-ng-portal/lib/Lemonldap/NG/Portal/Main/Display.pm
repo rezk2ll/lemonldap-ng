@@ -21,34 +21,22 @@ has passwordResetUrl => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
-        my $self = $_[0];
-        my $p    = $self->conf->{portal};
-        $p =~ s#/*$##;
-        return $self->conf->{mailUrl} ? $self->conf->{mailUrl} : "$p/resetpwd";
+        $_[0]->conf->{mailUrl} || $_[0]->buildUrl("resetpwd");
     }
 );
 has certificateResetUrl => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
-        my $self = $_[0];
-        my $p    = $self->conf->{portal};
-        $p =~ s#/*$##;
-        return $self->conf->{certificateResetByMailURL}
-          ? $self->conf->{certificateResetByMailURL}
-          : "$p/certificateReset";
+        $_[0]->conf->{certificateResetByMailURL}
+          || $_[0]->buildUrl("certificateReset");
     }
 );
 has registerUrl => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
-        my $self = $_[0];
-        my $p    = $self->conf->{portal};
-        $p =~ s#/*$##;
-        return $self->conf->{registerUrl}
-          ? $self->conf->{registerUrl}
-          : "$p/register";
+        $_[0]->conf->{registerUrl} || $_[0]->buildUrl("register");
     }
 );
 
@@ -226,7 +214,7 @@ sub display {
             AUTH_ERROR_ROLE                 => $req->error_role,
             ( 'AUTH_ERROR_' . $req->error ) => 1,
             MSG                             => $info,
-            URL           => $req->{urldc} || $self->conf->{portal},  # Fix 2158
+            URL           => $req->{urldc} || $req->portal,  # Fix 2158
             HIDDEN_INPUTS => $self->buildOutgoingHiddenForm( $req, $method ),
             ACTIVE_TIMER  => $req->data->{activeTimer},
             CHOICE_PARAM  => $self->conf->{authChoiceParam},
@@ -249,8 +237,9 @@ sub display {
         or $req->{error} == PE_OPENID_BADID )
     {
         $skinfile = 'openid';
-        my $p = $self->conf->{portal} . $self->conf->{issuerDBOpenIDPath};
-        $p =~ s#(?<!:)/?\^?/#/#g;
+
+        my $openid_path =
+          $self->conf->{issuerDBOpenIDPath} =~ s/^.*?(\w+).*?$/$1/r;
         my $id = $req->{sessionInfo}
           ->{ $self->conf->{openIdAttr} || $self->conf->{whatToTrace} };
         %templateParams = (
@@ -258,8 +247,8 @@ sub display {
             AUTH_ERROR_TYPE                 => $req->error_type,
             AUTH_ERROR_ROLE                 => $req->error_role,
             ( 'AUTH_ERROR_' . $req->error ) => 1,
-            PROVIDERURI                     => $p,
-            MSG                             => $req->info(),
+            PROVIDERURI => $self->buildUrl( $req->portal, $openid_path, "" ),
+            MSG         => $req->info(),
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -311,7 +300,7 @@ sub display {
         %templateParams = (
             AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
             NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},
-            LOGOUT_URL              => $self->conf->{portal} . "?logout=1",
+            LOGOUT_URL              => $self->buildUrl( $req->portal, { logout => 1 } ),
             APPSLIST_ORDER          => $req->{sessionInfo}->{'_appsListOrder'},
             PING                    => $self->conf->{portalPingInterval},
             DONT_STORE_PASSWORD     => $self->conf->{browsersDontStorePassword},
@@ -343,7 +332,7 @@ sub display {
             PORTALBUTTON => 1,
             BUTTON       => 'upgradeSession',
             CONFIRMKEY   => $self->stamp,
-            PORTAL       => $self->conf->{portal},
+            PORTAL       => $req->portal,
             URL          => $req->data->{_url},
             (
                 $req->data->{customScript}
@@ -360,7 +349,7 @@ sub display {
             FORMACTION   => '/renewsession',
             MSG          => 'askToRenew',
             CONFIRMKEY   => $self->stamp,
-            PORTAL       => $self->conf->{portal},
+            PORTAL       => $req->portal,
             PORTALBUTTON => 1,
             BUTTON       => 'renewSession',
             URL          => $req->data->{_url},
@@ -380,7 +369,7 @@ sub display {
             MSG        => 'PE87',
             CONFIRMKEY => $self->stamp,
             BUTTON     => 'renewSession',
-            PORTAL     => $self->conf->{portal},
+            PORTAL     => $req->portal,
             URL        => $req->data->{_url},
             (
                 $req->data->{customScript}
@@ -475,15 +464,15 @@ sub display {
         # External links
         if ( $self->conf->{portalDisplayResetPassword} ) {
             $templateParams{"MAIL_URL_EXTERNAL"} =
-              $self->_isExternalUrl( $self->passwordResetUrl );
+              $self->_isExternalUrl( $req, $self->passwordResetUrl );
         }
         if ( $self->conf->{portalDisplayRegister} ) {
             $templateParams{"REGISTER_URL_EXTERNAL"} =
-              $self->_isExternalUrl( $self->registerUrl );
+              $self->_isExternalUrl( $req, $self->registerUrl );
         }
         if ( $self->conf->{portalDisplayCertificateResetByMail} ) {
             $templateParams{MAILCERTIF_URL_EXTERNAL} =
-              $self->_isExternalUrl( $self->certificateResetUrl );
+              $self->_isExternalUrl( $req, $self->certificateResetUrl );
         }
 
         # Display captcha if it's enabled
@@ -635,7 +624,7 @@ sub display {
                     : "",
                     AUTH_LOOP  => [],
                     PORTAL_URL =>
-                      ( $displayType eq "logo" ? $self->conf->{portal} : 0 ),
+                      ( $displayType eq "logo" ? $req->portal : 0 ),
                     MSG       => $req->info(),
                     MANDATORY => $mandatory,
                     FIELDS    => $fields,
@@ -812,7 +801,14 @@ sub mkSessionArray {
                         ip     => $session->{ipAddr},
                         values => [
                             map {
-                                { v => $session->{$_}, k => $_, "k_$_" => 1 }
+                                # Modifying key to remove ordering prefix
+                                my $modifiedKey = $_;
+                                $modifiedKey =~ s/(\d+_)?//;
+                                {
+                                    v      => $session->{$modifiedKey},
+                                    k      => $_,
+                                    "k_$_" => 1
+                                }
                             } @fields
                         ],
                         error        => $session->{error},
@@ -888,8 +884,8 @@ sub mkOidcConsent {
 }
 
 sub _isExternalUrl {
-    my ( $self, $url ) = @_;
-    return ( index( $url, $self->conf->{portal} ) < 0 );
+    my ( $self, $req, $url ) = @_;
+    return ( index( $url, $req->portal ) < 0 );
 }
 
 sub getPasswordPolicyTemplateVars {

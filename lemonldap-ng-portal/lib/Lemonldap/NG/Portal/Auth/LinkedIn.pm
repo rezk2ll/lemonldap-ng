@@ -84,7 +84,7 @@ sub extractFormInfo {
     my $nonce = time;
 
     # Build redirect_uri
-    my $callback_url = $self->conf->{portal};
+    my $callback_url = $req->portal;
 
     # Check return values
     my $error = $req->param("error");

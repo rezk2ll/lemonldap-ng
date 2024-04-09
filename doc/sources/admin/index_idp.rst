@@ -9,3 +9,4 @@ Identity provider
    idpopenid
    idpopenidconnect
    issuerdbget
+   idpjitsimeettokens

@@ -8,10 +8,11 @@ package Lemonldap::NG::Portal::Lib::OpenIDConnect;
 use strict;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
-use Crypt::JWT  qw(encode_jwt decode_jwt);
+use Crypt::JWT qw(encode_jwt decode_jwt);
 use Digest::SHA qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
+use Lemonldap::NG::Common::OpenIDConnect::Constants;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::JWT
   qw(getAccessTokenSessionId getJWTPayload getJWTHeader getJWTSignature getJWTSignedData);
@@ -27,51 +28,6 @@ use URI;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
 
 our $VERSION = '2.19.0';
-
-use constant BACKCHANNEL_EVENTSKEY =>
-  'http://schemas.openid.net/event/backchannel-logout';
-
-# OpenID Connect standard claims
-use constant PROFILE => [
-    qw/name family_name given_name middle_name nickname preferred_username
-      profile picture website gender birthdate zoneinfo locale updated_at/
-];
-use constant EMAIL => [qw/email email_verified/];
-use constant ADDRESS =>
-  [qw/formatted street_address locality region postal_code country/];
-use constant PHONE => [qw/phone_number phone_number_verified/];
-
-use constant DEFAULT_SCOPES => {
-    profile => PROFILE,
-    email   => EMAIL,
-    address => ADDRESS,
-    phone   => PHONE,
-};
-
-use constant COMPLEX_CLAIM => {
-    formatted      => "address",
-    street_address => "address",
-    locality       => "address",
-    region         => "address",
-    postal_code    => "address",
-    country        => "address",
-};
-
-use constant ENC_ALG_SUPPORTED => [ qw(
-      RSA-OAEP ECDH-ES RSA-OAEP-256
-      ECDH-ES+A256KW
-      ECDH-ES+A192KW
-      ECDH-ES+A128KW
-      RSA1_5
-    )
-];
-
-# Unsupported: A128KW A192KW A256KW A128GCMKW A192GCMKW A256GCMKW PBES2-HS256+A128KW PBES2-HS384+A192KW PBES2-HS512+A256KW
-
-use constant ENC_SUPPORTED => [ qw(
-      A256CBC-HS512 A256GCM A192CBC-HS384 A192GCM A128CBC-HS256 A128GCM
-    )
-];
 
 # PROPERTIES
 
@@ -355,49 +311,59 @@ sub refreshJWKSdata {
     }
 
     foreach ( keys %{ $self->conf->{oidcOPMetaDataJSON} } ) {
-
-        # Refresh JWKS data if
-        # 1/ oidcOPMetaDataOptionsJWKSTimeout > 0
-        # 2/ jwks_uri defined in metadata
-
-        my $jwksTimeout =
-          $self->opOptions->{$_}->{oidcOPMetaDataOptionsJWKSTimeout};
-        my $jwksUri = $self->opMetadata->{$_}->{conf}->{jwks_uri};
-
-        unless ($jwksTimeout) {
-            $self->logger->debug(
-                "No JWKS refresh timeout defined for $_, skipping...");
-            next;
-        }
-
-        unless ($jwksUri) {
-            $self->logger->debug("No JWKS URI defined for $_, skipping...");
-            next;
-        }
-
-        if ( $self->opMetadata->{$_}->{jwks}->{time} + $jwksTimeout > time ) {
-            $self->logger->debug("JWKS data still valid for $_, skipping...");
-            next;
-        }
-
-        $self->logger->debug("Refresh JWKS data for $_ from $jwksUri");
-
-        my $response = $self->ua->get($jwksUri);
-
-        if ( $response->is_error ) {
-            $self->logger->warn(
-                "Unable to get JWKS data for $_ from $jwksUri: "
-                  . $response->message );
-            $self->logger->debug( $response->content );
-            next;
-        }
-
-        my $content = $self->decodeJSON( $response->decoded_content );
-
-        $self->opMetadata->{$_}->{jwks} = $content;
-        $self->opMetadata->{$_}->{jwks}->{time} = time;
-
+        $self->refreshJWKSdataForOp($_);
     }
+    return 1;
+}
+
+sub refreshJWKSdataForOp {
+    my ( $self, $op ) = @_;
+
+    $self->logger->debug("Attempting to refresh JWKS data for $op");
+
+    # Refresh JWKS data if
+    # 1/ oidcOPMetaDataOptionsJWKSTimeout > 0
+    # 2/ jwks_uri defined in metadata
+
+    my $jwksTimeout =
+      $self->opOptions->{$op}->{oidcOPMetaDataOptionsJWKSTimeout};
+    my $jwksUri = $self->opMetadata->{$op}->{conf}->{jwks_uri};
+
+    unless ($jwksTimeout) {
+        $self->logger->debug(
+            "No JWKS refresh timeout defined for $op, skipping...");
+        return;
+    }
+
+    unless ($jwksUri) {
+        $self->logger->debug("No JWKS URI defined for $op, skipping...");
+        return;
+    }
+
+    if ( $self->opMetadata->{$op}->{jwks}->{time}
+        && ( $self->opMetadata->{$op}->{jwks}->{time} + $jwksTimeout > time ) )
+    {
+        $self->logger->debug("JWKS data still valid for $op, skipping...");
+        return;
+    }
+
+    $self->logger->debug("Refresh JWKS data for $op from $jwksUri");
+
+    my $response = $self->ua->get($jwksUri);
+
+    if ( $response->is_error ) {
+        $self->logger->warn(
+            "Unable to get JWKS data for $op from $jwksUri: "
+              . $response->message );
+        $self->logger->debug( $response->content );
+        return;
+    }
+
+    my $content = $self->decodeJSON( $response->decoded_content );
+
+    $self->opMetadata->{$op}->{jwks} = $content;
+    $self->opMetadata->{$op}->{jwks}->{time} = time;
+
     return 1;
 }
 
@@ -408,11 +374,7 @@ sub getCallbackUri {
 
     my $callback_get_param = $self->conf->{oidcRPCallbackGetParam};
 
-    my $callback_uri = $self->conf->{portal};
-    $callback_uri .=
-      ( $self->conf->{portal} =~ /\?/ )
-      ? '&' . $callback_get_param . '=1'
-      : '?' . $callback_get_param . '=1';
+    my $callback_uri = $self->p->buildUrl( $req->portal, { $callback_get_param => 1 } );
 
     $self->logger->debug("OpenIDConnect Callback URI: $callback_uri");
     return $callback_uri;
@@ -1243,7 +1205,7 @@ sub makeJWT {
     my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
 
     my $access_token_payload = {
-        iss       => $self->iss,                  # Issuer Identifier
+        iss       => $self->get_issuer($req),     # Issuer Identifier
         exp       => $exp,                        # expiration
         aud       => $self->getAudiences($rp),    # Audience
         client_id => $client_id,                  # Client ID
@@ -1352,6 +1314,7 @@ sub updateToken {
             $self->_storeOpts(),
             cacheModule        => $self->conf->{localSessionStorage},
             cacheModuleOptions => $self->conf->{localSessionStorageOptions},
+            hashStore          => $self->conf->{hashedSessionStore},
             id                 => $id,
             info               => $infos,
         }
@@ -1378,6 +1341,7 @@ sub getOpenIDConnectSession {
             $self->_storeOpts(),
             cacheModule        => $self->conf->{localSessionStorage},
             cacheModuleOptions => $self->conf->{localSessionStorageOptions},
+            hashStore          => $self->conf->{hashedSessionStore},
             id                 => $id,
             kind               => $self->sessionKind,
             (
@@ -1520,10 +1484,14 @@ sub decodeJWT {
         return;
     }
 
-   # For now, only OP has JWKS
-   #my $jwks =
-   #  $op ? $self->opMetadata->{$op}->{jwks} : $self->rpMetadata->{$rp}->{jwks};
-    my $jwks = $op ? $self->opMetadata->{$op}->{jwks} : $self->rpSigKey->{$rp};
+    my $jwks;
+    if ($op) {
+        $self->refreshJWKSdataForOp($op);
+        $jwks = $self->opMetadata->{$op}->{jwks};
+    }
+    else {
+        $jwks = $self->rpSigKey->{$rp};
+    }
 
     unless ( $alg =~ /^HS/ ) {
         unless ($jwks) {
