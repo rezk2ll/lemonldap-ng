@@ -137,6 +137,29 @@ sub searchOnExpr {
     return \%res;
 }
 
+sub searchGt {
+    my ( $class, $args, $selectField, $value, @fields ) = splice @_;
+    return $args->{backend}->searchGt( $args, $selectField, $value, @fields )
+      if ( _load( $args->{backend}, 'searchGt' ) );
+    my %res = ();
+    $class->get_key_from_all_sessions(
+        $args,
+        sub {
+            my $entry = shift;
+            my $id    = shift;
+            return undef unless ( $entry->{$selectField} > $value );
+            if (@fields) {
+                $res{$id}->{$_} = $entry->{$_} foreach (@fields);
+            }
+            else {
+                $res{$id} = $entry;
+            }
+            undef;
+        }
+    );
+    return \%res;
+}
+
 sub searchLt {
     my ( $class, $args, $selectField, $value, @fields ) = splice @_;
     return $args->{backend}->searchLt( $args, $selectField, $value, @fields )
