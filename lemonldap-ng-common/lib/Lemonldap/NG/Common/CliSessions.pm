@@ -73,6 +73,14 @@ sub _search {
             $res = Lemonldap::NG::Common::Apache::Session->searchOn( $args,
                 $selectField, $value, @fields );
         }
+        elsif ( $self->opts->{where} =~ /^(\w+)\s*<\s*(.*)/ ) {
+            $res = Lemonldap::NG::Common::Apache::Session->searchLt( $args,
+                $1, $2, @fields );
+        }
+        elsif ( $self->opts->{where} =~ /^(\w+)\s*>\s*(.*)/ ) {
+            $res = Lemonldap::NG::Common::Apache::Session->searchGt( $args,
+                $1, $2, @fields );
+        }
         else {
             die "Invalid --where option : " . $self->opts->{where};
         }

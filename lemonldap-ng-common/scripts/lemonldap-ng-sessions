@@ -179,6 +179,9 @@ Examples
 	lemonldap-ng-sessions search --where uid=dwho \
 		--select authenticationLevel
 
+    lemonldap-ng-sessions search --where '_startTime>20240410063538'
+    lemonldap-ng-sessions search --where '_startTime<20240410063538'
+
 =head2 Delete
 
     lemonldap-ng-sessions delete <id> [<id> ...]
