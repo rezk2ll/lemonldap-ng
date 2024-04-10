@@ -314,12 +314,12 @@ This option lets you filter your session search according to a filter.
 
 For now, only one filter can be set.
 
-Only exact matches are supported
-
 Examples:
 
 	--search uid=dwho
 	--search _sessionType=OIDC
+    --search '_startTime>20240410063538'
+    --search '_startTime<20240410063538'
 
 =item B<--backend>,B<-b>
 
