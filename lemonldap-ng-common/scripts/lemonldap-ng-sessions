@@ -5,6 +5,7 @@ use strict;
 use POSIX;
 
 use Lemonldap::NG::Common::CliSessions;
+use Lemonldap::NG::Common::Session 'id2storage';
 
 use strict;
 use Getopt::Long;
@@ -19,15 +20,16 @@ my $opt_user  = '__APACHEUSER__';
 my $opt_group = '__APACHEGROUP__';
 
 GetOptions(
-    'help|h'       => \$help,
-    'select|s=s@'  => \$opts->{select},
-    'where|w=s'    => \$opts->{where},
-    'all|a'        => \$opts->{all},
-    'backend|b=s'  => \$opts->{backend},
-    'persistent|p' => \$opts->{persistent},
-    'id-only|i'    => \$opts->{idonly},
-    'user|u=s'     => \$opt_user,
-    'group|g=s'    => \$opt_group,
+    'help|h'        => \$help,
+    'select|s=s@'   => \$opts->{select},
+    'where|w=s'     => \$opts->{where},
+    'all|a'         => \$opts->{all},
+    'backend|b=s'   => \$opts->{backend},
+    'persistent|p'  => \$opts->{persistent},
+    'hash|cookie|c' => \$opts->{hash},
+    'id-only|i'     => \$opts->{idonly},
+    'user|u=s'      => \$opt_user,
+    'group|g=s'     => \$opt_group,
 ) or pod2usage( -exitcode => 1, -verbose => 0 );
 
 pod2usage( -exitcode => 0, -verbose => 2 ) if $help;
@@ -134,6 +136,8 @@ Options:
 	--id-only	Only return IDs (search only)
 	--user      Change user running the script
 	--group     Change group running the script
+    --hash      When "hashed session store" is in use, indicates that the given
+                session ID is the original value (cookie value)
 
 =head1 COMMANDS
 

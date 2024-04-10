@@ -114,6 +114,8 @@ sub search {
 sub _get_one_session {
     my ( $self, $id, $backend ) = @_;
 
+    $id = id2storage($id) if $id and $self->opts->{hash};
+
     # Lookup backend storage from CLI options
     my $backendStorage =
       ( lc( $self->opts->{backend} || 'global' ) ) . "Storage";
@@ -133,7 +135,7 @@ sub _get_one_session {
     $backendStorage = "globalStorage" unless $self->conf->{$backendStorage};
 
     my $as = Lemonldap::NG::Common::Session->new( {
-            hashStore            => $self->conf->{hashedSessionStore},
+            hashStore            => 0,
             storageModule        => $self->conf->{$backendStorage},
             storageModuleOptions => $self->conf->{"${backendStorage}Options"},
             id                   => $id,
