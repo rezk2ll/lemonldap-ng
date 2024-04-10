@@ -26,15 +26,17 @@ has stderr => (
 has conf => (
     is      => 'ro',
     default => sub {
-        my $res = Lemonldap::NG::Common::Conf->new( { (
+        my $ca = Lemonldap::NG::Common::Conf->new( { (
                     ref $_[0] && $_[0]->{iniFile}
                     ? ( confFile => $_[0]->{iniFile} )
                     : ()
                 )
             }
         );
-        die $Lemonldap::NG::Common::Conf::msg unless ($res);
-        return $res->getConf();
+        die $Lemonldap::NG::Common::Conf::msg unless ($ca);
+        my $res       = $ca->getConf('all');
+        my $localConf = $ca->getLocalConf( 'all', $_[0]->{iniFile} );
+        return { %$res, %$localConf };
     },
 );
 
@@ -112,6 +114,8 @@ sub search {
 sub _get_one_session {
     my ( $self, $id, $backend ) = @_;
 
+    $id = id2storage($id) if $id and $self->opts->{hash};
+
     # Lookup backend storage from CLI options
     my $backendStorage =
       ( lc( $self->opts->{backend} || 'global' ) ) . "Storage";
@@ -131,7 +135,7 @@ sub _get_one_session {
     $backendStorage = "globalStorage" unless $self->conf->{$backendStorage};
 
     my $as = Lemonldap::NG::Common::Session->new( {
-            hashStore            => $self->conf->{hashedSessionStore},
+            hashStore            => 0,
             storageModule        => $self->conf->{$backendStorage},
             storageModuleOptions => $self->conf->{"${backendStorage}Options"},
             id                   => $id,
