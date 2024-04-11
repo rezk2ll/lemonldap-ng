@@ -146,15 +146,18 @@ sub _resend {
     # Timer
     my $lastretry =
       $session->{__lastRetry} || $session->{tokenSessionStartTimestamp} || time;
+
+    $self->p->_sfEngine->restore2faSessionInfo( $req, $session );
+
     if ( $self->resend_interval
         and ( $lastretry + $self->resend_interval < time ) )
     {
 
         $self->logger->debug("Re-sending code");
-        $self->populateDestAttribute( $req, $session );
+        $self->populateDestAttribute( $req, $req->sessionInfo );
 
         # Resend code and update last retry
-        unless ( $self->sendCode( $req, $session, $code ) ) {
+        unless ( $self->sendCode( $req, $req->sessionInfo, $code ) ) {
             return $self->p->do( $req, [ sub { PE_ERROR } ] );
         }
         $self->ott->updateToken( $token, __lastRetry => time );
