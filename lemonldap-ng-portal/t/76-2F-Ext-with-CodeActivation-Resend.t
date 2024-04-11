@@ -25,6 +25,7 @@ sub getCodeFromFile {
     return do {
         local $/;
         my $filename = $ENV{llngtmpfile};
+        return undef unless -f $filename;
         open my $fh, '<', $filename;
         <$fh>;
     };
@@ -120,8 +121,7 @@ sub init_login {
     return $res;
 }
 
-my $client = LLNG::Manager::Test->new(
-    {
+my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel            => 'error',
             ext2fActivation     => 1,

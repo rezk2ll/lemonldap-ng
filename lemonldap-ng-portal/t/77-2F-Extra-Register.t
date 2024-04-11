@@ -50,6 +50,7 @@ my $client = LLNG::Manager::Test->new( {
             'sfExtra'             => {
                 'work' => {
                     'over' => {
+                        rest2fResendInterval => 10,
                         rest2fCodeActivation => '\d{6}',
                         rest2fInitUrl        => 'http://auth.example.com/init',
                         rest2fInitArgs       =>
@@ -479,6 +480,29 @@ subtest "Register and use rest based custom SF as dwho" => sub {
     ( $host, $url, $query ) =
       expectForm( $res, undef, '/work2fcheck?skin=bootstrap', 'token', 'code' );
 
+    ok( $receivedCode, "Code was sent" );
+    $receivedCode = undef;
+
+    Time::Fake->offset("+30s");
+
+    # Check resend
+    like(
+        $res->[2]->[0],
+        qr,formaction=\"/work2fresend\?skin=bootstrap\",,
+        "Found resend button"
+    );
+
+    ok(
+        $res = $client->_post(
+            '/work2fresend',
+            IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'Resend code'
+    );
+
+    ok( $receivedCode, "Code was sent again" );
     $code = $receivedCode;
 
     $query =~ s/code=/code=${code}/;
