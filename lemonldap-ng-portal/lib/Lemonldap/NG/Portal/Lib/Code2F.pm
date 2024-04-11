@@ -103,6 +103,8 @@ sub challenge {
 sub _resend {
     my ( $self, $req ) = @_;
 
+    $self->logger->debug("Request to re-send code");
+
     # Check token
     my $token;
     unless ( $token = $req->param('token') ) {
@@ -148,6 +150,9 @@ sub _resend {
         and ( $lastretry + $self->resend_interval < time ) )
     {
 
+        $self->logger->debug("Re-sending code");
+        $self->populateDestAttribute( $req, $session );
+
         # Resend code and update last retry
         unless ( $self->sendCode( $req, $session, $code ) ) {
             return $self->p->do( $req, [ sub { PE_ERROR } ] );
@@ -155,6 +160,7 @@ sub _resend {
         $self->ott->updateToken( $token, __lastRetry => time );
     }
     else {
+        $self->logger->debug("Resend request arrived too soon");
         $legend = "resendTooSoon";
     }
 
