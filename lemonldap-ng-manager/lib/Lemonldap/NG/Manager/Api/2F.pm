@@ -74,8 +74,13 @@ sub getSecondFactorsById {
 }
 
 sub deleteSecondFactors {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, @path ) = @_;
     my ( $uid, $res );
+
+    # Return an error on
+    @path
+      and return $self->sendError( $req, 'Invalid URI, provide /id/ or /type/',
+        400 );
 
     $uid = $req->params('uid')
       or return $self->sendError( $req, 'uid is missing', 400 );
@@ -331,6 +336,205 @@ sub _getDevicesFromSessionData {
         }
     }
     return [];
+}
+
+sub addSecondFactor {
+    my ( $self, $req ) = @_;
+
+    my $uid = $req->params('uid')
+      or return $self->sendError( $req, 'uid is missing', 400 );
+
+    $self->logger->debug("[API] Add 2F for $uid");
+
+    my $add = $req->jsonBodyToObj;
+    return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
+      unless ( $add and ref($add) eq "HASH" );
+
+    return $self->sendError( $req, 'Invalid input: type is missing', 400 )
+      unless ( defined $add->{type} );
+
+    return $self->sendError( $req, 'Invalid input: epoch is forbidden', 400 )
+      if ( defined $add->{epoch} );
+
+    my $allow_create =
+      (      $req->params('create')
+          && $req->params('create') ne "false"
+          && $req->params('create') ne "0" );
+
+    my $res = $self->_add2F( $uid, undef, $add, $allow_create );
+
+    return $self->sendError( $req, $res->{msg}, $res->{code} )
+      if ( $res->{res} ne 'ok' );
+    return $self->sendJSONresponse(
+        $req,
+        { message => "Successful operation" },
+        code => 201
+    );
+}
+
+sub addSecondFactorByType {
+    my ( $self, $req ) = @_;
+
+    my $uid = $req->params('uid')
+      or return $self->sendError( $req, 'uid is missing', 400 );
+
+    my $type = $req->params('type')
+      or return $self->sendError( $req, 'type is missing', 400 );
+
+    my $add = $req->jsonBodyToObj;
+    return $self->sendError( $req, "Invalid input: " . $req->error, 400 )
+      unless ( $add and ref($add) eq "HASH" );
+
+    $self->logger->debug("[API] Add $type 2F for $uid");
+
+    my $allow_create =
+      (      $req->params('create')
+          && $req->params('create') ne "false"
+          && $req->params('create') ne "0" );
+
+    my $res = $self->_add2F( $uid, $type, $add, $allow_create );
+
+    return $self->sendError( $req, $res->{msg}, $res->{code} )
+      unless ( $res->{res} eq 'ok' );
+
+    return $self->sendJSONresponse(
+        $req,
+        { message => "Successful operation" },
+        code => 201
+    );
+}
+
+sub _transformNew2f {
+    my ( $self, $type, $add ) = @_;
+
+    # Generic API, no transformation is done
+    if ( !defined($type) ) {
+        return {
+            res    => "ok",
+            device => $add,
+        };
+    }
+
+    if ( uc($type) eq "TOTP" ) {
+        return $self->_transformNew2fTotp( $type, $add );
+    }
+
+    else {
+        return {
+            res  => "ko",
+            code => 400,
+            msg  => "Invalid type: $type",
+        };
+    }
+}
+
+sub _transformNew2fTotp {
+    my ( $self, $type, $add ) = @_;
+
+    if ( !$add->{key} ) {
+        return {
+            res  => "ko",
+            code => 400,
+            msg  => "Invalid input: missing \"key\" parameter",
+        };
+    }
+
+    my $secret = $self->_totpKeyToSecret( $add->{key} );
+    if ( !$secret ) {
+        return {
+            res  => "ko",
+            code => 400,
+            msg  => "Invalid secret: you must provide a base32-encoded key",
+        };
+    }
+
+    my $newdevice = {
+        type => "TOTP",
+        ( $add->{name} ? ( name => $add->{name} ) : () ),
+        _secret => $secret,
+    };
+
+    return {
+        res    => "ok",
+        device => $newdevice,
+    };
+}
+
+sub _totpKeyToSecret {
+    my ( $self, $key ) = @_;
+
+    return unless $key;
+
+    # Make sure only BASE32 characters are present
+    if ( uc($key) =~ /^[ABCDEFGHIJKLMNOPQRSTUVWXYZ234567\s]*$/ ) {
+
+        # Trim spaces and normalize to lowercase
+        my $newKey = $key =~ s/\s//gr;
+        return $self->totp_encrypt->get_storable_secret( lc($newKey) );
+    }
+
+    return undef;
+}
+
+sub _add2F {
+    my ( $self, $uid, $type, $add, $allow_create ) = @_;
+
+    my $res = $self->_transformNew2f( $type, $add );
+    return $res if ( $res->{res} ne 'ok' );
+
+    my $device = $res->{device};
+
+    $device->{epoch} = time();
+
+    $res =
+      $self->_add2FToSessions( $uid, $device, $self->_getPersistentMod,
+        'Persistent', '_session_uid', $allow_create );
+    return $res if ( $res->{res} ne 'ok' );
+
+    # Add to existing sessions
+    my $whatToTrace = Lemonldap::NG::Handler::PSGI::Main->tsv->{whatToTrace};
+    $res =
+      $self->_add2FToSessions( $uid, $device, $self->_getSSOMod, 'SSO',
+        $whatToTrace );
+
+    return { res => "ok" };
+}
+
+sub _add2FToSessions {
+    my ( $self, $uid, $add, $mod, $kind, $key, $allow_create ) = @_;
+
+    my ( $sessions, $session, $devices, @keep, $removed,
+        $total, $module, $localStorage );
+    $sessions = $self->_getSessions2F( $mod, $kind, $key, $uid );
+    my $found = keys %$sessions;
+
+    if ( !$found and $allow_create ) {
+        my $ps = $self->getPersistentSession( $mod, $uid );
+        $sessions = { $ps->id => { _2fDevices => undef } };
+        $found    = 1;
+    }
+
+    foreach ( keys %$sessions ) {
+        $session = $self->_getSession2F( $_, $mod )
+          or return { res => 'ko', code => 500, msg => $@ };
+
+        $devices = $self->_getDevicesFromSessionData( $session->data );
+        push @$devices, $add;
+
+        # Update session
+        $self->logger->debug(
+            "Adding " . display2F($add) . " to sessionId $_" );
+        $session->data->{_2fDevices} = to_json($devices);
+        $session->update( $session->data );
+    }
+    return {
+        res     => "notfound",
+        message => "User $uid was not found",
+        code    => 404
+      }
+      if !$found;
+
+    return { res => 'ok' };
 }
 
 1;

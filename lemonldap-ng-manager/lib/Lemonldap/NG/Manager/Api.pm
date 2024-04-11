@@ -13,6 +13,7 @@ use Lemonldap::NG::Manager::Api::Providers::SamlSp;
 use Lemonldap::NG::Manager::Api::Providers::CasApp;
 use Lemonldap::NG::Manager::Api::Menu::Cat;
 use Lemonldap::NG::Manager::Api::Menu::App;
+use Lemonldap::NG::Common::TOTP;
 
 extends qw(
   Lemonldap::NG::Manager::Plugin
@@ -20,6 +21,7 @@ extends qw(
   Lemonldap::NG::Common::Session::REST
 );
 
+has totp_encrypt => ( is => "rw" );
 our $VERSION = '2.18.0';
 
 #############################
@@ -33,6 +35,12 @@ sub init {
     my ( $self, $conf ) = @_;
 
     $self->ua( Lemonldap::NG::Common::UserAgent->new($conf) );
+    $self->totp_encrypt(
+        Lemonldap::NG::Common::TOTP->new(
+            key           => ( $conf->{totp2fKey} || $conf->{key} ),
+            encryptSecret => $conf->{totp2fEncryptSecret}
+        )
+    );
 
     # HTML template
     $self->addRoute( 'api.html', undef, ['GET'] )
@@ -132,6 +140,14 @@ sub init {
                     app => {
                         ':confKey' => 'addMenuApp'
                     }
+                },
+                secondFactor => {
+                    ':uid' => {
+                        type => {
+                            ':type' => 'addSecondFactorByType'
+                        },
+                        '*' => 'addSecondFactor'
+                    },
                 },
             },
         },

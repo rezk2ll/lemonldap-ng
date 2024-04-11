@@ -430,6 +430,42 @@
             },
             "type" : "object"
          },
+         "NewSecondFactor" : {
+            "additionalProperties" : {
+               "type" : "string"
+            },
+            "properties" : {
+               "name" : {
+                  "description" : "A description of the device",
+                  "type" : "string"
+               },
+               "type" : {
+                  "description" : "The type of second factor to create",
+                  "example" : "TOTP, U2F, UBK (Yubikey), WebAuthn",
+                  "type" : "string"
+               }
+            },
+            "required" : [
+               "type"
+            ],
+            "type" : "object"
+         },
+         "NewSecondFactorTotp" : {
+            "properties" : {
+               "key" : {
+                  "description" : "The BASE32 encoded shared secret",
+                  "type" : "string"
+               },
+               "name" : {
+                  "description" : "A description of the device",
+                  "type" : "string"
+               }
+            },
+            "required" : [
+               "key"
+            ],
+            "type" : "object"
+         },
          "OidcOptions" : {
             "properties" : {
                "IDTokenExpiration" : {
@@ -948,15 +984,15 @@
          "SecondFactor" : {
             "properties" : {
                "id" : {
-                  "description" : "An opaque idenfifier for this particular token",
+                  "description" : "An opaque idenfifier for this particular device",
                   "type" : "string"
                },
                "name" : {
-                  "description" : "A user-set description of the token",
+                  "description" : "A user-set description of the device",
                   "type" : "string"
                },
                "type" : {
-                  "description" : "The type of token in use",
+                  "description" : "The type of device in use",
                   "example" : "TOTP, U2F, UBK (Yubikey), WebAuthn",
                   "type" : "string"
                }
@@ -2596,7 +2632,49 @@
                   "type" : "string"
                }
             }
-         ]
+         ],
+         "post" : {
+            "description" : "",
+            "operationId" : "addSecondFactor",
+            "parameters" : [
+               {
+                  "description" : "Should the persistent session be created if it does not exist yet",
+                  "in" : "query",
+                  "name" : "create",
+                  "required" : "false",
+                  "schema" : {
+                     "default" : "false",
+                     "type" : "bool"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/NewSecondFactor"
+                     }
+                  }
+               },
+               "description" : "Second factor to add, additional properties depend on the 2FA type",
+               "required" : "true"
+            },
+            "responses" : {
+               "201" : {
+                  "$ref" : "#/components/responses/Created"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Register a new second factor for a user",
+            "tags" : [
+               "2fa"
+            ]
+         }
       },
       "/api/v1/secondFactor/{uid}/id/{id}" : {
          "delete" : {
@@ -2650,6 +2728,61 @@
                }
             }
          ]
+      },
+      "/api/v1/secondFactor/{uid}/type/TOTP" : {
+         "description" : "Specialized API for TOTP",
+         "parameters" : [
+            {
+               "in" : "path",
+               "name" : "uid",
+               "required" : "true",
+               "schema" : {
+                  "type" : "string"
+               }
+            }
+         ],
+         "post" : {
+            "description" : "The secret must be passed as cleartext and will be encrypted by the server if needed",
+            "operationId" : "addSecondFactorTotp",
+            "parameters" : [
+               {
+                  "description" : "Should the persistent session be created if it does not exist yet",
+                  "in" : "query",
+                  "name" : "create",
+                  "required" : "false",
+                  "schema" : {
+                     "default" : "false",
+                     "type" : "bool"
+                  }
+               }
+            ],
+            "requestBody" : {
+               "content" : {
+                  "application/json" : {
+                     "schema" : {
+                        "$ref" : "#/components/schemas/NewSecondFactorTotp"
+                     }
+                  }
+               },
+               "description" : "Second factor to add",
+               "required" : "true"
+            },
+            "responses" : {
+               "201" : {
+                  "$ref" : "#/components/responses/Created"
+               },
+               "400" : {
+                  "$ref" : "#/components/responses/Error"
+               },
+               "404" : {
+                  "$ref" : "#/components/responses/NotFound"
+               }
+            },
+            "summary" : "Register a new TOTP device factor for a user",
+            "tags" : [
+               "2fa"
+            ]
+         }
       },
       "/api/v1/secondFactor/{uid}/type/{type}" : {
          "delete" : {
@@ -2734,7 +2867,7 @@
          "name" : "oidcrp"
       },
       {
-         "description" : "Registered Second Factors",
+         "description" : "negistered Second Factors",
          "name" : "2fa"
       },
       {

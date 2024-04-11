@@ -50,10 +50,7 @@ sub getOptions {
             if ($api_type_func) {
                 my $desc = $api_type_func->($attribute_desc);
 
-                if (
-                    Lemonldap::NG::Manager::Api->_mustArrayizeOption(
-                        $option)
-                  )
+                if ( Lemonldap::NG::Manager::Api->_mustArrayizeOption($option) )
                 {
                     $options->{$api_option_name} = {
                         type  => "array",
@@ -107,7 +104,7 @@ sub openapi {
             },
             {
                 'name'        => '2fa',
-                'description' => 'Registered Second Factors'
+                'description' => 'negistered Second Factors'
             },
             {
                 'name'        => 'history',
@@ -952,6 +949,48 @@ sub openapi {
                             '$ref' => '#/components/responses/NotFound'
                         }
                     }
+                },
+                'post' => {
+                    'summary'     => 'Register a new second factor for a user',
+                    'description' => '',
+                    'tags'        => ['2fa'],
+                    'operationId' => 'addSecondFactor',
+                    'parameters'  => [ {
+                            'name'        => 'create',
+                            'in'          => 'query',
+                            'required'    => 'false',
+                            'description' =>
+"Should the persistent session be created if it does not exist yet",
+                            'schema' => {
+                                'type'    => 'bool',
+                                'default' => 'false'
+                            }
+                        }
+                    ],
+                    'requestBody' => {
+                        'description' =>
+'Second factor to add, additional properties depend on the 2FA type',
+                        'content' => {
+                            'application/json' => {
+                                'schema' => {
+                                    '$ref' =>
+                                      '#/components/schemas/NewSecondFactor'
+                                }
+                            }
+                        },
+                        'required' => 'true'
+                    },
+                    'responses' => {
+                        '201' => {
+                            '$ref' => '#/components/responses/Created'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
+                        },
+                        '404' => {
+                            '$ref' => '#/components/responses/NotFound'
+                        }
+                    }
                 }
             },
             '/api/v1/secondFactor/{uid}/type/{type}' => {
@@ -998,6 +1037,60 @@ sub openapi {
                     'responses'   => {
                         '204' => {
                             '$ref' => '#/components/responses/NoContent'
+                        },
+                        '404' => {
+                            '$ref' => '#/components/responses/NotFound'
+                        }
+                    }
+                }
+            },
+            '/api/v1/secondFactor/{uid}/type/TOTP' => {
+                'description' => 'Specialized API for TOTP',
+                'parameters'  => [ {
+                        'name'     => 'uid',
+                        'in'       => 'path',
+                        'required' => 'true',
+                        'schema'   => {
+                            'type' => 'string'
+                        }
+                    }
+                ],
+                'post' => {
+                    'summary' => 'Register a new TOTP device factor for a user',
+                    'description' =>
+'The secret must be passed as cleartext and will be encrypted by the server if needed',
+                    'tags'        => ['2fa'],
+                    'operationId' => 'addSecondFactorTotp',
+                    'parameters'  => [ {
+                            'name'        => 'create',
+                            'in'          => 'query',
+                            'required'    => 'false',
+                            'description' =>
+"Should the persistent session be created if it does not exist yet",
+                            'schema' => {
+                                'type'    => 'bool',
+                                'default' => 'false'
+                            }
+                        }
+                    ],
+                    'requestBody' => {
+                        'description' => 'Second factor to add',
+                        'content'     => {
+                            'application/json' => {
+                                'schema' => {
+                                    '$ref' =>
+                                      '#/components/schemas/NewSecondFactorTotp'
+                                }
+                            }
+                        },
+                        'required' => 'true'
+                    },
+                    'responses' => {
+                        '201' => {
+                            '$ref' => '#/components/responses/Created'
+                        },
+                        '400' => {
+                            '$ref' => '#/components/responses/Error'
                         },
                         '404' => {
                             '$ref' => '#/components/responses/NotFound'
@@ -1946,6 +2039,39 @@ sub openapi {
                     'properties' =>
                       getOptions( $attributes, 'casAppMetaDataOptions' ),
                 },
+                'NewSecondFactor' => {
+                    'type'       => 'object',
+                    'required'   => ['type'],
+                    'properties' => {
+                        'type' => {
+                            'type'        => 'string',
+                            'description' =>
+                              'The type of second factor to create',
+                            'example' => 'TOTP, U2F, UBK (Yubikey), WebAuthn'
+                        },
+                        'name' => {
+                            'type'        => 'string',
+                            'description' => 'A description of the device'
+                        }
+                    },
+                    'additionalProperties' => {
+                        'type' => 'string'
+                    }
+                },
+                'NewSecondFactorTotp' => {
+                    'type'       => 'object',
+                    'required'   => ['key'],
+                    'properties' => {
+                        'key' => {
+                            'type'        => 'string',
+                            'description' => 'The BASE32 encoded shared secret',
+                        },
+                        'name' => {
+                            'type'        => 'string',
+                            'description' => 'A description of the device'
+                        }
+                    },
+                },
                 'SecondFactor' => {
                     'type'       => 'object',
                     'required'   => [ 'type', 'id' ],
@@ -1953,17 +2079,17 @@ sub openapi {
                         'id' => {
                             'type'        => 'string',
                             'description' =>
-                              'An opaque idenfifier for this particular token'
+                              'An opaque idenfifier for this particular device'
                         },
                         'type' => {
                             'type'        => 'string',
-                            'description' => 'The type of token in use',
+                            'description' => 'The type of device in use',
                             'example' => 'TOTP, U2F, UBK (Yubikey), WebAuthn'
                         },
                         'name' => {
                             'type'        => 'string',
                             'description' =>
-                              'A user-set description of the token'
+                              'A user-set description of the device'
                         }
                     }
                 },

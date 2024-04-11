@@ -576,6 +576,7 @@ t/02-Password-Demo-Hook.t
 t/02-Password-Demo-Local-noPpolicy.t
 t/02-Password-Demo-Local-Ppolicy.t
 t/02-Password-Demo-Local-SpeChars-Ppolicy.t
+t/02-Password-Demo-Mail.t
 t/02-Password-Demo.t
 t/02-Password-Encrypted-Demo.t
 t/02-SendHtml-Plugin.t

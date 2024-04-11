@@ -1610,7 +1610,7 @@ sub validateConditions {
         }
 
         unless ( $status eq Lasso::Constants::SAML2_ASSERTION_VALID ) {
-            $self->logger->error("Time conditions validations result: $status");
+            $self->logger->error("Time conditions validation failed ($status)");
             return 0;
         }
 

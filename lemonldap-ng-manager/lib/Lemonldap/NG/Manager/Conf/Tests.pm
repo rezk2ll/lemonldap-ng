@@ -491,6 +491,20 @@ sub tests {
               );
         },
 
+        samlIssuerNotEnabled => sub {
+            if ( keys %{ $conf->{samlSPMetaDataXML} || {} } ) {
+                if ( $conf->{issuerDBSAMLActivation} ) {
+                    return 1;
+                }
+                else {
+                    return ( 1,
+"SAML service providers require enabling the SAML Issuer in General Parameters"
+                    );
+                }
+            }
+            return 1;
+        },
+
         # Try to parse combination with declared modules
         checkCombinations => sub {
             return 1 unless ( $conf->{authentication} eq 'Combination' );
@@ -939,6 +953,20 @@ sub tests {
             return ( $res, join( ', ', @msg ) );
         },
 
+        oidcIssuerNotEnabled => sub {
+            if ( keys %{ $conf->{oidcRPMetaDataOptions} || {} } ) {
+                if ( $conf->{issuerDBOpenIDConnectActivation} ) {
+                    return 1;
+                }
+                else {
+                    return ( 1,
+"OIDC relying parties require enabling the OpenID Connect Issuer in General Parameters"
+                    );
+                }
+            }
+            return 1;
+        },
+
         # CAS APP URL must be defined and unique
         casAppHostnameUniqueness => sub {
             return 1
@@ -976,6 +1004,20 @@ sub tests {
                 }
             }
             return ( $res, join( ', ', @msg ) );
+        },
+
+        casIssuerNotEnabled => sub {
+            if ( keys %{ $conf->{casAppMetaDataOptions} || {} } ) {
+                if ( $conf->{issuerDBCASActivation} ) {
+                    return 1;
+                }
+                else {
+                    return ( 1,
+"CAS applications require enabling the CAS Issuer in General Parameters"
+                    );
+                }
+            }
+            return 1;
         },
 
         # Notification system required with removed SF notification
