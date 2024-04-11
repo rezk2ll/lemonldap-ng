@@ -74,8 +74,13 @@ sub getSecondFactorsById {
 }
 
 sub deleteSecondFactors {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, @path ) = @_;
     my ( $uid, $res );
+
+    # Return an error on
+    @path
+      and return $self->sendError( $req, 'Invalid URI, provide /id/ or /type/',
+        400 );
 
     $uid = $req->params('uid')
       or return $self->sendError( $req, 'uid is missing', 400 );
