@@ -61,11 +61,11 @@ sub init {
     # Declare REST route
     $self->addUnauthRoute(
         checkhibp => '_checkHIBP',
-        ['GET']
+        ['POST']
     );
     $self->addAuthRoute(
         checkhibp => '_checkHIBP',
-        ['GET']
+        ['POST']
     );
 
     $self->p->addPasswordPolicyDisplay(
