@@ -203,6 +203,14 @@ sub processRefreshSession {
     my %data = %{ $req->userData };
     $req->user( $data{_user} || $data{ $self->conf->{whatToTrace} } );
     $req->id( $data{_session_id} );
+
+    $self->auditLog(
+        $req,
+        message => ( 'Refresh request for ' . $req->user ),
+        code    => "SESSION_REFRESH",
+        user    => $req->user,
+    );
+
     foreach ( keys %data ) {
 
         # Variables that start with _ are kept accross refresh
@@ -300,7 +308,7 @@ sub unauthLogout {
 
 sub _unauthLogout {
     my ( $self, $req ) = @_;
-    $self->userLogger->info('Unauthenticated logout request');
+    $self->logger->debug('Unauthenticated logout request');
     $self->logger->debug('Cleaning pdata');
     $self->logger->debug("Removing $self->{conf}->{cookieName} cookie");
     $req->pdata( {} );
@@ -459,7 +467,12 @@ sub autoRedirect {
     # Redirection should be made if urldc defined
     if ( $req->{urldc} ) {
         if ( $req->{urldc} =~ /^\s*((?:java|vb)script|data):/ ) {
-            $self->userLogger->error("Redirection to $req->{urldc} blocked");
+            $self->auditLog(
+                $req,
+                message => "Redirection to $req->{urldc} blocked",
+                code    => "UNAUTHORIZED_REDIRECT",
+                url     => $req->{urldc},
+            );
             delete $req->{urldc};
         }
         else {
@@ -746,9 +759,16 @@ sub _deleteSession {
     # Log
     my $user = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
     my $mod  = $req->{sessionInfo}->{_auth};
-    $self->userLogger->notice(
+    if ($user) {
+        $self->auditLog(
+            $req,
+            message => (
 "User $user has been disconnected from $mod ($req->{sessionInfo}->{ipAddr})"
-    ) if $user;
+            ),
+            code => "LOGOUT",
+            auth => $mod,
+        );
+    }
 
     return $session->error ? 0 : 1;
 }
@@ -778,7 +798,12 @@ sub autoPost {
     # Get URL and Form fields
     $req->{urldc} = $req->postUrl;
     if ( $req->{urldc} =~ /^\s*((?:java|vb)script|data):/ ) {
-        $self->userLogger->error("Redirection to $req->{urldc} blocked");
+        $self->auditLog(
+            $req,
+            message => "Redirection to $req->{urldc} blocked",
+            code    => "UNAUTHORIZED_REDIRECT",
+            url     => $req->{urldc},
+        );
         return PE_BADURL;
     }
     my $formFields = $req->postFields;

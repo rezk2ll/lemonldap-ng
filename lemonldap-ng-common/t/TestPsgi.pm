@@ -28,6 +28,10 @@ sub handler {
     $self->logger->notice("Request handled by TestPsgi handler");
     $self->userLogger->info("User logger trace");
 
+
+    $self->auditLog( $req, message => "audit" );
+    $self->auditLog( $req, field1 => "one", field2 => "two" );
+
     return [ 200, [ 'Content-Type' => 'text/plain' ], ['Body lines'] ];
 }
 

@@ -288,6 +288,11 @@ sub lmLog {
     return $class->logger->$level($msg);
 }
 
+sub auditLog {
+    my ( $class, $req, %info ) = @_;
+    $class->_auditLogger->log( $req, %info );
+}
+
 ## @rmethod protected boolean checkMaintenanceMode
 # Check if we are in maintenance mode
 # @return true if maintenance mode is enabled
@@ -416,9 +421,17 @@ sub forbidden {
     }
 
     # Log forbidding
-    $class->userLogger->notice( "User "
-          . $session->{ $class->tsv->{whatToTrace} }
-          . " was forbidden to access to $vhost$uri" );
+    $class->auditLog(
+        $req,
+        message => (
+                "User "
+              . $session->{ $class->tsv->{whatToTrace} }
+              . " was forbidden to access to $vhost$uri"
+        ),
+        code => "ACCESS_REFUSED",
+        user => $session->{ $class->tsv->{whatToTrace} },
+
+    );
     $class->updateStatus( $req, 'REJECT',
         $session->{ $class->tsv->{whatToTrace} } );
 
@@ -516,8 +529,14 @@ sub fetchId {
     elsif ( $value =~ s/^c:// ) {
         $value = $class->tsv->{cipher}->decrypt($value);
         unless ( $value =~ s/^(.*)? (.*)$/$1/ and $2 eq $vhost ) {
-            $class->userLogger->error(
-                "Bad CDA cookie: available for $2 instead of $vhost");
+            $class->auditLog(
+                $req,
+                message =>
+                  ("Bad CDA cookie: available for $2 instead of $vhost"),
+                code      => "CDA_BAD_HOST",
+                vhost     => $vhost,
+                cda_vhost => $2,
+            );
             return undef;
         }
     }

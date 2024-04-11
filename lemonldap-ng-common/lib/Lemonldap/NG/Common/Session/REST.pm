@@ -49,7 +49,13 @@ sub delSession {
     my $id = $req->params('sessionId')
       or return $self->sendError( $req, 'sessionId is missing', 400 );
     my $session = $self->getApacheSession( $mod, $id );
-    $self->userLogger->notice("Deleted $type session: $id");
+    $self->auditLog(
+        $req,
+        message => "Deleted $type session: $id",
+        code    => "SESSION_DELETED",
+        type    => $type,
+        id      => $id
+    );
     $session->remove;
 
     Lemonldap::NG::Handler::PSGI::Main->localUnlog( $req, $id );
@@ -180,8 +186,14 @@ sub delete2F {
                 and ( $element->{epoch} eq $epoch ) )
             {
                 my $uid = $session->data->{_session_uid};
-                $self->userLogger->notice(
-                    "2FA deletion for $uid: " . display2F($element) );
+                $self->auditLog(
+                    $req,
+                    message =>
+                      ( "2FA deletion for $uid: " . display2F($element) ),
+                    code => "2FA_DELETED",
+                    user => $uid,
+                    sfa  => display2F($element)
+                );
             }
             else {
                 push @keep, $element;

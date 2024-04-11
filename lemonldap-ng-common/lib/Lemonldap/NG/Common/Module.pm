@@ -15,6 +15,11 @@ has logger => ( is => 'rw', lazy => 1, default => sub { $_[0]->{p}->logger } );
 has userLogger =>
   ( is => 'rw', lazy => 1, default => sub { $_[0]->{p}->userLogger } );
 
+sub auditLog {
+    my $self = shift;
+    return $self->p->auditLog(@_);
+}
+
 sub error {
     my $self = shift;
     return $self->p->error(@_);

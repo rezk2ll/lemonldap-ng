@@ -297,11 +297,15 @@ sub _delete2F {
     $removed = { %$removed, %{ $res->{removed} } };
     $count   = scalar( keys %$removed );
     if ($count) {
-        my $list_log = join(
-            ",", map { display2F( $removed->{$_} ) }
-              keys %$removed
+        my @list_log = map { display2F( $removed->{$_} ) } keys %$removed;
+        my $list_log = join( ",", @list_log );
+        $self->auditLog(
+            $req,
+            code        => "API_2FA_DELETED",
+            message     => ("[API] 2FA deletion for $uid: $list_log"),
+            user        => $uid,
+            removed_2fa => \@list_log,
         );
-        $self->userLogger->notice("[API] 2FA deletion for $uid: $list_log");
     }
 
     return {

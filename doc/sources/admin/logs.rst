@@ -295,3 +295,57 @@ Use it to enable more than one logger. Example:
     until another lever is declared. In the above example,
     Sentry collects ``error`` and ``warn`` levels and all user
     actions, while syslog stores technical ``notice``, ``info`` and ``debug`` logs.
+
+.. _auditlogs:
+
+Audit logs
+----------
+
+.. versionadded:: 2.19
+
+|beta| This feature may change in a future version, event codes and format should not be considered stable.
+
+LemonLDAP::NG user logs (see above) are being replaced with a new facility: :ref:`auditlogs`.
+
+Audit logs are structured logs that are meant to be easier to process than the current log messages.
+
+At the moment, audit logs are transmitted by default to the configured
+``userLogger``. But you can plug-in your own custom implementation.
+
+.. code:: ini
+
+    auditLogger=My::Logger::Class
+
+Your logger class can look something like this:
+
+.. code:: perl
+
+    package My::Logger::Class;
+    use Scalar::Util qw(weaken);
+
+    sub new {
+        my ( $class, $psgi_or_handler ) = @_;
+        my $self = bless {}, $class;
+
+        # Populate $self with options read from $psgi_or_handler
+        # ...
+
+        return $self;
+    }
+
+    sub log {
+        my ( $self, $req, %fields ) = @_;
+
+        # Your logging actions here. %fields is the structured
+        # data from the logging context, which you can enrich with
+        # data from the HTTP request ($req).
+        # The "code" field generally contains an upper case event code such as
+        # AUTHENTICATED or 2FA_REQUIRED
+
+        # my $code = $fields{code};
+        # ...
+    };
+
+    1;
+
+.. |beta| image:: /documentation/beta.png

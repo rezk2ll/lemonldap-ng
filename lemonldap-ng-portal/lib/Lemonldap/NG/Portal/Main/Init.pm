@@ -443,7 +443,15 @@ sub reloadConf {
             }
         }
         my $user_log = $_[0]->{sessionInfo}->{ $self->conf->{whatToTrace} };
-        $self->userLogger->notice( $user_log . ' connected' ) if $user_log;
+
+        if ($user_log) {
+            $self->auditLog(
+                $_[0],
+                message => ( $user_log . ' connected' ),
+                code    => "LOGIN",
+                user    => $user_log,
+            );
+        }
         if (@$tmp) {
             $self->logger->debug(
                 'Add ' . join( ',', @$tmp ) . ' in keepPdata' );
@@ -451,6 +459,7 @@ sub reloadConf {
         }
         return PE_OK;
     };
+
     # Failsafe: allow handler access to portal in case it's missing in conf
     my $default_portal_uri  = URI->new( HANDLER->tsv->{portal}->() );
     my $default_portal_host = eval { $default_portal_uri->host };
@@ -602,7 +611,7 @@ sub loadModule {
 }
 
 sub fail {
-    $_[0]->userLogger->error( $_[0]->error );
+    $_[0]->logger->error( $_[0]->error );
     $_[0]->addUnauthRoute( '*' => 'displayError' );
     $_[0]->addAuthRoute( '*' => 'displayError' );
     return 0;

@@ -5,6 +5,7 @@ use Mouse;
 use URI;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Portal::Main::Constants qw(
+  portalConsts
   URIRE
   PE_OK
   PE_INFO
@@ -278,17 +279,6 @@ sub run {
             }
         }
 
-        if ($app) {
-            $self->userLogger->notice( 'User '
-                  . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                  . " is authorized to access to $app" );
-        }
-        else {
-            $self->userLogger->notice( 'User '
-                  . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-                  . " is redirected to $service" );
-        }
-
         # Check last authentication time to decide if
         # the authentication is recent or not
         my $casRenewFlag     = 0;
@@ -340,6 +330,22 @@ sub run {
 
         $self->logger->debug(
             "CAS service session $casServiceSessionID created");
+
+        $self->auditLog(
+            $req,
+            code => "ISSUER_CAS_LOGIN_SUCCESS",
+            ( $app ? ( app => $app ) : () ),
+            service => $service,
+            message => (
+                $app
+                ? ( 'User '
+                      . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                      . " is authorized to access to $app" )
+                : (     'User '
+                      . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+                      . " is redirected to $service" )
+            ),
+        );
 
         return $self->_redirectUser( $req, $cas_request->{service},
             $casServiceTicket );
@@ -1095,15 +1101,16 @@ sub isLogoutEnabled {
 sub _failLogin {
     my ( $self, $req, %params ) = @_;
     my $reason = $params{'msg'} ? ": $params{'msg'}" : "";
+    my $res    = $params{res} || PE_ERROR;
 
-    if ( $params{userLogger} ) {
-        $self->userLogger->error( "CAS login failed" . $reason );
-    }
-    else {
-        $self->logger->error( "CAS login failed" . $reason );
-    }
+    $self->auditLog(
+        $res,
+        code    => "ISSUER_CAS_LOGIN_FAILED",
+        message => ( "CAS login failed" . $reason ),
+        ( $reason ? ( reason => $reason ) : () ),
+        portal_error => portalConsts->{$res},
+    );
 
-    my $res = $params{res} || PE_ERROR;
     return $res;
 }
 
@@ -1111,18 +1118,21 @@ sub _failLoginRule {
     my ( $self, $req, $cas_request, $app ) = @_;
     my $casAccessControlPolicy = $self->conf->{casAccessControlPolicy};
 
-    $self->userLogger->warn( 'User '
-          . $req->sessionInfo->{ $self->conf->{whatToTrace} }
-          . " is not authorized to access to $app" );
+    $self->auditLog(
+        $req,
+        code    => "ISSUER_CAS_LOGIN_FAILED",
+        message => (
+                'User '
+              . $req->sessionInfo->{ $self->conf->{whatToTrace} }
+              . " is not authorized to access to $app"
+        ),
+        reason => "User is not authorized by access rule",
+    );
 
     if ( $casAccessControlPolicy =~ /^(error)$/i ) {
-        $self->logger->debug(
-            "Return error instead of redirecting user" . " on CAS service" );
         return PE_UNAUTHORIZEDPARTNER;
     }
-
     else {
-        $self->logger->debug("Redirect user on CAS service with a fake ticket");
         return $self->_redirectUser( $req, $cas_request->{service},
             "ST-F4K3T1CK3T" );
     }

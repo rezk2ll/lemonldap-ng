@@ -117,12 +117,23 @@ sub createSession {
     my $resp = $class->ua->request($get);
 
     if ( $resp->is_success ) {
-        $class->userLogger->notice("Good REST authentication for $user");
+        $class->auditLog(
+            $req,
+            message => "Good REST authentication for $user",
+            code    => "REST_AUTHENTICATION_SUCCESS",
+            user    => $user,
+        );
         return 1;
     }
     else {
-        $class->userLogger->warn(
-            "Authentication failed for $user: " . $resp->status_line );
+        $class->auditLog(
+            $req,
+            message =>
+              ( "Authentication failed for $user: " . $resp->status_line ),
+            code   => "REST_AUTHENTICATION_FAILURE",
+            user   => $user,
+            status => $resp->status_line,
+        );
         return 0;
     }
 }

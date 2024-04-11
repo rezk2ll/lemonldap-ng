@@ -726,16 +726,17 @@ sub register {
     # Clear previous global handler data
     @Lemonldap::NG::Handler::Main::_onReload = ();
     $Lemonldap::NG::Handler::Main::_tshv     = {
-        tsv         => {},
-        cfgNum      => 0,
-        cfgDate     => 0,
-        lastCheck   => 0,
-        checkTime   => 600,
-        confAcc     => {},
-        logger      => {},
-        userLogger  => {},
-        lmConf      => {},
-        localConfig => {},
+        tsv             => {},
+        cfgNum          => 0,
+        cfgDate         => 0,
+        lastCheck       => 0,
+        checkTime       => 600,
+        confAcc         => {},
+        logger          => {},
+        userLogger      => {},
+        lmConf          => {},
+        localConfig     => {},
+        _auditLogger    => {},
     };
     &Lemonldap::NG::Handler::Main::cfgNum( 0, 0 );
 

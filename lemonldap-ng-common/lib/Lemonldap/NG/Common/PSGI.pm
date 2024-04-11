@@ -24,6 +24,7 @@ has links           => ( is => 'rw', isa     => 'ArrayRef' );
 has menuLinks       => ( is => 'rw', isa     => 'ArrayRef' );
 has logger          => ( is => 'rw' );
 has userLogger      => ( is => 'rw' );
+has _auditLogger    => ( is => 'rw' );
 
 # portal only stores the "default" portal URL, in case a request
 # is not available in the current context to compute the dynamic portal URL
@@ -66,6 +67,7 @@ sub _initLogger {
         $self->logger( $logger->new($self) );
         $self->logger->error($err) if $err;
     }
+
     unless ( ref $self->userLogger ) {
         $logger = $ENV{LLNG_USERLOGGER} || $args->{userLogger} || $logger;
         eval "require $logger";
@@ -80,6 +82,21 @@ sub _initLogger {
             )
         );
     }
+
+    unless ( ref $self->_auditLogger ) {
+        $logger =
+             $ENV{LLNG_AUDITLOGGER}
+          || $args->{auditLogger}
+          || "Lemonldap::NG::Common::AuditLogger::UserLoggerCompat";
+        eval "require $logger";
+        die $@ if ($@);
+        $self->_auditLogger( $logger->new($self) );
+    }
+}
+
+sub auditLog {
+    my ( $self, $req, %info ) = @_;
+    $self->_auditLogger->log( $req, %info );
 }
 
 # RUNNING METHODS
