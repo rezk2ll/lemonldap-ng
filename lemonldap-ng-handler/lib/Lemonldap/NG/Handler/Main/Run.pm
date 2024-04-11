@@ -529,8 +529,14 @@ sub fetchId {
     elsif ( $value =~ s/^c:// ) {
         $value = $class->tsv->{cipher}->decrypt($value);
         unless ( $value =~ s/^(.*)? (.*)$/$1/ and $2 eq $vhost ) {
-            $class->logger->error(
-                "Bad CDA cookie: available for $2 instead of $vhost");
+            $class->auditLog(
+                $req,
+                message =>
+                  ("Bad CDA cookie: available for $2 instead of $vhost"),
+                code      => "CDA_BAD_HOST",
+                vhost     => $vhost,
+                cda_vhost => $2,
+            );
             return undef;
         }
     }
