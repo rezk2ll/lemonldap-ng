@@ -95,7 +95,7 @@ sub deleteNotification {
 
     # Check input parameters
     unless ( $uid and $myref ) {
-        $self->logger->error(
+        $self->userLogger->error(
             "SOAP service deleteNotification called without all parameters");
         return 0;
     }
