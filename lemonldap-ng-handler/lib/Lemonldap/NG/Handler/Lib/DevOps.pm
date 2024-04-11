@@ -101,7 +101,7 @@ q"I refuse to compile 'rules.json' when useSafeJail isn't activated! Yes I know,
         $header =~ s/^\$//;
         if ( isHiddenAttr( $class->localConfig, $header ) ) {
             delete $json->{headers}->{$_};
-            $self->auditLog(
+            $class->auditLog(
                 $req,
                 message => (
 "DevOps handler: $vhost tried to retrieve a hidden attribute -> $header"
