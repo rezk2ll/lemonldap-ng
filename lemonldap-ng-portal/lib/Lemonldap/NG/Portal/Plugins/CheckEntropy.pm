@@ -73,11 +73,11 @@ sub init {
     # Declare REST route
     $self->addUnauthRoute(
         checkentropy => '_checkEntropyJSON',
-        ['GET']
+        ['POST']
     );
     $self->addAuthRoute(
         checkentropy => '_checkEntropyJSON',
-        ['GET']
+        ['POST']
     );
 
     $self->p->addPasswordPolicyDisplay(
