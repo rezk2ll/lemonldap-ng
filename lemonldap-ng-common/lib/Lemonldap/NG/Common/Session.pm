@@ -123,7 +123,6 @@ has hashStore => ( is => 'rw' );
 sub BUILD {
     my ($self) = @_;
 
-
     # Load Apache::Session module
     unless ( $self->storageModule->can('populate') ) {
         eval "require " . $self->storageModule;
@@ -194,8 +193,8 @@ sub BUILD {
         $self->kind( $data->{_session_kind} );
         $self->id( $data->{_session_id} );
         if ( $self->hashStore and $self->id ) {
-            $data->{_session_id}     = id2storage( $self->id );
-            $data->{_session_hashed} = 1;
+            $self->_hashDataSessionId($data);
+            $data->{_session_hashed} ||= 1;
         }
 
         untie(%$data);
@@ -252,7 +251,9 @@ sub _tie_session {
     if ( $self->hashStore ) {
 
         # Before returning the session, set here the real cookie value
+        my $status = tied(%h)->{status};
         $h{_session_id} = $securedId;
+        tied(%h)->{status} = $status;
     }
 
     return \%h;
@@ -302,7 +303,7 @@ sub remove {
     my $data = $self->_tie_session($tieOptions);
 
     # Before saving, hide the real ID and replace it by the storage ID
-    $data->{_session_id} = id2storage( $self->id ) if $self->hashStore;
+    $self->_hashDataSessionId($data) if $self->hashStore;
 
     eval { tied(%$data)->delete(); };
 
@@ -312,6 +313,16 @@ sub remove {
     }
 
     return 1;
+}
+
+sub _hashDataSessionId {
+    my ( $self, $data, $id ) = @_;
+    my $nid = id2storage( $id || $self->id );
+    if ( $nid ne $data->{_session_id} ) {
+        my $status = tied(%$data)->{status};
+        $data->{_session_id} = id2storage( $self->id );
+        tied(%$data)->{status} = $status;
+    }
 }
 
 no Mouse;
