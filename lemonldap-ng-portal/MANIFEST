@@ -584,6 +584,7 @@ t/03-ConfTimeout.t
 t/03-SessionTimeout.t
 t/03-XSS-protection.t
 t/04-language-selection.t
+t/05-Hashed-Session.t
 t/10-AuthCustom.t
 t/19-Auth-Null.t
 t/20-Auth-and-password-DBI-dynamic-hash.t
