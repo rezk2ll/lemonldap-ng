@@ -8,6 +8,7 @@ lib/Lemonldap/NG/Common/Apache/Session/REST.pm
 lib/Lemonldap/NG/Common/Apache/Session/Serialize/JSON.pm
 lib/Lemonldap/NG/Common/Apache/Session/SOAP.pm
 lib/Lemonldap/NG/Common/Apache/Session/Store.pm
+lib/Lemonldap/NG/Common/AuditLogger/UserLoggerCompat.pm
 lib/Lemonldap/NG/Common/Cli.pm
 lib/Lemonldap/NG/Common/CliSessions.pm
 lib/Lemonldap/NG/Common/Combination/Parser.pm
@@ -118,6 +119,7 @@ t/lemonldap-ng.ini
 t/overlay_test/lmConf-1.json
 t/overlay_test/overlay/globalStorage
 t/overlay_test/overlay/globalStorageOptions
+t/TestAuditLogger.pm
 t/TestConfBackend.pm
 t/TestLogger.pm
 t/TestPsgi.pm
