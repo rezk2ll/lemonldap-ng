@@ -3,7 +3,7 @@ package Lemonldap::NG::Common::Module;
 use strict;
 use Mouse;
 
-our $VERSION = '2.0.0';
+our $VERSION = '2.19.0';
 
 # Object that provides loggers and error methods (typically PSGI object)
 has p => ( is => 'rw', weak_ref => 1 );

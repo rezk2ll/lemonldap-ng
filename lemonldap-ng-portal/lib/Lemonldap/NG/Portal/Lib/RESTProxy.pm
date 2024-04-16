@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use Lemonldap::NG::Common::FormEncode;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.19.0';
 
 has ua             => ( is => 'rw' );
 has cookieName     => ( is => 'rw' );

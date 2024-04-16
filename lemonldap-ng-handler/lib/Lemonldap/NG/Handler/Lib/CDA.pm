@@ -4,7 +4,7 @@ use strict;
 use URI;
 use URI::QueryParam;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.19.0';
 
 sub run {
     my ( $class, $req, $rule, $protection ) = @_;

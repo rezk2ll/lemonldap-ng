@@ -16,7 +16,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OID_SERVICE_NOT_ALLOWED
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.19.0';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer';
 

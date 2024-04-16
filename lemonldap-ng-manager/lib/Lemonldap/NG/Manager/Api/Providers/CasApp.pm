@@ -1,6 +1,6 @@
 package Lemonldap::NG::Manager::Api::Providers::CasApp;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.19.0';
 
 package Lemonldap::NG::Manager::Api;
 

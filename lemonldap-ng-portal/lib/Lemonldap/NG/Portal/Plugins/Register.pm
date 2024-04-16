@@ -22,7 +22,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_MAILCONFIRMATION_ALREADY_SENT
 );
 
-our $VERSION = '2.16.1';
+our $VERSION = '2.19.0';
 
 extends qw(
   Lemonldap::NG::Portal::Lib::SMTP

@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Lib::U2F;
 use strict;
 use Mouse;
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.19.0';
 
 has origin => ( is => 'rw', );
 

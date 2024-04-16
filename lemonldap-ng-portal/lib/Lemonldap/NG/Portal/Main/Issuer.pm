@@ -22,7 +22,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.19.0';
 
 # PROPERTIES
 

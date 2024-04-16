@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_REDIRECT
 );
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.19.0';
 
 has cookieName => ( is => 'rw' );
 

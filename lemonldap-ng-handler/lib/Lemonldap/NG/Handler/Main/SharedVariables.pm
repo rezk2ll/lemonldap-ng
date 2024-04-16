@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::Main::SharedVariables;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.19.0';
 
 # Since handler has no instance but only static classes, this module provides
 # classes properties with accessors

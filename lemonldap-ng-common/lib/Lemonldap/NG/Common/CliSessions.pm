@@ -9,7 +9,7 @@ use Lemonldap::NG::Common::Apache::Session;
 use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::Util qw/getPSessionID genId2F/;
 
-our $VERSION = '2.0.9';
+our $VERSION = '2.19.0';
 
 has opts => ( is => 'rw' );
 

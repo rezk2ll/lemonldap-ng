@@ -5,7 +5,7 @@ use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::Util qw(isHiddenAttr);
 use JSON qw(from_json);
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.19.0';
 our $_ua;
 
 sub ua {

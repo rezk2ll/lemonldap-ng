@@ -17,7 +17,7 @@ use Lemonldap::NG::Common::EmailTransport;
 use MIME::Base64;
 use Encode;
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.19.0';
 
 our $transport;
 

@@ -18,7 +18,7 @@ extends qw(
   Lemonldap::NG::Common::Conf::AccessLib
 );
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.19.0';
 
 has notifAccess => ( is => 'rw' );
 has notifFormat => ( is => 'rw' );

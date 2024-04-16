@@ -13,7 +13,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Common::Module';
 
-our $VERSION = '2.16.1';
+our $VERSION = '2.19.0';
 
 # PROPERTIES
 

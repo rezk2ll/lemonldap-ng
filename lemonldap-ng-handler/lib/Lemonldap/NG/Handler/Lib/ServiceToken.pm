@@ -2,7 +2,7 @@ package Lemonldap::NG::Handler::Lib::ServiceToken;
 
 use strict;
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.19.0';
 
 sub fetchId {
     my ( $class, $req ) = @_;

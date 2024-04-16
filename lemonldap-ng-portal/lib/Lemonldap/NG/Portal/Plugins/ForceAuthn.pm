@@ -7,7 +7,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_MUSTAUTHN
 );
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.19.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 

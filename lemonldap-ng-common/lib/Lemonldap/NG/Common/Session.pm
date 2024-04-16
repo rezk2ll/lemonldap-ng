@@ -13,7 +13,7 @@ use JSON;
 use Lemonldap::NG::Common::Apache::Session;
 use Lemonldap::NG::Common::Apache::Session::Generate::SHA256;
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.19.0';
 
 # Export method needed to handle hashed storage
 our @EXPORT = qw(id2storage hashedKinds reHashedKinds);

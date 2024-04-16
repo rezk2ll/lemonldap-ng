@@ -3,7 +3,7 @@ use Lemonldap::NG::Common::JWT qw(getAccessTokenSessionId);
 
 use strict;
 
-our $VERSION = '2.16.2';
+our $VERSION = '2.19.0';
 
 sub retrieveSession {
     my ( $class, $req, $id ) = @_;

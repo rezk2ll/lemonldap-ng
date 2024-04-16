@@ -22,7 +22,7 @@ extends qw(
 );
 
 has totp_encrypt => ( is => "rw" );
-our $VERSION = '2.18.0';
+our $VERSION = '2.19.0';
 
 #############################
 # I. INITIALIZATION METHODS #

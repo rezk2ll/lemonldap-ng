@@ -10,7 +10,7 @@ use Crypt::URandom;
 use Digest::HMAC_SHA1 'hmac_sha1_hex';
 use Lemonldap::NG::Common::Crypto;
 
-our $VERSION = '2.0.14';
+our $VERSION = '2.19.0';
 
 has key => (
     is      => 'ro',

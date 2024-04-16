@@ -15,7 +15,7 @@ use Lemonldap::NG::Common::Apache::Session::Serialize::JSON;
 use Lemonldap::NG::Common::Apache::Session::Store;
 use Lemonldap::NG::Common::Apache::Session::Lock;
 
-our $VERSION = '2.0.6';
+our $VERSION = '2.19.0';
 
 sub _load {
     my ( $backend, $func ) = @_;

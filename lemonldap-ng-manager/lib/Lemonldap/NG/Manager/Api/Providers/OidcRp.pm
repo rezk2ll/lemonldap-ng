@@ -1,6 +1,6 @@
 package Lemonldap::NG::Manager::Api::Providers::OidcRp;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.19.0';
 
 package Lemonldap::NG::Manager::Api;
 

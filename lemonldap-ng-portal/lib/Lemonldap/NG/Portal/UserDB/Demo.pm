@@ -15,7 +15,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 extends 'Lemonldap::NG::Portal::Main::UserDB';
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.19.0';
 
 # Sample accounts from Doctor Who characters
 our %demoAccounts = (

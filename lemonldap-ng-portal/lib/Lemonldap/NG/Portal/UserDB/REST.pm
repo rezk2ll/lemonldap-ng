@@ -15,7 +15,7 @@ extends qw(
   Lemonldap::NG::Portal::Lib::REST
 );
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.19.0';
 
 # INITIALIZATION
 
