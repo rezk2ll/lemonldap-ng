@@ -162,7 +162,7 @@ sub get2F {
 }
 
 sub search2F {
-    my ( $self, $req, $mod, $type, $params ) = @_;
+    my ( $self, $req, $mod, $type, $params, $return_devices ) = @_;
 
     my $whatToTrace = Lemonldap::NG::Handler::PSGI::Main->tsv->{whatToTrace};
 
@@ -333,7 +333,24 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
     #   { session => <sessionId>, userId => <_session_uid> }
     else {
         $res = [
-            map { { session => $_, userId => $res->{$_}->{_session_uid} } }
+            map {
+                {
+                    session => $_,
+                    userId  => $res->{$_}->{_session_uid},
+                    (
+                        $return_devices
+                        ? (
+                            _2fDevices => eval {
+                                from_json(
+                                    $res->{$_}->{_2fDevices},
+                                    { allow_nonref => 1 }
+                                );
+                            }
+                          )
+                        : ()
+                    )
+                }
+              }
               keys %$res
         ];
     }
