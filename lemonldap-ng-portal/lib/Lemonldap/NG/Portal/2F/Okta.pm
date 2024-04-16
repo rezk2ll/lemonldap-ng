@@ -15,7 +15,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_TOKENEXPIRED
 );
 
-extends qw(Lemonldap::NG::Portal::Lib::Code2F Lemonldap::NG::Portal::Lib::Okta);
+extends 'Lemonldap::NG::Portal::Lib::Code2F';
+with 'Lemonldap::NG::Portal::Lib::Okta';
 
 has prefix    => ( is => 'ro', default => 'okta' );
 has conf_type => ( is => 'ro', default => 'okta' );

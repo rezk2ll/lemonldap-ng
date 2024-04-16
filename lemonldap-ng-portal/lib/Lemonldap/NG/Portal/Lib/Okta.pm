@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Lib::Okta;
 
 use strict;
 use HTTP::Request;
-use Mouse;
+use Mouse::Role;
 use URI;
 
 has ua => (

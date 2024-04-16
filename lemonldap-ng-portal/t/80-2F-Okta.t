@@ -9,8 +9,7 @@ my $debug = 'error';
 
 subtest "Choose Okta SMS" => sub {
 
-    my $client = LLNG::Manager::Test->new(
-        {
+    my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel             => $debug,
                 authentication       => 'Demo',
@@ -78,8 +77,7 @@ subtest "Choose Okta SMS" => sub {
 
 subtest "Choose Okta Push" => sub {
 
-    my $client = LLNG::Manager::Test->new(
-        {
+    my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel             => $debug,
                 authentication       => 'Demo',
@@ -155,7 +153,7 @@ done_testing();
 
 no warnings 'redefine';
 
-sub Lemonldap::NG::Portal::Lib::Okta::searchProfile {
+sub Lemonldap::NG::Portal::2F::Okta::searchProfile {
     my ( $self, $okta_login ) = @_;
     return '[
   {
@@ -194,7 +192,7 @@ sub Lemonldap::NG::Portal::Lib::Okta::searchProfile {
 
 }
 
-sub Lemonldap::NG::Portal::Lib::Okta::searchFactors {
+sub Lemonldap::NG::Portal::2F::Okta::searchFactors {
     my ( $self, $okta_userid ) = @_;
     return '[
   {
@@ -458,7 +456,7 @@ sub Lemonldap::NG::Portal::Lib::Okta::searchFactors {
 
 }
 
-sub Lemonldap::NG::Portal::Lib::Okta::issueFactor {
+sub Lemonldap::NG::Portal::2F::Okta::issueFactor {
     my ( $self, $okta_userid, $okta_factorid ) = @_;
     return '{
     "factorResult": "CHALLENGE",
@@ -525,14 +523,14 @@ sub Lemonldap::NG::Portal::Lib::Okta::issueFactor {
 }' if ( $okta_userid eq "oktaID0fTheFakeUsermsmith" );
 }
 
-sub Lemonldap::NG::Portal::Lib::Okta::pollFactor {
+sub Lemonldap::NG::Portal::2F::Okta::pollFactor {
     return '{
   "factorResult": "SUCCESS"
 }';
 
 }
 
-sub Lemonldap::NG::Portal::Lib::Okta::verifyFactor {
+sub Lemonldap::NG::Portal::2F::Okta::verifyFactor {
     return '{
   "factorResult": "SUCCESS"
 }';
