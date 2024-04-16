@@ -333,8 +333,7 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
     #   { session => <sessionId>, userId => <_session_uid> }
     else {
         $res = [
-            sort  { $a->{date} <=> $b->{date} }
-              map { { session => $_, userId => $res->{$_}->{_session_uid} } }
+            map { { session => $_, userId => $res->{$_}->{_session_uid} } }
               keys %$res
         ];
     }
