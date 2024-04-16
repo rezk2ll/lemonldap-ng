@@ -16,8 +16,8 @@ sub getSecondFactors {
     my ( $self, $req ) = @_;
     my ( $uid, $res );
 
-    $uid = $req->params('uid')
-      or return $self->sendError( $req, 'uid is missing', 400 );
+    $uid = $req->params('_uid')
+      or return $self->searchSecondFactors($req);
 
     $self->logger->debug("[API] 2F for $uid requested");
 
@@ -33,7 +33,7 @@ sub getSecondFactorsByType {
     my ( $self, $req ) = @_;
     my ( $uid, $type, $res );
 
-    $uid = $req->params('uid')
+    $uid = $req->params('_uid')
       or return $self->sendError( $req, 'Uid is missing', 400 );
 
     $type = $req->params('type')
@@ -53,7 +53,7 @@ sub getSecondFactorsById {
     my ( $self, $req ) = @_;
     my ( $uid, $id, $res );
 
-    $uid = $req->params('uid')
+    $uid = $req->params('_uid')
       or return $self->sendError( $req, 'uid is missing', 400 );
 
     $id = $req->params('id')
@@ -93,6 +93,45 @@ sub deleteSecondFactors {
       unless ( $res->{res} eq 'ok' );
 
     return $self->sendJSONresponse( $req, { message => $res->{msg} } );
+}
+
+sub searchSecondFactors {
+    my ( $self, $req ) = @_;
+
+    my $uid   = $req->param('uid') || '*';
+    my @types = $req->parameters->get_all('type');
+    use Hash::MultiValue;
+    my $search_params =
+      Hash::MultiValue->from_mixed( { _session_uid => $uid, type => \@types } );
+
+    my $res = $self->search2F( $req, $self->_getPersistentMod, "Persistent",
+        $search_params, 1 );
+
+    if ( $res->{result} ) {
+        my $api_result = [];
+
+        my @sorted_results =
+          sort { $a->{userId} cmp $b->{userId} } @{ $res->{values} || [] };
+        for my $result (@sorted_results) {
+            push @$api_result, {
+                uid           => $result->{userId},
+                secondFactors => [
+                    map {
+                        {
+                            id   => genId2F($_),
+                            type => $_->{type},
+                            name => $_->{name}
+                        }
+                    } @{ $result->{_2fDevices} || [] }
+                ]
+
+            };
+        }
+        return $self->sendJSONresponse( $req, $api_result );
+    }
+    else {
+        return $self->sendError( $req, $res->{msg}, $res->{code} );
+    }
 }
 
 sub deleteSecondFactorsById {
