@@ -185,6 +185,19 @@
             },
             "description" : "Return a second factor"
          },
+         "SecondFactorSearch" : {
+            "content" : {
+               "application/json" : {
+                  "schema" : {
+                     "items" : {
+                        "$ref" : "#/components/schemas/SecondFactorSearchResult"
+                     },
+                     "type" : "array"
+                  }
+               }
+            },
+            "description" : "A list of search results"
+         },
          "SecondFactors" : {
             "content" : {
                "application/json" : {
@@ -1003,6 +1016,23 @@
             ],
             "type" : "object"
          },
+         "SecondFactorSearchResult" : {
+            "properties" : {
+               "secondFactors" : {
+                  "$ref" : "#/components/schemas/SecondFactors",
+                  "description" : "The list of second factors matching the request's type"
+               },
+               "uid" : {
+                  "description" : "The user identifier",
+                  "type" : "string"
+               }
+            },
+            "required" : [
+               "uid",
+               "secondFactors"
+            ],
+            "type" : "object"
+         },
          "SecondFactors" : {
             "items" : {
                "$ref" : "#/components/schemas/SecondFactor"
@@ -1240,7 +1270,7 @@
                {
                   "in" : "path",
                   "name" : "uid",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "type" : "string"
                   }
@@ -1248,7 +1278,7 @@
                {
                   "in" : "query",
                   "name" : "result",
-                  "required" : "false",
+                  "required" : false,
                   "schema" : {
                      "enum" : [
                         "success",
@@ -1283,7 +1313,7 @@
                {
                   "in" : "path",
                   "name" : "uid",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "type" : "string"
                   }
@@ -1291,7 +1321,7 @@
                {
                   "in" : "query",
                   "name" : "result",
-                  "required" : "false",
+                  "required" : false,
                   "schema" : {
                      "enum" : [
                         "success",
@@ -1328,7 +1358,7 @@
                   "description" : "Configuration key of Menu Category to work with",
                   "in" : "path",
                   "name" : "cat",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/menuCatConfKey"
                   }
@@ -1357,7 +1387,7 @@
                   "description" : "Configuration key of Menu Category to work with",
                   "in" : "path",
                   "name" : "cat",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/menuCatConfKey"
                   }
@@ -1372,7 +1402,7 @@
                   }
                },
                "description" : "Menu Application to add",
-               "required" : "true"
+               "required" : true
             },
             "responses" : {
                "201" : {
@@ -1403,7 +1433,7 @@
                   "description" : "Configuration key of Menu Category to work with",
                   "in" : "path",
                   "name" : "cat",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/menuCatConfKey"
                   }
@@ -1426,7 +1456,7 @@
                   },
                   "in" : "query",
                   "name" : "pattern",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "type" : "string"
                   }
@@ -1454,7 +1484,7 @@
                   "description" : "Configuration key of Menu Category to work with",
                   "in" : "path",
                   "name" : "cat",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/menuCatConfKey"
                   }
@@ -1463,7 +1493,7 @@
                   "description" : "Configuration key of Menu Application to delete",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -1493,7 +1523,7 @@
                   "description" : "Configuration key of Menu Category to work with",
                   "in" : "path",
                   "name" : "cat",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/menuCatConfKey"
                   }
@@ -1502,7 +1532,7 @@
                   "description" : "Configuration key of Menu Application",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -1531,7 +1561,7 @@
                   "description" : "Configuration key of Menu Category to work with",
                   "in" : "path",
                   "name" : "cat",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/menuCatConfKey"
                   }
@@ -1540,7 +1570,7 @@
                   "description" : "Configuration key of Menu Application that needs to be updated",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -1581,7 +1611,7 @@
                   "description" : "Configuration key of Menu Category to work with",
                   "in" : "path",
                   "name" : "cat",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/menuCatConfKey"
                   }
@@ -1590,7 +1620,7 @@
                   "description" : "Configuration key of Menu Application that needs to be replaced",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -1637,7 +1667,7 @@
                   }
                },
                "description" : "Menu Category to add",
-               "required" : "true"
+               "required" : true
             },
             "responses" : {
                "201" : {
@@ -1679,7 +1709,7 @@
                   },
                   "in" : "query",
                   "name" : "pattern",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "type" : "string"
                   }
@@ -1707,7 +1737,7 @@
                   "description" : "Configuration key of Menu Category to delete",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -1737,7 +1767,7 @@
                   "description" : "Configuration key of Menu Category",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -1766,7 +1796,7 @@
                   "description" : "Configuration key of Menu Category that needs to be updated",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -1807,7 +1837,7 @@
                   "description" : "Configuration key of Menu Category that needs to be replaced",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -1854,7 +1884,7 @@
                   }
                },
                "description" : "CAS Application to add",
-               "required" : "true"
+               "required" : true
             },
             "responses" : {
                "201" : {
@@ -1896,7 +1926,7 @@
                   },
                   "in" : "query",
                   "name" : "pattern",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "type" : "string"
                   }
@@ -1925,7 +1955,7 @@
                   "example" : "http://mycasapp.example.com/",
                   "in" : "query",
                   "name" : "serviceUrl",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "type" : "string"
                   }
@@ -1956,7 +1986,7 @@
                   "description" : "Configuration key of CAS Application to delete",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -1986,7 +2016,7 @@
                   "description" : "Configuration key of CAS Application",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -2015,7 +2045,7 @@
                   "description" : "Configuration key of CAS Application that needs to be updated",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -2056,7 +2086,7 @@
                   "description" : "Configuration key of CAS Application that needs to be replaced",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -2103,7 +2133,7 @@
                   }
                },
                "description" : "OpenID Connect Relying Party to add",
-               "required" : "true"
+               "required" : true
             },
             "responses" : {
                "201" : {
@@ -2131,7 +2161,7 @@
                   "example" : "my_client_id",
                   "in" : "query",
                   "name" : "clientId",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "type" : "string"
                   }
@@ -2177,7 +2207,7 @@
                   },
                   "in" : "query",
                   "name" : "pattern",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -2205,7 +2235,7 @@
                   "description" : "Configuration key of OpenID Connect Relying Party to delete",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -2235,7 +2265,7 @@
                   "description" : "Configuration key of OpenID Connect Relying Party",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -2264,7 +2294,7 @@
                   "description" : "Configuration key of OpenID Connect Relying Party that needs to be updated",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -2305,7 +2335,7 @@
                   "description" : "Configuration key of OpenID Connect Relying Party that needs to be replaced",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -2352,7 +2382,7 @@
                   }
                },
                "description" : "SAML Service provider to add",
-               "required" : "true"
+               "required" : true
             },
             "responses" : {
                "201" : {
@@ -2394,7 +2424,7 @@
                   },
                   "in" : "query",
                   "name" : "pattern",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "type" : "string"
                   }
@@ -2423,7 +2453,7 @@
                   "example" : "http://mysp.example.com/saml/metadata",
                   "in" : "query",
                   "name" : "entityId",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "type" : "string"
                   }
@@ -2454,7 +2484,7 @@
                   "description" : "Configuration key of SAML Service Provider to delete",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -2484,7 +2514,7 @@
                   "description" : "Configuration key of SAML Service Provider",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -2513,7 +2543,7 @@
                   "description" : "Configuration key of SAML Service Provider that needs to be updated",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -2554,7 +2584,7 @@
                   "description" : "Configuration key of SAML Service Provider that needs to be replaced",
                   "in" : "path",
                   "name" : "confKey",
-                  "required" : "true",
+                  "required" : true,
                   "schema" : {
                      "$ref" : "#/components/schemas/confKey"
                   }
@@ -2586,6 +2616,43 @@
             "summary" : "Replaces a SAML Service",
             "tags" : [
                "samlsp"
+            ]
+         }
+      },
+      "/api/v1/secondFactor/" : {
+         "description" : "Registered second factors",
+         "get" : {
+            "operationId" : "searchSecondFactors",
+            "parameters" : [
+               {
+                  "description" : "The user id to filter on. Can contain wildcards.",
+                  "example" : "dw*",
+                  "in" : "query",
+                  "name" : "uid",
+                  "required" : "false",
+                  "schema" : {
+                     "type" : "string"
+                  }
+               },
+               {
+                  "description" : "The second factor type to filter on. Can be specified multiple times.",
+                  "example" : "TOTP",
+                  "in" : "query",
+                  "name" : "type",
+                  "required" : "false",
+                  "schema" : {
+                     "type" : "string"
+                  }
+               }
+            ],
+            "responses" : {
+               "200" : {
+                  "$ref" : "#/components/responses/SecondFactorSearch"
+               }
+            },
+            "summary" : "Search for second factors",
+            "tags" : [
+               "2fa"
             ]
          }
       },
@@ -2627,7 +2694,7 @@
             {
                "in" : "path",
                "name" : "uid",
-               "required" : "true",
+               "required" : true,
                "schema" : {
                   "type" : "string"
                }
@@ -2641,9 +2708,9 @@
                   "description" : "Should the persistent session be created if it does not exist yet",
                   "in" : "query",
                   "name" : "create",
-                  "required" : "false",
+                  "required" : false,
                   "schema" : {
-                     "default" : "false",
+                     "default" : false,
                      "type" : "bool"
                   }
                }
@@ -2657,7 +2724,7 @@
                   }
                },
                "description" : "Second factor to add, additional properties depend on the 2FA type",
-               "required" : "true"
+               "required" : true
             },
             "responses" : {
                "201" : {
@@ -2714,7 +2781,7 @@
             {
                "in" : "path",
                "name" : "uid",
-               "required" : "true",
+               "required" : true,
                "schema" : {
                   "type" : "string"
                }
@@ -2722,7 +2789,7 @@
             {
                "in" : "path",
                "name" : "id",
-               "required" : "true",
+               "required" : true,
                "schema" : {
                   "type" : "string"
                }
@@ -2735,7 +2802,7 @@
             {
                "in" : "path",
                "name" : "uid",
-               "required" : "true",
+               "required" : true,
                "schema" : {
                   "type" : "string"
                }
@@ -2749,9 +2816,9 @@
                   "description" : "Should the persistent session be created if it does not exist yet",
                   "in" : "query",
                   "name" : "create",
-                  "required" : "false",
+                  "required" : false,
                   "schema" : {
-                     "default" : "false",
+                     "default" : false,
                      "type" : "bool"
                   }
                }
@@ -2765,7 +2832,7 @@
                   }
                },
                "description" : "Second factor to add",
-               "required" : "true"
+               "required" : true
             },
             "responses" : {
                "201" : {
@@ -2822,7 +2889,7 @@
             {
                "in" : "path",
                "name" : "uid",
-               "required" : "true",
+               "required" : true,
                "schema" : {
                   "type" : "string"
                }
@@ -2830,7 +2897,7 @@
             {
                "in" : "path",
                "name" : "type",
-               "required" : "true",
+               "required" : true,
                "schema" : {
                   "type" : "string"
                }
