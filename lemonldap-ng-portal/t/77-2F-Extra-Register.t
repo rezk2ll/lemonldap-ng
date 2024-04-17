@@ -91,7 +91,7 @@ my $client = LLNG::Manager::Test->new( {
                     'rule'     => '$ENV{REMOTE_ADDR} eq "1.2.3.4"',
                     'type'     => 'Mail2F',
                     'register' => 1,
-                    'regrule'  => 1,
+                    'regrule'  => '$ENV{CANNOT_REGISTER} != 1',
                     'level'    => 5,
                 },
             },
@@ -296,7 +296,44 @@ subtest "Register a 2F that is not always available on login" => sub {
     );
 
     # 2fa is not asked is rule doesn't match
-    expectCookie($res);
+    $id = expectCookie($res);
+
+    # But 2FA is registrable manually
+    $res = $client->_get(
+        '/2fregisters',
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+    );
+    like(
+        $res->[2]->[0],
+        qr@data-target="#remove2fModal"@,
+        "Found remove button"
+    );
+    like(
+        $res->[2]->[0],
+        qr@href="/2fregisters/homeregrule"@,
+        "Found add button"
+    );
+
+# If the registration rule doesn't match, 2FA is displayed but no longer registrable
+    $res = $client->_get(
+        '/2fregisters',
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+        custom => {
+            CANNOT_REGISTER => 1,
+        },
+    );
+    unlike(
+        $res->[2]->[0],
+        qr@data-target="#remove2fModal"@,
+        "Remove button not displayed"
+    );
+    unlike(
+        $res->[2]->[0],
+        qr@href="/2fregisters/homeregrule"@,
+        "Add button not displayed"
+    );
 
     # 2fa is asked if rule matches
     ok(
