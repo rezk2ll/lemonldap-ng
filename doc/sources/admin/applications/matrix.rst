@@ -38,7 +38,7 @@ See `The official Synapse documentation <https://matrix-org.github.io/synapse/la
 Configuring LemonLDAP
 ~~~~~~~~~~~~~~~~~~~~~
 
-Add a :doc:`new OpenID Connect relaying party<..//idpopenidconnect>`
+Add a :doc:`new OpenID Connect relying party<..//idpopenidconnect>`
 with the following parameters:
 
 * **Options/Basic**

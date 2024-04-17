@@ -18,7 +18,7 @@ This documentation illustrates the OpenID Connect plugin.
 
 First, make sure you have set up LemonLDAP::NG 's
 :doc:`OpenID Connect service<..//openidconnectservice>` and added
-:doc:`a Relaying Party for your Discourse instance<..//idpopenidconnect>`
+:doc:`a Relying Party for your Discourse instance<..//idpopenidconnect>`
 
 Discourse can use the following OpenID Connect attributes to fill the
 user's profile:

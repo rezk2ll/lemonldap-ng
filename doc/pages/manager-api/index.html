@@ -13733,7 +13733,7 @@ except ApiException as e:
                       <article id="api-Oidcrp-addoidcrp-0" data-group="User" data-name="addoidcrp" data-version="0">
                         <div class="pull-left">
                           <h1>addoidcrp</h1>
-                          <p>Create a new OpenID Connect Relaying Party</p>
+                          <p>Create a new OpenID Connect Relying Party</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -13780,7 +13780,7 @@ public class OidcrpApiExample {
     public static void main(String[] args) {
         
         OidcrpApi apiInstance = new OidcrpApi();
-        OidcRp body = ; // OidcRp | OpenID Connect Relaying Party to add
+        OidcRp body = ; // OidcRp | OpenID Connect Relying Party to add
         try {
             apiInstance.addoidcrp(body);
         } catch (ApiException e) {
@@ -13798,7 +13798,7 @@ public class OidcrpApiExample {
 
     public static void main(String[] args) {
         OidcrpApi apiInstance = new OidcrpApi();
-        OidcRp body = ; // OidcRp | OpenID Connect Relaying Party to add
+        OidcRp body = ; // OidcRp | OpenID Connect Relying Party to add
         try {
             apiInstance.addoidcrp(body);
         } catch (ApiException e) {
@@ -13813,11 +13813,11 @@ public class OidcrpApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Oidcrp-addoidcrp-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">OidcRp *body = ; // OpenID Connect Relaying Party to add
+                              <pre class="prettyprint"><code class="language-cpp">OidcRp *body = ; // OpenID Connect Relying Party to add
 
 OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
-// Create a new OpenID Connect Relaying Party
+// Create a new OpenID Connect Relying Party
 [apiInstance addoidcrpWith:body
               completionHandler: ^(NSError* error) {
                             if (error) {
@@ -13831,7 +13831,7 @@ OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
 
 var api = new LemonLdapngManagerApi.OidcrpApi()
-var body = ; // {{OidcRp}} OpenID Connect Relaying Party to add
+var body = ; // {{OidcRp}} OpenID Connect Relying Party to add
 
 var callback = function(error, data, response) {
   if (error) {
@@ -13862,11 +13862,11 @@ namespace Example
         {
 
             var apiInstance = new OidcrpApi();
-            var body = new OidcRp(); // OidcRp | OpenID Connect Relaying Party to add
+            var body = new OidcRp(); // OidcRp | OpenID Connect Relying Party to add
 
             try
             {
-                // Create a new OpenID Connect Relaying Party
+                // Create a new OpenID Connect Relying Party
                 apiInstance.addoidcrp(body);
             }
             catch (Exception e)
@@ -13884,7 +13884,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiOidcrpApi();
-$body = ; // OidcRp | OpenID Connect Relaying Party to add
+$body = ; // OidcRp | OpenID Connect Relying Party to add
 
 try {
     $api_instance->addoidcrp($body);
@@ -13900,7 +13900,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::OidcrpApi;
 
 my $api_instance = WWW::SwaggerClient::OidcrpApi->new();
-my $body = WWW::SwaggerClient::Object::OidcRp->new(); # OidcRp | OpenID Connect Relaying Party to add
+my $body = WWW::SwaggerClient::Object::OidcRp->new(); # OidcRp | OpenID Connect Relying Party to add
 
 eval { 
     $api_instance->addoidcrp(body => $body);
@@ -13919,10 +13919,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.OidcrpApi()
-body =  # OidcRp | OpenID Connect Relaying Party to add
+body =  # OidcRp | OpenID Connect Relying Party to add
 
 try: 
-    # Create a new OpenID Connect Relaying Party
+    # Create a new OpenID Connect Relying Party
     api_instance.addoidcrp(body)
 except ApiException as e:
     print("Exception when calling OidcrpApi->addoidcrp: %s\n" % e)</code></pre>
@@ -13946,7 +13946,7 @@ except ApiException as e:
                                 <script>
                                 $(document).ready(function() {
                                   var schemaWrapper = {
-  "description" : "OpenID Connect Relaying Party to add",
+  "description" : "OpenID Connect Relying Party to add",
   "content" : {
     "application/json" : {
       "schema" : {
@@ -14092,7 +14092,7 @@ except ApiException as e:
                       <article id="api-Oidcrp-deleteOidcRp-0" data-group="User" data-name="deleteOidcRp" data-version="0">
                         <div class="pull-left">
                           <h1>deleteOidcRp</h1>
-                          <p>Deletes a OpenID Connect Relaying Party</p>
+                          <p>Deletes a OpenID Connect Relying Party</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -14138,7 +14138,7 @@ public class OidcrpApiExample {
     public static void main(String[] args) {
         
         OidcrpApi apiInstance = new OidcrpApi();
-        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party to delete
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relying Party to delete
         try {
             apiInstance.deleteOidcRp(confKey);
         } catch (ApiException e) {
@@ -14156,7 +14156,7 @@ public class OidcrpApiExample {
 
     public static void main(String[] args) {
         OidcrpApi apiInstance = new OidcrpApi();
-        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party to delete
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relying Party to delete
         try {
             apiInstance.deleteOidcRp(confKey);
         } catch (ApiException e) {
@@ -14171,11 +14171,11 @@ public class OidcrpApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Oidcrp-deleteOidcRp-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relaying Party to delete
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relying Party to delete
 
 OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
-// Deletes a OpenID Connect Relaying Party
+// Deletes a OpenID Connect Relying Party
 [apiInstance deleteOidcRpWith:confKey
               completionHandler: ^(NSError* error) {
                             if (error) {
@@ -14189,7 +14189,7 @@ OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
 
 var api = new LemonLdapngManagerApi.OidcrpApi()
-var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relaying Party to delete
+var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relying Party to delete
 
 var callback = function(error, data, response) {
   if (error) {
@@ -14220,11 +14220,11 @@ namespace Example
         {
 
             var apiInstance = new OidcrpApi();
-            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relaying Party to delete
+            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relying Party to delete
 
             try
             {
-                // Deletes a OpenID Connect Relaying Party
+                // Deletes a OpenID Connect Relying Party
                 apiInstance.deleteOidcRp(confKey);
             }
             catch (Exception e)
@@ -14242,7 +14242,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiOidcrpApi();
-$confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party to delete
+$confKey = ; // confKey | Configuration key of OpenID Connect Relying Party to delete
 
 try {
     $api_instance->deleteOidcRp($confKey);
@@ -14258,7 +14258,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::OidcrpApi;
 
 my $api_instance = WWW::SwaggerClient::OidcrpApi->new();
-my $confKey = ; # confKey | Configuration key of OpenID Connect Relaying Party to delete
+my $confKey = ; # confKey | Configuration key of OpenID Connect Relying Party to delete
 
 eval { 
     $api_instance->deleteOidcRp(confKey => $confKey);
@@ -14277,10 +14277,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.OidcrpApi()
-confKey =  # confKey | Configuration key of OpenID Connect Relaying Party to delete
+confKey =  # confKey | Configuration key of OpenID Connect Relying Party to delete
 
 try: 
-    # Deletes a OpenID Connect Relaying Party
+    # Deletes a OpenID Connect Relying Party
     api_instance.delete_oidc_rp(confKey)
 except ApiException as e:
     print("Exception when calling OidcrpApi->deleteOidcRp: %s\n" % e)</code></pre>
@@ -14307,7 +14307,7 @@ except ApiException as e:
                                                   </span>
                                   
                                                       <div class="inner description">
-                                                          Configuration key of OpenID Connect Relaying Party to delete
+                                                          Configuration key of OpenID Connect Relying Party to delete
                                                       </div>
                                               </div>
                                                   <div class="inner required">
@@ -14435,7 +14435,7 @@ except ApiException as e:
                       <article id="api-Oidcrp-findOidcRpByClientId-0" data-group="User" data-name="findOidcRpByClientId" data-version="0">
                         <div class="pull-left">
                           <h1>findOidcRpByClientId</h1>
-                          <p>Finds OpenID Connect Relaying Party by Client ID</p>
+                          <p>Finds OpenID Connect Relying Party by Client ID</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -14520,7 +14520,7 @@ public class OidcrpApiExample {
 
 OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
-// Finds OpenID Connect Relaying Party by Client ID
+// Finds OpenID Connect Relying Party by Client ID
 [apiInstance findOidcRpByClientIdWith:clientId
               completionHandler: ^(OidcRp output, NSError* error) {
                             if (output) {
@@ -14572,7 +14572,7 @@ namespace Example
 
             try
             {
-                // Finds OpenID Connect Relaying Party by Client ID
+                // Finds OpenID Connect Relying Party by Client ID
                 OidcRp result = apiInstance.findOidcRpByClientId(clientId);
                 Debug.WriteLine(result);
             }
@@ -14631,7 +14631,7 @@ api_instance = swagger_client.OidcrpApi()
 clientId = clientId_example # String | Client ID to search
 
 try: 
-    # Finds OpenID Connect Relaying Party by Client ID
+    # Finds OpenID Connect Relying Party by Client ID
     api_response = api_instance.find_oidc_rp_by_client_id(clientId)
     pprint(api_response)
 except ApiException as e:
@@ -14827,7 +14827,7 @@ except ApiException as e:
                       <article id="api-Oidcrp-findOidcRpByConfKey-0" data-group="User" data-name="findOidcRpByConfKey" data-version="0">
                         <div class="pull-left">
                           <h1>findOidcRpByConfKey</h1>
-                          <p>Finds OpenID Connect Relaying Partys by configuration key</p>
+                          <p>Finds OpenID Connect Relying Partys by configuration key</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -14912,7 +14912,7 @@ public class OidcrpApiExample {
 
 OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
-// Finds OpenID Connect Relaying Partys by configuration key
+// Finds OpenID Connect Relying Partys by configuration key
 [apiInstance findOidcRpByConfKeyWith:pattern
               completionHandler: ^(array[OidcRp] output, NSError* error) {
                             if (output) {
@@ -14964,7 +14964,7 @@ namespace Example
 
             try
             {
-                // Finds OpenID Connect Relaying Partys by configuration key
+                // Finds OpenID Connect Relying Partys by configuration key
                 array[OidcRp] result = apiInstance.findOidcRpByConfKey(pattern);
                 Debug.WriteLine(result);
             }
@@ -15023,7 +15023,7 @@ api_instance = swagger_client.OidcrpApi()
 pattern =  # confKey | Search pattern
 
 try: 
-    # Finds OpenID Connect Relaying Partys by configuration key
+    # Finds OpenID Connect Relying Partys by configuration key
     api_response = api_instance.find_oidc_rp_by_conf_key(pattern)
     pprint(api_response)
 except ApiException as e:
@@ -15175,7 +15175,7 @@ except ApiException as e:
                       <article id="api-Oidcrp-getOidcRpByConfKey-0" data-group="User" data-name="getOidcRpByConfKey" data-version="0">
                         <div class="pull-left">
                           <h1>getOidcRpByConfKey</h1>
-                          <p>Get OpenID Connect Relaying Party by configuration key</p>
+                          <p>Get OpenID Connect Relying Party by configuration key</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -15221,7 +15221,7 @@ public class OidcrpApiExample {
     public static void main(String[] args) {
         
         OidcrpApi apiInstance = new OidcrpApi();
-        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relying Party
         try {
             OidcRp result = apiInstance.getOidcRpByConfKey(confKey);
             System.out.println(result);
@@ -15240,7 +15240,7 @@ public class OidcrpApiExample {
 
     public static void main(String[] args) {
         OidcrpApi apiInstance = new OidcrpApi();
-        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relying Party
         try {
             OidcRp result = apiInstance.getOidcRpByConfKey(confKey);
             System.out.println(result);
@@ -15256,11 +15256,11 @@ public class OidcrpApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Oidcrp-getOidcRpByConfKey-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relaying Party
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relying Party
 
 OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
-// Get OpenID Connect Relaying Party by configuration key
+// Get OpenID Connect Relying Party by configuration key
 [apiInstance getOidcRpByConfKeyWith:confKey
               completionHandler: ^(OidcRp output, NSError* error) {
                             if (output) {
@@ -15277,7 +15277,7 @@ OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
 
 var api = new LemonLdapngManagerApi.OidcrpApi()
-var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relaying Party
+var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relying Party
 
 var callback = function(error, data, response) {
   if (error) {
@@ -15308,11 +15308,11 @@ namespace Example
         {
 
             var apiInstance = new OidcrpApi();
-            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relaying Party
+            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relying Party
 
             try
             {
-                // Get OpenID Connect Relaying Party by configuration key
+                // Get OpenID Connect Relying Party by configuration key
                 OidcRp result = apiInstance.getOidcRpByConfKey(confKey);
                 Debug.WriteLine(result);
             }
@@ -15331,7 +15331,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiOidcrpApi();
-$confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party
+$confKey = ; // confKey | Configuration key of OpenID Connect Relying Party
 
 try {
     $result = $api_instance->getOidcRpByConfKey($confKey);
@@ -15348,7 +15348,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::OidcrpApi;
 
 my $api_instance = WWW::SwaggerClient::OidcrpApi->new();
-my $confKey = ; # confKey | Configuration key of OpenID Connect Relaying Party
+my $confKey = ; # confKey | Configuration key of OpenID Connect Relying Party
 
 eval { 
     my $result = $api_instance->getOidcRpByConfKey(confKey => $confKey);
@@ -15368,10 +15368,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.OidcrpApi()
-confKey =  # confKey | Configuration key of OpenID Connect Relaying Party
+confKey =  # confKey | Configuration key of OpenID Connect Relying Party
 
 try: 
-    # Get OpenID Connect Relaying Party by configuration key
+    # Get OpenID Connect Relying Party by configuration key
     api_response = api_instance.get_oidc_rp_by_conf_key(confKey)
     pprint(api_response)
 except ApiException as e:
@@ -15399,7 +15399,7 @@ except ApiException as e:
                                                   </span>
                                   
                                                       <div class="inner description">
-                                                          Configuration key of OpenID Connect Relaying Party
+                                                          Configuration key of OpenID Connect Relying Party
                                                       </div>
                                               </div>
                                                   <div class="inner required">
@@ -15567,7 +15567,7 @@ except ApiException as e:
                       <article id="api-Oidcrp-replaceOidcRp-0" data-group="User" data-name="replaceOidcRp" data-version="0">
                         <div class="pull-left">
                           <h1>replaceOidcRp</h1>
-                          <p>Replaces an OpenID Connect Relaying Party</p>
+                          <p>Replaces an OpenID Connect Relying Party</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -15614,7 +15614,7 @@ public class OidcrpApiExample {
     public static void main(String[] args) {
         
         OidcrpApi apiInstance = new OidcrpApi();
-        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relying Party that needs to be replaced
         OidcRpReplace body = ; // OidcRpReplace | 
         try {
             apiInstance.replaceOidcRp(confKey, body);
@@ -15633,7 +15633,7 @@ public class OidcrpApiExample {
 
     public static void main(String[] args) {
         OidcrpApi apiInstance = new OidcrpApi();
-        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relying Party that needs to be replaced
         OidcRpReplace body = ; // OidcRpReplace | 
         try {
             apiInstance.replaceOidcRp(confKey, body);
@@ -15649,12 +15649,12 @@ public class OidcrpApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Oidcrp-replaceOidcRp-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relaying Party that needs to be replaced
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relying Party that needs to be replaced
 OidcRpReplace *body = ; //  (optional)
 
 OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
-// Replaces an OpenID Connect Relaying Party
+// Replaces an OpenID Connect Relying Party
 [apiInstance replaceOidcRpWith:confKey
     body:body
               completionHandler: ^(NSError* error) {
@@ -15669,7 +15669,7 @@ OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
 
 var api = new LemonLdapngManagerApi.OidcrpApi()
-var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relaying Party that needs to be replaced
+var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relying Party that needs to be replaced
 var opts = { 
   'body':  // {{OidcRpReplace}} 
 };
@@ -15702,12 +15702,12 @@ namespace Example
         {
 
             var apiInstance = new OidcrpApi();
-            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
+            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relying Party that needs to be replaced
             var body = new OidcRpReplace(); // OidcRpReplace |  (optional) 
 
             try
             {
-                // Replaces an OpenID Connect Relaying Party
+                // Replaces an OpenID Connect Relying Party
                 apiInstance.replaceOidcRp(confKey, body);
             }
             catch (Exception e)
@@ -15725,7 +15725,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiOidcrpApi();
-$confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
+$confKey = ; // confKey | Configuration key of OpenID Connect Relying Party that needs to be replaced
 $body = ; // OidcRpReplace | 
 
 try {
@@ -15742,7 +15742,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::OidcrpApi;
 
 my $api_instance = WWW::SwaggerClient::OidcrpApi->new();
-my $confKey = ; # confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
+my $confKey = ; # confKey | Configuration key of OpenID Connect Relying Party that needs to be replaced
 my $body = WWW::SwaggerClient::Object::OidcRpReplace->new(); # OidcRpReplace | 
 
 eval { 
@@ -15762,11 +15762,11 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.OidcrpApi()
-confKey =  # confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
+confKey =  # confKey | Configuration key of OpenID Connect Relying Party that needs to be replaced
 body =  # OidcRpReplace |  (optional)
 
 try: 
-    # Replaces an OpenID Connect Relaying Party
+    # Replaces an OpenID Connect Relying Party
     api_instance.replace_oidc_rp(confKey, body=body)
 except ApiException as e:
     print("Exception when calling OidcrpApi->replaceOidcRp: %s\n" % e)</code></pre>
@@ -15793,7 +15793,7 @@ except ApiException as e:
                                                   </span>
                                   
                                                       <div class="inner description">
-                                                          Configuration key of OpenID Connect Relaying Party that needs to be replaced
+                                                          Configuration key of OpenID Connect Relying Party that needs to be replaced
                                                       </div>
                                               </div>
                                                   <div class="inner required">
@@ -16011,7 +16011,7 @@ except ApiException as e:
                       <article id="api-Oidcrp-updateOidcRp-0" data-group="User" data-name="updateOidcRp" data-version="0">
                         <div class="pull-left">
                           <h1>updateOidcRp</h1>
-                          <p>Updates an OpenID Connect Relaying Party</p>
+                          <p>Updates an OpenID Connect Relying Party</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -16058,7 +16058,7 @@ public class OidcrpApiExample {
     public static void main(String[] args) {
         
         OidcrpApi apiInstance = new OidcrpApi();
-        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party that needs to be updated
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relying Party that needs to be updated
         OidcRpUpdate body = ; // OidcRpUpdate | 
         try {
             apiInstance.updateOidcRp(confKey, body);
@@ -16077,7 +16077,7 @@ public class OidcrpApiExample {
 
     public static void main(String[] args) {
         OidcrpApi apiInstance = new OidcrpApi();
-        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party that needs to be updated
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relying Party that needs to be updated
         OidcRpUpdate body = ; // OidcRpUpdate | 
         try {
             apiInstance.updateOidcRp(confKey, body);
@@ -16093,12 +16093,12 @@ public class OidcrpApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Oidcrp-updateOidcRp-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relaying Party that needs to be updated
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relying Party that needs to be updated
 OidcRpUpdate *body = ; //  (optional)
 
 OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
-// Updates an OpenID Connect Relaying Party
+// Updates an OpenID Connect Relying Party
 [apiInstance updateOidcRpWith:confKey
     body:body
               completionHandler: ^(NSError* error) {
@@ -16113,7 +16113,7 @@ OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
 
 var api = new LemonLdapngManagerApi.OidcrpApi()
-var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relaying Party that needs to be updated
+var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relying Party that needs to be updated
 var opts = { 
   'body':  // {{OidcRpUpdate}} 
 };
@@ -16146,12 +16146,12 @@ namespace Example
         {
 
             var apiInstance = new OidcrpApi();
-            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relaying Party that needs to be updated
+            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relying Party that needs to be updated
             var body = new OidcRpUpdate(); // OidcRpUpdate |  (optional) 
 
             try
             {
-                // Updates an OpenID Connect Relaying Party
+                // Updates an OpenID Connect Relying Party
                 apiInstance.updateOidcRp(confKey, body);
             }
             catch (Exception e)
@@ -16169,7 +16169,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiOidcrpApi();
-$confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party that needs to be updated
+$confKey = ; // confKey | Configuration key of OpenID Connect Relying Party that needs to be updated
 $body = ; // OidcRpUpdate | 
 
 try {
@@ -16186,7 +16186,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::OidcrpApi;
 
 my $api_instance = WWW::SwaggerClient::OidcrpApi->new();
-my $confKey = ; # confKey | Configuration key of OpenID Connect Relaying Party that needs to be updated
+my $confKey = ; # confKey | Configuration key of OpenID Connect Relying Party that needs to be updated
 my $body = WWW::SwaggerClient::Object::OidcRpUpdate->new(); # OidcRpUpdate | 
 
 eval { 
@@ -16206,11 +16206,11 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.OidcrpApi()
-confKey =  # confKey | Configuration key of OpenID Connect Relaying Party that needs to be updated
+confKey =  # confKey | Configuration key of OpenID Connect Relying Party that needs to be updated
 body =  # OidcRpUpdate |  (optional)
 
 try: 
-    # Updates an OpenID Connect Relaying Party
+    # Updates an OpenID Connect Relying Party
     api_instance.update_oidc_rp(confKey, body=body)
 except ApiException as e:
     print("Exception when calling OidcrpApi->updateOidcRp: %s\n" % e)</code></pre>
@@ -16237,7 +16237,7 @@ except ApiException as e:
                                                   </span>
                                   
                                                       <div class="inner description">
-                                                          Configuration key of OpenID Connect Relaying Party that needs to be updated
+                                                          Configuration key of OpenID Connect Relying Party that needs to be updated
                                                       </div>
                                               </div>
                                                   <div class="inner required">

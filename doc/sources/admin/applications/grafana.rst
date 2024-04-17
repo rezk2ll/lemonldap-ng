@@ -46,7 +46,7 @@ Make sure you have already
 :doc:`enabled OpenID Connect<../idpopenidconnect>` on your LemonLDAP::NG
 server
 
-Then, add a Relaying Party with the following configuration:
+Then, add a Relying Party with the following configuration:
 
 -  Options » Authentification » Client ID : same as ``client_id`` above
 -  Options » Authentification » Client Secret : same as ``client_secret`` above

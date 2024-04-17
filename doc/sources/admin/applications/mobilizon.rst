@@ -12,7 +12,7 @@ Mobilizon lets users `authenticate with OpenID Connect <https://docs.joinmobiliz
 
 First, make sure you have set up LemonLDAP::NG 's
 :doc:`OpenID Connect service<..//openidconnectservice>` and added
-:doc:`a Relaying Party for your Mobilizon instance<..//idpopenidconnect>`
+:doc:`a Relying Party for your Mobilizon instance<..//idpopenidconnect>`
 
 The only options you need to configure are:
 

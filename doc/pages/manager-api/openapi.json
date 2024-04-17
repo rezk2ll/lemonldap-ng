@@ -2102,7 +2102,7 @@
                      }
                   }
                },
-               "description" : "OpenID Connect Relaying Party to add",
+               "description" : "OpenID Connect Relying Party to add",
                "required" : "true"
             },
             "responses" : {
@@ -2116,7 +2116,7 @@
                   "$ref" : "#/components/responses/Conflict"
                }
             },
-            "summary" : "Create a new OpenID Connect Relaying Party",
+            "summary" : "Create a new OpenID Connect Relying Party",
             "tags" : [
                "oidcrp"
             ]
@@ -2148,7 +2148,7 @@
                   "$ref" : "#/components/responses/NotFound"
                }
             },
-            "summary" : "Finds OpenID Connect Relaying Party by Client ID",
+            "summary" : "Finds OpenID Connect Relying Party by Client ID",
             "tags" : [
                "oidcrp"
             ]
@@ -2191,7 +2191,7 @@
                   "$ref" : "#/components/responses/Error"
                }
             },
-            "summary" : "Finds OpenID Connect Relaying Partys by configuration key",
+            "summary" : "Finds OpenID Connect Relying Partys by configuration key",
             "tags" : [
                "oidcrp"
             ]
@@ -2202,7 +2202,7 @@
             "operationId" : "deleteOidcRp",
             "parameters" : [
                {
-                  "description" : "Configuration key of OpenID Connect Relaying Party to delete",
+                  "description" : "Configuration key of OpenID Connect Relying Party to delete",
                   "in" : "path",
                   "name" : "confKey",
                   "required" : "true",
@@ -2222,7 +2222,7 @@
                   "$ref" : "#/components/responses/NotFound"
                }
             },
-            "summary" : "Deletes a OpenID Connect Relaying Party",
+            "summary" : "Deletes a OpenID Connect Relying Party",
             "tags" : [
                "oidcrp"
             ]
@@ -2232,7 +2232,7 @@
             "operationId" : "getOidcRpByConfKey",
             "parameters" : [
                {
-                  "description" : "Configuration key of OpenID Connect Relaying Party",
+                  "description" : "Configuration key of OpenID Connect Relying Party",
                   "in" : "path",
                   "name" : "confKey",
                   "required" : "true",
@@ -2252,7 +2252,7 @@
                   "$ref" : "#/components/responses/NotFound"
                }
             },
-            "summary" : "Get OpenID Connect Relaying Party by configuration key",
+            "summary" : "Get OpenID Connect Relying Party by configuration key",
             "tags" : [
                "oidcrp"
             ]
@@ -2261,7 +2261,7 @@
             "operationId" : "updateOidcRp",
             "parameters" : [
                {
-                  "description" : "Configuration key of OpenID Connect Relaying Party that needs to be updated",
+                  "description" : "Configuration key of OpenID Connect Relying Party that needs to be updated",
                   "in" : "path",
                   "name" : "confKey",
                   "required" : "true",
@@ -2293,7 +2293,7 @@
                   "$ref" : "#/components/responses/Conflict"
                }
             },
-            "summary" : "Updates an OpenID Connect Relaying Party",
+            "summary" : "Updates an OpenID Connect Relying Party",
             "tags" : [
                "oidcrp"
             ]
@@ -2302,7 +2302,7 @@
             "operationId" : "replaceOidcRp",
             "parameters" : [
                {
-                  "description" : "Configuration key of OpenID Connect Relaying Party that needs to be replaced",
+                  "description" : "Configuration key of OpenID Connect Relying Party that needs to be replaced",
                   "in" : "path",
                   "name" : "confKey",
                   "required" : "true",
@@ -2334,7 +2334,7 @@
                   "$ref" : "#/components/responses/Conflict"
                }
             },
-            "summary" : "Replaces an OpenID Connect Relaying Party",
+            "summary" : "Replaces an OpenID Connect Relying Party",
             "tags" : [
                "oidcrp"
             ]
@@ -2863,7 +2863,7 @@
          "name" : "samlsp"
       },
       {
-         "description" : "OpenID Connect Relaying Parties",
+         "description" : "OpenID Connect Relying Parties",
          "name" : "oidcrp"
       },
       {

@@ -42,7 +42,7 @@ The signing public key must be in `BEGIN CERTIFICATE` format, check :ref:`the
 OIDC certificate conversion instructions <x5c>` for details if you are
 currently using a public key in `BEGIN PUBLIC KEY` format.
 
-Add a Relaying Party with the following configuration:
+Add a Relying Party with the following configuration:
 
 - Options > Basic > Client ID : choose a client ID, such as ``my_client_id``
 - Options > Basic > Public client : set to ``Enabled``

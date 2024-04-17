@@ -65,7 +65,7 @@ Google          France Connect     Pro Santé Connect
 .. attention::
 
     OpenID Connect specification is not achieved for logout propagation.
-    So logout initiated by relaying-party will be forwarded to
+    So logout initiated by relying-party will be forwarded to
     OpenID Connect provider but logout initiated by the provider (or another
     RP) will not be propagated. LL::NG will implement this when specification
     is published.

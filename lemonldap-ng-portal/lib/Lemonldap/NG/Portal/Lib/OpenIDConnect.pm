@@ -292,7 +292,7 @@ sub load_rp {
     }
     else {
         $self->logger->error(
-            "Relaying Party $rp has errors and will be ignored");
+            "Relying Party $rp has errors and will be ignored");
     }
     return;
 }

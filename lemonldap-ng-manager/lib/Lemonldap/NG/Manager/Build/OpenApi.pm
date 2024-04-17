@@ -100,7 +100,7 @@ sub openapi {
             },
             {
                 'name'        => 'oidcrp',
-                'description' => 'OpenID Connect Relaying Parties'
+                'description' => 'OpenID Connect Relying Parties'
             },
             {
                 'name'        => '2fa',
@@ -439,10 +439,10 @@ sub openapi {
             '/api/v1/providers/oidc/rp' => {
                 'post' => {
                     'tags'    => ['oidcrp'],
-                    'summary' => 'Create a new OpenID Connect Relaying Party',
+                    'summary' => 'Create a new OpenID Connect Relying Party',
                     'operationId' => 'addoidcrp',
                     'requestBody' => {
-                        'description' => 'OpenID Connect Relaying Party to add',
+                        'description' => 'OpenID Connect Relying Party to add',
                         'content'     => {
                             'application/json' => {
                                 'schema' => {
@@ -469,7 +469,7 @@ sub openapi {
                 'get' => {
                     'tags'    => ['oidcrp'],
                     'summary' =>
-'Finds OpenID Connect Relaying Partys by configuration key',
+'Finds OpenID Connect Relying Partys by configuration key',
                     'description' =>
 'Takes a search pattern to be tested against existing service providers',
                     'operationId' => 'findOidcRpByConfKey',
@@ -511,7 +511,7 @@ sub openapi {
                 'get' => {
                     'tags'    => ['oidcrp'],
                     'summary' =>
-                      'Finds OpenID Connect Relaying Party by Client ID',
+                      'Finds OpenID Connect Relying Party by Client ID',
                     'operationId' => 'findOidcRpByClientId',
                     'parameters'  => [ {
                             'name'        => 'clientId',
@@ -541,14 +541,14 @@ sub openapi {
                 'get' => {
                     'tags'    => ['oidcrp'],
                     'summary' =>
-                      'Get OpenID Connect Relaying Party by configuration key',
+                      'Get OpenID Connect Relying Party by configuration key',
                     'description' => 'Returns a single Service Provider',
                     'operationId' => 'getOidcRpByConfKey',
                     'parameters'  => [ {
                             'name'        => 'confKey',
                             'in'          => 'path',
                             'description' =>
-'Configuration key of OpenID Connect Relaying Party',
+'Configuration key of OpenID Connect Relying Party',
                             'required' => 'true',
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
@@ -569,13 +569,13 @@ sub openapi {
                 },
                 'patch' => {
                     'tags'        => ['oidcrp'],
-                    'summary'     => 'Updates an OpenID Connect Relaying Party',
+                    'summary'     => 'Updates an OpenID Connect Relying Party',
                     'operationId' => 'updateOidcRp',
                     'parameters'  => [ {
                             'name'        => 'confKey',
                             'in'          => 'path',
                             'description' =>
-'Configuration key of OpenID Connect Relaying Party that needs to be updated',
+'Configuration key of OpenID Connect Relying Party that needs to be updated',
                             'required' => 'true',
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
@@ -609,13 +609,13 @@ sub openapi {
                 },
                 'put' => {
                     'tags'    => ['oidcrp'],
-                    'summary' => 'Replaces an OpenID Connect Relaying Party',
+                    'summary' => 'Replaces an OpenID Connect Relying Party',
                     'operationId' => 'replaceOidcRp',
                     'parameters'  => [ {
                             'name'        => 'confKey',
                             'in'          => 'path',
                             'description' =>
-'Configuration key of OpenID Connect Relaying Party that needs to be replaced',
+'Configuration key of OpenID Connect Relying Party that needs to be replaced',
                             'required' => 'true',
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
@@ -649,13 +649,13 @@ sub openapi {
                 },
                 'delete' => {
                     'tags'        => ['oidcrp'],
-                    'summary'     => 'Deletes a OpenID Connect Relaying Party',
+                    'summary'     => 'Deletes a OpenID Connect Relying Party',
                     'operationId' => 'deleteOidcRp',
                     'parameters'  => [ {
                             'name'        => 'confKey',
                             'in'          => 'path',
                             'description' =>
-'Configuration key of OpenID Connect Relaying Party to delete',
+'Configuration key of OpenID Connect Relying Party to delete',
                             'required' => 'true',
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'

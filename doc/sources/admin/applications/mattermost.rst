@@ -86,10 +86,10 @@ Configuring LemonLDAP
 ~~~~~~~~~~~~~~~~~~~~~
 
 We now have to configure LemonLDAP::NG to recognize Mattermost as a
-valid OAuth2 relaying party and send it the information it needs to
+valid OAuth2 relying party and send it the information it needs to
 recognize a user.
 
-Add a :doc:`new OpenID Connect relaying party<..//idpopenidconnect>`
+Add a :doc:`new OpenID Connect relying party<..//idpopenidconnect>`
 with the following parameters:
 
 * **Client ID**: the same you set in Mattermost configuration

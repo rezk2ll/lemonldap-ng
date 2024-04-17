@@ -297,7 +297,7 @@ Options
 -  **Logout**
 
    -  **Bypass confirm**: Bypass logout confirmation when logout is initiated
-      by relaying party
+      by relying party
    -  **Session required**: Whether to send the Session ID *(sid)* in the logout
       request *(Front and Back Channel)*
    -  **Type**: Type of logout to perform
