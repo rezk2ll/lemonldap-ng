@@ -713,12 +713,13 @@ sub isRegistrationEnabled {
     my $module = $reg_mod_info->{m};
     my $prefix = $module->prefix;
 
+    my $rule = $reg_mod_info->{r};
+
     # Extra modules require special processing
     if ( $self->conf->{sfExtra}->{$prefix} ) {
-        return 1;
+        return $rule->( $req, $req->userData );
     }
     else {
-        my $rule = $reg_mod_info->{r};
         return $self->conf->{ $prefix . '2fActivation' }
           && $rule->( $req, $req->userData );
     }
@@ -739,8 +740,7 @@ sub register {
           unless $m;
         unless ( $m->{r}->( $req, $req->userData ) ) {
             $self->userLogger->error("${prefix}2F registration not allowed");
-            return $self->p->sendError( $req,
-                "${prefix}2F registration not allowed", 403 );
+            return $self->p->sendError( $req, "notAuthorized", 403 );
         }
 
         my $can_update_error = $self->canUpdateSfa( $req, $m->{m}, @args );
