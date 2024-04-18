@@ -6,6 +6,7 @@ our $VERSION = '2.19.0';
 
 use Lemonldap::NG::Manager::Attributes;
 use Lemonldap::NG::Manager::Api::Common qw/_listAttributes/;
+use JSON;
 
 my %TYPEMAP = (
     "bool"      => sub { { type => "boolean" } },
@@ -134,7 +135,7 @@ sub openapi {
                     'parameters'  => [ {
                             'name'     => 'uid',
                             'in'       => 'path',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 'type' => 'string'
                             }
@@ -142,7 +143,7 @@ sub openapi {
                         {
                             'name'     => 'result',
                             'in'       => 'query',
-                            'required' => 'false',
+                            'required' => JSON::false,
                             'schema'   => {
                                 'type' => 'string',
                                 'enum' => [ 'success', 'failed', 'any' ]
@@ -170,7 +171,7 @@ sub openapi {
                     'parameters'  => [ {
                             'name'     => 'uid',
                             'in'       => 'path',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 'type' => 'string'
                             }
@@ -178,7 +179,7 @@ sub openapi {
                         {
                             'name'     => 'result',
                             'in'       => 'query',
-                            'required' => 'false',
+                            'required' => JSON::false,
                             'schema'   => {
                                 'type' => 'string',
                                 'enum' => [ 'success', 'failed', 'any' ]
@@ -212,7 +213,7 @@ sub openapi {
                                 }
                             }
                         },
-                        'required' => 'true'
+                        'required' => JSON::true
                     },
                     'responses' => {
                         '201' => {
@@ -239,7 +240,7 @@ sub openapi {
                             'name'        => 'pattern',
                             'in'          => 'query',
                             'description' => 'Search pattern',
-                            'required'    => 'true',
+                            'required'    => JSON::true,
                             'schema'      => {
                                 'type' => 'string'
                             },
@@ -278,7 +279,7 @@ sub openapi {
                             'name'        => 'entityId',
                             'in'          => 'query',
                             'description' => 'Entity ID to search',
-                            'required'    => 'true',
+                            'required'    => JSON::true,
                             'schema'      => {
                                 'type' => 'string'
                             },
@@ -310,7 +311,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
                               'Configuration key of SAML Service Provider',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -337,7 +338,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
 'Configuration key of SAML Service Provider that needs to be replaced',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -377,7 +378,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
 'Configuration key of SAML Service Provider that needs to be updated',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -417,7 +418,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
 'Configuration key of SAML Service Provider to delete',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -450,7 +451,7 @@ sub openapi {
                                 }
                             }
                         },
-                        'required' => 'true'
+                        'required' => JSON::true
                     },
                     'responses' => {
                         '201' => {
@@ -477,7 +478,7 @@ sub openapi {
                             'name'        => 'pattern',
                             'in'          => 'query',
                             'description' => 'Search pattern',
-                            'required'    => 'true',
+                            'required'    => JSON::true,
                             'schema'      => {
                                 '$ref' => '#/components/schemas/confKey'
                             },
@@ -517,7 +518,7 @@ sub openapi {
                             'name'        => 'clientId',
                             'in'          => 'query',
                             'description' => 'Client ID to search',
-                            'required'    => 'true',
+                            'required'    => JSON::true,
                             'schema'      => {
                                 'type' => 'string'
                             },
@@ -549,7 +550,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
 'Configuration key of OpenID Connect Relying Party',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -576,7 +577,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
 'Configuration key of OpenID Connect Relying Party that needs to be updated',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -616,7 +617,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
 'Configuration key of OpenID Connect Relying Party that needs to be replaced',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -656,7 +657,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
 'Configuration key of OpenID Connect Relying Party to delete',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -689,7 +690,7 @@ sub openapi {
                                 }
                             }
                         },
-                        'required' => 'true'
+                        'required' => JSON::true
                     },
                     'responses' => {
                         '201' => {
@@ -715,7 +716,7 @@ sub openapi {
                             'name'        => 'pattern',
                             'in'          => 'query',
                             'description' => 'Search pattern',
-                            'required'    => 'true',
+                            'required'    => JSON::true,
                             'schema'      => {
                                 'type' => 'string'
                             },
@@ -754,7 +755,7 @@ sub openapi {
                             'name'        => 'serviceUrl',
                             'in'          => 'query',
                             'description' => 'Service URL to search',
-                            'required'    => 'true',
+                            'required'    => JSON::true,
                             'schema'      => {
                                 'type' => 'string'
                             },
@@ -785,7 +786,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
                               'Configuration key of CAS Application',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -812,7 +813,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
 'Configuration key of CAS Application that needs to be replaced',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -852,7 +853,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
 'Configuration key of CAS Application that needs to be updated',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -892,7 +893,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
                               'Configuration key of CAS Application to delete',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -911,12 +912,50 @@ sub openapi {
                     }
                 }
             },
+
+            '/api/v1/secondFactor/' => {
+                description => "Registered second factors",
+                get         => {
+                    summary    => "Search for second factors",
+                    parameters => [ {
+                            name        => "uid",
+                            in          => "query",
+                            description =>
+"The user id to filter on. Can contain wildcards.",
+                            example  => "dw*",
+                            required => "false",
+                            schema   => {
+                                type => "string",
+                            },
+                        },
+                        {
+                            name        => "type",
+                            in          => "query",
+                            description =>
+"The second factor type to filter on. Can be specified multiple times.",
+                            example  => "TOTP",
+                            required => "false",
+                            schema   => {
+                                type => "string",
+                            },
+                        },
+                    ],
+                    tags        => ['2fa'],
+                    operationId => "searchSecondFactors",
+                    responses   => {
+                        200 => {
+                            '$ref' =>
+                              '#/components/responses/SecondFactorSearch'
+                        },
+                    }
+                },
+            },
             '/api/v1/secondFactor/{uid}' => {
                 'description' => 'Second factors for a particular user',
                 'parameters'  => [ {
                         'name'     => 'uid',
                         'in'       => 'path',
-                        'required' => 'true',
+                        'required' => JSON::true,
                         'schema'   => {
                             'type' => 'string'
                         }
@@ -958,12 +997,12 @@ sub openapi {
                     'parameters'  => [ {
                             'name'        => 'create',
                             'in'          => 'query',
-                            'required'    => 'false',
+                            'required'    => JSON::false,
                             'description' =>
 "Should the persistent session be created if it does not exist yet",
                             'schema' => {
                                 'type'    => 'bool',
-                                'default' => 'false'
+                                'default' => JSON::false
                             }
                         }
                     ],
@@ -978,7 +1017,7 @@ sub openapi {
                                 }
                             }
                         },
-                        'required' => 'true'
+                        'required' => JSON::true
                     },
                     'responses' => {
                         '201' => {
@@ -999,7 +1038,7 @@ sub openapi {
                 'parameters' => [ {
                         'name'     => 'uid',
                         'in'       => 'path',
-                        'required' => 'true',
+                        'required' => JSON::true,
                         'schema'   => {
                             'type' => 'string'
                         }
@@ -1007,7 +1046,7 @@ sub openapi {
                     {
                         'name'     => 'type',
                         'in'       => 'path',
-                        'required' => 'true',
+                        'required' => JSON::true,
                         'schema'   => {
                             'type' => 'string'
                         }
@@ -1049,7 +1088,7 @@ sub openapi {
                 'parameters'  => [ {
                         'name'     => 'uid',
                         'in'       => 'path',
-                        'required' => 'true',
+                        'required' => JSON::true,
                         'schema'   => {
                             'type' => 'string'
                         }
@@ -1064,12 +1103,12 @@ sub openapi {
                     'parameters'  => [ {
                             'name'        => 'create',
                             'in'          => 'query',
-                            'required'    => 'false',
+                            'required'    => JSON::false,
                             'description' =>
 "Should the persistent session be created if it does not exist yet",
                             'schema' => {
                                 'type'    => 'bool',
-                                'default' => 'false'
+                                'default' => JSON::false
                             }
                         }
                     ],
@@ -1083,7 +1122,7 @@ sub openapi {
                                 }
                             }
                         },
-                        'required' => 'true'
+                        'required' => JSON::true
                     },
                     'responses' => {
                         '201' => {
@@ -1104,7 +1143,7 @@ sub openapi {
                 'parameters' => [ {
                         'name'     => 'uid',
                         'in'       => 'path',
-                        'required' => 'true',
+                        'required' => JSON::true,
                         'schema'   => {
                             'type' => 'string'
                         }
@@ -1112,7 +1151,7 @@ sub openapi {
                     {
                         'name'     => 'id',
                         'in'       => 'path',
-                        'required' => 'true',
+                        'required' => JSON::true,
                         'schema'   => {
                             'type' => 'string'
                         }
@@ -1161,7 +1200,7 @@ sub openapi {
                                 }
                             }
                         },
-                        'required' => 'true'
+                        'required' => JSON::true
                     },
                     'responses' => {
                         '201' => {
@@ -1187,7 +1226,7 @@ sub openapi {
                             'name'        => 'pattern',
                             'in'          => 'query',
                             'description' => 'Search pattern',
-                            'required'    => 'true',
+                            'required'    => JSON::true,
                             'schema'      => {
                                 'type' => 'string'
                             },
@@ -1228,7 +1267,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
                               'Configuration key of Menu Category',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -1255,7 +1294,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
 'Configuration key of Menu Category that needs to be replaced',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -1294,7 +1333,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
 'Configuration key of Menu Category that needs to be updated',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -1334,7 +1373,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
                               'Configuration key of Menu Category to delete',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -1365,7 +1404,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
                               'Configuration key of Menu Category to work with',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/menuCatConfKey'
                             }
@@ -1393,7 +1432,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
                               'Configuration key of Menu Category to work with',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/menuCatConfKey'
                             }
@@ -1408,7 +1447,7 @@ sub openapi {
                                 }
                             }
                         },
-                        'required' => 'true'
+                        'required' => JSON::true
                     },
                     'responses' => {
                         '201' => {
@@ -1439,7 +1478,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
                               'Configuration key of Menu Category to work with',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/menuCatConfKey'
                             }
@@ -1448,7 +1487,7 @@ sub openapi {
                             'name'        => 'pattern',
                             'in'          => 'query',
                             'description' => 'Search pattern',
-                            'required'    => 'true',
+                            'required'    => JSON::true,
                             'schema'      => {
                                 'type' => 'string'
                             },
@@ -1490,7 +1529,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
                               'Configuration key of Menu Category to work with',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/menuCatConfKey'
                             }
@@ -1500,7 +1539,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
                               'Configuration key of Menu Application',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -1527,7 +1566,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
                               'Configuration key of Menu Category to work with',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/menuCatConfKey'
                             }
@@ -1537,7 +1576,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
 'Configuration key of Menu Application that needs to be replaced',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -1576,7 +1615,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
                               'Configuration key of Menu Category to work with',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/menuCatConfKey'
                             }
@@ -1586,7 +1625,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
 'Configuration key of Menu Application that needs to be updated',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -1626,7 +1665,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
                               'Configuration key of Menu Category to work with',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/menuCatConfKey'
                             }
@@ -1636,7 +1675,7 @@ sub openapi {
                             'in'          => 'path',
                             'description' =>
                               'Configuration key of Menu Application to delete',
-                            'required' => 'true',
+                            'required' => JSON::true,
                             'schema'   => {
                                 '$ref' => '#/components/schemas/confKey'
                             }
@@ -2099,6 +2138,21 @@ sub openapi {
                         '$ref' => '#/components/schemas/SecondFactor'
                     }
                 },
+                'SecondFactorSearchResult' => {
+                    'type'       => 'object',
+                    'required'   => [ 'uid', 'secondFactors' ],
+                    'properties' => {
+                        'uid' => {
+                            'type'        => 'string',
+                            'description' => 'The user identifier',
+                        },
+                        'secondFactors' => {
+                            description =>
+"The list of second factors matching the request's type",
+                            '$ref' => '#/components/schemas/SecondFactors'
+                        },
+                    }
+                },
                 'menuCatConfKey' => {
                     'type'    => 'string',
                     'pattern' => '^\\w[\\w\\.\\-]*$'
@@ -2367,6 +2421,20 @@ sub openapi {
                         'application/json' => {
                             'schema' => {
                                 '$ref' => '#/components/schemas/SecondFactors'
+                            }
+                        }
+                    }
+                },
+                'SecondFactorSearch' => {
+                    'description' => 'A list of search results',
+                    'content'     => {
+                        'application/json' => {
+                            'schema' => {
+                                'type'  => 'array',
+                                'items' => {
+                                    '$ref' =>
+'#/components/schemas/SecondFactorSearchResult'
+                                }
                             }
                         }
                     }

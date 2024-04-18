@@ -85,7 +85,7 @@ sub init {
                     },
                 },
                 secondFactor => {
-                    ':uid' => {
+                    ':_uid' => {
                         id => {
                             ':id' => 'getSecondFactorsById'
                         },

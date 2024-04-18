@@ -154,6 +154,40 @@ sub checkJson {
     count(1);
 }
 
+sub checkSearchNotFound {
+    my ($params) = @_;
+    my $test =
+      "Searching for " . ( $params || '[no params]' ) . " returns no results";
+    my $res = search( $test, $params );
+    check200( $test, $res );
+    my $result = from_json( $res->[2]->[0] );
+    is_deeply( $result, [], "Empty list was returned" );
+}
+
+sub checkSearch {
+    my ( $params, $expected_list ) = @_;
+    $expected_list ||= [];
+    my $test =
+        "Searching for "
+      . ( $params || '[no params]' )
+      . " returns "
+      . join( ",", @$expected_list );
+    my $res = search( $test, $params );
+    check200( $test, $res );
+    my $result = from_json( $res->[2]->[0] );
+    my @names  = map { $_->{uid} } @$result;
+    is_deeply( [ sort @names ], $expected_list, "Expected results" );
+    return $result;
+}
+
+sub search {
+    my ( $test, $params ) = @_;
+    ok( my $res = &client->_get( "/api/v1/secondFactor", $params ),
+        "$test: Request succeed" );
+    count(1);
+    return $res;
+}
+
 sub get {
     my ( $test, $uid, $type, $id ) = splice @_;
     my ($res);
@@ -596,5 +630,91 @@ checkAdd( "Add/missinguser", "unknownt", "TOTP",
     { name => "test", key => "GEZDGNBVGY3TQOJQ GEZDGNBVG Y3TQOJQ  " },
     "create=true" );
 checkGetList( 1, 'unknownt', 'TOTP' );
+
+# 2FA search
+
+`rm -rf t/sessions/*`;
+
+checkSearchNotFound;
+
+# Populate some test factors
+newSession(
+    'dwho',
+    '127.10.0.1',
+    'Persistent',
+    [ {
+            "name"  => "MyTOTP",
+            "type"  => "TOTP",
+            "epoch" => "1643201784",
+        },
+        {
+            "epoch" => "1643201784",
+            "name"  => "MyFidoKey",
+            "type"  => "WebAuthn"
+        },
+    ]
+);
+newSession(
+    'rtyler',
+    '127.10.0.1',
+    'Persistent',
+    [ {
+            "name"  => "MyTOTP",
+            "type"  => "TOTP",
+            "epoch" => "1643201784",
+        }
+    ]
+);
+newSession(
+    'mjones',
+    '127.10.0.1',
+    'Persistent',
+    [ {
+            "name"  => "MyUBK",
+            "type"  => "Yubikey",
+            "epoch" => "1643201784",
+        }
+    ]
+);
+newSession( 'msmith', '127.10.0.1', 'Persistent', [] );
+
+checkSearch( "", [qw/dwho mjones rtyler/] );
+my $result = checkSearch( "type=TOTP", [qw/dwho rtyler/] );
+is_deeply(
+    $result,
+
+    [ {
+            'secondFactors' => [ {
+                    'id'   => 'MTY0MzIwMTc4NDo6VE9UUDo6TXlUT1RQ',
+                    'name' => 'MyTOTP',
+                    'type' => 'TOTP'
+                },
+                {
+                    'id'   => 'MTY0MzIwMTc4NDo6V2ViQXV0aG46Ok15Rmlkb0tleQ==',
+                    'name' => 'MyFidoKey',
+                    'type' => 'WebAuthn'
+                }
+            ],
+            'uid' => 'dwho'
+        },
+        {
+            'secondFactors' => [ {
+                    'id'   => 'MTY0MzIwMTc4NDo6VE9UUDo6TXlUT1RQ',
+                    'name' => 'MyTOTP',
+                    'type' => 'TOTP'
+                }
+            ],
+            'uid' => 'rtyler'
+        }
+    ],
+    "Expected API response"
+);
+
+checkSearch( "uid=m*",              [qw/mjones/] );
+checkSearch( "uid=m*&type=Yubikey", [qw/mjones/] );
+checkSearchNotFound("uid=m*&type=TOTP");
+checkSearch( "uid=dwho&type=TOTP", [qw/dwho/] );
+checkSearchNotFound("uid=dwho&type=Yubikey");
+checkSearch( "type=TOTP&type=WebAuthn", [qw/dwho/] );
 
 done_testing();
