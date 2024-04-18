@@ -78,7 +78,10 @@ sub enabledPlugins {
         if ( $pList[$i] =~ /^(.*?)::(.*)$/ ) {
             $pluginConf = checkConf( $conf, $2, $1 );
         }
-        else { $pluginConf = $conf->{ $pList[$i] } }
+        else {
+            my $c = $conf->{ $pList[$i] };
+            $pluginConf = ( ref($c) && ref($c) eq 'HASH' ? scalar(%$c) : $c );
+        }
         push @res, $pList[ $i + 1 ] if $pluginConf;
     }
 
