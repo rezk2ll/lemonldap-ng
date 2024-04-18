@@ -5052,7 +5052,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Bypass logout confirmation'
         },
         oidcRPMetaDataOptionsLogoutUrl => {
-            type          => 'url',
+            type          => 'text',
             documentation => 'Logout URL',
         },
         oidcRPMetaDataOptionsLogoutType => {

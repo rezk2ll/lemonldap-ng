@@ -3087,7 +3087,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type' => 'select'
         },
         'oidcRPMetaDataOptionsLogoutUrl' => {
-            'type' => 'url'
+            'type' => 'text'
         },
         'oidcRPMetaDataOptionsOfflineSessionExpiration' => {
             'type' => 'intOrNull'
