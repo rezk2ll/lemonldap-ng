@@ -145,9 +145,6 @@ sub init {
     # Handler::PSGI::Try initialization
     unless ( $self->SUPER::init( $self->localConfig ) ) {
         $self->logger->error( 'Initialization failed: ' . $self->error );
-        $self->error(
-"Initialization failed! Enable debug logs, reload your web server and catch main error..."
-        );
         return 0;
     }
     if ( $self->error ) {
@@ -593,6 +590,7 @@ sub loadModule {
     eval "require $module";
     if ($@) {
         $self->logger->error("$module load error: $@");
+        $self->error("$module load error: $@");
         return 0;
     }
     eval {
@@ -609,6 +607,7 @@ sub loadModule {
     }
     if ( $obj->can("init") and ( !$obj->init ) ) {
         $self->logger->error("$module init failed");
+        $self->error("$module init failed");
         return 0;
     }
 

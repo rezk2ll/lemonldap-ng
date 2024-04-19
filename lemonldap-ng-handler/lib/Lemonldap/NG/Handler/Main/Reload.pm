@@ -84,6 +84,9 @@ sub checkConf {
                     $class->logger->error( "Underlying object can't load conf ("
                           . ref($obj)
                           . "->$sub)" );
+                    if ( $obj->can('error') ) {
+                        $Lemonldap::NG::Common::Conf::msg = $obj->error;
+                    }
                     return 0;
                 }
             }
