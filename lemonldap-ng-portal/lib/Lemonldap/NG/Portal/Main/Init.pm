@@ -442,14 +442,20 @@ sub reloadConf {
                 delete $_[0]->pdata->{$k};
             }
         }
-        my $user_log = $_[0]->{sessionInfo}->{ $self->conf->{whatToTrace} };
+        my $user_log    = $_[0]->{sessionInfo}->{ $self->conf->{whatToTrace} };
+        my $auth_module = $_[0]->{sessionInfo}->{_auth};
+        my $ipAddr      = $_[0]->{sessionInfo}->{ipAddr};
 
         if ($user_log) {
             $self->auditLog(
                 $_[0],
-                message => ( $user_log . ' connected' ),
-                code    => "LOGIN",
-                user    => $user_log,
+                message => (
+                        "User "
+                      . $user_log
+                      . " connected from $auth_module ($ipAddr)"
+                ),
+                code => "LOGIN",
+                user => $user_log,
             );
         }
         if (@$tmp) {

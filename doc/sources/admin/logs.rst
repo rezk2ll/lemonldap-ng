@@ -77,9 +77,8 @@ Authentication:
 
 ::
 
-   [notice] Session granted for dwho by LDAP (81.20.13.21)
-   [notice] User dwho.com successfully authenticated at level 2
-   [notice] dwho connected
+   [info] User dwho successfully authenticated at level 2
+   [info] User dwho connected from LDAP (81.20.13.21)
 
 Failed authentication:
 
