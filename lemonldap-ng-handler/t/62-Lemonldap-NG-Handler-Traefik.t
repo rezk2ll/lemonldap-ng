@@ -53,6 +53,17 @@ is(
 );
 count(1);
 
+# Check echo of Authorization header
+ok(
+    $res = $client->_get(
+        '/', undef, undef, "lemonldap=$sessionId", HTTP_AUTHORIZATION => "xx"
+    ),
+    'Authentified query'
+);
+my $h = HTTP::Headers->new( @{ $res->[1] } );
+is( $h->header('Authorization'), "xx", 'Authorization header is echoed' );
+count(2);
+
 # Authorized query
 ok( $res = $client->_get( '/', undef, undef, "lemonldap=$sessionId" ),
     'Authentified query' );
