@@ -46,6 +46,13 @@ sub handler {
             push @convertedHdrs, $k, $v;
         }
     }
+
+    # Echo the Authorization header to compensate the fact that Traefik removes
+    # it from the incoming HTTP request
+    if ( my $authorization = $req->headers->header('Authorization') ) {
+        push @convertedHdrs, "Authorization" => $authorization;
+    }
+
     return [ 200, \@convertedHdrs, [] ];
 }
 
