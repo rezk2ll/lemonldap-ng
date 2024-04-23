@@ -249,9 +249,8 @@ sub run {
             unless ($app) {
                 return $self->_failLogin(
                     $req,
-                    msg        => 'CAS service not configured',
-                    res        => PE_UNKNOWNPARTNER,
-                    userLogger => 1,
+                    msg => 'CAS service not configured',
+                    res => PE_UNKNOWNPARTNER,
                 );
             }
 
@@ -315,14 +314,18 @@ sub run {
         return $self->_failLogin(
             $req,
             msg => 'casGenerateServiceTicket hook failed',
-            res => $h
+            res => $h,
+            ( $app ? ( app => $app ) : () ),
         ) if ( $h != PE_OK );
 
         my $casServiceSession = $self->getCasSession( undef, $Sinfos );
 
         unless ($casServiceSession) {
-            return $self->_failLogin( $req,
-                msg => "Unable to create CAS session" );
+            return $self->_failLogin(
+                $req,
+                msg => "Unable to create CAS session",
+                ( $app ? ( app => $app ) : () ),
+            );
         }
 
         my $casServiceSessionID = $casServiceSession->id;
@@ -1102,12 +1105,14 @@ sub _failLogin {
     my ( $self, $req, %params ) = @_;
     my $reason = $params{'msg'} ? ": $params{'msg'}" : "";
     my $res    = $params{res} || PE_ERROR;
+    my $app    = $params{app};
 
     $self->auditLog(
         $req,
         code    => "ISSUER_CAS_LOGIN_FAILED",
         message => ( "CAS login failed" . $reason ),
         ( $reason ? ( reason => $reason ) : () ),
+        ( $app    ? ( app    => $app )    : () ),
         portal_error => portalConsts->{$res},
     );
 
@@ -1120,7 +1125,8 @@ sub _failLoginRule {
 
     $self->auditLog(
         $req,
-        code    => "ISSUER_CAS_LOGIN_FAILED",
+        code => "ISSUER_CAS_LOGIN_FAILED",
+        ( $app ? ( app => $app ) : () ),
         message => (
                 'User '
               . $req->sessionInfo->{ $self->conf->{whatToTrace} }
