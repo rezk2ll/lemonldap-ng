@@ -1104,7 +1104,7 @@ sub _failLogin {
     my $res    = $params{res} || PE_ERROR;
 
     $self->auditLog(
-        $res,
+        $req,
         code    => "ISSUER_CAS_LOGIN_FAILED",
         message => ( "CAS login failed" . $reason ),
         ( $reason ? ( reason => $reason ) : () ),
