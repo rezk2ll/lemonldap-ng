@@ -39,7 +39,12 @@ sub rp_id {
     }
     else {
         my $portal_uri = URI->new( $req->portal );
-        return $portal_uri->authority;
+        if ( $portal_uri->can('host') ) {
+            return $portal_uri->host;
+        }
+        else {
+            return $portal_uri->authority;
+        }
     }
 }
 
