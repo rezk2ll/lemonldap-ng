@@ -789,9 +789,9 @@ sub mkSessionArray {
                                 my $modifiedKey = $_;
                                 $modifiedKey =~ s/(\d+_)?//;
                                 {
-                                    v      => $session->{$modifiedKey},
-                                    k      => $_,
-                                    "k_$_" => 1
+                                    v => $session->{$modifiedKey},
+                                    k => $modifiedKey,
+                                    "k_$modifiedKey" => 1
                                 }
                             } @fields
                         ],
