@@ -18,7 +18,7 @@ sub defaultValues {
         'authChoiceParam' => 'lmAuth',
         'authentication'  => 'Demo',
         'available2F'     =>
-          'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius,Password',
+'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius,Password,Okta',
         'available2FSelfRegistration'   => 'Password,TOTP,U2F,WebAuthn,Yubikey',
         'bruteForceProtectionLockTimes' => '15, 30, 60, 300, 600',
         'bruteForceProtectionMaxAge'    => 300,
@@ -248,6 +248,7 @@ sub defaultValues {
         'oidcServiceOfflineSessionExpiration' => 2592000,
         'oidcServiceOldKeyTypeEnc'            => 'RSA',
         'oidcServiceOldKeyTypeSig'            => 'RSA',
+        'okta2fActivation'                    => 0,
         'openIdAuthnLevel'                    => 1,
         'openIdExportedVars'                  => {},
         'openIdIDPList'                       => '0;',

@@ -276,6 +276,22 @@ sub display {
         );
     }
 
+    # 2.1 Wait for 2FA
+    elsif ( $req->{error} == PE_2FWAIT ) {
+        my $method = $req->data->{redirectFormMethod} || 'get';
+        $skinfile       = "2fwait";
+        %templateParams = (
+            URL           => $req->{urldc},
+            HIDDEN_INPUTS => $self->buildOutgoingHiddenForm( $req, $method ),
+            FORM_METHOD   => $method,
+            (
+                $req->data->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
+                : ()
+            ),
+        );
+    }
+
     # 2.2 Case : display menu (with error or not)
     elsif ( $req->error == PE_OK ) {
         $skinfile = 'menu';

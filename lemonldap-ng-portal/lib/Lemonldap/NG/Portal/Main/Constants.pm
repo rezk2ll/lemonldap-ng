@@ -10,6 +10,7 @@ use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::Main';
 use constant URIRE =>
 qr{(((?^:https?))://((?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::((?:[0-9]*)))?(/(((?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():\@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():\@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():\@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():\@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?]((?:(?:[;/?:\@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)};
 use constant {
+    PE_2FWAIT                            => -6,
     PE_IDPCHOICE                         => -5,
     PE_SENDRESPONSE                      => -4,
     PE_INFO                              => -3,
@@ -126,6 +127,7 @@ sub portalConsts {
         '-3'  => 'PE_INFO',
         '-4'  => 'PE_SENDRESPONSE',
         '-5'  => 'PE_IDPCHOICE',
+        '-6'  => 'PE_2FWAIT',
         '0'   => 'PE_OK',
         '1'   => 'PE_SESSIONEXPIRED',
         '10'  => 'PE_BADCERTIFICATE',
@@ -237,6 +239,7 @@ our @EXPORT_OK = (
     'portalConsts',
     'HANDLER',
     'URIRE',
+    'PE_2FWAIT',
     'PE_IDPCHOICE',
     'PE_SENDRESPONSE',
     'PE_INFO',

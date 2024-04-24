@@ -2136,6 +2136,38 @@ sub attributes {
             documentation => 'Maximum 2F devices name length',
         },
 
+        # Okta 2FA
+        okta2fActivation => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Okta2F activation',
+        },
+        okta2fAdminURL => {
+            type          => 'url',
+            documentation => 'Okta Administration URL'
+        },
+        okta2fApiKey => {
+            type          => 'text',
+            documentation => 'Okta API key'
+        },
+        okta2fAuthnLevel => {
+            type          => 'intOrNull',
+            documentation =>
+              'Authentication level for users authentified by Okta2F'
+        },
+        okta2fLabel => {
+            type          => 'text',
+            documentation => 'Portal label for Okta2F'
+        },
+        okta2fLoginAttribute => {
+            type          => 'text',
+            documentation => 'Session key containing Okta login'
+        },
+        okta2fLogo => {
+            type          => 'text',
+            documentation => 'Custom logo for Okta 2F',
+        },
+
         # Password 2FA
         password2fActivation => {
             type          => 'boolOrExpr',
@@ -3778,7 +3810,7 @@ sub attributes {
         available2F => {
             type    => 'text',
             default => join( ',',
-                qw/UTOTP TOTP U2F REST Mail2F Ext2F WebAuthn Yubikey Radius Password/
+                qw/UTOTP TOTP U2F REST Mail2F Ext2F WebAuthn Yubikey Radius Password Okta/
             ),
             documentation => 'Available second factor modules',
         },

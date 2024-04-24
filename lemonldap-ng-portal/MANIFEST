@@ -7,6 +7,7 @@ lib/Lemonldap/NG/Portal.pm
 lib/Lemonldap/NG/Portal/2F/Engines/Default.pm
 lib/Lemonldap/NG/Portal/2F/Ext2F.pm
 lib/Lemonldap/NG/Portal/2F/Mail2F.pm
+lib/Lemonldap/NG/Portal/2F/Okta.pm
 lib/Lemonldap/NG/Portal/2F/Password.pm
 lib/Lemonldap/NG/Portal/2F/Radius.pm
 lib/Lemonldap/NG/Portal/2F/Register/Base.pm
@@ -77,6 +78,7 @@ lib/Lemonldap/NG/Portal/Lib/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Net/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Notifications/JSON.pm
 lib/Lemonldap/NG/Portal/Lib/Notifications/XML.pm
+lib/Lemonldap/NG/Portal/Lib/Okta.pm
 lib/Lemonldap/NG/Portal/Lib/OneTimeToken.pm
 lib/Lemonldap/NG/Portal/Lib/OpenID/Server.pm
 lib/Lemonldap/NG/Portal/Lib/OpenID/SREG.pm
@@ -272,6 +274,9 @@ site/htdocs/static/bwr/qrious/dist/qrious.js
 site/htdocs/static/bwr/qrious/dist/qrious.js.map
 site/htdocs/static/bwr/qrious/dist/qrious.min.js
 site/htdocs/static/bwr/qrious/dist/qrious.min.js.map
+site/htdocs/static/common/2F/okta-push.png
+site/htdocs/static/common/2F/okta-sms.png
+site/htdocs/static/common/2F/okta-tokensoftwaretotp.png
 site/htdocs/static/common/apps/attach.png
 site/htdocs/static/common/apps/bell.png
 site/htdocs/static/common/apps/bookmark.png
@@ -453,6 +458,7 @@ site/htdocs/static/languages/zh.json
 site/htdocs/static/languages/zh_TW.json
 site/templates/bootstrap/2fchoice.tpl
 site/templates/bootstrap/2fregisters.tpl
+site/templates/bootstrap/2fwait.tpl
 site/templates/bootstrap/captcha.tpl
 site/templates/bootstrap/casBack2Url.tpl
 site/templates/bootstrap/certificateReset.tpl
@@ -489,6 +495,7 @@ site/templates/bootstrap/notifications.tpl
 site/templates/bootstrap/oidcConsents.tpl
 site/templates/bootstrap/oidcGiveConsent.tpl
 site/templates/bootstrap/oidcLogout.tpl
+site/templates/bootstrap/okta2fchoice.tpl
 site/templates/bootstrap/openid.tpl
 site/templates/bootstrap/openidform.tpl
 site/templates/bootstrap/openIdPol.tpl
@@ -944,6 +951,7 @@ t/78-2F-UpgradeOnly-without-2F.t
 t/78-2F-UpgradeOnly.t
 t/79-2F-Yubikey-from-Session.t
 t/79-2F-Yubikey.t
+t/80-2F-Okta.t
 t/90-Translations.t
 t/91-Handler-cache-cleaned.t
 t/91-Memory-Leak.t

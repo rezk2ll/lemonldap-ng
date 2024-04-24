@@ -820,6 +820,13 @@ sub autoPost {
     }
 
     $req->data->{redirectFormMethod} = "post";
+
+    # Case 2F wait
+    if ( $req->data->{sfWait} ) {
+        return PE_2FWAIT;
+    }
+
+    # Default case -> redirect
     return PE_REDIRECT;
 }
 

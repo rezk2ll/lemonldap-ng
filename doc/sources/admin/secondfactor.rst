@@ -27,6 +27,7 @@ Second factors that rely on external systems:
 
 -  :doc:`E-Mail 2F<mail2f>` *(Send a code to an email address)*
 -  :doc:`External 2F<external2f>` *(To call an external command)*
+-  :doc:`Okta<okta2f>` *(To use Okta API)*
 -  :doc:`RADIUS<radius2f>` *(Remote RADIUS server)*
 -  :doc:`REST<rest2f>` *(Remote REST app)*
 

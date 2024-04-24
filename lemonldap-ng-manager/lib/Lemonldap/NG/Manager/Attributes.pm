@@ -661,7 +661,7 @@ sub attributes {
         },
         'available2F' => {
             'default' =>
-'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius,Password',
+'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius,Password,Okta',
             'type' => 'text'
         },
         'available2FSelfRegistration' => {
@@ -3551,6 +3551,28 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'oidcStorageOptions' => {
             'type' => 'keyTextContainer'
+        },
+        'okta2fActivation' => {
+            'default' => 0,
+            'type'    => 'boolOrExpr'
+        },
+        'okta2fAdminURL' => {
+            'type' => 'url'
+        },
+        'okta2fApiKey' => {
+            'type' => 'text'
+        },
+        'okta2fAuthnLevel' => {
+            'type' => 'intOrNull'
+        },
+        'okta2fLabel' => {
+            'type' => 'text'
+        },
+        'okta2fLoginAttribute' => {
+            'type' => 'text'
+        },
+        'okta2fLogo' => {
+            'type' => 'text'
         },
         'oldNotifFormat' => {
             'default' => 0,

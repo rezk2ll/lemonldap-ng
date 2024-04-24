@@ -14,6 +14,7 @@ Error codes list
    :widths: auto
 
 
+    ``PE_2FWAIT``;-6
     ``PE_IDPCHOICE``;-5
     ``PE_SENDRESPONSE``;-4
     ``PE_INFO``;-3
