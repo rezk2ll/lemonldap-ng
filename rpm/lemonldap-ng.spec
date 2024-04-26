@@ -239,7 +239,7 @@ BuildRequires:  python3-sphinx-bootstrap-theme
 BuildRequires:  python3-sphinx
 %endif
 
-Requires: lemonldap-ng-conf = %{version}-%{release}
+Requires: lemonldap-ng-common = %{version}-%{release}
 Requires: lemonldap-ng-doc = %{version}-%{release}
 Requires: lemonldap-ng-handler = %{version}-%{release}
 Requires: lemonldap-ng-manager = %{version}-%{release}
@@ -257,6 +257,7 @@ Requires:        (%{name}-selinux = %{version}-%{release} if selinux-policy-%{se
 # Setup requires filtering
 %{?perl_default_filter}
 %{?el7:%global __requires_exclude perl\\(Web::ID|perl\\(Sentry::Raven}
+%{!?el7:%global __requires_exclude perl\\(Apache2::|perl\\(APR::Table\\)}
 
 
 %description
@@ -266,22 +267,35 @@ application. It manages both authentication and authorization and provides
 headers for accounting.
 So you can have a full AAA protection for your web space as described below.
 
-%package conf
+%package common
 Summary:        LemonLDAP-NG configuration
-Requires:       perl(Apache::Session)
 Requires:       perl(Apache::Session::Browseable)
+Requires:       perl(Cache::Cache)
 Requires:       perl(IO::String)
-Requires:       perl(Lemonldap::NG::Common) = %{version}-%{release}
-Requires:       perl(mod_perl2)
+Requires:       perl(String::Random)
+%if 0%{?el7}
 Requires(post): httpd
 Requires:       mod_fcgid
+Requires:       perl(mod_perl2)
+%else
+Requires:       (httpd or nginx)
+Requires:       httpd-filesystem
+Requires:       nginx-filesystem
+Requires:       (mod_fcgid if httpd)
+Requires:       (perl(mod_perl2) if httpd)
+Requires:       (perl(Apache2::ServerRec) if httpd)
+%endif
+Obsoletes:      perl-Lemonldap-NG-Common < %{version}-%{release}
+Provides:       perl-Lemonldap-NG-Common = %{version}-%{release}
+Obsoletes:      lemonldap-ng-conf < %{version}-%{release}
+Provides:       lemonldap-ng-conf = %{version}-%{release}
 
-%description conf
+%description common
 This package contains the main storage configuration.
 
 %package doc
 Summary:        LemonLDAP-NG documentation
-Requires:       lemonldap-ng-conf = %{version}-%{release}
+Requires:       lemonldap-ng-common = %{version}-%{release}
 
 %description doc
 This package contains HTML documentation.
@@ -289,21 +303,38 @@ This package contains HTML documentation.
 %package handler
 Summary:        LemonLDAP-NG handler
 Requires:       crontabs
-Requires:       lemonldap-ng-conf = %{version}-%{release}
-Requires:       perl(Lemonldap::NG::Handler) = %{version}-%{release}
+Requires:       lemonldap-ng-common = %{version}-%{release}
+%if 0%{!?el7}
+Requires:       (perl(Apache2::Connection) if httpd)
+Requires:       (perl(Apache2::Const) if httpd)
+Requires:       (perl(Apache2::Filter) if httpd)
+Requires:       (perl(Apache2::Log) if httpd)
+Requires:       (perl(Apache2::RequestIO) if httpd)
+Requires:       (perl(Apache2::RequestRec) if httpd)
+Requires:       (perl(Apache2::RequestUtil) if httpd)
+Requires:       (perl(Apache2::ServerUtil) if httpd)
+Requires:       (perl(APR::Table) if httpd)
+%endif
+Obsoletes:      lemonldap-ng-nginx < %{version}-%{release}
+Provides:       lemonldap-ng-nginx = %{version}-%{release}
+Obsoletes:      perl-Lemonldap-NG-Handler < %{version}-%{release}
+Provides:       perl-Lemonldap-NG-Handler = %{version}-%{release}
 
 %description handler
 This package deploys the Apache Handler.
 
 %package manager
 Summary:        LemonLDAP-NG administration interface
-Requires:       lemonldap-ng-conf = %{version}-%{release}
-Requires:       perl(Lemonldap::NG::Manager) = %{version}-%{release}
+Requires:       lemonldap-ng-common = %{version}-%{release}
 Provides:       bundled(js-angular) = 1.7.9
 Provides:       bundled(js-angular-bootstrap) = 2.5.0
 Provides:       bundled(js-angular-ui-tree) = 2.22.6
 Provides:       bundled(js-es5-shim) = 4.5.14
 Provides:       bundled(js-filesaver) = 2.0.4
+Obsoletes:      lemonldap-ng-nginx < %{version}-%{release}
+Provides:       lemonldap-ng-nginx = %{version}-%{release}
+Obsoletes:      perl-Lemonldap-NG-Manager < %{version}-%{release}
+Provides:       perl-Lemonldap-NG-Manager = %{version}-%{release}
 
 %description manager
 This package deploys the administration interface and sessions explorer.
@@ -311,8 +342,7 @@ This package deploys the administration interface and sessions explorer.
 %package portal
 Summary:        LemonLDAP-NG authentication portal
 Requires:       crontabs
-Requires:       lemonldap-ng-conf = %{version}-%{release}
-Requires:       perl(Lemonldap::NG::Portal) = %{version}-%{release}
+Requires:       lemonldap-ng-common = %{version}-%{release}
 %if 0%{?el7}
 # SAML
 Requires:       perl(Glib)
@@ -345,22 +375,32 @@ Provides:       bundled(js-fingerprint2) = 2.1.4
 Provides:       bundled(js-jquery) = 3.5.1
 Provides:       bundled(js-jquery-ui) = 1.13.2
 Provides:       bundled(js-qrious) = 4.0.2
+Obsoletes:      lemonldap-ng-nginx < %{version}-%{release}
+Provides:       lemonldap-ng-nginx = %{version}-%{release}
+Obsoletes:      perl-Lemonldap-NG-Portal < %{version}-%{release}
+Provides:       perl-Lemonldap-NG-Portal = %{version}-%{release}
 
 %description portal
 This package deploys the authentication portal.
 
 %package test
 Summary:        LemonLDAP-NG test applications
-Requires:       lemonldap-ng-conf = %{version}-%{release}
+Requires:       lemonldap-ng-common = %{version}-%{release}
+Obsoletes:      lemonldap-ng-nginx < %{version}-%{release}
+Provides:       lemonldap-ng-nginx = %{version}-%{release}
 
 %description test
 This package deploys small test applications.
 
 %package fastcgi-server
 Summary:        LemonLDAP-NG FastCGI Server
-Requires:       lemonldap-ng-conf = %{version}-%{release}
-Requires:       mod_fcgid
+Requires:       lemonldap-ng-common = %{version}-%{release}
 Requires:       perl(FCGI::ProcManager)
+%if 0%{?el7}
+Requires:       mod_fcgi
+%else
+Requires:       (mod_fcgid if httpd)
+%endif
 
 %description fastcgi-server
 This package deploys files needed to start a FastCGI server.
@@ -373,41 +413,6 @@ Requires:       uwsgi-plugin-psgi
 LemonLDAP::NG uWSGI server provides a replacement to LemonLDAP::NG FastCGI
 server, using uWSGI instead of Plack FCGI.
 
-%package nginx
-Summary:        LemonLDAP-NG Nginx support
-Requires:       nginx
-
-%description nginx
-Nginx support for LemonLDAP::NG.
-
-%package -n perl-Lemonldap-NG-Common
-Summary:        LemonLDAP-NG Common Modules
-Requires:       perl(JSON::XS)
-Requires:       perl(String::Random)
-Requires:       perl(Cache::Cache)
-
-%description -n perl-Lemonldap-NG-Common
-This package installs the configuration libraries used by other LemonLDAP::NG
-modules.
-
-%package -n perl-Lemonldap-NG-Handler
-Summary:        LemonLDAP-NG Handler Modules
-
-%description -n perl-Lemonldap-NG-Handler
-This package installs the Apache module part (handler) used to protect web
-areas.
-
-%package -n perl-Lemonldap-NG-Manager
-Summary:        LemonLDAP-NG Manager Modules
-
-%description -n perl-Lemonldap-NG-Manager
-This package installs the administration interface (manager).
-
-%package -n perl-Lemonldap-NG-Portal
-Summary:        LemonLDAP-NG Portal Modules
-
-%description -n perl-Lemonldap-NG-Portal
-This package installs the authentication portal.
 
 %if 0%{?with_selinux}
 %package selinux
@@ -570,7 +575,7 @@ sed -i 's:^dirName.*:dirName = %{lm_vardir}/conf:' \
     %{buildroot}%{lm_storagefile}
 
 
-%post conf
+%post common
 # Upgrade from previous version
 # See http://lemonldap-ng.org/documentation/1.0/upgrade
 if [ $1 -gt 1 ] ; then
@@ -584,7 +589,7 @@ if [ $1 -gt 1 ] ; then
     fi
 fi
 
-%preun conf
+%preun common
 # Upgrade from previous version
 if [ $1 -eq 1 ] ; then
     # Remove old symlinks in Apache configuration
@@ -623,16 +628,12 @@ fi
 
 %files
 
-%files conf
+%files common
 %doc changelog README.md AUTHORS CONTRIBUTING.md
 %doc for_etc_hosts
 %license COPYING LICENSE
 %dir %{lm_confdir}
 %config(noreplace) %attr(-,root,%{lm_apachegroup}) %{lm_storagefile}
-%config(noreplace) %{apache_confdir}/z-lemonldap-ng-handler.conf
-%config(noreplace) %{apache_confdir}/z-lemonldap-ng-manager.conf
-%config(noreplace) %{apache_confdir}/z-lemonldap-ng-api.conf
-%config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
 %{_mandir}/man1/convertConfig*
 %{_mandir}/man1/convertSessions*
 %{_mandir}/man1/convertToHashSessionStorage*
@@ -662,6 +663,12 @@ fi
 %dir %{lm_vardir}/notifications
 %dir %{lm_cachedir}
 %config(noreplace) %{lm_vardir}/conf/lmConf-1.json
+%{_mandir}/man3/Lemonldap::NG::Common*.3pm.*
+%dir %{perl_vendorlib}/Lemonldap
+%dir %{perl_vendorlib}/Lemonldap/NG
+%{perl_vendorlib}/Lemonldap/NG/Common.pm
+%{perl_vendorlib}/Lemonldap/NG/Common/
+%{perl_vendorlib}/auto/Lemonldap/NG/Common/
 
 %files doc
 %doc %{lm_sharedir}/doc
@@ -670,12 +677,25 @@ fi
 
 %files handler
 %{lm_bindir}/purgeLocalCache
+%config(noreplace) %{apache_confdir}/z-lemonldap-ng-handler.conf
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/handler-nginx.conf
+%config(noreplace) %{_sysconfdir}/nginx/nginx-lmlog.conf
 %config(noreplace) %{_sysconfdir}/cron.d/lemonldap-ng-handler
 %{lm_sharedir}/handler
 %{lm_examplesdir}/handler
 %{lm_sharedir}/llng-server/
+%{_mandir}/man3/Lemonldap::NG::Handler*.3pm.*
+%{_mandir}/man3/Plack::Middleware::Auth::LemonldapNG.3pm.*
+%{perl_vendorlib}/Lemonldap/NG/Handler.pm
+%{perl_vendorlib}/Lemonldap/NG/Handler/
+%{perl_vendorlib}/auto/Lemonldap/NG/Handler/
+%{perl_vendorlib}/Plack/Middleware/Auth/LemonldapNG.pm
 
 %files manager
+%config(noreplace) %{apache_confdir}/z-lemonldap-ng-manager.conf
+%config(noreplace) %{apache_confdir}/z-lemonldap-ng-api.conf
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/manager-nginx.conf
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/api-nginx.conf
 %{lm_sharedir}/manager
 %{lm_examplesdir}/manager
 %{lm_bindir}/lmConfigEditor
@@ -683,18 +703,28 @@ fi
 %{lm_bindir}/llngDeleteSession
 %{_mandir}/man1/lemonldap-ng-cli*
 %{_mandir}/man1/importMetadata*
+%{_mandir}/man3/Lemonldap::NG::Manager*.3pm.*
+%{perl_vendorlib}/Lemonldap/NG/Manager.pm
+%{perl_vendorlib}/Lemonldap/NG/Manager/
 
 %files portal
 %{lm_sharedir}/portal
 %{lm_bindir}/purgeCentralCache
+%config(noreplace) %{apache_confdir}/z-lemonldap-ng-portal.conf
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/portal-nginx.conf
 %config(noreplace) %{_sysconfdir}/cron.d/lemonldap-ng-portal
 %{lm_examplesdir}/portal
 %defattr(-,%{lm_apacheuser},%{lm_apachegroup},750)
 %dir %{lm_vardir}/captcha
+%{_mandir}/man3/Lemonldap::NG::Portal*.3pm.*
+%{perl_vendorlib}/Lemonldap/NG/Portal.pm
+%{perl_vendorlib}/Lemonldap/NG/Portal/
 
 %files test
 %{lm_sharedir}/test
 %config(noreplace) %{apache_confdir}/z-lemonldap-ng-test.conf
+%config(noreplace) %{_sysconfdir}/nginx/conf.d/test-nginx.conf
+%config(noreplace) %{_sysconfdir}/nginx/nginx-lua-headers.conf
 
 %files fastcgi-server
 %{lm_sbindir}/llng-fastcgi-server
@@ -707,41 +737,6 @@ fi
 
 %files uwsgi-app
 %config(noreplace) %{_sysconfdir}/uwsgi/apps-available/llng-server.yaml
-
-%files nginx
-%config(noreplace) %{_sysconfdir}/nginx/conf.d/handler-nginx.conf
-%config(noreplace) %{_sysconfdir}/nginx/conf.d/manager-nginx.conf
-%config(noreplace) %{_sysconfdir}/nginx/nginx-lmlog.conf
-%config(noreplace) %{_sysconfdir}/nginx/nginx-lua-headers.conf
-%config(noreplace) %{_sysconfdir}/nginx/conf.d/portal-nginx.conf
-%config(noreplace) %{_sysconfdir}/nginx/conf.d/api-nginx.conf
-%config(noreplace) %{_sysconfdir}/nginx/conf.d/test-nginx.conf
-
-%files -n perl-Lemonldap-NG-Common
-%{_mandir}/man3/Lemonldap::NG::Common*.3pm.*
-%dir %{perl_vendorlib}/Lemonldap
-%dir %{perl_vendorlib}/Lemonldap/NG
-%{perl_vendorlib}/Lemonldap/NG/Common.pm
-%{perl_vendorlib}/Lemonldap/NG/Common/
-%{perl_vendorlib}/auto/Lemonldap/NG/Common/
-
-%files -n perl-Lemonldap-NG-Handler
-%{_mandir}/man3/Lemonldap::NG::Handler*.3pm.*
-%{_mandir}/man3/Plack::Middleware::Auth::LemonldapNG.3pm.*
-%{perl_vendorlib}/Lemonldap/NG/Handler.pm
-%{perl_vendorlib}/Lemonldap/NG/Handler/
-%{perl_vendorlib}/auto/Lemonldap/NG/Handler/
-%{perl_vendorlib}/Plack/Middleware/Auth/LemonldapNG.pm
-
-%files -n perl-Lemonldap-NG-Manager
-%{_mandir}/man3/Lemonldap::NG::Manager*.3pm.*
-%{perl_vendorlib}/Lemonldap/NG/Manager.pm
-%{perl_vendorlib}/Lemonldap/NG/Manager/
-
-%files -n perl-Lemonldap-NG-Portal
-%{_mandir}/man3/Lemonldap::NG::Portal*.3pm.*
-%{perl_vendorlib}/Lemonldap/NG/Portal.pm
-%{perl_vendorlib}/Lemonldap/NG/Portal/
 
 %if 0%{?with_selinux}
 %files selinux
