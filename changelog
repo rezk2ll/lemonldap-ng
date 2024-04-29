@@ -1,3 +1,61 @@
+lemonldap-ng (2.19.0) jammy; urgency=medium
+
+  * Bugs:
+    * #3047: Headers are sent twice in Traefik handler
+    * #3048: Error in Notification DBI backend
+    * #3076: RefreshSession plugin doesn't work with choice
+    * #3077: Handling of groups from an OIDC provider
+    * #3079: UserDB::OpenIDConnect doesn't handle arrays of values
+    * #3087: RefreshSession plugin creates group duplicates when multiple sessions are used
+    * #3091: Send mail on password change doesn't work corretcly
+    * #3104: Incorrect initialization of SAML IDP causes IDP to fallback to default settings
+    * #3105: SAML cannot set custom signature scheme when used in Choice
+    * #3107: Manager diff viewer doesn't work when adding new macro named "groups"
+    * #3112: Configuration override from lemonldap-ng.ini can be lost due to cache issues
+    * #3119: Inconsistent logs when using "faketicket" CAS access policy
+    * #3121: LLNG should not fail when local cache is broken
+    * #3123: JWKS timeout is not implemented
+    * #3133: lemonldap-ng-sessions doesn't read lemonldap-ng.ini
+    * #3136: sessionInfo is not available when re-sending 2FA code
+    * #3137: re-sending 2FA code does not work with registrable extra 2FA
+    * #3139: Bad UI when registration rule doesn't match for an extra second factor
+    * #3142: WebAuthn registration/authentication fails when running on custom HTTPS port
+
+  * New features:
+    * #3030: Implement ANSSI recommendations for securing the implementation of the Openid-Connect protocol
+    * #3038: OKTA 2FA module
+    * #3073: [OIDC] Implement optional "Passing Request Parameters as JWTs"
+    * #3080: Allow users to retry 2FA
+    * #3094: add a portalCustomJs option
+    * #3095: Add llngUserAttributes tools
+    * #3097: manager API: allow registration of 2FA
+    * #3103: Add a plugin/issuer for Jitsi Meet JWT authentication
+    * #3113: Add possibility to store conf secrets in separated files
+    * #3117: Add a hook before 2fa retry
+    * #3120: Add unique HTTP request ID to logs
+    * #3138: Add a search endpoint in manager 2FA api
+
+  * Improvements:
+    * #2941: Replace userLogger with a more flexible system
+    * #3040: Allow auto-detection of portal URL and domain
+    * #3054: Cannot get the full otpauth URL when registering a new TOTP
+    * #3057: Generate OpenAPI spec from Manager::Build
+    * #3075: Use `hash(session_id)` instead of `session_id` to store all sessions
+    * #3086: Make systemd timers taken from debian directory available globally
+    * #3088: Extend session lifetime when refreshing session/access token
+    * #3092: Display an error message when issuer context is not restored
+    * #3099: second factor type is not stored in history in case of a 2FA failure
+    * #3100: Add PKCE option inside Auth::OpenIDConnect
+    * #3101: OIDC offline session refresh has no access to previous session info
+    * #3102: Allow custom ordering in history session keys
+    * #3109: Conf test: should warn when auth is Choice and userDB isn't set to Choice or Same
+    * #3115: Date in login history is based on session _utime, not the very same time as the login triggering action
+    * #3124: Allow users to configure WebAuthn relying party ID
+    * #3131: Add Authorization header in Traefik handler
+    * #3132: Use POST instead GET in check entropy and HIBP modules
+
+ -- Clément <clem.oudot@gmail.com>  Mon, 29 Apr 2024 11:44:35 +0200
+
 lemonldap-ng (2.18.1) jammy; urgency=medium
 
   * Bugs:
