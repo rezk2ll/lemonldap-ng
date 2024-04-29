@@ -4,36 +4,24 @@ Installation from the tarball
 Get the tarball
 ---------------
 
-Get the tarball from `download page <https://lemonldap-ng.org/download.html>`__. You can also find
-on this page the SVN tarball if you want to test latest features.
+Get the tarball from `download page <https://lemonldap-ng.org/download.html>`__ and
+its associated GPG signature file.
 
+Signature check
+---------------
 
-.. attention::
-
-    The content of the SVN tarball is not the same as the
-    official tarball. Please see the next chapter to learn how build an
-    official tarball from SVN files.
-
-Build the tarball from SVN
---------------------------
-
-Either checkout or export the `SVN
-repository <http://forge.ow2.org/plugins/scmsvn/index.php?group_id=274>`__,
-or extract the SVN tarball to get the SVN files on your disk.
-
-Then go to trunk directory:
+Download the `Security GPG key <https://lemonldap-ng.org/security/GPG-KEY-LLNG-SECURITY>`__ and import it:
 
 ::
 
-   cd trunk
+    gpg --import GPG-KEY-LLNG-SECURITY
 
-And run the "dist" target:
+
+Then verify the signature of the tarball:
 
 ::
 
-   make dist
-
-The generated tarball is in the current directory.
+   gpg --verify lemonldap-ng-*.tar.gz.sig lemonldap-ng-*.tar.gz
 
 Extraction
 ----------
