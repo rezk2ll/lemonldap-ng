@@ -218,9 +218,9 @@ sub findUser {
     $self->logger->debug(
         'LDAP UserDB number of result(s): ' . $mesg->count() );
     if ( $mesg->count() ) {
-        my @results = map {
-            ( $_->dn() =~ /\b(?:uid|sAMAccountName)\x3d(.+?),/ ) ? [0] : ()
-        } $mesg->entries;
+        my @results =
+          map { ( $_->dn() =~ /\b(?:uid|sAMAccountName)\x3d(.+?),/ )[0] || () }
+          $mesg->entries;
         if (@results) {
             $req->data->{findUserAll} = \@results;
             my $rank = int( rand(@results) );
