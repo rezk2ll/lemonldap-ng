@@ -10,11 +10,11 @@ its associated GPG signature file.
 Signature check
 ---------------
 
-Download the `Security GPG key <https://lemonldap-ng.org/security/GPG-KEY-LLNG-SECURITY>`__ and import it:
+Download the `Security GPG key <https://lemonldap-ng.org/security/GPG-KEY-LLNG-SECURITY.asc>`__ and import it:
 
 ::
 
-    gpg --import GPG-KEY-LLNG-SECURITY
+    gpg --import GPG-KEY-LLNG-SECURITY.asc
 
 
 Then verify the signature of the tarball:
