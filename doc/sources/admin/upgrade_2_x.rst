@@ -8,24 +8,12 @@ backups and a rollback plan ready!
 Known issues
 -------------
 
-Upgrading from 2.0.0 or 2.0.1 to later versions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you have :doc:`installed LemonLDAP::NG from official RPMs<installrpm>`, you
-may run into bug `#1757
-<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1757>`__ and lose your
-Apache configuration files while updating from LemonLDAP::NG 2.0.0 or 2.0.1 to
-later versions. Please backup your ``/etc/httpd/conf.d/z-lemonldap-ng-*.conf``
-files before the update.
-
-
 .. Adjust for every new version that has known, unreleased bugs
 
 Known regressions in the latest released version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some regressions have been found on OpenID Connect signature management
-and on configuration reload. Upgrade to 2.18.1 to fix them.
+No known issues.
 
 2.19.0
 ------
@@ -33,7 +21,7 @@ and on configuration reload. Upgrade to 2.18.1 to fix them.
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can skip this entire section if you use the default ``bootstrap`` theme or if your custo theme only uses ``custom*.tpl`` templates.
+You can skip this entire section if you use the default ``bootstrap`` theme or if your custom theme only uses ``custom*.tpl`` templates.
 
 TOTP registration
 ^^^^^^^^^^^^^^^^^
@@ -1236,3 +1224,12 @@ manager API config:
    lemonldap-ng-handler package and installed in /etc/nginx/snippets
    directory.
 
+Upgrading from 2.0.0 or 2.0.1 to later versions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you have :doc:`installed LemonLDAP::NG from official RPMs<installrpm>`, you
+may run into bug `#1757
+<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1757>`__ and lose your
+Apache configuration files while updating from LemonLDAP::NG 2.0.0 or 2.0.1 to
+later versions. Please backup your ``/etc/httpd/conf.d/z-lemonldap-ng-*.conf``
+files before the update.
