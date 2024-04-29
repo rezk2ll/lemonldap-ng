@@ -1,6 +1,7 @@
 [Unit]
 Description=FastCGI server for Lemonldap::NG websso system
 After=network.target
+Documentation=https://lemonldap-ng.org/documentation/latest/fastcgiserver
 
 [Service]
 Type=forking
@@ -9,6 +10,7 @@ PIDFile=__FASTCGISOCKDIR__/llng-fastcgi-server.pid
 ExecStart=__SBINDIR__/llng-fastcgi-server
 ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile ${PID}
 KillMode=mixed
+PrivateTmp=yes
 
 [Install]
 Alias=llng-fastcgi-server.service

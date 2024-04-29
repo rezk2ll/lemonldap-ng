@@ -41,6 +41,7 @@ COMPRESSSUFFIX=tar.gz
 NGINX=/usr/sbin/nginx
 UGLIFYJSVERSION:=$(shell uglifyjs --version|perl -pe 's/^[^\d]*(\d).*$$/$$1/')
 CHOWN=chown
+CHGRP=chgrp
 CHMOD=chmod
 
 # Default directories install
@@ -53,6 +54,8 @@ LMPREFIX=$(PREFIX)/lemonldap-ng
 BINDIR=$(LMPREFIX)/bin
 SBINDIR=$(LMPREFIX)/sbin
 INITDIR=$(LMPREFIX)/etc/init.d
+UNITDIR=$(LMPREFIX)/usr/lib/systemd/system
+TMPFILESDIR=$(LMPREFIX)/usr/lib/tmpfiles.d
 ETCDEFAULTDIR=$(LMPREFIX)/etc/default
 DATADIR=$(LMPREFIX)/data
 
@@ -162,6 +165,8 @@ RSBINDIR=$(DESTDIR)/$(SBINDIR)
 RUWSGIYAMLDIR=$(DESTDIR)/$(UWSGIYAMLDIR)
 RLLNGAPPDIR=$(DESTDIR)/$(LLNGAPPDIR)
 RINITDIR=$(DESTDIR)/$(INITDIR)
+RUNITDIR=$(DESTDIR)/$(UNITDIR)
+RTMPFILESDIR=$(DESTDIR)/$(TMPFILESDIR)
 RETCDEFAULTDIR=$(DESTDIR)/$(ETCDEFAULTDIR)
 RDATADIR=$(DESTDIR)/$(DATADIR)
 RPORTALDIR=$(DESTDIR)/$(PORTALDIR)
@@ -351,14 +356,14 @@ fastcgi-server/man/llng-fastcgi-server.8p: fastcgi-server/sbin/llng-fastcgi-serv
 json:	$(MANAGERJSONDST) fastcgi-server/man/llng-fastcgi-server.8p debian/*cron*
 	@if which yui-compressor >/dev/null; then $(MAKE) minify; fi
 
-debian/liblemonldap-ng-handler-perl.cron.d: lemonldap-ng-handler/eg/scripts/purgeLocalCache.cron.d
+debian/liblemonldap-ng-handler-perl.cron.d: lemonldap-ng-handler/scripts/purgeLocalCache.cron.d
 	@perl -pe 's/__APACHEUSER__/www-data/g;s@__BINDIR__@/usr/share/lemonldap-ng/bin@g' \
-		lemonldap-ng-handler/eg/scripts/purgeLocalCache.cron.d \
+		lemonldap-ng-handler/scripts/purgeLocalCache.cron.d \
 		> debian/liblemonldap-ng-handler-perl.cron.d
 
-debian/liblemonldap-ng-portal-perl.cron.d: lemonldap-ng-portal/site/cron/purgeCentralCache.cron.d
+debian/liblemonldap-ng-portal-perl.cron.d: lemonldap-ng-portal/scripts/purgeCentralCache.cron.d
 	@perl -pe 's/__APACHEUSER__/www-data/g;s@__BINDIR__@/usr/share/lemonldap-ng/bin@g' \
-		lemonldap-ng-portal/site/cron/purgeCentralCache.cron.d \
+		lemonldap-ng-portal/scripts/purgeCentralCache.cron.d \
 		> debian/liblemonldap-ng-portal-perl.cron.d
 
 $(MANAGERJSONDST):	$(MANAGERJSONSRC)
@@ -650,8 +655,8 @@ install_bin:	install_conf_dir
 	# Binary install
 	@install -v -d $(RBINDIR)
 	@cp -f\
-		${SRCHANDLERDIR}/eg/scripts/purgeLocalCache \
-		${SRCPORTALDIR}/site/cron/purgeCentralCache \
+		${SRCHANDLERDIR}/scripts/purgeLocalCache \
+		${SRCPORTALDIR}/scripts/purgeCentralCache \
 		${SRCPORTALDIR}/scripts/llngDeleteSession \
 		${SRCCOMMONDIR}/scripts/convertConfig \
 		${SRCCOMMONDIR}/scripts/convertSessions \
@@ -689,29 +694,41 @@ install_bin:	install_conf_dir
 	@$(CHMOD) +x $(RBINDIR)/*
 
 install_fastcgi_server:
-	@install -v -d $(RSBINDIR) $(RINITDIR) $(RETCDEFAULTDIR) $(RFASTCGISOCKDIR)
+	@install -v -d $(RSBINDIR) $(RINITDIR) $(RUNITDIR) $(RTMPFILESDIR) $(RETCDEFAULTDIR) $(RFASTCGISOCKDIR)
 	@cp -f fastcgi-server/sbin/llng-fastcgi-server $(RSBINDIR)
 	@$(CHMOD) +x $(RSBINDIR)/llng-fastcgi-server
 	@cp -f fastcgi-server/rc/llng-fastcgi-server $(RINITDIR)
+	@cp -f fastcgi-server/systemd/llng-fastcgi-server.service $(RUNITDIR)
+	@cp -f fastcgi-server/systemd/llng-fastcgi-server.tmpfile $(RTMPFILESDIR)/llng-fastcgi-server.conf
 	@cp -f fastcgi-server/default/llng-fastcgi-server $(RETCDEFAULTDIR)
 	@$(PERL) -pi -e 's#__SBINDIR__#$(SBINDIR)#;s#__DEFAULTDIR__#$(ETCDEFAULTDIR)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g;' \
 		$(RETCDEFAULTDIR)/llng-fastcgi-server \
 		$(RSBINDIR)/llng-fastcgi-server \
+		$(RUNITDIR)/llng-fastcgi-server.service \
+		$(RTMPFILESDIR)/llng-fastcgi-server.conf \
 		$(RINITDIR)/llng-fastcgi-server
 	@if [ ! "$(FASTCGIUSER)" ]; then \
-		$(PERL) -pi -e 's#__USER__#nobody#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
+		$(PERL) -pi -e 's#__USER__#nobody#' \
+			$(RTMPFILESDIR)/llng-fastcgi-server.conf \
+			$(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	else \
-		$(PERL) -pi -e 's#__USER__#$(FASTCGIUSER)#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
+		$(PERL) -pi -e 's#__USER__#$(FASTCGIUSER)#' \
+			$(RTMPFILESDIR)/llng-fastcgi-server.conf \
+			$(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	fi
 	@if [ ! "$(FASTCGIGROUP)" ]; then \
-		$(PERL) -pi -e 's#__GROUP__#nobody#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
+		$(PERL) -pi -e 's#__GROUP__#nobody#' \
+			$(RTMPFILESDIR)/llng-fastcgi-server.conf \
+			$(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	else \
-		$(PERL) -pi -e 's#__GROUP__#$(FASTCGIGROUP)#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
+		$(PERL) -pi -e 's#__GROUP__#$(FASTCGIGROUP)#' \
+			$(RTMPFILESDIR)/llng-fastcgi-server.conf \
+			$(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	fi
 	@if [ "$(FASTCGIUSER)" != "" ]; then \
 		$(CHOWN) $(FASTCGIUSER) $(RFASTCGISOCKDIR) || exit 1; \
 		if [ "$(FASTCGIGROUP)" != "" ]; then \
-			chgrp $(FASTCGIGROUP) $(RFASTCGISOCKDIR) || exit 1; \
+			$(CHGRP) $(FASTCGIGROUP) $(RFASTCGISOCKDIR) || exit 1; \
 		fi; \
 		$(CHMOD) 770 $(RFASTCGISOCKDIR); \
 	else \
@@ -810,9 +827,6 @@ install_manager_site:	install_conf_dir
 	elif test "$(USEDEBIANLIBS)" = "yes"; then \
 		rm -rvf $(MANAGERLIBSTOREMOVEFORDEBIAN); \
 	fi
-	# Clean svn files
-	@rm -rf $$(find ${RMANAGERSTATICDIR} \
-		$(RMANAGERTEMPLATESDIR) $(RCONFDIR) -type d -name .svn)
 	@$(PERL) -i -pe 's#__MANAGERSTATICDIR__#$(MANAGERRELATIVESTATICDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 	@$(PERL) -i -pe 's#__MANAGERDOCDIR__#$(MANAGERRELATIVEDOCDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 	@$(PERL) -i -pe 's#__MANAGERTEMPLATESDIR__#$(MANAGERTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
@@ -821,7 +835,7 @@ install_portal_site:	install_conf_dir
 	# Portal install
 	@install -v -d $(RPORTALDIR) $(RPORTALSTATICDIR) \
 		$(RPORTALTEMPLATESDIR) \
-		$(RCRONDIR) $(RCONFDIR)
+		$(RCRONDIR) $(RUNITDIR) $(RCONFDIR)
 	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/index.* $(RPORTALSITEDIR)
 	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/static/* $(RPORTALSTATICDIR)
 	@cd $(SRCPORTALDIR)/site/templates; for f in `find * -type f -name '*.tpl'`; do \
@@ -851,37 +865,54 @@ install_portal_site:	install_conf_dir
 		rm -rvf $(PORTALLIBSTOREMOVEFORDEBIAN); \
 	fi
 	# Cron files
-	@cp -f $(SRCPORTALDIR)/site/cron/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng-portal
+	@cp -f $(SRCPORTALDIR)/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng-portal
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-portal; \
 	else \
 		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng-portal; \
 	fi
 	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng-portal
-	# Clean SVN files
-	@rm -rf $$(find ${RPORTALDIR} $(RPORTALSKINSDIR) $(RCRONDIR) $(RCONFDIR) -type d -name .svn)
+	# systemd files
+	@cp -f $(SRCPORTALDIR)/scripts/lemonldap-ng-portal.service \
+		$(SRCPORTALDIR)/scripts/lemonldap-ng-portal.timer \
+		$(RUNITDIR)/
+	@if [ ! "$(APACHEUSER)" ]; then \
+		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RUNITDIR)/lemonldap-ng-portal.service; \
+	else \
+		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RUNITDIR)/lemonldap-ng-portal.service;  \
+	fi
+	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RUNITDIR)/lemonldap-ng-portal.service
+	#
 	@$(PERL) -i -pe 's#__PORTALSTATICDIR__#$(PORTALRELATIVESTATICDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 	@$(PERL) -i -pe 's#__PORTALTEMPLATESDIR__#$(PORTALTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 
 install_handler_site:	install_conf_dir
 	# Handler install
-	@install -v -d ${RHANDLERDIR}
-	@cp -f $(SRCHANDLERDIR)/eg/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler
+	@install -v -d ${RHANDLERDIR} $(RCRONDIR) $(RUNITDIR)
+	# Cron files
+	@cp -f $(SRCHANDLERDIR)/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-handler; \
 	else \
 		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng-handler; \
 	fi
 	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng-handler
-	@rm -rf $$(find $(RHANDLERDIR) -type d -name .svn)
+	# systemd files
+	@cp -f $(SRCHANDLERDIR)/scripts/lemonldap-ng-handler.service \
+		$(SRCHANDLERDIR)/scripts/lemonldap-ng-handler.timer \
+		$(RUNITDIR)/
+	@if [ ! "$(APACHEUSER)" ]; then \
+		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RUNITDIR)/lemonldap-ng-handler.service; \
+	else \
+		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RUNITDIR)/lemonldap-ng-handler.service; \
+	fi
+	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RUNITDIR)/lemonldap-ng-handler.service
 
 install_test_site:
 	# Test site install
 	@install -v -d $(RTESTDIR)
 	@cp -pR -f _example/test/* $(RTESTDIR)
-	@rm -rf $$(find $(RTESTDIR) -type d -name .svn)
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RTESTDIR)/index.pl
-	@rm -rf $$(find $(RTESTDIR) -type d -name .svn)
 
 install_examples_site:
 	# Examples install
@@ -892,7 +923,6 @@ install_examples_site:
 	@cp -a -f fastcgi-server/psgi/llngapp.psgi $(REXAMPLESDIR)/$$i
 	@rm -rf $(REXAMPLESDIR)/portal/skins \
 		$(REXAMPLESDIR)/manager/skins \
-	@rm -rf $$(find $(REXAMPLESDIR) -type d -name .svn)
 
 install_doc_site:
 	# Offline documentation install
@@ -923,7 +953,7 @@ install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir ins
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		$(CHOWN) $(APACHEUSER) $(RFILECONFIGDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
-			chgrp $(APACHEGROUP) $(RFILECONFIGDIR) || exit 1; \
+			$(CHGRP) $(APACHEGROUP) $(RFILECONFIGDIR) || exit 1; \
 		fi; \
 		$(CHMOD) 770 $(RFILECONFIGDIR); \
 	else \
@@ -933,7 +963,6 @@ install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir ins
 	@cp $(SRCCOMMONDIR)/tools/sso.schema $(RTOOLSDIR)
 	$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; s#__CACHEDIR__#$(CACHEDIR)#g;' \
 		$(RCONFDIR)/$(CONFFILENAME)
-	@rm -rf $$(find $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR) -type d -name .svn)
 
 install_sessions_dir:
 	@install -m 777 -v -d $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR)
@@ -941,7 +970,7 @@ install_sessions_dir:
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		$(CHOWN) $(APACHEUSER) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
-			chgrp $(APACHEGROUP) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR) || exit 1; \
+			$(CHGRP) $(APACHEGROUP) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR) || exit 1; \
 		fi; \
 		$(CHMOD) 770 $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR); \
 	else \
@@ -954,7 +983,7 @@ install_notif_dir:
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		$(CHOWN) $(APACHEUSER) $(RFILENOTIFDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
-			chgrp $(APACHEGROUP) $(RFILENOTIFDIR) || exit 1; \
+			$(CHGRP) $(APACHEGROUP) $(RFILENOTIFDIR) || exit 1; \
 		fi; \
 		$(CHMOD) 770 $(RFILENOTIFDIR); \
 	else \
@@ -967,7 +996,7 @@ install_captcha_dir:
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		$(CHOWN) $(APACHEUSER) $(RCAPTCHADIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
-			chgrp $(APACHEGROUP) $(RCAPTCHADIR) || exit 1; \
+			$(CHGRP) $(APACHEGROUP) $(RCAPTCHADIR) || exit 1; \
 		fi; \
 		$(CHMOD) 770 $(RCAPTCHADIR); \
 	else \
@@ -980,7 +1009,7 @@ install_cache_dir:
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		$(CHOWN) $(APACHEUSER) $(RCACHEDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
-			chgrp $(APACHEGROUP) $(RCACHEDIR) || exit 1; \
+			$(CHGRP) $(APACHEGROUP) $(RCACHEDIR) || exit 1; \
 		fi; \
 		$(CHMOD) 770 $(RCACHEDIR); \
 	else \
