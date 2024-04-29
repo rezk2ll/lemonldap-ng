@@ -218,6 +218,7 @@ groups                                                  Groups                  
 groupsBeforeMacros                                      Compute groups before macros                                                         ✔
 handlerInternalCache                                    Handler internal cache timeout                                                       ✔      ✔               ✔
 handlerServiceTokenTTL                                  Handler ServiceToken timeout                                                         ✔      ✔               ✔
+hashedSessionStore                                      Securize storage of sensible sessions                                                ✔
 hiddenAttributes                                        Name of attributes to hide in logs                                                   ✔
 hideOldPassword                                         Hide old password in portal                                                          ✔
 httpOnly                                                Enable httpOnly flag in cookie                                                       ✔      ✔
@@ -239,6 +240,9 @@ issuerDBGetActivation                                   Get issuer activation   
 issuerDBGetParameters                                   List of virtualHosts with their get parameters                                       ✔
 issuerDBGetPath                                         Get issuer request path                                                              ✔
 issuerDBGetRule                                         Get issuer rule                                                                      ✔
+issuerDBJitsiMeetTokensActivation                       Jitsi issuer activation                                                              ✔
+issuerDBJitsiMeetTokensPath                             Jitsi issuer request path                                                            ✔
+issuerDBJitsiMeetTokensRule                             Jitsi issuer rule                                                                    ✔
 issuerDBOpenIDActivation                                OpenID server activation                                                             ✔
 issuerDBOpenIDConnectActivation                         OpenID Connect server activation                                                     ✔
 issuerDBOpenIDConnectPath                               OpenID Connect server request path                                                   ✔
@@ -249,6 +253,14 @@ issuerDBSAMLActivation                                  SAML IDP activation     
 issuerDBSAMLPath                                        SAML IDP request path                                                                ✔
 issuerDBSAMLRule                                        SAML IDP rule                                                                        ✔
 issuersTimeout                                          Token timeout for issuers                                                            ✔
+jitsiAppId                                              Jitsi application ID                                                                 ✔
+jitsiAppSecret                                          Jitsi application secret                                                             ✔
+jitsiDefaultServer                                      Jitsi server URL                                                                     ✔
+jitsiExpiration                                         Jitsi JWT expiration                                                                 ✔
+jitsiIdAttribute                                        Jitsi attribute for ID                                                               ✔
+jitsiMailAttribute                                      Jitsi attribute for email                                                            ✔
+jitsiNameAttribute                                      Jitsi attribute for name                                                             ✔
+jitsiSigningAlg                                         Jitsi JWT signature method                                                           ✔
 jsRedirect                                              Use javascript for redirections                                                      ✔
 key                                                     Secret key                                                                           ✔
 krbAllowedDomains                                       Allowed domains                                                                      ✔
@@ -381,6 +393,7 @@ oidcServiceDynamicRegistrationExportedVars              OpenID Connect exported 
 oidcServiceDynamicRegistrationExtraClaims               OpenID Connect extra claims for dynamic registration                                 ✔
 oidcServiceEncAlgorithmAlg                              JWT encryption algorithme                                                            ✔
 oidcServiceEncAlgorithmEnc                              JWT encryption algorithme                                                            ✔
+oidcServiceHideMetadata                                                                                                                      ✔
 oidcServiceIDTokenExpiration                            OpenID Connect global ID token TTL                                                   ✔
 oidcServiceIgnoreScopeForClaims                         OpenID Connect release all attributes even when not allowed by scope                 ✔
 oidcServiceKeyIdEnc                                     OpenID Connect Encryption Key ID                                                     ✔
@@ -418,6 +431,13 @@ oidcServicePublicKeyEnc                                                         
 oidcServicePublicKeySig                                                                                                                      ✔
 oidcStorage                                             Apache::Session module to store OIDC user data                                       ✔
 oidcStorageOptions                                      Apache::Session module parameters                                                    ✔
+okta2fActivation                                        Okta2F activation                                                                    ✔
+okta2fAdminURL                                          Okta Administration URL                                                              ✔
+okta2fApiKey                                            Okta API key                                                                         ✔
+okta2fAuthnLevel                                        Authentication level for users authentified by Okta2F                                ✔
+okta2fLabel                                             Portal label for Okta2F                                                              ✔
+okta2fLoginAttribute                                    Session key containing Okta login                                                    ✔
+okta2fLogo                                              Custom logo for Okta 2F                                                              ✔
 oldNotifFormat                                          Use old XML format for notifications                                                 ✔
 openIdAttr                                                                                                                                   ✔
 openIdAuthnLevel                                        OpenID authentication level                                                          ✔
@@ -462,6 +482,7 @@ portal                                                  Portal URL              
 portalAntiFrame                                         Avoid portal to be displayed inside frames                                           ✔
 portalCheckLogins                                       Display login history checkbox in portal                                             ✔
 portalCustomCss                                         Path to custom CSS file                                                              ✔
+portalCustomJs                                          Path to custom JS file                                                               ✔
 portalDisplayAppslist                                   Display applications tab in portal                                                   ✔
 portalDisplayCertificateResetByMail                     Display certificate reset by mail button in portal                                   ✔
 portalDisplayChangePassword                             Display password tab in portal                                                       ✔
@@ -637,6 +658,7 @@ sfRemovedNotifRef                                       Notification reference  
 sfRemovedNotifTitle                                     Notification title                                                                   ✔
 sfRemovedUseNotif                                       Use Notifications plugin to display message                                          ✔
 sfRequired                                              Second factor required                                                               ✔
+sfRetries                                               Allowed number of retries                                                            ✔
 showLanguages                                           Display langs icons                                                                  ✔
 singleIP                                                Allow only one session per IP                                                        ✔
 singleSession                                           Allow only one session per user                                                      ✔
@@ -727,6 +749,7 @@ webauthn2fSelfRegistration                              WebAuthn self registrati
 webauthn2fUserCanRemoveKey                              Authorize users to remove existing WebAuthn                                          ✔
 webauthn2fUserVerification                              Verify user during registration and login                                            ✔
 webauthnDisplayNameAttr                                 Session attribute containing user display name                                       ✔
+webauthnRpId                                            WebAuthn Relying Party ID                                                            ✔
 webauthnRpName                                          WebAuthn Relying Party display name                                                  ✔
 whatToTrace                                             Session parameter used to fill REMOTE_USER                                           ✔      ✔
 wsdlServer                                              Enable /portal.wsdl server                                                           ✔
@@ -785,4 +808,8 @@ SOAP server location (URL)                                                    pr
 `LWP::UserAgent <http://search.cpan.org/perldoc?LWP::UserAgent>`__ parameters proxyOptions
 SOAP user                                                                     User
 SOAP password                                                                 Password
+Overlay real configuration backend                                            overlayRealtype      :doc:`Overlay<overlaybackend>`
+Overlay directory                                                             overlayDirectory     :doc:`Overlay<overlaybackend>`
+Overlay write authorization                                                   overlayWrite         :doc:`Overlay<overlaybackend>`
+
 ============================================================================= ==================== ===========================================================
