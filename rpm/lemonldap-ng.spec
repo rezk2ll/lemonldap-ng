@@ -595,6 +595,9 @@ fi
 
 %post portal
 %systemd_post lemonldap-ng-portal.service
+if [ $1 -gt 1 ] ; then
+  systemctl preset lemonldap-ng-portal.timer || :
+fi
 
 %preun portal
 %systemd_preun lemonldap-ng-portal.service
@@ -604,6 +607,9 @@ fi
 
 %post handler
 %systemd_post lemonldap-ng-handler.service
+if [ $1 -gt 1 ] ; then
+  systemctl preset lemonldap-ng-handler.timer || :
+fi
 
 %preun handler
 %systemd_preun lemonldap-ng-handler.service
