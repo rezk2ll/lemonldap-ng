@@ -895,6 +895,7 @@
 "passwordPolicyMinDigit":"Minimalna liczba cyfr",
 "passwordPolicyMinLower":"Minimalna liczba małych liter",
 "passwordPolicyMinSize":"Minimalny rozmiar",
+"passwordPolicyMaxSize":"Maximal size",
 "passwordPolicyMinSpeChar":"Minimalna liczba znaków specjalnych",
 "passwordPolicyMinUpper":"Minimalna liczba dużych liter",
 "passwordPolicySpecialChar":"Dozwolone znaki specjalne",

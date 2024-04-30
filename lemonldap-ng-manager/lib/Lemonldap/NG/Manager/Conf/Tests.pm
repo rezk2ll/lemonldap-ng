@@ -1272,6 +1272,19 @@ sub tests {
                   . 'when authentication is required on authorization endpoint: '
                   . join( ', ', @pb ) );
         },
+
+        # Test password policy if enabled
+        ppMaxSizeGreaterThanMinSize => sub {
+            return ( 1,
+                'Password maximum size should be greater than minimal size' )
+              if ( (
+                    $conf->{passwordPolicyMinSize} >=
+                    $conf->{passwordPolicyMaxSize}
+                )
+                and $conf->{passwordPolicyActivation}
+              );
+            return 1;
+        },
     };
 }
 

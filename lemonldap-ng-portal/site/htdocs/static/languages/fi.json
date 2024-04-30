@@ -266,6 +266,7 @@
 "passwordPolicyMinDigit":"Numeroiden vähimmäismäärä:",
 "passwordPolicyMinLower":"Pienten kirjainten vähimmäismäärä:",
 "passwordPolicyMinSize":"Vähimmäispituus:",
+"passwordPolicyMaxSize":"Maximal size:",
 "passwordPolicyMinSpeChar":"Erikoismerkkien vähimmäismäärä:",
 "passwordPolicyMinUpper":"Isojen kirjainten vähimmäismäärä:",
 "passwordPolicyNone":"Olet vapaa valitsemaan salasanasi!",

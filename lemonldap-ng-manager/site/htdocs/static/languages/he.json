@@ -895,6 +895,7 @@
 "passwordPolicyMinDigit":"כמות מזערית של ספרות",
 "passwordPolicyMinLower":"כמות מזערית של אותיות קטנות",
 "passwordPolicyMinSize":"גודל מזערי",
+"passwordPolicyMaxSize":"Maximal size",
 "passwordPolicyMinSpeChar":"Minimal special characters",
 "passwordPolicyMinUpper":"כמות מזערית של אותיות גדולות",
 "passwordPolicySpecialChar":"Allowed special characters",

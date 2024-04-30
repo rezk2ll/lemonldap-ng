@@ -188,8 +188,13 @@ MANIFEST.SKIP
 META.json
 META.yml
 README
+scripts/lemonldap-ng-portal.preset
+scripts/lemonldap-ng-portal.service
+scripts/lemonldap-ng-portal.timer
 scripts/llngDeleteSession
 scripts/llngUserAttributes
+scripts/purgeCentralCache
+scripts/purgeCentralCache.cron.d
 site/coffee/2fregistration.coffee
 site/coffee/autoRenew.coffee
 site/coffee/captcha.coffee
@@ -216,8 +221,6 @@ site/coffee/u2fcheck.coffee
 site/coffee/u2fregistration.coffee
 site/coffee/webauthncheck.coffee
 site/coffee/webauthnregistration.coffee
-site/cron/purgeCentralCache
-site/cron/purgeCentralCache.cron.d
 site/htdocs/index.fcgi
 site/htdocs/index.psgi
 site/htdocs/static/bootstrap/2f.png

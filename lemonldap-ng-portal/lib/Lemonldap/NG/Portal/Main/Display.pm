@@ -2,7 +2,7 @@
 # Display functions for LemonLDAP::NG Portal
 package Lemonldap::NG::Portal::Main::Display;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.20.0';
 
 package Lemonldap::NG::Portal::Main;
 use strict;
@@ -101,6 +101,7 @@ sub displayInit {
 
     $self->isPP( $self->speChars
           || $self->conf->{passwordPolicyMinSize}
+          || $self->conf->{passwordPolicyMaxSize}
           || $self->conf->{passwordPolicyMinLower}
           || $self->conf->{passwordPolicyMinUpper}
           || $self->conf->{passwordPolicyMinDigit}
@@ -190,7 +191,7 @@ sub display {
             ASK_LOGINS        => $req->param('checkLogins')   || 0,
             ASK_STAYCONNECTED => $req->param('stayconnected') || 0,
             CONFIRMKEY        => $self->stamp(),
-            LIST              => $req->data->{list} || [],
+            LIST => $req->data->{list} || [],
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -214,7 +215,7 @@ sub display {
             AUTH_ERROR_ROLE                 => $req->error_role,
             ( 'AUTH_ERROR_' . $req->error ) => 1,
             MSG                             => $info,
-            URL           => $req->{urldc} || $req->portal,  # Fix 2158
+            URL => $req->{urldc} || $req->portal,    # Fix 2158
             HIDDEN_INPUTS => $self->buildOutgoingHiddenForm( $req, $method ),
             ACTIVE_TIMER  => $req->data->{activeTimer},
             CHOICE_PARAM  => $self->conf->{authChoiceParam},
@@ -300,11 +301,11 @@ sub display {
         %templateParams = (
             AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
             NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},
-            LOGOUT_URL              => $self->buildUrl( $req->portal, { logout => 1 } ),
-            APPSLIST_ORDER          => $req->{sessionInfo}->{'_appsListOrder'},
-            PING                    => $self->conf->{portalPingInterval},
-            DONT_STORE_PASSWORD     => $self->conf->{browsersDontStorePassword},
-            HIDE_OLDPASSWORD        => 0,
+            LOGOUT_URL     => $self->buildUrl( $req->portal, { logout => 1 } ),
+            APPSLIST_ORDER => $req->{sessionInfo}->{'_appsListOrder'},
+            PING           => $self->conf->{portalPingInterval},
+            DONT_STORE_PASSWORD => $self->conf->{browsersDontStorePassword},
+            HIDE_OLDPASSWORD    => 0,
             ENABLE_PASSWORD_DISPLAY =>
               $self->conf->{portalEnablePasswordDisplay},
             %{ $self->getPasswordPolicyTemplateVars },
@@ -423,11 +424,11 @@ sub display {
             LOGIN                           => $login,
             DONT_STORE_PASSWORD   => $self->conf->{browsersDontStorePassword},
             CHECK_LOGINS          => $self->conf->{portalCheckLogins},
-            ASK_LOGINS            => $req->param('checkLogins')   || 0,
+            ASK_LOGINS            => $req->param('checkLogins') || 0,
             ASK_STAYCONNECTED     => $req->param('stayconnected') || 0,
             DISPLAY_RESETPASSWORD => $self->conf->{portalDisplayResetPassword},
             DISPLAY_REGISTER      => $self->conf->{portalDisplayRegister},
-            DISPLAY_UPDATECERTIF  =>
+            DISPLAY_UPDATECERTIF =>
               $self->conf->{portalDisplayCertificateResetByMail},
             MAILCERTIF_URL => $self->certificateResetUrl,
             MAIL_URL       => $self->passwordResetUrl,
@@ -617,18 +618,17 @@ sub display {
                     : 0,
                     DISPLAY_SSL_FORM  => $displayType =~ /sslform/ ? 1 : 0,
                     DISPLAY_GPG_FORM  => $displayType =~ /gpgform/ ? 1 : 0,
-                    DISPLAY_LOGO_FORM => $displayType eq "logo" ? 1 : 0,
+                    DISPLAY_LOGO_FORM => $displayType eq "logo"    ? 1 : 0,
                     DISPLAY_FINDUSER  => scalar @$fields,
                     module            => $displayType eq "logo"
                     ? $self->getModule( $req, 'auth' )
                     : "",
                     AUTH_LOOP  => [],
-                    PORTAL_URL =>
-                      ( $displayType eq "logo" ? $req->portal : 0 ),
-                    MSG       => $req->info(),
-                    MANDATORY => $mandatory,
-                    FIELDS    => $fields,
-                    SPOOFID   => $slogin
+                    PORTAL_URL => ( $displayType eq "logo" ? $req->portal : 0 ),
+                    MSG        => $req->info(),
+                    MANDATORY  => $mandatory,
+                    FIELDS     => $fields,
+                    SPOOFID    => $slogin
                 );
             }
         }
@@ -869,8 +869,7 @@ sub mkOidcConsent {
         'oidcConsents',
         params => {
             partners => [
-                map {
-                    {
+                map { {
                         name        => $_,
                         epoch       => $consents->{$_}->{epoch},
                         scope       => $consents->{$_}->{scope},
@@ -896,6 +895,7 @@ sub getPasswordPolicyTemplateVars {
         ENABLE_CHECKHIBP => $self->conf->{checkHIBP},
         DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy},
         PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
+        PPOLICY_MAXSIZE  => $self->conf->{passwordPolicyMaxSize},
         PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
         PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
         PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
@@ -907,7 +907,7 @@ sub getPasswordPolicyTemplateVars {
         (
             $self->conf->{passwordPolicyMinSpeChar} && $self->speChars()
             ? (
-                PPOLICY_ALLOWEDSPECHAR      => $self->speChars(),
+                PPOLICY_ALLOWEDSPECHAR => $self->speChars(),
                 PPOLICY_ALLOWEDSPECHAR_JSON =>
                   to_json( $self->speChars(), { allow_nonref => 1 } ),
               )
@@ -928,7 +928,8 @@ sub getPpolicyRules {
     }
 
     # Sort ppolicy items by "order" numerically and then by "id" lexically
-    $result = [ sort { $a->{order} <=> $b->{order} || $a->{id} cmp $b->{id} } @$result ];
+    $result = [ sort { $a->{order} <=> $b->{order} || $a->{id} cmp $b->{id} }
+          @$result ];
 
     # Format data attributes for HTML::Template loop
     # data => { foo => "bar" } becomes

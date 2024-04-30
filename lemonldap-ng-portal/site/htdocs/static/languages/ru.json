@@ -266,6 +266,7 @@
 "passwordPolicyMinDigit":"Минимальное количество цифр:",
 "passwordPolicyMinLower":"Минимальное количество строчных букв:",
 "passwordPolicyMinSize":"Минимальная длина:",
+"passwordPolicyMaxSize":"Maximal size:",
 "passwordPolicyMinSpeChar":"Минимальное количество специальных символов:",
 "passwordPolicyMinUpper":"Минимальное количество заглавных букв:",
 "passwordPolicyNone":"Вы можете выбрать свой пароль!",

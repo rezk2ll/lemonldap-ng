@@ -38,6 +38,7 @@
  "ppolicy": {
             "display": "<TMPL_VAR NAME="DISPLAY_PPOLICY" DEFAULT="0">",
             "minsize": "<TMPL_VAR NAME="PPOLICY_MINSIZE" DEFAULT="0">",
+            "maxsize": "<TMPL_VAR NAME="PPOLICY_MAXSIZE" DEFAULT="0">",
             "minlower": "<TMPL_VAR NAME="PPOLICY_MINLOWER" DEFAULT="0">",
             "minupper": "<TMPL_VAR NAME="PPOLICY_MINUPPER" DEFAULT="0">",
             "mindigit": "<TMPL_VAR NAME="PPOLICY_MINDIGIT" DEFAULT="0">",

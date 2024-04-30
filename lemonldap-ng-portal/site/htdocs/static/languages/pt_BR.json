@@ -266,6 +266,7 @@
 "passwordPolicyMinDigit":"Mínimo de caracteres de dígitos:",
 "passwordPolicyMinLower":"Mínimo de caracteres minúsculos:",
 "passwordPolicyMinSize":"Tamanho mínimo:",
+"passwordPolicyMaxSize":"Maximal size:",
 "passwordPolicyMinSpeChar":"Mínimo de caracteres especiais:",
 "passwordPolicyMinUpper":"Mínimo de caracteres maiúsculos:",
 "passwordPolicyNone":"Você é livre para escolher sua senha!",

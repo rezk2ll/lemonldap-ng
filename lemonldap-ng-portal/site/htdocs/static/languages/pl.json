@@ -266,6 +266,7 @@
 "passwordPolicyMinDigit":"Minimalna liczba cyfr:",
 "passwordPolicyMinLower":"Minimalna liczba małych liter:",
 "passwordPolicyMinSize":"Minimalna długość:",
+"passwordPolicyMaxSize":"Maximal size:",
 "passwordPolicyMinSpeChar":"Minimalna liczba znaków specjalnych:",
 "passwordPolicyMinUpper":"Minimalna liczba dużych liter:",
 "passwordPolicyNone":"Możesz sam wybrać hasło!",
