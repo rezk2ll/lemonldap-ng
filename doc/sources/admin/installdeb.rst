@@ -21,40 +21,6 @@ LemonLDAP::NG provides these packages:
 Get the packages
 ----------------
 
-.. _installdeb-official-repository:
-
-Official repository
-~~~~~~~~~~~~~~~~~~~
-
-If you run Debian stable, testing or unstable, the packages are directly
-available:
-
-::
-
-   apt install lemonldap-ng
-
-
-.. tip::
-
-    Packages from `Debian
-    repository <http://packages.debian.org/search?keywords=lemonldap-ng>`__
-    may not be up to date but are **security-maintained** by `Debian
-    Security Team <https://security-team.debian.org/>`__ for "stable"
-    release and `LTS team <https://www.debian.org/lts/>`__ for "oldstable"
-    release. Then if you don't need some new features or aren't concerned by
-    a bug fixed earlier, **this is a good choice**. You can also use `Debian
-    backports <https://backports.debian.org/>`__ or "testing"/"unstable"
-    packages, team maintained.
-    `Here is the list of Debian versions <https://lemonldap-ng.org/documentation/#packaged_versions>`__.
-
-
-.. danger::
-
-    LLNG Ubuntu packages are not in the "universe" but in the
-    "multiverse". This means they are not security-maintained. If you use
-    them, you should follow our security advisories on
-    lemonldap-ng-users@ow2.org.
-
 .. _installdeb-llng-repository:
 
 LL::NG repository
@@ -105,6 +71,40 @@ Finally update your APT cache:
 
    apt update
 
+.. _installdeb-official-repository:
+
+Official Debian repository
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you run Debian stable, testing or unstable, the packages are directly
+available:
+
+::
+
+   apt install lemonldap-ng
+
+
+.. tip::
+
+    Packages from `Debian
+    repository <http://packages.debian.org/search?keywords=lemonldap-ng>`__
+    may not be up to date but are **security-maintained** by `Debian
+    Security Team <https://security-team.debian.org/>`__ for "stable"
+    release and `LTS team <https://www.debian.org/lts/>`__ for "oldstable"
+    release. Then if you don't need some new features or aren't concerned by
+    a bug fixed earlier, **this is a good choice**. You can also use `Debian
+    backports <https://backports.debian.org/>`__ or "testing"/"unstable"
+    packages, team maintained.
+    `Here is the list of Debian versions <https://lemonldap-ng.org/documentation/#packaged_versions>`__.
+
+
+.. danger::
+
+    LLNG Ubuntu packages are not in the "universe" but in the
+    "multiverse". This means they are not security-maintained. If you use
+    them, you should follow our security advisories on
+    lemonldap-ng-users@ow2.org.
+
 Manual download
 ~~~~~~~~~~~~~~~
 
@@ -113,6 +113,8 @@ Packages are available on the `Download page <https://lemonldap-ng.org/download.
 Install packages
 ----------------
 
+With apt
+~~~~~~~~
 
 .. attention::
 
@@ -122,11 +124,6 @@ Install packages
     ::
 
        apt install apache2 libapache2-mod-perl2 libapache2-mod-fcgid
-
-
-
-With apt
-~~~~~~~~
 
 ::
 
@@ -185,15 +182,3 @@ File location
    /usr/share/lemonldap-ng/
 -  Apache configuration files are in /etc/lemonldap-ng and linked in
    /etc/apache2/sites-available and /etc/nginx/sites-available
-
-Build your packages
--------------------
-
-You can also get the `LemonLDAP::NG source <https://lemonldap-ng.org/download.html>`__ and make
-the package yourself:
-
-::
-
-   tar xzf lemonldap-ng-*.tar.gz
-   cd lemonldap-ng-*
-   make debian-packages
