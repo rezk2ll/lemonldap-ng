@@ -17,21 +17,21 @@ sub defaultValues {
         },
         'authChoiceParam' => 'lmAuth',
         'authentication'  => 'Demo',
-        'available2F'     =>
+        'available2F' =>
 'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius,Password,Okta',
         'available2FSelfRegistration'   => 'Password,TOTP,U2F,WebAuthn,Yubikey',
         'bruteForceProtectionLockTimes' => '15, 30, 60, 300, 600',
         'bruteForceProtectionMaxAge'    => 300,
         'bruteForceProtectionMaxFailed' => 3,
-        'bruteForceProtectionMaxLockTime'            => 900,
-        'bruteForceProtectionTempo'                  => 30,
-        'captcha_mail_enabled'                       => 1,
-        'captcha_register_enabled'                   => 1,
-        'captcha_size'                               => 6,
-        'casAccessControlPolicy'                     => 'none',
-        'casAuthnLevel'                              => 1,
-        'casTicketExpiration'                        => 0,
-        'certificateResetByMailCeaAttribute'         => 'description',
+        'bruteForceProtectionMaxLockTime'    => 900,
+        'bruteForceProtectionTempo'          => 30,
+        'captcha_mail_enabled'               => 1,
+        'captcha_register_enabled'           => 1,
+        'captcha_size'                       => 6,
+        'casAccessControlPolicy'             => 'none',
+        'casAuthnLevel'                      => 1,
+        'casTicketExpiration'                => 0,
+        'certificateResetByMailCeaAttribute' => 'description',
         'certificateResetByMailCertificateAttribute' =>
           'userCertificate;binary',
         'certificateResetByMailValidityDelay' => 0,
@@ -103,7 +103,7 @@ sub defaultValues {
         'globalLogoutTimer'    => 1,
         'globalStorage'        => 'Apache::Session::File',
         'globalStorageOptions' => {
-            'Directory'      => '/var/lib/lemonldap-ng/sessions/',
+            'Directory' => '/var/lib/lemonldap-ng/sessions/',
             'generateModule' =>
               'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
             'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
@@ -206,7 +206,7 @@ sub defaultValues {
         'newLocationWarningMaxValues'                => '0',
         'notificationDefaultCond'                    => '',
         'notificationServerPOST'                     => 1,
-        'notificationServerSentAttributes'           =>
+        'notificationServerSentAttributes' =>
           'uid reference date title subtitle text check',
         'notificationsMaxRetrieve'   => 3,
         'notificationStorage'        => 'File',
@@ -271,7 +271,7 @@ sub defaultValues {
         'passwordPolicyMinUpper'              => 0,
         'passwordPolicySpecialChar'           => '__ALL__',
         'passwordResetAllowedRetries'         => 3,
-        'persistentSessionAttributes'         =>
+        'persistentSessionAttributes' =>
           '_loginHistory _2fDevices _oidcConsents notification_',
         'port'                          => -1,
         'portal'                        => 'http://auth.example.com/',
@@ -282,7 +282,7 @@ sub defaultValues {
         'portalDisplayGeneratePassword' => 1,
         'portalDisplayLoginHistory'     => 1,
         'portalDisplayLogout'           => 1,
-        'portalDisplayOidcConsents'     =>
+        'portalDisplayOidcConsents' =>
           '$_oidcConsents && $_oidcConsents =~ /\\w+/',
         'portalDisplayOrder' =>
           'Appslist ChangePassword LoginHistory OidcConsents Logout',
@@ -319,11 +319,11 @@ sub defaultValues {
               'http://auth.example.com/Lemonldap/NG/Common/PSGI/SOAPService',
             'proxy' => 'http://auth.example.com/sessions'
         },
-        'requireToken'                                         => 1,
-        'rest2fActivation'                                     => 0,
-        'restAuthnLevel'                                       => 2,
-        'restClockTolerance'                                   => 15,
-        'sameSite'                                             => '',
+        'requireToken'       => 1,
+        'rest2fActivation'   => 0,
+        'restAuthnLevel'     => 2,
+        'restClockTolerance' => 15,
+        'sameSite'           => '',
         'samlAttributeAuthorityDescriptorAttributeServiceSOAP' =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;',
         'samlAuthnContextMapKerberos'                   => 4,
@@ -363,7 +363,7 @@ sub defaultValues {
 '0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/proxySingleSignOnArtifact',
         'samlSPSSODescriptorAssertionConsumerServiceHTTPPost' =>
 '1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleSignOnPost',
-        'samlSPSSODescriptorAuthnRequestsSigned'         => 1,
+        'samlSPSSODescriptorAuthnRequestsSigned' => 1,
         'samlSPSSODescriptorSingleLogoutServiceHTTPPost' =>
 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleLogout;#PORTAL#/saml/proxySingleLogoutReturn',
         'samlSPSSODescriptorSingleLogoutServiceHTTPRedirect' =>
@@ -376,7 +376,7 @@ sub defaultValues {
         'sfEngine'                                => '::2F::Engines::Default',
         'sfManagerRule'                           => 1,
         'sfRemovedMsgRule'                        => 0,
-        'sfRemovedNotifMsg'                       =>
+        'sfRemovedNotifMsg' =>
 '_removedSF_ expired second factor(s) has/have been removed (_nameSF_)!',
         'sfRemovedNotifRef'       => 'RemoveSF',
         'sfRemovedNotifTitle'     => 'Second factor notification',

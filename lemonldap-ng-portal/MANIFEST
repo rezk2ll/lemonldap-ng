@@ -572,6 +572,7 @@ t/01-CSP-and-CORS-headers.t
 t/01-Dynamic-Portal-Url.t
 t/01-EnablePasswordDisplay.t
 t/01-Handler-redirection-and-URL-check-by-portal.t
+t/01-Mail-Tpl.t
 t/01-pdata.t
 t/01-Reject-Hashes-in-URL.t
 t/01-Unauth-Logout.t
@@ -1002,10 +1003,14 @@ t/sessions2/6e30af4ffa5689b3e49a104d1b160d316db2b2161a0f45776994eed19dbdc101
 t/sessions2/lock/Apache-Session-6e30af4ffa5689b3e49a104d1b160d316db2b2161a0f45776994eed19dbdc101.lock
 t/sfHookPlugin.pm
 t/smtp.pm
+t/templates/mailtplskin/all.json
+t/templates/mailtplskin/fr.json
+t/templates/mailtplskin/mail_header.tpl
 t/test-ldap.pm
 t/test-lib.pm
 t/test-psgi.pm
 t/test-yubikey.pm
+t/TestMail.pm
 t/testslapd/confs-sessions.ldif
 t/testslapd/slapd.ldif
 t/testslapd/users.ldif
