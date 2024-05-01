@@ -1292,7 +1292,7 @@ sub tests {
             my $total;
             foreach (qw(Lower Upper Digit SpeChar)) {
                 $total += $conf->{"passwordPolicyMin$_"}
-                  if $conf->{"passwordPolicyMin$_"};
+                  if $conf->{"passwordPolicyMin$_"} > 0;
             }
             return ( 1,
 'Password minimal size should be greater than total of minimal sizes'
