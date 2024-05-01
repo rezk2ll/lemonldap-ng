@@ -1,12 +1,17 @@
 #!/usr/bin/perl
-#
+
 use IO::Socket::UNIX;
 use FCGI::Client;
 use Test::More tests => 1;
+use constant LLNGSOCK => '/var/run/llng-fastcgi-server/llng-fastcgi.sock';
+
+my @stat = stat(LLNGSOCK);
+
+exit 77 unless @stat;
 
 my $sock = IO::Socket::UNIX->new(
     Type => SOCK_STREAM(),
-    Peer => '/var/run/llng-fastcgi-server/llng-fastcgi.sock',
+    Peer => LLNGSOCK,
 );
 my $client = FCGI::Client::Connection->new( sock => $sock );
 my $env    = {
@@ -25,5 +30,7 @@ my $env    = {
 
 my ( $stdout, $stderr, $status ) = $client->request($env);
 
-ok( $stdout =~ /^Status: 200 OK/s, 'Portal responded 200' )
- or diag "STDOUT: $stdout\nSTDERR: $stderr";
+unless ( ok( $stdout =~ /^Status: 200 OK/s, 'Portal responded 200' ) ) {
+    diag "STDOUT: $stdout\nSTDERR: $stderr";
+    system( 'journalctl', '-xe' );
+}

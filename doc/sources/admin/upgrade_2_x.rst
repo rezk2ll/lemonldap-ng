@@ -18,6 +18,25 @@ No known issues.
 2.19.0
 ------
 
+RPM packaging
+~~~~~~~~~~~~~
+
+RPM packages have been reorganized to match the Debian packages naming convention.
+The upgrade via ``yum`` or ``dnf`` should work smoothly.
+
+For EL8 and EL9, you must update the GPG key:
+
+::
+
+   curl https://lemonldap-ng.org/security/GPG-KEY-LLNG-SECURITY.asc /etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
+
+
+Like Debian, jobs are now managed through systemd timers:
+```
+systemd edit lemonldap-ng-portal.timer
+systemd edit lemonldap-ng-handler.timer
+```
+
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
 

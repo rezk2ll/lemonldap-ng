@@ -455,6 +455,8 @@ prepare_test_server:
 		PORTALSTATICDIR=`pwd`/$(SRCPORTALDIR)/site/htdocs/static \
 		MANAGERSITEDIR=`pwd`/e2e-tests/conf/manager \
 		MANAGERSTATICDIR=`pwd`/$(SRCMANAGERDIR)/site/htdocs/static \
+		RUNITDIR=`pwd`/e2e-tests/conf/run \
+		RTMPFILESDIR=`pwd`/e2e-tests/conf/tmp \
 		TESTDIR=`pwd`/e2e-tests/conf/site \
 		DEFDOCDIR=`pwd`/doc \
 		SBINDIR=`pwd`/e2e-tests/conf/sbin \
