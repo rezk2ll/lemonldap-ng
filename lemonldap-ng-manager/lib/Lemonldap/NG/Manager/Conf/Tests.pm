@@ -1273,7 +1273,7 @@ sub tests {
                   . join( ', ', @pb ) );
         },
 
-        # Test password policy if enabled
+        # Test password length policy if enabled
         ppMaxSizeGreaterThanMinSize => sub {
             return ( 1,
                 'Password maximum size should be greater than minimal size' )
@@ -1281,8 +1281,25 @@ sub tests {
                     $conf->{passwordPolicyMinSize} >=
                     $conf->{passwordPolicyMaxSize}
                 )
+                and $conf->{passwordPolicyMaxSize}
                 and $conf->{passwordPolicyActivation}
               );
+            return 1;
+        },
+
+        # Test password minimal size policy if enabled
+        ppMinSize => sub {
+            my $total;
+            foreach (qw(Lower Upper Digit SpeChar)) {
+                $total += $conf->{"passwordPolicyMin$_"}
+                  if $conf->{"passwordPolicyMin$_"};
+            }
+            return ( 1,
+'Password minimal size should be greater than total of minimal sizes'
+              )
+              if (  ( $conf->{passwordPolicyMinSize} <= $total )
+                and $conf->{passwordPolicyMinSize}
+                and $conf->{passwordPolicyActivation} );
             return 1;
         },
     };
