@@ -895,7 +895,7 @@
 "passwordPolicyMinDigit":"Minimal digit characters",
 "passwordPolicyMinLower":"Minimal lower characters",
 "passwordPolicyMinSize":"Minimal size",
-"passwordPolicyMinSize":"Maximal size",
+"passwordPolicyMaxSize":"Maximal size",
 "passwordPolicyMinSpeChar":"Minimal special characters",
 "passwordPolicyMinUpper":"Minimal upper characters",
 "passwordPolicySpecialChar":"Allowed special characters",

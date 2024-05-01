@@ -15,6 +15,7 @@
 "PE108":"Unauthorized URL",
 "PE109":"Not a protected or trusted URL",
 "PE110":"Second factor validation failed, please retry",
+"PE111":"Password too long",
 "PE2":"用户名和密码必须填写",
 "PE20":"No password backend defined",
 "PE21":"您的账号被锁定",
