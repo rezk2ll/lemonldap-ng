@@ -113,7 +113,7 @@ Install the `GPG Security key <https://lemonldap-ng.org/security/GPG-KEY-LLNG-SE
 
 ::
 
-   curl https://lemonldap-ng.org/security/GPG-KEY-LLNG-SECURITY.asc /etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
+   curl https://lemonldap-ng.org/security/GPG-KEY-LLNG-SECURITY.asc > /etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
 
 
 Install packages
