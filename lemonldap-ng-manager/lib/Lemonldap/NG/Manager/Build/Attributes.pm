@@ -2618,6 +2618,11 @@ sub attributes {
             type          => 'text',
             documentation => 'WebAuthn Relying Party ID',
         },
+        webauthnAppId => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Send AppID extension',
+        },
         webauthnRpName => {
             type          => 'text',
             documentation => 'WebAuthn Relying Party display name',

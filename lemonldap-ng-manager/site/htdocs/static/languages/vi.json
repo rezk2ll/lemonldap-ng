@@ -1385,6 +1385,7 @@
 "webauthn2fSelfRegistration":"Tự đăng ký",
 "webauthn2fUserCanRemoveKey":"Cho phép người dùng xóa WebAuthn",
 "webauthn2fUserVerification":"xác minh người dùng",
+"webauthnAppId":"Send U2F AppID",
 "webauthnDisplayNameAttr":"Thuộc tính Tên hiển thị của người dùng",
 "webauthnRpId":"Relying Party ID",
 "webauthnRpName":"Tên hiển thị của Relying Party",

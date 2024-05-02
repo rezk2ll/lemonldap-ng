@@ -1034,6 +1034,7 @@ sub tree {
                                 'webauthn2fAttestationTrust',
                                 'webauthnRpName',
                                 'webauthnRpId',
+                                'webauthnAppId',
                                 'webauthnDisplayNameAttr',
                                 'webauthn2fAuthnLevel',
                                 'webauthn2fLabel',

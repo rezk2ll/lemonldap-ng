@@ -1385,6 +1385,7 @@
 "webauthn2fSelfRegistration":"Kendi kendine kayıt",
 "webauthn2fUserCanRemoveKey":"WebAuthn'i kaldırmak için kullanıcıya izin ver",
 "webauthn2fUserVerification":"Kullanıcı doğrulama",
+"webauthnAppId":"Send U2F AppID",
 "webauthnDisplayNameAttr":"Kullanıcı Görüntülenen İsim niteliği",
 "webauthnRpId":"Relying Party ID",
 "webauthnRpName":"Bağlı Partinin görünen adı",

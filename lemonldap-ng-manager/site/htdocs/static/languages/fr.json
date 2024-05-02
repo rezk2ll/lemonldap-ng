@@ -1385,6 +1385,7 @@
 "webauthn2fSelfRegistration":"Auto-enregistrement",
 "webauthn2fUserCanRemoveKey":"Autoriser les utilisateurs à effacer leur WebAuthn",
 "webauthn2fUserVerification":"Vérification de l'utilisateur",
+"webauthnAppId":"Envoyer l'AppID U2F",
 "webauthnDisplayNameAttr":"Attribut du nom d'affichage de l'utilisateur",
 "webauthnRpId":"Domaine de validité",
 "webauthnRpName":"Nom d'affichage du portail",
