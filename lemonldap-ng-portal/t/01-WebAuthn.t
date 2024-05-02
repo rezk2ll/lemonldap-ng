@@ -65,72 +65,112 @@ ENDKEY
         }
     );
 
-    # Authenticate with good password
-    # --------------------------------------
-    ok(
-        $res = $client->_post(
-            '/',
-            IO::String->new('user=dwho&password=dwho'),
-            length => 23,
-            accept => 'text/html',
-        ),
-        'Auth query'
-    );
+    subtest "Authenticate with WebAuthn" => sub {
 
-    expectOK($res);
-    my ( $host, $url, $query ) =
-      expectForm( $res, "", '/webauthn2fcheck', 'token', 'credential' );
+        # Authenticate with good password
+        # --------------------------------------
+        ok(
+            $res = $client->_post(
+                '/',
+                IO::String->new('user=dwho&password=dwho'),
+                length => 23,
+                accept => 'text/html',
+            ),
+            'Auth query'
+        );
 
-    my ($json) = $res->[2]->[0] =~
-      m#<script type="application/init">\s*(\{"request"[^<]*\})\s*</script>#ms;
-    ok( $json, "Found request object in JS data" );
-    $json = from_json($json);
-    my $request   = $json->{request};
-    my $challenge = $request->{challenge};
-    ok( $challenge, "Found challenge" );
+        expectOK($res);
+        my ( $host, $url, $query ) =
+          expectForm( $res, "", '/webauthn2fcheck', 'token', 'credential' );
 
-    is( $request->{extensions}->{appid},
-        'http://auth.example.com', "Correct U2F AppID" );
-    is( @{ $request->{allowCredentials} },
-        1, "Found only one allowed credentials" );
-    is(
-        $request->{allowCredentials}->[0]->{id},
-        "bFpZbHRQOU10b1JOdVhLOGY4dFdm",
-        "Correct credential ID"
-    );
-    is( $request->{allowCredentials}->[0]->{type},
-        "public-key", "Correct public key" );
+        my ($json) = $res->[2]->[0] =~
+m#<script type="application/init">\s*(\{"request"[^<]*\})\s*</script>#ms;
+        ok( $json, "Found request object in JS data" );
+        $json = from_json($json);
+        my $request   = $json->{request};
+        my $challenge = $request->{challenge};
+        ok( $challenge, "Found challenge" );
 
-    is( $request->{rpId}, "auth.example.com", "Correct RP ID" );
+        is( $request->{extensions}->{appid},
+            'http://auth.example.com', "Correct U2F AppID" );
+        is( @{ $request->{allowCredentials} },
+            1, "Found only one allowed credentials" );
+        is(
+            $request->{allowCredentials}->[0]->{id},
+            "bFpZbHRQOU10b1JOdVhLOGY4dFdm",
+            "Correct credential ID"
+        );
+        is( $request->{allowCredentials}->[0]->{type},
+            "public-key", "Correct public key" );
 
-    my $credential = $webauthn_tester->get_assertion_response( {
-            request => $request,
-        }
-    );
+        is( $request->{rpId}, "auth.example.com", "Correct RP ID" );
 
-    $credential = $webauthn_tester->encode_credential($credential);
+        my $credential = $webauthn_tester->get_assertion_response( {
+                request => $request,
+            }
+        );
 
-    #diag $credential;
+        $credential = $webauthn_tester->encode_credential($credential);
 
-    my $urlencoded_credential = buildForm( {
-            credential => $credential
-        }
-    );
+        #diag $credential;
 
-    $query =~ s/credential=/$urlencoded_credential/;
-    ok(
-        $res = $client->_post(
-            $url,
-            IO::String->new($query),
-            length => length($query),
-        ),
-        'Auth query'
-    );
+        my $urlencoded_credential = buildForm( {
+                credential => $credential
+            }
+        );
 
-    my $id = expectCookie($res);
+        $query =~ s/credential=/$urlencoded_credential/;
+        ok(
+            $res = $client->_post(
+                $url,
+                IO::String->new($query),
+                length => length($query),
+            ),
+            'Auth query'
+        );
 
-    # Test logout
-    $client->logout($id);
+        my $id = expectCookie($res);
+
+        # Test logout
+        $client->logout($id);
+    };
+
+    subtest "Disable AppId and change RP ID" => sub {
+
+        $client->ini( {
+                %{ $client->ini },
+                webauthnAppId => 0,
+                webauthnRpId  => "example.com"
+            }
+        );
+
+        # Authenticate with good password
+        # --------------------------------------
+        ok(
+            $res = $client->_post(
+                '/',
+                IO::String->new('user=dwho&password=dwho'),
+                length => 23,
+                accept => 'text/html',
+            ),
+            'Auth query'
+        );
+
+        expectOK($res);
+        my ( $host, $url, $query ) =
+          expectForm( $res, "", '/webauthn2fcheck', 'token', 'credential' );
+
+        my ($json) = $res->[2]->[0] =~
+m#<script type="application/init">\s*(\{"request"[^<]*\})\s*</script>#ms;
+        ok( $json, "Found request object in JS data" );
+        $json = from_json($json);
+        my $request   = $json->{request};
+        my $challenge = $request->{challenge};
+        ok( $challenge, "Found challenge" );
+
+        ok( !exists( $request->{extensions}->{appid} ), "No U2F AppID" );
+        is( $request->{rpId}, "example.com", "Correct RP ID" );
+    };
 
 }
 clean_sessions();
