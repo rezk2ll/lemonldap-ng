@@ -25,13 +25,16 @@ Configuration
 Declare your SAML federation files
 ==================================
 
-The new system does not (yet?) automatically handle retrieval of Federation
-metadata. Therefore you need to write your own shell script to download the
-federation metadata XML files on each server.
+You need to use the provided ``downloadSamlMetadata`` script to periodically download
+the federation metadata on each portal server. This script checks if the
+received metadata is valid, and ensures the metadata file does not contain
+partial content during download.
 
-.. warning:: Be careful with possible race conditions when overwriting the
-   current file. It is recommended to download the new files in a temporary
-   location and then overwrite the original file with an atomic file move
+.. code::
+
+  downloadSamlMetadata -m http://path/to/main-sps-renater-metadata.xml \
+    -o /etc/lemonldap-ng/metadata/main-sps-renater-metadata.xml
+
 
 Then, declare your federation metadata files in
 
@@ -39,7 +42,7 @@ SAML2 Service » Advanced » Federation » SAML Federation Metadata files
 
 You should list local file paths, separated by spaces. For example ::
 
-    /etc/saml/main-all-edugain-metadata.xml /etc/saml/main-sps-renater-metadata.xml
+    /etc/lemonldap-ng/metadata/main-all-edugain-metadata.xml /etc/lemonldap-ng/metadata/main-sps-renater-metadata.xml
 
 In case an EntityID is defined in multiple files, the first match wins.
 
