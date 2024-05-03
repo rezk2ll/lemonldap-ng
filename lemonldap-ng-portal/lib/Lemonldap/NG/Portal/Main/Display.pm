@@ -740,7 +740,7 @@ sub getSkin {
     my $skinParam = $req->param('skin');
     if ( defined $skinParam ) {
         if ( $skinParam =~ /^[\w\-]+$/ ) {
-            if ( -d $self->getSkinTplDir( $req, $skinParam ) ) {
+            if ( -d $self->getSkinTplDir($skinParam) ) {
                 $skin = $skinParam;
                 $self->logger->debug(
                     "Skin $skin selected from GET/POST parameter");
