@@ -1036,7 +1036,7 @@ sub sendHtml {
 
     # Look for templates in skin subdirectories instead of templateDir
     $args{templateDir} =
-      [ $skin_template_dir, $self->templateDir . "/bootstrap" ];
+      [ $skin_template_dir, $self->conf->{templateDir} . "/bootstrap" ];
 
     $args{params}->{TROVER} = $self->getTrOver( $req, $skin_template_dir );
 
