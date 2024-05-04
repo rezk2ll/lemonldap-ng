@@ -895,6 +895,7 @@
 "passwordPolicyMinDigit":"Ký tự chữ số tối thiểu",
 "passwordPolicyMinLower":"Ký tự viết thường tối thiểu",
 "passwordPolicyMinSize":"kích thước tối thiểu",
+"passwordPolicyMaxSize":"Maximal size",
 "passwordPolicyMinSpeChar":"Ký tự đặc biệt tối thiểu",
 "passwordPolicyMinUpper":"Ký tự viết hoa tối thiểu",
 "passwordPolicySpecialChar":"Các ký tự đặc biệt được phép",

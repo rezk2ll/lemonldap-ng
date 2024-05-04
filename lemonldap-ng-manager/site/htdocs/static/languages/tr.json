@@ -895,6 +895,7 @@
 "passwordPolicyMinDigit":"Minimum rakam karakter sayısı",
 "passwordPolicyMinLower":"Minimum küçük harf karakter sayısı",
 "passwordPolicyMinSize":"Minimum parola uzunluğu",
+"passwordPolicyMaxSize":"Maximal size",
 "passwordPolicyMinSpeChar":"Minimum özel karakter sayısı",
 "passwordPolicyMinUpper":"Minimum büyük harf karakter sayısı",
 "passwordPolicySpecialChar":"İzin verilen özel karakter sayısı",

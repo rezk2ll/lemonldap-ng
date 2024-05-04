@@ -90,6 +90,7 @@ sub tree {
                                         'passwordPolicyActivation',
                                         'portalDisplayPasswordPolicy',
                                         'passwordPolicyMinSize',
+                                        'passwordPolicyMaxSize',
                                         'passwordPolicyMinLower',
                                         'passwordPolicyMinUpper',
                                         'passwordPolicyMinDigit',

@@ -423,6 +423,7 @@ Password Policy
 -  **Display policy in password form**: enable this option to display an
    information message about password policy constraints
 -  **Minimal size**: leave 0 to bypass the check
+-  **Maximal size**: leave 0 to bypass the check
 -  **Minimal lower characters**: leave 0 to bypass the check
 -  **Minimal upper characters**: leave 0 to bypass the check
 -  **Minimal digit characters**: leave 0 to bypass the check

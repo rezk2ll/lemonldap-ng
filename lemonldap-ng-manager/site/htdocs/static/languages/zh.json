@@ -895,6 +895,7 @@
 "passwordPolicyMinDigit":"最少數字字元",
 "passwordPolicyMinLower":"最少小寫字母",
 "passwordPolicyMinSize":"最小大小",
+"passwordPolicyMaxSize":"Maximal size",
 "passwordPolicyMinSpeChar":"最少特殊字元",
 "passwordPolicyMinUpper":"最少大寫字母",
 "passwordPolicySpecialChar":"已允許的特殊字元",

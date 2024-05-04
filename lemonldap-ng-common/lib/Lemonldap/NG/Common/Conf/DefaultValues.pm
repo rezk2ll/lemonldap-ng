@@ -264,6 +264,7 @@ sub defaultValues {
         'password2fUserCanRemoveKey'          => 1,
         'passwordDB'                          => 'Demo',
         'passwordPolicyActivation'            => 1,
+        'passwordPolicyMaxSize'               => 0,
         'passwordPolicyMinDigit'              => 0,
         'passwordPolicyMinLower'              => 0,
         'passwordPolicyMinSize'               => 0,

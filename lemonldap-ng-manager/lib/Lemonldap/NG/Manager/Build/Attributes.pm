@@ -1926,6 +1926,11 @@ sub attributes {
             type          => 'int',
             documentation => 'Password policy: minimal size',
         },
+        passwordPolicyMaxSize => {
+            default       => 0,
+            type          => 'int',
+            documentation => 'Password policy: maximal size',
+        },
         passwordPolicyMinLower => {
             default       => 0,
             type          => 'int',

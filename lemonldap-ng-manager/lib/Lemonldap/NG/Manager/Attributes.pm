@@ -3715,6 +3715,10 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 1,
             'type'    => 'boolOrExpr'
         },
+        'passwordPolicyMaxSize' => {
+            'default' => 0,
+            'type'    => 'int'
+        },
         'passwordPolicyMinDigit' => {
             'default' => 0,
             'type'    => 'int'
