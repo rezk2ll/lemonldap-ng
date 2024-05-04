@@ -1386,6 +1386,7 @@
 "webauthn2fSelfRegistration":"Samodzielna rejestracja",
 "webauthn2fUserCanRemoveKey":"Pozwól użytkownikowi usunąć WebAuthn",
 "webauthn2fUserVerification":"Weryfikacja użytkownika",
+"webauthnAppId":"Send U2F AppID",
 "webauthnDisplayNameAttr":"Atrybut nazwy wyświetlanej użytkownika",
 "webauthnRpId":"Relying Party ID",
 "webauthnRpName":"Wyświetlana nazwa strony uzależnionej",

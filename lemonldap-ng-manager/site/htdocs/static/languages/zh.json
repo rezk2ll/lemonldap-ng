@@ -1386,6 +1386,7 @@
 "webauthn2fSelfRegistration":"自行註冊",
 "webauthn2fUserCanRemoveKey":"允許使用者移除 WebAuthn",
 "webauthn2fUserVerification":"User verification",
+"webauthnAppId":"Send U2F AppID",
 "webauthnDisplayNameAttr":"User Display Name attribute",
 "webauthnRpId":"Relying Party ID",
 "webauthnRpName":"Relying Party display name",

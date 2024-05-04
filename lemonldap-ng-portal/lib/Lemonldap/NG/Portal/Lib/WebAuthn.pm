@@ -54,6 +54,17 @@ sub origin {
     return ( $portal_uri->scheme . "://" . $portal_uri->authority );
 }
 
+sub appid {
+    my ( $self, $req ) = @_;
+
+    if ( $self->conf->{webauthnAppId} ) {
+        return $self->origin($req);
+    }
+    else {
+        return;
+    }
+}
+
 around 'init' => sub {
     my $orig = shift;
     my $self = shift;
@@ -91,7 +102,7 @@ sub generateChallenge {
     my $challenge_base64 = encode_base64url( Crypt::URandom::urandom(32) );
     my $userVerification = $self->conf->{webauthn2fUserVerification};
 
-    return {
+    my $challenge = {
         challenge        => $challenge_base64,
         rpId             => $self->rp_id($req),
         allowCredentials => [
@@ -99,10 +110,16 @@ sub generateChallenge {
               @webauthn_devices
         ],
         ( $userVerification ? ( userVerification => $userVerification ) : () ),
-        extensions => {
-            appid => $self->origin($req),
-        },
     };
+
+    if ( my $appid = $self->appid($req) ) {
+        $challenge->{extensions}->{appid} = $appid;
+    }
+
+    $self->logger->debug(
+        "WebAuthn authentication parameters " . to_json($challenge) );
+
+    return $challenge;
 }
 
 sub validateCredential {

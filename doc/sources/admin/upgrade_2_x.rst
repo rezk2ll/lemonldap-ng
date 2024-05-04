@@ -28,7 +28,7 @@ For EL8 and EL9, you must update the GPG key:
 
 ::
 
-   curl https://lemonldap-ng.org/security/GPG-KEY-LLNG-SECURITY.asc /etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
+   curl https://lemonldap-ng.org/security/GPG-KEY-LLNG-SECURITY.asc > /etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
 
 
 Like Debian, jobs are now managed through systemd timers:

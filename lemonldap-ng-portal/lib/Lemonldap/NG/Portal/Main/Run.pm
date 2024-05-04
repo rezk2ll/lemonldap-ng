@@ -977,9 +977,8 @@ sub _dump {
 }
 
 sub getSkinTplDir {
-    my ( $self, $req, $skin ) = @_;
+    my ( $self, $skin ) = @_;
 
-    $skin ||= $self->getSkin($req);
     my $base = $self->conf->{skinTemplateDir} || $self->conf->{templateDir};
     return ( $base . '/' . $skin );
 }
@@ -988,7 +987,7 @@ sub getSkinTplDir {
 sub getTrOver {
     my ( $self, $req, $templateDir ) = @_;
 
-    $templateDir //= $self->getSkinTplDir($req);
+    $templateDir //= $self->getSkinTplDir( $self->getSkin($req) );
 
     unless ( $self->trOverCache->{$templateDir} ) {
 
@@ -1033,11 +1032,11 @@ sub getTrOver {
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
 
-    my $skin_template_dir = $self->getSkinTplDir($req);
+    my $skin_template_dir = $self->getSkinTplDir( $self->getSkin($req) );
 
     # Look for templates in skin subdirectories instead of templateDir
     $args{templateDir} =
-      [ $skin_template_dir, $self->templateDir . "/bootstrap" ];
+      [ $skin_template_dir, $self->conf->{templateDir} . "/bootstrap" ];
 
     $args{params}->{TROVER} = $self->getTrOver( $req, $skin_template_dir );
 
@@ -1423,7 +1422,7 @@ sub loadTemplate {
     my $tpl = HTML::Template->new(
         filename => $name,
         path     => [
-            $self->getSkinTplDir($req),
+            $self->getSkinTplDir( $self->getSkin($req) ),
             $self->conf->{templateDir} . '/bootstrap/',
             $self->conf->{templateDir} . '/common/'
         ],

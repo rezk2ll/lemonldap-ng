@@ -426,6 +426,7 @@ sub defaultValues {
         'webauthn2fSelfRegistration' => 0,
         'webauthn2fUserCanRemoveKey' => 1,
         'webauthn2fUserVerification' => 'preferred',
+        'webauthnAppId'              => 1,
         'webIDAuthnLevel'            => 1,
         'webIDExportedVars'          => {},
         'whatToTrace'                => 'uid',
