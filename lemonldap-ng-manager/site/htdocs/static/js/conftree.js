@@ -1761,8 +1761,7 @@ function templates(tpl,key) {
       ],
       "help" : "authsaml.html#options",
       "id" : "samlIDPMetaDataOptions",
-      "title" : "samlIDPMetaDataOptions",
-      "type" : "simpleInputContainer"
+      "title" : "samlIDPMetaDataOptions"
    },
    {
       "_nodes" : [

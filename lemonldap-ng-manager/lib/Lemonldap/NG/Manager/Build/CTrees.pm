@@ -84,7 +84,6 @@ sub cTrees {
             {
                 title => 'samlIDPMetaDataOptions',
                 help  => 'authsaml.html#options',
-                form  => 'simpleInputContainer',
                 nodes => [
                     'samlIDPMetaDataOptionsNameIDFormat',
                     'samlIDPMetaDataOptionsForceAuthn',
@@ -95,7 +94,7 @@ sub cTrees {
                     {
                         title => 'samlIDPMetaDataOptionsFederation',
                         form  => 'simpleInputContainer',
-                        nodes => [ 'samlIDPMetaDataOptionsFederationEntityID', ]
+                        nodes => ['samlIDPMetaDataOptionsFederationEntityID']
                     },
                     'samlIDPMetaDataOptionsComment'
                 ],
