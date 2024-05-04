@@ -125,7 +125,7 @@ sub checkLogonHours {
 # @param $ignorecase boolean Be case insensitive
 # @return 1 if the value was found, 0 else
 # NOTE: this function is not exported directly in this module because we don't
-# want the usr to have to worry about separator. Is is wrapped in a closure in
+# want the user to have to worry about separator. Is is wrapped in a closure in
 # Jail.pm
 sub listMatch {
     my ( $sep, $list, $value, $ignorecase ) = @_;
