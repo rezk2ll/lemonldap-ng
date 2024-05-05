@@ -306,17 +306,15 @@ inDomain
 
 .. versionadded:: 2.19.0
 
-This function tests if the request's hostname (HTTP ``Host`` header) belongs to
-a given DNS domain
+This function tests if the request's hostname (HTTP ``Host`` header) belongs to a given DNS domain
 
-Usage example:
+Usage examples:
 
 ::
 
    inDomain('example.com')
 
-The function returns 1 if the targeted Vhost is equal to the given domain or
-contains it as a suffix.
+The function returns 1 if the targeted Vhost is equal to the given domain or contains it as a suffix.
 
 inGroup
 ~~~~~~~
@@ -334,8 +332,9 @@ Usage example:
 
    inGroup('test users')
 
-The function returns 1 if the user belongs to the given group, and 0 if
-they don't.
+   inGroup('test users', 'admins')
+
+The function returns 1 if the user belongs to the given group, and 0 if they don't.
 
 inSubnet
 ~~~~~~~~
@@ -353,8 +352,7 @@ Usage example:
 
    inSubnet('10.0.0.0/8', '192.168.0.0/16')
 
-The function returns 1 if the user's IP is in provided subnets, and 0 if
-it is not.
+The function returns 1 if the user's IP is in provided subnets, and 0 if it is not.
 
 isInNet6
 ~~~~~~~~
