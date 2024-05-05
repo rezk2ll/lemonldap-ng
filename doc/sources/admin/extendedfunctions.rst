@@ -308,7 +308,7 @@ inDomain
 
 This function tests if the request's hostname (HTTP ``Host`` header) belongs to a given DNS domain
 
-Usage examples:
+Usage example:
 
 ::
 
@@ -324,7 +324,7 @@ inGroup
 This function lets you test if the user is in a given group. It is
 case-insensitive.
 
-Usage example:
+Usage examples:
 
 ::
 
@@ -344,7 +344,7 @@ inSubnet
 This function lets you test if the request's IP address (``REMOTE_ADDR``
 environment variable) belongs to a certain subnet. You can give multiple subnets.
 
-Usage example:
+Usage examples:
 
 ::
 
@@ -372,7 +372,7 @@ ipInSubnet
 This function lets you test if the provided IP address belongs to a certain
 subnet. You can give multiple subnets.
 
-Usage example:
+Usage examples:
 
 ::
 
@@ -431,9 +431,8 @@ multi-valued session attribute.
 
 Function parameter:
 
--  **list**: Variable containing several values (plain string with
-   separator, array or hash)
--  **value**: Value to search in the list
+-  **list**: Variable containing several values (plain string with separator, array or hash)
+-  **values**: Values to search in the list
 -  **ignorecase**: Ignore case, by default the search is case-sensitive
 
 Simple usage example:
@@ -442,12 +441,13 @@ Simple usage example:
 
    # Case sensitive match
    listMatch($roles, 'role-app1')
+   listMatch($roles, 'role-app1', 'Role-App2')
 
    # Case insensitive match
    listMatch($roles, 'RoLe-aPp1', 1)
+   listMatch($roles, 'RoLe-aPp1', 'Role-App2', 1)
 
-The function returns 1 if the value was found, and 0 if it was not
-found.
+The function returns 1 if a value was found, and 0 if it was not found.
 
 .. _subjectid:
 

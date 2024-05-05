@@ -129,9 +129,14 @@ sub checkLogonHours {
 # Jail.pm
 sub listMatch {
     my ( $sep, $list, @values ) = @_;
-    my $ignorecase = pop @values;
-    my $flags = $ignorecase ? 'i' : '';
+    my $flags = '';
     my @a;
+
+    if ( $values[-1] == 1 ) {
+        $flags = 'i';
+        pop @values;
+    }
+    
     if ( ref($list) eq "ARRAY" ) {
         @a = @{$list};
     }
@@ -142,7 +147,7 @@ sub listMatch {
         @a = split $sep, $list;
     }
 
-    foreach my $value ( @values ) {
+    foreach my $value (@values) {
         return 1 if grep /(?$flags)^\Q$value\E$/, @a;
     }
 
