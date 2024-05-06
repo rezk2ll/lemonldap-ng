@@ -27,7 +27,7 @@ my %base_req = (
 # c : expected rule result
 
 my @rulestotest = ( {
-        rule  => "inGroup('tutu', 'tata tutu', 'toto')",
+        rule  => "inGroup('tutu', 'tata tutu', 'toto', '1toto')",
         tests => [
             [ {}, { hGroups => { "titi" => 1 } }, 0 ],
             [ {}, { hGroups => { "toto" => 1 } }, 1 ],
