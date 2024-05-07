@@ -318,8 +318,8 @@ Examples:
 
 	--search uid=dwho
 	--search _sessionType=OIDC
-    --search '_startTime>20240410063538'
-    --search '_startTime<20240410063538'
+	--search '_startTime>20240410063538'
+	--search '_startTime<20240410063538'
 
 =item B<--backend>,B<-b>
 
