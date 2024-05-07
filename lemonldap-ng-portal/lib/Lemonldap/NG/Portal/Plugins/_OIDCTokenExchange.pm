@@ -70,7 +70,7 @@ sub tokenExchange {
 
     # 2. Check for audience and authorization
     my $targetClientId = $req->param('audience') // $clientId;
-    my $requestedRp = $rp;
+    my $requestedRp    = $rp;
     if ( $targetClientId and $targetClientId ne $clientId ) {
         ($requestedRp) = grep {
             $self->oidc->rpOptions->{$_}->{oidcRPMetaDataOptionsClientID} eq
@@ -117,47 +117,39 @@ sub tokenExchange {
 
     unless (@keys) {
 
-        # 3.1. If allowed, create a new refresh_token if missing
-        unless ( $self->oidc->rpOptions->{$rp}
-            ->{oidcRPMetaDataOptionsTokenXNoNewSession} )
-        {
-            $req->user($uid);
-            $req->steps( [
-                    'getUser',        'setAuthSessionInfo',
-                    'setSessionInfo', $self->p->groupsAndMacros,
-                    'setLocalGroups'
-                ]
-            );
-            if ( my $error = $self->p->process($req) ) {
-                if ( $error == PE_OK ) {
-                    $self->userLogger->warn(
-                            'Token exchange requested for an invalid user ('
-                          . $req->{user}
-                          . ")" );
-                }
-                $self->logger->error("Unable to find user $uid");
-                return PE_OK;
+        # 3.1. Create a new refresh_token if missing
+        $req->user($uid);
+        $req->steps( [
+                'getUser',        'setAuthSessionInfo',
+                'setSessionInfo', $self->p->groupsAndMacros,
+                'setLocalGroups'
+            ]
+        );
+        if ( my $error = $self->p->process($req) ) {
+            if ( $error == PE_OK ) {
+                $self->userLogger->warn(
+                        'Token exchange requested for an invalid user ('
+                      . $req->{user}
+                      . ")" );
             }
-
-            my $res = $self->oidc->newRefreshToken(
-                $rp,
-                {
-                    %{ $req->sessionInfo },
-                    scope     => $req->param('scope') || 'openid profile email',
-                    client_id => $targetClientId,
-                    _session_uid => $uid,
-                    grant_type   => $req->param('grant_type'),
-                },
-            );
-            unless ($res) {
-                return PE_OK;
-            }
-            push @keys, $res->id;
-        }
-        else {
-            $self->userLogger->warn("No refresh_session found for $uid");
+            $self->logger->error("Unable to find user $uid");
             return PE_OK;
         }
+
+        my $res = $self->oidc->newRefreshToken(
+            $rp,
+            {
+                %{ $req->sessionInfo },
+                scope        => $req->param('scope') || 'openid profile email',
+                client_id    => $targetClientId,
+                _session_uid => $uid,
+                grant_type   => $req->param('grant_type'),
+            },
+        );
+        unless ($res) {
+            return PE_OK;
+        }
+        push @keys, $res->id;
     }
 
     # 4. Use normal method to create new access_token from refresh_token
