@@ -47,6 +47,8 @@ our @pList = (
     samlFederationFiles => '::Plugins::SamlFederation',
     'or::oidcOPMetaDataOptions/*/oidcOPMetaDataOptionsRequirePkce' =>
       '::Plugins::AuthOidcPkce',
+    'or::oidcRPMetaDataOptions/*/oidcRPMetaDataOptionsTokenXAuthorizedRP' =>
+      '::Plugins::OIDCInternalTokenExchange',
 );
 
 ##@method list enabledPlugins
