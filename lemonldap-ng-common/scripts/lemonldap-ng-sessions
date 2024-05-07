@@ -148,7 +148,7 @@ B<Options>:
 
 =item B<--backend>: Specify session backend
 
-=item B<--persistent>:Search in persistent sessions
+=item B<--persistent>: Search in persistent sessions
 
 =item B<--where>: Set search filter (search/delete only)
 
