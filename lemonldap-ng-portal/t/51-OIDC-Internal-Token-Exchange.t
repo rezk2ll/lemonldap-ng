@@ -64,6 +64,7 @@ sub runTest {
             client_id     => 'rpid',
             subject_token => $access_token,
             audience      => 'rpid2',
+            scope         => 'openid profile email',
         }
     );
 

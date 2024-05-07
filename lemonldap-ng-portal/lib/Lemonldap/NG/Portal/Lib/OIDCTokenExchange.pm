@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Plugins::_OIDCTokenExchange;
+package Lemonldap::NG::Portal::Lib::OIDCTokenExchange;
 
 use strict;
 use Lemonldap::NG::Portal::Main::Constants qw(
@@ -58,7 +58,7 @@ sub tokenExchange {
             and $subjectTokenType =~
             /^(?:(?:refresh|access|id)_token|saml[12])$/ )
         {
-            $self->userLogger->error( 'Malformed subject_token_type: '
+            $self->logger->info( 'Malformed subject_token_type: '
                   . $req->param('subject_token_type') );
             return PE_OK;
         }
@@ -77,7 +77,7 @@ sub tokenExchange {
               $targetClientId
         } keys %{ $self->oidc->rpOptions };
         unless ($requestedRp) {
-            $self->userLogger->error(
+            $self->logger->debug(
                 "Token exchange request for an unexistent RP $targetClientId");
             return PE_OK;
         }
@@ -140,7 +140,7 @@ sub tokenExchange {
             $rp,
             {
                 %{ $req->sessionInfo },
-                scope        => $req->param('scope') || 'openid profile email',
+                scope        => $req->param('scope') || 'openid',
                 client_id    => $targetClientId,
                 _session_uid => $uid,
                 grant_type   => $req->param('grant_type'),

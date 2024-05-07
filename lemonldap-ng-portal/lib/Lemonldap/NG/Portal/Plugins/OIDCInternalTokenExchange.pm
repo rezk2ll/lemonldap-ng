@@ -3,13 +3,14 @@ package Lemonldap::NG::Portal::Plugins::OIDCInternalTokenExchange;
 use strict;
 use Mouse;
 
-extends 'Lemonldap::NG::Portal::Plugins::_OIDCTokenExchange';
+extends 'Lemonldap::NG::Portal::Lib::OIDCTokenExchange';
 
 sub validate {
     my ( $self, $req, $rp, $subjectToken, $subjectTokenType ) = @_;
 
     if ( $subjectTokenType and $subjectTokenType ne 'access_token' ) {
         $self->logger->error("Given token isn't declared as access_token");
+        return 0;
     }
 
     my $accessTokenSession = $self->oidc->getAccessToken($subjectToken);
