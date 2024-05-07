@@ -655,6 +655,11 @@ function templates(tpl,key) {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAdditionalAudiences",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAdditionalAudiences",
                   "title" : "oidcRPMetaDataOptionsAdditionalAudiences"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsTokenXAuthorizedRP",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsTokenXAuthorizedRP",
+                  "title" : "oidcRPMetaDataOptionsTokenXAuthorizedRP"
                }
             ],
             "id" : "oidcRPMetaDataOptionsAdvanced",

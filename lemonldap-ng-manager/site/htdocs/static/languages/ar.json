@@ -778,6 +778,7 @@
 "oidcRPMetaDataOptionsRule":"قاعدة الدخول",
 "oidcRPMetaDataOptionsScopes":"نطاق",
 "oidcRPMetaDataOptionsTimeouts":"Timeouts",
+"oidcRPMetaDataOptionsTokenXAuthorizedRP":"Other RP allowed to exchange access_token",
 "oidcRPMetaDataOptionsUserIDAttr":"خاصّيّة المستخدم",
 "oidcRPMetaDataOptionsUserInfoEncContentEncAlg":"User_info Encryption content encryption algorithm",
 "oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg":"User_info Encryption key management alg",

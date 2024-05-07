@@ -246,6 +246,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsRefreshToken',
                             'oidcRPMetaDataOptionsUserIDAttr',
                             'oidcRPMetaDataOptionsAdditionalAudiences',
+                            'oidcRPMetaDataOptionsTokenXAuthorizedRP',
                         ]
                     },
                     {
