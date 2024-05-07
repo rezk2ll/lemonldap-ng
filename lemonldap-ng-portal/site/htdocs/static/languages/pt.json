@@ -324,7 +324,6 @@
 "submit":"Enviar",
 "switchContext":"Trocar de contexto",
 "totp2f":" App OTP",
-"totpExistingKey":"Um dispositivo TOTP já está registrado. Você deve removê-lo antes de adicionar um novo dispositivo TOTP",
 "totpMissingCode":"Insira o código fornecido pelo seu aplicativo TOTP",
 "totpOrTouch":"Se você vê isso no seu celular, toque no código QR para abrir sua aplicação TOTP",
 "totpQrCode":"Leia este código QR em seu aplicativo TOTP",

@@ -324,7 +324,6 @@
 "submit":"قدم",
 "switchContext":"Switch context",
 "totp2f":"OTP App",
-"totpExistingKey":"A TOTP device is already registered, you must remove it before adding a new TOTP device",
 "totpMissingCode":"Please enter the code supplied by your TOTP application",
 "totpOrTouch":"If you see this on your mobile, touch the QR code to open your TOTP application",
 "totpQrCode":"Scan this QR code in your TOTP application",

@@ -324,7 +324,6 @@
 "submit":"Подтвердить",
 "switchContext":"Переключение контекста",
 "totp2f":"Приложение OTP",
-"totpExistingKey":"Устройство TOTP уже зарегистрировано, его необходимо удалить перед добавлением нового устройства TOTP",
 "totpMissingCode":"Пожалуйста, введите код, предоставленный вашим приложением TOTP",
 "totpOrTouch":"If you see this on your mobile, touch the QR code to open your TOTP application",
 "totpQrCode":"Отсканируйте этот QR-код в приложении TOTP",
