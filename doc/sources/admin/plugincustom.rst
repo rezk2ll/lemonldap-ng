@@ -195,6 +195,37 @@ If you want to display user feedback, you need to do two additional things
 
 * Implement a JS check and trigger it on the :ref:`checkpassword event <checkpassword>`
 
+Creating a second factor module
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Adding a new type of second factor requires one or two modules:
+
+* A module for using the second factor during authentication
+
+This module must inherit from ``Lemonldap::NG::Portal::Main::SecondFactor``.
+
+.. code:: perl
+
+    package My::SFA;
+
+    use strict;
+    use Mouse;
+
+    extends 'Lemonldap::NG::Portal::Main::SecondFactor';
+
+* (optional) A module for registering the second factor
+
+This module must inherit from ``Lemonldap::NG::Portal::2F::Register::Base``.
+
+.. code:: perl
+
+    package My::SFARegister;
+
+    use strict;
+    use Mouse;
+
+    extends 'Lemonldap::NG::Portal::2F::Register::Base';
+
 
 Example
 -------

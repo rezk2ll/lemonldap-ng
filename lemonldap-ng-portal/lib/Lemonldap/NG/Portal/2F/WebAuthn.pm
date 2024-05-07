@@ -24,7 +24,6 @@ with 'Lemonldap::NG::Portal::Lib::WebAuthn';
 
 # INITIALIZATION
 
-has rule   => ( is => 'rw' );
 has prefix => ( is => 'ro', default => 'webauthn' );
 has logo   => ( is => 'rw', default => 'webauthn.png' );
 
