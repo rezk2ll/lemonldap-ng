@@ -65,6 +65,10 @@ sub runTest {
             subject_token => $access_token,
             audience      => 'rpid2',
             scope         => 'openid profile email',
+            subject_token_type =>
+              'urn:ietf:params:oauth:token-type:access_token',
+            requested_token_type =>
+              'urn:ietf:params:oauth:token-type:access_token',
         }
     );
 

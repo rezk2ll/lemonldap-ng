@@ -6,10 +6,16 @@ use Mouse;
 extends 'Lemonldap::NG::Portal::Lib::OIDCTokenExchange';
 
 sub validate {
-    my ( $self, $req, $rp, $subjectToken, $subjectTokenType ) = @_;
+    my ( $self, $req, $rp, $subjectToken, $subjectTokenType,
+        $requestedTokenType )
+      = @_;
 
     if ( $subjectTokenType and $subjectTokenType ne 'access_token' ) {
         $self->logger->error("Given token isn't declared as access_token");
+        return 0;
+    }
+    if ( $requestedTokenType and $requestedTokenType ne 'access_token' ) {
+        $self->logger->error("Requested token isn't declared as access_token");
         return 0;
     }
 
@@ -27,9 +33,9 @@ sub validate {
         return 0;
     }
 
-    my $id = $accessTokenSession->data->{user_session_id};
+    my $id      = $accessTokenSession->data->{user_session_id};
     my $session = $self->p->getApacheSession($id);
-    return $session->data->{$self->conf->{whatToTrace}};
+    return $session->data->{ $self->conf->{whatToTrace} };
 }
 
 1;

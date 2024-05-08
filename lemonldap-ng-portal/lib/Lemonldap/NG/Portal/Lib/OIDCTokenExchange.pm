@@ -43,29 +43,33 @@ sub tokenExchange {
     # Note that client_id and grant_type value are verified by
     # ::/lib::OpenIDConnect
 
-    my $clientId         = $req->param('client_id');         # already validated
-    my $subjectToken     = $req->param('subject_token');
-    my $subjectTokenType = $req->param('subject_token_type');
+    my $clientId     = $req->param('client_id');       # already validated
+    my $subjectToken = $req->param('subject_token');
     unless ($subjectToken) {
         $self->userLogger->error('Token exchange called without subject_token');
         return PE_OK;
     }
 
-    # Even if this field is required in Oauth2, it seems that it is not required
-    # by Keycloak.
-    if ($subjectTokenType) {
-        unless ($subjectTokenType =~ s/^urn:ietf:params:oauth:token-type://
-            and $subjectTokenType =~
-            /^(?:(?:refresh|access|id)_token|saml[12])$/ )
-        {
-            $self->logger->info( 'Malformed subject_token_type: '
-                  . $req->param('subject_token_type') );
-            return PE_OK;
+    # Even if these fields are required in Oauth2, it seems that it is not required
+    # by Keycloak..
+
+    my @types;
+    foreach my $name (qw(subject_token_type requested_token_type)) {
+        my $val = $req->param($name);
+        if ($val) {
+            unless ($val =~ s/^urn:ietf:params:oauth:token-type://
+                and $val =~ /^(?:(?:refresh|access|id)_token|saml[12])$/ )
+            {
+                $self->logger->info(
+                    "Malformed $name: " . $req->param('subject_token_type') );
+                return PE_OK;
+            }
         }
+        push @types, $val;
     }
 
     # 1.1. Use subclass validate() to get user ID
-    my $uid = $self->validate( $req, $rp, $subjectToken, $subjectTokenType );
+    my $uid = $self->validate( $req, $rp, $subjectToken, @types );
     return PE_OK unless $uid;
 
     # 2. Check for audience and authorization

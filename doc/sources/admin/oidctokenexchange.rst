@@ -46,7 +46,8 @@ Request parameters:
 * **Oauth2 parameters**:
 
   * ``grant_type`` must be ``urn:ietf:params:oauth:grant-type:token-exchange``
-  * ``requested_token_type``, only ``urn:ietf:params:oauth:token-type:access_token`` is supported here
+  * ``subject_token_type`` *(optional)*, only ``urn:ietf:params:oauth:token-type:access_token`` is supported here
+  * ``requested_token_type`` *(optional)*, only ``urn:ietf:params:oauth:token-type:access_token`` is supported here
 
 * **Target**:
 
