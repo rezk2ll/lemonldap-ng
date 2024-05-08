@@ -100,60 +100,39 @@ sub tokenExchange {
 
     # TODO: get user from refresh_tokens (or access_token) and build and return
     # an access_token
-    my $opts     = { $self->oidc->_storeOpts() };
-    my $sessions = Lemonldap::NG::Common::Apache::Session->searchOn( {
-            %{ $opts->{storageModuleOptions} },
-            backend => $opts->{storageModule},
-        },
-        '_session_uid',
-        $uid,
+    my $opts = { $self->oidc->_storeOpts() };
+
+    # 3.1. Create a new refresh_token if missing
+    $req->user($uid);
+    $req->steps( [
+            'getUser',        'setAuthSessionInfo',
+            'setSessionInfo', $self->p->groupsAndMacros,
+            'setLocalGroups'
+        ]
     );
-    my @keys =
-      sort { return $sessions->{$b}->{_utime} <=> $sessions->{$a}->{_utime}; }
-      grep {
-        # Only refresh_token sessions
-        $sessions->{$_}->{_type} eq 'refresh_token'
-
-          # Verify that $rp matches
-          and $sessions->{$_}->{client_id} eq $targetClientId
-      }
-      keys %$sessions;
-
-    unless (@keys) {
-
-        # 3.1. Create a new refresh_token if missing
-        $req->user($uid);
-        $req->steps( [
-                'getUser',        'setAuthSessionInfo',
-                'setSessionInfo', $self->p->groupsAndMacros,
-                'setLocalGroups'
-            ]
-        );
-        if ( my $error = $self->p->process($req) ) {
-            if ( $error == PE_OK ) {
-                $self->userLogger->warn(
-                        'Token exchange requested for an invalid user ('
-                      . $req->{user}
-                      . ")" );
-            }
-            $self->logger->error("Unable to find user $uid");
-            return PE_OK;
+    if ( my $error = $self->p->process($req) ) {
+        if ( $error == PE_OK ) {
+            $self->userLogger->warn(
+                    'Token exchange requested for an invalid user ('
+                  . $req->{user}
+                  . ")" );
         }
+        $self->logger->error("Unable to find user $uid");
+        return PE_OK;
+    }
 
-        my $res = $self->oidc->newRefreshToken(
-            $rp,
-            {
-                %{ $req->sessionInfo },
-                scope        => $req->param('scope') || 'openid',
-                client_id    => $targetClientId,
-                _session_uid => $uid,
-                grant_type   => $req->param('grant_type'),
-            },
-        );
-        unless ($res) {
-            return PE_OK;
-        }
-        push @keys, $res->id;
+    my $refreshToken = $self->oidc->newRefreshToken(
+        $rp,
+        {
+            %{ $req->sessionInfo },
+            scope        => $req->param('scope') || 'openid',
+            client_id    => $targetClientId,
+            _session_uid => $uid,
+            grant_type   => $req->param('grant_type'),
+        },
+    );
+    unless ($refreshToken) {
+        return PE_OK;
     }
 
     # 4. Use normal method to create new access_token from refresh_token
@@ -161,12 +140,12 @@ sub tokenExchange {
     # TODO: remote may want a refresh_token
 
     my $res =
-      $self->oidc->_handleRefreshTokenGrant( $req, $requestedRp, $keys[0],
-        $targetClientId );
+      $self->oidc->_handleRefreshTokenGrant( $req, $requestedRp,
+        $refreshToken->id, $targetClientId );
 
     # Insert refresh_token in response
     my $tmp = JSON::from_json( $res->[2]->[0] );
-    $tmp->{refresh_token} = $keys[0];
+    $tmp->{refresh_token} = $refreshToken->id;
     $res->[2]->[0] = JSON::to_json($tmp);
 
     $req->response($res);
