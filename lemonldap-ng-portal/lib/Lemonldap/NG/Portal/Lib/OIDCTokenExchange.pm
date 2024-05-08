@@ -50,8 +50,8 @@ sub tokenExchange {
         return PE_OK;
     }
 
-    # Even if these fields are required in Oauth2, it seems that it is not required
-    # by Keycloak..
+    # Even if these fields are required in Oauth2, it seems that it is not
+    # required by Keycloak..
 
     my @types;
     foreach my $name (qw(subject_token_type requested_token_type)) {
@@ -160,11 +160,16 @@ sub tokenExchange {
     #
     # TODO: remote may want a refresh_token
 
-    $req->response(
-        $self->oidc->_handleRefreshTokenGrant(
-            $req, $requestedRp, $keys[0], $targetClientId
-        )
-    );
+    my $res =
+      $self->oidc->_handleRefreshTokenGrant( $req, $requestedRp, $keys[0],
+        $targetClientId );
+
+    # Insert refresh_token in response
+    my $tmp = JSON::from_json( $res->[2]->[0] );
+    $tmp->{refresh_token} = $keys[0];
+    $res->[2]->[0] = JSON::to_json($tmp);
+
+    $req->response($res);
 
     return PE_SENDRESPONSE;
 }

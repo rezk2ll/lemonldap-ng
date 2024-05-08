@@ -84,11 +84,13 @@ sub runTest {
     );
 
     # Refresh access token
-    $json         = expectJSON($res);
-    $access_token = $json->{access_token};
-    $id_token     = $json->{id_token};
-    ok( $access_token, "Got refreshed Access token" );
-    ok( $id_token,     "Got refreshed ID token" );
+    $json          = expectJSON($res);
+    $access_token  = $json->{access_token};
+    $id_token      = $json->{id_token};
+    $refresh_token = $json->{refresh_token};
+    ok( $access_token,  "Got refreshed Access token" );
+    ok( $id_token,      "Got refreshed ID token" );
+    ok( $refresh_token, "Got new refresh_token" );
 
     my $id_token_payload = id_token_payload($id_token);
     is( $id_token_payload->{sub}, 'french', 'Found sub in ID token' );
