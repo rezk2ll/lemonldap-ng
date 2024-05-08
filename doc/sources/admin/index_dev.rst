@@ -9,3 +9,4 @@ Development
    handlerarch
    plugincustom
    customhandlers
+   oidctokenexchange
