@@ -148,7 +148,7 @@ B<Options>:
 
 =item B<--backend>: Specify session backend
 
-=item B<--persistent>:Search in persistent sessions
+=item B<--persistent>: Search in persistent sessions
 
 =item B<--where>: Set search filter (search/delete only)
 
@@ -318,8 +318,8 @@ Examples:
 
 	--search uid=dwho
 	--search _sessionType=OIDC
-    --search '_startTime>20240410063538'
-    --search '_startTime<20240410063538'
+	--search '_startTime>20240410063538'
+	--search '_startTime<20240410063538'
 
 =item B<--backend>,B<-b>
 

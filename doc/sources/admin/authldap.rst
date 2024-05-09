@@ -90,7 +90,7 @@ Connection
 -  **Users search base**: Base of search in the LDAP directory.
 -  **Account**: DN used to connect to LDAP server. By default, anonymous
    bind is used.
--  **Password**: password to used to connect to LDAP server. By default,
+-  **Password**: password used to connect to LDAP server. By default,
    anonymous bind is used.
 -  **Connection timeout**: applies only when initiating the connection
 -  **Operation timeout**: applies to all LDAP operations

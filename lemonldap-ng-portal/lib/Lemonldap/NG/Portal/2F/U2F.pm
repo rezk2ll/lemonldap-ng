@@ -27,7 +27,6 @@ with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
 
-has rule   => ( is => 'rw' );
 has prefix => ( is => 'ro', default => 'u' );
 has logo   => ( is => 'rw', default => 'u2f.png' );
 

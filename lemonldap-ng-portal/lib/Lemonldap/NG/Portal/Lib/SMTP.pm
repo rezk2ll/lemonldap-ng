@@ -189,9 +189,7 @@ sub send_mail {
                 $related->attach(
                     Type => "image/" . ( $cid{$_} =~ m/\.(\w+)/ )[0],
                     Id   => $_,
-                    Path => $self->conf->{templateDir} . "/"
-                      . $self->conf->{portalSkin} . "/"
-                      . $cid{$_},
+                    Path => $self->_search_attachment( $cid{$_} ),
                 );
             }
         }
@@ -222,6 +220,24 @@ sub send_mail {
     }
 
     return 1;
+}
+
+sub _search_attachment {
+    my ( $self, $filename ) = @_;
+
+    my $from_skin =
+      $self->p->getSkinTplDir( $self->conf->{portalSkin} ) . "/" . $filename;
+
+    if ( -e $from_skin ) {
+        $self->logger->debug("found attachment at $from_skin");
+        return $from_skin;
+    }
+    else {
+        my $from_bootstrap =
+          $self->conf->{templateDir} . "/bootstrap/" . $filename;
+        $self->logger->debug("returning attachment at $from_bootstrap");
+        return $from_bootstrap;
+    }
 }
 
 ## @method string getMailSession(string user)

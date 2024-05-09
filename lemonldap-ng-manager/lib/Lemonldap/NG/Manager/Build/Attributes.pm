@@ -1926,6 +1926,11 @@ sub attributes {
             type          => 'int',
             documentation => 'Password policy: minimal size',
         },
+        passwordPolicyMaxSize => {
+            default       => 0,
+            type          => 'int',
+            documentation => 'Password policy: maximal size',
+        },
         passwordPolicyMinLower => {
             default       => 0,
             type          => 'int',
@@ -2617,6 +2622,11 @@ sub attributes {
         webauthnRpId => {
             type          => 'text',
             documentation => 'WebAuthn Relying Party ID',
+        },
+        webauthnAppId => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Send AppID extension',
         },
         webauthnRpName => {
             type          => 'text',
