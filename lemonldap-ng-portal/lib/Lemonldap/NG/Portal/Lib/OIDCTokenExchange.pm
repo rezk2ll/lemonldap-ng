@@ -69,29 +69,28 @@ sub tokenExchange {
     }
 
     # 1.1. Use subclass validate() to get user ID
-    my $uid = $self->validate( $req, $rp, $subjectToken, @types );
+    my $uid = $self->validateSrc( $req, $rp, $subjectToken, $types[0] );
     return PE_OK unless $uid;
 
     # 2. Check for audience and authorization
-    my $targetClientId = $req->param('audience') // $clientId;
-    my $requestedRp    = $rp;
-    if ( $targetClientId and $targetClientId ne $clientId ) {
-        ($requestedRp) = grep {
-            $self->oidc->rpOptions->{$_}->{oidcRPMetaDataOptionsClientID} eq
-              $targetClientId
-        } keys %{ $self->oidc->rpOptions };
-        unless ($requestedRp) {
-            $self->logger->debug(
-                "Token exchange request for an unexistent RP $targetClientId");
-            return PE_OK;
+    my $targetClientId = $req->param('audience');
+    my $target         = { audience => $req->param('audience'), };
+    if ( $target->{audience} ) {
+        if ( $target->{audience} eq $clientId ) {
+            $target->{rp} = $rp;
         }
-        my $list = $self->oidc->rpOptions->{$requestedRp}
-          ->{oidcRPMetaDataOptionsTokenXAuthorizedRP};
-        unless ( $list and grep { $_ eq $rp } split /[,;\s]+/, $list ) {
-            $self->userLogger->error(
-                "Token exchange for an unauthorized RP $targetClientId");
-            return PE_OK;
+        else {
+            my ($res) = grep {
+                $self->oidc->rpOptions->{$_}->{oidcRPMetaDataOptionsClientID}
+                  eq $targetClientId
+            } keys %{ $self->oidc->rpOptions };
+            $target->{rp} = $res;
         }
+    }
+
+    unless ( $self->validateDst( $req, $rp, $target, $types[1] ) ) {
+        $self->logger->debug( ref($self) . " refused to validate audience" );
+        return PE_OK;
     }
 
     # 2. Create access_token
@@ -126,7 +125,7 @@ sub tokenExchange {
         {
             %{ $req->sessionInfo },
             scope        => $req->param('scope') || 'openid',
-            client_id    => $targetClientId,
+            client_id    => $target->{audience},
             _session_uid => $uid,
             grant_type   => $req->param('grant_type'),
         },
@@ -139,8 +138,7 @@ sub tokenExchange {
     #
     # TODO: remote may want a refresh_token
 
-    my $res =
-      $self->oidc->_handleRefreshTokenGrant( $req, $requestedRp,
+    my $res = $self->oidc->_handleRefreshTokenGrant( $req, $target->{rp} || $rp,
         $refreshToken->id, $targetClientId );
 
     # Insert refresh_token in response

@@ -5,17 +5,11 @@ use Mouse;
 
 extends 'Lemonldap::NG::Portal::Lib::OIDCTokenExchange';
 
-sub validate {
-    my ( $self, $req, $rp, $subjectToken, $subjectTokenType,
-        $requestedTokenType )
-      = @_;
+sub validateSrc {
+    my ( $self, $req, $rp, $subjectToken, $subjectTokenType ) = @_;
 
     if ( $subjectTokenType and $subjectTokenType ne 'access_token' ) {
         $self->logger->error("Given token isn't declared as access_token");
-        return 0;
-    }
-    if ( $requestedTokenType and $requestedTokenType ne 'access_token' ) {
-        $self->logger->error("Requested token isn't declared as access_token");
         return 0;
     }
 
@@ -27,7 +21,7 @@ sub validate {
     }
 
     unless ( $rp eq $accessTokenSession->data->{rp} ) {
-        $self->userLogger->error( "subject_token rp isn't $rp ("
+        $self->logger->debug( "subject_token rp isn't $rp ("
               . $accessTokenSession->data->{rp}
               . ')s' );
         return 0;
@@ -36,6 +30,35 @@ sub validate {
     my $id      = $accessTokenSession->data->{user_session_id};
     my $session = $self->p->getApacheSession($id);
     return $session->data->{ $self->conf->{whatToTrace} };
+}
+
+sub validateDst {
+    my ( $self, $req, $rp, $target, $requestedTokenType ) = @_;
+
+    if ( $requestedTokenType and $requestedTokenType ne 'access_token' ) {
+        $self->logger->debug("Requested token isn't declared as access_token");
+        return 0;
+    }
+
+    unless ( $target->{audience} ) {
+        $target->{rp} = $rp;
+        return 1;
+    }
+
+    unless ( $target->{rp} ) {
+        $self->logger->debug(
+            "Token exchange request for an unexistent RP $target->{audience}");
+        return 0;
+    }
+
+    my $list = $self->oidc->rpOptions->{ $target->{rp} }
+      ->{oidcRPMetaDataOptionsTokenXAuthorizedRP};
+    unless ( $list and grep { $_ eq $rp } split /[,;\s]+/, $list ) {
+        $self->userLogger->error(
+            "Token exchange for an unauthorized RP ($rp => $target->{rp})");
+        return 0;
+    }
+    return 1;
 }
 
 1;
