@@ -225,7 +225,6 @@ site/htdocs/static/bootstrap/js/skin.min.js
 site/htdocs/static/bootstrap/js/skin.min.js.map
 site/htdocs/static/bootstrap/password.png
 site/htdocs/static/bootstrap/totp.png
-site/htdocs/static/bootstrap/utotp.png
 site/htdocs/static/bootstrap/webauthn.png
 site/htdocs/static/bootstrap/yubikey.png
 site/htdocs/static/bwr/bootstrap/dist/css/bootstrap-grid.css

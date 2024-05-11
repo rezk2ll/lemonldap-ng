@@ -543,16 +543,14 @@ sub tests {
         # Warn if 2F dependencies seem missing
         sfaDependencies => sub {
             my $ok = 0;
-            foreach (qw(u totp utotp yubikey)) {
+            foreach (qw(totp yubikey)) {
                 $ok ||= $conf->{ $_ . '2fActivation' };
                 last if ($ok);
             }
             return 1 unless ($ok);
 
             # Use TOTP
-            if (   $conf->{totp2fActivation}
-                or $conf->{utotp2fActivation} )
-            {
+            if ( $conf->{totp2fActivation} ) {
                 eval "use Convert::Base32";
                 return ( 1,
                     "Convert::Base32 module is required to enable TOTP" )
