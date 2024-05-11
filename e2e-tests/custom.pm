@@ -13,7 +13,6 @@ sub accessToTrace {
     my $custom  = $hash->{custom};
     my $req     = $hash->{req};
     my $vhost   = $hash->{vhost};
-    my $custom  = $hash->{custom};
     my $params  = $hash->{params};
     my $session = $hash->{session};
 

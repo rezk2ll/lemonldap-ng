@@ -13,35 +13,17 @@ LemonLDAP::NG provides packages for RHEL (and derivatives) 7/8/9:
 
 - ``lemonldap-ng``: metapackage, contains no file but dependencies on other
   packages
-- ``lemonldap-ng-doc``: contains HTML documentation and project docs
+- ``lemonldap-ng-doc``: HTML documentation and project docs
   (README, etc.)
-- ``lemonldap-ng-conf``: contains default configuration (DNS domain:
-  example.com)
-- ``lemonldap-ng-test``: contains sample CGI test page
-- ``lemonldap-ng-handler``: contains Apache Handler implementation (agent)
-- ``lemonldap-ng-manager``: contains administration interface and session
-  explorer
-- ``lemonldap-ng-portal``: contains authentication portal and menu
+- ``lemonldap-ng-test``: sample CGI test page
+- ``lemonldap-ng-common``: configuration and common files
+- ``lemonldap-ng-handler``: Handler common libraries
+- ``lemonldap-ng-manager``: Manager files
+- ``lemonldap-ng-portal``: Portal files
 - ``lemonldap-ng-fastcgi-server``: FastCGI server needed to use Nginx
-- ``lemonldap-ng-nginx``: contains Nginx configuration and dependencies
-- ``lemonldap-ng-uwsgi-app``: contains Uwsgi application
-- ``lemonldap-ng-selinux``: contains the SELinux policy for httpd
-- ``perl-Lemonldap-NG-Common``: CPAN - Shared modules
-- ``perl-Lemonldap-NG-Handler``: CPAN - Handler modules
-- ``perl-Lemonldap-NG-Manager``: CPAN - Manager modules
-- ``perl-Lemonldap-NG-Portal``: CPAN - Portal modules
+- ``lemonldap-ng-uwsgi-app``: Uwsgi application
+- ``lemonldap-ng-selinux``: SELinux policy
 - ``perl-Lemonldap-NG-SSOaaS-Apache-Client``: SSOaaS client module
-
-
-.. danger::
-
-    The package lemonldap-ng-nginx requires the Nginx
-    community package. If you use OpenResty or Nginx plus, you must ignore
-    this dependency. To do this, download the package and install it with:
-
-    ::
-
-       rpm --nodeps -i lemonldap-ng-nginx*.rpm
 
 
 Prerequisites
@@ -101,6 +83,10 @@ Run this to update packages cache:
 
    yum update
 
+Official Fedora packages
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Packages are available in EPEL, so you can choose to install them directly from here.
 
 Manual download
 ~~~~~~~~~~~~~~~
@@ -110,12 +96,25 @@ RPMs are available on the `Download page <https://lemonldap-ng.org/download.html
 Package GPG signature
 ---------------------
 
+For EL7
+~~~~~~~
 
-Get the `RPM signing key <https://lemonldap-ng.org/_media/rpm-gpg-key-ow2>`__ onto your LemonLDAP::NG server:
+Get the legacy `RPM signing key <https://lemonldap-ng.org/_media/rpm-gpg-key-ow2>`__ onto your LemonLDAP::NG server:
 
 ::
 
    curl https://lemonldap-ng.org/_media/rpm-gpg-key-ow2 > /etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
+
+
+For EL8 and higher
+~~~~~~~~~~~~~~~~~~
+
+Install the `GPG Security key <https://lemonldap-ng.org/security/GPG-KEY-LLNG-SECURITY.asc>`__ on your LemonLDAP::NG server:
+
+::
+
+   curl https://lemonldap-ng.org/security/GPG-KEY-LLNG-SECURITY.asc > /etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
+
 
 Install packages
 ----------------
@@ -153,9 +152,6 @@ You have then to install all the downloaded packages:
     You can choose to install only one component by choosing the
     package ``lemonldap-ng-portal``, ``lemonldap-ng-handler`` or
     ``lemonldap-ng-manager``.
-
-    Install the package ``lemonldap-ng-conf`` on all server which contains
-    one of those packages.
 
 First configuration steps
 -------------------------
@@ -197,29 +193,4 @@ File location
 -  All static content (examples, CSS, images, etc.) is in
    ``/usr/share/lemonldap-ng/``
 - Administration scripts are in ``/usr/libexec/lemonldap-ng/bin``
-
-Build your packages
--------------------
-
-If you need it, you can rebuild RPMs:
-
--  Install rpm-build package
--  Install all build dependencies (see BuildRequires in
-   ``lemonldap-ng.spec`` )
--  Put LemonLDAP::NG tarball in ``%_topdir/SOURCES``
--  Edit ``~/.rpmmacros`` and set your build parameters:
-
-::
-
-   %_topdir /home/user/build
-   %dist .el7
-   %rhel 7
-
--  Go to ``%_topdir``
--  Build:
-
-::
-
-   rpmbuild -ta SOURCES/lemonldap-ng-VERSION.tar.gz
-
 

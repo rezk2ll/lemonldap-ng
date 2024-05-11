@@ -126,6 +126,11 @@ Copyright: Mark James
 License: CC-BY-2.5
 Comment: downloaded from https://github.com/legacy-icons/famfamfam-silk/
 
+Files: lemonldap-ng-portal/site/htdocs/static/common/2F/*
+Copyright: 2024 Katerina Limpitsouni
+License: unDraw
+Comment: downloaded from https://undraw.co/
+
 Files: lemonldap-ng-portal/site/htdocs/static/common/icons/decryptValue.png
 Copyright: Christophe Maudoux <chrmdx@gmail.com>
 License: CC-3
@@ -1915,3 +1920,18 @@ License: WebAuthnLogoLicense
  .
   * If you want to use artwork not included in this repository
   * If you want to use these images in a video/mainstream media
+
+License: unDraw
+ All images, assets and vectors published on unDraw can be used for free.
+ You can use them for noncommercial and commercial purposes. You do not
+ need to ask permission from or provide credit to the creator or unDraw.
+ .
+ More precisely, unDraw grants you an nonexclusive, worldwide copyright
+ license to download, copy, modify, distribute, perform, and use the assets
+ provided from unDraw for free, including for commercial purposes, without
+ permission from or attributing the creator or unDraw. This license does not
+ include the right to compile assets, vectors or images from unDraw to
+ replicate a similar or competing service, in any form or distribute the
+ assets in packs or otherwise. This extends to automated and non-automated
+ ways to link, embed, scrape, search or download the assets included on the
+ website without our consent.

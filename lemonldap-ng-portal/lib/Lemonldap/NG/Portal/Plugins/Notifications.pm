@@ -20,7 +20,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_NOTIFICATION
 );
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.19.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -141,7 +141,7 @@ sub checkNotifDuringAuth {
             and $req->env->{PATH_INFO} ne '/' )
         {
             $req->data->{_url} =
-              encode_base64( $self->conf->{portal} . $req->env->{PATH_INFO},
+              encode_base64( $req->portal . $req->env->{PATH_INFO},
                 '' );
         }
 
@@ -201,11 +201,11 @@ sub myNotifs {
 
 sub retrieveNotifs {
     my ( $self, $req ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
+    return [] unless $user;
 
     # Retrieve user's accepted notifications
-    $self->logger->debug( 'Searching for "'
-          . $req->userData->{ $self->conf->{whatToTrace} }
-          . '" accepted notification(s)' );
+    $self->logger->debug(qq{Searching for "$user" accepted notification(s)});
     my @_notifications = sort {
              $b->{epoch} <=> $a->{epoch}
           or $a->{reference} cmp $b->{reference}

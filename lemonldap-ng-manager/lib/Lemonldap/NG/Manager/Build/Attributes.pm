@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.17.2';
+our $VERSION = '2.19.0';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -23,7 +23,7 @@ sub perlExpr {
     );
     $cpt->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
-    $cpt->reval("BEGIN { 'warnings'->unimport; } $val");
+    $cpt->reval($val);
     my $err = join( '',
         grep { $_ =~ /(?:Undefined subroutine|Devel::StackTrace)/ ? () : $_ }
           split( /\n/, $@ ) );
@@ -289,6 +289,22 @@ use constant oidcEncAlgorithmAlg => [
     { k => 'ECDH-ES+A256KW', v => 'ECDH-ES+A256KW' },
 ];
 
+use constant oidcSigAlgorithmAlg => [
+    { k => 'HS256', v => 'HS256' },
+    { k => 'HS384', v => 'HS384' },
+    { k => 'HS512', v => 'HS512' },
+    { k => 'RS256', v => 'RS256' },
+    { k => 'RS384', v => 'RS384' },
+    { k => 'RS512', v => 'RS512' },
+    { k => 'PS256', v => 'PS256' },
+    { k => 'PS384', v => 'PS384' },
+    { k => 'PS512', v => 'PS512' },
+    { k => 'ES256', v => 'ES256' },
+    { k => 'ES384', v => 'ES384' },
+    { k => 'ES512', v => 'ES512' },
+    { k => 'EdDSA', v => 'EdDSA' },
+];
+
 sub attributes {
     return {
 
@@ -439,6 +455,10 @@ sub attributes {
         portalCustomCss => {
             type          => 'text',
             documentation => 'Path to custom CSS file',
+        },
+        portalCustomJs => {
+            type          => 'text',
+            documentation => 'Path to custom JS file',
         },
         portalStatus => {
             type          => 'bool',
@@ -619,6 +639,35 @@ sub attributes {
             default       => 1,
             type          => 'bool',
             documentation => 'Require HIBP check to pass',
+            flags         => 'p',
+        },
+        checkEntropy => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable entropy check of password',
+            flags         => 'p',
+        },
+        checkEntropyRequired => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Require entropy check to pass',
+            flags         => 'p',
+        },
+        checkEntropyRequiredLevel => {
+            type          => 'int',
+            documentation =>
+              'Minimal entropy required for the password to be accepted',
+            flags => 'p',
+        },
+        initializePasswordReset => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable Password Reset API plugin',
+            flags         => 'p',
+        },
+        initializePasswordResetSecret => {
+            type          => 'password',
+            documentation => 'Secret key for the Initialize Password Reset API',
             flags         => 'p',
         },
         checkUser => {
@@ -1245,12 +1294,22 @@ sub attributes {
             default       => '[A-Z]{3}[a-z]{5}.\d{2}',
             documentation => 'Regular expression to create a random password',
         },
+        trustedBrowserRule => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Trusted browser registration rule',
+        },
         trustedDomains =>
           { type => 'text', documentation => 'Trusted domains', },
         storePassword => {
             default       => 0,
             type          => 'bool',
             documentation => 'Store password in session',
+        },
+        storePasswordEncrypted => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Crypt the password in session',
         },
         timeout => {
             type          => 'int',
@@ -1452,8 +1511,9 @@ sub attributes {
             flags         => 'hp',
         },
         domain => {
-            type          => 'text',
-            test          => qr/^(?:$Regexp::Common::URI::RFC2396::hostname)?$/,
+            type => 'text',
+            test =>
+              qr/^(?:(?:$Regexp::Common::URI::RFC2396::hostname|#\w+#))?$/,
             msgFail       => '__badDomainName__',
             default       => 'example.com',
             documentation => 'DNS domain',
@@ -1484,6 +1544,11 @@ sub attributes {
             default       => 0,
             documentation => 'Cookie securisation method',
             flags         => 'hp',
+        },
+        hashedSessionStore => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Securize storage of sensible sessions',
         },
         sameSite => {
             type   => 'select',
@@ -1697,7 +1762,7 @@ sub attributes {
         },
         sessionDataToRemember => {
             type          => 'keyTextContainer',
-            keyTest       => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+            keyTest       => qr/^(\d+_)?[_a-zA-Z][a-zA-Z0-9_]*$/,
             keyMsgFail    => '__invalidSessionData__',
             documentation => 'Data to remember in login history',
         },
@@ -1781,6 +1846,59 @@ sub attributes {
             documentation => 'List of virtualHosts with their get parameters',
         },
 
+        # Jitsi Meet tokens issuer
+        issuerDBJitsiMeetTokensActivation => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Jitsi issuer activation',
+        },
+        issuerDBJitsiMeetTokensPath => {
+            type          => 'text',
+            default       => '^/jitsi/',
+            documentation => 'Jitsi issuer request path',
+        },
+        issuerDBJitsiMeetTokensRule => {
+            type          => 'boolOrExpr',
+            default       => 1,
+            documentation => 'Jitsi issuer rule',
+        },
+
+        jitsiDefaultServer => {
+            type          => 'url',
+            documentation => 'Jitsi server URL',
+        },
+        jitsiAppId => {
+            type          => 'text',
+            documentation => 'Jitsi application ID',
+        },
+        jitsiAppSecret => {
+            type          => 'text',
+            documentation => 'Jitsi application secret',
+        },
+        jitsiSigningAlg => {
+            type          => 'select',
+            select        => oidcSigAlgorithmAlg,
+            default       => 'RS256',
+            documentation => 'Jitsi JWT signature method',
+        },
+        jitsiExpiration => {
+            type          => 'int',
+            default       => '300',
+            documentation => 'Jitsi JWT expiration',
+        },
+        jitsiIdAttribute => {
+            type          => 'text',
+            documentation => 'Jitsi attribute for ID',
+        },
+        jitsiNameAttribute => {
+            type          => 'text',
+            documentation => 'Jitsi attribute for name',
+        },
+        jitsiMailAttribute => {
+            type          => 'text',
+            documentation => 'Jitsi attribute for email',
+        },
+
         # Password
         mailOnPasswordChange => {
             default       => 0,
@@ -1807,6 +1925,11 @@ sub attributes {
             default       => 0,
             type          => 'int',
             documentation => 'Password policy: minimal size',
+        },
+        passwordPolicyMaxSize => {
+            default       => 0,
+            type          => 'int',
+            documentation => 'Password policy: maximal size',
         },
         passwordPolicyMinLower => {
             default       => 0,
@@ -2016,6 +2139,38 @@ sub attributes {
             default       => 20,
             type          => 'int',
             documentation => 'Maximum 2F devices name length',
+        },
+
+        # Okta 2FA
+        okta2fActivation => {
+            type          => 'boolOrExpr',
+            default       => 0,
+            documentation => 'Okta2F activation',
+        },
+        okta2fAdminURL => {
+            type          => 'url',
+            documentation => 'Okta Administration URL'
+        },
+        okta2fApiKey => {
+            type          => 'text',
+            documentation => 'Okta API key'
+        },
+        okta2fAuthnLevel => {
+            type          => 'intOrNull',
+            documentation =>
+              'Authentication level for users authentified by Okta2F'
+        },
+        okta2fLabel => {
+            type          => 'text',
+            documentation => 'Portal label for Okta2F'
+        },
+        okta2fLoginAttribute => {
+            type          => 'text',
+            documentation => 'Session key containing Okta login'
+        },
+        okta2fLogo => {
+            type          => 'text',
+            documentation => 'Custom logo for Okta 2F',
         },
 
         # Password 2FA
@@ -2442,17 +2597,18 @@ sub attributes {
         webauthn2fAttestation => {
             type   => 'select',
             select => [
-                { k => 'none', v => 'None' },
-                { k => 'direct',   v => 'Direct' },
-                { k => 'indirect',    v => 'Indirect' },
-                { k => 'enterprise',    v => 'Enterprise' },
+                { k => 'none',       v => 'None' },
+                { k => 'direct',     v => 'Direct' },
+                { k => 'indirect',   v => 'Indirect' },
+                { k => 'enterprise', v => 'Enterprise' },
             ],
             default       => 'none',
             documentation => 'Ask the authenticator for an attestation',
         },
         webauthn2fAttestationTrust => {
             type          => 'file',
-            documentation => 'Certificate bundle for attestation trust validation',
+            documentation =>
+              'Certificate bundle for attestation trust validation',
         },
         webauthn2fUserCanRemoveKey => {
             type          => 'bool',
@@ -2462,6 +2618,15 @@ sub attributes {
         webauthnDisplayNameAttr => {
             type          => 'text',
             documentation => 'Session attribute containing user display name',
+        },
+        webauthnRpId => {
+            type          => 'text',
+            documentation => 'WebAuthn Relying Party ID',
+        },
+        webauthnAppId => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Send AppID extension',
         },
         webauthnRpName => {
             type          => 'text',
@@ -3592,6 +3757,10 @@ sub attributes {
             default       => '::2F::Engines::Default',
             documentation => 'Second factor engine',
         },
+        sfRetries => {
+            type          => 'intOrNull',
+            documentation => 'Allowed number of retries',
+        },
         sfRequired => {
             type          => 'boolOrExpr',
             default       => 0,
@@ -3651,7 +3820,7 @@ sub attributes {
         available2F => {
             type    => 'text',
             default => join( ',',
-                qw/UTOTP TOTP U2F REST Mail2F Ext2F WebAuthn Yubikey Radius Password/
+                qw/UTOTP TOTP U2F REST Mail2F Ext2F WebAuthn Yubikey Radius Password Okta/
             ),
             documentation => 'Available second factor modules',
         },
@@ -4424,6 +4593,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         sfExtra => {
             type          => 'sfExtraContainer',
+            help          => "sfextra.html",
             keyTest       => qr/^\w+$/,
             test          => sub { 1 },
             documentation => 'Extra second factors',
@@ -4554,6 +4724,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 'loa-5' => 5,
             },
             documentation => 'OpenID Connect Authentication Context Class Ref',
+        },
+        oidcServiceHideMetadata => {
+            type          => 'bool',
+            Documentation => "Don't display OIDC metadata",
         },
 
         # OIDC Keys
@@ -4792,8 +4966,21 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             select => [
                 { k => 'client_secret_post',  v => 'client_secret_post' },
                 { k => 'client_secret_basic', v => 'client_secret_basic' },
+                { k => 'client_secret_jwt',   v => 'client_secret_jwt' },
+                { k => 'private_key_jwt',     v => 'private_key_jwt' },
             ],
             default => 'client_secret_post',
+        },
+        oidcOPMetaDataOptionsAuthnEndpointAuthMethod => {
+            type   => 'select',
+            select =>
+              [ { k => '', v => 'None' }, { k => 'jws', v => 'Signed JWT' }, ],
+            default => 'get',
+        },
+        oidcOPMetaDataOptionsAuthnEndpointAuthSigAlg => {
+            type    => 'select',
+            select  => oidcSigAlgorithmAlg,
+            default => 'RS256',
         },
         oidcOPMetaDataOptionsCheckJWTSignature =>
           { type => 'bool', default => 1 },
@@ -4809,6 +4996,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type    => 'longtext',
             default => '',
         },
+        oidcOPMetaDataOptionsRequirePkce => {
+            type          => 'bool',
+            documentation => 'Use PKCE with this OP',
+        },
 
         # OpenID Connect relying parties
         oidcRPMetaDataExportedVars => {
@@ -4822,51 +5013,35 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 'email'              => 'mail',
             }
         },
-        oidcRPMetaDataOptionsClientID       => { type => 'text', },
-        oidcRPMetaDataOptionsClientSecret   => { type => 'password', },
+        oidcRPMetaDataOptionsClientID     => { type => 'text', },
+        oidcRPMetaDataOptionsClientSecret => { type => 'password', },
+        oidcRPMetaDataOptionsAuthMethod   => {
+            type   => 'select',
+            select => [
+                { k => '',                    v => 'Any' },
+                { k => 'client_secret_post',  v => 'client_secret_post' },
+                { k => 'client_secret_basic', v => 'client_secret_basic' },
+                { k => 'client_secret_jwt',   v => 'client_secret_jwt' },
+                { k => 'private_key_jwt',     v => 'private_key_jwt' },
+            ],
+        },
+        oidcRPMetaDataOptionsAuthRequiredForAuthorize => {
+            type => 'bool',
+        },
         oidcRPMetaDataOptionsDisplayName    => { type => 'text', },
         oidcRPMetaDataOptionsIcon           => { type => 'text', },
         oidcRPMetaDataOptionsUserIDAttr     => { type => 'text', },
         oidcRPMetaDataOptionsIDTokenSignAlg => {
             type   => 'select',
-            select => [
-                { k => 'none',  v => 'None' },
-                { k => 'HS256', v => 'HS256' },
-                { k => 'HS384', v => 'HS384' },
-                { k => 'HS512', v => 'HS512' },
-                { k => 'RS256', v => 'RS256' },
-                { k => 'RS384', v => 'RS384' },
-                { k => 'RS512', v => 'RS512' },
-                { k => 'PS256', v => 'PS256' },
-                { k => 'PS384', v => 'PS384' },
-                { k => 'PS512', v => 'PS512' },
-                { k => 'ES256', v => 'ES256' },
-                { k => 'ES384', v => 'ES384' },
-                { k => 'ES512', v => 'ES512' },
-                { k => 'EdDSA', v => 'EdDSA' },
-            ],
+            select => [ { k => 'none', v => 'None' }, @{&oidcSigAlgorithmAlg} ],
             default => 'RS256',
         },
         oidcRPMetaDataOptionsIDTokenExpiration  => { type => 'intOrNull' },
         oidcRPMetaDataOptionsIDTokenForceClaims =>
           { type => 'bool', default => 0 },
         oidcRPMetaDataOptionsAccessTokenSignAlg => {
-            type   => 'select',
-            select => [
-                { k => 'HS256', v => 'HS256' },
-                { k => 'HS384', v => 'HS384' },
-                { k => 'HS512', v => 'HS512' },
-                { k => 'RS256', v => 'RS256' },
-                { k => 'RS384', v => 'RS384' },
-                { k => 'RS512', v => 'RS512' },
-                { k => 'PS256', v => 'PS256' },
-                { k => 'PS384', v => 'PS384' },
-                { k => 'PS512', v => 'PS512' },
-                { k => 'ES256', v => 'ES256' },
-                { k => 'ES384', v => 'ES384' },
-                { k => 'ES512', v => 'ES512' },
-                { k => 'EdDSA', v => 'EdDSA' },
-            ],
+            type    => 'select',
+            select  => oidcSigAlgorithmAlg,
             default => 'RS256',
         },
         oidcRPMetaDataOptionsUserInfoSignAlg => {
@@ -5056,6 +5231,17 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             select        => oidcEncAlgorithmEnc,
             default       => 'A256GCM',
             documentation => '"enc" algorithm for logout encryption',
+        },
+        oidcRPMetaDataOptionsAuthnRequireState => {
+            type => 'bool',
+        },
+        oidcRPMetaDataOptionsAuthnRequireNonce => {
+            type => 'bool',
+        },
+        oidcRPMetaDataOptionsUserinfoRequireHeaderToken => {
+            type          => 'bool',
+            documentation =>
+              '/userinfo endpoint requires authn using Bearer token',
         },
     };
 }

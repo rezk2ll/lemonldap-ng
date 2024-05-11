@@ -65,7 +65,7 @@ Google          France Connect     Pro Santé Connect
 .. attention::
 
     OpenID Connect specification is not achieved for logout propagation.
-    So logout initiated by relaying-party will be forwarded to
+    So logout initiated by relying-party will be forwarded to
     OpenID Connect provider but logout initiated by the provider (or another
     RP) will not be propagated. LL::NG will implement this when specification
     is published.
@@ -250,8 +250,10 @@ Protocol
 -  **ACR values**: Space-separated list of acceptable ACR values (example:
    'loa-2 loa-3'). Authentication will fail if the OpenID Provider does not
    supply one of the values listed here in the ID Token.
+-  **Authentication method for authorization code request**: Require JWS authentication for code requests
+-  **Signature algorithm for authorization code authentication**: Fix signature algorithm to be used for JWS authentication for code requests
 -  **Token endpoint authentication method**: choice between
-   ``client_secret_post`` and ``client_secret_basic``
+   ``client_secret_post``, ``client_secret_basic``, ``client_secret_jwt`` and ``private_key_jwt``
 -  **Check JWT signature**: Set to 0 to disable JWT signature
    checking
 -  **ID Token max age**: If defined, LL::NG will check the ID Token

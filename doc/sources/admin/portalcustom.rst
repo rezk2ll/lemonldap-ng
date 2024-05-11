@@ -78,6 +78,20 @@ CSS file example to remove white background of main logo:
    }
 
 
+Custom JS file
+~~~~~~~~~~~~~~
+
+Similarly, you can define a custom JS file, for example ``custom.js``, which will
+be loaded after default JS files. This file must be created in the
+static repository
+(``/usr/share/lemonldap-ng/portal/htdocs/static/bootstrap/js``).
+
+Then set this value in Custom CSS parameter:
+``bootstrap/js/custom.js``.
+
+Check out the :doc:`jqueryevents` page for available integrations
+
+
 .. _portalcustom-skin-customization:
 
 Skin
@@ -388,14 +402,14 @@ Password management
 
 -  **Require old password**: used only in the password changing module
    of the menu, will check the old password before updating it
+-  **Allow to display password**: if enabled, a small icon in the password
+   field is added and when users click on it, the password value is
+   revealed. Disabled by default.
 -  **Hide old password**: used only if the password need to be reset by
    the user (LDAP password policy), will hide the old password input
 -  **Send mail on password change**: send a mail if the password is
    changed from the Menu, or from forced password reset (LDAP password
    policy)
--  **Allow to display password**: if enabled, a small icon in the password
-   field is added and when users click on it, the password value is
-   revealed. Disabled by default.
 
 Password Policy
 ---------------
@@ -409,6 +423,7 @@ Password Policy
 -  **Display policy in password form**: enable this option to display an
    information message about password policy constraints
 -  **Minimal size**: leave 0 to bypass the check
+-  **Maximal size**: leave 0 to bypass the check
 -  **Minimal lower characters**: leave 0 to bypass the check
 -  **Minimal upper characters**: leave 0 to bypass the check
 -  **Minimal digit characters**: leave 0 to bypass the check

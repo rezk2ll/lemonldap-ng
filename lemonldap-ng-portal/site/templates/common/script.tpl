@@ -16,6 +16,15 @@
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery-ui/jquery-ui.js"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery.cookie/jquery.cookie.js"></script>
  <!-- //endif -->
+
+ <TMPL_IF NAME="DISPLAY_PPOLICY">
+ <!-- //if:jsminified
+ <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/ppolicy.min.js"></script>
+ //else -->
+ <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/ppolicy.js"></script>
+ <!-- //endif -->
+ </TMPL_IF>
+
  <script type="application/init">
  {
  "displaytab":"<TMPL_VAR NAME="DISPLAY_TAB">",
@@ -29,6 +38,7 @@
  "ppolicy": {
             "display": "<TMPL_VAR NAME="DISPLAY_PPOLICY" DEFAULT="0">",
             "minsize": "<TMPL_VAR NAME="PPOLICY_MINSIZE" DEFAULT="0">",
+            "maxsize": "<TMPL_VAR NAME="PPOLICY_MAXSIZE" DEFAULT="0">",
             "minlower": "<TMPL_VAR NAME="PPOLICY_MINLOWER" DEFAULT="0">",
             "minupper": "<TMPL_VAR NAME="PPOLICY_MINUPPER" DEFAULT="0">",
             "mindigit": "<TMPL_VAR NAME="PPOLICY_MINDIGIT" DEFAULT="0">",

@@ -47,6 +47,19 @@ count(1);
 expectOK($res);
 my $id = expectCookie($res);
 
+$res = $client->_get(
+    '/',
+    cookie => "lemonldap=$id",
+    accept => "text/html",
+);
+
+ok( getHtmlElement( $res, '//li/i[@id="ppolicy-checkhibp-feedback"]' ),
+    "Found HIBP ppolicy display (id)" );
+ok( getHtmlElement( $res, '//li/span[@trspan="passwordCompromised"]' ),
+    "Found HIBP ppolicy display (message)" );
+count(2);
+
+# <i id=ppolicy-checkhibp-feedback" class="fa fa-li">
 # Test HIBP API
 # -------------
 ok(

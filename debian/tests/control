@@ -7,7 +7,7 @@ Depends: @
  , libmime-tools-perl
  , libgd-securityimage-perl
  , libimage-magick-perl
-Restrictions: allow-stderr, needs-root
+Restrictions: allow-stderr, needs-root, skippable
 
 # debian/tests/runner launch pkg-perl-autopkgtest tests for each library
 Test-Command: ./debian/tests/runner build-deps lemonldap-ng-common

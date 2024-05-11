@@ -8,7 +8,7 @@
 #                  of lemonldap-ng.ini) and underlying handler configuration
 package Lemonldap::NG::Portal::Main::Init;
 
-our $VERSION = '2.17.2';
+our $VERSION = '2.19.0';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -16,6 +16,7 @@ use strict;
 use Mouse;
 use Regexp::Assemble;
 use Lemonldap::NG::Common::Util qw(getSameSite);
+use URI;
 
 # PROPERTIES
 
@@ -32,6 +33,7 @@ has _passwordDB     => ( is => 'rw' );
 has _sfEngine       => ( is => 'rw' );
 has _captcha        => ( is => 'rw' );
 has _trustedBrowser => ( is => 'rw' );
+has _ppRules        => ( is => 'rw', default => sub { {} } );
 
 has loadedModules => ( is => 'rw' );
 
@@ -73,11 +75,11 @@ BEGIN {
 }
 
 # Endpoints inserted after any main sub
-has 'afterSub'  => ( is => 'rw', default => sub { {} } );
-has 'aroundSub' => ( is => 'rw', default => sub { {} } );
+has afterSub  => ( is => 'rw', default => sub { {} } );
+has aroundSub => ( is => 'rw', default => sub { {} } );
 
 # Issuer hooks
-has 'hook' => ( is => 'rw', default => sub { {} } );
+has hook => ( is => 'rw', default => sub { {} } );
 
 has spRules => (
     is      => 'rw',
@@ -143,9 +145,6 @@ sub init {
     # Handler::PSGI::Try initialization
     unless ( $self->SUPER::init( $self->localConfig ) ) {
         $self->logger->error( 'Initialization failed: ' . $self->error );
-        $self->error(
-"Initialization failed! Enable debug logs, reload your web server and catch main error..."
-        );
         return 0;
     }
     if ( $self->error ) {
@@ -223,6 +222,9 @@ sub setPortalRoutes {
 sub reloadConf {
     my ( $self, $conf ) = @_;
 
+    # Store default portal value in $self->portal
+    $self->portal( Lemonldap::NG::Handler::Main->tsv->{portal}->() );
+
     # Handle requests (other path may be declared in enabled plugins)
     $self->setPortalRoutes;
 
@@ -289,13 +291,6 @@ sub reloadConf {
         $self->conf->{persistentStorageOptions} =
           $self->conf->{globalStorageOptions};
     }
-
-    # Initialize cookie domain
-    unless ( $self->conf->{domain} ) {
-        $self->error('Configuration error: no domain');
-        return $self->fail;
-    }
-    $self->conf->{domain} =~ s/^([^\.])/.$1/;
 
     # Initialize cookie SameSite value
     $self->cookieSameSite( getSameSite( $self->conf ) );
@@ -401,15 +396,14 @@ sub reloadConf {
                 $re->add("$_");
             }
         }
-        foreach ( @{ $self->{additionalTrustedDomains} },
-            $self->conf->{portal} )
-        {
+        my $default_portal = HANDLER->tsv->{portal}->();
+        foreach ( @{ $self->{additionalTrustedDomains} }, $default_portal ) {
             my $p = $_;
             $p =~ s#https?://([^/]*).*$#$1#;
             $re->add( quotemeta($p) );
         }
 
-        foreach my $vhost ( keys %{ $self->conf->{locationRules} } ) {
+        foreach my $vhost ( sort keys %{ $self->conf->{locationRules} } ) {
             my $expr = quotemeta($vhost);
 
             # Handle wildcards
@@ -445,8 +439,22 @@ sub reloadConf {
                 delete $_[0]->pdata->{$k};
             }
         }
-        my $user_log = $_[0]->{sessionInfo}->{ $self->conf->{whatToTrace} };
-        $self->userLogger->notice( $user_log . ' connected' ) if $user_log;
+        my $user_log    = $_[0]->{sessionInfo}->{ $self->conf->{whatToTrace} };
+        my $auth_module = $_[0]->{sessionInfo}->{_auth};
+        my $ipAddr      = $_[0]->{sessionInfo}->{ipAddr};
+
+        if ($user_log) {
+            $self->auditLog(
+                $_[0],
+                message => (
+                        "User "
+                      . $user_log
+                      . " connected from $auth_module ($ipAddr)"
+                ),
+                code => "LOGIN",
+                user => $user_log,
+            );
+        }
         if (@$tmp) {
             $self->logger->debug(
                 'Add ' . join( ',', @$tmp ) . ' in keepPdata' );
@@ -454,16 +462,13 @@ sub reloadConf {
         }
         return PE_OK;
     };
-    unshift @{ $self->beforeAuth }, sub {
-        if ( $_[0]->param('cancel') ) {
-            $self->logger->debug('Cancel called, push authCancel calls');
-            unshift @{ $_[0]->steps }, @{ $self->authCancel };
-            return PE_OK;
-        }
-    };
-    my $portal = $self->conf->{portal};
-    $portal =~ s#^https?://(.*?)(?:[:/].*)?$#$1#;
-    HANDLER->tsv->{defaultCondition}->{$portal} ||= sub { 1 };
+
+    # Failsafe: allow handler access to portal in case it's missing in conf
+    my $default_portal_uri  = URI->new( HANDLER->tsv->{portal}->() );
+    my $default_portal_host = eval { $default_portal_uri->host };
+    if ($default_portal_host) {
+        HANDLER->tsv->{defaultCondition}->{$default_portal_host} ||= sub { 1 };
+    }
 
     1;
 }
@@ -564,13 +569,24 @@ sub findEP {
     }
     $self->logger->debug("Plugin $plugin initialized");
 
+    # Second factors
+    if ( $obj->isa("Lemonldap::NG::Portal::Main::SecondFactor") ) {
+        $self->_sfEngine->_enable_2f_module($obj);
+        $self->logger->debug("Loaded $plugin as a 2FA module");
+    }
+
+    if ( $obj->isa("Lemonldap::NG::Portal::2F::Register::Base") ) {
+        $self->_sfEngine->_enable_2f_register_module($obj);
+        $self->logger->debug("Loaded $plugin as a 2F Register module");
+    }
+
     # Rules for menu
     if ( $obj->can('spRules') ) {
-        foreach my $k ( keys %{ $obj->{spRules} } ) {
+        foreach my $k ( keys %{ $obj->spRules } ) {
             $self->logger->info(
 "$k is defined more than one time, it can have some bad effects on Menu display"
             ) if ( $self->spRules->{$k} );
-            $self->spRules->{$k} = $obj->{spRules}->{$k};
+            $self->spRules->{$k} = $obj->spRules->{$k};
         }
     }
     return $obj;
@@ -585,6 +601,7 @@ sub loadModule {
     eval "require $module";
     if ($@) {
         $self->logger->error("$module load error: $@");
+        $self->error("$module load error: $@");
         return 0;
     }
     eval {
@@ -601,6 +618,7 @@ sub loadModule {
     }
     if ( $obj->can("init") and ( !$obj->init ) ) {
         $self->logger->error("$module init failed");
+        $self->error("$module init failed");
         return 0;
     }
 
@@ -609,7 +627,7 @@ sub loadModule {
 }
 
 sub fail {
-    $_[0]->userLogger->error( $_[0]->error );
+    $_[0]->logger->error( $_[0]->error );
     $_[0]->addUnauthRoute( '*' => 'displayError' );
     $_[0]->addAuthRoute( '*' => 'displayError' );
     return 0;
@@ -641,6 +659,11 @@ sub buildRule {
         $self->logger->error( "Bad" . $ruleDesc . "rule: " . $error );
     }
     return $compiledRule,;
+}
+
+sub addPasswordPolicyDisplay {
+    my ( $self, $id, $options ) = @_;
+    $self->_ppRules->{$id} = {%$options};
 }
 
 1;

@@ -40,7 +40,7 @@ Test ssh connexion :
 
 ::
 
-   ssh -T git@gitlab.com
+   ssh -T git@gitlab.ow2.org
 
 Accept messages
 
@@ -54,7 +54,7 @@ As *root:*
 
 ::
 
-   apt install make devscripts equivs yui-compressor git uglifyjs coffeescript autopkgtest
+   apt install make devscripts equivs yui-compressor git uglifyjs coffeescript autopkgtest cpanminus
 
 Configure Git
 ^^^^^^^^^^^^^

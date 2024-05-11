@@ -20,12 +20,17 @@ Make sure you have already
 :doc:`enabled OpenID Connect<../idpopenidconnect>` on your LemonLDAP::NG
 server.
 
-Then, add a Relaying Party with the following configuration:
+APISIX acts as OpenID-COnnect Ressource Server, then it only validates given
+access_token. So LLNG configuration is related to the real Relying Party.
+
+Then, add a Relying Party with the following configuration:
 
 - Client ID : choose a client ID, such as ``james_client_id``
 - Client Secret : choose a client secret, such as ``james_client_secret``
 - Logout URL: endpoint to Apisix revoked token plugin, such as ``http://apisix.example.com:8081/add-revoked-token``
 - Login redirect URI: such as ``http://apisix.example.com:8081/login-callback.html``
+- **Options/Advanced**
+   * **Release claims in Access Token**: set to **On**
 
 Define exported attributes:
 

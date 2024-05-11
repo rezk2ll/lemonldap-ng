@@ -8,7 +8,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
 );
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.18.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin
@@ -58,6 +58,7 @@ sub skipAuthentication {
     $req->user($uid);
     $req->sessionInfo->{_stayConnectedSession} =
       $state->{_stayConnectedSession};
+    $req->sessionInfo->{_trustedBrowser} = 1;
     my @steps =
       grep { ref $_ or $_ !~ /^(?:extractFormInfo|authenticate)$/ }
       @{ $req->steps };

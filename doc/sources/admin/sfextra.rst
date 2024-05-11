@@ -29,11 +29,10 @@ You can find the configuration for this feature in
    lowercase, and it is used as a sort key when second factors are
    displayed to the user
 -  ``Type``: what type of second factor you want to use
--  ``Registrable``: allow users to register their own contact information, see :ref:`below<sfextraregister>`
 -  ``Label``: what title to display in the 2F choice screen
 -  ``Logo`` : URL path of a logo to display in the 2F choice screen
 -  ``Level``: authentication level that will be set if this 2F is used
--  ``Rule``: If you leave this field empty, this second factor will
+-  ``Activation rule``: If you leave this field empty, this second factor will
    always be enabled. You may use a perl expression to decide when this
    second factor is available.
 
@@ -41,6 +40,10 @@ You can find the configuration for this feature in
       ``$homeMail`` session key exists
    -  ``defined $hGroups->{'admin'}`` : this second factor will only
       trigger if the user is in the ``admin`` group
+-  ``Registrable``: allow users to register their own contact information, see :ref:`below<sfextraregister>`
+-  ``Registration rule``: The rule that decides when users can register this
+   second factor. Leave it empty to use the same rule as the activation rule
+   above
 
 After adding your second factors, don't forget to add overload
 parameters to them. You usually should at least give them different

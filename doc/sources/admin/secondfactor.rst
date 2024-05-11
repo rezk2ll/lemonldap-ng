@@ -27,6 +27,7 @@ Second factors that rely on external systems:
 
 -  :doc:`E-Mail 2F<mail2f>` *(Send a code to an email address)*
 -  :doc:`External 2F<external2f>` *(To call an external command)*
+-  :doc:`Okta<okta2f>` *(To use Okta API)*
 -  :doc:`RADIUS<radius2f>` *(Remote RADIUS server)*
 -  :doc:`REST<rest2f>` *(Remote REST app)*
 
@@ -90,6 +91,13 @@ Registration timeout
 Allowed time for the user to register their new second factor. By default it is
 set to 2 minutes, but some complex second factor types (TOTP...) may require
 more time to be registered.
+
+Allowed retries
+---------------
+
+You can allow users to retry entering their second factor multiple times. By
+default, users get only one chance, and must reauthenticate if they fail to
+input their second factor correctly on the first try.
 
 Second factor expiration
 ------------------------

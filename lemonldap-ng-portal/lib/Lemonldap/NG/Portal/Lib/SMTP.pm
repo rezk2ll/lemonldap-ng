@@ -9,13 +9,15 @@ use strict;
 use Mouse;
 use JSON qw(from_json);
 use MIME::Entity;
-use Email::Sender::Simple qw(sendmail);
-use Email::Date::Format qw(email_date);
+use Lemonldap::NG::Common::EmailAddress qw(format_email);
+use Email::Sender::Simple               qw(sendmail);
+use Email::Date::Format                 qw(email_date);
+use HTML::FormatText::WithLinks;
 use Lemonldap::NG::Common::EmailTransport;
 use MIME::Base64;
 use Encode;
 
-our $VERSION = '2.0.12';
+our $VERSION = '2.19.0';
 
 our $transport;
 
@@ -40,6 +42,13 @@ has transport => (
         my $conf = $_[0]->{conf};
         $transport = Lemonldap::NG::Common::EmailTransport->new($conf);
         return $transport;
+    },
+);
+has htmlParser => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        return HTML::FormatText::WithLinks->new;
     },
 );
 
@@ -107,6 +116,11 @@ sub gen_password {
 # @return boolean result
 sub send_mail {
     my ( $self, $mail, $subject, $body, $html ) = @_;
+
+    if ( $mail =~ /^\S+\@\S+$/ ) {
+        $mail = format_email( $mail, $mail );
+    }
+
     $self->logger->info("send_mail called to send \"$subject\" to $mail");
 
     # Encode the body with the given charset
@@ -149,24 +163,33 @@ sub send_mail {
                     : ()
                 ),
                 Subject => $subject,
-                Type    => 'multipart/related',
+                Type    => 'multipart/mixed',
                 Date    => email_date,
             );
 
+            my $alternative =
+              $message->attach( Type => 'multipart/alternative' );
+
+            # Text message
+            $alternative->attach(
+                Type => 'text/plain; charset=' . $self->charset,
+                Data => $self->htmlParser->parse($body),
+            );
+
+            my $related = $alternative->attach( Type => 'multipart/related' );
+
             # Attach HTML message
-            $message->attach(
+            $related->attach(
                 Type => 'text/html; charset=' . $self->charset,
-                Data => qq{$body},
+                Data => $body,
             );
 
             # Attach included images
             foreach ( keys %cid ) {
-                $message->attach(
+                $related->attach(
                     Type => "image/" . ( $cid{$_} =~ m/\.(\w+)/ )[0],
                     Id   => $_,
-                    Path => $self->conf->{templateDir} . "/"
-                      . $self->conf->{portalSkin} . "/"
-                      . $cid{$_},
+                    Path => $self->_search_attachment( $cid{$_} ),
                 );
             }
         }
@@ -199,6 +222,24 @@ sub send_mail {
     return 1;
 }
 
+sub _search_attachment {
+    my ( $self, $filename ) = @_;
+
+    my $from_skin =
+      $self->p->getSkinTplDir( $self->conf->{portalSkin} ) . "/" . $filename;
+
+    if ( -e $from_skin ) {
+        $self->logger->debug("found attachment at $from_skin");
+        return $from_skin;
+    }
+    else {
+        my $from_bootstrap =
+          $self->conf->{templateDir} . "/bootstrap/" . $filename;
+        $self->logger->debug("returning attachment at $from_bootstrap");
+        return $from_bootstrap;
+    }
+}
+
 ## @method string getMailSession(string user)
 # Check if a mail session exists
 # @param user the value of the user key in session
@@ -216,7 +257,7 @@ sub getMailSession {
     # Browse found sessions to check if it's a mail session
     foreach my $id ( keys %$sessions ) {
         my $mailSession =
-          $self->p->getApacheSession( $id, ( kind => "TOKEN" ) );
+          $self->p->getApacheSession( $id, kind => "TOKEN", hashStore => 0, );
         next unless ($mailSession);
         return $mailSession if ( $mailSession->data->{_type} =~ /^mail$/ );
     }
@@ -242,7 +283,7 @@ sub getRegisterSession {
     # Browse found sessions to check if it's a register session
     foreach my $id ( keys %$sessions ) {
         my $registerSession =
-          $self->p->getApacheSession( $id, ( kind => "TOKEN" ) );
+          $self->p->getApacheSession( $id, kind => "TOKEN", hashStore => 0, );
         next unless ($registerSession);
         return $id
           if (  $registerSession->data->{_type}

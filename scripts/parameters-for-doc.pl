@@ -101,5 +101,9 @@ SOAP server location (URL)                                                    pr
 `LWP::UserAgent <http://search.cpan.org/perldoc?LWP::UserAgent>`__ parameters proxyOptions
 SOAP user                                                                     User
 SOAP password                                                                 Password
+Overlay real configuration backend                                            overlayRealtype      :doc:`Overlay<overlayconfbackend>`
+Overlay directory                                                             overlayDirectory     :doc:`Overlay<overlayconfbackend>`
+Overlay write authorization                                                   overlayWrite         :doc:`Overlay<overlayconfbackend>`
+
 ============================================================================= ==================== ===========================================================
 EOF

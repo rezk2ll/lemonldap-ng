@@ -1,3 +1,6 @@
 version=4
-opts="dversionmangle=s/[\+~](debian|dfsg|ds|deb)(\.)?(\d+)?$//,repacksuffix=+ds,repack" \
+opts=\
+dversionmangle=s/[\+~](debian|dfsg|ds|deb)(\.)?(\d+)?$//,\
+pgpsigurlmangle=s/$/.sig/,\
+repacksuffix=+ds,repack \
  https://releases.ow2.org/lemonldap/ lemonldap-ng-(\d[\d\.]+)\.tar\.gz

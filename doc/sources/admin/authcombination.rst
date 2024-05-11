@@ -10,7 +10,7 @@ Authentication Users Password
 Presentation
 ------------
 
-This backend allows one to chain authentication method, for example to
+This backend allows one to chain authentication methods, for example to
 failback to LDAP authentication if Remote authentication failed…
 
 Configuration
@@ -45,7 +45,7 @@ must set:
 .. note::
 
     To overload parameters, you must select a module, add a parameter
-    and set its value.  For example:
+    and set its value. For example:
 
 ==== ==== ============ ===========================
 Name Type Scope        Parameters
@@ -145,7 +145,7 @@ Example                                                                         
 
     Note that brackets can't be used except to enclose test.
 
-    If you wants to write ``if(...) then if...``, you must write
+    If you want to write ``if(...) then if...``, you must write
     ``if(not ...) then ... else if(...)...``
 
 Let's be crazy
@@ -257,7 +257,7 @@ used only with a "and" boolean expression.
 .. tip::
 
     The new :doc:`Kerberos authentication module<authkerberos>`
-    solve this for Kerberos: you just have to use it instead of Apache and
+    solves this for Kerberos: you just have to use it instead of Apache and
     enable authentication by Ajax in Kerberos parameters.
 
 Example: ``[ Apache and LDAP, LDAP ]``

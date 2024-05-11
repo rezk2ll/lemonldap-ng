@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::Main::Reload;
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.19.0';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -84,6 +84,9 @@ sub checkConf {
                     $class->logger->error( "Underlying object can't load conf ("
                           . ref($obj)
                           . "->$sub)" );
+                    if ( $obj->can('error') ) {
+                        $Lemonldap::NG::Common::Conf::msg = $obj->error;
+                    }
                     return 0;
                 }
             }
@@ -214,6 +217,7 @@ sub defaultValuesInit {
         useSafeJail  httpOnly   whatToTrace        handlerInternalCache
         handlerServiceTokenTTL  customToTrace      lwpOpts lwpSslOpts
         authChoiceAuthBasic     authChoiceParam    upgradeSession
+        hashedSessionStore
         )
       );
 
@@ -523,14 +527,16 @@ sub conditionSub {
             $url
             ? (
                 sub {
-                    $_[1]->{_logout} = $url;
+                    my ( $req, $session ) = @_;
+                    $session->{_logout} = $url;
                     return 0;
                 },
                 0
               )
             : (
                 sub {
-                    $_[1]->{_logout} = $class->tsv->{portal}->();
+                    my ( $req, $session ) = @_;
+                    $session->{_logout} = $class->tsv->{portal}->($req);
                     return 0;
                 },
                 0
@@ -538,57 +544,14 @@ sub conditionSub {
         );
     }
 
-    # Since filter exists only with Apache>=2, logout_app and logout_app_sso
-    # targets are available only for it.
-    # This error can also appear with Manager configured as CGI script
-    if ( $cond =~ /^logout_app/i
-        and not $class->isa('Lemonldap::NG::Handler::ApacheMP2::Main') )
-    {
-        $class->logger->info(
-            "Rules logout_app and logout_app_sso require Apache>=2");
-        return ( sub { 1 }, 0 );
-    }
-
     # logout_app
     if ( $cond =~ /^logout_app(?:\s+(.*))?$/i ) {
-        my $u = $1 || $class->tsv->{portal}->();
-        $class->logger->debug("logout_app redirect to $u");
-        eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
-        return (
-            sub {
-                $_[0]->{env}->{'psgi.r'}->add_output_filter(
-                    sub {
-                        return $class->redirectFilter( $u, @_ );
-                    }
-                );
-                1;
-            },
-            0
-        );
+        return $class->logout_app($1);
     }
+
+    # logout_app_sso
     elsif ( $cond =~ /^logout_app_sso(?:\s+(.*))?$/i ) {
-        my $u = $1 || $class->tsv->{portal}->();
-        $class->logger->debug("logout_app_sso redirect to $u");
-        eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
-        return (
-            sub {
-                my ($req) = @_;
-                $class->localUnlog( $req, @_ );
-                $req->{env}->{'psgi.r'}->add_output_filter(
-                    sub {
-                        my $r = $_[0]->r;
-                        return $class->redirectFilter(
-                            &{ $class->tsv->{portal} }() . "?url="
-                              . $class->encodeUrl( $req, $u )
-                              . "&logout=1",
-                            @_
-                        );
-                    }
-                );
-                1;
-            },
-            0
-        );
+        return $class->logout_app_sso($1);
     }
 
     my $mayskip = 0;
@@ -604,6 +567,15 @@ sub conditionSub {
 
     # Return sub and protected flag
     return ( $sub, $mayskip );
+}
+
+## These methods should be overriden in subclasses
+sub logout_app {
+    return ( sub { 1 }, 0 );
+}
+
+sub logout_app_sso {
+    return ( sub { 1 }, 0 );
 }
 
 ## @method arrayref aliasInit
@@ -667,6 +639,10 @@ sub substitute {
 
     # handle inSubnet
     $expr =~ s/\binSubnet\(([^)]*)\)/ipInSubnet(\$r->{env}->{REMOTE_ADDR},$1)/g;
+
+    # handle inSubnet
+    $expr =~
+      s/\binDomain\(([^)]*)\)/inDomain_internal(\$r->{env}->{HTTP_HOST},$1)/g;
 
     return $expr;
 }

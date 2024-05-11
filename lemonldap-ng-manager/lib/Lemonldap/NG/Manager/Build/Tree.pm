@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.18.0';
 
 sub tree {
     return [ {
@@ -55,6 +55,7 @@ sub tree {
                                 'showLanguages',
                                 'scrollTop',
                                 'portalCustomCss',
+                                'portalCustomJs',
                                 'portalSkin',
                                 'portalSkinBackground',
                                 'portalSkinRules',
@@ -89,6 +90,7 @@ sub tree {
                                         'passwordPolicyActivation',
                                         'portalDisplayPasswordPolicy',
                                         'passwordPolicyMinSize',
+                                        'passwordPolicyMaxSize',
                                         'passwordPolicyMinLower',
                                         'passwordPolicyMinUpper',
                                         'passwordPolicyMinDigit',
@@ -550,6 +552,34 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'issuerDBJitsiMeetTokens',
+                            help  => 'idpjitsimeettokens.html',
+                            nodes => [
+                                'issuerDBJitsiMeetTokensActivation',
+                                'issuerDBJitsiMeetTokensPath',
+                                'issuerDBJitsiMeetTokensRule',
+                                {
+                                    title => 'jitsiOptions',
+                                    nodes => [
+                                        'jitsiDefaultServer',
+                                        'jitsiAppId',
+                                        'jitsiAppSecret',
+                                        'jitsiSigningAlg',
+                                        'jitsiExpiration',
+                                        {
+                                            title => 'jitsiAttributes',
+                                            form  => 'simpleInputContainer',
+                                            nodes => [
+                                                'jitsiIdAttribute',
+                                                'jitsiNameAttribute',
+                                                'jitsiMailAttribute',
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
                             title => 'issuerOptions',
                             help  => 'start.html#options',
                             form  => 'simpleInputContainer',
@@ -580,6 +610,7 @@ sub tree {
                     help  => 'sessions.html',
                     nodes => [
                         'storePassword',
+                        'storePasswordEncrypted',
                         'displaySessionId',
                         'timeout',
                         'timeoutActivity',
@@ -739,9 +770,10 @@ sub tree {
                         'autoSigninRules',
                         {
                             title => 'stayConnect',
-                            help  => 'stayconnected.html',
+                            help  => 'trustedbrowser.html',
                             form  => 'simpleInputContainer',
                             nodes => [
+                                'trustedBrowserRule',
                                 'stayConnected',
                                 'stayConnectedBypassFG',
                                 'stayConnectedTimeout',
@@ -908,6 +940,15 @@ sub tree {
                               [ 'decryptValueRule', 'decryptValueFunctions', ]
                         },
                         {
+                            title => 'initializePasswordResetLabel',
+                            help  => 'initializePasswordReset.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'initializePasswordReset',
+                                'initializePasswordResetSecret',
+                            ],
+                        },
+                        {
                             title => 'customPluginsNode',
                             help  => 'plugincustom.html',
                             nodes => [ 'customPlugins', 'customPluginsParams' ]
@@ -917,12 +958,31 @@ sub tree {
                 {
                     title => 'secondFactors',
                     help  => 'secondfactor.html',
-                    nodes => [
-                        'sfManagerRule',
-                        'sfRequired',
-                        'sfOnlyUpgrade',
-                        'sfLoginTimeout',
-                        'sfRegisterTimeout',
+                    nodes => [ {
+                            title => 'sfOptions',
+                            help  => 'secondfactor.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'sfManagerRule',
+                                'sfRequired',
+                                'sfOnlyUpgrade',
+                                'sfLoginTimeout',
+                                'sfRegisterTimeout',
+                                'sfRetries',
+                                {
+                                    title => 'sfRemovedNotification',
+                                    help  => 'secondfactor.html',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'sfRemovedMsgRule',
+                                        'sfRemovedUseNotif',
+                                        'sfRemovedNotifRef',
+                                        'sfRemovedNotifTitle',
+                                        'sfRemovedNotifMsg'
+                                    ],
+                                }
+                            ]
+                        },
                         {
                             title => 'utotp2f',
                             help  => 'utotp2f.html',
@@ -974,6 +1034,8 @@ sub tree {
                                 'webauthn2fAttestation',
                                 'webauthn2fAttestationTrust',
                                 'webauthnRpName',
+                                'webauthnRpId',
+                                'webauthnAppId',
                                 'webauthnDisplayNameAttr',
                                 'webauthn2fAuthnLevel',
                                 'webauthn2fLabel',
@@ -1038,6 +1100,18 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'okta2f',
+                            help  => 'okta2f.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'okta2fActivation', 'okta2fAdminURL',
+                                'okta2fApiKey',     'okta2fLoginAttribute',
+                                'okta2fAuthnLevel', 'okta2fLabel',
+                                'okta2fLogo',
+                            ]
+                        },
+
+                        {
                             title => 'radius2f',
                             help  => 'radius2f.html',
                             form  => 'simpleInputContainer',
@@ -1073,16 +1147,6 @@ sub tree {
                             ]
                         },
                         'sfExtra',
-                        {
-                            title => 'sfRemovedNotification',
-                            help  => 'secondfactor.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'sfRemovedMsgRule',  'sfRemovedUseNotif',
-                                'sfRemovedNotifRef', 'sfRemovedNotifTitle',
-                                'sfRemovedNotifMsg'
-                            ],
-                        }
                     ]
                 },
                 {
@@ -1131,6 +1195,7 @@ sub tree {
                                 'formTimeout',
                                 'tokenUseGlobalStorage',
                                 'strictTransportSecurityMax_Age',
+                                'hashedSessionStore',
                                 {
                                     title => 'CrowdSecPlugin',
                                     help  => 'crowdsec.html',
@@ -1147,6 +1212,16 @@ sub tree {
                                     nodes => [
                                         'checkHIBP', 'checkHIBPURL',
                                         'checkHIBPRequired'
+                                    ],
+                                },
+                                {
+                                    title => 'Entropycheck',
+                                    help  => 'checkentropy.html',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'checkEntropy',
+                                        'checkEntropyRequired',
+                                        'checkEntropyRequiredLevel'
                                     ],
                                 },
                                 {
@@ -1426,6 +1501,7 @@ sub tree {
         'samlSPMetaDataNodes',
         {
             title => 'oidcServiceMetaData',
+            form  => 'displayOidcMetadata',
             help  => 'openidconnectservice.html#service-configuration',
             nodes => [
                 'oidcServiceMetaDataIssuer',
@@ -1503,6 +1579,7 @@ sub tree {
                         'oidcDropCspHeaders',
                         'oidcServiceEncAlgorithmAlg',
                         'oidcServiceEncAlgorithmEnc',
+                        'oidcServiceHideMetadata',
                     ],
                 },
                 {
@@ -1529,10 +1606,14 @@ sub tree {
             title => 'casServiceMetadata',
             help  => 'idpcas.html#configuring-the-cas-service',
             nodes => [
-                'casAttr',                    'casAccessControlPolicy',
-                'casStrictMatching',          'casTicketExpiration',
-                'casBackChannelSingleLogout', 'casStorage',
-                'casStorageOptions',          'casAttributes',
+                'casAttr',
+                'casAccessControlPolicy',
+                'casStrictMatching',
+                'casTicketExpiration',
+                'casBackChannelSingleLogout',
+                'casStorage',
+                'casStorageOptions',
+                'casAttributes',
             ]
         },
         'casSrvMetaDataNodes',

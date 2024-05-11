@@ -2,7 +2,7 @@
 # Display functions for LemonLDAP::NG Portal
 package Lemonldap::NG::Portal::Main::Display;
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.20.0';
 
 package Lemonldap::NG::Portal::Main;
 use strict;
@@ -21,34 +21,22 @@ has passwordResetUrl => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
-        my $self = $_[0];
-        my $p    = $self->conf->{portal};
-        $p =~ s#/*$##;
-        return $self->conf->{mailUrl} ? $self->conf->{mailUrl} : "$p/resetpwd";
+        $_[0]->conf->{mailUrl} || $_[0]->buildUrl("resetpwd");
     }
 );
 has certificateResetUrl => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
-        my $self = $_[0];
-        my $p    = $self->conf->{portal};
-        $p =~ s#/*$##;
-        return $self->conf->{certificateResetByMailURL}
-          ? $self->conf->{certificateResetByMailURL}
-          : "$p/certificateReset";
+        $_[0]->conf->{certificateResetByMailURL}
+          || $_[0]->buildUrl("certificateReset");
     }
 );
 has registerUrl => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
-        my $self = $_[0];
-        my $p    = $self->conf->{portal};
-        $p =~ s#/*$##;
-        return $self->conf->{registerUrl}
-          ? $self->conf->{registerUrl}
-          : "$p/register";
+        $_[0]->conf->{registerUrl} || $_[0]->buildUrl("register");
     }
 );
 
@@ -113,6 +101,7 @@ sub displayInit {
 
     $self->isPP( $self->speChars
           || $self->conf->{passwordPolicyMinSize}
+          || $self->conf->{passwordPolicyMaxSize}
           || $self->conf->{passwordPolicyMinLower}
           || $self->conf->{passwordPolicyMinUpper}
           || $self->conf->{passwordPolicyMinDigit}
@@ -202,7 +191,7 @@ sub display {
             ASK_LOGINS        => $req->param('checkLogins')   || 0,
             ASK_STAYCONNECTED => $req->param('stayconnected') || 0,
             CONFIRMKEY        => $self->stamp(),
-            LIST              => $req->data->{list} || [],
+            LIST => $req->data->{list} || [],
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -226,7 +215,7 @@ sub display {
             AUTH_ERROR_ROLE                 => $req->error_role,
             ( 'AUTH_ERROR_' . $req->error ) => 1,
             MSG                             => $info,
-            URL           => $req->{urldc} || $self->conf->{portal},  # Fix 2158
+            URL => $req->{urldc} || $req->portal,    # Fix 2158
             HIDDEN_INPUTS => $self->buildOutgoingHiddenForm( $req, $method ),
             ACTIVE_TIMER  => $req->data->{activeTimer},
             CHOICE_PARAM  => $self->conf->{authChoiceParam},
@@ -249,8 +238,9 @@ sub display {
         or $req->{error} == PE_OPENID_BADID )
     {
         $skinfile = 'openid';
-        my $p = $self->conf->{portal} . $self->conf->{issuerDBOpenIDPath};
-        $p =~ s#(?<!:)/?\^?/#/#g;
+
+        my $openid_path =
+          $self->conf->{issuerDBOpenIDPath} =~ s/^.*?(\w+).*?$/$1/r;
         my $id = $req->{sessionInfo}
           ->{ $self->conf->{openIdAttr} || $self->conf->{whatToTrace} };
         %templateParams = (
@@ -258,8 +248,8 @@ sub display {
             AUTH_ERROR_TYPE                 => $req->error_type,
             AUTH_ERROR_ROLE                 => $req->error_role,
             ( 'AUTH_ERROR_' . $req->error ) => 1,
-            PROVIDERURI                     => $p,
-            MSG                             => $req->info(),
+            PROVIDERURI => $self->buildUrl( $req->portal, $openid_path, "" ),
+            MSG         => $req->info(),
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -287,6 +277,22 @@ sub display {
         );
     }
 
+    # 2.1 Wait for 2FA
+    elsif ( $req->{error} == PE_2FWAIT ) {
+        my $method = $req->data->{redirectFormMethod} || 'get';
+        $skinfile       = "2fwait";
+        %templateParams = (
+            URL           => $req->{urldc},
+            HIDDEN_INPUTS => $self->buildOutgoingHiddenForm( $req, $method ),
+            FORM_METHOD   => $method,
+            (
+                $req->data->{customScript}
+                ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
+                : ()
+            ),
+        );
+    }
+
     # 2.2 Case : display menu (with error or not)
     elsif ( $req->error == PE_OK ) {
         $skinfile = 'menu';
@@ -295,36 +301,14 @@ sub display {
         %templateParams = (
             AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
             NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},
-            LOGOUT_URL              => $self->conf->{portal} . "?logout=1",
-            APPSLIST_ORDER          => $req->{sessionInfo}->{'_appsListOrder'},
-            PING                    => $self->conf->{portalPingInterval},
-            DONT_STORE_PASSWORD     => $self->conf->{browsersDontStorePassword},
-            HIDE_OLDPASSWORD        => 0,
-            PPOLICY_NOPOLICY        => !$self->isPP(),
+            LOGOUT_URL     => $self->buildUrl( $req->portal, { logout => 1 } ),
+            APPSLIST_ORDER => $req->{sessionInfo}->{'_appsListOrder'},
+            PING           => $self->conf->{portalPingInterval},
+            DONT_STORE_PASSWORD => $self->conf->{browsersDontStorePassword},
+            HIDE_OLDPASSWORD    => 0,
             ENABLE_PASSWORD_DISPLAY =>
               $self->conf->{portalEnablePasswordDisplay},
-            ENABLE_CHECKHIBP => $self->conf->{checkHIBP},
-            DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy},
-            PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
-            PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
-            PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
-            PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
-            (
-                $self->conf->{passwordPolicyMinSpeChar}
-                  && $self->conf->{passwordPolicySpecialChar}
-                ? ( PPOLICY_MINSPECHAR =>
-                      $self->conf->{passwordPolicyMinSpeChar} )
-                : ()
-            ),
-            (
-                $self->conf->{passwordPolicyMinSpeChar} || $self->speChars()
-                ? (
-                    PPOLICY_ALLOWEDSPECHAR      => $self->speChars(),
-                    PPOLICY_ALLOWEDSPECHAR_JSON =>
-                      to_json( $self->speChars(), { allow_nonref => 1 } ),
-                  )
-                : ()
-            ),
+            %{ $self->getPasswordPolicyTemplateVars },
             (
                 $self->requireOldPwd->( $req, $req->userData )
                 ? ( REQUIRE_OLDPASSWORD => 1 )
@@ -349,7 +333,7 @@ sub display {
             PORTALBUTTON => 1,
             BUTTON       => 'upgradeSession',
             CONFIRMKEY   => $self->stamp,
-            PORTAL       => $self->conf->{portal},
+            PORTAL       => $req->portal,
             URL          => $req->data->{_url},
             (
                 $req->data->{customScript}
@@ -366,7 +350,7 @@ sub display {
             FORMACTION   => '/renewsession',
             MSG          => 'askToRenew',
             CONFIRMKEY   => $self->stamp,
-            PORTAL       => $self->conf->{portal},
+            PORTAL       => $req->portal,
             PORTALBUTTON => 1,
             BUTTON       => 'renewSession',
             URL          => $req->data->{_url},
@@ -386,7 +370,7 @@ sub display {
             MSG        => 'PE87',
             CONFIRMKEY => $self->stamp,
             BUTTON     => 'renewSession',
-            PORTAL     => $self->conf->{portal},
+            PORTAL     => $req->portal,
             URL        => $req->data->{_url},
             (
                 $req->data->{customScript}
@@ -440,11 +424,11 @@ sub display {
             LOGIN                           => $login,
             DONT_STORE_PASSWORD   => $self->conf->{browsersDontStorePassword},
             CHECK_LOGINS          => $self->conf->{portalCheckLogins},
-            ASK_LOGINS            => $req->param('checkLogins')   || 0,
+            ASK_LOGINS            => $req->param('checkLogins') || 0,
             ASK_STAYCONNECTED     => $req->param('stayconnected') || 0,
             DISPLAY_RESETPASSWORD => $self->conf->{portalDisplayResetPassword},
             DISPLAY_REGISTER      => $self->conf->{portalDisplayRegister},
-            DISPLAY_UPDATECERTIF  =>
+            DISPLAY_UPDATECERTIF =>
               $self->conf->{portalDisplayCertificateResetByMail},
             MAILCERTIF_URL => $self->certificateResetUrl,
             MAIL_URL       => $self->passwordResetUrl,
@@ -454,10 +438,11 @@ sub display {
               || $self->conf->{proxyAuthServiceImpersonation},
             ENABLE_PASSWORD_DISPLAY =>
               $self->conf->{portalEnablePasswordDisplay},
-            ENABLE_CHECKHIBP => $self->conf->{checkHIBP},
-            (
-                $self->stayConnected->( $req, $req->sessionInfo )
-                ? ( STAYCONNECTED => 1 )
+            %{ $self->getPasswordPolicyTemplateVars },
+            ( (
+                         $self->conf->{trustedBrowserRule}
+                      or $self->stayConnected->( $req, $req->sessionInfo )
+                ) ? ( STAYCONNECTED => 1 )
                 : ()
             ),
             (
@@ -480,15 +465,15 @@ sub display {
         # External links
         if ( $self->conf->{portalDisplayResetPassword} ) {
             $templateParams{"MAIL_URL_EXTERNAL"} =
-              $self->_isExternalUrl( $self->passwordResetUrl );
+              $self->_isExternalUrl( $req, $self->passwordResetUrl );
         }
         if ( $self->conf->{portalDisplayRegister} ) {
             $templateParams{"REGISTER_URL_EXTERNAL"} =
-              $self->_isExternalUrl( $self->registerUrl );
+              $self->_isExternalUrl( $req, $self->registerUrl );
         }
         if ( $self->conf->{portalDisplayCertificateResetByMail} ) {
             $templateParams{MAILCERTIF_URL_EXTERNAL} =
-              $self->_isExternalUrl( $self->certificateResetUrl );
+              $self->_isExternalUrl( $req, $self->certificateResetUrl );
         }
 
         # Display captcha if it's enabled
@@ -538,35 +523,14 @@ sub display {
                 CHOICE_PARAM          => $self->conf->{authChoiceParam},
                 CHOICE_VALUE          => $req->data->{_authChoice},
                 OLDPASSWORD           => $self->checkXSSAttack( 'oldpassword',
-                    $req->data->{oldpassword} ) ? ''
+                    $req->data->{oldpassword} )
+                ? ''
                 : $req->data->{oldpassword},
                 HIDE_OLDPASSWORD    => $self->conf->{hideOldPassword},
                 DONT_STORE_PASSWORD => $self->conf->{browsersDontStorePassword},
-                PPOLICY_NOPOLICY    => !$self->isPP(),
                 ENABLE_PASSWORD_DISPLAY =>
                   $self->conf->{portalEnablePasswordDisplay},
-                ENABLE_CHECKHIBP => $self->conf->{checkHIBP},
-                DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy},
-                PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
-                PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
-                PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
-                PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
-                (
-                    $self->conf->{passwordPolicyMinSpeChar}
-                      && $self->conf->{passwordPolicySpecialChar}
-                    ? ( PPOLICY_MINSPECHAR =>
-                          $self->conf->{passwordPolicyMinSpeChar} )
-                    : ()
-                ),
-                (
-                    $self->conf->{passwordPolicyMinSpeChar} || $self->speChars()
-                    ? (
-                        PPOLICY_ALLOWEDSPECHAR      => $self->speChars(),
-                        PPOLICY_ALLOWEDSPECHAR_JSON =>
-                          to_json( $self->speChars(), { allow_nonref => 1 } ),
-                      )
-                    : ()
-                ),
+                %{ $self->getPasswordPolicyTemplateVars },
             );
         }
 
@@ -654,18 +618,17 @@ sub display {
                     : 0,
                     DISPLAY_SSL_FORM  => $displayType =~ /sslform/ ? 1 : 0,
                     DISPLAY_GPG_FORM  => $displayType =~ /gpgform/ ? 1 : 0,
-                    DISPLAY_LOGO_FORM => $displayType eq "logo" ? 1 : 0,
+                    DISPLAY_LOGO_FORM => $displayType eq "logo"    ? 1 : 0,
                     DISPLAY_FINDUSER  => scalar @$fields,
                     module            => $displayType eq "logo"
                     ? $self->getModule( $req, 'auth' )
                     : "",
                     AUTH_LOOP  => [],
-                    PORTAL_URL =>
-                      ( $displayType eq "logo" ? $self->conf->{portal} : 0 ),
-                    MSG       => $req->info(),
-                    MANDATORY => $mandatory,
-                    FIELDS    => $fields,
-                    SPOOFID   => $slogin
+                    PORTAL_URL => ( $displayType eq "logo" ? $req->portal : 0 ),
+                    MSG        => $req->info(),
+                    MANDATORY  => $mandatory,
+                    FIELDS     => $fields,
+                    SPOOFID    => $slogin
                 );
             }
         }
@@ -777,18 +740,18 @@ sub getSkin {
     my $skinParam = $req->param('skin');
     if ( defined $skinParam ) {
         if ( $skinParam =~ /^[\w\-]+$/ ) {
-            if ( -d $self->conf->{templateDir} . '/' . $skinParam ) {
+            if ( -d $self->getSkinTplDir($skinParam) ) {
                 $skin = $skinParam;
                 $self->logger->debug(
                     "Skin $skin selected from GET/POST parameter");
             }
             else {
-                $self->userLogger->error(
-                    "User tries to access to unexistent skin dir $skinParam");
+                $self->logger->warn(
+                    "User tries to access to nonexistent skin dir $skinParam");
             }
         }
         else {
-            $self->userLogger->error("Strange skin parameter: $skinParam");
+            $self->logger->warn("Invalid skin name $skinParam");
         }
     }
 
@@ -838,7 +801,14 @@ sub mkSessionArray {
                         ip     => $session->{ipAddr},
                         values => [
                             map {
-                                { v => $session->{$_}, k => $_, "k_$_" => 1 }
+                                # Modifying key to remove ordering prefix
+                                my $modifiedKey = $_;
+                                $modifiedKey =~ s/(\d+_)?//;
+                                {
+                                    v => $session->{$modifiedKey},
+                                    k => $modifiedKey,
+                                    "k_$modifiedKey" => 1
+                                }
                             } @fields
                         ],
                         error        => $session->{error},
@@ -899,8 +869,7 @@ sub mkOidcConsent {
         'oidcConsents',
         params => {
             partners => [
-                map {
-                    {
+                map { {
                         name        => $_,
                         epoch       => $consents->{$_}->{epoch},
                         scope       => $consents->{$_}->{scope},
@@ -914,8 +883,66 @@ sub mkOidcConsent {
 }
 
 sub _isExternalUrl {
-    my ( $self, $url ) = @_;
-    return ( index( $url, $self->conf->{portal} ) < 0 );
+    my ( $self, $req, $url ) = @_;
+    return ( index( $url, $req->portal ) < 0 );
+}
+
+sub getPasswordPolicyTemplateVars {
+    my ( $self, $req ) = @_;
+    return {
+        PPOLICY_RULES    => $self->getPpolicyRules,
+        PPOLICY_NOPOLICY => !$self->isPP(),
+        ENABLE_CHECKHIBP => $self->conf->{checkHIBP},
+        DISPLAY_PPOLICY  => $self->conf->{portalDisplayPasswordPolicy},
+        PPOLICY_MINSIZE  => $self->conf->{passwordPolicyMinSize},
+        PPOLICY_MAXSIZE  => $self->conf->{passwordPolicyMaxSize},
+        PPOLICY_MINLOWER => $self->conf->{passwordPolicyMinLower},
+        PPOLICY_MINUPPER => $self->conf->{passwordPolicyMinUpper},
+        PPOLICY_MINDIGIT => $self->conf->{passwordPolicyMinDigit},
+        (
+            $self->conf->{passwordPolicyMinSpeChar}
+            ? ( PPOLICY_MINSPECHAR => $self->conf->{passwordPolicyMinSpeChar} )
+            : ()
+        ),
+        (
+            $self->conf->{passwordPolicyMinSpeChar} && $self->speChars()
+            ? (
+                PPOLICY_ALLOWEDSPECHAR => $self->speChars(),
+                PPOLICY_ALLOWEDSPECHAR_JSON =>
+                  to_json( $self->speChars(), { allow_nonref => 1 } ),
+              )
+            : ()
+        ),
+    };
+}
+
+sub getPpolicyRules {
+    my ($self) = @_;
+    my $result = [];
+
+    # Avoid useless computation if ppolicy is not displayed
+    return $result if !$self->conf->{portalDisplayPasswordPolicy};
+
+    while ( my ( $id, $policy ) = each %{ $self->_ppRules } ) {
+        push @$result, { %$policy, id => $id };
+    }
+
+    # Sort ppolicy items by "order" numerically and then by "id" lexically
+    $result = [ sort { $a->{order} <=> $b->{order} || $a->{id} cmp $b->{id} }
+          @$result ];
+
+    # Format data attributes for HTML::Template loop
+    # data => { foo => "bar" } becomes
+    # data => [ { key => "foo", value => "bar" } ]
+    for my $result (@$result) {
+        if ( ref( $result->{data} ) eq "HASH" ) {
+            $result->{data} = [
+                map { { key => $_, value => $result->{data}->{$_} } }
+                  keys %{ $result->{data} }
+            ];
+        }
+    }
+    return $result;
 }
 
 1;

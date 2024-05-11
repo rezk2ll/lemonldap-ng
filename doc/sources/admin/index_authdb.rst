@@ -44,3 +44,4 @@ Authentication, users and password databases
    yubikey2f
    webauthn2f
    sfextra
+   okta2f

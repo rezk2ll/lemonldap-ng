@@ -37,8 +37,7 @@ ENDKEY
 
     my $res;
 
-    my $client = LLNG::Manager::Test->new(
-        {
+    my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel                   => 'error',
                 useSafeJail                => 1,
@@ -53,8 +52,7 @@ ENDKEY
     $portal->getPersistentSession(
         "dwho",
         {
-            _2fDevices => to_json [
-                {
+            _2fDevices => to_json [ {
                     "_credentialId"        => "bFpZbHRQOU10b1JOdVhLOGY4dFdm",
                     "_credentialPublicKey" =>
                       encode_base64url( $webauthn_tester->encode_cosekey ),
@@ -67,71 +65,112 @@ ENDKEY
         }
     );
 
-    # Authenticate with good password
-    # --------------------------------------
-    ok(
-        $res = $client->_post(
-            '/',
-            IO::String->new('user=dwho&password=dwho'),
-            length => 23,
-        ),
-        'Auth query'
-    );
+    subtest "Authenticate with WebAuthn" => sub {
 
-    expectOK($res);
-    my ( $host, $url, $query ) =
-      expectForm( $res, "", '/webauthn2fcheck', 'token', 'credential' );
+        # Authenticate with good password
+        # --------------------------------------
+        ok(
+            $res = $client->_post(
+                '/',
+                IO::String->new('user=dwho&password=dwho'),
+                length => 23,
+                accept => 'text/html',
+            ),
+            'Auth query'
+        );
 
-    my ($json) = $res->[2]->[0] =~
-      m#<script type="application/init">\s*(\{"request"[^<]*\})\s*</script>#ms;
-    ok( $json, "Found request object in JS data" );
-    $json = from_json($json);
-    my $request   = $json->{request};
-    my $challenge = $request->{challenge};
-    ok( $challenge, "Found challenge" );
+        expectOK($res);
+        my ( $host, $url, $query ) =
+          expectForm( $res, "", '/webauthn2fcheck', 'token', 'credential' );
 
-    is( $request->{extensions}->{appid},
-        'http://auth.example.com', "Correct U2F AppID" );
-    is( @{ $request->{allowCredentials} },
-        1, "Found only one allowed credentials" );
-    is(
-        $request->{allowCredentials}->[0]->{id},
-        "bFpZbHRQOU10b1JOdVhLOGY4dFdm",
-        "Correct credential ID"
-    );
-    is( $request->{allowCredentials}->[0]->{type},
-        "public-key", "Correct public key" );
+        my ($json) = $res->[2]->[0] =~
+m#<script type="application/init">\s*(\{"request"[^<]*\})\s*</script>#ms;
+        ok( $json, "Found request object in JS data" );
+        $json = from_json($json);
+        my $request   = $json->{request};
+        my $challenge = $request->{challenge};
+        ok( $challenge, "Found challenge" );
 
-    my $credential = $webauthn_tester->get_assertion_response(
-        {
-            request => $request,
-        }
-    );
+        is( $request->{extensions}->{appid},
+            'http://auth.example.com', "Correct U2F AppID" );
+        is( @{ $request->{allowCredentials} },
+            1, "Found only one allowed credentials" );
+        is(
+            $request->{allowCredentials}->[0]->{id},
+            "bFpZbHRQOU10b1JOdVhLOGY4dFdm",
+            "Correct credential ID"
+        );
+        is( $request->{allowCredentials}->[0]->{type},
+            "public-key", "Correct public key" );
 
-    $credential = $webauthn_tester->encode_credential($credential);
+        is( $request->{rpId}, "auth.example.com", "Correct RP ID" );
 
-    #diag $credential;
+        my $credential = $webauthn_tester->get_assertion_response( {
+                request => $request,
+            }
+        );
 
-    my $urlencoded_credential = buildForm(
-        {
-            credential => $credential
-        }
-    );
+        $credential = $webauthn_tester->encode_credential($credential);
 
-    $query =~ s/credential=/$urlencoded_credential/;
-    ok(
-        $res = $client->_post(
-            $url,
-            IO::String->new($query),
-            length => length($query),
-        ),
-        'Auth query'
-    );
+        #diag $credential;
 
-    my $id = expectCookie($res);
+        my $urlencoded_credential = buildForm( {
+                credential => $credential
+            }
+        );
 
-    # Test logout
-    $client->logout($id);
+        $query =~ s/credential=/$urlencoded_credential/;
+        ok(
+            $res = $client->_post(
+                $url,
+                IO::String->new($query),
+                length => length($query),
+            ),
+            'Auth query'
+        );
+
+        my $id = expectCookie($res);
+
+        # Test logout
+        $client->logout($id);
+    };
+
+    subtest "Disable AppId and change RP ID" => sub {
+
+        $client->ini( {
+                %{ $client->ini },
+                webauthnAppId => 0,
+                webauthnRpId  => "example.com"
+            }
+        );
+
+        # Authenticate with good password
+        # --------------------------------------
+        ok(
+            $res = $client->_post(
+                '/',
+                IO::String->new('user=dwho&password=dwho'),
+                length => 23,
+                accept => 'text/html',
+            ),
+            'Auth query'
+        );
+
+        expectOK($res);
+        my ( $host, $url, $query ) =
+          expectForm( $res, "", '/webauthn2fcheck', 'token', 'credential' );
+
+        my ($json) = $res->[2]->[0] =~
+m#<script type="application/init">\s*(\{"request"[^<]*\})\s*</script>#ms;
+        ok( $json, "Found request object in JS data" );
+        $json = from_json($json);
+        my $request   = $json->{request};
+        my $challenge = $request->{challenge};
+        ok( $challenge, "Found challenge" );
+
+        ok( !exists( $request->{extensions}->{appid} ), "No U2F AppID" );
+        is( $request->{rpId}, "example.com", "Correct RP ID" );
+    };
 
 }
 clean_sessions();

@@ -70,9 +70,9 @@ possibilities:
 
 -  Protect the application with the Handler, and push user identity
    through HTTP headers. This is how main Access Manager products, like
-   CA SiteMinder, are working. This also how Apache authentication
+   CA SiteMinder, are working. This is also how Apache authentication
    modules are working, so if your application is compatible with Apache
-   authentication (often called "external authentifcation"), then you
+   authentication (often called "external authentication"), then you
    can use the Handler.
 -  Specific Handler: some applications can require a specific Handler,
    to manage preauthentication process for example.
@@ -122,7 +122,7 @@ Application                                                       Configuration 
 .. image:: applications/humhub_logo.png                           :doc:`HumHub<applications/humhub>`                                                          ✔
 .. image:: applications/iparapheur_logo.png                       :doc:`i-Parapheur<applications/iparapheur>`          ✔
 .. image:: applications/itsm-ng.png                               :doc:`ITSM-NG<applications/itsm-ng>`                 ✔                                      ✔
-.. image:: applications/logo-jitsimeet.png                        :doc:`Jitsi Meet<applications/jitsimeet>`            ✔
+.. image:: applications/logo-jitsimeet.png                        :doc:`Jitsi Meet<idpjitsimeettokens>`
 .. image:: applications/liferay_logo.png                          :doc:`Liferay<applications/liferay>`                 ✔
 .. image:: applications/limesurvey_logo.png                       :doc:`LimeSurvey<applications/limesurvey>`           ✔
 .. image:: applications/mailman.jpg                               :doc:`Mailman<applications/mailman>`                                                        ✔

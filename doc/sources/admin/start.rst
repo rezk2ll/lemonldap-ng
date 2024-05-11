@@ -213,8 +213,9 @@ Protocol                                                              Service Pr
 :doc:`CAS 1.0 / 2.0 / 3.0<idpcas>`                                    ✔                ✔
 :doc:`SAML 2.0 / Shibboleth<idpsaml>`                                 ✔                ✔
 :doc:`OpenID Connect<idpopenidconnect>`                               ✔                ✔
-:doc:`OpenID 2.0<idpopenid>` *(decrepated)*                           ✔                ✔
+:doc:`OpenID 2.0<idpopenid>` *(deprecated)*                           ✔                ✔
 :doc:`Get parameters provider<issuerdbget>` *(for poor applications)*                  ✔
+:doc:`Jitsi Meet Tokens<idpjitsimeettokens>`                                           ✔
 ===================================================================== ================ =================
 
 *Options*
@@ -275,6 +276,8 @@ Name                                                                 Description
 :doc:`CDA<cda>`                                                      Cross Domain Authentication
 :doc:`Check DevOps<checkdevops>` [5]_ |new|                          Check DevOps handler file
 :doc:`Check HIBP<checkhibp>` [19]_ |new|                             Check Have I Been Pwned
+:doc:`Check entropy<checkentropy>` [21]_ |new|                       Check entropy of password
+:doc:`InitializePasswordReset<initializePasswordReset>` [22]_ |new|  Initialize Password Reset by mail
 :doc:`Check state<checkstate>` |new|                                 Check state plugin (test page)
 :doc:`Check user<checkuser>`  [6]_                                   Check access rights, transmitted headers and session attibutes for a specific user and URL
 :doc:`Configuration viewer<viewer>`                                  Edit WebSSO configuration in Read Only mode
@@ -298,7 +301,7 @@ Name                                                                 Description
 :doc:`Remember auth choice<rememberauthchoice>` [20]_\ |new|         Remember user last authentication choice
 :doc:`REST services<restservices>`                                   REST server for :doc:`Proxy<authproxy>`
 :doc:`SOAP services<soapservices>` |deprecated|                      SOAP server for :doc:`Proxy<authproxy>`
-:doc:`Stay connected<stayconnected>`                                 Enable persistent connection on same browser
+:doc:`Trusted browser<trustedbrowser>`                               Remember previous authentications
 Upgrade session                                                      This plugin explains to an already authenticated user that a higher authentication level is required to access the URL instead of reject him
 ==================================================================== ============================================================================================================================================
 
@@ -358,6 +361,9 @@ Backend                                               Shareable Comment
                                                                 backend. \ **Can be used to secure another backend** for
                                                                 remote servers.
 :doc:`Local<localconfbackend>` |new|                            Use only lemonldap-ng.ini parameters.
+:doc:`Overlay<overlayconfbackend>` |new|              ✔         Pseudo configuration backend that permits one to store part of the
+                                                                configuration into local files. \ *(for example to not store secrets
+                                                                into central configuration)*
 ===================================================== ========= ====================================================================
 
 
@@ -640,6 +646,14 @@ by your language code):
 .. [20]
    :doc:`Remember AuthChoice plugin<rememberauthchoice>` is available with LLNG ≥
    2.0.15
+
+.. [21]
+   :doc:`Check entropy plugin<checkentropy>` is available with LLNG ≥
+   2.18.0
+
+.. [22]
+   :doc:`initializePasswordReset<initializePasswordReset>` is available with LLNG ≥
+   2.18.0
 
 .. |image0| image:: /icons/kthememgr.png
 .. |image1| image:: /icons/warehause.png

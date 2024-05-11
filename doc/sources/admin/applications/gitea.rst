@@ -26,7 +26,7 @@ Make sure you have generated a set of signing keys in
 
 You also need to set a Signing key ID to a non-empty value of your choice.
 
-Then, add a Relaying Party with the following configuration:
+Then, add a Relying Party with the following configuration:
 
 - Options » Basic » Client ID : choose a client ID, such as ``gitea``
 - Options » Basic » Client Secret : choose a client secret, such as ``xxxx``

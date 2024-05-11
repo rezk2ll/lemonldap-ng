@@ -30,6 +30,8 @@ session, nothing is stored.
 * **Max failed logins count**: How many failed logins should be remembered in the history
 * **Session data to store**: additional session variables to store in the history. *Key* is the variable (or macro) name, *Value* is the title of the column used when displaying the field. Use ``__hidden__`` to store a variables without displaying it to the user.
 
+Tips
+~~~~
 By default, login time and IP address are stored in history, and the error
 message prompted to the user for failed logins. It is possible to store any
 additional session data. For example to store authentication, add a new key
@@ -43,3 +45,5 @@ You can also display a check box on the authentication form, to allow
 user to see their login history before being redirected to the protected
 application (see
 :ref:`portal customization<portalcustom-other-parameters>`).
+
+The order of the columns can be specified by add a number value to the *Key*. Use ``X_key`` where ``X`` is a digit value representing the order and the ``key`` represents the attribute to be retrieved and displayed.

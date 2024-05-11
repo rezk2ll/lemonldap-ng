@@ -11,7 +11,7 @@ BEGIN {
 }
 
 my ( $res, $user, $pwd );
-my $maintests = 18;
+my $maintests = 17;
 
 SKIP: {
     eval
@@ -78,9 +78,6 @@ SKIP: {
         'Found custom Main Logo'
     ) or print STDERR Dumper( $res->[2]->[0] );
 
-    ok( mail() =~ m%Content-Type: image/png; name="logo_llng_old.png"%,
-        'Found custom Main logo in mail' )
-      or print STDERR Dumper( mail() );
     like( mail(), qr#<span>Hello</span>#, "Found english greeting" );
     ok( mail() =~ m#a href="http://other\.example\.com/passwdreset\?(.*?)"#,
         'Found link in mail' )
@@ -100,27 +97,20 @@ SKIP: {
         ' Found password policy' );
     ok(
         $res->[2]->[0] =~
-/<span trspan="passwordPolicyMinLower">Minimal lower characters:<\/span> 1/,
+        qr/<span trspan="passwordPolicyMinLower"><\/span> 1/,
         ' Found password policy min lower == 1'
     );
+    ok( $res->[2]->[0] =~ /<span trspan="passwordPolicyMinUpper"><\/span> 1/,
+        ' Found password policy min upper == 1' );
+    ok( $res->[2]->[0] =~ /<span trspan="passwordPolicyMinDigit"><\/span> 2/,
+        ' Found password policy min digit == 2' );
     ok(
-        $res->[2]->[0] =~
-/<span trspan="passwordPolicyMinUpper">Minimal upper characters:<\/span> 1/,
-        ' Found password policy min upper == 1'
-    );
-    ok(
-        $res->[2]->[0] =~
-/<span trspan="passwordPolicyMinDigit">Minimal digit characters:<\/span> 2/,
-        ' Found password policy min digit == 2'
-    );
-    ok(
-        $res->[2]->[0] =~
-/<span trspan="passwordPolicyMinSpeChar">Minimal special characters:<\/span> 1/,
+        $res->[2]->[0] =~ /<span trspan="passwordPolicyMinSpeChar"><\/span> 1/,
         ' Found password policy min speChar == 1'
     );
     ok(
         $res->[2]->[0] =~
-/<span trspan="passwordPolicySpecialChar">Allowed special characters:<\/span> &amp;%#/,
+          /<span trspan="passwordPolicySpecialChar"><\/span> # % &amp;/,
         ' Found password special char list'
     );
     $query .= '&newpassword=zZ11#&confirmpassword=zZ11#';

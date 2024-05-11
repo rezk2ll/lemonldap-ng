@@ -9,10 +9,8 @@ Go in Manager and click on ``OpenID Connect Service`` node.
 Issuer identifier
 ~~~~~~~~~~~~~~~~~
 
-Set the issuer identifier, which should be the portal URL.
-For example: http://auth.example.com
-
-Set a blank value to use Portal URL.
+Set the issuer identifier, this URL will also be used as the base URL for all OIDC endpoints.
+If this value is left empty, the portal URL is used. Don't change this unless you have a very good reason to.
 
 Endpoints
 ~~~~~~~~~~
@@ -55,6 +53,8 @@ to define attributes and extra claims released when a new relying party is regis
     will be created in the backend for each registration request.
     You can restrict this by protecting the WebServer registration endpoint
     with an authentication module, and give credentials to clients.
+
+.. _openidconnectservice-security-parameters:
 
 Security
 ~~~~~~~~

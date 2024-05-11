@@ -39,8 +39,7 @@ require 't/smtp.pm';
 use_ok('Lemonldap::NG::Common::FormEncode');
 
 my $res;
-my $client = LLNG::Manager::Test->new(
-    {
+my $client = LLNG::Manager::Test->new( {
         ini => {
             logLevel              => 'error',
             localSessionStorage   => "Cache::NullCache",
@@ -51,6 +50,7 @@ my $client = LLNG::Manager::Test->new(
             'sfExtra'             => {
                 'work' => {
                     'over' => {
+                        rest2fResendInterval => 10,
                         rest2fCodeActivation => '\d{6}',
                         rest2fInitUrl        => 'http://auth.example.com/init',
                         rest2fInitArgs       =>
@@ -83,6 +83,15 @@ my $client = LLNG::Manager::Test->new(
                     'rule'     => '$uid eq "dwho"',
                     'type'     => 'Mail2F',
                     'register' => 1,
+                    'level'    => 5,
+                },
+                'homeregrule' => {
+                    'logo'     => 'homeregrule.jpg',
+                    'label'    => "Home Regrule Label",
+                    'rule'     => '$ENV{REMOTE_ADDR} eq "1.2.3.4"',
+                    'type'     => 'Mail2F',
+                    'register' => 1,
+                    'regrule'  => '$ENV{CANNOT_REGISTER} != 1',
                     'level'    => 5,
                 },
             },
@@ -204,6 +213,141 @@ subtest "Register and use mail based custom SF as dwho" => sub {
         _2f                 => "home",
         authenticationLevel => 5
     );
+};
+
+subtest "Register a 2F that is not always available on login" => sub {
+    getPSession('dwho')->remove;
+    my ( $id, $host, $url, $query );
+
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=dwho&password=dwho'),
+            length => 23,
+            accept => 'text/html',
+        ),
+        'Auth query'
+    );
+
+    $id = expectCookie($res);
+
+    $res = $client->_get(
+        '/2fregisters',
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+    );
+    ok( getHtmlElement( $res, '//a[@href="/2fregisters/homeregrule"]' ),
+        "Found link to homeregrule register" );
+
+    $res = $client->_get(
+        '/2fregisters/homeregrule',
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+    );
+
+    # Ajax send mail
+    $query = buildForm( { generic => 'test@test.com' } );
+    $res   = $client->_post(
+        '/2fregisters/homeregrule/sendcode',
+        IO::String->new($query),
+        length => length $query,
+        cookie => "lemonldap=$id",
+        accept => 'application/json',
+    );
+
+    $res = expectJSON($res);
+    is( $res->{result}, 1 );
+    ok( $res->{token} );
+    my $token = $res->{token};
+
+    like( mail(), qr%Doctor Who%,     'Found session attribute in mail' );
+    like( mail(), qr%<b>(\w{6})</b>%, 'Found 2F code in mail' );
+
+    mail() =~ qr%<b>(\w{6})</b>%;
+    is( envelope()->{to}->[0], 'test@test.com',
+        'Sent to self registered mail' );
+
+    my $code = $1;
+
+    $query = buildForm(
+        { generic => 'test@test.com', genericcode => $code, token => $token } );
+    $res = $client->_post(
+        '/2fregisters/homeregrule/verify',
+        IO::String->new($query),
+        length => length $query,
+        cookie => "lemonldap=$id",
+        accept => 'application/json',
+    );
+
+    $res = expectJSON($res);
+    is( $res->{result}, 1 );
+
+    # Login with dwho, with 2FA
+    # -----------------
+    clear_mail();
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=dwho&password=dwho'),
+            length => 23,
+            accept => 'text/html',
+        ),
+        'Auth query'
+    );
+
+    # 2fa is not asked is rule doesn't match
+    $id = expectCookie($res);
+
+    # But 2FA is registrable manually
+    $res = $client->_get(
+        '/2fregisters',
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+    );
+    like(
+        $res->[2]->[0],
+        qr@data-target="#remove2fModal"@,
+        "Found remove button"
+    );
+    like(
+        $res->[2]->[0],
+        qr@href="/2fregisters/homeregrule"@,
+        "Found add button"
+    );
+
+# If the registration rule doesn't match, 2FA is displayed but no longer registrable
+    $res = $client->_get(
+        '/2fregisters',
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+        custom => {
+            CANNOT_REGISTER => 1,
+        },
+    );
+    unlike(
+        $res->[2]->[0],
+        qr@data-target="#remove2fModal"@,
+        "Remove button not displayed"
+    );
+    unlike(
+        $res->[2]->[0],
+        qr@href="/2fregisters/homeregrule"@,
+        "Add button not displayed"
+    );
+
+    # 2fa is asked if rule matches
+    ok(
+        $res = $client->_post(
+            '/',
+            IO::String->new('user=dwho&password=dwho'),
+            length => 23,
+            accept => 'text/html',
+            ip     => "1.2.3.4",
+        ),
+        'Auth query'
+    );
+    expectForm( $res, undef, '/homeregrule2fcheck?skin=bootstrap',
+        'token', 'code' );
 };
 
 subtest "Fail to register mail based custom SF as dwho" => sub {
@@ -340,8 +484,7 @@ subtest "Register and use rest based custom SF as dwho" => sub {
 
     my $code = $receivedCode;
 
-    $query = buildForm(
-        {
+    $query = buildForm( {
             generic     => 'dwho-destination',
             genericcode => $code,
             token       => $token
@@ -374,6 +517,29 @@ subtest "Register and use rest based custom SF as dwho" => sub {
     ( $host, $url, $query ) =
       expectForm( $res, undef, '/work2fcheck?skin=bootstrap', 'token', 'code' );
 
+    ok( $receivedCode, "Code was sent" );
+    $receivedCode = undef;
+
+    Time::Fake->offset("+30s");
+
+    # Check resend
+    like(
+        $res->[2]->[0],
+        qr,formaction=\"/work2fresend\?skin=bootstrap\",,
+        "Found resend button"
+    );
+
+    ok(
+        $res = $client->_post(
+            '/work2fresend',
+            IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'Resend code'
+    );
+
+    ok( $receivedCode, "Code was sent again" );
     $code = $receivedCode;
 
     $query =~ s/code=/code=${code}/;

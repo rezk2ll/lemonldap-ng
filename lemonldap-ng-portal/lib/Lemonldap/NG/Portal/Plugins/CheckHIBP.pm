@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_PP_INSUFFICIENT_PASSWORD_QUALITY
 );
 
-our $VERSION = '2.16.1';
+our $VERSION = '2.19.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -61,11 +61,22 @@ sub init {
     # Declare REST route
     $self->addUnauthRoute(
         checkhibp => '_checkHIBP',
-        ['GET']
+        ['POST']
     );
     $self->addAuthRoute(
         checkhibp => '_checkHIBP',
-        ['GET']
+        ['POST']
+    );
+
+    $self->p->addPasswordPolicyDisplay(
+        'ppolicy-checkhibp',
+        {
+            condition  => $self->conf->{checkHIBP},
+            label      => "passwordCompromised",
+            customHtml =>
+qq'<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/hibp.min.js"></script>',
+            order => 201,
+        }
     );
 
     return 1;
@@ -128,9 +139,7 @@ sub _checkHIBP {
     my $response = $self->ua->request($reqAPI);
 
     my $debugstr =
-        'checkHIBP: requesting '
-      . $reqAPI->as_string
-      . $response->status_line;
+      'checkHIBP: requesting ' . $reqAPI->as_string . $response->status_line;
 
     $self->logger->debug($debugstr);
 

@@ -9,11 +9,11 @@ Presentation
 
 `OpenCTI <https://www.opencti.io/en/>`__ is an open source platform allowing organizations to manage their cyber threat intelligence knowledge and observables.
 
-OpenCTI allows SSO via the SAML or OIDC protocols, this page explains how to setup the SAML protocol.
+OpenCTI allows SSO via the SAML or OIDC protocols.
 
 
-Configuring OpenCTI
--------------------
+Configuring OpenCTI (SAML)
+--------------------------
 
 Prerequisites
 ~~~~~~~~~~~~~
@@ -76,8 +76,8 @@ In a docker setup, add the following environment variables ::
 * The ``ROLES_MANAGEMENT`` variables are only useful if you want to automatically affect roles to your LemonLDAP::NG users depending on their groups.
 
 
-Configuring LemonLDAP
----------------------
+Configuring LemonLDAP (SAML)
+----------------------------
 
 Generating OpenCTI metadata
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -117,5 +117,57 @@ with the following parameters:
 * **Exported Attributes**
    * variable name: ``groups``
    * attribute name: ``groups``
+
+
+OIDC Interconnection
+--------------------
+
+This section describe the OpenID Connect configuration
+
+Configure OpenCTI (OIDC)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Here is the basic configuration for a docker installation
+
+Define and replace ``<clientid>`` and ``<clientsecret>``, and also adapt issuer and redirect uri:
+
+.. code-block::
+
+    - PROVIDERS__OPENID__STRATEGY=OpenIDConnectStrategy
+    - "PROVIDERS__OPENID__CONFIG__LABEL=Login with OpenID"
+    - PROVIDERS__OPENID__CONFIG__ISSUER=https://auth.example.com
+    - PROVIDERS__OPENID__CONFIG__CLIENT_ID=<clientid>
+    - PROVIDERS__OPENID__CONFIG__CLIENT_SECRET=<clientsecret>
+    - "PROVIDERS__OPENID__CONFIG__REDIRECT_URIS=[\"https://opencti.mydomain.com/auth/oic/callback\"]"
+
+For an advanced usage, you can also map lemonldap groups to openCTI groups with these paramters:
+
+.. code-block::
+
+    - "PROVIDERS__OPENID__CONFIG__GROUPS_MANAGEMENT__GROUPS_SCOPE=groups"
+    - "PROVIDERS__OPENID__CONFIG__GROUPS_MANAGEMENT__GROUPS_PATH=[\"groups\", \"realm_access.groups\", \"resource_access.account.groups\"]"
+    - "PROVIDERS__OPENID__CONFIG__GROUPS_MANAGEMENT__GROUPS_MAPPING=[\"OpenID_Group_1:OpenCTI_Group_1\", \"OpenID_Group_2:OpenCTI_Group_2\", ...]"
+
+
+Configure LemonLDAP (OIDC)
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Configure LemonLDAP as an :doc:`OpenID Connect provider <../idpopenidconnect>`.
+
+As describe in documentation link above, also define a new Relying Party in LL::NG.
+
+Take care to configure at least these parameters:
+
+* ``Public client``: disabled
+* ``Client ID``: client id defined in previous section
+* ``Client secret``: client secret defined in previous section
+* ``Allowed redirection addresses for login``: redirect uri defined in previous section
+* ``Security -> ID Token signature algorithm``: make sure you select **RS256**, as HS512 is not supported in OpenCTI
+* ``Advanced -> User attribute``: take care to use the user unique identifier defined in OpenCTI, usually ``mail``
+
+Advanced usage, for group mapping:
+
+* ``Exported attributes (claims)``: add claim ``groups -> groups``
+* ``Options -> Scope``: add scope ``groups -> groups``
 
 

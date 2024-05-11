@@ -6,7 +6,7 @@ use Mouse;
 use JSON qw(from_json to_json);
 use Lemonldap::NG::Common::Crypto;
 
-our $VERSION = '2.17.0';
+our $VERSION = '2.18.0';
 
 extends 'Lemonldap::NG::Portal::2F::Register::Base';
 with 'Lemonldap::NG::Portal::Lib::2fDevices';
@@ -29,7 +29,7 @@ has ott => (
     }
 );
 
-has 'key' => (
+has key => (
     is      => 'ro',
     lazy    => 1,
     default => sub {
@@ -38,7 +38,7 @@ has 'key' => (
     }
 );
 
-has 'crypto' => (
+has crypto => (
     is      => 'ro',
     lazy    => 1,
     default => sub {

@@ -718,18 +718,18 @@
             defs["CasAppReplace"] = {
   "type" : "object",
   "properties" : {
-    "macros" : {
-      "type" : "object",
-      "example" : {
-        "myMacroName" : "$macro(rule)"
-      }
-    },
     "exportedVars" : {
       "type" : "object",
       "default" : {
         "cn" : "cn",
         "mail" : "mail",
         "uid" : "uid"
+      }
+    },
+    "macros" : {
+      "type" : "object",
+      "example" : {
+        "myMacroName" : "$macro(rule)"
       }
     },
     "options" : {
@@ -740,18 +740,18 @@
             defs["CasAppUpdate"] = {
   "type" : "object",
   "properties" : {
-    "macros" : {
-      "type" : "object",
-      "example" : {
-        "myMacroName" : "$macro(rule)"
-      }
-    },
     "exportedVars" : {
       "type" : "object",
       "default" : {
         "cn" : "cn",
         "mail" : "mail",
         "uid" : "uid"
+      }
+    },
+    "macros" : {
+      "type" : "object",
+      "example" : {
+        "myMacroName" : "$macro(rule)"
       }
     },
     "options" : {
@@ -763,20 +763,32 @@
   "required" : [ "service" ],
   "type" : "object",
   "properties" : {
+    "authnLevel" : {
+      "type" : "integer"
+    },
+    "comment" : {
+      "type" : "string"
+    },
+    "displayName" : {
+      "type" : "string"
+    },
+    "logout" : {
+      "maximum" : 1,
+      "minimum" : -1,
+      "type" : "integer",
+      "default" : -1
+    },
+    "rule" : {
+      "type" : "string"
+    },
     "service" : {
       "type" : "array",
       "items" : {
-        "type" : "string",
-        "format" : "uri"
+        "type" : "string"
       }
     },
     "userAttribute" : {
-      "type" : "string",
-      "default" : "none"
-    },
-    "rule" : {
-      "type" : "string",
-      "default" : "none"
+      "type" : "string"
     }
   }
 };
@@ -801,6 +813,10 @@
       "type" : "string",
       "description" : "Unix timestamp of the event"
     },
+    "error" : {
+      "type" : "integer",
+      "description" : "LemonLDAP::NG error code"
+    },
     "ipAddr" : {
       "type" : "string",
       "description" : "String representation of the IP address"
@@ -809,10 +825,6 @@
       "type" : "string",
       "description" : "Result of authentication attempt",
       "enum" : [ "success", "failed" ]
-    },
-    "error" : {
-      "type" : "integer",
-      "description" : "LemonLDAP::NG error code"
     }
   }
 };
@@ -823,11 +835,11 @@
     "confKey" : {
       "$ref" : "#/components/schemas/confKey"
     },
-    "order" : {
-      "type" : "integer"
-    },
     "options" : {
       "$ref" : "#/components/schemas/MenuAppOptions"
+    },
+    "order" : {
+      "type" : "integer"
     }
   }
 };
@@ -835,38 +847,38 @@
   "required" : [ "name" ],
   "type" : "object",
   "properties" : {
-    "name" : {
-      "type" : "string"
-    },
-    "tooltip" : {
-      "type" : "string"
-    },
     "description" : {
       "type" : "string"
     },
-    "uri" : {
-      "type" : "string"
+    "display" : {
+      "type" : "string",
+      "default" : "auto",
+      "enum" : [ "on", "off", "auto", "(Any special rule to apply for example \"$uid eq 'dwho'\")" ]
     },
     "logo" : {
       "type" : "string",
       "default" : "network.png",
       "enum" : [ "attach.png", "bell.png", "bookmark.png", "configure.png", "database.png", "demo.png", "folder.png", "gear.png", "help.png", "llng.png", "mailappt.png", "money.png", "network.png", "terminal.png", "thumbnail.png", "tux.png", "web.png", "(Any reference to an available image in app logo folder)" ]
     },
-    "display" : {
-      "type" : "string",
-      "default" : "auto",
-      "enum" : [ "on", "off", "auto", "(Any special rule to apply for example \"$uid eq 'dwho'\")" ]
+    "name" : {
+      "type" : "string"
+    },
+    "tooltip" : {
+      "type" : "string"
+    },
+    "uri" : {
+      "type" : "string"
     }
   }
 };
             defs["MenuAppUpdate"] = {
   "type" : "object",
   "properties" : {
-    "order" : {
-      "type" : "integer"
-    },
     "options" : {
       "$ref" : "#/components/schemas/MenuAppOptions"
+    },
+    "order" : {
+      "type" : "integer"
     }
   }
 };
@@ -874,11 +886,11 @@
   "required" : [ "catname", "confKey" ],
   "type" : "object",
   "properties" : {
-    "confKey" : {
-      "$ref" : "#/components/schemas/confKey"
-    },
     "catname" : {
       "type" : "string"
+    },
+    "confKey" : {
+      "$ref" : "#/components/schemas/confKey"
     },
     "order" : {
       "type" : "integer"
@@ -900,58 +912,169 @@
     }
   }
 };
+            defs["NewSecondFactor"] = {
+  "required" : [ "type" ],
+  "type" : "object",
+  "properties" : {
+    "name" : {
+      "type" : "string",
+      "description" : "A description of the device"
+    },
+    "type" : {
+      "type" : "string",
+      "description" : "The type of second factor to create",
+      "example" : "TOTP, U2F, UBK (Yubikey), WebAuthn"
+    }
+  },
+  "additionalProperties" : {
+    "type" : "string"
+  }
+};
+            defs["NewSecondFactorTotp"] = {
+  "required" : [ "key" ],
+  "type" : "object",
+  "properties" : {
+    "key" : {
+      "type" : "string",
+      "description" : "The BASE32 encoded shared secret"
+    },
+    "name" : {
+      "type" : "string",
+      "description" : "A description of the device"
+    }
+  }
+};
             defs["OidcOptions"] = {
   "type" : "object",
   "properties" : {
-    "logoutUrl" : {
+    "IDTokenExpiration" : {
+      "type" : "integer"
+    },
+    "IDTokenForceClaims" : {
+      "type" : "boolean"
+    },
+    "IDTokenSignAlg" : {
+      "type" : "string",
+      "default" : "RS256",
+      "enum" : [ "none", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "ES512", "EdDSA" ]
+    },
+    "accessTokenClaims" : {
+      "type" : "boolean"
+    },
+    "accessTokenEncContentEncAlg" : {
+      "type" : "string",
+      "default" : "A256GCM",
+      "enum" : [ "A256CBC-HS512", "A256GCM", "A192CBC-HS384", "A192GCM", "A128CBC-HS256", "A128GCM" ]
+    },
+    "accessTokenEncKeyMgtAlg" : {
+      "type" : "string",
+      "enum" : [ "", "RSA-OAEP", "RSA-OAEP-256", "RSA1_5", "ECDH-ES", "ECDH-ES+A128KW", "ECDH-ES+A192KW", "ECDH-ES+A256KW" ]
+    },
+    "accessTokenExpiration" : {
+      "type" : "integer"
+    },
+    "accessTokenJWT" : {
+      "type" : "boolean"
+    },
+    "accessTokenSignAlg" : {
+      "type" : "string",
+      "default" : "RS256",
+      "enum" : [ "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "ES512", "EdDSA" ]
+    },
+    "additionalAudiences" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
+    },
+    "allowClientCredentialsGrant" : {
+      "type" : "boolean"
+    },
+    "allowOffline" : {
+      "type" : "boolean"
+    },
+    "allowPasswordGrant" : {
+      "type" : "boolean"
+    },
+    "authMethod" : {
+      "type" : "string",
+      "enum" : [ "", "client_secret_post", "client_secret_basic", "client_secret_jwt", "private_key_jwt" ]
+    },
+    "authRequiredForAuthorize" : {
+      "type" : "boolean"
+    },
+    "authnLevel" : {
+      "type" : "integer"
+    },
+    "authnRequireNonce" : {
+      "type" : "boolean"
+    },
+    "authnRequireState" : {
+      "type" : "boolean"
+    },
+    "authorizationCodeExpiration" : {
+      "type" : "integer"
+    },
+    "bypassConsent" : {
+      "type" : "boolean"
+    },
+    "clientId" : {
+      "type" : "string"
+    },
+    "clientSecret" : {
+      "type" : "string",
+      "format" : "password"
+    },
+    "comment" : {
+      "type" : "string"
+    },
+    "displayName" : {
+      "type" : "string"
+    },
+    "icon" : {
+      "type" : "string"
+    },
+    "idTokenEncContentEncAlg" : {
+      "type" : "string",
+      "default" : "A256GCM",
+      "enum" : [ "A256CBC-HS512", "A256GCM", "A192CBC-HS384", "A192GCM", "A128CBC-HS256", "A128GCM" ]
+    },
+    "idTokenEncKeyMgtAlg" : {
+      "type" : "string",
+      "enum" : [ "", "RSA-OAEP", "RSA-OAEP-256", "RSA1_5", "ECDH-ES", "ECDH-ES+A128KW", "ECDH-ES+A192KW", "ECDH-ES+A256KW" ]
+    },
+    "jwks" : {
+      "type" : "string"
+    },
+    "jwksUri" : {
       "type" : "string",
       "format" : "url"
     },
     "logoutBypassConfirm" : {
       "type" : "boolean"
     },
-    "clientSecret" : {
+    "logoutEncContentEncAlg" : {
       "type" : "string",
-      "format" : "password"
+      "default" : "A256GCM",
+      "enum" : [ "A256CBC-HS512", "A256GCM", "A192CBC-HS384", "A192GCM", "A128CBC-HS256", "A128GCM" ]
     },
-    "displayName" : {
+    "logoutEncKeyMgtAlg" : {
+      "type" : "string",
+      "enum" : [ "", "RSA-OAEP", "RSA-OAEP-256", "RSA1_5", "ECDH-ES", "ECDH-ES+A128KW", "ECDH-ES+A192KW", "ECDH-ES+A256KW" ]
+    },
+    "logoutSessionRequired" : {
+      "type" : "boolean"
+    },
+    "logoutType" : {
+      "type" : "string",
+      "default" : "front",
+      "enum" : [ "front", "back" ]
+    },
+    "logoutUrl" : {
       "type" : "string"
     },
-    "allowOffline" : {
-      "type" : "boolean"
-    },
-    "accessTokenSignAlg" : {
-      "type" : "string",
-      "default" : "RS256",
-      "enum" : [ "none", "RS256", "RS384", "RS512" ]
-    },
-    "userInfoSignAlg" : {
-      "type" : "string",
-      "default" : "",
-      "enum" : [ "", "none", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512" ]
-    },
-    "accessTokenJWT" : {
-      "type" : "boolean"
-    },
-    "accessTokenClaims" : {
-      "type" : "boolean"
-    },
-    "authnLevel" : {
+    "offlineSessionExpiration" : {
       "type" : "integer"
-    },
-    "rule" : {
-      "type" : "string"
-    },
-    "IDTokenSignAlg" : {
-      "type" : "string",
-      "default" : "RS256",
-      "enum" : [ "none", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512" ]
-    },
-    "refreshToken" : {
-      "type" : "boolean"
-    },
-    "public" : {
-      "type" : "boolean"
     },
     "postLogoutRedirectUris" : {
       "type" : "array",
@@ -959,18 +1082,19 @@
         "type" : "string"
       }
     },
-    "logoutType" : {
-      "type" : "string",
-      "default" : "front",
-      "enum" : [ "front", "back" ]
-    },
-    "accessTokenExpiration" : {
-      "type" : "integer"
-    },
-    "IDTokenForceClaims" : {
+    "public" : {
       "type" : "boolean"
     },
-    "additionalAudiences" : {
+    "redirectUris" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
+    },
+    "refreshToken" : {
+      "type" : "boolean"
+    },
+    "requestUris" : {
       "type" : "array",
       "items" : {
         "type" : "string"
@@ -979,35 +1103,27 @@
     "requirePKCE" : {
       "type" : "boolean"
     },
-    "offlineSessionExpiration" : {
-      "type" : "integer"
-    },
-    "redirectUris" : {
-      "type" : "array",
-      "items" : {
-        "type" : "string"
-      }
-    },
-    "bypassConsent" : {
-      "type" : "boolean"
-    },
-    "logoutSessionRequired" : {
-      "type" : "boolean"
-    },
-    "clientId" : {
-      "type" : "string"
-    },
-    "IDTokenExpiration" : {
-      "type" : "integer"
-    },
-    "authorizationCodeExpiration" : {
-      "type" : "integer"
-    },
-    "icon" : {
+    "rule" : {
       "type" : "string"
     },
     "userIDAttr" : {
       "type" : "string"
+    },
+    "userInfoEncContentEncAlg" : {
+      "type" : "string",
+      "default" : "A256GCM",
+      "enum" : [ "A256CBC-HS512", "A256GCM", "A192CBC-HS384", "A192GCM", "A128CBC-HS256", "A128GCM" ]
+    },
+    "userInfoEncKeyMgtAlg" : {
+      "type" : "string",
+      "enum" : [ "", "RSA-OAEP", "RSA-OAEP-256", "RSA1_5", "ECDH-ES", "ECDH-ES+A128KW", "ECDH-ES+A192KW", "ECDH-ES+A256KW" ]
+    },
+    "userInfoSignAlg" : {
+      "type" : "string",
+      "enum" : [ "", "none", "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "PS256", "PS384", "PS512", "ES256", "ES384", "ES512", "EdDSA" ]
+    },
+    "userinfoRequireHeaderToken" : {
+      "type" : "boolean"
     }
   }
 };
@@ -1015,19 +1131,11 @@
   "required" : [ "clientId", "confKey", "redirectUris" ],
   "type" : "object",
   "properties" : {
-    "confKey" : {
-      "$ref" : "#/components/schemas/confKey"
-    },
     "clientId" : {
       "type" : "string"
     },
-    "redirectUris" : {
-      "type" : "array",
-      "items" : {
-        "minItems" : 1,
-        "type" : "string",
-        "format" : "uri"
-      }
+    "confKey" : {
+      "$ref" : "#/components/schemas/confKey"
     },
     "exportedVars" : {
       "type" : "object",
@@ -1051,6 +1159,13 @@
     },
     "options" : {
       "$ref" : "#/components/schemas/OidcOptions"
+    },
+    "redirectUris" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string",
+        "format" : "uri"
+      }
     },
     "scopeRules" : {
       "type" : "object",
@@ -1138,26 +1253,74 @@
             defs["samlAttribute"] = {
   "type" : "object",
   "properties" : {
-    "name" : {
+    "format" : {
+      "type" : "string",
+      "example" : "urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
+    },
+    "friendlyName" : {
       "type" : "string"
     },
     "mandatory" : {
       "type" : "boolean"
     },
-    "friendlyName" : {
+    "name" : {
       "type" : "string"
-    },
-    "format" : {
-      "type" : "string",
-      "example" : "urn:oasis:names:tc:SAML:2.0:attrname-format:basic"
     }
   }
 };
             defs["samlOptions"] = {
   "type" : "object",
   "properties" : {
+    "authnLevel" : {
+      "type" : "integer"
+    },
+    "checkSLOMessageSignature" : {
+      "type" : "boolean"
+    },
     "checkSSOMessageSignature" : {
       "type" : "boolean"
+    },
+    "comment" : {
+      "type" : "string"
+    },
+    "enableIDPInitiatedURL" : {
+      "type" : "boolean"
+    },
+    "encryptionMode" : {
+      "type" : "string",
+      "default" : "none",
+      "enum" : [ "none", "nameid", "assertion" ]
+    },
+    "federationEntityID" : {
+      "type" : "string"
+    },
+    "federationOptionalAttributes" : {
+      "type" : "string",
+      "enum" : [ "", "ignore" ]
+    },
+    "federationRequiredAttributes" : {
+      "type" : "string",
+      "enum" : [ "", "optional", "ignore" ]
+    },
+    "forceUTF8" : {
+      "type" : "boolean"
+    },
+    "nameIDFormat" : {
+      "type" : "string",
+      "enum" : [ "", "unspecified", "email", "x509", "windows", "kerberos", "entity", "persistent", "transient", "encrypted" ]
+    },
+    "nameIDSessionKey" : {
+      "type" : "string"
+    },
+    "notOnOrAfterTimeout" : {
+      "type" : "integer",
+      "default" : 72000
+    },
+    "oneTimeUse" : {
+      "type" : "boolean"
+    },
+    "rule" : {
+      "type" : "string"
     },
     "sessionNotOnOrAfterTimeout" : {
       "type" : "integer",
@@ -1169,45 +1332,15 @@
       "type" : "integer",
       "default" : -1
     },
-    "enableIDPInitiatedURL" : {
-      "type" : "boolean"
-    },
-    "oneTimeUse" : {
-      "type" : "boolean"
-    },
-    "checkSLOMessageSignature" : {
-      "type" : "boolean"
-    },
-    "encryptionMode" : {
-      "type" : "string",
-      "default" : "none",
-      "enum" : [ "none", "nameid", "assertion" ]
-    },
-    "notOnOrAfterTimeout" : {
-      "type" : "integer",
-      "default" : 72000
-    },
-    "authnLevel" : {
-      "type" : "integer"
-    },
-    "rule" : {
-      "type" : "string"
-    },
-    "forceUTF8" : {
-      "type" : "boolean"
-    },
     "signSSOMessage" : {
       "maximum" : 1,
       "minimum" : -1,
       "type" : "integer",
       "default" : -1
     },
-    "nameIDSessionKey" : {
-      "type" : "string"
-    },
-    "nameIDFormat" : {
+    "signatureMethod" : {
       "type" : "string",
-      "enum" : [ "unspecified", "email", "x509", "windows", "kerberos", "entity", "persistent", "transient", "encrypted" ]
+      "enum" : [ "", "RSA_SHA1", "RSA_SHA256", "RSA_SHA384", "RSA_SHA512" ]
     }
   }
 };
@@ -1218,10 +1351,6 @@
     "confKey" : {
       "$ref" : "#/components/schemas/confKey"
     },
-    "metadata" : {
-      "type" : "string",
-      "example" : "<?xml version=\"1.0\"?><EntityDescriptor..."
-    },
     "exportedAttributes" : {
       "type" : "array",
       "items" : {
@@ -1233,6 +1362,10 @@
       "example" : {
         "myMacroName" : "$macro(rule)"
       }
+    },
+    "metadata" : {
+      "type" : "string",
+      "example" : "<?xml version=\"1.0\"?><EntityDescriptor..."
     },
     "options" : {
       "$ref" : "#/components/schemas/samlOptions"
@@ -1243,9 +1376,11 @@
   "required" : [ "metadata" ],
   "type" : "object",
   "properties" : {
-    "metadata" : {
-      "type" : "string",
-      "example" : "<?xml version=\"1.0\"?><EntityDescriptor..."
+    "exportedAttributes" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/samlAttribute"
+      }
     },
     "macros" : {
       "type" : "object",
@@ -1253,11 +1388,9 @@
         "myMacroName" : "$macro(rule)"
       }
     },
-    "exportedAttributes" : {
-      "type" : "array",
-      "items" : {
-        "$ref" : "#/components/schemas/samlAttribute"
-      }
+    "metadata" : {
+      "type" : "string",
+      "example" : "<?xml version=\"1.0\"?><EntityDescriptor..."
     },
     "options" : {
       "$ref" : "#/components/schemas/samlOptions"
@@ -1267,9 +1400,11 @@
             defs["SamlSpUpdate"] = {
   "type" : "object",
   "properties" : {
-    "metadata" : {
-      "type" : "string",
-      "example" : "<?xml version=\"1.0\"?><EntityDescriptor..."
+    "exportedAttributes" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/samlAttribute"
+      }
     },
     "macros" : {
       "type" : "object",
@@ -1277,11 +1412,9 @@
         "myMacroName" : "$macro(rule)"
       }
     },
-    "exportedAttributes" : {
-      "type" : "array",
-      "items" : {
-        "$ref" : "#/components/schemas/samlAttribute"
-      }
+    "metadata" : {
+      "type" : "string",
+      "example" : "<?xml version=\"1.0\"?><EntityDescriptor..."
     },
     "options" : {
       "$ref" : "#/components/schemas/samlOptions"
@@ -1294,16 +1427,29 @@
   "properties" : {
     "id" : {
       "type" : "string",
-      "description" : "An opaque idenfifier for this particular token"
-    },
-    "type" : {
-      "type" : "string",
-      "description" : "The type of token in use",
-      "example" : "TOTP, U2F, UBK (Yubikey), WebAuthn"
+      "description" : "An opaque idenfifier for this particular device"
     },
     "name" : {
       "type" : "string",
-      "description" : "A user-set description of the token"
+      "description" : "A user-set description of the device"
+    },
+    "type" : {
+      "type" : "string",
+      "description" : "The type of device in use",
+      "example" : "TOTP, U2F, UBK (Yubikey), WebAuthn"
+    }
+  }
+};
+            defs["SecondFactorSearchResult"] = {
+  "required" : [ "secondFactors", "uid" ],
+  "type" : "object",
+  "properties" : {
+    "secondFactors" : {
+      "$ref" : "#/components/schemas/SecondFactors"
+    },
+    "uid" : {
+      "type" : "string",
+      "description" : "The user identifier"
     }
   }
 };
@@ -1320,29 +1466,29 @@
       "type" : "string",
       "description" : "Descriptive name of the software"
     },
-    "version" : {
+    "status" : {
       "type" : "string",
-      "description" : "Version of the LemonLDAP::NG software"
-    },
-    "status_sessions" : {
-      "type" : "string",
-      "description" : "Status of the sessions database",
-      "enum" : [ "ok", "ko", "unknown" ]
-    },
-    "status_psessions" : {
-      "type" : "string",
-      "description" : "Status of the psessions database",
-      "enum" : [ "ok", "ko", "unknown" ]
+      "description" : "Global status",
+      "enum" : [ "ok", "ko" ]
     },
     "status_config" : {
       "type" : "string",
       "description" : "Status of the configuration database",
       "enum" : [ "ok", "ko" ]
     },
-    "status" : {
+    "status_psessions" : {
       "type" : "string",
-      "description" : "Global status",
-      "enum" : [ "ok", "ko" ]
+      "description" : "Status of the psessions database",
+      "enum" : [ "ok", "ko", "unknown" ]
+    },
+    "status_sessions" : {
+      "type" : "string",
+      "description" : "Status of the sessions database",
+      "enum" : [ "ok", "ko", "unknown" ]
+    },
+    "version" : {
+      "type" : "string",
+      "description" : "Version of the LemonLDAP::NG software"
     }
   }
 };
@@ -1385,6 +1531,12 @@
                       <a href="#api-Casapp-updateCasApp">updateCasApp</a>
                     </li>
                   <li class="nav-header" data-group="Class2fa"><a href="#api-Class2fa">API Methods - Class2fa</a></li>
+                    <li data-group="Class2fa" data-name="addSecondFactor" class="">
+                      <a href="#api-Class2fa-addSecondFactor">addSecondFactor</a>
+                    </li>
+                    <li data-group="Class2fa" data-name="addSecondFactorTotp" class="">
+                      <a href="#api-Class2fa-addSecondFactorTotp">addSecondFactorTotp</a>
+                    </li>
                     <li data-group="Class2fa" data-name="deleteSecondFactors" class="">
                       <a href="#api-Class2fa-deleteSecondFactors">deleteSecondFactors</a>
                     </li>
@@ -1402,6 +1554,9 @@
                     </li>
                     <li data-group="Class2fa" data-name="getSecondFactorsByType" class="">
                       <a href="#api-Class2fa-getSecondFactorsByType">getSecondFactorsByType</a>
+                    </li>
+                    <li data-group="Class2fa" data-name="searchSecondFactors" class="">
+                      <a href="#api-Class2fa-searchSecondFactors">searchSecondFactors</a>
                     </li>
                   <li class="nav-header" data-group="Default"><a href="#api-Default">API Methods - Default</a></li>
                     <li data-group="Default" data-name="status" class="">
@@ -4245,6 +4400,866 @@ except ApiException as e:
                   </section>
                 <section id="api-Class2fa">
                   <h1>Class2fa</h1>
+                    <div id="api-Class2fa-addSecondFactor">
+                      <article id="api-Class2fa-addSecondFactor-0" data-group="User" data-name="addSecondFactor" data-version="0">
+                        <div class="pull-left">
+                          <h1>addSecondFactor</h1>
+                          <p>Register a new second factor for a user</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/v1/secondFactor/{uid}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Class2fa-addSecondFactor-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Class2fa-addSecondFactor-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Class2fa-addSecondFactor-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Class2fa-addSecondFactor-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Class2fa-addSecondFactor-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Class2fa-addSecondFactor-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Class2fa-addSecondFactor-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Class2fa-addSecondFactor-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Class2fa-addSecondFactor-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Class2fa-addSecondFactor-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Class2fa-addSecondFactor-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Class2fa-addSecondFactor-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/secondFactor/{uid}?create="</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Class2fa-addSecondFactor-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.Class2faApi;
+
+import java.io.File;
+import java.util.*;
+
+public class Class2faApiExample {
+
+    public static void main(String[] args) {
+        
+        Class2faApi apiInstance = new Class2faApi();
+        map[String, String] body = ; // map[String, String] | Second factor to add, additional properties depend on the 2FA type
+        String uid = uid_example; // String | 
+        bool create = ; // bool | Should the persistent session be created if it does not exist yet
+        try {
+            apiInstance.addSecondFactor(body, uid, create);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling Class2faApi#addSecondFactor");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Class2fa-addSecondFactor-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.Class2faApi;
+
+public class Class2faApiExample {
+
+    public static void main(String[] args) {
+        Class2faApi apiInstance = new Class2faApi();
+        map[String, String] body = ; // map[String, String] | Second factor to add, additional properties depend on the 2FA type
+        String uid = uid_example; // String | 
+        bool create = ; // bool | Should the persistent session be created if it does not exist yet
+        try {
+            apiInstance.addSecondFactor(body, uid, create);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling Class2faApi#addSecondFactor");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Class2fa-addSecondFactor-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Class2fa-addSecondFactor-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">map[String, String] *body = ; // Second factor to add, additional properties depend on the 2FA type
+String *uid = uid_example; // 
+bool *create = ; // Should the persistent session be created if it does not exist yet (optional)
+
+Class2faApi *apiInstance = [[Class2faApi alloc] init];
+
+// Register a new second factor for a user
+[apiInstance addSecondFactorWith:body
+    uid:uid
+    create:create
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Class2fa-addSecondFactor-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.Class2faApi()
+var body = ; // {{map[String, String]}} Second factor to add, additional properties depend on the 2FA type
+var uid = uid_example; // {{String}} 
+var opts = { 
+  'create':  // {{bool}} Should the persistent session be created if it does not exist yet
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.addSecondFactor(bodyuid, opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Class2fa-addSecondFactor-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Class2fa-addSecondFactor-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class addSecondFactorExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new Class2faApi();
+            var body = new map[String, String](); // map[String, String] | Second factor to add, additional properties depend on the 2FA type
+            var uid = uid_example;  // String | 
+            var create = new bool(); // bool | Should the persistent session be created if it does not exist yet (optional) 
+
+            try
+            {
+                // Register a new second factor for a user
+                apiInstance.addSecondFactor(body, uid, create);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling Class2faApi.addSecondFactor: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Class2fa-addSecondFactor-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiClass2faApi();
+$body = ; // map[String, String] | Second factor to add, additional properties depend on the 2FA type
+$uid = uid_example; // String | 
+$create = ; // bool | Should the persistent session be created if it does not exist yet
+
+try {
+    $api_instance->addSecondFactor($body, $uid, $create);
+} catch (Exception $e) {
+    echo 'Exception when calling Class2faApi->addSecondFactor: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Class2fa-addSecondFactor-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::Class2faApi;
+
+my $api_instance = WWW::SwaggerClient::Class2faApi->new();
+my $body = WWW::SwaggerClient::Object::map[String, String]->new(); # map[String, String] | Second factor to add, additional properties depend on the 2FA type
+my $uid = uid_example; # String | 
+my $create = ; # bool | Should the persistent session be created if it does not exist yet
+
+eval { 
+    $api_instance->addSecondFactor(body => $body, uid => $uid, create => $create);
+};
+if ($@) {
+    warn "Exception when calling Class2faApi->addSecondFactor: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Class2fa-addSecondFactor-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.Class2faApi()
+body =  # map[String, String] | Second factor to add, additional properties depend on the 2FA type
+uid = uid_example # String | 
+create =  # bool | Should the persistent session be created if it does not exist yet (optional)
+
+try: 
+    # Register a new second factor for a user
+    api_instance.add_second_factor(body, uid, create=create)
+except ApiException as e:
+    print("Exception when calling Class2faApi->addSecondFactor: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">uid*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_addSecondFactor_uid">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body <span style="color:red;">*</span></td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "description" : "Second factor to add, additional properties depend on the 2FA type",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/NewSecondFactor"
+      }
+    }
+  },
+  "required" : true
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_addSecondFactor_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_addSecondFactor_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">create</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_addSecondFactor_create">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    bool
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        Should the persistent session be created if it does not exist yet
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
+
+                          <h2>Responses</h2>
+                            <h3> Status: 201 - Successful creation </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-addSecondFactor-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-addSecondFactor-400-schema">
+                                  <div id='responses-addSecondFactor-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-addSecondFactor-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-addSecondFactor-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-addSecondFactor-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-addSecondFactor-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-addSecondFactor-404-schema">
+                                  <div id='responses-addSecondFactor-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-addSecondFactor-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-addSecondFactor-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-addSecondFactor-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Class2fa-addSecondFactorTotp">
+                      <article id="api-Class2fa-addSecondFactorTotp-0" data-group="User" data-name="addSecondFactorTotp" data-version="0">
+                        <div class="pull-left">
+                          <h1>addSecondFactorTotp</h1>
+                          <p>Register a new TOTP device factor for a user</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">The secret must be passed as cleartext and will be encrypted by the server if needed</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/v1/secondFactor/{uid}/type/TOTP</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Class2fa-addSecondFactorTotp-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Class2fa-addSecondFactorTotp-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Class2fa-addSecondFactorTotp-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Class2fa-addSecondFactorTotp-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Class2fa-addSecondFactorTotp-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Class2fa-addSecondFactorTotp-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Class2fa-addSecondFactorTotp-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Class2fa-addSecondFactorTotp-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Class2fa-addSecondFactorTotp-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Class2fa-addSecondFactorTotp-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Class2fa-addSecondFactorTotp-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Class2fa-addSecondFactorTotp-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/json"\
+-H "Content-Type: application/json"\
+"https://manager-api.example.com/api/v1/secondFactor/{uid}/type/TOTP?create="</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Class2fa-addSecondFactorTotp-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.Class2faApi;
+
+import java.io.File;
+import java.util.*;
+
+public class Class2faApiExample {
+
+    public static void main(String[] args) {
+        
+        Class2faApi apiInstance = new Class2faApi();
+        NewSecondFactorTotp body = ; // NewSecondFactorTotp | Second factor to add
+        String uid = uid_example; // String | 
+        bool create = ; // bool | Should the persistent session be created if it does not exist yet
+        try {
+            apiInstance.addSecondFactorTotp(body, uid, create);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling Class2faApi#addSecondFactorTotp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Class2fa-addSecondFactorTotp-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.Class2faApi;
+
+public class Class2faApiExample {
+
+    public static void main(String[] args) {
+        Class2faApi apiInstance = new Class2faApi();
+        NewSecondFactorTotp body = ; // NewSecondFactorTotp | Second factor to add
+        String uid = uid_example; // String | 
+        bool create = ; // bool | Should the persistent session be created if it does not exist yet
+        try {
+            apiInstance.addSecondFactorTotp(body, uid, create);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling Class2faApi#addSecondFactorTotp");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Class2fa-addSecondFactorTotp-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Class2fa-addSecondFactorTotp-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">NewSecondFactorTotp *body = ; // Second factor to add
+String *uid = uid_example; // 
+bool *create = ; // Should the persistent session be created if it does not exist yet (optional)
+
+Class2faApi *apiInstance = [[Class2faApi alloc] init];
+
+// Register a new TOTP device factor for a user
+[apiInstance addSecondFactorTotpWith:body
+    uid:uid
+    create:create
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Class2fa-addSecondFactorTotp-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.Class2faApi()
+var body = ; // {{NewSecondFactorTotp}} Second factor to add
+var uid = uid_example; // {{String}} 
+var opts = { 
+  'create':  // {{bool}} Should the persistent session be created if it does not exist yet
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.addSecondFactorTotp(bodyuid, opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Class2fa-addSecondFactorTotp-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Class2fa-addSecondFactorTotp-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class addSecondFactorTotpExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new Class2faApi();
+            var body = new NewSecondFactorTotp(); // NewSecondFactorTotp | Second factor to add
+            var uid = uid_example;  // String | 
+            var create = new bool(); // bool | Should the persistent session be created if it does not exist yet (optional) 
+
+            try
+            {
+                // Register a new TOTP device factor for a user
+                apiInstance.addSecondFactorTotp(body, uid, create);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling Class2faApi.addSecondFactorTotp: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Class2fa-addSecondFactorTotp-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiClass2faApi();
+$body = ; // NewSecondFactorTotp | Second factor to add
+$uid = uid_example; // String | 
+$create = ; // bool | Should the persistent session be created if it does not exist yet
+
+try {
+    $api_instance->addSecondFactorTotp($body, $uid, $create);
+} catch (Exception $e) {
+    echo 'Exception when calling Class2faApi->addSecondFactorTotp: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Class2fa-addSecondFactorTotp-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::Class2faApi;
+
+my $api_instance = WWW::SwaggerClient::Class2faApi->new();
+my $body = WWW::SwaggerClient::Object::NewSecondFactorTotp->new(); # NewSecondFactorTotp | Second factor to add
+my $uid = uid_example; # String | 
+my $create = ; # bool | Should the persistent session be created if it does not exist yet
+
+eval { 
+    $api_instance->addSecondFactorTotp(body => $body, uid => $uid, create => $create);
+};
+if ($@) {
+    warn "Exception when calling Class2faApi->addSecondFactorTotp: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Class2fa-addSecondFactorTotp-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.Class2faApi()
+body =  # NewSecondFactorTotp | Second factor to add
+uid = uid_example # String | 
+create =  # bool | Should the persistent session be created if it does not exist yet (optional)
+
+try: 
+    # Register a new TOTP device factor for a user
+    api_instance.add_second_factor_totp(body, uid, create=create)
+except ApiException as e:
+    print("Exception when calling Class2faApi->addSecondFactorTotp: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">uid*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_addSecondFactorTotp_uid">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body <span style="color:red;">*</span></td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "description" : "Second factor to add",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/NewSecondFactorTotp"
+      }
+    }
+  },
+  "required" : true
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_addSecondFactorTotp_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_addSecondFactorTotp_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">create</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_addSecondFactorTotp_create">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    bool
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        Should the persistent session be created if it does not exist yet
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
+
+                          <h2>Responses</h2>
+                            <h3> Status: 201 - Successful creation </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: 400 - An error was encountered when processing the request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-addSecondFactorTotp-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-addSecondFactorTotp-400-schema">
+                                  <div id='responses-addSecondFactorTotp-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "An error was encountered when processing the request",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-addSecondFactorTotp-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-addSecondFactorTotp-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-addSecondFactorTotp-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - The specified resource was not found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-addSecondFactorTotp-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-addSecondFactorTotp-404-schema">
+                                  <div id='responses-addSecondFactorTotp-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The specified resource was not found",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-addSecondFactorTotp-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-addSecondFactorTotp-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-addSecondFactorTotp-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
                     <div id="api-Class2fa-deleteSecondFactors">
                       <article id="api-Class2fa-deleteSecondFactors-0" data-group="User" data-name="deleteSecondFactors" data-version="0">
                         <div class="pull-left">
@@ -6250,6 +7265,332 @@ except ApiException as e:
                                     </script>
                                   </div>
                                   <input id='responses-getSecondFactorsByType-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Class2fa-searchSecondFactors">
+                      <article id="api-Class2fa-searchSecondFactors-0" data-group="User" data-name="searchSecondFactors" data-version="0">
+                        <div class="pull-left">
+                          <h1>searchSecondFactors</h1>
+                          <p>Search for second factors</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/secondFactor/</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Class2fa-searchSecondFactors-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Class2fa-searchSecondFactors-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Class2fa-searchSecondFactors-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Class2fa-searchSecondFactors-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Class2fa-searchSecondFactors-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Class2fa-searchSecondFactors-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Class2fa-searchSecondFactors-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Class2fa-searchSecondFactors-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Class2fa-searchSecondFactors-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Class2fa-searchSecondFactors-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Class2fa-searchSecondFactors-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Class2fa-searchSecondFactors-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/json"\
+"https://manager-api.example.com/api/v1/secondFactor/?uid=&type="</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Class2fa-searchSecondFactors-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.Class2faApi;
+
+import java.io.File;
+import java.util.*;
+
+public class Class2faApiExample {
+
+    public static void main(String[] args) {
+        
+        Class2faApi apiInstance = new Class2faApi();
+        String uid = uid_example; // String | The user id to filter on. Can contain wildcards.
+        String type = type_example; // String | The second factor type to filter on. Can be specified multiple times.
+        try {
+            array[SecondFactorSearchResult] result = apiInstance.searchSecondFactors(uid, type);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling Class2faApi#searchSecondFactors");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Class2fa-searchSecondFactors-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.Class2faApi;
+
+public class Class2faApiExample {
+
+    public static void main(String[] args) {
+        Class2faApi apiInstance = new Class2faApi();
+        String uid = uid_example; // String | The user id to filter on. Can contain wildcards.
+        String type = type_example; // String | The second factor type to filter on. Can be specified multiple times.
+        try {
+            array[SecondFactorSearchResult] result = apiInstance.searchSecondFactors(uid, type);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling Class2faApi#searchSecondFactors");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Class2fa-searchSecondFactors-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Class2fa-searchSecondFactors-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *uid = uid_example; // The user id to filter on. Can contain wildcards. (optional)
+String *type = type_example; // The second factor type to filter on. Can be specified multiple times. (optional)
+
+Class2faApi *apiInstance = [[Class2faApi alloc] init];
+
+// Search for second factors
+[apiInstance searchSecondFactorsWith:uid
+    type:type
+              completionHandler: ^(array[SecondFactorSearchResult] output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Class2fa-searchSecondFactors-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
+
+var api = new LemonLdapngManagerApi.Class2faApi()
+var opts = { 
+  'uid': uid_example, // {{String}} The user id to filter on. Can contain wildcards.
+  'type': type_example // {{String}} The second factor type to filter on. Can be specified multiple times.
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.searchSecondFactors(opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Class2fa-searchSecondFactors-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Class2fa-searchSecondFactors-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class searchSecondFactorsExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new Class2faApi();
+            var uid = uid_example;  // String | The user id to filter on. Can contain wildcards. (optional) 
+            var type = type_example;  // String | The second factor type to filter on. Can be specified multiple times. (optional) 
+
+            try
+            {
+                // Search for second factors
+                array[SecondFactorSearchResult] result = apiInstance.searchSecondFactors(uid, type);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling Class2faApi.searchSecondFactors: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Class2fa-searchSecondFactors-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiClass2faApi();
+$uid = uid_example; // String | The user id to filter on. Can contain wildcards.
+$type = type_example; // String | The second factor type to filter on. Can be specified multiple times.
+
+try {
+    $result = $api_instance->searchSecondFactors($uid, $type);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling Class2faApi->searchSecondFactors: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Class2fa-searchSecondFactors-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::Class2faApi;
+
+my $api_instance = WWW::SwaggerClient::Class2faApi->new();
+my $uid = uid_example; # String | The user id to filter on. Can contain wildcards.
+my $type = type_example; # String | The second factor type to filter on. Can be specified multiple times.
+
+eval { 
+    my $result = $api_instance->searchSecondFactors(uid => $uid, type => $type);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling Class2faApi->searchSecondFactors: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Class2fa-searchSecondFactors-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.Class2faApi()
+uid = uid_example # String | The user id to filter on. Can contain wildcards. (optional)
+type = type_example # String | The second factor type to filter on. Can be specified multiple times. (optional)
+
+try: 
+    # Search for second factors
+    api_response = api_instance.search_second_factors(uid=uid, type=type)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling Class2faApi->searchSecondFactors: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+                            <div class="methodsubtabletitle">Query parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">uid</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_searchSecondFactors_uid">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        The user id to filter on. Can contain wildcards.
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                                <tr><td style="width:150px;">type</td>
+                                <td>
+                                
+                                
+                                    <div id="d2e199_searchSecondFactors_type">
+                                        <div class="json-schema-view">
+                                            <div class="primitive">
+                                                <span class="type">
+                                                    String
+                                                </span>
+                                
+                                                    <div class="inner description">
+                                                        The second factor type to filter on. Can be specified multiple times.
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                </tr>
+                            </table>
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - A list of search results </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-searchSecondFactors-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-searchSecondFactors-200-schema">
+                                  <div id='responses-searchSecondFactors-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "A list of search results",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/SecondFactorSearchResult"
+        },
+        "x-content-type" : "application/json"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-searchSecondFactors-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-searchSecondFactors-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-searchSecondFactors-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -12733,7 +14074,7 @@ except ApiException as e:
                       <article id="api-Oidcrp-addoidcrp-0" data-group="User" data-name="addoidcrp" data-version="0">
                         <div class="pull-left">
                           <h1>addoidcrp</h1>
-                          <p>Create a new OpenID Connect Relaying Party</p>
+                          <p>Create a new OpenID Connect Relying Party</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -12780,7 +14121,7 @@ public class OidcrpApiExample {
     public static void main(String[] args) {
         
         OidcrpApi apiInstance = new OidcrpApi();
-        OidcRp body = ; // OidcRp | OpenID Connect Relaying Party to add
+        OidcRp body = ; // OidcRp | OpenID Connect Relying Party to add
         try {
             apiInstance.addoidcrp(body);
         } catch (ApiException e) {
@@ -12798,7 +14139,7 @@ public class OidcrpApiExample {
 
     public static void main(String[] args) {
         OidcrpApi apiInstance = new OidcrpApi();
-        OidcRp body = ; // OidcRp | OpenID Connect Relaying Party to add
+        OidcRp body = ; // OidcRp | OpenID Connect Relying Party to add
         try {
             apiInstance.addoidcrp(body);
         } catch (ApiException e) {
@@ -12813,11 +14154,11 @@ public class OidcrpApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Oidcrp-addoidcrp-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">OidcRp *body = ; // OpenID Connect Relaying Party to add
+                              <pre class="prettyprint"><code class="language-cpp">OidcRp *body = ; // OpenID Connect Relying Party to add
 
 OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
-// Create a new OpenID Connect Relaying Party
+// Create a new OpenID Connect Relying Party
 [apiInstance addoidcrpWith:body
               completionHandler: ^(NSError* error) {
                             if (error) {
@@ -12831,7 +14172,7 @@ OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
 
 var api = new LemonLdapngManagerApi.OidcrpApi()
-var body = ; // {{OidcRp}} OpenID Connect Relaying Party to add
+var body = ; // {{OidcRp}} OpenID Connect Relying Party to add
 
 var callback = function(error, data, response) {
   if (error) {
@@ -12862,11 +14203,11 @@ namespace Example
         {
 
             var apiInstance = new OidcrpApi();
-            var body = new OidcRp(); // OidcRp | OpenID Connect Relaying Party to add
+            var body = new OidcRp(); // OidcRp | OpenID Connect Relying Party to add
 
             try
             {
-                // Create a new OpenID Connect Relaying Party
+                // Create a new OpenID Connect Relying Party
                 apiInstance.addoidcrp(body);
             }
             catch (Exception e)
@@ -12884,7 +14225,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiOidcrpApi();
-$body = ; // OidcRp | OpenID Connect Relaying Party to add
+$body = ; // OidcRp | OpenID Connect Relying Party to add
 
 try {
     $api_instance->addoidcrp($body);
@@ -12900,7 +14241,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::OidcrpApi;
 
 my $api_instance = WWW::SwaggerClient::OidcrpApi->new();
-my $body = WWW::SwaggerClient::Object::OidcRp->new(); # OidcRp | OpenID Connect Relaying Party to add
+my $body = WWW::SwaggerClient::Object::OidcRp->new(); # OidcRp | OpenID Connect Relying Party to add
 
 eval { 
     $api_instance->addoidcrp(body => $body);
@@ -12919,10 +14260,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.OidcrpApi()
-body =  # OidcRp | OpenID Connect Relaying Party to add
+body =  # OidcRp | OpenID Connect Relying Party to add
 
 try: 
-    # Create a new OpenID Connect Relaying Party
+    # Create a new OpenID Connect Relying Party
     api_instance.addoidcrp(body)
 except ApiException as e:
     print("Exception when calling OidcrpApi->addoidcrp: %s\n" % e)</code></pre>
@@ -12946,7 +14287,7 @@ except ApiException as e:
                                 <script>
                                 $(document).ready(function() {
                                   var schemaWrapper = {
-  "description" : "OpenID Connect Relaying Party to add",
+  "description" : "OpenID Connect Relying Party to add",
   "content" : {
     "application/json" : {
       "schema" : {
@@ -13092,7 +14433,7 @@ except ApiException as e:
                       <article id="api-Oidcrp-deleteOidcRp-0" data-group="User" data-name="deleteOidcRp" data-version="0">
                         <div class="pull-left">
                           <h1>deleteOidcRp</h1>
-                          <p>Deletes a OpenID Connect Relaying Party</p>
+                          <p>Deletes a OpenID Connect Relying Party</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -13138,7 +14479,7 @@ public class OidcrpApiExample {
     public static void main(String[] args) {
         
         OidcrpApi apiInstance = new OidcrpApi();
-        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party to delete
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relying Party to delete
         try {
             apiInstance.deleteOidcRp(confKey);
         } catch (ApiException e) {
@@ -13156,7 +14497,7 @@ public class OidcrpApiExample {
 
     public static void main(String[] args) {
         OidcrpApi apiInstance = new OidcrpApi();
-        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party to delete
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relying Party to delete
         try {
             apiInstance.deleteOidcRp(confKey);
         } catch (ApiException e) {
@@ -13171,11 +14512,11 @@ public class OidcrpApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Oidcrp-deleteOidcRp-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relaying Party to delete
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relying Party to delete
 
 OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
-// Deletes a OpenID Connect Relaying Party
+// Deletes a OpenID Connect Relying Party
 [apiInstance deleteOidcRpWith:confKey
               completionHandler: ^(NSError* error) {
                             if (error) {
@@ -13189,7 +14530,7 @@ OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
 
 var api = new LemonLdapngManagerApi.OidcrpApi()
-var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relaying Party to delete
+var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relying Party to delete
 
 var callback = function(error, data, response) {
   if (error) {
@@ -13220,11 +14561,11 @@ namespace Example
         {
 
             var apiInstance = new OidcrpApi();
-            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relaying Party to delete
+            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relying Party to delete
 
             try
             {
-                // Deletes a OpenID Connect Relaying Party
+                // Deletes a OpenID Connect Relying Party
                 apiInstance.deleteOidcRp(confKey);
             }
             catch (Exception e)
@@ -13242,7 +14583,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiOidcrpApi();
-$confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party to delete
+$confKey = ; // confKey | Configuration key of OpenID Connect Relying Party to delete
 
 try {
     $api_instance->deleteOidcRp($confKey);
@@ -13258,7 +14599,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::OidcrpApi;
 
 my $api_instance = WWW::SwaggerClient::OidcrpApi->new();
-my $confKey = ; # confKey | Configuration key of OpenID Connect Relaying Party to delete
+my $confKey = ; # confKey | Configuration key of OpenID Connect Relying Party to delete
 
 eval { 
     $api_instance->deleteOidcRp(confKey => $confKey);
@@ -13277,10 +14618,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.OidcrpApi()
-confKey =  # confKey | Configuration key of OpenID Connect Relaying Party to delete
+confKey =  # confKey | Configuration key of OpenID Connect Relying Party to delete
 
 try: 
-    # Deletes a OpenID Connect Relaying Party
+    # Deletes a OpenID Connect Relying Party
     api_instance.delete_oidc_rp(confKey)
 except ApiException as e:
     print("Exception when calling OidcrpApi->deleteOidcRp: %s\n" % e)</code></pre>
@@ -13307,7 +14648,7 @@ except ApiException as e:
                                                   </span>
                                   
                                                       <div class="inner description">
-                                                          Configuration key of OpenID Connect Relaying Party to delete
+                                                          Configuration key of OpenID Connect Relying Party to delete
                                                       </div>
                                               </div>
                                                   <div class="inner required">
@@ -13435,7 +14776,7 @@ except ApiException as e:
                       <article id="api-Oidcrp-findOidcRpByClientId-0" data-group="User" data-name="findOidcRpByClientId" data-version="0">
                         <div class="pull-left">
                           <h1>findOidcRpByClientId</h1>
-                          <p>Finds OpenID Connect Relaying Party by Client ID</p>
+                          <p>Finds OpenID Connect Relying Party by Client ID</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -13520,7 +14861,7 @@ public class OidcrpApiExample {
 
 OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
-// Finds OpenID Connect Relaying Party by Client ID
+// Finds OpenID Connect Relying Party by Client ID
 [apiInstance findOidcRpByClientIdWith:clientId
               completionHandler: ^(OidcRp output, NSError* error) {
                             if (output) {
@@ -13572,7 +14913,7 @@ namespace Example
 
             try
             {
-                // Finds OpenID Connect Relaying Party by Client ID
+                // Finds OpenID Connect Relying Party by Client ID
                 OidcRp result = apiInstance.findOidcRpByClientId(clientId);
                 Debug.WriteLine(result);
             }
@@ -13631,7 +14972,7 @@ api_instance = swagger_client.OidcrpApi()
 clientId = clientId_example # String | Client ID to search
 
 try: 
-    # Finds OpenID Connect Relaying Party by Client ID
+    # Finds OpenID Connect Relying Party by Client ID
     api_response = api_instance.find_oidc_rp_by_client_id(clientId)
     pprint(api_response)
 except ApiException as e:
@@ -13827,7 +15168,7 @@ except ApiException as e:
                       <article id="api-Oidcrp-findOidcRpByConfKey-0" data-group="User" data-name="findOidcRpByConfKey" data-version="0">
                         <div class="pull-left">
                           <h1>findOidcRpByConfKey</h1>
-                          <p>Finds OpenID Connect Relaying Partys by configuration key</p>
+                          <p>Finds OpenID Connect Relying Partys by configuration key</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -13912,7 +15253,7 @@ public class OidcrpApiExample {
 
 OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
-// Finds OpenID Connect Relaying Partys by configuration key
+// Finds OpenID Connect Relying Partys by configuration key
 [apiInstance findOidcRpByConfKeyWith:pattern
               completionHandler: ^(array[OidcRp] output, NSError* error) {
                             if (output) {
@@ -13964,7 +15305,7 @@ namespace Example
 
             try
             {
-                // Finds OpenID Connect Relaying Partys by configuration key
+                // Finds OpenID Connect Relying Partys by configuration key
                 array[OidcRp] result = apiInstance.findOidcRpByConfKey(pattern);
                 Debug.WriteLine(result);
             }
@@ -14023,7 +15364,7 @@ api_instance = swagger_client.OidcrpApi()
 pattern =  # confKey | Search pattern
 
 try: 
-    # Finds OpenID Connect Relaying Partys by configuration key
+    # Finds OpenID Connect Relying Partys by configuration key
     api_response = api_instance.find_oidc_rp_by_conf_key(pattern)
     pprint(api_response)
 except ApiException as e:
@@ -14175,7 +15516,7 @@ except ApiException as e:
                       <article id="api-Oidcrp-getOidcRpByConfKey-0" data-group="User" data-name="getOidcRpByConfKey" data-version="0">
                         <div class="pull-left">
                           <h1>getOidcRpByConfKey</h1>
-                          <p>Get OpenID Connect Relaying Party by configuration key</p>
+                          <p>Get OpenID Connect Relying Party by configuration key</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -14221,7 +15562,7 @@ public class OidcrpApiExample {
     public static void main(String[] args) {
         
         OidcrpApi apiInstance = new OidcrpApi();
-        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relying Party
         try {
             OidcRp result = apiInstance.getOidcRpByConfKey(confKey);
             System.out.println(result);
@@ -14240,7 +15581,7 @@ public class OidcrpApiExample {
 
     public static void main(String[] args) {
         OidcrpApi apiInstance = new OidcrpApi();
-        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relying Party
         try {
             OidcRp result = apiInstance.getOidcRpByConfKey(confKey);
             System.out.println(result);
@@ -14256,11 +15597,11 @@ public class OidcrpApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Oidcrp-getOidcRpByConfKey-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relaying Party
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relying Party
 
 OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
-// Get OpenID Connect Relaying Party by configuration key
+// Get OpenID Connect Relying Party by configuration key
 [apiInstance getOidcRpByConfKeyWith:confKey
               completionHandler: ^(OidcRp output, NSError* error) {
                             if (output) {
@@ -14277,7 +15618,7 @@ OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
 
 var api = new LemonLdapngManagerApi.OidcrpApi()
-var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relaying Party
+var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relying Party
 
 var callback = function(error, data, response) {
   if (error) {
@@ -14308,11 +15649,11 @@ namespace Example
         {
 
             var apiInstance = new OidcrpApi();
-            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relaying Party
+            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relying Party
 
             try
             {
-                // Get OpenID Connect Relaying Party by configuration key
+                // Get OpenID Connect Relying Party by configuration key
                 OidcRp result = apiInstance.getOidcRpByConfKey(confKey);
                 Debug.WriteLine(result);
             }
@@ -14331,7 +15672,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiOidcrpApi();
-$confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party
+$confKey = ; // confKey | Configuration key of OpenID Connect Relying Party
 
 try {
     $result = $api_instance->getOidcRpByConfKey($confKey);
@@ -14348,7 +15689,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::OidcrpApi;
 
 my $api_instance = WWW::SwaggerClient::OidcrpApi->new();
-my $confKey = ; # confKey | Configuration key of OpenID Connect Relaying Party
+my $confKey = ; # confKey | Configuration key of OpenID Connect Relying Party
 
 eval { 
     my $result = $api_instance->getOidcRpByConfKey(confKey => $confKey);
@@ -14368,10 +15709,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.OidcrpApi()
-confKey =  # confKey | Configuration key of OpenID Connect Relaying Party
+confKey =  # confKey | Configuration key of OpenID Connect Relying Party
 
 try: 
-    # Get OpenID Connect Relaying Party by configuration key
+    # Get OpenID Connect Relying Party by configuration key
     api_response = api_instance.get_oidc_rp_by_conf_key(confKey)
     pprint(api_response)
 except ApiException as e:
@@ -14399,7 +15740,7 @@ except ApiException as e:
                                                   </span>
                                   
                                                       <div class="inner description">
-                                                          Configuration key of OpenID Connect Relaying Party
+                                                          Configuration key of OpenID Connect Relying Party
                                                       </div>
                                               </div>
                                                   <div class="inner required">
@@ -14567,7 +15908,7 @@ except ApiException as e:
                       <article id="api-Oidcrp-replaceOidcRp-0" data-group="User" data-name="replaceOidcRp" data-version="0">
                         <div class="pull-left">
                           <h1>replaceOidcRp</h1>
-                          <p>Replaces an OpenID Connect Relaying Party</p>
+                          <p>Replaces an OpenID Connect Relying Party</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -14614,7 +15955,7 @@ public class OidcrpApiExample {
     public static void main(String[] args) {
         
         OidcrpApi apiInstance = new OidcrpApi();
-        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relying Party that needs to be replaced
         OidcRpReplace body = ; // OidcRpReplace | 
         try {
             apiInstance.replaceOidcRp(confKey, body);
@@ -14633,7 +15974,7 @@ public class OidcrpApiExample {
 
     public static void main(String[] args) {
         OidcrpApi apiInstance = new OidcrpApi();
-        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relying Party that needs to be replaced
         OidcRpReplace body = ; // OidcRpReplace | 
         try {
             apiInstance.replaceOidcRp(confKey, body);
@@ -14649,12 +15990,12 @@ public class OidcrpApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Oidcrp-replaceOidcRp-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relaying Party that needs to be replaced
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relying Party that needs to be replaced
 OidcRpReplace *body = ; //  (optional)
 
 OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
-// Replaces an OpenID Connect Relaying Party
+// Replaces an OpenID Connect Relying Party
 [apiInstance replaceOidcRpWith:confKey
     body:body
               completionHandler: ^(NSError* error) {
@@ -14669,7 +16010,7 @@ OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
 
 var api = new LemonLdapngManagerApi.OidcrpApi()
-var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relaying Party that needs to be replaced
+var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relying Party that needs to be replaced
 var opts = { 
   'body':  // {{OidcRpReplace}} 
 };
@@ -14702,12 +16043,12 @@ namespace Example
         {
 
             var apiInstance = new OidcrpApi();
-            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
+            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relying Party that needs to be replaced
             var body = new OidcRpReplace(); // OidcRpReplace |  (optional) 
 
             try
             {
-                // Replaces an OpenID Connect Relaying Party
+                // Replaces an OpenID Connect Relying Party
                 apiInstance.replaceOidcRp(confKey, body);
             }
             catch (Exception e)
@@ -14725,7 +16066,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiOidcrpApi();
-$confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
+$confKey = ; // confKey | Configuration key of OpenID Connect Relying Party that needs to be replaced
 $body = ; // OidcRpReplace | 
 
 try {
@@ -14742,7 +16083,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::OidcrpApi;
 
 my $api_instance = WWW::SwaggerClient::OidcrpApi->new();
-my $confKey = ; # confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
+my $confKey = ; # confKey | Configuration key of OpenID Connect Relying Party that needs to be replaced
 my $body = WWW::SwaggerClient::Object::OidcRpReplace->new(); # OidcRpReplace | 
 
 eval { 
@@ -14762,11 +16103,11 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.OidcrpApi()
-confKey =  # confKey | Configuration key of OpenID Connect Relaying Party that needs to be replaced
+confKey =  # confKey | Configuration key of OpenID Connect Relying Party that needs to be replaced
 body =  # OidcRpReplace |  (optional)
 
 try: 
-    # Replaces an OpenID Connect Relaying Party
+    # Replaces an OpenID Connect Relying Party
     api_instance.replace_oidc_rp(confKey, body=body)
 except ApiException as e:
     print("Exception when calling OidcrpApi->replaceOidcRp: %s\n" % e)</code></pre>
@@ -14793,7 +16134,7 @@ except ApiException as e:
                                                   </span>
                                   
                                                       <div class="inner description">
-                                                          Configuration key of OpenID Connect Relaying Party that needs to be replaced
+                                                          Configuration key of OpenID Connect Relying Party that needs to be replaced
                                                       </div>
                                               </div>
                                                   <div class="inner required">
@@ -15011,7 +16352,7 @@ except ApiException as e:
                       <article id="api-Oidcrp-updateOidcRp-0" data-group="User" data-name="updateOidcRp" data-version="0">
                         <div class="pull-left">
                           <h1>updateOidcRp</h1>
-                          <p>Updates an OpenID Connect Relaying Party</p>
+                          <p>Updates an OpenID Connect Relying Party</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -15058,7 +16399,7 @@ public class OidcrpApiExample {
     public static void main(String[] args) {
         
         OidcrpApi apiInstance = new OidcrpApi();
-        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party that needs to be updated
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relying Party that needs to be updated
         OidcRpUpdate body = ; // OidcRpUpdate | 
         try {
             apiInstance.updateOidcRp(confKey, body);
@@ -15077,7 +16418,7 @@ public class OidcrpApiExample {
 
     public static void main(String[] args) {
         OidcrpApi apiInstance = new OidcrpApi();
-        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party that needs to be updated
+        confKey confKey = ; // confKey | Configuration key of OpenID Connect Relying Party that needs to be updated
         OidcRpUpdate body = ; // OidcRpUpdate | 
         try {
             apiInstance.updateOidcRp(confKey, body);
@@ -15093,12 +16434,12 @@ public class OidcrpApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Oidcrp-updateOidcRp-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relaying Party that needs to be updated
+                              <pre class="prettyprint"><code class="language-cpp">confKey *confKey = ; // Configuration key of OpenID Connect Relying Party that needs to be updated
 OidcRpUpdate *body = ; //  (optional)
 
 OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
 
-// Updates an OpenID Connect Relaying Party
+// Updates an OpenID Connect Relying Party
 [apiInstance updateOidcRpWith:confKey
     body:body
               completionHandler: ^(NSError* error) {
@@ -15113,7 +16454,7 @@ OidcrpApi *apiInstance = [[OidcrpApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var LemonLdapngManagerApi = require('lemon_ldapng_manager_api');
 
 var api = new LemonLdapngManagerApi.OidcrpApi()
-var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relaying Party that needs to be updated
+var confKey = ; // {{confKey}} Configuration key of OpenID Connect Relying Party that needs to be updated
 var opts = { 
   'body':  // {{OidcRpUpdate}} 
 };
@@ -15146,12 +16487,12 @@ namespace Example
         {
 
             var apiInstance = new OidcrpApi();
-            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relaying Party that needs to be updated
+            var confKey = new confKey(); // confKey | Configuration key of OpenID Connect Relying Party that needs to be updated
             var body = new OidcRpUpdate(); // OidcRpUpdate |  (optional) 
 
             try
             {
-                // Updates an OpenID Connect Relaying Party
+                // Updates an OpenID Connect Relying Party
                 apiInstance.updateOidcRp(confKey, body);
             }
             catch (Exception e)
@@ -15169,7 +16510,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiOidcrpApi();
-$confKey = ; // confKey | Configuration key of OpenID Connect Relaying Party that needs to be updated
+$confKey = ; // confKey | Configuration key of OpenID Connect Relying Party that needs to be updated
 $body = ; // OidcRpUpdate | 
 
 try {
@@ -15186,7 +16527,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::OidcrpApi;
 
 my $api_instance = WWW::SwaggerClient::OidcrpApi->new();
-my $confKey = ; # confKey | Configuration key of OpenID Connect Relaying Party that needs to be updated
+my $confKey = ; # confKey | Configuration key of OpenID Connect Relying Party that needs to be updated
 my $body = WWW::SwaggerClient::Object::OidcRpUpdate->new(); # OidcRpUpdate | 
 
 eval { 
@@ -15206,11 +16547,11 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.OidcrpApi()
-confKey =  # confKey | Configuration key of OpenID Connect Relaying Party that needs to be updated
+confKey =  # confKey | Configuration key of OpenID Connect Relying Party that needs to be updated
 body =  # OidcRpUpdate |  (optional)
 
 try: 
-    # Updates an OpenID Connect Relaying Party
+    # Updates an OpenID Connect Relying Party
     api_instance.update_oidc_rp(confKey, body=body)
 except ApiException as e:
     print("Exception when calling OidcrpApi->updateOidcRp: %s\n" % e)</code></pre>
@@ -15237,7 +16578,7 @@ except ApiException as e:
                                                   </span>
                                   
                                                       <div class="inner description">
-                                                          Configuration key of OpenID Connect Relaying Party that needs to be updated
+                                                          Configuration key of OpenID Connect Relying Party that needs to be updated
                                                       </div>
                                               </div>
                                                   <div class="inner required">

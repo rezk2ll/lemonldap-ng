@@ -17,14 +17,13 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.0.16';
+our $VERSION = '2.19.0';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor';
 with 'Lemonldap::NG::Portal::Lib::WebAuthn';
 
 # INITIALIZATION
 
-has rule   => ( is => 'rw' );
 has prefix => ( is => 'ro', default => 'webauthn' );
 has logo   => ( is => 'rw', default => 'webauthn.png' );
 
@@ -53,16 +52,18 @@ sub run {
 
     $self->ott->updateToken( $token, _webauthn_request => $request );
 
+    $self->logger->debug(
+        "WebAuthn authentication parameters " . to_json($request) );
+
     # Prepare form
     my ( $checkLogins, $stayConnected ) = $self->getFormParams($req);
     my $tmp = $self->p->sendHtml(
         $req,
         'webauthn2fcheck',
         params => {
-            DATA          => to_json( { request => $request } ),
-            TOKEN         => $token,
-            CHECKLOGINS   => $checkLogins,
-            STAYCONNECTED => $stayConnected
+            DATA  => to_json( { request => $request } ),
+            TOKEN => $token,
+            $self->get2fTplParams($req),
         }
     );
 

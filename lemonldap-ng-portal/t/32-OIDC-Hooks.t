@@ -120,8 +120,14 @@ my $id_token = $json->{id_token};
 ok( $id_token, 'ID token present' );
 my $refresh_token = $json->{refresh_token};
 ok( $refresh_token, 'Refresh token present' );
+my $customToken = $json->{custom_token};
+is( $customToken, 'CustomToken', 'Found custom token in token response' );
 my $id_token_payload = id_token_payload($id_token);
 is( $id_token_payload->{id_token_hook}, 1, "Found hooked claim in ID token" );
+
+# 3084
+my $id_token_header = id_token_header($id_token);
+ok( !exists $id_token_header->{kid}, "HS** ID token has no kid header" );
 
 # Reset conf to make sure to make sure lazy loading works
 $op->p->HANDLER->checkConf(1);

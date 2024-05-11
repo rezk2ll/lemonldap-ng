@@ -9,10 +9,10 @@ use strict;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;
 use Crypt::JWT qw(encode_jwt decode_jwt);
-use Digest::SHA
-  qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
+use Digest::SHA qw/sha1 hmac_sha256_base64 sha256 sha384 sha512 sha256_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
+use Lemonldap::NG::Common::OpenIDConnect::Constants;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::JWT
   qw(getAccessTokenSessionId getJWTPayload getJWTHeader getJWTSignature getJWTSignedData);
@@ -25,54 +25,10 @@ use Mouse;
 use Crypt::URandom;
 use URI;
 
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT PE_ERROR);
+use Lemonldap::NG::Portal::Main::Constants
+  qw(PE_OK PE_REDIRECT PE_ERROR portalConsts);
 
-our $VERSION = '2.18.0';
-
-use constant BACKCHANNEL_EVENTSKEY =>
-  'http://schemas.openid.net/event/backchannel-logout';
-
-# OpenID Connect standard claims
-use constant PROFILE => [
-    qw/name family_name given_name middle_name nickname preferred_username
-      profile picture website gender birthdate zoneinfo locale updated_at/
-];
-use constant EMAIL => [qw/email email_verified/];
-use constant ADDRESS =>
-  [qw/formatted street_address locality region postal_code country/];
-use constant PHONE => [qw/phone_number phone_number_verified/];
-
-use constant DEFAULT_SCOPES => {
-    profile => PROFILE,
-    email   => EMAIL,
-    address => ADDRESS,
-    phone   => PHONE,
-};
-
-use constant COMPLEX_CLAIM => {
-    formatted      => "address",
-    street_address => "address",
-    locality       => "address",
-    region         => "address",
-    postal_code    => "address",
-    country        => "address",
-};
-
-use constant ENC_ALG_SUPPORTED => [ qw(
-      RSA-OAEP ECDH-ES RSA-OAEP-256
-      ECDH-ES+A256KW
-      ECDH-ES+A192KW
-      ECDH-ES+A128KW
-      RSA1_5
-    )
-];
-
-# Unsupported: A128KW A192KW A256KW A128GCMKW A192GCMKW A256GCMKW PBES2-HS256+A128KW PBES2-HS384+A192KW PBES2-HS512+A256KW
-
-use constant ENC_SUPPORTED => [ qw(
-      A256CBC-HS512 A256GCM A192CBC-HS384 A192GCM A128CBC-HS256 A128GCM
-    )
-];
+our $VERSION = '2.19.0';
 
 # PROPERTIES
 
@@ -87,6 +43,7 @@ has rpRules      => ( is => 'rw', default => sub { {} } );
 has rpScopes     => ( is => 'rw', default => sub { {} } );
 has rpScopeRules => ( is => 'rw', default => sub { {} } );
 has rpEncKey     => ( is => 'rw', default => sub { {} } );
+has rpSigKey     => ( is => 'rw', default => sub { {} } );
 
 # Deprecated names, remove in 3.0
 *oidcOPList   = *opMetadata;
@@ -166,29 +123,6 @@ sub loadOPs {
     }
 
     return 1;
-}
-
-# Load OpenID Connect Relying Parties
-# DEPRECATED, remove in 3.0, use sendOidcResponse instead
-# @param no_cache Disable cache use
-# @return boolean result
-sub loadRPs {
-    my ($self) = @_;
-
-    $self->warning->info("Using loadRPs is deprecated, use getRP instead");
-
-    # Check presence of at least one relying party in configuration
-    unless ( $self->conf->{oidcRPMetaDataOptions}
-        and keys %{ $self->conf->{oidcRPMetaDataOptions} } )
-    {
-        $self->logger->warn(
-            "No OpenID Connect Relying Party found in configuration");
-        return 1;
-    }
-
-    foreach my $rp ( keys %{ $self->conf->{oidcRPMetaDataOptions} || {} } ) {
-        $self->load_rp_from_llng_conf($rp);
-    }
 }
 
 # Load a single RP from LLNG configuration
@@ -306,11 +240,15 @@ sub load_rp {
             my %keys;
             my %validKeys;
             foreach my $key ( sort @{ $jwks->{keys} } ) {
-                next unless $key->{use} eq 'enc';
+                my $type = lc( $key->{use} );
+                next unless $type =~ /^(?:enc|sig)$/;
                 $key->{alg} = 'RSA-OAEP'
                   if !$key->{alg} and $key->{kty} eq 'RSA';
                 $key->{alg} = 'ES256'
                   if !$key->{alg} and $key->{kty} eq 'EC';
+                if ( $type eq 'sig' ) {
+                    push @{ $validKeys{sig} }, $key;
+                }
                 if ( $key->{alg} ) {
                     $keys{ $key->{alg} } ||= $key;
                 }
@@ -319,21 +257,22 @@ sub load_rp {
                 }
             }
             foreach my $alg ( @{&ENC_ALG_SUPPORTED} ) {
-                if ( $keys{$alg} ) {
+                if ( $keys{$alg} and $keys{$alg}->{use} eq 'enc' ) {
                     $self->logger->debug(
                         "Found encryption key with algorith $alg");
-                    $validKeys{$alg} = $keys{$alg};
-                    $self->rpEncKey->{$rp} = $keys{$alg};
+                    $validKeys{enc}{$alg} = $keys{$alg};
                     last;
                 }
             }
             unless (%validKeys) {
-                $self->logger->error(
-                    "Unable to find a supported encryption key for $rp");
+                $self->logger->error("Unable to find a supported key for $rp");
                 $valid = 0;
             }
             else {
-                $self->rpEncKey->{$rp} = \%validKeys;
+                $self->rpEncKey->{$rp} = { keys => $validKeys{enc} }
+                  if $validKeys{enc};
+                $self->rpSigKey->{$rp} = { keys => $validKeys{sig} }
+                  if $validKeys{sig};
             }
         }
         else {
@@ -353,7 +292,7 @@ sub load_rp {
     }
     else {
         $self->logger->error(
-            "Relaying Party $rp has errors and will be ignored");
+            "Relying Party $rp has errors and will be ignored");
     }
     return;
 }
@@ -373,49 +312,59 @@ sub refreshJWKSdata {
     }
 
     foreach ( keys %{ $self->conf->{oidcOPMetaDataJSON} } ) {
-
-        # Refresh JWKS data if
-        # 1/ oidcOPMetaDataOptionsJWKSTimeout > 0
-        # 2/ jwks_uri defined in metadata
-
-        my $jwksTimeout =
-          $self->opOptions->{$_}->{oidcOPMetaDataOptionsJWKSTimeout};
-        my $jwksUri = $self->opMetadata->{$_}->{conf}->{jwks_uri};
-
-        unless ($jwksTimeout) {
-            $self->logger->debug(
-                "No JWKS refresh timeout defined for $_, skipping...");
-            next;
-        }
-
-        unless ($jwksUri) {
-            $self->logger->debug("No JWKS URI defined for $_, skipping...");
-            next;
-        }
-
-        if ( $self->opMetadata->{$_}->{jwks}->{time} + $jwksTimeout > time ) {
-            $self->logger->debug("JWKS data still valid for $_, skipping...");
-            next;
-        }
-
-        $self->logger->debug("Refresh JWKS data for $_ from $jwksUri");
-
-        my $response = $self->ua->get($jwksUri);
-
-        if ( $response->is_error ) {
-            $self->logger->warn(
-                "Unable to get JWKS data for $_ from $jwksUri: "
-                  . $response->message );
-            $self->logger->debug( $response->content );
-            next;
-        }
-
-        my $content = $self->decodeJSON( $response->decoded_content );
-
-        $self->opMetadata->{$_}->{jwks} = $content;
-        $self->opMetadata->{$_}->{jwks}->{time} = time;
-
+        $self->refreshJWKSdataForOp($_);
     }
+    return 1;
+}
+
+sub refreshJWKSdataForOp {
+    my ( $self, $op ) = @_;
+
+    $self->logger->debug("Attempting to refresh JWKS data for $op");
+
+    # Refresh JWKS data if
+    # 1/ oidcOPMetaDataOptionsJWKSTimeout > 0
+    # 2/ jwks_uri defined in metadata
+
+    my $jwksTimeout =
+      $self->opOptions->{$op}->{oidcOPMetaDataOptionsJWKSTimeout};
+    my $jwksUri = $self->opMetadata->{$op}->{conf}->{jwks_uri};
+
+    unless ($jwksTimeout) {
+        $self->logger->debug(
+            "No JWKS refresh timeout defined for $op, skipping...");
+        return;
+    }
+
+    unless ($jwksUri) {
+        $self->logger->debug("No JWKS URI defined for $op, skipping...");
+        return;
+    }
+
+    if ( $self->opMetadata->{$op}->{jwks}->{time}
+        && ( $self->opMetadata->{$op}->{jwks}->{time} + $jwksTimeout > time ) )
+    {
+        $self->logger->debug("JWKS data still valid for $op, skipping...");
+        return;
+    }
+
+    $self->logger->debug("Refresh JWKS data for $op from $jwksUri");
+
+    my $response = $self->ua->get($jwksUri);
+
+    if ( $response->is_error ) {
+        $self->logger->warn(
+            "Unable to get JWKS data for $op from $jwksUri: "
+              . $response->message );
+        $self->logger->debug( $response->content );
+        return;
+    }
+
+    my $content = $self->decodeJSON( $response->decoded_content );
+
+    $self->opMetadata->{$op}->{jwks} = $content;
+    $self->opMetadata->{$op}->{jwks}->{time} = time;
+
     return 1;
 }
 
@@ -426,11 +375,7 @@ sub getCallbackUri {
 
     my $callback_get_param = $self->conf->{oidcRPCallbackGetParam};
 
-    my $callback_uri = $self->conf->{portal};
-    $callback_uri .=
-      ( $self->conf->{portal} =~ /\?/ )
-      ? '&' . $callback_get_param . '=1'
-      : '?' . $callback_get_param . '=1';
+    my $callback_uri = $self->p->buildUrl( $req->portal, { $callback_get_param => 1 } );
 
     $self->logger->debug("OpenIDConnect Callback URI: $callback_uri");
     return $callback_uri;
@@ -442,6 +387,8 @@ sub getCallbackUri {
 # return String Authentication Request URI
 sub buildAuthorizationCodeAuthnRequest {
     my ( $self, $req, $op, $state, $nonce ) = @_;
+    my $authMode =
+      $self->opOptions->{$op}->{oidcOPMetaDataOptionsAuthnEndpointAuthMethod};
 
     my $authorize_uri =
       $self->opMetadata->{$op}->{conf}->{authorization_endpoint};
@@ -463,13 +410,16 @@ sub buildAuthorizationCodeAuthnRequest {
     my $ui_locales = $self->opOptions->{$op}->{oidcOPMetaDataOptionsUiLocales};
     my $acr_values = $self->opOptions->{$op}->{oidcOPMetaDataOptionsAcrValues};
 
-    my $authorize_request_params = {
+    my $authorize_request_oauth2_params = {
         response_type => $response_type,
         client_id     => $client_id,
         scope         => $scope,
         redirect_uri  => $redirect_uri,
-        ( defined $state      ? ( state      => $state )      : () ),
-        ( defined $nonce      ? ( nonce      => $nonce )      : () ),
+        ( defined $state ? ( state => $state ) : () ),
+        ( defined $nonce ? ( nonce => $nonce ) : () ),
+    };
+    my $authorize_request_params = {
+        %$authorize_request_oauth2_params,
         ( defined $display    ? ( display    => $display )    : () ),
         ( defined $prompt     ? ( prompt     => $prompt )     : () ),
         ( $max_age            ? ( max_age    => $max_age )    : () ),
@@ -480,10 +430,41 @@ sub buildAuthorizationCodeAuthnRequest {
     # Call oidcGenerateAuthenticationRequest
     my $h = $self->p->processHook(
         $req, 'oidcGenerateAuthenticationRequest',
-        $op,  $authorize_request_params
+        $op,  $authorize_request_params,
     );
     return if ( $h != PE_OK );
 
+    if ( $authMode and $authMode =~ /^jw(?:s|e)$/ ) {
+
+        # Save hook changes if any
+        $authorize_request_oauth2_params->{$_} = $authorize_request_params->{$_}
+          foreach ( keys %$authorize_request_oauth2_params );
+        my $aud = $authorize_uri;
+        $aud =~ s#^(https://[^/]*).*?$#$1#;
+        my $jwt = $self->createJWTForOP( {
+                iss => $client_id,
+                aud => $aud,
+                jti => $self->generateNonce,
+                exp => time + 30,
+                iat => time,
+                %$authorize_request_params,
+            },
+            $self->opOptions->{op}
+              ->{oidcOPMetaDataOptionsAuthnEndpointAuthSigAlg} || 'RS256',
+            $op
+        );
+        if ($jwt) {
+            $authorize_request_params =
+              { %$authorize_request_oauth2_params, request => $jwt };
+            if ( $authMode eq 'jwe' ) {
+                $self->logger->error('jwe mode not yet implemented');
+            }
+        }
+        else {
+            $self->logger->error(
+                'Unable to generate JWT, continue with unauthenticated query');
+        }
+    }
     my $authn_uri =
         $authorize_uri
       . ( $authorize_uri =~ /\?/ ? '&' : '?' )
@@ -717,7 +698,9 @@ sub getAccessTokenFromTokenEndpoint {
       $self->opOptions->{$op}->{oidcOPMetaDataOptionsTokenEndpointAuthMethod}
       || 'client_secret_post';
 
-    unless ( $auth_method =~ /^client_secret_(basic|post)$/o ) {
+    unless ( $auth_method =~
+        /^(?:client_secret_(?:(?:pos|jw)t|basic)|private_key_jwt)$/o )
+    {
         $self->logger->error(
             "Bad authentication method on token endpoint for OP $op");
         return 0;
@@ -745,15 +728,39 @@ sub getAccessTokenFromTokenEndpoint {
             "Content-Type" => 'application/x-www-form-urlencoded',
         );
     }
-    elsif ( $auth_method eq "client_secret_post" ) {
-        $token_request_params->{client_id}     = $client_id;
-        $token_request_params->{client_secret} = $client_secret;
+    else {
+        if ( $auth_method eq "client_secret_post" ) {
+            $token_request_params->{client_id}     = $client_id;
+            $token_request_params->{client_secret} = $client_secret;
+        }
+        elsif ( $auth_method =~ /^(?:client_secret|private_key)_jwt$/ ) {
 
+            # TODO: add parameter to choose alg
+            my $alg =
+                $auth_method eq 'client_secret_jwt'          ? 'HS256'
+              : $self->conf->{oidcServiceKeyTypeSig} eq 'EC' ? 'ES256'
+              :                                                'RS256';
+            my $time = time;
+            my $jws  = $self->createJWTForOP( {
+                    iss => $client_id,
+                    sub => $client_id,
+                    aud => $access_token_uri,
+                    jti => $self->generateNonce,
+                    exp => $time + 30,
+                    iat => $time,
+                },
+                $alg, $op
+            );
+            $token_request_params->{client_id} = $client_id;
+            $token_request_params->{client_assertion_type} =
+              'urn:ietf:params:oauth:client-assertion-type:jwt-bearer';
+            $token_request_params->{client_assertion} = $jws;
+        }
+        else {
+            $self->logger->error("Unknown auth method $auth_method");
+        }
         $response = $self->ua->post( $access_token_uri, $token_request_params,
             "Content-Type" => 'application/x-www-form-urlencoded' );
-    }
-    else {
-        $self->logger->error("Unknown auth method $auth_method");
     }
 
     if ( $response->is_error ) {
@@ -1199,7 +1206,7 @@ sub makeJWT {
     my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
 
     my $access_token_payload = {
-        iss       => $self->iss,                  # Issuer Identifier
+        iss       => $self->get_issuer($req),     # Issuer Identifier
         exp       => $exp,                        # expiration
         aud       => $self->getAudiences($rp),    # Audience
         client_id => $client_id,                  # Client ID
@@ -1308,6 +1315,7 @@ sub updateToken {
             $self->_storeOpts(),
             cacheModule        => $self->conf->{localSessionStorage},
             cacheModuleOptions => $self->conf->{localSessionStorageOptions},
+            hashStore          => $self->conf->{hashedSessionStore},
             id                 => $id,
             info               => $infos,
         }
@@ -1334,6 +1342,7 @@ sub getOpenIDConnectSession {
             $self->_storeOpts(),
             cacheModule        => $self->conf->{localSessionStorage},
             cacheModuleOptions => $self->conf->{localSessionStorageOptions},
+            hashStore          => $self->conf->{hashedSessionStore},
             id                 => $id,
             kind               => $self->sessionKind,
             (
@@ -1476,10 +1485,14 @@ sub decodeJWT {
         return;
     }
 
-   # For now, only OP has JWKS
-   #my $jwks =
-   #  $op ? $self->opMetadata->{$op}->{jwks} : $self->rpMetadata->{$rp}->{jwks};
-    my $jwks = $op ? $self->opMetadata->{$op}->{jwks} : undef;
+    my $jwks;
+    if ($op) {
+        $self->refreshJWKSdataForOp($op);
+        $jwks = $self->opMetadata->{$op}->{jwks};
+    }
+    else {
+        $jwks = $self->rpSigKey->{$rp};
+    }
 
     unless ( $alg =~ /^HS/ ) {
         unless ($jwks) {
@@ -1498,30 +1511,55 @@ sub decodeJWT {
 
     # Choosing keys
     #  - if algorithm is HS{digits}, the key is the ClientSecret
-    #  - if JWS has a "kti" field in its header, use it (then replace the
+    #  - if JWS has a "kid" field in its header, use it (then replace the
     #    "key" arg of Crypt::JWT by "kid_keys" and give the whole JWKS)
     #  - else we try the first available key of jwks document
-    my @keyArg =
-      $alg =~ /^HS/
-      ? (
-        key => $op
-        ? $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientSecret}
-        : $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret}
-      )
-      : $jwt_header->{kti} ? ( kid_keys => $jwks )
-      :                      ( key => $jwks->{keys}->[0] );
+    my @keyArgs;
+    if ( $alg =~ /^HS/ ) {
+        $self->logger->debug("Alg is $alg, using secret as key");
+        @keyArgs = ( [
+                key => $op
+                ? $self->opOptions->{$op}->{oidcOPMetaDataOptionsClientSecret}
+                : $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret}
+            ]
+        );
+    }
+    elsif ( $jwt_header->{kid} ) {
+        $self->logger->debug(
+            "'kid' found in JWT header, using the whole JWKS doc as 'kid_keys'"
+        );
+        @keyArgs = ( [ kid_keys => $jwks ] );
+    }
+    else {
+        $self->logger->debug(
+"No 'kid' found in JWT header, will try all keys found in JWKS doc ("
+              . @{ $jwks->{keys} }
+              . ' key(s))' );
+        @keyArgs = map { [ key => $_ ] } @{ $jwks->{keys} };
+    }
 
-    # JSON decoding is done here because #2748
-    my $content = eval {
-        JSON::from_json(
-            decode_jwt( token => $jwt, @keyArg, decode_payload => 0 ) );
-    };
-    if ($@) {
-        $self->logger->error("Unable to verify JWT: $@");
-        $self->logger->error("Jwt was: $jwt");
+    my $error = [];
+    my $content;
+    foreach my $keyArg (@keyArgs) {
+
+        # JSON decoding is done here because #2748
+        $content = eval {
+            JSON::from_json(
+                decode_jwt( token => $jwt, @$keyArg, decode_payload => 0 ) );
+        };
+        if ($@) {
+            $error = [ "Unable to verify JWT: $@", "Jwt was: $jwt" ];
+        }
+        else {
+            $error = [];
+            last;
+        }
+    }
+    if (@$error) {
+        $self->logger->error($_) foreach @$error;
         return;
     }
-    return $content;
+    return wantarray ? ( $content, $alg ) : $content;
 }
 
 ### HERE
@@ -1607,6 +1645,16 @@ sub returnRedirectError {
         $error_uri, $state, $fragment )
       = @_;
 
+    my $reason = $error_description ? ": $error_description" : "";
+    $self->auditLog(
+        $req,
+        code    => "ISSUER_OIDC_LOGIN_FAILED",
+        message => ( "OIDC login failed" . $reason ),
+        ( $error_description ? ( reason => $error_description ) : () ),
+        oauth_error  => $error,
+        portal_error => portalConsts->{PE_REDIRECT},
+    );
+
     my $urldc =
         $redirect_url
       . ( $fragment ? '#' : $redirect_url =~ /\?/ ? '&' : '?' )
@@ -1689,8 +1737,10 @@ sub checkEndPointAuthenticationCredentials {
     my ( $self, $req ) = @_;
 
     # Check authentication
-    my ( $client_id, $client_secret ) =
+    my ( $client_id, $client_secret, $method ) =
       $self->getEndPointAuthenticationCredentials($req);
+
+    $self->logger->debug("Authentication method: $method");
 
     unless ($client_id) {
         $self->logger->error(
@@ -1717,17 +1767,28 @@ sub checkEndPointAuthenticationCredentials {
             "Relying Party $rp is public, do not check client secret");
     }
     else {
-        unless ($client_secret) {
-            $self->logger->error(
+        if ( $method =~ /^client_secret_(?:basic|post)$/ ) {
+            unless ($client_secret) {
+                $self->logger->error(
 "Relying Party $rp is confidential but no client secret was provided to authenticate on token endpoint"
-            );
-            return undef;
+                );
+                return undef;
+            }
+            unless ( $client_secret eq
+                $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret} )
+            {
+                $self->logger->error("Wrong credentials for $rp");
+                return undef;
+            }
         }
-        unless ( $client_secret eq
-            $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret} )
-        {
-            $self->logger->error("Wrong credentials for $rp");
-            return undef;
+
+        if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthMethod} ) {
+            unless ( $method eq
+                $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAuthMethod} )
+            {
+                $self->logger->error("Wrong authetication method for $rp");
+                return undef;
+            }
         }
     }
     return $rp;
@@ -1737,10 +1798,11 @@ sub checkEndPointAuthenticationCredentials {
 # @return array (client_id, client_secret)
 sub getEndPointAuthenticationCredentials {
     my ( $self, $req ) = @_;
-    my ( $client_id, $client_secret );
+    my ( $client_id, $client_secret, $scheme );
 
     my $authorization = $req->authorization;
     if ( $authorization and $authorization =~ /^Basic (\w+)/i ) {
+        $scheme = 'client_secret_basic';
         $self->logger->debug("Method client_secret_basic used");
         eval {
             ( $client_id, $client_secret ) =
@@ -1749,40 +1811,130 @@ sub getEndPointAuthenticationCredentials {
         $self->logger->error("Bad authentication header: $@") if ($@);
 
         # Using multiple methods is an error
-        if ( $req->param('client_id') and $req->param('client_secret') ) {
+        if (
+            ( $req->param('client_id') and $req->param('client_secret') )
+            or (    $req->param('client_assertion')
+                and $req->param('client_assertion_type') )
+          )
+        {
             $self->logger->error("Multiple client authentication methods used");
             ( $client_id, $client_secret ) = ( undef, undef );
         }
     }
+
+    # JWS authentication
+    elsif ( my $atype = $req->param('client_assertion_type')
+        and my $jws = $req->param('client_assertion')
+        and my $_clientId = $req->param('client_id') )
+    {
+        # Type must be 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer'
+        if (
+            $atype eq 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer' )
+        {
+            # JWS token must contain iss, sub and iss must be equal to usb
+            my $payload = getJWTPayload($jws);
+            if (    $payload
+                and ( ref($payload) eq 'HASH' )
+                and $payload->{iss}
+                and $payload->{sub}
+                and $payload->{iss} eq $payload->{sub}
+                and $payload->{iss} eq $_clientId )
+            {
+                # client_id must match to a known relying party
+                my ($rp) = grep {
+                    $self->rpOptions->{$_}->{oidcRPMetaDataOptionsClientID} eq
+                      $_clientId
+                } keys %{ $self->rpOptions || {} };
+                if ($rp) {
+
+                    # RP must have a signature key registered
+                    # (key may be the secret for HS* alg)
+                    if (   $self->rpSigKey->{$rp}
+                        or $self->rpOptions->{$rp}
+                        ->{oidcRPMetaDataOptionsClientSecret} )
+                    {
+
+                        # Signature must be valid
+                        my ( $jwt, $alg ) =
+                          $self->decodeJWT( $jws, undef, $rp );
+                        if ($jwt) {
+
+                            $scheme =
+                              $alg =~ /^HS/i
+                              ? 'client_secret_jwt'
+                              : 'private_key_jwt';
+
+                            # Token must be time-valid
+                            if ( $jwt->{aud} and $jwt->{exp} ) {
+                                if ( time < $jwt->{exp} ) {
+                                    $self->logger->debug("JWS is valid");
+
+                                    # Then export the client_id !
+                                    $client_id = $_clientId;
+                                }
+                                else {
+                                    $self->logger->error('JWS expired');
+                                }
+                            }
+                            else {
+                                $self->logger->error(
+                                    'Bad JWS content (missing aud or exp)');
+                            }
+                        }
+                        else {
+                            $self->logger->error('Bad JWS signature');
+                        }
+                    }
+                    else {
+                        $self->logger->error("No signature key found for $rp");
+                    }
+                }
+                else {
+                    $self->logger->error(
+                        "Unable to find any RP with client_id=$_clientId");
+                }
+            }
+            else {
+                $self->logger->error("Bad JWS payload: $jws");
+            }
+        }
+        else {
+            $self->logger->error("Unsuported client_assertion_type $atype");
+        }
+    }
     elsif ( $req->param('client_id') and $req->param('client_secret') ) {
+        $scheme = 'client_secret_post';
         $self->logger->debug("Method client_secret_post used");
         $client_id     = $req->param('client_id');
         $client_secret = $req->param('client_secret');
     }
     elsif ( $req->param('client_id') and !$req->param('client_secret') ) {
+        $scheme = 'none';
         $self->logger->debug("Method none used");
         $client_id = $req->param('client_id');
     }
 
-    return ( $client_id, $client_secret );
+    return ( $client_id, $client_secret, $scheme );
 }
 
 # Get Access Token
 # @return access_token
 sub getEndPointAccessToken {
     my ( $self, $req ) = @_;
-    my $access_token;
+    my ( $access_token, $method );
 
     my $authorization = $req->authorization;
     if ( $authorization and $authorization =~ /^Bearer ([\w\-\.]+)/i ) {
         $self->logger->debug("Bearer access token");
         $access_token = $1;
+        $method       = 'header';
     }
     elsif ( $access_token = $req->param('access_token') ) {
         $self->logger->debug("GET/POST access token");
+        $method = 'param';
     }
 
-    return $access_token;
+    return wantarray ? ( $access_token, $method ) : $access_token;
 }
 
 # DEPRECATED, remove in 3.0, use getAttributeListFromScopeValue instead
@@ -2073,8 +2225,19 @@ sub _forceType {
 # @param alg Signature algorithm
 # @param rp Internal Relying Party identifier
 # @return String jwt JWT
+
 sub createJWT {
     my ( $self, $payload, $alg, $rp, $type ) = @_;
+    return $self->_createJWT( $payload, $alg, $rp, $type );
+}
+
+sub createJWTForOP {
+    my ( $self, $payload, $alg, $rp, $type ) = @_;
+    return $self->_createJWT( $payload, $alg, $rp, $type, 1 );
+}
+
+sub _createJWT {
+    my ( $self, $payload, $alg, $partner, $type, $isRp ) = @_;
 
     my @keyArg;
 
@@ -2089,7 +2252,9 @@ sub createJWT {
 
         # Sign with client secret
         my $client_secret =
-          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientSecret};
+            $isRp
+          ? $self->opOptions->{$partner}->{oidcOPMetaDataOptionsClientSecret}
+          : $self->rpOptions->{$partner}->{oidcRPMetaDataOptionsClientSecret};
         unless ($client_secret) {
             $self->logger->error(
                 "Algorithm $alg needs a Client Secret to sign JWT");
@@ -2107,6 +2272,11 @@ sub createJWT {
             return;
         }
         @keyArg = ( key => \$priv_key, );
+
+        if ( $self->conf->{oidcServiceKeyIdSig} ) {
+            push @keyArg,
+              extra_headers => { kid => $self->conf->{oidcServiceKeyIdSig} };
+        }
     }
 
     # Encode payload here due to #2748
@@ -2385,6 +2555,11 @@ sub addRouteFromConf {
 # @return boolean 1 if challenge succeed, 0 else
 sub validatePKCEChallenge {
     my ( $self, $code_verifier, $code_challenge, $code_challenge_method ) = @_;
+
+    unless ($code_challenge) {
+        $self->logger->debug("PKCE was not requested by the RP");
+        return 1;
+    }
 
     unless ($code_verifier) {
         $self->logger->error("PKCE required but no code verifier provided");

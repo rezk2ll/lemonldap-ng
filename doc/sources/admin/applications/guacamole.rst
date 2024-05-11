@@ -76,7 +76,7 @@ server
 You also need to allow the ``Implicit Flow`` under
 ``OpenID Connect Service`` » ``Security``
 
-Then, add a Relaying Party with the following configuration
+Then, add a Relying Party with the following configuration
 
 -  Options » Authentification » Client ID : same as ``openid-client-id``
    in ``guacamole.properties``

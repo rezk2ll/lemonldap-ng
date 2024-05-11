@@ -8,26 +8,157 @@ backups and a rollback plan ready!
 Known issues
 -------------
 
-Upgrading from 2.0.0 or 2.0.1 to later versions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you have :doc:`installed LemonLDAP::NG from official RPMs<installrpm>`, you
-may run into bug `#1757
-<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1757>`__ and lose your
-Apache configuration files while updating from LemonLDAP::NG 2.0.0 or 2.0.1 to
-later versions. Please backup your ``/etc/httpd/conf.d/z-lemonldap-ng-*.conf``
-files before the update.
-
-
 .. Adjust for every new version that has known, unreleased bugs
 
 Known regressions in the latest released version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-None
+No known issues.
+
+2.19.0
+------
+
+RPM packaging
+~~~~~~~~~~~~~
+
+RPM packages have been reorganized to match the Debian packages naming convention.
+The upgrade via ``yum`` or ``dnf`` should work smoothly.
+
+For EL8 and EL9, you must update the GPG key:
+
+::
+
+   curl https://lemonldap-ng.org/security/GPG-KEY-LLNG-SECURITY.asc > /etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
+
+
+Like Debian, jobs are now managed through systemd timers:
+```
+systemd edit lemonldap-ng-portal.timer
+systemd edit lemonldap-ng-handler.timer
+```
+
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can skip this entire section if you use the default ``bootstrap`` theme or if your custom theme only uses ``custom*.tpl`` templates.
+
+TOTP registration
+^^^^^^^^^^^^^^^^^
+
+The TOTP registration now offers a ``otpauth://`` url that can automatically open your TOTP application when viewed on mobile. Apply the following patch to ``totp2fregister.tpl`` to use this new feature::
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/totp2fregister.tpl b/lemonldap-ng-portal/site/templates/bootstrap/totp2fregister.tpl
+    index 506a83481..a14e61d31 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/totp2fregister.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/totp2fregister.tpl
+    @@ -11,8 +11,8 @@
+             <div class="col-md-6 text-center">
+               <div >
+                 <p>&#x2460; <span trspan="totpQrCode"></span></p>
+    -            <canvas id="qr"></canvas>
+    -
+    +            <p><a class="otpauth-url" href=""><canvas id="qr"></canvas></a></p>
+    +            <p><span trspan="totpOrTouch"></span></p>
+                 <p><span trspan="totpSecretKey"></span></p>
+                 <tt id="secret"></tt>
+               </div>
+
+Second factor retry
+^^^^^^^^^^^^^^^^^^^
+
+It is recommended to apply the following patch to your custom templates so that users will have a more friendly error message when retrying their 2FA:
+
+.. code-block:: diff
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl b/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
+    index 4f277f295..c0381fc9e 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/ext2fcheck.tpl
+    @@ -2,7 +2,11 @@
+
+     <main id="logincontent" class="container">
+
+    +<TMPL_IF NAME="AUTH_ERROR">
+    +  <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert" role="<TMPL_VAR NAME="AUTH_ERROR_ROLE">"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
+    +<TMPL_ELSE>
+     <div class="message message-positive alert"><span trspan="<TMPL_IF "LEGEND"><TMPL_VAR "LEGEND"><TMPL_ELSE>enterExt2fCode</TMPL_IF>"></span></div>
+    +</TMPL_IF>
+
+     <div class="card">
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/password2fcheck.tpl b/lemonldap-ng-portal/site/templates/bootstrap/password2fcheck.tpl
+    index 098d91345..361365ef6 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/password2fcheck.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/password2fcheck.tpl
+    @@ -2,7 +2,11 @@
+
+     <main id="logincontent" class="container">
+
+    +<TMPL_IF NAME="AUTH_ERROR">
+    +  <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert" role="<TMPL_VAR NAME="AUTH_ERROR_ROLE">"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
+    +<TMPL_ELSE>
+     <div class="message message-positive alert"><span trspan="enterPassword">Enter your password</span></div>
+    +</TMPL_IF>
+
+     <div class="card">
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl b/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl
+    index 427f78f6c..8e84497e6 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/totp2fcheck.tpl
+    @@ -2,7 +2,11 @@
+
+     <main id="logincontent" class="container">
+
+    +<TMPL_IF NAME="AUTH_ERROR">
+    +  <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert" role="<TMPL_VAR NAME="AUTH_ERROR_ROLE">"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
+    +<TMPL_ELSE>
+     <div class="message message-positive alert"><span trspan="enterTotpCode"></span></div>
+    +</TMPL_IF>
+
+     <div class="card">
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl b/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl
+    index 881625d5f..aad8d4886 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl
+    @@ -3,7 +3,7 @@
+     <div class="container">
+
+     <TMPL_IF NAME="AUTH_ERROR">
+    -  <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
+    +  <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert" role="<TMPL_VAR NAME="AUTH_ERROR_ROLE">"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
+     </TMPL_IF>
+     <TMPL_IF NAME="DATA">
+       <div id="color" class="message message-positive alert"><span id="msg" trspan="webAuthnRequired"></span></div>
+
+
+2.18.2
+------
+
+PKCE is enforced for all OIDC clients supporting it
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In versions before 2.18.2, PKCE was not verified doing the token request of an
+OIDC flow unless the "Require PKCE" option was set explicitly in the
+LemonLDAP::NG configuration for this RP.
+
+Starting from now, PKCE will be verified anytime a RP enabled it by specifying
+the ``code_challenge`` parameter during the authorization request.
+
+RPs that do not support PKCE will not send the ``code_challenge`` parameter,
+and therefore will not be affected by this change.
 
 2.18.0
 ------
+
+"Stay connected" has changed name
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The "Stay connected on this device" feature has been refactored into a more
+generic :doc:`trustedbrowser` feature. The name of the configuration section
+has changed in the manager but no particular actions are required for existing
+installations.
 
 Change in second factor UI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -43,8 +174,6 @@ You can cancel this behavior by calling preventDefault in your JS handler:
          });
 
 See :doc:`jqueryevents` for more information
-
-
 
 Apache2 handler now uses IP from mod_remoteip
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -76,16 +205,51 @@ systemd edit liblemonldap-ng-handler-perl.timer
 OnCalendar=*-*-* *:07:07
 ```
 
+Encryption of password in session
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you store the password in session because you need to replay it on a protected application (Auth Basic or form replay),
+you should now enable password encryption in session (this option is disabled by default).
+
+This requires to decrypt the ``$_password``` value before sending it to the application, with the ``decrypt()`` method.
+
+Safe Jail
+~~~~~~~~~
+
+For security reason, we now enforce Safe Jail by default in lemonldap-ng.ini, so an administrator with only access to Manager
+cannot disable it. If you want to improve security, update your lemonldap-ng.ini. To retrieve the old behavior (Safe Jail configuration
+through Manager), just let the option commented in lemonldap-ng.ini.
+
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can skip this entire section if you use the default ``bootstrap`` theme or if your custom theme only uses ``custom*.tpl`` templates.
+
+Password policy display
+^^^^^^^^^^^^^^^^^^^^^^^
+
+It is recommended to replace your custom theme's ``passwordpolicy.tpl`` by the one that is provided in the ``bootstrap`` theme.
+
+If you use the :doc:`Have I Been Pwned <checkhibp>` plugin, this is a required change because the modifications in 2.18 will break this particular plugin.
+
+If you are using the default templates from the ``bootstrap`` theme, you don't need to change anything.
+
+Email templates
+^^^^^^^^^^^^^^^
+
+To avoid email sent by LL::NG being flagged as spam, we remove inline images in HTML content. You can add them back by customising the email templates and eithier use inline images (cid) or links to external resources.
+
+Note that we now send a plain text version of the mail attached to the HTML email.
+
 2.17.1
 ------
 
-Declaration of OIDC `request_uri` is now required
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+Restriction in use of OIDC `request_uri`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A little-know feature of OIDC (*note*: you are probably not using it) allows the OpenID Provider, LemonLDAP::NG in this case, to fetch the Authorization request parameters itself by indicating a `request_uri` parameter.
 
-By default, we now disallow this feature, and require LemonLDAP::NG admins to explicitely allow Request URIs in the configuration (*OpenID Connect Relying Parties* » *Your RP* » *Options* » *Security* » *Allowed URLs for fetching Request Object*). This setting allows wildcards such as ``http://rp.example.com/*``.
+By default, we now disallow this feature, and require LemonLDAP::NG admins to explicitly allow Request URIs in the configuration (*OpenID Connect Relying Parties* » *Your RP* » *Options* » *Security* » *Allowed URLs for fetching Request Object*). This setting allows wildcards such as ``http://rp.example.com/*``.
 
 2.17.0
 ------
@@ -115,6 +279,8 @@ even more encoding bugs in the long run.
 
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can skip this entire section if you use the default ``bootstrap`` theme or if your custom theme only uses ``custom*.tpl`` templates.
 
 Font Awesome application icons
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1077,3 +1243,12 @@ manager API config:
    lemonldap-ng-handler package and installed in /etc/nginx/snippets
    directory.
 
+Upgrading from 2.0.0 or 2.0.1 to later versions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you have :doc:`installed LemonLDAP::NG from official RPMs<installrpm>`, you
+may run into bug `#1757
+<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/1757>`__ and lose your
+Apache configuration files while updating from LemonLDAP::NG 2.0.0 or 2.0.1 to
+later versions. Please backup your ``/etc/httpd/conf.d/z-lemonldap-ng-*.conf``
+files before the update.

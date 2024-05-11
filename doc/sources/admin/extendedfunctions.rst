@@ -30,9 +30,11 @@ Inside this jail, you can access to:
   * checkLogonHours_
   * date_
   * dateToTime_ (|new| in version 2.0.12)
+  * decrypt_ (|new| in version 2.18)
   * encrypt_
   * groupMatch_
   * has2f_ (|new| in version 2.0.10)
+  * inDomain_ (|new| in version 2.19.0)
   * inGroup_ (|new| in version 2.0.8)
   * inSubnet_ (|new| in version 2.17)
   * ipInSubnet_ (|new| in version 2.17)
@@ -221,6 +223,15 @@ Simple usage example:
 
     dateToTime($ssoStartDate) lt dateToTime(date(1))
 
+decrypt
+~~~~~~~
+
+This function uses the secret key of LL::NG configuration to decrypt a value.
+
+::
+
+   decrypt($_password)
+
 encrypt
 ~~~~~~~
 
@@ -290,6 +301,21 @@ Example::
 
       $_2fDevices =~ /"type":\s*"TOTP"/s
 
+inDomain
+~~~~~~~~
+
+.. versionadded:: 2.19.0
+
+This function tests if the request's hostname (HTTP ``Host`` header) belongs to a given DNS domain
+
+Usage example:
+
+::
+
+   inDomain('example.com')
+
+The function returns 1 if the targeted Vhost is equal to the given domain or contains it as a suffix.
+
 inGroup
 ~~~~~~~
 
@@ -298,7 +324,7 @@ inGroup
 This function lets you test if the user is in a given group. It is
 case-insensitive.
 
-Usage example:
+Usage examples:
 
 ::
 
@@ -306,8 +332,9 @@ Usage example:
 
    inGroup('test users')
 
-The function returns 1 if the user belongs to the given group, and 0 if
-they don't.
+   inGroup('test users', 'admins')
+
+The function returns 1 if the user belongs to the given group, and 0 if they don't.
 
 inSubnet
 ~~~~~~~~
@@ -317,7 +344,7 @@ inSubnet
 This function lets you test if the request's IP address (``REMOTE_ADDR``
 environment variable) belongs to a certain subnet. You can give multiple subnets.
 
-Usage example:
+Usage examples:
 
 ::
 
@@ -325,8 +352,7 @@ Usage example:
 
    inSubnet('10.0.0.0/8', '192.168.0.0/16')
 
-The function returns 1 if the user's IP is in provided subnets, and 0 if
-it is not.
+The function returns 1 if the user's IP is in provided subnets, and 0 if it is not.
 
 isInNet6
 ~~~~~~~~
@@ -346,7 +372,7 @@ ipInSubnet
 This function lets you test if the provided IP address belongs to a certain
 subnet. You can give multiple subnets.
 
-Usage example:
+Usage examples:
 
 ::
 
@@ -405,9 +431,8 @@ multi-valued session attribute.
 
 Function parameter:
 
--  **list**: Variable containing several values (plain string with
-   separator, array or hash)
--  **value**: Value to search in the list
+-  **list**: Variable containing several values (plain string with separator, array or hash)
+-  **values**: Values to search in the list
 -  **ignorecase**: Ignore case, by default the search is case-sensitive
 
 Simple usage example:
@@ -416,12 +441,13 @@ Simple usage example:
 
    # Case sensitive match
    listMatch($roles, 'role-app1')
+   listMatch($roles, 'role-app1', 'Role-App2')
 
    # Case insensitive match
    listMatch($roles, 'RoLe-aPp1', 1)
+   listMatch($roles, 'RoLe-aPp1', 'Role-App2', 1)
 
-The function returns 1 if the value was found, and 0 if it was not
-found.
+The function returns 1 if a value was found, and 0 if it was not found.
 
 .. _subjectid:
 

@@ -153,6 +153,31 @@ Sample code::
        return PE_OK;
    }
 
+oidcGenerateTokenResponse
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.19.0
+
+This hook is triggered when LemonLDAP::NG has generated id_token and access_token
+
+The hook's parameters are:
+
+* the configuration key of the relying party which will receive the tokens
+* the prepared response before JSON encoding
+* the OIDC session content
+* the user's session content
+
+Sample code::
+
+    use constant hook => {
+        oidcGenerateTokenResponse      => 'addTokenToResponse',
+    };
+
+    sub addTokenToResponse {
+        my ( $self, $req, $tokensResponse, $oidcSession, $userSession ) = @_;
+        $tokensResponse->{mySpecialToken} = 'randomValue';
+        return PE_OK;
+    }
 
 oidcResolveScope
 ~~~~~~~~~~~~~~~~
@@ -704,12 +729,16 @@ Password change hooks
 ---------------------
 
 
+.. _passwordBeforeChange:
+
 passwordBeforeChange
 ~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.0.12
 
-This hook is triggered when LemonLDAP::NG is about to change or reset a user's password. Returning an error will cancel the password change operation
+This hook is triggered when LemonLDAP::NG is about to change or reset a user's password.
+Returning an error will cancel the password change operation.
+You can use this hook to implement :ref:`custom password policies <pluginppolicy>`.
 
 The hook's parameters are:
 
@@ -773,6 +802,7 @@ of each second factor implementation in order to verify the code/response
 submitted by the user. You can use it to run additional checks.
 
 The hook's parameters are:
+
 * An instance of the 2F module in use
 * A hash of session information
 
@@ -789,6 +819,39 @@ Sample code::
             return PE_ERROR;
         }
 
+        return PE_OK;
+    }
+
+sfBeforeRetry
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.19
+
+If a second factor failed and should be retried, this hook is called just before retrying.
+You can use it to run additional checks before retrying, or reporting the
+failure to a third party.
+
+The hook's parameters are:
+
+* An instance of the 2F module in use
+
+Sample code::
+
+    use constant hook => { sfBeforeRetry  => 'allowedToRetry' };
+
+    sub allowedToRetry {
+        my ( $self, $req, $module ) = @_;
+
+        # $module contains an instance of the 2FA module
+        my $prefix = $module->prefix;
+
+        # Use $req->sessionInfo to get current session attributes
+        my $uid = $req->sessionInfo->{uid};
+
+        if ( $uid eq "msmith" ) {
+            $self->logger->error("User $uid not allowed to retry $prefix");
+            return PE_ERROR;
+        }
         return PE_OK;
     }
 

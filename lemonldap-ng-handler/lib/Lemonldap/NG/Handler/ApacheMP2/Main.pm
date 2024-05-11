@@ -30,7 +30,7 @@ use constant AUTH_REQUIRED     => Apache2::Const::AUTH_REQUIRED;
 use constant MAINTENANCE       => Apache2::Const::HTTP_SERVICE_UNAVAILABLE;
 use constant BUFF_LEN          => 8192;
 
-our $VERSION = '2.16.3';
+our $VERSION = '2.19.0';
 
 # Set default logger
 use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Apache2';
@@ -175,6 +175,55 @@ sub redirectFilter {
     $class->updateStatus( $f->r, '$class->REDIRECT',
         $class->data->{ $class->tsv->{whatToTrace} }, 'filter' );
     return $class->OK;
+}
+
+sub logout_app {
+    my $class = shift;
+    my $u     = shift;
+    $class->logger->debug("logout_app redirect to $u");
+    eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
+    return (
+        sub {
+            my ($req)  = @_;
+            my $portal = $class->tsv->{portal}->($req);
+            my $dest   = $u || $portal;
+            $req->{env}->{'psgi.r'}->add_output_filter(
+                sub {
+                    return $class->redirectFilter( $dest, @_ );
+                }
+            );
+            1;
+        },
+        0
+    );
+}
+
+sub logout_app_sso {
+    my $class = shift;
+    my $u     = shift;
+    $class->logger->debug("logout_app_sso redirect to $u");
+    eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
+    return (
+        sub {
+            my ($req)  = @_;
+            my $portal = $class->tsv->{portal}->($req);
+            my $dest   = $u || $portal;
+            $class->localUnlog( $req, @_ );
+            $req->{env}->{'psgi.r'}->add_output_filter(
+                sub {
+                    my $r = $_[0]->r;
+                    return $class->redirectFilter(
+                        $portal . "?url="
+                          . $class->encodeUrl( $req, $dest )
+                          . "&logout=1",
+                        @_
+                    );
+                }
+            );
+            1;
+        },
+        0
+    );
 }
 
 1;

@@ -67,6 +67,11 @@ Go in Manager, ``General Parameters`` » ``Plugins`` » ``Password management``:
 
     If you define mail contents in Manager, HTML templates will not be used.
 
+    You can use session attributes in success mail body like `$uid` or `$password`.
+    
+    You can use session attributes in confirmation mail body like `$uid` or the following technical variables: `$url`, `$expMailDate` and `$expMailTime`.
+    Variables will be replaced by their corresponding value. 
+
 
 -  **Other:**
 
@@ -79,5 +84,5 @@ Go in Manager, ``General Parameters`` » ``Plugins`` » ``Password management``:
       user to generate a new password instead of choosing one (default:
       disabled)
    -  **Regexp for password generation**: regular expression used to generate the password. Set a blank value to use
-      password policy if enabled or default regexp will be employed: [A-Z]{3}[a-z]{5}.\d{2}
+      password policy if enabled or default regexp will be employed: [A-Z]{3}[a-z]{5}.\\d{2}
 

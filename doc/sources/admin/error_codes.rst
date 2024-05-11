@@ -14,6 +14,7 @@ Error codes list
    :widths: auto
 
 
+    ``PE_2FWAIT``;-6
     ``PE_IDPCHOICE``;-5
     ``PE_SENDRESPONSE``;-4
     ``PE_INFO``;-3
@@ -120,3 +121,5 @@ Error codes list
     ``PE_UNKNOWNPARTNER``;107
     ``PE_UNAUTHORIZEDURL``;108
     ``PE_UNPROTECTEDURL``;109
+    ``PE_RETRY_2FA``;110
+    ``PE_PP_PASSWORD_TOO_LONG``;111

@@ -48,8 +48,9 @@ OpenID Connect Service
 See :doc:`OpenID Connect service<openidconnectservice>` configuration
 chapter.
 
-IssuerDB
-~~~~~~~~
+
+OpenID Connect Issuer Activation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Go in ``General Parameters`` » ``Issuer modules`` » ``OpenID Connect``
 and configure:
@@ -181,7 +182,9 @@ Basic options
 Exported attributes (claims)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. versionchanged:: In 2.0.16, all exported attributes are sent if **Always send exported attributes** option is enabled in **OpenID Connect Service**. In previous versions, you had to declare them in **Options**/**Scope**/**Scope Values content** too.
+.. versionchanged:: 2.0.16
+
+   All exported attributes are sent if **Always send exported attributes** option is enabled in **OpenID Connect Service**. In previous versions, you had to declare them in **Options**/**Scope**/**Scope Values content** too.
 
 
 For each OpenID Connect attribute you want to expose to applications, you can define:
@@ -272,6 +275,8 @@ Options
    -  **User_info Encryption content encryption algorithm**: If Relying-Party require user_info response encryption, set here the content encryption algorithm
    -  **Logout Encryption key management algorithm**: If Relying-Party require back-channel-logout token encryption, set here the key management algorithm
    -  **Logout Encryption content encryption algorithm**: If Relying-Party require back-channel-logout token encryption, set here the content encryption algorithm
+   -  **Token endpoint authentication method**: Fix method to use to connect to "token" endpoint
+   -  **Require JWS for authorization requests**: Require a signed JWS for code authorization requests. If **Token endpoint authentication method** is set, it will require the same algorithm
 
 -  **Keys**
 
@@ -292,7 +297,7 @@ Options
 -  **Logout**
 
    -  **Bypass confirm**: Bypass logout confirmation when logout is initiated
-      by relaying party
+      by relying party
    -  **Session required**: Whether to send the Session ID *(sid)* in the logout
       request *(Front and Back Channel)*
    -  **Type**: Type of logout to perform

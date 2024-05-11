@@ -9,6 +9,7 @@ Plugins
    bruteforceprotection
    cda
    checkdevops
+   checkentropy
    checkhibp
    checkstate
    checkuser
@@ -20,6 +21,7 @@ Plugins
    globallogout
    grantsession
    impersonation
+   initializePasswordReset
    locationdetect
    loginhistory
    notifications
@@ -32,5 +34,5 @@ Plugins
    restservices
    soapservices
    status
-   stayconnected
+   trustedbrowser
    viewer

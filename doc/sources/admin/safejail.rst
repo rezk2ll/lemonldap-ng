@@ -29,8 +29,9 @@ Safe can be very annoying when using
 :doc:`custom functions<customfunctions>`. In this case, you might want
 to disable it.
 
-To do this, go into Manager > General Parameters > Advanced Parameters >
-Security > Use Safe Jail and disable it.
+To do this, either set useSafeJail to 0 in lemonldap-ng.ini, or comment
+the option in lemonldap-ng.ini and go into Manager > General Parameters >
+Advanced Parameters > Security > Use Safe Jail and disable it.
 
 
 Assignment test
