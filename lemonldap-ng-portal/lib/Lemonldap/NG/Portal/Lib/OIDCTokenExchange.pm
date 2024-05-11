@@ -152,3 +152,178 @@ sub tokenExchange {
 }
 
 1;
+__END__
+
+=pod
+
+=encoding utf8
+
+=head1 NAME
+
+Lemonldap::NG::Portal::Lib::OIDCTokenExchange - Base class for building OpenID
+Connect token exchange systems.
+
+=head1 SYNOPSIS
+
+  use Mouse
+  extends 'Lemonldap::NG::Portal::Lib::OIDCTokenExchange';
+  
+  sub validateSrc {
+    my ( $self, $req, $rp, $subjectToken, $subjectTokenType ) = @_;
+    #
+    # verify subjectToken
+    #
+    return 1;
+  }
+  
+  sub validateDst {
+    my ( $self, $req, $rp, $target, $requestedTokenType ) = @_;
+    #
+    # verify and update if needed:
+    # * $target->{audience}
+    # * $target->{rp}
+    #
+    return 1;
+  }
+
+=head1 DESCRIPTION
+
+When L<Lemonldap::NG|https://lemonldap-ng.org> detects a
+L<Oauth2 token exchange|https://datatracker.ietf.org/doc/html/rfc8693> request,
+it searches for a plugin able to respond. If no one returns a valid response,
+it rejects the requests.
+
+B<Lemonldap::NG::Portal::Lib::OIDCTokenExchange> permits one to build such
+plugin by just writing two methods. Of course you need then to load the module
+for example using L<Enabling custom plugin|https://lemonldap-ng.org/documentation/latest/plugincustom.html#enabling-your-plugin>.
+
+=head2 Methods to write
+
+=head3 validateSrc
+
+C<validateSrc()> is a boolean method to validate the token given in the request.
+
+If a non-null value is returned, then the request is accepted. Else Lemonldap::NG
+will try the next plugin.
+
+Parameters:
+
+=over
+
+=item * B<$req>, the L<Lemonldap::NG::Portal::Main::Request> object
+
+=item * B<$rp>, the internal LLNG name of the Relying Party which pushed the request
+
+=item * B<$subjectToken>, the token given in the request
+
+=item * B<$subjectTokenType>, the type of the given token. This value is always
+one of:
+
+=over
+
+=item * B<access_token>
+
+=item * B<refresh_token>
+
+=item * B<id_token>
+
+=item * B<saml1>
+
+=item * B<saml2>
+
+=item * I<undef>
+
+=back
+
+=back
+
+=head3 validateDst
+
+The goal of C<validateDst()> is to validate the requested B<audience>.
+
+If a non-null value is returned, then the request is accepted and Lemonldap::NG
+will build new C<access_token>, C<id_token> and C<refresh_token> using the
+values included into C<$target> hash.
+
+If a null value is returned, Lemonldap::NG will try the next plugin.
+
+Parameters:
+
+=over
+
+=item * B<$req>, the L<Lemonldap::NG::Portal::Main::Request> object
+
+=item * B<$rp>, the internal LLNG name of the Relying Party which pushed the request
+
+=item * B<$target>, a hash value with 2 keys:
+
+=over
+
+=item * B<audience>, the requested audience
+
+=item * B<rp>: if B<Lemonldap::NG> found a known Relying Party which Client-ID
+matches with requested audience, its name is put here, else this value is
+undefined.
+
+=back
+
+This value can be modified inside C<validateDst> and will be used to generate
+the new C<access_token>.
+
+=item * B<$requestedTokenType>, the type of the requested token. This value is always
+one of:
+
+=over
+
+=item * B<access_token>
+
+=item * B<refresh_token>
+
+=item * B<id_token>
+
+=item * B<saml1>
+
+=item * B<saml2>
+
+=item * I<undef>
+
+=back
+
+=back
+
+=head1 AUTHORS
+
+=over
+
+=item * LemonLDAP::NG team L<http://lemonldap-ng.org/team>
+
+=back
+
+=head1 BUG REPORT
+
+Use OW2 system to report bug or ask for features:
+L<https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues>
+
+=head1 DOWNLOAD
+
+Lemonldap::NG is available at
+L<https://lemonldap-ng.org/download>
+
+=head1 COPYRIGHT AND LICENSE
+
+See COPYING file for details.
+
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see L<http://www.gnu.org/licenses/>.
+
+=cut
