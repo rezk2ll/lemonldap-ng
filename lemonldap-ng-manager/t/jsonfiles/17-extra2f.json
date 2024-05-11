@@ -2735,42 +2735,6 @@
                   "_nodes" : [
                      {
                         "default" : 0,
-                        "id" : "u2fActivation",
-                        "title" : "u2fActivation",
-                        "type" : "boolOrExpr"
-                     },
-                     {
-                        "default" : 0,
-                        "id" : "u2fSelfRegistration",
-                        "title" : "u2fSelfRegistration",
-                        "type" : "boolOrExpr"
-                     },
-                     {
-                        "id" : "u2fAuthnLevel",
-                        "title" : "u2fAuthnLevel",
-                        "type" : "int"
-                     },
-                     {
-                        "default" : 1,
-                        "id" : "u2fUserCanRemoveKey",
-                        "title" : "u2fUserCanRemoveKey",
-                        "type" : "bool"
-                     },
-                     {
-                        "id" : "u2fTTL",
-                        "title" : "u2fTTL",
-                        "type" : "int"
-                     }
-                  ],
-                  "help" : "u2f.html",
-                  "id" : "u2f",
-                  "title" : "u2f",
-                  "type" : "simpleInputContainer"
-               },
-               {
-                  "_nodes" : [
-                     {
-                        "default" : 0,
                         "id" : "mail2fActivation",
                         "title" : "mail2fActivation",
                         "type" : "boolOrExpr"

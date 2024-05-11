@@ -559,16 +559,6 @@ sub tests {
                   if ($@);
             }
 
-            # Use U2F
-            if (   $conf->{u2fActivation}
-                or $conf->{utotp2fActivation} )
-            {
-                eval "use Crypt::U2F::Server::Simple";
-                return ( 1,
-"Crypt::U2F::Server::Simple module is required to enable U2F"
-                ) if ($@);
-            }
-
             # Use WebAuthn
             if ( $conf->{webauthn2fActivation} ) {
                 eval "use Authen::WebAuthn";
@@ -593,17 +583,6 @@ sub tests {
                 ) if ($@);
             }
             return 1;
-        },
-
-        # Warn if TOTP or U2F is enabled with UTOTP (U2F + TOTP)
-        utotp => sub {
-            return 1 unless ( $conf->{utotp2fActivation} );
-            my $w = "";
-            foreach ( 'totp', 'u' ) {
-                $w .= uc($_) . "2F is activated twice \n"
-                  if ( $conf->{ $_ . '2fActivation' } eq '1' );
-            }
-            return ( 1, ( $w ? $w : () ) );
         },
 
         # Warn if TOTP not 6 or 8 digits long
@@ -670,12 +649,6 @@ sub tests {
                   && $conf->{ $_ . '2fSelfRegistration' };
                 last if ($ok);
             }
-
-            $ok ||= $conf->{'utotp2fActivation'}
-              && ( $conf->{'u2fSelfRegistration'}
-                || $conf->{'totp2fSelfRegistration'} );
-            $msg = "A self registrable module should be enabled to require 2FA"
-              unless ($ok);
             return ( 1, $msg );
         },
 
@@ -790,9 +763,7 @@ sub tests {
             return 1 unless ( $conf->{disablePersistentStorage} );
             return ( 1, "2FA enabled WITHOUT persistent session storage" )
               if ( $conf->{totp2fActivation}
-                || $conf->{yubikey2fActivation}
-                || $conf->{u2fActivation}
-                || $conf->{utotp2fActivation} );
+                || $conf->{yubikey2fActivation} );
             return ( 1,
                 "History plugin enabled WITHOUT persistent session storage" )
               if ( $conf->{loginHistoryEnabled} );

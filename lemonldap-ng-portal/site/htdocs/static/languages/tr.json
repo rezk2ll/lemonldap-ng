@@ -86,7 +86,6 @@
 "PE80":"Bu adres zaten kullanılıyor",
 "PE81":"Geçersiz kimlik doğrulama girişimi",
 "PE82":"Kimlik doğrulama zaman aşımına uğradı",
-"PE83":"U2F doğrulaması başarısız oldu. Tekrar deneyin veya yöneticinize başvurun",
 "PE84":"Bu ana makineye erişmek için yetkili değilsiniz",
 "PE85":"Uzak site daha yeni bir oturum istedi (ve UpgradeSession eklentisi yüklenmedi). Çıkış yap ve tekrar dene",
 "PE86":"Hesabınız kilitlendi. Beklemelisiniz",

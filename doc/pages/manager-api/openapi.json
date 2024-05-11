@@ -454,7 +454,7 @@
                },
                "type" : {
                   "description" : "The type of second factor to create",
-                  "example" : "TOTP, U2F, UBK (Yubikey), WebAuthn",
+                  "example" : "TOTP, UBK (Yubikey), WebAuthn",
                   "type" : "string"
                }
             },
@@ -1005,7 +1005,7 @@
                },
                "type" : {
                   "description" : "The type of device in use",
-                  "example" : "TOTP, U2F, UBK (Yubikey), WebAuthn",
+                  "example" : "TOTP, UBK (Yubikey), WebAuthn",
                   "type" : "string"
                }
             },

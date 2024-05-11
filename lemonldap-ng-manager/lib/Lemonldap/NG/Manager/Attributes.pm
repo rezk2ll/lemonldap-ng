@@ -661,11 +661,11 @@ sub attributes {
         },
         'available2F' => {
             'default' =>
-'UTOTP,TOTP,U2F,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius,Password,Okta',
+              'TOTP,REST,Mail2F,Ext2F,WebAuthn,Yubikey,Radius,Password,Okta',
             'type' => 'text'
         },
         'available2FSelfRegistration' => {
-            'default' => 'Password,TOTP,U2F,WebAuthn,Yubikey',
+            'default' => 'Password,TOTP,WebAuthn,Yubikey',
             'type'    => 'text'
         },
         'avoidAssignment' => {
@@ -5356,30 +5356,6 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 'screen_name',
             'type'    => 'text'
         },
-        'u2fActivation' => {
-            'default' => 0,
-            'type'    => 'boolOrExpr'
-        },
-        'u2fAuthnLevel' => {
-            'type' => 'intOrNull'
-        },
-        'u2fLabel' => {
-            'type' => 'text'
-        },
-        'u2fLogo' => {
-            'type' => 'text'
-        },
-        'u2fSelfRegistration' => {
-            'default' => 0,
-            'type'    => 'boolOrExpr'
-        },
-        'u2fTTL' => {
-            'type' => 'intOrNull'
-        },
-        'u2fUserCanRemoveKey' => {
-            'default' => 1,
-            'type'    => 'bool'
-        },
         'upgradeSession' => {
             'default' => 1,
             'type'    => 'bool'
@@ -5441,19 +5417,6 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'useSafeJail' => {
             'default' => 1,
             'type'    => 'bool'
-        },
-        'utotp2fActivation' => {
-            'default' => 0,
-            'type'    => 'boolOrExpr'
-        },
-        'utotp2fAuthnLevel' => {
-            'type' => 'intOrNull'
-        },
-        'utotp2fLabel' => {
-            'type' => 'text'
-        },
-        'utotp2fLogo' => {
-            'type' => 'text'
         },
         'vhostAccessToTrace' => {
             'default' => '',

@@ -26,9 +26,7 @@ displayError = (j, status, err) ->
 delete2F = (device, epoch, prefix) ->
 		# Only needed in case pre 2.0.16 templates are used
 		if (!prefix)
-			if device == 'U2F'
-				prefix = 'u'
-			else if device == 'UBK'
+			if device == 'UBK'
 					prefix = 'yubikey'
 			else if device == 'TOTP'
 					prefix = 'totp'

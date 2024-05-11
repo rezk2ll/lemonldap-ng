@@ -2086,7 +2086,7 @@ sub openapi {
                             'type'        => 'string',
                             'description' =>
                               'The type of second factor to create',
-                            'example' => 'TOTP, U2F, UBK (Yubikey), WebAuthn'
+                            'example' => 'TOTP, UBK (Yubikey), WebAuthn'
                         },
                         'name' => {
                             'type'        => 'string',
@@ -2123,7 +2123,7 @@ sub openapi {
                         'type' => {
                             'type'        => 'string',
                             'description' => 'The type of device in use',
-                            'example' => 'TOTP, U2F, UBK (Yubikey), WebAuthn'
+                            'example' => 'TOTP, UBK (Yubikey), WebAuthn'
                         },
                         'name' => {
                             'type'        => 'string',

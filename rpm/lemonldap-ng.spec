@@ -85,7 +85,6 @@ BuildRequires:  perl(Crypt::OpenSSL::Bignum)
 BuildRequires:  perl(Crypt::OpenSSL::RSA)
 BuildRequires:  perl(Crypt::OpenSSL::X509)
 BuildRequires:  perl(Crypt::Rijndael)
-%{?fedora:BuildRequires:  perl(Crypt::U2F::Server::Simple)}
 BuildRequires:  perl(Crypt::URandom)
 BuildRequires:  perl(Cwd)
 BuildRequires:  perl(Data::Dumper)
@@ -200,8 +199,6 @@ BuildRequires:  perl(XML::Simple)
 BuildRequires:  perl(YAML)
 # Tests
 BuildRequires:  perl(Apache::Session::File)
-%{?fedora:BuildRequires:  perl(Authen::U2F::Tester)}
-%{?fedora:BuildRequires:  perl(Crypt::U2F::Server)}
 BuildRequires:  perl(DBD::SQLite)
 BuildRequires:  perl(Email::Sender::Transport)
 BuildRequires:  perl(File::Basename)

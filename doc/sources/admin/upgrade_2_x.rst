@@ -163,7 +163,7 @@ installations.
 Change in second factor UI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-After registering a new second factor of type Webauthn, TOTP, U2F or Generic,
+After registering a new second factor of type Webauthn, TOTP or Generic,
 the user is now brought back to the main 2FA Management screen.
 You can cancel this behavior by calling preventDefault in your JS handler:
 
@@ -1005,7 +1005,7 @@ Stay connected
 
 A small change is required in ``checklogins.tpl`` for `issue 2365 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2365>`__.
 
-Other changes needed in ``2fchoice.tpl``, ``ext2check.tpl``, ``totp2fcheck.tpl``, ``u2fcheck.tpl`` and ``utotp2fcheck.tpl`` for `issue 2366 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2366>`__.
+Other changes needed in ``2fchoice.tpl``, ``ext2check.tpl`` and ``totp2fcheck.tpl`` for `issue 2366 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2366>`__.
 
 Mails
 ^^^^^

@@ -158,17 +158,17 @@ The following rule is valid:
 Combine second factor
 ~~~~~~~~~~~~~~~~~~~~~
 
-Imagine you want to authenticate users either by SSL or LDAP+U2F, you
+Imagine you want to authenticate users either by SSL or LDAP+Webauthn, you
 can't directly write this rule: this is done in 2 steps:
 
 -  use this combination rule: ``[SSL,LDAP] or [LDAP]``
--  enable U2F with this rule: ``$_auth eq "LDAP"`` or
-   ``$authenticationLevel < 4`` *(and adapt U2F authentication level)*
+-  enable Webauthn with this rule: ``$_auth eq "LDAP"`` or
+   ``$authenticationLevel < 4`` *(and adapt Webauthn authentication level)*
 
-Now if you want to authenticate users either by LDAP or LDAP+U2F *(to
+Now if you want to authenticate users either by LDAP or LDAP+Webauthn *(to
 have 2 different authentication level)*, 2 possibilities:
 
--  configure 2 portals and overwrite U2F activation in the second
+-  configure 2 portals and overwrite Webauthn activation in the second
 -  Modify login template to propose the choice *(add a "submit" button
    that points to the second portal)*
 

@@ -86,7 +86,6 @@
 "PE80":"Este endereço já é usado",
 "PE81":"Tentativa de autenticação inválida",
 "PE82":"Tempo limite de autenticação excedido",
-"PE83":"A verificação U2F falhou. Tente novamente ou entre em contato com seu administrador",
 "PE84":"Você não está autorizado a acessar este host",
 "PE85":"O site remoto pede uma sessão mais nova (e o plugin UpgradeSession não está carregado). Saia e tente novamente",
 "PE86":"Sua conta está bloqueada. Você tem que esperar",
