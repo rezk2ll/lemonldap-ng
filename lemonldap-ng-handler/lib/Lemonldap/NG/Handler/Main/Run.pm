@@ -188,6 +188,7 @@ sub run {
             }
         }
         $class->set_custom( $req, $custom ) if $custom;
+        $req->userData($session);
 
         # AUTHORIZATION
         return ( $class->forbidden( $req, $session ), $session )

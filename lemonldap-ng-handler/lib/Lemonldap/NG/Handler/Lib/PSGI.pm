@@ -138,7 +138,6 @@ sub _authAndTrace {
     my ( $res, $session ) = $type->run( $req, $self->{rule} );
     my $portal = eval { $type->tsv->{portal}->($req) };
     $self->logger->warn($@)  if $@;
-    $req->userData($session) if ($session);
 
     if ( $res < 300 ) {
         if ($noCall) {
