@@ -7,8 +7,9 @@ sub new {
 }
 
 sub publish {}
-sub subscribe {}
-sub checkNextMessage {}
+*subscribe = \&publish;
+*checkNextMessage = \&publish;
+
 sub getNextMessage {
     die __PACKAGE__ . ' is not a real message broker';
 }

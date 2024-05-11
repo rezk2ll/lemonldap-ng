@@ -164,6 +164,11 @@ sub reload {
 #      - outputPostData
 # - aliasInit():
 #      - vhostAlias
+# - oauth2Init():
+#      - oauth2Options
+# - msgBrokerInit():
+#      - msgBrokerWriter
+#      - msgBrokerReader
 #
 # The *Init() methods can be run in any order,
 # but jailInit must be run first because $tsv->{jail}
@@ -178,7 +183,8 @@ sub configReload {
 
     foreach my $sub (
         qw( defaultValuesInit jailInit portalInit locationRulesInit
-        sessionStorageInit headersInit postUrlInit aliasInit oauth2Init )
+        sessionStorageInit headersInit postUrlInit aliasInit
+        oauth2Init msgBrokerInit )
       )
     {
         $class->logger->debug("Process $$ calls $sub");
@@ -614,6 +620,20 @@ sub oauth2Init {
         }
     }
     return 1;
+}
+
+sub msgBrokerInit {
+    my ( $class, $conf ) = @_;
+
+    my $brokerClass = $conf->{messageBroker} || '::Null';
+    $brokerClass =~ s/^::/Lemonldap::NG::Common::MessageBroker::/;
+    eval "require $brokerClass";
+    die $@ if $@;
+    $class->tsv->{msgBrokerReader} =
+      $brokerClass->new( $conf->{messageBrokerOptions} // {} );
+    $class->tsv->{msgBrokerReader}->subscribe('llng_events');
+    $class->tsv->{msgBrokerWriter} =
+      $brokerClass->new( $conf->{messageBrokerOptions} // {} );
 }
 
 sub substitute {
