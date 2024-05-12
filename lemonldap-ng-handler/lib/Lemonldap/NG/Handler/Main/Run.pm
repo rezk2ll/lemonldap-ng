@@ -97,7 +97,7 @@ sub checkType {
         if ( my $msg = $class->tsv->{msgBrokerReader}->checkNextMessage('llng_events') ) {
             $class->logger->error( 'Malformed message: ' . JSON::to_json($msg) )
               unless $msg->{action} and my $sub = msgActions->{ $msg->{action} };
-            $sub->($msg, $req);
+            $sub->($class, $msg, $req);
         }
         $class->lastCheckMsg($now);
     }

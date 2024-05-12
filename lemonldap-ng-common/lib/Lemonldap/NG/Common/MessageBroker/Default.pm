@@ -33,9 +33,11 @@ sub checkNextMessage {
     if ( $now >= $lastCheck + $self->{checkTime} ) {
         $self->publish( 'llng_events', { action => 'checkConf' } );
     }
-    return shift @{ $self->{$channel} }
-      if ref( $self->{$channel} )
-      and @{ $self->{$channel} };
+    if ( ref( $self->{channels}->{$channel} )
+        and @{ $self->{channels}->{$channel} } )
+    {
+        return shift @{ $self->{channels}->{$channel} };
+    }
 }
 
 sub getNextMessage {

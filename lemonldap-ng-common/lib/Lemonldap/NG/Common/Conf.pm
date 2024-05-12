@@ -149,6 +149,12 @@ sub saveConf {
         $self->compactConf($conf);
         eval { Lemonldap::NG::Handler::Main->reload() };
     }
+    if (    Lemonldap::NG::Handler::Main->tsv
+        and Lemonldap::NG::Handler::Main->tsv->{msgBrokerWriter} )
+    {
+        Lemonldap::NG::Handler::Main->tsv->{msgBrokerWriter}
+          ->publish( 'llng_events', { action => 'checkConf' } );
+    }
 
     $self->unlock();
     return $tmp;
