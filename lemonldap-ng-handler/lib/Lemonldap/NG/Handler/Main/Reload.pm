@@ -93,6 +93,7 @@ sub checkConf {
         }
     }
     $class->checkTime( $conf->{checkTime} ) if $conf->{checkTime};
+    $class->checkMsg( $conf->{checkMsg} )   if $conf->{checkMsg};
     $class->lastCheck( time() );
     $class->logger->debug("$class: configuration is up to date");
     return 1;
@@ -629,11 +630,9 @@ sub msgBrokerInit {
     $brokerClass =~ s/^::/Lemonldap::NG::Common::MessageBroker::/;
     eval "require $brokerClass";
     die $@ if $@;
-    $class->tsv->{msgBrokerReader} =
-      $brokerClass->new($conf);
+    $class->tsv->{msgBrokerReader} = $brokerClass->new($conf);
     $class->tsv->{msgBrokerReader}->subscribe('llng_events');
-    $class->tsv->{msgBrokerWriter} =
-      $brokerClass->new($conf);
+    $class->tsv->{msgBrokerWriter} = $brokerClass->new($conf);
 }
 
 sub substitute {

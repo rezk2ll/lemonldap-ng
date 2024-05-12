@@ -316,6 +316,13 @@ sub attributes {
             default => 600,
             flags   => 'hp',
         },
+        checkMsg => {
+            type          => 'int',
+            documentation =>
+              'Timeout to check new evant',
+            default => 5,
+            flags   => 'hp',
+        },
         defaultNewKeySize => {
             type          => 'int',
             documentation => 'Default size for new RSA key helper',

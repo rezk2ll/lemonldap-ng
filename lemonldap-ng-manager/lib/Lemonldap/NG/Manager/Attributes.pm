@@ -962,6 +962,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 'https://api.pwnedpasswords.com/range/',
             'type'    => 'url'
         },
+        'checkMsg' => {
+            'default' => 5,
+            'type'    => 'int'
+        },
         'checkState' => {
             'default' => 0,
             'type'    => 'bool'

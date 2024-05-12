@@ -33,6 +33,7 @@ sub init($$) {
         { %{ $class->confAcc->getLocalConf('handler') }, %{$args} } );
 
     $class->checkTime( $class->localConfig->{checkTime} || $class->checkTime );
+    $class->checkMsg( $class->localConfig->{checkMsg}   || $class->checkMsg );
 
     # Few actions that must be done at server startup:
     # * set log level for Lemonldap::NG logs

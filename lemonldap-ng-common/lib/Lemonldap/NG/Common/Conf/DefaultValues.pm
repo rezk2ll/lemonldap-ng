@@ -40,6 +40,7 @@ sub defaultValues {
         'checkDevOpsDownload'                 => 1,
         'checkHIBPRequired'                   => 1,
         'checkHIBPURL' => 'https://api.pwnedpasswords.com/range/',
+        'checkMsg'     => 5,
         'checkTime'    => 600,
         'checkUserDisplayComputedSession'   => 1,
         'checkUserDisplayEmptyHeaders'      => 0,
