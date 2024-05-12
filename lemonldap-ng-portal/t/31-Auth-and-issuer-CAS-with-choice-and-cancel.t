@@ -15,9 +15,6 @@ my $maintests = 12;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 
-eval { require XML::Simple };
-plan skip_all => "Missing dependencies: $@" if ($@);
-
 # Redefine LWP methods for tests
 LWP::Protocol::PSGI->register(
     sub {
