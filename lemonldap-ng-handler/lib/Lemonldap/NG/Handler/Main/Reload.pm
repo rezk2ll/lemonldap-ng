@@ -625,15 +625,15 @@ sub oauth2Init {
 sub msgBrokerInit {
     my ( $class, $conf ) = @_;
 
-    my $brokerClass = $conf->{messageBroker} || '::Null';
+    my $brokerClass = $conf->{messageBroker} || '::Default';
     $brokerClass =~ s/^::/Lemonldap::NG::Common::MessageBroker::/;
     eval "require $brokerClass";
     die $@ if $@;
     $class->tsv->{msgBrokerReader} =
-      $brokerClass->new( $conf->{messageBrokerOptions} // {} );
+      $brokerClass->new($conf);
     $class->tsv->{msgBrokerReader}->subscribe('llng_events');
     $class->tsv->{msgBrokerWriter} =
-      $brokerClass->new( $conf->{messageBrokerOptions} // {} );
+      $brokerClass->new($conf);
 }
 
 sub substitute {

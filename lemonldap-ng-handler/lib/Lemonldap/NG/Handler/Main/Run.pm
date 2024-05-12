@@ -12,6 +12,7 @@ use MIME::Base64;
 use URI;
 use URI::Escape;
 use Lemonldap::NG::Common::Session;
+use Lemonldap::NG::Handler::Main::MsgActions;
 
 # Methods that must be overloaded
 
@@ -80,15 +81,25 @@ sub getStatus {
 
 # Method that must be called by base packages (Handler::ApacheMP2,...) to get
 # type of handler to call (Main, AuthBasic,...)
+
 sub checkType {
     my ( $class, $req ) = @_;
 
-    if ( time() - $class->lastCheck > $class->checkTime ) {
-        unless ( $class->checkConf ) {
-            $class->logger->error("$class: No configuration found");
-            $req->data->{noTry} = 1;
+    # Always launch "checkConf" task if never started
+    msgActions->{checkConf}->($class, {}, $req) unless $class->tsv and %{$class->tsv};
+
+    my $now = time;
+    if ( $now - $class->lastCheckMsg > $class->checkMsg ) {
+        unless ( $class->tsv->{msgBrokerReader} ) {
+            $class->logger->error('Not initialized');
             return 'Fail';
         }
+        if ( my $msg = $class->tsv->{msgBrokerReader}->checkNextMessage('llng_events') ) {
+            $class->logger->error( 'Malformed message: ' . JSON::to_json($msg) )
+              unless $msg->{action} and my $sub = msgActions->{ $msg->{action} };
+            $sub->($msg, $req);
+        }
+        $class->lastCheckMsg($now);
     }
     my $vhost = $class->resolveAlias($req);
     return ( defined $class->tsv->{type}->{$vhost} )
