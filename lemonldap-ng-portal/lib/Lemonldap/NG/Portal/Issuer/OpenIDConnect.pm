@@ -1826,7 +1826,8 @@ sub _handleAuthorizationCodeGrant {
 
         $self->logger->debug("Generated offline refresh token: $refresh_token");
 
-        $sid = $self->getSidFromSession( $rp, $refreshTokenSession );
+        $sid = $self->getSidFromSession( $rp,
+            { _session_id => $refreshTokenSession->id } );
     }
 
     # For online access, if configured
