@@ -1,7 +1,7 @@
 package Lemonldap::NG::Handler::ApacheMP2::Request;
 
 use strict;
-use base 'Plack::Request';
+use base 'Lemonldap::NG::Common::PSGI::Request';
 use Plack::Util;
 use URI;
 use URI::Escape;
@@ -61,6 +61,7 @@ sub new {
     $env->{PATH_INFO} = uri_unescape( $uri->path );
 
     my $self = Plack::Request->new($env);
+    $self->{data} = {};
     bless $self, $class;
     return $self;
 }
