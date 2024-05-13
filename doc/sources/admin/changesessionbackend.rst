@@ -14,7 +14,7 @@ available in LemonLDAP::NG utilities directory (``convertSessions``).
    hashed storage. Use the `convertToHashSessionStorage` to change from
    unhashed storage into hashed storage.
 
-   Note also that this operation isn't reversible.
+   Note also that this operation is not reversible.
 
 How it works
 ------------
