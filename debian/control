@@ -20,7 +20,6 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libcrypt-openssl-x509-perl <!nocheck>,
                      libcrypt-urandom-perl <!nocheck>,
                      libcrypt-rijndael-perl <!nocheck>,
-                     libcrypt-u2f-server-perl <!nocheck>,
                      libdatetime-format-rfc3339-perl <!nocheck>,
                      libdbd-sqlite3-perl <!nocheck>,
                      libdbi-perl <!nocheck>,
@@ -326,7 +325,6 @@ Recommends: fonts-urw-base35 | gsfonts,
 Suggests: crowdsec,
           gpg,
           libauthen-radius-perl,
-          libcrypt-u2f-server-perl,
           libdbi-perl,
           libgeoip2-perl,
           libglib-perl,
@@ -357,4 +355,4 @@ Description: Lemonldap::NG authentication portal part
  .
  You may have to install some suggested packages depending on plugins you
  enabled. For example, libgd-securityimage-perl and fonts-urw-base35 are needed
- if you want to use Captcha, libcrypt-u2f-server-perl for U2F features,...
+ if you want to use Captcha,...

@@ -8,7 +8,7 @@ It is a method to confirm a user's claimed identity by using a
 combination of two different factors between:
 
 #. something they know *(login / password, …)*
-#. something they have *(U2F Key, smartphone, …)*
+#. something they have *(Webauthn Key, smartphone, …)*
 #. something they are *(biometrics like fingerprints, ...)*
 
 Since 2.0, LL::NG provides some second factor plugins that can be used for
@@ -20,8 +20,6 @@ Second factors that can be registered by the user:
 -  :doc:`TOTP<totp2f>` *(To use with* `FreeOTP <https://freeotp.github.io/>`__\ *,*\ `Google-Authenticator <https://en.wikipedia.org/wiki/Google_Authenticator>`__\ *,…)*
 -  :doc:`WebAuthn<webauthn2f>` *(Web Authentication API)*
 -  :doc:`Yubico OTP<yubikey2f>` *(Legacy OTP method from Yubico)*
--  :doc:`U2F tokens<u2f>` |deprecated|
--  :doc:`TOTP-or-U2F<utotp2f>` *(Enable both TOTP and U2F)* |deprecated|
 
 Second factors that rely on external systems:
 
@@ -111,7 +109,7 @@ SF name(s) or number of removed SF can be displayed in message BODY by using
 Providing tokens from an external source
 ----------------------------------------
 
-If you do not want to use self-registration features for U2F, TOTP and so
+If you do not want to use self-registration features for Webauthn, TOTP and so
 on, you can set devices by yourself *(in your LDAP server for example)*
 and map it to ``_2fDevices`` attribute. ``_2fDevices`` is a JSON array
 that contains device descriptions :
@@ -119,13 +117,6 @@ that contains device descriptions :
 .. code::
 
    [ {"type" : "TOTP", "name" : "MyTOTP", …}, {<other_device>}, …]
-
-U2F Device
-~~~~~~~~~~
-
-.. code-block:: json
-
-   {"name" : "MyU2FKey" , "type" : "U2F" , "_userKey" : "########" , "_keyHandle":"########" , "epoch":"1524078936"}
 
 TOTP Device
 ~~~~~~~~~~~
@@ -153,7 +144,7 @@ module must be a Perl class named
 .. code-block:: ini
 
    [portal]
-   available2F = U2F,TOTP,<custom_name>
+   available2F = TOTP,<custom_name>
 
 To enable manager Second Factor Administration Module, set
 ``enabledModules`` key in your ``lemonldap-ng.ini`` file :
