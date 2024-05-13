@@ -1385,7 +1385,7 @@ sub token {
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect TOKEN URL");
 
-    my $rp = $self->checkEndPointAuthenticationCredentials($req);
+    my ($rp) = $self->checkEndPointAuthenticationCredentials($req);
     return $self->invalidClientResponse($req) unless ($rp);
 
     my $grant_type = $req->param('grant_type') || '';
@@ -2205,12 +2205,13 @@ sub introspection {
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect INTROSPECTION URL");
 
-    my $rp = $self->checkEndPointAuthenticationCredentials($req);
+    my ( $rp, $authMethod ) =
+      $self->checkEndPointAuthenticationCredentials($req);
     return $self->invalidClientResponse($req) unless ($rp);
 
-    if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsPublic} ) {
+    if ( !$authMethod or $authMethod eq 'none' ) {
         $self->logger->error(
-            "Public clients are not allowed to access the introspection endpoint"
+"Unauthenticated clients are not allowed to access the introspection endpoint"
         );
         return $self->sendOIDCError( $req, 'unauthorized_client', 401 );
     }
