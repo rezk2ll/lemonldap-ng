@@ -15,6 +15,25 @@ Known regressions in the latest released version
 
 No known issues.
 
+2.20.0
+------
+
+U2F is no more supported
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Current browser no more support U2F specification which has been replaced by
+**Webauthn**. Starting from version 2.20.0, LLNG no more support U2G also.
+
+You can easily replace **U2F** by **Webauthn**. LNG provide also migration
+tools:
+
+::
+
+   lemonldap-ng-sessions secondfactors migrateu2f --all
+   lemonldap-ng-sessions secondfactors delType --all U2F
+
+See `lemonldap-ng-sessions doc <https://lemonldap-ng.org/documentation/latest/cli_examples.html>`__
+
 2.19.0
 ------
 
