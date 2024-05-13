@@ -546,6 +546,10 @@ install -D -m 0644 %{modulename}.pp.bz2 \
     %{buildroot}%{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
 %endif
 
+# Fix man and perl modules permissions
+%{_fixperms} %{buildroot}%{perl_vendorlib}/ %{buildroot}%{_mandir}/
+
+
 %check
 sed -i 's:^dirName.*:dirName = %{buildroot}%{lm_vardir}/conf:' \
     %{buildroot}%{lm_storagefile}
