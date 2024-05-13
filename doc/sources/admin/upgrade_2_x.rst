@@ -15,6 +15,25 @@ Known regressions in the latest released version
 
 No known issues.
 
+2.20.0
+------
+
+U2F is no more supported
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Current browser no more support U2F specification which has been replaced by
+**Webauthn**. Starting from version 2.20.0, LLNG no more support U2G also.
+
+You can easily replace **U2F** by **Webauthn**. LNG provide also migration
+tools:
+
+::
+
+   lemonldap-ng-sessions secondfactors migrateu2f --all
+   lemonldap-ng-sessions secondfactors delType --all U2F
+
+See `lemonldap-ng-sessions doc <https://lemonldap-ng.org/documentation/latest/cli_examples.html>`__
+
 2.19.0
 ------
 
@@ -163,7 +182,7 @@ installations.
 Change in second factor UI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-After registering a new second factor of type Webauthn, TOTP, U2F or Generic,
+After registering a new second factor of type Webauthn, TOTP or Generic,
 the user is now brought back to the main 2FA Management screen.
 You can cancel this behavior by calling preventDefault in your JS handler:
 
@@ -794,7 +813,7 @@ Changes impacting plugin developpers
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some ``autocomplete`` attributes have been added to improve accessibility in the following files: ``checkdevops.tpl``, ``checkuser.tpl``, ``register.tpl``, ``ext2fcheck.tpl``, ``totp2fcheck.tpl``, ``utotp2fcheck.tpl``.
+Some ``autocomplete`` attributes have been added to improve accessibility in the following files: ``checkdevops.tpl``, ``checkuser.tpl``, ``register.tpl``, ``ext2fcheck.tpl``, ``totp2fcheck.tpl``.
 
 
 2.0.12
@@ -1005,7 +1024,7 @@ Stay connected
 
 A small change is required in ``checklogins.tpl`` for `issue 2365 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2365>`__.
 
-Other changes needed in ``2fchoice.tpl``, ``ext2check.tpl``, ``totp2fcheck.tpl``, ``u2fcheck.tpl`` and ``utotp2fcheck.tpl`` for `issue 2366 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2366>`__.
+Other changes needed in ``2fchoice.tpl``, ``ext2check.tpl`` and ``totp2fcheck.tpl`` for `issue 2366 <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2366>`__.
 
 Mails
 ^^^^^

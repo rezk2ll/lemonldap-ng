@@ -181,7 +181,7 @@ Authentication process main steps are:
 -  **Extract form info**: get login/password, certificate, environment
    variable (depending on authentication module)
 -  **Get user info**: contact user database to collect attributes
--  **Ask for second factor if required**: TOTP, U2F key, etc...
+-  **Ask for second factor if required**: TOTP, Webauthn key, etc...
 -  **Set macros**: compute configured macros
 -  **Set groups**: request user database to find groups
 -  **Set local groups**: compute configured groups

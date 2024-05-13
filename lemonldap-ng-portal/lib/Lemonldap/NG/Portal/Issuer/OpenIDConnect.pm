@@ -2210,7 +2210,7 @@ sub introspection {
 
     if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsPublic} ) {
         $self->logger->error(
-            "Public clients are not allowed to acces the introspection endpoint"
+            "Public clients are not allowed to access the introspection endpoint"
         );
         return $self->sendOIDCError( $req, 'unauthorized_client', 401 );
     }

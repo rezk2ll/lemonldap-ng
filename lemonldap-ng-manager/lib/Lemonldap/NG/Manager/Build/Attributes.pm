@@ -2208,40 +2208,6 @@ sub attributes {
             documentation => 'Password2F device time to live ',
         },
 
-        # U2F
-        u2fActivation => {
-            type          => 'boolOrExpr',
-            default       => 0,
-            documentation => 'U2F activation',
-        },
-        u2fSelfRegistration => {
-            type          => 'boolOrExpr',
-            default       => 0,
-            documentation => 'U2F self registration activation',
-        },
-        u2fAuthnLevel => {
-            type          => 'intOrNull',
-            documentation =>
-              'Authentication level for users authentified by password+U2F'
-        },
-        u2fLabel => {
-            type          => 'text',
-            documentation => 'Portal label for U2F'
-        },
-        u2fLogo => {
-            type          => 'text',
-            documentation => 'Custom logo for U2F',
-        },
-        u2fUserCanRemoveKey => {
-            type          => 'bool',
-            default       => 1,
-            documentation => 'Authorize users to remove existing U2F key',
-        },
-        u2fTTL => {
-            type          => 'intOrNull',
-            documentation => 'U2F device time to live',
-        },
-
         # TOTP second factor
         totp2fActivation => {
             type          => 'boolOrExpr',
@@ -2298,26 +2264,6 @@ sub attributes {
             type          => 'bool',
             default       => 0,
             documentation => 'Encrypt TOTP secrets in database',
-        },
-
-        # UTOTP 2F
-        utotp2fActivation => {
-            type          => 'boolOrExpr',
-            default       => 0,
-            documentation => 'UTOTP activation (mixed U2F/TOTP module)',
-        },
-        utotp2fAuthnLevel => {
-            type          => 'intOrNull',
-            documentation =>
-'Authentication level for users authentified by password+(U2F or TOTP)'
-        },
-        utotp2fLabel => {
-            type          => 'text',
-            documentation => 'Portal label for U2F+TOTP'
-        },
-        utotp2fLogo => {
-            type          => 'text',
-            documentation => 'Custom logo for U2F+TOTP',
         },
 
         # Mail second factor
@@ -3820,13 +3766,13 @@ sub attributes {
         available2F => {
             type    => 'text',
             default => join( ',',
-                qw/UTOTP TOTP U2F REST Mail2F Ext2F WebAuthn Yubikey Radius Password Okta/
+                qw/TOTP REST Mail2F Ext2F WebAuthn Yubikey Radius Password Okta/
             ),
             documentation => 'Available second factor modules',
         },
         available2FSelfRegistration => {
             type    => 'text',
-            default => join( ',', qw/Password TOTP U2F WebAuthn Yubikey/ ),
+            default => join( ',', qw/Password TOTP WebAuthn Yubikey/ ),
             documentation =>
               'Available self-registration modules for second factor',
         },

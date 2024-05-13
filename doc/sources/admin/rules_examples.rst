@@ -90,7 +90,7 @@ attribute you see there can be used in a rule!
    # Since 2.0.10
    has2f()
    has2f('TOTP')
-   has2f('TOTP') or has2f('U2F')
+   has2f('TOTP') or has2f('UBK')
 
    # Before 2.0.10
    $_2fDevices =~ /"type":\s*"TOTP"/s
