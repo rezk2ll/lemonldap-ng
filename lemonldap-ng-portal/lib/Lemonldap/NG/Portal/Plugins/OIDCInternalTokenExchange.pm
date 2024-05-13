@@ -50,6 +50,8 @@ sub validateAudience {
         return 0;
     }
 
+    return 1 if $target->{rp} eq $rp;
+
     my $list = $self->oidc->rpOptions->{ $target->{rp} }
       ->{oidcRPMetaDataOptionsTokenXAuthorizedRP};
     unless ( $list and grep { $_ eq $rp } split /[,;\s]+/, $list ) {

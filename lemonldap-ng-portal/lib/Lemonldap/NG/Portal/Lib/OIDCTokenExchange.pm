@@ -87,6 +87,9 @@ sub tokenExchange {
             $target->{rp} = $res;
         }
     }
+    else {
+        $target->{rp} = $rp;
+    }
 
     unless ( $self->validateAudience( $req, $rp, $target, $types[1] ) ) {
         $self->logger->debug( ref($self) . " refused to validate audience" );
