@@ -15,8 +15,7 @@ sub validateSrc {
 
     my $accessTokenSession = $self->oidc->getAccessToken($subjectToken);
     unless ($accessTokenSession) {
-        $self->userLogger->error(
-            "Unable to validate subject_token $subjectToken");
+        $self->logger->debug("Unable to validate subject_token $subjectToken");
         return 0;
     }
 
@@ -54,7 +53,7 @@ sub validateDst {
     my $list = $self->oidc->rpOptions->{ $target->{rp} }
       ->{oidcRPMetaDataOptionsTokenXAuthorizedRP};
     unless ( $list and grep { $_ eq $rp } split /[,;\s]+/, $list ) {
-        $self->userLogger->error(
+        $self->logger->debug(
             "Token exchange for an unauthorized RP ($rp => $target->{rp})");
         return 0;
     }
