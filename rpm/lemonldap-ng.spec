@@ -648,7 +648,7 @@ fi
 %doc for_etc_hosts
 %license COPYING LICENSE
 %dir %{lm_confdir}
-%config(noreplace) %attr(-,root,%{lm_apachegroup}) %{lm_storagefile}
+%config(noreplace) %attr(640,root,%{lm_apachegroup}) %{lm_storagefile}
 %{_mandir}/man1/convertConfig*
 %{_mandir}/man1/convertSessions*
 %{_mandir}/man1/convertToHashSessionStorage*
