@@ -1791,7 +1791,7 @@ sub checkEndPointAuthenticationCredentials {
             }
         }
     }
-    return $rp;
+    return ( $rp, $method );
 }
 
 # Get Client ID and Client Secret
