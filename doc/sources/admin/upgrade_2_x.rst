@@ -51,10 +51,11 @@ For EL8 and EL9, you must update the GPG key:
 
 
 Like Debian, jobs are now managed through systemd timers:
-```
-systemd edit lemonldap-ng-portal.timer
-systemd edit lemonldap-ng-handler.timer
-```
+
+::
+
+    systemctl edit lemonldap-ng-portal.timer
+    systemctl edit lemonldap-ng-handler.timer
 
 Portal templates changes
 ~~~~~~~~~~~~~~~~~~~~~~~~
