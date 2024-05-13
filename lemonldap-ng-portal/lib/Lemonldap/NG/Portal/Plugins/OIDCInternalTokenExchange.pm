@@ -5,7 +5,7 @@ use Mouse;
 
 extends 'Lemonldap::NG::Portal::Lib::OIDCTokenExchange';
 
-sub validateSrc {
+sub getUid {
     my ( $self, $req, $rp, $subjectToken, $subjectTokenType ) = @_;
 
     if ( $subjectTokenType and $subjectTokenType ne 'access_token' ) {
@@ -31,7 +31,7 @@ sub validateSrc {
     return $session->data->{ $self->conf->{whatToTrace} };
 }
 
-sub validateDst {
+sub validateAudience {
     my ( $self, $req, $rp, $target, $requestedTokenType ) = @_;
 
     if ( $requestedTokenType and $requestedTokenType ne 'access_token' ) {

@@ -68,8 +68,8 @@ sub tokenExchange {
         push @types, $val;
     }
 
-    # 1.1. Use subclass validate() to get user ID
-    my $uid = $self->validateSrc( $req, $rp, $subjectToken, $types[0] );
+    # 1.1. Use subclass getUid() to get user ID
+    my $uid = $self->getUid( $req, $rp, $subjectToken, $types[0] );
     return PE_OK unless $uid;
 
     # 2. Check for audience and authorization
@@ -88,7 +88,7 @@ sub tokenExchange {
         }
     }
 
-    unless ( $self->validateDst( $req, $rp, $target, $types[1] ) ) {
+    unless ( $self->validateAudience( $req, $rp, $target, $types[1] ) ) {
         $self->logger->debug( ref($self) . " refused to validate audience" );
         return PE_OK;
     }
@@ -168,7 +168,7 @@ Connect token exchange systems.
   use Mouse
   extends 'Lemonldap::NG::Portal::Lib::OIDCTokenExchange';
   
-  sub validateSrc {
+  sub getUid {
     my ( $self, $req, $rp, $subjectToken, $subjectTokenType ) = @_;
     #
     # verify subjectToken
@@ -176,7 +176,7 @@ Connect token exchange systems.
     return 1;
   }
   
-  sub validateDst {
+  sub validateAudience {
     my ( $self, $req, $rp, $target, $requestedTokenType ) = @_;
     #
     # verify and update if needed:
@@ -199,9 +199,9 @@ for example using L<Enabling custom plugin|https://lemonldap-ng.org/documentatio
 
 =head2 Methods to write
 
-=head3 validateSrc
+=head3 getUid
 
-C<validateSrc()> is a boolean method to validate the token given in the request.
+C<getUid()> is a boolean method to validate the token given in the request.
 
 If a non-null value is returned, then the request is accepted. Else Lemonldap::NG
 will try the next plugin.
@@ -237,9 +237,9 @@ one of:
 
 =back
 
-=head3 validateDst
+=head3 validateAudience
 
-The goal of C<validateDst()> is to validate the requested B<audience>.
+The goal of C<validateAudience()> is to validate the requested B<audience>.
 
 If a non-null value is returned, then the request is accepted and Lemonldap::NG
 will build new C<access_token>, C<id_token> and C<refresh_token> using the
@@ -267,7 +267,7 @@ undefined.
 
 =back
 
-This value can be modified inside C<validateDst> and will be used to generate
+This value can be modified inside C<validateAudience> and will be used to generate
 the new C<access_token>.
 
 =item * B<$requestedTokenType>, the type of the requested token. This value is always
