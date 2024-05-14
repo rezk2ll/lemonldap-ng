@@ -26,7 +26,7 @@ sub checkIP {
     @IPs = grep {
         if ( m#^\d[\d.]+/\d{1,2}$# && Net::CIDR::cidrvalidate($_) ) {
             push @networks, $_;
-            $self->logger->debug("Found netblock: $1");
+            $self->logger->debug("Found netblock: $_");
             0;
         }
         elsif ( Net::CIDR::cidrvalidate($_) ) {
