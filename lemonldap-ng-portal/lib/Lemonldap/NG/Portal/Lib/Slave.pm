@@ -26,7 +26,7 @@ sub checkIP {
     @IPs = grep {
         if ( m#^(\d[\d.]+/\d{1,2})$# && Net::CIDR::cidrvalidate($_) ) {
             push @networks, $1;
-            $self->logger->debug("Found network subnet: $1");
+            $self->logger->debug("Found netblock: $1");
             0;
         }
         elsif ( Net::CIDR::cidrvalidate($_) ) {
@@ -55,7 +55,7 @@ sub checkHeader {
     my ( $self, $req ) = @_;
     return 1
       unless ( $self->conf->{slaveHeaderName}
-        and $self->conf->{slaveHeaderContent} );
+        && $self->conf->{slaveHeaderContent} );
 
     my $slave_header = 'HTTP_' . uc( $self->conf->{slaveHeaderName} );
     $slave_header =~ s/\-/_/g;
@@ -67,7 +67,7 @@ sub checkHeader {
 
     return 1
       if (  $headerContent
-        and $self->conf->{slaveHeaderContent} =~ /\b$headerContent\b/ );
+        && $self->conf->{slaveHeaderContent} =~ /\b$headerContent\b/ );
 
     $self->userLogger->warn('Matching header not found for Slave module ');
     return 0;
