@@ -14,8 +14,7 @@ LL::NG Slave backend relies on HTTP headers to retrieve user login
 and/or attributes.
 
 -  Authentication: will check user login in a header and create session
-   without prompting any credentials (but will register client IP and
-   creation date)
+   without prompting any credentials (but will register client IP and creation date)
 -  Users: collect data transferred in HTTP headers by the "master".
 
 It allows one to put LL::NG::portal behind another web SSO, or behind a
@@ -33,8 +32,8 @@ Then, go in ``Slave parameters``:
 -  **Header for user login**: header containing user main login
 -  **Master's IP address**: IP addresses of servers which are accredited to authenticate user.
    This is a security point to prevent someone to create a session by sending custom headers.
-   You can set regular expressions (PCRE) or several IP addresses, spaces or comma separated.
-   By example: ``127.0.0.2, 192.168.1.1 /^10\\.20\\.30\\./``. A blank value disables this checking.
+   You can set netblocks in CIDR notation or list IP addresses, space or comma separated.
+   By example: ``127.0.0.2, 192.168.1.1 10.20.30.0/24``. A blank value disables this checking.
 -  **Control header name**: header containing value to check.
    A blank value disables this checking.
 -  **Control header content**: value to check. A blank value disables this checking.

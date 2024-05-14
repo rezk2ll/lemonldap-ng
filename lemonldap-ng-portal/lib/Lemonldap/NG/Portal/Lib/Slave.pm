@@ -7,9 +7,9 @@ package Lemonldap::NG::Portal::Lib::Slave;
 
 use strict;
 use Mouse;
-use Regexp::Common;
+use Net::CIDR;
 
-our $VERSION = '2.20';
+our $VERSION = '2.20.0';
 
 # RUNNING METHODS
 
@@ -17,19 +17,19 @@ our $VERSION = '2.20';
 # @return true if remote IP is accredited in LL::NG conf
 sub checkIP {
     my ( $self, $req ) = @_;
+    my ( @networks, @IPs );
     my $remoteIP = $req->address;
-    my ( @regexpIP, @IPs );
 
     return 1
       if !$self->conf->{slaveMasterIP};
 
     @IPs = grep {
-        if (m#^/(.+)?/$#) {
-            push @regexpIP, qr/$1/;
-            $self->logger->debug("Found IP regexp: $1");
+        if ( m#^(\d[\d.]+/\d{1,2})$# && Net::CIDR::cidrvalidate($_) ) {
+            push @networks, $1;
+            $self->logger->debug("Found network subnet: $1");
             0;
         }
-        elsif ( m/$RE{net}{IPv4}/ || m/$RE{net}{IPv6}/ ) {
+        elsif ( Net::CIDR::cidrvalidate($_) ) {
             $self->logger->debug("Found IP address: $_");
             1;
         }
@@ -43,10 +43,7 @@ sub checkIP {
         return 1
           if $remoteIP eq $_;
     }
-    foreach (@regexpIP) {
-        return 1
-          if $remoteIP =~ $_;
-    }
+    return 1 if Net::CIDR::cidrlookup( $remoteIP, @networks );
 
     $self->userLogger->warn('Client IP not accredited for Slave module');
     return 0;
