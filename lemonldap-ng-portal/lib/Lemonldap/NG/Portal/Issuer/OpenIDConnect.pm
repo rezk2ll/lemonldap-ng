@@ -24,7 +24,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use String::Random qw/random_string/;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.20.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Issuer
@@ -1838,6 +1838,7 @@ sub _handleAuthorizationCodeGrant {
                 redirect_uri    => $codeSession->data->{redirect_uri},
                 scope           => $scope,
                 client_id       => $client_id,
+                _session_uid    => $apacheSession->data->{_user},
                 user_session_id => $codeSession->data->{user_session_id},
                 grant_type      => "authorizationcode",
             },
@@ -1922,9 +1923,9 @@ sub _handleAuthorizationCodeGrant {
 }
 
 sub _handleRefreshTokenGrant {
-    my ( $self, $req, $rp ) = @_;
-    my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
-    my $refresh_token = $req->param('refresh_token');
+    my ( $self, $req, $rp, $refresh_token, $client_id ) = @_;
+    $client_id ||= $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
+    $refresh_token ||= $req->param('refresh_token');
 
     unless ($refresh_token) {
         $self->logger->error("Missing refresh_token parameter");

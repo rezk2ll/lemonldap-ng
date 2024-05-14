@@ -10,7 +10,7 @@ use Carp;
 with 'Lemonldap::NG::Portal::Lib::2fDevices';
 use Lemonldap::NG::Common::Util qw/display2F/;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.20.0';
 
 has trust_anchors => (
     is      => 'rw',

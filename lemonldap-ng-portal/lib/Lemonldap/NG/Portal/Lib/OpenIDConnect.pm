@@ -28,7 +28,7 @@ use URI;
 use Lemonldap::NG::Portal::Main::Constants
   qw(PE_OK PE_REDIRECT PE_ERROR portalConsts);
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.20.0';
 
 # PROPERTIES
 

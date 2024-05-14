@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.20.0';
 use strict;
 use Regexp::Common qw/URI/;
 
@@ -5188,6 +5188,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'bool',
             documentation =>
               '/userinfo endpoint requires authn using Bearer token',
+        },
+        oidcRPMetaDataOptionsTokenXAuthorizedRP => {
+            type          => 'text',
+            documentation =>
+              'List of RP authorized to query for an access_token of this RP',
         },
     };
 }

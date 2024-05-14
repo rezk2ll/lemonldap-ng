@@ -776,6 +776,7 @@
 "oidcRPMetaDataOptionsRule":"Règle d'accès",
 "oidcRPMetaDataOptionsScopes":"Scope",
 "oidcRPMetaDataOptionsTimeouts":"Expirations",
+"oidcRPMetaDataOptionsTokenXAuthorizedRP":"RP autorisés à échanger un access_token",
 "oidcRPMetaDataOptionsUserIDAttr":"Attribut de l'utilisateur",
 "oidcRPMetaDataOptionsUserInfoEncContentEncAlg":"Algorithme de chiffrement du contenu pour le chiffrement des réponses user_info",
 "oidcRPMetaDataOptionsUserInfoEncKeyMgtAlg":"Algorithme d'échange de clef pour le chiffrement des réponses user_info",

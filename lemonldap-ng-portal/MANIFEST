@@ -75,6 +75,7 @@ lib/Lemonldap/NG/Portal/Lib/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Net/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Notifications/JSON.pm
 lib/Lemonldap/NG/Portal/Lib/Notifications/XML.pm
+lib/Lemonldap/NG/Portal/Lib/OIDCTokenExchange.pm
 lib/Lemonldap/NG/Portal/Lib/Okta.pm
 lib/Lemonldap/NG/Portal/Lib/OneTimeToken.pm
 lib/Lemonldap/NG/Portal/Lib/OpenID/Server.pm
@@ -142,6 +143,7 @@ lib/Lemonldap/NG/Portal/Plugins/LocationDetect.pm
 lib/Lemonldap/NG/Portal/Plugins/MailPasswordReset.pm
 lib/Lemonldap/NG/Portal/Plugins/NewLocationWarning.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
+lib/Lemonldap/NG/Portal/Plugins/OIDCInternalTokenExchange.pm
 lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
 lib/Lemonldap/NG/Portal/Plugins/Refresh.pm
 lib/Lemonldap/NG/Portal/Plugins/Register.pm
@@ -800,6 +802,7 @@ t/44-CertificateResetByMail-Demo.t
 t/44-CertificateResetByMail-LDAP.t
 t/50-IssuerGet.t
 t/50-IssuerJitsiJWT.t
+t/51-OIDC-Internal-Token-Exchange.t
 t/56-CheckDevOps-with-Download.t
 t/56-CheckDevOps.t
 t/57-GlobalLogout-with-Confirmation.t

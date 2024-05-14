@@ -5,7 +5,7 @@ use strict;
 use Exporter 'import';
 use base qw(Exporter);
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.20.0';
 
 # CONSTANTS
 
