@@ -20,7 +20,7 @@ my $client = LLNG::Manager::Test->new( {
             slaveUserHeader    => 'My-Test',
             slaveHeaderName    => 'Check-Slave',
             slaveHeaderContent => 'Password',
-            slaveMasterIP      => '127.0.0.10 127.0.0.1 , /^127.1.2/',
+            slaveMasterIP      => '127.0.0.10 127.0.0.1 , /^127\.1\.2\./',
             slaveExportedVars  => {
                 name => 'Name',
             }
