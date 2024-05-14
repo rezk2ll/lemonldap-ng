@@ -42,9 +42,6 @@ LemonLDAP::NG TOTP registration script
       success: function(data) {
         var qr, s, secret;
         if (data.error) {
-          if (data.error.match(/totpExistingKey/)) {
-            $("#divToHide").hide();
-          }
           return setMsg(data.error, 'warning');
         }
         if (!(data.portal && data.user && data.secret)) {

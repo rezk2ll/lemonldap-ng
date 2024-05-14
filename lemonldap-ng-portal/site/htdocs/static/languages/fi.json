@@ -323,7 +323,6 @@
 "submit":"Lähetä",
 "switchContext":"Vaihda kontekstia",
 "totp2f":"OTP-sovellus",
-"totpExistingKey":"TOTP-tunnistusväline on jo rekisteröity, sinun pitää poistaa se ennen uuden TOTP-tunnistusvälineen lisäämistä",
 "totpMissingCode":"Ole hyvä ja anna TOTP-sovelluksesi tarjoama koodi",
 "totpOrTouch":"Jos katsot tätä mobiililaitteessasi, kosketa QR-koodia avataksesi TOTP-sovelluksesi",
 "totpQrCode":"Skannaa tämä QR-koodi TOTP-sovelluksellasi",

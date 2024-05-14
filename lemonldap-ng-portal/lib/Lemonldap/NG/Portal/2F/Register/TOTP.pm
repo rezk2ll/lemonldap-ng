@@ -57,9 +57,6 @@ sub run {
             return $self->p->sendError( $req, 'PE82', 400 );
         }
 
-        # Token is valid, so we have the master key proposed
-        # ($token->{_totp2fSecret})
-
         # Now check TOTP code to verify that user has a valid TOTP app
         my $code = $req->param('code');
         unless ($code) {
@@ -72,7 +69,7 @@ sub run {
           $self->checkNameSfa( $req, $self->type, $req->param('TOTPName') );
         return $self->p->sendError( $req, 'badName', 200 ) unless $TOTPName;
 
-        my ($r, $range) = $self->verifyCode(
+        my ( $r, $range ) = $self->verifyCode(
             $self->conf->{totp2fInterval},
             $self->conf->{totp2fRange},
             $self->conf->{totp2fDigits},
@@ -91,13 +88,6 @@ sub run {
         $self->userLogger->info("Codes match at range $range");
         $self->logger->debug( $self->prefix . '2f: code verified' );
 
-        # Test if a TOTP is already registered
-        my @totp2f =
-          $self->find2fDevicesByType( $req, $req->userData, $self->type );
-        return $self->p->sendError( $req, 'totpExistingKey', 200 )
-          if scalar @totp2f;
-
-        $self->logger->debug( $self->prefix . '2f: no secret found' );
         my $storable_secret =
           $self->get_storable_secret( $token->{_totp2fSecret} );
         unless ($storable_secret) {
@@ -139,16 +129,6 @@ sub run {
     # Get or generate master key
     elsif ( $action eq 'getkey' ) {
         my ( $nk, $secret, $issuer ) = ( 0, '' );
-
-        # Read existing TOTP 2F
-        my @totp2f =
-          $self->find2fDevicesByType( $req, $req->userData, $self->type );
-
-        # Loading TOTP secret
-        $self->logger->debug(
-            $self->prefix . '2f: read existing secret(s)...' );
-        $secret = $_->{_secret} foreach (@totp2f);
-        return $self->p->sendError( $req, 'totpExistingKey', 200 ) if $secret;
 
         $secret = $self->newSecret;
         $self->logger->debug(

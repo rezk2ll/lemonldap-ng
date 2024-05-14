@@ -323,7 +323,6 @@
 "submit":"הגשה",
 "switchContext":"החלפת הקשר",
 "totp2f":"יישומון סיסמה חד־פעמית",
-"totpExistingKey":"כבר יש התקן TOTP רשום, עליך להסיר אותו בטרם הוספת התקן TOTP חדש",
 "totpMissingCode":"יש למלא את הקוד שסופק על ידי יישומון ה־TOTP שלך",
 "totpOrTouch":"If you see this on your mobile, touch the QR code to open your TOTP application",
 "totpQrCode":"יש לסרוק את קוד ה־QR הזה ביישומון ה־TOTP שלך",

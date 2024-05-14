@@ -323,7 +323,6 @@
 "submit":"Gönder",
 "switchContext":"Bağlam değiştir",
 "totp2f":"OTP Uygulaması",
-"totpExistingKey":"Bir TOTP cihazı zaten kaydedildi, yeni bir TOTP cihazı eklemeden önce diğerini kaldırmalısınız",
 "totpMissingCode":"Lütfen TOTP uygulamanız tarafından sağlanan kodu girin",
 "totpOrTouch":"Bunu cep telefonunuzda görürseniz, TOTP uygulamanızı açmak için QR koduna dokunun",
 "totpQrCode":"TOTP uygulamanızda bu QR kodu tarayın",

@@ -74,37 +74,36 @@ sub verify {
     }
 
     @totp2f = $self->find2fDevicesByType( $req, $session, $self->type );
-    my $_2fDevice;
-    foreach (@totp2f) {
-        if ( $_->{_secret} ) {
-            $secret    = $_->{_secret};
-            $_2fDevice = $_;
+
+    foreach my $device (@totp2f) {
+        $self->logger->debug( "Trying TOTP device " . display2F($device) );
+
+        if ( my $secret = $device->{_secret} ) {
+            my ( $r, $range ) = $self->verifyCode(
+                $self->conf->{totp2fInterval},
+                $self->conf->{totp2fRange},
+                $self->conf->{totp2fDigits},
+                $secret, $code
+            );
+            if ( $r == 1 ) {
+                $self->userLogger->info("Codes match at range $range");
+                $self->userLogger->info(
+                    "User $uid authenticated with 2F device: "
+                      . display2F($device) );
+                return PE_OK;
+            }
+        }
+        else {
+            $self->logger->warn( "TOTP device "
+                  . display2F($device)
+                  . " has no secret for user $uid" );
         }
     }
-    unless ($secret) {
-        $self->logger->debug( $self->prefix . '2f: no secret found' );
-        return PE_BADOTP;
-    }
 
-    my ($r, $range) = $self->verifyCode(
-        $self->conf->{totp2fInterval},
-        $self->conf->{totp2fRange},
-        $self->conf->{totp2fDigits},
-        $secret, $code
-    );
-    return PE_ERROR if $r == -1;
-
-    if ($r) {
-        $self->userLogger->info("Codes match at range $range");
-        $self->userLogger->info( "User $uid authenticated with 2F device: "
-              . display2F($_2fDevice) );
-        return PE_OK;
-    }
-    else {
-        $self->userLogger->notice(
-            $self->prefix . '2f: invalid attempt for ' . $uid );
-        return PE_BADOTP;
-    }
+    $self->userLogger->notice( $self->prefix
+          . '2f: code did not match any of the registered TOTP for '
+          . $uid );
+    return PE_BADOTP;
 }
 
 1;

@@ -323,7 +323,6 @@
 "submit":"Absenden",
 "switchContext":"Switch context",
 "totp2f":"OTP App",
-"totpExistingKey":"Ein TOTP-Gerät ist bereits registriert, entfernen Sie es bevor ein neues TOTP-Gerät angelegt werden kann",
 "totpMissingCode":"Gebe den Code aus Ihrer TOTP-Anwendung an",
 "totpOrTouch":"If you see this on your mobile, touch the QR code to open your TOTP application",
 "totpQrCode":"Scanne diesen QR-Code in Ihner TOTP-Anwendung",
