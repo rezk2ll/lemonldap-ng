@@ -24,7 +24,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use String::Random qw/random_string/;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.20.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Issuer

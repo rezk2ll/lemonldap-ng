@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.20.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Plugin

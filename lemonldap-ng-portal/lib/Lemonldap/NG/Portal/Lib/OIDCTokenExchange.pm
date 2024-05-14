@@ -9,6 +9,8 @@ use Mouse;
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
+our $VERSION = '2.20.0';
+
 # INTERFACE
 use constant hook => { oidcGotTokenExchange => 'tokenExchange' };
 

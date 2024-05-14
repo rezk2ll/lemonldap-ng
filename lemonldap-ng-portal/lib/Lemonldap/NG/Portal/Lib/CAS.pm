@@ -9,7 +9,7 @@ use XML::LibXML;
 use Lemonldap::NG::Common::UserAgent;
 use URI;
 
-our $VERSION = '2.0.15';
+our $VERSION = '2.20.0';
 
 # PROPERTIES
 

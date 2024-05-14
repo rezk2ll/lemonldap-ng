@@ -5,6 +5,8 @@ use Mouse;
 
 extends 'Lemonldap::NG::Portal::Lib::OIDCTokenExchange';
 
+our $VERSION = '2.20.0';
+
 sub getUid {
     my ( $self, $req, $rp, $subjectToken, $subjectTokenType ) = @_;
 

@@ -4,7 +4,7 @@ package Lemonldap::NG::Portal::2F::Register::Base;
 use strict;
 use Mouse;
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.20.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
