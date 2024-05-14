@@ -72,7 +72,7 @@ sub tokenExchange {
 
     # 2. Check for audience and authorization
     my $targetClientId = $req->param('audience');
-    my $target         = { audience => $req->param('audience'), };
+    my $target         = { audience => $req->param('audience') // undef, };
     if ( $target->{audience} ) {
         if ( $target->{audience} eq $clientId ) {
             $target->{rp} = $rp;
@@ -125,8 +125,9 @@ sub tokenExchange {
         $rp,
         {
             %{ $req->sessionInfo },
-            scope        => $req->param('scope') || 'openid',
-            client_id    => $target->{audience},
+            scope     => $req->param('scope') || 'openid',
+            client_id => $target->{audience}
+              || $self->oidc->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID},
             _session_uid => $uid,
             grant_type   => $req->param('grant_type'),
         },
