@@ -5189,6 +5189,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation =>
               '/userinfo endpoint requires authn using Bearer token',
         },
+        oidcRPMetaDataOptionsTokenXAuthorizedRP => {
+            type          => 'text',
+            documentation =>
+              'List of RP authorized to query for an access_token of this RP',
+        },
     };
 }
 
