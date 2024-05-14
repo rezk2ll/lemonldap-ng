@@ -24,8 +24,8 @@ sub checkIP {
       if !$self->conf->{slaveMasterIP};
 
     @IPs = grep {
-        if ( m#^(\d[\d.]+/\d{1,2})$# && Net::CIDR::cidrvalidate($_) ) {
-            push @networks, $1;
+        if ( m#^\d[\d.]+/\d{1,2}$# && Net::CIDR::cidrvalidate($_) ) {
+            push @networks, $_;
             $self->logger->debug("Found netblock: $1");
             0;
         }
