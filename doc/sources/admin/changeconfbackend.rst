@@ -25,9 +25,8 @@ Let's go
 
    convertConfig --current=/etc/lemonldap-ng/lemonldap-ng.ini --new=/new/lemonldap-ng.ini
 
--  Install the new lemonldap-ng.ini file at the place of the old file in
-   all LL::NG servers
--  Restart all your Apache servers
+-  Install the new lemonldap-ng.ini file at the place of the old file in all LL::NG servers
+-  Restart all your web servers
 
 .. note::
 

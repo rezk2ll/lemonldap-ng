@@ -1,7 +1,7 @@
 # Main running methods file
 package Lemonldap::NG::Handler::Main::Run;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.20.0';
 
 package Lemonldap::NG::Handler::Main;
 
@@ -188,6 +188,7 @@ sub run {
             }
         }
         $class->set_custom( $req, $custom ) if $custom;
+        $req->userData($session);
 
         # AUTHORIZATION
         return ( $class->forbidden( $req, $session ), $session )

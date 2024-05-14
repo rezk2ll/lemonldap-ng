@@ -8,7 +8,7 @@
 #                  of lemonldap-ng.ini) and underlying handler configuration
 package Lemonldap::NG::Portal::Main::Init;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.20.0';
 
 package Lemonldap::NG::Portal::Main;
 
@@ -568,6 +568,17 @@ sub findEP {
         }
     }
     $self->logger->debug("Plugin $plugin initialized");
+
+    # Second factors
+    if ( $obj->isa("Lemonldap::NG::Portal::Main::SecondFactor") ) {
+        $self->_sfEngine->_enable_2f_module($obj);
+        $self->logger->debug("Loaded $plugin as a 2FA module");
+    }
+
+    if ( $obj->isa("Lemonldap::NG::Portal::2F::Register::Base") ) {
+        $self->_sfEngine->_enable_2f_register_module($obj);
+        $self->logger->debug("Loaded $plugin as a 2F Register module");
+    }
 
     # Rules for menu
     if ( $obj->can('spRules') ) {

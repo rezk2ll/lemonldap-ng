@@ -173,8 +173,6 @@ Second factor (:doc:`documentation<secondfactor>`)                   Authenticat
 :doc:`REST Second Factor<rest2f>` |new|                              ✔              [18]_
 :doc:`Radius Second Factor<radius2f>` |new|  [3]_                    ✔
 :doc:`Password as second factor<password2f>` |new| [4]_              ✔              ✔
-:doc:`TOTP-or-U2F<utotp2f>` |deprecated|                             ✔              ✔
-:doc:`U2F<u2f>` |deprecated|                                         ✔              ✔
 ==================================================================== ============== =================
 
 .. versionadded:: 2.0.6

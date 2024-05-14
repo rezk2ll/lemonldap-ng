@@ -17,14 +17,13 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
 );
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.20.0';
 
 extends 'Lemonldap::NG::Portal::Main::SecondFactor';
 with 'Lemonldap::NG::Portal::Lib::WebAuthn';
 
 # INITIALIZATION
 
-has rule   => ( is => 'rw' );
 has prefix => ( is => 'ro', default => 'webauthn' );
 has logo   => ( is => 'rw', default => 'webauthn.png' );
 

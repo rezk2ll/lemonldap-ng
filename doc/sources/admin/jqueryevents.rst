@@ -28,7 +28,7 @@ mfaAdded
 
 .. versionadded:: 2.0.15
 
-This event is triggered when a TOTP, WebAuthn or U2F device is registered
+This event is triggered when a TOTP or WebAuthn device is registered
 
 Sample code:
 
@@ -53,7 +53,7 @@ mfaDeleted
 
 .. versionadded:: 2.0.15
 
-This event is triggered when a TOTP, WebAuthn or U2F device is removed
+This event is triggered when a TOTP or WebAuthn device is removed
 
 Sample code:
 

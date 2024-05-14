@@ -4,7 +4,7 @@ package Lemonldap::NG::Portal::2F::Register::Base;
 use strict;
 use Mouse;
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.20.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
@@ -20,6 +20,14 @@ has type => (
     is      => 'rw',
     default => sub {
         ( split( '::', ref( $_[0] ) ) )[-1];
+    }
+);
+
+has rule => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        return $_[0]->conf->{ $_[0]->prefix . '2fSelfRegistration' };
     }
 );
 
@@ -74,7 +82,7 @@ sub checkNameSfa {
 
 # Update request with newly registered device
 sub markRegistered {
-    my ($self, $req)  = @_;
+    my ( $self, $req ) = @_;
     $req->data->{_2fRegistered}                     = 1;
     $req->userData->{_2f}                           = $self->prefix;
     $req->userData->{registeredAuthenticationLevel} = $self->authnLevel;
