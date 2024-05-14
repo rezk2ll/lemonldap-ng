@@ -29,11 +29,7 @@ sub checkIP {
             $self->logger->debug("Found IP regexp: $1");
             0;
         }
-        elsif (m/$RE{net}{IPv4}/) {
-            $self->logger->debug("Found IP address: $_");
-            1;
-        }
-        elsif (m/$RE{net}{IPv6}/) {
+        elsif ( m/$RE{net}{IPv4}/ || m/$RE{net}{IPv6}/ ) {
             $self->logger->debug("Found IP address: $_");
             1;
         }
@@ -76,7 +72,7 @@ sub checkHeader {
       if (  $headerContent
         and $self->conf->{slaveHeaderContent} =~ /\b$headerContent\b/ );
 
-    $self->userLogger->warn('Matching header not found for AuthSlave module ');
+    $self->userLogger->warn('Matching header not found for Slave module ');
     return 0;
 }
 
