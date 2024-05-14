@@ -70,10 +70,6 @@ sub tokenExchange {
         push @types, $val;
     }
 
-    # 1.1. Use subclass getUid() to get user ID
-    my $uid = $self->getUid( $req, $rp, $subjectToken, $types[0] );
-    return PE_OK unless $uid;
-
     # 2. Check for audience and authorization
     my $targetClientId = $req->param('audience');
     my $target         = { audience => $req->param('audience'), };
@@ -98,12 +94,12 @@ sub tokenExchange {
         return PE_OK;
     }
 
-    # 2. Create access_token
+    # 3. Use subclass getUid() to get user ID
+    my $uid = $self->getUid( $req, $rp, $subjectToken, $types[0] );
+    return PE_OK unless $uid;
 
-    # 3.2. Else find a corresponding refresh_token and use it
+    # 4. Create refresh_token
 
-    # TODO: get user from refresh_tokens (or access_token) and build and return
-    # an access_token
     my $opts = { $self->oidc->_storeOpts() };
 
     # 3.1. Create a new refresh_token if missing
@@ -139,7 +135,7 @@ sub tokenExchange {
         return PE_OK;
     }
 
-    # 4. Use normal method to create new access_token from refresh_token
+    # 5. Use normal method to create new access_token from refresh_token
     #
     # TODO: remote may want a refresh_token
 
@@ -173,20 +169,20 @@ Connect token exchange systems.
   use Mouse
   extends 'Lemonldap::NG::Portal::Lib::OIDCTokenExchange';
   
-  sub getUid {
-    my ( $self, $req, $rp, $subjectToken, $subjectTokenType ) = @_;
-    #
-    # verify subjectToken
-    #
-    return 1;
-  }
-  
   sub validateAudience {
     my ( $self, $req, $rp, $target, $requestedTokenType ) = @_;
     #
     # verify and update if needed:
     # * $target->{audience}
     # * $target->{rp}
+    #
+    return 1;
+  }
+  
+  sub getUid {
+    my ( $self, $req, $rp, $subjectToken, $subjectTokenType ) = @_;
+    #
+    # verify subjectToken
     #
     return 1;
   }
@@ -203,44 +199,6 @@ plugin by just writing two methods. Of course you need then to load the module
 for example using L<Enabling custom plugin|https://lemonldap-ng.org/documentation/latest/plugincustom.html#enabling-your-plugin>.
 
 =head2 Methods to write
-
-=head3 getUid
-
-C<getUid()> is a boolean method to validate the token given in the request.
-
-If a non-null value is returned, then the request is accepted. Else Lemonldap::NG
-will try the next plugin.
-
-Parameters:
-
-=over
-
-=item * B<$req>, the L<Lemonldap::NG::Portal::Main::Request> object
-
-=item * B<$rp>, the internal LLNG name of the Relying Party which pushed the request
-
-=item * B<$subjectToken>, the token given in the request
-
-=item * B<$subjectTokenType>, the type of the given token. This value is always
-one of:
-
-=over
-
-=item * B<access_token>
-
-=item * B<refresh_token>
-
-=item * B<id_token>
-
-=item * B<saml1>
-
-=item * B<saml2>
-
-=item * I<undef>
-
-=back
-
-=back
 
 =head3 validateAudience
 
@@ -276,6 +234,44 @@ This value can be modified inside C<validateAudience> and will be used to genera
 the new C<access_token>.
 
 =item * B<$requestedTokenType>, the type of the requested token. This value is always
+one of:
+
+=over
+
+=item * B<access_token>
+
+=item * B<refresh_token>
+
+=item * B<id_token>
+
+=item * B<saml1>
+
+=item * B<saml2>
+
+=item * I<undef>
+
+=back
+
+=back
+
+=head3 getUid
+
+C<getUid()> is a boolean method to validate the token given in the request.
+
+If a non-null value is returned, then the request is accepted. Else Lemonldap::NG
+will try the next plugin.
+
+Parameters:
+
+=over
+
+=item * B<$req>, the L<Lemonldap::NG::Portal::Main::Request> object
+
+=item * B<$rp>, the internal LLNG name of the Relying Party which pushed the request
+
+=item * B<$subjectToken>, the token given in the request
+
+=item * B<$subjectTokenType>, the type of the given token. This value is always
 one of:
 
 =over
