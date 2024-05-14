@@ -29,18 +29,16 @@ and choose Slave for authentication or users module.
 
 Then, go in ``Slave parameters``:
 
--  **Authentication level**: authentication level for this module.
--  **Header for user login**: header that contains the user main login
--  **Master's IP address**: the IP addresses of servers which are
-   accredited to authenticate user. This is a security point, to prevent
-   someone to create a session by sending custom headers. You can set
-   one or several IP addresses, spaces separated, or let this
-   parameter empty to disable the checking.
--  **Control header name**: header that contains a value to control. Let
-   this parameter empty to disable the checking.
--  **Control header content**: value to control. Let this parameter
-   empty to disable the checking.
--  **Display authentication logo**: display Slave logo.
+-  **Authentication level**: authentication level for this module
+-  **Header for user login**: header containing user main login
+-  **Master's IP address**: IP addresses of servers which are accredited to authenticate user.
+   This is a security point to prevent someone to create a session by sending custom headers.
+   You can set regular expressions (PCRE) or several IP addresses, spaces or comma separated.
+   By example: ``127.0.0.2, 192.168.1.1 /^10\\.20\\.30\\./``. A blank value disables this checking.
+-  **Control header name**: header containing value to check.
+   A blank value disables this checking.
+-  **Control header content**: value to check. A blank value disables this checking.
+-  **Display authentication logo**: display Slave logo
 
 You have then to declare HTTP headers exported by the main SSO (in
 **Exported Variables**). Example :
