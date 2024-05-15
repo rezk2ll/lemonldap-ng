@@ -898,6 +898,8 @@ t/70-2F-Password.t
 t/70-2F-TOTP-8-with-global-storage.t
 t/70-2F-TOTP-encryption.t
 t/70-2F-TOTP-Hook.t
+t/70-2F-TOTP-multiple-register.t
+t/70-2F-TOTP-multiple.t
 t/70-2F-TOTP-with-History-and-Refresh.t
 t/70-2F-TOTP-with-LDAP.t
 t/70-2F-TOTP-with-Range.t
