@@ -323,7 +323,6 @@
 "submit":"Gửi",
 "switchContext":"Chuyển ngữ cảnh",
 "totp2f":"Ứng dụng OTP",
-"totpExistingKey":"Thiết bị TOTP đã được đăng ký, bạn phải xóa thiết bị này trước khi thêm thiết bị TOTP mới",
 "totpMissingCode":"Vui lòng nhập mã được cung cấp bởi ứng dụng TOTP của bạn",
 "totpOrTouch":"If you see this on your mobile, touch the QR code to open your TOTP application",
 "totpQrCode":"Quét mã QR này trong ứng dụng TOTP của bạn",
