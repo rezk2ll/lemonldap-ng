@@ -445,6 +445,7 @@ prepare_test_server:
 	-@mkdir -p e2e-tests/conf/sessions/lock e2e-tests/conf/persistents/lock
 	-@mkdir e2e-tests/conf/manager e2e-tests/conf/portal e2e-tests/conf/api
 	$(MAKE) install_webserver_conf install_test_site install_fastcgi_server \
+		DNSDOMAIN=$(DNSDOMAIN) \
 		CONFDIR=`pwd`/e2e-tests/conf \
 		RCONFDIR=e2e-tests/conf \
 		ERASECONFIG=1 \
@@ -474,7 +475,7 @@ prepare_test_server:
 	done
 	@cp e2e-tests/lmConf-1.json e2e-tests/lemonldap-ng*.ini e2e-tests/env.conf e2e-tests/test-nginx.conf e2e-tests/conf/
 	@cp e2e-tests/form.html e2e-tests/conf/site
-	@perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s#__port__#$(TESTWEBSERVERPORT)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#;' \
+	@perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s#__port__#$(TESTWEBSERVERPORT)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#;s#__domain__#$(DNSDOMAIN)#g;' \
 		e2e-tests/conf/lemonldap-ng*.ini \
 		e2e-tests/conf/lmConf-1.json \
 		e2e-tests/conf/env.conf \
