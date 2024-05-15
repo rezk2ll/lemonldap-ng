@@ -9,7 +9,7 @@
           "display": "auto",
           "logo": "demo.png",
           "name": "Application Test 1",
-          "uri": "http://test1.example.com:__port__/"
+          "uri": "http://test1.__domain__:__port__/"
         },
         "type": "application"
       },
@@ -19,7 +19,7 @@
           "display": "auto",
           "logo": "thumbnail.png",
           "name": "Application Test 2",
-          "uri": "http://test2.example.com:__port__/"
+          "uri": "http://test2.__domain__:__port__/"
         },
         "type": "application"
       },
@@ -33,7 +33,7 @@
           "display": "auto",
           "logo": "configure.png",
           "name": "WebSSO Manager",
-          "uri": "http://manager.example.com:__port__/manager.html"
+          "uri": "http://manager.__domain__:__port__/manager.html"
         },
         "type": "application"
       },
@@ -43,7 +43,7 @@
           "display": "auto",
           "logo": "database.png",
           "name": "Notifications Explorer",
-          "uri": "http://manager.example.com:__port__/notifications.html"
+          "uri": "http://manager.__domain__:__port__/notifications.html"
         },
         "type": "application"
       },
@@ -53,7 +53,7 @@
           "display": "auto",
           "logo": "database.png",
           "name": "Sessions Explorer",
-          "uri": "http://manager.example.com:__port__/sessions.html"
+          "uri": "http://manager.__domain__:__port__/sessions.html"
         },
         "type": "application"
       },
@@ -63,7 +63,7 @@
           "display": "auto",
           "logo": "database.png",
           "name": "2FA Sessions Explorer",
-          "uri": "http://manager.example.com:__port__/2ndfa.html"
+          "uri": "http://manager.__domain__:__port__/2ndfa.html"
         },
         "type": "application"
       },
@@ -77,7 +77,7 @@
           "display": "on",
           "logo": "help.png",
           "name": "Local documentation",
-          "uri": "http://manager.example.com:__port__/doc/"
+          "uri": "http://manager.__domain__:__port__/doc/"
         },
         "type": "application"
       },
@@ -108,9 +108,9 @@
     "mail": "mail",
     "uid": "uid"
   },
-  "domain": "example.com",
+  "domain": "__domain__",
   "exportedHeaders": {
-    "test1.example.com": {
+    "test1.__domain__": {
       "Auth-User": "$uid",
       "Ip-Addr": "$ipAddr",
       "Hello": "hello()",
@@ -119,7 +119,7 @@
       "Additional-Arg": "get_additional_arg('header-added')",
       "Base64": "encode_base64('a:b','')"
     },
-    "test2.example.com": {
+    "test2.__domain__": {
       "Auth-User": "$uid"
     }
   },
@@ -141,32 +141,32 @@
     "namespace": "lemonldap-ng-sessions"
   },
   "locationRules": {
-    "auth.example.com" : {
+    "auth.__domain__" : {
       "(?#checkUser)^/checkuser": "$uid eq \"dwho\"",
       "(?#checkDevOps)^/checkdevops": "$uid eq \"dwho\"",
       "(?#errors)^/lmerror/": "accept",
       "default" : "accept"
     },
-    "manager.example.com": {
+    "manager.__domain__": {
       "(?#Configuration)^/(manager\\.html|conf|$)": "$uid eq \"dwho\"",
       "(?#Notifications)^/notifications": "$uid eq \"dwho\" or $uid eq \"rtyler\"",
       "(?#Sessions)^/sessions": "$uid eq \"dwho\" or $uid eq \"rtyler\"",
       "default": "$uid eq \"dwho\" or $uid eq \"rtyler\""
     },
-    "test1.example.com": {
+    "test1.__domain__": {
       "^/logout": "logout_sso",
-      "^/index.pl\\?logout_app$": "logout_app http://test1.example.com:__port__/index.pl?foo=1",
+      "^/index.pl\\?logout_app$": "logout_app http://test1.__domain__:__port__/index.pl?foo=1",
       "^/index.pl\\?logout_all$": "logout_app_sso http://lemonldap-ng.org/welcome/",
       "^/saml": "unprotect",
       "default": "accept"
     },
-    "test2.example.com": {
+    "test2.__domain__": {
       "^/logout": "logout_sso",
       "default": "accept"
     }
   },
   "vhostOptions":{
-    "manager.example.com": {
+    "manager.__domain__": {
       "vhostMaintenance": 0,
       "vhostPort": -1,
       "vhostHttps": -1,
@@ -192,19 +192,19 @@
     "LockDirectory": "__pwd__/e2e-tests/conf/persistents/lock",
     "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
   },
-  "portal": "http://auth.example.com:__port__/",
+  "portal": "http://auth.__domain__:__port__/",
   "portalSkin": "bootstrap",
   "portalSkinBackground": "1280px-Cedar_Breaks_National_Monument_partially.jpg",
   "post": {
-    "test2.example.com": {},
-    "manager.example.com": {},
-    "test1.example.com": {
+    "test2.__domain__": {},
+    "manager.__domain__": {},
+    "test1.__domain__": {
       "/form.html": {
         "vars": [
           ["postuid", "$_user"],
           ["postmail", "'x@x.org'"],
           ["poststatic", "'static content'"]],
-        "jqueryUrl": "http://manager.example.com:__port__/static/bwr/jquery/dist/jquery.js",
+        "jqueryUrl": "http://manager.__domain__:__port__/static/bwr/jquery/dist/jquery.js",
         "buttonSelector": "#bt",
         "formSelector": "#test",
         "target": "/index.pl"
