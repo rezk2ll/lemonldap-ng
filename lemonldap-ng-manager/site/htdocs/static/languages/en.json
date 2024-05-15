@@ -497,7 +497,7 @@
 "krbAllowedDomains":"Allowed domains",
 "krbAuthnLevel":"Kerberos authn level",
 "krbByJs":"Use Ajax request",
-"krbKeytab":"keytab file",
+"krbKeytab":"Keytab file",
 "krbRemoveDomain":"Remove domain from Kerberos username",
 "label":"Label",
 "languages":"Languages",
