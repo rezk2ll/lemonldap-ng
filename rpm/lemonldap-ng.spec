@@ -546,6 +546,10 @@ install -D -m 0644 %{modulename}.pp.bz2 \
     %{buildroot}%{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
 %endif
 
+# Fix man and perl modules permissions
+%{_fixperms} %{buildroot}%{perl_vendorlib}/ %{buildroot}%{_mandir}/
+
+
 %check
 sed -i 's:^dirName.*:dirName = %{buildroot}%{lm_vardir}/conf:' \
     %{buildroot}%{lm_storagefile}
@@ -640,7 +644,7 @@ fi
 %doc for_etc_hosts
 %license COPYING LICENSE
 %dir %{lm_confdir}
-%config(noreplace) %attr(-,root,%{lm_apachegroup}) %{lm_storagefile}
+%config(noreplace) %attr(640,root,%{lm_apachegroup}) %{lm_storagefile}
 %{_mandir}/man1/convertConfig*
 %{_mandir}/man1/convertSessions*
 %{_mandir}/man1/convertToHashSessionStorage*
@@ -660,6 +664,12 @@ fi
 %dir %{lm_examplesdir}
 %dir %{lm_sharedir}
 %{lm_sharedir}/ressources/
+%{_mandir}/man3/Lemonldap::NG::Common*.3pm.*
+%dir %{perl_vendorlib}/Lemonldap
+%dir %{perl_vendorlib}/Lemonldap/NG
+%{perl_vendorlib}/Lemonldap/NG/Common.pm
+%{perl_vendorlib}/Lemonldap/NG/Common/
+%{perl_vendorlib}/auto/Lemonldap/NG/Common/
 %dir %{lm_vardir}
 %defattr(640,%{lm_apacheuser},%{lm_apachegroup},750)
 %dir %{lm_vardir}/conf
@@ -670,12 +680,6 @@ fi
 %dir %{lm_vardir}/notifications
 %dir %{lm_cachedir}
 %config(noreplace) %{lm_vardir}/conf/lmConf-1.json
-%{_mandir}/man3/Lemonldap::NG::Common*.3pm.*
-%dir %{perl_vendorlib}/Lemonldap
-%dir %{perl_vendorlib}/Lemonldap/NG
-%{perl_vendorlib}/Lemonldap/NG/Common.pm
-%{perl_vendorlib}/Lemonldap/NG/Common/
-%{perl_vendorlib}/auto/Lemonldap/NG/Common/
 
 %files doc
 %doc %{lm_sharedir}/doc
@@ -725,11 +729,11 @@ fi
 %{_unitdir}/lemonldap-ng-portal.timer
 %{_presetdir}/10-lemonldap-ng-portal.preset
 %{lm_examplesdir}/portal
-%defattr(-,%{lm_apacheuser},%{lm_apachegroup},750)
-%dir %{lm_vardir}/captcha
 %{_mandir}/man3/Lemonldap::NG::Portal*.3pm.*
 %{perl_vendorlib}/Lemonldap/NG/Portal.pm
 %{perl_vendorlib}/Lemonldap/NG/Portal/
+%defattr(-,%{lm_apacheuser},%{lm_apachegroup},750)
+%dir %{lm_vardir}/captcha
 
 %files test
 %{lm_sharedir}/test
