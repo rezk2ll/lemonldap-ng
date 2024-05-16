@@ -746,9 +746,9 @@ fi
 %config(noreplace) %{_sysconfdir}/default/llng-fastcgi-server
 %{_unitdir}/llng-fastcgi-server.service
 %{_tmpfilesdir}/llng-fastcgi-server.conf
+%{lm_examplesdir}/llngapp.psgi
 %defattr(755,%{lm_apacheuser},%{lm_apachegroup},755)
 %dir %{_rundir}/llng-fastcgi-server
-%{lm_examplesdir}/llngapp.psgi
 
 %files uwsgi-app
 %config(noreplace) %{_sysconfdir}/uwsgi/apps-available/llng-server.yaml
