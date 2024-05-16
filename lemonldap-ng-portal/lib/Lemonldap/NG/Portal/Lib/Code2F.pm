@@ -251,14 +251,6 @@ sub verify_internal {
 sub sendCodeForm {
     my ( $self, $req, %params ) = @_;
 
-    my $checkLogins = $req->param('checkLogins');
-    $self->logger->debug( $self->prefix . "2f: checkLogins set" )
-      if $checkLogins;
-
-    my $stayconnected = $req->param('stayconnected');
-    $self->logger->debug( $self->prefix . "2f: stayconnected set" )
-      if $stayconnected;
-
     # Prepare form
     my $prefix = $self->prefix;
     return $self->p->sendHtml(
