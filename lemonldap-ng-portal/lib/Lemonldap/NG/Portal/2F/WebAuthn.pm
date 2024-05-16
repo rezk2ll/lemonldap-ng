@@ -52,9 +52,6 @@ sub run {
 
     $self->ott->updateToken( $token, _webauthn_request => $request );
 
-    $self->logger->debug(
-        "WebAuthn authentication parameters " . to_json($request) );
-
     # Prepare form
     my $tmp = $self->p->sendHtml(
         $req,
@@ -95,6 +92,20 @@ sub verify {
     }
 
     if ( $validation_result->{success} == 1 ) {
+        $self->auditLog(
+            $req,
+            message => (
+                    "User $user authenticated with 2F device: "
+                  . display2F( $validation_result->{matching_credential} )
+                  . " (signature count: $validation_result->{signature_count}) "
+            ),
+            code   => "2FA_SUCCESS",
+            user   => $user,
+            type   => $self->prefix,
+            device => display2F( $validation_result->{matching_credential} ),
+            signature_count => $validation_result->{signature_count},
+        );
+
         return PE_OK;
     }
     else {
