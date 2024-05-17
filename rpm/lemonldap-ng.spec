@@ -391,7 +391,7 @@ Summary:        LemonLDAP-NG FastCGI Server
 Requires:       lemonldap-ng-common = %{version}-%{release}
 Requires:       perl(FCGI::ProcManager)
 %if 0%{?el7}
-Requires:       mod_fcgi
+Requires:       mod_fcgid
 %else
 Requires:       (mod_fcgid if httpd)
 %endif
