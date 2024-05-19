@@ -497,7 +497,7 @@
 "krbAllowedDomains":"שמות תחום מותרים",
 "krbAuthnLevel":"Kerberos authn level",
 "krbByJs":"להשתמש בבקשת Ajax",
-"krbKeytab":"קובץ keytab",
+"krbKeytab":"קובץ Keytab",
 "krbRemoveDomain":"הסרת שם תחום משם משתמש ב־Kerberos",
 "label":"תווית",
 "languages":"שפות",

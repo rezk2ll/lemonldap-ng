@@ -497,7 +497,7 @@
 "krbAllowedDomains":"Các tên miền được phép ",
 "krbAuthnLevel":"Cấp authn Kerberos",
 "krbByJs":"Sử dụng yêu cầu Ajax",
-"krbKeytab":"tệp keytab",
+"krbKeytab":"Tệp keytab",
 "krbRemoveDomain":"Xóa tên miền khỏi tên người dùng Kerberos",
 "label":"Nhãn",
 "languages":"Ngôn ngữ",
