@@ -125,6 +125,10 @@ LLNGAPPDIR=$(LMPREFIX)/llng-server
 UWSGIUSER=$(APACHEUSER)
 UWSGIGROUP=$(APACHEGROUP)
 
+# RC/systemd
+WITHRC=yes
+WITHSYSTEMD=yes
+
 # Apache version
 APACHEVERSION=2.X
 
@@ -699,9 +703,6 @@ install_bin:	install_conf_dir
 install_fastcgi_server:
 	@install -v -d \
 		$(RSBINDIR) \
-		$(RINITDIR) \
-		$(RUNITDIR) \
-		$(RTMPFILESDIR) \
 		$(RETCDEFAULTDIR) \
 		$(RFASTCGISOCKDIR) \
 		${RMANDIR}/man8
@@ -710,32 +711,62 @@ install_fastcgi_server:
 	@pod2man -s 8 -name llng-fastcgi-server \
 		fastcgi-server/sbin/llng-fastcgi-server \
 		> ${RMANDIR}/man8/llng-fastcgi-server.8p
-	@cp -f fastcgi-server/rc/llng-fastcgi-server $(RINITDIR)
-	@cp -f fastcgi-server/systemd/llng-fastcgi-server.service $(RUNITDIR)
-	@cp -f fastcgi-server/systemd/llng-fastcgi-server.tmpfile $(RTMPFILESDIR)/llng-fastcgi-server.conf
+	# RC
+	@if [ "x$(WITHRC)" = "xyes" ]; then \
+		install -v -d $(RINITDIR); \
+		cp -f fastcgi-server/rc/llng-fastcgi-server $(RINITDIR); \
+		$(PERL) -pi \
+			-e 's#__SBINDIR__#$(SBINDIR)#;' \
+			-e 's#__DEFAULTDIR__#$(ETCDEFAULTDIR)#;' \
+			-e 's#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g;' \
+			$(RINITDIR)/llng-fastcgi-server; \
+	fi
+	# systemd
+	@if [ "x$(WITHSYSTEMD)" = "xyes" ]; then \
+		install -v -d $(RUNITDIR) $(RTMPFILESDIR); \
+		cp -f fastcgi-server/systemd/llng-fastcgi-server.service $(RUNITDIR); \
+		cp -f fastcgi-server/systemd/llng-fastcgi-server.tmpfile $(RTMPFILESDIR)/llng-fastcgi-server.conf; \
+		$(PERL) -pi \
+			-e 's#__SBINDIR__#$(SBINDIR)#;' \
+			-e 's#__DEFAULTDIR__#$(ETCDEFAULTDIR)#;' \
+			-e 's#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g;' \
+			$(RUNITDIR)/llng-fastcgi-server.service \
+			$(RTMPFILESDIR)/llng-fastcgi-server.conf; \
+		if [ ! "$(FASTCGIUSER)" ]; then \
+			$(PERL) -pi -e 's#__USER__#nobody#' \
+				$(RTMPFILESDIR)/llng-fastcgi-server.conf;  \
+		else \
+			$(PERL) -pi -e 's#__USER__#$(FASTCGIUSER)#' \
+				$(RTMPFILESDIR)/llng-fastcgi-server.conf; \
+		fi; \
+		if [ ! "$(FASTCGIGROUP)" ]; then \
+			$(PERL) -pi -e 's#__GROUP__#nobody#' \
+				$(RTMPFILESDIR)/llng-fastcgi-server.conf; \
+		else \
+			$(PERL) -pi -e 's#__GROUP__#$(FASTCGIGROUP)#' \
+				$(RTMPFILESDIR)/llng-fastcgi-server.conf; \
+		fi; \
+	fi
+	#
 	@cp -f fastcgi-server/default/llng-fastcgi-server $(RETCDEFAULTDIR)
-	@$(PERL) -pi -e 's#__SBINDIR__#$(SBINDIR)#;s#__DEFAULTDIR__#$(ETCDEFAULTDIR)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g;' \
+	@$(PERL) -pi \
+		-e 's#__SBINDIR__#$(SBINDIR)#;' \
+		-e 's#__DEFAULTDIR__#$(ETCDEFAULTDIR)#;' \
+		-e 's#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g;' \
 		$(RETCDEFAULTDIR)/llng-fastcgi-server \
-		$(RSBINDIR)/llng-fastcgi-server \
-		$(RUNITDIR)/llng-fastcgi-server.service \
-		$(RTMPFILESDIR)/llng-fastcgi-server.conf \
-		$(RINITDIR)/llng-fastcgi-server
+		$(RSBINDIR)/llng-fastcgi-server
 	@if [ ! "$(FASTCGIUSER)" ]; then \
 		$(PERL) -pi -e 's#__USER__#nobody#' \
-			$(RTMPFILESDIR)/llng-fastcgi-server.conf \
 			$(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	else \
 		$(PERL) -pi -e 's#__USER__#$(FASTCGIUSER)#' \
-			$(RTMPFILESDIR)/llng-fastcgi-server.conf \
 			$(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	fi
 	@if [ ! "$(FASTCGIGROUP)" ]; then \
 		$(PERL) -pi -e 's#__GROUP__#nobody#' \
-			$(RTMPFILESDIR)/llng-fastcgi-server.conf \
 			$(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	else \
 		$(PERL) -pi -e 's#__GROUP__#$(FASTCGIGROUP)#' \
-			$(RTMPFILESDIR)/llng-fastcgi-server.conf \
 			$(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	fi
 	@if [ "$(FASTCGIUSER)" != "" ]; then \
@@ -878,48 +909,58 @@ install_portal_site:	install_conf_dir
 		rm -rvf $(PORTALLIBSTOREMOVEFORDEBIAN); \
 	fi
 	# Cron files
-	@cp -f $(SRCPORTALDIR)/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng-portal
-	@if [ ! "$(APACHEUSER)" ]; then \
-		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-portal; \
-	else \
-		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng-portal; \
+	@if [ "x$(WITHRC)" = "xyes" ]; then \
+		cp -f $(SRCPORTALDIR)/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng-portal; \
+		if [ ! "$(APACHEUSER)" ]; then \
+			$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-portal; \
+		else \
+			$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng-portal; \
+		fi; \
+		$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng-portal; \
 	fi
-	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng-portal
 	# systemd files
-	@cp -f $(SRCPORTALDIR)/scripts/lemonldap-ng-portal.service \
-		$(SRCPORTALDIR)/scripts/lemonldap-ng-portal.timer \
-		$(RUNITDIR)/
-	@if [ ! "$(APACHEUSER)" ]; then \
-		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RUNITDIR)/lemonldap-ng-portal.service; \
-	else \
-		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RUNITDIR)/lemonldap-ng-portal.service;  \
+	@if [ "x$(WITHSYSTEMD)" = "xyes" ]; then \
+		cp -f $(SRCPORTALDIR)/scripts/lemonldap-ng-portal.service \
+			$(SRCPORTALDIR)/scripts/lemonldap-ng-portal.timer \
+			$(RUNITDIR)/; \
+		if [ ! "$(APACHEUSER)" ]; then \
+			$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RUNITDIR)/lemonldap-ng-portal.service; \
+		else \
+			$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RUNITDIR)/lemonldap-ng-portal.service;  \
+		fi; \
+		$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RUNITDIR)/lemonldap-ng-portal.service; \
 	fi
-	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RUNITDIR)/lemonldap-ng-portal.service
 	#
 	@$(PERL) -i -pe 's#__PORTALSTATICDIR__#$(PORTALRELATIVESTATICDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 	@$(PERL) -i -pe 's#__PORTALTEMPLATESDIR__#$(PORTALTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 
 install_handler_site:	install_conf_dir
 	# Handler install
-	@install -v -d ${RHANDLERDIR} $(RCRONDIR) $(RUNITDIR)
+	@install -v -d ${RHANDLERDIR}
 	# Cron files
-	@cp -f $(SRCHANDLERDIR)/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler
-	@if [ ! "$(APACHEUSER)" ]; then \
-		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-handler; \
-	else \
-		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng-handler; \
+	@if [ "x$(WITHRC)" = "xyes" ]; then \
+		install -v -d $(RCRONDIR); \
+		cp -f $(SRCHANDLERDIR)/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler; \
+		if [ ! "$(APACHEUSER)" ]; then \
+			$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-handler; \
+		else \
+			$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng-handler; \
+		fi; \
+		$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng-handler; \
 	fi
-	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng-handler
 	# systemd files
-	@cp -f $(SRCHANDLERDIR)/scripts/lemonldap-ng-handler.service \
-		$(SRCHANDLERDIR)/scripts/lemonldap-ng-handler.timer \
-		$(RUNITDIR)/
-	@if [ ! "$(APACHEUSER)" ]; then \
-		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RUNITDIR)/lemonldap-ng-handler.service; \
-	else \
-		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RUNITDIR)/lemonldap-ng-handler.service; \
+	@if [ "x$(WITHSYSTEMD)" = "xyes" ]; then \
+		install -v -d $(RUNITDIR); \
+		cp -f $(SRCHANDLERDIR)/scripts/lemonldap-ng-handler.service \
+			$(SRCHANDLERDIR)/scripts/lemonldap-ng-handler.timer \
+			$(RUNITDIR)/; \
+		if [ ! "$(APACHEUSER)" ]; then \
+			$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RUNITDIR)/lemonldap-ng-handler.service; \
+		else \
+			$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RUNITDIR)/lemonldap-ng-handler.service; \
+		fi; \
+		$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RUNITDIR)/lemonldap-ng-handler.service; \
 	fi
-	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RUNITDIR)/lemonldap-ng-handler.service
 
 install_test_site:
 	# Test site install
