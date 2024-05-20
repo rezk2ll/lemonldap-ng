@@ -92,26 +92,6 @@ sub init {
 
 # RUNNING METHODS
 
-sub initDisplay {
-    my ($self, $req, $module) = @_;
-
-    my $mod = $self->modules->{$module};
-    if ( $mod->{AjaxInitScript} ) {
-        $self->logger->debug( 'Append ' . $mod->{Name} . ' init/script' )
-        if $mod->{Name};
-        $req->data->{customScript} .= $mod->AjaxInitScript;
-    }
-    if ( $mod->{InitCmd} ) {
-        $self->logger->debug( 'Launch ' . $mod->{Name} . ' init command' )
-        if $mod->{Name};
-        my $res = eval( $mod->{InitCmd} );
-        if ($@) {
-            die "Error running InitCmd: $@";
-        }
-    }
-
-}
-
 sub checkChoice {
     my ( $self, $req ) = @_;
     my $name;
@@ -121,7 +101,9 @@ sub checkChoice {
         $name = $req->pdata->{_choice};
         $self->logger->debug("Choice $name selected from pdata");
     }
-    elsif ( (defined $req->data->{_authChoice}) or (defined $req->data->{_choice}) ) {
+    elsif (( defined $req->data->{_authChoice} )
+        or ( defined $req->data->{_choice} ) )
+    {
         $name = $req->data->{_authChoice} || $req->data->{_choice};
         $self->logger->debug("Choice $name selected from req->data");
     }
@@ -258,10 +240,12 @@ sub _buildAuthLoop {
                 $self->logger->debug("Use URL $url");
 
                 eval {
-                    $self->_authentication->initDisplay($req, $_);
+                    my $mod = $self->_authentication->modules->{$_};
+                    $mod->initDisplay($req) if $mod->can('initDisplay');
                 };
-                $self->logger->info("Unable to initialize choice $_ display: $@") if $@;
-
+                $self->logger->info(
+                    "Unable to initialize choice $_ display: $@")
+                  if $@;
 
                 # Options to store in the loop
                 my $optionsLoop = {
