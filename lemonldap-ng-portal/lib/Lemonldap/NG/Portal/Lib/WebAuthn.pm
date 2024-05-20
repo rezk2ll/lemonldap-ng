@@ -99,18 +99,11 @@ sub generateChallenge {
       $self->find2fDevicesByType( $req, $data, $self->type );
     return unless @webauthn_devices;
 
-    my $challenge_base64 = encode_base64url( Crypt::URandom::urandom(32) );
-    my $userVerification = $self->conf->{webauthn2fUserVerification};
+    my $challenge = $self->_generateBasicChallenge($req);
 
-    my $challenge = {
-        challenge        => $challenge_base64,
-        rpId             => $self->rp_id($req),
-        allowCredentials => [
-            map { { type => "public-key", id => $_->{_credentialId}, } }
-              @webauthn_devices
-        ],
-        ( $userVerification ? ( userVerification => $userVerification ) : () ),
-    };
+    $challenge->{allowCredentials} =
+      [ map { { type => "public-key", id => $_->{_credentialId}, } }
+          @webauthn_devices ];
 
     if ( my $appid = $self->appid($req) ) {
         $challenge->{extensions}->{appid} = $appid;
@@ -120,6 +113,71 @@ sub generateChallenge {
         "WebAuthn authentication parameters " . to_json($challenge) );
 
     return $challenge;
+}
+
+sub generateDiscoverableChallenge {
+    my ( $self, $req ) = @_;
+
+    my $challenge = $self->_generateBasicChallenge($req);
+
+    $self->logger->debug(
+        "WebAuthn authentication parameters " . to_json($challenge) );
+}
+
+sub _generateBasicChallenge {
+    my ( $self, $req ) = @_;
+
+    my $challenge_base64 = encode_base64url( Crypt::URandom::urandom(32) );
+    my $userVerification = $self->conf->{webauthn2fUserVerification};
+
+    my $challenge = {
+        challenge        => $challenge_base64,
+        rpId             => $self->rp_id($req),
+        allowCredentials => [],
+        ( $userVerification ? ( userVerification => $userVerification ) : () ),
+    };
+    return $challenge;
+}
+
+sub getUserFromCredential {
+    my ( $self, $req, $credential_json ) = @_;
+    my $credential = eval { from_json($credential_json) };
+    if ($@) {
+        $self->logger->error("Could not deserialize WebAuthn credential: $@");
+        return;
+    }
+    my $userHandle = $credential->{response}->{userHandle};
+    if ( !$userHandle ) {
+        $self->logger->error(
+            "Could not find userHandle in WebAuthn credential");
+        return;
+    }
+
+    my $opts = {
+        %{ $self->p->conf->{persistentStorageOptions} },
+        backend => $self->p->conf->{persistentStorage}
+    };
+
+    my $sessions = Lemonldap::NG::Common::Apache::Session->searchOn( $opts,
+        "_webAuthnUserHandle", $userHandle );
+    if (    $sessions
+        and ref($sessions) eq "HASH"
+        and scalar( keys %$sessions ) == 1 )
+    {
+        my ($session) = values %$sessions;
+        return {
+            uid                 => $session->{_session_uid},
+            _2fDevices          => $session->{_2fDevices},
+            _webAuthnUserHandle => $userHandle,
+        };
+
+    }
+    else {
+        $self->logger->error( "Could not locate a persistent session for"
+              . " WebAuthn user handle $userHandle" );
+        return;
+    }
+
 }
 
 sub validateCredential {
