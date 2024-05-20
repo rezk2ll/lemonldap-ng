@@ -26,7 +26,7 @@ check = ->
 			$(document).trigger e, [ response ]
 			if !e.isDefaultPrevented()
 				$('#credential').val JSON.stringify response
-				$('#verify-form').submit()
+				$('#credential').closest('form').submit()
 		. catch (error) ->
 			e = jQuery.Event( "webauthnFailure" )
 			$(document).trigger e, [ error ]
@@ -36,3 +36,4 @@ check = ->
 $(document).ready ->
 	setTimeout check, 1000
 	$('#retrybutton').on 'click', check
+	$('.webauthnclick').on 'click', check

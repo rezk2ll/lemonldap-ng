@@ -36,7 +36,7 @@ LemonLDAP::NG WebAuthn verify script
         $(document).trigger(e, [response]);
         if (!e.isDefaultPrevented()) {
           $('#credential').val(JSON.stringify(response));
-          return $('#verify-form').submit();
+          return $('#credential').closest('form').submit();
         }
       })["catch"](function(error) {
         e = jQuery.Event("webauthnFailure");
@@ -50,7 +50,8 @@ LemonLDAP::NG WebAuthn verify script
 
   $(document).ready(function() {
     setTimeout(check, 1000);
-    return $('#retrybutton').on('click', check);
+    $('#retrybutton').on('click', check);
+    return $('.webauthnclick').on('click', check);
   });
 
 }).call(this);
