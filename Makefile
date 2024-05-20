@@ -58,6 +58,7 @@ UNITDIR=$(LMPREFIX)/usr/lib/systemd/system
 TMPFILESDIR=$(LMPREFIX)/usr/lib/tmpfiles.d
 ETCDEFAULTDIR=$(LMPREFIX)/etc/default
 DATADIR=$(LMPREFIX)/data
+MANDIR=$(LMPREFIX)/usr/share/man
 
 # Document roots for Apache VirtualHosts
 DOCUMENTROOT=$(LMPREFIX)/htdocs
@@ -169,6 +170,7 @@ RUNITDIR=$(DESTDIR)/$(UNITDIR)
 RTMPFILESDIR=$(DESTDIR)/$(TMPFILESDIR)
 RETCDEFAULTDIR=$(DESTDIR)/$(ETCDEFAULTDIR)
 RDATADIR=$(DESTDIR)/$(DATADIR)
+RMANDIR=$(DESTDIR)/$(MANDIR)
 RPORTALDIR=$(DESTDIR)/$(PORTALDIR)
 RPORTALSITEDIR=$(DESTDIR)/$(PORTALSITEDIR)
 RPORTALSTATICDIR=$(DESTDIR)/$(PORTALSTATICDIR)
@@ -347,13 +349,9 @@ $(SRCMANAGERDIR)/site/htdocs/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coff
 		uglifyjs `basename $*`.js --compress --mangle --comments '/Copyr/i' --source-map -o `basename $*`.min.js; \
 	fi
 
-fastcgi-server/man/llng-fastcgi-server.8p: fastcgi-server/sbin/llng-fastcgi-server
-	@echo Update FastCGI server man page
-	@pod2man -s 8 -name llng-fastcgi-server fastcgi-server/sbin/llng-fastcgi-server >fastcgi-server/man/llng-fastcgi-server.8p
-
 # Perl libraries configuration
 
-json:	$(MANAGERJSONDST) fastcgi-server/man/llng-fastcgi-server.8p debian/*cron*
+json:	$(MANAGERJSONDST) debian/*cron*
 	@if which yui-compressor >/dev/null; then $(MAKE) minify; fi
 	$(MAKE) minify
 
@@ -699,9 +697,19 @@ install_bin:	install_conf_dir
 	@$(CHMOD) +x $(RBINDIR)/*
 
 install_fastcgi_server:
-	@install -v -d $(RSBINDIR) $(RINITDIR) $(RUNITDIR) $(RTMPFILESDIR) $(RETCDEFAULTDIR) $(RFASTCGISOCKDIR)
+	@install -v -d \
+		$(RSBINDIR) \
+		$(RINITDIR) \
+		$(RUNITDIR) \
+		$(RTMPFILESDIR) \
+		$(RETCDEFAULTDIR) \
+		$(RFASTCGISOCKDIR) \
+		${RMANDIR}/man8
 	@cp -f fastcgi-server/sbin/llng-fastcgi-server $(RSBINDIR)
 	@$(CHMOD) +x $(RSBINDIR)/llng-fastcgi-server
+	@pod2man -s 8 -name llng-fastcgi-server \
+		fastcgi-server/sbin/llng-fastcgi-server \
+		> ${RMANDIR}/man8/llng-fastcgi-server.8p
 	@cp -f fastcgi-server/rc/llng-fastcgi-server $(RINITDIR)
 	@cp -f fastcgi-server/systemd/llng-fastcgi-server.service $(RUNITDIR)
 	@cp -f fastcgi-server/systemd/llng-fastcgi-server.tmpfile $(RTMPFILESDIR)/llng-fastcgi-server.conf
