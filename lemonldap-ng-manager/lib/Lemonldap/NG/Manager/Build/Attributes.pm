@@ -2556,6 +2556,16 @@ sub attributes {
             documentation =>
               'Certificate bundle for attestation trust validation',
         },
+        webauthn2fResidentKey => {
+            type   => 'select',
+            select => [
+                { k => '',            v => '' },
+                { k => 'discouraged', v => 'Discouraged' },
+                { k => 'preferred',   v => 'Preferred' },
+                { k => 'required',    v => 'Required' },
+            ],
+            documentation => 'Use discoverable credential',
+        },
         webauthn2fUserCanRemoveKey => {
             type          => 'bool',
             default       => 1,
@@ -4525,6 +4535,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'SSL',      v => 'SSL' },
                 { k => 'Twitter',  v => 'Twitter' },
                 { k => 'WebID',    v => 'WebID' },
+                { k => 'WebAuthn', v => 'WebAuthn' },
                 { k => 'Demo',     v => 'Demonstration' },
                 { k => 'CAS',    v => 'Central Authentication Service (CAS)' },
                 { k => 'OpenID', v => 'OpenID' },
