@@ -251,6 +251,9 @@ Options
       return it as a JWT, using one of the available signature algorithms.
    -  **Require PKCE** (since version ``2.0.4``): A code challenge is
       required at Tokens endpoint (see :rfc:`7636`)
+   -  **Invalidate refresh tokens after use** (since version ``2.20.0``): Use
+      this option to prevent Refresh Tokens from being re-used. A new refresh
+      token will be generated every time.
    -  **Allow offline access** (since version ``2.0.7``): After enabling
       this feature, an application may request the **offline_access**
       scope, and will obtain a Refresh Token that persists even after
