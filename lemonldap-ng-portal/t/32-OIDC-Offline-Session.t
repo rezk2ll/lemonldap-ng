@@ -14,7 +14,7 @@ BEGIN {
 my $debug = "error";
 
 sub runTest {
-    my ( $op, $jwt ) = @_;
+    my ( $op, $jwt, $refresh_rotation ) = @_;
     Time::Fake->reset;
 
     my $query;
@@ -79,6 +79,17 @@ sub runTest {
 
     $json = expectJSON( refreshGrant( $op, 'rpid', $refresh_token ) );
 
+    if ($refresh_rotation) {
+        my $old_refresh_token = $refresh_token;
+        ok( $refresh_token = $json->{refresh_token},
+            "Refresh token was updated" );
+        expectReject( refreshGrant( $op, "rpid", $old_refresh_token ),
+            400, "invalid_request" );
+    }
+    else {
+        ok( !defined $json->{refresh_token}, "Refresh token not present" );
+    }
+
     # Make sure refresh token session has no _lastSeen to avoid purge
     ok( !getSamlSession($refresh_token)->{data}->{_lastSeen} );
 
@@ -90,11 +101,9 @@ sub runTest {
             sub  => "customfrench"
         );
     }
-    my $refresh_token2 = $json->{refresh_token};
     $id_token = $json->{id_token};
-    ok( $access_token,            "Got refreshed Access token" );
-    ok( $id_token,                "Got refreshed ID token" );
-    ok( !defined $refresh_token2, "Refresh token not present" );
+    ok( $access_token, "Got refreshed Access token" );
+    ok( $id_token,     "Got refreshed ID token" );
 
     $id_token_payload = id_token_payload($id_token);
     is(
@@ -120,6 +129,17 @@ sub runTest {
 
     $json = expectJSON( refreshGrant( $op, 'rpid', $refresh_token ) );
 
+    if ($refresh_rotation) {
+        my $old_refresh_token = $refresh_token;
+        ok( $refresh_token = $json->{refresh_token},
+            "Refresh token was updated" );
+        expectReject( refreshGrant( $op, "rpid", $old_refresh_token ),
+            400, "invalid_request" );
+    }
+    else {
+        ok( !defined $json->{refresh_token}, "Refresh token not present" );
+    }
+
     # Make sure refresh token session has no _lastSeen to avoid purge
     ok( !getSamlSession($refresh_token)->{data}->{_lastSeen} );
 
@@ -131,11 +151,9 @@ sub runTest {
             sub  => "customfrench"
         );
     }
-    $refresh_token2 = $json->{refresh_token};
-    $id_token       = $json->{id_token};
-    ok( $access_token,            "Got refreshed Access token" );
-    ok( $id_token,                "Got refreshed ID token" );
-    ok( !defined $refresh_token2, "Refresh token not present" );
+    $id_token = $json->{id_token};
+    ok( $access_token, "Got refreshed Access token" );
+    ok( $id_token,     "Got refreshed ID token" );
 
     $id_token_payload = id_token_payload($id_token);
     is( $id_token_payload->{auth_time},
@@ -176,7 +194,7 @@ sub runTest {
 }
 
 sub runTestRemoveUser {
-    my ($op) = @_;
+    my ( $op, $refresh_rotation ) = @_;
     Time::Fake->reset;
 
     my $query;
@@ -211,6 +229,17 @@ sub runTestRemoveUser {
     # Refresh access token after logging out
     $json = expectJSON( refreshGrant( $op, 'rpid', $refresh_token ) );
     ok( $json->{access_token}, "Found access token" );
+
+    if ($refresh_rotation) {
+        my $old_refresh_token = $refresh_token;
+        ok( $refresh_token = $json->{refresh_token},
+            "Refresh token was updated" );
+        expectReject( refreshGrant( $op, "rpid", $old_refresh_token ),
+            400, "invalid_request" );
+    }
+    else {
+        ok( !defined $json->{refresh_token}, "Refresh token not present" );
+    }
 
     # Remove user from storage
     delete $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{goner};
@@ -278,12 +307,18 @@ subtest "Run tests with JWT access tokens" => sub {
     runTest( $op, 1 );
 };
 
-# Re-run tests with Choice
+subtest "Run tests with refresh token rotation" => sub {
+    $baseConfig->{ini}->{oidcRPMetaDataOptions}->{rp}
+      ->{oidcRPMetaDataOptionsRefreshTokenRotation} = 1;
+    my $op = LLNG::Manager::Test->new($baseConfig);
+    runTest( $op, 1, 1 );
+};
+
 subtest "Using choice authentication method" => sub {
     $baseConfig->{ini}->{authentication} = "Choice";
     $baseConfig->{ini}->{authChoiceModules}->{'1_Demo'} = 'Demo;Demo;Null';
     my $op = LLNG::Manager::Test->new($baseConfig);
-    runTest( $op, 1 );
+    runTest( $op, 1, 1 );
 };
 
 clean_sessions();
