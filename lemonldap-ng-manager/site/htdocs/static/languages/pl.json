@@ -771,6 +771,7 @@
 "oidcRPMetaDataOptionsPublic":"Klient publiczny",
 "oidcRPMetaDataOptionsRedirectUris":"Dozwolone adresy przekierowań dla logowania",
 "oidcRPMetaDataOptionsRefreshToken":"Użyj tokenów odświeżających",
+"oidcRPMetaDataOptionsRefreshTokenRotation":"Invalidate refresh tokens after use",
 "oidcRPMetaDataOptionsRequestUris":"Allowed URLs for fetching Request Object",
 "oidcRPMetaDataOptionsRequirePKCE":"Wymagaj PKCE",
 "oidcRPMetaDataOptionsRule":"Reguła dostępu",

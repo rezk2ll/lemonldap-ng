@@ -771,6 +771,7 @@
 "oidcRPMetaDataOptionsPublic":"Açık istemci",
 "oidcRPMetaDataOptionsRedirectUris":"Giriş için izin verilen yönlendirme adresleri",
 "oidcRPMetaDataOptionsRefreshToken":"Yeni jetonları kullan",
+"oidcRPMetaDataOptionsRefreshTokenRotation":"Invalidate refresh tokens after use",
 "oidcRPMetaDataOptionsRequestUris":"İstek Nesnesini getirmek için izin verilen URL'ler",
 "oidcRPMetaDataOptionsRequirePKCE":"PKCE gerektir",
 "oidcRPMetaDataOptionsRule":"Erişim kuralı",

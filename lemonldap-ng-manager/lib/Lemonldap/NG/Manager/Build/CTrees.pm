@@ -260,6 +260,7 @@ sub cTrees {
                         form  => 'simpleInputContainer',
                         nodes => [
                             'oidcRPMetaDataOptionsRequirePKCE',
+                            'oidcRPMetaDataOptionsRefreshTokenRotation',
                             'oidcRPMetaDataOptionsAllowOffline',
                             'oidcRPMetaDataOptionsAllowPasswordGrant',
                             'oidcRPMetaDataOptionsAllowClientCredentialsGrant',
