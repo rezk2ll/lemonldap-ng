@@ -20,7 +20,7 @@ sub runTest {
     my $query;
     my $res;
 
-    my $idpId = login( $op, 'french' );
+    my $idpId = $op->login( 'french', { lmAuth => '1_Demo' } );
 
     # Inital first name
     $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{french}->{cn} =
@@ -261,16 +261,30 @@ my $baseConfig = {
     }
 };
 
-my $op = LLNG::Manager::Test->new($baseConfig);
-runTest($op);
+subtest "Run tests with base config" => sub {
+    my $op = LLNG::Manager::Test->new($baseConfig);
+    runTest($op);
+};
 
-# Re-run tests with JWT access tokens
-$baseConfig->{ini}->{oidcRPMetaDataOptions}->{rp}
-  ->{oidcRPMetaDataOptionsAccessTokenJWT} = 1;
-$op = LLNG::Manager::Test->new($baseConfig);
-runTest( $op, 1 );
+subtest "Removed user's offline sessions are no longer valid" => sub {
+    my $op = LLNG::Manager::Test->new($baseConfig);
+    runTestRemoveUser($op);
+};
 
-runTestRemoveUser($op);
+subtest "Run tests with JWT access tokens" => sub {
+    $baseConfig->{ini}->{oidcRPMetaDataOptions}->{rp}
+      ->{oidcRPMetaDataOptionsAccessTokenJWT} = 1;
+    my $op = LLNG::Manager::Test->new($baseConfig);
+    runTest( $op, 1 );
+};
+
+# Re-run tests with Choice
+subtest "Using choice authentication method" => sub {
+    $baseConfig->{ini}->{authentication} = "Choice";
+    $baseConfig->{ini}->{authChoiceModules}->{'1_Demo'} = 'Demo;Demo;Null';
+    my $op = LLNG::Manager::Test->new($baseConfig);
+    runTest( $op, 1 );
+};
 
 clean_sessions();
 done_testing();
