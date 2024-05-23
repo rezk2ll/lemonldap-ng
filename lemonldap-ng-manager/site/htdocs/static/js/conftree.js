@@ -699,6 +699,13 @@ function templates(tpl,key) {
                },
                {
                   "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRefreshTokenRotation",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRefreshTokenRotation",
+                  "title" : "oidcRPMetaDataOptionsRefreshTokenRotation",
+                  "type" : "bool"
+               },
+               {
+                  "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowOffline",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAllowOffline",
                   "title" : "oidcRPMetaDataOptionsAllowOffline",

@@ -771,6 +771,7 @@
 "oidcRPMetaDataOptionsPublic":"Client public",
 "oidcRPMetaDataOptionsRedirectUris":"Adresses de redirection autorisées pour la connexion",
 "oidcRPMetaDataOptionsRefreshToken":"Utiliser les jetons de renouvellement",
+"oidcRPMetaDataOptionsRefreshTokenRotation":"Invalider les jetons de rafraichissement après utilisation",
 "oidcRPMetaDataOptionsRequestUris":"URLs autorisées pour récupérer les paramètres de la requête",
 "oidcRPMetaDataOptionsRequirePKCE":"PKCE requis",
 "oidcRPMetaDataOptionsRule":"Règle d'accès",

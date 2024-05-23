@@ -3771,8 +3771,8 @@ sub attributes {
             documentation => 'Available second factor modules',
         },
         available2FSelfRegistration => {
-            type    => 'text',
-            default => join( ',', qw/Password TOTP WebAuthn Yubikey/ ),
+            type          => 'text',
+            default       => join( ',', qw/Password TOTP WebAuthn Yubikey/ ),
             documentation =>
               'Available self-registration modules for second factor',
         },
@@ -5087,6 +5087,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type          => 'bool',
             default       => 0,
             documentation => 'Issue refresh tokens',
+        },
+        oidcRPMetaDataOptionsRefreshTokenRotation => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Invalidate refresh token after use',
         },
         oidcRPMetaDataOptionsAuthnLevel => {
             type          => 'intOrNull',

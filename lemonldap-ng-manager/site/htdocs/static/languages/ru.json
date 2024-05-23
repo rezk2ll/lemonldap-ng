@@ -771,6 +771,7 @@
 "oidcRPMetaDataOptionsPublic":"Публичный клиент",
 "oidcRPMetaDataOptionsRedirectUris":"Разрешенные адреса перенаправления для входа",
 "oidcRPMetaDataOptionsRefreshToken":"Использовать токены обновления",
+"oidcRPMetaDataOptionsRefreshTokenRotation":"Invalidate refresh tokens after use",
 "oidcRPMetaDataOptionsRequestUris":"Allowed URLs for fetching Request Object",
 "oidcRPMetaDataOptionsRequirePKCE":"Требовать PKCE",
 "oidcRPMetaDataOptionsRule":"Правило доступа",

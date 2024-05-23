@@ -1924,7 +1924,7 @@ sub _handleAuthorizationCodeGrant {
 
 sub _handleRefreshTokenGrant {
     my ( $self, $req, $rp, $refresh_token, $client_id ) = @_;
-    $client_id ||= $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
+    $client_id     ||= $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
     $refresh_token ||= $req->param('refresh_token');
 
     unless ($refresh_token) {
@@ -1940,6 +1940,8 @@ sub _handleRefreshTokenGrant {
         $self->logger->error("Unable to find OIDC session $refresh_token");
         return $self->sendOIDCError( $req, 'invalid_request', 400 );
     }
+
+    $refreshSession = $self->_rotateRefreshSession( $rp, $refreshSession );
 
     # Check we have the same client_id value
     unless ( $client_id eq $refreshSession->data->{client_id} ) {
@@ -2082,17 +2084,61 @@ sub _handleRefreshTokenGrant {
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
 
+    my $need_to_update_refresh_token =
+      ( $refresh_token ne $refreshSession->id );
+
     my $token_response = {
         access_token => "$access_token",
         token_type   => 'Bearer',
         expires_in   => $expires_in + 0,
+        (
+            $need_to_update_refresh_token
+            ? ( refresh_token => $refreshSession->id )
+            : ()
+        ),
         ( $id_token ? ( id_token => "$id_token" ) : () ),
     };
 
     $self->logger->debug("Send token response");
 
     return $self->p->sendJSONresponse( $req, $token_response );
+}
 
+sub _rotateRefreshSession {
+    my ( $self, $rp, $refreshSession ) = @_;
+
+    if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRefreshTokenRotation} )
+    {
+        $self->logger->debug("Creating new refresh token for $rp");
+
+        my $newRefreshSession =
+          $self->newRefreshToken( $rp, $refreshSession->data );
+
+        if ($newRefreshSession) {
+            $self->logger->debug(
+                "Generated new refresh token: " . $newRefreshSession->id );
+
+            my $old_refresh_token = $refreshSession->id;
+            if ( $refreshSession->remove ) {
+                $self->logger->debug(
+                    "Removed old refresh token: $old_refresh_token");
+            }
+            else {
+                $self->logger->error(
+                    "Failed to remove old refresh token $old_refresh_token: "
+                      . $refreshSession->error );
+            }
+
+            return $newRefreshSession;
+
+        }
+        else {
+            $self->logger->error(
+                "Unable to create OIDC session for refresh_token");
+            return $refreshSession;
+        }
+    }
+    return $refreshSession;
 }
 
 # Handle userinfo endpoint

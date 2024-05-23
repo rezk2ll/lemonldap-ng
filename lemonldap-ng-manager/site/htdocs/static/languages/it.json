@@ -771,6 +771,7 @@
 "oidcRPMetaDataOptionsPublic":"Cliente pubblico",
 "oidcRPMetaDataOptionsRedirectUris":"Indirizzi di reindirizzazione consentiti per l'accesso",
 "oidcRPMetaDataOptionsRefreshToken":"Use refresh tokens",
+"oidcRPMetaDataOptionsRefreshTokenRotation":"Invalidate refresh tokens after use",
 "oidcRPMetaDataOptionsRequestUris":"Allowed URLs for fetching Request Object",
 "oidcRPMetaDataOptionsRequirePKCE":"Richiedi PKCE",
 "oidcRPMetaDataOptionsRule":"Regola di accesso",
