@@ -2,7 +2,7 @@ uwsgi:
         plugins: psgi
         socket: 127.0.0.1:5000
         psgi: __APPDIR__/llng-server.psgi
-        perl-no-die-catch: false
+        perl-no-die-catch: true
         master: true
         uid: __UID__
         gid: __GID__
