@@ -655,6 +655,11 @@ function templates(tpl,key) {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAdditionalAudiences",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAdditionalAudiences",
                   "title" : "oidcRPMetaDataOptionsAdditionalAudiences"
+               },
+               {
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsTokenXAuthorizedRP",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsTokenXAuthorizedRP",
+                  "title" : "oidcRPMetaDataOptionsTokenXAuthorizedRP"
                }
             ],
             "id" : "oidcRPMetaDataOptionsAdvanced",
@@ -690,6 +695,13 @@ function templates(tpl,key) {
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequirePKCE",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRequirePKCE",
                   "title" : "oidcRPMetaDataOptionsRequirePKCE",
+                  "type" : "bool"
+               },
+               {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRefreshTokenRotation",
+                  "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsRefreshTokenRotation",
+                  "title" : "oidcRPMetaDataOptionsRefreshTokenRotation",
                   "type" : "bool"
                },
                {

@@ -2,7 +2,7 @@
 
 package Lemonldap::NG::Manager::Build::OpenApi;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.20.0';
 
 use Lemonldap::NG::Manager::Attributes;
 use Lemonldap::NG::Manager::Api::Common qw/_listAttributes/;
@@ -2086,7 +2086,7 @@ sub openapi {
                             'type'        => 'string',
                             'description' =>
                               'The type of second factor to create',
-                            'example' => 'TOTP, U2F, UBK (Yubikey), WebAuthn'
+                            'example' => 'TOTP, UBK (Yubikey), WebAuthn'
                         },
                         'name' => {
                             'type'        => 'string',
@@ -2123,7 +2123,7 @@ sub openapi {
                         'type' => {
                             'type'        => 'string',
                             'description' => 'The type of device in use',
-                            'example' => 'TOTP, U2F, UBK (Yubikey), WebAuthn'
+                            'example' => 'TOTP, UBK (Yubikey), WebAuthn'
                         },
                         'name' => {
                             'type'        => 'string',

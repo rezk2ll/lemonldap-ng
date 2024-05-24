@@ -33,8 +33,6 @@ Authentication, users and password databases
    authmulti
    authopenid
    authremote
-   utotp2f
-   u2f
    totp2f
    mail2f
    external2f

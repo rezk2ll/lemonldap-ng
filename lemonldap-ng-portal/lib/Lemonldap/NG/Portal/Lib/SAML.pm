@@ -6,8 +6,8 @@ use Lemonldap::NG::Common::Conf::SAML::Metadata;
 use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Common::FormEncode;
-use XML::Simple;
 use HTML::Entities qw(decode_entities encode_entities);
+use XML::LibXML;
 use MIME::Base64;
 use HTTP::Request;         # SOAP call
 use POSIX qw(strftime);    # Convert SAML2 date into timestamp
@@ -23,7 +23,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 with 'Lemonldap::NG::Portal::Lib::LazyLoadedConfiguration';
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.20.0';
 
 # PROPERTIES
 
@@ -37,6 +37,14 @@ has spRules       => ( is => 'rw', default => sub { {} } );
 has spMacros      => ( is => 'rw', default => sub { {} } );
 has spAttributes  => ( is => 'rw', default => sub { {} } );
 has spOptions     => ( is => 'rw', default => sub { {} } );
+
+# XML parser
+has parser => (
+    is      => 'rw',
+    builder => sub {
+        return XML::LibXML->new( load_ext_dtd => 0, expand_entities => 0 );
+    }
+);
 
 # return LWP::UserAgent object
 has ua => (
@@ -959,16 +967,14 @@ sub getOrganizationName {
     return unless $node;
 
     # Extract organization name
-    my $org_name;
-    eval {
-        my $xs   = XML::Simple->new();
-        my $data = $xs->XMLin( $node, ForceContent => 1 );
-        $org_name = $data->{OrganizationName}->{content};
-    };
-    if ($@) {
-        $self->logger->warn("Could not parse organization name for $idp: $@");
+    my $data = eval { $self->parser->parse_string($node)->documentElement };
+    if ( my $exception = $@ ) {
+        $self->logger->warn("Could not parse Organization for $idp: $@");
     }
-    return $org_name;
+    return unless $data;
+    return $data->getElementsByTagNameNS(
+        "urn:oasis:names:tc:SAML:2.0:metadata",
+        'OrganizationName' )->string_value;
 }
 
 ## @method string getNextProviderId(Lasso::Logout logout)
@@ -1561,23 +1567,10 @@ sub getAttributeValue {
         # Attribute is found, return its content
         my @attr_values = $_->AttributeValue();
 
-        foreach (@attr_values) {
-            my $xs   = XML::Simple->new();
-            my $data = eval { $xs->XMLin( $_->dump() ) };
-            if ($@) {
-                $self->logger->error("Unable to decode a SAML attribute: $@");
-            }
-            else {
-                my $content = $data->{content};
-                $value .= $content . $self->conf->{multiValuesSeparator}
-                  if $content;
-            }
-        }
-        $value =~ s/$self->{conf}->{multiValuesSeparator}$// if $value;
-
-        # Encode UTF-8 if force_utf8 flag
-        $value = encode( "utf8", $value ) if $force_utf8;
-
+        $value = join(
+            $self->{conf}->{multiValuesSeparator},
+            map { $_->any->content || () } @attr_values
+        );
     }
 
     return $value;

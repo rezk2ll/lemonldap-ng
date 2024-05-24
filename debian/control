@@ -20,7 +20,6 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libcrypt-openssl-x509-perl <!nocheck>,
                      libcrypt-urandom-perl <!nocheck>,
                      libcrypt-rijndael-perl <!nocheck>,
-                     libcrypt-u2f-server-perl <!nocheck>,
                      libdatetime-format-rfc3339-perl <!nocheck>,
                      libdbd-sqlite3-perl <!nocheck>,
                      libdbi-perl <!nocheck>,
@@ -64,7 +63,6 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libwww-perl <!nocheck>,
                      libxml-libxml-perl <!nocheck>,
                      libxml-libxslt-perl <!nocheck>,
-                     libxml-simple-perl <!nocheck>,
                      libtest-leaktrace-perl <!nocheck>,
                      python3-sphinx,
                      python3-sphinx-bootstrap-theme,
@@ -254,8 +252,7 @@ Recommends: libapache-session-browseable-perl,
 Suggests: libconvert-base32-perl,
           libnet-ldap-perl,
           libsoap-lite-perl,
-          libxml-libxml-perl,
-          libxml-simple-perl
+          libxml-libxml-perl
 Description: Lemonldap::NG common files
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
@@ -283,8 +280,7 @@ Depends: ${misc:Depends},
          lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uwsgi-app (= ${binary:Version}) | apache2 | httpd-cgi
 Recommends: lemonldap-ng-doc (= ${binary:Version}),
             libxml-libxml-perl,
-            libxml-libxslt-perl,
-            libxml-simple-perl
+            libxml-libxslt-perl
 Suggests: libclone-perl,
           libregexp-assemble-perl
 Pre-Depends: debconf
@@ -329,7 +325,6 @@ Recommends: fonts-urw-base35 | gsfonts,
 Suggests: crowdsec,
           gpg,
           libauthen-radius-perl,
-          libcrypt-u2f-server-perl,
           libdbi-perl,
           libgeoip2-perl,
           libglib-perl,
@@ -360,4 +355,4 @@ Description: Lemonldap::NG authentication portal part
  .
  You may have to install some suggested packages depending on plugins you
  enabled. For example, libgd-securityimage-perl and fonts-urw-base35 are needed
- if you want to use Captcha, libcrypt-u2f-server-perl for U2F features,...
+ if you want to use Captcha,...

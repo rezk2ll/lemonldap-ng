@@ -712,13 +712,6 @@ twitterAuthnLevel                                       Twitter authentication l
 twitterKey                                                                                                                                   ✔
 twitterSecret                                                                                                                                ✔
 twitterUserField                                                                                                                             ✔
-u2fActivation                                           U2F activation                                                                       ✔
-u2fAuthnLevel                                           Authentication level for users authentified by password+U2F                          ✔
-u2fLabel                                                Portal label for U2F                                                                 ✔
-u2fLogo                                                 Custom logo for U2F                                                                  ✔
-u2fSelfRegistration                                     U2F self registration activation                                                     ✔
-u2fTTL                                                  U2F device time to live                                                              ✔
-u2fUserCanRemoveKey                                     Authorize users to remove existing U2F key                                           ✔
 upgradeSession                                          Upgrade session activation                                                           ✔
 useRedirectOnError                                      Use 302 redirect code for error (500)                                                       ✔
 useRedirectOnForbidden                                  Use 302 redirect code for forbidden (403)                                            ✔
@@ -728,10 +721,6 @@ userDB                                                  User module             
 userLogger                                              User actions logger                                                                  ✔      ✔       ✔       ✔
 userPivot                                                                                                                                    ✔
 userSyslogFacility                                      Syslog logger user-actions facility                                                  ✔      ✔       ✔       ✔
-utotp2fActivation                                       UTOTP activation (mixed U2F/TOTP module)                                             ✔
-utotp2fAuthnLevel                                       Authentication level for users authentified by password+(U2F or TOTP)                ✔
-utotp2fLabel                                            Portal label for U2F+TOTP                                                            ✔
-utotp2fLogo                                             Custom logo for U2F+TOTP                                                             ✔
 vhostOptions                                                                                                                                 ✔                      [1]
 viewerAllowBrowser                                      Allow configuration browser                                                          ✔                      ✔
 viewerAllowDiff                                         Allow configuration diff                                                             ✔                      ✔

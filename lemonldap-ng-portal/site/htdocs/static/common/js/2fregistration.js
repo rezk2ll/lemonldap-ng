@@ -36,9 +36,7 @@ LemonLDAP::NG 2F registration script
 
   delete2F = function(device, epoch, prefix) {
     if (!prefix) {
-      if (device === 'U2F') {
-        prefix = 'u';
-      } else if (device === 'UBK') {
+      if (device === 'UBK') {
         prefix = 'yubikey';
       } else if (device === 'TOTP') {
         prefix = 'totp';

@@ -14,7 +14,7 @@
 
 package Lemonldap::NG::Manager::Build::CTrees;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.20.0';
 
 sub cTrees {
     return {
@@ -245,6 +245,7 @@ sub cTrees {
                             'oidcRPMetaDataOptionsRefreshToken',
                             'oidcRPMetaDataOptionsUserIDAttr',
                             'oidcRPMetaDataOptionsAdditionalAudiences',
+                            'oidcRPMetaDataOptionsTokenXAuthorizedRP',
                         ]
                     },
                     {
@@ -259,6 +260,7 @@ sub cTrees {
                         form  => 'simpleInputContainer',
                         nodes => [
                             'oidcRPMetaDataOptionsRequirePKCE',
+                            'oidcRPMetaDataOptionsRefreshTokenRotation',
                             'oidcRPMetaDataOptionsAllowOffline',
                             'oidcRPMetaDataOptionsAllowPasswordGrant',
                             'oidcRPMetaDataOptionsAllowClientCredentialsGrant',

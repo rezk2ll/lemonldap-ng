@@ -24,7 +24,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 );
 use String::Random qw/random_string/;
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.20.0';
 
 extends qw(
   Lemonldap::NG::Portal::Main::Issuer
@@ -1385,7 +1385,7 @@ sub token {
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect TOKEN URL");
 
-    my $rp = $self->checkEndPointAuthenticationCredentials($req);
+    my ($rp) = $self->checkEndPointAuthenticationCredentials($req);
     return $self->invalidClientResponse($req) unless ($rp);
 
     my $grant_type = $req->param('grant_type') || '';
@@ -1826,7 +1826,8 @@ sub _handleAuthorizationCodeGrant {
 
         $self->logger->debug("Generated offline refresh token: $refresh_token");
 
-        $sid = $self->getSidFromSession( $rp, $refreshTokenSession );
+        $sid = $self->getSidFromSession( $rp,
+            { _session_id => $refreshTokenSession->id } );
     }
 
     # For online access, if configured
@@ -1837,6 +1838,7 @@ sub _handleAuthorizationCodeGrant {
                 redirect_uri    => $codeSession->data->{redirect_uri},
                 scope           => $scope,
                 client_id       => $client_id,
+                _session_uid    => $apacheSession->data->{_user},
                 user_session_id => $codeSession->data->{user_session_id},
                 grant_type      => "authorizationcode",
             },
@@ -1921,9 +1923,9 @@ sub _handleAuthorizationCodeGrant {
 }
 
 sub _handleRefreshTokenGrant {
-    my ( $self, $req, $rp ) = @_;
-    my $client_id = $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
-    my $refresh_token = $req->param('refresh_token');
+    my ( $self, $req, $rp, $refresh_token, $client_id ) = @_;
+    $client_id     ||= $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsClientID};
+    $refresh_token ||= $req->param('refresh_token');
 
     unless ($refresh_token) {
         $self->logger->error("Missing refresh_token parameter");
@@ -1938,6 +1940,8 @@ sub _handleRefreshTokenGrant {
         $self->logger->error("Unable to find OIDC session $refresh_token");
         return $self->sendOIDCError( $req, 'invalid_request', 400 );
     }
+
+    $refreshSession = $self->_rotateRefreshSession( $rp, $refreshSession );
 
     # Check we have the same client_id value
     unless ( $client_id eq $refreshSession->data->{client_id} ) {
@@ -2080,17 +2084,61 @@ sub _handleRefreshTokenGrant {
          $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsAccessTokenExpiration}
       || $self->conf->{oidcServiceAccessTokenExpiration};
 
+    my $need_to_update_refresh_token =
+      ( $refresh_token ne $refreshSession->id );
+
     my $token_response = {
         access_token => "$access_token",
         token_type   => 'Bearer',
         expires_in   => $expires_in + 0,
+        (
+            $need_to_update_refresh_token
+            ? ( refresh_token => $refreshSession->id )
+            : ()
+        ),
         ( $id_token ? ( id_token => "$id_token" ) : () ),
     };
 
     $self->logger->debug("Send token response");
 
     return $self->p->sendJSONresponse( $req, $token_response );
+}
 
+sub _rotateRefreshSession {
+    my ( $self, $rp, $refreshSession ) = @_;
+
+    if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsRefreshTokenRotation} )
+    {
+        $self->logger->debug("Creating new refresh token for $rp");
+
+        my $newRefreshSession =
+          $self->newRefreshToken( $rp, $refreshSession->data );
+
+        if ($newRefreshSession) {
+            $self->logger->debug(
+                "Generated new refresh token: " . $newRefreshSession->id );
+
+            my $old_refresh_token = $refreshSession->id;
+            if ( $refreshSession->remove ) {
+                $self->logger->debug(
+                    "Removed old refresh token: $old_refresh_token");
+            }
+            else {
+                $self->logger->error(
+                    "Failed to remove old refresh token $old_refresh_token: "
+                      . $refreshSession->error );
+            }
+
+            return $newRefreshSession;
+
+        }
+        else {
+            $self->logger->error(
+                "Unable to create OIDC session for refresh_token");
+            return $refreshSession;
+        }
+    }
+    return $refreshSession;
 }
 
 # Handle userinfo endpoint
@@ -2204,12 +2252,13 @@ sub introspection {
     $req->data->{dropCsp} = 1 if $self->conf->{oidcDropCspHeaders};
     $self->logger->debug("URL detected as an OpenID Connect INTROSPECTION URL");
 
-    my $rp = $self->checkEndPointAuthenticationCredentials($req);
+    my ( $rp, $authMethod ) =
+      $self->checkEndPointAuthenticationCredentials($req);
     return $self->invalidClientResponse($req) unless ($rp);
 
-    if ( $self->rpOptions->{$rp}->{oidcRPMetaDataOptionsPublic} ) {
+    if ( !$authMethod or $authMethod eq 'none' ) {
         $self->logger->error(
-            "Public clients are not allowed to acces the introspection endpoint"
+"Unauthenticated clients are not allowed to access the introspection endpoint"
         );
         return $self->sendOIDCError( $req, 'unauthorized_client', 401 );
     }

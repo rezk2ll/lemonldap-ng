@@ -4,7 +4,7 @@ package Lemonldap::NG::Portal::Main::Constants;
 use strict;
 use Exporter 'import';
 
-our $VERSION = '2.19.0';
+our $VERSION = '2.20.0';
 
 use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::Main';
 use constant URIRE =>
@@ -90,7 +90,6 @@ use constant {
     PE_REGISTERALREADYEXISTS             => 80,
     PE_NOTOKEN                           => 81,
     PE_TOKENEXPIRED                      => 82,
-    PE_U2FFAILED                         => 83,
     PE_UNAUTHORIZEDPARTNER               => 84,
     PE_RENEWSESSION                      => 85,
     PE_WAIT                              => 86,
@@ -214,7 +213,6 @@ sub portalConsts {
         '80'  => 'PE_REGISTERALREADYEXISTS',
         '81'  => 'PE_NOTOKEN',
         '82'  => 'PE_TOKENEXPIRED',
-        '83'  => 'PE_U2FFAILED',
         '84'  => 'PE_UNAUTHORIZEDPARTNER',
         '85'  => 'PE_RENEWSESSION',
         '86'  => 'PE_WAIT',
@@ -321,7 +319,6 @@ our @EXPORT_OK = (
     'PE_REGISTERALREADYEXISTS',
     'PE_NOTOKEN',
     'PE_TOKENEXPIRED',
-    'PE_U2FFAILED',
     'PE_UNAUTHORIZEDPARTNER',
     'PE_RENEWSESSION',
     'PE_WAIT',

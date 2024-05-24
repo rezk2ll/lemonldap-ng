@@ -70,17 +70,6 @@ look at the module documentation, for example:
 Tips
 ----
 
-Kerberos
-~~~~~~~~
-
-The Kerberos configuration is quite complex. You can find some
-configuration tips :doc:`on this page<kerberos>`.
-
-
-.. tip::
-
-    Prefer new :doc:`Kerberos<authkerberos>` module.
-
 Compatibility with Identity Provider modules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

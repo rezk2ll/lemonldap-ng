@@ -110,11 +110,6 @@ License: Expat
 Comment: downloaded from
  https://commons.wikimedia.org/wiki/File:Octicons-mark-github.svg
 
-Files: lemonldap-ng-portal/site/htdocs/static/bootstrap/u2f.png
-Copyright: Bautsch <https://commons.wikimedia.org/wiki/User:Bautsch>
-License: CC0-1.0
-Comment: Downloaded from https://commons.wikimedia.org
-
 Files: lemonldap-ng-portal/site/htdocs/static/common/icons/sfa_manager.png
 Copyright: Christophe Maudoux <chrmdx@gmail.com>
 License: CC-3
@@ -268,10 +263,6 @@ Files: lemonldap-ng-portal/site/htdocs/static/bwr/qrious/*
 Copyright: 2017, Alasdair Mercer
  2010, Tom Zerucha
 License: GPL-3+
-
-Files: lemonldap-ng-portal/site/htdocs/static/common/js/u2f-api.*
-Copyright: 2014-2015, Google Inc.
-License: BSD-3-Clause
 
 Files: lemonldap-ng-portal/site/htdocs/static/common/apps/*
  doc/sources/admin/icons/*

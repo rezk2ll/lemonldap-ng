@@ -17,7 +17,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.18.0';
+our $VERSION = '2.20.0';
 
 sub tree {
     return [ {
@@ -984,15 +984,6 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'utotp2f',
-                            help  => 'utotp2f.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'utotp2fActivation', 'utotp2fAuthnLevel',
-                                'utotp2fLabel',      'utotp2fLogo'
-                            ]
-                        },
-                        {
                             title => 'totp2f',
                             help  => 'totp2f.html',
                             form  => 'simpleInputContainer',
@@ -1009,17 +1000,6 @@ sub tree {
                                 'totp2fLabel',
                                 'totp2fLogo',
                                 'totp2fTTL'
-                            ]
-                        },
-                        {
-                            title => 'u2f',
-                            help  => 'u2f.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'u2fActivation',       'u2fSelfRegistration',
-                                'u2fUserCanRemoveKey', 'u2fAuthnLevel',
-                                'u2fLabel',            'u2fLogo',
-                                'u2fTTL'
                             ]
                         },
                         {
