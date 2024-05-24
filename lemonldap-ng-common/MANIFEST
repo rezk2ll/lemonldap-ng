@@ -46,10 +46,13 @@ lib/Lemonldap/NG/Common/Logger/_Duplicate.pm
 lib/Lemonldap/NG/Common/Logger/Apache2.pm
 lib/Lemonldap/NG/Common/Logger/Dispatch.pm
 lib/Lemonldap/NG/Common/Logger/Log4perl.pm
+lib/Lemonldap/NG/Common/Logger/MessageBroker.pm
 lib/Lemonldap/NG/Common/Logger/Null.pm
 lib/Lemonldap/NG/Common/Logger/Sentry.pm
 lib/Lemonldap/NG/Common/Logger/Std.pm
 lib/Lemonldap/NG/Common/Logger/Syslog.pm
+lib/Lemonldap/NG/Common/MessageBroker/Default.pm
+lib/Lemonldap/NG/Common/MessageBroker/Redis.pm
 lib/Lemonldap/NG/Common/Module.pm
 lib/Lemonldap/NG/Common/Notifications.pm
 lib/Lemonldap/NG/Common/Notifications/DBI.pm

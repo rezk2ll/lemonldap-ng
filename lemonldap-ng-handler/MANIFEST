@@ -30,6 +30,7 @@ lib/Lemonldap/NG/Handler/Lib/ZimbraPreAuth.pm
 lib/Lemonldap/NG/Handler/Main.pm
 lib/Lemonldap/NG/Handler/Main/Init.pm
 lib/Lemonldap/NG/Handler/Main/Jail.pm
+lib/Lemonldap/NG/Handler/Main/MsgActions.pm
 lib/Lemonldap/NG/Handler/Main/Reload.pm
 lib/Lemonldap/NG/Handler/Main/Run.pm
 lib/Lemonldap/NG/Handler/Main/SharedVariables.pm
