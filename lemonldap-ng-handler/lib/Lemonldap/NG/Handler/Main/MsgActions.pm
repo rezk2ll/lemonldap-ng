@@ -3,12 +3,12 @@ package Lemonldap::NG::Handler::Main::MsgActions;
 use strict;
 use Exporter 'import';
 
-our @EXPORT = qw(msgActions addAction);
+our @EXPORT = qw(msgActions addMsgAction delMsgAction);
 
 our $msgActions = {
     checkConf => sub {
         my ( $class, $msg, $req ) = @_;
-        unless ( $class->checkConf(1) ) {
+        unless ( $class->checkConf() ) {
             $class->logger->error("$class: No configuration found");
             $req->data->{noTry} = 1;
         }
@@ -21,9 +21,14 @@ our $msgActions = {
 
 sub msgActions { return $msgActions }
 
-sub addAction {
+sub addMsgAction {
     my ( $name, $sub ) = @_;
     $msgActions->{$name} = $sub;
+}
+
+sub delMsgAction {
+    my ( $name ) = @_;
+    delete $msgActions->{$name};
 }
 
 1;

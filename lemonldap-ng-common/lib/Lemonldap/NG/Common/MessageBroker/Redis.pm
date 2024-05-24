@@ -60,8 +60,8 @@ sub getNextMessage {
     my ( $self, $channel ) = @_;
     return undef
       unless $self->{messages}{$channel};
-    return shift( @{ $self->{messages}{$channel} } )
-      if @{ $self->{messages}{$channel} };
+
+    # Infinite loop until one message is seen
     $self->{redis}->wait_for_messages(1)
       while ( !@{ $self->{messages}{$channel} } );
     return shift( @{ $self->{messages}{$channel} } );
