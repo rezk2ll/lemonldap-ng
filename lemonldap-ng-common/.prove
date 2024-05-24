@@ -1,116 +1,251 @@
 ---
-generation: 4
-last_run_time: 1578123129.50232
+generation: 5
+last_run_time: 1716554671.34763
 tests:
   t/01-Common-Conf.t:
-    elapsed: 0.0778188705444336
-    gen: 4
-    last_pass_time: 1578123128.45887
+    elapsed: 0.251824855804443
+    gen: 5
+    last_pass_time: 1716554671.05781
     last_result: 0
-    last_run_time: 1578123128.45887
+    last_run_time: 1716554671.05781
     last_todo: 0
-    mtime: 1569964806
-    seq: 23
-    total_passes: 3
+    mtime: 1715401237
+    seq: 45
+    total_passes: 4
   t/02-Common-Conf-File.t:
-    elapsed: 0.100058794021606
-    gen: 4
-    last_pass_time: 1578123128.56113
+    elapsed: 0.202218055725098
+    gen: 5
+    last_pass_time: 1716554671.00992
     last_result: 0
-    last_run_time: 1578123128.56113
+    last_run_time: 1716554671.00992
     last_todo: 0
-    mtime: 1566161618
-    seq: 24
-    total_passes: 3
+    mtime: 1712582590
+    seq: 36
+    total_passes: 4
+  t/02-Common-Conf-Overlay.t:
+    elapsed: 0.204039096832275
+    gen: 5
+    last_pass_time: 1716554671.01353
+    last_result: 0
+    last_run_time: 1716554671.01353
+    last_todo: 0
+    seq: 37
+    total_passes: 1
+  t/02-Common-Conf-ServerEnv.t:
+    elapsed: 0.205245971679688
+    gen: 5
+    last_pass_time: 1716554671.01664
+    last_result: 0
+    last_run_time: 1716554671.01664
+    last_todo: 0
+    seq: 38
+    total_passes: 1
   t/03-Common-Conf-CDBI.t:
-    elapsed: 0.137683868408203
-    gen: 4
-    last_pass_time: 1578123128.70288
+    elapsed: 0.210416078567505
+    gen: 5
+    last_pass_time: 1716554671.02367
     last_result: 0
-    last_run_time: 1578123128.70288
+    last_run_time: 1716554671.02367
     last_todo: 0
-    mtime: 1569964806
-    seq: 25
-    total_passes: 3
+    mtime: 1712582590
+    seq: 40
+    total_passes: 4
   t/03-Common-Conf-RDBI.t:
-    elapsed: 0.177071094512939
-    gen: 4
-    last_pass_time: 1578123128.88517
+    elapsed: 0.21312403678894
+    gen: 5
+    last_pass_time: 1716554671.02832
     last_result: 0
-    last_run_time: 1578123128.88517
+    last_run_time: 1716554671.02832
     last_todo: 0
-    mtime: 1569964806
-    seq: 26
-    total_passes: 3
+    mtime: 1712582590
+    seq: 41
+    total_passes: 4
   t/05-Common-Conf-LDAP.t:
-    elapsed: 0.149403095245361
-    gen: 4
-    last_pass_time: 1578123129.0415
+    elapsed: 0.202935934066772
+    gen: 5
+    last_pass_time: 1716554671.02031
     last_result: 0
-    last_run_time: 1578123129.0415
+    last_run_time: 1716554671.02031
     last_todo: 0
-    mtime: 1569964806
-    seq: 27
-    total_passes: 3
+    mtime: 1715401237
+    seq: 39
+    total_passes: 4
+  t/10-PSGI-Request.t:
+    elapsed: 0.213413000106812
+    gen: 5
+    last_pass_time: 1716554671.03314
+    last_result: 0
+    last_run_time: 1716554671.03314
+    last_todo: 0
+    seq: 42
+    total_passes: 1
+  t/10-PSGI.t:
+    elapsed: 0.184188842773438
+    gen: 5
+    last_pass_time: 1716554671.0063
+    last_result: 0
+    last_run_time: 1716554671.0063
+    last_todo: 0
+    seq: 35
+    total_passes: 1
+  t/11-Logger.t:
+    elapsed: 0.216771841049194
+    gen: 5
+    last_pass_time: 1716554671.04133
+    last_result: 0
+    last_run_time: 1716554671.04133
+    last_todo: 0
+    seq: 44
+    total_passes: 1
+  t/11-TestLogger.t:
+    elapsed: 0.208574056625366
+    gen: 5
+    last_pass_time: 1716554671.03691
+    last_result: 0
+    last_run_time: 1716554671.03691
+    last_todo: 0
+    seq: 43
+    total_passes: 1
   t/30-Common-Safelib.t:
-    elapsed: 0.0528419017791748
-    gen: 4
-    last_pass_time: 1578123129.09654
+    elapsed: 0.164584875106812
+    gen: 5
+    last_pass_time: 1716554671.00249
     last_result: 0
-    last_run_time: 1578123129.09654
+    last_run_time: 1716554671.00249
     last_todo: 0
-    mtime: 1566161617
-    seq: 28
-    total_passes: 3
+    mtime: 1712582590
+    seq: 34
+    total_passes: 4
   t/35-Common-Crypto.t:
-    elapsed: 0.0592200756072998
-    gen: 4
-    last_pass_time: 1578123129.15818
+    elapsed: 0.104712009429932
+    gen: 5
+    last_pass_time: 1716554671.10963
     last_result: 0
-    last_run_time: 1578123129.15818
+    last_run_time: 1716554671.10963
     last_todo: 0
-    mtime: 1569964806
-    seq: 29
-    total_passes: 3
+    mtime: 1712582590
+    seq: 49
+    total_passes: 4
   t/36-Common-Regexp.t:
-    elapsed: 0.0458948612213135
-    gen: 4
-    last_pass_time: 1578123129.20648
+    elapsed: 0.0773730278015137
+    gen: 5
+    last_pass_time: 1716554671.08698
     last_result: 0
-    last_run_time: 1578123129.20648
+    last_run_time: 1716554671.08698
     last_todo: 0
-    mtime: 1569964806
-    seq: 30
-    total_passes: 3
+    mtime: 1712582590
+    seq: 46
+    total_passes: 4
+  t/37-Common-TOTP.t:
+    elapsed: 0.095149040222168
+    gen: 5
+    last_pass_time: 1716554671.1082
+    last_result: 0
+    last_run_time: 1716554671.1082
+    last_todo: 0
+    seq: 48
+    total_passes: 1
   t/40-Common-Session.t:
-    elapsed: 0.0870401859283447
-    gen: 4
-    last_pass_time: 1578123129.29591
+    elapsed: 0.123644113540649
+    gen: 5
+    last_pass_time: 1716554671.13992
     last_result: 0
-    last_run_time: 1578123129.29591
+    last_run_time: 1716554671.13992
     last_todo: 0
-    mtime: 1569964806
-    seq: 31
-    total_passes: 3
+    mtime: 1712582590
+    seq: 50
+    total_passes: 4
+  t/41-Common-EmailAddress.t:
+    elapsed: 0.0748867988586426
+    gen: 5
+    last_pass_time: 1716554671.09427
+    last_result: 0
+    last_run_time: 1716554671.09427
+    last_todo: 0
+    seq: 47
+    total_passes: 1
+  t/45-importMetadata-config.t:
+    elapsed: 0.323724031448364
+    gen: 5
+    last_pass_time: 1716554671.34707
+    last_result: 0
+    last_run_time: 1716554671.34707
+    last_todo: 0
+    seq: 59
+    total_passes: 1
+  t/45-importMetadata.t:
+    elapsed: 0.286436080932617
+    gen: 5
+    last_pass_time: 1716554671.31429
+    last_result: 0
+    last_run_time: 1716554671.31429
+    last_todo: 0
+    seq: 58
+    total_passes: 1
   t/50-Combination-Parser.t:
-    elapsed: 0.07663893699646
-    gen: 4
-    last_pass_time: 1578123129.37738
+    elapsed: 0.11336088180542
+    gen: 5
+    last_pass_time: 1716554671.14514
     last_result: 0
-    last_run_time: 1578123129.37738
+    last_run_time: 1716554671.14514
     last_todo: 0
-    mtime: 1569964806
-    seq: 32
-    total_passes: 3
+    mtime: 1712582590
+    seq: 51
+    total_passes: 4
+  t/60-Hashed-Session.t:
+    elapsed: 0.156521797180176
+    gen: 5
+    last_pass_time: 1716554671.19309
+    last_result: 0
+    last_run_time: 1716554671.19309
+    last_todo: 0
+    seq: 52
+    total_passes: 1
+  t/60-Session-Cache.t:
+    elapsed: 0.169061899185181
+    gen: 5
+    last_pass_time: 1716554671.20956
+    last_result: 0
+    last_run_time: 1716554671.20956
+    last_todo: 0
+    seq: 53
+    total_passes: 1
+  t/60-Session-Cli.t:
+    elapsed: 0.214707136154175
+    gen: 5
+    last_pass_time: 1716554671.26484
+    last_result: 0
+    last_run_time: 1716554671.26484
+    last_todo: 0
+    seq: 56
+    total_passes: 1
+  t/60-U2F-Migrate.t:
+    elapsed: 0.223772048950195
+    gen: 5
+    last_pass_time: 1716554671.2881
+    last_result: 0
+    last_run_time: 1716554671.2881
+    last_todo: 0
+    seq: 57
+    total_passes: 1
+  t/70-User-Agent.t:
+    elapsed: 0.116680145263672
+    gen: 5
+    last_pass_time: 1716554671.21067
+    last_result: 0
+    last_run_time: 1716554671.21067
+    last_todo: 0
+    seq: 54
+    total_passes: 1
   t/99-pod.t:
-    elapsed: 0.122200965881348
-    gen: 4
-    last_pass_time: 1578123129.50186
+    elapsed: 0.149667024612427
+    gen: 5
+    last_pass_time: 1716554671.25447
     last_result: 0
-    last_run_time: 1578123129.50186
+    last_run_time: 1716554671.25447
     last_todo: 0
-    mtime: 1566161617
-    seq: 33
-    total_passes: 3
+    mtime: 1712582590
+    seq: 55
+    total_passes: 4
 version: 1
 ...
