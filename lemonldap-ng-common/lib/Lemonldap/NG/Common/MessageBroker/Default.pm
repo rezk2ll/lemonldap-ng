@@ -7,41 +7,46 @@ use strict;
 
 our $lastCheck = time;
 
+our $channels = {llng_events => []};
+
 sub new {
     my ( $class, $conf ) = @_;
     return bless {
         checkTime => $conf->{checkTime},
-        channels  => {
-            llng_events => [],
-        }
       },
       $class;
 }
 
 sub publish {
     my ( $self, $channel, $msg ) = @_;
-    $self->{channels}->{$channel} = []
-      unless ref( $self->{channels}->{$channel} );
-    push @{ $self->{channels}->{$channel} }, $msg;
+    die unless $channel and $msg;
+    $channels->{$channel} = []
+      unless ref( $channels->{$channel} );
+    push @{ $channels->{$channel} }, $msg;
 }
 
 sub subscribe { }
 
 sub checkNextMessage {
-    my ( $self, $channel ) = @_;
-    my $now = time;
-    if ( $now >= $lastCheck + $self->{checkTime} ) {
+    my ( $self, $channel, $delay ) = @_;
+    if ( time >= $lastCheck + $self->{checkTime} ) {
         $self->publish( 'llng_events', { action => 'checkConf' } );
     }
-    if ( ref( $self->{channels}->{$channel} )
-        and @{ $self->{channels}->{$channel} } )
+    if ( ref( $channels->{$channel} )
+        and @{ $channels->{$channel} } )
     {
-        return shift @{ $self->{channels}->{$channel} };
+        return shift @{ $channels->{$channel} };
     }
 }
 
 sub getNextMessage {
-    die __PACKAGE__ . ' is not a real message broker';
+    my ( $self, $channel ) = @_;
+    while(1) {
+        if ( my $msg = $self->checkNextMessage($channel) ) {
+            return $msg;
+        }
+        sleep 1;
+    }
 }
 
 1;

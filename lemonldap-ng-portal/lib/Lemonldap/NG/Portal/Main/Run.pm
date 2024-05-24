@@ -742,7 +742,7 @@ sub _deleteSession {
         ) unless ($preserveCookie);
     }
 
-    HANDLER->localUnlog( $req, $session->id );
+    HANDLER->publishEvent( $req, { action => 'unlog', id => $session->id } );
     $session->remove;
 
     # Create an obsolete cookie to remove it

@@ -45,12 +45,12 @@ sub subscribe {
 }
 
 sub checkNextMessage {
-    my ( $self, $channel ) = @_;
+    my ( $self, $channel, $delay ) = @_;
     return undef
       unless $self->{messages}{$channel};
     return shift( @{ $self->{messages}{$channel} } )
       if @{ $self->{messages}{$channel} };
-    $self->{redis}->wait_for_messages(0.1);
+    $self->{redis}->wait_for_messages( $delay || 0.1 );
     return shift( @{ $self->{messages}{$channel} } )
       if @{ $self->{messages}{$channel} };
     return;

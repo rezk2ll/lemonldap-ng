@@ -86,25 +86,60 @@ sub checkType {
     my ( $class, $req ) = @_;
 
     # Always launch "checkConf" task if never started
-    msgActions->{checkConf}->($class, {}, $req) unless $class->tsv and %{$class->tsv};
+    msgActions->{checkConf}->( $class, {}, $req )
+      unless $class->tsv and %{ $class->tsv };
 
     my $now = time;
     if ( $now - $class->lastCheckMsg > $class->checkMsg ) {
-        unless ( $class->tsv->{msgBrokerReader} ) {
-            $class->logger->error('Not initialized');
-            return 'Fail';
-        }
-        if ( my $msg = $class->tsv->{msgBrokerReader}->checkNextMessage('llng_events') ) {
-            $class->logger->error( 'Malformed message: ' . JSON::to_json($msg) )
-              unless $msg->{action} and my $sub = msgActions->{ $msg->{action} };
-            $sub->($class, $msg, $req);
-        }
-        $class->lastCheckMsg($now);
+        defined( $class->checkEvent($req) ) or return 'Fail';
     }
     my $vhost = $class->resolveAlias($req);
     return ( defined $class->tsv->{type}->{$vhost} )
       ? $class->tsv->{type}->{$vhost}
       : 'Main';
+}
+
+sub checkEvent {
+    my ( $class, $req, $force ) = @_;
+    unless ( $class->tsv->{msgBrokerReader} ) {
+        $class->logger->error('Not initialized');
+        return;
+    }
+    my $ret = '';
+    if ( my $msg =
+        $class->tsv->{msgBrokerReader}
+        ->checkNextMessage( 'llng_events', $force ) )
+    {
+        if ( $msg->{action} ) {
+            if ( my $sub = msgActions->{ $msg->{action} } ) {
+                $sub->( $class, $msg, $req );
+                $ret = $msg->{action};
+            }
+            else {
+                $class->logger->error("Unkown action $msg->{action}");
+            }
+        }
+        else {
+            $class->logger->error(
+                'Malformed message: ' . JSON::to_json($msg) );
+        }
+    }
+    $class->lastCheckMsg(time);
+    return $ret;
+}
+
+sub publishEvent {
+    my ( $class, $req, $msg ) = @_;
+    die unless $msg;
+    unless ( $class->tsv->{msgBrokerWriter} ) {
+        $class->logger->error('Not initialized');
+        return;
+    }
+    $class->tsv->{msgBrokerWriter}->publish( 'llng_events', $msg );
+    my $ret;
+    my $start = time;
+    do { $ret = $class->checkEvent( $req, 1 ) }
+      while ( $ret ne $msg->{action} and time < $start + 1 );
 }
 
 ## @rmethod int run
