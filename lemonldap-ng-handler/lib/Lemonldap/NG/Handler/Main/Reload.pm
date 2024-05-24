@@ -10,6 +10,7 @@ use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Crypto;
 use Lemonldap::NG::Common::Safelib;            #link protected safe Safe object
 use Lemonldap::NG::Handler::Main::Jail;
+use Lemonldap::NG::Common::MessageBroker::Constants;
 use Scalar::Util qw(weaken);
 
 use constant UNPROTECT => 1;
@@ -631,7 +632,7 @@ sub msgBrokerInit {
     eval "require $brokerClass";
     die $@ if $@;
     $class->tsv->{msgBrokerReader} = $brokerClass->new($conf);
-    $class->tsv->{msgBrokerReader}->subscribe('llng_events');
+    $class->tsv->{msgBrokerReader}->subscribe(EVENT_QUEUE);
     $class->tsv->{msgBrokerWriter} = $brokerClass->new($conf);
 }
 

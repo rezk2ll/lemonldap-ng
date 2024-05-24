@@ -11,6 +11,7 @@ use strict;
 use utf8;
 no strict 'refs';
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
+use Lemonldap::NG::Common::MessageBroker::Constants;
 
 # Import compacter
 use Lemonldap::NG::Common::Conf::Compact;
@@ -152,7 +153,7 @@ sub saveConf {
         and Lemonldap::NG::Handler::Main->tsv->{msgBrokerWriter} )
     {
         Lemonldap::NG::Handler::Main->tsv->{msgBrokerWriter}
-          ->publish( 'llng_events', { action => 'checkConf' } );
+          ->publish( EVENT_QUEUE, { action => 'checkConf' } );
     }
     else {
         eval { Lemonldap::NG::Handler::Main->reload() };

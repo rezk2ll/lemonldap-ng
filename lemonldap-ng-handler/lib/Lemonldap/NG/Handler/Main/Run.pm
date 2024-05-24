@@ -89,8 +89,8 @@ sub checkType {
     msgActions->{checkConf}->( $class, {}, $req )
       unless $class->tsv and %{ $class->tsv };
 
-    my $now = time;
-    if ( $now - $class->lastCheckMsg > $class->checkMsg ) {
+    # Check for event in events queue every 5 seconds
+    if ( time - $class->lastCheckMsg > $class->checkMsg ) {
         defined( $class->checkEvent($req) ) or return 'Fail';
     }
     my $vhost = $class->resolveAlias($req);
@@ -99,6 +99,7 @@ sub checkType {
       : 'Main';
 }
 
+# Method to check for event in events queue
 sub checkEvent {
     my ( $class, $req, $force ) = @_;
     unless ( $class->tsv->{msgBrokerReader} ) {
@@ -108,7 +109,7 @@ sub checkEvent {
     my $ret = '';
     if ( my $msg =
         $class->tsv->{msgBrokerReader}
-        ->checkNextMessage( 'llng_events', $force ) )
+        ->checkNextMessage( EVENT_QUEUE, $force ) )
     {
         if ( $msg->{action} ) {
             if ( my $sub = msgActions->{ $msg->{action} } ) {
@@ -135,7 +136,7 @@ sub publishEvent {
         $class->logger->error('Not initialized');
         return;
     }
-    $class->tsv->{msgBrokerWriter}->publish( 'llng_events', $msg );
+    $class->tsv->{msgBrokerWriter}->publish( EVENT_QUEUE, $msg );
     my $ret;
     my $start = time;
     do { $ret = $class->checkEvent( $req, 1 ) }
