@@ -646,15 +646,6 @@ sub tree {
                     ]
                 },
                 {
-                    title => 'reloadParams',
-                    help  => 'configlocation.html#configuration-reload',
-                    nodes => [
-                        'messageBroker', 'messageBrokerOptions',
-                        'reloadTimeout', 'compactConf',
-                        'reloadUrls'
-                    ]
-                },
-                {
                     title => 'plugins',
                     help  => 'start.html#plugins',
                     nodes => [
@@ -1296,6 +1287,16 @@ sub tree {
                             nodes => [
                                 'infoFormMethod',     'confirmFormMethod',
                                 'redirectFormMethod', 'activeTimer',
+                            ]
+                        },
+                        {
+                            title => 'eventsManagement',
+                            help  => 'eventsmanagement',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'messageBroker', 'messageBrokerOptions',
+                                'reloadTimeout', 'compactConf',
+                                'reloadUrls'
                             ]
                         },
                     ]
