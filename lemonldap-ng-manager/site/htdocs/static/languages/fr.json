@@ -605,6 +605,8 @@
 "menu":"Menu",
 "menuCategory":"Catégorie du menu",
 "message":"Message",
+"messageBroker":"Système pub/sub",
+"messageBrokerOptions":"Options du système pub/sub",
 "messages":"Messages",
 "modulesTitle":"Modules utilisés",
 "multiIp":"Multiples IP",

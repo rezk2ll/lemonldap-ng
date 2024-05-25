@@ -2288,6 +2288,13 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => 20,
             'type'    => 'int'
         },
+        'messageBroker' => {
+            'type' => 'PerlModule'
+        },
+        'messageBrokerOptions' => {
+            'default' => {},
+            'type'    => 'keyTextContainer'
+        },
         'multiValuesSeparator' => {
             'default' => '; ',
             'type'    => 'authParamsText'

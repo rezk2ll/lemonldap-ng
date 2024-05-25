@@ -605,6 +605,8 @@
 "menu":"תפריט",
 "menuCategory":"קטגוריית תפריט",
 "message":"הודעה",
+"messageBroker":"Pub/Sub system",
+"messageBrokerOptions":"Pub/Sub system options",
 "messages":"הודעות",
 "modulesTitle":"מודולים בשימוש",
 "multiIp":"ריבוי כתובות IP",

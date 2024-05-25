@@ -1853,6 +1853,18 @@ sub attributes {
             documentation => 'List of virtualHosts with their get parameters',
         },
 
+        # Message broker
+        messageBroker => {
+            type          => 'PerlModule',
+            documentation => 'Messages broker module',
+            flags         => 'hp',
+        },
+        messageBrokerOptions => {
+            type    => 'keyTextContainer',
+            default => {},
+            documentation => 'Options of messages broker module',
+            flags         => 'hp',
+        },
         # Jitsi Meet tokens issuer
         issuerDBJitsiMeetTokensActivation => {
             type          => 'bool',

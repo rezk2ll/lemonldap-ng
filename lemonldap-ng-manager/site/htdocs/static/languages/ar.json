@@ -605,6 +605,8 @@
 "menu":"القائمة",
 "menuCategory":"قائمة الاقسام",
 "message":"رسالة",
+"messageBroker":"Pub/Sub system",
+"messageBrokerOptions":"Pub/Sub system options",
 "messages":"رسائل",
 "modulesTitle":"الوحدات المستخدمة",
 "multiIp":"عنوان آي بي متعدد",

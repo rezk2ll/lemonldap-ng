@@ -197,6 +197,7 @@ sub defaultValues {
         'managerPassword'           => '',
         'max2FDevices'              => 10,
         'max2FDevicesNameLength'    => 20,
+        'messageBrokerOptions'      => {},
         'multiValuesSeparator'      => '; ',
         'mySessionAuthorizedRWKeys' => [
             '_appsListOrder',      '_oidcConnectedRP',

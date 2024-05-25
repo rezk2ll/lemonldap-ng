@@ -605,6 +605,8 @@
 "menu":"Menü",
 "menuCategory":"Menü kategorisi",
 "message":"Mesaj",
+"messageBroker":"Pub/Sub system",
+"messageBrokerOptions":"Pub/Sub system options",
 "messages":"Mesajlar",
 "modulesTitle":"Kullanılan modüller",
 "multiIp":"Çoklu IP",

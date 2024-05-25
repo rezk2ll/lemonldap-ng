@@ -605,6 +605,8 @@
 "menu":"Menu",
 "menuCategory":"Loại menu",
 "message":"Tin nhắn",
+"messageBroker":"Pub/Sub system",
+"messageBrokerOptions":"Pub/Sub system options",
 "messages":"Tin nhắn",
 "modulesTitle":"Các mô-đun đã sử dụng",
 "multiIp":"Nhiều địa chỉ IP",

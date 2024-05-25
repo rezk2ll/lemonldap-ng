@@ -605,6 +605,8 @@
 "menu":"選單",
 "menuCategory":"選單分類",
 "message":"訊息",
+"messageBroker":"Pub/Sub system",
+"messageBrokerOptions":"Pub/Sub system options",
 "messages":"訊息",
 "modulesTitle":"已使用的模組",
 "multiIp":"多 IP",

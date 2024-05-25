@@ -648,7 +648,11 @@ sub tree {
                 {
                     title => 'reloadParams',
                     help  => 'configlocation.html#configuration-reload',
-                    nodes => [ 'reloadTimeout', 'compactConf', 'reloadUrls' ]
+                    nodes => [
+                        'messageBroker', 'messageBrokerOptions',
+                        'reloadTimeout', 'compactConf',
+                        'reloadUrls'
+                    ]
                 },
                 {
                     title => 'plugins',
