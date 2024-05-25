@@ -1292,7 +1292,6 @@ sub tree {
                         {
                             title => 'eventsManagement',
                             help  => 'eventsmanagement.html',
-                            form  => 'simpleInputContainer',
                             nodes => [
                                 'messageBroker', 'messageBrokerOptions',
                                 'reloadTimeout', 'compactConf',

@@ -494,7 +494,6 @@ sub attributes {
         },
         reloadUrls => {
             type          => 'keyTextContainer',
-            help          => 'configlocation.html#configuration-reload',
             keyTest       => qr/^$Regexp::Common::URI::RFC2396::host(?::\d+)?$/,
             test          => $url,
             msgFail       => '__badUrl__',
