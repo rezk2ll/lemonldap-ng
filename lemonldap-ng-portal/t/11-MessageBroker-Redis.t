@@ -4,22 +4,29 @@ use IO::String;
 use Lemonldap::NG::Common::MessageBroker::Constants;
 use Time::Fake;
 
+our $noRedis;
+
 BEGIN {
     require 't/test-lib.pm';
-    require 't/redis/redis.pm';
+    eval 'use Redis';
+    if ($@) {
+        $noRedis++;
+    }
+    else {
+        require 't/redis/redis.pm';
+    }
 }
 
 SKIP: {
-    unless ( $ENV{LLNGTESTREDIS} ) {
-        skip "LLNGTESTREDIS isn't set", 1;
-    }
-    startRedis;
+    skip( "LLNGTESTREDIS isn't set", 1 ) unless $ENV{LLNGTESTREDIS};
+    skip( 'Redis is missing',        1 ) if $noRedis;
+    &startRedis;
     my $client = LLNG::Manager::Test->new(
         {
             ini => {
                 messageBroker        => '::Redis',
                 messageBrokerOptions => {
-                    server => REDISSERVER,
+                    server => &REDISSERVER,
                 },
             }
         }
@@ -33,7 +40,7 @@ SKIP: {
         my $pub = Lemonldap::NG::Common::MessageBroker::Redis->new(
             {
                 messageBrokerOptions => {
-                    server => REDISSERVER,
+                    server => &REDISSERVER,
                 },
             }
         );
@@ -54,7 +61,7 @@ SKIP: {
     };
 }
 
-eval { stopRedis };
+eval { &stopRedis };
 
 clean_sessions();
 done_testing();
