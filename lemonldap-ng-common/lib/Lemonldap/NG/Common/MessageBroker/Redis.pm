@@ -8,13 +8,13 @@ our $VERSION = '2.0.18';
 
 sub new {
     my $self   = bless {}, shift;
-    my (%args) = @_;
+    my $args = $_[0]->{messageBrokerOptions} // {};
 
     # Reconnection parameters
     #  - try to reconnect every 1s up to 60s
-    $args{reconnect} //= 60;
-    $args{every}     //= 1000000;
-    $self->{redis}    = Redis->new(%args);
+    $args->{reconnect} //= 60;
+    $args->{every}     //= 1000000;
+    $self->{redis}    = Redis->new(%$args);
     $self->{messages} = {};
     return $self;
 }
