@@ -149,7 +149,7 @@ sub saveConf {
         $self->setValuesFromEnv($conf);
         $self->compactConf($conf);
     }
-    if (    Lemonldap::NG::Handler::Main->tsv
+    if (    Lemonldap::NG::Handler::Main->can('tsv')
         and Lemonldap::NG::Handler::Main->tsv->{msgBrokerWriter} )
     {
         Lemonldap::NG::Handler::Main->tsv->{msgBrokerWriter}
