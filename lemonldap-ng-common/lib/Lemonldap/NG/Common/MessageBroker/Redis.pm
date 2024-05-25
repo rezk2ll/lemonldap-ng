@@ -4,7 +4,7 @@ use strict;
 use Redis;
 use JSON;
 
-our $VERSION = '2.0.18';
+our $VERSION = '2.20.0';
 
 sub new {
     my $self   = bless {}, shift;
@@ -38,7 +38,7 @@ sub subscribe {
                 print STDERR "Bad message from Redis: $@";
             }
             else {
-                push @{ $self->{messages}{$channel} }, JSON::from_json( $_[0] );
+                push @{ $self->{messages}{$channel} }, $tmp;
             }
         }
     );

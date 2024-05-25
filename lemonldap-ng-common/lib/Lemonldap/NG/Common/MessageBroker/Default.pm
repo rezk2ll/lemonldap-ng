@@ -6,6 +6,8 @@ package Lemonldap::NG::Common::MessageBroker::Default;
 use strict;
 use Lemonldap::NG::Common::MessageBroker::Constants;
 
+our $VERSION = '2.20.0';
+
 our $lastCheck = time;
 
 our $channels = {&EVENT_QUEUE => []};
