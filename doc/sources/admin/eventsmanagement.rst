@@ -130,7 +130,8 @@ Such *orders* are  read every 5 seconds, then logout and configuration updates
 are propagated in this delay.
 
 To configure this, go into "General Parameters » Advanced parameters » Events Management"
-and set **Pub/Sub** system to "Redis", "PostgreSQL" or "MQTT".
+and set **Pub/Sub** system to :ref:`Redis<PubSubRedis>`, :ref:`PostgreSQL<PubSubPg>` or
+:ref:`MQTT<PubSubMQTT>`.
 
 Then set into "**Pub/Sub system options**" the needed options depending on the
 chosen system *(see below)*.
@@ -143,6 +144,8 @@ chosen system *(see below)*.
 
    Options take place into ``messageBrokerOptions`` parameter.
 
+.. _PubSubRedis:
+
 Redis
 ~~~~~
 
@@ -153,6 +156,8 @@ Example:
 .. code-block:: perl
 
    server => "redis.example.com:3456"
+
+.. _PubSubPg:
 
 PostgreSQL
 ~~~~~~~~~~
@@ -169,6 +174,8 @@ Example:
    dbiChain    => "dbi:Pg:dbname=llng;host=localhost;port=54432",
    dbiUser     => "llng",
    dbiPassword => "llng",
+
+.. _PubSubMQTT:
 
 MQTT
 ~~~~
