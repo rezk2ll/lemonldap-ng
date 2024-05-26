@@ -51,7 +51,9 @@ lib/Lemonldap/NG/Common/Logger/Null.pm
 lib/Lemonldap/NG/Common/Logger/Sentry.pm
 lib/Lemonldap/NG/Common/Logger/Std.pm
 lib/Lemonldap/NG/Common/Logger/Syslog.pm
+lib/Lemonldap/NG/Common/MessageBroker/Constants.pm
 lib/Lemonldap/NG/Common/MessageBroker/Default.pm
+lib/Lemonldap/NG/Common/MessageBroker/Pg.pm
 lib/Lemonldap/NG/Common/MessageBroker/Redis.pm
 lib/Lemonldap/NG/Common/Module.pm
 lib/Lemonldap/NG/Common/Notifications.pm
