@@ -5,6 +5,7 @@ use Lemonldap::NG::Common::MessageBroker::Constants;
 use Time::Fake;
 
 our $noPg;
+our $started;
 
 BEGIN {
     require 't/test-lib.pm';
@@ -21,10 +22,11 @@ BEGIN {
 }
 
 SKIP: {
-    skip( "LLNGTESTPG isn't set",   1 ) unless $ENV{LLNGTESTPG};
-    skip( "One dep is missing: $@", 1 ) if $noPg;
+    skip( "LLNGTESTPG isn't set",      1 ) unless $ENV{LLNGTESTPG};
+    skip( "One dep is missing: $noPg", 1 ) if $noPg;
     eval { &startPg };
     skip( $@, 1 ) if $@;
+    $started++;
     my $client = LLNG::Manager::Test->new( {
             ini => {
                 messageBroker        => '::Pg',
@@ -100,7 +102,7 @@ SKIP: {
     };
 }
 
-eval { &stopPg };
+eval { &stopPg } if $started;
 
 clean_sessions();
 done_testing();
