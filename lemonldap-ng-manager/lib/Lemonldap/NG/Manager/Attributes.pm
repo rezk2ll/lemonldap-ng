@@ -2289,7 +2289,24 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type'    => 'int'
         },
         'messageBroker' => {
-            'type' => 'PerlModule'
+            'select' => [ {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => '::Redis',
+                    'v' => 'Redis'
+                },
+                {
+                    'k' => '::Pg',
+                    'v' => 'PostgreSQL'
+                },
+                {
+                    'k' => '::MQTT',
+                    'v' => 'MQTT'
+                }
+            ],
+            'type' => 'select'
         },
         'messageBrokerOptions' => {
             'default' => {},

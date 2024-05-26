@@ -129,20 +129,22 @@ propagate "orders":
 Such *orders* are  read every 5 seconds, then logout and configuration updates
 are propagated in this delay.
 
+To configure this, go into "General Parameters » Advanced parameters » Events Management"
+and set **Pub/Sub** system to "Redis", "PostgreSQL" or "MQTT".
 
-Configuration
-~~~~~~~~~~~~~
+Then set into "**Pub/Sub system options**" the needed options depending on the
+chosen system *(see below)*.
 
-In "General Parameters » Advanced parameters » Events Management", set
-**Pub/Sub** system to ``::Redis`` *(which is an abbreviation of
-``Lemonldap::NG::Common::MessageBroker::Redis``)* or ``::Pg``
-*(which is an abbreviation of ``Lemonldap::NG::Common::MessageBroker::Pg``)* or
-``::MQTT`` *(which is an abbreviation of ``Lemonldap::NG::Common::MessageBroker::MQTT``)*
+.. note::
 
-Then set into "**Pub/Sub system options**" the needed options:
+   The corresponding parameter inside ``lemonldap-ng.ini`` is ``messageBroker``
+   which takes as value: ``::Redis`` or ``::Pg`` or ``::MQTT``
+   (which are abbreviations of ``Lemonldap::NG::Common::MessageBroker::<name>``).
+
+   Options take place into ``messageBrokerOptions`` parameter.
 
 Redis
-.....
+~~~~~
 
 See `Redis`_ options,
 
@@ -153,7 +155,7 @@ Example:
    server => "redis.example.com:3456"
 
 PostgreSQL
-..........
+~~~~~~~~~~
 
 The following parameters are needed:
 * ``dbiChain``: see `DBD::Pg`_ to know the syntax
@@ -169,7 +171,7 @@ Example:
    dbiPassword => "llng",
 
 MQTT
-....
+~~~~
 
 The following parameter can be set:
 

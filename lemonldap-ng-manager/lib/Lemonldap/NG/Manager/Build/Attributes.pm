@@ -318,10 +318,9 @@ sub attributes {
         },
         checkMsg => {
             type          => 'int',
-            documentation =>
-              'Timeout to check new evant',
-            default => 5,
-            flags   => 'hp',
+            documentation => 'Timeout to check new evant',
+            default       => 5,
+            flags         => 'hp',
         },
         defaultNewKeySize => {
             type          => 'int',
@@ -1854,16 +1853,23 @@ sub attributes {
 
         # Message broker
         messageBroker => {
-            type          => 'PerlModule',
+            type          => 'select',
             documentation => 'Messages broker module',
-            flags         => 'hp',
+            select        => [
+                { k => '',        v => '' },
+                { k => '::Redis', v => 'Redis' },
+                { k => '::Pg',    v => 'PostgreSQL' },
+                { k => '::MQTT',  v => 'MQTT' },
+            ],
+            flags => 'hp',
         },
         messageBrokerOptions => {
-            type    => 'keyTextContainer',
-            default => {},
+            type          => 'keyTextContainer',
+            default       => {},
             documentation => 'Options of messages broker module',
             flags         => 'hp',
         },
+
         # Jitsi Meet tokens issuer
         issuerDBJitsiMeetTokensActivation => {
             type          => 'bool',
