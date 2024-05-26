@@ -70,56 +70,12 @@ sub loadTemplate {
 #@return reload status as boolean
 sub applyConf {
     my ( $self, $newConf ) = @_;
-    my $status;
-
-    # 1 Apply conf locally
-    $self->p->api->checkConf();
-
-    # Get apply section values
-    my %reloadUrls =
-      %{ $self->confAcc->getLocalConf( APPLYSECTION, undef, 0 ) };
-    if ( !%reloadUrls && $newConf->{reloadUrls} ) {
-        %reloadUrls = %{ $newConf->{reloadUrls} };
+    if ( $self->p->api->tsv->{msgBrokerWriter}
+        and my $sub = $self->p->api->tsv->{msgBrokerWriter}->can('applyConf') )
+    {
+        return $sub->( $self, $newConf );
     }
-    return {} unless (%reloadUrls);
-
-    $self->ua->timeout( $newConf->{reloadTimeout} );
-
-    # Parse apply values
-    while ( my ( $host, $request ) = each %reloadUrls ) {
-        my $r = HTTP::Request->new( 'GET', "http://$host$request" );
-        $self->logger->debug("Sending reload request to $host");
-        if ( $request =~ /^https?:\/\/[^\/]+.*$/ ) {
-            my $url       = URI::URL->new($request);
-            my $targetUrl = $url->scheme . "://" . $host;
-            $targetUrl .= ":" . $url->port if defined( $url->port );
-            $targetUrl .= $url->full_path;
-            $r =
-              HTTP::Request->new( 'GET', $targetUrl,
-                HTTP::Headers->new( Host => $url->host ) );
-            if ( defined $url->userinfo
-                && $url->userinfo =~ /^([^:]+):(.*)$/ )
-            {
-                $r->authorization_basic( $1, $2 );
-            }
-        }
-
-        my $response = $self->ua->request($r);
-        if ( $response->code != 200 ) {
-            $status->{$host} =
-              "Error " . $response->code . " (" . $response->message . ")";
-            $self->logger->error( "Apply configuration for $host: error "
-                  . $response->code . " ("
-                  . $response->message
-                  . ")" );
-        }
-        else {
-            $status->{$host} = "OK";
-            $self->logger->notice("Apply configuration for $host: ok");
-        }
-    }
-
-    return $status;
+    return {};
 }
 
 1;
