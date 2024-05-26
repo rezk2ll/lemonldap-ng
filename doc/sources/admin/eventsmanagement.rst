@@ -116,7 +116,7 @@ Using a Pub/Sub system
 ----------------------
 
 The message broker system replaces the previous system using an external
-**Pub/Sub** system. For now, only Redis can be used here.
+**Pub/Sub** system. For now, only Redis and Pg *(PostgreSQL)* can be used here.
 
 When enabled, all LLNG process subscribe to ``llng_events`` channel which
 propagate "orders":
@@ -133,15 +133,29 @@ Configuration
 
 In "General Parameters » Advanced parameters » Events Management", set
 **Pub/Sub** system to ``::Redis`` *(which is an abbreviation of
-``Lemonldap::NG::Common::MessageBroker::Redis``)*.
+``Lemonldap::NG::Common::MessageBroker::Redis``)* or ``::Pg``
+*(which is an abbreviation of ``Lemonldap::NG::Common::MessageBroker::Pg``)*.
 
-Then set into "**Pub/Sub system options**" the `Redis`_ options.
+Then set into "**Pub/Sub system options**" the needed options:
 
-Example:
+* for Redis, see `Redis`_ options,
+* for Pg, set ``dbiChain``, ``dbiUser`` and ``dbiPassword``. See `DBD::Pg`_ to
+  know the ``dbiChain`` syntax
+
+Redis example:
 
 .. code-block:: perl
 
    server => "redis.example.com:3456"
 
+Pg example:
+
+.. code-block:: perl
+
+   dbiChain    => "dbi:Pg:dbname=llng;host=localhost;port=54432",
+   dbiUser     => "llng",
+   dbiPassword => "llng",
 
 .. _Redis: https://metacpan.org/pod/Redis
+
+.. _`DBD::Pg`: https://metacpan.org/pod/DBD::Pg
