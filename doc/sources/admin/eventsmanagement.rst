@@ -9,8 +9,8 @@ LemonLDAP::NG has two kinds of events to propagate between its nodes:
 By default, events aren't really propagated but a timer permits to refresh
 such data.
 
-Starting from version 2.20.0, LLNG adds a **PUB/SUB** system *(not enabled by default)*
-to replace this timers.
+Starting from version 2.20.0, LLNG adds a :ref:`PUB/SUB system<PubSub>` *(not enabled by default)*
+to replace this timers..
 
 Default events system
 ---------------------
@@ -112,6 +112,8 @@ You also need to adjust the protection of the reload vhost, for example:
            PerlResponseHandler Lemonldap::NG::Handler::ApacheMP2->reload
        </Location>
 
+.. _PubSub:
+
 Using a Pub/Sub system
 ----------------------
 
@@ -121,8 +123,8 @@ The message broker system replaces the previous system using an external
 When enabled, all LLNG process subscribe to ``llng_events`` channel which
 propagate "orders":
 
-* configution update *(``checkConf``)*
-* logouts *(``unlog``)*
+* configution update (``checkConf``)
+* logouts (``unlog``)
 
 Such *orders* are  read every 5 seconds, then logout and configuration updates
 are propagated in this delay.
@@ -134,21 +136,31 @@ Configuration
 In "General Parameters » Advanced parameters » Events Management", set
 **Pub/Sub** system to ``::Redis`` *(which is an abbreviation of
 ``Lemonldap::NG::Common::MessageBroker::Redis``)* or ``::Pg``
-*(which is an abbreviation of ``Lemonldap::NG::Common::MessageBroker::Pg``)*.
+*(which is an abbreviation of ``Lemonldap::NG::Common::MessageBroker::Pg``)* or
+``::MQTT`` *(which is an abbreviation of ``Lemonldap::NG::Common::MessageBroker::MQTT``)*
 
 Then set into "**Pub/Sub system options**" the needed options:
 
-* for Redis, see `Redis`_ options,
-* for Pg, set ``dbiChain``, ``dbiUser`` and ``dbiPassword``. See `DBD::Pg`_ to
-  know the ``dbiChain`` syntax
+Redis
+.....
 
-Redis example:
+See `Redis`_ options,
+
+Example:
 
 .. code-block:: perl
 
    server => "redis.example.com:3456"
 
-Pg example:
+PostgreSQL
+..........
+
+The following parameters are needed:
+* ``dbiChain``: see `DBD::Pg`_ to know the syntax
+* ``dbiUser``: the username to use to connect
+* ``dbiPassword``: the password to use to connect
+
+Example:
 
 .. code-block:: perl
 
@@ -156,6 +168,31 @@ Pg example:
    dbiUser     => "llng",
    dbiPassword => "llng",
 
+MQTT
+....
+
+The following parameter can be set:
+
+* ``server`` *(default: ``localhost:1883``)*
+* ``ssl``: set to 1 if SSL is available. Remember then to install `IO::Socket::SSL`_ (`libio-socket-ssl-perl`_ on Debian).
+
+If ``ssl`` is set then these parameters are allowed:
+
+* ``user``: usernane to use for login
+* ``password``: password to use for login
+* ``SSL_ca_file``: file with certificate authorities *(PEM encoded)*
+* ``SSL_cert_file``: client certificate
+* ``SSL_key_file``: client private key
+
+If ``ssl`` is set then these environment variables can be used also:
+
+* ``MQTT_SIMPLE_SSL_INSECURE``: Set to something other than 0 to disable SSL validation
+* ``MQTT_SIMPLE_SSL_CA``: Path to the CA certificate or a directory of certificates. `IO::Socket::SSL`_ can find the CA path automatically on some systems.
+* ``MQTT_SIMPLE_SSL_CERT``: Path to the client certificate file.
+* ``MQTT_SIMPLE_SSL_KEY``: Path to the client private key file.
+
 .. _Redis: https://metacpan.org/pod/Redis
 
 .. _`DBD::Pg`: https://metacpan.org/pod/DBD::Pg
+.. _`IO::Socket::SSL`: https://metacpan.org/pod/IO::Socket::SSL
+.. _`libio-socket-ssl-perl`: https://packages.debian.org/stable/libio-socket-ssl-perl
