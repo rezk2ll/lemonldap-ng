@@ -9,13 +9,23 @@ sub new {
     my $args = $_[1]->{messageBrokerOptions};
     $args //= {};
     $args->{server} ||= 'localhost:1883';
-    my $mqtt = Net::MQTT::Simple->new( $args->{server} );
+    my $mqtt;
+    if ( $args->{ssl} ) {
+        require Net::MQTT::Simple::SSL;
+        my $h = {};
+        $h->{$_} = $args->{$_}
+          foreach (qw(SSL_ca_file SSL_cert_file SSL_key_file));
+        $mqtt = Net::MQTT::Simple::SSL->new( $args->{server}, $h );
+        if ( $args->{user} ) {
+            $mqtt->login( $args->{user}, $args->{password} );
+        }
+    }
+    else {
+        $mqtt = Net::MQTT::Simple->new( $args->{server} );
+    }
     unless ($mqtt) {
         print STDERR "Unalble to connect to MQTT server $@$!";
         return;
-    }
-    if ( $args->{user} ) {
-        $mqtt->login( $args->{user}, $args->{password} );
     }
     my $self = bless { mqtt => $mqtt, _ch => [] }, shift;
     return $self;
