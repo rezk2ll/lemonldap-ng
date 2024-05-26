@@ -580,6 +580,7 @@ t/03-XSS-protection.t
 t/04-language-selection.t
 t/05-Hashed-Session.t
 t/10-AuthCustom.t
+t/11-MessageBroker-MQTT.t
 t/11-MessageBroker-Pg.t
 t/11-MessageBroker-Redis.t
 t/19-Auth-Null.t
@@ -941,6 +942,7 @@ t/92-Required-UserDB-Methods.t
 t/99-Bad-logLevel.t
 t/99-Dont-load-Dumper.t
 t/99-pod.t
+t/activemq/activemq.pm
 t/AfterDataCustomPlugin.pm
 t/CaptchaOldApi.pm
 t/cas-lib.pm
