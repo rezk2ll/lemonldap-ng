@@ -19,7 +19,7 @@ BEGIN {
 }
 
 SKIP: {
-    skip( "LLNGTESTMQTT isn't set",   1 ) unless $ENV{LLNGTESTMQTT};
+    skip( "LLNGTESTMQTT isn't set",      1 ) unless $ENV{LLNGTESTMQTT};
     skip( "One dep is missing: $noMqtt", 1 ) if $noMqtt;
     eval { &startActiveMq };
     skip( $@, 1 ) if $@;
@@ -39,6 +39,8 @@ SKIP: {
     # Simple test to verify that unlog is well propagated inside portal
     subtest "Simple login/logout" => sub {
         my $id = $client->login('dwho');
+
+        # Real wait time needed here since ActiveMQ is asynchronous
         sleep 1;
         $client->logout($id);
     };
@@ -56,6 +58,8 @@ SKIP: {
         my $sd = $client->ini->{globalStorageOptions}->{Directory};
         note "Push unlog event";
         $pub->publish( EVENT_QUEUE, { action => 'unlog', id => $id } );
+
+        # Real wait time needed here since ActiveMQ is asynchronous
         sleep 1;
         Time::Fake->offset('+6s');
         my $res;
@@ -80,8 +84,10 @@ SKIP: {
         note "Push unlog event";
         $pub->publish( EVENT_QUEUE, { action => 'unlog', id => $id } );
 
-        # 6+6 because time already updated to +6
+        # Real wait time needed here since ActiveMQ is asynchronous
         sleep 1;
+
+        # 6+6 because time already updated to +6
         Time::Fake->offset('+12s');
         my $res;
         ok( $res = $client->_get( '/', cookie => "lemonldap=$id" ),
