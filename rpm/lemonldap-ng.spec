@@ -277,6 +277,7 @@ Requires:       perl(String::Random)
 Requires(post): httpd
 Requires:       mod_fcgid
 Requires:       perl(mod_perl2)
+Requires:       perl(LWP::Protocol::https)
 %else
 Requires:       (httpd or nginx)
 Requires:       httpd-filesystem
@@ -284,6 +285,7 @@ Requires:       nginx-filesystem
 Requires:       (mod_fcgid if httpd)
 Requires:       (perl(mod_perl2) if httpd)
 Requires:       (perl(Apache2::ServerRec) if httpd)
+Recommends:     perl(LWP::Protocol::https)
 %endif
 Obsoletes:      perl-Lemonldap-NG-Common < %{version}-%{release}
 Provides:       perl-Lemonldap-NG-Common = %{version}-%{release}
