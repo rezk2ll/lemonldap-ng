@@ -511,37 +511,66 @@ sub newRawConf {
         return $self->sendError( $req, undef, 400 );
     }
 
-    my $res = {};
+    require Lemonldap::NG::Manager::Conf::Parser;
+    my $parser = Lemonldap::NG::Manager::Conf::Parser->new( {
+            refConf => $self->currentConf,
+            newConf => $new,
+            req     => $req,
+        }
+    );
 
-    # When uploading a new conf, always force it since cfgNum has a few
-    # chances to be equal to last config cfgNum
-    my $s = $self->confAcc->saveConf( $new, force => 1 );
-    if ( $s > 0 ) {
-        $self->auditLog(
-            $req,
-            message => (
-                'User ' . $self->p->userId($req) . " has stored (raw) conf $s"
-            ),
-            code   => "CONF_STORED_RAW",
-            user   => $self->p->userId($req),
-            cfgNum => $s,
-        );
-        $res->{result} = 1;
-        $res->{cfgNum} = $s;
+    $parser->confChanged(1);
+
+    my $res = { result => $parser->check( $self->p ) };
+
+    # "message" fields: note that words enclosed by "__" (__word__) will be
+    # translated
+    $res->{details}->{'__errors__'} = $parser->{errors}
+      if ( @{ $parser->{errors} } );
+    unless ( @{ $parser->{errors} } ) {
+        if ( @{ $parser->{needConfirmation} } && !$req->params('force') ) {
+            $res->{needConfirm} = 1;
+            $res->{details}->{'__needConfirmation__'} =
+              $parser->{needConfirmation};
+        }
+        $res->{message} = $parser->{message};
+        foreach my $t (qw(warnings changes)) {
+            $res->{details}->{ '__' . $t . '__' } = $parser->$t
+              if ( @{ $parser->$t } );
+        }
     }
-    else {
-        $self->auditLog(
-            $req,
-            message => (
-                'Raw saving attempt rejected, asking for confirmation to '
-                  . $self->p->userId($req)
-            ),
-            code => "CONF_REJECTED_RAW",
-            user => $self->p->userId($req),
-        );
-        $res->{result}      = 0;
-        $res->{needConfirm} = 1 if ( $s == CONFIG_WAS_CHANGED );
-        $res->{message} .= '__needConfirmation__';
+    if ( $res->{result} ) {
+
+        # When uploading a new conf, always force it since cfgNum has a few
+        # chances to be equal to last config cfgNum
+        my $s = $self->confAcc->saveConf( $new, force => 1 );
+        if ( $s > 0 ) {
+            $self->auditLog(
+                $req,
+                message => (
+                    'User ' . $self->p->userId($req) . " has stored (raw) conf $s"
+                ),
+                code   => "CONF_STORED_RAW",
+                user   => $self->p->userId($req),
+                cfgNum => $s,
+            );
+            $res->{result} = 1;
+            $res->{cfgNum} = $s;
+        }
+        else {
+            $self->auditLog(
+                $req,
+                message => (
+                    'Raw saving attempt rejected, asking for confirmation to '
+                      . $self->p->userId($req)
+                ),
+                code => "CONF_REJECTED_RAW",
+                user => $self->p->userId($req),
+            );
+            $res->{result}      = 0;
+            $res->{needConfirm} = 1 if ( $s == CONFIG_WAS_CHANGED );
+            $res->{message} .= '__needConfirmation__';
+        }
     }
     return $self->sendJSONresponse( $req, $res );
 }
