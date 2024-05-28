@@ -32,6 +32,7 @@ sub checkNextMessage {
     my ( $self, $channel, $delay ) = @_;
     if ( time >= $lastCheck + $self->{checkTime} ) {
         $self->publish( EVENT_QUEUE, { action => 'checkConf' } );
+        $lastCheck = time;
     }
     if ( ref( $channels->{$channel} )
         and @{ $channels->{$channel} } )
