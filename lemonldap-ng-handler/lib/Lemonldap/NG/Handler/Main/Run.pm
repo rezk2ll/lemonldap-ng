@@ -99,18 +99,21 @@ sub checkType {
       : 'Main';
 }
 
+our $msgRate = 0;
+
 # Method to check for event in events queue
 sub checkEvent {
-    my ( $class, $req, $force ) = @_;
+    my ( $class, $req, $delay ) = @_;
     unless ( $class->tsv->{msgBrokerReader} ) {
         $class->logger->error('Not initialized');
         return;
     }
     my $ret = '';
     if ( my $msg =
-        $class->tsv->{msgBrokerReader}
-        ->checkNextMessage( EVENT_QUEUE, $force ) )
+        $class->tsv->{msgBrokerReader}->checkNextMessage( EVENT_QUEUE, $delay )
+      )
     {
+        $msgRate++;
         if ( $msg->{action} ) {
             if ( my $sub = msgActions->{ $msg->{action} } ) {
                 $sub->( $class, $msg, $req );
@@ -124,6 +127,16 @@ sub checkEvent {
             $class->logger->error(
                 'Malformed message: ' . JSON::to_json($msg) );
         }
+
+        # If we received 2 messages consecutively, let's empty the message
+        # queue. This mechanism avoid loosing messages if we receive more than
+        # 1 message each 5 seconds.
+        if ( $msgRate > 1 ) {
+            $class->checkEvent($req);
+        }
+    }
+    else {
+        $msgRate = 0;
     }
     $class->lastCheckMsg(time);
     return $ret;
