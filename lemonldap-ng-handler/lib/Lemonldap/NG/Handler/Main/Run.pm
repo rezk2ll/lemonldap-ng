@@ -142,6 +142,7 @@ sub checkEvent {
     return $ret;
 }
 
+# Method to push an event into message queue.
 sub publishEvent {
     my ( $class, $req, $msg ) = @_;
     die unless $msg;
@@ -152,8 +153,11 @@ sub publishEvent {
     $class->tsv->{msgBrokerWriter}->publish( EVENT_QUEUE, $msg );
     my $ret;
     my $start = time;
+
+    # After pushing message, let's pop message queue for this node and
+    # then launch the concerning method
     do { $ret = $class->checkEvent( $req, 1 ) }
-      while ( $ret ne $msg->{action} and time < $start + 1 );
+      while ( $ret and $ret ne $msg->{action} and time < $start + 1 );
 }
 
 ## @rmethod int run

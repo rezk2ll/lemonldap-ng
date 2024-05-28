@@ -16,7 +16,7 @@ sub startPg {
         "$initFile:/docker-entrypoint-initdb.d/init.sql", "-p", "54432:5432",
         "postgres:15-bookworm"
     );
-    sleep 1;
+    sleep 3;
 }
 
 sub stopPg {
