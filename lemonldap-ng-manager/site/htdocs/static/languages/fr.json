@@ -359,6 +359,7 @@
 "enterPassword":"Entrer le mot de passe (optionnel)",
 "error":"Erreur",
 "errors":"ERREURS",
+"eventQueueName":"Nom du canal des événements",
 "eventsManagement":"Gestion des événements",
 "exportedAttr":"Attributs exportés par le portail (SOAP/REST)",
 "exportedHeaders":"En-têtes exportés",

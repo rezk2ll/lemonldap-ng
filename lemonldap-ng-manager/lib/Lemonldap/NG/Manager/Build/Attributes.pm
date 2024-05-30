@@ -1869,6 +1869,11 @@ sub attributes {
             documentation => 'Options of messages broker module',
             flags         => 'hp',
         },
+        eventQueueName => {
+            type          => 'text',
+            default       => 'llng_events',
+            documentation => 'Event channel name',
+        },
 
         # Jitsi Meet tokens issuer
         issuerDBJitsiMeetTokensActivation => {

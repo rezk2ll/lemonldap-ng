@@ -359,6 +359,7 @@
 "enterPassword":"Введите пароль (опционально)",
 "error":"Ошибка",
 "errors":"ОШИБКИ",
+"eventQueueName":"Event channel name",
 "eventsManagement":"Events management",
 "exportedAttr":"Экспортированные атрибуты SOAP/REST",
 "exportedHeaders":"Экспортированные заголовки",

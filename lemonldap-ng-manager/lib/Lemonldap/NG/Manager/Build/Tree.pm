@@ -1295,7 +1295,7 @@ sub tree {
                             nodes => [
                                 'messageBroker', 'messageBrokerOptions',
                                 'reloadTimeout', 'compactConf',
-                                'reloadUrls'
+                                'reloadUrls',    'eventQueueName',
                             ]
                         },
                     ]

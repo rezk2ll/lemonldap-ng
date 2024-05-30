@@ -359,6 +359,7 @@
 "enterPassword":"أدخل كلمة المرور (اختياري)",
 "error":"خطأ",
 "errors":"ERRORS",
+"eventQueueName":"Event channel name",
 "eventsManagement":"Events management",
 "exportedAttr":"SOAP/REST السمات المصدرة",
 "exportedHeaders":"الهيدر المصدرة",

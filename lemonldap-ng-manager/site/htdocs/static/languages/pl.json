@@ -359,6 +359,7 @@
 "enterPassword":"Wpisz hasło (opcjonalnie)",
 "error":"Błąd",
 "errors":"BŁĘDY",
+"eventQueueName":"Event channel name",
 "eventsManagement":"Events management",
 "exportedAttr":"Wyeksportowane atrybuty SOAP/REST",
 "exportedHeaders":"Wyeksportowane nagłówki",

@@ -118,10 +118,10 @@ Using a Pub/Sub system
 ----------------------
 
 The message broker system replaces the previous system using an external
-**Pub/Sub** system. For now, only Redis and Pg *(PostgreSQL)* can be used here.
+**Pub/Sub** system.
 
 When enabled, all LLNG process subscribe to ``llng_events`` channel which
-propagate "orders":
+propagate "events":
 
 * configution update (``checkConf``)
 * logouts (``unlog``)

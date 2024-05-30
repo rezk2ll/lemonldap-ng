@@ -359,6 +359,7 @@
 "enterPassword":"Enter password (optional)",
 "error":"Error",
 "errors":"ERRORS",
+"eventQueueName":"Event channel name",
 "eventsManagement":"Events management",
 "exportedAttr":"SOAP/REST exported attributes",
 "exportedHeaders":"Exported headers",

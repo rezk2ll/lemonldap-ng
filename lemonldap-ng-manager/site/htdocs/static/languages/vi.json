@@ -359,6 +359,7 @@
 "enterPassword":"Nhập mật khẩu (tùy chọn)",
 "error":"Lỗi",
 "errors":"LỖI",
+"eventQueueName":"Event channel name",
 "eventsManagement":"Events management",
 "exportedAttr":"Biến SOAP/REST đã được xuất",
 "exportedHeaders":"Tiêu đề đã được xuất",

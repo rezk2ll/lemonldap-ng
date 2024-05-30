@@ -4,18 +4,21 @@ package Lemonldap::NG::Common::MessageBroker::Default;
 # llng_events.
 
 use strict;
-use Lemonldap::NG::Common::MessageBroker::Constants;
 use Lemonldap::NG::Common::Conf::Constants;
 
 our $VERSION = '2.20.0';
 
 our $lastCheck = time;
 
-our $channels = { &EVENT_QUEUE => [] };
+our $channels = {};
 
 sub new {
     my ( $class, $conf ) = @_;
-    return bless { checkTime => $conf->{checkTime}, }, $class;
+    $channels->{ $conf->{eventQueueName} } //= [];
+    return bless {
+        checkTime      => $conf->{checkTime},
+        eventQueueName => $conf->{eventQueueName},
+    }, $class;
 }
 
 sub publish {
@@ -31,7 +34,7 @@ sub subscribe { }
 sub checkNextMessage {
     my ( $self, $channel, $delay ) = @_;
     if ( time >= $lastCheck + $self->{checkTime} ) {
-        $self->publish( EVENT_QUEUE, { action => 'checkConf' } );
+        $self->publish( $self->{eventQueueName}, { action => 'checkConf' } );
         $lastCheck = time;
     }
     if ( ref( $channels->{$channel} )

@@ -359,6 +359,7 @@
 "enterPassword":"Introduzca password (opcional)",
 "error":"Error",
 "errors":"ERRORES",
+"eventQueueName":"Event channel name",
 "eventsManagement":"Events management",
 "exportedAttr":"Atributos SOAP/REST exportados",
 "exportedHeaders":"Cabeceras exportadas",

@@ -1,7 +1,6 @@
 use strict;
 use Test::More;
 use IO::String;
-use Lemonldap::NG::Common::MessageBroker::Constants;
 use Time::Fake;
 
 our $noRedis;
@@ -55,7 +54,7 @@ SKIP: {
         );
         my $sd = $client->ini->{globalStorageOptions}->{Directory};
         note "Push unlog event";
-        $pub->publish( EVENT_QUEUE, { action => 'unlog', id => $id } );
+        $pub->publish( 'llng_events', { action => 'unlog', id => $id } );
         Time::Fake->offset('+6s');
         my $res;
         ok( $res = $client->_get( '/', cookie => "lemonldap=$id" ),
@@ -77,7 +76,7 @@ SKIP: {
         );
         my $sd = $client->ini->{globalStorageOptions}->{Directory};
         note "Push unlog event";
-        $pub->publish( EVENT_QUEUE, { action => 'unlog', id => $id } );
+        $pub->publish( 'llng_events', { action => 'unlog', id => $id } );
 
         # 6+6 because time already updated to +6
         Time::Fake->offset('+12s');

@@ -85,6 +85,7 @@ sub defaultValues {
         },
         'displaySessionId' => 1,
         'domain'           => 'example.com',
+        'eventQueueName'   => 'llng_events',
         'exportedVars'     => {
             'UA' => 'HTTP_USER_AGENT'
         },

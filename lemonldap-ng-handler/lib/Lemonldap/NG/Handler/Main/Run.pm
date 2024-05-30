@@ -110,7 +110,7 @@ sub checkEvent {
     }
     my $ret = '';
     if ( my $msg =
-        $class->tsv->{msgBrokerReader}->checkNextMessage( EVENT_QUEUE, $delay )
+        $class->tsv->{msgBrokerReader}->checkNextMessage( $class->tsv->{eventQueueName}, $delay )
       )
     {
         $msgRate++;
@@ -150,7 +150,7 @@ sub publishEvent {
         $class->logger->error('Not initialized');
         return;
     }
-    $class->tsv->{msgBrokerWriter}->publish( EVENT_QUEUE, $msg );
+    $class->tsv->{msgBrokerWriter}->publish( $class->tsv->{eventQueueName}, $msg );
     my $ret;
     my $start = time;
 

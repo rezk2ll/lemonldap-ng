@@ -359,6 +359,7 @@
 "enterPassword":"Parolayı gir (isteğe bağlı)",
 "error":"Hata",
 "errors":"HATALAR",
+"eventQueueName":"Event channel name",
 "eventsManagement":"Events management",
 "exportedAttr":"Dışa aktarılan SOAP/REST nitelikleri",
 "exportedHeaders":"Dışa aktarılan başlıklar",

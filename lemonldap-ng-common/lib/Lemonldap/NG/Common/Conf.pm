@@ -11,7 +11,6 @@ use strict;
 use utf8;
 no strict 'refs';
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
-use Lemonldap::NG::Common::MessageBroker::Constants;
 
 # Import compacter
 use Lemonldap::NG::Common::Conf::Compact;
@@ -144,16 +143,15 @@ sub saveConf {
     }
 
     $msg .= "Configuration $conf->{cfgNum} stored.\n";
-    if ( $self->{refLocalStorage} ) {
-        $self->setDefault($conf);
-        $self->setValuesFromEnv($conf);
-        $self->compactConf($conf);
-    }
+    $self->setDefault($conf);
+    $self->setValuesFromEnv($conf);
+    $self->compactConf($conf);
+
     if (    Lemonldap::NG::Handler::Main->can('tsv')
         and Lemonldap::NG::Handler::Main->tsv->{msgBrokerWriter} )
     {
         Lemonldap::NG::Handler::Main->tsv->{msgBrokerWriter}
-          ->publish( EVENT_QUEUE, { action => 'checkConf' } );
+          ->publish( $conf->{eventQueueName}, { action => 'checkConf' } );
     }
     else {
         eval { Lemonldap::NG::Handler::Main->reload() };

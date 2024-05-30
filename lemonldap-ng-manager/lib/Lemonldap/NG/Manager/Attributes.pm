@@ -1428,6 +1428,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
 qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|#\w+#))?$/,
             'type' => 'text'
         },
+        'eventQueueName' => {
+            'default' => 'llng_events',
+            'type'    => 'text'
+        },
         'exportedAttr' => {
             'type' => 'text'
         },

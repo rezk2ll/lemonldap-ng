@@ -359,6 +359,7 @@
 "enterPassword":"להקליד סיסמה (רשות)",
 "error":"שגיאה",
 "errors":"שגיאות",
+"eventQueueName":"Event channel name",
 "eventsManagement":"Events management",
 "exportedAttr":"מאפייני SOAP/REST מיוצאים",
 "exportedHeaders":"כותרות מיוצאות",

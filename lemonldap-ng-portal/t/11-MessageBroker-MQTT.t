@@ -1,7 +1,6 @@
 use strict;
 use Test::More;
 use IO::String;
-use Lemonldap::NG::Common::MessageBroker::Constants;
 use Time::Fake;
 
 our $noMqtt;
@@ -57,7 +56,7 @@ SKIP: {
         );
         my $sd = $client->ini->{globalStorageOptions}->{Directory};
         note "Push unlog event";
-        $pub->publish( EVENT_QUEUE, { action => 'unlog', id => $id } );
+        $pub->publish( 'llng_events', { action => 'unlog', id => $id } );
 
         # Real wait time needed here since ActiveMQ is asynchronous
         sleep 1;
@@ -82,7 +81,7 @@ SKIP: {
         );
         my $sd = $client->ini->{globalStorageOptions}->{Directory};
         note "Push unlog event";
-        $pub->publish( EVENT_QUEUE, { action => 'unlog', id => $id } );
+        $pub->publish( 'llng_events', { action => 'unlog', id => $id } );
 
         # Real wait time needed here since ActiveMQ is asynchronous
         sleep 1;

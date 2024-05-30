@@ -359,6 +359,7 @@
 "enterPassword":"輸入密碼（選擇性）",
 "error":"错误",
 "errors":"錯誤",
+"eventQueueName":"Event channel name",
 "eventsManagement":"Events management",
 "exportedAttr":"SOAP/REST 已匯出屬性",
 "exportedHeaders":"已匯出的標頭",
