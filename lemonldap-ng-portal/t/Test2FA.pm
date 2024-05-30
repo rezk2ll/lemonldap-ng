@@ -26,7 +26,6 @@ sub run {
     my ( $self, $req, $token ) = @_;
 
     # Prepare form
-    my ( $checkLogins, $stayConnected ) = $self->getFormParams($req);
     my $tmp = $self->p->sendHtml(
         $req,
         'ext2fcheck',

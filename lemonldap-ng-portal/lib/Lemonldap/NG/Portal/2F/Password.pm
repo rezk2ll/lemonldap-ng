@@ -64,7 +64,6 @@ sub run {
     $self->logger->debug( $self->prefix . '2f: generate form' );
 
     # Prepare form
-    my ( $checkLogins, $stayConnected ) = $self->getFormParams($req);
     my $tmp = $self->p->sendHtml(
         $req,
         'password2fcheck',

@@ -52,6 +52,18 @@ policy:
     every policy must be computed with their precedence to know which
     maximum password age to apply.
 
+
+Mandatory password change
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Some configuration is required in *General parameters* » *Authentication parameters* » *LDAP parameters* » *Password*:
+
+* Enable **Change as user**
+* Enable **Allow to reset an expired password**
+
+Password expiration warning
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 To configure warning before password expiration, you must set two
 variables in Active Directory parameters in Manager:
 

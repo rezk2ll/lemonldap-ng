@@ -17,5 +17,9 @@ for module in common handler portal manager; do
     HARNESS_PERL_SWITCHES=-MDevel::Cover prove
     cover -report SonarGeneric
     sed -i "s,path=\"blib,path=\"lemonldap-ng-$module,g" cover_db/sonar_generic.xml
+
+    # Make sure all files are readable to avoid Indexer errors
+    chmod o+rX -R .
+
     cd ..
 done
