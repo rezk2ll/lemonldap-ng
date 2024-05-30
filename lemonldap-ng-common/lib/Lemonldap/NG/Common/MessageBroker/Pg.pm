@@ -24,9 +24,8 @@ sub publish {
     my ($self, $channel, $msg ) = @_;
     die 'Not a hash msg' unless ref $msg eq 'HASH';
     my $j = eval { JSON::to_json($msg) };
-    $j =~ s/'/''/g;
     die "MessageBroker publish only hashes! $@" if $@;
-    $self->_dbh->do("NOTIFY $channel, '$j'");
+    $self->_dbh->do("NOTIFY $channel, ?", undef, $j);
 }
 
 sub subscribe {
