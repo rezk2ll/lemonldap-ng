@@ -1310,6 +1310,7 @@ sub tree {
         'virtualHosts',
         {
             title => 'samlServiceMetaData',
+            form  => 'displaySamlMetadata',
             help  => 'samlservice.html',
             nodes => [
                 'samlEntityID',

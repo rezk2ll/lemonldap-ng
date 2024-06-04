@@ -233,22 +233,10 @@ sub validateAssertion {
         token_binding_id_b64   => $token_binding_id_b64,
     );
 
+    $validation_result->{matching_credential} = $matching_credential;
+
     if ( $validation_result->{success} == 1 ) {
         my $new_signature_count = $validation_result->{signature_count};
-
-        $self->auditLog(
-            $req,
-            message => (
-                    "User $user authenticated with 2F device: "
-                  . display2F($matching_credential)
-                  . " (signature count: $new_signature_count) "
-            ),
-            code            => "2FA_SUCCESS",
-            user            => $user,
-            type            => $self->prefix,
-            device          => display2F($matching_credential),
-            signature_count => $new_signature_count,
-        );
 
         # Update storedSignCount to be the value of authData.signCount
         $self->update2fDevice( $req, $data, $self->type,

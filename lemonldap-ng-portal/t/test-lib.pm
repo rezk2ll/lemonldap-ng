@@ -296,6 +296,16 @@ sub expectAutoPost {
     return @r;
 }
 
+sub expectXpath {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+
+    my ( $res, $xpath ) = @_;
+    my $doc =
+      XML::LibXML->new->load_html( string => $res->[2]->[0], recover => 2 );
+
+    return $doc->findnodes($xpath);
+}
+
 =head4 expectForm( $res, $hostRe, $uriRe, @requiredFields )
 
 Verify form in HTML result and return ( $host, $uri, $query, $method ):
