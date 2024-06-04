@@ -516,6 +516,7 @@ site/templates/bootstrap/totp2fregister.tpl
 site/templates/bootstrap/upgradesession.tpl
 site/templates/bootstrap/webauthn2fcheck.tpl
 site/templates/bootstrap/webauthn2fregister.tpl
+site/templates/bootstrap/webauthnform.tpl
 site/templates/bootstrap/yubikey2fregister.tpl
 site/templates/bootstrap/yubikeyform.tpl
 site/templates/common/bullet_go.png

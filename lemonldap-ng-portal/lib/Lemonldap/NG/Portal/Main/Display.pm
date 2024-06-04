@@ -615,7 +615,9 @@ sub display {
                     DISPLAY_YUBIKEY_FORM => $displayType =~ /\byubikeyform\b/
                     ? 1
                     : 0,
-                    DISPLAY_SSL_FORM  => $displayType =~ /sslform/ ? 1 : 0,
+                    DISPLAY_SSL_FORM      => $displayType =~ /sslform/ ? 1 : 0,
+                    DISPLAY_WEBAUTHN_FORM => $displayType =~ /webauthnform/ ? 1
+                    : 0,
                     DISPLAY_GPG_FORM  => $displayType =~ /gpgform/ ? 1 : 0,
                     DISPLAY_LOGO_FORM => $displayType eq "logo"    ? 1 : 0,
                     DISPLAY_FINDUSER  => scalar @$fields,
