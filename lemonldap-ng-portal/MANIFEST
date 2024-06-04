@@ -49,6 +49,7 @@ lib/Lemonldap/NG/Portal/Auth/SAML.pm
 lib/Lemonldap/NG/Portal/Auth/Slave.pm
 lib/Lemonldap/NG/Portal/Auth/SSL.pm
 lib/Lemonldap/NG/Portal/Auth/Twitter.pm
+lib/Lemonldap/NG/Portal/Auth/WebAuthn.pm
 lib/Lemonldap/NG/Portal/Auth/WebID.pm
 lib/Lemonldap/NG/Portal/Captcha.pod
 lib/Lemonldap/NG/Portal/Captcha/ReCaptcha.pm
