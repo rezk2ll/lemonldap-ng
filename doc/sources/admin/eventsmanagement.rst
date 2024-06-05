@@ -24,15 +24,6 @@ are automatically refreshed after this delay.
 Configuration reload
 ~~~~~~~~~~~~~~~~~~~~
 
-.. note::
-
-    As Handlers keep configuration in cache, when configuration
-    change, it should be updated in Handlers. An Apache restart will work,
-    but LemonLDAP::NG offers the mean to reload them through an HTTP
-    request. Configuration reload will then be effective in less than 10
-    minutes. If you want to change this timeout, set ``checkTime = 240`` in
-    your lemonldap-ng.ini file *(values in seconds)*\
-
 After configuration is saved by Manager, LemonLDAP::NG will try to
 reload configuration on distant Handlers by sending an HTTP request to
 the servers. The servers and URLs can be configured in Manager,
