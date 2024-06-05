@@ -44,7 +44,7 @@ sub subscribe {
     );
 }
 
-sub checkNextMessage {
+sub getNextMessage {
     my ( $self, $channel, $delay ) = @_;
     return undef
       unless $self->{messages}{$channel};
@@ -56,7 +56,7 @@ sub checkNextMessage {
     return;
 }
 
-sub getNextMessage {
+sub waitForNextMessage {
     my ( $self, $channel ) = @_;
     return undef
       unless $self->{messages}{$channel};

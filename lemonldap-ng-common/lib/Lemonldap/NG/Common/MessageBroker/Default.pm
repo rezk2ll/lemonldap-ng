@@ -31,7 +31,7 @@ sub publish {
 
 sub subscribe { }
 
-sub checkNextMessage {
+sub getNextMessage {
     my ( $self, $channel, $delay ) = @_;
     if ( time >= $lastCheck + $self->{checkTime} ) {
         $self->publish( $self->{eventQueueName}, { action => 'checkConf' } );
@@ -44,10 +44,10 @@ sub checkNextMessage {
     }
 }
 
-sub getNextMessage {
+sub waitForNextMessage {
     my ( $self, $channel ) = @_;
     while (1) {
-        if ( my $msg = $self->checkNextMessage($channel) ) {
+        if ( my $msg = $self->getNextMessage($channel) ) {
             return $msg;
         }
         sleep 1;

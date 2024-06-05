@@ -88,7 +88,7 @@ Arguments:
 
 =back
 
-=head2 checkNextMessage
+=head2 getNextMessage
 
 Non blocking method that return a L<message|/"MESSAGE FORMAT"> in the given channel if one exists.
 Arguments:
@@ -101,7 +101,7 @@ Arguments:
 
 =back
 
-=head2 getNextMessage
+=head2 waitForNextMessage
 
 Blocking method that waits for a L<message|/"MESSAGE FORMAT"> in the given channel and return it.
 Arguments:

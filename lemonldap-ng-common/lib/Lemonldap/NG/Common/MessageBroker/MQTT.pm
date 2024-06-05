@@ -72,7 +72,7 @@ sub DESTROY {
     print STDERR $@ if $@;
 }
 
-sub checkNextMessage {
+sub getNextMessage {
     my ( $self, $channel, $delay ) = @_;
     return undef unless $self->{messages}{$channel};
     return shift( @{ $self->{messages}{$channel} } )
@@ -83,7 +83,7 @@ sub checkNextMessage {
     return;
 }
 
-sub getNextMessage {
+sub waitForNextMessage {
     my ( $self, $channel ) = @_;
     return undef
       unless $self->{messages}{$channel};
@@ -91,7 +91,7 @@ sub getNextMessage {
     # Infinite loop until one message is seen
     my $res;
     while ( !$res ) {
-        $res = $self->{redis}->checkNextMessage( $channel, 1 );
+        $res = $self->{redis}->getNextMessage( $channel, 1 );
     }
     return $res;
 }

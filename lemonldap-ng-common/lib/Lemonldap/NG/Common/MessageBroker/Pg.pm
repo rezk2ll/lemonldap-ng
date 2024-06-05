@@ -34,7 +34,7 @@ sub subscribe {
     $self->_dbh->do("LISTEN $channel");
 }
 
-sub checkNextMessage {
+sub getNextMessage {
     my ( $self, $channel, $delay ) = @_;
     return undef
       unless $self->{messages}{$channel};
@@ -52,13 +52,13 @@ sub checkNextMessage {
       if @{ $self->{messages}{$channel} };
 }
 
-sub getNextMessage {
+sub waitForNextMessage {
     my ( $self, $channel ) = @_;
     return undef unless $self->{messages}{$channel};
 
     # Infinite loop until one message is seen
     my $res;
-    while ( not($res = $self->checkNextMessage($channel))){
+    while ( not($res = $self->getNextMessage($channel))){
         sleep 1;
     }
 }

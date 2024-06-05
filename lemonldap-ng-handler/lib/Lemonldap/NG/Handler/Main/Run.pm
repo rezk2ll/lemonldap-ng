@@ -110,7 +110,7 @@ sub checkEvent {
     }
     my $ret = '';
     if ( my $msg =
-        $class->tsv->{msgBrokerReader}->checkNextMessage( $class->tsv->{eventQueueName}, $delay )
+        $class->tsv->{msgBrokerReader}->getNextMessage( $class->tsv->{eventQueueName}, $delay )
       )
     {
         $msgRate++;
