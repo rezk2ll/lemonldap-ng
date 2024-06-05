@@ -6,7 +6,7 @@ use Exporter 'import';
 our @EXPORT = qw(msgActions addMsgAction delMsgAction);
 
 our $msgActions = {
-    checkConf => sub {
+    newConf => sub {
         my ( $class, $msg, $req ) = @_;
         unless ( $class->checkConf() ) {
             $class->logger->error("$class: No configuration found");

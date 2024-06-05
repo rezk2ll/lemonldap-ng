@@ -130,7 +130,7 @@ L<Lemonldap::NG::Hanlder::Main::MsgActions> to launch the corresponding method.
 =item * B<Configuration update>
 
   {
-    action => 'checkConf'
+    action => 'newConf'
   }
 
 =item * B<Session end>

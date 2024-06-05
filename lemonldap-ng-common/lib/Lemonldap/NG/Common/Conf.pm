@@ -151,7 +151,7 @@ sub saveConf {
         and Lemonldap::NG::Handler::Main->tsv->{msgBrokerWriter} )
     {
         Lemonldap::NG::Handler::Main->tsv->{msgBrokerWriter}
-          ->publish( $conf->{eventQueueName}, { action => 'checkConf' } );
+          ->publish( $conf->{eventQueueName}, { action => 'newConf' } );
     }
     else {
         eval { Lemonldap::NG::Handler::Main->reload() };

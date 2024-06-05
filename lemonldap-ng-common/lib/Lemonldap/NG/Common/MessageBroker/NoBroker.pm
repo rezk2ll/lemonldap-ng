@@ -1,6 +1,6 @@
 package Lemonldap::NG::Common::MessageBroker::NoBroker;
 
-# The default messages broker simply inserts periodically "checkConf" into
+# The default messages broker simply inserts periodically "newConf" into
 # llng_events.
 
 use strict;
@@ -34,7 +34,7 @@ sub subscribe { }
 sub getNextMessage {
     my ( $self, $channel, $delay ) = @_;
     if ( time >= $lastCheck + $self->{checkTime} ) {
-        $self->publish( $self->{eventQueueName}, { action => 'checkConf' } );
+        $self->publish( $self->{eventQueueName}, { action => 'newConf' } );
         $lastCheck = time;
     }
     if ( ref( $channels->{$channel} )

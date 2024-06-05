@@ -85,8 +85,8 @@ sub getStatus {
 sub checkType {
     my ( $class, $req ) = @_;
 
-    # Always launch "checkConf" task if never started
-    msgActions->{checkConf}->( $class, {}, $req )
+    # Always launch "newConf" task if never started
+    msgActions->{newConf}->( $class, {}, $req )
       unless $class->tsv and %{ $class->tsv };
 
     # Check for event in events queue every 5 seconds

@@ -123,7 +123,7 @@ The message broker system replaces the previous system using an external
 When enabled, all LLNG process subscribe to ``llng_events`` channel which
 propagate "events":
 
-* configution update (``checkConf``)
+* configution update (``newConf``)
 * logouts (``unlog``)
 
 Such *orders* are  read every 5 seconds, then logout and configuration updates
