@@ -626,7 +626,7 @@ sub oauth2Init {
 sub msgBrokerInit {
     my ( $class, $conf ) = @_;
 
-    my $brokerClass = $conf->{messageBroker} || '::Default';
+    my $brokerClass = $conf->{messageBroker} || '::NoBroker';
     $brokerClass =~ s/^::/Lemonldap::NG::Common::MessageBroker::/;
     eval "require $brokerClass";
     die $@ if $@;

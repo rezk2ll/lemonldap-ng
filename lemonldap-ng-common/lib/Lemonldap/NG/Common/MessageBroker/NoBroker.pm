@@ -1,4 +1,4 @@
-package Lemonldap::NG::Common::MessageBroker::Default;
+package Lemonldap::NG::Common::MessageBroker::NoBroker;
 
 # The default messages broker simply inserts periodically "checkConf" into
 # llng_events.
