@@ -9,8 +9,9 @@ LemonLDAP::NG has two kinds of events to propagate between its nodes:
 By default, events aren't really propagated but a timer permits to refresh
 such data.
 
-Starting from version 2.20.0, LLNG adds a :ref:`PUB/SUB system<PubSub>`
-*(not enabled by default)* to replace this timers.
+Starting from version 2.20.0, LLNG adds an **optional** :ref:`PUB/SUB system<PubSub>`
+*(not enabled by default)* to replace this timers. This isn't useful in classic
+deployments but may help big deployment.
 
 Default events system
 ---------------------
@@ -117,7 +118,7 @@ propagate "events":
 * configution update (``newConf``)
 * logouts (``unlog``)
 
-Such *orders* are  read every 5 seconds, then logout and configuration updates
+Such messages are  read every 5 seconds, then logout and configuration updates
 are propagated in this delay. To modify this delay *(10 seconds for example)*,
 set `checkMsg=10` inside ``lemonldap-ng.ini``, section ``[all]``.
 
