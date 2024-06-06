@@ -144,8 +144,8 @@ sub publishEvent {
 
     # After pushing message, let's pop message queue for this node and
     # then launch the concerning method
-    do { $ret = $class->checkEvent( $req, 1 ) }
-      while ( $ret and $ret ne $msg->{action} and time < $start + 1 );
+    do { $ret = $class->checkEvent( $req, 0.1 ) }
+      while ( ( !$ret or $ret ne $msg->{action} ) and time < $start + 1 );
 }
 
 ## @rmethod int run

@@ -2,7 +2,6 @@ package Lemonldap::NG::Common::MessageBroker::MQTT;
 
 use strict;
 use Net::MQTT::Simple;
-use Time::HiRes 'usleep';
 
 our $VERSION = '2.20.0';
 
@@ -38,9 +37,6 @@ sub publish {
     my $j = eval { JSON::to_json($msg) };
     die "MessageBroker publish only hashes! $@" if $@;
     $self->{mqtt}->publish( "llng/$channel", $j );
-
-    # Wait a little to get the new event in local stack
-    usleep 100000;
 }
 
 sub subscribe {
