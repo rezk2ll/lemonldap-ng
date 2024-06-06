@@ -1,7 +1,8 @@
 package Lemonldap::NG::Common::MessageBroker::NoBroker;
 
-# The default messages broker simply inserts periodically "newConf" into
-# llng_events.
+# This pseudo message broker only dispatch messages into current node.
+# It also inserts periodically "newConf" into llng_events to permit- to
+# detect configuration changes usng the checkTime parameter.
 
 use strict;
 use Lemonldap::NG::Common::Conf::Constants;
