@@ -264,7 +264,7 @@ sub _reset {
             }
         }
 
-        unless ( $req->{user} =~ /$self->{conf}->{userControl}/o ) {
+        unless ( $req->{user} =~ /$self->{conf}->{userControl}/ ) {
             $self->setSecurity($req);
             return PE_MALFORMEDUSER;
         }

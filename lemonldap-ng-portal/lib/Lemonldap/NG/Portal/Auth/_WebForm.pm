@@ -60,7 +60,7 @@ sub extractFormInfo {
     my ( $self, $req ) = @_;
 
     if ( $req->param('user') ) {
-        unless ( $req->param('user') =~ /$self->{conf}->{userControl}/o ) {
+        unless ( $req->param('user') =~ /$self->{conf}->{userControl}/ ) {
             $self->setSecurity($req);
             return PE_MALFORMEDUSER;
         }

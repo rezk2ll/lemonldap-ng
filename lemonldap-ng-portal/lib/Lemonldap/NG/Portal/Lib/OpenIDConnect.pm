@@ -699,7 +699,7 @@ sub getAccessTokenFromTokenEndpoint {
       || 'client_secret_post';
 
     unless ( $auth_method =~
-        /^(?:client_secret_(?:(?:pos|jw)t|basic)|private_key_jwt)$/o )
+        /^(?:client_secret_(?:(?:pos|jw)t|basic)|private_key_jwt)$/ )
     {
         $self->logger->error(
             "Bad authentication method on token endpoint for OP $op");

@@ -1072,7 +1072,7 @@ sub tests {
             return ( 1,
                 'FindUser wildcard should be allowed by parameters control' )
               unless (
-                $conf->{findUserWildcard} =~ /$conf->{findUserControl}/o );
+                $conf->{findUserWildcard} =~ /$conf->{findUserControl}/ );
             return 1;
         },
 
