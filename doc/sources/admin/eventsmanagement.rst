@@ -11,7 +11,7 @@ such data.
 
 Starting from version 2.20.0, LLNG adds an **optional** :ref:`PUB/SUB system<PubSub>`
 *(not enabled by default)* to replace this timers. This isn't useful in classic
-deployments but may help big deployment.
+deployments but may help big ones.
 
 Default events system
 ---------------------
