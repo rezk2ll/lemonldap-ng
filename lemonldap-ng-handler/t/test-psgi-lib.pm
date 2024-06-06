@@ -27,6 +27,7 @@ sub init {
     $prms ||= {};
     %$prms = (
         configStorage       => { type => 'File', dirName => 't' },
+        checkTime           => 1,
         localSessionStorage => '',
         logLevel            => 'error',
         cookieName          => 'lemonldap',
