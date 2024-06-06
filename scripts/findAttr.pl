@@ -44,7 +44,7 @@ foreach my $module (qw(common handler manager portal)) {
             last if ( /^__END__$/ and not $autoload );
             if (/\$(?:self|args)->\{\s*(\w+)\s*\}/) {
                 my $k = $1;
-                unless ( $k =~ /^$IGNORE$/o ) {
+                unless ( $k =~ /^$IGNORE$/ ) {
                     $attr->{$module}->{$1}++;
                     $attrFile->{$module}->{$1}->{$file}++;
                 }
