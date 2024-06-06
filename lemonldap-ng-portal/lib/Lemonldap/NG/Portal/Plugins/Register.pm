@@ -189,7 +189,7 @@ sub _register {
     # Check mail
     return PE_MALFORMEDUSER
       unless ( $req->data->{registerInfo}->{mail} =~
-        m/$self->{conf}->{userControl}/o );
+        m/$self->{conf}->{userControl}/ );
 
     # Search for user using UserDB module
     # If the user already exists, register is forbidden

@@ -533,7 +533,7 @@ sub logError {
 
 sub _substPlaceHolders {
     return $_[0] unless $_[0];
-    $_[0] =~ s/$PlaceHolderRe/$ENV{$1}/geo;
+    $_[0] =~ s/$PlaceHolderRe/$ENV{$1}/ge;
     return $_[0];
 }
 
@@ -544,7 +544,7 @@ sub replacePlaceholders {
     my ( $self, $conf ) = @_;
     if ( ref $conf eq 'HASH' ) {
         foreach my $key ( keys %$conf ) {
-            if ( $key =~ /$PlaceHolderRe/o ) {
+            if ( $key =~ /$PlaceHolderRe/ ) {
                 my $val = $conf->{$key};
                 delete $conf->{$key};
                 my $nk = _substPlaceHolders($key);
@@ -554,7 +554,7 @@ sub replacePlaceholders {
             if ( ref $conf->{$key} ) {
                 $self->replacePlaceholders( $conf->{$key} );
             }
-            elsif ( $conf->{$key} =~ /$PlaceHolderRe/o ) {
+            elsif ( $conf->{$key} =~ /$PlaceHolderRe/ ) {
                 $conf->{$key} = _substPlaceHolders( $conf->{$key} );
             }
         }
@@ -564,7 +564,7 @@ sub replacePlaceholders {
             if ( ref $conf->[$i] ) {
                 $self->replacePlaceholders( $conf->[$i] );
             }
-            elsif ( $conf->[$i] =~ /$PlaceHolderRe/o ) {
+            elsif ( $conf->[$i] =~ /$PlaceHolderRe/ ) {
                 $conf->[$i] = _substPlaceHolders( $conf->[$i] );
             }
         }

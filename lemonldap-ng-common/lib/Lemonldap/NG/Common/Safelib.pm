@@ -325,8 +325,8 @@ sub isInNet6 {
 sub varIsInUri {
     my ( $uri, $wanteduri, $attribute, $restricted ) = @_;
     return $restricted
-      ? $uri =~ /$wanteduri$attribute$/o
-      : $uri =~ /$wanteduri$attribute/o;
+      ? $uri =~ /$wanteduri$attribute$/
+      : $uri =~ /$wanteduri$attribute/;
 }
 
 my $json = JSON::XS->new;

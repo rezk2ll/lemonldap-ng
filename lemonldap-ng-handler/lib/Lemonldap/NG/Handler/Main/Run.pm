@@ -521,8 +521,8 @@ sub fetchId {
           and not $class->_isHttps( $req, $vhost ) );
     my $cn    = $class->tsv->{cookieName};
     my $value = $lookForHttpCookie    # Avoid prefix and bad cookie name (#2417)
-      ? ( $t =~ /(?<![-.~])\b${cn}http=([^,; ]+)/o ? $1 : 0 )
-      : ( $t =~ /(?<![-.~])\b$cn=([^,; ]+)/o       ? $1 : 0 );
+      ? ( $t =~ /(?<![-.~])\b${cn}http=([^,; ]+)/ ? $1 : 0 )
+      : ( $t =~ /(?<![-.~])\b$cn=([^,; ]+)/       ? $1 : 0 );
 
     if ( $value && $lookForHttpCookie && $class->tsv->{securedCookie} == 3 ) {
         $value = $class->tsv->{cipher}->decryptHex( $value, "http" );

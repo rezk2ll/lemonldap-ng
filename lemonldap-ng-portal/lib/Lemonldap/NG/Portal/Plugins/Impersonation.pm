@@ -102,7 +102,7 @@ sub run {
     $self->logger->debug("No impersonation required")
       if ( $spoofId eq $req->{user} );
 
-    unless ( $spoofId =~ /$self->{conf}->{userControl}/o ) {
+    unless ( $spoofId =~ /$self->{conf}->{userControl}/ ) {
         $self->userLogger->warn('Malformed spoofed Id');
         $self->logger->debug("Impersonation tried with spoofed Id: $spoofId");
         $spoofId = $req->{user};

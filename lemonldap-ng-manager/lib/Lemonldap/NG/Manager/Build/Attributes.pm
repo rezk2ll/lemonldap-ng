@@ -3847,7 +3847,7 @@ sub attributes {
                 my (@s) = split( /[\s,]+/, $l );
                 foreach my $s (@s) {
                     $s =~
-m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?::\d{1,5})?/?.*)$}o
+m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?::\d{1,5})?/?.*)$}
                       or return ( 0, "__badLdapUri__: \"$s\"" );
                 }
                 return 1;
