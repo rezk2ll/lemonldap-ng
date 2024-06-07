@@ -8,7 +8,7 @@ our @EXPORT = qw(msgActions addMsgAction delMsgAction);
 our $msgActions = {
     newConf => sub {
         my ( $class, $msg, $req ) = @_;
-        unless ( $class->checkConf() ) {
+        unless ( $class->checkConf(1) ) {
             $class->logger->error("$class: No configuration found");
             $req->data->{noTry} = 1;
         }
@@ -27,7 +27,7 @@ sub addMsgAction {
 }
 
 sub delMsgAction {
-    my ( $name ) = @_;
+    my ($name) = @_;
     delete $msgActions->{$name};
 }
 
