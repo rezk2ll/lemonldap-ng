@@ -14,11 +14,12 @@ our $lastCheck = time;
 our $channels = {};
 
 sub new {
-    my ( $class, $conf ) = @_;
+    my ( $class, $conf, $logger ) = @_;
     $channels->{ $conf->{eventQueueName} } //= [];
     return bless {
         checkTime      => $conf->{checkTime},
         eventQueueName => $conf->{eventQueueName},
+        logger => $logger,
     }, $class;
 }
 

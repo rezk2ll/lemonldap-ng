@@ -7,8 +7,9 @@ use JSON;
 our $VERSION = '2.20.0';
 
 sub new {
-    my $self   = bless {}, shift;
-    my $args = $_[0]->{messageBrokerOptions} // {};
+    my ( $class, $conf, $logger ) = @_;
+    my $self = bless { logger => $logger }, $class;
+    my $args = $conf->{messageBrokerOptions} // {};
 
     # Reconnection parameters
     #  - try to reconnect every 1s up to 60s
@@ -35,7 +36,7 @@ sub subscribe {
         sub {
             my $tmp = eval { JSON::from_json( $_[0] ) };
             if ($@) {
-                print STDERR "Bad message from Redis: $@";
+                $self->{logger}->error("Bad message from Redis: $@");
             }
             else {
                 push @{ $self->{messages}{$channel} }, $tmp;

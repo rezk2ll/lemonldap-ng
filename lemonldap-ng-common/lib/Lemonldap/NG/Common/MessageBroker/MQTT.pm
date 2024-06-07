@@ -6,7 +6,8 @@ use Net::MQTT::Simple;
 our $VERSION = '2.20.0';
 
 sub new {
-    my $args = $_[1]->{messageBrokerOptions};
+    my ( $class, $conf, $logger ) = @_;
+    my $args = $conf->{messageBrokerOptions};
     $args //= {};
     $args->{server} ||= 'localhost:1883';
     my $mqtt;
@@ -24,10 +25,10 @@ sub new {
         $mqtt = Net::MQTT::Simple->new( $args->{server} );
     }
     unless ($mqtt) {
-        print STDERR "Unalble to connect to MQTT server $@$!";
+        $logger->error("Unable to connect to MQTT server $@$!");
         return;
     }
-    my $self = bless { mqtt => $mqtt, _ch => [] }, shift;
+    my $self = bless { mqtt => $mqtt, _ch => [], logger => $logger }, $class;
     return $self;
 }
 
@@ -49,7 +50,7 @@ sub subscribe {
             $_[0] =~ s#llng/##;
             my $tmp = eval { JSON::from_json( $_[1] ) };
             if ($@) {
-                print STDERR "Bad message from MQTT server: $@";
+                $self->{logger}->error("Bad message from MQTT server: $@")
             }
             else {
                 push @{ $self->{messages}{ $_[0] } }, $tmp;
@@ -65,7 +66,7 @@ sub DESTROY {
         ( $self->{mqtt} && $self->{mqtt}->unsubscribe($_) )
           foreach ( @{ $self->{_ch} } );
     };
-    print STDERR $@ if $@;
+    $self->{logger}->error($@) if $@;
 }
 
 sub getNextMessage {

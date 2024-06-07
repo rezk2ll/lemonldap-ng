@@ -630,9 +630,9 @@ sub msgBrokerInit {
     $brokerClass =~ s/^::/Lemonldap::NG::Common::MessageBroker::/;
     eval "require $brokerClass";
     die $@ if $@;
-    $class->tsv->{msgBrokerReader} = $brokerClass->new($conf);
+    $class->tsv->{msgBrokerReader} = $brokerClass->new($conf, $class->logger);
     $class->tsv->{msgBrokerReader}->subscribe( $conf->{eventQueueName} );
-    $class->tsv->{msgBrokerWriter} = $brokerClass->new($conf);
+    $class->tsv->{msgBrokerWriter} = $brokerClass->new($conf, $class->logger);
 }
 
 sub substitute {

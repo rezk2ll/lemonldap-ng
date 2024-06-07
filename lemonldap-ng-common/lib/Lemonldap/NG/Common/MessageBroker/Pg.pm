@@ -7,25 +7,26 @@ use JSON;
 our $VERSION = '2.20.0';
 
 sub new {
-    my $args = $_[1]->{messageBrokerOptions};
+    my ( $class, $conf, $logger ) = @_;
+    my $args = $conf->{messageBrokerOptions};
     unless ($args
         and $args->{dbiChain}
         and $args->{dbiUser}
         and $args->{dbiPassword} )
     {
-        print STDERR "MISSING OPTIONS FOR PG PUB/SUB\n";
+        $logger->error('MISSING OPTIONS FOR PG PUB/SUB');
         return undef;
     }
-    my $self = bless { %{$args} }, shift;
+    my $self = bless { %{$args}, logger => $logger }, $class;
     return $self;
 }
 
 sub publish {
-    my ($self, $channel, $msg ) = @_;
+    my ( $self, $channel, $msg ) = @_;
     die 'Not a hash msg' unless ref $msg eq 'HASH';
     my $j = eval { JSON::to_json($msg) };
     die "MessageBroker publish only hashes! $@" if $@;
-    $self->_dbh->do("NOTIFY $channel, ?", undef, $j);
+    $self->_dbh->do( "NOTIFY $channel, ?", undef, $j );
 }
 
 sub subscribe {
@@ -39,10 +40,10 @@ sub getNextMessage {
     return undef
       unless $self->{messages}{$channel};
     if ( my $notify = $self->_dbh->pg_notifies ) {
-        my ($name, $pid, $payload) = @$notify;
+        my ( $name, $pid, $payload ) = @$notify;
         $payload = eval { JSON::from_json($payload) };
         if ($@) {
-            print STDERR "Bad message from Pg: $@";
+            $self->{logger}->error("Bad message from Pg: $@");
         }
         else {
             push @{ $self->{messages}{$name} }, $payload;
@@ -58,7 +59,7 @@ sub waitForNextMessage {
 
     # Infinite loop until one message is seen
     my $res;
-    while ( not($res = $self->getNextMessage($channel))){
+    while ( not( $res = $self->getNextMessage($channel) ) ) {
         sleep 1;
     }
 }
