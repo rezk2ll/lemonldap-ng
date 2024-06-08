@@ -37,6 +37,8 @@ sub checkConf {
     my ( $class, $force ) = @_;
     $class->logger->debug("Check configuration for $class");
     my $prm  = { local => !$force, localPrm => $class->localConfig };
+    my $cfgNum = $class->confAcc->lastCfg();
+    $prm->{local} = 0 if $class->cfgNum and $cfgNum == $class->cfgNum;
     my $conf = $class->confAcc->getConf($prm);
     chomp $Lemonldap::NG::Common::Conf::msg;
 

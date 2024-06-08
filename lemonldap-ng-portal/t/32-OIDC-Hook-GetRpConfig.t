@@ -185,7 +185,6 @@ sub get_id_token_alg {
 sub op {
     return LLNG::Manager::Test->new( {
             ini => {
-                checkMsg                        => 6000,
                 logLevel                        => $debug,
                 domain                          => 'idp.com',
                 portal                          => 'http://auth.op.com',
