@@ -15,7 +15,6 @@ BEGIN {
         require 't/postgres/pg.pm';
     };
     if ($@) {
-        print STDERR $@;
         $noPg = $@;
     }
 }
