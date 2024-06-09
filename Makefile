@@ -1065,7 +1065,8 @@ ubuntu-install-for-nginx:
 
 distclean:	clean
 
-clean:		common_clean handler_clean portal_clean manager_clean stop_web_server
+clean:
+	-@$(MAKE) common_clean handler_clean portal_clean manager_clean stop_web_server
 	@rm -f $$(find */ -name '*bak' -delete)
 	@rm -rf doc/devel
 	@rm -rf doc/pages/documentation/current/*
