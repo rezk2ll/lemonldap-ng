@@ -33,7 +33,8 @@ sub init {
 
     # If "activation" is just set to "enabled",
     # replace the rule to detect if user has registered its key
-    $self->conf->{webauthn2fActivation} = 'has2f("WebAuthn")'
+    $self->conf->{webauthn2fActivation} =
+      'has2f("WebAuthn") and $_auth ne "WebAuthn"'
       if $self->conf->{webauthn2fActivation} eq '1';
 
     return $self->SUPER::init() ? 1 : 0;
