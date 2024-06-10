@@ -48,10 +48,14 @@ LemonLDAP::NG WebAuthn verify script
     }
   };
 
-  $(document).ready(function() {
-    setTimeout(check, 1000);
-    $('#retrybutton').on('click', check);
-    return $('.webauthnclick').on('click', check);
+  $(document).on("portalLoaded", {}, function(event, info) {
+    return $(document).ready(function() {
+      $('#retrybutton').on('click', check);
+      $('.webauthnclick').on('click', check);
+      if (window.datas.webauthn_autostart) {
+        return setTimeout(check, 1000);
+      }
+    });
   });
 
 }).call(this);

@@ -33,7 +33,9 @@ check = ->
 			if !e.isDefaultPrevented()
 				setMsg 'webAuthnBrowserFailed', 'danger'
 
-$(document).ready ->
-	setTimeout check, 1000
-	$('#retrybutton').on 'click', check
-	$('.webauthnclick').on 'click', check
+$(document).on "portalLoaded", { }, ( event, info ) ->
+			$(document).ready ->
+				$('#retrybutton').on 'click', check
+				$('.webauthnclick').on 'click', check
+				if window.datas.webauthn_autostart
+					setTimeout check, 1000
