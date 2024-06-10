@@ -64,8 +64,9 @@ EOF
         $req,
         'webauthn2fcheck',
         params => {
-            DATA          => to_json( { request => $request } ),
-            TOKEN         => $token,
+            DATA =>
+              to_json( { request => $request, webauthn_autostart => \1 } ),
+            TOKEN => $token,
             CUSTOM_SCRIPT => $req->data->{customScript},
             $self->get2fTplParams($req),
         }
