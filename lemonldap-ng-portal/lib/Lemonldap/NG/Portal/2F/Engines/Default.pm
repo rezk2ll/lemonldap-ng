@@ -26,6 +26,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   portalConsts
 );
 
+use Lemonldap::NG::Common::Util qw/display2F filterKey2F/;
+
 our $VERSION = '2.20.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
@@ -679,7 +681,15 @@ sub _displayRegister {
         my $prefix = $reg_mod_info->{p};
         my $module = $reg_mod_info->{m};
         foreach (@$_2fDevices) {
+
             if ( $_->{type} eq $type ) {
+
+                # Set k_v template variables for non_private values
+                # and also not for epoch/name
+                my $extrakeys = filterKey2F( $_, "epoch", "name" );
+                while ( my ( $k, $v ) = each %$extrakeys ) {
+                    $_->{"${k}_${v}"} = 1;
+                }
 
                 # Populate additional info for template engine
                 $_->{prefix}     = $prefix;
