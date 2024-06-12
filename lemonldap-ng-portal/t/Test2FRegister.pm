@@ -13,8 +13,8 @@ with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
 
-has logo     => ( is => 'rw', default => 'test.png' );
-has prefix   => ( is => 'rw', default => 'test' );
+has logo   => ( is => 'rw', default => 'test.png' );
+has prefix => ( is => 'rw', default => 'test' );
 has template => ( is => 'ro', default => 'generic2fregister' );
 has welcome  => ( is => 'ro', default => 'generic2fwelcome' );
 has type     => ( is => 'ro', default => 'test' );
