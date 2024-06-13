@@ -11,10 +11,11 @@ init(
     {
         localStorage        => 'Cache::FileCache',
         localStorageOptions => {
-            namespace          => 'lemonldap-ng-config',
-            default_expires_in => 600,
-            cache_root         => $cacheDir,
-            cache_depth        => 3,
+            namespace            => 'lemonldap-ng-config',
+            default_expires_in   => 600,
+            cache_root           => $cacheDir,
+            cache_depth          => 3,
+            allow_cache_for_root => 1,
         },
     }
 );
