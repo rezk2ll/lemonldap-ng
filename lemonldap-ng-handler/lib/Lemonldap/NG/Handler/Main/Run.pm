@@ -102,6 +102,7 @@ sub checkType {
 # Method to check for event in events queue
 sub checkEvent {
     my ( $class, $req, $delay ) = @_;
+    $class->logger->debug('Checking for events');
     unless ( $class->tsv->{msgBrokerReader} ) {
         $class->logger->error('Not initialized');
         return;
@@ -112,6 +113,7 @@ sub checkEvent {
         ->getNextMessage( $class->tsv->{eventQueueName}, $delay ) )
     {
         if ( $msg->{action} ) {
+            $class->logger->debug("Processing event $msg->{action}");
             if ( my $sub = msgActions->{ $msg->{action} } ) {
                 $sub->( $class, $msg, $req );
                 $ret = $msg->{action};
@@ -133,6 +135,7 @@ sub checkEvent {
 sub publishEvent {
     my ( $class, $req, $msg ) = @_;
     die unless $msg;
+    $class->logger->debug("Publishing event $msg->{action}");
     unless ( $class->tsv->{msgBrokerWriter} ) {
         $class->logger->error('Not initialized');
         return;
