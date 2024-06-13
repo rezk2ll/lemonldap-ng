@@ -165,12 +165,15 @@ sub saveConf {
 sub getConf {
     my ( $self, $args ) = @_;
     my $res;
-    my $local                = $args->{local};
-    my $cfgNum               = $args->{cfgNum};
-    my $localPrm             = $args->{localPrm};
-    my $noCache              = $args->{noCache};
-    my $raw                  = $args->{raw};
-    my $allow_cache_for_root = $args->{allow_cache_for_root};
+    my $local    = $args->{local};
+    my $cfgNum   = $args->{cfgNum};
+    my $localPrm = $args->{localPrm};
+    my $noCache  = $args->{noCache};
+    my $raw      = $args->{raw};
+    my $allow_cache_for_root =
+      (   $self->{localStorageOptions}
+        ? $self->{localStorageOptions}->{allow_cache_for_root}
+        : 0 );
 
     # If running as UID=0, disabled the cache unless explicitely allowed
     if ( $> == 0 and !$allow_cache_for_root ) {
