@@ -1372,6 +1372,7 @@
 "webauthn2fAuthnLevel":"مستوى إثبات الهوية",
 "webauthn2fLabel":"Label",
 "webauthn2fLogo":"شعار",
+"webauthn2fResidentKey":"Use discoverable credential",
 "webauthn2fSelfRegistration":"التسجيل الذاتي",
 "webauthn2fUserCanRemoveKey":"Allow user to remove WebAuthn",
 "webauthn2fUserVerification":"User verification",

@@ -1111,6 +1111,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                     'v' => 'WebID'
                 },
                 {
+                    'k' => 'WebAuthn',
+                    'v' => 'WebAuthn'
+                },
+                {
                     'k' => 'Demo',
                     'v' => 'Demonstration'
                 },
@@ -2031,7 +2035,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                 foreach my $s (@s) {
                     return 0, qq[__badLdapUri__: "$s"]
                       unless $s =~
-m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?::\d{1,5})?/?.*)$]o;
+m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?::\d{1,5})?/?.*)$];
                 }
                 return 1;
             },
@@ -5590,6 +5594,26 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'webauthn2fLogo' => {
             'type' => 'text'
+        },
+        'webauthn2fResidentKey' => {
+            'select' => [ {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => 'discouraged',
+                    'v' => 'Discouraged'
+                },
+                {
+                    'k' => 'preferred',
+                    'v' => 'Preferred'
+                },
+                {
+                    'k' => 'required',
+                    'v' => 'Required'
+                }
+            ],
+            'type' => 'select'
         },
         'webauthn2fSelfRegistration' => {
             'default' => 0,

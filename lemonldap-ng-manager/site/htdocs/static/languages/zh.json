@@ -1372,6 +1372,7 @@
 "webauthn2fAuthnLevel":"驗證等級",
 "webauthn2fLabel":"標籤",
 "webauthn2fLogo":"圖示",
+"webauthn2fResidentKey":"Use discoverable credential",
 "webauthn2fSelfRegistration":"自行註冊",
 "webauthn2fUserCanRemoveKey":"允許使用者移除 WebAuthn",
 "webauthn2fUserVerification":"User verification",

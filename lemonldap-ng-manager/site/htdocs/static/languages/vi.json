@@ -1372,6 +1372,7 @@
 "webauthn2fAuthnLevel":"Mức xác thực",
 "webauthn2fLabel":"Nhãn",
 "webauthn2fLogo":"Logo",
+"webauthn2fResidentKey":"Use discoverable credential",
 "webauthn2fSelfRegistration":"Tự đăng ký",
 "webauthn2fUserCanRemoveKey":"Cho phép người dùng xóa WebAuthn",
 "webauthn2fUserVerification":"xác minh người dùng",

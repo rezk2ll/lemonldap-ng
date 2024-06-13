@@ -109,7 +109,7 @@ sub sendWarningEmail {
 
 sub _sendMail {
     my ( $self, $req ) = @_;
-    my $date     = strftime( '%F %X', localtime );
+    my $date     = strftime( '%F %X (UTC%z)', localtime );
     my $location = $req->sessionInfo->{_riskDetails}->{newLocation};
     my $ua       = $req->env->{HTTP_USER_AGENT};
     my $mail     = $req->sessionInfo->{ $self->mailSessionKey };

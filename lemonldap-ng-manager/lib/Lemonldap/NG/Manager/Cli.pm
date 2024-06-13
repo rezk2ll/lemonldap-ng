@@ -217,7 +217,7 @@ sub addKey {
         my $root   = shift;
         my $newKey = shift;
         my $value  = shift;
-        unless ( $root =~ /$simpleHashKeys$/o or $root =~ /$sep/o ) {
+        unless ( $root =~ /$simpleHashKeys$/ or $root =~ /$sep/ ) {
             die "$root is not a simple hash. Aborting";
         }
         $self->logger->info("CLI: Append key $root/$newKey $value");
@@ -258,7 +258,7 @@ sub delKey {
     while (@_) {
         my $root = shift;
         my $key  = shift;
-        unless ( $root =~ /$simpleHashKeys$/o or $root =~ /$sep/o ) {
+        unless ( $root =~ /$simpleHashKeys$/ or $root =~ /$sep/ ) {
             die "$root is not a simple hash. Aborting";
         }
         $self->logger->info("CLI: Remove key $root/$key");

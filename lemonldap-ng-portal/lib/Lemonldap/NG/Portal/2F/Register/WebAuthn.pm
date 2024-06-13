@@ -98,6 +98,7 @@ sub _registrationchallenge {
 
     my $displayName      = $req->userData->{ $self->displayname_attr } || $user;
     my $userVerification = $self->conf->{webauthn2fUserVerification};
+    my $residentKey      = $self->conf->{webauthn2fResidentKey};
     my $attestation      = $self->conf->{webauthn2fAttestation} || "none";
     my $request          = {
         rp => {
@@ -113,8 +114,11 @@ sub _registrationchallenge {
         attestation            => $attestation,
         pubKeyCredParams       => [],
         authenticatorSelection => { (
-                $userVerification
-                ? ( userVerification => $userVerification )
+                $userVerification ? ( userVerification => $userVerification )
+                : ()
+            ),
+            (
+                $residentKey ? ( residentKey => $residentKey )
                 : ()
             )
         }

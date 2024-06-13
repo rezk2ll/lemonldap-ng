@@ -1372,6 +1372,7 @@
 "webauthn2fAuthnLevel":"Nivel de autentificación",
 "webauthn2fLabel":"Etiqueta",
 "webauthn2fLogo":"Logotipo",
+"webauthn2fResidentKey":"Use discoverable credential",
 "webauthn2fSelfRegistration":"Auto registro",
 "webauthn2fUserCanRemoveKey":"Allow user to remove WebAuthn",
 "webauthn2fUserVerification":"User verification",

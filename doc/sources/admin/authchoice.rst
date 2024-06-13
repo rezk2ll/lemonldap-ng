@@ -77,38 +77,47 @@ Define here:
    $env->{urldc} =~ /test1\.example\.com/
 
 
-.. note::
+Ordering of choices on the main login page
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Federated authentication need pdata cookie.
-    SameSite cookie value must be set to "Lax" or "None".
-    See :doc:`SSO cookie parameters<ssocookie>`
+You can prefix the key name with a digit to order them. The
+digit will not be shown on portal page. Underscore characters are also
+replaced by spaces.
 
-.. note::
+For example, use ``2_France_Connect`` to use *France Connect* as the second
+choice.
 
-    Authentication request to another URL than Portal URL can lead
-    to a persistent loop between Portal and a redirection URL (pdata is not
-    removed because domains mismatch). To avoid this, you have to set pdata
-    cookie domain by editing ``lemonldap-ng.ini`` in section [portal]:
+Parameter override
+~~~~~~~~~~~~~~~~~~
 
-    .. code:: ini
+You can also override some LLNG parameters for each chain. See
+:doc:`Parameters list<parameterlist>` to have the key names to use
 
-       [portal]
-       pdataDomain = example.com
+Custom logo
+~~~~~~~~~~~
 
+You can customize the logo by copying a PNG file that matches the *Name* of the
+choice in ``/usr/share/lemonldap-ng/portal/htdocs/static/common/modules/``.
 
+For example: ``2_France_Connect.png``
 
+Issues with persistent data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. tip::
+Federated authentication need pdata cookie.
+SameSite cookie value must be set to "Lax" or "None".
+See :doc:`SSO cookie parameters<ssocookie>`
 
-    You can prefix the key name with a digit to order them. The
-    digit will not be shown on portal page. Underscore characters are also
-    replaced by spaces.
+Authentication request to another URL than Portal URL can lead
+to a persistent loop between Portal and a redirection URL (pdata is not
+removed because domains mismatch). To avoid this, you have to set pdata
+cookie domain by editing ``lemonldap-ng.ini`` in section [portal]:
 
+.. code:: ini
 
-.. tip::
+   [portal]
+   pdataDomain = example.com
 
-    You can also override some LLNG parameters for each chain. See
-    :doc:`Parameters list<parameterlist>` to have the key names to use
 
 .. |image0| image:: /documentation/manager-choice.png
    :class: align-center

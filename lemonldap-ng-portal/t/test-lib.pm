@@ -306,6 +306,19 @@ sub expectXpath {
     return $doc->findnodes($xpath);
 }
 
+sub getJsVars {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ($res) = @_;
+
+    my $initscripts = expectXpath( $res, '//script[@type="application/init"]' );
+
+    my @parsed_initscripts =
+      map { from_json($_) } $initscripts->to_literal_list();
+
+    my %vars = map { %$_ } @parsed_initscripts;
+    return \%vars;
+}
+
 =head4 expectForm( $res, $hostRe, $uriRe, @requiredFields )
 
 Verify form in HTML result and return ( $host, $uri, $query, $method ):

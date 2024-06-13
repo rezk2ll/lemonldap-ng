@@ -1372,6 +1372,7 @@
 "webauthn2fAuthnLevel":"Уровень аутентификации",
 "webauthn2fLabel":"Метка",
 "webauthn2fLogo":"Лого",
+"webauthn2fResidentKey":"Use discoverable credential",
 "webauthn2fSelfRegistration":"Самостоятельная регистрация",
 "webauthn2fUserCanRemoveKey":"Разрешить пользователю удалять WebAuthn",
 "webauthn2fUserVerification":"Подтверждение пользователя",
