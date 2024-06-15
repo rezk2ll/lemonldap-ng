@@ -29,7 +29,7 @@ sub init {
         configStorage       => { type => 'File', dirName => 't' },
         checkTime           => 1,
         localSessionStorage => '',
-        logLevel            => 'error',
+        logLevel            => $ENV{LLNGLOGLEVEL} || 'error',
         cookieName          => 'lemonldap',
         status              => 1,
         securedCookie       => 0,
