@@ -241,8 +241,9 @@ sub getConf {
 
                 # Store configuration in cache
                 $self->setLocalConf($r)
-                  if ( $self->{refLocalStorage}
-                    and not( $noCache == 1 or $raw ) );
+                  if (  $self->{refLocalStorage}
+                    and ( !$noCache or $noCache != 1 )
+                    and !$raw );
             }
         }
 
