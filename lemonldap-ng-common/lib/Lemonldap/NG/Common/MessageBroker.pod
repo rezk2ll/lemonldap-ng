@@ -59,6 +59,8 @@ Constructor. Arguments:
 
 =item * B<$conf>: current LLNG configuration
 
+=item * B<$logger>: a Lemonldap::NG::Common logger
+
 =back
 
 =head2 publish
