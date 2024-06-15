@@ -13,25 +13,23 @@ ok( $res = $client->_get( '/deny', undef, undef, "lemonldap=$sessionId" ),
     'Denied query' );
 ok( $res->[0] == 403, ' Code is 403' ) or explain( $res->[0], 403 );
 
-newConf(1, '/deny', '/deny2');
+newConf( 1, '/deny', '/deny2' );
 
 Time::Fake->offset('+6s');
 ok( $res = $client->_get( '/deny', undef, undef, "lemonldap=$sessionId" ),
     'Denied query' );
 ok( $res->[0] == 200, ' Conf was updated' ) or explain( $res->[0], 200 );
 
-newConf(2, '/deny2', '/deny');
+newConf( 2, '/deny2', '/deny' );
 
 Time::Fake->offset('+12s');
 ok( $res = $client->_get( '/deny', undef, undef, "lemonldap=$sessionId" ),
     'Denied query' );
 ok( $res->[0] == 403, ' Conf was updated' ) or explain( $res->[0], 403 );
 
-
 unlink(
 't/sessions/lock/Apache-Session-e5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545.lock',
-    't/lmConf-2.json',
-    't/lmConf-3.json',
+    't/lmConf-2.json', 't/lmConf-3.json',
 );
 
 done_testing();
@@ -39,11 +37,11 @@ done_testing();
 clean();
 
 sub newConf {
-    my ($cfgNum, $src, $dst) = @_;
-    my $next = $cfgNum+1;
+    my ( $cfgNum, $src, $dst ) = @_;
+    my $next = $cfgNum + 1;
     open my $cur, '<', "t/lmConf-$cfgNum.json";
     open my $new, '>', "t/lmConf-$next.json";
-    
+
     while ( my $line = <$cur> ) {
         $line =~ s/("cfgNum")\s*:\s*"?$cfgNum"?"?/$1:$next/;
         $line =~ s#$src#$dst#;
