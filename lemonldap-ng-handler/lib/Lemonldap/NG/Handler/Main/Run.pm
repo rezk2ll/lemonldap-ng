@@ -12,6 +12,7 @@ use MIME::Base64;
 use URI;
 use URI::Escape;
 use Lemonldap::NG::Common::Session;
+use Lemonldap::NG::Handler::Main::MsgActions;
 
 # Methods that must be overloaded
 
@@ -80,20 +81,74 @@ sub getStatus {
 
 # Method that must be called by base packages (Handler::ApacheMP2,...) to get
 # type of handler to call (Main, AuthBasic,...)
+
 sub checkType {
     my ( $class, $req ) = @_;
 
-    if ( time() - $class->lastCheck > $class->checkTime ) {
-        unless ( $class->checkConf ) {
-            $class->logger->error("$class: No configuration found");
-            $req->data->{noTry} = 1;
-            return 'Fail';
-        }
+    # Always launch "newConf" task if never started
+    msgActions->{newConf}->( $class, {}, $req )
+      unless $class->tsv and %{ $class->tsv };
+
+    # Check for event in events queue every 5 seconds
+    if ( time - $class->lastCheckMsg > $class->checkMsg ) {
+        defined( $class->checkEvent($req) ) or return 'Fail';
     }
     my $vhost = $class->resolveAlias($req);
     return ( defined $class->tsv->{type}->{$vhost} )
       ? $class->tsv->{type}->{$vhost}
       : 'Main';
+}
+
+# Method to check for event in events queue
+sub checkEvent {
+    my ( $class, $req, $delay ) = @_;
+    $class->logger->debug('Checking for events');
+    unless ( $class->tsv->{msgBrokerReader} ) {
+        $class->logger->error('Not initialized');
+        return;
+    }
+    my $ret = '';
+    while ( my $msg =
+        $class->tsv->{msgBrokerReader}
+        ->getNextMessage( $class->tsv->{eventQueueName}, $delay ) )
+    {
+        if ( $msg->{action} ) {
+            $class->logger->debug("Processing event $msg->{action}");
+            if ( my $sub = msgActions->{ $msg->{action} } ) {
+                $sub->( $class, $msg, $req );
+                $ret = $msg->{action};
+            }
+            else {
+                $class->logger->error("Unkown action $msg->{action}");
+            }
+        }
+        else {
+            $class->logger->error(
+                'Malformed message: ' . JSON::to_json($msg) );
+        }
+    }
+    $class->lastCheckMsg(time);
+    return $ret;
+}
+
+# Method to push an event into message queue.
+sub publishEvent {
+    my ( $class, $req, $msg ) = @_;
+    die unless $msg;
+    $class->logger->debug("Publishing event $msg->{action}");
+    unless ( $class->tsv->{msgBrokerWriter} ) {
+        $class->logger->error('Not initialized');
+        return;
+    }
+    $class->tsv->{msgBrokerWriter}
+      ->publish( $class->tsv->{eventQueueName}, $msg );
+    my $ret;
+    my $start = time;
+
+    # After pushing message, let's pop message queue for this node and
+    # then launch the concerning method
+    do { $ret = $class->checkEvent( $req, 0.1 ) }
+      while ( ( !$ret or $ret ne $msg->{action} ) and time < $start + 1 );
 }
 
 ## @rmethod int run

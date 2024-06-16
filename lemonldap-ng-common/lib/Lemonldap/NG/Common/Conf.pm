@@ -143,10 +143,17 @@ sub saveConf {
     }
 
     $msg .= "Configuration $conf->{cfgNum} stored.\n";
-    if ( $self->{refLocalStorage} ) {
-        $self->setDefault($conf);
-        $self->setValuesFromEnv($conf);
-        $self->compactConf($conf);
+    $self->setDefault($conf);
+    $self->setValuesFromEnv($conf);
+    $self->compactConf($conf);
+
+    if (    Lemonldap::NG::Handler::Main->can('tsv')
+        and Lemonldap::NG::Handler::Main->tsv->{msgBrokerWriter} )
+    {
+        Lemonldap::NG::Handler::Main->tsv->{msgBrokerWriter}
+          ->publish( $conf->{eventQueueName}, { action => 'newConf' } );
+    }
+    else {
         eval { Lemonldap::NG::Handler::Main->reload() };
     }
 
@@ -234,8 +241,9 @@ sub getConf {
 
                 # Store configuration in cache
                 $self->setLocalConf($r)
-                  if ( $self->{refLocalStorage}
-                    and not( $noCache == 1 or $raw ) );
+                  if (  $self->{refLocalStorage}
+                    and ( !$noCache or $noCache != 1 )
+                    and !$raw );
             }
         }
 

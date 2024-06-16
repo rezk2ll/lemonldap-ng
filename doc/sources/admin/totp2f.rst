@@ -88,16 +88,13 @@ In the manager (advanced parameters), you just have to enable it:
 .. attention::
 
     If you want to use a custom rule for "activation" and
-    want to keep self-registration, you must include this in your rule that
-    ``$_2fDevices =~ /"type":\s*"TOTP"/s`` is set, else TOTP will be
-    required even if users are not registered. This is automatically done
-    when "activation" is simply set to "on".
+    want to keep self-registration, you must add the following condition to the custom activation rule::
 
+        and has2f('TOTP')
 
-.. danger::
+    Without this condition, TOTP will be asked even for users who didn't register one.
+    This is automatically done when "activation" is simply set to "on".
 
-    Range is tested backward and forward to prevent
-    positive or negative clock drift.
 
 Enrollment
 ----------

@@ -742,7 +742,9 @@ sub _deleteSession {
         ) unless ($preserveCookie);
     }
 
-    HANDLER->localUnlog( $req, $session->id );
+    # Publishing an "unlog" event will automatically remove the corresponding
+    # session from handler cache. See publishEvent into Handler::Main::Run
+    HANDLER->publishEvent( $req, { action => 'unlog', id => $session->id } );
     $session->remove;
 
     # Create an obsolete cookie to remove it

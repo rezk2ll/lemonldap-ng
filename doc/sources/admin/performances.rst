@@ -19,11 +19,13 @@ databases:
 \             Lifetime in memory                  Lifetime in Local-Cache (file)                      DB
 ============= ======================== ========== ============================== ==================== ==
 \             Parameter                Default    Parameter                      Default
-Configuration ``checkTime``            1 second                                  Until "reload" order ✔
-Session       ``handlerInternalCache`` 15 seconds ``default_expires_in`` [1]_    10 minutes           ✔
+Configuration ``checkTime`` [1]_       1 second                                  Until "reload" order ✔
+Session       ``handlerInternalCache`` 15 seconds ``default_expires_in`` [2]_    10 minutes           ✔
 ============= ======================== ========== ============================== ==================== ==
 
-.. [1] Manager >> General parameters >> Sessions >> Sessions storage >> Cache module options
+.. [1] See also :doc:`Event management <eventsmanagement>`
+
+.. [2] Manager >> General parameters >> Sessions >> Sessions storage >> Cache module options
 
 
 .. note::
@@ -232,22 +234,22 @@ Name                                                                   Configura
 ====================================================================== ============================ =================== ========== =================== ===================================== =================== =============
 Apache::Session::\ **Browseable::LDAP**                                mdb                          159.66              0.0120     49.22               0.1110                                0.0076              0.0050
 Apache::Session::\ **MySQL**                                           No lock                      87.20               **0.0039** 23.14               0.0281                                0.0252              0.0235
-Apache::Session::\ **Browseable::MySQL**                                                            91.79               **0.0039** **0.139** [2]_      0.0272                                **0.0036**          **0.0026**
-Apache::Session::\ **Browseable::MySQLJSON**                                                        86.06               0.0145     \*\* 0.151*\* [3]_  **0.0104**                            0.0137              0.0038
+Apache::Session::\ **Browseable::MySQL**                                                            91.79               **0.0039** **0.139** [3]_      0.0272                                **0.0036**          **0.0026**
+Apache::Session::\ **Browseable::MySQLJSON**                                                        86.06               0.0145     \*\* 0.151*\* [4]_  **0.0104**                            0.0137              0.0038
 Apache::Session::\ **Postgres**                                                                     18.31               0.0095     13.40               0.0323                                0.0277              0.0264
 Apache::Session::\ **Postgres**                                        Unlogged table               9.16                0.0095     7.91                0.0318                                0.0270              0.0254
-Apache::Session::\ **Browseable::Postgres**                            Unlogged table with indexes  9.24                0.0094     **0.103** [2]_      0.0301                                **0.0036**          **0.0028**
-Apache::Session::\ **Browseable::PgJSON**                              Unlogged table, json field   9.25                0.0091     **0.108** [2]_      0.0247                                **0.0035**          **0.0029**
-Apache::Session::\ **Browseable::PgJSON**                              Unlogged table, jsonb field  9.25                0.0091     **0.105** [2]_      **0.0126**                            **0.0034**          **0.0029**
-Apache::Session::\ **Browseable::PgHstore**                            Unlogged table, hstore field 9.62                0.0111     **0.105** [2]_      **0.0125**                            **0.0033**          **0.0029**
+Apache::Session::\ **Browseable::Postgres**                            Unlogged table with indexes  9.24                0.0094     **0.103** [3]_      0.0301                                **0.0036**          **0.0028**
+Apache::Session::\ **Browseable::PgJSON**                              Unlogged table, json field   9.25                0.0091     **0.108** [3]_      0.0247                                **0.0035**          **0.0029**
+Apache::Session::\ **Browseable::PgJSON**                              Unlogged table, jsonb field  9.25                0.0091     **0.105** [3]_      **0.0126**                            **0.0034**          **0.0029**
+Apache::Session::\ **Browseable::PgHstore**                            Unlogged table, hstore field 9.62                0.0111     **0.105** [3]_      **0.0125**                            **0.0033**          **0.0029**
 Apache::Session::\ **Browseable::Redis**                                                            **2.36**            **0.0033** 1.154               0.0643                                0.1048              **0.0024**
 ====================================================================== ============================ =================== ========== =================== ===================================== =================== =============
 
 *The source of this test is available in sources: e2e-tests/sbperf.pl*
 
-.. [2]  "purge" test is done with Apache::Session::Browseable-1.2.5
+.. [3]  "purge" test is done with Apache::Session::Browseable-1.2.5
    and LLG-2.0. Earlier results are not so good.
-.. [3] "purge" test is done with Apache::Session::Browseable-1.2.6
+.. [4] "purge" test is done with Apache::Session::Browseable-1.2.6
    and LLG-2.0.
 
 Analysis:

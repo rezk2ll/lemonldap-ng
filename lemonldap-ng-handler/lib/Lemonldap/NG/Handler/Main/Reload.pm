@@ -37,6 +37,8 @@ sub checkConf {
     my ( $class, $force ) = @_;
     $class->logger->debug("Check configuration for $class");
     my $prm  = { local => !$force, localPrm => $class->localConfig };
+    my $cfgNum = $class->confAcc->lastCfg();
+    $prm->{local} = 0 if $class->cfgNum and $cfgNum != $class->cfgNum;
     my $conf = $class->confAcc->getConf($prm);
     chomp $Lemonldap::NG::Common::Conf::msg;
 
@@ -93,6 +95,7 @@ sub checkConf {
         }
     }
     $class->checkTime( $conf->{checkTime} ) if $conf->{checkTime};
+    $class->checkMsg( $conf->{checkMsg} )   if $conf->{checkMsg};
     $class->lastCheck( time() );
     $class->logger->debug("$class: configuration is up to date");
     return 1;
@@ -164,6 +167,11 @@ sub reload {
 #      - outputPostData
 # - aliasInit():
 #      - vhostAlias
+# - oauth2Init():
+#      - oauth2Options
+# - msgBrokerInit():
+#      - msgBrokerWriter
+#      - msgBrokerReader
 #
 # The *Init() methods can be run in any order,
 # but jailInit must be run first because $tsv->{jail}
@@ -178,7 +186,8 @@ sub configReload {
 
     foreach my $sub (
         qw( defaultValuesInit jailInit portalInit locationRulesInit
-        sessionStorageInit headersInit postUrlInit aliasInit oauth2Init )
+        sessionStorageInit headersInit postUrlInit aliasInit
+        oauth2Init msgBrokerInit )
       )
     {
         $class->logger->debug("Process $$ calls $sub");
@@ -217,7 +226,7 @@ sub defaultValuesInit {
         useSafeJail  httpOnly   whatToTrace        handlerInternalCache
         handlerServiceTokenTTL  customToTrace      lwpOpts lwpSslOpts
         authChoiceAuthBasic     authChoiceParam    upgradeSession
-        hashedSessionStore
+        hashedSessionStore      eventQueueName
         )
       );
 
@@ -614,6 +623,18 @@ sub oauth2Init {
         }
     }
     return 1;
+}
+
+sub msgBrokerInit {
+    my ( $class, $conf ) = @_;
+
+    my $brokerClass = $conf->{messageBroker} || '::NoBroker';
+    $brokerClass =~ s/^::/Lemonldap::NG::Common::MessageBroker::/;
+    eval "require $brokerClass";
+    die $@ if $@;
+    $class->tsv->{msgBrokerReader} = $brokerClass->new($conf, $class->logger);
+    $class->tsv->{msgBrokerReader}->subscribe( $conf->{eventQueueName} );
+    $class->tsv->{msgBrokerWriter} = $brokerClass->new($conf, $class->logger);
 }
 
 sub substitute {

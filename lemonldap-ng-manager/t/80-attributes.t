@@ -63,7 +63,7 @@ my @notManagedAttributes = (
     'checkTime',                 'status', 'soapProxyUrn',
     'impersonationPrefix',       'pdataDomain',
     'mySessionAuthorizedRWKeys', 'contextSwitchingPrefix',
-    'defaultNewKeySize',
+    'defaultNewKeySize',         'checkMsg',
 );
 
 # Words used either as attribute name and node title
