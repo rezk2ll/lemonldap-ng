@@ -488,6 +488,7 @@ Advanced features
 -  :doc:`Deploy LemonLDAP::NG on Plack servers family<configplack>`
    *(Twiggy, Starman, Corona,...)* |new|
 -  :doc:`Node.js handler<nodehandler>` |new|
+-  :doc:`Event management<eventsmanagement>` |new|
 
 Mini howtos
 -----------

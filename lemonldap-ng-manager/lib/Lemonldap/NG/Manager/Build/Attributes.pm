@@ -316,6 +316,12 @@ sub attributes {
             default => 600,
             flags   => 'hp',
         },
+        checkMsg => {
+            type          => 'int',
+            documentation => 'Timeout to check new evant',
+            default       => 5,
+            flags         => 'hp',
+        },
         defaultNewKeySize => {
             type          => 'int',
             documentation => 'Default size for new RSA key helper',
@@ -487,7 +493,6 @@ sub attributes {
         },
         reloadUrls => {
             type          => 'keyTextContainer',
-            help          => 'configlocation.html#configuration-reload',
             keyTest       => qr/^$Regexp::Common::URI::RFC2396::host(?::\d+)?$/,
             test          => $url,
             msgFail       => '__badUrl__',
@@ -1844,6 +1849,30 @@ sub attributes {
                 },
             },
             documentation => 'List of virtualHosts with their get parameters',
+        },
+
+        # Message broker
+        messageBroker => {
+            type          => 'select',
+            documentation => 'Messages broker module',
+            select        => [
+                { k => '',        v => '' },
+                { k => '::Redis', v => 'Redis' },
+                { k => '::Pg',    v => 'PostgreSQL' },
+                { k => '::MQTT',  v => 'MQTT' },
+            ],
+            flags => 'hp',
+        },
+        messageBrokerOptions => {
+            type          => 'keyTextContainer',
+            default       => {},
+            documentation => 'Options of messages broker module',
+            flags         => 'hp',
+        },
+        eventQueueName => {
+            type          => 'text',
+            default       => 'llng_events',
+            documentation => 'Event channel name',
         },
 
         # Jitsi Meet tokens issuer

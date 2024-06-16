@@ -18,6 +18,7 @@ Advanced features
    register
    logoutforward
    securetoken
+   eventsmanagement
    authbasichandler
    safejail
    loginhistory

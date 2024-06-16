@@ -40,6 +40,7 @@ sub defaultValues {
         'checkDevOpsDownload'                 => 1,
         'checkHIBPRequired'                   => 1,
         'checkHIBPURL' => 'https://api.pwnedpasswords.com/range/',
+        'checkMsg'     => 5,
         'checkTime'    => 600,
         'checkUserDisplayComputedSession'   => 1,
         'checkUserDisplayEmptyHeaders'      => 0,
@@ -84,6 +85,7 @@ sub defaultValues {
         },
         'displaySessionId' => 1,
         'domain'           => 'example.com',
+        'eventQueueName'   => 'llng_events',
         'exportedVars'     => {
             'UA' => 'HTTP_USER_AGENT'
         },
@@ -196,6 +198,7 @@ sub defaultValues {
         'managerPassword'           => '',
         'max2FDevices'              => 10,
         'max2FDevicesNameLength'    => 20,
+        'messageBrokerOptions'      => {},
         'multiValuesSeparator'      => '; ',
         'mySessionAuthorizedRWKeys' => [
             '_appsListOrder',      '_oidcConnectedRP',

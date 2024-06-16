@@ -207,4 +207,3 @@ sub plugin {
 
 clean_sessions();
 done_testing();
-

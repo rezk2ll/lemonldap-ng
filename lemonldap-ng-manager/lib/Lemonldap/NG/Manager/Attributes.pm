@@ -962,6 +962,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 'https://api.pwnedpasswords.com/range/',
             'type'    => 'url'
         },
+        'checkMsg' => {
+            'default' => 5,
+            'type'    => 'int'
+        },
         'checkState' => {
             'default' => 0,
             'type'    => 'bool'
@@ -1427,6 +1431,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'test'    =>
 qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|#\w+#))?$/,
             'type' => 'text'
+        },
+        'eventQueueName' => {
+            'default' => 'llng_events',
+            'type'    => 'text'
         },
         'exportedAttr' => {
             'type' => 'text'
@@ -2287,6 +2295,30 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         'max2FDevicesNameLength' => {
             'default' => 20,
             'type'    => 'int'
+        },
+        'messageBroker' => {
+            'select' => [ {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => '::Redis',
+                    'v' => 'Redis'
+                },
+                {
+                    'k' => '::Pg',
+                    'v' => 'PostgreSQL'
+                },
+                {
+                    'k' => '::MQTT',
+                    'v' => 'MQTT'
+                }
+            ],
+            'type' => 'select'
+        },
+        'messageBrokerOptions' => {
+            'default' => {},
+            'type'    => 'keyTextContainer'
         },
         'multiValuesSeparator' => {
             'default' => '; ',
