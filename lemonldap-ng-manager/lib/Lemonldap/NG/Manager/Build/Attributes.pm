@@ -4932,7 +4932,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type   => 'select',
             select =>
               [ { k => '', v => 'None' }, { k => 'jws', v => 'Signed JWT' }, ],
-            default => 'get',
         },
         oidcOPMetaDataOptionsAuthnEndpointAuthSigAlg => {
             type    => 'select',

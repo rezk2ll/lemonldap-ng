@@ -358,7 +358,6 @@ function templates(tpl,key) {
                   "title" : "oidcOPMetaDataOptionsAcrValues"
                },
                {
-                  "default" : "get",
                   "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsAuthnEndpointAuthMethod",
                   "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsAuthnEndpointAuthMethod",
                   "select" : [
