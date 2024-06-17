@@ -29,56 +29,7 @@ sub logout {
     return $class->unlog(@_);
 }
 
-sub status {
-    my $class;
-    $class = $#_ ? shift : __PACKAGE__;
-    return $class->getStatus(@_);
-}
-
 # Public methods
-
-# Return Handler::Lib::Status output
-sub getStatus {
-    my ( $class, $req ) = @_;
-    $class->logger->debug("Request for status");
-    my $statusPipe = $class->tsv->{statusPipe};
-    my $statusOut  = $class->tsv->{statusOut};
-    my $args       = '';
-    if ( $ENV{LLNGSTATUSHOST} ) {
-        require IO::Socket::INET;
-        foreach ( 64322 .. 64331 ) {
-            if ( $statusOut =
-                IO::Socket::INET->new( Proto => 'udp', LocalPort => $_ ) )
-            {
-                $args =
-                  ' host=' . ( $ENV{LLNGSTATUSCLIENT} || 'localhost' ) . ":$_";
-                last;
-            }
-        }
-        return $class->abort( $req,
-            "$class: status page can not be displayed, unable to open socket" )
-          unless ($statusOut);
-    }
-    return $class->abort( $req, "$class: status page can not be displayed" )
-      unless ( $statusPipe and $statusOut );
-    my $q = $req->{env}->{QUERY_STRING} || '';
-    if ( $q =~ /\s/ ) {
-        $class->logger->error("Bad characters in query");
-        return $class->FORBIDDEN;
-    }
-    $statusPipe->print(
-        "STATUS " . ( $req->{env}->{QUERY_STRING} || '' ) . "$args\n" );
-    my $buf;
-
-    while ( $_ = $statusOut->getline ) {
-        last if (/^END$/);
-        $buf .= $_;
-    }
-    $class->set_header_out( $req,
-        "Content-Type" => "text/html; charset=UTF-8" );
-    $class->print( $req, $buf );
-    return $class->OK;
-}
 
 # Method that must be called by base packages (Handler::ApacheMP2,...) to get
 # type of handler to call (Main, AuthBasic,...)
@@ -153,6 +104,13 @@ sub publishEvent {
         usleep 100000;
         $class->checkEvent( $req, 0.1 );
     }
+}
+
+sub publishStatus {
+    my ( $class, $msg ) = @_;
+    return unless $class->tsv->{eventStatus};
+    $class->tsv->{msgBrokerWriter}
+      ->publish( $class->tsv->{statusQueueName}, { msg => $msg } );
 }
 
 ## @rmethod int run
@@ -330,13 +288,9 @@ sub unlog {
 # @param optional url string URL to log, if undefined defaults to request URI
 sub updateStatus {
     my ( $class, $req, $action, $user, $url ) = @_;
-    my $statusPipe = $class->tsv->{statusPipe} or return;
     $user ||= $req->address;
     $url  ||= $req->{env}->{REQUEST_URI};
-    eval {
-        $statusPipe->print(
-            "$user => " . $req->{env}->{HTTP_HOST} . "$url $action\n" );
-    };
+    $class->publishStatus("$user => " . $req->{env}->{HTTP_HOST} . "$url $action");
 }
 
 ## @rmethod void lmLog(string msg, string level)

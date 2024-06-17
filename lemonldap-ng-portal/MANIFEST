@@ -152,7 +152,6 @@ lib/Lemonldap/NG/Portal/Plugins/RESTServer.pm
 lib/Lemonldap/NG/Portal/Plugins/SamlFederation.pm
 lib/Lemonldap/NG/Portal/Plugins/SingleSession.pm
 lib/Lemonldap/NG/Portal/Plugins/SOAPServer.pm
-lib/Lemonldap/NG/Portal/Plugins/Status.pm
 lib/Lemonldap/NG/Portal/Plugins/StayConnected.pm
 lib/Lemonldap/NG/Portal/Plugins/TrustedBrowser.pm
 lib/Lemonldap/NG/Portal/Plugins/Upgrade.pm
@@ -821,7 +820,6 @@ t/59-Double-cookies-for-a-Single-session.t
 t/59-Double-cookies-for-Double-sessions.t
 t/59-Double-cookies-Refresh-and-Logout.t
 t/59-Secured-cookie-Refresh-and-Logout.t
-t/60-Status.t
 t/61-AdaptativeAuthenticationLevel.t
 t/61-BruteForceProtection-with-Incremental-lockTimes-and-TOTP.t
 t/61-BruteForceProtection-with-Incremental-lockTimes.t

@@ -333,11 +333,10 @@ sub do {
     my $err = $req->error( $self->process( $req, nofail => $nofail ) );
 
     # Update status
-    if ( my $p = $self->HANDLER->tsv->{statusPipe} ) {
-        $p->print( ( $req->user ? $req->user : $req->address ) . ' => '
-              . $req->{env}->{REQUEST_URI}
-              . " $err\n" );
-    }
+    $self->HANDLER->publishStatus(
+            ( $req->user ? $req->user : $req->address ) . ' => '
+          . $req->{env}->{REQUEST_URI}
+          . " $err\n" );
 
     # Update history
     return $req->response if $err == PE_SENDRESPONSE;

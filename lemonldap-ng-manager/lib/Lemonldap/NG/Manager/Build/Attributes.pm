@@ -376,10 +376,16 @@ sub attributes {
             type          => 'text',
             documentation => 'Version of LLNG which build configuration',
         },
-        status => {
+        eventStatus => {
             type          => 'bool',
-            documentation => 'Status daemon activation',
+            documentation => 'Push status into message broker',
             flags         => 'h',
+        },
+        statusQueueName => {
+            type          => 'text',
+            default       => 'llng_status',
+            flags         => 'h',
+            documentation => 'Status channel name',
         },
         confirmFormMethod => {
             type   => "select",

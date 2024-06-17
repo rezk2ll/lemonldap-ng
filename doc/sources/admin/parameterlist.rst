@@ -92,6 +92,7 @@ checkEntropyRequiredLevel                               Minimal entropy required
 checkHIBP                                               Enable check HIBP                                                                    ✔
 checkHIBPRequired                                       Require HIBP check to pass                                                           ✔
 checkHIBPURL                                            URL of Have I Been Pwned API                                                         ✔
+checkMsg                                                Timeout to check new evant                                                           ✔      ✔               ✔
 checkState                                              Enable CheckState plugin                                                             ✔
 checkStateSecret                                        Secret token for CheckState plugin                                                   ✔
 checkTime                                               Timeout to check new configuration in local cache                                    ✔      ✔               ✔
@@ -176,6 +177,8 @@ demoExportedVars                                        Demo exported variables 
 disablePersistentStorage                                Enabled persistent storage                                                           ✔
 displaySessionId                                        Display _session_id with sessions explorer                                           ✔
 domain                                                  DNS domain                                                                           ✔      ✔
+eventQueueName                                          Event channel name                                                                   ✔
+eventStatus                                             Push status into message broker                                                             ✔               ✔
 exportedAttr                                            List of attributes to export by SOAP or REST servers                                 ✔
 exportedVars                                            Main exported variables                                                              ✔
 ext2FSendCommand                                        Send command of External second factor                                               ✔
@@ -349,6 +352,8 @@ managerDn                                               LDAP manager DN         
 managerPassword                                         LDAP manager Password                                                                ✔
 max2FDevices                                            Maximum registered 2F devices                                                        ✔                      ✔
 max2FDevicesNameLength                                  Maximum 2F devices name length                                                       ✔                      ✔
+messageBroker                                           Messages broker module                                                               ✔      ✔
+messageBrokerOptions                                    Options of messages broker module                                                    ✔      ✔
 multiValuesSeparator                                    Separator for multiple values                                                        ✔      ✔       ✔
 mySessionAuthorizedRWKeys                               Alterable session keys by user itself                                                ✔                      ✔
 newLocationWarning                                      Enable New Location Warning                                                          ✔
@@ -466,6 +471,7 @@ password2fTTL                                           Password2F device time t
 password2fUserCanRemoveKey                              Authorize users to remove existing Password2F secret                                 ✔
 passwordDB                                              Password module                                                                      ✔
 passwordPolicyActivation                                Enable password policy                                                               ✔
+passwordPolicyMaxSize                                   Password policy: maximal size                                                        ✔
 passwordPolicyMinDigit                                  Password policy: minimal digit characters                                            ✔
 passwordPolicyMinLower                                  Password policy: minimal lower characters                                            ✔
 passwordPolicyMinSize                                   Password policy: minimal size                                                        ✔
@@ -678,7 +684,7 @@ soapSessionServer                                       Enable SOAP session serv
 sslByAjax                                               Use Ajax request for SSL                                                             ✔
 sslHost                                                 URL for SSL Ajax request                                                             ✔
 staticPrefix                                            Prefix of static files for HTML templates                                            ✔                      ✔
-status                                                  Status daemon activation                                                                    ✔               ✔
+statusQueueName                                         Status channel name                                                                         ✔               ✔
 stayConnected                                           Stay connected activation rule                                                       ✔
 stayConnectedBypassFG                                   Disable fingerprint checkng                                                          ✔
 stayConnectedCookieName                                 Name of the stayConnected plugin cookie                                              ✔
@@ -734,9 +740,11 @@ webauthn2fAttestationTrust                              Certificate bundle for a
 webauthn2fAuthnLevel                                    Authentication level for users authentified by WebAuthn second factor                ✔
 webauthn2fLabel                                         Portal label for WebAuthn second factor                                              ✔
 webauthn2fLogo                                          Custom logo for WebAuthn 2F                                                          ✔
+webauthn2fResidentKey                                   Use discoverable credential                                                          ✔
 webauthn2fSelfRegistration                              WebAuthn self registration activation                                                ✔
 webauthn2fUserCanRemoveKey                              Authorize users to remove existing WebAuthn                                          ✔
 webauthn2fUserVerification                              Verify user during registration and login                                            ✔
+webauthnAppId                                           Send AppID extension                                                                 ✔
 webauthnDisplayNameAttr                                 Session attribute containing user display name                                       ✔
 webauthnRpId                                            WebAuthn Relying Party ID                                                            ✔
 webauthnRpName                                          WebAuthn Relying Party display name                                                  ✔
