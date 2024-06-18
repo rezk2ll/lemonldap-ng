@@ -82,7 +82,7 @@
 "PE77":"Vous devez saisir le captcha",
 "PE78":"Merci de saisir vos informations",
 "PE79":"Une information est manquante",
-"PE8":"Erreur du module Apache::Session choisi",
+"PE8":"Erreur du module de stockage de session",
 "PE80":"Cette adresse est déjà utilisée",
 "PE81":"Tentative d'authentification invalide",
 "PE82":"Délai d'authentification dépassé",
