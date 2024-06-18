@@ -167,7 +167,7 @@ m#<iframe.*src="http://auth.cdc.com/\?(action=write&idp=http://auth.idp.com/saml
         ),
         'Post SAML response to SP'
     );
-    expectRedirection( $res, 'http://auth.sp.com/' );
+    expectRedirection( $res, 'http://auth.sp.com/?logout=1' );
 
     # Test if logout is done
     ok(
