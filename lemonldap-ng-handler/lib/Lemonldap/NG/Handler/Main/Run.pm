@@ -13,6 +13,7 @@ use URI;
 use URI::Escape;
 use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Handler::Main::MsgActions;
+use Time::HiRes 'usleep';
 
 # Methods that must be overloaded
 
@@ -147,8 +148,11 @@ sub publishEvent {
 
     # After pushing message, let's pop message queue for this node and
     # then launch the concerning method
-    do { $ret = $class->checkEvent( $req, 0.1 ) }
-      while ( ( !$ret or $ret ne $msg->{action} ) and time < $start + 1 );
+    $ret = $class->checkEvent( $req, 0.1 );
+    if ( !$ret or $ret ne $msg->{action} ) {
+        usleep 100000;
+        $class->checkEvent( $req, 0.1 );
+    }
 }
 
 ## @rmethod int run
