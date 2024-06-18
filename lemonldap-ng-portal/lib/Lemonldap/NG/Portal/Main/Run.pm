@@ -453,8 +453,17 @@ sub autoRedirect {
     my ( $self, $req ) = @_;
 
     # Set redirection URL if needed
-    $req->{urldc} ||= $req->portal
-      if ( $req->mustRedirect and not( $req->info ) );
+    if ( $req->mustRedirect and not( $req->info ) ) {
+        if ( $req->error == PE_LOGOUT_OK ) {
+            if ( !$req->urldc or !$self->_isExternalUrl( $req, $req->urldc ) ) {
+                $req->urldc(
+                    $self->buildUrl( $req->portal, { "logout" => 1 } ) );
+            }
+        }
+        else {
+            $req->{urldc} ||= $req->portal;
+        }
+    }
 
     # Redirection should be made if urldc defined
     if ( $req->{urldc} ) {
