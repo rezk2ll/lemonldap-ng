@@ -36,6 +36,18 @@ Name          Comment                     Example
 **Index**     Fields to index             refer to :ref:`fieldstoindex`
 ============= =========================== ===============================================
 
+============================== ===================== =======
+Additional sentinel parameters Comment               Default
+============================== ===================== =======
+**sentinels_ssl**              Use SSL               0
+**sentinels_username**         Login
+**sentinels_password**         Password 
+**sentinels_cnx_timeout**      Connection timeout    0.1
+**sentinels_write_timeout**    Write timeout         1
+**sentinels_read_timeout**     Read timeout          1
+**no_sentinels_list_update**   Use only one Sentinel 0
+============================== ===================== =======
+
 Security
 --------
 
