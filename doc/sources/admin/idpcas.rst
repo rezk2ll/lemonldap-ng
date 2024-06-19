@@ -111,8 +111,9 @@ list.
 Options
 ^^^^^^^
 
--  **Service URL**: the service (user-facing) URL of the CAS-enabled
-   application. See :ref:`idpcas-url-matching`
+-  **Service URL**: the service (user-facing) URL(s) of the CAS-enabled
+   application. Multiple URLs can be specified, separated by a space.
+   See :ref:`idpcas-url-matching`.
 -  **User attribute**: session field that will be used as main
    identifier.
 -  **Logout**: enable back-channel logout to this CAS application
