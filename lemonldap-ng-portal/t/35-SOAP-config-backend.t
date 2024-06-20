@@ -52,7 +52,7 @@ SKIP: {
         skip 'SOAP::Lite not found', $maintests;
     }
 
-    $issuer = issuer();
+    $issuer = register( 'issuer', sub { issuer() } );
 
     # Test SOAP config backend
     my $soap = SOAP::Lite->new( proxy => 'http://auth.idp.com/config' );
@@ -65,7 +65,7 @@ SKIP: {
     ok( $res = $soap->call('getConfig')->result(), 'Get configuration' );
     ok( $res->{cfgNum} == 1,                       'cfgNum is 1' );
 
-    $sp = sp();
+    $sp = register( 'sp', sub { sp() } );
 
     # Simple SP access
     ok(
