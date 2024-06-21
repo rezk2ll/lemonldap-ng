@@ -324,6 +324,7 @@ Obsoletes:      lemonldap-ng-nginx < %{version}-%{release}
 Provides:       lemonldap-ng-nginx = %{version}-%{release}
 Obsoletes:      perl-Lemonldap-NG-Manager < %{version}-%{release}
 Provides:       perl-Lemonldap-NG-Manager = %{version}-%{release}
+%{!?el7:Recommends:     lemonldap-ng-doc = %{version}-%{release}}
 
 %description manager
 This package deploys the administration interface and sessions explorer.
