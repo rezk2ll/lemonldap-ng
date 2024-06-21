@@ -89,6 +89,7 @@ Ubuntu dist               LL::NG version                     Secured            
 22.04       Jammy  [9]_   `2.0.13 </documentation/2.0/>`__ |maybe| minor issues: CVE-2021-40874, CVE-2023-28862, CVE-2023-44469                           None
 23.04       Lunar         `2.0.16 </documentation/2.0/>`__ |maybe| minor issues: CVE-2023-28862, CVE-2023-44469                                           None
 23.10       Mantic        `2.16.2 </documentation/2.0/>`__ |maybe| minor issue: CVE-2023-44469                                                            None
+24.04       Noble         `2.18.2 </documentation/2.0/>`__ |clean|                                                                                        None
 =========== ============= ================================ ============================================================================================== ===========
 
 Bug report
