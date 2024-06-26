@@ -82,7 +82,7 @@
 "PE77":"Bạn phải nhập captcha",
 "PE78":"Vui lòng nhập thông tin của bạn",
 "PE79":"Một thông tin bị thiếu",
-"PE8":"Mô-đun Apache::Session báo lỗi",
+"PE8":"Session storage module failed",
 "PE80":"Địa chỉ này đã được sử dụng",
 "PE81":"Xác thực không hợp lệ",
 "PE82":"Đã vượt quá thời gian chờ xác thực",

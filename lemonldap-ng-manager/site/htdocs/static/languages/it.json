@@ -7,7 +7,7 @@
 "AuthLDAPFilter":"Filtro di autenticazione",
 "Configuration":"Configurazione",
 "CrowdSecPlugin":"CrowdSec Bouncer",
-"Entropycheck":"Check password entropy",
+"Entropycheck":"Verifica dell'entropia della password",
 "HIBPcheck":"Check HIBP API",
 "LDAPFilter":"Filtro predefinito",
 "OpenIDConnect":"OpenID Connect",

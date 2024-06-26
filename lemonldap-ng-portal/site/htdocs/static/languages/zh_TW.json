@@ -82,7 +82,7 @@
 "PE77":"您必須輸入驗證碼",
 "PE78":"請輸入您的資訊",
 "PE79":"資訊遺失",
-"PE8":"Apache::Session 模組失效",
+"PE8":"Session storage module failed",
 "PE80":"此地址已被使用",
 "PE81":"無效的驗證嘗試",
 "PE82":"驗證超時",

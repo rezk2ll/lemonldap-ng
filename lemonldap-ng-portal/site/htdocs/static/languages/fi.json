@@ -82,7 +82,7 @@
 "PE77":"Sinun täytyy ratkaista kuvavarmennus",
 "PE78":"Anna tietosi",
 "PE79":"Tieto puuttuu",
-"PE8":"Apache::Session -moduulissa tapahtui virhe",
+"PE8":"Session storage module failed",
 "PE80":"Tämä osoite on jo käytössä",
 "PE81":"Virheellinen tunnistautumisyritys",
 "PE82":"Tunnistautumisen aikaraja ylittyi",

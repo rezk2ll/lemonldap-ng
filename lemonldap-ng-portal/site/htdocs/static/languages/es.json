@@ -82,7 +82,7 @@
 "PE77":"Introduzca el captcha",
 "PE78":"Introduzca sus datos",
 "PE79":"Faltan datos",
-"PE8":"Error del módulo Apache::Session seleccionado",
+"PE8":"Session storage module failed",
 "PE80":"Esta dirección ya está siendo utilizada",
 "PE81":"Intento de autenticación inválido",
 "PE82":"Tiempo de espera de autenticación exedido",
