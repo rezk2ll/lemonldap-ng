@@ -268,6 +268,7 @@
 "crossOrigineResourceSharing":"跨來源資源共享",
 "crowdsec":"激活",
 "crowdsecAction":"動作",
+"crowdsecIgnoreFailures":"Ignore Crowdsec failures",
 "crowdsecKey":"API 金鑰",
 "crowdsecUrl":"Base URL of local API",
 "cspConnect":"Ajax 目的地",

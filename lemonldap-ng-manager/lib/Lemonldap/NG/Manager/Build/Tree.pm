@@ -1177,8 +1177,11 @@ sub tree {
                                     help  => 'crowdsec.html',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'crowdsec',    'crowdsecAction',
-                                        'crowdsecUrl', 'crowdsecKey',
+                                        'crowdsec',
+                                        'crowdsecAction',
+                                        'crowdsecUrl',
+                                        'crowdsecKey',
+                                        'crowdsecIgnoreFailures',
                                     ],
                                 },
                                 {
