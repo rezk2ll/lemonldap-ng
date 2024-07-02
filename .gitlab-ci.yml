@@ -62,21 +62,6 @@ build_noble:
   after_script:
     - DEBIAN_FRONTEND=noninteractive apt install -y ${CI_PROJECT_DIR}/result/ubuntu/noble/*_all.deb
 
-build_centos_7:
-  extends: .build_job
-  image: buildpkg/centos:7
-  script:
-    - yum-config-manager --disable base,updates,extras
-    - yum-config-manager --add-repo=rpm/el7-vault.repo
-    - yum clean all
-    - yum makecache
-    - yum -y update
-    - yum -y install epel-release
-    - make dist
-    - yum -y install openssl openssl-libs
-    - ci-build-pkg
-    - yum -y install ${CI_PROJECT_DIR}/result/centos/7/*.noarch.rpm
-
 build_rocky_8:
   extends: .build_job
   image: registry.gitlab.com/orange-opensource/gitlab-buildpkg/rockylinux:8
@@ -110,7 +95,6 @@ sign:
     - ci-sign-pkg
   dependencies:
     - build_bullseye
-    - build_centos_7
     - build_rocky_8
   artifacts:
     expire_in: 1 day
