@@ -247,12 +247,17 @@ sub _buildAuthLoop {
                     "Unable to initialize choice $_ display: $@")
                   if $@;
 
+                my $name_without_space = $name =~ s/^\s*//r;
+
                 # Options to store in the loop
                 my $optionsLoop = {
-                    name   => $name,
-                    key    => $_,
-                    module => $auth,
-                    url    => $url
+                    name                       => $name,
+                    key                        => $_,
+                    module                     => $auth,
+                    url                        => $url,
+                    "name_$name_without_space" => 1,
+                    "module_$auth"             => 1,
+                    "key_$_"                   => 1,
                 };
 
                 # Get displayType for this module
