@@ -34,6 +34,12 @@ tools:
 
 See `lemonldap-ng-sessions doc <https://lemonldap-ng.org/documentation/latest/cli_examples.html>`__
 
+Status changed
+~~~~~~~~~~~~~~
+
+The obsolete "portal status" and "status" features were removed from 2.20.0.
+An alternative is available using :doc:`Use message broker to collect status <statuscollect>`.
+
 2.19.0
 ------
 
