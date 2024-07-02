@@ -419,7 +419,7 @@ into Lemonldap::NG's SSOaaS service.
     STORAGECONFFILE=%{lm_storagefile} \
     DATADIR=%{lm_vardir} \
     CACHEDIR=%{lm_cachedir} \
-    PERLOPTIONS="INSTALLDIRS=vendor"
+    PERLOPTIONS="INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1"
 %make_build
 
 %if 0%{?with_selinux}
@@ -464,11 +464,6 @@ bzip2 -9 %{modulename}.pp
     CHGRP=/usr/bin/true \
     WITHRC=no \
     PROD=yes
-
-# Remove some unwanted files
-find %{buildroot} -name .packlist -exec rm -f {} \;
-find %{buildroot} -name perllocal.pod -exec rm -f {} \;
-find %{buildroot} -name *.bak -exec rm -f {} \;
 
 # UWSGI Application
 mkdir -p %{buildroot}%{_sysconfdir}/uwsgi/apps-available
