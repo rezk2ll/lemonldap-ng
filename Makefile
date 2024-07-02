@@ -1073,6 +1073,7 @@ clean:
 	@rm -rf "$(WEBSITE_DIR)"
 	@rm -vf *gz *zip
 	@rm -rf lemonldap-ng-$(VERSION)
+	@rm -rf lemonldap-ng-portal/t/sessions/tmpSession*
 	@echo "Cleaned"
 
 common_clean:
