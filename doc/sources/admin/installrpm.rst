@@ -6,7 +6,7 @@ Installation on Red Hat/CentOS
 
     LemonLDAP::NG requires at least Red Hat/CentOS 7
 
-List of pacakges
+List of packages
 ----------------
 
 LemonLDAP::NG provides packages for RHEL (and derivatives) 7/8/9:

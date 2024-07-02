@@ -82,7 +82,7 @@
 "PE77":"Captcha'yı girmek zorundasınız",
 "PE78":"Lütfen bilgilerinizi girin",
 "PE79":"Bir bilgi eksik",
-"PE8":"Apache::Session modülü hata verdi",
+"PE8":"Session storage module failed",
 "PE80":"Bu adres zaten kullanılıyor",
 "PE81":"Geçersiz kimlik doğrulama girişimi",
 "PE82":"Kimlik doğrulama zaman aşımına uğradı",

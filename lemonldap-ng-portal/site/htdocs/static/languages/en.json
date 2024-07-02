@@ -82,7 +82,7 @@
 "PE77":"You have to type the captcha",
 "PE78":"Please enter your information",
 "PE79":"An information is missing",
-"PE8":"Apache::Session module failed",
+"PE8":"Session storage module failed",
 "PE80":"This address is already used",
 "PE81":"Invalid authentication attempt",
 "PE82":"Exceeded authentication timeout",

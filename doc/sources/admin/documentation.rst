@@ -57,9 +57,9 @@ Debian dist                            LL::NG version                           
 *6*         *Squeeze*                  *0.9.4.1*                                |maybe| minor issues: CVE-2020-16093                   *None*                                                       *February 2016*                     *April 2019*
 *7*         *Wheezy*                   *1.1.2*                                  |maybe| minor issues: CVE-2020-16093                   *None*                                                       *May 2018*                          *June 2020*
 *8*         *Jessie*                   *1.3.3*                                  |maybe| minor issues: CVE-2019-19791, CVE-2020-16093   *None*                                                       *June 2020*                         *Possibly 2024*
-*9*         *Stretch*                  *1.9.7*                                  |maybe| minor issues: CVE-2020-16093                   *None*  [1]_                                                 *June 2022*                         *Possibly 2024*
-**10**      Buster                     `2.0.2 </documentation/2.0/>`__          |clean|                                                `Debian LTS Team <https://www.debian.org/lts/>`__            June 2024                           Possibly 2026
-**11**      Bullseye                   `2.0.11 </documentation/2.0/>`__         |clean|                                                `Debian Security Team <https://security-team.debian.org/>`__ July 2026                           Possibly 2028
+*9*         *Stretch*                  *1.9.7*                                  |maybe| minor issues: CVE-2020-16093                   *None*  [1]_                                                 *June 2022*                         *Possibly 2025*
+*10*        *Buster*                   `2.0.2 </documentation/2.0/>`__          |clean|                                                *None*  [1]_                                                 *June 2024*                         Possibly 2026
+**11**      Bullseye                   `2.0.11 </documentation/2.0/>`__         |clean|                                                `Debian Security Team <https://security-team.debian.org/>`__ August 2026                         Possibly 2028
 \           Bullseye-backports         `Latest </documentation/2.0/>`__         |clean|                                                LL::NG Team, "best effort" [3]_                              July 2024
 **12**      Bookworm                   `2.16.1 </documentation/2.0/>`__         |clean|                                                `Debian Security Team <https://security-team.debian.org/>`__ June 2028                           Possibly 2030
 \           Bookworm-backports         `Latest </documentation/2.0/>`__         |clean|                                                LL::NG Team, "best effort" [3]_                              July 2026
@@ -89,6 +89,7 @@ Ubuntu dist               LL::NG version                     Secured            
 22.04       Jammy  [9]_   `2.0.13 </documentation/2.0/>`__ |maybe| minor issues: CVE-2021-40874, CVE-2023-28862, CVE-2023-44469                           None
 23.04       Lunar         `2.0.16 </documentation/2.0/>`__ |maybe| minor issues: CVE-2023-28862, CVE-2023-44469                                           None
 23.10       Mantic        `2.16.2 </documentation/2.0/>`__ |maybe| minor issue: CVE-2023-44469                                                            None
+24.04       Noble         `2.18.2 </documentation/2.0/>`__ |clean|                                                                                        None
 =========== ============= ================================ ============================================================================================== ===========
 
 Bug report

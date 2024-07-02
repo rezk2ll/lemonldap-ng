@@ -27,3 +27,4 @@ lemonldap-ng-portal/blib/
 lemonldap-ng-portal/pm_to_blib
 lemonldap-ng-*/MANIFEST.bak
 node_modules
+dev/sessions/

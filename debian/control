@@ -280,7 +280,8 @@ Depends: ${misc:Depends},
          lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uwsgi-app (= ${binary:Version}) | apache2 | httpd-cgi
 Recommends: lemonldap-ng-doc (= ${binary:Version}),
             libxml-libxml-perl,
-            libxml-libxslt-perl
+            libxml-libxslt-perl,
+            libyaml-perl
 Suggests: libclone-perl,
           libregexp-assemble-perl
 Pre-Depends: debconf

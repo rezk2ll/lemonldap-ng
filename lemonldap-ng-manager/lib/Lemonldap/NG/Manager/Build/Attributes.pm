@@ -1412,6 +1412,10 @@ sub attributes {
             type          => 'text',
             documentation => 'CrowdSec API key',
         },
+        crowdsecIgnoreFailures => {
+            type          => 'bool',
+            documentation => 'Ignore Crowdsec errors',
+        },
 
         # History
         failedLoginNumber => {

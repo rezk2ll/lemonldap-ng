@@ -1262,6 +1262,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             ],
             'type' => 'select'
         },
+        'crowdsecIgnoreFailures' => {
+            'type' => 'bool'
+        },
         'crowdsecKey' => {
             'type' => 'text'
         },

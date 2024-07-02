@@ -20,8 +20,11 @@ applies the following rules:
       ``<component>/site/coffee``): ``make minify`` will generate JS
       files
 
+Get code
+--------
+
 Configure SSH
--------------
+^^^^^^^^^^^^^
 
 *On Debian developper station :*
 
@@ -35,7 +38,7 @@ Go to your gitlab account : https://gitlab.ow2.org/profile/keys
 
    cat ~/.ssh/id_rsa.pub
 
-Copy id_rsa.pub content to key section and enter a name into "Title" and click "Add key" button. 
+Copy id_rsa.pub content to key section and enter a name into "Title" and click "Add key" button.
 Test ssh connexion :
 
 ::
@@ -43,18 +46,6 @@ Test ssh connexion :
    ssh -T git@gitlab.ow2.org
 
 Accept messages
-
-Install basic tools
--------------------
-
-Debian
-^^^^^^
-
-As *root:*
-
-::
-
-   apt install make devscripts equivs yui-compressor git uglifyjs coffeescript autopkgtest cpanminus
 
 Configure Git
 ^^^^^^^^^^^^^
@@ -68,8 +59,8 @@ As *user:*
    git config --global color.ui true
    git config --list
 
-Import Project and using Git
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Clone repository
+^^^^^^^^^^^^^^^^
 
 As *user*, create directory in directory:
 
@@ -82,8 +73,44 @@ As *user*, create directory in directory:
    git remote set-url --push origin git@gitlab.ow2.org:user/lemonldap-ng.git
 
 
+Run LemonLDAP::NG
+-------------------
+
+Container-based setup
+^^^^^^^^^^^^^^^^^^^^^
+
+The following commands are based on `Podman <https://podman.io/>`. To get them working in a
+Docker environment, just replace ``podman`` with ``docker``.
+
+Build image:
+
+::
+
+	podman build . -t llng-local-dev
+
+Start container:
+
+::
+
+	podman run -it -v ./:/app -p 8080:8080 llng-local-dev
+
+Open http://auth.llng.localhost:8080/ in your browser.
+
+Manual setup
+^^^^^^^^^^^^
+
+Install basic tools
+~~~~~~~~~~~~~~~~~~~
+
+As *root:*
+
+::
+
+   apt install make devscripts equivs yui-compressor git uglifyjs coffeescript autopkgtest cpanminus
+
+
 Install dependencies
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -99,17 +126,15 @@ For SAML:
 
    apt install liblasso-perl libglib-perl
 
-Working Project
----------------
-
 Configure hosts file
-^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~
+
 ::
 
      echo '127.0.0.1       auth.example.com manager.example.com test1.example.com test2.example.com' >> /etc/hosts
 
 Unit tests
-^^^^^^^^^^
+~~~~~~~~~~
 
 Launch unit tests:
 
@@ -142,7 +167,7 @@ Launch tests with LDAP backend
    make LLNGTESTLDAP=1 test
 
 Other commands
-^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~
 
 * Start a test web server on port 19876::
 
@@ -172,7 +197,7 @@ Other commands
      make tidy
 
 Add a translation key
-^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~
 
 If you need to create a new parameter in Manager or add a new message in Portal, you must add a key in JSON languages files.
 
@@ -201,7 +226,7 @@ For example:
 
 
 Documentation
-^^^^^^^^^^^^^
+~~~~~~~~~~~~~
 
 Install dependencies:
 

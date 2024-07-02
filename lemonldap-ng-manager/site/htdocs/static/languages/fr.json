@@ -268,6 +268,7 @@
 "crossOrigineResourceSharing":"Partage des ressources entre origines multiples",
 "crowdsec":"Activation",
 "crowdsecAction":"Action",
+"crowdsecIgnoreFailures":"Ignorer les erreurs Crowdsec",
 "crowdsecKey":"Clef de l'API",
 "crowdsecUrl":"URL de base de l'API locale",
 "cspConnect":"Destinations des requêtes AJAX",

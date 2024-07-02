@@ -268,6 +268,7 @@
 "crossOrigineResourceSharing":"Chia sẻ tài nguyên nguồn gốc chéo",
 "crowdsec":"Kích hoạt",
 "crowdsecAction":"Hành động",
+"crowdsecIgnoreFailures":"Ignore Crowdsec failures",
 "crowdsecKey":"khóa API",
 "crowdsecUrl":"URL cơ sở của API cục bộ",
 "cspConnect":"Đích cúa Ajax",
