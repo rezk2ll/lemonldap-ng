@@ -237,6 +237,7 @@
 "comment":"הערה",
 "comments":"הערות",
 "compactConf":"קובץ הגדרות מצומצם",
+"complexnode":"This setting cannot be displayed here, open it separately from the menu",
 "condition":"תנאי",
 "conf":"הגדרות",
 "confModuledeprecated":"This module has been deprecated, set \"forceUpload=1\" in lemonldap-ng.ini to use it",
