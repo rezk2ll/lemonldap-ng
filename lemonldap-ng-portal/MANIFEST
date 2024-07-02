@@ -582,6 +582,7 @@ t/10-AuthCustom.t
 t/11-MessageBroker-MQTT.t
 t/11-MessageBroker-Pg.t
 t/11-MessageBroker-Redis.t
+t/12-EventStatus.t
 t/19-Auth-Null.t
 t/20-Auth-and-password-DBI-dynamic-hash.t
 t/20-Auth-and-password-DBI-encrypt.t

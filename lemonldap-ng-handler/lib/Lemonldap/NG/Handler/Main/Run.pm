@@ -107,10 +107,10 @@ sub publishEvent {
 }
 
 sub publishStatus {
-    my ( $class, $msg ) = @_;
+    my ( $class, %msg ) = @_;
     return unless $class->tsv->{eventStatus};
     $class->tsv->{msgBrokerWriter}
-      ->publish( $class->tsv->{statusQueueName}, { msg => $msg } );
+      ->publish( $class->tsv->{statusQueueName}, \%msg );
 }
 
 ## @rmethod int run
@@ -290,7 +290,11 @@ sub updateStatus {
     my ( $class, $req, $action, $user, $url ) = @_;
     $user ||= $req->address;
     $url  ||= $req->{env}->{REQUEST_URI};
-    $class->publishStatus("$user => " . $req->{env}->{HTTP_HOST} . "$url $action");
+    $class->publishStatus(
+        user          => $user,
+        url           => $req->{env}->{HTTP_HOST} . $url,
+        handlerAction => $action
+    );
 }
 
 ## @rmethod void lmLog(string msg, string level)
