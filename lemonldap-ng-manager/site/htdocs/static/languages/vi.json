@@ -237,6 +237,7 @@
 "comment":"Bình luận",
 "comments":"Bình luận",
 "compactConf":"Tệp cấu hình gọn nhẹ",
+"complexnode":"This setting cannot be displayed here, open it separately from the menu",
 "condition":"Điều kiện",
 "conf":"Cấu hình",
 "confModuledeprecated":"Mô đun này đã bị xóa, thiết lập \" forceUpload = 1 \" trong lemonldap-ng.ini để sử dụng nó",
