@@ -1266,7 +1266,7 @@ sub tests {
             return ( 1,
 'Password minimal size should be greater than total of minimal sizes'
               )
-              if (  ( $conf->{passwordPolicyMinSize} <= $total )
+              if (  ( $conf->{passwordPolicyMinSize} < $total )
                 and $conf->{passwordPolicyMinSize}
                 and $conf->{passwordPolicyActivation} );
             return 1;
