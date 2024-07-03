@@ -1,5 +1,16 @@
 #!/bin/sh
 
+# Run given command-line, if any
+if [ -n "$1" ]; then
+	rm lemonldap-ng-*/Makefile
+	make
+	echo "Running command-line:" "$@"
+	"$@"
+	exit
+fi
+
+export LLNG_DEFAULTCONFFILE="/app/dev/lemonldap-ng.ini"
+
 mkdir -p "$(pwd)/dev/sessions/lock" "$(pwd)/dev/sessions/persistents/lock"
 
 plackup \
