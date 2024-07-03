@@ -124,13 +124,12 @@ sub display {
         $self->logger->debug('Display: notification detected');
         $skinfile       = 'notification';
         %templateParams = (
-            AUTH_ERROR_TYPE => $req->error_type,
-            AUTH_ERROR_ROLE => $req->error_role,
-            NOTIFICATION    => $notif,
-            HIDDEN_INPUTS   => $self->buildHiddenForm($req),
-            AUTH_URL        => $req->{data}->{_url},
-            CHOICE_PARAM    => $self->conf->{authChoiceParam},
-            CHOICE_VALUE    => $req->data->{_authChoice},
+            $self->getErrorTplParams($req),
+            NOTIFICATION  => $notif,
+            HIDDEN_INPUTS => $self->buildHiddenForm($req),
+            AUTH_URL      => $req->{data}->{_url},
+            CHOICE_PARAM  => $self->conf->{authChoiceParam},
+            CHOICE_VALUE  => $req->data->{_authChoice},
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -145,19 +144,16 @@ sub display {
         $self->logger->debug('Display: confirm detected');
         $skinfile       = 'confirm';
         %templateParams = (
-            AUTH_ERROR                      => $req->error,
-            AUTH_ERROR_TYPE                 => $req->error_type,
-            AUTH_ERROR_ROLE                 => $req->error_role,
-            ( 'AUTH_ERROR_' . $req->error ) => 1,
-            AUTH_URL                        => $req->{data}->{_url},
-            MSG                             => $req->info,
-            HIDDEN_INPUTS                   => $self->buildHiddenForm($req),
-            ACTIVE_TIMER                    => $req->data->{activeTimer},
-            FORM_ACTION  => $req->data->{confirmFormAction} || "#",
-            FORM_METHOD  => $self->conf->{confirmFormMethod},
-            CHOICE_PARAM => $self->conf->{authChoiceParam},
-            CHOICE_VALUE => $req->data->{_authChoice},
-            CHECK_LOGINS => $self->conf->{portalCheckLogins}
+            $self->getErrorTplParams($req),
+            AUTH_URL      => $req->{data}->{_url},
+            MSG           => $req->info,
+            HIDDEN_INPUTS => $self->buildHiddenForm($req),
+            ACTIVE_TIMER  => $req->data->{activeTimer},
+            FORM_ACTION   => $req->data->{confirmFormAction} || "#",
+            FORM_METHOD   => $self->conf->{confirmFormMethod},
+            CHOICE_PARAM  => $self->conf->{authChoiceParam},
+            CHOICE_VALUE  => $req->data->{_authChoice},
+            CHECK_LOGINS  => $self->conf->{portalCheckLogins}
               && $req->data->{login},
             ASK_LOGINS        => $req->param('checkLogins')   || 0,
             ASK_STAYCONNECTED => $req->param('stayconnected') || 0,
@@ -176,17 +172,14 @@ sub display {
         $self->logger->debug('Display: IDP choice detected');
         $skinfile       = 'idpchoice';
         %templateParams = (
-            AUTH_ERROR                      => $req->error,
-            AUTH_ERROR_TYPE                 => $req->error_type,
-            AUTH_ERROR_ROLE                 => $req->error_role,
-            ( 'AUTH_ERROR_' . $req->error ) => 1,
-            AUTH_URL                        => $req->{data}->{_url},
-            HIDDEN_INPUTS                   => $self->buildHiddenForm($req),
-            ACTIVE_TIMER                    => $req->data->{activeTimer},
-            FORM_METHOD                     => $self->conf->{confirmFormMethod},
-            CHOICE_PARAM                    => $self->conf->{authChoiceParam},
-            CHOICE_VALUE                    => $req->data->{_authChoice},
-            CHECK_LOGINS                    => $self->conf->{portalCheckLogins}
+            $self->getErrorTplParams($req),
+            AUTH_URL      => $req->{data}->{_url},
+            HIDDEN_INPUTS => $self->buildHiddenForm($req),
+            ACTIVE_TIMER  => $req->data->{activeTimer},
+            FORM_METHOD   => $self->conf->{confirmFormMethod},
+            CHOICE_PARAM  => $self->conf->{authChoiceParam},
+            CHOICE_VALUE  => $req->data->{_authChoice},
+            CHECK_LOGINS  => $self->conf->{portalCheckLogins}
               && $req->data->{login},
             ASK_LOGINS        => $req->param('checkLogins')   || 0,
             ASK_STAYCONNECTED => $req->param('stayconnected') || 0,
@@ -210,12 +203,9 @@ sub display {
           for keys %{ $req->{portalHiddenFormValues} // {} };
         $skinfile       = 'info';
         %templateParams = (
-            AUTH_ERROR                      => $req->error,
-            AUTH_ERROR_TYPE                 => $req->error_type,
-            AUTH_ERROR_ROLE                 => $req->error_role,
-            ( 'AUTH_ERROR_' . $req->error ) => 1,
-            MSG                             => $info,
-            URL => $req->{urldc} || $req->portal,    # Fix 2158
+            $self->getErrorTplParams($req),
+            MSG           => $info,
+            URL           => $req->{urldc} || $req->portal,    # Fix 2158
             HIDDEN_INPUTS => $self->buildOutgoingHiddenForm( $req, $method ),
             ACTIVE_TIMER  => $req->data->{activeTimer},
             CHOICE_PARAM  => $self->conf->{authChoiceParam},
@@ -244,10 +234,7 @@ sub display {
         my $id = $req->{sessionInfo}
           ->{ $self->conf->{openIdAttr} || $self->conf->{whatToTrace} };
         %templateParams = (
-            AUTH_ERROR                      => $self->error,
-            AUTH_ERROR_TYPE                 => $req->error_type,
-            AUTH_ERROR_ROLE                 => $req->error_role,
-            ( 'AUTH_ERROR_' . $req->error ) => 1,
+            $self->getErrorTplParams($req),
             PROVIDERURI => $self->buildUrl( $req->portal, $openid_path, "" ),
             MSG         => $req->info(),
             (
@@ -398,11 +385,7 @@ sub display {
     {
         $skinfile       = 'error';
         %templateParams = (
-            AUTH_ERROR                      => $req->error,
-            AUTH_ERROR_TYPE                 => $req->error_type,
-            AUTH_ERROR_ROLE                 => $req->error_role,
-            ( 'AUTH_ERROR_' . $req->error ) => 1,
-            LOCKTIME                        => $req->lockTime(),
+            $self->getErrorTplParams($req),
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -416,12 +399,9 @@ sub display {
         $skinfile = 'login';
         my $login = $req->user;
         %templateParams = (
-            AUTH_ERROR                      => $req->error,
-            AUTH_ERROR_TYPE                 => $req->error_type,
-            AUTH_ERROR_ROLE                 => $req->error_role,
-            ( 'AUTH_ERROR_' . $req->error ) => 1,
-            AUTH_URL                        => $req->{data}->{_url},
-            LOGIN                           => $login,
+            $self->getErrorTplParams($req),
+            AUTH_URL              => $req->{data}->{_url},
+            LOGIN                 => $login,
             DONT_STORE_PASSWORD   => $self->conf->{browsersDontStorePassword},
             CHECK_LOGINS          => $self->conf->{portalCheckLogins},
             ASK_LOGINS            => $req->param('checkLogins') || 0,
