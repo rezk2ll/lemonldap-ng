@@ -5,7 +5,7 @@ This plugin enables automatic authentication, based upon the last user authentic
 
 For this plugin to work, you have to configure a set of :doc:`authentication modules<authchoice>`.
 
-If you have multiple SAML, OIDC or CAS issuers, you should define a dedicated choice for each of these issuers, and set the corresponding URL to ``/?idp=youridp``.
+If you have multiple SAML, OIDC or CAS issuers, you should define a dedicated choice for each of these issuers, and set the corresponding URL to ``/?idpName=youridp``.
 
 Configuration
 -------------

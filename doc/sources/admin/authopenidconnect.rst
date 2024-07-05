@@ -296,3 +296,13 @@ To preselect this OP when the ``MY_OP`` :doc:`choice <authchoice>` is selected :
 
 
     Go to: ``General Parameters > Advanced Parameters > Security > SSL options for server requests``
+
+Manual IDP Selection
+--------------------
+
+When using multiple OpenID Providers, LemonLDAP will display an additional
+choice screen to let the user decide which OP they want to use.
+
+In addition to the *resolution rule* described above, you can also use the
+``idp`` URL parameter to automatically select an OP for the
+user: ``https://auth.example.com/?idp=op-example``
