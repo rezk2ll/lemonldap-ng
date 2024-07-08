@@ -70,7 +70,7 @@ SKIP: {
 
     ok(
         $res->[2]->[0] =~
-m%<img src="http://auth.sp.com/static/common/icons/sfa_manager.png" class="mr-2" alt="IDP2" title="My_tooltip" />%,
+m%<img src="/static/common/icons/sfa_manager.png" class="mr-2" alt="IDP2" title="My_tooltip" />%,
         'Found IDP icon, tooltip and title tags'
     ) or print STDERR Dumper( $res->[2]->[0] );
     ok( $res->[2]->[0] =~ /idp_Test_DisplayName/, 'Found IDP display name' )
