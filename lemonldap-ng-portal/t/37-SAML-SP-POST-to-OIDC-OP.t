@@ -237,7 +237,7 @@ SKIP: {
         ),
         'Forward logout response to SP'
     );
-    expectRedirection( $res, 'http://auth.sp.com/' );
+    expectRedirection( $res, 'http://auth.sp.com/?logout=1' );
 
     #print STDERR Dumper($res);
 }

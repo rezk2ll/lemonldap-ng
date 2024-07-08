@@ -201,11 +201,16 @@ sub display {
         $self->logger->debug('Hidden values :');
         $self->logger->debug( " $_: " . $req->{portalHiddenFormValues}->{$_} )
           for keys %{ $req->{portalHiddenFormValues} // {} };
-        $skinfile       = 'info';
+        $skinfile = 'info';
+
+        if ( !$req->urldc and $req->error == PE_LOGOUT_OK ) {
+            $req->urldc( $self->buildUrl( $req->portal, { logout => 1 } ) );
+        }
+
         %templateParams = (
             $self->getErrorTplParams($req),
-            MSG           => $info,
-            URL           => $req->{urldc} || $req->portal,    # Fix 2158
+            MSG                             => $info,
+            URL                             => $req->urldc || $req->portal,
             HIDDEN_INPUTS => $self->buildOutgoingHiddenForm( $req, $method ),
             ACTIVE_TIMER  => $req->data->{activeTimer},
             CHOICE_PARAM  => $self->conf->{authChoiceParam},
