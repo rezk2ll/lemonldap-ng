@@ -1147,10 +1147,13 @@ sub imgnok {
 
 sub sendImage {
     my ( $self, $req, $img ) = @_;
+    my $u = URI->new_abs( $self->staticPrefix . "/common/$img", $req->portal )
+      ->as_string;
+
     return [
         302,
         [
-            'Location' => ($req->portal . $self->staticPrefix . "/common/$img")
+            'Location' => $u,
         ],
         [],
     ];
