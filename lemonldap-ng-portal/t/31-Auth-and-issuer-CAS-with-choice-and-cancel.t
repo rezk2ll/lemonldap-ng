@@ -108,7 +108,7 @@ SKIP: {
     # Found Cancel button
     ok(
         $res->[2]->[0] =~
-qr%<a href="http://auth.sp.com\?cancel=1" class="btn btn-primary" role="button">%,
+qr%<a href="http://auth.sp.com\/\?cancel=1" class="btn btn-primary" role="button">%,
         'Found Cancel button'
     ) or print STDERR Dumper( $res->[2]->[0] );
 
@@ -148,7 +148,7 @@ sub issuer {
                 logLevel              => $debug,
 
                 domain                   => 'idp.com',
-                portal                   => 'http://auth.idp.com',
+                portal                   => 'http://auth.idp.com/',
                 authentication           => 'Demo',
                 userDB                   => 'Same',
                 issuerDBCASActivation    => 1,
@@ -168,7 +168,7 @@ sub sp {
             ini => {
                 logLevel          => $debug,
                 domain            => 'sp.com',
-                portal            => 'http://auth.sp.com',
+                portal            => 'http://auth.sp.com/',
                 authentication    => 'Choice',
                 userDB            => 'Same',
                 authChoiceParam   => 'test',

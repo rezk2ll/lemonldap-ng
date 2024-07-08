@@ -117,7 +117,7 @@ sub runTest {
 my $baseConfig = {
     ini => {
         domain                          => 'op.com',
-        portal                          => 'http://auth.op.com',
+        portal                          => 'http://auth.op.com/',
         authentication                  => 'Demo',
         userDB                          => 'Same',
         issuerDBOpenIDConnectActivation => 1,

@@ -206,7 +206,7 @@ sub sp {
             ini => {
                 logLevel                   => $debug,
                 domain                     => 'sp.com',
-                portal                     => 'http://auth.sp.com',
+                portal                     => 'http://auth.sp.com/',
                 authentication             => 'CAS',
                 userDB                     => 'CAS',
                 restSessionServer          => 1,
