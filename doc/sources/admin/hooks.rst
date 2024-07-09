@@ -855,6 +855,46 @@ Sample code::
         return PE_OK;
     }
 
+sfRegisterDevice
+~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.20
+
+This hook is called immediately before registering a new second factor device
+into the user's persistent session.
+You can use it to abort the operation unless some condition is met, to modified
+the stored data, or to change the authentication level obtained immediately
+after registration.
+
+The hook's parameters are:
+
+* A hash of session information
+* A hash containing the second factor device data (type, name, timestamp, and implementation-specific fields)
+* A hash containing the current registration state, which you can modify to change the authentication level
+
+Sample code::
+
+    use constant hook => { sfRegisterDevice => 'specialDeviceNames' };
+
+    sub specialDeviceNames {
+        my ( $self, $req, $info, $device, $registration_state ) = @_;
+
+        # If the device name given by the user contains the word "insecure",
+        # downgrade the authentication level
+        if ( $device->{name} =~ /insecure/i ) {
+            $registration_state->{authenticationLevel} = 1;
+        }
+
+        # If the device name contains the word "invalid",
+        # abort registration
+        if ( $device->{name} =~ /invalid/i ) {
+            return PE_ERROR;
+        }
+
+        return PE_OK;
+    }
+
+
 Generic hooks
 -------------
 
