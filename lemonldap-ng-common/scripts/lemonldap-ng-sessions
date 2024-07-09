@@ -30,11 +30,13 @@ GetOptions(
     'id-only|i'     => \$opts->{idonly},
     'user|u=s'      => \$opt_user,
     'group|g=s'     => \$opt_group,
+    'count'         => \$opts->{count},
 ) or pod2usage( -exitcode => 1, -verbose => 0 );
 
 pod2usage( -exitcode => 0, -verbose => 2 ) if $help;
 
 eval {
+    no warnings;
     POSIX::setgid( scalar( getgrnam($opt_group) ) );
     POSIX::setuid( scalar( getpwnam($opt_user) ) );
 };
@@ -43,6 +45,11 @@ my $action = shift @ARGV;
 
 unless ($action) {
     pod2usage( -exitcode => 1, -verbose => 0 );
+}
+
+if ( $action eq 'count' ) {
+    $action = 'search';
+    $opts->{count} = 1;
 }
 
 if ( $action eq "get" ) {
@@ -126,6 +133,8 @@ B<Commands>:
 
 =item B<L</search>>: search for sessions
 
+=item B<count>: alias for B<search --count>
+
 =item B<L</delete>>: delete existing sessions
 
 =item B<L</setKey>>: add/change key in existing session
@@ -160,6 +169,9 @@ B<Options>:
 
 =item B<--hash>: When "hashed session storage" is in use, indicates that the
 given session ID is the original value (cookie value)
+
+=item B<--count> I<(only with B<L</search>>)>: display the number of matching
+sessions instead of their content
 
 =back
 
@@ -209,6 +221,9 @@ Examples
 
     lemonldap-ng-sessions search --where '_startTime>20240410063538'
     lemonldap-ng-sessions search --where '_startTime<20240410063538'
+
+And you can just display the number of result using
+B<lemonldap-ng-sessions search --count>
 
 =head3 delete
 
