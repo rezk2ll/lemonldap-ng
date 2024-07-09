@@ -6,8 +6,9 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR);
 
 use constant hook => {
-    sfBeforeVerify => 'ipHasChanged',
-    sfBeforeRetry  => 'allowedToRetry',
+    sfBeforeVerify   => 'ipHasChanged',
+    sfBeforeRetry    => 'allowedToRetry',
+    sfRegisterDevice => 'sfRegisterDevice',
 };
 
 sub ipHasChanged {
@@ -31,6 +32,21 @@ sub allowedToRetry {
         $self->logger->error("User $uid not allowed to retry $prefix");
         return 999;
     }
+    return PE_OK;
+}
+
+sub sfRegisterDevice {
+    my ( $self, $req, $info, $device, $registration_state ) = @_;
+    $device->{_hooked_attr} = 1;
+    $device->{_hooked_type} = $device->{type};
+    $device->{_hooked_uid}  = $info->{uid};
+
+    if ( $device->{type} eq "test" ) {
+
+        # Set authnLevel
+        $registration_state->{authenticationLevel} = 7;
+    }
+
     return PE_OK;
 }
 
