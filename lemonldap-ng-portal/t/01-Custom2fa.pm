@@ -18,6 +18,7 @@ my $client = LLNG::Manager::Test->new( {
             test2fSelfRegistration => 1,
             test2fActivation       => 'has2f("test")',
             sfRequired             => '$uid eq "dwho"',
+            sfRetries              => 1,
         }
     }
 );
@@ -108,6 +109,40 @@ subtest "Login with 2FA" => sub {
 
     my ( $host, $url, $query ) =
       expectForm( $res, undef, '/test2fcheck', 'token' );
+
+    $query .= "&failme=1";
+
+    # This request will be failed by the hook
+    ok(
+        $res = $client->_post(
+            '/test2fcheck', IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'Post code'
+    );
+
+    # Retry form is displayed
+    expectXpath( $res, '//span[@trmsg="110"]' );
+    ( $host, $url, $query ) =
+      expectForm( $res, undef, '/test2fcheck', 'token' );
+    $query .= "&failme=1";
+
+    # This request will be failed by the hook (again)
+    ok(
+        $res = $client->_post(
+            '/test2fcheck', IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'Post code'
+    );
+
+    # Retry form is displayed, meaning the number of retries has been
+    # successfully extended by the hook
+    expectXpath( $res, '//span[@trmsg="110"]' );
+    ( $host, $url, $query ) =
+      expectForm( $res, undef, '/test2fcheck', 'token' );
     ok(
         $res = $client->_post(
             '/test2fcheck', IO::String->new($query),
@@ -117,7 +152,12 @@ subtest "Login with 2FA" => sub {
         'Post code'
     );
     my $id = expectCookie($res);
-    expectSessionAttributes( $client, $id, uid => "dwho", _2f => "test" );
+    expectSessionAttributes(
+        $client, $id,
+        uid                 => "dwho",
+        _2f                 => "test",
+        authenticationLevel => "7",
+    );
 };
 
 subtest "Register 2FA from logged in session" => sub {

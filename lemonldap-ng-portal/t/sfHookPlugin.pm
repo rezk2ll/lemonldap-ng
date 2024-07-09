@@ -3,12 +3,13 @@ package t::sfHookPlugin;
 use Mouse;
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR);
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_BADOTP);
 
 use constant hook => {
     sfBeforeVerify   => 'ipHasChanged',
     sfBeforeRetry    => 'allowedToRetry',
     sfRegisterDevice => 'sfRegisterDevice',
+    sfAfterVerify    => 'sfAfterVerify',
 };
 
 sub ipHasChanged {
@@ -45,6 +46,25 @@ sub sfRegisterDevice {
 
         # Set authnLevel
         $registration_state->{authenticationLevel} = 7;
+    }
+
+    return PE_OK;
+}
+
+sub sfAfterVerify {
+    my ( $self, $req, $module, $session, $verify_result ) = @_;
+
+    if ( $req->params('failme') ) {
+        $verify_result->{result}  = PE_BADOTP;
+        $verify_result->{retries} = 1;
+    }
+
+    if (   $verify_result->{result} == PE_OK
+        && $verify_result->{device}->{type} eq "test" )
+    {
+
+        # Set authnLevel
+        $verify_result->{authenticationLevel} = 7;
     }
 
     return PE_OK;
