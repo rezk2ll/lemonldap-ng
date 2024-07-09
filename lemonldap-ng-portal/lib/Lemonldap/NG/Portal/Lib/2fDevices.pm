@@ -117,6 +117,8 @@ sub add2fDevice {
     );
     $self->p->updatePersistentSession( $req,
         { _2fDevices => to_json($_2fDevices) } );
+
+    $self->markRegistered($req);
     return 1;
 }
 
