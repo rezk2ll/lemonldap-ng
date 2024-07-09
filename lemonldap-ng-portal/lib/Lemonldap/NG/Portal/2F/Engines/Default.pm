@@ -940,24 +940,46 @@ sub _verify {
     }
 
     # Launch second factor verification
-    my $res = $module->verify( $req, $session );
+    my $verify_result = {
+        result              => $module->verify( $req, $session ),
+        authenticationLevel => $module->authnLevel,
+        retries             => ( $session->{_2fRetries} || 0 ),
+        (
+            $req->data->{_2fDevice} ? ( device => $req->data->{_2fDevice} ) : ()
+        ),
+    };
+
+    # Evaluate hook
+    {
+        my $h = $self->p->processHook( $req, 'sfAfterVerify', $module, $session,
+            $verify_result );
+        if ( $h != PE_OK ) {
+            $req->noLoginDisplay(1);
+            return $self->p->do( $req, [ sub { $h } ] );
+        }
+    }
+
+    # May be modified by sfAfterVerify
+    my $res        = $verify_result->{result};
+    my $authnLevel = $verify_result->{authenticationLevel};
+    my $retries    = $verify_result->{retries};
 
     $self->restore2faSessionInfo( $req, $session );
 
     # Case error
-    if ( $res and !$req->data->{_2fRetries} ) {
+    if ( $res and $retries == 0 ) {
         $req->noLoginDisplay(1);
         $req->authResult(PE_BADCREDENTIALS);
 
         # Set the failed 2f type in case you want to store it in history
         # through sessionDataToRemember
-        $req->sessionInfo->{'_2f'} = $module->prefix;
+        $req->sessionInfo->{'_2f'} = $prefix;
         return $self->p->do( $req, [ 'storeHistory', sub { $res } ] );
     }
     elsif ($res) {
         $req->data->{_2fRetries} = (
-            ( $req->data->{_2fRetries} > 0 )
-            ? $req->data->{_2fRetries} - 1
+            ( $retries > 0 )
+            ? $retries - 1
             : 0
         );
 
@@ -983,12 +1005,11 @@ sub _verify {
 
     # Else restore session
     $req->mustRedirect(1);
-    $self->userLogger->notice( $module->prefix
+    $self->userLogger->notice( $prefix
           . '2f verification succeeded for '
           . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
-    my $level = $module->authnLevel;
-    return $self->_continueLogin( $req, $module->prefix, $module->authnLevel );
+    return $self->_continueLogin( $req, $prefix, $authnLevel, );
 }
 
 sub searchForAuthorized2Fmodules {
