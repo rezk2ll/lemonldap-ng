@@ -822,6 +822,51 @@ Sample code::
         return PE_OK;
     }
 
+sfAfterVerify
+~~~~~~~~~~~~~
+
+.. versionadded:: 2.20
+
+This hook is called after verifying a second factor, whether it was successful or not.
+You can use it to change the verification status depending on some condition.
+
+The hook's parameters are:
+
+* An instance of the 2F module in use
+* A hash of session information
+* A hash containing the verification result, which you can modify. Its subkeys are:
+    * `authenticationLevel`: authentication level granted by the module
+    * `device`: if applicable, details of the 2FA device used (name, type, epoch, etc.)
+    * `result`: result code of this attempt
+    * `retries`: how many retries are left after this attempt
+
+Sample code::
+
+    use constant hook => { sfAfterVerify => 'ipExceptions', };
+
+    sub ipExceptions {
+        my ( $self, $req, $module, $session, $verify_result ) = @_;
+
+        my $status_of_verification = $verify_result->{result};
+
+        # Override authentication level for a particular IP
+        if ( $status_of_verification == PE_OK and $req->address eq "127.0.0.1" )
+        {
+            $verify_result->{authenticationLevel} = 7;
+        }
+
+        # This special IP has infinite retries
+        if (    $status_of_verification != PE_OK
+            and $req->address eq "127.0.0.2"
+            and $verify_result->{retries} == 0 )
+        {
+            $self->logger->info("Allowing more retries to 127.0.0.2");
+            $verify_result->{retries} = 1;
+        }
+        return PE_OK;
+    }
+
+
 sfBeforeRetry
 ~~~~~~~~~~~~~
 
