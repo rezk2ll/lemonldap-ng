@@ -54,7 +54,7 @@ if ( $action eq "get" ) {
         );
     }
 }
-if ( $action eq "delete" ) {
+elsif ( $action eq "delete" ) {
     unless ( @ARGV >= 1 or $opts->{where} ) {
         pod2usage(
             -exitval  => 1,
@@ -63,7 +63,7 @@ if ( $action eq "delete" ) {
         );
     }
 }
-if ( $action eq "delKey" ) {
+elsif ( $action eq "delKey" ) {
     unless ( @ARGV >= 2 ) {
         pod2usage(
             -exitval  => 1,
@@ -72,7 +72,7 @@ if ( $action eq "delKey" ) {
         );
     }
 }
-if ( $action eq "setKey" ) {
+elsif ( $action eq "setKey" ) {
     unless ( @ARGV >= 3 ) {
         pod2usage(
             -exitval  => 1,
@@ -82,7 +82,7 @@ if ( $action eq "setKey" ) {
     }
 }
 
-if ( $action eq "secondfactors" ) {
+elsif ( $action eq "secondfactors" ) {
     unless ( @ARGV >= 1 ) {
         pod2usage(
             -exitval  => 1,
@@ -92,7 +92,7 @@ if ( $action eq "secondfactors" ) {
     }
 }
 
-if ( $action eq "consents" ) {
+elsif ( $action eq "consents" ) {
     unless ( @ARGV >= 2 ) {
         pod2usage(
             -exitval  => 1,
