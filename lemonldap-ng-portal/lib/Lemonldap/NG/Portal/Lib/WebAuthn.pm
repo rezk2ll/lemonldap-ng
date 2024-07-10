@@ -297,6 +297,8 @@ sub validateAssertion {
         my $new_signature_count = $validation_result->{signature_count};
 
         # Update storedSignCount to be the value of authData.signCount
+        $validation_result->{matching_credential}->{_signCount} =
+          $new_signature_count;
         $self->update2fDevice( $req, $data, $self->type,
             "_credentialId", $credential_id, "_signCount",
             $new_signature_count );
