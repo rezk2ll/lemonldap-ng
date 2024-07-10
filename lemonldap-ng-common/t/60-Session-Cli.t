@@ -190,7 +190,7 @@ resetSessions;
 sub getJson {
     my @args = @_;
     my ($str) = Test::Output::output_from( sub { $cli->run(@args); } );
-    return from_json($str);
+    return $str =~ /^([\w]+)$/ ? $1 : from_json($str);
 }
 
 sub getLines {
