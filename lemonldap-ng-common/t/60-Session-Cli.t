@@ -245,9 +245,15 @@ is(
 $res = getJson( "search", {} );
 is( @{$res}, 5, "Found 5 sessions" );
 
+$res = getJson( "search", { count => 1 } );
+is( $res, 5, "Count gives 5 sessions" );
+
 # Test search with different backend
 $res = getJson( "search", { backend => 'persistent' } );
 is( @{$res}, 2, "Found 2 psessions" );
+
+$res = getJson( "search", { backend => 'persistent', count => 1 } );
+is( $res, 2, "Count gives 2 psessions" );
 
 # Persistent mode
 $res = getJson( "search", { persistent => 1 } );
