@@ -124,7 +124,7 @@ To preselect this server when the ``MY_SRV`` :doc:`choice <authchoice>` is selec
 Manual IDP Selection
 --------------------
 
-When using multiple CAS servers, LemonLDAP will display an additional
+When using multiple CAS servers, LemonLDAP::NG will display an additional
 choice screen to let the user decide which server they want to use.
 
 In addition to the *resolution rule* described above, you can also use the

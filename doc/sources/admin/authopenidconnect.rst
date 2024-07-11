@@ -226,15 +226,15 @@ Options
 
 Configuration
 """""""""""""
+-  **PKCE required**:
+-  **Store ID token**: Allows one to store the ID Token (JWT) inside user session.
+   Do not enable it unless you need to replay this token on an application,
+   or if you need the id_token_hint parameter when using logout.
 -  **Configuration endpoint**: URL of OP configuration endpoint
 -  **JWKS data timeout**: After this time, LL::NG will do a request
    to get a fresh version of JWKS data. Set to 0 to disable it
 -  **Client ID**: client ID given by OP
 -  **Client secret**: client secret given by OP
--  **Store ID token**: Allows one to store the ID Token (JWT) inside
-   user session. Do not enable it unless you need to replay this token
-   on an application, or if you need the id_token_hint parameter when
-   using logout.
 -  **Attribute containing user identifier**: Set the value of the ID Token
    claim that should be used as user main identifier. If empty, the ``sub``
    claim is used.
@@ -300,9 +300,8 @@ To preselect this OP when the ``MY_OP`` :doc:`choice <authchoice>` is selected :
 Manual IDP Selection
 --------------------
 
-When using multiple OpenID Providers, LemonLDAP will display an additional
+When using multiple OpenID Providers, LemonLDAP::NG will display an additional
 choice screen to let the user decide which OP they want to use.
 
 In addition to the *resolution rule* described above, you can also use the
-``idp`` URL parameter to automatically select an OP for the
-user: ``https://auth.example.com/?idp=op-example``
+``idp`` URL parameter to automatically select an OP for the user: ``https://auth.example.com/?idp=op-example``
