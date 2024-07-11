@@ -1298,8 +1298,8 @@ sub tree {
                             help  => 'eventsmanagement.html',
                             nodes => [
                                 'messageBroker', 'messageBrokerOptions',
-                                'reloadTimeout', 'compactConf',
-                                'reloadUrls',    'eventQueueName',
+                                'reloadTimeout', 'reloadUrls',
+                                'compactConf',   'eventQueueName',
                             ]
                         },
                     ]
