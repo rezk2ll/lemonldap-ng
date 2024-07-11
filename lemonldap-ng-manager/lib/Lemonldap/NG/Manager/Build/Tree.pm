@@ -599,10 +599,10 @@ sub tree {
                     help  => 'ssocookie.html',
                     form  => 'simpleInputContainer',
                     nodes => [
-                        'cookieName', '*domain',
-                        'cda',        'securedCookie',
-                        'httpOnly',   'cookieExpiration',
-                        'sameSite',
+                        'cookieName',    '*domain',
+                        'cda',           'httpOnly',
+                        'securedCookie', 'sameSite',
+                        'cookieExpiration',
                     ]
                 },
                 {
