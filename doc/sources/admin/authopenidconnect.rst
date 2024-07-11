@@ -226,7 +226,7 @@ Options
 
 Configuration
 """""""""""""
--  **PKCE required**:
+-  **PKCE required**: A code challenge is required at Tokens endpoint (see :rfc:`7636`)
 -  **Store ID token**: Allows one to store the ID Token (JWT) inside user session.
    Do not enable it unless you need to replay this token on an application,
    or if you need the id_token_hint parameter when using logout.
