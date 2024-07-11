@@ -100,11 +100,17 @@ sub search {
     my ($self) = shift;
     my $res    = $self->_search();
     my $o      = $self->stdout;
-    if ( $self->opts->{idonly} ) {
-        print $o map { $res->{$_}->{_session_id} . "\n" } keys %{$res};
+    if ( $self->opts->{count} ) {
+        my @tmp = keys %$res;
+        print $o scalar(@tmp) . "\n";
     }
     else {
-        print $o $self->_to_json( [ values %{$res} ] );
+        if ( $self->opts->{idonly} ) {
+            print $o map { $res->{$_}->{_session_id} . "\n" } keys %{$res};
+        }
+        else {
+            print $o $self->_to_json( [ values %{$res} ] );
+        }
     }
     return 0;
 
