@@ -242,13 +242,6 @@ Options
 
 -  **Security**
 
-   -  **ID Token signature algorithm**: Select one of the available public key
-      (RSXXX) or HMAC (HSXXX) based signature algorithms
-   -  **Access Token signature algorithm** (since version ``2.0.12``): Select
-      one of the available public key signature algorithms
-   -  **UserInfo response format** (since version ``2.0.12``): By default,
-      UserInfo is returned as a simple JSON object. You can also choose to
-      return it as a JWT, using one of the available signature algorithms.
    -  **Require PKCE** (since version ``2.0.4``): A code challenge is
       required at Tokens endpoint (see :rfc:`7636`)
    -  **Invalidate refresh tokens after use** (since version ``2.20.0``): Use
@@ -273,16 +266,30 @@ Options
       in OIDC specifications). These URLs may use wildcards (``https://app.example.com/*``).
    -  **Authentication level**: Required authentication level to access this application
    -  **Access rule**: Lets you specify a :doc:`Perl rule<rules_examples>` to restrict access to this client
+   -  **Token endpoint authentication method**: Fix method to use to connect to "token" endpoint
+   -  **Require JWS for authorization requests**: Require a signed JWS for code authorization requests. If **Token endpoint authentication method** is set, it will require the same algorithm
+   -  **Require "state" in authorization request**: Require 
+   -  **Require "nonce" in authorization request**: Require 
+   -  **userinfo endpoint authentication using header only**: 
+
+
+-  **Algorithms**
+
+   -  **Access Token signature algorithm** (since version ``2.0.12``): Select
+      one of the available public key signature algorithms
    -  **Access Token Encryption key management algorithm**: If Relying-Party require access_token encryption, set here the key management algorithm
    -  **Access Token Encryption content encryption algorithm**: If Relying-Party require access_token encryption, set here the content encryption algorithm
+   -  **ID Token signature algorithm**: Select one of the available public key
+      (RSXXX) or HMAC (HSXXX) based signature algorithms
    -  **ID Token Encryption key management algorithm**: If Relying-Party require id_token encryption, set here the key management algorithm
    -  **ID Token Encryption content encryption algorithm**: If Relying-Party require id_token encryption, set here the content encryption algorithm
+   -  **UserInfo response format** (since version ``2.0.12``): By default,
+      UserInfo is returned as a simple JSON object. You can also choose to
+      return it as a JWT, using one of the available signature algorithms. 
    -  **User_info Encryption key management algorithm**: If Relying-Party require user_info response encryption, set here the key management algorithm
    -  **User_info Encryption content encryption algorithm**: If Relying-Party require user_info response encryption, set here the content encryption algorithm
    -  **Logout Encryption key management algorithm**: If Relying-Party require back-channel-logout token encryption, set here the key management algorithm
    -  **Logout Encryption content encryption algorithm**: If Relying-Party require back-channel-logout token encryption, set here the content encryption algorithm
-   -  **Token endpoint authentication method**: Fix method to use to connect to "token" endpoint
-   -  **Require JWS for authorization requests**: Require a signed JWS for code authorization requests. If **Token endpoint authentication method** is set, it will require the same algorithm
 
 -  **Keys**
 
