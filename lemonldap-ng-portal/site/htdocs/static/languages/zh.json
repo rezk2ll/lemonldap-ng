@@ -270,6 +270,7 @@
 "passwordPolicyMinSpeChar":"最少特殊字元：",
 "passwordPolicyMinUpper":"最少大寫字母：",
 "passwordPolicyNone":"您可以自由選擇密碼！",
+"passwordPolicySamePwd":"You must confirm your new password by entering it twice",
 "passwordPolicySpecialChar":"已允許的特殊字元：",
 "passwordverify":"Double-check your password",
 "pasteHere":"Paste your file here...",
