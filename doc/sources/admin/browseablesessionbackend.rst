@@ -36,7 +36,7 @@ List of fields to index by session type
    * - SAML sessions
      - \_session_kind \_utime \_saml_id ProxyID \_nameID \_assert_id \_art_id
    * - OIDC sessions
-     - \_session_kind \_utime
+     - \_session_kind \_utime \_oidc_sid \_oidc_sub
 
 .. [1]
    - ``user`` is used by :doc:`resetpassword`.

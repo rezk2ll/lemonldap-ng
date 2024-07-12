@@ -4,6 +4,11 @@ Trusted browser plugin
 This plugin lets you remember your web browser after a successful login. This trusted browser can then 
 be used to skip the entire authentication, or just bypass second factors.
 
+.. important::
+
+    The Trusted Browser feature uses a TOTP challenge behind the scenes. This
+    means it only works if the client web browser is in sync with the server.
+
 Configuration
 -------------
 

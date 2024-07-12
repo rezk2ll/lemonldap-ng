@@ -2606,7 +2606,8 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type' => 'text'
         },
         'oidcOPMetaDataOptionsRequirePkce' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'oidcOPMetaDataOptionsResolutionRule' => {
             'default' => '',
@@ -2864,16 +2865,19 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type' => 'intOrNull'
         },
         'oidcRPMetaDataOptionsAuthnRequireNonce' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsAuthnRequireState' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsAuthorizationCodeExpiration' => {
             'type' => 'intOrNull'
         },
         'oidcRPMetaDataOptionsAuthRequiredForAuthorize' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsBypassConsent' => {
             'default' => 0,
@@ -3236,7 +3240,8 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'type' => 'select'
         },
         'oidcRPMetaDataOptionsUserinfoRequireHeaderToken' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'oidcRPMetaDataOptionsUserInfoSignAlg' => {
             'default' => '',

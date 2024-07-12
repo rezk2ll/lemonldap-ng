@@ -6,6 +6,7 @@ our $VERSION = '2.20.0';
 
 use Lemonldap::NG::Manager::Attributes;
 use Lemonldap::NG::Manager::Api::Common qw/_listAttributes/;
+use Lemonldap::NG::Common;
 use JSON;
 
 my %TYPEMAP = (
@@ -89,7 +90,7 @@ sub openapi {
             'title'       => 'LemonLDAP::NG Manager API',
             'description' =>
 'The Manager API allows an administrator to modify the LemonLDAP::NG configuration programmatically. It is not meant to be accessed by end users. The client libraries mentionned in examples can be generated from doc/sources/manager-api/openapi-spec.yaml',
-            'version' => '2.17'
+            'version' => $Lemonldap::NG::Common::VERSION,
         },
         'servers' => [ {
                 'url' => 'https://manager-api.example.com'

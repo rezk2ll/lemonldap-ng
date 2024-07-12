@@ -237,6 +237,7 @@
 "comment":"Commento",
 "comments":"Commenti",
 "compactConf":"Compact configuration file",
+"complexnode":"This setting cannot be displayed here, open it separately from the menu",
 "condition":"Condizione",
 "conf":"Configurazione",
 "confModuledeprecated":"Questo modulo è stato deprecato, impostare \"forceUpload = 1\" in limonldap-ng.ini per utilizzarlo",

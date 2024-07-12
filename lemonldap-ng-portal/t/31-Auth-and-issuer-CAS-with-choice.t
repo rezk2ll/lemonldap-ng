@@ -290,7 +290,7 @@ sub issuer {
                 skipRenewConfirmation => 1,
                 logLevel              => $debug,
                 domain                => 'idp.com',
-                portal                => 'http://auth.idp.com',
+                portal                => 'http://auth.idp.com/',
                 authentication        => 'Choice',
                 userDB                => 'Same',
                 authChoiceParam       => 'test',
@@ -322,7 +322,7 @@ sub sp {
             ini => {
                 logLevel                   => $debug,
                 domain                     => 'sp.com',
-                portal                     => 'http://auth.sp.com',
+                portal                     => 'http://auth.sp.com/',
                 authentication             => 'CAS',
                 userDB                     => 'CAS',
                 restSessionServer          => 1,

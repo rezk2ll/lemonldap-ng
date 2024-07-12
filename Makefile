@@ -355,6 +355,7 @@ fastcgi-server/man/llng-fastcgi-server.8p: fastcgi-server/sbin/llng-fastcgi-serv
 
 json:	$(MANAGERJSONDST) fastcgi-server/man/llng-fastcgi-server.8p debian/*cron*
 	@if which yui-compressor >/dev/null; then $(MAKE) minify; fi
+	$(MAKE) minify
 
 debian/liblemonldap-ng-handler-perl.cron.d: lemonldap-ng-handler/scripts/purgeLocalCache.cron.d
 	@perl -pe 's/__APACHEUSER__/www-data/g;s@__BINDIR__@/usr/share/lemonldap-ng/bin@g' \
@@ -1073,6 +1074,7 @@ clean:
 	@rm -rf "$(WEBSITE_DIR)"
 	@rm -vf *gz *zip
 	@rm -rf lemonldap-ng-$(VERSION)
+	@rm -rf lemonldap-ng-portal/t/sessions/tmpSession*
 	@echo "Cleaned"
 
 common_clean:

@@ -280,6 +280,14 @@ By default, we now disallow this feature, and require LemonLDAP::NG admins to ex
 2.17.0
 ------
 
+"Stay connected" now uses a TOTP challenge
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The :doc:`Stay connected on this device <trustedbrowser>` feature now relies on
+a TOTP challenge. This means it only works if the client web browser is in
+sync with the server.  Existing sessions are not affected by this new
+requirement.
+
 Possible regression in unicode character handling for UWSGI users
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

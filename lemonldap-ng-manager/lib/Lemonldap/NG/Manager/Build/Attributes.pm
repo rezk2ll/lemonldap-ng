@@ -4993,6 +4993,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         oidcOPMetaDataOptionsRequirePkce => {
             type          => 'bool',
+            default       => 0,
             documentation => 'Use PKCE with this OP',
         },
 
@@ -5021,7 +5022,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
         },
         oidcRPMetaDataOptionsAuthRequiredForAuthorize => {
-            type => 'bool',
+            type    => 'bool',
+            default => 0,
         },
         oidcRPMetaDataOptionsDisplayName    => { type => 'text', },
         oidcRPMetaDataOptionsIcon           => { type => 'text', },
@@ -5233,13 +5235,16 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => '"enc" algorithm for logout encryption',
         },
         oidcRPMetaDataOptionsAuthnRequireState => {
-            type => 'bool',
+            type    => 'bool',
+            default => 0,
         },
         oidcRPMetaDataOptionsAuthnRequireNonce => {
-            type => 'bool',
+            type    => 'bool',
+            default => 0,
         },
         oidcRPMetaDataOptionsUserinfoRequireHeaderToken => {
             type          => 'bool',
+            default       => 0,
             documentation =>
               '/userinfo endpoint requires authn using Bearer token',
         },
