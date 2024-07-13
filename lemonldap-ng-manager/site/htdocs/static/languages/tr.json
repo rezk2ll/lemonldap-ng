@@ -237,6 +237,7 @@
 "comment":"Yorum",
 "comments":"Yorumlar",
 "compactConf":"Yapılandırma dosyasını sıkıştır",
+"complexnode":"This setting cannot be displayed here, open it separately from the menu",
 "condition":"Koşul",
 "conf":"Yapılandırma",
 "confModuledeprecated":"Bu modül kullanımdan kaldırıldı, kullanmak için lemonldap-ng.ini içinde \"forceUpload=1\" olarak ayarla",

@@ -237,6 +237,7 @@
 "comment":"註解",
 "comments":"註解",
 "compactConf":"簡潔設定檔",
+"complexnode":"This setting cannot be displayed here, open it separately from the menu",
 "condition":"狀況",
 "conf":"設定",
 "confModuledeprecated":"此模組已被棄用，在 lemonldap-ng.ini 裡設定 \"forceUpload=1\" 以使用它。",

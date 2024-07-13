@@ -237,6 +237,7 @@
 "comment":"Comentario",
 "comments":"Comentarios",
 "compactConf":"Compact configuration file",
+"complexnode":"This setting cannot be displayed here, open it separately from the menu",
 "condition":"Condición",
 "conf":"Configuración",
 "confModuledeprecated":"Este módulo está obsoleto. Para utilizarlo, establezca \"forceUpload=1\" in lemonldap-ng.ini",

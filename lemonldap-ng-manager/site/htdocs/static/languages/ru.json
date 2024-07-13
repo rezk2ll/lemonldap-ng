@@ -237,6 +237,7 @@
 "comment":"Комментарий",
 "comments":"Комментарии",
 "compactConf":"Компактный файл конфигурации",
+"complexnode":"This setting cannot be displayed here, open it separately from the menu",
 "condition":"Условие",
 "conf":"Конфиурация",
 "confModuledeprecated":"Этот модуль устарел, установите \"forceUpload=1\" в lemonldap-ng.ini, чтобы использовать его",

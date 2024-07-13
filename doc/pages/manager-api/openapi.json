@@ -714,6 +714,9 @@
                "refreshToken" : {
                   "type" : "boolean"
                },
+               "refreshTokenRotation" : {
+                  "type" : "boolean"
+               },
                "requestUris" : {
                   "items" : {
                      "type" : "string"
@@ -724,6 +727,9 @@
                   "type" : "boolean"
                },
                "rule" : {
+                  "type" : "string"
+               },
+               "tokenXAuthorizedRP" : {
                   "type" : "string"
                },
                "userIDAttr" : {
@@ -1258,7 +1264,7 @@
    "info" : {
       "description" : "The Manager API allows an administrator to modify the LemonLDAP::NG configuration programmatically. It is not meant to be accessed by end users. The client libraries mentionned in examples can be generated from doc/sources/manager-api/openapi-spec.yaml",
       "title" : "LemonLDAP::NG Manager API",
-      "version" : "2.17"
+      "version" : "2.19.0"
    },
    "openapi" : "3.0.1",
    "paths" : {

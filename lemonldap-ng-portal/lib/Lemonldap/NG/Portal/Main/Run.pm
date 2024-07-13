@@ -350,16 +350,8 @@ sub do {
         if ( ( $err > 0 and !$req->id ) or $err eq PE_SESSIONNOTGRANTED ) {
             my $json = { result => 0, error => $err };
             if ( $req->wantErrorRender ) {
-                $json->{html} = $self->loadTemplate(
-                    $req,
-                    'errormsg',
-                    params => {
-                        AUTH_ERROR               => $err,
-                        ( 'AUTH_ERROR_' . $err ) => 1,
-                        AUTH_ERROR_TYPE          => $req->error_type,
-                        AUTH_ERROR_ROLE          => $req->error_role,
-                    }
-                );
+                $json->{html} = $self->loadTemplate( $req, 'errormsg',
+                    params => { $self->getErrorTplParams($req) } );
             }
             return $self->sendJSONresponse(
                 $req, $json,
@@ -461,8 +453,17 @@ sub autoRedirect {
     my ( $self, $req ) = @_;
 
     # Set redirection URL if needed
-    $req->{urldc} ||= $req->portal
-      if ( $req->mustRedirect and not( $req->info ) );
+    if ( $req->mustRedirect and not( $req->info ) ) {
+        if ( $req->error == PE_LOGOUT_OK ) {
+            if ( !$req->urldc or !$self->_isExternalUrl( $req, $req->urldc ) ) {
+                $req->urldc(
+                    $self->buildUrl( $req->portal, { "logout" => 1 } ) );
+            }
+        }
+        else {
+            $req->{urldc} ||= $req->portal;
+        }
+    }
 
     # Redirection should be made if urldc defined
     if ( $req->{urldc} ) {
@@ -1155,10 +1156,13 @@ sub imgnok {
 
 sub sendImage {
     my ( $self, $req, $img ) = @_;
+    my $u = URI->new_abs( $self->staticPrefix . "/common/$img", $req->portal )
+      ->as_string;
+
     return [
         302,
         [
-            'Location' => ($req->portal . $self->staticPrefix . "/common/$img")
+            'Location' => $u,
         ],
         [],
     ];
@@ -1263,6 +1267,20 @@ sub tplParams {
             : ()
         ),
         %templateParams
+    );
+}
+
+sub getErrorTplParams {
+    my ( $self, $req ) = @_;
+
+    my $err = $req->error;
+
+    return (
+        AUTH_ERROR               => $err,
+        ( 'AUTH_ERROR_' . $err ) => 1,
+        AUTH_ERROR_TYPE          => $req->error_type,
+        AUTH_ERROR_ROLE          => $req->error_role,
+        LOCKTIME                 => $req->lockTime(),
     );
 }
 

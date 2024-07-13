@@ -247,7 +247,7 @@ Apache::Session::\ **Browseable::Redis**                                        
 
 *The source of this test is available in sources: e2e-tests/sbperf.pl*
 
-.. [3]  "purge" test is done with Apache::Session::Browseable-1.2.5
+.. [3] "purge" test is done with Apache::Session::Browseable-1.2.5
    and LLG-2.0. Earlier results are not so good.
 .. [4] "purge" test is done with Apache::Session::Browseable-1.2.6
    and LLG-2.0.
@@ -255,14 +255,14 @@ Apache::Session::\ **Browseable::Redis**                                        
 Analysis:
 
 -  LDAP servers are "write-once-read-many", so write performances are
-   very bad. Don't use this on heavy load if "Session activity timeout"
-   is enabled *(if set, handler "write" sessions)*
+   very bad. Don't use this on heavy load
 -  MySQL/MariaDB is better to read than to write. Prefer PostgreSQL if
    you use "Session activity timeout"
 -  Logged tables decrease a lot insert performances with PostgreSQL, so
    use unlogged tables for sessions except for persistent sessions
--  Redis is the best for main usage
--  Browseable::Postgres/PgHstore/PgJSON are the best SQL solutions on
+-  Redis is the best for main usage, except when using SAML, Single-Sessions
+   and CAS
+-  Browseable::Postgres/PgHstore/PgJSON are the best solutions on
    average
 
 .. _performances-ldap-performances:

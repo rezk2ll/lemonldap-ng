@@ -106,7 +106,7 @@ Development
 -  `Source
    code <https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/tree/master>`__
 -  `Nightly trunk builds <http://lemonldap-ng.ow2.io/lemonldap-ng/>`__
-   *(for Debian or Ubuntu, *\ **really unstable**\ *)*
+   *(for Debian or Ubuntu,* **really unstable** *)*
 -  Git access:
 
 ::

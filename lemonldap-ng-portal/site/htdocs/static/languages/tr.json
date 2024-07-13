@@ -270,6 +270,7 @@
 "passwordPolicyMinSpeChar":"Minimum özel karakter sayısı:",
 "passwordPolicyMinUpper":"Minimum büyük harf karakter sayısı:",
 "passwordPolicyNone":"Parolanızı seçmekte özgürsünüz!",
+"passwordPolicySamePwd":"You must confirm your new password by entering it twice",
 "passwordPolicySpecialChar":"İzin verilen özel karakter sayısı:",
 "passwordverify":"Parolanızı tekrar kontrol edin",
 "pasteHere":"Dosyanı buraya yapıştır...",

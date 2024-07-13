@@ -307,23 +307,23 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
    syntax.
 -  **Avoid browsers to store users password**: Enable this option to
    prevent browsers from prompting users to save passwords.
--  **Force authentication**: set to 'On' to force authentication when
+-  **Force authentication**: Set to 'On' to force authentication when
    user connects to portal, even if he has a valid session.
--  **Force authentication interval**: time interval (in seconds) when an
+-  **Force authentication interval**: Time interval (in seconds) when an
    authentication renewal cannot be forced, used to prevent to loose the
    current authentication during the main process. If you experience
    slow network performances, you can increase this value.
--  **Encryption key**: key used for crypting some data, should not be known
+-  **Encryption key**: Key used for crypting some data, should not be known
    by other applications
--  **Trusted domains**: domains on which the user can be redirected
+-  **Trusted domains**: Domains on which the user can be redirected
    after login on portal.
 
    -  Example: ``myapp.example.com .subdomain.example.com``
    -  ``*`` allows redirections to any external domain (DANGEROUS)
 
 -  **Use Safe jail**: Set to 'Off' to disable Safe jail. Safe module is
-   used to eval expressions in headers, rules, etc. Disabling it can
-   lead to security issues.
+   used to eval expressions in headers, rules, etc. Disabling it can lead to security issues.
+   Value can be overriden by using ``lemonldap-ng.ini`` file.
 -  **Avoid assignment in expressions**: Set to 'Off' to disable syntax checking.
    Equal sign can be replaced by \x3D i.e. "dc\x3Dorg"
 -  **Check XSS Attacks**: Set to 'Off' to disable XSS checks. XSS checks
@@ -342,7 +342,10 @@ Go in Manager, ``General parameters`` » ``Advanced parameters`` »
    because it breaks exiting OIDC offline sessions.
    **Incompatible with "Proxy" authentication in SOAP mode**.
 -  **CrowdSec Bouncer**: Set to 'On' to enable :doc:`CrowdSec Bouncer plugin<crowdsec>`
--  **Brute-Force Attack protection**: set to 'On' to enable :doc:`Brute-force protection plugin<bruteforceprotection>`
+-  **Check HIBP API**: Set to 'On' to enable :doc:`Check HIBP API plugin<checkhibp>`
+-  **Check password entropy**: Set to 'On' to enable :doc:`Check password entropy plugin<checkentropy>`
+-  **New location warning**: Set to 'On' to enable :doc:`New location warning plugin<newlocationwarning>`
+-  **Brute-Force Attack protection**: Set to 'On' to enable :doc:`Brute-force protection plugin<bruteforceprotection>`
 -  **LWP::UserAgent and SSL options**: Insert here options to pass to
    LWP::UserAgent object (used by SAML or OpenID-Connect to query
    partners and AuthSSL or AuthBasic handler to request Portal URL).

@@ -270,6 +270,7 @@
 "passwordPolicyMinSpeChar":"Минимальное количество специальных символов:",
 "passwordPolicyMinUpper":"Минимальное количество заглавных букв:",
 "passwordPolicyNone":"Вы можете выбрать свой пароль!",
+"passwordPolicySamePwd":"You must confirm your new password by entering it twice",
 "passwordPolicySpecialChar":"Разрешенные специальные символы:",
 "passwordverify":"Проверьте свой пароль",
 "pasteHere":"Добавьте файл сюда...",

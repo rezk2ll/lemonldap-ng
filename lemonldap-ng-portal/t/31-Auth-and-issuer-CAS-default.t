@@ -206,7 +206,7 @@ sub issuer {
             ini => {
                 logLevel              => $debug,
                 domain                => 'idp.com',
-                portal                => 'http://auth.idp.com',
+                portal                => 'http://auth.idp.com/',
                 authentication        => 'Demo',
                 userDB                => 'Same',
                 issuerDBCASActivation => 1,
@@ -226,7 +226,7 @@ sub sp {
             ini => {
                 logLevel                   => $debug,
                 domain                     => 'sp.com',
-                portal                     => 'http://auth.sp.com',
+                portal                     => 'http://auth.sp.com/',
                 authentication             => 'CAS',
                 userDB                     => 'CAS',
                 restSessionServer          => 1,

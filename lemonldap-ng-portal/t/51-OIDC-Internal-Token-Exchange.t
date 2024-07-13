@@ -15,7 +15,7 @@ sub checkJWT {
     my ($access_token) = @_;
     my $payload = expectJWT(
         $access_token,
-        iss       => "http://auth.op.com",
+        iss       => "http://auth.op.com/",
         name      => "Frédéric Accents",
         sub       => "french",
         scope     => "openid profile email",
@@ -118,7 +118,7 @@ sub runTest {
 my $baseConfig = {
     ini => {
         domain                          => 'op.com',
-        portal                          => 'http://auth.op.com',
+        portal                          => 'http://auth.op.com/',
         authentication                  => 'Demo',
         userDB                          => 'Same',
         issuerDBOpenIDConnectActivation => 1,

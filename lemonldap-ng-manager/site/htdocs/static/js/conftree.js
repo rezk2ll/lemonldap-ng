@@ -253,6 +253,20 @@ function templates(tpl,key) {
          {
             "_nodes" : [
                {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsRequirePkce",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsRequirePkce",
+                  "title" : "oidcOPMetaDataOptionsRequirePkce",
+                  "type" : "bool"
+               },
+               {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsStoreIDToken",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsStoreIDToken",
+                  "title" : "oidcOPMetaDataOptionsStoreIDToken",
+                  "type" : "bool"
+               },
+               {
                   "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsConfigurationURI",
                   "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsConfigurationURI",
                   "title" : "oidcOPMetaDataOptionsConfigurationURI"
@@ -276,22 +290,9 @@ function templates(tpl,key) {
                   "type" : "password"
                },
                {
-                  "default" : 0,
-                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsStoreIDToken",
-                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsStoreIDToken",
-                  "title" : "oidcOPMetaDataOptionsStoreIDToken",
-                  "type" : "bool"
-               },
-               {
                   "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUserAttribute",
                   "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsUserAttribute",
                   "title" : "oidcOPMetaDataOptionsUserAttribute"
-               },
-               {
-                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsRequirePkce",
-                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsRequirePkce",
-                  "title" : "oidcOPMetaDataOptionsRequirePkce",
-                  "type" : "bool"
                }
             ],
             "id" : "oidcOPMetaDataOptionsConfiguration",
@@ -775,24 +776,28 @@ function templates(tpl,key) {
                   "type" : "select"
                },
                {
+                  "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthRequiredForAuthorize",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthRequiredForAuthorize",
                   "title" : "oidcRPMetaDataOptionsAuthRequiredForAuthorize",
                   "type" : "bool"
                },
                {
+                  "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireState",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireState",
                   "title" : "oidcRPMetaDataOptionsAuthnRequireState",
                   "type" : "bool"
                },
                {
+                  "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireNonce",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsAuthnRequireNonce",
                   "title" : "oidcRPMetaDataOptionsAuthnRequireNonce",
                   "type" : "bool"
                },
                {
+                  "default" : 0,
                   "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
                   "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
                   "title" : "oidcRPMetaDataOptionsUserinfoRequireHeaderToken",
