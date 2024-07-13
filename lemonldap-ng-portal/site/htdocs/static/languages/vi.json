@@ -270,6 +270,7 @@
 "passwordPolicyMinSpeChar":"Ký tự đặt biệt tối thiểu ",
 "passwordPolicyMinUpper":"Ký tự viết hoa tối thiểu",
 "passwordPolicyNone":"Bạn được tự do lựa chọn mật khẩu của mình!",
+"passwordPolicySamePwd":"You must confirm your new password by entering it twice",
 "passwordPolicySpecialChar":"Các ký tự đặc biệt được cho phép:",
 "passwordverify":"Kiểm tra lại mật khẩu của bạn",
 "pasteHere":"Dán tệp của bạn vào đây...",

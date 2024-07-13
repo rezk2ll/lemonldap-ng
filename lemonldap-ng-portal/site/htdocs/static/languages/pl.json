@@ -270,6 +270,7 @@
 "passwordPolicyMinSpeChar":"Minimalna liczba znaków specjalnych:",
 "passwordPolicyMinUpper":"Minimalna liczba dużych liter:",
 "passwordPolicyNone":"Możesz sam wybrać hasło!",
+"passwordPolicySamePwd":"You must confirm your new password by entering it twice",
 "passwordPolicySpecialChar":"Dozwolone znaki specjalne:",
 "passwordverify":"Sprawdź swoje hasło",
 "pasteHere":"Wklej swój plik tutaj...",

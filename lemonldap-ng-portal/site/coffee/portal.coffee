@@ -18,6 +18,17 @@ ppolicyResults = {}
 setResult = (field, result) ->
 	  ppolicyResults[field] = result
 
+	  displayIcon(field, result)
+
+	  # Compute form validity from all previous results
+	  if Object.values(ppolicyResults).every( (value) => ( value == "good" || value == "info" ) )
+
+			  $('#newpassword').get(0)?.setCustomValidity('')
+	  else
+			  $('#newpassword').get(0)?.setCustomValidity(translate('PE28'))
+	  updateBorder()
+
+displayIcon = (field, result) ->
 	  # Clear icon
 	  $("#" + field).removeClass('fa-times fa-check fa-spinner fa-pulse fa-info-circle fa-question-circle text-danger text-success text-info text-secondary')
 	  $("#" + field).attr('role', 'status')
@@ -32,15 +43,11 @@ setResult = (field, result) ->
 		  when "waiting" then $("#" + field).addClass('fa-spinner fa-pulse text-secondary')
 		  when "info" then $("#" + field).addClass('fa-info-circle text-info')
 
-	  # Compute form validity from all previous results
-	  if Object.values(ppolicyResults).every( (value) => ( value == "good" || value == "info" ) )
-
-			  $('.ppolicy').removeClass('border-danger').addClass('border-success')
-			  $('#newpassword').get(0)?.setCustomValidity('')
-	  else
-			  $('.ppolicy').removeClass('border-success').addClass('border-danger');
-			  $('#newpassword').get(0)?.setCustomValidity(translate('PE28'))
-
+updateBorder = () ->
+	if $('#newpassword').get(0)?.checkValidity() and $('#confirmpassword').get(0)?.checkValidity()
+		$('.ppolicy').removeClass('border-danger').addClass('border-success')
+	else
+		$('.ppolicy').removeClass('border-success').addClass('border-danger');
 
 translatePage = (lang) ->
 	$.getJSON "#{window.staticPrefix}languages/#{lang}.json", (data) ->
@@ -411,16 +418,35 @@ $(window).on 'load', () ->
 
 		$(document).trigger(e, info)
 
+	checksamepass = () ->
+		if $('#confirmpassword').get(0)?.value and $('#confirmpassword').get(0)?.value == $('#newpassword').get(0)?.value
+			$('#confirmpassword').get(0)?.setCustomValidity('')
+			displayIcon("samepassword-feedback", "good")
+			updateBorder()
+			return true
+		else
+			$('#confirmpassword').get(0)?.setCustomValidity(translate('PE34'))
+			displayIcon("samepassword-feedback", "bad")
+			updateBorder()
+			return false
+
 	if window.datas.ppolicy? and $('#newpassword').length
 		# Initialize display
 		checkpassword ''
+		checksamepass()
+
+		$('#confirmpassword').keyup (e) ->
+			checksamepass()
+			return
 
 		$('#newpassword').keyup (e) ->
 			checkpassword e.target.value
+			checksamepass()
 			return
 
 		$('#newpassword').focusout (e) ->
 			checkpassword e.target.value, "focusout"
+			checksamepass()
 			return
 
 	# If generating password, disable policy check
@@ -434,14 +460,6 @@ $(window).on 'load', () ->
 				checkpassword e.target.value
 				return
 			checkpassword ''
-
-	checksamepass = () ->
-		if $('#confirmpassword').get(0)?.value == $('#newpassword').get(0)?.value
-			$('#confirmpassword').get(0)?.setCustomValidity('')
-			return true
-		else
-			$('#confirmpassword').get(0)?.setCustomValidity(translate('PE34'))
-			return false
 
 	$('#newpassword').change checksamepass
 	$('#confirmpassword').change checksamepass

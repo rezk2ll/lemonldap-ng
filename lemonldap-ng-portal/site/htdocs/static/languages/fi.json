@@ -270,6 +270,7 @@
 "passwordPolicyMinSpeChar":"Erikoismerkkien vähimmäismäärä:",
 "passwordPolicyMinUpper":"Isojen kirjainten vähimmäismäärä:",
 "passwordPolicyNone":"Olet vapaa valitsemaan salasanasi!",
+"passwordPolicySamePwd":"You must confirm your new password by entering it twice",
 "passwordPolicySpecialChar":"Sallitut erikoismerkit:",
 "passwordverify":"Tarkista salasanasi vielä kerran",
 "pasteHere":"Liitä tiedostosi tähän ...",

@@ -34,6 +34,37 @@ tools:
 
 See `lemonldap-ng-sessions doc <https://lemonldap-ng.org/documentation/latest/cli_examples.html>`__
 
+Portal templates changes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can skip this entire section if you use the default ``bootstrap`` theme or
+if your custom theme only uses ``custom*.tpl`` templates.
+
+Password policy
+^^^^^^^^^^^^^^^
+
+The requirement for new password and new password confirmation to match is now
+displayed in the password policy, if you changed ``passwordpolicy.tpl``, you
+need to update it:
+
+.. code-block:: diff
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/passwordpolicy.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/passwordpolicy.tpl
+    @@ -11,8 +11,9 @@
+             </li>
+             </TMPL_IF>
+         </TMPL_LOOP>
+    +    <li>
+    +        <i id="samepassword-feedback" class="fa fa-li"> </i>
+    +        <span trspan="passwordPolicySamePwd"></span>
+    +    </li>
+       </ul>
+    -  <TMPL_IF NAME="PPOLICY_NOPOLICY">
+    -    <span trspan="passwordPolicyNone">You are free to choose your password! ;-)</span>
+    -  </TMPL_IF>
+     </div>
+
 Status changed
 ~~~~~~~~~~~~~~
 
