@@ -110,18 +110,9 @@ Convenience method that builds a url-encoded query string from a hash of argumen
 
 sub buildForm {
     my $fields = shift;
-    my $query  = join(
-        '&',
-        map {
-            "$_="
-              . (
-                $fields->{$_}
-                ? uri_escape( uri_unescape( $fields->{$_} ) )
-                : ''
-              )
-          }
-          keys(%$fields)
-    );
+    my $query  = join( '&',
+        map { "$_=" . ( $fields->{$_} ? uri_escape( $fields->{$_} ) : '' ) }
+          keys(%$fields) );
     return $query;
 }
 
