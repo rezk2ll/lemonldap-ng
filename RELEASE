@@ -52,7 +52,7 @@ Before release
 - Check Debian packages quality
   $ cme check dpkg
 
-- Update doc/admin/documentation.rst to display vulnerable packaged versions
+- Update doc/sources/admin/documentation.rst to display vulnerable packaged versions
 
 - Close the milestone on Gitlab and create a new one
 
