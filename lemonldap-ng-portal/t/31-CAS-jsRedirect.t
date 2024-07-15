@@ -2,6 +2,7 @@ use warnings;
 use Test::More;    # skip_all => 'CAS is in rebuild';
 use strict;
 use IO::String;
+use URI;
 use LWP::UserAgent;
 use LWP::Protocol::PSGI;
 use MIME::Base64;
@@ -19,8 +20,9 @@ count(1);
 ok(
     $res = $issuer->_get(
         '/cas/login',
-        query =>
-          buildForm( { service => 'http://auth.sp.com/?param1=1&param2=2' } ),
+        query => buildForm(
+            { service => 'http://auth.sp.com/a,%22b?param1=1&param2=2' }
+        ),
         accept => 'text/html'
     ),
     'Query CAS server'
@@ -58,8 +60,10 @@ count(1);
 
 my $target =
   getHtmlElement( $res, '//form[@id="form"]' )->shift->getAttribute("action");
-like( $target, qr|http://auth.sp.com/|, "Form target has correct destination" );
-count(1);
+my $u = URI->new($target);
+is( $u->host, "auth.sp.com", "Correct destination host" );
+is( $u->path, "/a,%22b",     "Correct destination path" );
+count(2);
 
 # Check order of params, expectForm is not enough
 my @params = map { $_->getAttribute("name") => $_->getAttribute("value") }
@@ -73,7 +77,7 @@ ok(
     $res = $issuer->_get(
         '/cas/validate',
         query => buildForm( {
-                service => 'http://auth.sp.com/?param1=1&param2=2',
+                service => 'http://auth.sp.com/a,%22b?param1=1&param2=2',
                 ticket  => $st
             }
         ),
