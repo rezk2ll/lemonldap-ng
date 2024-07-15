@@ -1,5 +1,3 @@
-|image0|
-
 New Location Warning Plugin
 ===========================
 

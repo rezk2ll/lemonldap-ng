@@ -270,6 +270,7 @@
 "passwordPolicyMinSpeChar":"כמות מזערית של תווים מיוחדים:",
 "passwordPolicyMinUpper":"כמות מזערים של אותיות גדולות:",
 "passwordPolicyNone":"הסיסמה שלך נתונה לבחירתך החופשית!",
+"passwordPolicySamePwd":"You must confirm your new password by entering it twice",
 "passwordPolicySpecialChar":"תווים מיוחדים מורשים:",
 "passwordverify":"נא לבדוק את הסיסמה שוב",
 "pasteHere":"ניתן להדביק את הקובץ שלך כאן…",

@@ -176,13 +176,13 @@ sub cTrees {
                         title => 'oidcOPMetaDataOptionsConfiguration',
                         form  => 'simpleInputContainer',
                         nodes => [
+                            'oidcOPMetaDataOptionsRequirePkce',
+                            'oidcOPMetaDataOptionsStoreIDToken',
                             'oidcOPMetaDataOptionsConfigurationURI',
                             'oidcOPMetaDataOptionsJWKSTimeout',
                             'oidcOPMetaDataOptionsClientID',
                             'oidcOPMetaDataOptionsClientSecret',
-                            'oidcOPMetaDataOptionsStoreIDToken',
                             'oidcOPMetaDataOptionsUserAttribute',
-                            'oidcOPMetaDataOptionsRequirePkce',
                         ]
                     },
                     {

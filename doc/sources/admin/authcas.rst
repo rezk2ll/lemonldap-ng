@@ -120,3 +120,13 @@ To preselect this server when the ``MY_SRV`` :doc:`choice <authchoice>` is selec
 
     If no proxied services are defined, CAS authentication will not
     activate the CAS proxy mode with this CAS server.
+
+Manual IDP Selection
+--------------------
+
+When using multiple CAS servers, LemonLDAP::NG will display an additional
+choice screen to let the user decide which server they want to use.
+
+In addition to the *resolution rule* described above, you can also use the
+``idp`` URL parameter to automatically select a CAS server for the
+user: ``https://auth.example.com/?idp=srv-example``

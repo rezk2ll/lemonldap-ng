@@ -9,10 +9,11 @@ build_requires:
   String::Random: '0'
   Test::Output: '0'
   Test::Pod: '1'
+  Time::Fake: '0'
 configure_requires:
   ExtUtils::MakeMaker: '0'
 dynamic_config: 1
-generated_by: 'ExtUtils::MakeMaker version 7.62, CPAN::Meta::Converter version 2.150010'
+generated_by: 'ExtUtils::MakeMaker version 7.70, CPAN::Meta::Converter version 2.150010'
 license: open_source
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
