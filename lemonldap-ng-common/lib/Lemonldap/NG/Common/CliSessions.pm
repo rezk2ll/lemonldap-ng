@@ -9,7 +9,8 @@ use Lemonldap::NG::Common::Apache::Session;
 use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::Util qw/getPSessionID genId2F/;
 
-use constant BACKENDS => qw(global persistent oidc saml cas);
+use constant BACKENDS       => qw(global persistent oidc saml cas);
+use constant ISREFRESHTOKEN => '_type=refresh_token';
 
 our $VERSION = '2.19.0';
 
@@ -57,6 +58,10 @@ sub _search {
     if ( $self->opts->{persistent} ) {
         $backendStorage = "persistentStorage";
     }
+    elsif ( $self->opts->{refreshTokens} ) {
+        $backendStorage = "oidcStorage";
+        $self->opts->{where} ||= ISREFRESHTOKEN;
+    }
 
     $backendStorage = "globalStorage" unless $self->conf->{$backendStorage};
 
@@ -95,6 +100,16 @@ sub _search {
             $args, ( @fields ? [@fields] : () ) );
     }
 
+    if (    $self->opts->{refreshTokens}
+        and $self->opts->{where} ne ISREFRESHTOKEN )
+    {
+        foreach my $key (%$res) {
+            delete $res->{$key}
+              unless $res->{$key}->{_type}
+              and $res->{$key}->{_type} eq 'refresh_token';
+        }
+    }
+
     return $res;
 }
 
@@ -121,11 +136,19 @@ sub search {
 sub backup {
     my $self = shift;
     my $res  = {};
-    foreach my $backend (BACKENDS) {
-        next unless $self->conf->{"${backend}Storage"};
-        $self->opts->{backend} = $backend;
-        my $_res = $self->_search();
-        $res->{$backend} = $_res;
+    if ( $self->opts->{persistent} ) {
+        $res->{persistent} = $self->_search();
+    }
+    elsif ( $self->opts->{refreshTokens} ) {
+        $res->{oidc} = $self->_search();
+    }
+    else {
+        foreach my $backend (BACKENDS) {
+            next unless $self->conf->{"${backend}Storage"};
+            $self->opts->{backend} = $backend;
+            my $_res = $self->_search();
+            $res->{$backend} = $_res;
+        }
     }
     my $o = $self->stdout;
     print $o to_json($res);
@@ -139,7 +162,7 @@ sub restore {
         local $/ = undef;
         my $i = *STDIN;
         if (@_) {
-            open($i, '<', "$_[0]") or die $!;
+            open( $i, '<', "$_[0]" ) or die $!;
         }
         while (<$i>) {
             $obj .= $_;
@@ -209,6 +232,9 @@ sub _get_one_session {
     elsif ( $self->opts->{persistent} ) {
         $backendStorage = "persistentStorage";
         $id             = getPSessionID($id);
+    }
+    elsif ( $self->opts->{refreshTokens} ) {
+        $backendStorage = "oidcStorage";
     }
 
     # In any case, fall back to global storage if we couldn't find the backend

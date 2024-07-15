@@ -21,18 +21,19 @@ my $opt_group = '__APACHEGROUP__';
 my $out;
 
 GetOptions(
-    'help|h'        => \$help,
-    'select|s=s@'   => \$opts->{select},
-    'where|w=s'     => \$opts->{where},
-    'all|a'         => \$opts->{all},
-    'backend|b=s'   => \$opts->{backend},
-    'persistent|p'  => \$opts->{persistent},
-    'hash|cookie|c' => \$opts->{hash},
-    'id-only|i'     => \$opts->{idonly},
-    'user|u=s'      => \$opt_user,
-    'group|g=s'     => \$opt_group,
-    'count'         => \$opts->{count},
-    'out|o=s'       => \$out,
+    'help|h'         => \$help,
+    'select|s=s@'    => \$opts->{select},
+    'where|w=s'      => \$opts->{where},
+    'all|a'          => \$opts->{all},
+    'backend|b=s'    => \$opts->{backend},
+    'persistent|p'   => \$opts->{persistent},
+    'refresh-tokens' => \$opts->{refreshTokens},
+    'hash|cookie|c'  => \$opts->{hash},
+    'id-only|i'      => \$opts->{idonly},
+    'user|u=s'       => \$opt_user,
+    'group|g=s'      => \$opt_group,
+    'count'          => \$opts->{count},
+    'out|o=s'        => \$out,
 ) or pod2usage( -exitcode => 1, -verbose => 0 );
 
 pod2usage( -exitcode => 0, -verbose => 2 ) if $help;
@@ -114,8 +115,9 @@ elsif ( $action eq "consents" ) {
 my $client;
 if ( $out and $out ne '-' ) {
     open F, '>', $out or die "Unable to open file given by --out: $!";
-    $client = Lemonldap::NG::Common::CliSessions->new({stdout => *F});
-} else {
+    $client = Lemonldap::NG::Common::CliSessions->new( { stdout => *F } );
+}
+else {
     $client = Lemonldap::NG::Common::CliSessions->new;
 }
 
@@ -172,6 +174,8 @@ B<Options>:
 =item B<--backend>: Specify session backend
 
 =item B<--persistent>: Search in persistent sessions
+
+=item B<--refresh-tokens>: Search into refresh_tokens only
 
 =item B<--where>: Set search filter (search/delete only)
 
@@ -333,8 +337,12 @@ Commands:
     lemonldap-ng-sessions backup > file
     # or
     lemonldap-ng-sessions backup --out file
+    # or limited to persistent sessions
+    lemonldap-ng-sessions backup --persistent --out file
+    # or limited to OIDC refresh_tokens
+    lemonldap-ng-sessions backup --refresh-tokens --out file
 
-Simple commande to dump all sessions
+Simple command to dump all sessions or only persistent or refresh_tokens.
 
 =head3 restore
 
