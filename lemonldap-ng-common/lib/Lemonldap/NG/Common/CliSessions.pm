@@ -129,6 +129,7 @@ sub backup {
     }
     my $o = $self->stdout;
     print $o to_json($res);
+    return 0;
 }
 
 sub restore {
@@ -151,7 +152,7 @@ sub restore {
     };
     if ($@) {
         print STDERR "Given backup file looks bad: $@\n";
-        exit 1;
+        return 1;
     }
     foreach my $backend ( keys %$obj ) {
         unless ( grep { $backend eq $_ } BACKENDS ) {
@@ -163,6 +164,7 @@ sub restore {
             $self->_insert( $_session_id, $obj->{$backend}->{$_session_id} );
         }
     }
+    return 0;
 }
 
 sub _insert {
