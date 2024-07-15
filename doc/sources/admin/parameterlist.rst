@@ -132,6 +132,7 @@ corsExpose_Headers                                      Exposed headers for Cros
 corsMax_Age                                             Max-age for Cross-Origin Resource Sharing                                            ✔
 crowdsec                                                CrowdSec plugin activation                                                           ✔
 crowdsecAction                                          CrowdSec action                                                                      ✔
+crowdsecIgnoreFailures                                  Ignore Crowdsec errors                                                               ✔
 crowdsecKey                                             CrowdSec API key                                                                     ✔
 crowdsecUrl                                             Base URL of CrowdSec local API                                                       ✔
 cspConnect                                              Authorized Ajax destination for Content-Security-Policy                              ✔
