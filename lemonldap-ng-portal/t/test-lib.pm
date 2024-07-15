@@ -287,21 +287,12 @@ sub expectAutoPost {
     return @r;
 }
 
-sub expectXpath {
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-
-    my ( $res, $xpath ) = @_;
-    my $doc =
-      XML::LibXML->new->load_html( string => $res->[2]->[0], recover => 2 );
-
-    return $doc->findnodes($xpath);
-}
-
 sub getJsVars {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ($res) = @_;
 
-    my $initscripts = expectXpath( $res, '//script[@type="application/init"]' );
+    my $initscripts =
+      getHtmlElement( $res, '//script[@type="application/init"]' );
 
     my @parsed_initscripts =
       map { from_json($_) } $initscripts->to_literal_list();
@@ -645,6 +636,17 @@ sub getHtmlElement {
       XML::LibXML->new->load_html( string => $res->[2]->[0], recover => 2 );
 
     return $doc->findnodes($xpath);
+}
+
+sub expectXpath {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+
+    my ( $res, $xpath ) = @_;
+
+    return ok(
+        getHtmlElement( $res, $xpath ),
+        "Found at least one result for $xpath"
+    );
 }
 
 =head4 getCookies($res)
