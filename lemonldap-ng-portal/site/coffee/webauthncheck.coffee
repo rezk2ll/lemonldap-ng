@@ -10,18 +10,17 @@ setMsg = (msg, level) ->
 	level = 'success' if level == 'positive'
 	$('#color').addClass "alert-#{level}"
 
-webAuthnError = (error) ->
-	switch (error.name)
-		when 'unsupported' then setMsg 'webAuthnUnsupported', 'warning'
-		else setMsg 'webAuthnBrowserFailed', 'danger'
-
 check = ->
+	if !webauthnJSON.supported()
+		setMsg 'webAuthnUnsupported', 'warning'
+		return
+
 	e = jQuery.Event( "webauthnAttempt" )
 	$(document).trigger e
 	if !e.isDefaultPrevented()
 		setMsg 'webAuthnBrowserInProgress', 'warning'
-		request = window.datas.request
-		WebAuthnUI.WebAuthnUI.getCredential request
+		request = { publicKey: window.datas.request }
+		webauthnJSON.get request
 		. then (response) ->
 			e = jQuery.Event( "webauthnSuccess" )
 			$(document).trigger e, [ response ]
@@ -32,7 +31,7 @@ check = ->
 			e = jQuery.Event( "webauthnFailure" )
 			$(document).trigger e, [ error ]
 			if !e.isDefaultPrevented()
-				webAuthnError(error)
+				setMsg 'webAuthnBrowserFailed', 'danger'
 
 $(document).ready ->
 	setTimeout check, 1000
