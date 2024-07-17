@@ -38,6 +38,16 @@ has registerUrl => (
         $_[0]->conf->{registerUrl} || $_[0]->buildUrl("register");
     }
 );
+has ott => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        my $ott =
+          $_[0]->loadModule('::Lib::OneTimeToken');
+        $ott->timeout( $_[0]->conf->{formTimeout} );
+        return $ott;
+    }
+);
 
 sub displayInit {
     my ($self) = @_;
@@ -188,7 +198,7 @@ sub display {
             ASK_LOGINS        => $req->param('checkLogins')   || 0,
             ASK_STAYCONNECTED => $req->param('stayconnected') || 0,
             CONFIRMKEY        => $self->stamp(),
-            LIST => $req->data->{list} || [],
+            LIST              => $req->data->{list} || [],
             (
                 $req->data->{customScript}
                 ? ( CUSTOM_SCRIPT => $req->data->{customScript} )
@@ -213,8 +223,8 @@ sub display {
 
         %templateParams = (
             $self->getErrorTplParams($req),
-            MSG                             => $info,
-            URL                             => $req->urldc || $req->portal,
+            MSG           => $info,
+            URL           => $req->urldc || $req->portal,
             HIDDEN_INPUTS => $self->buildOutgoingHiddenForm( $req, $method ),
             ACTIVE_TIMER  => $req->data->{activeTimer},
             CHOICE_PARAM  => $self->conf->{authChoiceParam},
@@ -300,8 +310,8 @@ sub display {
             LOGOUT_URL     => $self->buildUrl( $req->portal, { logout => 1 } ),
             APPSLIST_ORDER => $req->{sessionInfo}->{'_appsListOrder'},
             PING           => $self->conf->{portalPingInterval},
-            DONT_STORE_PASSWORD => $self->conf->{browsersDontStorePassword},
-            HIDE_OLDPASSWORD    => 0,
+            DONT_STORE_PASSWORD     => $self->conf->{browsersDontStorePassword},
+            HIDE_OLDPASSWORD        => 0,
             ENABLE_PASSWORD_DISPLAY =>
               $self->conf->{portalEnablePasswordDisplay},
             %{ $self->getPasswordPolicyTemplateVars },
@@ -413,11 +423,11 @@ sub display {
             LOGIN                 => $login,
             DONT_STORE_PASSWORD   => $self->conf->{browsersDontStorePassword},
             CHECK_LOGINS          => $self->conf->{portalCheckLogins},
-            ASK_LOGINS            => $req->param('checkLogins') || 0,
+            ASK_LOGINS            => $req->param('checkLogins')   || 0,
             ASK_STAYCONNECTED     => $req->param('stayconnected') || 0,
             DISPLAY_RESETPASSWORD => $self->conf->{portalDisplayResetPassword},
             DISPLAY_REGISTER      => $self->conf->{portalDisplayRegister},
-            DISPLAY_UPDATECERTIF =>
+            DISPLAY_UPDATECERTIF  =>
               $self->conf->{portalDisplayCertificateResetByMail},
             MAILCERTIF_URL => $self->certificateResetUrl,
             MAIL_URL       => $self->passwordResetUrl,
@@ -511,9 +521,12 @@ sub display {
                 AUTH_LOOP             => [],
                 CHOICE_PARAM          => $self->conf->{authChoiceParam},
                 CHOICE_VALUE          => $req->data->{_authChoice},
-                OLDPASSWORD           => $self->checkXSSAttack( 'oldpassword',
-                    $req->data->{oldpassword} )
-                ? ''
+                OLDPASSWORD           => $self->conf->{hideOldPassword}
+                ? $self->ott->createToken(
+                    { oldpassword => $req->data->{oldpassword} }
+                  )
+                : $self->checkXSSAttack( 'oldpassword',
+                    $req->data->{oldpassword} ) ? ''
                 : $req->data->{oldpassword},
                 HIDE_OLDPASSWORD    => $self->conf->{hideOldPassword},
                 DONT_STORE_PASSWORD => $self->conf->{browsersDontStorePassword},
@@ -607,7 +620,7 @@ sub display {
                     : 0,
                     DISPLAY_SSL_FORM  => $displayType =~ /sslform/ ? 1 : 0,
                     DISPLAY_GPG_FORM  => $displayType =~ /gpgform/ ? 1 : 0,
-                    DISPLAY_LOGO_FORM => $displayType eq "logo"    ? 1 : 0,
+                    DISPLAY_LOGO_FORM => $displayType eq "logo" ? 1 : 0,
                     DISPLAY_FINDUSER  => scalar @$fields,
                     module            => $displayType eq "logo"
                     ? $self->getModule( $req, 'auth' )
@@ -858,7 +871,8 @@ sub mkOidcConsent {
         'oidcConsents',
         params => {
             partners => [
-                map { {
+                map {
+                    {
                         name        => $_,
                         epoch       => $consents->{$_}->{epoch},
                         scope       => $consents->{$_}->{scope},
@@ -896,7 +910,7 @@ sub getPasswordPolicyTemplateVars {
         (
             $self->conf->{passwordPolicyMinSpeChar} && $self->speChars()
             ? (
-                PPOLICY_ALLOWEDSPECHAR => $self->speChars(),
+                PPOLICY_ALLOWEDSPECHAR      => $self->speChars(),
                 PPOLICY_ALLOWEDSPECHAR_JSON =>
                   to_json( $self->speChars(), { allow_nonref => 1 } ),
               )
