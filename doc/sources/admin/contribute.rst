@@ -159,12 +159,19 @@ Execute an unit test :
      # and execute the unit test:
      prove -v t/67-CheckUser.t
 
+     # Run unit test at debug log level
+     DEBUG=1 prove -v t/67-CheckUser.t
+
 Launch tests with LDAP backend
 
 ::
 
    apt install slapd
    make LLNGTESTLDAP=1 test
+
+.. note::
+
+    slapd might fail to start if you use Apparmor or SELinux, check your system logs if that happens
 
 Other commands
 ~~~~~~~~~~~~~~
