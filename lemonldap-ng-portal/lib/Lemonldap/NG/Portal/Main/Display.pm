@@ -110,14 +110,10 @@ sub displayInit {
 }
 
 sub isPP {
-    my $self = shift;
+    my $self    = shift;
     my $ppRules = $self->getPpolicyRules();
-    foreach my $rule ( @$ppRules )
-    {
-        if( $rule->{'condition'} )
-        {
-            return 1;
-        }
+    foreach (@$ppRules) {
+        return 1 if $_->{'condition'};
     }
     return 0;
 }
