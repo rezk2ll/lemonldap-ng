@@ -1637,7 +1637,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'text'
         },
         'hideOldPassword' => {
-            'default' => 0,
+            'default' => 1,
             'type'    => 'bool'
         },
         'httpOnly' => {
