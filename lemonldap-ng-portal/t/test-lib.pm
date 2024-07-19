@@ -893,6 +893,7 @@ our $defaultIni = {
     },
     logLevel              => 'error',
     cookieName            => 'lemonldap',
+    languages             => 'en, fr',
     domain                => 'example.com',
     templateDir           => $templateDir,
     staticPrefix          => '/static',
@@ -1151,7 +1152,7 @@ sub _get {
 
     my $res = $self->app->( {
             'HTTP_ACCEPT'          => $args{accept} // $self->accept,
-            'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
+            'HTTP_ACCEPT_LANGUAGE' => 'en-US,fr-FR;q=0.7,fr;q=0.3',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
             ( $args{cookie} ? ( HTTP_COOKIE => $args{cookie} ) : () ),
             'HTTP_HOST' => ( $args{host} ? $args{host} : 'auth.example.com' ),
@@ -1217,7 +1218,7 @@ sub _post {
       unless ( ref($body) and $body->can('read') );
     my $res = $self->app->( {
             'HTTP_ACCEPT'          => $args{accept} // $self->accept,
-            'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
+            'HTTP_ACCEPT_LANGUAGE' => 'en-US,fr-FR;q=0.7,fr;q=0.3',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
             ( $args{cookie} ? ( HTTP_COOKIE => $args{cookie} ) : () ),
             'HTTP_HOST' => ( $args{host} ? $args{host} : 'auth.example.com' ),
