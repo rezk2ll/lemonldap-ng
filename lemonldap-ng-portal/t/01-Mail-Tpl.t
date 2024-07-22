@@ -55,13 +55,34 @@ subtest "custom skin, default language" => sub {
     );
 };
 
-subtest "custom skin, custom language" => sub {
+subtest "custom skin, custom language (cookie)" => sub {
     clear_mail();
     ok(
         $res = $client->_get(
             '/testmail',
             query  => "skin=mailtplskin",
             cookie => "llnglanguage=fr"
+        ),
+        'Request ok'
+    );
+
+    like( mail(), qr/Votre code 2FA/ );
+    like(
+        mail(),
+        qr,Content-Type: image/png; name="logo_llng_400px\.png",,
+        "Logo attached"
+    );
+};
+
+subtest "custom skin, custom language (header)" => sub {
+    clear_mail();
+    ok(
+        $res = $client->_get(
+            '/testmail',
+            query  => "skin=mailtplskin",
+            custom => {
+                'HTTP_ACCEPT_LANGUAGE' => 'fr-FR;q=0.7,en;q=0.3',
+            },
         ),
         'Request ok'
     );

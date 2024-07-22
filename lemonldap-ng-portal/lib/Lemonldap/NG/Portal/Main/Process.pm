@@ -517,7 +517,7 @@ sub setSessionInfo {
     }
 
     # Currently selected language
-    $req->{sessionInfo}->{_language} = $req->cookies->{llnglanguage} || 'en';
+    $req->{sessionInfo}->{_language} = $self->getLanguage($req);
 
     # Store URL origin in session
     $req->{sessionInfo}->{_url} = $req->{urldc};
