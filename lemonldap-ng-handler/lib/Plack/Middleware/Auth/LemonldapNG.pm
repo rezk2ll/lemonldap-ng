@@ -76,15 +76,15 @@ Plack::Middleware::Auth::LemonldapNG - authentication middleware for Lemonldap-N
   };
 
   # Or through OO Interface
-  my $auth_builder = Plack::Builder->new();
-  $auth_builder->add_middleware(
+  my $builder = Plack::Builder->new();
+  $builder->add_middleware(
       "Auth::LemonldapNG",
       llparams => {
         configStorage => ...
       },
       on_reject => \&on_reject
   );
-  $protected_app = $auth_builder->wrap($app);
+  $protected_app = $builder->wrap($app);
 
 =head1 DESCRIPTION
 
