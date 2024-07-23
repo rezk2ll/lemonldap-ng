@@ -348,48 +348,22 @@ $(window).on 'load', () ->
 
 	# Language detection. Priority order:
 	#  0 - llnglanguage parameter
-	#  1 - cookie value
-	#  2 - first navigator.languages item that exists in window.availableLanguages
-	#  3 - first value of window.availableLanguages
+	#  1 - window.language value (server-set from Cookie+Accept-Language)
 	if window.location.search
 		queryLang = getQueryParam('llnglanguage')
 		console.log 'Get lang from parameter' if queryLang
 		setCookieLang = getQueryParam('setCookieLang')
 		console.log 'Set lang cookie' if setCookieLang == 1
 	if !lang
-		lang = getCookie 'llnglanguage'
-		console.log 'Get lang from cookie' if lang && !queryLang
-	if !lang
-		if navigator
-			langs = []
-			langs2 = []
-			nlangs = [ navigator.language ]
-			if navigator.languages
-				nlangs = navigator.languages
-			for al in window.availableLanguages
-				langdiv += "<img class=\"langicon\" src=\"#{window.staticPrefix}common/#{al}.png\" title=\"#{al}\" alt=\"[#{al}]\"> "
-			for nl in nlangs
-				console.log 'Navigator lang', nl
-				for al in window.availableLanguages
-					console.log ' Available lang', al
-					re = new RegExp('^'+al+'-?')
-					if nl.match re
-						console.log '  Matching lang =', al
-						langs.push al
-					else if al.substring(0, 1) == nl.substring(0, 1)
-						langs2.push al
-			lang = if langs[0] then langs[0] else if langs2[0] then langs2[0] else window.availableLanguages[0]
-			console.log 'Get lang from navigator' if lang && !queryLang
-		else
-			lang = window.availableLanguages[0]
-			console.log 'Get lang from window' if lang && !queryLang
+		lang = window.language
+		console.log 'Get lang from server' if lang && !queryLang
 	else if lang not in window.availableLanguages
-		lang = window.availableLanguages[0]
-		console.log 'Lang not available -> Get default lang' if !queryLang
+		lang = window.language
+		console.log 'Lang not available -> Get lang from server' if !queryLang
 	if queryLang
 		if queryLang not in window.availableLanguages
-			console.log 'Lang not available -> Get default lang'
-			queryLang = window.availableLanguages[0]
+			console.log 'Lang not available -> Get lang from server'
+			queryLang = window.language
 		console.log 'Selected lang ->', queryLang
 		if setCookieLang
 			console.log 'Set cookie lang ->', queryLang
@@ -397,7 +371,6 @@ $(window).on 'load', () ->
 		translatePage(queryLang)
 	else
 		console.log 'Selected lang ->', lang
-	#	setCookie 'llnglanguage', lang, 3650 (Fix #2899)
 		translatePage(lang)
 
 	# Build language icons
