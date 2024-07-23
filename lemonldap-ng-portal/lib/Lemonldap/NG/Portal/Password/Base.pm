@@ -23,7 +23,7 @@ our $VERSION = '2.20.0';
 # INITIALIZATION
 
 has requireOldPwdRule => ( is => 'rw' );
-has ott => ( is => 'rw' );
+has ott               => ( is => 'rw' );
 
 sub init {
     my ($self) = shift;
@@ -78,7 +78,9 @@ sub _modifyPassword {
         $token = $self->ott->getToken( $req->param('oldpassword') )
           if $self->conf->{hideOldPassword} && $requireOldPwd;
         $req->data->{oldpassword} =
-          $token ? $token->{oldpassword} : $req->param('oldpassword');
+            $token
+          ? $self->conf->{cipher}->decrypt( $token->{oldpassword} )
+          : $req->param('oldpassword');
 
         # Verify old password
         return PE_BADOLDPASSWORD
