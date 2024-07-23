@@ -1945,7 +1945,7 @@ sub attributes {
               'Rule to require old password to change the password',
         },
         hideOldPassword => {
-            default       => 0,
+            default       => 1,
             type          => 'bool',
             documentation => 'Hide old password in portal',
         },
