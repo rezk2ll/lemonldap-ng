@@ -90,7 +90,7 @@ SKIP: {
               expectForm( $res, '#', undef, 'user', 'oldpassword',
                 'newpassword', 'confirmpassword' );
             $query =~ s/((?:confirm|new)password)=/$1=newp/g;
-            $query =~ s/(oldpassword)=\d{10}_\d{4,5}/$1=1234567890_12345/;
+            $query =~ s/(oldpassword)=\d{10}_\d+/$1=1234567890_12345/;
             ok(
                 $res = $client->_post(
                     '/', IO::String->new($query),
@@ -122,7 +122,7 @@ SKIP: {
             ) or print STDERR Dumper( $res->[2]->[0], 'Hidden user input' );
             ok(
                 $res->[2]->[0] =~
-m%<input id="oldpassword" name="oldpassword" type="hidden" value="\d{10}_\d{4,5}" aria-required="true">%,
+m%<input id="oldpassword" name="oldpassword" type="hidden" value="\d{10}_\d+" aria-required="true">%,
                 ' oldpassword token found'
             ) or print STDERR Dumper( $res->[2]->[0], 'oldpassword token' );
             ok(
