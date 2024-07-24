@@ -31,8 +31,7 @@ SKIP: {
     ok( $res->[2]->[0] =~ m%<input[^>]*name="password"%,
         'Password: Found text input' );
 
-    $query =~ s/.*\btoken=([^&]+).+/token=$1/;
-    my $token;
+    my ($token) = $query =~ /\btoken=([^&]*)/;
     ok( $token = $1, ' Token value is defined' );
     ok( $res->[2]->[0] =~ m#<img id="captcha" src="data:image/png;base64#,
         ' Captcha image inserted' )
@@ -46,7 +45,7 @@ SKIP: {
     ok( $captcha = $ts->{captcha}, ' Found captcha value' );
 
     # Try to authenticate
-    $query .= "&user=dwho&password=dwho&captcha=$captcha";
+    $query = "token=$token&user=dwho&password=dwho&captcha=$captcha";
     ok(
         $res = $client->_post(
             '/',
@@ -81,3 +80,14 @@ count($maintests);
 clean_sessions();
 
 done_testing( count() );
+
+{
+    no warnings 'redefine';
+    use Lemonldap::NG::Portal::Lib::Net::LDAP;
+
+    sub Lemonldap::NG::Portal::Lib::Net::LDAP::new {
+        my ($self) = @_;
+        note "Mocking LDAP failure";
+        return 0;
+    }
+}
