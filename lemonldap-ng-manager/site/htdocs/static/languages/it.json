@@ -1309,6 +1309,7 @@
 "totp2fTTL":"Lifetime",
 "totp2fUserCanRemoveKey":"Autorizza l'utente a rimuovere TOTP",
 "trustedBrowserRule":"Activation condition",
+"trustedBrowserUseTotp":"Use time-based fingerprinting",
 "trustedDomains":"Domini attendibili",
 "trustedProxies":"IP proxy attendibili",
 "twitterAppName":"Nome dell'applicazione",
