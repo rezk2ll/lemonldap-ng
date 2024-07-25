@@ -295,7 +295,7 @@ sub getJsVars {
       getHtmlElement( $res, '//script[@type="application/init"]' );
 
     my @parsed_initscripts =
-      map { from_json($_) } $initscripts->to_literal_list();
+      map { from_json( $_->string_value ) } $initscripts->get_nodelist();
 
     my %vars = map { %$_ } @parsed_initscripts;
     return \%vars;
