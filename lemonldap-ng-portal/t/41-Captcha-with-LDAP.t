@@ -9,9 +9,9 @@ require 't/test-lib.pm';
 my $res;
 my $maintests = 14;
 SKIP: {
-    eval 'use GD::SecurityImage; use Image::Magick;';
+    eval 'use GD::SecurityImage; use Image::Magick; use Net::LDAP;';
     if ($@) {
-        skip 'Image::Magick not found', $maintests;
+        skip "Prerequisites not found: $@", $maintests;
     }
 
     my $client = LLNG::Manager::Test->new( {

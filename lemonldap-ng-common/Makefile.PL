@@ -36,13 +36,14 @@ WriteMakefile(
     VERSION_FROM   => 'lib/Lemonldap/NG/Common.pm',    # finds $VERSION
     LICENSE        => 'gpl',
     BUILD_REQUIRES => {
-        'IO::String'     => 0,
-        'MIME::Entity'   => 0,
-        'Net::LDAP'      => 0,
-        'String::Random' => 0,
-        'Test::Pod'      => 1.00,
-        'Test::Output'   => 0,
-        'Time::Fake'     => 0,
+        'Convert::Base32' => 0,
+        'IO::String'      => 0,
+        'MIME::Entity'    => 0,
+        'Net::LDAP'       => 0,
+        'String::Random'  => 0,
+        'Test::Pod'       => 1.00,
+        'Test::Output'    => 0,
+        'Time::Fake'      => 0,
     },
     META_MERGE => {
         'recommends' => {
