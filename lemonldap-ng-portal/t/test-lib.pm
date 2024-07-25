@@ -643,10 +643,11 @@ sub expectXpath {
 
     my ( $res, $xpath ) = @_;
 
-    return ok(
-        getHtmlElement( $res, $xpath ),
+    ok(
+        my $res = getHtmlElement( $res, $xpath ),
         "Found at least one result for $xpath"
     );
+    return $res;
 }
 
 =head4 getCookies($res)
