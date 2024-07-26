@@ -54,6 +54,16 @@ our @pList = (
 ##@method list enabledPlugins
 #
 #@return list of enabled plugins
+#
+# List can be:
+#  * a plugin name
+#  * an array ref containing:
+#    - the property into which the plugin has to be linked
+#    - the plugin name
+#
+# If plugin name starts with '::', the prefix Lemonldap::NG::Portal will be
+# added
+
 sub enabledPlugins {
     my ($self) = @_;
     my $conf = $self->conf;
@@ -112,13 +122,20 @@ sub enabledPlugins {
 
     # Trusted browser
     if ( $self->conf->{trustedBrowserRule} or $self->conf->{stayConnected} ) {
-        $self->logger->debug('::Plugins::TrustedBrowser needed');
-        push @res,
-          [
-            '_trustedBrowser',
-            $self->conf->{'trustedBrowserEngine'}
-              || '::Plugins::TrustedBrowser'
-          ];
+        my $module =
+          $self->conf->{'trustedBrowserEngine'} || '::Plugins::TrustedBrowser';
+        $self->logger->debug("$module needed");
+        push @res, [ _trustedBrowser => $module ];
+    }
+
+    # Captcha
+    if (   $self->conf->{captcha_mail_enabled}
+        || $self->conf->{captcha_login_enabled}
+        || $self->conf->{captcha_register_enabled} )
+    {
+        my $module = $self->conf->{'captcha'} || '::Captcha::SecurityImage';
+        $self->logger->debug("$module needed");
+        push @res, [ _captcha => $module ];
     }
 
     # Impersonation overwrites req->step and pops 'afterData' EP.
