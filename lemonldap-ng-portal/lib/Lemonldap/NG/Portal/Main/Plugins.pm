@@ -110,6 +110,17 @@ sub enabledPlugins {
         push @res, grep ( /\w+/, split( /[,\s]+/, $conf->{customPlugins} ) );
     }
 
+    # Trusted browser
+    if ( $self->conf->{trustedBrowserRule} or $self->conf->{stayConnected} ) {
+        $self->logger->debug('::Plugins::TrustedBrowser needed');
+        push @res,
+          [
+            '_trustedBrowser',
+            $self->conf->{'trustedBrowserEngine'}
+              || '::Plugins::TrustedBrowser'
+          ];
+    }
+
     # Impersonation overwrites req->step and pops 'afterData' EP.
     # Static and custom 'afterData' plugins will be never launched
     # if they are loaded after Impersonation.

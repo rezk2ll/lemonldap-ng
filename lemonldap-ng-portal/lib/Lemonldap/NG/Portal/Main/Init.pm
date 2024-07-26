@@ -325,15 +325,6 @@ sub reloadConf {
       unless $self->{_sfEngine} =
       $self->loadPlugin( $self->conf->{'sfEngine'} );
 
-    # Load trusted browser engine
-    return $self->fail
-      unless $self->_trustedBrowser(
-        $self->loadPlugin(
-            $self->conf->{'trustedBrowserEngine'}
-              || "::Plugins::TrustedBrowser"
-        )
-      );
-
     # Load Captcha module
     return $self->fail
       unless $self->_captcha(
@@ -367,7 +358,13 @@ sub reloadConf {
 
     # Load plugins
     foreach my $plugin ( $self->enabledPlugins ) {
-        $self->loadPlugin($plugin) or return $self->fail;
+        if ( ref $plugin ) {
+            $self->{ $plugin->[0] } = $self->loadPlugin( $plugin->[1] )
+              or return $self->fail;
+        }
+        else {
+            $self->loadPlugin($plugin) or return $self->fail;
+        }
     }
 
     # Initialize trusted domain regexp
