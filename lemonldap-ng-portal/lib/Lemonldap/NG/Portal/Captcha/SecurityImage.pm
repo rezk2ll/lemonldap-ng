@@ -62,12 +62,7 @@ has ott => (
 
 sub init {
     my ($self) = @_;
-    if (   $self->conf->{captcha_mail_enabled}
-        || $self->conf->{captcha_login_enabled}
-        || $self->conf->{captcha_register_enabled} )
-    {
-        $self->addUnauthRoute( renewcaptcha => '_sendCaptcha', ['GET'] );
-    }
+    $self->addUnauthRoute( renewcaptcha => '_sendCaptcha', ['GET'] );
     return 1;
 }
 
