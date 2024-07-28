@@ -17,12 +17,12 @@ has width => (
 has height => (
     is      => 'rw',
     lazy    => 1,
-    default => sub { $_[0]->{conf}->{captchaHeight} || 40 }
+    default => sub { $_[0]->{conf}->{captchaHeight} || 60 }
 );
 has lines => (
     is      => 'rw',
     lazy    => 1,
-    default => sub { $_[0]->{conf}->{captchaLines} || 5 }
+    default => sub { $_[0]->{conf}->{captchaLines} || 4 }
 );
 has scramble => (
     is      => 'rw',

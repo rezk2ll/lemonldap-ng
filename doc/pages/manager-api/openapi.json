@@ -1000,6 +1000,9 @@
             "type" : "object"
          },
          "SecondFactor" : {
+            "additionalProperties" : {
+               "type" : "string"
+            },
             "properties" : {
                "id" : {
                   "description" : "An opaque idenfifier for this particular device",

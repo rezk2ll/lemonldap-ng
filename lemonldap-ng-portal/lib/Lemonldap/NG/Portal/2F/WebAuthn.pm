@@ -92,6 +92,7 @@ sub verify {
     }
 
     if ( $validation_result->{success} == 1 ) {
+        $req->data->{_2fDevice} = $validation_result->{matching_credential};
         $self->auditLog(
             $req,
             message => (

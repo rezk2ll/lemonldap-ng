@@ -34,11 +34,14 @@ sub verifier {
 sub rp_id {
     my ( $self, $req ) = @_;
 
+    # In case a plugin calls this method without arguments
+    my $portal = $req ? $req->portal : $self->p->portal;
+
     if ( $self->conf->{webauthnRpId} ) {
         return $self->conf->{webauthnRpId};
     }
     else {
-        my $portal_uri = URI->new( $req->portal );
+        my $portal_uri = URI->new( $portal );
         if ( $portal_uri->can('host') ) {
             return $portal_uri->host;
         }
@@ -50,7 +53,11 @@ sub rp_id {
 
 sub origin {
     my ( $self, $req ) = @_;
-    my $portal_uri = URI->new( $req->portal );
+
+    # In case a plugin calls this method without arguments
+    my $portal = $req ? $req->portal : $self->p->portal;
+
+    my $portal_uri = URI->new( $portal );
     return ( $portal_uri->scheme . "://" . $portal_uri->authority );
 }
 
@@ -297,6 +304,8 @@ sub validateAssertion {
         my $new_signature_count = $validation_result->{signature_count};
 
         # Update storedSignCount to be the value of authData.signCount
+        $validation_result->{matching_credential}->{_signCount} =
+          $new_signature_count;
         $self->update2fDevice( $req, $data, $self->type,
             "_credentialId", $credential_id, "_signCount",
             $new_signature_count );

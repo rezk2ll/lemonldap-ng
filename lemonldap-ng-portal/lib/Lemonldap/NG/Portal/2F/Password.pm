@@ -104,6 +104,7 @@ sub verify {
 
     if ( $password eq $self->crypto->decrypt($secret) ) {
 
+        $req->data->{_2fDevice} = $password_device;
         $self->userLogger->info( "User $uid authenticated with 2F device: "
               . display2F($password_device) );
         return PE_OK;

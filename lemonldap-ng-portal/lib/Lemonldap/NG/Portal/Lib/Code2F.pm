@@ -190,9 +190,9 @@ sub verify {
     my $res = $self->verify_supplied_code( $req, $session, $usercode );
 
     # If we authenticated the user using a 2F Device, log it
-    if ( $res == PE_OK && $req->data->{__2fDevice_registrable} ) {
+    if ( $res == PE_OK && $req->data->{_2fDevice} ) {
         my $uid    = $session->{ $self->conf->{whatToTrace} };
-        my $device = $req->data->{__2fDevice_registrable};
+        my $device = $req->data->{_2fDevice};
         $self->auditLog(
             $req,
             message => (
@@ -287,7 +287,7 @@ sub populateDestAttribute {
         if (@registered_devices) {
 
             $sessionInfo->{destination} = $registered_devices[0]->{_generic};
-            $req->data->{__2fDevice_registrable} = $registered_devices[0];
+            $req->data->{_2fDevice} = $registered_devices[0];
         }
     }
 }

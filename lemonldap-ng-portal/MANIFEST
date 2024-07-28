@@ -107,6 +107,7 @@ lib/Lemonldap/NG/Portal/Main/Request.pm
 lib/Lemonldap/NG/Portal/Main/Run.pm
 lib/Lemonldap/NG/Portal/Main/SecondFactor.pm
 lib/Lemonldap/NG/Portal/Main/UserDB.pm
+lib/Lemonldap/NG/Portal/Password.pod
 lib/Lemonldap/NG/Portal/Password/AD.pm
 lib/Lemonldap/NG/Portal/Password/Base.pm
 lib/Lemonldap/NG/Portal/Password/Choice.pm
@@ -566,7 +567,6 @@ t/01-WebAuthn.t
 t/02-Password-Demo-checkEntropy.t
 t/02-Password-Demo-checkHIBP.t
 t/02-Password-Demo-Hook.t
-t/02-Password-Demo-Local-noPpolicy.t
 t/02-Password-Demo-Local-Ppolicy.t
 t/02-Password-Demo-Local-SpeChars-Ppolicy.t
 t/02-Password-Demo-Mail.t
