@@ -13,3 +13,5 @@ liblemonldap-ng-common-perl: non-standard-dir-perm var/lib/lemonldap-ng/sessions
 liblemonldap-ng-common-perl: non-standard-dir-perm var/lib/lemonldap-ng/sessions/lock/ 0770 != 0755
 liblemonldap-ng-common-perl: non-standard-dir-perm var/lib/lemonldap-ng/psessions/ 0770 != 0755
 liblemonldap-ng-common-perl: non-standard-dir-perm var/lib/lemonldap-ng/psessions/lock/ 0770 != 0755
+# First conf file owns to package
+non-etc-file-marked-as-conffile var/lib/lemonldap-ng/conf/lmConf-1.json [conffiles:1]

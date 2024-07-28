@@ -50,7 +50,7 @@ sub init {
 
 sub _get_localized {
     my ( $self, $req, $record ) = @_;
-    my $lang  = $req->cookies->{llnglanguage} || 'en';
+    my $lang  = $self->p->getLanguage($req);
     my $names = $record->names;
     if ( $names->{$lang} ) {
         return $names->{$lang};

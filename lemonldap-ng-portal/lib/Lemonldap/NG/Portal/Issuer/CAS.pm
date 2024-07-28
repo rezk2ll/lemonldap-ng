@@ -96,7 +96,7 @@ sub storeEnvAndCheckGateway {
     my ( $self, $req ) = @_;
     my $service = $self->p->getHiddenFormValue( $req, 'service' )
       || $req->param('service');
-    $service = '' if ( $self->p->checkXSSAttack( 'service', $service ) );
+    $service = '' if ( $self->p->checkXSSAttackUrldc( 'service', $service ) );
     my $gateway = $self->p->getHiddenFormValue( $req, 'gateway' )
       || $req->param('gateway');
 
@@ -203,7 +203,7 @@ sub run {
         ) if ( $h != PE_OK );
 
         my $service = $cas_request->{service};
-        $service = '' if ( $self->p->checkXSSAttack( 'service', $service ) );
+        $service = '' if ( $self->p->checkXSSAttackUrldc( 'service', $service ) );
         my $renew   = $cas_request->{renew};
         my $gateway = $cas_request->{gateway};
 
@@ -372,7 +372,7 @@ sub run {
         my $logout_url     = $req->param('url');        # CAS 2.0
         my $logout_service = $req->param('service');    # CAS 3.0
         $logout_service = ''
-          if ( $self->p->checkXSSAttack( 'service', $logout_service ) );
+          if ( $self->p->checkXSSAttackUrldc( 'service', $logout_service ) );
 
         # If we use access control, check that the service URL is trusted
         if ( $self->conf->{casAccessControlPolicy} =~ /^(error|faketicket)$/i )

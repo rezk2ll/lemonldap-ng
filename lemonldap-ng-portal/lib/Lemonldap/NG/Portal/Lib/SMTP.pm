@@ -71,8 +71,7 @@ sub loadMailTemplate {
 sub translate {
     my ( $self, $req ) = @_;
 
-    # Get language using llnglanguage cookie
-    my $lang_code = $req->cookies->{llnglanguage} || 'en';
+    my $lang_code = $self->p->getLanguage($req);
     my $json      = $self->conf->{templateDir} . "/common/mail/$lang_code.json";
     $json = $self->conf->{templateDir} . '/common/mail/en.json'
       unless ( -f $json );

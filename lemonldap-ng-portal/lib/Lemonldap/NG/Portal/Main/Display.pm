@@ -38,6 +38,15 @@ has registerUrl => (
         $_[0]->conf->{registerUrl} || $_[0]->buildUrl("register");
     }
 );
+has ott => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        my $ott = $_[0]->loadModule('::Lib::OneTimeToken');
+        $ott->timeout( $_[0]->conf->{formTimeout} );
+        return $ott;
+    }
+);
 
 sub displayInit {
     my ($self) = @_;
@@ -100,14 +109,10 @@ sub displayInit {
 }
 
 sub isPP {
-    my $self = shift;
+    my $self    = shift;
     my $ppRules = $self->getPpolicyRules();
-    foreach my $rule ( @$ppRules )
-    {
-        if( $rule->{'condition'} )
-        {
-            return 1;
-        }
+    foreach (@$ppRules) {
+        return 1 if $_->{'condition'};
     }
     return 0;
 }
@@ -213,8 +218,8 @@ sub display {
 
         %templateParams = (
             $self->getErrorTplParams($req),
-            MSG                             => $info,
-            URL                             => $req->urldc || $req->portal,
+            MSG           => $info,
+            URL           => $req->urldc || $req->portal,
             HIDDEN_INPUTS => $self->buildOutgoingHiddenForm( $req, $method ),
             ACTIVE_TIMER  => $req->data->{activeTimer},
             CHOICE_PARAM  => $self->conf->{authChoiceParam},
@@ -511,9 +516,14 @@ sub display {
                 AUTH_LOOP             => [],
                 CHOICE_PARAM          => $self->conf->{authChoiceParam},
                 CHOICE_VALUE          => $req->data->{_authChoice},
-                OLDPASSWORD           => $self->checkXSSAttack( 'oldpassword',
-                    $req->data->{oldpassword} )
-                ? ''
+                OLDPASSWORD           => $self->conf->{hideOldPassword}
+                ? $self->ott->createToken( {
+                        oldpassword => $self->conf->{cipher}
+                          ->encrypt( $req->data->{oldpassword}, 1 )
+                    }
+                  )
+                : $self->checkXSSAttack( 'oldpassword',
+                    $req->data->{oldpassword} ) ? ''
                 : $req->data->{oldpassword},
                 HIDE_OLDPASSWORD    => $self->conf->{hideOldPassword},
                 DONT_STORE_PASSWORD => $self->conf->{browsersDontStorePassword},

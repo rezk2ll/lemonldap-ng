@@ -110,18 +110,9 @@ Convenience method that builds a url-encoded query string from a hash of argumen
 
 sub buildForm {
     my $fields = shift;
-    my $query  = join(
-        '&',
-        map {
-            "$_="
-              . (
-                $fields->{$_}
-                ? uri_escape( uri_unescape( $fields->{$_} ) )
-                : ''
-              )
-          }
-          keys(%$fields)
-    );
+    my $query  = join( '&',
+        map { "$_=" . ( $fields->{$_} ? uri_escape( $fields->{$_} ) : '' ) }
+          keys(%$fields) );
     return $query;
 }
 
@@ -296,24 +287,15 @@ sub expectAutoPost {
     return @r;
 }
 
-sub expectXpath {
-    local $Test::Builder::Level = $Test::Builder::Level + 1;
-
-    my ( $res, $xpath ) = @_;
-    my $doc =
-      XML::LibXML->new->load_html( string => $res->[2]->[0], recover => 2 );
-
-    return $doc->findnodes($xpath);
-}
-
 sub getJsVars {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
     my ($res) = @_;
 
-    my $initscripts = expectXpath( $res, '//script[@type="application/init"]' );
+    my $initscripts =
+      getHtmlElement( $res, '//script[@type="application/init"]' );
 
     my @parsed_initscripts =
-      map { from_json($_) } $initscripts->to_literal_list();
+      map { from_json( $_->string_value ) } $initscripts->get_nodelist();
 
     my %vars = map { %$_ } @parsed_initscripts;
     return \%vars;
@@ -656,6 +638,18 @@ sub getHtmlElement {
     return $doc->findnodes($xpath);
 }
 
+sub expectXpath {
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+
+    my ( $res, $xpath ) = @_;
+
+    ok(
+        my $res = getHtmlElement( $res, $xpath ),
+        "Found at least one result for $xpath"
+    );
+    return $res;
+}
+
 =head4 getCookies($res)
 
 Returns an hash ref with names => values of cookies set by server.
@@ -900,6 +894,7 @@ our $defaultIni = {
     },
     logLevel              => 'error',
     cookieName            => 'lemonldap',
+    languages             => 'en, fr',
     domain                => 'example.com',
     templateDir           => $templateDir,
     staticPrefix          => '/static',
@@ -1158,7 +1153,7 @@ sub _get {
 
     my $res = $self->app->( {
             'HTTP_ACCEPT'          => $args{accept} // $self->accept,
-            'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
+            'HTTP_ACCEPT_LANGUAGE' => 'en-US,fr-FR;q=0.7,fr;q=0.3',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
             ( $args{cookie} ? ( HTTP_COOKIE => $args{cookie} ) : () ),
             'HTTP_HOST' => ( $args{host} ? $args{host} : 'auth.example.com' ),
@@ -1224,7 +1219,7 @@ sub _post {
       unless ( ref($body) and $body->can('read') );
     my $res = $self->app->( {
             'HTTP_ACCEPT'          => $args{accept} // $self->accept,
-            'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
+            'HTTP_ACCEPT_LANGUAGE' => 'en-US,fr-FR;q=0.7,fr;q=0.3',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
             ( $args{cookie} ? ( HTTP_COOKIE => $args{cookie} ) : () ),
             'HTTP_HOST' => ( $args{host} ? $args{host} : 'auth.example.com' ),

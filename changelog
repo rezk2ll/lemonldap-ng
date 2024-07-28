@@ -1,3 +1,18 @@
+lemonldap-ng (2.19.1) jammy; urgency=medium
+
+  * Bugs:
+    * #3147: Form replay on ApacheMP2 causes server error when response body is empty
+    * #3165: Error when running make start_web_server
+    * #3167: Tests for file readability do not account for ACL
+    * #3171: Regression in CDA when domain is a suffix of the CDA host
+    * #3180: Double utf-8 encoding when using Auth::SSL + UserDB::LDAP
+    * #3191: Error 500 when service= parameter is invalid
+    * #3192: cli purgeCentralCache fails to remove LDAP sessions by force
+    * #3194: Inappropriate message "You are free to choose your password"
+    * #3201: Lemonldap::NG::Common tests fail due to omission from Makefile.PL
+
+ -- Clément <clem.oudot@gmail.com>  Mon, 15 Jul 2024 09:55:00 +0200
+
 lemonldap-ng (2.19.0) jammy; urgency=medium
 
   * Bugs:
