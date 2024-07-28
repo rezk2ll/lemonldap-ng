@@ -117,12 +117,12 @@ sub extractFormInfo {
         }
 
         if ( $self->captcha ) {
-            my $result = $self->p->_captcha->check_captcha($req);
+            my $result = $self->p->getService('captcha')->check_captcha($req);
             if ($result) {
                 $self->logger->debug("Captcha code verified");
             }
             else {
-                $self->p->_captcha->init_captcha($req);
+                $self->p->getService('captcha')->init_captcha($req);
                 $self->userLogger->warn("Captcha failed");
                 return PE_CAPTCHAERROR;
             }
@@ -180,7 +180,7 @@ sub setSecurity {
 
     # If captcha is enable, prepare it
     if ( $self->captcha ) {
-        $self->p->_captcha->init_captcha($req);
+        $self->p->getService('captcha')->init_captcha($req);
     }
 
     # Else get token
