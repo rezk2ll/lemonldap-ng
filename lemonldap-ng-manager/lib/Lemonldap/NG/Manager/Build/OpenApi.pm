@@ -610,8 +610,8 @@ sub openapi {
                     }
                 },
                 'put' => {
-                    'tags'    => ['oidcrp'],
-                    'summary' => 'Replaces an OpenID Connect Relying Party',
+                    'tags'        => ['oidcrp'],
+                    'summary'     => 'Replaces an OpenID Connect Relying Party',
                     'operationId' => 'replaceOidcRp',
                     'parameters'  => [ {
                             'name'        => 'confKey',
@@ -2092,7 +2092,7 @@ sub openapi {
                         'name' => {
                             'type'        => 'string',
                             'description' => 'A description of the device'
-                        }
+                        },
                     },
                     'additionalProperties' => {
                         'type' => 'string'
@@ -2124,13 +2124,16 @@ sub openapi {
                         'type' => {
                             'type'        => 'string',
                             'description' => 'The type of device in use',
-                            'example' => 'TOTP, UBK (Yubikey), WebAuthn'
+                            'example'     => 'TOTP, UBK (Yubikey), WebAuthn'
                         },
                         'name' => {
                             'type'        => 'string',
                             'description' =>
                               'A user-set description of the device'
-                        }
+                        },
+                    },
+                    'additionalProperties' => {
+                        'type' => 'string'
                     }
                 },
                 'SecondFactors' => {

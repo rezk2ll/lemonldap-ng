@@ -218,7 +218,6 @@ sub _registration {
         )
       )
     {
-        $self->markRegistered($req);
         return $self->p->sendJSONresponse( $req, { result => 1 } );
     }
     else {

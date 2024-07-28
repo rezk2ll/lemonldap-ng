@@ -1,6 +1,6 @@
-usr/share/lemonldap-ng/bin/purgeCentralCache
-usr/share/man/man3/Lemonldap::NG::Portal*
-usr/share/perl5/Lemonldap/NG/Portal*
-usr/share/lemonldap-ng/portal
 etc/lemonldap-ng/portal-apache2.conf
 etc/lemonldap-ng/portal-nginx.conf
+usr/share/lemonldap-ng/bin/purgeCentralCache
+usr/share/lemonldap-ng/portal
+usr/share/man/man3/Lemonldap::NG::Portal*
+usr/share/perl5/Lemonldap/NG/Portal*

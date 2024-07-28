@@ -14,6 +14,7 @@ our $VERSION = '2.19.0';
 extends qw(
   Lemonldap::NG::Portal::Main::SecondFactor
 );
+with 'Lemonldap::NG::Portal::Lib::2fDevices';
 
 # INITIALIZATION
 
@@ -42,6 +43,9 @@ sub run {
 
 sub verify {
     my ( $self, $req, $session ) = @_;
+
+    my ($device) = $self->find2fDevicesByType( $req, $session, "test" );
+    $req->data->{_2fDevice} = $device;
     return PE_OK;
 }
 

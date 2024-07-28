@@ -189,6 +189,7 @@ sub verify {
     }
     my $uid = $session->{ $self->conf->{whatToTrace} };
     if ( $yubikey->{epoch} ) {
+        $req->data->{_2fDevice} = $yubikey;
         $self->userLogger->info(
             "User $uid authenticated with 2F device: " . display2F($yubikey) );
     }
