@@ -3,8 +3,7 @@ Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
 Uploaders: Yadd <yadd@debian.org>
 Section: perl
 Priority: optional
-Build-Depends: debhelper (>= 10),
-               po-debconf
+Build-Depends: debhelper (>= 10), po-debconf
 Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libapache-session-perl <!nocheck>,
                      libauth-yubikey-webclient-perl <!nocheck>,
@@ -18,8 +17,8 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libcrypt-jwt-perl <!nocheck>,
                      libcrypt-openssl-rsa-perl <!nocheck>,
                      libcrypt-openssl-x509-perl <!nocheck>,
-                     libcrypt-urandom-perl <!nocheck>,
                      libcrypt-rijndael-perl <!nocheck>,
+                     libcrypt-urandom-perl <!nocheck>,
                      libdata-password-zxcvbn-perl <!nocheck>,
                      libdatetime-format-rfc3339-perl <!nocheck>,
                      libdbd-sqlite3-perl <!nocheck>,
@@ -32,6 +31,7 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libhash-merge-simple-perl <!nocheck>,
                      libhtml-formattext-withlinks-perl <!nocheck>,
                      libhtml-template-perl <!nocheck>,
+                     libhttp-message-perl <!nocheck>,
                      libimage-magick-perl <!nocheck>,
                      libio-socket-timeout-perl <!nocheck>,
                      libio-string-perl,
@@ -46,7 +46,6 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libnet-cidr-lite-perl <!nocheck>,
                      libnet-cidr-perl <!nocheck>,
                      libnet-ldap-perl <!nocheck>,
-                     libio-socket-timeout-perl <!nocheck>,
                      libnet-openid-consumer-perl <!nocheck>,
                      libnet-openid-server-perl <!nocheck>,
                      libplack-perl <!nocheck>,
@@ -54,6 +53,7 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libregexp-common-perl,
                      libsoap-lite-perl <!nocheck>,
                      libstring-random-perl <!nocheck>,
+                     libtest-leaktrace-perl <!nocheck>,
                      libtest-mockobject-perl <!nocheck>,
                      libtest-output-perl <!nocheck>,
                      libtest-pod-perl <!nocheck>,
@@ -61,14 +61,12 @@ Build-Depends-Indep: fonts-urw-base35 <!nocheck> | gsfonts <!nocheck>,
                      libtime-fake-perl <!nocheck>,
                      libunicode-string-perl <!nocheck>,
                      liburi-perl <!nocheck>,
-                     libhttp-message-perl <!nocheck>,
                      libwww-perl <!nocheck>,
                      libxml-libxml-perl <!nocheck>,
                      libxml-libxslt-perl <!nocheck>,
-                     libtest-leaktrace-perl <!nocheck>,
+                     perl,
                      python3-sphinx,
                      python3-sphinx-bootstrap-theme,
-                     perl,
                      uglifyjs
 Standards-Version: 4.6.2
 Vcs-Browser: https://salsa.debian.org/perl-team/modules/packages/lemonldap-ng
@@ -78,10 +76,10 @@ Rules-Requires-Root: binary-targets
 
 Package: lemonldap-ng
 Architecture: all
-Depends: ${misc:Depends},
-         lemonldap-ng-handler (= ${binary:Version}),
+Depends: lemonldap-ng-handler (= ${binary:Version}),
          liblemonldap-ng-manager-perl (= ${binary:Version}),
-         liblemonldap-ng-portal-perl (= ${binary:Version})
+         liblemonldap-ng-portal-perl (= ${binary:Version}),
+         ${misc:Depends}
 Provides: openid-connect-provider,
           openid-connect-relying-party,
           saml-identity-provider,
@@ -121,16 +119,14 @@ Description: Lemonldap::NG Web-SSO system documentation
 Package: lemonldap-ng-fastcgi-server
 Architecture: all
 Section: web
-Depends: ${misc:Depends},
-         ${perl:Depends},
-         lsb-base,
-         libfcgi-perl,
+Depends: libfcgi-perl,
          libfcgi-procmanager-perl,
          liblemonldap-ng-handler-perl (= ${binary:Version}),
-         libplack-perl
-Recommends: libhttp-parser-xs-perl,
-            libnginx-mod-http-lua,
-            nginx-extras | nginx
+         libplack-perl,
+         lsb-base,
+         ${misc:Depends},
+         ${perl:Depends}
+Recommends: libhttp-parser-xs-perl, libnginx-mod-http-lua, nginx-extras | nginx
 Pre-Depends: ${misc:Pre-Depends}
 Description: Lemonldap::NG FastCGI server
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
@@ -149,8 +145,7 @@ Description: Lemonldap::NG FastCGI server
 Package: liblemonldap-ng-ssoaas-apache-client-perl
 Architecture: all
 Section: web
-Depends: ${misc:Depends},
-         ${perl:Depends}
+Depends: ${misc:Depends}, ${perl:Depends}
 Breaks: liblemonldap-ng-handler-perl (<< 2.0.14~)
 Multi-Arch: foreign
 Description: Lemonldap::NG SSOaaS client for Apache
@@ -161,10 +156,8 @@ Description: Lemonldap::NG SSOaaS client for Apache
 Package: lemonldap-ng-uwsgi-app
 Architecture: all
 Section: web
-Depends: ${misc:Depends},
-         liblemonldap-ng-handler-perl (= ${binary:Version})
-Recommends: libhttp-parser-xs-perl,
-            uwsgi-plugin-psgi
+Depends: liblemonldap-ng-handler-perl (= ${binary:Version}), ${misc:Depends}
+Recommends: libhttp-parser-xs-perl, uwsgi-plugin-psgi
 Suggests: nginx-extras | nginx
 Description: Lemonldap::NG uWSGI server
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
@@ -182,12 +175,9 @@ Description: Lemonldap::NG uWSGI server
 
 Package: lemonldap-ng-handler
 Architecture: all
-Depends: ${misc:Depends},
-         liblemonldap-ng-handler-perl (= ${binary:Version})
+Depends: liblemonldap-ng-handler-perl (= ${binary:Version}), ${misc:Depends}
 Recommends: lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uwsgi-app (= ${binary:Version}) | libapache2-mod-perl2
-Suggests: libcache-memcached-perl,
-          libdigest-hmac-perl,
-          libsoap-lite-perl
+Suggests: libcache-memcached-perl, libdigest-hmac-perl, libsoap-lite-perl
 Breaks: lemonldap-ng-fastcgi-server (<< 2.0.5~)
 Replaces: lemonldap-ng-fastcgi-server (<< 2.0.5~)
 Description: Lemonldap::NG handler part
@@ -206,9 +196,9 @@ Description: Lemonldap::NG handler part
 
 Package: liblemonldap-ng-handler-perl
 Architecture: all
-Depends: ${misc:Depends},
-         ${perl:Depends},
-         liblemonldap-ng-common-perl (= ${binary:Version})
+Depends: liblemonldap-ng-common-perl (= ${binary:Version}),
+         ${misc:Depends},
+         ${perl:Depends}
 Description: Lemonldap::NG handler common libraries
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
@@ -224,25 +214,25 @@ Description: Lemonldap::NG handler common libraries
 
 Package: liblemonldap-ng-common-perl
 Architecture: all
-Depends: ${misc:Depends},
-         ${perl:Depends},
-         debconf,
+Depends: debconf,
          libapache-session-perl,
          libcache-cache-perl,
+         libclass-xsaccessor-perl,
          libconfig-inifiles-perl,
          libcrypt-openssl-rsa-perl,
          libcrypt-openssl-x509-perl,
-         libcrypt-urandom-perl,
          libcrypt-rijndael-perl,
+         libcrypt-urandom-perl,
          libhtml-template-perl,
          libjson-perl,
          libjson-xs-perl,
-         libnet-cidr-perl,
          libmouse-perl,
-         libclass-xsaccessor-perl,
+         libnet-cidr-perl,
          libplack-perl,
          liburi-perl,
-         libwww-perl
+         libwww-perl,
+         ${misc:Depends},
+         ${perl:Depends}
 Recommends: libapache-session-browseable-perl,
             libcookie-baker-xs-perl,
             libdbi-perl,
@@ -271,20 +261,19 @@ Description: Lemonldap::NG common files
 
 Package: liblemonldap-ng-manager-perl
 Architecture: all
-Depends: ${misc:Depends},
-         ${perl:Depends},
+Depends: lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uwsgi-app (= ${binary:Version}) | apache2 | httpd-cgi,
          libconvert-pem-perl,
-         libregexp-common-perl,
          libcrypt-openssl-rsa-perl,
          libemail-date-format-perl,
-         liblemonldap-ng-handler-perl (= ${binary:Version}),
          libhash-merge-simple-perl,
-         lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uwsgi-app (= ${binary:Version}) | apache2 | httpd-cgi
+         liblemonldap-ng-handler-perl (= ${binary:Version}),
+         libregexp-common-perl,
+         ${misc:Depends},
+         ${perl:Depends}
 Recommends: lemonldap-ng-doc (= ${binary:Version}),
             libxml-libxml-perl,
             libxml-libxslt-perl
-Suggests: libclone-perl,
-          libregexp-assemble-perl
+Suggests: libclone-perl, libregexp-assemble-perl
 Pre-Depends: debconf
 Description: Lemonldap::NG manager part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
@@ -301,9 +290,7 @@ Description: Lemonldap::NG manager part
 
 Package: liblemonldap-ng-portal-perl
 Architecture: all
-Depends: ${misc:Depends},
-         ${perl:Depends},
-         lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uwsgi-app (= ${binary:Version}) | apache2 | httpd-cgi,
+Depends: lemonldap-ng-fastcgi-server (= ${binary:Version}) | lemonldap-ng-uwsgi-app (= ${binary:Version}) | apache2 | httpd-cgi,
          libclone-perl,
          libconvert-base32-perl,
          libdigest-hmac-perl,
@@ -312,17 +299,19 @@ Depends: ${misc:Depends},
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          liblist-moreutils-perl,
          libregexp-assemble-perl,
-         libtext-unidecode-perl
+         libtext-unidecode-perl,
+         ${misc:Depends},
+         ${perl:Depends}
 Recommends: fonts-urw-base35 | gsfonts,
             libauthen-webauthn-perl,
             libcrypt-jwt-perl,
             libcrypt-openssl-bignum-perl,
+            libgd-securityimage-perl,
+            libio-socket-timeout-perl,
             libio-string-perl,
             libipc-run-perl,
-            libgd-securityimage-perl,
             libmime-tools-perl,
             libnet-ldap-perl,
-            libio-socket-timeout-perl,
             libunicode-string-perl
 Suggests: crowdsec,
           gpg,
@@ -336,9 +325,9 @@ Suggests: crowdsec,
           liblasso-perl,
           liblist-moreutils-perl,
           libnet-facebook-oauth2-perl,
+          libnet-oauth-perl,
           libnet-openid-consumer-perl,
           libnet-openid-server-perl,
-          libnet-oauth-perl,
           libsoap-lite-perl,
           libweb-id-perl,
           slapd
