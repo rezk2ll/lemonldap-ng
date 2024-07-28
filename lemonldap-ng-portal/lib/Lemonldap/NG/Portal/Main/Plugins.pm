@@ -125,7 +125,7 @@ sub enabledPlugins {
         my $module =
           $self->conf->{'trustedBrowserEngine'} || '::Plugins::TrustedBrowser';
         $self->logger->debug("$module needed");
-        push @res, [ _trustedBrowser => $module ];
+        unshift @res, [ _trustedBrowser => $module ];
     }
 
     # Captcha
@@ -135,7 +135,7 @@ sub enabledPlugins {
     {
         my $module = $self->conf->{'captcha'} || '::Captcha::SecurityImage';
         $self->logger->debug("$module needed");
-        push @res, [ _captcha => $module ];
+        unshift @res, [ _captcha => $module ];
     }
 
     # Impersonation overwrites req->step and pops 'afterData' EP.
