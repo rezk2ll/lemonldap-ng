@@ -31,9 +31,14 @@ has _authentication => ( is => 'rw' );
 has _userDB         => ( is => 'rw' );
 has _passwordDB     => ( is => 'rw' );
 has _sfEngine       => ( is => 'rw' );
-has _captcha        => ( is => 'rw' );
-has _trustedBrowser => ( is => 'rw' );
-has _ppRules        => ( is => 'rw', default => sub { {} } );
+
+has _loadedServices => ( is => 'ro', default => sub { {} } );
+
+# Legacy
+sub _captcha        { $_[0]->getService('captcha') }
+sub _trustedBrowser { $_[0]->getService('trustedBrowser') }
+
+has _ppRules => ( is => 'rw', default => sub { {} } );
 
 has loadedModules => ( is => 'rw' );
 
@@ -348,15 +353,14 @@ sub reloadConf {
       or $self->logger->error(
         'jsRedirect returns an error: ' . HANDLER->tsv->{jail}->error );
 
+    # Load services
+    foreach my $service ( $self->enabledServices ) {
+        $self->loadService(@$service) or return $self->fail;
+    }
+
     # Load plugins
     foreach my $plugin ( $self->enabledPlugins ) {
-        if ( ref $plugin ) {
-            $self->{ $plugin->[0] } = $self->loadPlugin( $plugin->[1] )
-              or return $self->fail;
-        }
-        else {
-            $self->loadPlugin($plugin) or return $self->fail;
-        }
+        $self->loadPlugin($plugin) or return $self->fail;
     }
 
     # Initialize trusted domain regexp
@@ -463,6 +467,17 @@ sub reloadConf {
 }
 
 # Method used to load plugins
+
+sub loadService {
+    my ( $self, $name, $plugin ) = @_;
+    return $self->_loadedServices->{$name} = $self->loadPlugin($plugin);
+}
+
+sub getService {
+    my ($self, $name) = @_;
+    return $_[0]->_loadedServices->{$name};
+}
+
 sub loadPlugin {
     my ( $self, $plugin ) = @_;
     unless ($plugin) {

@@ -64,6 +64,31 @@ our @pList = (
 # If plugin name starts with '::', the prefix Lemonldap::NG::Portal will be
 # added
 
+sub enabledServices {
+    my ($self) = @_;
+    my $conf = $self->conf;
+    my @res;
+
+    # Trusted browser
+    if ( $self->conf->{trustedBrowserRule} or $self->conf->{stayConnected} ) {
+        my $module =
+          $self->conf->{'trustedBrowserEngine'} || '::Plugins::TrustedBrowser';
+        $self->logger->debug("$module needed");
+        push @res, [ trustedBrowser => $module ];
+    }
+
+    # Captcha
+    if (   $self->conf->{captcha_mail_enabled}
+        || $self->conf->{captcha_login_enabled}
+        || $self->conf->{captcha_register_enabled} )
+    {
+        my $module = $self->conf->{'captcha'} || '::Captcha::SecurityImage';
+        $self->logger->debug("$module needed");
+        push @res, [ captcha => $module ];
+    }
+    return @res;
+}
+
 sub enabledPlugins {
     my ($self) = @_;
     my $conf = $self->conf;
@@ -118,24 +143,6 @@ sub enabledPlugins {
     if ( $conf->{customPlugins} ) {
         $self->logger->debug( 'Custom plugins: ' . $conf->{customPlugins} );
         push @res, grep ( /\w+/, split( /[,\s]+/, $conf->{customPlugins} ) );
-    }
-
-    # Trusted browser
-    if ( $self->conf->{trustedBrowserRule} or $self->conf->{stayConnected} ) {
-        my $module =
-          $self->conf->{'trustedBrowserEngine'} || '::Plugins::TrustedBrowser';
-        $self->logger->debug("$module needed");
-        unshift @res, [ _trustedBrowser => $module ];
-    }
-
-    # Captcha
-    if (   $self->conf->{captcha_mail_enabled}
-        || $self->conf->{captcha_login_enabled}
-        || $self->conf->{captcha_register_enabled} )
-    {
-        my $module = $self->conf->{'captcha'} || '::Captcha::SecurityImage';
-        $self->logger->debug("$module needed");
-        unshift @res, [ _captcha => $module ];
     }
 
     # Impersonation overwrites req->step and pops 'afterData' EP.
