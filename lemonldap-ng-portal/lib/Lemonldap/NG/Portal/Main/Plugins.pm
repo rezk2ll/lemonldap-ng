@@ -69,6 +69,9 @@ sub enabledServices {
     my $conf = $self->conf;
     my @res;
 
+    # Second factor
+    push @res, [ secondFactor => $self->conf->{'sfEngine'} ];
+
     # Trusted browser
     if ( $self->conf->{trustedBrowserRule} or $self->conf->{stayConnected} ) {
         my $module =
