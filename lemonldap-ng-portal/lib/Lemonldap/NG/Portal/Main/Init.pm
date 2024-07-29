@@ -32,7 +32,7 @@ has _userDB         => ( is => 'rw' );
 has _passwordDB     => ( is => 'rw' );
 has _sfEngine       => ( is => 'rw' );
 
-has _loadedServices => ( is => 'ro', default => sub { {} } );
+has _loadedServices => ( is => 'rw', default => sub { {} } );
 
 # Legacy
 sub _captcha        { $_[0]->getService('captcha') }
@@ -109,6 +109,22 @@ has pluginSessionDataToRemember =>
 
 # INITIALIZATION
 
+sub _resetPluginsAndServices {
+    my ($self) = @_;
+    $self->loadedModules( {} );
+    $self->_loadedServices( {} );
+    $self->afterSub( {} );
+    $self->aroundSub( {} );
+    $self->spRules( {} );
+    $self->hook( {} );
+    $self->pluginSessionDataToRemember( {} );
+
+    # Reinitialize arrays
+    foreach ( qw(_macros _groups), @entryPoints ) {
+        $self->{$_} = [];
+    }
+}
+
 sub init {
     my ( $self, $args ) = @_;
     $args ||= {};
@@ -139,10 +155,7 @@ sub init {
     $self->trOver( JSON::to_json( $self->trOver ) );
 
     # Purge loaded module list
-    $self->loadedModules( {} );
-    $self->afterSub( {} );
-    $self->aroundSub( {} );
-    $self->hook( {} );
+    $self->_resetPluginsAndServices;
 
     # Insert `reloadConf` in handler reload stack
     Lemonldap::NG::Handler::Main->onReload( $self, 'reloadConf' );
@@ -236,17 +249,8 @@ sub reloadConf {
     # Reinitialize $self->conf
     %{ $self->{conf} } = %{ $self->localConfig };
 
-    # Reinitialize arrays
-    foreach ( qw(_macros _groups), @entryPoints ) {
-        $self->{$_} = [];
-    }
-    $self->afterSub( {} );
-    $self->aroundSub( {} );
-    $self->spRules( {} );
-    $self->hook( {} );
-
-    # Plugin history fields
-    $self->pluginSessionDataToRemember( {} );
+    # Purge loaded module list
+    $self->_resetPluginsAndServices;
 
     # Load conf in portal object
     foreach my $key ( keys %$conf ) {
