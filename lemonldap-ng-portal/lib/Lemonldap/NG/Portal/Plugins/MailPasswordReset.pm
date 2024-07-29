@@ -240,7 +240,7 @@ sub _reset {
 
         # Captcha for register form
         if ( $self->captcha ) {
-            my $result = $self->p->_captcha->check_captcha($req);
+            my $result = $self->p->getService('captcha')->check_captcha($req);
             if ($result) {
                 $self->logger->debug("Captcha code verified");
             }
@@ -586,7 +586,7 @@ sub changePwd {
 sub setSecurity {
     my ( $self, $req ) = @_;
     if ( $self->captcha ) {
-        $self->p->_captcha->init_captcha($req);
+        $self->p->getService('captcha')->init_captcha($req);
     }
     elsif ( $self->ottRule->( $req, {} ) ) {
         $self->ott->setToken($req);
