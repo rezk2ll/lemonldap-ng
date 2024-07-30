@@ -86,6 +86,7 @@
 "PE80":"Cette adresse est déjà utilisée",
 "PE81":"Tentative d'authentification invalide",
 "PE82":"Délai d'authentification dépassé",
+"PE83":"L'authentification WebAuthn a échoué",
 "PE84":"Vous n'êtes pas autorisé à accéder à ce site",
 "PE85":"Le site souhaite une authentification plus récente (et le plugin UpgradeSession n'est pas chargé). Déconnectez-vous et réessayez",
 "PE86":"Votre compte est verrouillé. Avant de pouvoir vous réauthentifier, vous devez patienter",

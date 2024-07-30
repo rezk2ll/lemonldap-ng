@@ -12,6 +12,7 @@ use Crypt::URandom;
 
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
+  PE_WEBAUTHNFAILED
   PE_ERROR
   PE_SENDRESPONSE
   PE_BADCREDENTIALS
@@ -47,7 +48,7 @@ sub run {
     unless ($request) {
         $self->logger->error(
             $self->prefix . '2f: no registered device for ' . $req->user );
-        return PE_ERROR;
+        return PE_WEBAUTHNFAILED;
     }
 
     $self->ott->updateToken( $token, _webauthn_request => $request );
@@ -81,7 +82,7 @@ sub verify {
     unless ($credential_json) {
         $self->logger->error(
             $self->prefix . '2f: missing signature parameter' );
-        return PE_ERROR;
+        return PE_WEBAUTHNFAILED;
     }
 
     my $signature_options = $session->{_webauthn_request};
@@ -94,7 +95,7 @@ sub verify {
     if ($@) {
         $self->logger->error(
             $self->prefix . "2f: validation error for $user ($@)" );
-        return PE_ERROR;
+        return PE_WEBAUTHNFAILED;
     }
 
     if ( $validation_result->{success} == 1 ) {
@@ -118,7 +119,7 @@ sub verify {
     else {
         $self->logger->error(
             $self->prefix . "2f: validation did not return success for $user" );
-        return PE_ERROR;
+        return PE_WEBAUTHNFAILED;
     }
 }
 

@@ -86,6 +86,7 @@
 "PE80":"This address is already used",
 "PE81":"Invalid authentication attempt",
 "PE82":"Exceeded authentication timeout",
+"PE83":"WebAuthn authentication failed",
 "PE84":"You're not authorized to access to this host",
 "PE85":"The remote site ask for a newer session (and UpgradeSession plugin isn't loaded). Logout and retry",
 "PE86":"Your account is locked. You have to wait",

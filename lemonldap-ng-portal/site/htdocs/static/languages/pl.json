@@ -86,6 +86,7 @@
 "PE80":"Ten adres jest już używany",
 "PE81":"Nieprawidłowa próba uwierzytelnienia",
 "PE82":"Przekroczono limit czasu uwierzytelnienia",
+"PE83":"Uwierzytelnianie WebAuthn nie powiodło się",
 "PE84":"Nie masz uprawnień dostępu do tego serwera",
 "PE85":"Witryna zdalna prosi o nowszą sesję (a wtyczka UpgradeSession nie jest ładowana). Wyloguj się i spróbuj ponownie",
 "PE86":"Twoje konto jest zablokowane. Musisz zaczekać",

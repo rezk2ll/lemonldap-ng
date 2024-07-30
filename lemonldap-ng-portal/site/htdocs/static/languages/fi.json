@@ -86,6 +86,7 @@
 "PE80":"Tämä osoite on jo käytössä",
 "PE81":"Virheellinen tunnistautumisyritys",
 "PE82":"Tunnistautumisen aikaraja ylittyi",
+"PE83":"WebAuthn-tunnistautuminen epäonnistui",
 "PE84":"Sinulla ei ole valtuuksia olla yhteydessä tähän isäntäkoneeseen",
 "PE85":"Etäsivusto pyytää uudempaa istuntoa (ja UpgradeSession-laajennusta ei ole ladattu). Kirjaudu ulos ja yritä uudestaan",
 "PE86":"Käyttäjätilisi on lukittu. Sinun täytyy odottaa",
