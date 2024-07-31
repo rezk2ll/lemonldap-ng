@@ -65,6 +65,10 @@ sub check_captcha {
             $self->logger->error("reCaptcha: $@");
             return 0;
         }
+        unless ( $res->{success} ) {
+            $self->logger->info(
+                'reCaptcha errors:' . $response->decoded_content );
+        }
         return $res->{success};
     }
     $self->logger->error( 'reCaptcha error: ' . $response->status_line );
