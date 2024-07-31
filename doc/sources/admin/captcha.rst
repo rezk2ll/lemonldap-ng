@@ -38,6 +38,11 @@ Go in ``General parameters`` > ``Portal`` > ``Captcha``:
 
 .. _customcaptcha:
 
+Alternatives
+------------
+
+- :doc:`Google reCaptcha<recaptcha>`
+
 Custom Captcha modules
 ----------------------
 
