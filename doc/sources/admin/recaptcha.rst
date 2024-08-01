@@ -1,14 +1,12 @@
-reCaptcha v3
-============
+reCaptcha
+=========
 
 Presentation
 ------------
 
-reCaptcha version 3 is an evolution of Google's reCaptcha that returns a score
-for each request without user friction. The score is based on interactions with
-your site and enables you to take an appropriate action for your site.
+Captcha system provided by `Google <https://about.google>`__.
 
-See `Google reCAPTCHA v3 <https://developers.google.com/recaptcha/docs/v3>`__
+See `Google reCAPTCHA <https://www.google.com/recaptcha/about/>`__
 for more.
 
 Configuration
