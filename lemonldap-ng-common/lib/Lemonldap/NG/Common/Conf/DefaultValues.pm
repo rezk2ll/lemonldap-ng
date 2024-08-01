@@ -25,6 +25,7 @@ sub defaultValues {
         'bruteForceProtectionMaxFailed'   => 3,
         'bruteForceProtectionMaxLockTime' => 900,
         'bruteForceProtectionTempo'       => 30,
+        'captcha_login_enabled'           => 0,
         'captcha_mail_enabled'            => 1,
         'captcha_register_enabled'        => 1,
         'captcha_size'                    => 6,

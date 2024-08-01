@@ -53,6 +53,41 @@ our @pList = (
 ##@method list enabledPlugins
 #
 #@return list of enabled plugins
+#
+# List can be:
+#  * a plugin name
+#  * an array ref containing:
+#    - the property into which the plugin has to be linked
+#    - the plugin name
+#
+# If plugin name starts with '::', the prefix Lemonldap::NG::Portal will be
+# added
+
+sub enabledServices {
+    my ($self) = @_;
+    my $conf = $self->conf;
+    my @res;
+
+    # Trusted browser
+    if ( $self->conf->{trustedBrowserRule} or $self->conf->{stayConnected} ) {
+        my $module =
+          $self->conf->{'trustedBrowserEngine'} || '::Plugins::TrustedBrowser';
+        $self->logger->debug("$module needed");
+        push @res, [ trustedBrowser => $module ];
+    }
+
+    # Captcha
+    if (   $self->conf->{captcha_mail_enabled}
+        || $self->conf->{captcha_login_enabled}
+        || $self->conf->{captcha_register_enabled} )
+    {
+        my $module = $self->conf->{'captcha'} || '::Captcha::SecurityImage';
+        $self->logger->debug("$module needed");
+        push @res, [ captcha => $module ];
+    }
+    return @res;
+}
+
 sub enabledPlugins {
     my ($self) = @_;
     my $conf = $self->conf;

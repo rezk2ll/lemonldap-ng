@@ -56,6 +56,10 @@ License: GPL-2+
 Comment: a little part of it comes from JQuery-UI examples
  (https://snipplr.com/view/29434/)
 
+Files: lemonldap-ng-portal/site/htdocs/static/common/js/webauthn-json.browser-global.*
+Copyright: GitHub, Inc.
+License: Expat
+
 Files: lemonldap-ng-portal/site/htdocs/static/common/modules/Apache.png
 Copyright: Apache Software Foundation (ASF)
 License: Apache-2.0

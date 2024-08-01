@@ -1672,17 +1672,17 @@ sub attributes {
         # Captcha
         captcha_login_enabled => {
             default       => 0,
-            type          => 'bool',
+            type          => 'boolOrExpr',
             documentation => 'Captcha on login page',
         },
         captcha_mail_enabled => {
             default       => 1,
-            type          => 'bool',
+            type          => 'boolOrExpr',
             documentation => 'Captcha on password reset page',
         },
         captcha_register_enabled => {
             default       => 1,
-            type          => 'bool',
+            type          => 'boolOrExpr',
             documentation => 'Captcha on account creation page',
         },
         captcha_size => {

@@ -240,7 +240,7 @@ sub processRefreshSession {
 
     # Avoid interferences when refresh is run on multiple sessions
     # in the same request
-    $req->sessionInfo({});
+    $req->sessionInfo( {} );
     $req->steps( [
             'getUser',
             @{ $self->betweenAuthAndData },
@@ -1513,8 +1513,10 @@ sub buildUrl {
 sub rememberBrowser {
     my ( $self, $req ) = @_;
 
-    if ( $self->_trustedBrowser and $self->_trustedBrowser->can("newDevice") ) {
-        return $self->_trustedBrowser->newDevice($req);
+    if (    $self->getService('trustedBrowser')
+        and $self->getService('trustedBrowser')->can("newDevice") )
+    {
+        return $self->getService('trustedBrowser')->newDevice($req);
     }
     else {
         return PE_OK;
@@ -1524,8 +1526,10 @@ sub rememberBrowser {
 sub rememberBrowserCheck {
     my ( $self, $req ) = @_;
 
-    if ( $self->_trustedBrowser and $self->_trustedBrowser->can("check") ) {
-        return $self->_trustedBrowser->check($req);
+    if (    $self->getService('trustedBrowser')
+        and $self->getService('trustedBrowser')->can("check") )
+    {
+        return $self->getService('trustedBrowser')->check($req);
     }
     else {
         return PE_OK;
