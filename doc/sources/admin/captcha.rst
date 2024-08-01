@@ -24,11 +24,13 @@ Configuration
 
 Go in ``General parameters`` > ``Portal`` > ``Captcha``:
 
--  **Activation in login form**: set to On to display captcha in login
-   form, or use a rule if you want to enable it only for some networks.
-   Example ``inSubnet('10.0.0.0/8', '192.168.0.0/16') or isInNet6($ipAddr, 'fe80::/10')``
--  **Activation in password reset by mail form**: set to 1 to display
-   captcha in password reset by mail form
+-  **Activation in login form**: set to "On" to display captcha in login
+   form, or *- starting from version 2.20.0 -* use a rule if you want to enable
+   it only for some networks.  Example
+   ``inSubnet('10.0.0.0/8', '192.168.0.0/16') or isInNet6($ipAddr, 'fe80::/10')``
+-  **Activation in password reset by mail form**: set to "On" to display
+   captcha in password reset by mail form, or *- starting from version 2.20.0 -*
+   use a rule
 -  **Activation in register form**: set to 1 to display captcha in
    register form
 -  **Size**: define captcha length

@@ -713,7 +713,7 @@ sub attributes {
         },
         'captcha_mail_enabled' => {
             'default' => 1,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'captcha_register_enabled' => {
             'default' => 1,

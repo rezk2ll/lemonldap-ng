@@ -1671,7 +1671,7 @@ sub attributes {
         },
         captcha_mail_enabled => {
             default       => 1,
-            type          => 'bool',
+            type          => 'boolOrExpr',
             documentation => 'Captcha on password reset page',
         },
         captcha_register_enabled => {
