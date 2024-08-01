@@ -1676,7 +1676,7 @@ sub attributes {
         },
         captcha_register_enabled => {
             default       => 1,
-            type          => 'bool',
+            type          => 'boolOrExpr',
             documentation => 'Captcha on account creation page',
         },
         captcha_size => {
