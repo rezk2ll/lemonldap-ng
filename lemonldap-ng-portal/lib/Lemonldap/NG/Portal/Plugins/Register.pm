@@ -64,12 +64,15 @@ sub init {
     $self->addUnauthRoute( register => 'register', [ 'POST', 'GET' ] );
 
     # Initialize Captcha if needed
-    if ( $self->conf->{captcha_register_enabled} ) {
-        $self->captcha(1);
-    }
+    $self->captcha(
+        $self->p->buildRule(
+            $self->conf->{captcha_register_enabled},
+            'captchaRegister'
+        )
+    );
 
     # Initialize form token if needed (captcha provides also a token)
-    else {
+    unless ( $self->conf->{captcha_register_enabled} ) {
         $_[0]->ott(
             $_[0]->p->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken') )
           or return 0;
@@ -158,8 +161,9 @@ sub _register {
         {
 
             # Captcha for register form
-            if ( $self->captcha ) {
-                my $result = $self->p->_captcha->check_captcha($req);
+            if ( $self->captcha->( $req, {} ) ) {
+                my $result =
+                  $self->p->getService('captcha')->check_captcha($req);
                 if ($result) {
                     $self->logger->debug("Captcha code verified");
                 }
@@ -188,8 +192,8 @@ sub _register {
 
     # Check mail
     return PE_MALFORMEDUSER
-      unless ( $req->data->{registerInfo}->{mail} =~
-        m/$self->{conf}->{userControl}/ );
+      unless (
+        $req->data->{registerInfo}->{mail} =~ m/$self->{conf}->{userControl}/ );
 
     # Search for user using UserDB module
     # If the user already exists, register is forbidden
@@ -542,7 +546,7 @@ sub display {
 sub setSecurity {
     my ( $self, $req ) = @_;
     if ( $self->captcha ) {
-        $self->p->_captcha->init_captcha($req);
+        $self->p->getService('captcha')->init_captcha($req);
     }
     elsif ( $self->ottRule->( $req, {} ) ) {
         $self->ott->setToken($req);

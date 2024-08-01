@@ -129,6 +129,8 @@ sub generateDiscoverableChallenge {
 
     $self->logger->debug(
         "WebAuthn authentication parameters " . to_json($challenge) );
+
+    return $challenge;
 }
 
 sub _generateBasicChallenge {
