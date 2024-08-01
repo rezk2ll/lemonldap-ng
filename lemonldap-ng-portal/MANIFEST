@@ -396,8 +396,10 @@ site/htdocs/static/common/js/sslChoice.min.js.map
 site/htdocs/static/common/js/totpregistration.js
 site/htdocs/static/common/js/totpregistration.min.js
 site/htdocs/static/common/js/totpregistration.min.js.map
-site/htdocs/static/common/js/webauthn-ui.js
-site/htdocs/static/common/js/webauthn-ui.min.js
+site/htdocs/static/common/js/webauthn-json.browser-global.js
+site/htdocs/static/common/js/webauthn-json.browser-global.js.map
+site/htdocs/static/common/js/webauthn-json.browser-global.min.js
+site/htdocs/static/common/js/webauthn-json.browser-global.min.js.map
 site/htdocs/static/common/js/webauthncheck.js
 site/htdocs/static/common/js/webauthncheck.min.js
 site/htdocs/static/common/js/webauthncheck.min.js.map

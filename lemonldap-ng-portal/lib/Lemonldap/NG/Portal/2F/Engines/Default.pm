@@ -625,13 +625,19 @@ sub _displayRegister {
           unless $m;
         return $self->p->sendError( $req, 'Registration not authorized', 403 )
           unless $m->{r}->( $req, $req->userData );
+        my $mod = $m->{m};
+
+        if ( $mod->can('initDisplay') ) {
+            $mod->initDisplay($req);
+        }
         return $self->p->sendHtml(
             $req,
-            $m->{m}->template,
+            $mod->template,
             params => {
+                CUSTOM_SCRIPT    => $req->data->{customScript},
                 PREFIX           => $prefix,
                 "PREFIX_$prefix" => 1,
-                MSG   => $self->canUpdateSfa($req) || $m->{m}->welcome,
+                MSG              => $self->canUpdateSfa($req) || $mod->welcome,
                 ALERT => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
             }
         );

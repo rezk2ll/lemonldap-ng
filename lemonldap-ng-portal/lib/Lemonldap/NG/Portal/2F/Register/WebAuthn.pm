@@ -52,6 +52,16 @@ has rpName => (
     }
 );
 
+sub initDisplay {
+    my ( $self, $req ) = @_;
+
+    $req->data->{customScript} .= <<"EOF";
+<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/webauthn-json.browser-global.min.js"></script>
+<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/webauthnregistration.min.js"></script>
+EOF
+
+}
+
 # Split content of webauthn2fAttestationTrust into an array ref of PEM certificates
 sub _build_trust_anchors {
     my ($self) = shift;
