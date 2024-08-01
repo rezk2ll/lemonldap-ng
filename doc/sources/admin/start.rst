@@ -108,6 +108,7 @@ Portal
 -  :doc:`Portal menu<portalmenu>`
 -  :doc:`REST/SOAP servers<portalservers>`
 -  :doc:`Captcha<captcha>`
+-  :doc:`reCaptcha<recaptcha>`
 -  :doc:`Public pages<public_pages>`
 
 
