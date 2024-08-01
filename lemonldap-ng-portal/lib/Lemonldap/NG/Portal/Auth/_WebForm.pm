@@ -43,10 +43,15 @@ has ott     => ( is => 'rw' );
 sub init {
     my $self = shift;
 
-    if ( $self->{conf}->{captcha_login_enabled} ) {
-        $self->captcha(1);
-    }
-    else {
+    $self->captcha(
+        $self->p->buildRule(
+            $self->{conf}->{captcha_login_enabled},
+            'captchaLogin'
+        )
+    );
+
+    return 0 unless $self->captcha;
+    unless ( $self->{conf}->{captcha_login_enabled} ) {
         $self->ott( $self->p->loadModule('::Lib::OneTimeToken') ) or return 0;
         $self->ott->timeout( $self->conf->{formTimeout} );
     }
@@ -106,17 +111,18 @@ sub extractFormInfo {
     }
 
     # Security: check for captcha or token
+    my $needCaptcha = $self->captcha->( $req, {} );
     if ( not $req->data->{'skipToken'}
-        and ( $self->captcha or $self->ottRule->( $req, {} ) ) )
+        and ( $needCaptcha or $self->ottRule->( $req, {} ) ) )
     {
         my $token;
-        unless ( $token = $req->param('token') or $self->captcha ) {
+        unless ( $token = $req->param('token') or $needCaptcha ) {
             $self->userLogger->error('Authentication tried without token');
             $self->ott->setToken($req);
             return PE_NOTOKEN;
         }
 
-        if ( $self->captcha ) {
+        if ($needCaptcha) {
             my $result = $self->p->getService('captcha')->check_captcha($req);
             if ($result) {
                 $self->logger->debug("Captcha code verified");
@@ -179,7 +185,7 @@ sub setSecurity {
     return if $req->data->{skipToken};
 
     # If captcha is enable, prepare it
-    if ( $self->captcha ) {
+    if ( $self->captcha->( $req, {} ) ) {
         $self->p->getService('captcha')->init_captcha($req);
     }
 
