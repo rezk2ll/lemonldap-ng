@@ -80,6 +80,11 @@ ENDKEY
     my ( $host, $url, $query ) =
       expectForm( $res, "#", undef, 'token', 'credential' );
 
+    expectXpath( $res,
+        '//script[@src="/static/common/js/webauthn-json.browser-global.min.js"]'
+    );
+    expectXpath( $res,
+        '//script[@src="/static/common/js/webauthncheck.min.js"]' );
     my $js_vars   = getJsVars($res);
     my $request   = $js_vars->{request};
     my $challenge = $request->{challenge};
