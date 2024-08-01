@@ -10,6 +10,8 @@ require 't/test-lib.pm';
 
 my $res;
 
+$ENV{FORCE_STATUS} = 'force status';
+
 my $client = LLNG::Manager::Test->new( {
         ini => {
             portal      => 'https://auth.example.com/',
