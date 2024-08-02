@@ -5,7 +5,7 @@ LemonLDAP::NG WebAuthn verify script
  */
 
 (function() {
-  var check, setMsg;
+  var check, setMsg, setupConditional, trySetupConditional;
 
   setMsg = function(msg, level) {
     $('#msg').attr('trspan', msg);
@@ -23,6 +23,10 @@ LemonLDAP::NG WebAuthn verify script
     if (!webauthnJSON.supported()) {
       setMsg('webAuthnUnsupported', 'warning');
       return;
+    }
+    if (window.webauthnAbort) {
+      console.log("Aborting conditional mediation");
+      window.webauthnAbort.abort();
     }
     e = jQuery.Event("webauthnAttempt");
     $(document).trigger(e);
@@ -42,16 +46,55 @@ LemonLDAP::NG WebAuthn verify script
         e = jQuery.Event("webauthnFailure");
         $(document).trigger(e, [error]);
         if (!e.isDefaultPrevented()) {
-          return setMsg('webAuthnBrowserFailed', 'danger');
+          setMsg('webAuthnBrowserFailed', 'danger');
+        }
+        return trySetupConditional();
+      });
+    }
+  };
+
+  trySetupConditional = function() {
+    if (PublicKeyCredential.isConditionalMediationAvailable) {
+      return PublicKeyCredential.isConditionalMediationAvailable().then(function(result) {
+        if (result) {
+          return setupConditional();
         }
       });
     }
+  };
+
+  setupConditional = function() {
+    var request;
+    console.log("Setting up conditional mediation");
+    window.webauthnAbort = new AbortController();
+    request = {
+      publicKey: window.datas.request,
+      mediation: "conditional",
+      signal: window.webauthnAbort.signal
+    };
+    return webauthnJSON.get(request).then(function(response) {
+      var e;
+      e = jQuery.Event("webauthnSuccess");
+      $(document).trigger(e, [response]);
+      if (!e.isDefaultPrevented()) {
+        $('#credential').val(JSON.stringify(response));
+        return $('#credential').closest('form').submit();
+      }
+    })["catch"](function(error) {
+      var e;
+      e = jQuery.Event("webauthnFailure");
+      $(document).trigger(e, [error]);
+      if (!e.isDefaultPrevented()) {
+        return true;
+      }
+    });
   };
 
   $(document).on("portalLoaded", {}, function(event, info) {
     return $(document).ready(function() {
       $('#retrybutton').on('click', check);
       $('.webauthnclick').on('click', check);
+      trySetupConditional();
       if (window.datas.webauthn_autostart) {
         return setTimeout(check, 1000);
       }
