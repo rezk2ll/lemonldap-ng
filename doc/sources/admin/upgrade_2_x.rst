@@ -113,6 +113,28 @@ from both templates.
     -<!-- //endif -->
      <TMPL_INCLUDE NAME="footer.tpl">
 
+Passwordless WebAuthn
+^^^^^^^^^^^^^^^^^^^^^
+
+In order to support autocompletion of WebAuthn credentials on supported web browsers, update `standardlogin.tpl`
+
+.. code:: diff
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl b/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
+    index c6af84745..81ce95c3d 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/standardform.tpl
+    @@ -10,7 +10,8 @@
+         <div class="input-group-prepend">
+           <span class="input-group-text"><label for="userfield" class="mb-0"><i class="fa fa-user"></i></label></span>
+         </div>
+    -    <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">" trplaceholder="login" required aria-required="true"/>
+    +    <input id="userfield" name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">"
+    +      trplaceholder="login" required aria-required="true" autocomplete="webauthn"/>
+       </div>
+       <div class="input-group mb-3">
+         <div class="input-group-prepend">
+
 
 Also update `2fregisters.tpl` to that resident credentials are properly show to the user
 
