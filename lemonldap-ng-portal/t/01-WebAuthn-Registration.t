@@ -47,22 +47,20 @@ ENDKEY
         sign_count    => 18,
     );
 
-    #FIXME
     my $webauthn_tester = $webauthn_tester_1;
 
     my $res;
 
-    my $client = LLNG::Manager::Test->new( {
-            ini => {
+    my $ini = {
                 logLevel                   => 'error',
                 useSafeJail                => 1,
                 webauthn2fSelfRegistration => 1,
                 webauthn2fActivation       => 1,
                 webauthn2fUserCanRemoveKey => 1,
                 webauthnDisplayNameAttr    => 'cn',
-            }
-        }
-    );
+            };
+    my $client = LLNG::Manager::Test->new( {
+            ini => $ini } );
 
     my $portal = $client->p;
 
@@ -265,7 +263,7 @@ ENDKEY
 'pQECAyYgASFYIM_oQXEUzjPwEhM4gWmIbCuOXc4Ja8jPDKxbQaZckal7Ilgg_9a693_nkf7flk1S9AV2tjrtJPF6kg8TCGbFKoeD9Wc',
                 '_signCount' => 5,
                 'name'       => "MyFirstDevice",
-                'type'       => 'WebAuthn'
+                'type'       => 'WebAuthn',
             },
             "Registration contains expected data"
         );
@@ -277,7 +275,8 @@ ENDKEY
 'pQECAyYgASFYIM_oQXEUzjPwEhM4gWmIbCuOXc4Ja8jPDKxbQaZckal7Ilgg_9a693_nkf7flk1S9AV2tjrtJPF6kg8TCGbFKoeD9Wc',
                 '_signCount' => 18,
                 'name'       => "MySecondDevice",
-                'type'       => 'WebAuthn'
+                'type'       => 'WebAuthn',
+                resident => 1,
             },
             "Registration contains expected data"
         );
@@ -358,6 +357,9 @@ ENDKEY
     # Make sure epoch is different
     Time::Fake->offset("+10m");
 
+    # Require resident key
+    $client->ini({ %$ini, webauthn2fResidentKey => "always" });
+
     # Register a different device should succeed
     my $user_handle_2 =
       register_new_device( $client, $id, $webauthn_tester_2, "MySecondDevice" );
@@ -377,7 +379,7 @@ ENDKEY
             },
             {
                 'id'   => encode_base64url($credential_id_2),
-                'type' => 'public-key'
+                'type' => 'public-key',
             }
         ]
     );
