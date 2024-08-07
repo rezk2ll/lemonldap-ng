@@ -114,6 +114,26 @@ from both templates.
      <TMPL_INCLUDE NAME="footer.tpl">
 
 
+Also update `2fregisters.tpl` to that resident credentials are properly show to the user
+
+.. code:: diff
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/2fregisters.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/2fregisters.tpl
+    @@ -33,6 +33,11 @@
+                 <TMPL_ELSE>
+                     <TMPL_VAR NAME="type">
+                 </TMPL_IF>
+    +            <TMPL_IF name="type_WebAuthn">
+    +                <TMPL_IF name="resident">
+    +                <span trattribute="title:webauthnResident" class="fa fa-key"></span>
+    +                </TMPL_IF>
+    +            </TMPL_IF>
+                 </td>
+                 <td class="align-middle"><TMPL_VAR NAME="name"></td>
+                 <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
+
+
 2.19.0
 ------
 
