@@ -72,6 +72,9 @@ sub enabledServices {
     # Second factor
     push @res, [ secondFactor => $self->conf->{'sfEngine'} ];
 
+    # Portal menu
+    push @res, [ menu         => "::Main::Menu" ];
+
     # Trusted browser
     if ( $self->conf->{trustedBrowserRule} or $self->conf->{stayConnected} ) {
         my $module =

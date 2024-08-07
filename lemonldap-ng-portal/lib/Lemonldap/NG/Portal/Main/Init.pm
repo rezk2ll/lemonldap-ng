@@ -23,7 +23,6 @@ use URI;
 # Configuration storage
 has localConfig => ( is => 'rw', default => sub { {} } );
 has conf        => ( is => 'rw', default => sub { {} } );
-has menu        => ( is => 'rw', default => sub { {} } );
 has trOver      => ( is => 'rw', default => sub { { all => {} } } );
 
 # Sub modules
@@ -37,6 +36,7 @@ has _loadedServices => ( is => 'rw', default => sub { {} } );
 sub _captcha        { $_[0]->getService('captcha') }
 sub _trustedBrowser { $_[0]->getService('trustedBrowser') }
 sub _sfEngine       { $_[0]->getService('secondFactor') }
+sub menu            { $_[0]->getService('menu') }
 
 has _ppRules => ( is => 'rw', default => sub { {} } );
 
@@ -308,7 +308,6 @@ sub reloadConf {
 
     # Load menu
     # ---------
-    $self->menu( $self->loadPlugin('::Main::Menu') );
     $self->displayInit;
 
     # Load authentication/userDB
