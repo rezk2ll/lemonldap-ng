@@ -11,6 +11,7 @@ Portal configuration
    portalservers
    captcha
    public_pages
+   recaptcha
    secondfactor
    index_protocols
    index_authdb

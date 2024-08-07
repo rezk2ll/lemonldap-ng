@@ -709,15 +709,15 @@ sub attributes {
         },
         'captcha_login_enabled' => {
             'default' => 0,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'captcha_mail_enabled' => {
             'default' => 1,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'captcha_register_enabled' => {
             'default' => 1,
-            'type'    => 'bool'
+            'type'    => 'boolOrExpr'
         },
         'captcha_size' => {
             'default' => 6,
@@ -1637,7 +1637,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'text'
         },
         'hideOldPassword' => {
-            'default' => 0,
+            'default' => 1,
             'type'    => 'bool'
         },
         'httpOnly' => {

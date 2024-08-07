@@ -52,13 +52,19 @@ sub run {
 
     $self->ott->updateToken( $token, _webauthn_request => $request );
 
+    $req->data->{customScript} .= <<"EOF";
+<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/webauthn-json.browser-global.min.js"></script>
+<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/webauthncheck.min.js"></script>
+EOF
+
     # Prepare form
     my $tmp = $self->p->sendHtml(
         $req,
         'webauthn2fcheck',
         params => {
-            DATA  => to_json( { request => $request } ),
-            TOKEN => $token,
+            DATA          => to_json( { request => $request } ),
+            TOKEN         => $token,
+            CUSTOM_SCRIPT => $req->data->{customScript},
             $self->get2fTplParams($req),
         }
     );
@@ -92,6 +98,7 @@ sub verify {
     }
 
     if ( $validation_result->{success} == 1 ) {
+        $req->data->{_2fDevice} = $validation_result->{matching_credential};
         $self->auditLog(
             $req,
             message => (

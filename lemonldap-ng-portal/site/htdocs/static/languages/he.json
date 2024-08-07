@@ -364,6 +364,7 @@
 "webauthn2f":"WebAuthn",
 "webauthn2fWelcome":"רישום התקן אבטחה",
 "webauthnAlreadyRegistered":"ההתקן הזה כבר רשום",
+"webauthnResident":"This device can be used as a passkey",
 "welcomeOnPortal":"ברוך בואך לשער האימות המאובטח שלך.",
 "yesResendMail":"כן, לשלוח את ההודעה שוב",
 "your2faIsRegistered":"Your second factor has been registered",

@@ -364,6 +364,7 @@
 "webauthn2f":"WebAuthn",
 "webauthn2fWelcome":"Güvenlik cihazı kaydı",
 "webauthnAlreadyRegistered":"Bu cihaz zaten kayıtlı",
+"webauthnResident":"This device can be used as a passkey",
 "welcomeOnPortal":"Güvenli kimlik doğrulama portalına hoş geldiniz.",
 "yesResendMail":"Evet, tekrar e-posta gönder",
 "your2faIsRegistered":"İkinci faktörünüz kaydedildi",

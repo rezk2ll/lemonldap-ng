@@ -71,7 +71,6 @@ sub run {
                 )
               )
             {
-                $self->markRegistered($req);
                 return [
                     302,
                     [

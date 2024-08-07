@@ -85,9 +85,12 @@ sub init {
     );
 
     # Initialize Captcha if needed
-    if ( $self->conf->{captcha_mail_enabled} ) {
-        $self->captcha(1);
-    }
+    $self->captcha(
+        $self->p->buildRule(
+            $self->conf->{captcha_mail_enabled},
+            'captchaMail'
+        )
+    );
 
     # Load registered module
     $self->registerModule(
@@ -168,8 +171,8 @@ sub _certificateReset {
         $req->{user} = $req->param('mail');
 
         # Captcha for register form
-        if ( $self->captcha ) {
-            my $result = $self->p->_captcha->check_captcha($req);
+        if ( $self->captcha->( $req, {} ) ) {
+            my $result = $self->p->getService('captcha')->check_captcha($req);
             if ($result) {
                 $self->logger->debug("Captcha code verified");
             }
@@ -559,8 +562,8 @@ sub modifyCertificate {
 sub setSecurity {
     my ( $self, $req ) = @_;
 
-    if ( $self->captcha ) {
-        $self->p->_captcha->init_captcha($req);
+    if ( $self->captcha->( $req, {} ) ) {
+        $self->p->getService('captcha')->init_captcha($req);
     }
 
     elsif ( $self->ottRule->( $req, {} ) ) {

@@ -364,6 +364,7 @@
 "webauthn2f":"WebAuthn",
 "webauthn2fWelcome":"Turvavälineen rekisteröinti",
 "webauthnAlreadyRegistered":"Tämä väline on jo rekisteröity",
+"webauthnResident":"This device can be used as a passkey",
 "welcomeOnPortal":"Tervetuloa turvalliseen tunnistautumisportaaliisi.",
 "yesResendMail":"Kyllä, lähetä sähköposti uudestaan",
 "your2faIsRegistered":"Toisen vaiheen tunnistustapasi on rekisteröity",

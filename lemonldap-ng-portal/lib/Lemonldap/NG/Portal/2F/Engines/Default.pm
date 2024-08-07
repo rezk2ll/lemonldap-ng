@@ -26,6 +26,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   portalConsts
 );
 
+use Lemonldap::NG::Common::Util qw/display2F filterKey2F/;
+
 our $VERSION = '2.20.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
@@ -623,13 +625,19 @@ sub _displayRegister {
           unless $m;
         return $self->p->sendError( $req, 'Registration not authorized', 403 )
           unless $m->{r}->( $req, $req->userData );
+        my $mod = $m->{m};
+
+        if ( $mod->can('initDisplay') ) {
+            $mod->initDisplay($req);
+        }
         return $self->p->sendHtml(
             $req,
-            $m->{m}->template,
+            $mod->template,
             params => {
+                CUSTOM_SCRIPT    => $req->data->{customScript},
                 PREFIX           => $prefix,
                 "PREFIX_$prefix" => 1,
-                MSG   => $self->canUpdateSfa($req) || $m->{m}->welcome,
+                MSG              => $self->canUpdateSfa($req) || $mod->welcome,
                 ALERT => ( $self->canUpdateSfa($req) ? 'warning' : 'positive' ),
             }
         );
@@ -679,7 +687,15 @@ sub _displayRegister {
         my $prefix = $reg_mod_info->{p};
         my $module = $reg_mod_info->{m};
         foreach (@$_2fDevices) {
+
             if ( $_->{type} eq $type ) {
+
+                # Set k_v template variables for non_private values
+                # and also not for epoch/name
+                my $extrakeys = filterKey2F( $_, "epoch", "name" );
+                while ( my ( $k, $v ) = each %$extrakeys ) {
+                    $_->{"${k}_${v}"} = 1;
+                }
 
                 # Populate additional info for template engine
                 $_->{prefix}     = $prefix;
@@ -930,39 +946,66 @@ sub _verify {
     }
 
     # Evaluate hook
-    my $h = $self->p->processHook( $req, 'sfBeforeVerify', $module, $session );
-    if ( $h != PE_OK ) {
-        $req->noLoginDisplay(1);
-        return $self->p->do( $req, [ sub { $h } ] );
+    {
+        my $h =
+          $self->p->processHook( $req, 'sfBeforeVerify', $module, $session );
+        if ( $h != PE_OK ) {
+            $req->noLoginDisplay(1);
+            return $self->p->do( $req, [ sub { $h } ] );
+        }
     }
 
     # Launch second factor verification
-    my $res = $module->verify( $req, $session );
+    my $verify_result = {
+        result              => $module->verify( $req, $session ),
+        authenticationLevel => $module->authnLevel,
+        retries             => ( $session->{_2fRetries} || 0 ),
+        (
+            $req->data->{_2fDevice} ? ( device => $req->data->{_2fDevice} ) : ()
+        ),
+    };
+
+    # Evaluate hook
+    {
+        my $h = $self->p->processHook( $req, 'sfAfterVerify', $module, $session,
+            $verify_result );
+        if ( $h != PE_OK ) {
+            $req->noLoginDisplay(1);
+            return $self->p->do( $req, [ sub { $h } ] );
+        }
+    }
+
+    # May be modified by sfAfterVerify
+    my $res        = $verify_result->{result};
+    my $authnLevel = $verify_result->{authenticationLevel};
+    my $retries    = $verify_result->{retries};
 
     $self->restore2faSessionInfo( $req, $session );
 
     # Case error
-    if ( $res and !$req->data->{_2fRetries} ) {
+    if ( $res and $retries == 0 ) {
         $req->noLoginDisplay(1);
         $req->authResult(PE_BADCREDENTIALS);
 
         # Set the failed 2f type in case you want to store it in history
         # through sessionDataToRemember
-        $req->sessionInfo->{'_2f'} = $module->prefix;
+        $req->sessionInfo->{'_2f'} = $prefix;
         return $self->p->do( $req, [ 'storeHistory', sub { $res } ] );
     }
     elsif ($res) {
         $req->data->{_2fRetries} = (
-            ( $req->data->{_2fRetries} > 0 )
-            ? $req->data->{_2fRetries} - 1
+            ( $retries > 0 )
+            ? $retries - 1
             : 0
         );
 
         # Evaluate hook
-        my $h = $self->p->processHook( $req, 'sfBeforeRetry', $module );
-        if ( $h != PE_OK ) {
-            $req->noLoginDisplay(1);
-            return $self->p->do( $req, [ sub { $h } ] );
+        {
+            my $h = $self->p->processHook( $req, 'sfBeforeRetry', $module );
+            if ( $h != PE_OK ) {
+                $req->noLoginDisplay(1);
+                return $self->p->do( $req, [ sub { $h } ] );
+            }
         }
 
         $self->logger->debug(
@@ -978,12 +1021,11 @@ sub _verify {
 
     # Else restore session
     $req->mustRedirect(1);
-    $self->userLogger->notice( $module->prefix
+    $self->userLogger->notice( $prefix
           . '2f verification succeeded for '
           . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
-    my $level = $module->authnLevel;
-    return $self->_continueLogin( $req, $module->prefix, $module->authnLevel );
+    return $self->_continueLogin( $req, $prefix, $authnLevel, );
 }
 
 sub searchForAuthorized2Fmodules {

@@ -87,13 +87,12 @@ SKIP: {
       )
       or explain( $res->[2]->[0],
         '<form id="lformDemo" action="https://test.example.com"' );
-    ok(
-        $res->[2]->[0] =~
-m%<script type="application/init">\s*\{"sslHost":"https://authssl.example.com:19876"\}\s*</script>%s,
-        ' SSL AJAX URL found'
-      )
-      or
-      explain( $res->[2]->[0], '<script type="application/init">\{"sslHost"' );
+
+    is(
+        getJsVars($res)->{sslHost},
+        "https://authssl.example.com:19876",
+        "Found sslHost"
+    );
     expectForm( $res, '#', undef, 'kerberos' );
     ok(
         $res->[2]->[0] =~ m%<input type="hidden" name="kerberos" value="0" />%,
