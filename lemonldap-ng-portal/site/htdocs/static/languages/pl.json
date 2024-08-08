@@ -364,6 +364,7 @@
 "webauthn2f":"WebAuthn",
 "webauthn2fWelcome":"Rejestracja urządzenia zabezpieczającego",
 "webauthnAlreadyRegistered":"To urządzenie jest już zarejestrowane",
+"webauthnResident":"This device can be used as a passkey",
 "welcomeOnPortal":"Witamy w portalu z bezpiecznym uwierzytelnianiem.",
 "yesResendMail":"Tak, wyślij ponownie pocztę",
 "your2faIsRegistered":"Your second factor has been registered",

@@ -65,11 +65,6 @@ need to update it:
     -  </TMPL_IF>
      </div>
 
-Status changed
-^^^^^^^^^^^^^^
-
-The obsolete "portal status" and "status" features were removed from 2.20.0.
-An alternative is available using :doc:`Use message broker to collect status <statuscollect>`.
 
 WebAuthn registration and authentication
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -117,6 +112,33 @@ from both templates.
     -  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/webauthnregistration.js"></script>
     -<!-- //endif -->
      <TMPL_INCLUDE NAME="footer.tpl">
+
+
+Also update `2fregisters.tpl` to that resident credentials are properly show to the user
+
+.. code:: diff
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/2fregisters.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/2fregisters.tpl
+    @@ -33,6 +33,11 @@
+                 <TMPL_ELSE>
+                     <TMPL_VAR NAME="type">
+                 </TMPL_IF>
+    +            <TMPL_IF name="type_WebAuthn">
+    +                <TMPL_IF name="resident">
+    +                <span trattribute="title:webauthnResident" class="fa fa-key"></span>
+    +                </TMPL_IF>
+    +            </TMPL_IF>
+                 </td>
+                 <td class="align-middle"><TMPL_VAR NAME="name"></td>
+                 <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
+
+
+Status changed
+^^^^^^^^^^^^^^
+
+The obsolete "portal status" and "status" features were removed from 2.20.0.
+An alternative is available using :doc:`Use message broker to collect status <statuscollect>`.
 
 2.19.0
 ------

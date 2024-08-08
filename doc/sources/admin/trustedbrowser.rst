@@ -21,6 +21,7 @@ Configuration
    -  **Cookie name**: trusted browser cookie name
    -  **One trusted browser per user**: allow only one trusted browser per user
       New trusted browsers will disable the old ones. This option requires :doc:`Indexing the _session_uid field <browseablesessionbackend>`.
+   -  **Use time-based fingerprinting**: By default, the trusted browser system uses a time-dependant validation, based on TOTP. Disable this option to reverse to a simpler shared-secret, time-independant validation. This can help if your web browsers are not always synchronized with NTP.
 
 
 Rules examples

@@ -415,6 +415,7 @@ sub defaultValues {
         'totp2fSelfRegistration'  => 0,
         'totp2fUserCanRemoveKey'  => 1,
         'trustedBrowserRule'      => 0,
+        'trustedBrowserUseTotp'   => 1,
         'twitterAuthnLevel'       => 1,
         'twitterUserField'        => 'screen_name',
         'upgradeSession'          => 1,

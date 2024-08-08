@@ -68,6 +68,14 @@ has timeout => (
     }
 );
 
+has use_totp => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        $_[0]->conf->{trustedBrowserUseTotp} || 0;
+    }
+);
+
 has rule => (
     is      => 'rw',
     default => sub {
@@ -128,6 +136,7 @@ sub newDevice {
                     '../common/registerBrowser',
                     params => {
                         TOTPSEC => $totpSecret,
+                        USETOTP => $self->use_totp,
                         ACTION  => '/registerbrowser',
                         %$state,
                     }
@@ -353,16 +362,17 @@ sub checkFingerprint {
     if ( $self->conf->{stayConnectedBypassFG} ) {
         return 1;
     }
-    else {
+
+    if ( $ps->data->{totpSecret} ) {
         if ( $fg =~ s/^TOTP_// ) {
             return 1
               if (
                 $self->verifyCode( 30, 1, 6, $ps->data->{totpSecret}, $fg ) >
                 0 );
         }
-        elsif ( $fg eq $ps->data->{fingerprint} ) {
-            return 1;
-        }
+    }
+    elsif ( $ps->data->{fingerprint} ) {
+        return 1 if ( $fg eq $ps->data->{fingerprint} );
     }
     return 0;
 }
@@ -375,8 +385,9 @@ sub challenge {
             $req,
             '../common/registerBrowser',
             params => {
-                TOKEN  => $token,
-                ACTION => $action,
+                TOKEN   => $token,
+                USETOTP => $self->use_totp,
+                ACTION  => $action,
             }
         )
     );
@@ -424,7 +435,7 @@ sub removeExistingSessions {
     # searchOn() returns sessions indexed by their storage ID, then
     # it is required to use hashed ID
     foreach ( keys %{ $sessions || {} } ) {
-        if ( my $ps = $self->getTrustedBrowserSession($_, 1) ) {
+        if ( my $ps = $self->getTrustedBrowserSession( $_, 1 ) ) {
 
             # If this is a StayConnected session, remove it
             $ps->remove if $ps->{data}->{_connectedSince};
@@ -489,7 +500,8 @@ sub checkBrowserReturn {
         # Restore state
         my $sessionInfo = $state->{data}->{_challenge_session_info};
         my $urldc       = $state->{data}->{_challenge_urldc};
-        return $self->p->do( $req, [ sub { PE_ERROR } ] ) unless $sessionInfo;
+        return $self->p->do( $req, [ sub { PE_ERROR } ] )
+          unless $sessionInfo;
         $req->urldc($urldc) if $urldc;
         $req->sessionInfo($sessionInfo);
 

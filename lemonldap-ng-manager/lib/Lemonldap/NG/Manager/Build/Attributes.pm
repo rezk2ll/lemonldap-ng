@@ -1305,6 +1305,11 @@ sub attributes {
             default       => '[A-Z]{3}[a-z]{5}.\d{2}',
             documentation => 'Regular expression to create a random password',
         },
+        trustedBrowserUseTotp => {
+            type          => 'bool',
+            default       => 1,
+            documentation => 'Use TOTP for trusted browser registration',
+        },
         trustedBrowserRule => {
             type          => 'boolOrExpr',
             default       => 0,
