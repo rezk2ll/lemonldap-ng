@@ -1309,6 +1309,7 @@
 "totp2fTTL":"Ömür boyu",
 "totp2fUserCanRemoveKey":"Kullanıcının TOTP'yi kaldırmasına izin ver",
 "trustedBrowserRule":"Activation condition",
+"trustedBrowserUseTotp":"Use time-based fingerprinting",
 "trustedDomains":"Güvenilir etki alanları",
 "trustedProxies":"Güvenilir tünel IP'si",
 "twitterAppName":"Uygulama ismi",

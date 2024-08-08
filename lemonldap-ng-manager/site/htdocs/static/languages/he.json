@@ -1309,6 +1309,7 @@
 "totp2fTTL":"זמן חיים",
 "totp2fUserCanRemoveKey":"לאפשר למשתמש להסיר TOTP",
 "trustedBrowserRule":"Activation condition",
+"trustedBrowserUseTotp":"Use time-based fingerprinting",
 "trustedDomains":"שמות תחום מהימנים",
 "trustedProxies":"כתובות IP של מתווכים מהימנים",
 "twitterAppName":"שם יישום",

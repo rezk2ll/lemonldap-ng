@@ -782,6 +782,7 @@ sub tree {
                                 'stayConnectedTimeout',
                                 'stayConnectedCookieName',
                                 'stayConnectedSingleSession',
+                                'trustedBrowserUseTotp',
                             ],
                         },
                         {
