@@ -1309,6 +1309,7 @@
 "totp2fTTL":"Durée de vie",
 "totp2fUserCanRemoveKey":"Autoriser les utilisateurs à effacer leur TOTP",
 "trustedBrowserRule":"Condition d'activation",
+"trustedBrowserUseTotp":"Utiliser une empreinte basée sur le temps",
 "trustedDomains":"Domaines approuvés",
 "trustedProxies":"IP des proxys de confiance",
 "twitterAppName":"Nom de l'application",
