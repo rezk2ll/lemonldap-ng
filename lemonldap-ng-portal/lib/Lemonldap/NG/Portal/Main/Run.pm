@@ -1507,6 +1507,9 @@ sub loadTemplate {
         global_vars            => 0,
         ( $prm{filter} ? ( filter => $prm{filter} ) : () ),
     );
+    if ( $self->can('tplParams') ) {
+        $tpl->param( $self->tplParams($req) );
+    }
     if ( $prm{params} ) {
         $tpl->param( %{ $prm{params} } );
     }
