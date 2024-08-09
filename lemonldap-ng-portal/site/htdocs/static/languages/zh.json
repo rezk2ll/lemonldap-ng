@@ -364,6 +364,7 @@
 "webauthn2f":"WebAuthn",
 "webauthn2fWelcome":"Security device registration",
 "webauthnAlreadyRegistered":"This device is already registered",
+"webauthnResident":"This device can be used as a passkey",
 "welcomeOnPortal":"欢迎来到您的加密认证 portal",
 "yesResendMail":"好的，重新发送邮件",
 "your2faIsRegistered":"Your second factor has been registered",

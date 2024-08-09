@@ -52,6 +52,16 @@ has rpName => (
     }
 );
 
+sub initDisplay {
+    my ( $self, $req ) = @_;
+
+    $req->data->{customScript} .= <<"EOF";
+<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/webauthn-json.browser-global.min.js"></script>
+<script type="text/javascript" src="$self->{p}->{staticPrefix}/common/js/webauthnregistration.min.js"></script>
+EOF
+
+}
+
 # Split content of webauthn2fAttestationTrust into an array ref of PEM certificates
 sub _build_trust_anchors {
     my ($self) = shift;
@@ -202,6 +212,10 @@ sub _registration {
       $self->checkNameSfa( $req, $self->type, $req->param('keyName') );
     return $self->p->sendError( $req, 'badName', 200 ) unless $keyName;
 
+    my $is_resident =
+          $registration_options->{authenticatorSelection}->{residentKey}
+      and $registration_options->{authenticatorSelection}->{residentKey} eq
+      "required";
     if (
         $self->add2fDevice(
             $req,
@@ -214,6 +228,7 @@ sub _registration {
                 type  => $self->type,
                 name  => $keyName,
                 epoch => time(),
+                ( $is_resident ? ( resident => 1 ) : () ),
             }
         )
       )

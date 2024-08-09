@@ -1310,6 +1310,7 @@
 "totp2fTTL":"終生",
 "totp2fUserCanRemoveKey":"允許使用者移除 TOTP",
 "trustedBrowserRule":"Activation condition",
+"trustedBrowserUseTotp":"Use time-based fingerprinting",
 "trustedDomains":"受信任的網域",
 "trustedProxies":"受信任的代理伺服器 IP",
 "twitterAppName":"應用程式名稱",

@@ -364,6 +364,7 @@
 "webauthn2f":"WebAuthn",
 "webauthn2fWelcome":"Đăng ký thiết bị bảo mật",
 "webauthnAlreadyRegistered":"Thiết bị này đã được đăng ký",
+"webauthnResident":"This device can be used as a passkey",
 "welcomeOnPortal":"Chào mừng bạn đến với cổng thông tin xác thực được bảo mật của bạn.",
 "yesResendMail":"Có, gửi lại thư",
 "your2faIsRegistered":"Your second factor has been registered",

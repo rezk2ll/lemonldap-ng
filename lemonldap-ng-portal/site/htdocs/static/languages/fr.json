@@ -364,6 +364,7 @@
 "webauthn2f":"WebAuthn",
 "webauthn2fWelcome":"Enregistrement d'un périphérique de sécurité",
 "webauthnAlreadyRegistered":"Ce périphérique est déjà enregistré",
+"webauthnResident":"Ce périphérique peut remplacer votre mot de passe",
 "welcomeOnPortal":"Bienvenue sur votre portail d'authentification sécurisée.",
 "yesResendMail":"Oui, renvoyer le mail",
 "your2faIsRegistered":"Votre second facteur a été enregistré",

@@ -66,6 +66,73 @@ need to update it:
      </div>
 
 
+WebAuthn registration and authentication
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you modified the `webauthn2fcheck.tpl` or `/webauthn2fregister.tpl`, you
+will start noticing harmless but confusing error messages during WebAuthn
+checks or registration. In order to fix this, remove the javascript inclusions
+from both templates.
+
+
+.. code-block:: diff
+
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl b/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl
+    index aad8d4886..5d4f24fad 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fcheck.tpl
+    @@ -17,13 +17,6 @@
+       <script type="application/init">
+       <TMPL_VAR NAME="DATA">
+       </script>
+    -<!-- //if:jsminified
+    -  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/webauthn-ui.min.js"></script>
+    -  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/webauthncheck.min.js"></script>
+    -//else -->
+    -  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/webauthn-ui.js"></script>
+    -  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/webauthncheck.js"></script>
+    -<!-- //endif -->
+     </TMPL_IF>
+
+     </div>
+    diff --git a/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fregister.tpl b/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fregister.tpl
+    index d2e9d9df9..fe1f194f7 100644
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fregister.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/webauthn2fregister.tpl
+    @@ -43,12 +43,4 @@
+         <span trspan="goToPortal">Go to portal</span>
+       </a>
+     </div>
+    -
+    -<!-- //if:jsminified
+    -  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/webauthn-ui.min.js"></script>
+    -  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/webauthnregistration.min.js"></script>
+    -//else -->
+    -  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/webauthn-ui.js"></script>
+    -  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/webauthnregistration.js"></script>
+    -<!-- //endif -->
+     <TMPL_INCLUDE NAME="footer.tpl">
+
+
+Also update `2fregisters.tpl` to that resident credentials are properly show to the user
+
+.. code:: diff
+
+    --- a/lemonldap-ng-portal/site/templates/bootstrap/2fregisters.tpl
+    +++ b/lemonldap-ng-portal/site/templates/bootstrap/2fregisters.tpl
+    @@ -33,6 +33,11 @@
+                 <TMPL_ELSE>
+                     <TMPL_VAR NAME="type">
+                 </TMPL_IF>
+    +            <TMPL_IF name="type_WebAuthn">
+    +                <TMPL_IF name="resident">
+    +                <span trattribute="title:webauthnResident" class="fa fa-key"></span>
+    +                </TMPL_IF>
+    +            </TMPL_IF>
+                 </td>
+                 <td class="align-middle"><TMPL_VAR NAME="name"></td>
+                 <td class="data-epoch"><TMPL_VAR NAME="epoch"></td>
+
 
 2.19.0
 ------

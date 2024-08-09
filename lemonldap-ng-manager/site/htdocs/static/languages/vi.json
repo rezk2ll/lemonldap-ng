@@ -1310,6 +1310,7 @@
 "totp2fTTL":"Trọn đời",
 "totp2fUserCanRemoveKey":"Cho phép người dùng xóa TOTP",
 "trustedBrowserRule":"Activation condition",
+"trustedBrowserUseTotp":"Use time-based fingerprinting",
 "trustedDomains":"Miền tin cậy",
 "trustedProxies":"proxies IP tin cậy",
 "twitterAppName":"Tên ứng dụng",

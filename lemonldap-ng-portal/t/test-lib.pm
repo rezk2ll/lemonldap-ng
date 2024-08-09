@@ -641,12 +641,10 @@ sub getHtmlElement {
 sub expectXpath {
     local $Test::Builder::Level = $Test::Builder::Level + 1;
 
-    my ( $res, $xpath ) = @_;
+    my ( $res, $xpath, $message ) = @_;
+    $message ||= "Found at least one result for $xpath";
 
-    ok(
-        my $res = getHtmlElement( $res, $xpath ),
-        "Found at least one result for $xpath"
-    );
+    ok( $res = getHtmlElement( $res, $xpath ), $message, );
     return $res;
 }
 
