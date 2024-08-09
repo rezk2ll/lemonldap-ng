@@ -59,11 +59,6 @@ sub loadMailTemplate {
     $prm{cache}                   = 0 unless defined $prm{cache};
     $prm{params}->{STATIC_PREFIX} = $self->p->staticPrefix;
     $prm{params}->{MAIN_LOGO}     = $self->conf->{portalMainLogo};
-    my %extra =
-        $self->p->can('tplParams')
-      ? $self->p->tplParams($req)
-      : ();
-    $prm{params}->{$_} = $extra{$_} for keys %extra;
 
     return $self->loadTemplate( $req, $name, %prm );
 }
