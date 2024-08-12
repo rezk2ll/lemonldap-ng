@@ -2626,6 +2626,11 @@ sub attributes {
             type          => 'text',
             documentation => 'WebAuthn Relying Party display name',
         },
+        webauthnAuthnLevel => {
+            type          => 'int',
+            default       => 3,
+            documentation => 'WebAuthn authentication level',
+        },
 
         # Single session
         notifyDeleted => {
@@ -3698,6 +3703,7 @@ sub attributes {
                 { k => 'SSL',         v => 'SSL' },
                 { k => 'Twitter',     v => 'Twitter' },
                 { k => 'WebID',       v => 'WebID' },
+                { k => 'WebAuthn',    v => 'WebAuthn' },
                 { k => 'Demo',        v => 'Demonstration' },
                 { k => 'Choice',      v => 'authChoice' },
                 { k => 'Combination', v => 'combineMods' },
@@ -4511,6 +4517,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'SSL',           v => 'SSL' },
                     { k => 'Twitter',       v => 'Twitter' },
                     { k => 'WebID',         v => 'WebID' },
+                    { k => 'WebAuthn',      v => 'WebAuthn' },
                     { k => 'Custom',        v => 'customModule' },
                 ],
                 [

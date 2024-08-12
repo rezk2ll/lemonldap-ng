@@ -86,6 +86,7 @@
 "PE80":"Esta dirección ya está siendo utilizada",
 "PE81":"Intento de autenticación inválido",
 "PE82":"Tiempo de espera de autenticación exedido",
+"PE83":"WebAuthn authentication failed",
 "PE84":"Usted no está autorizado a acceder a este servidor",
 "PE85":"El sitio remoto pide una nueva sesión (y el plugin UpgradeSession no está cargado). Desconéctese y reintente",
 "PE86":"Your account is locked. You have to wait",

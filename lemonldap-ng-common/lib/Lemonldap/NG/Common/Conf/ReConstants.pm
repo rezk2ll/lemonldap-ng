@@ -58,6 +58,7 @@ our $authParameters = {
   slaveParams => [qw(slaveAuthnLevel slaveUserHeader slaveMasterIP slaveHeaderName slaveHeaderContent slaveDisplayLogo slaveExportedVars)],
   sslParams => [qw(SSLAuthnLevel SSLVar SSLIssuerVar SSLVarIf sslByAjax sslHost)],
   twitterParams => [qw(twitterAuthnLevel twitterKey twitterSecret twitterAppName twitterUserField)],
+  webauthnParams => [qw(webauthnAuthnLevel)],
   webidParams => [qw(webIDAuthnLevel webIDExportedVars webIDWhitelist)],
 };
 our $issuerParameters = {

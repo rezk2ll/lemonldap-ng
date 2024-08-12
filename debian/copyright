@@ -42,7 +42,7 @@ Copyright: 2005-2023, Xavier Guimard <yadd@debian.org>
  2019-2023, Maxime Besson <maxime.besson@worteks.com>
 License: GPL-2+
 
-Files: lemonldap-ng-portal/site/htdocs/static/bootstrap/webauthn.png
+Files: lemonldap-ng-portal/site/htdocs/static/bootstrap/webauthn.png lemonldap-ng-portal/site/htdocs/static/common/modules/webauthn.png
 Copyright: James Cullum <https://github.com/JamesCullum>
 License: WebAuthnLogoLicense
 

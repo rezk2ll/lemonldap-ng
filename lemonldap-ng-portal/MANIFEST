@@ -49,6 +49,7 @@ lib/Lemonldap/NG/Portal/Auth/SAML.pm
 lib/Lemonldap/NG/Portal/Auth/Slave.pm
 lib/Lemonldap/NG/Portal/Auth/SSL.pm
 lib/Lemonldap/NG/Portal/Auth/Twitter.pm
+lib/Lemonldap/NG/Portal/Auth/WebAuthn.pm
 lib/Lemonldap/NG/Portal/Auth/WebID.pm
 lib/Lemonldap/NG/Portal/Captcha.pod
 lib/Lemonldap/NG/Portal/Captcha/ReCaptcha.pm
@@ -515,6 +516,7 @@ site/templates/bootstrap/totp2fregister.tpl
 site/templates/bootstrap/upgradesession.tpl
 site/templates/bootstrap/webauthn2fcheck.tpl
 site/templates/bootstrap/webauthn2fregister.tpl
+site/templates/bootstrap/webauthnform.tpl
 site/templates/bootstrap/yubikey2fregister.tpl
 site/templates/bootstrap/yubikeyform.tpl
 site/templates/common/bullet_go.png
@@ -620,6 +622,8 @@ t/28-AuthChoice-with-rules.t
 t/28-AuthChoice-with-token.t
 t/29-AuthGPG.t
 t/29-AuthSSL.t
+t/29-AuthWebAuthn-Choice.t
+t/29-AuthWebAuthn.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO.t
 t/30-Auth-and-issuer-SAML-Federation.t
