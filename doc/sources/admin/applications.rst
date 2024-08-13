@@ -18,6 +18,7 @@ Applications
    applications/django
    applications/dokuwiki
    applications/drupal
+   applications/foreman
    applications/fusiondirectory
    applications/gerrit
    applications/gitea
@@ -110,6 +111,7 @@ Application                                                       Configuration 
 .. image:: applications/django_logo.png                           :doc:`Django<applications/django>`                   ✔
 .. image:: applications/dokuwiki_logo.png                         :doc:`Dokuwiki<applications/dokuwiki>`               ✔
 .. image:: applications/drupal_logo.png                           :doc:`Drupal<applications/drupal>`                   ✔
+.. image:: applications/foremanhelmet.svg                         :doc:`Foreman<applications/foreman>`                                                        ✔
 .. image:: applications/fusiondirectory-logo.jpg                  :doc:`FusionDirectory<applications/fusiondirectory>` ✔
 .. image:: applications/gerrit_logo.png                           :doc:`Gerrit<applications/gerrit>`                                                          ✔
 .. image:: applications/gitlab_logo.png                           :doc:`Gitlab<applications/gitlab>`                                                     ✔    ✔
