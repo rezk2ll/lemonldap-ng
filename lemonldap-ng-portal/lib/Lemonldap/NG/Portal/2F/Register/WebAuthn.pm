@@ -212,10 +212,10 @@ sub _registration {
       $self->checkNameSfa( $req, $self->type, $req->param('keyName') );
     return $self->p->sendError( $req, 'badName', 200 ) unless $keyName;
 
-    my $is_resident =
+    my $is_resident = (
           $registration_options->{authenticatorSelection}->{residentKey}
-      and $registration_options->{authenticatorSelection}->{residentKey} eq
-      "required";
+      and ($registration_options->{authenticatorSelection}->{residentKey} eq
+      "required"));
     if (
         $self->add2fDevice(
             $req,

@@ -364,7 +364,7 @@ ENDKEY
     Time::Fake->offset("+10m");
 
     # Require resident key
-    $client->ini({ %$ini, webauthn2fResidentKey => "always" });
+    $client->ini({ %$ini, webauthn2fResidentKey => "required" });
 
     # Register a different device should succeed
     my $user_handle_2 =
