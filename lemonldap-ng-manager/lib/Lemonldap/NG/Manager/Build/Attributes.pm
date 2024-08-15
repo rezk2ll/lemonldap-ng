@@ -4371,9 +4371,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         dbiAuthChain    => { type => 'text', },
         dbiAuthUser     => { type => 'text', },
         dbiAuthPassword => { type => 'password', },
-        dbiUserChain    => { type => 'text', },
-        dbiUserUser     => { type => 'text', },
-        dbiUserPassword => { type => 'password', },
         dbiAuthTable    => { type => 'text', },
         dbiUserTable    => { type => 'text', },
 
