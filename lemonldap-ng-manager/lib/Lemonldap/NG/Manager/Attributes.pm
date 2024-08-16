@@ -1391,16 +1391,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'dbiPasswordMailCol' => {
             'type' => 'text'
         },
-        'dbiUserChain' => {
-            'type' => 'text'
-        },
-        'dbiUserPassword' => {
-            'type' => 'password'
-        },
         'dbiUserTable' => {
-            'type' => 'text'
-        },
-        'dbiUserUser' => {
             'type' => 'text'
         },
         'decryptValueFunctions' => {

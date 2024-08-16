@@ -175,24 +175,10 @@ sub tree {
                                 {
                                     title => 'dbiConnection',
                                     help  => 'authdbi.html#connection',
-                                    nodes => [ {
-                                            title => 'dbiConnectionAuth',
-                                            form  => 'simpleInputContainer',
-                                            nodes => [
-                                                'dbiAuthChain',
-                                                'dbiAuthUser',
-                                                'dbiAuthPassword'
-                                            ]
-                                        },
-                                        {
-                                            title => 'dbiConnectionUser',
-                                            form  => 'simpleInputContainer',
-                                            nodes => [
-                                                'dbiUserChain',
-                                                'dbiUserUser',
-                                                'dbiUserPassword'
-                                            ]
-                                        }
+                                    nodes => [
+                                        'dbiAuthChain',
+                                        'dbiAuthUser',
+                                        'dbiAuthPassword'
                                     ]
                                 },
                                 {
