@@ -56,18 +56,34 @@ has _dbh => (
 );
 
 sub dbh {
-    my $conf = $_[0]->{conf};
-    $_[0]->{_dbh} = eval {
+    my ($self) = @_;
+
+    my $conf = $self->{conf};
+    $self->{_dbh} = eval {
         DBI->connect_cached(
             $conf->{dbiAuthChain}, $conf->{dbiAuthUser},
-            $conf->{dbiAuthPassword}, { RaiseError => 1 }
+            $conf->{dbiAuthPassword}, { RaiseError => 1, AutoCommit => 1, }
         );
     };
     if ($@) {
-        $_[0]->{p}->logger->error("DBI connection error: $@");
+        $self->{p}->logger->error("DBI connection error: $@");
         return 0;
     }
-    return $_[0]->{_dbh};
+
+    if ( $conf->{dbiAuthChain} =~ /^dbi:sqlite/i ) {
+        $self->{_dbh}->{sqlite_unicode} = 1;
+    }
+    elsif ( $conf->{dbiAuthChain} =~ /^dbi:mysql/i ) {
+        eval {
+            $self->{_dbh}->{mysql_enable_utf8} = 1;
+            $self->{_dbh}->do("set names 'utf8'");
+        };
+    }
+    elsif ( $conf->{dbiAuthChain} =~ /^dbi:pg/i ) {
+        $self->{_dbh}->{pg_enable_utf8} = 1;
+    }
+
+    return $self->{_dbh};
 }
 
 # INITIALIZATION
