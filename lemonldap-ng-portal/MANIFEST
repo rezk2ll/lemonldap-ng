@@ -189,6 +189,7 @@ MANIFEST.SKIP
 META.json
 META.yml
 README
+scripts/downloadSamlMetadata
 scripts/lemonldap-ng-portal.preset
 scripts/lemonldap-ng-portal.service
 scripts/lemonldap-ng-portal.timer
@@ -422,6 +423,7 @@ site/htdocs/static/common/modules/SAML.png
 site/htdocs/static/common/modules/Slave.png
 site/htdocs/static/common/modules/SSL.png
 site/htdocs/static/common/modules/Twitter.png
+site/htdocs/static/common/modules/webauthn.png
 site/htdocs/static/common/modules/WebID.png
 site/htdocs/static/common/nl.png
 site/htdocs/static/common/pl.png
@@ -561,6 +563,7 @@ t/01-BuildUrl.t
 t/01-Cookie-Domain.t
 t/01-CSP-and-CORS-headers.t
 t/01-Custom2fa.pm
+t/01-downloadSamlMetadata.t
 t/01-Dynamic-Portal-Url.t
 t/01-EnablePasswordDisplay.t
 t/01-Handler-redirection-and-URL-check-by-portal.t
