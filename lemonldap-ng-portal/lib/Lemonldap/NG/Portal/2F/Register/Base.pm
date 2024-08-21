@@ -125,4 +125,51 @@ sub delete {
     return $self->p->sendError( $req, '2FDeviceNotFound', 400 );
 }
 
+sub failHtmlResponse {
+    my ( $self, $req, $error ) = @_;
+    my $uid = $req->userData->{ $self->conf->{whatToTrace} };
+
+    $self->auditLog(
+        $req,
+        message => (
+            $self->type . " 2F device registration failed for $uid : $error"
+        ),
+        code         => "2FA_DEVICE_REGISTRATION_FAILED",
+        type         => $self->prefix,
+        portal_error => $error,
+        user         => $uid,
+    );
+
+    return $self->p->sendHtml(
+        $req, 'error',
+        params => {
+            RAW_ERROR       => $error,
+            AUTH_ERROR_TYPE => 'error',
+        }
+    );
+}
+
+sub failResponse {
+    my ( $self, $req, $error, $code ) = @_;
+    my $uid = $req->userData->{ $self->conf->{whatToTrace} };
+
+    $self->auditLog(
+        $req,
+        message => (
+            $self->type . " 2F device registration failed for $uid : $error"
+        ),
+        code         => "2FA_DEVICE_REGISTRATION_FAILED",
+        type         => $self->prefix,
+        portal_error => $error,
+        user         => $uid,
+    );
+
+    return $self->p->sendError( $req, $error, $code );
+}
+
+sub successResponse {
+    my ( $self, $req, $info ) = @_;
+    return $self->p->sendJSONresponse( $req, $info );
+}
+
 1;

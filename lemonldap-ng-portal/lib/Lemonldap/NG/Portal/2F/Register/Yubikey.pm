@@ -38,7 +38,7 @@ sub register {
     my $otp  = $req->param('otp');
     my $UBKName =
       $self->checkNameSfa( $req, $self->type, $req->param('UBKName') );
-    return $self->p->sendError( $req, 'badName', 200 ) unless $UBKName;
+    return $self->failHtmlResponse( $req, 'badName' ) unless $UBKName;
 
     if ( $otp
         and length($otp) > $self->conf->{yubikey2fPublicIDSize} )
@@ -50,15 +50,8 @@ sub register {
 
         # Search if the Yubikey is already registered
         if ( grep { $_->{_yubikey} eq $key } @alldevices ) {
-            $self->userLogger->error(
-                $self->prefix . '2f: device already registered!' );
-            return $self->p->sendHtml(
-                $req, 'error',
-                params => {
-                    RAW_ERROR       => 'yourKeyIsAlreadyRegistered',
-                    AUTH_ERROR_TYPE => 'warning',
-                }
-            );
+            return $self->failHtmlResponse( $req,
+                'yourKeyIsAlreadyRegistered' );
         }
 
         if (
@@ -86,19 +79,11 @@ sub register {
         }
         else {
             $self->logger->debug( $self->prefix . "2f: unable to add device" );
-            return $self->p->sendError( $req, 'serverError' );
+            return $self->failResponse( $req, 'serverError' );
         }
     }
     else {
-        $self->userLogger->error( $self->prefix . "2f: no code provided" );
-        return $self->p->sendHtml(
-            $req, 'error',
-            params => {
-                AUTH_ERROR                       => PE_FORMEMPTY,
-                ( 'AUTH_ERROR_' . PE_FORMEMPTY ) => 1,
-                AUTH_ERROR_TYPE                  => 'positive',
-            }
-        );
+        return $self->failHtmlResponse( $req, "PE2" );
     }
 }
 

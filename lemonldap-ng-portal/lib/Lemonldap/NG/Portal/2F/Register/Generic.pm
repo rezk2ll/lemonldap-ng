@@ -53,18 +53,14 @@ sub sendcode {
     my $generic = $req->param('generic');
 
     unless ($generic) {
-        $self->userLogger->info(
-            $self->prefix . "2f: registration -> empty validation form" );
-        return $self->p->sendError( $req, 'PE79', 200 );
+        return $self->failResponse( $req, 'PE79', 200 );
     }
 
     # Validate format
     unless ( $self->validateFormat($generic) ) {
         my $error_label = $self->conf->{generic2fFormatErrorLabel}
           || 'generic2fFormatError';
-        $self->userLogger->info(
-            $self->prefix . "2f: registration -> invalid format" );
-        return $self->p->sendError( $req, $error_label, 200 );
+        return $self->failResponse( $req, $error_label, 200 );
     }
 
     # Generate and send code
@@ -77,12 +73,12 @@ sub sendcode {
     my $token = $self->ott->createToken($sessionInfo);
     my $result =
       $self->verificationModule->challenge( $req, $sessionInfo, $token );
-    return $self->p->sendError( $req, 'serverError' ) unless $result;
+    return $self->failResponse( $req, 'serverError' ) unless $result;
 
     # Send response
     $self->userLogger->notice(
         $self->prefix . "2f: send verification code to $generic for $user" );
-    return $self->p->sendJSONresponse( $req, { result => 1, token => $token } );
+    return $self->successResponse( $req, { result => 1, token => $token } );
 }
 
 sub verify {
@@ -94,13 +90,13 @@ sub verify {
     my $genericcode = $req->param('genericcode');
     my $genericname =
       $self->checkNameSfa( $req, $self->prefix, $req->param('genericname') );
-    return $self->p->sendError( $req, 'badName', 200 ) unless $genericname;
+    return $self->failResponse( $req, 'badName', 200 ) unless $genericname;
 
     # Verify code
     my $token = $self->ott->getToken( $tokenid, 1 );
     my $res   = $self->verificationModule->verify_supplied_code( $req, $token,
         $genericcode );
-    return $self->p->sendError( $req, "PE$res", 400 )
+    return $self->failResponse( $req, "PE$res", 400 )
       unless ( $res == PE_OK );
 
     # Now generic is verified, let's store it in persistent data
@@ -116,7 +112,7 @@ sub verify {
         else {
             $self->logger->error(
                 $self->prefix . "2f: unable to delete old device(s)" );
-            return $self->p->sendError( $req, 'serverError' );
+            return $self->failResponse( $req, 'serverError' );
         }
     }
 
@@ -134,11 +130,11 @@ sub verify {
         )
       )
     {
-        return $self->p->sendJSONresponse( $req, { result => 1 } );
+        return $self->successResponse( $req, { result => 1 } );
     }
     else {
-        $self->logger->debug( $self->prefix . "2f: unable to add device" );
-        return $self->p->sendError( $req, 'serverError' );
+        $self->logger->error( $self->prefix . "2f: unable to add device" );
+        return $self->failResponse( $req, 'serverError' );
     }
 }
 

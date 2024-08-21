@@ -151,7 +151,7 @@ sub _registrationchallenge {
 
     $self->logger->debug(
         "WebAuthn registration parameters " . to_json($request) );
-    return $self->p->sendJSONresponse( $req,
+    return $self->successResponse( $req,
         { request => $request, state_id => $token } );
 }
 
@@ -164,19 +164,19 @@ sub _registration {
     unless ($state_id) {
         $self->logger->error(
             $self->prefix . "2f: could not find state ID in response" );
-        return $self->p->sendError( $req, 'webAuthnRegisterFailed', 400 );
+        return $self->failResponse( $req, 'webAuthnRegisterFailed', 400 );
     }
     my $state_data;
     unless ( $state_data = $self->ott->getToken($state_id) ) {
         $self->logger->error( $self->prefix
               . "2f: expired or invalid state ID in response: $state_id" );
-        return $self->p->sendError( $req, 'PE82', 400 );
+        return $self->failResponse( $req, 'PE82', 400 );
     }
     my $registration_options = ( $state_data->{registration_options} );
     unless ($registration_options) {
         $self->logger->error( $self->prefix
               . '2f: registration options missing from state data' );
-        return $self->p->sendError( $req, 'webAuthnRegisterFailed', 400 );
+        return $self->failResponse( $req, 'webAuthnRegisterFailed', 400 );
     }
 
     # Data required for WebAuthn verification
@@ -187,7 +187,7 @@ sub _registration {
     unless ($credential_json) {
         $self->logger->error(
             $self->prefix . '2f: missing credential parameter' );
-        return $self->p->sendError( $req, 'webAuthnRegisterFailed', 400 );
+        return $self->failResponse( $req, 'webAuthnRegisterFailed', 400 );
     }
 
     my $validation = eval {
@@ -197,7 +197,7 @@ sub _registration {
     if ($@) {
         $self->logger->error(
             $self->prefix . "2f: Credential validation error: $@" );
-        return $self->p->sendError( $req, "webAuthnRegisterFailed", 400 );
+        return $self->failResponse( $req, "webAuthnRegisterFailed", 400 );
     }
 
     my $credential_id     = $validation->{credential_id};
@@ -214,13 +214,13 @@ sub _registration {
             ( $aaguid ? "AAGUID: $aaguid" : () ) )
     );
 
-    return $self->p->sendError( $req, 'webauthnAlreadyRegistered', 400 )
+    return $self->failResponse( $req, 'webauthnAlreadyRegistered', 400 )
       if $self->find2fDevicesByKey( $req, $req->userData, $self->type,
         "_credentialId", $credential_id );
 
     my $keyName =
       $self->checkNameSfa( $req, $self->type, $req->param('keyName') );
-    return $self->p->sendError( $req, 'badName', 200 ) unless $keyName;
+    return $self->failResponse( $req, 'badName', 200 ) unless $keyName;
 
     my $is_resident = (
         $registration_options->{authenticatorSelection}->{residentKey}
@@ -245,11 +245,11 @@ sub _registration {
         )
       )
     {
-        return $self->p->sendJSONresponse( $req, { result => 1 } );
+        return $self->successResponse( $req, { result => 1 } );
     }
     else {
         $self->logger->error( $self->prefix . '2f: unable to add device' );
-        return $self->p->sendError( $req, 'serverError' );
+        return $self->failResponse( $req, 'serverError' );
     }
 }
 
@@ -263,7 +263,7 @@ sub _verificationchallenge {
 
     unless ($request) {
         $self->logger->error( $self->prefix . '2f: no registered device' );
-        return $self->p->sendError( $req, 'webAuthnNoDevice', 500 );
+        return $self->failResponse( $req, 'webAuthnNoDevice', 500 );
     }
 
     # Request is persisted on the server
@@ -274,7 +274,7 @@ sub _verificationchallenge {
 
     $self->logger->debug(
         $self->prefix . "2f: authentication parameters: " . to_json($request) );
-    return $self->p->sendJSONresponse( $req,
+    return $self->successResponse( $req,
         { request => $request, state_id => $token } );
 }
 
@@ -287,14 +287,14 @@ sub _verification {
     unless ($credential_json) {
         $self->logger->error(
             $self->prefix . '2f: missing credential parameter' );
-        return $self->p->sendError( $req, 'webAuthnFailed', 400 );
+        return $self->failResponse( $req, 'webAuthnFailed', 400 );
     }
 
     my $state_id = $req->param('state_id');
     unless ($state_id) {
         $self->logger->error( $self->prefix
               . "2f: could not find state ID in response ($credential_json)" );
-        return $self->p->sendError( $req, 'webAuthnFailed', 400 );
+        return $self->failResponse( $req, 'webAuthnFailed', 400 );
     }
 
     # Recover challenge
@@ -302,7 +302,7 @@ sub _verification {
     unless ( $state_data = $self->ott->getToken($state_id) ) {
         $self->logger->error( $self->prefix
               . "2f: expired or invalid state ID in response ($state_id)" );
-        return $self->p->sendError( $req, 'PE82', 400 );
+        return $self->failResponse( $req, 'PE82', 400 );
     }
 
     my $signature_options = ( $state_data->{authentication_options} );
@@ -313,14 +313,14 @@ sub _verification {
     if ($@) {
         $self->logger->error(
             $self->prefix . "2f: validation error for $user: $@" );
-        return $self->p->sendJSONresponse( $req, { result => 0 } );
+        return $self->successResponse( $req, { result => 0 } );
     }
 
     if ( $validation_result->{success} == 1 ) {
-        return $self->p->sendJSONresponse( $req, { result => 1 } );
+        return $self->successResponse( $req, { result => 1 } );
     }
     else {
-        return $self->p->sendJSONresponse( $req, { result => 0 } );
+        return $self->successResponse( $req, { result => 0 } );
     }
 }
 

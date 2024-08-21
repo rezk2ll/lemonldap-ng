@@ -62,17 +62,13 @@ sub verify {
     my $passwordverify = $req->param('passwordverify');
 
     unless ( $password and $passwordverify ) {
-        $self->userLogger->info(
-            $self->prefix . "2f: registration -> empty validation form" );
-        return $self->p->sendError( $req, 'missingPassword', 200 );
+        return $self->failResponse( $req, 'missingPassword', 200 );
     }
 
     # Invalid try is returned with a 200 code. Javascript will read error
     # and propose to retry
     if ( $password ne $passwordverify ) {
-        $self->userLogger->notice( $self->prefix
-              . "2f: registration -> password verification failed for $user" );
-        return $self->p->sendError( $req, 'PE34', 200 );
+        return $self->failResponse( $req, 'PE34', 200 );
     }
     $self->logger->debug( $self->prefix . '2f: code verified' );
 
@@ -92,7 +88,7 @@ sub verify {
         else {
             $self->logger->error(
                 $self->prefix . "2f: unable to delete old password(s)" );
-            return $self->p->sendError( $req, 'serverError' );
+            return $self->failResponse( $req, 'serverError' );
         }
     }
 
@@ -110,11 +106,11 @@ sub verify {
         )
       )
     {
-        return $self->p->sendJSONresponse( $req, { result => 1 } );
+        return $self->successResponse( $req, { result => 1 } );
     }
     else {
-        $self->logger->debug( $self->prefix . "2f: unable to add password" );
-        return $self->p->sendError( $req, 'serverError' );
+        $self->logger->error( $self->prefix . "2f: unable to add password" );
+        return $self->failResponse( $req, 'serverError' );
     }
 }
 
