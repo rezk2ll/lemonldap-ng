@@ -110,14 +110,7 @@ sub verify {
         )
       )
     {
-        return [
-            200,
-            [
-                'Content-Type'   => 'application/json',
-                'Content-Length' => 12,
-            ],
-            ['{"result":1}']
-        ];
+        return $self->p->sendJSONresponse( $req, { result => 1 } );
     }
     else {
         $self->logger->debug( $self->prefix . "2f: unable to add password" );
@@ -141,14 +134,7 @@ sub delete {
     if ( $self->del2fDevice( $req, $req->userData, $self->type, $epoch ) ) {
         $self->userLogger->notice(
             $self->prefix . "2f: password deleted for $user" );
-        return [
-            200,
-            [
-                'Content-Type'   => 'application/json',
-                'Content-Length' => 12,
-            ],
-            ['{"result":1}']
-        ];
+        return $self->p->sendJSONresponse( $req, { result => 1 } );
     }
 }
 

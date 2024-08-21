@@ -82,15 +82,7 @@ sub sendcode {
     # Send response
     $self->userLogger->notice(
         $self->prefix . "2f: send verification code to $generic for $user" );
-    my $json_response = qq({"result":1,"token":"$token"});
-    return [
-        200,
-        [
-            'Content-Type'   => 'application/json',
-            'Content-Length' => length($json_response),
-        ],
-        [$json_response]
-    ];
+    return $self->p->sendJSONresponse( $req, { result => 1, token => $token } );
 }
 
 sub verify {
@@ -142,14 +134,7 @@ sub verify {
         )
       )
     {
-        return [
-            200,
-            [
-                'Content-Type'   => 'application/json',
-                'Content-Length' => 12,
-            ],
-            ['{"result":1}']
-        ];
+        return $self->p->sendJSONresponse( $req, { result => 1 } );
     }
     else {
         $self->logger->debug( $self->prefix . "2f: unable to add device" );
@@ -171,14 +156,7 @@ sub delete {
         $self->prefix . '2f: "epoch" parameter is missing', 400 );
 
     if ( $self->del2fDevice( $req, $req->userData, $self->prefix, $epoch ) ) {
-        return [
-            200,
-            [
-                'Content-Type'   => 'application/json',
-                'Content-Length' => 12,
-            ],
-            ['{"result":1}']
-        ];
+        return $self->p->sendJSONresponse( $req, { result => 1 } );
     }
     $self->logger->error( $self->prefix . "2f: device not found" );
     return $self->p->sendError( $req, '2FDeviceNotFound', 400 );
