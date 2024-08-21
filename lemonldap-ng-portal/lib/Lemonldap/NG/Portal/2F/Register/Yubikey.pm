@@ -102,23 +102,4 @@ sub register {
     }
 }
 
-sub delete {
-
-    my ( $self, $req ) = @_;
-    my $user = $req->userData->{ $self->conf->{whatToTrace} };
-
-    # Check if unregistration is allowed
-    return $self->p->sendError( $req, 'notAuthorized', 400 )
-      unless $self->userCanRemove;
-
-    my $epoch = $req->param('epoch')
-      or return $self->p->sendError( $req,
-        $self->prefix . '2f: "epoch" parameter is missing', 400 );
-    if ( $self->del2fDevice( $req, $req->userData, $self->type, $epoch ) ) {
-        return $self->p->sendJSONresponse( $req, { result => 1 } );
-    }
-    $self->logger->error( $self->prefix . "2f: device not found" );
-    return $self->p->sendError( $req, '2FDeviceNotFound', 400 );
-}
-
 1;

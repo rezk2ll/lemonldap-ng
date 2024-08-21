@@ -118,24 +118,4 @@ sub verify {
     }
 }
 
-sub delete {
-
-    my ( $self, $req ) = @_;
-    my $user = $req->userData->{ $self->conf->{whatToTrace} };
-
-    # Check if unregistration is allowed
-    return $self->p->sendError( $req, 'notAuthorized', 400 )
-      unless $self->conf->{password2fUserCanRemoveKey};
-
-    my $epoch = $req->param('epoch')
-      or return $self->p->sendError( $req,
-        $self->prefix . '2f: "epoch" parameter is missing', 400 );
-
-    if ( $self->del2fDevice( $req, $req->userData, $self->type, $epoch ) ) {
-        $self->userLogger->notice(
-            $self->prefix . "2f: password deleted for $user" );
-        return $self->p->sendJSONresponse( $req, { result => 1 } );
-    }
-}
-
 1;

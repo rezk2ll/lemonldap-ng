@@ -57,7 +57,7 @@ use constant supportedActions => {
     registration          => "_registration",
     verificationchallenge => "_verificationchallenge",
     verification          => "_verification",
-    delete                => "_delete",
+    delete                => "delete",
 };
 
 sub initDisplay {
@@ -322,26 +322,6 @@ sub _verification {
     else {
         return $self->p->sendJSONresponse( $req, { result => 0 } );
     }
-}
-
-sub _delete {
-    my ( $self, $req ) = @_;
-    my $user = $req->userData->{ $self->conf->{whatToTrace} };
-
-    # Check if unregistration is allowed
-    return $self->p->sendError( $req, 'notAuthorized', 400 )
-      unless $self->userCanRemove;
-
-    my $epoch = $req->param('epoch');
-    unless ($epoch) {
-        $self->logger->error(
-            $self->prefix . '2f: "epoch" parameter is missing' );
-        return $self->p->sendError( $req, '2FDeviceNotFound', 400 );
-    }
-
-    return $self->del2fDevice( $req, $req->userData, $self->type, $epoch )
-      ? $self->p->sendJSONresponse( $req, { result => 1 } )
-      : $self->p->sendError( $req, '2FDeviceNotFound', 400 );
 }
 
 1;
