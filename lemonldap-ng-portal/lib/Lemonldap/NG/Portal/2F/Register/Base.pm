@@ -89,4 +89,22 @@ sub markRegistered {
       // $self->authnLevel;
 }
 
+# Default run method, for modules that don't want to implement it themselves
+sub run {
+    my ( $self, $req, $action ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
+    return $self->p->sendError( $req, 'PE82', 400 )
+      unless $user;
+
+    if ( $self->can('supportedActions')
+        and my $actions = $self->supportedActions($req) )
+    {
+        if ( my $sub = $actions->{$action} ) {
+            return $self->$sub($req);
+        }
+    }
+    $self->logger->error( $self->prefix . "2f: unknown action ($action)" );
+    return $self->p->sendError( $req, 'unknownAction', 400 );
+}
+
 1;

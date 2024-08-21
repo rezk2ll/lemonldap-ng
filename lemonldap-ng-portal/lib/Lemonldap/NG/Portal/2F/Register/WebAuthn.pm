@@ -52,6 +52,14 @@ has rpName => (
     }
 );
 
+use constant supportedActions => {
+    registrationchallenge => "_registrationchallenge",
+    registration          => "_registration",
+    verificationchallenge => "_verificationchallenge",
+    verification          => "_verification",
+    delete                => "_delete",
+};
+
 sub initDisplay {
     my ( $self, $req ) = @_;
 
@@ -102,7 +110,8 @@ sub _generate_user_handle {
 }
 
 sub _registrationchallenge {
-    my ( $self, $req, $user ) = @_;
+    my ( $self, $req ) = @_;
+    my $user             = $req->userData->{ $self->conf->{whatToTrace} };
     my @alldevices       = $self->find2fDevicesByType( $req, $req->userData );
     my $challenge_base64 = encode_base64url( Crypt::URandom::urandom(32) );
 
@@ -147,7 +156,8 @@ sub _registrationchallenge {
 }
 
 sub _registration {
-    my ( $self, $req, $user ) = @_;
+    my ( $self, $req ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
 
     # Recover creation parameters, including challenge
     my $state_id = $req->param('state_id');
@@ -213,9 +223,11 @@ sub _registration {
     return $self->p->sendError( $req, 'badName', 200 ) unless $keyName;
 
     my $is_resident = (
-          $registration_options->{authenticatorSelection}->{residentKey}
-      and ($registration_options->{authenticatorSelection}->{residentKey} eq
-      "required"));
+        $registration_options->{authenticatorSelection}->{residentKey}
+          and
+          ( $registration_options->{authenticatorSelection}->{residentKey} eq
+            "required" )
+    );
     if (
         $self->add2fDevice(
             $req,
@@ -242,7 +254,8 @@ sub _registration {
 }
 
 sub _verificationchallenge {
-    my ( $self, $req, $user ) = @_;
+    my ( $self, $req ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
 
     $self->logger->debug( $self->prefix . '2f: verification challenge req' );
 
@@ -266,7 +279,8 @@ sub _verificationchallenge {
 }
 
 sub _verification {
-    my ( $self, $req, $user ) = @_;
+    my ( $self, $req ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
 
     my $credential_json = $req->param('credential');
 
@@ -311,7 +325,8 @@ sub _verification {
 }
 
 sub _delete {
-    my ( $self, $req, $user ) = @_;
+    my ( $self, $req ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
 
     # Check if unregistration is allowed
     return $self->p->sendError( $req, 'notAuthorized', 400 )
@@ -327,43 +342,6 @@ sub _delete {
     return $self->del2fDevice( $req, $req->userData, $self->type, $epoch )
       ? $self->p->sendJSONresponse( $req, { result => 1 } )
       : $self->p->sendError( $req, '2FDeviceNotFound', 400 );
-}
-
-# Main method
-sub run {
-    my ( $self, $req, $action ) = @_;
-    my $user = $req->userData->{ $self->conf->{whatToTrace} };
-
-    unless ($user) {
-        $self->logger->error(
-            'No ' . $self->conf->{whatToTrace} . ' found in user data' );
-        return $self->p->sendError( $req, 'serverError', 500 );
-    }
-
-    if ( $action eq 'registrationchallenge' ) {
-        return $self->_registrationchallenge( $req, $user );
-    }
-
-    elsif ( $action eq 'registration' ) {
-        return $self->_registration( $req, $user );
-    }
-
-    elsif ( $action eq 'verificationchallenge' ) {
-        return $self->_verificationchallenge( $req, $user );
-    }
-
-    elsif ( $action eq 'verification' ) {
-        return $self->_verification( $req, $user );
-    }
-
-    elsif ( $action eq 'delete' ) {
-        return $self->_delete( $req, $user );
-    }
-
-    else {
-        $self->logger->error( $self->prefix . "2f: unknown action -> $action" );
-        return $self->p->sendError( $req, 'unknownAction', 400 );
-    }
 }
 
 1;

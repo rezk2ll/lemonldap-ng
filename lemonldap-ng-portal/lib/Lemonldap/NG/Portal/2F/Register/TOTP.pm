@@ -32,162 +32,157 @@ has ott => (
     }
 );
 
-sub run {
-    my ( $self, $req, $action ) = @_;
+use constant supportedActions => {
+    delete => "delete",
+    verify => "verify",
+    getkey => "getkey",
+};
+
+sub verify {
+    my ( $self, $req ) = @_;
     my $user = $req->userData->{ $self->conf->{whatToTrace} };
-    return $self->p->sendError( $req, 'PE82', 400 )
-      unless $user;
 
-    # Verification that user has a valid TOTP app
-    if ( $action eq 'verify' ) {
-
-        # Get form token
-        my $token = $req->param('token');
-        unless ($token) {
-            $self->userLogger->warn( $self->prefix
-                  . "2f: registration -> attempt without token for $user" );
-            return $self->p->sendError( $req, 'noTOTPFound', 400 );
-        }
-
-        # Verify that token exists in DB (note that "keep" flag is set to
-        # permit more than 1 try during token life
-        unless ( $token = $self->ott->getToken( $token, 1 ) ) {
-            $self->userLogger->notice(
-                $self->prefix . "2f: registration -> token expired for $user" );
-            return $self->p->sendError( $req, 'PE82', 400 );
-        }
-
-        # Now check TOTP code to verify that user has a valid TOTP app
-        my $code = $req->param('code');
-        unless ($code) {
-            $self->userLogger->info(
-                $self->prefix . '2f: registration -> empty validation form' );
-            return $self->p->sendError( $req, 'missingCode', 400 );
-        }
-
-        my $TOTPName =
-          $self->checkNameSfa( $req, $self->type, $req->param('TOTPName') );
-        return $self->p->sendError( $req, 'badName', 200 ) unless $TOTPName;
-
-        my ( $r, $range ) = $self->verifyCode(
-            $self->conf->{totp2fInterval},
-            $self->conf->{totp2fRange},
-            $self->conf->{totp2fDigits},
-            $token->{_totp2fSecret}, $code
-        );
-        return $self->p->sendError( $req, 'serverError' ) if $r == -1;
-
-        # Invalid try is returned with a 200 code. Javascript will read error
-        # and propose to retry
-        if ( $r == 0 ) {
-            $self->userLogger->notice(
-                $self->prefix . "2f: registration -> invalid code for $user" );
-            return $self->p->sendError( $req, 'badCode', 200 );
-        }
-
-        $self->userLogger->info("Codes match at range $range");
-        $self->logger->debug( $self->prefix . '2f: code verified' );
-
-        my $storable_secret =
-          $self->get_storable_secret( $token->{_totp2fSecret} );
-        unless ($storable_secret) {
-            $self->logger->error(
-                $self->prefix . '2f: unable to encrypt secret' );
-            return $self->p->sendError( $req, "serverError" );
-        }
-
-        # Store TOTP secret
-        if (
-            $self->add2fDevice(
-                $req,
-                $req->userData,
-                {
-                    _secret => $storable_secret,
-                    type    => $self->type,
-                    name    => $TOTPName,
-                    epoch   => time()
-                }
-            )
-          )
-        {
-            return [
-                200,
-                [
-                    'Content-Type'   => 'application/json',
-                    'Content-Length' => 12,
-                ],
-                ['{"result":1}']
-            ];
-        }
-        else {
-            $self->logger->debug( $self->prefix . "2f: unable to add device" );
-            return $self->p->sendError( $req, 'serverError' );
-        }
+    # Get form token
+    my $token = $req->param('token');
+    unless ($token) {
+        $self->userLogger->warn( $self->prefix
+              . "2f: registration -> attempt without token for $user" );
+        return $self->p->sendError( $req, 'noTOTPFound', 400 );
     }
 
-    # Get or generate master key
-    elsif ( $action eq 'getkey' ) {
-        my ( $nk, $secret, $issuer ) = ( 0, '' );
+    # Verify that token exists in DB (note that "keep" flag is set to
+    # permit more than 1 try during token life
+    unless ( $token = $self->ott->getToken( $token, 1 ) ) {
+        $self->userLogger->notice(
+            $self->prefix . "2f: registration -> token expired for $user" );
+        return $self->p->sendError( $req, 'PE82', 400 );
+    }
 
-        $secret = $self->newSecret;
-        $self->logger->debug(
-            $self->prefix . "2f: generate new secret ($secret)" );
-        $nk = 1;
+    # Now check TOTP code to verify that user has a valid TOTP app
+    my $code = $req->param('code');
+    unless ($code) {
+        $self->userLogger->info(
+            $self->prefix . '2f: registration -> empty validation form' );
+        return $self->p->sendError( $req, 'missingCode', 400 );
+    }
 
-        # Secret is stored in a token: we choose to not accept secret returned
-        # by Ajax request to avoid some attacks
-        my $token = $self->ott->createToken( {
-                _totp2fSecret => $secret,
-            }
-        );
-        unless ( $issuer = $self->conf->{totp2fIssuer} ) {
-            $issuer = $req->portal;
-            $issuer =~ s#^https?://([^/:]+).*$#$1#;
-        }
+    my $TOTPName =
+      $self->checkNameSfa( $req, $self->type, $req->param('TOTPName') );
+    return $self->p->sendError( $req, 'badName', 200 ) unless $TOTPName;
 
-        # QR-code will be generated by a javascript, here we just send data
-        return $self->p->sendJSONresponse(
+    my ( $r, $range ) = $self->verifyCode(
+        $self->conf->{totp2fInterval},
+        $self->conf->{totp2fRange},
+        $self->conf->{totp2fDigits},
+        $token->{_totp2fSecret}, $code
+    );
+    return $self->p->sendError( $req, 'serverError' ) if $r == -1;
+
+    # Invalid try is returned with a 200 code. Javascript will read error
+    # and propose to retry
+    if ( $r == 0 ) {
+        $self->userLogger->notice(
+            $self->prefix . "2f: registration -> invalid code for $user" );
+        return $self->p->sendError( $req, 'badCode', 200 );
+    }
+
+    $self->userLogger->info("Codes match at range $range");
+    $self->logger->debug( $self->prefix . '2f: code verified' );
+
+    my $storable_secret = $self->get_storable_secret( $token->{_totp2fSecret} );
+    unless ($storable_secret) {
+        $self->logger->error( $self->prefix . '2f: unable to encrypt secret' );
+        return $self->p->sendError( $req, "serverError" );
+    }
+
+    # Store TOTP secret
+    if (
+        $self->add2fDevice(
             $req,
+            $req->userData,
             {
-                secret   => $secret,
-                token    => $token,
-                portal   => $issuer,
-                user     => $user,
-                newkey   => $nk,
-                digits   => $self->conf->{totp2fDigits},
-                interval => $self->conf->{totp2fInterval}
+                _secret => $storable_secret,
+                type    => $self->type,
+                name    => $TOTPName,
+                epoch   => time()
             }
-        );
+        )
+      )
+    {
+        return [
+            200,
+            [
+                'Content-Type'   => 'application/json',
+                'Content-Length' => 12,
+            ],
+            ['{"result":1}']
+        ];
     }
+    else {
+        $self->logger->debug( $self->prefix . "2f: unable to add device" );
+        return $self->p->sendError( $req, 'serverError' );
+    }
+}
+
+sub getkey {
+    my ( $self, $req ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
+    my ( $nk, $secret, $issuer ) = ( 0, '' );
+
+    $secret = $self->newSecret;
+    $self->logger->debug( $self->prefix . "2f: generate new secret ($secret)" );
+    $nk = 1;
+
+    # Secret is stored in a token: we choose to not accept secret returned
+    # by Ajax request to avoid some attacks
+    my $token = $self->ott->createToken( {
+            _totp2fSecret => $secret,
+        }
+    );
+    unless ( $issuer = $self->conf->{totp2fIssuer} ) {
+        $issuer = $req->portal;
+        $issuer =~ s#^https?://([^/:]+).*$#$1#;
+    }
+
+    # QR-code will be generated by a javascript, here we just send data
+    return $self->p->sendJSONresponse(
+        $req,
+        {
+            secret   => $secret,
+            token    => $token,
+            portal   => $issuer,
+            user     => $user,
+            newkey   => $nk,
+            digits   => $self->conf->{totp2fDigits},
+            interval => $self->conf->{totp2fInterval}
+        }
+    );
+}
+
+sub delete {
+    my ( $self, $req ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
 
     # Delete TOTP
-    elsif ( $action eq 'delete' ) {
+    # Check if unregistration is allowed
+    return $self->p->sendError( $req, 'notAuthorized', 400 )
+      unless $self->userCanRemove;
 
-        # Check if unregistration is allowed
-        return $self->p->sendError( $req, 'notAuthorized', 400 )
-          unless $self->userCanRemove;
-
-        my $epoch = $req->param('epoch')
-          or return $self->p->sendError( $req,
-            $self->prefix . '2f: "epoch" parameter is missing', 400 );
-        if ( $self->del2fDevice( $req, $req->userData, $self->type, $epoch ) ) {
-            return [
-                200,
-                [
-                    'Content-Type'   => 'application/json',
-                    'Content-Length' => 12,
-                ],
-                ['{"result":1}']
-            ];
-        }
-        $self->logger->error( $self->prefix . "2f: device not found" );
-        return $self->p->sendError( $req, '2FDeviceNotFound', 400 );
+    my $epoch = $req->param('epoch')
+      or return $self->p->sendError( $req,
+        $self->prefix . '2f: "epoch" parameter is missing', 400 );
+    if ( $self->del2fDevice( $req, $req->userData, $self->type, $epoch ) ) {
+        return [
+            200,
+            [
+                'Content-Type'   => 'application/json',
+                'Content-Length' => 12,
+            ],
+            ['{"result":1}']
+        ];
     }
-
-    else {
-        $self->logger->error( $self->prefix . "2f: unknown action ($action)" );
-        return $self->p->sendError( $req, 'unknownAction', 400 );
-    }
+    $self->logger->error( $self->prefix . "2f: device not found" );
+    return $self->p->sendError( $req, '2FDeviceNotFound', 400 );
 }
 
 1;
