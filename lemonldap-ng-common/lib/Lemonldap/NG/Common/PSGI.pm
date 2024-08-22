@@ -342,9 +342,8 @@ sub sendJs {
         sprintf 'var staticPrefix="%s";'
       . 'var scriptname="%s";'
       . 'var availableLanguages="%s".split(/[,;] */);'
-      . 'var language="%s";'
       . 'var portal="%s";', $sp, $sc, $self->languages,
-      $self->getLanguage($req), $portal;
+      $portal;
     $s .= $self->javascript($req) if ( $self->can('javascript') );
     return [
         200,

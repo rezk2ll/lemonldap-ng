@@ -348,17 +348,17 @@ $(window).on 'load', () ->
 
 	# Language detection. Priority order:
 	#  0 - llnglanguage parameter
-	#  1 - window.language value (server-set from Cookie+Accept-Language)
+	#  1 - datas['language'] value (server-set from Cookie+Accept-Language)
 	if window.location.search
 		queryLang = getQueryParam('llnglanguage')
 		console.log 'Get lang from parameter' if queryLang
 		setCookieLang = getQueryParam('setCookieLang')
 		console.log 'Set lang cookie' if setCookieLang == 1
 	if !lang
-		lang = window.language
+		lang = window.datas['language']
 		console.log 'Get lang from server' if lang && !queryLang
 	else if lang not in window.availableLanguages
-		lang = window.language
+		lang = window.datas['language']
 		console.log 'Lang not available -> Get lang from server' if !queryLang
 	if queryLang
 		if queryLang not in window.availableLanguages
