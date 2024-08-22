@@ -20,3 +20,4 @@ Mini Howtos
    useoutgoingproxy
    testopenidconnect
    anssi-oidc
+   oidc-agent-connect
