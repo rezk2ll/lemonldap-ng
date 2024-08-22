@@ -188,22 +188,6 @@ sub verify {
     $self->populateDestAttribute( $req, $session );
 
     my $res = $self->verify_supplied_code( $req, $session, $usercode );
-
-    # If we authenticated the user using a 2F Device, log it
-    if ( $res == PE_OK && $req->data->{_2fDevice} ) {
-        my $uid    = $session->{ $self->conf->{whatToTrace} };
-        my $device = $req->data->{_2fDevice};
-        $self->auditLog(
-            $req,
-            message => (
-                "User $uid authenticated with 2F device: " . display2F($device)
-            ),
-            code   => "2FA_SUCCESS",
-            user   => $uid,
-            type   => $self->prefix,
-            device => display2F($device)
-        );
-    }
     return $res;
 }
 

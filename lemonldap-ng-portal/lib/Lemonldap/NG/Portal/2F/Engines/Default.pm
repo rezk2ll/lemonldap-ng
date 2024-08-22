@@ -963,6 +963,11 @@ sub _verify {
         (
             $req->data->{_2fDevice} ? ( device => $req->data->{_2fDevice} ) : ()
         ),
+        (
+            $req->data->{_2fLogInfo}
+            ? ( logInfo => $req->data->{_2fLogInfo} )
+            : ()
+        ),
     };
 
     # Evaluate hook
@@ -1021,9 +1026,25 @@ sub _verify {
 
     # Else restore session
     $req->mustRedirect(1);
-    $self->userLogger->notice( $prefix
-          . '2f verification succeeded for '
-          . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+    my $device  = $verify_result->{device};
+    my $logInfo = $verify_result->{logInfo} || {};
+    my $logInfoStr =
+      join( ', ', map { "$_: " . $logInfo->{$_} } keys %$logInfo );
+    my $user = $req->sessionInfo->{ $self->conf->{whatToTrace} };
+
+    $self->auditLog(
+        $req,
+        message => (
+                "${prefix}2f verification succeeded for abarnes"
+              . ( $device     ? ( " with device " . display2F($device) ) : "" )
+              . ( $logInfoStr ? " ($logInfoStr)"                         : "" )
+        ),
+        code => "2FA_SUCCESS",
+        user => $user,
+        type => $prefix,
+        ( $device ? ( device => display2F($device) ) : () ),
+        %$logInfo,
+    );
 
     return $self->_continueLogin( $req, $prefix, $authnLevel, );
 }

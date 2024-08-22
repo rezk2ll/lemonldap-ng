@@ -66,7 +66,7 @@ EOF
         params => {
             DATA =>
               to_json( { request => $request, webauthn_autostart => \1 } ),
-            TOKEN => $token,
+            TOKEN         => $token,
             CUSTOM_SCRIPT => $req->data->{customScript},
             $self->get2fTplParams($req),
         }
@@ -102,20 +102,8 @@ sub verify {
 
     if ( $validation_result->{success} == 1 ) {
         $req->data->{_2fDevice} = $validation_result->{matching_credential};
-        $self->auditLog(
-            $req,
-            message => (
-                    "User $user authenticated with 2F device: "
-                  . display2F( $validation_result->{matching_credential} )
-                  . " (signature count: $validation_result->{signature_count}) "
-            ),
-            code   => "2FA_SUCCESS",
-            user   => $user,
-            type   => $self->prefix,
-            device => display2F( $validation_result->{matching_credential} ),
-            signature_count => $validation_result->{signature_count},
-        );
-
+        $req->data->{_2fLogInfo} =
+          { signature_count => $validation_result->{signature_count} };
         return PE_OK;
     }
     else {
