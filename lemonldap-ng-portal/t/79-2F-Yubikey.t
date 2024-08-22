@@ -4,6 +4,8 @@ use strict;
 use IO::String;
 use Plack::Request;
 use JSON qw/from_json to_json/;
+use URI;
+use URI::QueryParam;
 
 require 't/test-lib.pm';
 require 't/test-yubikey.pm';
@@ -15,8 +17,7 @@ SKIP: {
     if ($@) {
         skip 'Auth::Yubikey_WebClient not found', 0;
     }
-    my $client = LLNG::Manager::Test->new(
-        {
+    my $client = LLNG::Manager::Test->new( {
             ini => {
                 logLevel                  => 'error',
                 yubikey2fActivation       => 1,
@@ -26,29 +27,88 @@ SKIP: {
                 authentication            => 'Demo',
                 userDB                    => 'Same',
                 'demoExportedVars'        => {
-                    'cn'         => 'cn',
-                    'mail'       => 'mail',
-                    'uid'        => 'uid',
-                    '_2fDevices' => '_2fDevices',
+                    'cn'   => 'cn',
+                    'mail' => 'mail',
+                    'uid'  => 'uid',
                 },
             }
         }
     );
 
-    # Register ccccccdddwho as second factor of user dwho
-    $Lemonldap::NG::Portal::UserDB::Demo::demoAccounts{dwho}->{_2fDevices} =
-      to_json(
-        [
-            {
-                "_yubikey" => "ccccccdddwho",
-                "epoch"    => "1548016213",
-                "name"     => "MyYubikey",
-                "type"     => "UBK",
-            },
-        ]
-      );
-
     my $res;
+
+    # Login
+    my $id = $client->login("dwho");
+
+    # Display Yubikey register page
+    ok(
+        $res = $client->_get(
+            '/2fregisters/yubikey',
+            accept => 'application/json',
+            cookie => "lemonldap=$id",
+        ),
+        'Auth query'
+    );
+    count(1);
+
+    expectXpath(
+        $res,
+        '//span[@trspan="clickOnYubikey"]',
+        "Found prompt message"
+    );
+    my ( $host, $url, $query ) =
+      expectForm( $res, undef, '/2fregisters/yubikey/register',
+        'UBKName', 'otp' );
+
+    my $form = URI->new;
+    $form->query($query);
+    $form->query_param( "otp", "invalid" );
+
+    ok(
+        $res = $client->_post(
+            '/2fregisters/yubikey/register',
+            $form->query,
+            accept => "text/html",
+            cookie => "lemonldap=$id",
+        ),
+        'Invalid otp'
+    );
+    count(1);
+    expectXpath( $res, '//span[@trspan="PE2"]', "Found error message" );
+
+    $form->query_param( "otp",     "ccccccdddwho20000000000000000000" );
+    $form->query_param( "UBKName", "aaaaaaaaaaaaaaaaaaaaaaaaé" );
+    ok(
+        $res = $client->_post(
+            '/2fregisters/yubikey/register',
+            $form->query,
+            accept => "text/html",
+            cookie => "lemonldap=$id",
+        ),
+        'Invalid UBKname'
+    );
+    count(1);
+    expectXpath( $res, '//span[@trspan="badName"]', "Found error message" );
+
+    $form->query_param( "UBKName", "MyUBK" );
+    ok(
+        $res = $client->_post(
+            '/2fregisters/yubikey/register',
+            $form->query,
+            accept => "text/html",
+            cookie => "lemonldap=$id",
+        ),
+        'Correct registration attempt'
+    );
+    count(1);
+    expectRedirection( $res, "http://auth.example.com/2fregisters?continue=1" );
+
+    my $psession = $client->p->getPersistentSession("dwho")->data;
+    my $devices  = from_json( $psession->{_2fDevices} );
+    is( $devices->[0]->{type},     "UBK",          "Found registered yubikey" );
+    is( $devices->[0]->{_yubikey}, "ccccccdddwho", "Correct device ID" );
+    ok( my $epoch = $devices->[0]->{epoch}, "Epoch is defined" );
+    count(3);
 
     # Try to authenticate
     # -------------------
@@ -63,7 +123,7 @@ SKIP: {
     );
     count(1);
 
-    my ( $host, $url, $query ) =
+    ( $host, $url, $query ) =
       expectForm( $res, undef, '/yubikey2fcheck?skin=bootstrap',
         'token', 'code' );
 
@@ -143,7 +203,23 @@ SKIP: {
         'Post code'
     );
     count(1);
-    my $id = expectCookie($res);
+    $id = expectCookie($res);
+
+    # Deletion
+    ok(
+        $res = $client->_post(
+            "/2fregisters/yubikey/delete",
+            { epoch => $epoch },
+            cookie => "lemonldap=$id",
+        ),
+        'Post deletion'
+    );
+    $res = expectJSON($res);
+    is( $res->{result}, 1 );
+    $psession = $client->p->getPersistentSession("dwho")->data;
+    $devices  = from_json( $psession->{_2fDevices} );
+    is( scalar @$devices, 0, "No device found anymore" );
+    count(3);
 
     # This user has no UBK, the activation rule should not trigger
     ok(

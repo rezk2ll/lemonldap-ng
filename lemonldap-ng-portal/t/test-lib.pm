@@ -645,6 +645,7 @@ sub expectXpath {
     $message ||= "Found at least one result for $xpath";
 
     ok( $res = getHtmlElement( $res, $xpath ), $message, );
+    count(1);
     return $res;
 }
 
