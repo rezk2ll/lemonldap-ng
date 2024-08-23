@@ -107,7 +107,7 @@ sub gen_password {
     return $self->random->randregex($regexp);
 }
 
-# Send mail
+# Send mail (legacy API, using sendEmail is recommended instead)
 # @param mail recipient address
 # @param subject mail subject
 # @param body mail body
@@ -291,6 +291,82 @@ sub getRegisterSession {
 
     # No register session found, return empty string
     return "";
+}
+
+## @method string sendEmail(string mail)
+# High-level method for sending a templated email
+# Takes a hash of parameters
+# @param dest the destination email address
+# @param subject the plaintext subject, will not be translated
+# @param subject_trmsg the translation key that will be used as subject
+# @param body the plaintext body, may contain $variable placeholders
+# @param body_template the name of the template file to render as body
+# @param params a hashref of parameters
+# @return success status as a boolean
+sub sendEmail {
+    my ( $self, $req, %params ) = @_;
+
+    my $subject_trmsg = $params{subject_trmsg};
+    my $subject       = $params{subject};
+    my $body          = $params{body};
+    my $body_template = $params{body_template};
+    my %variables     = %{ $params{params} || {} };
+    my $dest          = $params{dest};
+
+    # Build mail content
+    my $tr = $self->translate($req);
+    unless ($subject) {
+        $subject = $subject_trmsg;
+        $tr->( \$subject );
+    }
+    my $html;
+    if ($body) {
+
+        # Replace supplied variables in body, and also handle session variables
+        while ( my ( $k, $v ) = each %variables ) {
+            $body =~ s/\$\Q$k\E\b/$v/g;
+        }
+        $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
+    }
+    else {
+
+        # Use HTML template
+        $body = $self->loadMailTemplate(
+            $req,
+            $body_template,
+            filter => $tr,
+            params => \%variables
+        );
+        $html = 1;
+    }
+    if ( $dest && $subject && $body ) {
+        if ( $self->send_mail( $dest, $subject, $body, $html ) ) {
+            $self->auditLog(
+                $req,
+                message => "Email ($body_template) sent "
+                  . "to $dest with subject '$subject'",
+                code          => "EMAIL_SENT",
+                body_template => $body_template,
+                subject       => $subject,
+                subject_trmsg => $subject_trmsg,
+                dest          => $dest,
+            );
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+    else {
+        my $message = "Could not send email:";
+        $message .= " missing destination," unless $dest;
+        $message .= " missing subject,"     unless $subject;
+        $message .= " missing body,"        unless $body;
+        chop($message);
+        $message .= ".";
+        $self->logger->warn($message);
+        return 0;
+    }
 }
 
 1;
