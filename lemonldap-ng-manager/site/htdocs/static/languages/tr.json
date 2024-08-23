@@ -1061,6 +1061,7 @@
 "samlAttributeAuthorityDescriptorAttributeService":"Nitelik Servisi",
 "samlAttributeAuthorityDescriptorAttributeServiceSOAP":"SOAP",
 "samlAuthnContextMap":"Kimlik doğrulama bağlamları",
+"samlAuthnContextMapExtra":"Other authentication contexts",
 "samlAuthnContextMapKerberos":"Kerberos",
 "samlAuthnContextMapPassword":"Parola",
 "samlAuthnContextMapPasswordProtectedTransport":"Parola korumalı taşıma",

@@ -635,6 +635,7 @@ t/30-Auth-and-issuer-SAML-POST-Choice-2FA.t
 t/30-Auth-and-issuer-SAML-POST-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-POST-Missing-SLO.t
 t/30-Auth-and-issuer-SAML-POST.t
+t/30-Auth-and-issuer-SAML-Redirect-Extra-AuthnContext.t
 t/30-Auth-and-issuer-SAML-Redirect-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Redirect-MultipleSP-Missing-SLO.t
 t/30-Auth-and-issuer-SAML-Redirect-MultipleSP.t

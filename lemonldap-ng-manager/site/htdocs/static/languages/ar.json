@@ -1061,6 +1061,7 @@
 "samlAttributeAuthorityDescriptorAttributeService":"سمة الخدمة",
 "samlAttributeAuthorityDescriptorAttributeServiceSOAP":"SOAP",
 "samlAuthnContextMap":"سياقات إثبات الهوية",
+"samlAuthnContextMapExtra":"Other authentication contexts",
 "samlAuthnContextMapKerberos":"كيربيروس",
 "samlAuthnContextMapPassword":"كلمة المرور",
 "samlAuthnContextMapPasswordProtectedTransport":"حماية نقل كلمة المرور",

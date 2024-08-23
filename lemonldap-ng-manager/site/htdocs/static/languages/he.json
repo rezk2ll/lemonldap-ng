@@ -1061,6 +1061,7 @@
 "samlAttributeAuthorityDescriptorAttributeService":"Attribute Service",
 "samlAttributeAuthorityDescriptorAttributeServiceSOAP":"SOAP",
 "samlAuthnContextMap":"הקשרי אימות",
+"samlAuthnContextMapExtra":"Other authentication contexts",
 "samlAuthnContextMapKerberos":"Kerberos",
 "samlAuthnContextMapPassword":"סיסמה",
 "samlAuthnContextMapPasswordProtectedTransport":"העברה מוגנת בסיסמה",

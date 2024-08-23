@@ -1061,6 +1061,7 @@
 "samlAttributeAuthorityDescriptorAttributeService":"屬性服務",
 "samlAttributeAuthorityDescriptorAttributeServiceSOAP":"SOAP",
 "samlAuthnContextMap":"驗證內容",
+"samlAuthnContextMapExtra":"Other authentication contexts",
 "samlAuthnContextMapKerberos":"Kerberos",
 "samlAuthnContextMapPassword":"密碼",
 "samlAuthnContextMapPasswordProtectedTransport":"受密碼保護的傳輸",

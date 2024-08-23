@@ -1061,6 +1061,7 @@
 "samlAttributeAuthorityDescriptorAttributeService":"Dịch vụ Thuộc tính",
 "samlAttributeAuthorityDescriptorAttributeServiceSOAP":"SOAP",
 "samlAuthnContextMap":"Ngữ cảnh xác thực",
+"samlAuthnContextMapExtra":"Other authentication contexts",
 "samlAuthnContextMapKerberos":"Kerberos",
 "samlAuthnContextMapPassword":"Mật khẩu",
 "samlAuthnContextMapPasswordProtectedTransport":"Truyền tin được bảo vệ bằng mật khẩu",
