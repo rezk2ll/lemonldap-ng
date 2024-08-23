@@ -52,6 +52,14 @@ has rpName => (
     }
 );
 
+use constant supportedActions => {
+    registrationchallenge => "_registrationchallenge",
+    registration          => "_registration",
+    verificationchallenge => "_verificationchallenge",
+    verification          => "_verification",
+    delete                => "delete",
+};
+
 sub initDisplay {
     my ( $self, $req ) = @_;
 
@@ -102,7 +110,8 @@ sub _generate_user_handle {
 }
 
 sub _registrationchallenge {
-    my ( $self, $req, $user ) = @_;
+    my ( $self, $req ) = @_;
+    my $user             = $req->userData->{ $self->conf->{whatToTrace} };
     my @alldevices       = $self->find2fDevicesByType( $req, $req->userData );
     my $challenge_base64 = encode_base64url( Crypt::URandom::urandom(32) );
 
@@ -142,31 +151,32 @@ sub _registrationchallenge {
 
     $self->logger->debug(
         "WebAuthn registration parameters " . to_json($request) );
-    return $self->p->sendJSONresponse( $req,
+    return $self->successResponse( $req,
         { request => $request, state_id => $token } );
 }
 
 sub _registration {
-    my ( $self, $req, $user ) = @_;
+    my ( $self, $req ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
 
     # Recover creation parameters, including challenge
     my $state_id = $req->param('state_id');
     unless ($state_id) {
         $self->logger->error(
             $self->prefix . "2f: could not find state ID in response" );
-        return $self->p->sendError( $req, 'webAuthnRegisterFailed', 400 );
+        return $self->failResponse( $req, 'webAuthnRegisterFailed', 400 );
     }
     my $state_data;
     unless ( $state_data = $self->ott->getToken($state_id) ) {
         $self->logger->error( $self->prefix
               . "2f: expired or invalid state ID in response: $state_id" );
-        return $self->p->sendError( $req, 'PE82', 400 );
+        return $self->failResponse( $req, 'PE82', 400 );
     }
     my $registration_options = ( $state_data->{registration_options} );
     unless ($registration_options) {
         $self->logger->error( $self->prefix
               . '2f: registration options missing from state data' );
-        return $self->p->sendError( $req, 'webAuthnRegisterFailed', 400 );
+        return $self->failResponse( $req, 'webAuthnRegisterFailed', 400 );
     }
 
     # Data required for WebAuthn verification
@@ -177,7 +187,7 @@ sub _registration {
     unless ($credential_json) {
         $self->logger->error(
             $self->prefix . '2f: missing credential parameter' );
-        return $self->p->sendError( $req, 'webAuthnRegisterFailed', 400 );
+        return $self->failResponse( $req, 'webAuthnRegisterFailed', 400 );
     }
 
     my $validation = eval {
@@ -187,7 +197,7 @@ sub _registration {
     if ($@) {
         $self->logger->error(
             $self->prefix . "2f: Credential validation error: $@" );
-        return $self->p->sendError( $req, "webAuthnRegisterFailed", 400 );
+        return $self->failResponse( $req, "webAuthnRegisterFailed", 400 );
     }
 
     my $credential_id     = $validation->{credential_id};
@@ -204,18 +214,20 @@ sub _registration {
             ( $aaguid ? "AAGUID: $aaguid" : () ) )
     );
 
-    return $self->p->sendError( $req, 'webauthnAlreadyRegistered', 400 )
+    return $self->failResponse( $req, 'webauthnAlreadyRegistered', 400 )
       if $self->find2fDevicesByKey( $req, $req->userData, $self->type,
         "_credentialId", $credential_id );
 
     my $keyName =
       $self->checkNameSfa( $req, $self->type, $req->param('keyName') );
-    return $self->p->sendError( $req, 'badName', 200 ) unless $keyName;
+    return $self->failResponse( $req, 'badName', 200 ) unless $keyName;
 
     my $is_resident = (
-          $registration_options->{authenticatorSelection}->{residentKey}
-      and ($registration_options->{authenticatorSelection}->{residentKey} eq
-      "required"));
+        $registration_options->{authenticatorSelection}->{residentKey}
+          and
+          ( $registration_options->{authenticatorSelection}->{residentKey} eq
+            "required" )
+    );
     if (
         $self->add2fDevice(
             $req,
@@ -233,16 +245,17 @@ sub _registration {
         )
       )
     {
-        return $self->p->sendJSONresponse( $req, { result => 1 } );
+        return $self->successResponse( $req, { result => 1 } );
     }
     else {
         $self->logger->error( $self->prefix . '2f: unable to add device' );
-        return $self->p->sendError( $req, 'serverError' );
+        return $self->failResponse( $req, 'serverError' );
     }
 }
 
 sub _verificationchallenge {
-    my ( $self, $req, $user ) = @_;
+    my ( $self, $req ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
 
     $self->logger->debug( $self->prefix . '2f: verification challenge req' );
 
@@ -250,7 +263,7 @@ sub _verificationchallenge {
 
     unless ($request) {
         $self->logger->error( $self->prefix . '2f: no registered device' );
-        return $self->p->sendError( $req, 'webAuthnNoDevice', 500 );
+        return $self->failResponse( $req, 'webAuthnNoDevice', 500 );
     }
 
     # Request is persisted on the server
@@ -261,26 +274,27 @@ sub _verificationchallenge {
 
     $self->logger->debug(
         $self->prefix . "2f: authentication parameters: " . to_json($request) );
-    return $self->p->sendJSONresponse( $req,
+    return $self->successResponse( $req,
         { request => $request, state_id => $token } );
 }
 
 sub _verification {
-    my ( $self, $req, $user ) = @_;
+    my ( $self, $req ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
 
     my $credential_json = $req->param('credential');
 
     unless ($credential_json) {
         $self->logger->error(
             $self->prefix . '2f: missing credential parameter' );
-        return $self->p->sendError( $req, 'webAuthnFailed', 400 );
+        return $self->failResponse( $req, 'webAuthnFailed', 400 );
     }
 
     my $state_id = $req->param('state_id');
     unless ($state_id) {
         $self->logger->error( $self->prefix
               . "2f: could not find state ID in response ($credential_json)" );
-        return $self->p->sendError( $req, 'webAuthnFailed', 400 );
+        return $self->failResponse( $req, 'webAuthnFailed', 400 );
     }
 
     # Recover challenge
@@ -288,7 +302,7 @@ sub _verification {
     unless ( $state_data = $self->ott->getToken($state_id) ) {
         $self->logger->error( $self->prefix
               . "2f: expired or invalid state ID in response ($state_id)" );
-        return $self->p->sendError( $req, 'PE82', 400 );
+        return $self->failResponse( $req, 'PE82', 400 );
     }
 
     my $signature_options = ( $state_data->{authentication_options} );
@@ -299,70 +313,14 @@ sub _verification {
     if ($@) {
         $self->logger->error(
             $self->prefix . "2f: validation error for $user: $@" );
-        return $self->p->sendJSONresponse( $req, { result => 0 } );
+        return $self->successResponse( $req, { result => 0 } );
     }
 
     if ( $validation_result->{success} == 1 ) {
-        return $self->p->sendJSONresponse( $req, { result => 1 } );
+        return $self->successResponse( $req, { result => 1 } );
     }
     else {
-        return $self->p->sendJSONresponse( $req, { result => 0 } );
-    }
-}
-
-sub _delete {
-    my ( $self, $req, $user ) = @_;
-
-    # Check if unregistration is allowed
-    return $self->p->sendError( $req, 'notAuthorized', 400 )
-      unless $self->userCanRemove;
-
-    my $epoch = $req->param('epoch');
-    unless ($epoch) {
-        $self->logger->error(
-            $self->prefix . '2f: "epoch" parameter is missing' );
-        return $self->p->sendError( $req, '2FDeviceNotFound', 400 );
-    }
-
-    return $self->del2fDevice( $req, $req->userData, $self->type, $epoch )
-      ? $self->p->sendJSONresponse( $req, { result => 1 } )
-      : $self->p->sendError( $req, '2FDeviceNotFound', 400 );
-}
-
-# Main method
-sub run {
-    my ( $self, $req, $action ) = @_;
-    my $user = $req->userData->{ $self->conf->{whatToTrace} };
-
-    unless ($user) {
-        $self->logger->error(
-            'No ' . $self->conf->{whatToTrace} . ' found in user data' );
-        return $self->p->sendError( $req, 'serverError', 500 );
-    }
-
-    if ( $action eq 'registrationchallenge' ) {
-        return $self->_registrationchallenge( $req, $user );
-    }
-
-    elsif ( $action eq 'registration' ) {
-        return $self->_registration( $req, $user );
-    }
-
-    elsif ( $action eq 'verificationchallenge' ) {
-        return $self->_verificationchallenge( $req, $user );
-    }
-
-    elsif ( $action eq 'verification' ) {
-        return $self->_verification( $req, $user );
-    }
-
-    elsif ( $action eq 'delete' ) {
-        return $self->_delete( $req, $user );
-    }
-
-    else {
-        $self->logger->error( $self->prefix . "2f: unknown action -> $action" );
-        return $self->p->sendError( $req, 'unknownAction', 400 );
+        return $self->successResponse( $req, { result => 0 } );
     }
 }
 

@@ -154,6 +154,7 @@ sub init {
                     "::2F::Register::Generic",
                     $over,
                     prefix             => $extraKey,
+                    type               => $extraKey,
                     logo               => $m->logo,
                     label              => $m->label,
                     userCanRemove      => 1,
