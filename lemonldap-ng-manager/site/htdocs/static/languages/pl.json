@@ -1061,6 +1061,7 @@
 "samlAttributeAuthorityDescriptorAttributeService":"Usługa atrybutów",
 "samlAttributeAuthorityDescriptorAttributeServiceSOAP":"SOAP",
 "samlAuthnContextMap":"Konteksty uwierzytelniania",
+"samlAuthnContextMapExtra":"Other authentication contexts",
 "samlAuthnContextMapKerberos":"Kerberos",
 "samlAuthnContextMapPassword":"Hasło",
 "samlAuthnContextMapPasswordProtectedTransport":"Transport chroniony hasłem",

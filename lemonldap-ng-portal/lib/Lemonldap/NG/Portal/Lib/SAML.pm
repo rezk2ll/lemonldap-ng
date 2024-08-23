@@ -202,8 +202,10 @@ sub loadService {
 
     # Create Lasso server with service metadata
     my $server = $self->createServer(
-        $service_metadata->serviceToXML(
-            { %{ $self->conf }, portal => $self->p->HANDLER->tsv->{portal}->() }, ''
+        $service_metadata->serviceToXML( {
+                %{ $self->conf }, portal => $self->p->HANDLER->tsv->{portal}->()
+            },
+            ''
         ),
         $self->conf->{samlServicePrivateKeySig},
         $self->conf->{samlServicePrivateKeySigPwd},
@@ -3051,6 +3053,7 @@ sub checkSignatureStatus {
 sub authnContext2authnLevel {
     my ( $self, $authnContext ) = @_;
 
+    # Standard contexts
     return $self->conf->{samlAuthnContextMapPassword}
       if ( $authnContext eq $self->getAuthnContext("password") );
     return $self->conf->{samlAuthnContextMapPasswordProtectedTransport}
@@ -3061,8 +3064,15 @@ sub authnContext2authnLevel {
       if ( $authnContext eq $self->getAuthnContext("kerberos") );
     return $self->conf->{samlAuthnContextMapTLSClient}
       if ( $authnContext eq $self->getAuthnContext("tls-client") );
-    return 0;
 
+    # Extras contexts
+    if (    defined $self->conf->{samlAuthnContextMapExtra}
+        and defined $self->conf->{samlAuthnContextMapExtra}->{$authnContext} )
+    {
+        return $self->conf->{samlAuthnContextMapExtra}->{$authnContext};
+    }
+
+    return 0;
 }
 
 ## @method int authnLevel2authnContext(int authnLevel)
@@ -3072,6 +3082,7 @@ sub authnContext2authnLevel {
 sub authnLevel2authnContext {
     my ( $self, $authnLevel ) = @_;
 
+    # Standard contexts
     return $self->getAuthnContext("password")
       if ( $authnLevel == $self->conf->{samlAuthnContextMapPassword} );
     return $self->getAuthnContext("password-protected-transport")
@@ -3081,8 +3092,19 @@ sub authnLevel2authnContext {
       if ( $authnLevel == $self->conf->{samlAuthnContextMapKerberos} );
     return $self->getAuthnContext("tls-client")
       if ( $authnLevel == $self->conf->{samlAuthnContextMapTLSClient} );
-    return $self->getAuthnContext("unspecified");
 
+    # Extras contexts
+    if ( defined $self->conf->{samlAuthnContextMapExtra} ) {
+        foreach
+          my $authnContext ( keys %{ $self->conf->{samlAuthnContextMapExtra} } )
+        {
+            return $authnContext
+              if ( $authnLevel ==
+                $self->conf->{samlAuthnContextMapExtra}->{$authnContext} );
+        }
+    }
+
+    return $self->getAuthnContext("unspecified");
 }
 
 ## @method boolean checkDestination(Lasso::Node message, string url)

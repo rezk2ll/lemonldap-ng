@@ -31,6 +31,8 @@ to take care of the following items:
 -  Force SAML response to be sent by POST and not Artifact (signature
    verification fails with Artifact)
 -  Enable ``Allow proxy authentication`` in IDP options on LL::NG side
+-  Add ``urn:federation:authentication:windows`` authentication context
+   in SAML Service if you need to map it to an internal authn level.
 
 .. |image0| image:: /applications/microsoft-adfs.png
    :class: align-center

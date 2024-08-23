@@ -218,7 +218,6 @@ Each LL::NG authentication module has an authentication level, which can
 be associated to an `SAML authentication
 context <http://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf>`__.
 
-
 .. note::
 
     This parameter is used by :doc:`SAML IDP<idpsaml>` to fill the
@@ -228,12 +227,14 @@ context <http://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os
     fill the authentication level in user session, based on authentication
     response authentication context.
 
-Customizable NameID formats are:
+Standard authentication contexts are:
 
 -  Password
 -  Password protected transport
 -  TLS client
 -  Kerberos
+
+If you need to map other authentication contexts, you can declare them in extra authentication contexts. For example if you use ADFS, you may need to add ``urn:federation:authentication:windows``.
 
 Organization
 ~~~~~~~~~~~~

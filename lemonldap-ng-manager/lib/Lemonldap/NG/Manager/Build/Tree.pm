@@ -1357,7 +1357,8 @@ sub tree {
                         'samlAuthnContextMapPassword',
                         'samlAuthnContextMapPasswordProtectedTransport',
                         'samlAuthnContextMapKerberos',
-                        'samlAuthnContextMapTLSClient'
+                        'samlAuthnContextMapTLSClient',
+                        'samlAuthnContextMapExtra'
                     ]
                 },
                 {

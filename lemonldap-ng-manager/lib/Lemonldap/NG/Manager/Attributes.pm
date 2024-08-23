@@ -4332,6 +4332,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;',
             'type' => 'samlService'
         },
+        'samlAuthnContextMapExtra' => {
+            'type' => 'keyTextContainer'
+        },
         'samlAuthnContextMapKerberos' => {
             'default' => 4,
             'type'    => 'int'

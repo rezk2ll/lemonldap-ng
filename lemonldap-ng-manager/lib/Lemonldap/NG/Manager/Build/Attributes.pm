@@ -3199,6 +3199,10 @@ sub attributes {
             type          => 'keyTextContainer',
             documentation => 'Apache::Session module parameters',
         },
+        samlAuthnContextMapExtra => {
+            type          => 'keyTextContainer',
+            documentation => 'SAML extra authn contexts',
+        },
         samlAuthnContextMapPassword => {
             type          => 'int',
             default       => 2,
