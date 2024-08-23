@@ -450,7 +450,7 @@ sub run {
             message => (
                     'Second factor '
                   . $am[0]->prefix
-                  . '2F selected for '
+                  . '2f selected for '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} }
             ),
             code => "2FA_SELECTED",
@@ -937,14 +937,19 @@ sub _verify {
     if ( $tokres != PE_OK ) {
         $self->auditLog(
             $req,
-            message      => "Token validation failed during 2FA verification",
-            code         => "2FA_VERIFICATION_FAILED",
-            user         => $req->sessionInfo->{ $self->conf->{whatToTrace} },
+            message => (
+                "Token validation failed during ${prefix}2f verification ("
+                  . portalConsts->{$tokres} . ")"
+            ),
+            code         => "2FA_FAILED",
             reason       => "Token validation failed",
+            type         => $prefix,
             portal_error => portalConsts->{$tokres},
         );
         return $self->p->do( $req, [ sub { $tokres } ] );
     }
+
+    my $user = $session->{ $self->conf->{whatToTrace} };
 
     # Evaluate hook
     {
@@ -993,6 +998,18 @@ sub _verify {
         $req->noLoginDisplay(1);
         $req->authResult(PE_BADCREDENTIALS);
 
+        $self->auditLog(
+            $req,
+            message => (
+                "Second factor ${prefix}2f failed for $user ("
+                  . portalConsts->{$res} . ")"
+            ),
+            code         => "2FA_FAILED",
+            user         => $user,
+            type         => $prefix,
+            portal_error => portalConsts->{$res},
+        );
+
         # Set the failed 2f type in case you want to store it in history
         # through sessionDataToRemember
         $req->sessionInfo->{'_2f'} = $prefix;
@@ -1031,12 +1048,11 @@ sub _verify {
     my $logInfo = $verify_result->{logInfo} || {};
     my $logInfoStr =
       join( ', ', map { "$_: " . $logInfo->{$_} } keys %$logInfo );
-    my $user = $req->sessionInfo->{ $self->conf->{whatToTrace} };
 
     $self->auditLog(
         $req,
         message => (
-                "${prefix}2f verification succeeded for abarnes"
+                "Second factor ${prefix}2f verification succeeded for abarnes"
               . ( $device     ? ( " with device " . display2F($device) ) : "" )
               . ( $logInfoStr ? " ($logInfoStr)"                         : "" )
         ),

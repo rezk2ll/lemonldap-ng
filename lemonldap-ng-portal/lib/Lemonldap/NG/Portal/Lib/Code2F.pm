@@ -174,14 +174,6 @@ sub verify {
     my ( $self, $req, $session ) = @_;
     my $usercode;
     unless ( $usercode = $req->param('code') ) {
-        $self->auditLog(
-            $req,
-            message      => ( $self->prefix . '2f: no code found' ),
-            code         => "2FA_VERIFICATION_FAILED",
-            reason       => "Code not provided",
-            portal_error => portalConsts->{PE_FORMEMPTY},
-            user         => $session->{ $self->conf->{whatToTrace} },
-        );
         return PE_FORMEMPTY;
     }
 
@@ -218,16 +210,6 @@ sub verify_internal {
         return PE_OK;
     }
     else {
-        $self->auditLog(
-            $req,
-            message => (
-                'Second factor failed for '
-                  . $session->{ $self->conf->{whatToTrace} }
-            ),
-            code => "2FA_FAILED",
-            user => $session->{ $self->conf->{whatToTrace} },
-            type => $self->prefix,
-        );
         return PE_BADOTP;
     }
 }
