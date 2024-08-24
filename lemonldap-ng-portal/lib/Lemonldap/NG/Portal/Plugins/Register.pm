@@ -277,49 +277,22 @@ sub _register {
             }
         );
 
-        # Build mail content
-        my $tr      = $self->translate($req);
-        my $subject = $self->conf->{registerConfirmSubject};
-        unless ($subject) {
-            $self->logger->debug('Use default confirm subject');
-            $subject = 'registerConfirmSubject';
-            $tr->( \$subject );
-        }
-        my ( $body, $html );
-        if ( $self->conf->{registerConfirmBody} ) {
-
-            # We use a specific text message, no html
-            $self->logger->debug('Use specific confirm body message');
-            $body = $self->conf->{registerConfirmBody};
-
-            # Replace variables in body
-            $body =~ s/\$url/$url/g;
-            $body =~ s/\$expMailDate/$req->{data}->{expMailDate}/g;
-            $body =~ s/\$expMailTime/$req->{data}->{expMailTime}/g;
-            $body =~ s/\$(\w+)/$req->{data}->{registerInfo}->{$1} || ''/ge;
-        }
-        else {
-
-            # Use HTML template
-            $self->logger->debug('Use default confirm HTML template body');
-            $body = $self->loadMailTemplate(
-                $req,
-                'mail_register_confirm',
-                filter => $tr,
-                params => {
-                    expMailDate => $req->data->{expMailDate},
-                    expMailTime => $req->data->{expMailTime},
-                    url         => $url,
-                    %{ $req->data->{registerInfo} || {} },
-                },
-            );
-            $html = 1;
-        }
-
         # Send mail
         return PE_MAILERROR
-          unless $self->send_mail( $req->data->{registerInfo}->{mail},
-            $subject, $body, $html );
+          unless $self->sendEmail(
+            $req,
+            subject       => $self->conf->{registerConfirmSubject},
+            subject_trmsg => 'registerConfirmSubject',
+            body          => $self->conf->{registerConfirmBody},
+            body_template => 'mail_register_confirm',
+            dest          => $req->data->{registerInfo}->{mail},
+            params        => {
+                expMailDate => $req->data->{expMailDate},
+                expMailTime => $req->data->{expMailTime},
+                url         => $url,
+                %{ $req->data->{registerInfo} || {} },
+            },
+          );
 
         $self->logger->debug('Register message sent');
         return PE_MAILCONFIRMOK;
@@ -362,45 +335,20 @@ sub _register {
         }
     );
 
-    # Build mail content
-    my $tr      = $self->translate($req);
-    my $subject = $self->conf->{registerDoneSubject};
-    unless ($subject) {
-        $self->logger->debug('Use default done subject');
-        $subject = 'registerDoneSubject';
-        $tr->( \$subject );
-    }
-    my ( $body, $html );
-    if ( $self->conf->{registerDoneBody} ) {
-
-        # We use a specific text message, no html
-        $self->logger->debug('Use specific done body message');
-        $body = $self->conf->{registerDoneBody};
-
-        # Replace variables in body
-        $body =~ s/\$url/$url/g;
-        $body =~ s/\$(\w+)/$req->{data}->{registerInfo}->{$1} || ''/ge;
-    }
-    else {
-
-        # Use HTML template
-        $self->logger->debug('Use default done HTML template body');
-        $body = $self->loadMailTemplate(
-            $req,
-            'mail_register_done',
-            filter => $tr,
-            params => {
-                url => $url,
-                %{ $req->data->{registerInfo} || {} },
-            },
-        );
-        $html = 1;
-    }
-
     # Send mail
     return PE_MAILERROR
-      unless $self->send_mail( $req->data->{registerInfo}->{mail},
-        $subject, $body, $html );
+      unless $self->sendEmail(
+        $req,
+        subject       => $self->conf->{registerDoneSubject},
+        subject_trmsg => 'registerDoneSubject',
+        body          => $self->conf->{registerDoneBody},
+        body_template => 'mail_register_done',
+        dest          => $req->data->{registerInfo}->{mail},
+        params        => {
+            url => $url,
+            %{ $req->data->{registerInfo} || {} },
+        }
+      );
 
     return PE_MAILOK;
 }

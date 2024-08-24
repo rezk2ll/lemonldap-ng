@@ -338,48 +338,19 @@ sub _certificateReset {
             }
         );
 
-        # Build mail content
-        my $tr      = $self->translate($req);
-        my $subject = $self->conf->{certificateResetByMailStep1Subject};
-        unless ($subject) {
-            $subject = 'certificateResetByMailStep1Subject';
-            $tr->( \$subject );
-        }
-        my $body;
-        my $html;
-        if ( $self->conf->{certificateResetByMailStep1Body} ) {
-
-            # We use a specific text message, no html
-            $body = $self->conf->{certificateResetByMailStep1Body};
-
-            # Replace variables in body
-            $body =~ s/\$expMailDate/$req->data->{expMailDate}/ge;
-            $body =~ s/\$expMailTime/$req->data->{expMailTime}/ge;
-            $body =~ s/\$url/$url/g;
-            $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
-
-        }
-        else {
-
-            # Use HTML template
-            $body = $self->loadMailTemplate(
+        unless (
+            $self->sendEmail(
                 $req,
-                'mail_certificateConfirm',
-                filter => $tr,
-                params => {
+                subject => $self->conf->{certificateResetByMailStep1Subject},
+                subject_trmsg => 'certificateResetByMailStep1Subject',
+                body          => $self->conf->{certificateResetByMailStep1Body},
+                body_template => 'mail_certificateConfirm',
+                dest          => $req->data->{mailAddress},
+                params        => {
                     expMailDate => $req->data->{expMailDate},
                     expMailTime => $req->data->{expMailTime},
                     url         => $url,
-                },
-            );
-            $html = 1;
-        }
-
-        # Send mail
-        unless (
-            $self->send_mail(
-                $req->data->{mailAddress},
-                $subject, $body, $html
+                }
             )
           )
         {
@@ -521,40 +492,16 @@ sub modifyCertificate {
       $self->p->getFirstValue(
         $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
 
-    # Build mail content
-    my $tr      = $self->translate($req);
-    my $subject = $self->conf->{certificateResetByMailStep2Subject};
-    unless ($subject) {
-        $subject = 'certificateResetByMailStep2Subject';
-        $tr->( \$subject );
-    }
-    my $body;
-    my $html;
-    if ( $self->conf->{certificateResetByMailStep2Body} ) {
-
-        # We use a specific text message, no html
-        $body = $self->conf->{certificateResetByMailStep2Body};
-
-        # Replace variables in body
-        $body =~ s/\$(\w+)/$req->{sessionInfo}->{$1} || ''/ge;
-
-    }
-    else {
-
-        # Use HTML template
-        $body = $self->loadMailTemplate(
-            $req,
-            'mail_certificateReset',
-            filter => $tr,
-            params => {},
-        );
-        $html = 1;
-    }
-
     # Send mail
     return PE_MAILERROR
-      unless $self->send_mail( $req->data->{mailAddress}, $subject, $body,
-        $html );
+      unless $self->sendEmail(
+        $req,
+        subject       => $self->conf->{certificateResetByMailStep2Subject},
+        subject_trmsg => 'certificateResetByMailStep2Subject',
+        body          => $self->conf->{certificateResetByMailStep2Body},
+        body_template => 'mail_certificateReset',
+        dest          => $req->data->{mailAddress},
+      );
 
     return PE_MAILOK;
 }
