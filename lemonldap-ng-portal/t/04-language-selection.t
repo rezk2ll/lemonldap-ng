@@ -63,14 +63,14 @@ sub getDetectedLangage {
     my ( $client, $cookielang, $acceptheader ) = @_;
     ok(
         $res = $client->_get(
-            "/psgi.js",
+            "/",
             accept => "text/html",
             ( $cookielang ? ( cookie => "llnglanguage=$cookielang" ) : () ),
             host   => "auth.example.com",
             custom => { HTTP_ACCEPT_LANGUAGE => ( $acceptheader || '' ) },
         )
     );
-    my ($language) = $res->[2]->[0] =~ m#var language="(.*?)"#;
+    my $language = getJsVars($res)->{language};
     ok( $language, "Language was found in response" );
     return $language;
 }

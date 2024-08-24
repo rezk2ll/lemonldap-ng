@@ -426,6 +426,10 @@ sub attributes {
                         'v' => 'WebID'
                     },
                     {
+                        'k' => 'WebAuthn',
+                        'v' => 'WebAuthn'
+                    },
+                    {
                         'k' => 'Custom',
                         'v' => 'customModule'
                     }
@@ -595,6 +599,10 @@ sub attributes {
                 {
                     'k' => 'WebID',
                     'v' => 'WebID'
+                },
+                {
+                    'k' => 'WebAuthn',
+                    'v' => 'WebAuthn'
                 },
                 {
                     'k' => 'Demo',
@@ -1383,16 +1391,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'dbiPasswordMailCol' => {
             'type' => 'text'
         },
-        'dbiUserChain' => {
-            'type' => 'text'
-        },
-        'dbiUserPassword' => {
-            'type' => 'password'
-        },
         'dbiUserTable' => {
-            'type' => 'text'
-        },
-        'dbiUserUser' => {
             'type' => 'text'
         },
         'decryptValueFunctions' => {
@@ -4336,6 +4335,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;',
             'type' => 'samlService'
         },
+        'samlAuthnContextMapExtra' => {
+            'type' => 'keyTextContainer'
+        },
         'samlAuthnContextMapKerberos' => {
             'default' => 4,
             'type'    => 'int'
@@ -5657,6 +5659,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'webauthnAppId' => {
             'default' => 1,
             'type'    => 'bool'
+        },
+        'webauthnAuthnLevel' => {
+            'default' => 3,
+            'type'    => 'int'
         },
         'webauthnDisplayNameAttr' => {
             'type' => 'text'

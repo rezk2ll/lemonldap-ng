@@ -12,6 +12,7 @@ use Crypt::URandom;
 
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
+  PE_WEBAUTHNFAILED
   PE_ERROR
   PE_SENDRESPONSE
   PE_BADCREDENTIALS
@@ -32,7 +33,8 @@ sub init {
 
     # If "activation" is just set to "enabled",
     # replace the rule to detect if user has registered its key
-    $self->conf->{webauthn2fActivation} = 'has2f("WebAuthn")'
+    $self->conf->{webauthn2fActivation} =
+      'has2f("WebAuthn") and $_auth ne "WebAuthn"'
       if $self->conf->{webauthn2fActivation} eq '1';
 
     return $self->SUPER::init() ? 1 : 0;
@@ -47,7 +49,7 @@ sub run {
     unless ($request) {
         $self->logger->error(
             $self->prefix . '2f: no registered device for ' . $req->user );
-        return PE_ERROR;
+        return PE_WEBAUTHNFAILED;
     }
 
     $self->ott->updateToken( $token, _webauthn_request => $request );
@@ -62,7 +64,8 @@ EOF
         $req,
         'webauthn2fcheck',
         params => {
-            DATA          => to_json( { request => $request } ),
+            DATA =>
+              to_json( { request => $request, webauthn_autostart => \1 } ),
             TOKEN         => $token,
             CUSTOM_SCRIPT => $req->data->{customScript},
             $self->get2fTplParams($req),
@@ -81,7 +84,7 @@ sub verify {
     unless ($credential_json) {
         $self->logger->error(
             $self->prefix . '2f: missing signature parameter' );
-        return PE_ERROR;
+        return PE_WEBAUTHNFAILED;
     }
 
     my $signature_options = $session->{_webauthn_request};
@@ -94,31 +97,19 @@ sub verify {
     if ($@) {
         $self->logger->error(
             $self->prefix . "2f: validation error for $user ($@)" );
-        return PE_ERROR;
+        return PE_WEBAUTHNFAILED;
     }
 
     if ( $validation_result->{success} == 1 ) {
         $req->data->{_2fDevice} = $validation_result->{matching_credential};
-        $self->auditLog(
-            $req,
-            message => (
-                    "User $user authenticated with 2F device: "
-                  . display2F( $validation_result->{matching_credential} )
-                  . " (signature count: $validation_result->{signature_count}) "
-            ),
-            code   => "2FA_SUCCESS",
-            user   => $user,
-            type   => $self->prefix,
-            device => display2F( $validation_result->{matching_credential} ),
-            signature_count => $validation_result->{signature_count},
-        );
-
+        $req->data->{_2fLogInfo} =
+          { signature_count => $validation_result->{signature_count} };
         return PE_OK;
     }
     else {
         $self->logger->error(
             $self->prefix . "2f: validation did not return success for $user" );
-        return PE_ERROR;
+        return PE_WEBAUTHNFAILED;
     }
 }
 

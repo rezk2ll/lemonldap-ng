@@ -83,6 +83,13 @@ ENDKEY
         my ( $host, $url, $query ) =
           expectForm( $res, "", '/webauthn2fcheck', 'token', 'credential' );
 
+        expectXpath( $res,
+                '//script[@src="/static/common/js/'
+              . 'webauthn-json.browser-global.min.js"]' );
+        expectXpath( $res,
+            '//script[@src="/static/common/js/webauthncheck.min.js"]' );
+        is( getJsVars($res)->{webauthn_autostart},
+            "1", "WebAuthn set to autostart" );
         ok( my $request = getJsVars($res)->{request},
             "Found WebAuthn request" );
         my $challenge = $request->{challenge};
@@ -156,6 +163,12 @@ ENDKEY
         expectOK($res);
         my ( $host, $url, $query ) =
           expectForm( $res, "", '/webauthn2fcheck', 'token', 'credential' );
+
+        expectXpath( $res,
+                '//script[@src="/static/common/js/'
+              . 'webauthn-json.browser-global.min.js"]' );
+        expectXpath( $res,
+            '//script[@src="/static/common/js/webauthncheck.min.js"]' );
 
         ok( my $request = getJsVars($res)->{request},
             "Found WebAuthn request" );

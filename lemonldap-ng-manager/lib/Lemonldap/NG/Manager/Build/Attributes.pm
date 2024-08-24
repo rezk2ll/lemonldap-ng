@@ -2626,6 +2626,11 @@ sub attributes {
             type          => 'text',
             documentation => 'WebAuthn Relying Party display name',
         },
+        webauthnAuthnLevel => {
+            type          => 'int',
+            default       => 3,
+            documentation => 'WebAuthn authentication level',
+        },
 
         # Single session
         notifyDeleted => {
@@ -3194,6 +3199,10 @@ sub attributes {
             type          => 'keyTextContainer',
             documentation => 'Apache::Session module parameters',
         },
+        samlAuthnContextMapExtra => {
+            type          => 'keyTextContainer',
+            documentation => 'SAML extra authn contexts',
+        },
         samlAuthnContextMapPassword => {
             type          => 'int',
             default       => 2,
@@ -3698,6 +3707,7 @@ sub attributes {
                 { k => 'SSL',         v => 'SSL' },
                 { k => 'Twitter',     v => 'Twitter' },
                 { k => 'WebID',       v => 'WebID' },
+                { k => 'WebAuthn',    v => 'WebAuthn' },
                 { k => 'Demo',        v => 'Demonstration' },
                 { k => 'Choice',      v => 'authChoice' },
                 { k => 'Combination', v => 'combineMods' },
@@ -4365,9 +4375,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         dbiAuthChain    => { type => 'text', },
         dbiAuthUser     => { type => 'text', },
         dbiAuthPassword => { type => 'password', },
-        dbiUserChain    => { type => 'text', },
-        dbiUserUser     => { type => 'text', },
-        dbiUserPassword => { type => 'password', },
         dbiAuthTable    => { type => 'text', },
         dbiUserTable    => { type => 'text', },
 
@@ -4511,6 +4518,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'SSL',           v => 'SSL' },
                     { k => 'Twitter',       v => 'Twitter' },
                     { k => 'WebID',         v => 'WebID' },
+                    { k => 'WebAuthn',      v => 'WebAuthn' },
                     { k => 'Custom',        v => 'customModule' },
                 ],
                 [

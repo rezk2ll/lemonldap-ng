@@ -89,4 +89,87 @@ sub markRegistered {
       // $self->authnLevel;
 }
 
+# Default run method, for modules that don't want to implement it themselves
+sub run {
+    my ( $self, $req, $action ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
+    return $self->p->sendError( $req, 'PE82', 400 )
+      unless $user;
+
+    if ( $self->can('supportedActions')
+        and my $actions = $self->supportedActions($req) )
+    {
+        if ( my $sub = $actions->{$action} ) {
+            return $self->$sub($req);
+        }
+    }
+    $self->logger->error( $self->prefix . "2f: unknown action ($action)" );
+    return $self->p->sendError( $req, 'unknownAction', 400 );
+}
+
+sub delete {
+    my ( $self, $req ) = @_;
+    my $user = $req->userData->{ $self->conf->{whatToTrace} };
+
+    # Check if unregistration is allowed
+    return $self->p->sendError( $req, 'notAuthorized', 400 )
+      unless $self->userCanRemove;
+
+    my $epoch = $req->param('epoch')
+      or return $self->p->sendError( $req,
+        $self->prefix . '2f: "epoch" parameter is missing', 400 );
+    if ( $self->del2fDevice( $req, $req->userData, $self->type, $epoch ) ) {
+        return $self->p->sendJSONresponse( $req, { result => 1 } );
+    }
+    $self->logger->error( $self->prefix . "2f: device not found" );
+    return $self->p->sendError( $req, '2FDeviceNotFound', 400 );
+}
+
+sub failHtmlResponse {
+    my ( $self, $req, $error ) = @_;
+    my $uid = $req->userData->{ $self->conf->{whatToTrace} };
+
+    $self->auditLog(
+        $req,
+        message => (
+            $self->type . " 2F device registration failed for $uid : $error"
+        ),
+        code         => "2FA_DEVICE_REGISTRATION_FAILED",
+        type         => $self->prefix,
+        portal_error => $error,
+        user         => $uid,
+    );
+
+    return $self->p->sendHtml(
+        $req, 'error',
+        params => {
+            RAW_ERROR       => $error,
+            AUTH_ERROR_TYPE => 'error',
+        }
+    );
+}
+
+sub failResponse {
+    my ( $self, $req, $error, $code ) = @_;
+    my $uid = $req->userData->{ $self->conf->{whatToTrace} };
+
+    $self->auditLog(
+        $req,
+        message => (
+            $self->type . " 2F device registration failed for $uid : $error"
+        ),
+        code         => "2FA_DEVICE_REGISTRATION_FAILED",
+        type         => $self->prefix,
+        portal_error => $error,
+        user         => $uid,
+    );
+
+    return $self->p->sendError( $req, $error, $code );
+}
+
+sub successResponse {
+    my ( $self, $req, $info ) = @_;
+    return $self->p->sendJSONresponse( $req, $info );
+}
+
 1;

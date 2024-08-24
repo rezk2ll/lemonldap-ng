@@ -1259,6 +1259,7 @@ sub tplParams {
         COOKIESECURE => ( $self->conf->{securedCookie} ? 1 : 0 ),
         SKIN_BG      => $self->conf->{portalSkinBackground},
         FAVICON      => $self->conf->{portalFavicon} || 'common/favicon.ico',
+        LANGUAGE     => $self->getLanguage($req),
         CUSTOM_CSS   => $self->conf->{portalCustomCss},
         CUSTOM_JS    => $self->conf->{portalCustomJs},
         (

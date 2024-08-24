@@ -102,6 +102,12 @@ ENDKEY
             'Show WebAuthn registration'
         );
 
+        expectXpath( $res,
+                '//script[@src="/static/common/js/'
+              . 'webauthn-json.browser-global.min.js"]' );
+        expectXpath( $res,
+            '//script[@src="/static/common/js/webauthnregistration.min.js"]' );
+
         like(
             $res->[2]->[0],
             qr%<img src="/static/bootstrap/webauthn.png"%,
@@ -358,7 +364,7 @@ ENDKEY
     Time::Fake->offset("+10m");
 
     # Require resident key
-    $client->ini({ %$ini, webauthn2fResidentKey => "always" });
+    $client->ini({ %$ini, webauthn2fResidentKey => "required" });
 
     # Register a different device should succeed
     my $user_handle_2 =

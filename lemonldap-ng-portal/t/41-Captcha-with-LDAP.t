@@ -7,7 +7,7 @@ use JSON;
 require 't/test-lib.pm';
 
 my $res;
-my $maintests = 14;
+my $maintests = 11;
 SKIP: {
     eval 'use GD::SecurityImage; use Image::Magick; use Net::LDAP;';
     if ($@) {

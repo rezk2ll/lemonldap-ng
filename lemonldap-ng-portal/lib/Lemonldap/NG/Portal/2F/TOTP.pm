@@ -85,11 +85,8 @@ sub verify {
                 $secret, $code
             );
             if ( $r == 1 ) {
-                $req->data->{_2fDevice} = $device;
-                $self->userLogger->info("Codes match at range $range");
-                $self->userLogger->info(
-                    "User $uid authenticated with 2F device: "
-                      . display2F($device) );
+                $req->data->{_2fDevice}  = $device;
+                $req->data->{_2fLogInfo} = { range => $range };
                 return PE_OK;
             }
         }

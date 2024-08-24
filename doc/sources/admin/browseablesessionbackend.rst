@@ -27,10 +27,10 @@ List of fields to index by session type
 
    * - Session Type
      - Fields to index
-   * - Sessions (global) [1]_
-     - \_whatToTrace \_session_kind \_utime ipAddr \_httpSessionType user mail \_session_uid
+   * - Sessions (global)
+     - \_whatToTrace \_session_kind \_utime ipAddr \_httpSessionType user [#]_ mail [#]_ \_session_uid [#]_
    * - Persistent sessions
-     - \_session\_kind \_httpSessionType \_session\_uid ipAddr \_whatToTrace
+     - \_session\_kind \_httpSessionType \_session\_uid ipAddr \_whatToTrace \_webAuthnUserHandle [#]_
    * - CAS sessions
      - \_session_kind \_utime \_cas\_id pgtIou
    * - SAML sessions
@@ -38,10 +38,10 @@ List of fields to index by session type
    * - OIDC sessions
      - \_session_kind \_utime \_oidc_sid \_oidc_sub
 
-.. [1]
-   - ``user`` is used by :doc:`resetpassword`.
-   - ``mail`` is used by :doc:`register`.
-   - ``_session_uid`` is used by :doc:`trustedbrowser`.
+.. [#] ``user`` is used by :doc:`resetpassword`.
+.. [#] ``mail`` is used by :doc:`register`.
+.. [#] ``_session_uid`` is used by :doc:`trustedbrowser`.
+.. [#] ``_webAuthnUserHandle`` is used by :doc:`authwebauthn`.
 
 .. note::
 

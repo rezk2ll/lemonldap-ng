@@ -13,6 +13,7 @@ WriteMakefile(
             'Authen::WebAuthn'            => 0,
             'Convert::Base32'             => 0,
             'HTML::FormatText::WithLinks' => 0,
+            'Convert::PEM'                => 0,
             'Crypt::JWT'                  => 0,
             'DBI'                         => 0,
             'Email::Sender'               => 1.300027,
