@@ -76,8 +76,7 @@ sub storeRememberedAuthChoice {
                   . " with authentication choice lmAuth="
                   . $lmAuth );
             $req->addCookie(
-                $self->p->genCookie(
-                    $req,
+                $self->p->cookie(
                     name     => $self->rememberCookieName,
                     value    => $lmAuth,
                     max_age  => $self->rememberCookieTimeout,
@@ -94,8 +93,7 @@ sub storeRememberedAuthChoice {
                   . $self->rememberCookieName );
 
             $req->addCookie(
-                $self->p->genCookie(
-                    $req,
+                $self->p->cookie(
                     name    => $self->rememberCookieName,
                     value   => 0,
                     expires => 'Wed, 21 Oct 2015 00:00:00 GMT',
